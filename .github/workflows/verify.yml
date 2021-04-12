@@ -1,0 +1,24 @@
+name: Verify Commit
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+
+      - name: Install modules
+        run: yarn
+
+      - name: Run build
+        run: yarn run build
+
+      - name: Run TypeScript compiler ESLint
+        run: yarn run lint
+
+      - name: Run Jest
+        run: yarn run test

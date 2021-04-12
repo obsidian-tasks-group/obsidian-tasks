@@ -1,0 +1,7 @@
+.markdown-preview-view ul > li.tasks-item {
+    list-style: none;
+    text-indent: -1.5em;
+}
+.markdown-preview-view ul > li.tasks-item > * {
+        text-indent: 0;
+}
