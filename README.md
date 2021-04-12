@@ -68,6 +68,9 @@ For example: `📅 2021-04-09` means the task is due on the 9th of April, 2021.
 You can list tasks from your entire vault by querying them using a `tasks` code block.
 Tasks are sorted by due date and then path.
 
+**The result will only list tasks that are not indented!**
+See section Caveats for more details.
+
 The simplest way is this:
 
     ```tasks
@@ -104,6 +107,8 @@ Show all tasks that were done before the 1st of December 2020:
 
 ### Caveats
 
+**Toggling in preview mode of a file**
+
 When you toggle a task in its file, it will identify the task based on its description.
 This means that when you have multiple tasks with the exact same description, due date, and done date, it will toggle the first of those tasks and not necessarily the one you actually clicked.
 **This only applies to tasks within the file in preview mode.**
@@ -111,3 +116,13 @@ This means that when you have multiple tasks with the exact same description, du
 
 The reason for this is that I can currently not reliably identify the line number in the file from a click on the checkbox in preview mode.
 This might change/improve in the future.
+
+**A query result will only list tasks that are not indented!**
+
+This means that the dash that identifies the list item in the file must not have preceding spaces or tabs.
+This is a deliberate design decision (for the moment).
+I am happy to discuss this and possibly change it.
+However, there is more to it than simply showing the task.
+Should it be indented in the query results? Below what? Should the parent list item be shown as well?
+
+For now, you can use this "feature" to track projects with sub-tasks that won't clutter your overview.
