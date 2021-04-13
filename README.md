@@ -126,3 +126,7 @@ However, there is more to it than simply showing the task.
 Should it be indented in the query results? Below what? Should the parent list item be shown as well?
 
 For now, you can use this "feature" to track projects with sub-tasks that won't clutter your overview.
+
+## Development
+
+Clone the repository, run `yarn` to install the dependencies, and run `yarn dev` to compile the plugin and watch file changes.
