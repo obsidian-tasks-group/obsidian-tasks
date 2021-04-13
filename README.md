@@ -68,7 +68,7 @@ For example: `📅 2021-04-09` means the task is due on the 9th of April, 2021.
 You can list tasks from your entire vault by querying them using a `tasks` code block.
 Tasks are sorted by due date and then path.
 
-**The result will only list tasks that are not indented!**
+**The result list will list tasks unindented.**
 See section Caveats for more details.
 
 The simplest way is this:
@@ -88,6 +88,8 @@ The following filters exist:
 - `no due date`
 - `due (before|after|on) <date>`
 - `path (includes|does not include) <path>`
+- `exclude sub-items`
+    - When this is set, the result list will only include tasks that are not indented in their file. It will only show tasks that are top level list items in their list.
 
 #### Examples
 
@@ -117,15 +119,11 @@ This means that when you have multiple tasks with the exact same description, du
 The reason for this is that I can currently not reliably identify the line number in the file from a click on the checkbox in preview mode.
 This might change/improve in the future.
 
-**A query result will only list tasks that are not indented!**
+**A query result list will list tasks unindented!**
 
-This means that the dash that identifies the list item in the file must not have preceding spaces or tabs.
-This is a deliberate design decision (for the moment).
 I am happy to discuss this and possibly change it.
-However, there is more to it than simply showing the task.
-Should it be indented in the query results? Below what? Should the parent list item be shown as well?
-
-For now, you can use this "feature" to track projects with sub-tasks that won't clutter your overview.
+However, there is more to it than simply indenting the task the same depth it was indented in the source file.
+Below what item should it be indented? Its direct parent? Does that have to be a task?
 
 ## Development
 

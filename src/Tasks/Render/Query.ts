@@ -10,6 +10,7 @@ export class Query {
     private readonly notDoneString = 'not done';
     private readonly doneRegexp = /done (before|after|on) (\d{4}-\d{2}-\d{2})/;
     private readonly pathRegexp = /path (includes|does not include) (.*)/;
+    private readonly excludeSubItemsString = 'exclude sub-items';
 
     constructor({ source }: { source: string }) {
         this.filters = this.parseFilters({ source });
@@ -21,7 +22,7 @@ export class Query {
         source: string;
     }): ((task: Task) => boolean)[] {
         const filters: ((task: Task) => boolean)[] = [];
-        const sourceLines = source.split('\n');
+        const sourceLines = source.split('\n').map(line => line.trim());
 
         for (const sourceLine of sourceLines) {
             if (sourceLine === '') {
@@ -49,6 +50,8 @@ export class Query {
                 if (filter !== undefined) {
                     filters.push(filter);
                 }
+            } else if (sourceLine === this.excludeSubItemsString) {
+                filters.push((task) => task.indentation === '');
             } else {
                 console.error('Tasks: do not understand filter: ' + sourceLine);
             }

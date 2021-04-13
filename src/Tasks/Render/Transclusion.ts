@@ -52,11 +52,6 @@ export class Transclusion extends MarkdownRenderChild {
 
         const taskList = allTaskLists.createEl('ul');
         for (const task of Sort.byDateThenPath(tasks)) {
-            // Only transclude top-level tasks
-            if (task.indentation !== '') {
-                continue;
-            }
-
             let fileName: string | undefined;
             const fileNameMatch = task.path.match(/([^/]+)\.md$/);
             if (fileNameMatch !== null) {
