@@ -104,9 +104,33 @@ export class Obsidian {
         this.workspace.onLayoutReady(func);
     }
 
+    public subscribeToCreation(func: (path: string) => Promise<void>) {
+        const eventRef = this.vault.on('create', (file: TAbstractFile) => {
+            func(file.path);
+        });
+
+        this.eventReferences.push(eventRef);
+    }
+
     public subscribeToModification(func: (path: string) => Promise<void>) {
         const eventRef = this.vault.on('modify', (file: TAbstractFile) => {
             func(file.path);
+        });
+
+        this.eventReferences.push(eventRef);
+    }
+
+    public subscribeToDeletion(func: (path: string) => Promise<void>) {
+        const eventRef = this.vault.on('delete', (file: TAbstractFile) => {
+            func(file.path);
+        });
+
+        this.eventReferences.push(eventRef);
+    }
+
+    public subscribeToRenaming(func: (oldPath: string, newPath: string) => Promise<void>) {
+        const eventRef = this.vault.on('rename', (file: TAbstractFile, oldPath: string) => {
+            func(oldPath, file.path);
         });
 
         this.eventReferences.push(eventRef);

@@ -5,6 +5,7 @@ import { REGEX_TASK, Task } from './Task';
 export class Cache {
     private readonly obsidian: Obsidian;
     private readonly mutex: Mutex;
+    private readonly markdownRegexp = /.*\.md$/;
 
     private readonly subscribedHandlers: { [number: number]: () => void };
     private registeredMaxId: number = 0;
@@ -20,14 +21,8 @@ export class Cache {
         this.obsidian.subscribeToLayoutReadyEvent(() => {
             this.init();
         });
-        this.obsidian.subscribeToModification(async (path: string) => {
-            await this.mutex.runExclusive(async () => {
-                this.tasks = this.tasks.filter(
-                    (task: Task) => task.path !== path,
-                );
-                await this.updateFiles({ paths: [path] });
-            });
-        });
+
+        this.subscribeToFileEvents();
     }
 
     public getTasks(): Task[] {
@@ -52,6 +47,69 @@ export class Cache {
         return false;
     }
 
+    private subscribeToFileEvents(): void {
+        this.obsidian.subscribeToCreation(async (path: string) => {
+            if (!this.markdownRegexp.test(path)) {
+                return;
+            }
+
+            await this.mutex.runExclusive(async () => {
+                await this.updateFiles({ paths: [path] });
+            });
+        });
+
+        this.obsidian.subscribeToModification(async (path: string) => {
+            if (!this.markdownRegexp.test(path)) {
+                return;
+            }
+
+            await this.mutex.runExclusive(async () => {
+                this.tasks = this.tasks.filter(
+                    (task: Task) => task.path !== path,
+                );
+                await this.updateFiles({ paths: [path] });
+            });
+        });
+
+        this.obsidian.subscribeToDeletion(async (path: string) => {
+            if (!this.markdownRegexp.test(path)) {
+                return;
+            }
+
+            await this.mutex.runExclusive(async () => {
+                this.tasks = this.tasks.filter(
+                    (task: Task) => task.path !== path,
+                );
+                this.notifySubscribers();
+            });
+        });
+
+        this.obsidian.subscribeToRenaming(
+            async (oldPath: string, newPath: string) => {
+                if (
+                    !this.markdownRegexp.test(oldPath) ||
+                    !this.markdownRegexp.test(newPath)
+                ) {
+                    return;
+                }
+
+                await this.mutex.runExclusive(async () => {
+                    this.tasks = this.tasks.map(
+                        (task: Task): Task => {
+                            if (task.path === oldPath) {
+                                return new Task({ ...task, path: newPath });
+                            } else {
+                                return task;
+                            }
+                        },
+                    );
+
+                    this.notifySubscribers();
+                });
+            },
+        );
+    }
+
     private async init(): Promise<void> {
         await this.mutex.runExclusive(async () => {
             const paths = this.obsidian.getMarkdownFilePaths();
@@ -62,9 +120,9 @@ export class Cache {
 
     private async updateFiles({ paths }: { paths: string[] }) {
         const headerRegex = /^#+ (.*)/;
-        let precedingHeader: string | undefined = undefined;
 
         for (const path of paths) {
+            let precedingHeader: string | undefined = undefined;
             const lines = await this.obsidian.readLines({ path });
             let pageIndex = 0;
             for (
@@ -97,6 +155,10 @@ export class Cache {
             }
         }
 
+        this.notifySubscribers();
+    }
+
+    private notifySubscribers(): void {
         for (const subscribedHandler of Object.values(
             this.subscribedHandlers,
         )) {
