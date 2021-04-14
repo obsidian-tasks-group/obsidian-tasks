@@ -5,25 +5,28 @@ import { CLASS_ITEM, Task } from '../Task';
 import { Cache } from '../Cache';
 import { Query } from './Query';
 import { Transclusion } from './Transclusion';
-import { Checkbox } from './Checkbox';
-import { ListItem } from './ListItem';
+import { TaskItem } from './TaskItem';
 
 export class Render {
     private readonly cache: Cache;
+    private readonly taskItem: TaskItem;
     private readonly obsidian: Obsidian;
 
     public constructor({
         cache,
+        taskItem,
         obsidian,
     }: {
         cache: Cache;
+        taskItem: TaskItem;
         obsidian: Obsidian;
     }) {
         this.cache = cache;
+        this.taskItem = taskItem;
         this.obsidian = obsidian;
 
         this.obsidian.registerMarkdownPostProcessor(
-            this.renderCheckBoxes.bind(this),
+            this.renderInLineTasks.bind(this),
         );
 
         this.obsidian.registerCodeBlockPostProcessor(
@@ -31,7 +34,7 @@ export class Render {
         );
     }
 
-    private renderCheckBoxes(
+    private renderInLineTasks(
         element: HTMLElement,
         context: MarkdownPostProcessorContext,
     ) {
@@ -52,8 +55,7 @@ export class Render {
                 return;
             }
 
-            ListItem.addAttributes({ listItem, task });
-            Checkbox.prependTo({ listItem, taskStatus: task.status });
+            this.taskItem.processListItem({ listItem, task });
         });
     }
 
@@ -67,6 +69,7 @@ export class Render {
         context.addChild(
             new Transclusion({
                 cache: this.cache,
+                taskItem: this.taskItem,
                 container: element,
                 filters: query.filters,
             }),

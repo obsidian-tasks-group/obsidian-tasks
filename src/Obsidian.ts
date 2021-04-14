@@ -91,15 +91,6 @@ export class Obsidian {
         this.plugin.addCommand(command);
     }
 
-    public subscribeToClickEvent(
-        eventsHandler: (
-            this: HTMLElement,
-            ev: HTMLElementEventMap['click'],
-        ) => any,
-    ): void {
-        this.plugin.registerDomEvent(document, 'click', eventsHandler);
-    }
-
     public subscribeToLayoutReadyEvent(func: () => void): void {
         this.workspace.onLayoutReady(func);
     }
@@ -128,10 +119,15 @@ export class Obsidian {
         this.eventReferences.push(eventRef);
     }
 
-    public subscribeToRenaming(func: (oldPath: string, newPath: string) => Promise<void>) {
-        const eventRef = this.vault.on('rename', (file: TAbstractFile, oldPath: string) => {
-            func(oldPath, file.path);
-        });
+    public subscribeToRenaming(
+        func: (oldPath: string, newPath: string) => Promise<void>,
+    ) {
+        const eventRef = this.vault.on(
+            'rename',
+            (file: TAbstractFile, oldPath: string) => {
+                func(oldPath, file.path);
+            },
+        );
 
         this.eventReferences.push(eventRef);
     }

@@ -1,12 +1,13 @@
-import { MarkdownRenderChild } from 'obsidian';
+import { Component, MarkdownRenderChild, MarkdownRenderer } from 'obsidian';
 import { Task } from '../Task';
 import { Cache } from '../Cache';
+import { TaskItem } from './TaskItem';
 import { Sort } from './Sort';
-import { ListItem } from './ListItem';
 
 export class Transclusion extends MarkdownRenderChild {
     private readonly cache: Cache;
     private readonly container: HTMLElement;
+    private readonly taskItem: TaskItem;
     private readonly filters: ((task: Task) => boolean)[];
 
     // private cacheCallbackId: number | undefined;
@@ -14,16 +15,19 @@ export class Transclusion extends MarkdownRenderChild {
     constructor({
         cache,
         container,
+        taskItem,
         filters,
     }: {
         cache: Cache;
         container: HTMLElement;
+        taskItem: TaskItem;
         filters: ((task: Task) => boolean)[];
     }) {
         super();
 
         this.cache = cache;
         this.container = container;
+        this.taskItem = taskItem;
         this.filters = filters;
     }
 
@@ -58,7 +62,7 @@ export class Transclusion extends MarkdownRenderChild {
                 fileName = fileNameMatch[1];
             }
 
-            const listItem = await ListItem.fromTask({
+            const listItem = await this.listItemFromTask({
                 task,
                 parentComponent: this,
             });
@@ -93,5 +97,33 @@ export class Transclusion extends MarkdownRenderChild {
         allTaskLists.appendChild(taskList);
 
         this.container.firstChild?.replaceWith(allTaskLists);
+    }
+
+    private async listItemFromTask({
+        task,
+        parentComponent,
+    }: {
+        task: Task;
+        parentComponent: Component;
+    }): Promise<HTMLLIElement> {
+        const listItem = document.createElement('li');
+
+        await MarkdownRenderer.renderMarkdown(
+            task.toLiString(),
+            listItem,
+            task.path,
+            parentComponent,
+        );
+
+        // Unwrap the p-tag that was created by the MarkdownRenderer:
+        const pElement = listItem.querySelector('p');
+        if (pElement !== null) {
+            listItem.innerHTML = pElement.innerHTML;
+            pElement.remove();
+        }
+
+        this.taskItem.processListItem({ listItem, task });
+
+        return listItem;
     }
 }
