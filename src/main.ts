@@ -1,7 +1,7 @@
 import { Plugin } from 'obsidian';
 
 import { Obsidian } from './Obsidian';
-import { Cache, Commands, Events, File, Render, Settings } from './Tasks';
+import { Cache, Commands, File, Render, Settings, TaskItem } from './Tasks';
 
 const DEFAULT_SETTINGS: Settings = {};
 
@@ -17,12 +17,9 @@ export default class TasksPlugin extends Plugin {
         this.obsidian = new Obsidian({ plugin: this });
         const cache = new Cache({ obsidian: this.obsidian });
         const file = new File({ obsidian: this.obsidian });
-        new Events({
-            file,
-            obsidian: this.obsidian,
-        });
+        const taskItem = new TaskItem({ file, obsidian: this.obsidian });
         new Commands({ file, obsidian: this.obsidian });
-        new Render({ cache, obsidian: this.obsidian });
+        new Render({ cache, taskItem, obsidian: this.obsidian });
     }
 
     onunload() {

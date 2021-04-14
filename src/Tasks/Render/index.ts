@@ -1,2 +1,2 @@
-export { CLASS_CHECKBOX, Checkbox } from './Checkbox';
+export { TaskItem } from './TaskItem';
 export { Render } from './Render';

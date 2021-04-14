@@ -22,7 +22,7 @@ export class Query {
         source: string;
     }): ((task: Task) => boolean)[] {
         const filters: ((task: Task) => boolean)[] = [];
-        const sourceLines = source.split('\n').map(line => line.trim());
+        const sourceLines = source.split('\n').map((line) => line.trim());
 
         for (const sourceLine of sourceLines) {
             if (sourceLine === '') {
@@ -122,11 +122,9 @@ export class Query {
             let filter;
             const filterMethod = pathMatch[1];
             if (filterMethod === 'includes') {
-                filter = (task: Task) =>
-                    task.path.includes(pathMatch[2]);
+                filter = (task: Task) => task.path.includes(pathMatch[2]);
             } else if (pathMatch[1] === 'does not include') {
-                filter = (task: Task) =>
-                    !task.path.includes(pathMatch[2]);
+                filter = (task: Task) => !task.path.includes(pathMatch[2]);
             } else {
                 console.error('Tasks: do not understand path query: ' + line);
                 return undefined;
