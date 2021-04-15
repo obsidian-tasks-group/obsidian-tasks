@@ -3,8 +3,8 @@ import { Task } from '../../src/Tasks/Task';
 
 describe('fromLine', () => {
     it('parses a task from a line', () => {
-        const line = "- TODO take out the trash";
-        const path = "example/path.md";
+        const line = '- [ ] #task take out the trash';
+        const path = 'example/path.md';
 
         const task = Task.fromLine({
             line,

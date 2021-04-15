@@ -1,14 +1,9 @@
 import stringSimilarity from 'string-similarity';
 import { Obsidian } from '../../Obsidian';
 import { File } from '../File';
+import { Settings } from '../Settings';
 import { Status } from '../Status';
-import {
-    CLASS_ITEM,
-    DATA_PAGE_INDEX,
-    DATA_PATH,
-    REGEX_TASK,
-    Task,
-} from '../Task';
+import { Task } from '../Task';
 import { NodeTypes } from './NodeTypes';
 
 export const CLASS_CHECKBOX = 'tasks-checkbox';
@@ -29,10 +24,13 @@ export class TaskItem {
         listItem: Element;
         task: Task;
     }): void {
-        listItem.addClass(CLASS_ITEM);
-        listItem.setAttribute(DATA_PATH, task.path);
+        listItem.addClass(Settings.CLASS_ITEM);
+        listItem.setAttribute(Settings.DATA_PATH, task.path);
         if (task.pageIndex !== undefined) {
-            listItem.setAttribute(DATA_PAGE_INDEX, task.pageIndex.toString());
+            listItem.setAttribute(
+                Settings.DATA_PAGE_INDEX,
+                task.pageIndex.toString(),
+            );
         }
 
         for (let i = 0; i < listItem.childNodes.length; i = i + 1) {
@@ -42,7 +40,7 @@ export class TaskItem {
                 childNode.nodeType == NodeTypes.TEXT &&
                 childNode.textContent !== null
             ) {
-                childNode.textContent = this.removeStatusIfPresent(
+                childNode.textContent = this.removeTagIfPresent(
                     childNode.textContent,
                 );
 
@@ -74,7 +72,7 @@ export class TaskItem {
     }): Promise<void> {
         event.preventDefault();
 
-        const path = listItem.getAttribute(DATA_PATH);
+        const path = listItem.getAttribute(Settings.DATA_PATH);
         if (path === null) {
             return;
         }
@@ -87,7 +85,7 @@ export class TaskItem {
         let lineNumber: number | undefined;
         // Use the page index if it is available. It is more accurate and
         // should be faster than calculating the string similarity.
-        const pageIndex = listItem.getAttribute(DATA_PAGE_INDEX);
+        const pageIndex = listItem.getAttribute(Settings.DATA_PAGE_INDEX);
         if (pageIndex) {
             lineNumber = this.getLineNumberBasedOnPageIndex({
                 pageIndex,
@@ -108,8 +106,11 @@ export class TaskItem {
         }
     }
 
-    private removeStatusIfPresent(text: string): string {
-        const existingStatusRegex = /^(TODO|DONE) (.*)/u;
+    private removeTagIfPresent(text: string): string {
+        const existingStatusRegex = new RegExp(
+            `^${Settings.TASK_TAG} (.*)`,
+            'u',
+        );
         const existingStatusMatch = text.match(existingStatusRegex);
         if (existingStatusMatch !== null) {
             text = existingStatusMatch[2];
@@ -131,7 +132,7 @@ export class TaskItem {
             currentLine < fileLines.length;
             currentLine = currentLine + 1
         ) {
-            if (REGEX_TASK.test(fileLines[currentLine])) {
+            if (Settings.REGEX_TASK.test(fileLines[currentLine])) {
                 if (currentIndex.toString() === pageIndex) {
                     return currentLine;
                 }
@@ -165,7 +166,7 @@ export class TaskItem {
             currentLine < fileLines.length;
             currentLine = currentLine + 1
         ) {
-            const match = fileLines[currentLine].match(REGEX_TASK);
+            const match = fileLines[currentLine].match(Settings.REGEX_TASK);
             if (match !== null) {
                 // The LI only knows the text part after the list identifier
                 // and the status.
