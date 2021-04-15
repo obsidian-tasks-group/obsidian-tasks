@@ -3,8 +3,6 @@ import { Plugin } from 'obsidian';
 import { Obsidian } from './Obsidian';
 import { Cache, Commands, File, Render, Settings, TaskItem } from './Tasks';
 
-const DEFAULT_SETTINGS: Settings = {};
-
 export default class TasksPlugin extends Plugin {
     private settings: Settings | undefined = undefined;
     private obsidian: Obsidian | undefined = undefined;
@@ -17,7 +15,10 @@ export default class TasksPlugin extends Plugin {
         this.obsidian = new Obsidian({ plugin: this });
         const cache = new Cache({ obsidian: this.obsidian });
         const file = new File({ obsidian: this.obsidian });
-        const taskItem = new TaskItem({ file, obsidian: this.obsidian });
+        const taskItem = new TaskItem({
+            file,
+            obsidian: this.obsidian,
+        });
         new Commands({ file, obsidian: this.obsidian });
         new Render({ cache, taskItem, obsidian: this.obsidian });
     }
@@ -27,14 +28,10 @@ export default class TasksPlugin extends Plugin {
         this.obsidian?.unload();
     }
 
-    async loadSettings(): Promise<Settings> {
-        this.settings = Object.assign(
-            {},
-            DEFAULT_SETTINGS,
-            await this.loadData(),
-        ) as Settings;
-
-        return this.settings;
+    async loadSettings(): Promise<void> {
+        this.settings = new Settings(
+            Object.assign({}, Settings.DEFAULT_SETTINGS, await this.loadData()),
+        );
     }
 
     async saveSettings() {

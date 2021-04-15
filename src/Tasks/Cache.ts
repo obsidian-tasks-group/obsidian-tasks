@@ -1,6 +1,7 @@
 import { Mutex } from 'async-mutex';
 import { Obsidian } from '../Obsidian';
-import { REGEX_TASK, Task } from './Task';
+import { Settings } from './Settings';
+import { Task } from './Task';
 
 export class Cache {
     private readonly obsidian: Obsidian;
@@ -139,7 +140,7 @@ export class Cache {
                     continue;
                 }
 
-                if (REGEX_TASK.test(line)) {
+                if (Settings.REGEX_TASK.test(line)) {
                     const task = Task.fromLine({
                         line,
                         path,

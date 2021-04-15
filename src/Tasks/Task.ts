@@ -1,20 +1,6 @@
 import moment from 'moment';
-import { NodeTypes } from './Render/NodeTypes';
+import { Settings } from './Settings';
 import { Status } from './Status';
-
-export const IDENTIFIER_DUE_DATE = '📅';
-export const IDENTIFIER_DONE_DATE = '✅';
-export const DATE_FORMAT = 'YYYY-MM-DD';
-
-export const CLASS_ITEM = 'tasks-item';
-
-export const DATA_PAGE_INDEX = 'data-tasks-page-index';
-export const DATA_PATH = 'data-tasks-path';
-
-export const REGEX_TASK = /^([\s\t]*)- (TODO|DONE) ([^📅✅]*)(.*)/u;
-export const REGEX_LI_TASK = /^(TODO|DONE) ([^📅✅]*)(.*)/u;
-export const REGEX_DUE_DATE = /📅 (\d{4}-\d{2}-\d{2})/u;
-export const REGEX_DONE_DATE = /✅ (\d{4}-\d{2}-\d{2})/u;
 
 export class Task {
     public readonly status: Status;
@@ -79,7 +65,7 @@ export class Task {
         lineNumber: number | undefined;
         precedingHeader: string | undefined;
     }): Task | undefined {
-        const taskMatch = line.match(REGEX_TASK);
+        const taskMatch = line.match(Settings.REGEX_TASK);
 
         if (taskMatch !== null) {
             const indentation = taskMatch[1];
@@ -87,13 +73,13 @@ export class Task {
             const description = taskMatch[3].trim();
 
             let dueDate: moment.Moment | undefined;
-            const dueDateMatch = line.match(REGEX_DUE_DATE);
+            const dueDateMatch = line.match(Settings.REGEX_DUE_DATE);
             if (dueDateMatch !== null) {
-                dueDate = moment(dueDateMatch[1], DATE_FORMAT);
+                dueDate = moment(dueDateMatch[1], Settings.DATE_FORMAT);
             }
 
             switch (status) {
-                case Status.DONE:
+                case 'x':
                     return Task.doneFromLine({
                         line,
                         description,
@@ -126,62 +112,88 @@ export class Task {
         element,
         path,
     }: {
-        element: Element;
+        element: HTMLLIElement;
         path: string;
     }): Task | undefined {
-        for (let i = 0; i < element.childNodes.length; i = i + 1) {
-            const childNode = element.childNodes[i];
-            if (
-                // Process to the first text child in the list item that is a task, if any.
-                childNode.nodeType == NodeTypes.TEXT &&
-                childNode.textContent !== null
-            ) {
-                const taskMatch = childNode.textContent.match(REGEX_LI_TASK);
-                if (taskMatch === null) {
-                    // Maybe a later text node?
-                    continue;
-                }
-
-                const status = taskMatch[1];
-                const description = taskMatch[2].trim();
-
-                let dueDate: moment.Moment | undefined;
-                const dueDateMatch = childNode.textContent.match(
-                    REGEX_DUE_DATE,
-                );
-                if (dueDateMatch !== null) {
-                    dueDate = moment(dueDateMatch[1], DATE_FORMAT);
-                }
-
-                switch (status) {
-                    case Status.DONE:
-                        return Task.doneFromLine({
-                            line: childNode.textContent,
-                            description,
-                            path,
-                            indentation: undefined,
-                            pageIndex: undefined,
-                            lineNumber: undefined,
-                            precedingHeader: undefined,
-                            dueDate,
-                        });
-                    default:
-                        return new Task({
-                            status: Status.TODO,
-                            description,
-                            path,
-                            indentation: undefined,
-                            pageIndex: undefined,
-                            lineNumber: undefined,
-                            precedingHeader: undefined,
-                            dueDate,
-                            doneDate: undefined,
-                        });
-                }
-            }
+        if (element.textContent === null) {
+            return undefined;
         }
 
-        return undefined;
+        // A Task starts with a checkbox followed by a tasks tag
+        let originalChekbox;
+        const inputs = element.querySelectorAll('input');
+        for (let i = 0; i < inputs.length; i++) {
+            const input = inputs[i];
+            if (input.type === 'checkbox' && input.parentElement === element) {
+                originalChekbox = input;
+                break;
+            }
+        }
+        if (!originalChekbox) {
+            return undefined;
+        }
+
+        let originalTag;
+        const as = element.querySelectorAll('a');
+        for (let i = 0; i < as.length; i++) {
+            const a = as[i];
+            if (a.innerHTML === '#task' && a.parentElement === element) {
+                originalTag = a;
+                break;
+            }
+        }
+        if (!originalTag) {
+            return undefined;
+        }
+
+        // The list item is a task if it has a checkbox and the required tag.
+        const status = originalChekbox.checked ? Status.DONE : Status.TODO;
+
+        // The task will handle its own checkbox.
+        element.removeChild(originalChekbox);
+        // The task should not render with the tag.
+        element.removeChild(originalTag);
+
+        let description: string;
+        const taskMatch = element.textContent.match(Settings.REGEX_LI_TASK);
+        if (taskMatch === null) {
+            // It's the closest we can get here.
+            description = element.textContent;
+        } else {
+            description = taskMatch[1].trim();
+        }
+
+        let dueDate: moment.Moment | undefined;
+        const dueDateMatch = element.textContent.match(Settings.REGEX_DUE_DATE);
+        if (dueDateMatch !== null) {
+            dueDate = moment(dueDateMatch[1], Settings.DATE_FORMAT);
+        }
+
+        switch (status) {
+            case Status.DONE:
+                return Task.doneFromLine({
+                    line: element.textContent,
+                    description,
+                    path,
+                    indentation: undefined,
+                    pageIndex: undefined,
+                    lineNumber: undefined,
+                    precedingHeader: undefined,
+                    dueDate,
+                });
+            default:
+                return new Task({
+                    status: Status.TODO,
+                    description,
+                    path,
+                    indentation: undefined,
+                    pageIndex: undefined,
+                    lineNumber: undefined,
+                    precedingHeader: undefined,
+                    dueDate,
+                    doneDate: undefined,
+                });
+        }
     }
 
     public toggle(): Task {
@@ -203,8 +215,8 @@ export class Task {
     }
 
     public toFileString(): string {
-        const fileString = `${this.indentation}- ${
-            this.status
+        const fileString = `${this.indentation}- ${this.status} ${
+            Settings.TASK_TAG
         } ${this.toLiString()}`;
 
         return fileString;
@@ -213,14 +225,14 @@ export class Task {
     public toLiString(): string {
         let liString = `${this.description}`;
         if (this.dueDate !== undefined) {
-            liString += ` ${IDENTIFIER_DUE_DATE} ${this.dueDate.format(
-                DATE_FORMAT,
+            liString += ` ${Settings.IDENTIFIER_DUE_DATE} ${this.dueDate.format(
+                Settings.DATE_FORMAT,
             )}`;
         }
         if (this.doneDate !== undefined) {
-            liString += ` ${IDENTIFIER_DONE_DATE} ${this.doneDate.format(
-                DATE_FORMAT,
-            )}`;
+            liString += ` ${
+                Settings.IDENTIFIER_DONE_DATE
+            } ${this.doneDate.format(Settings.DATE_FORMAT)}`;
         }
 
         return liString;
@@ -250,9 +262,9 @@ export class Task {
         // string, for example when havin `<em />` tags.
         let doneDate: moment.Moment | undefined = undefined;
 
-        const match = line.match(REGEX_DONE_DATE);
+        const match = line.match(Settings.REGEX_DONE_DATE);
         if (match !== null) {
-            doneDate = moment(match[1], DATE_FORMAT);
+            doneDate = moment(match[1], Settings.DATE_FORMAT);
         }
 
         return new Task({

@@ -1,6 +1,6 @@
 import { Obsidian } from '../Obsidian';
 import { File } from './File';
-import { REGEX_TASK } from './Task';
+import { Settings } from './Settings';
 
 export class Commands {
     private readonly file: File;
@@ -23,7 +23,7 @@ export class Commands {
                     const editor = this.obsidian.editor;
                     const currentLine = editor.getLine(editor.getCursor().line);
 
-                    const isTasksLine = REGEX_TASK.test(currentLine);
+                    const isTasksLine = Settings.REGEX_TASK.test(currentLine);
 
                     return isTasksLine;
                 }
