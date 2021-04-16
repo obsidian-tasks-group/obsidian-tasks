@@ -1,5 +1,11 @@
 # Obsidian Tasks
 
+⚠️ **Warning** ⚠️
+I am not able to maintain this properly. 
+It is a personal workaround until a proper task manager comes around.
+It might still be helpful to you.
+If you need anything, create an issue :)
+
 Task management for the [Obsidian](https://obsidian.md/) knowledge base. 
 
 Track tasks across your entire vault. List them and mark them as done wherever you want.
