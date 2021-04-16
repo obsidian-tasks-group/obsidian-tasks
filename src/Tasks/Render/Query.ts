@@ -1,7 +1,6 @@
 import moment from 'moment';
-import { Settings } from '../Settings';
-import { Status } from '../Status';
-import { Task } from '../Task';
+import { Status } from 'Tasks/Status';
+import { DATE_FORMAT, Task } from '../Task';
 
 export class Query {
     public readonly filters: ((task: Task) => boolean)[];
@@ -69,7 +68,7 @@ export class Query {
         const dueMatch = line.match(this.dueRegexp);
         if (dueMatch !== null) {
             let filter;
-            const filterDate = moment(dueMatch[2], Settings.DATE_FORMAT);
+            const filterDate = moment(dueMatch[2], DATE_FORMAT);
             if (dueMatch[1] === 'before') {
                 filter = (task: Task) =>
                     task.dueDate ? task.dueDate.isBefore(filterDate) : false;
@@ -95,7 +94,7 @@ export class Query {
         const doneMatch = line.match(this.doneRegexp);
         if (doneMatch !== null) {
             let filter;
-            const filterDate = moment(doneMatch[2], Settings.DATE_FORMAT);
+            const filterDate = moment(doneMatch[2], DATE_FORMAT);
             if (doneMatch[1] === 'before') {
                 filter = (task: Task) =>
                     task.doneDate ? task.doneDate.isBefore(filterDate) : false;
