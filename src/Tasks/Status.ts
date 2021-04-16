@@ -1,4 +1,4 @@
 export enum Status {
-    TODO = '[ ]',
-    DONE = '[x]',
+    TODO = 'TODO',
+    DONE = 'DONE',
 }

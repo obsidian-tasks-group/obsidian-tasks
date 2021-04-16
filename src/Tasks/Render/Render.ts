@@ -1,8 +1,7 @@
 import { MarkdownPostProcessorContext } from 'obsidian';
 
 import { Obsidian } from '../../Obsidian';
-import { Task } from '../Task';
-import { Settings } from '../Settings';
+import { CLASS_ITEM, Task } from '../Task';
 import { Cache } from '../Cache';
 import { Query } from './Query';
 import { Transclusion } from './Transclusion';
@@ -41,13 +40,13 @@ export class Render {
     ) {
         const path = context.sourcePath;
         Object.values(element.querySelectorAll('LI')).forEach((listItem) => {
-            if (listItem.hasClass(Settings.CLASS_ITEM)) {
+            if (listItem.hasClass(CLASS_ITEM)) {
                 // has already been processed
                 return;
             }
 
             const task = Task.fromLi({
-                element: listItem as HTMLLIElement,
+                element: listItem,
                 path,
             });
 
