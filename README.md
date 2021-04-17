@@ -3,7 +3,7 @@
 ⚠️ **Warning** ⚠️
 This is still a work in progress.
 Obsidian can get laggy when you edit large files.
-User discretion is advised.
+User discretion is advised. I plan to ask for addition to the community repo once [milestone 1](https://github.com/schemar/obsidian-tasks/milestone/1) is achieved.
 
 Task management for the [Obsidian](https://obsidian.md/) knowledge base. 
 
@@ -39,6 +39,22 @@ Follow the steps below to install Tasks.
 ## Usage
 
 You track tasks by creating list items that start with the keyword `TODO`.
+
+ℹ I chose `- TODO` over `- [ ]`,
+which would be typical for markdown tasks,
+to differentiate between tasks that I need to track and checklists.
+A checklist could be a list of groceries, a daily morning routine, or a list of books that I want to read.
+I don't want any of these things to appear in my task tracker.
+I don't need to see ten things that I do every morning in my overview of things I need to take care of.
+If I were to track tasks by `- [ ]` and wanted to make sure my list of tasks stayed meaningful,
+I could no longer use checklists for things like groceries.
+But I also want a checklist of groceries.
+I want both.
+So that's why I decided to use `- TODO` instead.
+It is standard markdown, it is easy to search for,
+and it is easy to replace with `- [ ]`, e.g. using `sed`, if you decide you prefer checklists.
+No lock-in.
+Please give it a try ☺
 
 Example:
 
