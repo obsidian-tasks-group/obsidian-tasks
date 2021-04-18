@@ -14,16 +14,20 @@ export class File {
     }: {
         path: string;
         lineNumber: number;
-    }) {
-        const fileLines = await this.obsidian.readLines({ path });
-        const line = fileLines[lineNumber];
-        fileLines[lineNumber] = this.toggleLine({
+    }): Promise<void> {
+        const lines = await this.obsidian.readLines({ path });
+        if (lines === undefined) {
+            return;
+        }
+
+        const line = lines[lineNumber];
+        lines[lineNumber] = this.toggleLine({
             line,
             path,
             lineNumber,
         });
 
-        await this.obsidian.writeLines({ path, lines: fileLines });
+        await this.obsidian.writeLines({ path, lines });
     }
 
     private toggleLine({
