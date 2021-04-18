@@ -21,6 +21,11 @@ export class Commands {
                     }
 
                     const editor = this.obsidian.editor;
+                    if (editor === undefined) {
+                        // If we are not in an editor, the command shouldn't be shown.
+                        return false;
+                    }
+
                     const currentLine = editor.getLine(editor.getCursor().line);
 
                     const isTasksLine = REGEX_TASK.test(currentLine);
@@ -33,7 +38,12 @@ export class Commands {
                 if (path === undefined) {
                     return;
                 }
+                // We are certain we are in the editor on a tasks line due to the check above.
                 const editor = obsidian.editor;
+                if (editor === undefined) {
+                    return;
+                }
+
                 const cursorPosition = editor.getCursor();
                 const lineNumber = cursorPosition.line;
                 this.file.toggleDone({ path, lineNumber });

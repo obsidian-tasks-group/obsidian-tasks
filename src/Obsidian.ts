@@ -1,5 +1,6 @@
 import {
     App,
+    Editor,
     EventRef,
     MarkdownPostProcessor,
     MarkdownPostProcessorContext,
@@ -8,6 +9,7 @@ import {
     TAbstractFile,
     TFile,
     Vault,
+    View,
     Workspace,
 } from 'obsidian';
 
@@ -54,18 +56,30 @@ export class Obsidian {
         return activeLeaf.view;
     }
 
-    public get editor(): CodeMirror.Editor {
-        return (this.workspace.activeLeaf.view as any).sourceMode
-            .cmEditor as CodeMirror.Editor;
+    public get editor(): Editor | undefined {
+        const view: View = this.workspace.activeLeaf.view;
+        if (view instanceof MarkdownView) {
+            return view.editor;
+        } else {
+            return undefined;
+        }
     }
 
     public getMarkdownFilePaths(): string[] {
         return this.vault.getMarkdownFiles().map((file) => file.path);
     }
 
-    public async readLines({ path }: { path: string }): Promise<string[]> {
+    public async readLines({
+        path,
+    }: {
+        path: string;
+    }): Promise<string[] | undefined> {
         const file = this.vault.getAbstractFileByPath(path);
-        const fileContent = await this.vault.read(file as TFile);
+        if (!(file instanceof TFile)) {
+            return undefined;
+        }
+
+        const fileContent = await this.vault.cachedRead(file);
         const fileLines = fileContent.split('\n');
 
         return fileLines;
@@ -79,8 +93,13 @@ export class Obsidian {
         lines: string[];
     }): Promise<void> {
         const file = this.vault.getAbstractFileByPath(path);
+        if (!(file instanceof TFile)) {
+            console.error('Tasks: trying to write non-file:', path);
+            return Promise.resolve();
+        }
+
         const fileContent = lines.join('\n');
-        return this.vault.modify(file as TFile, fileContent);
+        return this.vault.modify(file, fileContent);
     }
 
     public addCommand(command: {

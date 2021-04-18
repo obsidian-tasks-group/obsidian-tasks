@@ -5,7 +5,6 @@ import { REGEX_TASK, Task } from './Task';
 export class Cache {
     private readonly obsidian: Obsidian;
     private readonly mutex: Mutex;
-    private readonly markdownRegexp = /.*\.md$/;
 
     private readonly subscribedHandlers: { [number: number]: () => void };
     private registeredMaxId: number = 0;
@@ -49,20 +48,12 @@ export class Cache {
 
     private subscribeToFileEvents(): void {
         this.obsidian.subscribeToCreation(async (path: string) => {
-            if (!this.markdownRegexp.test(path)) {
-                return;
-            }
-
             await this.mutex.runExclusive(async () => {
                 await this.updateFiles({ paths: [path] });
             });
         });
 
         this.obsidian.subscribeToModification(async (path: string) => {
-            if (!this.markdownRegexp.test(path)) {
-                return;
-            }
-
             await this.mutex.runExclusive(async () => {
                 this.tasks = this.tasks.filter(
                     (task: Task) => task.path !== path,
@@ -72,10 +63,6 @@ export class Cache {
         });
 
         this.obsidian.subscribeToDeletion(async (path: string) => {
-            if (!this.markdownRegexp.test(path)) {
-                return;
-            }
-
             await this.mutex.runExclusive(async () => {
                 this.tasks = this.tasks.filter(
                     (task: Task) => task.path !== path,
@@ -86,13 +73,6 @@ export class Cache {
 
         this.obsidian.subscribeToRenaming(
             async (oldPath: string, newPath: string) => {
-                if (
-                    !this.markdownRegexp.test(oldPath) ||
-                    !this.markdownRegexp.test(newPath)
-                ) {
-                    return;
-                }
-
                 await this.mutex.runExclusive(async () => {
                     this.tasks = this.tasks.map(
                         (task: Task): Task => {
@@ -124,6 +104,12 @@ export class Cache {
         for (const path of paths) {
             let precedingHeader: string | undefined = undefined;
             const lines = await this.obsidian.readLines({ path });
+            // If there are no lines, we don't need to parse.
+            // Could be a directory, for example.
+            if (lines === undefined) {
+                continue;
+            }
+
             let pageIndex = 0;
             for (
                 let lineNumber = 0;
