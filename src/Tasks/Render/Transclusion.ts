@@ -39,18 +39,29 @@ export class Transclusion extends MarkdownRenderChild {
 
     onunload() {
         if (this.cacheCallbackId !== undefined) {
-            this.cache.unregister({id: this.cacheCallbackId});
+            this.cache.unregister({ id: this.cacheCallbackId });
         }
     }
 
     public async render() {
-        const allTaskLists = this.containerEl.createEl('div');
+        const content = this.containerEl.createEl('div');
+        if (this.cache.isWarm) {
+            const taskList = await this.createTasksList(content);
+            content.appendChild(taskList);
+        } else {
+            content.innerHTML = 'Loading Tasks ...';
+        }
+
+        this.containerEl.firstChild?.replaceWith(content);
+    }
+
+    private async createTasksList(content: HTMLDivElement): Promise<HTMLUListElement> {
         let tasks = this.cache.getTasks();
         for (const filter of this.filters) {
             tasks = tasks.filter(filter);
         }
 
-        const taskList = allTaskLists.createEl('ul');
+        const taskList = content.createEl('ul');
         for (const task of Sort.byDateThenPath(tasks)) {
             let fileName: string | undefined;
             const fileNameMatch = task.path.match(/([^/]+)\.md$/);
@@ -90,9 +101,7 @@ export class Transclusion extends MarkdownRenderChild {
             taskList.appendChild(listItem);
         }
 
-        allTaskLists.appendChild(taskList);
-
-        this.containerEl.firstChild?.replaceWith(allTaskLists);
+        return taskList;
     }
 
     private async listItemFromTask({

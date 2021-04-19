@@ -10,6 +10,8 @@ export class Cache {
     private registeredMaxId: number = 0;
 
     private tasks: Task[];
+    /** The cache is warm when the initialization phase is done. */
+    private warm: boolean;
 
     constructor({ obsidian }: { obsidian: Obsidian }) {
         this.obsidian = obsidian;
@@ -17,11 +19,18 @@ export class Cache {
         this.subscribedHandlers = [];
 
         this.tasks = [];
+        this.warm = false;
+
         this.obsidian.subscribeToLayoutReadyEvent(() => {
             this.init();
         });
 
         this.subscribeToFileEvents();
+    }
+
+    /** Returns false if the cache is still initializing. */
+    public get isWarm(): boolean {
+        return this.warm;
     }
 
     public getTasks(): Task[] {
@@ -92,13 +101,19 @@ export class Cache {
 
     private async init(): Promise<void> {
         await this.mutex.runExclusive(async () => {
-            const paths = this.obsidian.getMarkdownFilePaths();
+            this.warm = false;
             this.tasks = [];
-            this.updateFiles({ paths });
+
+            const paths = this.obsidian.getMarkdownFilePaths();
+            await this.updateFiles({ paths });
+
+            this.warm = true;
+            // Need to notify again that the cache is now warm:
+            this.notifySubscribers();
         });
     }
 
-    private async updateFiles({ paths }: { paths: string[] }) {
+    private async updateFiles({ paths }: { paths: string[] }): Promise<void> {
         const headerRegex = /^#+ (.*)/;
 
         for (const path of paths) {
