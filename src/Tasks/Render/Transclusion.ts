@@ -6,11 +6,10 @@ import { Sort } from './Sort';
 
 export class Transclusion extends MarkdownRenderChild {
     private readonly cache: Cache;
-    private readonly container: HTMLElement;
     private readonly taskItem: TaskItem;
     private readonly filters: ((task: Task) => boolean)[];
 
-    // private cacheCallbackId: number | undefined;
+    private cacheCallbackId: number | undefined;
 
     constructor({
         cache,
@@ -26,29 +25,26 @@ export class Transclusion extends MarkdownRenderChild {
         super();
 
         this.cache = cache;
-        this.container = container;
+        this.containerEl = container;
         this.taskItem = taskItem;
         this.filters = filters;
     }
 
     onload() {
         this.render();
-        // this.cacheCallbackId =
-        this.cache.register({
+        this.cacheCallbackId = this.cache.register({
             handler: this.render.bind(this),
         });
     }
 
-    // onunload() {
-    //     // TODO: this is not working, it is always immediately unloading
-    //     // https://github.com/schemar/obsidian-tasks/issues/14
-    //     if (this.cacheCallbackId !== undefined) {
-    //         this.cache.unregister(this.cacheCallbackId);
-    //     }
-    // }
+    onunload() {
+        if (this.cacheCallbackId !== undefined) {
+            this.cache.unregister({id: this.cacheCallbackId});
+        }
+    }
 
     public async render() {
-        const allTaskLists = this.container.createEl('div');
+        const allTaskLists = this.containerEl.createEl('div');
         let tasks = this.cache.getTasks();
         for (const filter of this.filters) {
             tasks = tasks.filter(filter);
@@ -96,7 +92,7 @@ export class Transclusion extends MarkdownRenderChild {
 
         allTaskLists.appendChild(taskList);
 
-        this.container.firstChild?.replaceWith(allTaskLists);
+        this.containerEl.firstChild?.replaceWith(allTaskLists);
     }
 
     private async listItemFromTask({
