@@ -1,6 +1,6 @@
 import moment from 'moment';
-import { Status } from 'Tasks/Status';
-import { DATE_FORMAT, Task } from '../Task';
+
+import { Status, Task } from './Task';
 
 export class Query {
     public readonly filters: ((task: Task) => boolean)[];
@@ -30,9 +30,9 @@ export class Query {
             }
 
             if (sourceLine === this.doneString) {
-                filters.push((task) => task.status === Status.DONE);
+                filters.push((task) => task.status === Status.Done);
             } else if (sourceLine === this.notDoneString) {
-                filters.push((task) => task.status !== Status.DONE);
+                filters.push((task) => task.status !== Status.Done);
             } else if (sourceLine === this.noDueString) {
                 filters.push((task) => task.dueDate === undefined);
             } else if (this.dueRegexp.test(sourceLine)) {
@@ -68,7 +68,7 @@ export class Query {
         const dueMatch = line.match(this.dueRegexp);
         if (dueMatch !== null) {
             let filter;
-            const filterDate = moment(dueMatch[2], DATE_FORMAT);
+            const filterDate = moment(dueMatch[2], Task.dateFormat);
             if (dueMatch[1] === 'before') {
                 filter = (task: Task) =>
                     task.dueDate ? task.dueDate.isBefore(filterDate) : false;
@@ -94,7 +94,7 @@ export class Query {
         const doneMatch = line.match(this.doneRegexp);
         if (doneMatch !== null) {
             let filter;
-            const filterDate = moment(doneMatch[2], DATE_FORMAT);
+            const filterDate = moment(doneMatch[2], Task.dateFormat);
             if (doneMatch[1] === 'before') {
                 filter = (task: Task) =>
                     task.doneDate ? task.doneDate.isBefore(filterDate) : false;

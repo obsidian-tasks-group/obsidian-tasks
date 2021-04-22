@@ -2,6 +2,7 @@
   "compilerOptions": {
     "allowSyntheticDefaultImports": true,
     "baseUrl": "./src",
+    "esModuleInterop": true,
     "inlineSources": true,
     "sourceMap": true,
     "strict": true,
@@ -13,6 +14,9 @@
     "noImplicitAny": true,
     "moduleResolution": "node",
     "importHelpers": true,
+    "paths": {
+      "src": ["src/*", "tests/*"]
+    },
     "types": [
         "node",
         "jest"
@@ -25,10 +29,10 @@
     ]
   },
   "include": [
-    "src/**/*"
+    "src/**/*",
+    "tests/**/*"
   ],
   "exclude": [
-      "node_modules",
-      "**/*.spec.ts"
+      "node_modules"
   ]
 }
