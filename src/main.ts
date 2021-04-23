@@ -1,43 +1,47 @@
 import { Plugin } from 'obsidian';
+import { SettingsTab } from 'SettingsTab';
 
-import { Obsidian } from './Obsidian';
-import { Cache, Commands, File, Render, Settings, TaskItem } from './Tasks';
-
-const DEFAULT_SETTINGS: Settings = {};
+import { Cache } from './Cache';
+import { Commands } from './Commands';
+import { initializeFile } from './File';
+import { InlineRenderer } from './InlineRenderer';
+import { QueryRenderer } from './QueryRenderer';
+import { getSettings, updateSettings } from './Settings';
 
 export default class TasksPlugin extends Plugin {
-    private settings: Settings | undefined = undefined;
-    private obsidian: Obsidian | undefined = undefined;
+    private cache: Cache | undefined;
 
     async onload() {
-        console.log('loading plugin "tasks"');
+        console.log('loading plugin "test"');
 
         await this.loadSettings();
+        this.addSettingTab(new SettingsTab({ plugin: this }));
 
-        this.obsidian = new Obsidian({ plugin: this });
-        const cache = new Cache({ obsidian: this.obsidian });
-        const file = new File({ obsidian: this.obsidian });
-        const taskItem = new TaskItem({ file, obsidian: this.obsidian });
-        new Commands({ file, obsidian: this.obsidian });
-        new Render({ cache, taskItem, obsidian: this.obsidian });
+        initializeFile({
+            metadataCache: this.app.metadataCache,
+            vault: this.app.vault,
+        });
+
+        this.cache = new Cache({
+            metadataCache: this.app.metadataCache,
+            vault: this.app.vault,
+        });
+        new InlineRenderer({ plugin: this });
+        new QueryRenderer({ plugin: this, cache: this.cache });
+        new Commands({ plugin: this });
     }
 
     onunload() {
-        console.log('unloading plugin "tasks"');
-        this.obsidian?.unload();
+        console.log('unloading plugin "test"');
+        this.cache?.unload();
     }
 
-    async loadSettings(): Promise<Settings> {
-        this.settings = Object.assign(
-            {},
-            DEFAULT_SETTINGS,
-            await this.loadData(),
-        ) as Settings;
-
-        return this.settings;
+    async loadSettings() {
+        const newSettings = await this.loadData();
+        updateSettings(newSettings);
     }
 
     async saveSettings() {
-        await this.saveData(this.settings);
+        await this.saveData(getSettings());
     }
 }
