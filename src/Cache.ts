@@ -8,6 +8,7 @@ import {
 } from 'obsidian';
 import { Mutex } from 'async-mutex';
 
+import { mergeLineRangeIntoTaskLine } from './File';
 import { Task } from './Task';
 
 export enum State {
@@ -219,26 +220,10 @@ export class Cache {
                     continue;
                 }
 
-                // Support multi-line tasks, reduced to one line.
-                const line = fileLines
-                    .slice(
-                        listItem.position.start.line,
-                        listItem.position.end.line + 1, // End has same zero-based index as start.
-                    )
-                    .reduce((accumulator: string, value: string) => {
-                        // Do not trim indentation:
-                        if (accumulator === '') {
-                            value = value.trimEnd();
-                        } else {
-                            value = value.trim();
-                        }
-
-                        accumulator = accumulator + value + ' ';
-
-                        return accumulator;
-                    }, '')
-                    .trimEnd();
-
+                const line = mergeLineRangeIntoTaskLine({
+                    fileLines,
+                    position: listItem.position,
+                });
                 const task = Task.fromLine({
                     line,
                     path: file.path,

@@ -1,4 +1,5 @@
 import { MarkdownPostProcessorContext, Plugin } from 'obsidian';
+import { getSettings } from 'Settings';
 
 import { Task } from './Task';
 
@@ -13,8 +14,13 @@ export class InlineRenderer {
         element: HTMLElement,
         context: MarkdownPostProcessorContext,
     ): Promise<void> {
-        const renderedTasks = element.findAll('.task-list-item');
-        if (renderedTasks.length === 0) {
+        const { globalFilter } = getSettings();
+        const renderedElements = element
+            .findAll('.task-list-item')
+            .filter((taskItem) => {
+                return taskItem.textContent?.includes(globalFilter);
+            });
+        if (renderedElements.length === 0) {
             // No tasks means nothing to do.
             return;
         }
@@ -23,7 +29,7 @@ export class InlineRenderer {
         const section = context.getSectionInfo(element);
 
         if (section === null) {
-            // Should render once the section is available.
+            // We cannot process the render without the section info.
             return;
         }
 
@@ -38,7 +44,6 @@ export class InlineRenderer {
         ) {
             const line = fileLines[lineNumber];
             if (line === undefined) {
-                // File may not have caught up with editor.
                 // If we end up outside the range of the file,
                 // we cannot process this task.
                 continue;
@@ -60,11 +65,11 @@ export class InlineRenderer {
         // The section index is the nth task within this section.
         for (
             let sectionIndex = 0;
-            sectionIndex < renderedTasks.length;
+            sectionIndex < renderedElements.length;
             sectionIndex++
         ) {
             const task = fileTasks[sectionIndex];
-            const renderedElement = renderedTasks[sectionIndex];
+            const renderedElement = renderedElements[sectionIndex];
 
             if (task === undefined || renderedElement === undefined) {
                 // Assuming match of tasks in file and render preview.
@@ -74,6 +79,10 @@ export class InlineRenderer {
             }
 
             const cachedElement = await task.toLi({ parentUlElement: element });
+            // If the rendered element contains a sub-list, we need to keep it.
+            renderedElement.findAll('ul').map((renderedSubUl) => {
+                cachedElement.appendChild(renderedSubUl);
+            });
             renderedElement.replaceWith(cachedElement);
         }
     }

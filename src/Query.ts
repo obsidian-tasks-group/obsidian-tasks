@@ -10,6 +10,7 @@ export class Query {
     private readonly notDoneString = 'not done';
     private readonly doneRegexp = /done (before|after|on) (\d{4}-\d{2}-\d{2})/;
     private readonly pathRegexp = /path (includes|does not include) (.*)/;
+    private readonly descriptionRegexp = /description (includes|does not include) (.*)/;
     private readonly excludeSubItemsString = 'exclude sub-items';
 
     constructor({ source }: { source: string }) {
@@ -34,26 +35,33 @@ export class Query {
             } else if (sourceLine === this.notDoneString) {
                 filters.push((task) => task.status !== Status.Done);
             } else if (sourceLine === this.noDueString) {
-                filters.push((task) => task.dueDate === undefined);
+                filters.push((task) => task.dueDate === null);
             } else if (this.dueRegexp.test(sourceLine)) {
                 const filter = this.parseDueFilter({ line: sourceLine });
-                if (filter !== undefined) {
+                if (filter !== null) {
                     filters.push(filter);
                 }
             } else if (this.doneRegexp.test(sourceLine)) {
                 const filter = this.parseDoneFilter({ line: sourceLine });
-                if (filter !== undefined) {
+                if (filter !== null) {
                     filters.push(filter);
                 }
             } else if (this.pathRegexp.test(sourceLine)) {
                 const filter = this.parsePathFilter({ line: sourceLine });
-                if (filter !== undefined) {
+                if (filter !== null) {
+                    filters.push(filter);
+                }
+            } else if (this.descriptionRegexp.test(sourceLine)) {
+                const filter = this.parseDescriptionFilter({
+                    line: sourceLine,
+                });
+                if (filter !== null) {
                     filters.push(filter);
                 }
             } else if (sourceLine === this.excludeSubItemsString) {
                 filters.push((task) => task.indentation === '');
             } else {
-                console.error('Tasks: do not understand filter: ' + sourceLine);
+                console.error('Tasks: unknown query filter:', sourceLine);
             }
         }
 
@@ -64,7 +72,7 @@ export class Query {
         line,
     }: {
         line: string;
-    }): ((task: Task) => boolean) | undefined {
+    }): ((task: Task) => boolean) | null {
         const dueMatch = line.match(this.dueRegexp);
         if (dueMatch !== null) {
             let filter;
@@ -83,14 +91,15 @@ export class Query {
             return filter;
         }
 
-        return undefined;
+        console.error('Tasks: unknown query filter (due date):', line);
+        return null;
     }
 
     private parseDoneFilter({
         line,
     }: {
         line: string;
-    }): ((task: Task) => boolean) | undefined {
+    }): ((task: Task) => boolean) | null {
         const doneMatch = line.match(this.doneRegexp);
         if (doneMatch !== null) {
             let filter;
@@ -109,14 +118,15 @@ export class Query {
             return filter;
         }
 
-        return undefined;
+        console.error('Tasks: unknown query filter (done date):', line);
+        return null;
     }
 
     private parsePathFilter({
         line,
     }: {
         line: string;
-    }): ((task: Task) => boolean) | undefined {
+    }): ((task: Task) => boolean) | null {
         const pathMatch = line.match(this.pathRegexp);
         if (pathMatch !== null) {
             let filter;
@@ -126,13 +136,44 @@ export class Query {
             } else if (pathMatch[1] === 'does not include') {
                 filter = (task: Task) => !task.path.includes(pathMatch[2]);
             } else {
-                console.error('Tasks: do not understand path query: ' + line);
-                return undefined;
+                console.error('Tasks: unknown query filter (path):', line);
+                return null;
             }
 
             return filter;
         }
 
-        return undefined;
+        console.error('Tasks: unknown query filter (path):', line);
+        return null;
+    }
+
+    private parseDescriptionFilter({
+        line,
+    }: {
+        line: string;
+    }): ((task: Task) => boolean) | null {
+        const descriptionMatch = line.match(this.descriptionRegexp);
+        if (descriptionMatch !== null) {
+            let filter;
+            const filterMethod = descriptionMatch[1];
+            if (filterMethod === 'includes') {
+                filter = (task: Task) =>
+                    task.description.includes(descriptionMatch[2]);
+            } else if (descriptionMatch[1] === 'does not include') {
+                filter = (task: Task) =>
+                    !task.description.includes(descriptionMatch[2]);
+            } else {
+                console.error(
+                    'Tasks: unknown query filter (description):',
+                    line,
+                );
+                return null;
+            }
+
+            return filter;
+        }
+
+        console.error('Tasks: unknown query filter (description):', line);
+        return null;
     }
 }

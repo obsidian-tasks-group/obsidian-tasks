@@ -5,7 +5,7 @@ This is still a work in progress.
 Obsidian can get laggy when you edit large files.
 User discretion is advised. I plan to ask for addition to the community repo once [milestone 1](https://github.com/schemar/obsidian-tasks/milestone/1) is achieved.
 
-Task management for the [Obsidian](https://obsidian.md/) knowledge base. 
+Task management for the [Obsidian](https://obsidian.md/) knowledge base.
 
 Track tasks across your entire vault. List them and mark them as done wherever you want.
 
@@ -109,6 +109,7 @@ The following filters exist:
 - `no due date`
 - `due (before|after|on) <date>`
 - `path (includes|does not include) <path>`
+- `description (includes|does not include) <string>`
 - `exclude sub-items`
     - When this is set, the result list will only include tasks that are not indented in their file. It will only show tasks that are top level list items in their list.
 

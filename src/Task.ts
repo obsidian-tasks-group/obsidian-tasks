@@ -1,7 +1,8 @@
 import moment, { Moment } from 'moment';
 import { Component, MarkdownRenderer } from 'obsidian';
 
-import { File } from './File';
+import { writeTask } from './File';
+import { getSettings } from './Settings';
 
 export enum Status {
     Todo = 'Todo',
@@ -22,7 +23,7 @@ export class Task {
     public readonly doneDate: moment.Moment | null;
 
     public static readonly dateFormat = 'YYYY-MM-DD';
-    public static readonly taskRegex = /^([\s\t]*)[-*] +\[(.)\] *([^📅📆🗓✅🔁]*).*/u;
+    public static readonly taskRegex = /^([\s\t]*)[-*] +\[(.)\] *([^📅📆🗓✅🔁]*)(.*)/u;
     public static readonly dueDateRegex = /[📅📆🗓] ?(\d{4}-\d{2}-\d{2})/u;
     public static readonly doneDateRegex = /✅ ?(\d{4}-\d{2}-\d{2})/u;
 
@@ -80,6 +81,11 @@ export class Task {
         const statusString = regexMatch[2].toLowerCase();
         const description = regexMatch[3].trim();
 
+        const { globalFilter } = getSettings();
+        if (!description.includes(globalFilter)) {
+            return null;
+        }
+
         let status: Status;
         switch (statusString) {
             case 'x':
@@ -129,8 +135,14 @@ export class Task {
         li.addClass('task-list-item');
         li.setAttr('data-task', '');
 
+        let taskAsString = this.toString();
+        const { globalFilter, removeGlobalFilter } = getSettings();
+        if (removeGlobalFilter) {
+            taskAsString = taskAsString.replace(globalFilter, '').trim();
+        }
+
         await MarkdownRenderer.renderMarkdown(
-            this.toString(),
+            taskAsString,
             li,
             this.path,
             (null as unknown) as Component,
@@ -155,11 +167,8 @@ export class Task {
             // Should be re-rendered as enabled after update in file.
             checkbox.disabled = true;
             const toggledTask = this.toggle();
-            File.writeTask({
-                path: this.path,
-                taskSectionStart: toggledTask.sectionStart,
-                taskSectionIndex: toggledTask.sectionIndex,
-                taskString: toggledTask.toFileLineString(),
+            writeTask({
+                task: toggledTask,
             });
         });
 

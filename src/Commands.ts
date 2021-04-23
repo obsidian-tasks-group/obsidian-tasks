@@ -30,6 +30,9 @@ export class Commands {
 
                     const currentLine = editor.getLine(editor.getCursor().line);
 
+                    // We want to toggle any checklist item, task or not, as this command is
+                    // supposed to replace the original checklist toggle command.
+                    // So we do not need to check whether we can create a valid task from the line.
                     const isTasksLine = Task.taskRegex.test(currentLine);
 
                     return isTasksLine;
@@ -57,12 +60,32 @@ export class Commands {
                     sectionIndex: 0, // We don't need this to toggle it here in the editor.
                     precedingHeader: null, // We don't need this to toggle it here in the editor.
                 });
+
                 if (task === null) {
-                    // This shouldn't happen, as we have a check above.
-                    return;
+                    // If the task is null this means that we have a regular checklist item.
+                    // As this command is supposed to replace the original command to toggle
+                    // checklists, we must do a regular toggle here.
+                    const regexMatch = line.match(Task.taskRegex);
+                    if (regexMatch === null) {
+                        // We cannot toggle if we do not match.
+                        return;
+                    }
+
+                    const indentation = regexMatch[1];
+                    const statusString = regexMatch[2].toLowerCase();
+                    const description = regexMatch[3];
+                    const rest = regexMatch[4];
+
+                    const toggledStatusString =
+                        statusString === ' ' ? 'x' : ' ';
+
+                    const toggledLine = `${indentation}- [${toggledStatusString}] ${description}${rest}`;
+                    editor.setLine(lineNumber, toggledLine);
+                } else {
+                    // Toggle a regular task.
+                    const toggledTask = task.toggle();
+                    editor.setLine(lineNumber, toggledTask.toFileLineString());
                 }
-                const toggledTask = task.toggle();
-                editor.setLine(lineNumber, toggledTask.toFileLineString());
             },
         });
     }
