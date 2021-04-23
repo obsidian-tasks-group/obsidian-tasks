@@ -79,6 +79,8 @@ For example: `📅 2021-04-09` means the task is due on the 9th of April, 2021.
 - [ ] take out the trash 📅 2021-04-09
 ```
 
+**You can not put anything behind the due/done dates. Also not a global filter. Everything after the dates will be removed by Tasks.**
+
 ### Querying and listing tasks
 
 You can list tasks from your entire vault by querying them using a `tasks` code block.
