@@ -1,6 +1,6 @@
 {
   "name": "obsidian-tasks",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "Task management for the Obsidian knowledge base",
   "main": "main.js",
   "scripts": {
@@ -10,7 +10,13 @@
     "test": "jest --ci",
     "test:dev": "jest --watch"
   },
-  "keywords": ["obsidian", "obsidian-plugin", "obsidian-tasks", "task-manager", "task-management"],
+  "keywords": [
+    "obsidian",
+    "obsidian-plugin",
+    "obsidian-tasks",
+    "task-manager",
+    "task-management"
+  ],
   "author": "Martin Schenck",
   "license": "MIT",
   "devDependencies": {
