@@ -1,12 +1,45 @@
-import { Component, MarkdownRenderChild, MarkdownRenderer } from 'obsidian';
-import { Task } from '../Task';
-import { Cache } from '../Cache';
-import { TaskItem } from './TaskItem';
-import { Sort } from './Sort';
+import {
+    MarkdownPostProcessorContext,
+    MarkdownRenderChild,
+    Plugin,
+} from 'obsidian';
 
-export class Transclusion extends MarkdownRenderChild {
+import { Cache, State } from './Cache';
+import { Sort } from './Sort';
+import { Task } from './Task';
+import { Query } from './Query';
+
+export class QueryRenderer {
     private readonly cache: Cache;
-    private readonly taskItem: TaskItem;
+
+    constructor({ plugin, cache }: { plugin: Plugin; cache: Cache }) {
+        this.cache = cache;
+
+        plugin.registerMarkdownCodeBlockProcessor(
+            'tasks',
+            this.addQueryRenderChild.bind(this),
+        );
+    }
+
+    private async addQueryRenderChild(
+        source: string,
+        element: HTMLElement,
+        context: MarkdownPostProcessorContext,
+    ) {
+        const query = new Query({ source });
+
+        context.addChild(
+            new QueryRenderChild({
+                cache: this.cache,
+                container: element,
+                filters: query.filters,
+            }),
+        );
+    }
+}
+
+class QueryRenderChild extends MarkdownRenderChild {
+    private readonly cache: Cache;
     private readonly filters: ((task: Task) => boolean)[];
 
     private cacheCallbackId: number | undefined;
@@ -14,38 +47,32 @@ export class Transclusion extends MarkdownRenderChild {
     constructor({
         cache,
         container,
-        taskItem,
         filters,
     }: {
         cache: Cache;
         container: HTMLElement;
-        taskItem: TaskItem;
         filters: ((task: Task) => boolean)[];
     }) {
-        super();
+        super(container);
 
         this.cache = cache;
-        this.containerEl = container;
-        this.taskItem = taskItem;
         this.filters = filters;
     }
 
     onload() {
         this.render();
-        this.cacheCallbackId = this.cache.register({
-            handler: this.render.bind(this),
-        });
+        this.cacheCallbackId = this.cache.subscribe(this.render.bind(this));
     }
 
     onunload() {
         if (this.cacheCallbackId !== undefined) {
-            this.cache.unregister({ id: this.cacheCallbackId });
+            this.cache.unsubscribe({ id: this.cacheCallbackId });
         }
     }
 
-    public async render() {
+    private async render() {
         const content = this.containerEl.createEl('div');
-        if (this.cache.isWarm) {
+        if (this.cache.getState() === State.Warm) {
             const taskList = await this.createTasksList(content);
             content.appendChild(taskList);
         } else {
@@ -55,7 +82,9 @@ export class Transclusion extends MarkdownRenderChild {
         this.containerEl.firstChild?.replaceWith(content);
     }
 
-    private async createTasksList(content: HTMLDivElement): Promise<HTMLUListElement> {
+    private async createTasksList(
+        content: HTMLDivElement,
+    ): Promise<HTMLUListElement> {
         let tasks = this.cache.getTasks();
         for (const filter of this.filters) {
             tasks = tasks.filter(filter);
@@ -69,10 +98,7 @@ export class Transclusion extends MarkdownRenderChild {
                 fileName = fileNameMatch[1];
             }
 
-            const listItem = await this.listItemFromTask({
-                task,
-                parentComponent: this,
-            });
+            const listItem = await task.toLi({ parentUlElement: taskList });
             if (fileName !== undefined) {
                 const link = listItem.createEl('a');
                 link.href = fileName;
@@ -82,7 +108,7 @@ export class Transclusion extends MarkdownRenderChild {
                 link.addClass('internal-link');
 
                 link.innerHTML = `&nbsp;(${fileName}`;
-                if (task.precedingHeader !== undefined) {
+                if (task.precedingHeader !== null) {
                     link.href = link.href + '#' + task.precedingHeader;
                     link.setAttribute(
                         'data-href',
@@ -90,8 +116,12 @@ export class Transclusion extends MarkdownRenderChild {
                             '#' +
                             task.precedingHeader,
                     );
-                    link.innerHTML =
-                        link.innerHTML + ' > ' + task.precedingHeader;
+
+                    // Otherwise, this wouldn't provide additinoal information and only take up space.
+                    if (task.precedingHeader !== fileName) {
+                        link.innerHTML =
+                            link.innerHTML + ' > ' + task.precedingHeader;
+                    }
                 }
                 link.innerHTML = link.innerHTML + ')';
 
@@ -102,33 +132,5 @@ export class Transclusion extends MarkdownRenderChild {
         }
 
         return taskList;
-    }
-
-    private async listItemFromTask({
-        task,
-        parentComponent,
-    }: {
-        task: Task;
-        parentComponent: Component;
-    }): Promise<HTMLLIElement> {
-        const listItem = document.createElement('li');
-
-        await MarkdownRenderer.renderMarkdown(
-            task.toLiString(),
-            listItem,
-            task.path,
-            parentComponent,
-        );
-
-        // Unwrap the p-tag that was created by the MarkdownRenderer:
-        const pElement = listItem.querySelector('p');
-        if (pElement !== null) {
-            listItem.innerHTML = pElement.innerHTML;
-            pElement.remove();
-        }
-
-        this.taskItem.processListItem({ listItem, task });
-
-        return listItem;
     }
 }

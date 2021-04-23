@@ -5,6 +5,4 @@ module.exports = {
         '^.+\\.ts$': 'ts-jest',
     },
     moduleFileExtensions: ['js', 'ts'],
-    modulePathIgnorePatterns: ['yarn-cache'],
 };
-
