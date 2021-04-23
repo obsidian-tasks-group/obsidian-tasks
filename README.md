@@ -1,6 +1,8 @@
 # Obsidian Tasks
 
-Task management for the [Obsidian](https://obsidian.md/) knowledge base. The latest release requires Obsidian 12.0.0 or higher.
+Task management for the [Obsidian](https://obsidian.md/) knowledge base.
+
+⚠️ The latest release requires Obsidian 12.0.0 or higher.
 
 Track tasks across your entire vault. Query them and mark them as done wherever you want.
 
