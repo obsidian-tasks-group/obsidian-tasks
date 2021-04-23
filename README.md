@@ -1,13 +1,8 @@
 # Obsidian Tasks
 
-⚠️ **Warning** ⚠️
-This is still a work in progress.
-Obsidian can get laggy when you edit large files.
-User discretion is advised. I plan to ask for addition to the community repo once [milestone 1](https://github.com/schemar/obsidian-tasks/milestone/1) is achieved.
+Task management for the [Obsidian](https://obsidian.md/) knowledge base. The latest release requires Obsidian 12.0.0 or higher.
 
-Task management for the [Obsidian](https://obsidian.md/) knowledge base.
-
-Track tasks across your entire vault. List them and mark them as done wherever you want.
+Track tasks across your entire vault. Query them and mark them as done wherever you want.
 
 ## Screenshots
 
@@ -20,7 +15,7 @@ The `ACME` note has some tasks.
 The `Important Project` note also has some tasks.
 
 ![Tasks Queries](./resources/screenshots/tasks_queries.png)
-The `Tasks` note gathers all tasks from the vault and displays them.
+The `Tasks` note gathers all tasks from the vault and displays them using queries.
 
 ## Installation
 
@@ -35,42 +30,40 @@ Follow the steps below to install Tasks.
     - `manifest.json`
 3. Copy the files into your vault under `<VaultFolder>/.obsidian/plugins/obsidian-tasks/`.
 4. Enable the plugin in your Obsidian settings (find "Tasks" under "Community plugins").
+5. Check the settings. It makes sense to set the global filter early on (if you want one).
+6. Replace the "Toggle checklist status" hotkey with "Tasks: Toggle Done".
+    - I recommend you remove the original toggle hotkey and set the "Tasks" toggle to `Ctrl + Enter` (or `Cmd + Enter` on a mac).
 
 ## Usage
 
-You track tasks by creating list items that start with the keyword `TODO`.
+Tasks tracks your checklist items from your vault.
 
-ℹ I chose `- TODO` over `- [ ]`,
-which would be typical for markdown tasks,
-to differentiate between tasks that I need to track and checklists.
-A checklist could be a list of groceries, a daily morning routine, or a list of books that I want to read.
-I don't want any of these things to appear in my task tracker.
-I don't need to see ten things that I do every morning in my overview of things I need to take care of.
-If I were to track tasks by `- [ ]` and wanted to make sure my list of tasks stayed meaningful,
-I could no longer use checklists for things like groceries.
-But I also want a checklist of groceries.
-I want both.
-So that's why I decided to use `- TODO` instead.
-It is standard markdown, it is easy to search for,
-and it is easy to replace with `- [ ]`, e.g. using `sed`, if you decide you prefer checklists.
-No lock-in.
-Please give it a try ☺
+ℹ You can set a global filter in the settings so that Tasks only matches specific checklist items.
+For example, you could set it to `#tasks` to only track checklist items as task if they include the string `#tasks`.
+It doesn't have to be a tag. It can be any string.
+Leave it empty to reagard all checklist items as tasks.
 
-Example:
+Example with global filter `#tasks`:
 
 ```
-- TODO take out the trash
+- [ ] #tasks take out the trash
+```
+
+If you don't have a global filter set, all regular checklist items work:
+
+```
+- [ ] take out the trash
 ```
 
 There are two ways to mark a task done:
 
-1. In preview mode, click the checkbox at the beginning of the task to toggle the status between `TODO` and `DONE`.
-2. In edit mode, use the command `Tasks: Toggle done`.
-    - The command will only be available if the cursor is on a line of a task.
-    - You can map he command to a hotkey in order to quickly toggle statuses in the editor view.
+1. In preview mode, click the checkbox at the beginning of the task to toggle the status between "todo" and "done".
+2. In edit mode, use the command `Tasks: Toggle Done`.
+    - The command will only be available if the cursor is on a line with a checklist item.
+    - You can map he command to a hotkey in order to quickly toggle statuses in the editor view (I recommend to replace the original "Toggle checklist status" with it).
+    - If the checklist item is not a task (e.g. due to a global filter), the command will toggle it like a regular checklist item.
 
-When a task is marked as done, the keyword will automatically change from `TODO` to `DONE` and vice versa.
-A `DONE` task will have the date it was done appended to the end of its line.
+A "done" task will have the date it was done appended to the end of its line.
 For example: `✅ 2021-04-09` means the task was done on the 9th of April, 2021.
 
 ### Due dates
@@ -81,7 +74,7 @@ The date must be in the format `YYYY-MM-DD`, meaning `Year-Month-Day` with leadi
 For example: `📅 2021-04-09` means the task is due on the 9th of April, 2021.
 
 ```
-- TODO take out the trash 📅 2021-04-09
+- [ ] take out the trash 📅 2021-04-09
 ```
 
 ### Querying and listing tasks
@@ -130,16 +123,6 @@ Show all tasks that were done before the 1st of December 2020:
     ```
 
 ### Caveats
-
-**Toggling in preview mode of a file**
-
-When you toggle a task in its file, it will identify the task based on its description.
-This means that when you have multiple tasks with the exact same description, due date, and done date, it will toggle the first of those tasks and not necessarily the one you actually clicked.
-**This only applies to tasks within the file in preview mode.**
-**If you have many tasks with the same description and you want to be on the safer side, use a query instead.**
-
-The reason for this is that I can currently not reliably identify the line number in the file from a click on the checkbox in preview mode.
-This might change/improve in the future.
 
 **A query result list will list tasks unindented!**
 
