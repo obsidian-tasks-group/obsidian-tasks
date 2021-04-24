@@ -23,7 +23,7 @@ export class Task {
     public readonly doneDate: moment.Moment | null;
 
     public static readonly dateFormat = 'YYYY-MM-DD';
-    public static readonly taskRegex = /^([\s\t]*)[-*] +\[(.)\] *([^📅📆🗓✅🔁]*)(.*)/u;
+    public static readonly taskRegex = /^([\s\t]*)[-*] +\[(.)\] *([^📅📆🗓✅]*)(.*)/u;
     public static readonly dueDateRegex = /[📅📆🗓] ?(\d{4}-\d{2}-\d{2})/u;
     public static readonly doneDateRegex = /✅ ?(\d{4}-\d{2}-\d{2})/u;
 
