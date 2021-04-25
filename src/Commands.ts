@@ -83,8 +83,11 @@ export class Commands {
                     editor.setLine(lineNumber, toggledLine);
                 } else {
                     // Toggle a regular task.
-                    const toggledTask = task.toggle();
-                    editor.setLine(lineNumber, toggledTask.toFileLineString());
+                    const toggledTasks = task.toggle();
+                    const serialized = toggledTasks
+                        .map((task: Task) => task.toFileLineString())
+                        .join('\n');
+                    editor.setLine(lineNumber, serialized);
                 }
             },
         });
