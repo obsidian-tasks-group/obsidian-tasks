@@ -1,7 +1,7 @@
 import moment, { Moment } from 'moment';
 import { Component, MarkdownRenderer } from 'obsidian';
 
-import { writeTask } from './File';
+import { replaceTaskWithTasks } from './File';
 import { getSettings } from './Settings';
 
 export enum Status {
@@ -167,8 +167,9 @@ export class Task {
             // Should be re-rendered as enabled after update in file.
             checkbox.disabled = true;
             const toggledTask = this.toggle();
-            writeTask({
-                task: toggledTask,
+            replaceTaskWithTasks({
+                originalTask: this,
+                newTasks: toggledTask,
             });
         });
 
