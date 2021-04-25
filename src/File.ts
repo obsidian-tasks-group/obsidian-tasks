@@ -45,13 +45,30 @@ export const mergeLineRangeIntoTaskLine = ({
         .trimEnd();
 };
 
-export const writeTask = async ({ task }: { task: Task }): Promise<void> => {
+/**
+ * Replaces the original task with one or more new tassk.
+ *
+ * If you pass more than one replacement task, all subsequent tasks in the same
+ * section must be re-rendered, as their section indexes change. Assuming that
+ * this is done faster than user interaction in practice.
+ */
+export const replaceTaskWithTasks = async ({
+    originalTask,
+    newTasks,
+}: {
+    originalTask: Task;
+    newTasks: Task | Task[];
+}): Promise<void> => {
     if (vault === undefined || metadataCache === undefined) {
         console.error('Tasks: cannot use File before initializing it.');
         return;
     }
 
-    const file = vault.getAbstractFileByPath(task.path);
+    if (!Array.isArray(newTasks)) {
+        newTasks = [newTasks];
+    }
+
+    const file = vault.getAbstractFileByPath(originalTask.path);
     if (!(file instanceof TFile)) {
         return;
     }
@@ -73,7 +90,7 @@ export const writeTask = async ({ task }: { task: Task }): Promise<void> => {
     let listItem: ListItemCache | undefined;
     let sectionIndex = 0;
     for (const listItemCache of listItemsCache) {
-        if (listItemCache.position.start.line < task.sectionStart) {
+        if (listItemCache.position.start.line < originalTask.sectionStart) {
             continue;
         }
 
@@ -87,7 +104,7 @@ export const writeTask = async ({ task }: { task: Task }): Promise<void> => {
         });
 
         if (line.includes(globalFilter)) {
-            if (sectionIndex === task.sectionIndex) {
+            if (sectionIndex === originalTask.sectionIndex) {
                 listItem = listItemCache;
                 break;
             }
@@ -101,7 +118,7 @@ export const writeTask = async ({ task }: { task: Task }): Promise<void> => {
 
     const updatedFileLines = [
         ...fileLines.slice(0, listItem.position.start.line),
-        task.toFileLineString(),
+        ...newTasks.map((task: Task) => task.toFileLineString()),
         ...fileLines.slice(listItem.position.end.line + 1), // End has same zero-based index as start.
     ];
 

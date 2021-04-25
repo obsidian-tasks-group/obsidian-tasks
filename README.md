@@ -71,7 +71,7 @@ For example: `✅ 2021-04-09` means the task was done on the 9th of April, 2021.
 ### Due dates
 
 Tasks can have due dates.
-In order to specify the due date of a task, you must append the "due date signifier" followed by the date it is due to the end of the task.
+In order to specify the due date of a task, you must append the "due date signifier 📅" followed by the date it is due to the end of the task.
 The date must be in the format `YYYY-MM-DD`, meaning `Year-Month-Day` with leading zeros.
 For example: `📅 2021-04-09` means the task is due on the 9th of April, 2021.
 
@@ -80,6 +80,47 @@ For example: `📅 2021-04-09` means the task is due on the 9th of April, 2021.
 ```
 
 **You can not put anything behind the due/done dates. Also not a global filter. Everything after the dates will be removed by Tasks.**
+
+### Recurring tasks (repetition)
+
+Tasks can be recurring.
+In order to specify a recurrence rule of a task, you must append the "recurrence signifier 🔁" followed by the recurrence rule.
+For example: `🔁 every weekday` means the task will repeat every week on Monday through Friday.
+
+When you toggle the status of a recurring task to anything but "todo" (i.e. "done"), the orginal task that you wanted to toggle will be marked as done and get the done date appended to it, like any other task.
+In addition, *a new task will be put one line above the original task.*
+The new task will have the due date of the next occurrence after the due date of the original task.
+
+Take as example the following task::
+
+```
+- [ ] take out the trash 🔁 every Sunday 📅 2021-04-25
+```
+
+If you mark the above task "done" on Saturday, the 24th of April, the file will now look like this:
+
+```
+-   [ ] take out the trash 🔁 every Sunday 📅 2021-05-02
+-   [x] take out the trash 🔁 every Sunday 📅 2021-04-25 ✅ 2021-04-24
+```
+
+*For best compatibility, a recurring task should have a due date and the recurrence rule should appear before the due date of a task.*
+
+Right now there is no direct feedback to whether your recurrence rule is valid.
+You can validate that tasks understands your rule by checking that the task includes the recurrence rule when it is rendered, for example in the markdown preview of the file where it is defined or in another tasks query.
+When it is shown (with the checkbox on the left), then tasks understands it.
+
+Examples of possible recurrence rules (mix and match as desired; these should be considered inspirational):
+
+-   `🔁 every weekday` (meaning every Mon - Fri)
+-   `🔁 every week on Sunday`
+-   `🔁 every 2 weeks`
+-   `🔁 every 3 weeks on Friday`
+-   `🔁 every 2 months`
+-   `🔁 every month on the 1st`
+-   `🔁 every 6 months on the 1st Wednesday`
+-   `🔁 every January on the 15th`
+-   `🔁 every year`
 
 ### Querying and listing tasks
 
