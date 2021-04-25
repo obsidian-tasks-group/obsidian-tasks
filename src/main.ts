@@ -12,7 +12,7 @@ export default class TasksPlugin extends Plugin {
     private cache: Cache | undefined;
 
     async onload() {
-        console.log('loading plugin "test"');
+        console.log('loading plugin "tasks"');
 
         await this.loadSettings();
         this.addSettingTab(new SettingsTab({ plugin: this }));
@@ -32,7 +32,7 @@ export default class TasksPlugin extends Plugin {
     }
 
     onunload() {
-        console.log('unloading plugin "test"');
+        console.log('unloading plugin "tasks"');
         this.cache?.unload();
     }
 
