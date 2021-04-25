@@ -1,5 +1,6 @@
 import moment, { Moment } from 'moment';
 import { Component, MarkdownRenderer } from 'obsidian';
+import { RRule } from 'rrule';
 
 import { replaceTaskWithTasks } from './File';
 import { getSettings } from './Settings';
@@ -19,13 +20,15 @@ export class Task {
     /** The index of the nth task in its section. */
     public readonly sectionIndex: number;
     public readonly precedingHeader: string | null;
-    public readonly dueDate: moment.Moment | null;
-    public readonly doneDate: moment.Moment | null;
+    public readonly dueDate: Moment | null;
+    public readonly doneDate: Moment | null;
+    public readonly recurrenceRule: RRule | null;
 
     public static readonly dateFormat = 'YYYY-MM-DD';
-    public static readonly taskRegex = /^([\s\t]*)[-*] +\[(.)\] *([^📅📆🗓✅]*)(.*)/u;
+    public static readonly taskRegex = /^([\s\t]*)[-*] +\[(.)\] *([^🔁📅📆🗓✅]*)(.*)/u;
     public static readonly dueDateRegex = /[📅📆🗓] ?(\d{4}-\d{2}-\d{2})/u;
     public static readonly doneDateRegex = /✅ ?(\d{4}-\d{2}-\d{2})/u;
+    public static readonly recurrenceRegex = /🔁([a-zA-Z0-9, !]+)/u;
 
     constructor({
         status,
@@ -37,6 +40,7 @@ export class Task {
         precedingHeader,
         dueDate,
         doneDate,
+        recurrenceRule,
     }: {
         status: Status;
         description: string;
@@ -47,6 +51,7 @@ export class Task {
         precedingHeader: string | null;
         dueDate: moment.Moment | null;
         doneDate: moment.Moment | null;
+        recurrenceRule: RRule | null;
     }) {
         this.status = status;
         this.description = description;
@@ -57,6 +62,7 @@ export class Task {
         this.precedingHeader = precedingHeader;
         this.dueDate = dueDate;
         this.doneDate = doneDate;
+        this.recurrenceRule = recurrenceRule;
     }
 
     public static fromLine({
@@ -111,6 +117,19 @@ export class Task {
             doneDate = moment(doneDateMatch[1], Task.dateFormat);
         }
 
+        let recurrenceRule: RRule | null;
+        const recurrenceMatch = line.match(Task.recurrenceRegex);
+        if (recurrenceMatch === null) {
+            recurrenceRule = null;
+        } else {
+            try {
+                recurrenceRule = RRule.fromText(recurrenceMatch[1].trim());
+            } catch (error) {
+                // Could not read recurrence rule. User possibly not done typing.
+                recurrenceRule = null;
+            }
+        }
+
         const task = new Task({
             status,
             description,
@@ -121,6 +140,7 @@ export class Task {
             precedingHeader,
             dueDate,
             doneDate,
+            recurrenceRule,
         });
 
         return task;
@@ -179,6 +199,9 @@ export class Task {
     }
 
     public toString(): string {
+        const recurrenceRule: string = this.recurrenceRule
+            ? ` 🔁 ${this.recurrenceRule.toText()}`
+            : '';
         const dueDate: string = this.dueDate
             ? ` 📅 ${this.dueDate.format(Task.dateFormat)}`
             : '';
@@ -186,7 +209,7 @@ export class Task {
             ? ` ✅ ${this.doneDate.format(Task.dateFormat)}`
             : '';
 
-        return `${this.description}${dueDate}${doneDate}`;
+        return `${this.description}${recurrenceRule}${dueDate}${doneDate}`;
     }
 
     public toFileLineString(): string {
@@ -195,16 +218,56 @@ export class Task {
     }
 
     /**
-     * @returns {Task} a new task with the status toggled.
+     * Toggles this task and returns the resulting tasks.
+     *
+     * Toggling can result in more than one returned task in the case of
+     * recurrence. If it is a recurring task, the toggled task will be returned
+     * toether with the next occurrence in the order `[next, toggled]`. If the
+     * task is not recurring, it will return `[toggled]`.
      */
-    public toggle(): Task {
+    public toggle(): Task[] {
         const newStatus: Status =
             this.status === Status.Todo ? Status.Done : Status.Todo;
         let newDoneDate = null;
+        let nextOccurrence: Moment | undefined;
         if (newStatus !== Status.Todo) {
             newDoneDate = moment();
+
+            // If this task is no longer todo, we need to check if it is recurring:
+            if (this.recurrenceRule !== null) {
+                // If no due date, next occurrence is after "today".
+                const after: Moment =
+                    this.dueDate !== null ? this.dueDate : moment();
+                // RRule disregards the timezone:
+                after.endOf('day').utc(true);
+                const next = this.recurrenceRule.after(after.toDate(), false);
+
+                if (next !== null) {
+                    // Re-add the timezone that RRule disregarded:
+                    nextOccurrence = moment.utc(next);
+                }
+            }
         }
 
-        return new Task({ ...this, status: newStatus, doneDate: newDoneDate });
+        const toggledTask = new Task({
+            ...this,
+            status: newStatus,
+            doneDate: newDoneDate,
+        });
+
+        const newTasks: Task[] = [];
+
+        if (nextOccurrence !== undefined) {
+            const nextTask = new Task({
+                ...this,
+                dueDate: nextOccurrence,
+            });
+            newTasks.push(nextTask);
+        }
+
+        // Write next occurrence before previous occurrence.
+        newTasks.push(toggledTask);
+
+        return newTasks;
     }
 }

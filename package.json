@@ -43,5 +43,8 @@
   },
   "peerDependencies": {
     "moment": "^2.29.1"
+  },
+  "dependencies": {
+    "rrule": "^2.6.8"
   }
 }
