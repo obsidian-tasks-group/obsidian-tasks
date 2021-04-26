@@ -18,7 +18,12 @@ export class InlineRenderer {
         const renderedElements = element
             .findAll('.task-list-item')
             .filter((taskItem) => {
-                return taskItem.textContent?.includes(globalFilter);
+                // Only the first line. Can be multiple lines if an LI element contains an UL.
+                // Want to match the top level LI independently from its children.
+                // There was a false positive, when the LI wasn't a task itself, but contained the
+                // global filter in child LIs.
+                const firstLineText = taskItem.textContent?.split('\n')[0];
+                return firstLineText?.includes(globalFilter);
             });
         if (renderedElements.length === 0) {
             // No tasks means nothing to do.
