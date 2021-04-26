@@ -6,6 +6,19 @@ Task management for the [Obsidian](https://obsidian.md/) knowledge base.
 
 Track tasks across your entire vault. Query them and mark them as done wherever you want.
 
+* [Screenshots](#screenshots)
+* [Installation](#installation)
+* [Usage](#usage)
+  + [Due dates](#due-dates)
+  + [Recurring tasks (repetition)](#recurring-tasks-repetition)
+  + [Querying and listing tasks](#querying-and-listing-tasks)
+    - [Examples](#examples)
+  + [Tips](#tips)
+    - [Daily Agenda](#daily-agenda)
+    - [Natural Language Due Date](#natural-language-due-date)
+  + [Caveats](#caveats)
+* [Development](#development)
+
 ## Screenshots
 
 *You can toggle the task status in any view/query and it will update the source file.*
