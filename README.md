@@ -167,6 +167,72 @@ Show all tasks that were done before the 1st of December 2020:
     done before 2020-12-01
     ```
 
+### Tips
+
+#### Daily Agenda
+
+If you use the [calendar](https://github.com/liamcain/obsidian-calendar-plugin) plugin,
+you can use the following in your daily note *template* for an agenda:
+
+    ## Tasks
+    ### Overdue
+    ```tasks
+    not done
+    due before {{date:YYYY-MM-DD}}
+    ```
+    
+    ### Due today
+    ```tasks
+    not done
+    due on {{date:YYYY-MM-DD}}
+    ```
+    
+    ### Due in the next two weeks
+    ```tasks
+    not done
+    due after {{date:YYYY-MM-DD}}
+    due before {{date+14d:YYYY-MM-DD}}
+    ```
+    
+    ### No due date
+    ```tasks
+    not done
+    no due date
+    ```
+    
+    ### Done today
+    ```tasks
+    done on {{date:YYYY-MM-DD}}
+    ```
+
+#### Natural Language Due Date
+(Thanks to @zolrath)
+
+If you use the [templater](https://github.com/SilentVoid13/Templater) and [nldates](https://github.com/argenos/nldates-obsidian) plugins,
+you can use the following for a pop-up to add a task's due date to the end of the line:
+
+```js
+<%*
+let dueDateStr = await tp.system.prompt("Task Due Date:");
+let parseResult;
+let parseResultMarker;
+if (dueDateStr) {
+    let nlDatesPlugin = this.app.plugins.getPlugin('nldates-obsidian');
+    parseResult = nlDatesPlugin.parseDate(dueDateStr);
+    if (parseResult.date) {
+        parseResultMarker = '📅 ' + parseResult.formattedString;
+    }
+}
+
+if (parseResultMarker) {
+    let cmEditorAct = this.app.workspace.activeLeaf.view.sourceMode.cmEditor;
+    let curLine = cmEditorAct.getCursor().line;
+    cmEditorAct.setSelection({ line: curLine, ch: 0 }, { line: curLine, ch: 9999 });
+    tR = tp.file.selection() + ' ' + parseResultMarker;
+}
+%>
+```
+
 ### Caveats
 
 **A query result list will list tasks unindented!**
