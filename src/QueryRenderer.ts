@@ -91,6 +91,7 @@ class QueryRenderChild extends MarkdownRenderChild {
         }
 
         const taskList = content.createEl('ul');
+        taskList.addClass('contains-task-list');
         for (const task of Sort.byDateThenPath(tasks)) {
             let fileName: string | undefined;
             const fileNameMatch = task.path.match(/([^/]+)\.md$/);
