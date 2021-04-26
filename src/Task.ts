@@ -19,6 +19,11 @@ export class Task {
     public readonly sectionStart: number;
     /** The index of the nth task in its section. */
     public readonly sectionIndex: number;
+    /**
+     * The original character from within `[]` in the document.
+     * Required to be added to the LI the same way obsidian does as a `data-task` attribute.
+     */
+    public readonly originalStatusCharacter: string;
     public readonly precedingHeader: string | null;
     public readonly dueDate: Moment | null;
     public readonly doneDate: Moment | null;
@@ -37,6 +42,7 @@ export class Task {
         indentation,
         sectionStart,
         sectionIndex,
+        originalStatusCharacter,
         precedingHeader,
         dueDate,
         doneDate,
@@ -48,6 +54,7 @@ export class Task {
         indentation: string;
         sectionStart: number;
         sectionIndex: number;
+        originalStatusCharacter: string;
         precedingHeader: string | null;
         dueDate: moment.Moment | null;
         doneDate: moment.Moment | null;
@@ -59,6 +66,7 @@ export class Task {
         this.indentation = indentation;
         this.sectionStart = sectionStart;
         this.sectionIndex = sectionIndex;
+        this.originalStatusCharacter = originalStatusCharacter;
         this.precedingHeader = precedingHeader;
         this.dueDate = dueDate;
         this.doneDate = doneDate;
@@ -137,6 +145,7 @@ export class Task {
             indentation,
             sectionStart,
             sectionIndex,
+            originalStatusCharacter: statusString,
             precedingHeader,
             dueDate,
             doneDate,
@@ -153,7 +162,7 @@ export class Task {
     }): Promise<HTMLLIElement> {
         const li: HTMLLIElement = parentUlElement.createEl('li');
         li.addClass('task-list-item');
-        li.setAttr('data-task', '');
+        li.setAttr('data-task', this.originalStatusCharacter.trim()); // Trim to ensure empty attribute for space. Same way as obsidian.
 
         let taskAsString = this.toString();
         const { globalFilter, removeGlobalFilter } = getSettings();
