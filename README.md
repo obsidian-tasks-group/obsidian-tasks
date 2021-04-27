@@ -9,6 +9,7 @@
 <p align="center">
   <a href="#installation">Installation</a> •
   <a href="#usage">Usage</a> •
+  <a href="#filtering-checklist-items">Filtering</a> •
   <a href="#due-dates">Due Dates</a> •
   <a href="#recurring-tasks-repetition">Recurrence</a> •
   <a href="#querying-and-listing-tasks">Querying</a>
@@ -18,9 +19,12 @@
 
 Track tasks across your entire vault. Query them and mark them as done wherever you want. Supports due dates, recurring tasks (repetition), done dates, sub-set of checklist items, and filtering.
 
+*You can toggle the task status in any view or query and it will update the source file.*
+
 ## Screenshots
 
-*You can toggle the task status in any view/query and it will update the source file.*
+- *All screenshots assume the [global filter](#filtering-checklist-items) `#task` which is not set by default (see also [installation](#installation)).*
+- *The theme is [Obsidian Atom](https://github.com/kognise/obsidian-atom).*
 
 ![ACME Tasks](./resources/screenshots/acme.png)
 The `ACME` note has some tasks.
@@ -30,6 +34,9 @@ The `Important Project` note also has some tasks.
 
 ![Tasks Queries](./resources/screenshots/tasks_queries.png)
 The `Tasks` note gathers all tasks from the vault and displays them using queries.
+
+![Create or Edit Modal](./resources/screenshots/modal.png)
+The `Tasks: Create or edit` command helps you when editing a command.
 
 ## Installation
 
@@ -51,14 +58,36 @@ Follow the steps below to install Tasks.
 ## Usage
 
 Tasks tracks your checklist items from your vault.
+The simplest way to create a new task is to create a new checklist item.
+The markdown syntax for checklist items is a list item that starts with spaced brackets: `- [ ] take out the trash`.
+Now Tasks tracks that you need to take out the trash!
+
+**⚠️ Tasks only supports single-line checklist items.**
+You cannot have checklist items that span across multiple lines.
+
+A more convenient way to create a task is by using the `Tasks: Create or edit` command from the command palette.
+You can also bind a hotkey to the command.
+The command will parse what's on the current line in your editor and pre-populate a modal.
+In the modal, you can change the task's description, its due date, and a recurrence rule to have a repeating task.
+See below for more details on due dates and recurrence.
+
+There are two ways to mark a task done:
+
+1. In preview mode, click the checkbox at the beginning of the task to toggle the status between "todo" and "done".
+2. In edit mode, use the command `Tasks: Toggle Done`.
+    - The command will only be available if the cursor is on a line with a checklist item.
+    - You can map he command to a hotkey in order to quickly toggle statuses in the editor view (I recommend to replace the original "Toggle checklist status" with it).
+    - If the checklist item is not a task (e.g. due to a global filter), the command will toggle it like a regular checklist item.
+
+A "done" task will have the date it was done appended to the end of its line.
+For example: `✅ 2021-04-09` means the task was done on the 9th of April, 2021.
+
+### Filtering checklist items
 
 ℹ You can set a global filter in the settings so that Tasks only matches specific checklist items.
 For example, you could set it to `#tasks` to only track checklist items as task if they include the string `#tasks`.
 It doesn't have to be a tag. It can be any string.
 Leave it empty to reagard all checklist items as tasks.
-
-**⚠️ Tasks only supports single-line checklist items.**
-You cannot have checklist items that span across multiple lines.
 
 Example with global filter `#tasks`:
 
@@ -72,17 +101,6 @@ If you don't have a global filter set, all regular checklist items work:
 - [ ] take out the trash
 ```
 
-There are two ways to mark a task done:
-
-1. In preview mode, click the checkbox at the beginning of the task to toggle the status between "todo" and "done".
-2. In edit mode, use the command `Tasks: Toggle Done`.
-    - The command will only be available if the cursor is on a line with a checklist item.
-    - You can map he command to a hotkey in order to quickly toggle statuses in the editor view (I recommend to replace the original "Toggle checklist status" with it).
-    - If the checklist item is not a task (e.g. due to a global filter), the command will toggle it like a regular checklist item.
-
-A "done" task will have the date it was done appended to the end of its line.
-For example: `✅ 2021-04-09` means the task was done on the 9th of April, 2021.
-
 ### Due dates
 
 Tasks can have due dates.
@@ -94,6 +112,9 @@ For example: `📅 2021-04-09` means the task is due on the 9th of April, 2021.
 - [ ] take out the trash 📅 2021-04-09
 ```
 
+Instead of adding the emoji and the date manually, you can use the `Tasks: Crete or edit` command when creating or editing a task.
+When you use the command, you can also set a due date like "Monday", "tomorrow", or "next week" and Tasks will automatically save the date in the correct format.
+
 **You can not put anything behind the due/done dates. Also not a global filter. Everything after the dates will be removed by Tasks.**
 
 ### Recurring tasks (repetition)
@@ -101,12 +122,13 @@ For example: `📅 2021-04-09` means the task is due on the 9th of April, 2021.
 Tasks can be recurring.
 In order to specify a recurrence rule of a task, you must append the "recurrence signifier 🔁" followed by the recurrence rule.
 For example: `🔁 every weekday` means the task will repeat every week on Monday through Friday.
+Every recurrence rule has to start with the work `every`.
 
 When you toggle the status of a recurring task to anything but "todo" (i.e. "done"), the orginal task that you wanted to toggle will be marked as done and get the done date appended to it, like any other task.
 In addition, *a new task will be put one line above the original task.*
 The new task will have the due date of the next occurrence after the due date of the original task.
 
-Take as example the following task::
+Take as an example the following task::
 
 ```
 - [ ] take out the trash 🔁 every Sunday 📅 2021-04-25
@@ -121,9 +143,8 @@ If you mark the above task "done" on Saturday, the 24th of April, the file will 
 
 *For best compatibility, a recurring task should have a due date and the recurrence rule should appear before the due date of a task.*
 
-Right now there is no direct feedback to whether your recurrence rule is valid.
-You can validate that tasks understands your rule by checking that the task includes the recurrence rule when it is rendered, for example in the markdown preview of the file where it is defined or in another tasks query.
-When it is shown (with the checkbox on the left), then tasks understands it.
+In the editor there is no direct feedback to whether your recurrence rule is valid.
+You can validate that tasks understands your rule by using the `Tasks: Crete or edit` command when creating or editing a task.
 
 Examples of possible recurrence rules (mix and match as desired; these should be considered inspirational):
 
@@ -143,17 +164,15 @@ You can list tasks from your entire vault by querying them using a `tasks` code 
 Tasks are sorted by due date and then path.
 
 **⚠️ The result list will list tasks unindented.**
-I am happy to discuss this and possibly change it.
-However, there is more to it than simply indenting the task the same depth it was indented in the source file.
-Below what item should it be indented? Its direct parent? Does that have to be a task?
+See #51 for a discussion around the topic.
+do not hesitate to contribute 😊
 
-
-The simplest way is this:
+The simplest way to query tasks is this:
 
     ```tasks
     ```
 
-In preview mode, this will list all tasks from you vault, regardless of their status.
+In preview mode, this will list *all* tasks from your vault, regardless of their properties like status.
 This is probably not what you want. Therefore, Tasks allows you to filter the tasks that you want to show.
 All date filters must be in the format `YYYY-MM-DD`, meaning `Year-Month-Day` with leading zeros.
 
@@ -169,6 +188,24 @@ The following filters exist:
 - `exclude sub-items`
     - When this is set, the result list will only include tasks that are not indented in their file. It will only show tasks that are top level list items in their list.
 
+All filters of a query have to match in order for a task to be listed.
+This means you cannot show tasks that have "GitHub in the path and have no due date or are due after 2021-04-04".
+Instead you would have two queries, one for each condition:
+
+    ### Not due
+
+    ```tasks
+    no due date
+    path includes GitHub
+    ```
+
+    ### Due after 2021-04-04
+
+    ```tasks
+    due after 2021-04-04
+    path includes GitHub
+    ```
+
 #### Examples
 
 Show all tasks that aren't done, are due on the 9th of April 2021, and where the path includes `GitHub`:
@@ -178,6 +215,14 @@ Show all tasks that aren't done, are due on the 9th of April 2021, and where the
     due on 2021-04-09
     path includes GitHub
     ````
+
+Show all open tasks that are due within two weeks:
+
+    ```tasks
+    not done
+    due after 2021-04-30
+    due before 2021-05-15
+    ```
 
 Show all tasks that were done before the 1st of December 2020:
 

@@ -16,3 +16,20 @@
     color: red;
     font-weight: bold;
 }
+
+.tasks-modal label {
+    display: block;
+    margin: 5px 0 5px 0;
+}
+
+.tasks-modal input[type=text] {
+    width: 100%;
+}
+
+.tasks-modal hr {
+    margin: 0;
+}
+
+.tasks-modal-section {
+    margin-bottom: 1rem;
+}
