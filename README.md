@@ -1,23 +1,21 @@
-# Obsidian Tasks
+<h1 align="center">Obsidian Tasks</h1>
 
-Task management for the [Obsidian](https://obsidian.md/) knowledge base.
+<p align="center">Task management for the <a href="https://obsidian.md/">Obsidian</a> knowledge base</p>
+<p align="center">Track tasks across your entire vault. Query them and mark them as done wherever you want</p>
 
-⚠️ The latest release requires Obsidian 12.0.0 or higher.
+<p align="center">
+  ⚠️ The latest release requires Obsidian 12.0.0 or higher ⚠️
+</p>
 
-Track tasks across your entire vault. Query them and mark them as done wherever you want.
+<hr />
 
-* [Screenshots](#screenshots)
-* [Installation](#installation)
-* [Usage](#usage)
-  + [Due dates](#due-dates)
-  + [Recurring tasks (repetition)](#recurring-tasks-repetition)
-  + [Querying and listing tasks](#querying-and-listing-tasks)
-    - [Examples](#examples)
-  + [Tips](#tips)
-    - [Daily Agenda](#daily-agenda)
-    - [Natural Language Due Date](#natural-language-due-date)
-  + [Caveats](#caveats)
-* [Development](#development)
+<p align="center">
+  <a href="#installation">Installation</a> •
+  <a href="#usage">Usage</a> •
+  <a href="#due-dates">Due Dates</a> •
+  <a href="#recurring-tasks-repetition">Recurrence</a> •
+  <a href="#querying-and-listing-tasks">Querying</a>
+</p>
 
 ## Screenshots
 
