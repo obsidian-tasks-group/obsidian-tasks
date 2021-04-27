@@ -1,13 +1,10 @@
 <h1 align="center">Obsidian Tasks</h1>
 
-<p align="center">Task management for the <a href="https://obsidian.md/">Obsidian</a> knowledge base</p>
-<p align="center">Track tasks across your entire vault. Query them and mark them as done wherever you want</p>
+<p align="center">Task management for the <a href="https://obsidian.md/">Obsidian</a> knowledge base.</p>
 
 <p align="center">
   ⚠️ The latest release requires Obsidian 12.0.0 or higher ⚠️
 </p>
-
-<hr />
 
 <p align="center">
   <a href="#installation">Installation</a> •
@@ -16,6 +13,10 @@
   <a href="#recurring-tasks-repetition">Recurrence</a> •
   <a href="#querying-and-listing-tasks">Querying</a>
 </p>
+
+<hr />
+
+Track tasks across your entire vault. Query them and mark them as done wherever you want. Supports due dates, recurring tasks (repetition), done dates, sub-set of checklist items, and filtering.
 
 ## Screenshots
 
