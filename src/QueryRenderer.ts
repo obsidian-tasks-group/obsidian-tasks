@@ -73,8 +73,14 @@ class QueryRenderChild extends MarkdownRenderChild {
     private async render() {
         const content = this.containerEl.createEl('div');
         if (this.cache.getState() === State.Warm) {
-            const taskList = await this.createTasksList(content);
+            const { taskList, tasksCount } = await this.createTasksList(
+                content,
+            );
             content.appendChild(taskList);
+            content.createDiv({
+                text: `${tasksCount} tasks`,
+                cls: 'tasks-count',
+            });
         } else {
             content.innerHTML = 'Loading Tasks ...';
         }
@@ -84,7 +90,7 @@ class QueryRenderChild extends MarkdownRenderChild {
 
     private async createTasksList(
         content: HTMLDivElement,
-    ): Promise<HTMLUListElement> {
+    ): Promise<{ taskList: HTMLUListElement; tasksCount: number }> {
         let tasks = this.cache.getTasks();
         for (const filter of this.filters) {
             tasks = tasks.filter(filter);
@@ -141,6 +147,6 @@ class QueryRenderChild extends MarkdownRenderChild {
             taskList.appendChild(listItem);
         }
 
-        return taskList;
+        return { taskList, tasksCount };
     }
 }
