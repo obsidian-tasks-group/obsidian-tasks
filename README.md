@@ -3,7 +3,7 @@
 <p align="center">Task management for the <a href="https://obsidian.md/">Obsidian</a> knowledge base.</p>
 
 <p align="center">
-  ⚠️ The latest release requires Obsidian 12.0.0 or higher ⚠️
+  ⚠️ Requires Obsidian 12.0.0 or higher ⚠️
 </p>
 
 <p align="center">
@@ -56,6 +56,9 @@ Tasks tracks your checklist items from your vault.
 For example, you could set it to `#tasks` to only track checklist items as task if they include the string `#tasks`.
 It doesn't have to be a tag. It can be any string.
 Leave it empty to reagard all checklist items as tasks.
+
+**⚠️ Tasks only supports single-line checklist items.**
+You cannot have checklist items that span across multiple lines.
 
 Example with global filter `#tasks`:
 
@@ -139,8 +142,11 @@ Examples of possible recurrence rules (mix and match as desired; these should be
 You can list tasks from your entire vault by querying them using a `tasks` code block.
 Tasks are sorted by due date and then path.
 
-**The result list will list tasks unindented.**
-See section Caveats for more details.
+**⚠️ The result list will list tasks unindented.**
+I am happy to discuss this and possibly change it.
+However, there is more to it than simply indenting the task the same depth it was indented in the source file.
+Below what item should it be indented? Its direct parent? Does that have to be a task?
+
 
 The simplest way is this:
 
@@ -192,26 +198,26 @@ you can use the following in your daily note *template* for an agenda:
     not done
     due before {{date:YYYY-MM-DD}}
     ```
-    
+
     ### Due today
     ```tasks
     not done
     due on {{date:YYYY-MM-DD}}
     ```
-    
+
     ### Due in the next two weeks
     ```tasks
     not done
     due after {{date:YYYY-MM-DD}}
     due before {{date+14d:YYYY-MM-DD}}
     ```
-    
+
     ### No due date
     ```tasks
     not done
     no due date
     ```
-    
+
     ### Done today
     ```tasks
     done on {{date:YYYY-MM-DD}}
@@ -244,14 +250,6 @@ if (parseResultMarker) {
 }
 %>
 ```
-
-### Caveats
-
-**A query result list will list tasks unindented!**
-
-I am happy to discuss this and possibly change it.
-However, there is more to it than simply indenting the task the same depth it was indented in the source file.
-Below what item should it be indented? Its direct parent? Does that have to be a task?
 
 ## Development
 

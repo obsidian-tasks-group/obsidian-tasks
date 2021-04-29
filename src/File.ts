@@ -1,4 +1,4 @@
-import { ListItemCache, MetadataCache, Pos, TFile, Vault } from 'obsidian';
+import { ListItemCache, MetadataCache, TFile, Vault } from 'obsidian';
 
 import { getSettings } from './Settings';
 import type { Task } from './Task';
@@ -15,34 +15,6 @@ export const initializeFile = ({
 }) => {
     metadataCache = newMetadataCache;
     vault = newVault;
-};
-
-/** Supports multi-line positions, reduced to one line. */
-export const mergeLineRangeIntoTaskLine = ({
-    fileLines,
-    position,
-}: {
-    fileLines: string[];
-    position: Pos;
-}) => {
-    return fileLines
-        .slice(
-            position.start.line,
-            position.end.line + 1, // End has same zero-based index as start.
-        )
-        .reduce((accumulator: string, value: string) => {
-            // Do not trim indentation:
-            if (accumulator === '') {
-                value = value.trimEnd();
-            } else {
-                value = value.trim();
-            }
-
-            accumulator = accumulator + value + ' ';
-
-            return accumulator;
-        }, '')
-        .trimEnd();
 };
 
 /**
@@ -98,10 +70,7 @@ export const replaceTaskWithTasks = async ({
             continue;
         }
 
-        const line = mergeLineRangeIntoTaskLine({
-            fileLines,
-            position: listItemCache.position,
-        });
+        const line = fileLines[listItemCache.position.start.line];
 
         if (line.includes(globalFilter)) {
             if (sectionIndex === originalTask.sectionIndex) {
@@ -119,7 +88,7 @@ export const replaceTaskWithTasks = async ({
     const updatedFileLines = [
         ...fileLines.slice(0, listItem.position.start.line),
         ...newTasks.map((task: Task) => task.toFileLineString()),
-        ...fileLines.slice(listItem.position.end.line + 1), // End has same zero-based index as start.
+        ...fileLines.slice(listItem.position.start.line + 1), // Only supports single-line tasks.
     ];
 
     await vault.modify(file, updatedFileLines.join('\n'));
