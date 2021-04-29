@@ -7,6 +7,11 @@
     text-indent: 0;
 }
 
+.tasks-count {
+    color: var(--text-faint);
+    padding-left: 20px;
+}
+
 .tasks-setting-important {
     color: red;
     font-weight: bold;
