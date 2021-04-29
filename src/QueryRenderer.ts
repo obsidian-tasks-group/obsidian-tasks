@@ -90,16 +90,25 @@ class QueryRenderChild extends MarkdownRenderChild {
             tasks = tasks.filter(filter);
         }
 
+        const tasksSorted = Sort.byDateThenPath(tasks);
+        const tasksCount = tasksSorted.length;
+
         const taskList = content.createEl('ul');
         taskList.addClass('contains-task-list');
-        for (const task of Sort.byDateThenPath(tasks)) {
+        for (let i = 0; i < tasksCount; i++) {
+            const task = tasksSorted[i];
+
             let fileName: string | undefined;
             const fileNameMatch = task.path.match(/([^/]+)\.md$/);
             if (fileNameMatch !== null) {
                 fileName = fileNameMatch[1];
             }
 
-            const listItem = await task.toLi({ parentUlElement: taskList });
+            const listItem = await task.toLi({
+                parentUlElement: taskList,
+                listIndex: i,
+            });
+
             if (fileName !== undefined) {
                 const link = listItem.createEl('a');
                 link.href = fileName;

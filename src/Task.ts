@@ -157,12 +157,14 @@ export class Task {
 
     public async toLi({
         parentUlElement,
+        listIndex,
     }: {
         parentUlElement: HTMLElement;
+        /** The nth item in this list (including non-tasks). */
+        listIndex: number;
     }): Promise<HTMLLIElement> {
         const li: HTMLLIElement = parentUlElement.createEl('li');
         li.addClass('task-list-item');
-        li.setAttr('data-task', this.originalStatusCharacter.trim()); // Trim to ensure empty attribute for space. Same way as obsidian.
 
         let taskAsString = this.toString();
         const { globalFilter, removeGlobalFilter } = getSettings();
@@ -203,6 +205,11 @@ export class Task {
         });
 
         li.prepend(checkbox);
+
+        // Set these to be compatible with stock obsidian lists:
+        li.setAttr('data-task', this.originalStatusCharacter.trim()); // Trim to ensure empty attribute for space. Same way as obsidian.
+        li.setAttr('data-line', listIndex);
+        checkbox.setAttr('data-line', listIndex);
 
         return li;
     }
