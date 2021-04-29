@@ -83,7 +83,14 @@ export class InlineRenderer {
                 continue;
             }
 
-            const cachedElement = await task.toLi({ parentUlElement: element });
+            const dataLine: string =
+                renderedElement.getAttr('data-line') ?? '0';
+            const listIndex: number = Number.parseInt(dataLine, 10);
+            const cachedElement = await task.toLi({
+                parentUlElement: element,
+                listIndex,
+            });
+
             // If the rendered element contains a sub-list, we need to keep it.
             renderedElement.findAll('ul').map((renderedSubUl) => {
                 cachedElement.appendChild(renderedSubUl);
