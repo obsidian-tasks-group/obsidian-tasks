@@ -1,4 +1,4 @@
-import { Editor, MarkdownView, Plugin, View, Workspace } from 'obsidian';
+import { MarkdownView, Plugin, View, Workspace } from 'obsidian';
 
 import { Task } from './Task';
 
@@ -16,18 +16,18 @@ export class Commands {
             id: 'toggle-done',
             name: 'Toggle Done',
             checkCallback: (checking: boolean) => {
-                if (checking) {
-                    const markdownView = this.getActiveMarkdownView();
-                    if (markdownView === null) {
-                        return false;
-                    }
+                const markdownView = this.getActiveMarkdownView();
+                if (markdownView === null) {
+                    return false;
+                }
 
-                    const editor = this.getEditor();
+                const editor = markdownView.editor;
+
+                if (checking) {
                     if (editor === null) {
                         // If we are not in an editor, the command shouldn't be shown.
                         return false;
                     }
-
                     const currentLine = editor.getLine(editor.getCursor().line);
 
                     // We want to toggle any checklist item, task or not, as this command is
@@ -38,15 +38,14 @@ export class Commands {
                     return isTasksLine;
                 }
 
-                // We are certain we are in the editor on a tasks line due to the check above.
-                const path = (this.workspace.activeLeaf.view as any)?.file
-                    ?.path;
-                if (path === undefined) {
+                if (editor === null) {
+                    // If we are not in an editor, the command shouldn't be shown.
                     return;
                 }
+
                 // We are certain we are in the editor on a tasks line due to the check above.
-                const editor = this.getEditor();
-                if (editor === null) {
+                const path = this.workspace.getActiveFile()?.path;
+                if (path === undefined) {
                     return;
                 }
 
@@ -94,22 +93,9 @@ export class Commands {
     }
 
     private getActiveMarkdownView(): MarkdownView | null {
-        if (this.workspace.activeLeaf === undefined) {
-            return null;
-        }
-
-        const activeLeaf = this.workspace.activeLeaf;
-        if (!(activeLeaf.view instanceof MarkdownView)) {
-            return null;
-        }
-
-        return activeLeaf.view;
-    }
-
-    private getEditor(): Editor | null {
         const view: View = this.workspace.activeLeaf.view;
         if (view instanceof MarkdownView) {
-            return view.editor;
+            return view;
         } else {
             return null;
         }
