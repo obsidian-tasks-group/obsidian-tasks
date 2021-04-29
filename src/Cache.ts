@@ -8,7 +8,6 @@ import {
 } from 'obsidian';
 import { Mutex } from 'async-mutex';
 
-import { mergeLineRangeIntoTaskLine } from './File';
 import { Task } from './Task';
 
 export enum State {
@@ -180,7 +179,7 @@ export class Cache {
             return;
         }
 
-        const listItems = fileCache?.listItems;
+        const listItems = fileCache.listItems;
         if (listItems === undefined) {
             return;
         }
@@ -220,10 +219,7 @@ export class Cache {
                     continue;
                 }
 
-                const line = mergeLineRangeIntoTaskLine({
-                    fileLines,
-                    position: listItem.position,
-                });
+                const line = fileLines[listItem.position.start.line];
                 const task = Task.fromLine({
                     line,
                     path: file.path,
