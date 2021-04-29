@@ -78,7 +78,7 @@ class QueryRenderChild extends MarkdownRenderChild {
             );
             content.appendChild(taskList);
             content.createDiv({
-                text: `${tasksCount} tasks`,
+                text: `${tasksCount} task${tasksCount !== 1 ? 's' : ''}`,
                 cls: 'tasks-count',
             });
         } else {
