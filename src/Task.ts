@@ -102,11 +102,11 @@ export class Task {
 
         let status: Status;
         switch (statusString) {
-            case 'x':
-                status = Status.Done;
+            case ' ':
+                status = Status.Todo;
                 break;
             default:
-                status = Status.Todo;
+                status = Status.Done;
         }
 
         let dueDate: Moment | null;
