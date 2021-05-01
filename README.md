@@ -36,7 +36,7 @@ The `Important Project` note also has some tasks.
 The `Tasks` note gathers all tasks from the vault and displays them using queries.
 
 ![Create or Edit Modal](./resources/screenshots/modal.png)
-The `Tasks: Create or edit` command helps you when editing a command.
+The `Tasks: Create or edit` command helps you when editing a task.
 
 ## Installation
 
