@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "rollup --config rollup.config.js -w",
     "build": "rollup --config rollup.config.js",
-    "lint": "eslint ./src --fix && tsc --noEmit --pretty",
+    "lint": "eslint ./src --fix && tsc --noEmit --pretty && svelte-check",
     "test": "jest --ci",
     "test:dev": "jest --watch"
   },
@@ -22,7 +22,8 @@
   "devDependencies": {
     "@rollup/plugin-commonjs": "^15.1.0",
     "@rollup/plugin-node-resolve": "^9.0.0",
-    "@rollup/plugin-typescript": "^6.0.0",
+    "@rollup/plugin-typescript": "^8.2.1",
+    "@tsconfig/svelte": "^1.0.10",
     "@types/jest": "^26.0.22",
     "@types/node": "^14.14.2",
     "@typescript-eslint/eslint-plugin": "^4.19.0",
@@ -36,11 +37,16 @@
     "obsidian": "https://github.com/obsidianmd/obsidian-api/archive/068ff3052f0641baff90856dcb420dc2721680c9.tar.gz",
     "prettier": "^2.2.1",
     "rollup": "^2.32.1",
+    "rollup-plugin-svelte": "^7.1.0",
+    "svelte": "^3.37.0",
+    "svelte-check": "^1.5.2",
+    "svelte-preprocess": "^4.7.2",
     "ts-jest": "^26.5.4",
     "tslib": "^2.0.3",
-    "typescript": "^4.0.3"
+    "typescript": "^4.2.4"
   },
   "dependencies": {
+    "chrono-node": "^2.2.6",
     "moment": "^2.29.1",
     "rrule": "^2.6.8"
   }
