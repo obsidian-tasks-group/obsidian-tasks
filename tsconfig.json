@@ -1,4 +1,5 @@
 {
+  "extends": "@tsconfig/svelte/tsconfig.json",
   "compilerOptions": {
     "allowSyntheticDefaultImports": true,
     "baseUrl": "./src",
@@ -18,8 +19,9 @@
       "src": ["src/*", "tests/*"]
     },
     "types": [
-        "node",
-        "jest"
+      "jest",
+      "node",
+      "svelte"
     ],
     "lib": [
       "dom",
@@ -33,6 +35,6 @@
     "tests/**/*"
   ],
   "exclude": [
-      "node_modules"
+      "node_modules/*"
   ]
 }
