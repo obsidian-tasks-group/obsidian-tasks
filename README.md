@@ -122,13 +122,13 @@ When you use the command, you can also set a due date like "Monday", "tomorrow",
 Tasks can be recurring.
 In order to specify a recurrence rule of a task, you must append the "recurrence signifier 🔁" followed by the recurrence rule.
 For example: `🔁 every weekday` means the task will repeat every week on Monday through Friday.
-Every recurrence rule has to start with the work `every`.
+Every recurrence rule has to start with the word `every`.
 
 When you toggle the status of a recurring task to anything but "todo" (i.e. "done"), the orginal task that you wanted to toggle will be marked as done and get the done date appended to it, like any other task.
 In addition, *a new task will be put one line above the original task.*
 The new task will have the due date of the next occurrence after the due date of the original task.
 
-Take as an example the following task::
+Take as an example the following task:
 
 ```
 - [ ] take out the trash 🔁 every Sunday 📅 2021-04-25
@@ -164,8 +164,8 @@ You can list tasks from your entire vault by querying them using a `tasks` code 
 Tasks are sorted by due date and then path.
 
 **⚠️ The result list will list tasks unindented.**
-See #51 for a discussion around the topic.
-do not hesitate to contribute 😊
+See [#51](https://github.com/schemar/obsidian-tasks/issues/51) for a discussion around the topic.
+Do not hesitate to contribute 😊
 
 The simplest way to query tasks is this:
 
