@@ -6,7 +6,7 @@ import {
 
 import { Cache, State } from './Cache';
 import { Sort } from './Sort';
-import { Task } from './Task';
+import type { Task } from './Task';
 import { Query } from './Query';
 
 export class QueryRenderer {

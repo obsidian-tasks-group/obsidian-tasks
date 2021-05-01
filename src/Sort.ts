@@ -1,4 +1,4 @@
-import { Task } from './Task';
+import type { Task } from './Task';
 
 export class Sort {
     public static byDateThenPath(tasks: Task[]) {
