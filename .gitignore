@@ -9,3 +9,6 @@ yarn-error.log
 # build
 main.js
 *.js.map
+
+# obsidian
+data.json
