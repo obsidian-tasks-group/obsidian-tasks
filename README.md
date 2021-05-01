@@ -70,6 +70,8 @@ You can also bind a hotkey to the command.
 The command will parse what's on the current line in your editor and pre-populate a modal.
 In the modal, you can change the task's description, its due date, and a recurrence rule to have a repeating task.
 See below for more details on due dates and recurrence.
+You cannot toggle a task (un)done in the modal.
+For that, do one of the following.
 
 There are two ways to mark a task done:
 
