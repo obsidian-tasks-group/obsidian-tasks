@@ -3,7 +3,7 @@
 <p align="center">Task management for the <a href="https://obsidian.md/">Obsidian</a> knowledge base.</p>
 
 <p align="center">
-  ⚠️ Requires Obsidian 12.0.0 or higher ⚠️
+  ⚠️ Requires Obsidian 0.12.0 or higher ⚠️
 </p>
 
 <p align="center">
