@@ -71,7 +71,10 @@ class QueryRenderChild extends MarkdownRenderChild {
 
     private async render() {
         const content = this.containerEl.createEl('div');
-        if (this.cache.getState() === State.Warm) {
+        if (
+            this.cache.getState() === State.Warm &&
+            this.query.error === undefined
+        ) {
             const { taskList, tasksCount } = await this.createTasksList(
                 content,
             );
@@ -80,6 +83,8 @@ class QueryRenderChild extends MarkdownRenderChild {
                 text: `${tasksCount} task${tasksCount !== 1 ? 's' : ''}`,
                 cls: 'tasks-count',
             });
+        } else if (this.query.error !== undefined) {
+            content.innerHTML = `Tasks query: ${this.query.error}`;
         } else {
             content.innerHTML = 'Loading Tasks ...';
         }
