@@ -1,3 +1,4 @@
+import chrono from 'chrono-node';
 import moment from 'moment';
 
 import { Status, Task } from './Task';
@@ -5,11 +6,13 @@ import { Status, Task } from './Task';
 export class Query {
     private _limit: number | undefined = undefined;
     private _filters: ((task: Task) => boolean)[] = [];
+    private _error: string | undefined = undefined;
+
     private readonly noDueString = 'no due date';
-    private readonly dueRegexp = /due (before|after|on) (\d{4}-\d{2}-\d{2})/;
+    private readonly dueRegexp = /due (before|after|on)? ?(.*)/;
     private readonly doneString = 'done';
     private readonly notDoneString = 'not done';
-    private readonly doneRegexp = /done (before|after|on) (\d{4}-\d{2}-\d{2})/;
+    private readonly doneRegexp = /done (before|after|on)? ?(.*)/;
     private readonly pathRegexp = /path (includes|does not include) (.*)/;
     private readonly descriptionRegexp = /description (includes|does not include) (.*)/;
     private readonly limitRegexp = /limit (to )?(\d+)( tasks?)?/;
@@ -54,6 +57,8 @@ export class Query {
                     case this.limitRegexp.test(line):
                         this.parseLimit({ line });
                         break;
+                    default:
+                        this._error = 'do not understand query';
                 }
             });
     }
@@ -66,11 +71,19 @@ export class Query {
         return this._filters;
     }
 
+    public get error(): string | undefined {
+        return this._error;
+    }
+
     private parseDueFilter({ line }: { line: string }): void {
         const dueMatch = line.match(this.dueRegexp);
         if (dueMatch !== null) {
+            const filterDate = this.parseDate(dueMatch[2]);
+            if (!filterDate.isValid()) {
+                this._error = 'do not understand due date';
+            }
+
             let filter;
-            const filterDate = moment(dueMatch[2], Task.dateFormat);
             if (dueMatch[1] === 'before') {
                 filter = (task: Task) =>
                     task.dueDate ? task.dueDate.isBefore(filterDate) : false;
@@ -84,15 +97,19 @@ export class Query {
 
             this._filters.push(filter);
         } else {
-            console.error('Tasks: unknown query filter (due date):', line);
+            this._error = 'do not understand query filter (due date)';
         }
     }
 
     private parseDoneFilter({ line }: { line: string }): void {
         const doneMatch = line.match(this.doneRegexp);
         if (doneMatch !== null) {
+            const filterDate = this.parseDate(doneMatch[2]);
+            if (!filterDate.isValid()) {
+                this._error = 'do not understand done date';
+            }
+
             let filter;
-            const filterDate = moment(doneMatch[2], Task.dateFormat);
             if (doneMatch[1] === 'before') {
                 filter = (task: Task) =>
                     task.doneDate ? task.doneDate.isBefore(filterDate) : false;
@@ -121,10 +138,10 @@ export class Query {
                     (task: Task) => !task.path.includes(pathMatch[2]),
                 );
             } else {
-                console.error('Tasks: unknown query filter (path):', line);
+                this._error = 'do not understand query filter (path)';
             }
         } else {
-            console.error('Tasks: unknown query filter (path):', line);
+            this._error = 'do not understand query filter (path)';
         }
     }
 
@@ -142,13 +159,10 @@ export class Query {
                         !task.description.includes(descriptionMatch[2]),
                 );
             } else {
-                console.error(
-                    'Tasks: unknown query filter (description):',
-                    line,
-                );
+                this._error = 'do not understand query filter (description)';
             }
         } else {
-            console.error('Tasks: unknown query filter (description):', line);
+            this._error = 'do not understand query filter (description)';
         }
     }
 
@@ -159,7 +173,12 @@ export class Query {
             const limit = Number.parseInt(limitMatch[2], 10);
             this._limit = limit;
         } else {
-            console.error('Tasks: unknown query limit:', line);
+            this._error = 'do not understand query limit';
         }
+    }
+
+    private parseDate(input: string): moment.Moment {
+        // Using start of date to correctly match on comparison with other dates (like equality).
+        return moment(chrono.parseDate(input)).startOf('day');
     }
 }

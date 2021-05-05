@@ -176,7 +176,6 @@ The simplest way to query tasks is this:
 
 In preview mode, this will list *all* tasks from your vault, regardless of their properties like status.
 This is probably not what you want. Therefore, Tasks allows you to filter the tasks that you want to show.
-All date filters must be in the format `YYYY-MM-DD`, meaning `Year-Month-Day` with leading zeros.
 
 The following filters exist:
 
@@ -193,6 +192,20 @@ The following filters exist:
     - Only lists the first `<number>` tasks of the result.
     - Shorthand is `limit <number>`.
 
+#### Dates
+`<date>` filters can be given in natural language or in formal notation.
+The following are some examples of valid `<date>` filters as inspiration:
+- `2021-05-05`
+- `today`
+- `tomorrow`
+- `next monday`
+- `last friday`
+- `in two weeks`
+
+Note that if it is Wednesday and you write `tuesday`, Tasks assumes you mean "yesterday", as that is the closest Tuesday.
+Use `next tuesday` instead if you mean "next tuesday".
+
+#### Matching
 All filters of a query have to match in order for a task to be listed.
 This means you cannot show tasks that have "GitHub in the path and have no due date or are due after 2021-04-04".
 Instead you would have two queries, one for each condition:
@@ -212,6 +225,21 @@ Instead you would have two queries, one for each condition:
     ```
 
 #### Examples
+
+All open tasks that are due today:
+
+    ```tasks
+    not done
+    due today
+    ```
+
+All open tasks that are due within the next two weeks, but are not overdue (due today or later):
+
+    ```tasks
+    not done
+    due after yesterday
+    due before in two weeks
+    ```
 
 Show all tasks that aren't done, are due on the 9th of April 2021, and where the path includes `GitHub`:
 
