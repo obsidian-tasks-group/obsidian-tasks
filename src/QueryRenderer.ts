@@ -6,7 +6,6 @@ import {
 
 import { Cache, State } from './Cache';
 import { Sort } from './Sort';
-import type { Task } from './Task';
 import { Query } from './Query';
 
 export class QueryRenderer {
@@ -32,7 +31,7 @@ export class QueryRenderer {
             new QueryRenderChild({
                 cache: this.cache,
                 container: element,
-                filters: query.filters,
+                query,
             }),
         );
     }
@@ -40,23 +39,23 @@ export class QueryRenderer {
 
 class QueryRenderChild extends MarkdownRenderChild {
     private readonly cache: Cache;
-    private readonly filters: ((task: Task) => boolean)[];
+    private readonly query: Query;
 
     private cacheCallbackId: number | undefined;
 
     constructor({
         cache,
         container,
-        filters,
+        query,
     }: {
         cache: Cache;
         container: HTMLElement;
-        filters: ((task: Task) => boolean)[];
+        query: Query;
     }) {
         super(container);
 
         this.cache = cache;
-        this.filters = filters;
+        this.query = query;
     }
 
     onload() {
@@ -92,17 +91,20 @@ class QueryRenderChild extends MarkdownRenderChild {
         content: HTMLDivElement,
     ): Promise<{ taskList: HTMLUListElement; tasksCount: number }> {
         let tasks = this.cache.getTasks();
-        for (const filter of this.filters) {
+        this.query.filters.forEach((filter) => {
             tasks = tasks.filter(filter);
-        }
+        });
 
-        const tasksSorted = Sort.byDateThenPath(tasks);
-        const tasksCount = tasksSorted.length;
+        const tasksSortedLimited = Sort.byDateThenPath(tasks).slice(
+            0,
+            this.query.limit,
+        );
+        const tasksCount = tasksSortedLimited.length;
 
         const taskList = content.createEl('ul');
         taskList.addClass('contains-task-list');
         for (let i = 0; i < tasksCount; i++) {
-            const task = tasksSorted[i];
+            const task = tasksSortedLimited[i];
 
             let fileName: string | undefined;
             const fileNameMatch = task.path.match(/([^/]+)\.md$/);
