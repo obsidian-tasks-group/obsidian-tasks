@@ -15,6 +15,7 @@ export class Query {
     private readonly doneRegexp = /done (before|after|on)? ?(.*)/;
     private readonly pathRegexp = /path (includes|does not include) (.*)/;
     private readonly descriptionRegexp = /description (includes|does not include) (.*)/;
+    private readonly headingRegexp = /heading (includes|does not include) (.*)/;
     private readonly limitRegexp = /limit (to )?(\d+)( tasks?)?/;
     private readonly excludeSubItemsString = 'exclude sub-items';
 
@@ -53,6 +54,9 @@ export class Query {
                         break;
                     case this.descriptionRegexp.test(line):
                         this.parseDescriptionFilter({ line });
+                        break;
+                    case this.headingRegexp.test(line):
+                        this.parseHeadingFilter({ line });
                         break;
                     case this.limitRegexp.test(line):
                         this.parseLimit({ line });
@@ -163,6 +167,34 @@ export class Query {
             }
         } else {
             this._error = 'do not understand query filter (description)';
+        }
+    }
+
+    private parseHeadingFilter({ line }: { line: string }): void {
+        const headingMatch = line.match(this.headingRegexp);
+        if (headingMatch !== null) {
+            const filterMethod = headingMatch[1].toLowerCase();
+            if (filterMethod === 'includes') {
+                this._filters.push(
+                    (task: Task) =>
+                        task.precedingHeader !== null &&
+                        task.precedingHeader
+                            .toLowerCase()
+                            .includes(headingMatch[2]),
+                );
+            } else if (headingMatch[1] === 'does not include') {
+                this._filters.push(
+                    (task: Task) =>
+                        task.precedingHeader !== null &&
+                        !task.precedingHeader
+                            .toLowerCase()
+                            .includes(headingMatch[2]),
+                );
+            } else {
+                this._error = 'do not understand query filter (heading)';
+            }
+        } else {
+            this._error = 'do not understand query filter (heading)';
         }
     }
 

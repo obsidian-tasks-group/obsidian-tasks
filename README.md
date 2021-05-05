@@ -186,6 +186,11 @@ The following filters exist:
 - `due (before|after|on) <date>`
 - `path (includes|does not include) <path>`
 - `description (includes|does not include) <string>`
+- `heading (includes|does not include) <string>`
+    - Whether or not the heading preceding the task includes the given string.
+    - Always tries to match the closest heading above the task, regardless of heading level.
+    - Will never match a task that does not have a preceding heading in its file.
+    - Matches case-insensitive (disregards capitalization).
 - `exclude sub-items`
     - When this is set, the result list will only include tasks that are not indented in their file. It will only show tasks that are top level list items in their list.
 - `limit to <number> tasks`
@@ -239,6 +244,13 @@ All open tasks that are due within the next two weeks, but are not overdue (due 
     not done
     due after yesterday
     due before in two weeks
+    ```
+
+All done tasks that are anywhere in the vault under a `tasks` heading (e.g. `## Tasks`):
+
+    ```tasks
+    done
+    heading includes tasks
     ```
 
 Show all tasks that aren't done, are due on the 9th of April 2021, and where the path includes `GitHub`:
