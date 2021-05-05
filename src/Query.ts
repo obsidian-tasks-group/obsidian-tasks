@@ -3,7 +3,8 @@ import moment from 'moment';
 import { Status, Task } from './Task';
 
 export class Query {
-    public readonly filters: ((task: Task) => boolean)[];
+    private _limit: number | undefined = undefined;
+    private _filters: ((task: Task) => boolean)[] = [];
     private readonly noDueString = 'no due date';
     private readonly dueRegexp = /due (before|after|on) (\d{4}-\d{2}-\d{2})/;
     private readonly doneString = 'done';
@@ -11,68 +12,61 @@ export class Query {
     private readonly doneRegexp = /done (before|after|on) (\d{4}-\d{2}-\d{2})/;
     private readonly pathRegexp = /path (includes|does not include) (.*)/;
     private readonly descriptionRegexp = /description (includes|does not include) (.*)/;
+    private readonly limitRegexp = /limit (to )?(\d+)( tasks?)?/;
     private readonly excludeSubItemsString = 'exclude sub-items';
 
     constructor({ source }: { source: string }) {
-        this.filters = this.parseFilters({ source });
+        source
+            .split('\n')
+            .map((line: string) => line.trim())
+            .forEach((line: string) => {
+                switch (true) {
+                    case line === '':
+                        break;
+                    case line === this.doneString:
+                        this._filters.push(
+                            (task) => task.status === Status.Done,
+                        );
+                        break;
+                    case line === this.notDoneString:
+                        this._filters.push(
+                            (task) => task.status !== Status.Done,
+                        );
+                        break;
+                    case line === this.excludeSubItemsString:
+                        this._filters.push((task) => task.indentation === '');
+                        break;
+                    case line === this.noDueString:
+                        this._filters.push((task) => task.dueDate === null);
+                        break;
+                    case this.dueRegexp.test(line):
+                        this.parseDueFilter({ line });
+                        break;
+                    case this.doneRegexp.test(line):
+                        this.parseDoneFilter({ line });
+                        break;
+                    case this.pathRegexp.test(line):
+                        this.parsePathFilter({ line });
+                        break;
+                    case this.descriptionRegexp.test(line):
+                        this.parseDescriptionFilter({ line });
+                        break;
+                    case this.limitRegexp.test(line):
+                        this.parseLimit({ line });
+                        break;
+                }
+            });
     }
 
-    private parseFilters({
-        source,
-    }: {
-        source: string;
-    }): ((task: Task) => boolean)[] {
-        const filters: ((task: Task) => boolean)[] = [];
-        const sourceLines = source.split('\n').map((line) => line.trim());
-
-        for (const sourceLine of sourceLines) {
-            if (sourceLine === '') {
-                continue;
-            }
-
-            if (sourceLine === this.doneString) {
-                filters.push((task) => task.status === Status.Done);
-            } else if (sourceLine === this.notDoneString) {
-                filters.push((task) => task.status !== Status.Done);
-            } else if (sourceLine === this.noDueString) {
-                filters.push((task) => task.dueDate === null);
-            } else if (this.dueRegexp.test(sourceLine)) {
-                const filter = this.parseDueFilter({ line: sourceLine });
-                if (filter !== null) {
-                    filters.push(filter);
-                }
-            } else if (this.doneRegexp.test(sourceLine)) {
-                const filter = this.parseDoneFilter({ line: sourceLine });
-                if (filter !== null) {
-                    filters.push(filter);
-                }
-            } else if (this.pathRegexp.test(sourceLine)) {
-                const filter = this.parsePathFilter({ line: sourceLine });
-                if (filter !== null) {
-                    filters.push(filter);
-                }
-            } else if (this.descriptionRegexp.test(sourceLine)) {
-                const filter = this.parseDescriptionFilter({
-                    line: sourceLine,
-                });
-                if (filter !== null) {
-                    filters.push(filter);
-                }
-            } else if (sourceLine === this.excludeSubItemsString) {
-                filters.push((task) => task.indentation === '');
-            } else {
-                console.error('Tasks: unknown query filter:', sourceLine);
-            }
-        }
-
-        return filters;
+    public get limit(): number | undefined {
+        return this._limit;
     }
 
-    private parseDueFilter({
-        line,
-    }: {
-        line: string;
-    }): ((task: Task) => boolean) | null {
+    public get filters(): ((task: Task) => boolean)[] {
+        return this._filters;
+    }
+
+    private parseDueFilter({ line }: { line: string }): void {
         const dueMatch = line.match(this.dueRegexp);
         if (dueMatch !== null) {
             let filter;
@@ -88,18 +82,13 @@ export class Query {
                     task.dueDate ? task.dueDate.isSame(filterDate) : false;
             }
 
-            return filter;
+            this._filters.push(filter);
+        } else {
+            console.error('Tasks: unknown query filter (due date):', line);
         }
-
-        console.error('Tasks: unknown query filter (due date):', line);
-        return null;
     }
 
-    private parseDoneFilter({
-        line,
-    }: {
-        line: string;
-    }): ((task: Task) => boolean) | null {
+    private parseDoneFilter({ line }: { line: string }): void {
         const doneMatch = line.match(this.doneRegexp);
         if (doneMatch !== null) {
             let filter;
@@ -115,65 +104,62 @@ export class Query {
                     task.doneDate ? task.doneDate.isSame(filterDate) : false;
             }
 
-            return filter;
+            this._filters.push(filter);
         }
-
-        console.error('Tasks: unknown query filter (done date):', line);
-        return null;
     }
 
-    private parsePathFilter({
-        line,
-    }: {
-        line: string;
-    }): ((task: Task) => boolean) | null {
+    private parsePathFilter({ line }: { line: string }): void {
         const pathMatch = line.match(this.pathRegexp);
         if (pathMatch !== null) {
-            let filter;
             const filterMethod = pathMatch[1];
             if (filterMethod === 'includes') {
-                filter = (task: Task) => task.path.includes(pathMatch[2]);
+                this._filters.push((task: Task) =>
+                    task.path.includes(pathMatch[2]),
+                );
             } else if (pathMatch[1] === 'does not include') {
-                filter = (task: Task) => !task.path.includes(pathMatch[2]);
+                this._filters.push(
+                    (task: Task) => !task.path.includes(pathMatch[2]),
+                );
             } else {
                 console.error('Tasks: unknown query filter (path):', line);
-                return null;
             }
-
-            return filter;
+        } else {
+            console.error('Tasks: unknown query filter (path):', line);
         }
-
-        console.error('Tasks: unknown query filter (path):', line);
-        return null;
     }
 
-    private parseDescriptionFilter({
-        line,
-    }: {
-        line: string;
-    }): ((task: Task) => boolean) | null {
+    private parseDescriptionFilter({ line }: { line: string }): void {
         const descriptionMatch = line.match(this.descriptionRegexp);
         if (descriptionMatch !== null) {
-            let filter;
             const filterMethod = descriptionMatch[1];
             if (filterMethod === 'includes') {
-                filter = (task: Task) =>
-                    task.description.includes(descriptionMatch[2]);
+                this._filters.push((task: Task) =>
+                    task.description.includes(descriptionMatch[2]),
+                );
             } else if (descriptionMatch[1] === 'does not include') {
-                filter = (task: Task) =>
-                    !task.description.includes(descriptionMatch[2]);
+                this._filters.push(
+                    (task: Task) =>
+                        !task.description.includes(descriptionMatch[2]),
+                );
             } else {
                 console.error(
                     'Tasks: unknown query filter (description):',
                     line,
                 );
-                return null;
             }
-
-            return filter;
+        } else {
+            console.error('Tasks: unknown query filter (description):', line);
         }
+    }
 
-        console.error('Tasks: unknown query filter (description):', line);
-        return null;
+    private parseLimit({ line }: { line: string }): void {
+        const limitMatch = line.match(this.limitRegexp);
+        if (limitMatch !== null) {
+            // limitMatch[2] is per regex always digits and therefore parsable.
+            const limit = Number.parseInt(limitMatch[2], 10);
+            this._limit = limit;
+        } else {
+            console.error('Tasks: unknown query limit:', line);
+        }
     }
 }
