@@ -189,6 +189,9 @@ The following filters exist:
 - `description (includes|does not include) <string>`
 - `exclude sub-items`
     - When this is set, the result list will only include tasks that are not indented in their file. It will only show tasks that are top level list items in their list.
+- `limit to <number> tasks`
+    - Only lists the first `<number>` tasks of the result.
+    - Shorthand is `limit <number>`.
 
 All filters of a query have to match in order for a task to be listed.
 This means you cannot show tasks that have "GitHub in the path and have no due date or are due after 2021-04-04".
@@ -231,6 +234,15 @@ Show all tasks that were done before the 1st of December 2020:
     ```tasks
     done before 2020-12-01
     ```
+
+Show one task that is due on the 5th of May and includes `#prio1` in its description:
+
+    ```tasks
+    not done
+    due on 2021-05-05
+    description includes #prio1
+    limit to 1 tasks
+    ````
 
 ### Tips
 
