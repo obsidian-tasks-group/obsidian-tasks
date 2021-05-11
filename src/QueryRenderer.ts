@@ -107,7 +107,10 @@ class QueryRenderChild extends MarkdownRenderChild {
         const tasksCount = tasksSortedLimited.length;
 
         const taskList = content.createEl('ul');
-        taskList.addClass('contains-task-list');
+        taskList.addClasses([
+            'contains-task-list',
+            'plugin-tasks-query-result',
+        ]);
         for (let i = 0; i < tasksCount; i++) {
             const task = tasksSortedLimited[i];
 
