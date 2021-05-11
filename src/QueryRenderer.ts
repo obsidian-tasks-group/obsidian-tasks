@@ -100,7 +100,7 @@ class QueryRenderChild extends MarkdownRenderChild {
             tasks = tasks.filter(filter);
         });
 
-        const tasksSortedLimited = Sort.byDateThenPath(tasks).slice(
+        const tasksSortedLimited = Sort.byStatusThenDateThenPath(tasks).slice(
             0,
             this.query.limit,
         );
