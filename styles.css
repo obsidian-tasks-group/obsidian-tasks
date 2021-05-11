@@ -1,12 +1,3 @@
-.markdown-preview-view ul > li.tasks-item {
-    list-style: none;
-    text-indent: -1.5em;
-}
-
-.markdown-preview-view ul > li.tasks-item > * {
-    text-indent: 0;
-}
-
 .tasks-count {
     color: var(--text-faint);
     padding-left: 20px;
