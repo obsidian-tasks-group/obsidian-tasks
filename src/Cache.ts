@@ -179,9 +179,11 @@ export class Cache {
             return;
         }
 
-        const listItems = fileCache.listItems;
+        let listItems = fileCache.listItems;
         if (listItems === undefined) {
-            return;
+            // When there is no list items cache, there are no tasks.
+            // Still continue to notify watchers of removal.
+            listItems = [];
         }
 
         const fileContent = await this.vault.cachedRead(file);
