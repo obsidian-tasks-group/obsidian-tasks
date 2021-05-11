@@ -164,7 +164,7 @@ export class Task {
         listIndex: number;
     }): Promise<HTMLLIElement> {
         const li: HTMLLIElement = parentUlElement.createEl('li');
-        li.addClass('task-list-item');
+        li.addClasses(['task-list-item', 'plugin-tasks-list-item']);
 
         let taskAsString = this.toString();
         const { globalFilter, removeGlobalFilter } = getSettings();
