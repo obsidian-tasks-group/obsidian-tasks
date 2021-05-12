@@ -18,8 +18,9 @@ export enum State {
 
 export class Cache {
     private readonly metadataCache: MetadataCache;
+    private readonly metadataCacheEventReferences: EventRef[];
     private readonly vault: Vault;
-    private readonly eventReferences: EventRef[];
+    private readonly vaultEventReferences: EventRef[];
 
     private readonly tasksMutex: Mutex;
     private state: State;
@@ -36,8 +37,9 @@ export class Cache {
         vault: Vault;
     }) {
         this.metadataCache = metadataCache;
+        this.metadataCacheEventReferences = [];
         this.vault = vault;
-        this.eventReferences = [];
+        this.vaultEventReferences = [];
 
         this.tasksMutex = new Mutex();
         this.state = State.Cold;
@@ -47,11 +49,16 @@ export class Cache {
         this.registeredNextId = 0;
 
         this.subscribeToCache();
+        this.subscribeToVault();
     }
 
     public unload(): void {
-        for (const eventReference of this.eventReferences) {
+        for (const eventReference of this.metadataCacheEventReferences) {
             this.metadataCache.offref(eventReference);
+        }
+
+        for (const eventReference of this.vaultEventReferences) {
+            this.vault.offref(eventReference);
         }
     }
 
@@ -89,7 +96,7 @@ export class Cache {
         }
     }
 
-    private subscribeToCache() {
+    private subscribeToCache(): void {
         // Resolved fires on every change. We only want to initialize if we haven't started already.
         const resolvedEventeReference = this.metadataCache.on(
             'resolved',
@@ -109,7 +116,7 @@ export class Cache {
                 }
             },
         );
-        this.eventReferences.push(resolvedEventeReference);
+        this.metadataCacheEventReferences.push(resolvedEventeReference);
 
         // Does not fire when starting up obsidian and only works for changes.
         const changedEventReference = this.metadataCache.on(
@@ -120,8 +127,10 @@ export class Cache {
                 });
             },
         );
-        this.eventReferences.push(changedEventReference);
+        this.metadataCacheEventReferences.push(changedEventReference);
+    }
 
+    private subscribeToVault(): void {
         const createdEventReference = this.vault.on(
             'create',
             (file: TAbstractFile) => {
@@ -134,7 +143,7 @@ export class Cache {
                 });
             },
         );
-        this.eventReferences.push(createdEventReference);
+        this.vaultEventReferences.push(createdEventReference);
 
         const deletedEventReference = this.vault.on(
             'delete',
@@ -147,10 +156,12 @@ export class Cache {
                     this.tasks = this.tasks.filter((task: Task) => {
                         return task.path !== file.path;
                     });
+
+                    this.notifySubscribers();
                 });
             },
         );
-        this.eventReferences.push(deletedEventReference);
+        this.vaultEventReferences.push(deletedEventReference);
 
         const renamedEventReference = this.vault.on(
             'rename',
@@ -159,18 +170,22 @@ export class Cache {
                     return;
                 }
 
-                this.tasks = this.tasks.map(
-                    (task: Task): Task => {
-                        if (task.path === oldPath) {
-                            return new Task({ ...task, path: file.path });
-                        } else {
-                            return task;
-                        }
-                    },
-                );
+                this.tasksMutex.runExclusive(() => {
+                    this.tasks = this.tasks.map(
+                        (task: Task): Task => {
+                            if (task.path === oldPath) {
+                                return new Task({ ...task, path: file.path });
+                            } else {
+                                return task;
+                            }
+                        },
+                    );
+
+                    this.notifySubscribers();
+                });
             },
         );
-        this.eventReferences.push(renamedEventReference);
+        this.vaultEventReferences.push(renamedEventReference);
     }
 
     private async indexFile(file: TFile): Promise<void> {
