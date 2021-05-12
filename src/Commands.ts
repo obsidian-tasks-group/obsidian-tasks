@@ -132,6 +132,9 @@ export class Commands {
                         .join('\n');
                     editor.setLine(lineNumber, serialized);
                 }
+
+                // Put the cursor back where it was on the line.
+                editor.setCursor(cursorPosition);
             },
         });
     }
