@@ -3537,9 +3537,9 @@ object.values@^1.1.1:
     es-abstract "^1.18.0-next.2"
     has "^1.0.3"
 
-"obsidian@https://github.com/obsidianmd/obsidian-api/archive/068ff3052f0641baff90856dcb420dc2721680c9.tar.gz":
-  version "0.12.0"
-  resolved "https://github.com/obsidianmd/obsidian-api/archive/068ff3052f0641baff90856dcb420dc2721680c9.tar.gz#1159f454f99fadb43a7d287fd1e1d746cda3d93e"
+"obsidian@https://github.com/obsidianmd/obsidian-api/archive/48bd2b91f66aa7d3768629be48c52e5351ec6696.tar.gz":
+  version "0.12.2"
+  resolved "https://github.com/obsidianmd/obsidian-api/archive/48bd2b91f66aa7d3768629be48c52e5351ec6696.tar.gz#9e62de99bfe711dbd57b649ee6b790918e1061df"
   dependencies:
     "@types/codemirror" "0.0.108"
     moment "2.29.1"
