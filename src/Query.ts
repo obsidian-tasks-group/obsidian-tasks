@@ -1,5 +1,4 @@
 import chrono from 'chrono-node';
-import moment from 'moment';
 
 import { Status, Task } from './Task';
 
@@ -211,6 +210,6 @@ export class Query {
 
     private parseDate(input: string): moment.Moment {
         // Using start of date to correctly match on comparison with other dates (like equality).
-        return moment(chrono.parseDate(input)).startOf('day');
+        return window.moment(chrono.parseDate(input)).startOf('day');
     }
 }
