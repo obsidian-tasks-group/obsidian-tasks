@@ -1,7 +1,8 @@
-import { App, MarkdownView, Plugin, View, Workspace } from 'obsidian';
-import { TaskModal } from 'TaskModal';
+import type { App, Editor, Plugin, View } from 'obsidian';
+import { MarkdownView } from 'obsidian';
 
 import { Status, Task } from './Task';
+import { TaskModal } from './TaskModal';
 
 export class Commands {
     private readonly plugin: Plugin;
@@ -10,41 +11,27 @@ export class Commands {
         return this.plugin.app;
     }
 
-    private get workspace(): Workspace {
-        return this.app.workspace;
-    }
-
     constructor({ plugin }: { plugin: Plugin }) {
         this.plugin = plugin;
 
         plugin.addCommand({
             id: 'edit-task',
             name: 'Create or edit',
-            checkCallback: (checking: boolean) => {
-                const markdownView = this.getActiveMarkdownView();
-                if (markdownView === null) {
-                    return false;
-                }
-
-                const editor = markdownView.editor;
-
+            editorCheckCallback: (
+                checking: boolean,
+                editor: Editor,
+                view: View,
+            ) => {
                 if (checking) {
-                    if (editor === null) {
-                        // If we are not in an editor, the command shouldn't be shown.
-                        return false;
-                    }
-
-                    // We want to be able to create a task from any line.
-                    return true;
+                    return view instanceof MarkdownView;
                 }
 
-                // We are certain we are in the editor on a tasks line due to the check above.
-                if (markdownView === null || editor === null) {
+                if (!(view instanceof MarkdownView)) {
+                    // Should never happen due to check above.
                     return;
                 }
 
-                // We are certain we are in the editor on a tasks line due to the check above.
-                const path = markdownView.file?.path;
+                const path = view.file?.path;
                 if (path === undefined) {
                     return;
                 }
@@ -74,19 +61,17 @@ export class Commands {
         plugin.addCommand({
             id: 'toggle-done',
             name: 'Toggle Done',
-            checkCallback: (checking: boolean) => {
-                const markdownView = this.getActiveMarkdownView();
-                if (markdownView === null) {
-                    return false;
-                }
-
-                const editor = markdownView.editor;
-
+            editorCheckCallback: (
+                checking: boolean,
+                editor: Editor,
+                view: View,
+            ) => {
                 if (checking) {
-                    if (editor === null) {
-                        // If we are not in an editor, the command shouldn't be shown.
+                    if (!(view instanceof MarkdownView)) {
+                        // If we are not in a markdown view, the command shouldn't be shown.
                         return false;
                     }
+
                     const currentLine = editor.getLine(editor.getCursor().line);
 
                     // We want to toggle any checklist item, task or not, as this command is
@@ -97,13 +82,13 @@ export class Commands {
                     return isTasksLine;
                 }
 
-                if (editor === null) {
-                    // If we are not in an editor, the command shouldn't be shown.
+                if (!(view instanceof MarkdownView)) {
+                    // Should never happen due to check above.
                     return;
                 }
 
                 // We are certain we are in the editor on a tasks line due to the check above.
-                const path = this.workspace.getActiveFile()?.path;
+                const path = view.file?.path;
                 if (path === undefined) {
                     return;
                 }
@@ -149,15 +134,6 @@ export class Commands {
                 }
             },
         });
-    }
-
-    private getActiveMarkdownView(): MarkdownView | null {
-        const view: View = this.workspace.activeLeaf.view;
-        if (view instanceof MarkdownView) {
-            return view;
-        } else {
-            return null;
-        }
     }
 
     private taskFromLine({ line, path }: { line: string; path: string }): Task {
