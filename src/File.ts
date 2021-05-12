@@ -111,7 +111,7 @@ const tryRepetitive = async ({
         return retry();
     }
 
-    const fileContent = await vault.cachedRead(file);
+    const fileContent = await vault.read(file);
     const fileLines = fileContent.split('\n');
 
     const { globalFilter } = getSettings();
