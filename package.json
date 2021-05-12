@@ -34,7 +34,7 @@
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-prettier": "^3.3.1",
     "jest": "^26.6.3",
-    "obsidian": "https://github.com/obsidianmd/obsidian-api/archive/068ff3052f0641baff90856dcb420dc2721680c9.tar.gz",
+    "obsidian": "https://github.com/obsidianmd/obsidian-api/archive/48bd2b91f66aa7d3768629be48c52e5351ec6696.tar.gz",
     "prettier": "^2.2.1",
     "rollup": "^2.32.1",
     "rollup-plugin-svelte": "^7.1.0",
