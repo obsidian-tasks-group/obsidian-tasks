@@ -1,4 +1,4 @@
-import moment, { Moment } from 'moment';
+import type { Moment } from 'moment';
 import { Component, MarkdownRenderer } from 'obsidian';
 import { RRule } from 'rrule';
 
@@ -114,7 +114,7 @@ export class Task {
         if (dueDateMatch === null) {
             dueDate = null;
         } else {
-            dueDate = moment(dueDateMatch[1], Task.dateFormat);
+            dueDate = window.moment(dueDateMatch[1], Task.dateFormat);
         }
 
         let doneDate: Moment | null;
@@ -122,7 +122,7 @@ export class Task {
         if (doneDateMatch === null) {
             doneDate = null;
         } else {
-            doneDate = moment(doneDateMatch[1], Task.dateFormat);
+            doneDate = window.moment(doneDateMatch[1], Task.dateFormat);
         }
 
         let recurrenceRule: RRule | null;
@@ -251,20 +251,20 @@ export class Task {
         let newDoneDate = null;
         let nextOccurrence: Moment | undefined;
         if (newStatus !== Status.Todo) {
-            newDoneDate = moment();
+            newDoneDate = window.moment();
 
             // If this task is no longer todo, we need to check if it is recurring:
             if (this.recurrenceRule !== null) {
                 // If no due date, next occurrence is after "today".
                 const after: Moment =
-                    this.dueDate !== null ? this.dueDate : moment();
+                    this.dueDate !== null ? this.dueDate : window.moment();
                 // RRule disregards the timezone:
                 after.endOf('day').utc(true);
                 const next = this.recurrenceRule.after(after.toDate(), false);
 
                 if (next !== null) {
                     // Re-add the timezone that RRule disregarded:
-                    nextOccurrence = moment.utc(next);
+                    nextOccurrence = window.moment.utc(next);
                 }
             }
         }

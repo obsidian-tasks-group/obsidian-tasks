@@ -1,6 +1,5 @@
 <script lang='ts'>
     import chrono from 'chrono-node';
-    import moment from 'moment';
     import { RRule } from 'rrule';
     import { onMount } from 'svelte';
     import { getSettings } from '../Settings';
@@ -35,7 +34,7 @@
         } else {
             const parsed = chrono.parseDate(editableTask.dueDate, new Date(), { forwardDate: true });
             if (parsed !== null) {
-                parsedDueDate = moment(parsed).format('YYYY-MM-DD');
+                parsedDueDate = window.moment(parsed).format('YYYY-MM-DD');
             } else {
                 parsedDueDate = '<i>invalid due date</i>'
             }
@@ -60,7 +59,7 @@
         } else {
             const parsed = chrono.parseDate(editableTask.doneDate);
             if (parsed !== null) {
-                parsedDone = moment(parsed).format('YYYY-MM-DD');
+                parsedDone = window.moment(parsed).format('YYYY-MM-DD');
             } else {
                 parsedDone = '<i>invalid done date</i>'
             }
@@ -97,7 +96,7 @@
         let dueDate: moment.Moment | null = null;
         const parsedDueDate = chrono.parseDate(editableTask.dueDate, new Date(), { forwardDate: true });
         if (parsedDueDate !== null) {
-            dueDate = moment(parsedDueDate);
+            dueDate = window.moment(parsedDueDate);
         }
 
         const updatedTask = new Task({
@@ -106,7 +105,7 @@
             status: editableTask.status,
             recurrenceRule,
             dueDate,
-            doneDate: moment(editableTask.doneDate, 'YYYY-MM-DD').isValid() ? moment(editableTask.doneDate, 'YYYY-MM-DD') : null,
+            doneDate: window.moment(editableTask.doneDate, 'YYYY-MM-DD').isValid() ? window.moment(editableTask.doneDate, 'YYYY-MM-DD') : null,
         });
 
         onSubmit([updatedTask]);

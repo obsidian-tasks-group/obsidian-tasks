@@ -2,6 +2,7 @@ import moment from 'moment';
 import { Status, Task } from '../src/Task';
 
 jest.mock('obsidian');
+window.moment = moment;
 
 it('parses a task from a line', () => {
     // Arrange
