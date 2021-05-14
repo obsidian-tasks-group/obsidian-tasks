@@ -3,10 +3,6 @@
 <p align="center">Task management for the <a href="https://obsidian.md/">Obsidian</a> knowledge base.</p>
 
 <p align="center">
-  ⚠️ Requires Obsidian 0.12.0 or higher ⚠️
-</p>
-
-<p align="center">
   <a href="#installation">Installation</a> •
   <a href="#usage">Usage</a> •
   <a href="#filtering-checklist-items">Filtering</a> •
@@ -20,6 +16,12 @@
 Track tasks across your entire vault. Query them and mark them as done wherever you want. Supports due dates, recurring tasks (repetition), done dates, sub-set of checklist items, and filtering.
 
 *You can toggle the task status in any view or query and it will update the source file.*
+
+> Please submit bugs here: https://github.com/schemar/obsidian-tasks/issues
+>
+> Please submit ideas here: https://github.com/schemar/obsidian-tasks/discussions/categories/ideas
+>
+> Please ask for help here: https://github.com/schemar/obsidian-tasks/discussions/categories/q-a
 
 ## Screenshots
 
