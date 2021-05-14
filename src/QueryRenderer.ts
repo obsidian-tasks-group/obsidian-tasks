@@ -25,13 +25,11 @@ export class QueryRenderer {
         element: HTMLElement,
         context: MarkdownPostProcessorContext,
     ) {
-        const query = new Query({ source });
-
         context.addChild(
             new QueryRenderChild({
                 cache: this.cache,
                 container: element,
-                query,
+                source,
             }),
         );
     }
@@ -39,34 +37,66 @@ export class QueryRenderer {
 
 class QueryRenderChild extends MarkdownRenderChild {
     private readonly cache: Cache;
-    private readonly query: Query;
+    private readonly source: string;
+    private query: Query;
 
     private cacheCallbackId: number | undefined;
+    private queryReloadTimeout: NodeJS.Timeout | undefined;
 
     constructor({
         cache,
         container,
-        query,
+        source,
     }: {
         cache: Cache;
         container: HTMLElement;
-        query: Query;
+        source: string;
     }) {
         super(container);
 
         this.cache = cache;
-        this.query = query;
+        this.source = source;
+
+        this.query = new Query({ source });
     }
 
     onload() {
         this.render();
         this.cacheCallbackId = this.cache.subscribe(this.render.bind(this));
+
+        this.reloadQueryAtMidnight();
     }
 
     onunload() {
         if (this.cacheCallbackId !== undefined) {
             this.cache.unsubscribe({ id: this.cacheCallbackId });
         }
+
+        if (this.queryReloadTimeout !== undefined) {
+            clearTimeout(this.queryReloadTimeout);
+        }
+    }
+
+    /**
+     * Reloads the query after midnight to update results from relative date queries.
+     *
+     * For example, the query `due today` changes every day. This makes sure that all query results
+     * are re-rendered after midnight every day to ensure up-to-date results without having to
+     * reload obsidian. Creating a new query object from the source re-applies the relative dates
+     * to "now".
+     */
+    private reloadQueryAtMidnight(): void {
+        const midnight = new Date();
+        midnight.setHours(24, 0, 0, 0);
+        const now = new Date();
+
+        const millisecondsToMidnight = midnight.getTime() - now.getTime();
+
+        this.queryReloadTimeout = setTimeout(() => {
+            this.query = new Query({ source: this.source });
+            this.render();
+            this.reloadQueryAtMidnight();
+        }, millisecondsToMidnight + 1000); // Add buffer to be sure to run after midnight.
     }
 
     private async render() {
