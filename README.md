@@ -210,6 +210,8 @@ The following are some examples of valid `<date>` filters as inspiration:
 Note that if it is Wednesday and you write `tuesday`, Tasks assumes you mean "yesterday", as that is the closest Tuesday.
 Use `next tuesday` instead if you mean "next tuesday".
 
+When the day changes, relative dates like `due today` are re-evaluated so that the list stays up-to-date.
+
 #### Matching
 All filters of a query have to match in order for a task to be listed.
 This means you cannot show tasks that have "GitHub in the path and have no due date or are due after 2021-04-04".
