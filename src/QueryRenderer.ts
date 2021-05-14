@@ -84,9 +84,9 @@ class QueryRenderChild extends MarkdownRenderChild {
                 cls: 'tasks-count',
             });
         } else if (this.query.error !== undefined) {
-            content.innerHTML = `Tasks query: ${this.query.error}`;
+            content.setText(`Tasks query: ${this.query.error}`);
         } else {
-            content.innerHTML = 'Loading Tasks ...';
+            content.setText('Loading Tasks ...');
         }
 
         this.containerEl.firstChild?.replaceWith(content);
@@ -133,7 +133,7 @@ class QueryRenderChild extends MarkdownRenderChild {
                 link.target = '_blank';
                 link.addClass('internal-link');
 
-                link.innerHTML = `&nbsp;(${fileName}`;
+                let linkText = ` (${fileName}`;
                 if (task.precedingHeader !== null) {
                     link.href = link.href + '#' + task.precedingHeader;
                     link.setAttribute(
@@ -145,12 +145,12 @@ class QueryRenderChild extends MarkdownRenderChild {
 
                     // Otherwise, this wouldn't provide additinoal information and only take up space.
                     if (task.precedingHeader !== fileName) {
-                        link.innerHTML =
-                            link.innerHTML + ' > ' + task.precedingHeader;
+                        linkText = linkText + ' > ' + task.precedingHeader;
                     }
                 }
-                link.innerHTML = link.innerHTML + ')';
+                linkText = linkText + ')';
 
+                link.setText(linkText);
                 listItem.appendChild(link);
             }
 
