@@ -182,7 +182,7 @@ export class Task {
         // Unwrap the p-tag that was created by the MarkdownRenderer:
         const pElement = li.querySelector('p');
         if (pElement !== null) {
-            li.innerHTML = pElement.innerHTML;
+            while (pElement.firstChild) li.appendChild(pElement.firstChild);
             pElement.remove();
         }
 
