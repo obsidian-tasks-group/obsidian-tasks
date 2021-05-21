@@ -1,18 +1,24 @@
 import {
+    App,
     MarkdownPostProcessorContext,
     MarkdownRenderChild,
     Plugin,
 } from 'obsidian';
 
 import { Cache, State } from './Cache';
-import { Sort } from './Sort';
+import { replaceTaskWithTasks } from './File';
 import { Query } from './Query';
+import { Sort } from './Sort';
+import { TaskModal } from './TaskModal';
+import type { Task } from './Task';
 
 export class QueryRenderer {
     private readonly cache: Cache;
+    private readonly app: App;
 
     constructor({ plugin, cache }: { plugin: Plugin; cache: Cache }) {
         this.cache = cache;
+        this.app = plugin.app;
 
         plugin.registerMarkdownCodeBlockProcessor(
             'tasks',
@@ -27,6 +33,7 @@ export class QueryRenderer {
     ) {
         context.addChild(
             new QueryRenderChild({
+                app: this.app,
                 cache: this.cache,
                 container: element,
                 source,
@@ -36,6 +43,7 @@ export class QueryRenderer {
 }
 
 class QueryRenderChild extends MarkdownRenderChild {
+    private readonly app: App;
     private readonly cache: Cache;
     private readonly source: string;
     private query: Query;
@@ -44,16 +52,19 @@ class QueryRenderChild extends MarkdownRenderChild {
     private queryReloadTimeout: NodeJS.Timeout | undefined;
 
     constructor({
+        app,
         cache,
         container,
         source,
     }: {
+        app: App;
         cache: Cache;
         container: HTMLElement;
         source: string;
     }) {
         super(container);
 
+        this.app = app;
         this.cache = cache;
         this.source = source;
 
@@ -181,8 +192,29 @@ class QueryRenderChild extends MarkdownRenderChild {
                 linkText = linkText + ')';
 
                 link.setText(linkText);
-                listItem.appendChild(link);
             }
+
+            const editTaskPencil = listItem.createEl('a', {
+                cls: 'tasks-edit',
+            });
+            editTaskPencil.onClickEvent((event: MouseEvent) => {
+                event.preventDefault();
+
+                const onSubmit = (updatedTasks: Task[]): void => {
+                    replaceTaskWithTasks({
+                        originalTask: task,
+                        newTasks: updatedTasks,
+                    });
+                };
+
+                // Need to create a new instance every time, as cursor/task can change.
+                const taskModal = new TaskModal({
+                    app: this.app,
+                    task,
+                    onSubmit,
+                });
+                taskModal.open();
+            });
 
             taskList.appendChild(listItem);
         }
