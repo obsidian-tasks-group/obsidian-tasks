@@ -53,7 +53,7 @@ Follow the steps below to install Tasks.
 4. Replace the "Toggle checklist status" hotkey with "Tasks: Toggle Done".
     - I recommend you remove the original toggle hotkey and set the "Tasks" toggle to `Ctrl + Enter` (or `Cmd + Enter` on a mac).
 
-⚠️ **You have to restart obsidian after installing or updating the tasks plugin!**
+⚠️ **You have to restart obsidian every time you update the tasks plugin!**
 Unfortunately, I haven't found a way to circumvent this, yet.
 
 ## Usage
@@ -62,6 +62,8 @@ Tasks tracks your checklist items from your vault.
 The simplest way to create a new task is to create a new checklist item.
 The markdown syntax for checklist items is a list item that starts with spaced brackets: `- [ ] take out the trash`.
 Now Tasks tracks that you need to take out the trash!
+
+**⚠️ Whenever Tasks behaves in an unexpected way, please try restarting obsidian.**
 
 **⚠️ Tasks only supports single-line checklist items.**
 You cannot have checklist items that span across multiple lines.
@@ -182,8 +184,8 @@ Examples of possible recurrence rules (mix and match as desired; these should be
 
 ### Querying and listing tasks
 
-You can list tasks from your entire vault by querying them using a `tasks` code block.
-Tasks are sorted by due date and then path.
+You can list tasks from your entire vault by querying them using a `tasks` code block. You can edit the tasks from the query results by clicking on the little pencil icon next to them.
+Tasks are sorted by status, due date, and then path.
 
 **⚠️ The result list will list tasks unindented.**
 See [#51](https://github.com/schemar/obsidian-tasks/issues/51) for a discussion around the topic.
