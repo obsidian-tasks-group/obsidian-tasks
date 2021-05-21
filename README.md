@@ -67,6 +67,8 @@ Now Tasks tracks that you need to take out the trash!
 **⚠️ Tasks only supports single-line checklist items.**
 You cannot have checklist items that span across multiple lines.
 
+**⚠️ Tasks only supports checklist items in markdown files with the file extension `.md`**
+
 A more convenient way to create a task is by using the `Tasks: Create or edit` command from the command palette.
 You can also bind a hotkey to the command.
 The command will parse what's on the current line in your editor and pre-populate a modal.
