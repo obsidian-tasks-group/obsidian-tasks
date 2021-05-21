@@ -95,6 +95,13 @@ const tryRepetitive = async ({
         return retry();
     }
 
+    if (file.extension !== 'md') {
+        console.error(
+            'Tasks: Only supporting files with the .md file extension.',
+        );
+        return;
+    }
+
     const fileCache = metadataCache.getFileCache(file);
     if (fileCache == undefined || fileCache === null) {
         console.warn(
