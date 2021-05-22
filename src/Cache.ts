@@ -171,15 +171,13 @@ export class Cache {
                 }
 
                 this.tasksMutex.runExclusive(() => {
-                    this.tasks = this.tasks.map(
-                        (task: Task): Task => {
-                            if (task.path === oldPath) {
-                                return new Task({ ...task, path: file.path });
-                            } else {
-                                return task;
-                            }
-                        },
-                    );
+                    this.tasks = this.tasks.map((task: Task): Task => {
+                        if (task.path === oldPath) {
+                            return new Task({ ...task, path: file.path });
+                        } else {
+                            return task;
+                        }
+                    });
 
                     this.notifySubscribers();
                 });

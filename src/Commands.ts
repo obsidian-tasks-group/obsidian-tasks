@@ -1,8 +1,8 @@
-import type { App, Editor, Plugin, View } from 'obsidian';
 import { MarkdownView } from 'obsidian';
 
 import { Status, Task } from './Task';
 import { TaskModal } from './TaskModal';
+import type { App, Editor, Plugin, View } from 'obsidian';
 
 export class Commands {
     private readonly plugin: Plugin;
