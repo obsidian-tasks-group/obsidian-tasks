@@ -1,7 +1,6 @@
 import { App, Modal } from 'obsidian';
-import type { Task } from './Task';
-
 import EditTask from './ui/EditTask.svelte';
+import type { Task } from './Task';
 
 export class TaskModal extends Modal {
     public readonly task: Task;
