@@ -48,15 +48,10 @@ Tasks is not yet available in the repository of Obsidian community plugins.
 You have to download, install, and activate the plugin manually.
 Follow the steps below to install Tasks.
 
-1. Go to the latest [release](https://github.com/schemar/obsidian-tasks/releases).
-2. Download:
-    - `main.js`
-    - `styles.css`
-    - `manifest.json`
-3. Copy the files into your vault under `<VaultFolder>/.obsidian/plugins/obsidian-tasks/`.
-4. Enable the plugin in your Obsidian settings (find "Tasks" under "Community plugins").
-5. Check the settings. It makes sense to set the global filter early on (if you want one).
-6. Replace the "Toggle checklist status" hotkey with "Tasks: Toggle Done".
+1. Search for "Tasks" in Obsidian's community plugins browser
+2. Enable the plugin in your Obsidian settings (find "Tasks" under "Community plugins").
+3. Check the settings. It makes sense to set the global filter early on (if you want one).
+4. Replace the "Toggle checklist status" hotkey with "Tasks: Toggle Done".
     - I recommend you remove the original toggle hotkey and set the "Tasks" toggle to `Ctrl + Enter` (or `Cmd + Enter` on a mac).
 
 ## Usage
