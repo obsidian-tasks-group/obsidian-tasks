@@ -2,17 +2,6 @@
 
 <p align="center">Task management for the <a href="https://obsidian.md/">Obsidian</a> knowledge base.</p>
 
-<p align="center">
-  <a href="https://github.com/schemar/obsidian-tasks#installation">Installation</a> •
-  <a href="https://github.com/schemar/obsidian-tasks#usage">Usage</a> •
-  <a href="https://github.com/schemar/obsidian-tasks#filtering-checklist-items">Filtering</a> •
-  <a href="https://github.com/schemar/obsidian-tasks#due-dates">Due Dates</a> •
-  <a href="https://github.com/schemar/obsidian-tasks#recurring-tasks-repetition">Recurrence</a> •
-  <a href="https://github.com/schemar/obsidian-tasks#querying-and-listing-tasks">Querying</a>
-</p>
-
-<hr />
-
 Track tasks across your entire vault. Query them and mark them as done wherever you want. Supports due dates, recurring tasks (repetition), done dates, sub-set of checklist items, and filtering.
 
 *You can toggle the task status in any view or query and it will update the source file.*
@@ -22,6 +11,19 @@ Track tasks across your entire vault. Query them and mark them as done wherever 
 > Please submit ideas here: https://github.com/schemar/obsidian-tasks/discussions/categories/ideas
 >
 > Please ask for help here: https://github.com/schemar/obsidian-tasks/discussions/categories/q-a
+
+---
+
+<ul>
+    <li><a href="https://github.com/schemar/obsidian-tasks#installation">Installation</a></li>
+    <li><a href="https://github.com/schemar/obsidian-tasks#usage">Usage</a></li>
+    <li><a href="https://github.com/schemar/obsidian-tasks#filtering-checklist-items">Filtering</a></li>
+    <li><a href="https://github.com/schemar/obsidian-tasks#due-dates">Due Dates</a></li>
+    <li><a href="https://github.com/schemar/obsidian-tasks#recurring-tasks-repetition">Recurrence</a></li>
+    <li><a href="https://github.com/schemar/obsidian-tasks#querying-and-listing-tasks">Querying</a></li>
+</ul>
+
+---
 
 ## Screenshots
 
