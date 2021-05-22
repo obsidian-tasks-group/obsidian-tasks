@@ -13,7 +13,8 @@ export class Query {
     private readonly notDoneString = 'not done';
     private readonly doneRegexp = /done (before|after|on)? ?(.*)/;
     private readonly pathRegexp = /path (includes|does not include) (.*)/;
-    private readonly descriptionRegexp = /description (includes|does not include) (.*)/;
+    private readonly descriptionRegexp =
+        /description (includes|does not include) (.*)/;
     private readonly headingRegexp = /heading (includes|does not include) (.*)/;
     private readonly limitRegexp = /limit (to )?(\d+)( tasks?)?/;
     private readonly excludeSubItemsString = 'exclude sub-items';

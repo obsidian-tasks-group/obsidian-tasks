@@ -1,9 +1,9 @@
-import type { Moment } from 'moment';
 import { Component, MarkdownRenderer } from 'obsidian';
 import { RRule } from 'rrule';
 
 import { replaceTaskWithTasks } from './File';
 import { getSettings } from './Settings';
+import type { Moment } from 'moment';
 
 export enum Status {
     Todo = 'Todo',
@@ -30,7 +30,8 @@ export class Task {
     public readonly recurrenceRule: RRule | null;
 
     public static readonly dateFormat = 'YYYY-MM-DD';
-    public static readonly taskRegex = /^([\s\t]*)[-*] +\[(.)\] *([^🔁📅📆🗓✅]*)(.*)/u;
+    public static readonly taskRegex =
+        /^([\s\t]*)[-*] +\[(.)\] *([^🔁📅📆🗓✅]*)(.*)/u;
     public static readonly dueDateRegex = /[📅📆🗓] ?(\d{4}-\d{2}-\d{2})/u;
     public static readonly doneDateRegex = /✅ ?(\d{4}-\d{2}-\d{2})/u;
     public static readonly recurrenceRegex = /🔁([a-zA-Z0-9, !]+)/u;
@@ -176,7 +177,7 @@ export class Task {
             taskAsString,
             li,
             this.path,
-            (null as unknown) as Component,
+            null as unknown as Component,
         );
 
         // Unwrap the p-tag that was created by the MarkdownRenderer:
