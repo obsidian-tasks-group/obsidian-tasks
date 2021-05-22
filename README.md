@@ -328,34 +328,6 @@ you can use the following in your daily note *template* for an agenda:
     done on {{date:YYYY-MM-DD}}
     ```
 
-#### Natural Language Due Date
-(Thanks to @zolrath)
-
-If you use the [templater](https://github.com/SilentVoid13/Templater) and [nldates](https://github.com/argenos/nldates-obsidian) plugins,
-you can use the following for a pop-up to add a task's due date to the end of the line:
-
-```js
-<%*
-let dueDateStr = await tp.system.prompt("Task Due Date:");
-let parseResult;
-let parseResultMarker;
-if (dueDateStr) {
-    let nlDatesPlugin = this.app.plugins.getPlugin('nldates-obsidian');
-    parseResult = nlDatesPlugin.parseDate(dueDateStr);
-    if (parseResult.date) {
-        parseResultMarker = '📅 ' + parseResult.formattedString;
-    }
-}
-
-if (parseResultMarker) {
-    let cmEditorAct = this.app.workspace.activeLeaf.view.sourceMode.cmEditor;
-    let curLine = cmEditorAct.getCursor().line;
-    cmEditorAct.setSelection({ line: curLine, ch: 0 }, { line: curLine, ch: 9999 });
-    tR = tp.file.selection() + ' ' + parseResultMarker;
-}
-%>
-```
-
 ## Development
 
 Clone the repository, run `yarn` to install the dependencies, and run `yarn dev` to compile the plugin and watch file changes.
