@@ -3,12 +3,12 @@
 <p align="center">Task management for the <a href="https://obsidian.md/">Obsidian</a> knowledge base.</p>
 
 <p align="center">
-  <a href="#installation">Installation</a> •
-  <a href="#usage">Usage</a> •
-  <a href="#filtering-checklist-items">Filtering</a> •
-  <a href="#due-dates">Due Dates</a> •
-  <a href="#recurring-tasks-repetition">Recurrence</a> •
-  <a href="#querying-and-listing-tasks">Querying</a>
+  <a href="https://github.com/schemar/obsidian-tasks#installation">Installation</a> •
+  <a href="https://github.com/schemar/obsidian-tasks#usage">Usage</a> •
+  <a href="https://github.com/schemar/obsidian-tasks#filtering-checklist-items">Filtering</a> •
+  <a href="https://github.com/schemar/obsidian-tasks#due-dates">Due Dates</a> •
+  <a href="https://github.com/schemar/obsidian-tasks#recurring-tasks-repetition">Recurrence</a> •
+  <a href="https://github.com/schemar/obsidian-tasks#querying-and-listing-tasks">Querying</a>
 </p>
 
 <hr />
@@ -28,16 +28,16 @@ Track tasks across your entire vault. Query them and mark them as done wherever 
 - *All screenshots assume the [global filter](#filtering-checklist-items) `#task` which is not set by default (see also [installation](#installation)).*
 - *The theme is [Obsidian Atom](https://github.com/kognise/obsidian-atom).*
 
-![ACME Tasks](./resources/screenshots/acme.png)
+![ACME Tasks](https://github.com/schemar/obsidian-tasks/raw/main/resources/screenshots/acme.png)
 The `ACME` note has some tasks.
 
-![Important Project Tasks](./resources/screenshots/important_project.png)
+![Important Project Tasks](https://github.com/schemar/obsidian-tasks/raw/main/resources/screenshots/important_project.png)
 The `Important Project` note also has some tasks.
 
-![Tasks Queries](./resources/screenshots/tasks_queries.png)
+![Tasks Queries](https://github.com/schemar/obsidian-tasks/raw/main/resources/screenshots/tasks_queries.png)
 The `Tasks` note gathers all tasks from the vault and displays them using queries.
 
-![Create or Edit Modal](./resources/screenshots/modal.png)
+![Create or Edit Modal](https://github.com/schemar/obsidian-tasks/raw/main/resources/screenshots/modal.png)
 The `Tasks: Create or edit` command helps you when editing a task.
 
 ## Installation
