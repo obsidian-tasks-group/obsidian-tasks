@@ -23,6 +23,8 @@ Track tasks across your entire vault. Query them and mark them as done wherever 
     <li><a href="https://github.com/schemar/obsidian-tasks#querying-and-listing-tasks">Querying</a></li>
 </ul>
 
+For changes in each release, please check the releases page: https://github.com/schemar/obsidian-tasks/releases
+
 ---
 
 ## Screenshots
