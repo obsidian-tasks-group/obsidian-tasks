@@ -179,13 +179,21 @@ export class Commands {
                 sectionStart: 0,
                 sectionIndex: 0,
                 precedingHeader: null,
+                blockLink: '',
             });
         }
 
         const indentation: string = nonTaskMatch[1];
         const statusString: string = nonTaskMatch[3] ?? ' ';
         const status = statusString === ' ' ? Status.Todo : Status.Done;
-        const description: string = nonTaskMatch[4];
+        let description: string = nonTaskMatch[4];
+
+        const blockLinkMatch = line.match(Task.blockLinkRegex);
+        const blockLink = blockLinkMatch !== null ? blockLinkMatch[0] : '';
+
+        if (blockLink !== '') {
+            description = description.replace(Task.blockLinkRegex, '');
+        }
 
         return new Task({
             status,
@@ -193,6 +201,7 @@ export class Commands {
             path,
             indentation,
             originalStatusCharacter: statusString,
+            blockLink,
             dueDate: null,
             doneDate: null,
             recurrenceRule: null,

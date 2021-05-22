@@ -135,7 +135,7 @@ For example: `📅 2021-04-09` means the task is due on the 9th of April, 2021.
 Instead of adding the emoji and the date manually, you can use the `Tasks: Crete or edit` command when creating or editing a task.
 When you use the command, you can also set a due date like "Monday", "tomorrow", or "next week" and Tasks will automatically save the date in the correct format.
 
-**You can not put anything behind the due/done dates. Also not a global filter. Everything after the dates will be removed by Tasks.**
+**You can only put block links (`^link-name`) behind the due/done dates. Everything else after the dates will be removed by Tasks.**
 
 ### Recurring tasks (repetition)
 
