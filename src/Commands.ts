@@ -77,9 +77,9 @@ export class Commands {
                     // We want to toggle any checklist item, task or not, as this command is
                     // supposed to replace the original checklist toggle command.
                     // So we do not need to check whether we can create a valid task from the line.
-                    const isTasksLine = Task.taskRegex.test(currentLine);
+                    const itListItem = /^[\s|\t]*[-*]/.test(currentLine);
 
-                    return isTasksLine;
+                    return itListItem;
                 }
 
                 if (!(view instanceof MarkdownView)) {
@@ -105,24 +105,31 @@ export class Commands {
                 });
 
                 if (task === null) {
-                    // If the task is null this means that we have a regular checklist item.
+                    // If the task is null this means that we have a regular checklist item or a bullet point.
                     // As this command is supposed to replace the original command to toggle
-                    // checklists, we must do a regular toggle here.
+                    // checklists, we must do a regular toggle here or convert a bullet point.
+                    let toggledLine = line;
+
                     const regexMatch = line.match(Task.taskRegex);
                     if (regexMatch === null) {
-                        // We cannot toggle if we do not match.
-                        return;
+                        // This is not a task.
+                        // Let's convert the bullet point to a checklist item.
+                        toggledLine = line.replace(
+                            /^([\s\t]*)([-*])/,
+                            '$1$2 [ ]',
+                        );
+                    } else {
+                        const indentation = regexMatch[1];
+                        const statusString = regexMatch[2].toLowerCase();
+                        const description = regexMatch[3];
+                        const rest = regexMatch[4];
+
+                        const toggledStatusString =
+                            statusString === ' ' ? 'x' : ' ';
+
+                        toggledLine = `${indentation}- [${toggledStatusString}] ${description}${rest}`;
                     }
 
-                    const indentation = regexMatch[1];
-                    const statusString = regexMatch[2].toLowerCase();
-                    const description = regexMatch[3];
-                    const rest = regexMatch[4];
-
-                    const toggledStatusString =
-                        statusString === ' ' ? 'x' : ' ';
-
-                    const toggledLine = `${indentation}- [${toggledStatusString}] ${description}${rest}`;
                     editor.setLine(lineNumber, toggledLine);
                 } else {
                     // Toggle a regular task.
