@@ -28,6 +28,8 @@ export class Task {
     public readonly dueDate: Moment | null;
     public readonly doneDate: Moment | null;
     public readonly recurrenceRule: RRule | null;
+    /** The blockLink is a "^" annotation after the dates/recurrence rules. */
+    public readonly blockLink: string;
 
     public static readonly dateFormat = 'YYYY-MM-DD';
     public static readonly taskRegex =
@@ -35,6 +37,7 @@ export class Task {
     public static readonly dueDateRegex = /[📅📆🗓] ?(\d{4}-\d{2}-\d{2})/u;
     public static readonly doneDateRegex = /✅ ?(\d{4}-\d{2}-\d{2})/u;
     public static readonly recurrenceRegex = /🔁([a-zA-Z0-9, !]+)/u;
+    public static readonly blockLinkRegex = / \^[a-zA-Z0-9-]+$/u;
 
     constructor({
         status,
@@ -48,6 +51,7 @@ export class Task {
         dueDate,
         doneDate,
         recurrenceRule,
+        blockLink,
     }: {
         status: Status;
         description: string;
@@ -60,6 +64,7 @@ export class Task {
         dueDate: moment.Moment | null;
         doneDate: moment.Moment | null;
         recurrenceRule: RRule | null;
+        blockLink: string;
     }) {
         this.status = status;
         this.description = description;
@@ -72,6 +77,7 @@ export class Task {
         this.dueDate = dueDate;
         this.doneDate = doneDate;
         this.recurrenceRule = recurrenceRule;
+        this.blockLink = blockLink;
     }
 
     public static fromLine({
@@ -94,7 +100,14 @@ export class Task {
 
         const indentation = regexMatch[1];
         const statusString = regexMatch[2].toLowerCase();
-        const description = regexMatch[3].trim();
+
+        const blockLinkMatch = line.match(this.blockLinkRegex);
+        const blockLink = blockLinkMatch !== null ? blockLinkMatch[0] : '';
+
+        let description = regexMatch[3].trim();
+        if (blockLink !== '') {
+            description = description.replace(this.blockLinkRegex, '');
+        }
 
         const { globalFilter } = getSettings();
         if (!description.includes(globalFilter)) {
@@ -151,6 +164,7 @@ export class Task {
             dueDate,
             doneDate,
             recurrenceRule,
+            blockLink,
         });
 
         return task;
@@ -183,9 +197,18 @@ export class Task {
         // Unwrap the p-tag that was created by the MarkdownRenderer:
         const pElement = li.querySelector('p');
         if (pElement !== null) {
-            while (pElement.firstChild) li.appendChild(pElement.firstChild);
+            while (pElement.firstChild) {
+                li.insertBefore(pElement.firstChild, pElement);
+            }
             pElement.remove();
         }
+
+        // Remove an empty trailing p-tag that the MarkdownRenderer appends when there is a block link:
+        li.findAll('p').forEach((pElement) => {
+            if (!pElement.hasChildNodes()) {
+                pElement.remove();
+            }
+        });
 
         const checkbox = li.createEl('input');
         checkbox.addClass('task-list-item-checkbox');
@@ -230,7 +253,7 @@ export class Task {
             ? ` ✅ ${this.doneDate.format(Task.dateFormat)}`
             : '';
 
-        return `${this.description}${recurrenceRule}${dueDate}${doneDate}`;
+        return `${this.description}${recurrenceRule}${dueDate}${doneDate}${this.blockLink}`;
     }
 
     public toFileLineString(): string {
@@ -282,6 +305,9 @@ export class Task {
             const nextTask = new Task({
                 ...this,
                 dueDate: nextOccurrence,
+                // New occurrences cannot have the same block link.
+                // And random block links don't help.
+                blockLink: '',
             });
             newTasks.push(nextTask);
         }
