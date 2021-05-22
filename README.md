@@ -64,6 +64,23 @@ Now Tasks tracks that you need to take out the trash!
 **⚠️ Tasks only supports single-line checklist items.**
 You cannot have checklist items that span across multiple lines.
 
+This works:
+
+```markdown
+- [ ] This is a task
+    - This is a sub-item
+    - Another sub-item
+    - [ ] And a sub task
+        - Even more details
+```
+
+The following *does not work:*
+
+```markdown
+- [ ] This task starts on this line
+      and then its description continues on the next line
+```
+
 **⚠️ Tasks only supports checklist items in markdown files with the file extension `.md`**
 
 A more convenient way to create a task is by using the `Tasks: Create or edit` command from the command palette.
