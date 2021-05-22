@@ -45,9 +45,6 @@ The `Tasks` note gathers all tasks from the vault and displays them using querie
 The `Tasks: Create or edit` command helps you when editing a task.
 
 ## Installation
-
-Tasks is not yet available in the repository of Obsidian community plugins.
-You have to download, install, and activate the plugin manually.
 Follow the steps below to install Tasks.
 
 1. Search for "Tasks" in Obsidian's community plugins browser
