@@ -342,5 +342,11 @@ you can use the following in your daily note *template* for an agenda:
     ```
 
 ## Development
-
 Clone the repository, run `yarn` to install the dependencies, and run `yarn dev` to compile the plugin and watch file changes.
+
+## Donations
+The plugin is completely free to use. If you love it very much and want to pay it forward, please consider donating to an organization of your choice.
+Two example organizations that you could consider donating to are the Wikimedia Foundation and the Electronic Frontiers Foundation:
+
+1. [Support the Wikimedia Foundation](https://wikimediafoundation.org/support/)
+2. [Support EFF](https://supporters.eff.org/donate/join-eff-today)
