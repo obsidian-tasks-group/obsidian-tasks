@@ -34,8 +34,15 @@ export const toggleDone = (checking: boolean, editor: Editor, view: View) => {
     const toggledLine = toggleLine({ line, path });
     editor.setLine(lineNumber, toggledLine);
 
-    // Put the cursor back where it was on the line.
-    editor.setCursor(cursorPosition);
+    // The cursor is moved to the end of the line by default.
+    // If there is text on the line, put the cursor back where it was on the line.
+    if (/[^ [\]*-]/.test(toggledLine)) {
+        editor.setCursor({
+            line: cursorPosition.line,
+            // Need to move the cursor by the distance we added to the beginning.
+            ch: cursorPosition.ch + toggledLine.length - line.length,
+        });
+    }
 };
 
 const toggleLine = ({ line, path }: { line: string; path: string }): string => {
