@@ -29,6 +29,16 @@ export class Cache {
     private readonly subscribedHandlers: { [number: number]: () => void };
     private registeredNextId: number;
 
+    /**
+     * We cannot know if this class will be instantiated because obsidian started
+     * or because the plugin was activated later. This means we have to load the
+     * whole vault once after the first metadata cache resolve to ensure that we
+     * load the entire vault in case obsidian is starting up. In the case of
+     * obsidian starting, the task cache's initial load would end up with 0 tasks,
+     * as the metadata cache would still be empty.
+     */
+    private loadedAfterFirstResolve: boolean;
+
     constructor({
         metadataCache,
         vault,
@@ -48,8 +58,12 @@ export class Cache {
         this.subscribedHandlers = {};
         this.registeredNextId = 0;
 
+        this.loadedAfterFirstResolve = false;
+
         this.subscribeToCache();
         this.subscribeToVault();
+
+        this.loadVault();
     }
 
     public unload(): void {
@@ -97,22 +111,14 @@ export class Cache {
     }
 
     private subscribeToCache(): void {
-        // Resolved fires on every change. We only want to initialize if we haven't started already.
         const resolvedEventeReference = this.metadataCache.on(
             'resolved',
             async () => {
-                if (this.state === State.Cold) {
-                    this.tasksMutex.runExclusive(async () => {
-                        this.state = State.Initializing;
-                        await Promise.all(
-                            this.vault.getMarkdownFiles().map((file: TFile) => {
-                                return this.indexFile(file);
-                            }),
-                        );
-                        this.state = State.Warm;
-                        // Notify that the cache is now warm:
-                        this.notifySubscribers();
-                    });
+                // Resolved fires on every change.
+                // We only want to initialize if we haven't already.
+                if (!this.loadedAfterFirstResolve) {
+                    this.loadedAfterFirstResolve = true;
+                    this.loadVault();
                 }
             },
         );
@@ -184,6 +190,20 @@ export class Cache {
             },
         );
         this.vaultEventReferences.push(renamedEventReference);
+    }
+
+    private loadVault(): Promise<void> {
+        return this.tasksMutex.runExclusive(async () => {
+            this.state = State.Initializing;
+            await Promise.all(
+                this.vault.getMarkdownFiles().map((file: TFile) => {
+                    return this.indexFile(file);
+                }),
+            );
+            this.state = State.Warm;
+            // Notify that the cache is now warm:
+            this.notifySubscribers();
+        });
     }
 
     private async indexFile(file: TFile): Promise<void> {
