@@ -9,6 +9,8 @@ assignees: ''
 
 Issue tracker is **ONLY** used for reporting bugs. New feature ideas should be discussed in the [ideas section](https://github.com/schemar/obsidian-tasks/discussions/categories/ideas). Please use the [Q&A section](https://github.com/schemar/obsidian-tasks/discussions/categories/q-a) for supporting issues. Please use the search function.
 
+If you encountered the issue after you installed, updated, or reloaded the tasks plugin, please try restarting obsidian before reporting the bug.
+
 If you want to report a bug, please follow the guide lines below to help me resolve it.
 
 ## Expected Behavior
