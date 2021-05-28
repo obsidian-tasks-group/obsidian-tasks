@@ -21,7 +21,7 @@ export class Commands {
                 editor: Editor,
                 view: View,
             ) => {
-                createOrEdit(checking, editor, view, this.app);
+                return createOrEdit(checking, editor, view, this.app);
             },
         });
 
