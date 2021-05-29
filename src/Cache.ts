@@ -9,6 +9,7 @@ import {
 import { Mutex } from 'async-mutex';
 
 import { Task } from './Task';
+import type { Events } from './Events';
 
 export enum State {
     Cold = 'Cold',
@@ -21,13 +22,12 @@ export class Cache {
     private readonly metadataCacheEventReferences: EventRef[];
     private readonly vault: Vault;
     private readonly vaultEventReferences: EventRef[];
+    private readonly events: Events;
+    private readonly eventsEventReferences: EventRef[];
 
     private readonly tasksMutex: Mutex;
     private state: State;
     private tasks: Task[];
-
-    private readonly subscribedHandlers: { [number: number]: () => void };
-    private registeredNextId: number;
 
     /**
      * We cannot know if this class will be instantiated because obsidian started
@@ -42,26 +42,28 @@ export class Cache {
     constructor({
         metadataCache,
         vault,
+        events,
     }: {
         metadataCache: MetadataCache;
         vault: Vault;
+        events: Events;
     }) {
         this.metadataCache = metadataCache;
         this.metadataCacheEventReferences = [];
         this.vault = vault;
         this.vaultEventReferences = [];
+        this.events = events;
+        this.eventsEventReferences = [];
 
         this.tasksMutex = new Mutex();
         this.state = State.Cold;
         this.tasks = [];
 
-        this.subscribedHandlers = {};
-        this.registeredNextId = 0;
-
         this.loadedAfterFirstResolve = false;
 
         this.subscribeToCache();
         this.subscribeToVault();
+        this.subscribeToEvents();
 
         this.loadVault();
     }
@@ -74,6 +76,10 @@ export class Cache {
         for (const eventReference of this.vaultEventReferences) {
             this.vault.offref(eventReference);
         }
+
+        for (const eventReference of this.eventsEventReferences) {
+            this.events.off(eventReference);
+        }
     }
 
     public getTasks(): Task[] {
@@ -84,30 +90,11 @@ export class Cache {
         return this.state;
     }
 
-    public subscribe(handler: () => void | Promise<void>): number {
-        const id = this.registeredNextId;
-        this.registeredNextId++;
-
-        this.subscribedHandlers[id] = handler;
-
-        return id;
-    }
-
-    public unsubscribe({ id }: { id: number }): boolean {
-        if (this.subscribedHandlers[id]) {
-            delete this.subscribedHandlers[id];
-            return true;
-        }
-
-        return false;
-    }
-
     private notifySubscribers(): void {
-        for (const subscribedHandler of Object.values(
-            this.subscribedHandlers,
-        )) {
-            subscribedHandler();
-        }
+        this.events.triggerCacheUpdate({
+            tasks: this.tasks,
+            state: this.state,
+        });
     }
 
     private subscribeToCache(): void {
@@ -190,6 +177,13 @@ export class Cache {
             },
         );
         this.vaultEventReferences.push(renamedEventReference);
+    }
+
+    private subscribeToEvents(): void {
+        const requestReference = this.events.onRequestCacheUpdate((handler) => {
+            handler({ tasks: this.tasks, state: this.state });
+        });
+        this.eventsEventReferences.push(requestReference);
     }
 
     private loadVault(): Promise<void> {
