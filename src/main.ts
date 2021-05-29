@@ -1,12 +1,13 @@
 import { Plugin } from 'obsidian';
-import { SettingsTab } from 'SettingsTab';
 
 import { Cache } from './Cache';
 import { Commands } from './Commands';
+import { Events } from './Events';
 import { initializeFile } from './File';
 import { InlineRenderer } from './InlineRenderer';
 import { QueryRenderer } from './QueryRenderer';
 import { getSettings, updateSettings } from './Settings';
+import { SettingsTab } from './SettingsTab';
 
 export default class TasksPlugin extends Plugin {
     private cache: Cache | undefined;
@@ -22,12 +23,14 @@ export default class TasksPlugin extends Plugin {
             vault: this.app.vault,
         });
 
+        const events = new Events({ obsidianEents: this.app.workspace });
         this.cache = new Cache({
             metadataCache: this.app.metadataCache,
             vault: this.app.vault,
+            events,
         });
         new InlineRenderer({ plugin: this });
-        new QueryRenderer({ plugin: this, cache: this.cache });
+        new QueryRenderer({ plugin: this, events });
         new Commands({ plugin: this });
     }
 

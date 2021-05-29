@@ -53,9 +53,6 @@ Follow the steps below to install Tasks.
 4. Replace the "Toggle checklist status" hotkey with "Tasks: Toggle Done".
     - I recommend you remove the original toggle hotkey and set the "Tasks" toggle to `Ctrl + Enter` (or `Cmd + Enter` on a mac).
 
-⚠️ **You have to restart obsidian every time you update the tasks plugin!**
-Unfortunately, I haven't found a way to circumvent this, yet.
-
 ## Usage
 
 Tasks tracks your checklist items from your vault.

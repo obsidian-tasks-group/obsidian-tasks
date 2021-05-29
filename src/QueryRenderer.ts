@@ -1,24 +1,26 @@
 import {
     App,
+    EventRef,
     MarkdownPostProcessorContext,
     MarkdownRenderChild,
     Plugin,
 } from 'obsidian';
 
-import { Cache, State } from './Cache';
+import { State } from './Cache';
 import { replaceTaskWithTasks } from './File';
 import { Query } from './Query';
 import { Sort } from './Sort';
 import { TaskModal } from './TaskModal';
+import type { Events } from './Events';
 import type { Task } from './Task';
 
 export class QueryRenderer {
-    private readonly cache: Cache;
     private readonly app: App;
+    private readonly events: Events;
 
-    constructor({ plugin, cache }: { plugin: Plugin; cache: Cache }) {
-        this.cache = cache;
+    constructor({ plugin, events }: { plugin: Plugin; events: Events }) {
         this.app = plugin.app;
+        this.events = events;
 
         plugin.registerMarkdownCodeBlockProcessor(
             'tasks',
@@ -34,7 +36,7 @@ export class QueryRenderer {
         context.addChild(
             new QueryRenderChild({
                 app: this.app,
-                cache: this.cache,
+                events: this.events,
                 container: element,
                 source,
             }),
@@ -44,43 +46,45 @@ export class QueryRenderer {
 
 class QueryRenderChild extends MarkdownRenderChild {
     private readonly app: App;
-    private readonly cache: Cache;
+    private readonly events: Events;
     private readonly source: string;
     private query: Query;
 
-    private cacheCallbackId: number | undefined;
+    private renderEventRef: EventRef | undefined;
     private queryReloadTimeout: NodeJS.Timeout | undefined;
 
     constructor({
         app,
-        cache,
+        events,
         container,
         source,
     }: {
         app: App;
-        cache: Cache;
+        events: Events;
         container: HTMLElement;
         source: string;
     }) {
         super(container);
 
         this.app = app;
-        this.cache = cache;
+        this.events = events;
         this.source = source;
 
         this.query = new Query({ source });
     }
 
     onload() {
-        this.render();
-        this.cacheCallbackId = this.cache.subscribe(this.render.bind(this));
+        // Process the current cache state:
+        this.events.triggerRequestCacheUpdate(this.render.bind(this));
+        // Listen to future cache changes:
+        this.renderEventRef = this.events.onCacheUpdate(this.render.bind(this));
 
         this.reloadQueryAtMidnight();
     }
 
     onunload() {
-        if (this.cacheCallbackId !== undefined) {
-            this.cache.unsubscribe({ id: this.cacheCallbackId });
+        if (this.renderEventRef !== undefined) {
+            this.events.off(this.renderEventRef);
         }
 
         if (this.queryReloadTimeout !== undefined) {
@@ -105,20 +109,19 @@ class QueryRenderChild extends MarkdownRenderChild {
 
         this.queryReloadTimeout = setTimeout(() => {
             this.query = new Query({ source: this.source });
-            this.render();
+            // Process the current cache state:
+            this.events.triggerRequestCacheUpdate(this.render.bind(this));
             this.reloadQueryAtMidnight();
         }, millisecondsToMidnight + 1000); // Add buffer to be sure to run after midnight.
     }
 
-    private async render() {
+    private async render({ tasks, state }: { tasks: Task[]; state: State }) {
         const content = this.containerEl.createEl('div');
-        if (
-            this.cache.getState() === State.Warm &&
-            this.query.error === undefined
-        ) {
-            const { taskList, tasksCount } = await this.createTasksList(
+        if (state === State.Warm && this.query.error === undefined) {
+            const { taskList, tasksCount } = await this.createTasksList({
+                tasks,
                 content,
-            );
+            });
             content.appendChild(taskList);
             content.createDiv({
                 text: `${tasksCount} task${tasksCount !== 1 ? 's' : ''}`,
@@ -133,10 +136,13 @@ class QueryRenderChild extends MarkdownRenderChild {
         this.containerEl.firstChild?.replaceWith(content);
     }
 
-    private async createTasksList(
-        content: HTMLDivElement,
-    ): Promise<{ taskList: HTMLUListElement; tasksCount: number }> {
-        let tasks = this.cache.getTasks();
+    private async createTasksList({
+        tasks,
+        content,
+    }: {
+        tasks: Task[];
+        content: HTMLDivElement;
+    }): Promise<{ taskList: HTMLUListElement; tasksCount: number }> {
         this.query.filters.forEach((filter) => {
             tasks = tasks.filter(filter);
         });
