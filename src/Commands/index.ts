@@ -15,7 +15,7 @@ export class Commands {
 
         plugin.addCommand({
             id: 'edit-task',
-            name: 'Create or edit',
+            name: 'Create or edit task',
             editorCheckCallback: (
                 checking: boolean,
                 editor: Editor,
@@ -27,7 +27,7 @@ export class Commands {
 
         plugin.addCommand({
             id: 'toggle-done',
-            name: 'Toggle Done',
+            name: 'Toggle task done',
             editorCheckCallback: toggleDone,
         });
     }
