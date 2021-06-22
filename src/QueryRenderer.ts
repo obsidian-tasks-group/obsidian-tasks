@@ -172,15 +172,17 @@ class QueryRenderChild extends MarkdownRenderChild {
                 listIndex: i,
             });
 
+            const postInfo = listItem.createSpan();
             if (fileName !== undefined) {
-                const link = listItem.createEl('a');
+                postInfo.append(' (');
+                const link = postInfo.createEl('a');
                 link.href = fileName;
                 link.setAttribute('data-href', fileName);
                 link.rel = 'noopener';
                 link.target = '_blank';
                 link.addClass('internal-link');
 
-                let linkText = ` (${fileName}`;
+                let linkText = fileName;
                 if (task.precedingHeader !== null) {
                     link.href = link.href + '#' + task.precedingHeader;
                     link.setAttribute(
@@ -195,12 +197,12 @@ class QueryRenderChild extends MarkdownRenderChild {
                         linkText = linkText + ' > ' + task.precedingHeader;
                     }
                 }
-                linkText = linkText + ')';
 
                 link.setText(linkText);
+                postInfo.append(')');
             }
 
-            const editTaskPencil = listItem.createEl('a', {
+            const editTaskPencil = postInfo.createEl('a', {
                 cls: 'tasks-edit',
             });
             editTaskPencil.onClickEvent((event: MouseEvent) => {
