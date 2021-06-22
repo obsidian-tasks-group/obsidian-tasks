@@ -311,7 +311,10 @@ Show one task that is due on the 5th of May and includes `#prio1` in its descrip
 #### Daily Agenda
 
 If you use the [calendar](https://github.com/liamcain/obsidian-calendar-plugin) plugin,
-you can use the following in your daily note *template* for an agenda:
+you can use the following in your daily note *template* for an agenda. If you use this
+template, you have to create the daily note from within the calendar in order for it to
+work. If you don't create the daily note from the calendar, `{{date+14d:YYYY-MM-DD}}`
+won't be set to the date correctly.
 
     ## Tasks
     ### Overdue
