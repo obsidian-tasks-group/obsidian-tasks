@@ -257,8 +257,9 @@ export class Task {
     }
 
     public toFileLineString(): string {
-        const statusString = this.status === Status.Done ? 'x' : ' ';
-        return `${this.indentation}- [${statusString}] ${this.toString()}`;
+        return `${this.indentation}- [${
+            this.originalStatusCharacter
+        }] ${this.toString()}`;
     }
 
     /**
@@ -310,6 +311,7 @@ export class Task {
             ...this,
             status: newStatus,
             doneDate: newDoneDate,
+            originalStatusCharacter: newStatus === Status.Done ? 'x' : ' ',
         });
 
         const newTasks: Task[] = [];
