@@ -205,6 +205,7 @@ The following filters exist:
 - `due (before|after|on) <date>`
 - `path (includes|does not include) <path>`
 - `description (includes|does not include) <string>`
+    - Matches case-insensitive (disregards capitalization).
 - `heading (includes|does not include) <string>`
     - Whether or not the heading preceding the task includes the given string.
     - Always tries to match the closest heading above the task, regardless of heading level.

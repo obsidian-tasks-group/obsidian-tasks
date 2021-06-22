@@ -155,12 +155,18 @@ export class Query {
             const filterMethod = descriptionMatch[1];
             if (filterMethod === 'includes') {
                 this._filters.push((task: Task) =>
-                    task.description.includes(descriptionMatch[2]),
+                    this.stringIncludesCaseInsensitive(
+                        task.description,
+                        descriptionMatch[2],
+                    ),
                 );
             } else if (descriptionMatch[1] === 'does not include') {
                 this._filters.push(
                     (task: Task) =>
-                        !task.description.includes(descriptionMatch[2]),
+                        !this.stringIncludesCaseInsensitive(
+                            task.description,
+                            descriptionMatch[2],
+                        ),
                 );
             } else {
                 this._error = 'do not understand query filter (description)';
@@ -178,17 +184,19 @@ export class Query {
                 this._filters.push(
                     (task: Task) =>
                         task.precedingHeader !== null &&
-                        task.precedingHeader
-                            .toLowerCase()
-                            .includes(headingMatch[2]),
+                        this.stringIncludesCaseInsensitive(
+                            task.precedingHeader,
+                            headingMatch[2],
+                        ),
                 );
             } else if (headingMatch[1] === 'does not include') {
                 this._filters.push(
                     (task: Task) =>
                         task.precedingHeader !== null &&
-                        !task.precedingHeader
-                            .toLowerCase()
-                            .includes(headingMatch[2]),
+                        !this.stringIncludesCaseInsensitive(
+                            task.precedingHeader,
+                            headingMatch[2],
+                        ),
                 );
             } else {
                 this._error = 'do not understand query filter (heading)';
@@ -212,5 +220,14 @@ export class Query {
     private parseDate(input: string): moment.Moment {
         // Using start of date to correctly match on comparison with other dates (like equality).
         return window.moment(chrono.parseDate(input)).startOf('day');
+    }
+
+    private stringIncludesCaseInsensitive(
+        haystack: string,
+        needle: string,
+    ): boolean {
+        return haystack
+            .toLocaleLowerCase()
+            .includes(needle.toLocaleLowerCase());
     }
 }
