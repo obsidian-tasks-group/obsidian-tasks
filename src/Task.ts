@@ -32,11 +32,12 @@ export class Task {
     public readonly blockLink: string;
 
     public static readonly dateFormat = 'YYYY-MM-DD';
-    public static readonly taskRegex =
-        /^([\s\t]*)[-*] +\[(.)\] *([^🔁📅📆🗓✅]*)(.*)/u;
-    public static readonly dueDateRegex = /[📅📆🗓] ?(\d{4}-\d{2}-\d{2})/u;
-    public static readonly doneDateRegex = /✅ ?(\d{4}-\d{2}-\d{2})/u;
-    public static readonly recurrenceRegex = /🔁([a-zA-Z0-9, !]+)/u;
+    public static readonly taskRegex = /^([\s\t]*)[-*] +\[(.)\] *(.*)/u;
+    // The following regexes end with `$` because they will be matched and
+    // removed from the end until none are left.
+    public static readonly dueDateRegex = /[📅📆🗓] ?(\d{4}-\d{2}-\d{2})$/u;
+    public static readonly doneDateRegex = /✅ ?(\d{4}-\d{2}-\d{2})$/u;
+    public static readonly recurrenceRegex = /🔁([a-zA-Z0-9, !]+)$/u;
     public static readonly blockLinkRegex = / \^[a-zA-Z0-9-]+$/u;
 
     constructor({
@@ -101,19 +102,6 @@ export class Task {
         const indentation = regexMatch[1];
         const statusString = regexMatch[2].toLowerCase();
 
-        const blockLinkMatch = line.match(this.blockLinkRegex);
-        const blockLink = blockLinkMatch !== null ? blockLinkMatch[0] : '';
-
-        let description = regexMatch[3].trim();
-        if (blockLink !== '') {
-            description = description.replace(this.blockLinkRegex, '');
-        }
-
-        const { globalFilter } = getSettings();
-        if (!description.includes(globalFilter)) {
-            return null;
-        }
-
         let status: Status;
         switch (statusString) {
             case ' ':
@@ -123,34 +111,67 @@ export class Task {
                 status = Status.Done;
         }
 
-        let dueDate: Moment | null;
-        const dueDateMatch = line.match(Task.dueDateRegex);
-        if (dueDateMatch === null) {
-            dueDate = null;
-        } else {
-            dueDate = window.moment(dueDateMatch[1], Task.dateFormat);
+        // match[3] includes the whole body of the task after the brackets.
+        const body = regexMatch[3].trim();
+
+        const { globalFilter } = getSettings();
+        if (!body.includes(globalFilter)) {
+            return null;
         }
 
-        let doneDate: Moment | null;
-        const doneDateMatch = line.match(Task.doneDateRegex);
-        if (doneDateMatch === null) {
-            doneDate = null;
-        } else {
-            doneDate = window.moment(doneDateMatch[1], Task.dateFormat);
+        let description = body;
+
+        const blockLinkMatch = description.match(this.blockLinkRegex);
+        const blockLink = blockLinkMatch !== null ? blockLinkMatch[0] : '';
+
+        if (blockLink !== '') {
+            description = description.replace(this.blockLinkRegex, '').trim();
         }
 
-        let recurrenceRule: RRule | null;
-        const recurrenceMatch = line.match(Task.recurrenceRegex);
-        if (recurrenceMatch === null) {
-            recurrenceRule = null;
-        } else {
-            try {
-                recurrenceRule = RRule.fromText(recurrenceMatch[1].trim());
-            } catch (error) {
-                // Could not read recurrence rule. User possibly not done typing.
-                recurrenceRule = null;
+        // Keep matching and removing special strings from the end of the
+        // description in any order. The loop should only run once if the
+        // strings are in the expected order after the description.
+        let matched: boolean;
+        let dueDate: Moment | null = null;
+        let doneDate: Moment | null = null;
+        let recurrenceRule: RRule | null = null;
+        // Add a "max runs" failsafe to never end in an endless loop:
+        const maxRuns = 4;
+        let runs = 0;
+        do {
+            matched = false;
+            const doneDateMatch = description.match(Task.doneDateRegex);
+            if (doneDateMatch !== null) {
+                doneDate = window.moment(doneDateMatch[1], Task.dateFormat);
+                description = description
+                    .replace(Task.doneDateRegex, '')
+                    .trim();
+                matched = true;
             }
-        }
+
+            const dueDateMatch = description.match(Task.dueDateRegex);
+            if (dueDateMatch !== null) {
+                dueDate = window.moment(dueDateMatch[1], Task.dateFormat);
+                description = description.replace(Task.dueDateRegex, '').trim();
+                matched = true;
+            }
+
+            const recurrenceMatch = description.match(Task.recurrenceRegex);
+            if (recurrenceMatch !== null) {
+                try {
+                    recurrenceRule = RRule.fromText(recurrenceMatch[1].trim());
+                } catch (error) {
+                    // Could not read recurrence rule. User possibly not done typing.
+                }
+
+                description = description
+                    .replace(Task.recurrenceRegex, '')
+                    .trim();
+                matched = true;
+            }
+
+            runs++;
+        } while (matched && runs <= maxRuns);
 
         const task = new Task({
             status,
