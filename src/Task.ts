@@ -280,11 +280,24 @@ export class Task {
             // If this task is no longer todo, we need to check if it is recurring:
             if (this.recurrenceRule !== null) {
                 // If no due date, next occurrence is after "today".
-                const after: Moment =
+                const dtStart: Moment =
                     this.dueDate !== null ? this.dueDate : window.moment();
                 // RRule disregards the timezone:
-                after.endOf('day').utc(true);
-                const next = this.recurrenceRule.after(after.toDate(), false);
+                dtStart.endOf('day').utc(true);
+
+                // Create a new rrule with `dtstart` set so that the date of
+                // the new occurrence is calculated based on the original due
+                // date and not based on today.
+                const rrule = new RRule({
+                    ...this.recurrenceRule.options,
+                    dtstart: dtStart.toDate(),
+                });
+
+                // The next occurrence should happen after today or the due
+                // date, whatever is later.
+                const today = window.moment().endOf('day').utc(true);
+                const after = today.isAfter(dtStart) ? today : dtStart;
+                const next = rrule.after(after.toDate(), false);
 
                 if (next !== null) {
                     // Re-add the timezone that RRule disregarded:
