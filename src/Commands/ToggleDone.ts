@@ -104,12 +104,11 @@ const toggleChecklistItem = ({
     // It's a checklist item, let's toggle it.
     const indentation = regexMatch[1];
     const statusString = regexMatch[2].toLowerCase();
-    const description = regexMatch[3];
-    const rest = regexMatch[4];
+    const body = regexMatch[3];
 
     const toggledStatusString = statusString === ' ' ? 'x' : ' ';
 
-    const toggledLine = `${indentation}- [${toggledStatusString}] ${description}${rest}`;
+    const toggledLine = `${indentation}- [${toggledStatusString}] ${body}`;
 
     return toggledLine;
 };
