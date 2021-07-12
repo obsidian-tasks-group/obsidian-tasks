@@ -4,6 +4,8 @@ import { Status, Task } from './Task';
 
 export class Query {
     private _limit: number | undefined = undefined;
+    private _showTaskCount: boolean = true;
+    private _showBacklinks: boolean = true;
     private _filters: ((task: Task) => boolean)[] = [];
     private _error: string | undefined = undefined;
 
@@ -16,6 +18,7 @@ export class Query {
     private readonly descriptionRegexp =
         /description (includes|does not include) (.*)/;
     private readonly headingRegexp = /heading (includes|does not include) (.*)/;
+    private readonly layoutRegexp = /(layoutOptions): (.*)/
     private readonly limitRegexp = /limit (to )?(\d+)( tasks?)?/;
     private readonly excludeSubItemsString = 'exclude sub-items';
 
@@ -61,6 +64,9 @@ export class Query {
                     case this.limitRegexp.test(line):
                         this.parseLimit({ line });
                         break;
+                    case this.layoutRegexp.test(line):
+                        this.parseLayout({ line });
+                        break;
                     default:
                         this._error = 'do not understand query';
                 }
@@ -71,12 +77,39 @@ export class Query {
         return this._limit;
     }
 
+    public get showTaskCount(): boolean {
+        return this._showTaskCount;
+    }
+
+    public get showBacklinks(): boolean {
+        return this._showBacklinks;
+    }
+
     public get filters(): ((task: Task) => boolean)[] {
         return this._filters;
     }
 
     public get error(): string | undefined {
         return this._error;
+    }
+
+    private parseLayout({ line }: { line: string }): void {
+        const layoutOptionMatch = line.match(this.layoutRegexp);
+        if (layoutOptionMatch !== null) {
+            var splittedOptions = layoutOptionMatch[2].split(",");
+
+            splittedOptions.forEach(s => {
+                var option = s.trim().toLowerCase()
+
+                if (option === 'hidetaskcount') {
+                    this._showTaskCount = false;
+                } else if (option === 'hidebacklinks') {
+                    this._showBacklinks = false;
+                } else {
+                    this._error = 'do not understand layout option';
+                }
+            });
+        }
     }
 
     private parseDueFilter({ line }: { line: string }): void {
