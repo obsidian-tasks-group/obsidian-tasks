@@ -108,7 +108,7 @@ For example: `✅ 2021-04-09` means the task was done on the 9th of April, 2021.
 ℹ You can set a global filter in the settings so that Tasks only matches specific checklist items.
 For example, you could set it to `#tasks` to only track checklist items as task if they include the string `#tasks`.
 It doesn't have to be a tag. It can be any string.
-Leave it empty to reagard all checklist items as tasks.
+Leave it empty to regard all checklist items as tasks.
 
 Example with global filter `#tasks`:
 
@@ -133,7 +133,7 @@ For example: `📅 2021-04-09` means the task is due on the 9th of April, 2021.
 - [ ] take out the trash 📅 2021-04-09
 ```
 
-Instead of adding the emoji and the date manually, you can use the `Tasks: Crete or edit` command when creating or editing a task.
+Instead of adding the emoji and the date manually, you can use the `Tasks: Create or edit` command when creating or editing a task.
 When you use the command, you can also set a due date like "Monday", "tomorrow", or "next week" and Tasks will automatically save the date in the correct format.
 
 **You can only put block links (`^link-name`) behind the due/done dates. Anything else will break the parsing of dates and recurrence rules.**
