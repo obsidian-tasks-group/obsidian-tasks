@@ -108,7 +108,7 @@ For example: `✅ 2021-04-09` means the task was done on the 9th of April, 2021.
 ℹ You can set a global filter in the settings so that Tasks only matches specific checklist items.
 For example, you could set it to `#tasks` to only track checklist items as task if they include the string `#tasks`.
 It doesn't have to be a tag. It can be any string.
-Leave it empty to reagard all checklist items as tasks.
+Leave it empty to regard all checklist items as tasks.
 
 Example with global filter `#tasks`:
 
