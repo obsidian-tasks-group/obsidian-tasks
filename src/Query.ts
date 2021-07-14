@@ -10,10 +10,10 @@ export class Query {
     private _error: string | undefined = undefined;
 
     private readonly noDueString = 'no due date';
-    private readonly dueRegexp = /due (before|after|on)? ?(.*)/;
+    private readonly dueRegexp = /due (before|after|on) ?(.*)/;
     private readonly doneString = 'done';
     private readonly notDoneString = 'not done';
-    private readonly doneRegexp = /done (before|after|on)? ?(.*)/;
+    private readonly doneRegexp = /done (before|after|on) ?(.*)/;
     private readonly pathRegexp = /path (includes|does not include) (.*)/;
     private readonly descriptionRegexp =
         /description (includes|does not include) (.*)/;
