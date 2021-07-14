@@ -4,6 +4,7 @@ import { RRule } from 'rrule';
 import { replaceTaskWithTasks } from './File';
 import { getSettings } from './Settings';
 import type { Moment } from 'moment';
+import type { LayoutOptions } from 'LayoutOptions';
 
 export enum Status {
     Todo = 'Todo',
@@ -194,15 +195,17 @@ export class Task {
     public async toLi({
         parentUlElement,
         listIndex,
+        layoutOptions
     }: {
         parentUlElement: HTMLElement;
         /** The nth item in this list (including non-tasks). */
         listIndex: number;
+        layoutOptions?: LayoutOptions;
     }): Promise<HTMLLIElement> {
         const li: HTMLLIElement = parentUlElement.createEl('li');
         li.addClasses(['task-list-item', 'plugin-tasks-list-item']);
 
-        let taskAsString = this.toString();
+        let taskAsString = this.toString(layoutOptions);
         const { globalFilter, removeGlobalFilter } = getSettings();
         if (removeGlobalFilter) {
             taskAsString = taskAsString.replace(globalFilter, '').trim();
@@ -263,18 +266,32 @@ export class Task {
         return li;
     }
 
-    public toString(): string {
-        const recurrenceRule: string = this.recurrenceRule
-            ? ` 🔁 ${this.recurrenceRule.toText()}`
-            : '';
-        const dueDate: string = this.dueDate
-            ? ` 📅 ${this.dueDate.format(Task.dateFormat)}`
-            : '';
-        const doneDate: string = this.doneDate
-            ? ` ✅ ${this.doneDate.format(Task.dateFormat)}`
-            : '';
+    public toString(layoutOptions?: LayoutOptions): string {
 
-        return `${this.description}${recurrenceRule}${dueDate}${doneDate}${this.blockLink}`;
+        var taskString = this.description;
+
+        if (layoutOptions == undefined || !layoutOptions.hideRecurrenceRule) {
+            const recurrenceRule: string = this.recurrenceRule
+                ? ` 🔁 ${this.recurrenceRule.toText()}`
+                : '';
+            taskString += recurrenceRule;
+        }
+
+        if (layoutOptions == undefined || !layoutOptions.hideDueDate) {
+            const dueDate: string = this.dueDate
+                ? ` 📅 ${this.dueDate.format(Task.dateFormat)}`
+                : '';
+            taskString += dueDate;
+        }
+
+        if (layoutOptions == undefined || !layoutOptions.hideDoneDate) {
+            const doneDate: string = this.doneDate
+                ? ` ✅ ${this.doneDate.format(Task.dateFormat)}`
+                : '';
+            taskString += doneDate;
+        }
+
+        return taskString;
     }
 
     public toFileLineString(): string {

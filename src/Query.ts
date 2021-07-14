@@ -1,11 +1,11 @@
 import chrono from 'chrono-node';
+import { LayoutOptions } from 'LayoutOptions';
 
 import { Status, Task } from './Task';
 
 export class Query {
     private _limit: number | undefined = undefined;
-    private _showTaskCount: boolean = true;
-    private _showBacklinks: boolean = true;
+    private _layoutOptions: LayoutOptions = new LayoutOptions();
     private _filters: ((task: Task) => boolean)[] = [];
     private _error: string | undefined = undefined;
 
@@ -18,7 +18,8 @@ export class Query {
     private readonly descriptionRegexp =
         /description (includes|does not include) (.*)/;
     private readonly headingRegexp = /heading (includes|does not include) (.*)/;
-    private readonly layoutRegexp = /(layoutOptions): (.*)/
+    private readonly hideOptionsRegexp =
+        /hide (task count|backlink|done date|due date|recurrence rule|edit button)/
     private readonly limitRegexp = /limit (to )?(\d+)( tasks?)?/;
     private readonly excludeSubItemsString = 'exclude sub-items';
 
@@ -64,8 +65,8 @@ export class Query {
                     case this.limitRegexp.test(line):
                         this.parseLimit({ line });
                         break;
-                    case this.layoutRegexp.test(line):
-                        this.parseLayout({ line });
+                    case this.hideOptionsRegexp.test(line):
+                        this.parseHideOptions({ line });
                         break;
                     default:
                         this._error = 'do not understand query';
@@ -77,12 +78,8 @@ export class Query {
         return this._limit;
     }
 
-    public get showTaskCount(): boolean {
-        return this._showTaskCount;
-    }
-
-    public get showBacklinks(): boolean {
-        return this._showBacklinks;
+    public get layoutOptions(): LayoutOptions {
+        return this._layoutOptions;
     }
 
     public get filters(): ((task: Task) => boolean)[] {
@@ -93,22 +90,27 @@ export class Query {
         return this._error;
     }
 
-    private parseLayout({ line }: { line: string }): void {
-        const layoutOptionMatch = line.match(this.layoutRegexp);
-        if (layoutOptionMatch !== null) {
-            var splittedOptions = layoutOptionMatch[2].split(",");
+    private parseHideOptions({ line }: { line: string }): void {
 
-            splittedOptions.forEach(s => {
-                var option = s.trim().toLowerCase()
+        const hideOptionsMatch = line.match(this.hideOptionsRegexp);
+        if (hideOptionsMatch !== null) {
+            var option = hideOptionsMatch[1].trim().toLowerCase()
 
-                if (option === 'hidetaskcount') {
-                    this._showTaskCount = false;
-                } else if (option === 'hidebacklinks') {
-                    this._showBacklinks = false;
-                } else {
-                    this._error = 'do not understand layout option';
-                }
-            });
+            if (option === 'task count') {
+                this._layoutOptions.hideTaskCount = true;
+            } else if (option === 'backlink') {
+                this._layoutOptions.hideBacklinks = true;
+            } else if (option === 'done date') {
+                this._layoutOptions.hideDoneDate = true;
+            } else if (option === 'due date') {
+                this._layoutOptions.hideDueDate = true;
+            } else if (option === 'recurrence rule') {
+                this._layoutOptions.hideRecurrenceRule = true;
+            } else if (option === 'edit button') {
+                this._layoutOptions.hideEditButton = true;
+            } else {
+                this._error = 'do not understand hide option';
+            }
         }
     }
 

@@ -123,7 +123,7 @@ class QueryRenderChild extends MarkdownRenderChild {
                 content,
             });
             content.appendChild(taskList);
-            if (this.query.showTaskCount) {
+            if (!this.query.layoutOptions.hideTaskCount) {
                 content.createDiv({
                     text: `${tasksCount} task${tasksCount !== 1 ? 's' : ''}`,
                     cls: 'tasks-count',
@@ -172,11 +172,12 @@ class QueryRenderChild extends MarkdownRenderChild {
             const listItem = await task.toLi({
                 parentUlElement: taskList,
                 listIndex: i,
+                layoutOptions: this.query.layoutOptions
             });
 
             const postInfo = listItem.createSpan();
 
-            if (this.query.showBacklinks) {
+            if (!this.query.layoutOptions.hideBacklinks) {
                 if (fileName !== undefined) {
                     postInfo.append(' (');
                     const link = postInfo.createEl('a');
@@ -207,27 +208,29 @@ class QueryRenderChild extends MarkdownRenderChild {
                 }
             }
 
-            const editTaskPencil = postInfo.createEl('a', {
-                cls: 'tasks-edit',
-            });
-            editTaskPencil.onClickEvent((event: MouseEvent) => {
-                event.preventDefault();
-
-                const onSubmit = (updatedTasks: Task[]): void => {
-                    replaceTaskWithTasks({
-                        originalTask: task,
-                        newTasks: updatedTasks,
-                    });
-                };
-
-                // Need to create a new instance every time, as cursor/task can change.
-                const taskModal = new TaskModal({
-                    app: this.app,
-                    task,
-                    onSubmit,
+            if (!this.query.layoutOptions.hideEditButton) {
+                const editTaskPencil = postInfo.createEl('a', {
+                    cls: 'tasks-edit',
                 });
-                taskModal.open();
-            });
+                editTaskPencil.onClickEvent((event: MouseEvent) => {
+                    event.preventDefault();
+
+                    const onSubmit = (updatedTasks: Task[]): void => {
+                        replaceTaskWithTasks({
+                            originalTask: task,
+                            newTasks: updatedTasks,
+                        });
+                    };
+
+                    // Need to create a new instance every time, as cursor/task can change.
+                    const taskModal = new TaskModal({
+                        app: this.app,
+                        task,
+                        onSubmit,
+                    });
+                    taskModal.open();
+                });
+            }
 
             taskList.appendChild(listItem);
         }
