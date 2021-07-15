@@ -252,7 +252,7 @@ Instead you would have two queries, one for each condition:
     ```
 
 #### Layout options
-You can hide certain elements of rendered list with the "hide" option.
+You can hide certain elements of the rendered list with the "hide" option.
 
 The following options exist:
 
@@ -262,6 +262,8 @@ The following options exist:
 - `due date`
 - `recurrence rule`
 - `task count`
+
+Example:
 
     ```tasks
     no due date
