@@ -4,7 +4,7 @@ import { RRule } from 'rrule';
 import { replaceTaskWithTasks } from './File';
 import { getSettings } from './Settings';
 import type { Moment } from 'moment';
-import type { LayoutOptions } from 'LayoutOptions';
+import { LayoutOptions } from 'LayoutOptions';
 
 export enum Status {
     Todo = 'Todo',
@@ -268,23 +268,24 @@ export class Task {
 
     public toString(layoutOptions?: LayoutOptions): string {
 
-        var taskString = this.description;
+        layoutOptions = layoutOptions ?? new LayoutOptions();
+        let taskString = this.description;
 
-        if (layoutOptions == undefined || !layoutOptions.hideRecurrenceRule) {
+        if (!layoutOptions.hideRecurrenceRule) {
             const recurrenceRule: string = this.recurrenceRule
                 ? ` 🔁 ${this.recurrenceRule.toText()}`
                 : '';
             taskString += recurrenceRule;
         }
 
-        if (layoutOptions == undefined || !layoutOptions.hideDueDate) {
+        if (!layoutOptions.hideDueDate) {
             const dueDate: string = this.dueDate
                 ? ` 📅 ${this.dueDate.format(Task.dateFormat)}`
                 : '';
             taskString += dueDate;
         }
 
-        if (layoutOptions == undefined || !layoutOptions.hideDoneDate) {
+        if (!layoutOptions.hideDoneDate) {
             const doneDate: string = this.doneDate
                 ? ` ✅ ${this.doneDate.format(Task.dateFormat)}`
                 : '';
