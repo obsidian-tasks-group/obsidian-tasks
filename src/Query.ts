@@ -94,7 +94,7 @@ export class Query {
 
         const hideOptionsMatch = line.match(this.hideOptionsRegexp);
         if (hideOptionsMatch !== null) {
-            var option = hideOptionsMatch[1].trim().toLowerCase()
+            let option = hideOptionsMatch[1].trim().toLowerCase()
 
             if (option === 'task count') {
                 this._layoutOptions.hideTaskCount = true;
