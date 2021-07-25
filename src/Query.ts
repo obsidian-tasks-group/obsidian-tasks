@@ -10,17 +10,17 @@ export class Query {
     private _error: string | undefined = undefined;
 
     private readonly noDueString = 'no due date';
-    private readonly dueRegexp = /due (before|after|on) ?(.*)/;
+    private readonly dueRegexp = /^due (before|after|on)? ?(.*)/;
     private readonly doneString = 'done';
     private readonly notDoneString = 'not done';
-    private readonly doneRegexp = /done (before|after|on) ?(.*)/;
-    private readonly pathRegexp = /path (includes|does not include) (.*)/;
+    private readonly doneRegexp = /^done (before|after|on)? ?(.*)/;
+    private readonly pathRegexp = /^path (includes|does not include) (.*)/;
     private readonly descriptionRegexp =
-        /description (includes|does not include) (.*)/;
-    private readonly headingRegexp = /heading (includes|does not include) (.*)/;
+        /^description (includes|does not include) (.*)/;
+    private readonly headingRegexp = /^heading (includes|does not include) (.*)/;
     private readonly hideOptionsRegexp =
-        /hide (task count|backlink|done date|due date|recurrence rule|edit button)/
-    private readonly limitRegexp = /limit (to )?(\d+)( tasks?)?/;
+        /^hide (task count|backlink|done date|due date|recurrence rule|edit button)/
+    private readonly limitRegexp = /^limit (to )?(\d+)( tasks?)?/;
     private readonly excludeSubItemsString = 'exclude sub-items';
 
     constructor({ source }: { source: string }) {
