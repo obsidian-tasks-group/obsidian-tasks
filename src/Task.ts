@@ -4,7 +4,7 @@ import { RRule } from 'rrule';
 import { replaceTaskWithTasks } from './File';
 import { getSettings } from './Settings';
 import type { Moment } from 'moment';
-import { LayoutOptions } from 'LayoutOptions';
+import { LayoutOptions } from './LayoutOptions';
 
 export enum Status {
     Todo = 'Todo',
