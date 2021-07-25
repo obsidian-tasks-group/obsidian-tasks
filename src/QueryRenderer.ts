@@ -177,64 +177,70 @@ class QueryRenderChild extends MarkdownRenderChild {
 
             const postInfo = listItem.createSpan();
 
-            if (!this.query.layoutOptions.hideBacklinks) {
-                if (fileName !== undefined) {
-                    postInfo.append(' (');
-                    const link = postInfo.createEl('a');
-                    link.href = fileName;
-                    link.setAttribute('data-href', fileName);
-                    link.rel = 'noopener';
-                    link.target = '_blank';
-                    link.addClass('internal-link');
-
-                    let linkText = fileName;
-                    if (task.precedingHeader !== null) {
-                        link.href = link.href + '#' + task.precedingHeader;
-                        link.setAttribute(
-                            'data-href',
-                            link.getAttribute('data-href') +
-                            '#' +
-                            task.precedingHeader,
-                        );
-
-                        // Otherwise, this wouldn't provide additinoal information and only take up space.
-                        if (task.precedingHeader !== fileName) {
-                            linkText = linkText + ' > ' + task.precedingHeader;
-                        }
-                    }
-
-                    link.setText(linkText);
-                    postInfo.append(')');
-                }
+            if (!this.query.layoutOptions.hideBacklinks && fileName !== undefined) {
+                this.addBacklinks(postInfo, fileName, task);
             }
 
             if (!this.query.layoutOptions.hideEditButton) {
-                const editTaskPencil = postInfo.createEl('a', {
-                    cls: 'tasks-edit',
-                });
-                editTaskPencil.onClickEvent((event: MouseEvent) => {
-                    event.preventDefault();
-
-                    const onSubmit = (updatedTasks: Task[]): void => {
-                        replaceTaskWithTasks({
-                            originalTask: task,
-                            newTasks: updatedTasks,
-                        });
-                    };
-
-                    // Need to create a new instance every time, as cursor/task can change.
-                    const taskModal = new TaskModal({
-                        app: this.app,
-                        task,
-                        onSubmit,
-                    });
-                    taskModal.open();
-                });
+                this.addEditButton(postInfo, task);
             }
 
             taskList.appendChild(listItem);
         }
 
         return { taskList, tasksCount };
+    }
+
+    private addEditButton(postInfo: HTMLSpanElement, task: Task) {
+        const editTaskPencil = postInfo.createEl('a', {
+            cls: 'tasks-edit',
+        });
+        editTaskPencil.onClickEvent((event: MouseEvent) => {
+            event.preventDefault();
+
+            const onSubmit = (updatedTasks: Task[]): void => {
+                replaceTaskWithTasks({
+                    originalTask: task,
+                    newTasks: updatedTasks,
+                });
+            };
+
+            // Need to create a new instance every time, as cursor/task can change.
+            const taskModal = new TaskModal({
+                app: this.app,
+                task,
+                onSubmit,
+            });
+            taskModal.open();
+        });
+    }
+
+    private addBacklinks(postInfo: HTMLSpanElement, fileName: string, task: Task) {
+        postInfo.append(' (');
+        const link = postInfo.createEl('a');
+        link.href = fileName;
+        link.setAttribute('data-href', fileName);
+        link.rel = 'noopener';
+        link.target = '_blank';
+        link.addClass('internal-link');
+
+        let linkText = fileName;
+        if (task.precedingHeader !== null) {
+            link.href = link.href + '#' + task.precedingHeader;
+            link.setAttribute(
+                'data-href',
+                link.getAttribute('data-href') +
+                '#' +
+                task.precedingHeader
+            );
+
+            // Otherwise, this wouldn't provide additinoal information and only take up space.
+            if (task.precedingHeader !== fileName) {
+                linkText = linkText + ' > ' + task.precedingHeader;
+            }
+        }
+
+        link.setText(linkText);
+        postInfo.append(')');
     }
 }
