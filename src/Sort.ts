@@ -6,9 +6,21 @@ export class Sort {
         switch (query.sorting) {
             case 'status':
                 return this.byStatusThenDateThenPath(tasks);
+            case "due":
+                return this.byDue(tasks);
+            case "done":
+                return this.byDone(tasks);
             default:
                 return this.byStatusThenDateThenPath(tasks);
         }
+    }
+
+    public static byDue(tasks: Task[]): Task[] {
+        return tasks.sort(Sort.compareByDate);
+    }
+
+    public static byDone(tasks: Task[]): Task[] {
+        return tasks.sort(Sort.compareByStatus);
     }
 
     public static byStatusThenDateThenPath(tasks: Task[]): Task[] {
