@@ -47,4 +47,11 @@ describe('Sort', () => {
             Sort.by({ sorting: ['due', 'path', 'status'] }, [a, b, c, d]),
         ).toEqual(expectedOrder);
     });
+
+    test('by done', () => {
+      const a = fromLine('- [ ] bring out the trash 🗓 2021-09-12');
+      const b = fromLine('- [x] pet the cat 🗓 2021-09-15');
+      expect(Sort.byDone([a, b])).toEqual([a, b]);
+      expect(Sort.byDone([b, a])).toEqual([a, b]);
+  });
 });
