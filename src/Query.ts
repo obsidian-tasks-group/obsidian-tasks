@@ -2,10 +2,13 @@ import chrono from 'chrono-node';
 
 import { Status, Task } from './Task';
 
+type Sorting = 'status';
+
 export class Query {
     private _limit: number | undefined = undefined;
     private _filters: ((task: Task) => boolean)[] = [];
     private _error: string | undefined = undefined;
+    private _sorting: Sorting | undefined = undefined;
 
     private readonly noDueString = 'no due date';
     private readonly dueRegexp = /due (before|after|on)? ?(.*)/;
@@ -61,6 +64,9 @@ export class Query {
                     case this.limitRegexp.test(line):
                         this.parseLimit({ line });
                         break;
+                    case this.sortByRegexp.test(line):
+                        this.parseSortBy({ line });
+                        break;
                     default:
                         this._error = 'do not understand query';
                 }
@@ -73,6 +79,10 @@ export class Query {
 
     public get filters(): ((task: Task) => boolean)[] {
         return this._filters;
+    }
+
+    public get sorting(): Sorting | undefined {
+        return this._sorting;
     }
 
     public get error(): string | undefined {
@@ -214,6 +224,16 @@ export class Query {
             this._limit = limit;
         } else {
             this._error = 'do not understand query limit';
+        }
+    }
+
+    private readonly sortByRegexp = /sort by (status)/;
+    private parseSortBy({ line }: { line: string }): void {
+        const fieldMatch = line.match(this.sortByRegexp);
+        if (fieldMatch !== null) {
+            this._sorting = fieldMatch[1] as Sorting;
+        } else {
+            this._error = 'do not understand query sorting';
         }
     }
 
