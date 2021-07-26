@@ -8,7 +8,7 @@ export class Query {
     private _limit: number | undefined = undefined;
     private _filters: ((task: Task) => boolean)[] = [];
     private _error: string | undefined = undefined;
-    private _sorting: Sorting | undefined = undefined;
+    private _sorting: Sorting[] = [];
 
     private readonly noDueString = 'no due date';
     private readonly dueRegexp = /due (before|after|on)? ?(.*)/;
@@ -81,7 +81,7 @@ export class Query {
         return this._filters;
     }
 
-    public get sorting(): Sorting | undefined {
+    public get sorting(): Sorting[] {
         return this._sorting;
     }
 
@@ -231,7 +231,7 @@ export class Query {
     private parseSortBy({ line }: { line: string }): void {
         const fieldMatch = line.match(this.sortByRegexp);
         if (fieldMatch !== null) {
-            this._sorting = fieldMatch[1] as Sorting;
+            this._sorting.push(fieldMatch[1] as Sorting);
         } else {
             this._error = 'do not understand query sorting';
         }

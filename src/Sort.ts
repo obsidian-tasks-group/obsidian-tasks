@@ -5,23 +5,25 @@ import type moment from 'moment';
 type Comparator = (a: Task, b: Task) => -1 | 0 | 1;
 
 export class Sort {
-    public static by(query: Pick<Query, "sorting">, tasks: Task[]): Task[] {
+    public static by(query: Pick<Query, 'sorting'>, tasks: Task[]): Task[] {
         const priorities: Comparator[] = [
             this.compareByStatus,
             this.compareByDueDate,
             this.compareByPath,
         ];
 
-        switch (query.sorting) {
-            case 'status':
-                priorities.unshift(this.compareByStatus);
-                break;
-            case 'due':
-                priorities.unshift(this.compareByDueDate);
-                break;
-            case 'done':
-                priorities.unshift(this.compareByDoneDate);
-                break;
+        for (const sortProp of query.sorting.reverse()) {
+            switch (sortProp) {
+                case 'status':
+                    priorities.unshift(this.compareByStatus);
+                    break;
+                case 'due':
+                    priorities.unshift(this.compareByDueDate);
+                    break;
+                case 'done':
+                    priorities.unshift(this.compareByDoneDate);
+                    break;
+            }
         }
 
         return tasks.sort(this.makeCompositeComparator(priorities));
@@ -59,7 +61,10 @@ export class Sort {
         return Sort.compareByDate(a.doneDate, b.doneDate);
     }
 
-    private static compareByDate(a: moment.Moment | null, b: moment.Moment | null): -1 | 0 | 1 {
+    private static compareByDate(
+        a: moment.Moment | null,
+        b: moment.Moment | null,
+    ): -1 | 0 | 1 {
         if (a !== null && b === null) {
             return -1;
         } else if (a === null && b !== null) {

@@ -19,14 +19,14 @@ describe('Sort', () => {
     test('by due', () => {
         const a = fromLine('- [x] bring out the trash 🗓 2021-09-12');
         const b = fromLine('- [ ] pet the cat 🗓 2021-09-15');
-        expect(Sort.by({ sorting: 'due' }, [a, b])).toEqual([a, b]);
-        expect(Sort.by({ sorting: 'due' }, [b, a])).toEqual([a, b]);
+        expect(Sort.by({ sorting: ['due'] }, [a, b])).toEqual([a, b]);
+        expect(Sort.by({ sorting: ['due'] }, [b, a])).toEqual([a, b]);
     });
 
     test('by done', () => {
         const a = fromLine('- [ ] bring out the trash 🗓 2021-09-12');
         const b = fromLine('- [x] pet the cat 🗓 2021-09-15 ✅ 2021-09-16');
-        expect(Sort.by({ sorting: 'done' }, [a, b])).toEqual([b, a]);
-        expect(Sort.by({ sorting: 'done' }, [b, a])).toEqual([b, a]);
+        expect(Sort.by({ sorting: ['done'] }, [a, b])).toEqual([b, a]);
+        expect(Sort.by({ sorting: ['done'] }, [b, a])).toEqual([b, a]);
     });
 });
