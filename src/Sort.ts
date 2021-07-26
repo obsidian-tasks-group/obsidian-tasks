@@ -1,6 +1,16 @@
 import type { Task } from './Task';
+import type { Query } from './Query';
 
 export class Sort {
+    public static by(query: Query, tasks: Task[]): Task[] {
+        switch (query.sorting) {
+            case 'status':
+                return this.byStatusThenDateThenPath(tasks);
+            default:
+                return this.byStatusThenDateThenPath(tasks);
+        }
+    }
+
     public static byStatusThenDateThenPath(tasks: Task[]): Task[] {
         return tasks.sort(Sort.compareByStatus);
     }
