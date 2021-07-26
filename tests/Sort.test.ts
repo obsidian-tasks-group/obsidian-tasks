@@ -49,9 +49,9 @@ describe('Sort', () => {
     });
 
     test('by done', () => {
-      const a = fromLine('- [ ] bring out the trash 🗓 2021-09-12');
-      const b = fromLine('- [x] pet the cat 🗓 2021-09-15');
-      expect(Sort.byDone([a, b])).toEqual([a, b]);
-      expect(Sort.byDone([b, a])).toEqual([a, b]);
-  });
+        const a = fromLine('- [ ] bring out the trash 🗓 2021-09-12');
+        const b = fromLine('- [x] pet the cat 🗓 2021-09-15 ✅ 2021-09-16');
+        expect(Sort.by({ sorting: ['done'] }, [a, b])).toEqual([b, a]);
+        expect(Sort.by({ sorting: ['done'] }, [b, a])).toEqual([b, a]);
+    });
 });
