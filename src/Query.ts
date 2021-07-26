@@ -41,7 +41,7 @@ export class Query {
                         break;
                     case line === this.recurringString:
                         this._filters.push(
-                            (task) => task.recurrenceRule != null,
+                            (task) => task.recurrenceRule !== null,
                         );
                         break;
                     case line === this.notRecurringString:
