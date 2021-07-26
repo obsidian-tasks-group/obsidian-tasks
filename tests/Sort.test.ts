@@ -22,4 +22,11 @@ describe('Sort', () => {
         expect(Sort.byDue([a, b])).toEqual([a, b]);
         expect(Sort.byDue([b, a])).toEqual([a, b]);
     });
+
+    test('by done', () => {
+      const a = fromLine('- [ ] bring out the trash 🗓 2021-09-12');
+      const b = fromLine('- [x] pet the cat 🗓 2021-09-15');
+      expect(Sort.byDone([a, b])).toEqual([a, b]);
+      expect(Sort.byDone([b, a])).toEqual([a, b]);
+  });
 });
