@@ -86,7 +86,7 @@
     });
 
     const _onSubmit = () => {
-        const { globalFilter } = getSettings();
+        const { globalFilter, makeDatesBacklinks } = getSettings();
         let description = editableTask.description.trim();
         if (!description.includes(globalFilter)) {
             description = globalFilter + ' ' + description;
@@ -111,7 +111,9 @@
             status: editableTask.status,
             recurrenceRule,
             dueDate,
+            dueDateBacklink: makeDatesBacklinks,
             doneDate: window.moment(editableTask.doneDate, 'YYYY-MM-DD').isValid() ? window.moment(editableTask.doneDate, 'YYYY-MM-DD') : null,
+            doneDateBacklink: makeDatesBacklinks,
         });
 
         onSubmit([updatedTask]);

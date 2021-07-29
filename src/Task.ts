@@ -101,16 +101,22 @@ export class Task {
         // The following regexes end with `$` because they will be matched and
         // removed from the end until none are left.
         const dateRegexString = '(\\[\\[)?(\\d{4}-\\d{2}-\\d{2})(\\]\\])?';
+        const {
+            dueDateMarker,
+            doneDateMarker,
+            globalFilter,
+            recurrenceMarker,
+        } = getSettings();
         const dueDateRegex = new RegExp(
-            `${getSettings().dueDateMarker}\\s+?${dateRegexString}$`,
+            `${dueDateMarker}\\s+?${dateRegexString}$`,
             'u',
         );
         const doneDateRegex = new RegExp(
-            `${getSettings().doneDateMarker}\\s+?${dateRegexString}$`,
+            `${doneDateMarker}\\s+?${dateRegexString}$`,
             'u',
         );
         const recurrenceRegex = new RegExp(
-            `${getSettings().recurrenceMarker}\\s+?([a-zA-Z0-9, !]+)$`,
+            `${recurrenceMarker}\\s+?([a-zA-Z0-9, !]+)$`,
             'u',
         );
 
@@ -134,7 +140,6 @@ export class Task {
         // match[3] includes the whole body of the task after the brackets.
         const body = regexMatch[3].trim();
 
-        const { globalFilter } = getSettings();
         if (!body.includes(globalFilter)) {
             return null;
         }
@@ -400,6 +405,8 @@ export class Task {
             const nextTask = new Task({
                 ...this,
                 dueDate: nextOccurrence,
+                dueDateBacklink: makeDatesBacklinks,
+                doneDateBacklink: makeDatesBacklinks,
                 // New occurrences cannot have the same block link.
                 // And random block links don't help.
                 blockLink: '',
