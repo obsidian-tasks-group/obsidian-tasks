@@ -11,15 +11,22 @@ export class Query {
 
     private readonly noDueString = 'no due date';
     private readonly dueRegexp = /^due (before|after|on)? ?(.*)/;
+  
     private readonly doneString = 'done';
     private readonly notDoneString = 'not done';
     private readonly doneRegexp = /^done (before|after|on)? ?(.*)/;
+  
     private readonly pathRegexp = /^path (includes|does not include) (.*)/;
     private readonly descriptionRegexp =
         /^description (includes|does not include) (.*)/;
     private readonly headingRegexp = /^heading (includes|does not include) (.*)/;
+  
     private readonly hideOptionsRegexp =
         /^hide (task count|backlink|done date|due date|recurrence rule|edit button)/
+  
+    private readonly recurringString = 'is recurring';
+    private readonly notRecurringString = 'is not recurring';
+  
     private readonly limitRegexp = /^limit (to )?(\d+)( tasks?)?/;
     private readonly excludeSubItemsString = 'exclude sub-items';
 
@@ -39,6 +46,16 @@ export class Query {
                     case line === this.notDoneString:
                         this._filters.push(
                             (task) => task.status !== Status.Done,
+                        );
+                        break;
+                    case line === this.recurringString:
+                        this._filters.push(
+                            (task) => task.recurrenceRule !== null,
+                        );
+                        break;
+                    case line === this.notRecurringString:
+                        this._filters.push(
+                            (task) => task.recurrenceRule === null,
                         );
                         break;
                     case line === this.excludeSubItemsString:
