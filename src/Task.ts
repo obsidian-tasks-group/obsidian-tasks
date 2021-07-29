@@ -348,6 +348,7 @@ export class Task {
      * task is not recurring, it will return `[toggled]`.
      */
     public toggle(): Task[] {
+        const { makeDatesBacklinks } = getSettings();
         const newStatus: Status =
             this.status === Status.Todo ? Status.Done : Status.Todo;
         let newDoneDate = null;
@@ -387,7 +388,9 @@ export class Task {
         const toggledTask = new Task({
             ...this,
             status: newStatus,
+            dueDateBacklink: makeDatesBacklinks,
             doneDate: newDoneDate,
+            doneDateBacklink: makeDatesBacklinks,
             originalStatusCharacter: newStatus === Status.Done ? 'x' : ' ',
         });
 
