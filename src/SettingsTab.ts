@@ -66,9 +66,9 @@ export class SettingsTab extends PluginSettingTab {
             });
 
         new Setting(containerEl)
-            .setName('Wrap dates in Wikilink brackets')
+            .setName('Wrap dates in backlink brackets')
             .setDesc(
-                'Enabling this will wrap dates in brackets (e.g., "[[YYYY-MM-DD]]").',
+                'Enabling this will wrap due dates and done dates in backlink brackets (e.g., "[[YYYY-MM-DD]]"). Toggling this setting will not affect existing items until this plugin next interacts with them.',
             )
             .addToggle((toggle) => {
                 const settings = getSettings();

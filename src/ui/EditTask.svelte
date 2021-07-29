@@ -32,7 +32,6 @@
         doneDateMarker,
         dueDateMarker,
         recurrenceMarker,
-        makeDatesBacklinks,
     } = getSettings();
 
     $: {
