@@ -1,11 +1,15 @@
 export interface Settings {
     globalFilter: string;
     removeGlobalFilter: boolean;
+    dueDateRegex: string;
+    scheduledDateRegex: string;
 }
 
-const defaultSettings: Settings = {
+export const defaultSettings: Settings = {
     globalFilter: '',
     removeGlobalFilter: false,
+    dueDateRegex: '[📅📆🗓] ?(\\d{4}-\\d{2}-\\d{2})',
+    scheduledDateRegex: '[⏰⏲️🕰️] ?(\\d{4}-\\d{2}-\\d{2})',
 };
 
 let settings: Settings = { ...defaultSettings };

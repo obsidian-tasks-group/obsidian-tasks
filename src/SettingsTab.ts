@@ -1,6 +1,6 @@
 import { PluginSettingTab, Setting } from 'obsidian';
 
-import { getSettings, updateSettings } from './Settings';
+import { defaultSettings, getSettings, updateSettings } from './Settings';
 import type TasksPlugin from './main';
 
 export class SettingsTab extends PluginSettingTab {
@@ -60,6 +60,41 @@ export class SettingsTab extends PluginSettingTab {
                     .setValue(settings.removeGlobalFilter)
                     .onChange(async (value) => {
                         updateSettings({ removeGlobalFilter: value });
+
+                        await this.plugin.saveSettings();
+                    });
+            });
+
+        new Setting(containerEl)
+            .setName('Due date regex')
+            .setDesc('A Regular Expression for parsing due dates.')
+            .addText((text) => {
+                const settings = getSettings();
+
+                text.setPlaceholder(defaultSettings.dueDateRegex)
+                    .setValue(settings.dueDateRegex)
+                    .onChange(async (value) => {
+                        updateSettings({
+                            dueDateRegex:
+                                value !== ''
+                                    ? value
+                                    : defaultSettings.dueDateRegex,
+                        });
+
+                        await this.plugin.saveSettings();
+                    });
+            });
+
+        new Setting(containerEl)
+            .setName('Start/Scheduled date regex')
+            .setDesc('A Regular Expression for parsing start/scheduled dates.')
+            .addText((text) => {
+                const settings = getSettings();
+
+                text.setPlaceholder(defaultSettings.scheduledDateRegex)
+                    .setValue(settings.scheduledDateRegex)
+                    .onChange(async (value) => {
+                        updateSettings({ scheduledDateRegex: value });
 
                         await this.plugin.saveSettings();
                     });
