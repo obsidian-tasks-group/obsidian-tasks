@@ -234,6 +234,11 @@ export class Task {
             }
         });
 
+        // Remove the footnote that the MarkdownRenderer appends when there is a footnote in the task:
+        li.findAll('.footnotes').forEach((footnoteElement) => {
+            footnoteElement.remove();
+        });
+
         const checkbox = li.createEl('input');
         checkbox.addClass('task-list-item-checkbox');
         checkbox.type = 'checkbox';
