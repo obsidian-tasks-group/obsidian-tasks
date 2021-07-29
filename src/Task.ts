@@ -34,22 +34,6 @@ export class Task {
 
     public static readonly dateFormat = 'YYYY-MM-DD';
     public static readonly taskRegex = /^([\s\t]*)[-*] +\[(.)\] *(.*)/u;
-    // The following regexes end with `$` because they will be matched and
-    // removed from the end until none are left.
-    public static readonly dueDateRegex = new RegExp(
-        `${getSettings().dueDateMarker} ?(\\d{4}-\\d{2}-\\d{2})$`,
-        'u',
-    );
-    // public static readonly dueDateRegex = /[📅📆🗓] ?(\d{4}-\d{2}-\d{2})$/u;
-    public static readonly doneDateRegex = new RegExp(
-        `${getSettings().doneDateMarker} ?(\\d{4}-\\d{2}-\\d{2})$`,
-        'u',
-    );
-    public static readonly recurrenceRegex = new RegExp(
-        `${getSettings().recurrenceMarker} ?(\\d{4}-\\d{2}-\\d{2})$`,
-        'u',
-    );
-    public static readonly blockLinkRegex = / \^[a-zA-Z0-9-]+$/u;
 
     constructor({
         status,
@@ -105,6 +89,23 @@ export class Task {
         sectionIndex: number;
         precedingHeader: string | null;
     }): Task | null {
+        // The following regexes end with `$` because they will be matched and
+        // removed from the end until none are left.
+        const dueDateRegex = new RegExp(
+            `${getSettings().dueDateMarker} ?(\\d{4}-\\d{2}-\\d{2})$`,
+            'u',
+        );
+        const doneDateRegex = new RegExp(
+            `${getSettings().doneDateMarker} ?(\\d{4}-\\d{2}-\\d{2})$`,
+            'u',
+        );
+        const recurrenceRegex = new RegExp(
+            `${getSettings().recurrenceMarker} ?(\\d{4}-\\d{2}-\\d{2})$`,
+            'u',
+        );
+        const blockLinkRegex = / \^[a-zA-Z0-9-]+$/u;
+
+        console.log(107, getSettings(), doneDateRegex);
         const regexMatch = line.match(Task.taskRegex);
         if (regexMatch === null) {
             return null;
@@ -132,11 +133,11 @@ export class Task {
 
         let description = body;
 
-        const blockLinkMatch = description.match(this.blockLinkRegex);
+        const blockLinkMatch = description.match(blockLinkRegex);
         const blockLink = blockLinkMatch !== null ? blockLinkMatch[0] : '';
 
         if (blockLink !== '') {
-            description = description.replace(this.blockLinkRegex, '').trim();
+            description = description.replace(blockLinkRegex, '').trim();
         }
 
         // Keep matching and removing special strings from the end of the
@@ -151,23 +152,21 @@ export class Task {
         let runs = 0;
         do {
             matched = false;
-            const doneDateMatch = description.match(Task.doneDateRegex);
+            const doneDateMatch = description.match(doneDateRegex);
             if (doneDateMatch !== null) {
                 doneDate = window.moment(doneDateMatch[1], Task.dateFormat);
-                description = description
-                    .replace(Task.doneDateRegex, '')
-                    .trim();
+                description = description.replace(doneDateRegex, '').trim();
                 matched = true;
             }
 
-            const dueDateMatch = description.match(Task.dueDateRegex);
+            const dueDateMatch = description.match(dueDateRegex);
             if (dueDateMatch !== null) {
                 dueDate = window.moment(dueDateMatch[1], Task.dateFormat);
-                description = description.replace(Task.dueDateRegex, '').trim();
+                description = description.replace(dueDateRegex, '').trim();
                 matched = true;
             }
 
-            const recurrenceMatch = description.match(Task.recurrenceRegex);
+            const recurrenceMatch = description.match(recurrenceRegex);
             if (recurrenceMatch !== null) {
                 try {
                     recurrenceRule = RRule.fromText(recurrenceMatch[1].trim());
@@ -175,9 +174,7 @@ export class Task {
                     // Could not read recurrence rule. User possibly not done typing.
                 }
 
-                description = description
-                    .replace(Task.recurrenceRegex, '')
-                    .trim();
+                description = description.replace(recurrenceRegex, '').trim();
                 matched = true;
             }
 
@@ -285,23 +282,26 @@ export class Task {
         layoutOptions = layoutOptions ?? new LayoutOptions();
         let taskString = this.description;
 
+        const { doneDateMarker, dueDateMarker, recurrenceMarker } =
+            getSettings();
+
         if (!layoutOptions.hideRecurrenceRule) {
             const recurrenceRule: string = this.recurrenceRule
-                ? ` 🔁 ${this.recurrenceRule.toText()}`
+                ? ` ${recurrenceMarker} ${this.recurrenceRule.toText()}`
                 : '';
             taskString += recurrenceRule;
         }
 
         if (!layoutOptions.hideDueDate) {
             const dueDate: string = this.dueDate
-                ? ` 📅 ${this.dueDate.format(Task.dateFormat)}`
+                ? ` ${dueDateMarker} ${this.dueDate.format(Task.dateFormat)}`
                 : '';
             taskString += dueDate;
         }
 
         if (!layoutOptions.hideDoneDate) {
             const doneDate: string = this.doneDate
-                ? ` ✅ ${this.doneDate.format(Task.dateFormat)}`
+                ? ` ${doneDateMarker} ${this.doneDate.format(Task.dateFormat)}`
                 : '';
             taskString += doneDate;
         }

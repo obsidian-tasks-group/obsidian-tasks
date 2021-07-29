@@ -28,6 +28,12 @@
     let parsedRRule: string = '';
     let parsedDone: string = '';
 
+    const { 
+        doneDateMarker,
+        dueDateMarker,
+        recurrenceMarker
+    } = getSettings();
+
     $: {
         if (!editableTask.dueDate) {
             parsedDueDate = '<i>no due date</>'
@@ -122,13 +128,13 @@
         <div class="tasks-modal-section">
             <label for="due">Due</label>
             <input bind:value={editableTask.dueDate} id="due" type="text" placeholder="Try 'Monday' or 'tomorrow'." />
-            <code>📅 {@html parsedDueDate}</code>
+            <code>{@html dueDateMarker} {@html parsedDueDate}</code>
         </div>
         <hr />
         <div class="tasks-modal-section">
             <label for="recurrence">Recurrence</label>
             <input bind:value={editableTask.recurrenceRule} id="description" type="text" placeholder="Try 'every 2 weeks on Thursday'." />
-            <code>🔁 {@html parsedRRule }</code>
+            <code>{@html recurrenceMarker} {@html parsedRRule }</code>
         </div>
         <hr />
         <div class="tasks-modal-section">
