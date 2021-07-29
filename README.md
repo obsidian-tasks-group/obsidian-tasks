@@ -203,6 +203,8 @@ The following filters exist:
 - `done (before|after|on) <date>`
 - `no due date`
 - `due (before|after|on) <date>`
+- `is recurring`
+- `is not recurring`
 - `path (includes|does not include) <path>`
 - `description (includes|does not include) <string>`
     - Matches case-insensitive (disregards capitalization).
