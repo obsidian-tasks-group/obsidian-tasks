@@ -36,9 +36,19 @@ export class Task {
     public static readonly taskRegex = /^([\s\t]*)[-*] +\[(.)\] *(.*)/u;
     // The following regexes end with `$` because they will be matched and
     // removed from the end until none are left.
+    public static readonly dueDateRegex = new RegExp(
+        `${getSettings().dueDateMarker} ?(\\d{4}-\\d{2}-\\d{2})$`,
+        'u',
+    );
     // public static readonly dueDateRegex = /[📅📆🗓] ?(\d{4}-\d{2}-\d{2})$/u;
-    public static readonly doneDateRegex = /✅ ?(\d{4}-\d{2}-\d{2})$/u;
-    public static readonly recurrenceRegex = /🔁([a-zA-Z0-9, !]+)$/u;
+    public static readonly doneDateRegex = new RegExp(
+        `${getSettings().doneDateMarker} ?(\\d{4}-\\d{2}-\\d{2})$`,
+        'u',
+    );
+    public static readonly recurrenceRegex = new RegExp(
+        `${getSettings().recurrenceMarker} ?(\\d{4}-\\d{2}-\\d{2})$`,
+        'u',
+    );
     public static readonly blockLinkRegex = / \^[a-zA-Z0-9-]+$/u;
 
     constructor({
@@ -115,30 +125,10 @@ export class Task {
         // match[3] includes the whole body of the task after the brackets.
         const body = regexMatch[3].trim();
 
-        const { dueDateRegex, globalFilter, scheduledDateRegex } =
-            getSettings();
+        const { globalFilter } = getSettings();
         if (!body.includes(globalFilter)) {
             return null;
         }
-
-        // The following regexes end with `$` because they will be matched and
-        // removed from the end until none are left.
-        const dueDateRegexParsed = new RegExp(
-            `${dueDateRegex}${dueDateRegex.match(/(?<!\\\\)\\$$/) ? '' : '$'}`,
-            'u',
-        );
-        //                            /[📅📆🗓] ?(\d{4}-\d{2}-\d{2})$/u
-        //                            /[📅📆🗓] ?(\d{4}-\d{2}-\d{2})$/u
-        const scheduledDateRegexParsed = new RegExp(
-            `${scheduledDateRegex}$`,
-            'u',
-        );
-        console.log(
-            129,
-            dueDateRegex,
-            dueDateRegex.match(/(?<!\\\\)\\$$/),
-            dueDateRegexParsed,
-        );
 
         let description = body;
 
@@ -161,22 +151,19 @@ export class Task {
         let runs = 0;
         do {
             matched = false;
-            const doneDateMatch = description.match(dueDateRegexParsed);
-            console.log(158, dueDateRegexParsed, description, doneDateMatch);
+            const doneDateMatch = description.match(Task.doneDateRegex);
             if (doneDateMatch !== null) {
                 doneDate = window.moment(doneDateMatch[1], Task.dateFormat);
                 description = description
-                    .replace(dueDateRegexParsed, '')
+                    .replace(Task.doneDateRegex, '')
                     .trim();
                 matched = true;
             }
 
-            const dueDateMatch = description.match(dueDateRegexParsed);
+            const dueDateMatch = description.match(Task.dueDateRegex);
             if (dueDateMatch !== null) {
                 dueDate = window.moment(dueDateMatch[1], Task.dateFormat);
-                description = description
-                    .replace(dueDateRegexParsed, '')
-                    .trim();
+                description = description.replace(Task.dueDateRegex, '').trim();
                 matched = true;
             }
 

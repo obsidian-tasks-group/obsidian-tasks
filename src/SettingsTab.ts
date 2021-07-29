@@ -66,19 +66,23 @@ export class SettingsTab extends PluginSettingTab {
             });
 
         new Setting(containerEl)
-            .setName('Due date regex')
-            .setDesc('A Regular Expression for parsing due dates.')
+            .setName('Due date marker')
+            .setDesc('A marker that immediately precedes due dates.')
             .addText((text) => {
                 const settings = getSettings();
 
-                text.setPlaceholder(defaultSettings.dueDateRegex)
-                    .setValue(settings.dueDateRegex)
+                text.setPlaceholder(defaultSettings.dueDateMarker)
+                    .setValue(
+                        settings.dueDateMarker === defaultSettings.dueDateMarker
+                            ? ''
+                            : settings.dueDateMarker,
+                    )
                     .onChange(async (value) => {
                         updateSettings({
-                            dueDateRegex:
+                            dueDateMarker:
                                 value !== ''
                                     ? value
-                                    : defaultSettings.dueDateRegex,
+                                    : defaultSettings.dueDateMarker,
                         });
 
                         await this.plugin.saveSettings();
@@ -86,15 +90,70 @@ export class SettingsTab extends PluginSettingTab {
             });
 
         new Setting(containerEl)
-            .setName('Start/Scheduled date regex')
-            .setDesc('A Regular Expression for parsing start/scheduled dates.')
+            .setName('Start/Scheduled date marker')
+            .setDesc('A marker that immediately precedes start/scheduled dates')
             .addText((text) => {
                 const settings = getSettings();
 
-                text.setPlaceholder(defaultSettings.scheduledDateRegex)
-                    .setValue(settings.scheduledDateRegex)
+                text.setPlaceholder(defaultSettings.scheduledDateMarker)
+                    .setValue(
+                        settings.scheduledDateMarker ===
+                            defaultSettings.scheduledDateMarker
+                            ? ''
+                            : settings.scheduledDateMarker,
+                    )
                     .onChange(async (value) => {
-                        updateSettings({ scheduledDateRegex: value });
+                        updateSettings({ scheduledDateMarker: value });
+
+                        await this.plugin.saveSettings();
+                    });
+            });
+
+        new Setting(containerEl)
+            .setName('Done date marker')
+            .setDesc('A marker that immediately precedes done dates.')
+            .addText((text) => {
+                const settings = getSettings();
+
+                text.setPlaceholder(defaultSettings.doneDateMarker)
+                    .setValue(
+                        settings.doneDateMarker ===
+                            defaultSettings.doneDateMarker
+                            ? ''
+                            : settings.doneDateMarker,
+                    )
+                    .onChange(async (value) => {
+                        updateSettings({
+                            doneDateMarker:
+                                value !== ''
+                                    ? value
+                                    : defaultSettings.doneDateMarker,
+                        });
+
+                        await this.plugin.saveSettings();
+                    });
+            });
+
+        new Setting(containerEl)
+            .setName('Recurrence marker')
+            .setDesc('A marker that immediately precedes a recurrence date.')
+            .addText((text) => {
+                const settings = getSettings();
+
+                text.setPlaceholder(defaultSettings.recurrenceMarker)
+                    .setValue(
+                        settings.recurrenceMarker ===
+                            defaultSettings.recurrenceMarker
+                            ? ''
+                            : settings.recurrenceMarker,
+                    )
+                    .onChange(async (value) => {
+                        updateSettings({
+                            recurrenceMarker:
+                                value !== ''
+                                    ? value
+                                    : defaultSettings.recurrenceMarker,
+                        });
 
                         await this.plugin.saveSettings();
                     });
