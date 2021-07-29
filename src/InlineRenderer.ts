@@ -91,15 +91,18 @@ export class InlineRenderer {
                 listIndex,
             });
 
-            // If the rendered element contains a sub-list, we need to keep it.
-            renderedElement.findAll('ul').map((renderedSubUl) => {
-                if (renderedSubUl.parentElement === renderedElement) {
-                    // Only handle direct UL children.
-                    // ULs inside ULs will be handled in a later iteration.
-                    // The moved elements will still be elements in the renderedElements array.
-                    taskElement.appendChild(renderedSubUl);
+            // If the rendered element contains a sub-list or sub-div (e.g. the
+            // folding arrow), we need to keep it.
+            const renderedChildren = renderedElement.childNodes;
+            for (let i = 0; i< renderedChildren.length; i = i + 1) {
+                const renderedChild = renderedChildren[i];
+                if (renderedChild.nodeName.toLowerCase() === 'div') {
+                    taskElement.prepend(renderedChild);
+                } else if (renderedChild.nodeName.toLowerCase() === 'ul') {
+                    taskElement.append(renderedChild);
                 }
-            });
+            }
+
             renderedElement.replaceWith(taskElement);
         }
     }
