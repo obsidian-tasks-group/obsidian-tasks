@@ -251,6 +251,28 @@ Instead you would have two queries, one for each condition:
     path includes GitHub
     ```
 
+#### Layout options
+You can hide certain elements of the rendered list with the "hide" option.
+
+The following options exist:
+
+- `edit button`
+- `backlink`
+- `done date`
+- `due date`
+- `recurrence rule`
+- `task count`
+
+Example:
+
+    ```tasks
+    no due date
+    path includes GitHub
+    hide recurrence rule
+    hide task count
+    hide backlink
+    ```
+
 #### Examples
 
 All open tasks that are due today:
@@ -283,12 +305,14 @@ Show all tasks that aren't done, are due on the 9th of April 2021, and where the
     path includes GitHub
     ````
 
-Show all open tasks that are due within two weeks:
+Show all open tasks that are due within two weeks and hide the due date and edit button:
 
     ```tasks
     not done
     due after 2021-04-30
     due before 2021-05-15
+    hide due date
+    hide edit button
     ```
 
 Show all tasks that were done before the 1st of December 2020:
