@@ -1,19 +1,19 @@
 export interface Settings {
     globalFilter: string;
     removeGlobalFilter: boolean;
+    makeDatesBacklinks: boolean;
     dueDateMarker: string;
     doneDateMarker: string;
     recurrenceMarker: string;
-    scheduledDateMarker: string;
 }
 
 export const defaultSettings: Settings = {
     globalFilter: '',
     removeGlobalFilter: false,
+    makeDatesBacklinks: false,
     dueDateMarker: '📅',
     doneDateMarker: '✅',
     recurrenceMarker: '🔁',
-    scheduledDateMarker: '⏰',
 };
 
 let settings: Settings = { ...defaultSettings };

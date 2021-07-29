@@ -66,6 +66,23 @@ export class SettingsTab extends PluginSettingTab {
             });
 
         new Setting(containerEl)
+            .setName('Wrap dates in Wikilink brackets')
+            .setDesc(
+                'Enabling this will wrap dates in brackets (e.g., "[[YYYY-MM-DD]]").',
+            )
+            .addToggle((toggle) => {
+                const settings = getSettings();
+
+                toggle
+                    .setValue(settings.makeDatesBacklinks)
+                    .onChange(async (value) => {
+                        updateSettings({ makeDatesBacklinks: value });
+
+                        await this.plugin.saveSettings();
+                    });
+            });
+
+        new Setting(containerEl)
             .setName('Due date marker')
             .setDesc('A marker that immediately precedes due dates.')
             .addText((text) => {
@@ -84,26 +101,6 @@ export class SettingsTab extends PluginSettingTab {
                                     ? value
                                     : defaultSettings.dueDateMarker,
                         });
-
-                        await this.plugin.saveSettings();
-                    });
-            });
-
-        new Setting(containerEl)
-            .setName('Start/Scheduled date marker')
-            .setDesc('A marker that immediately precedes start/scheduled dates')
-            .addText((text) => {
-                const settings = getSettings();
-
-                text.setPlaceholder(defaultSettings.scheduledDateMarker)
-                    .setValue(
-                        settings.scheduledDateMarker ===
-                            defaultSettings.scheduledDateMarker
-                            ? ''
-                            : settings.scheduledDateMarker,
-                    )
-                    .onChange(async (value) => {
-                        updateSettings({ scheduledDateMarker: value });
 
                         await this.plugin.saveSettings();
                     });

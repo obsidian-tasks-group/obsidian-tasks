@@ -92,20 +92,25 @@ export class Task {
         // The following regexes end with `$` because they will be matched and
         // removed from the end until none are left.
         const dueDateRegex = new RegExp(
-            `${getSettings().dueDateMarker} ?(\\d{4}-\\d{2}-\\d{2})$`,
+            `${
+                getSettings().dueDateMarker
+            } ?\\[?\\[?(\\d{4}-\\d{2}-\\d{2})\\]?\\]?$`,
             'u',
         );
         const doneDateRegex = new RegExp(
-            `${getSettings().doneDateMarker} ?(\\d{4}-\\d{2}-\\d{2})$`,
+            `${
+                getSettings().doneDateMarker
+            } ?\\[?\\[?(\\d{4}-\\d{2}-\\d{2})\\]?\\]?$`,
             'u',
         );
         const recurrenceRegex = new RegExp(
-            `${getSettings().recurrenceMarker} ?(\\d{4}-\\d{2}-\\d{2})$`,
+            `${
+                getSettings().recurrenceMarker
+            } ?\\[?\\[?(\\d{4}-\\d{2}-\\d{2})\\]?\\]?$`,
             'u',
         );
         const blockLinkRegex = / \^[a-zA-Z0-9-]+$/u;
 
-        console.log(107, getSettings(), doneDateRegex);
         const regexMatch = line.match(Task.taskRegex);
         if (regexMatch === null) {
             return null;
@@ -280,6 +285,7 @@ export class Task {
 
     public toString(layoutOptions?: LayoutOptions): string {
         layoutOptions = layoutOptions ?? new LayoutOptions();
+        const { makeDatesBacklinks } = getSettings();
         let taskString = this.description;
 
         const { doneDateMarker, dueDateMarker, recurrenceMarker } =
@@ -294,14 +300,22 @@ export class Task {
 
         if (!layoutOptions.hideDueDate) {
             const dueDate: string = this.dueDate
-                ? ` ${dueDateMarker} ${this.dueDate.format(Task.dateFormat)}`
+                ? ` ${dueDateMarker} ${
+                      makeDatesBacklinks ? '[[' : ''
+                  }${this.dueDate.format(Task.dateFormat)}${
+                      makeDatesBacklinks ? ']]' : ''
+                  }`
                 : '';
             taskString += dueDate;
         }
 
         if (!layoutOptions.hideDoneDate) {
             const doneDate: string = this.doneDate
-                ? ` ${doneDateMarker} ${this.doneDate.format(Task.dateFormat)}`
+                ? ` ${doneDateMarker} ${
+                      makeDatesBacklinks ? '[[' : ''
+                  }${this.doneDate.format(Task.dateFormat)}${
+                      makeDatesBacklinks ? ']]' : ''
+                  }`
                 : '';
             taskString += doneDate;
         }

@@ -31,7 +31,8 @@
     const { 
         doneDateMarker,
         dueDateMarker,
-        recurrenceMarker
+        recurrenceMarker,
+        makeDatesBacklinks,
     } = getSettings();
 
     $: {
