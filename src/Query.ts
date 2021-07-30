@@ -23,7 +23,7 @@ export class Query {
     private readonly descriptionRegexp =
         /^description (includes|does not include) (.*)/;
     private readonly headingRegexp = /^heading (includes|does not include) (.*)/;
-    private readonly sortByRegexp = /sort by (status|due|done|path)/;
+    private readonly sortByRegexp = /^sort by (status|due|done|path)/;
   
     private readonly hideOptionsRegexp =
         /^hide (task count|backlink|done date|due date|recurrence rule|edit button)/
