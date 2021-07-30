@@ -1,5 +1,5 @@
 import chrono from 'chrono-node';
-import { LayoutOptions } from 'LayoutOptions';
+import { LayoutOptions } from './LayoutOptions';
 
 import { Status, Task } from './Task';
 
