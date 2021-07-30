@@ -5,13 +5,17 @@ window.moment = moment;
 import { Task } from '../src/Task';
 import { Sort } from '../src/Sort';
 
-function fromLine(line: string, path = '') {
+function fromLine(
+    line: string,
+    opts: Partial<Parameters<typeof Task.fromLine>[0]> = {},
+) {
     return Task.fromLine({
         line,
-        path,
+        path: '',
         precedingHeader: '',
         sectionIndex: 0,
         sectionStart: 0,
+        ...opts,
     })!;
 }
 
@@ -82,9 +86,9 @@ describe('Sort', () => {
     });
 
     test('by due, path, status', () => {
-        const a = fromLine('- [ ] a 🗓 1970-01-01', '1');
-        const b = fromLine('- [x] b 🗓 1970-01-01', '2');
-        const c = fromLine('- [ ] c 🗓 1970-01-01', '2');
+        const a = fromLine('- [ ] a 🗓 1970-01-01', { path: '1' });
+        const b = fromLine('- [x] b 🗓 1970-01-01', { path: '2' });
+        const c = fromLine('- [ ] c 🗓 1970-01-01', { path: '2' });
         const expectedOrder = [
             a, // date is the same, but path is lower
             c, // path is higher, but same as b. this is first b/c it's not done yet
@@ -105,9 +109,9 @@ describe('Sort', () => {
     });
 
     test('by due, path reverse, status', () => {
-        const a = fromLine('- [ ] a 🗓 1970-01-01', '1');
-        const b = fromLine('- [x] b 🗓 1970-01-01', '2');
-        const c = fromLine('- [ ] c 🗓 1970-01-01', '2');
+        const a = fromLine('- [ ] a 🗓 1970-01-01', { path: '1' });
+        const b = fromLine('- [x] b 🗓 1970-01-01', { path: '2' });
+        const c = fromLine('- [ ] c 🗓 1970-01-01', { path: '2' });
         const expectedOrder = [
             c, // dates are all the same, but path is higher than a. this is before b b/c it's not done yet
             b, // same as c, but already done.
