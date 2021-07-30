@@ -54,4 +54,18 @@ describe('Sort', () => {
         expect(Sort.by({ sorting: ['done'] }, [a, b])).toEqual([b, a]);
         expect(Sort.by({ sorting: ['done'] }, [b, a])).toEqual([b, a]);
     });
+
+    test('by due, path, status', () => {
+        const a = fromLine('- [ ] a 🗓 1970-01-01', '1');
+        const b = fromLine('- [x] b 🗓 1970-01-01', '2');
+        const c = fromLine('- [ ] c 🗓 1970-01-01', '2');
+        const expectedOrder = [
+            a, // date is the same, but path is lower
+            c, // path is lower, but same as b. this is first b/c it's not done yet
+            b, // same as c, but already done. this has lowest priority
+        ];
+        expect(
+            Sort.by({ sorting: ['due', 'path', 'status'] }, [a, b, c]),
+        ).toEqual(expectedOrder);
+    });
 });
