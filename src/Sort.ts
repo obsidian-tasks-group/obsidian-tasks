@@ -14,8 +14,8 @@ export class Sort {
         ];
 
         const userComparators: Comparator[] = [];
-        for (const sortProp of query.sorting) {
-            switch (sortProp) {
+        for (const { property } of query.sorting) {
+            switch (property) {
                 case 'status':
                     userComparators.unshift(this.compareByStatus);
                     break;

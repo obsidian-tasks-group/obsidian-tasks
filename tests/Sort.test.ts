@@ -20,16 +20,40 @@ describe('Sort', () => {
         const a = fromLine('- [x] bring out the trash 🗓 2021-09-12');
         const b = fromLine('- [ ] pet the cat 🗓 2021-09-15');
         const c = fromLine('- [ ] pet the cat 🗓 2021-09-18');
-        expect(Sort.by({ sorting: ['due'] }, [a, b, c])).toEqual([a, b, c]);
-        expect(Sort.by({ sorting: ['due'] }, [b, c, a])).toEqual([a, b, c]);
+        expect(
+            Sort.by({ sorting: [{ property: 'due', reverse: false }] }, [
+                a,
+                b,
+                c,
+            ]),
+        ).toEqual([a, b, c]);
+        expect(
+            Sort.by({ sorting: [{ property: 'due', reverse: false }] }, [
+                b,
+                c,
+                a,
+            ]),
+        ).toEqual([a, b, c]);
     });
 
     test('by done', () => {
         const a = fromLine('- [ ] bring out the trash 🗓 2021-09-12');
         const b = fromLine('- [x] pet the cat 🗓 2021-09-16 ✅ 2021-09-16');
         const c = fromLine('- [x] pet the cat 🗓 2021-09-15 ✅ 2021-09-15');
-        expect(Sort.by({ sorting: ['done'] }, [a, b, c])).toEqual([c, b, a]);
-        expect(Sort.by({ sorting: ['done'] }, [b, c, a])).toEqual([c, b, a]);
+        expect(
+            Sort.by({ sorting: [{ property: 'done', reverse: false }] }, [
+                a,
+                b,
+                c,
+            ]),
+        ).toEqual([c, b, a]);
+        expect(
+            Sort.by({ sorting: [{ property: 'done', reverse: false }] }, [
+                b,
+                c,
+                a,
+            ]),
+        ).toEqual([c, b, a]);
     });
 
     test('by due, path, status', () => {
@@ -44,15 +68,17 @@ describe('Sort', () => {
             b, // Done tasks are sorted after open tasks for status.
         ];
         expect(
-            Sort.by({ sorting: ['due', 'path', 'status'] }, [a, b, c, d]),
+            Sort.by(
+                {
+                    sorting: [
+                        { property: 'due', reverse: false },
+                        { property: 'path', reverse: false },
+                        { property: 'status', reverse: false },
+                    ],
+                },
+                [a, b, c, d],
+            ),
         ).toEqual(expectedOrder);
-    });
-
-    test('by done', () => {
-        const a = fromLine('- [ ] bring out the trash 🗓 2021-09-12');
-        const b = fromLine('- [x] pet the cat 🗓 2021-09-15 ✅ 2021-09-16');
-        expect(Sort.by({ sorting: ['done'] }, [a, b])).toEqual([b, a]);
-        expect(Sort.by({ sorting: ['done'] }, [b, a])).toEqual([b, a]);
     });
 
     test('by due, path, status', () => {
@@ -65,7 +91,16 @@ describe('Sort', () => {
             b, // same as c, but already done. this has lowest priority
         ];
         expect(
-            Sort.by({ sorting: ['due', 'path', 'status'] }, [a, b, c]),
+            Sort.by(
+                {
+                    sorting: [
+                        { property: 'due', reverse: false },
+                        { property: 'path', reverse: false },
+                        { property: 'status', reverse: false },
+                    ],
+                },
+                [a, b, c],
+            ),
         ).toEqual(expectedOrder);
     });
 });
