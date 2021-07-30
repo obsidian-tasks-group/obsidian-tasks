@@ -87,7 +87,7 @@ describe('Sort', () => {
         const c = fromLine('- [ ] c 🗓 1970-01-01', '2');
         const expectedOrder = [
             a, // date is the same, but path is lower
-            c, // path is lower, but same as b. this is first b/c it's not done yet
+            c, // path is higher, but same as b. this is first b/c it's not done yet
             b, // same as c, but already done. this has lowest priority
         ];
         expect(
@@ -96,6 +96,29 @@ describe('Sort', () => {
                     sorting: [
                         { property: 'due', reverse: false },
                         { property: 'path', reverse: false },
+                        { property: 'status', reverse: false },
+                    ],
+                },
+                [a, b, c],
+            ),
+        ).toEqual(expectedOrder);
+    });
+
+    test('by due, path reverse, status', () => {
+        const a = fromLine('- [ ] a 🗓 1970-01-01', '1');
+        const b = fromLine('- [x] b 🗓 1970-01-01', '2');
+        const c = fromLine('- [ ] c 🗓 1970-01-01', '2');
+        const expectedOrder = [
+            c, // dates are all the same, but path is higher than a. this is before b b/c it's not done yet
+            b, // same as c, but already done.
+            a, // path is lowest, so it's last
+        ];
+        expect(
+            Sort.by(
+                {
+                    sorting: [
+                        { property: 'due', reverse: false },
+                        { property: 'path', reverse: true },
                         { property: 'status', reverse: false },
                     ],
                 },

@@ -3,7 +3,7 @@ import { LayoutOptions } from './LayoutOptions';
 
 import { Status, Task } from './Task';
 
-type Sorting = 'status' | 'due' | 'done' | 'path' | 'description';
+export type Sorting = 'status' | 'due' | 'done' | 'path' | 'description';
 
 export class Query {
     private _limit: number | undefined = undefined;
