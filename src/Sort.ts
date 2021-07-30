@@ -23,6 +23,9 @@ export class Sort {
                 case 'done':
                     priorities.unshift(this.compareByDoneDate);
                     break;
+                case 'path':
+                    priorities.unshift(this.compareByPath);
+                    break;
             }
         }
 

@@ -2,7 +2,7 @@ import chrono from 'chrono-node';
 
 import { Status, Task } from './Task';
 
-type Sorting = 'status' | 'due' | 'done';
+type Sorting = 'status' | 'due' | 'done' | 'path';
 
 export class Query {
     private _limit: number | undefined = undefined;
@@ -227,7 +227,7 @@ export class Query {
         }
     }
 
-    private readonly sortByRegexp = /sort by (status|due|done)/;
+    private readonly sortByRegexp = /sort by (status|due|done|path)/;
     private parseSortBy({ line }: { line: string }): void {
         const fieldMatch = line.match(this.sortByRegexp);
         if (fieldMatch !== null) {
