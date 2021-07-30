@@ -20,6 +20,7 @@ export class Query {
         /description (includes|does not include) (.*)/;
     private readonly headingRegexp = /heading (includes|does not include) (.*)/;
     private readonly limitRegexp = /limit (to )?(\d+)( tasks?)?/;
+    private readonly sortByRegexp = /sort by (status|due|done|path)/;
     private readonly excludeSubItemsString = 'exclude sub-items';
 
     constructor({ source }: { source: string }) {
@@ -227,7 +228,6 @@ export class Query {
         }
     }
 
-    private readonly sortByRegexp = /sort by (status|due|done|path)/;
     private parseSortBy({ line }: { line: string }): void {
         const fieldMatch = line.match(this.sortByRegexp);
         if (fieldMatch !== null) {
