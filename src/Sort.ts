@@ -31,6 +31,9 @@ export class Sort {
                 case 'description':
                     userComparators.unshift(this.compareByDescription);
                     break;
+                case 'path':
+                    priorities.unshift(this.compareByPath);
+                    break;
             }
         }
 
