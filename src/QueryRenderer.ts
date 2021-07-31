@@ -172,12 +172,15 @@ class QueryRenderChild extends MarkdownRenderChild {
             const listItem = await task.toLi({
                 parentUlElement: taskList,
                 listIndex: i,
-                layoutOptions: this.query.layoutOptions
+                layoutOptions: this.query.layoutOptions,
             });
 
             const postInfo = listItem.createSpan();
 
-            if (!this.query.layoutOptions.hideBacklinks && fileName !== undefined) {
+            if (
+                !this.query.layoutOptions.hideBacklinks &&
+                fileName !== undefined
+            ) {
                 this.addBacklinks(postInfo, fileName, task);
             }
 
@@ -215,7 +218,11 @@ class QueryRenderChild extends MarkdownRenderChild {
         });
     }
 
-    private addBacklinks(postInfo: HTMLSpanElement, fileName: string, task: Task) {
+    private addBacklinks(
+        postInfo: HTMLSpanElement,
+        fileName: string,
+        task: Task,
+    ) {
         postInfo.append(' (');
         const link = postInfo.createEl('a');
         link.href = fileName;
@@ -229,9 +236,7 @@ class QueryRenderChild extends MarkdownRenderChild {
             link.href = link.href + '#' + task.precedingHeader;
             link.setAttribute(
                 'data-href',
-                link.getAttribute('data-href') +
-                '#' +
-                task.precedingHeader
+                link.getAttribute('data-href') + '#' + task.precedingHeader,
             );
 
             // Otherwise, this wouldn't provide additinoal information and only take up space.
