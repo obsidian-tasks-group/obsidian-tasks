@@ -3,8 +3,8 @@ import { RRule } from 'rrule';
 
 import { replaceTaskWithTasks } from './File';
 import { getSettings } from './Settings';
-import type { Moment } from 'moment';
 import { LayoutOptions } from './LayoutOptions';
+import type { Moment } from 'moment';
 
 export enum Status {
     Todo = 'Todo',
@@ -195,7 +195,7 @@ export class Task {
     public async toLi({
         parentUlElement,
         listIndex,
-        layoutOptions
+        layoutOptions,
     }: {
         parentUlElement: HTMLElement;
         /** The nth item in this list (including non-tasks). */
@@ -272,7 +272,6 @@ export class Task {
     }
 
     public toString(layoutOptions?: LayoutOptions): string {
-
         layoutOptions = layoutOptions ?? new LayoutOptions();
         let taskString = this.description;
 
