@@ -14,23 +14,25 @@ export class Query {
 
     private readonly noDueString = 'no due date';
     private readonly dueRegexp = /^due (before|after|on)? ?(.*)/;
-  
+
     private readonly doneString = 'done';
     private readonly notDoneString = 'not done';
     private readonly doneRegexp = /^done (before|after|on)? ?(.*)/;
-  
+
     private readonly pathRegexp = /^path (includes|does not include) (.*)/;
     private readonly descriptionRegexp =
         /^description (includes|does not include) (.*)/;
-    private readonly headingRegexp = /^heading (includes|does not include) (.*)/;
     private readonly sortByRegexp = /^sort by (status|due|done|path)/;
-  
+
+    private readonly headingRegexp =
+        /^heading (includes|does not include) (.*)/;
+
     private readonly hideOptionsRegexp =
-        /^hide (task count|backlink|done date|due date|recurrence rule|edit button)/
-  
+        /^hide (task count|backlink|done date|due date|recurrence rule|edit button)/;
+
     private readonly recurringString = 'is recurring';
     private readonly notRecurringString = 'is not recurring';
-  
+
     private readonly limitRegexp = /^limit (to )?(\d+)( tasks?)?/;
     private readonly excludeSubItemsString = 'exclude sub-items';
 
@@ -119,10 +121,9 @@ export class Query {
     }
 
     private parseHideOptions({ line }: { line: string }): void {
-
         const hideOptionsMatch = line.match(this.hideOptionsRegexp);
         if (hideOptionsMatch !== null) {
-            let option = hideOptionsMatch[1].trim().toLowerCase()
+            const option = hideOptionsMatch[1].trim().toLowerCase();
 
             if (option === 'task count') {
                 this._layoutOptions.hideTaskCount = true;
