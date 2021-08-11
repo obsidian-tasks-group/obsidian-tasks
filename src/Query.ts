@@ -26,7 +26,7 @@ export class Query {
     private readonly descriptionRegexp =
         /^description (includes|does not include) (.*)/;
     private readonly sortByRegexp =
-        /^sort by (status|due|done|path|description)/;
+        /^sort by (status|due|done|path|description)( reverse)?/;
 
     private readonly headingRegexp =
         /^heading (includes|does not include) (.*)/;
