@@ -16,6 +16,7 @@ export class Commands {
         plugin.addCommand({
             id: 'edit-task',
             name: 'Create or edit task',
+            icon: 'pencil',
             editorCheckCallback: (
                 checking: boolean,
                 editor: Editor,
@@ -28,6 +29,7 @@ export class Commands {
         plugin.addCommand({
             id: 'toggle-done',
             name: 'Toggle task done',
+            icon: 'check-in-circle',
             editorCheckCallback: toggleDone,
         });
     }
