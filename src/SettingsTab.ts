@@ -1,6 +1,7 @@
 import { PluginSettingTab, Setting } from 'obsidian';
 
 import { getSettings, updateSettings } from './Settings';
+import { Task } from './Task'
 import type TasksPlugin from './main';
 
 export class SettingsTab extends PluginSettingTab {
@@ -14,6 +15,7 @@ export class SettingsTab extends PluginSettingTab {
 
     public display(): void {
         const { containerEl } = this;
+        const settingsOnDisplay = getSettings();
 
         containerEl.empty();
         containerEl.createEl('h2', { text: 'Tasks Settings' });
@@ -22,6 +24,7 @@ export class SettingsTab extends PluginSettingTab {
             text: 'Changing any settings requires a restart of obsidian.',
         });
 
+        // textInput for filtering obsidian-tasks Tasks from ordinary checkboxes : string
         new Setting(containerEl)
             .setName('Global task filter')
             .setDesc(
@@ -48,6 +51,7 @@ export class SettingsTab extends PluginSettingTab {
                 'Leave empty if you want all checklist items from your vault to be tasks managed by this plugin.',
         });
 
+        // checkbox for hiding global filter on Preview Mode : boolean
         new Setting(containerEl)
             .setName('Remove global filter from description')
             .setDesc(
@@ -61,6 +65,39 @@ export class SettingsTab extends PluginSettingTab {
                     .onChange(async (value) => {
                         updateSettings({ removeGlobalFilter: value });
 
+                        await this.plugin.saveSettings();
+                    });
+            });
+
+        containerEl.createEl('h3', { text: 'Custom Date Formatting' });
+
+        // checkbox for locking custom date format : boolean
+        let customDateFormattingSetting : Setting;
+        const lockFormatSetting = new Setting(containerEl)
+            .setName('Lock Custom Date Format:')
+            .addToggle((toggle) => {
+                toggle
+                    .setValue(settingsOnDisplay.disableDateFormat)
+                    .onChange(async (value) => {
+                        customDateFormattingSetting.setDisabled(value)
+                        updateSettings({ disableDateFormat: value });
+                        await this.plugin.saveSettings();
+                    });
+            });
+          lockFormatSetting.descEl.innerHTML= "<span style='color:red'>WARNING</span>: If you already have tasks with a different date format, you may need to manually edit their format, otherwise they won't register dates correctly. They may be considered part of the Task Description. If your format is not a valid string, or the date may be considered invalid."
+
+        // dropdown for custom date format
+        customDateFormattingSetting = new Setting(containerEl)
+            .setName('Custom Date Format:')
+            .setDesc('Default: YYYY-MM-DD')
+            .addDropdown((dropdown) => {
+                const settings = getSettings();
+                const options = Task.customDateFormats.map(obj=>obj.format)
+                options.forEach(option=>dropdown.addOption(option, option))
+                dropdown
+                    .setValue(settings.customDateFormat)
+                    .onChange(async (value) => {
+                        updateSettings({ customDateFormat: value });
                         await this.plugin.saveSettings();
                     });
             });

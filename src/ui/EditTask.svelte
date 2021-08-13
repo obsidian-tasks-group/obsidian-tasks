@@ -34,7 +34,7 @@
         } else {
             const parsed = chrono.parseDate(editableTask.dueDate, new Date(), { forwardDate: true });
             if (parsed !== null) {
-                parsedDueDate = window.moment(parsed).format('YYYY-MM-DD');
+                parsedDueDate = window.moment(parsed).format(Task.getDateFormat());
             } else {
                 parsedDueDate = '<i>invalid due date</i>'
             }
@@ -59,7 +59,7 @@
         } else {
             const parsed = chrono.parseDate(editableTask.doneDate);
             if (parsed !== null) {
-                parsedDone = window.moment(parsed).format('YYYY-MM-DD');
+                parsedDone = window.moment(parsed).format(Task.getDateFormat());
             } else {
                 parsedDone = '<i>invalid done date</i>'
             }
@@ -69,12 +69,13 @@
     onMount(() => {
         const { globalFilter } = getSettings();
         const description = task.description.replace(globalFilter, '').replace('  ', ' ').trim();
+        const dateFormat = Task.getDateFormat()
         editableTask = {
             description,
             status: task.status,
             recurrenceRule: task.recurrenceRule ? task.recurrenceRule.toText() : '',
-            dueDate: task.dueDate ? task.dueDate.format('YYYY-MM-DD') : '',
-            doneDate: task.doneDate ? task.doneDate.format('YYYY-MM-DD') : '',
+            dueDate: task.dueDate ? task.dueDate.format(dateFormat) : '',
+            doneDate: task.doneDate ? task.doneDate.format(dateFormat) : '',
          };
         setTimeout(() => {descriptionInput.focus();}, 10);
     });
@@ -99,13 +100,14 @@
             dueDate = window.moment(parsedDueDate);
         }
 
+        const dateFormat = Task.getDateFormat()
         const updatedTask = new Task({
             ...task,
             description,
             status: editableTask.status,
             recurrenceRule,
             dueDate,
-            doneDate: window.moment(editableTask.doneDate, 'YYYY-MM-DD').isValid() ? window.moment(editableTask.doneDate, 'YYYY-MM-DD') : null,
+            doneDate: window.moment(editableTask.doneDate, dateFormat).isValid() ? window.moment(editableTask.doneDate, dateFormat) : null,
         });
 
         onSubmit([updatedTask]);
