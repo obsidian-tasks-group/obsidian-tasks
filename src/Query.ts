@@ -34,7 +34,7 @@ export class Query {
     constructor({ source }: { source: string }) {
         source
             .split('\n')
-            .map((line: string) => line.trim())
+            .map((line: string) => line.trim().toLowerCase())
             .forEach((line: string) => {
                 switch (true) {
                     case line === '':
