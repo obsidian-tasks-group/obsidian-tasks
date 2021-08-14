@@ -1,7 +1,7 @@
 export interface Settings {
     globalFilter: string;
     removeGlobalFilter: boolean;
-    disableDateFormat: boolean,
+    disableDateFormat: boolean;
     customDateFormat: string;
 }
 

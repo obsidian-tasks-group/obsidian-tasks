@@ -12,14 +12,11 @@ export enum Status {
 }
 
 export class DateFormat {
-  format : string = ''
-  dueDateRegex : RegExp
-  doneDateRegex : RegExp
-  constructor(format : string, dueDateRegex : RegExp, doneDateRegex : RegExp) {
-    this.format = format
-    this.dueDateRegex = dueDateRegex
-    this.doneDateRegex = doneDateRegex
-  }
+    constructor(
+      public format: string,
+      public dueDateRegex: RegExp,
+      public doneDateRegex: RegExp
+    ) {}
 }
 
 export class Task {
@@ -52,19 +49,22 @@ export class Task {
     public static readonly recurrenceRegex = /🔁([a-zA-Z0-9, !]+)$/u;
     public static readonly blockLinkRegex = / \^[a-zA-Z0-9-]+$/u;
     public static readonly customDateFormats = [
-      new DateFormat('YYYY-MM-DD',
-        /[📅📆🗓] ?(\d{4}-\d{2}-\d{2})$/u,
-        /✅ ?(\d{4}-\d{2}-\d{2})$/u,
-      ),
-      new DateFormat('MM-DD-YYYY',
-        /[📅📆🗓] ?(\d{2}-\d{2}-\d{4})$/u,
-        /✅ ?(\d{2}-\d{2}-\d{4})$/u,
-      ),
-      new DateFormat('DD-MM-YYYY',
-        /[📅📆🗓] ?(\d{2}-\d{2}-\d{4})$/u,
-        /✅ ?(\d{2}-\d{2}-\d{4})$/u,
-      )
-    ]
+        new DateFormat(
+            'YYYY-MM-DD',
+            /[📅📆🗓] ?(\d{4}-\d{2}-\d{2})$/u,
+            /✅ ?(\d{4}-\d{2}-\d{2})$/u,
+        ),
+        new DateFormat(
+            'MM-DD-YYYY',
+            /[📅📆🗓] ?(\d{2}-\d{2}-\d{4})$/u,
+            /✅ ?(\d{2}-\d{2}-\d{4})$/u,
+        ),
+        new DateFormat(
+            'DD-MM-YYYY',
+            /[📅📆🗓] ?(\d{2}-\d{2}-\d{4})$/u,
+            /✅ ?(\d{2}-\d{2}-\d{4})$/u,
+        ),
+    ];
 
     constructor({
         status,
@@ -108,19 +108,21 @@ export class Task {
     }
 
     public static getDateFormat() {
-      const { customDateFormat } = getSettings()
-      return customDateFormat.trim() || Task.defaultDateFormat
+        const { customDateFormat } = getSettings();
+        return customDateFormat.trim() || Task.defaultDateFormat;
     }
 
-    public static getSelectedDateFormatOptions() {
-      const { customDateFormat } = getSettings()
-      let options : DateFormat = Task.customDateFormats[0]
-      for (let i = 0; i < Task.customDateFormats.length; i++) {
-        const formatObject : DateFormat = Task.customDateFormats[i]
-        if (formatObject.format == customDateFormat) options = formatObject
-      }
+    public static getSelectedDateFormatOptions(inputOptions? : any) {
+        const customDateFormat = inputOptions.forcedDateFormat || Task.getDateFormat();
+        let options: DateFormat = Task.customDateFormats[0];
+        for (let i = 0; i < Task.customDateFormats.length; i++) {
+            const formatObject: DateFormat = Task.customDateFormats[i];
+            if (formatObject.format == customDateFormat) {
+              options = formatObject
+            }
+        }
 
-      return options
+        return options;
     }
 
     public static fromLine({
@@ -129,12 +131,14 @@ export class Task {
         sectionStart,
         sectionIndex,
         precedingHeader,
+        forcedDateFormat
     }: {
         line: string;
         path: string;
         sectionStart: number;
         sectionIndex: number;
         precedingHeader: string | null;
+        forcedDateFormat: string | null;
     }): Task | null {
         const regexMatch = line.match(Task.taskRegex);
         if (regexMatch === null) {
@@ -157,7 +161,7 @@ export class Task {
         const body = regexMatch[3].trim();
 
         const { globalFilter } = getSettings();
-        const dateFormat = Task.getDateFormat()
+        const dateFormat = forcedDateFormat || Task.getDateFormat();
         if (!body.includes(globalFilter)) {
             return null;
         }
@@ -181,10 +185,12 @@ export class Task {
         // Add a "max runs" failsafe to never end in an endless loop:
         const maxRuns = 4;
         let runs = 0;
-        const dateFormatOptions = Task.getSelectedDateFormatOptions()
+        const dateFormatOptions = Task.getSelectedDateFormatOptions({forcedDateFormat:forcedDateFormat});
         do {
             matched = false;
-            const doneDateMatch = description.match(dateFormatOptions.doneDateRegex);
+            const doneDateMatch = description.match(
+                dateFormatOptions.doneDateRegex,
+            );
             if (doneDateMatch !== null) {
                 doneDate = window.moment(doneDateMatch[1], dateFormat);
                 description = description
@@ -193,10 +199,14 @@ export class Task {
                 matched = true;
             }
 
-            const dueDateMatch = description.match(dateFormatOptions.dueDateRegex);
+            const dueDateMatch = description.match(
+                dateFormatOptions.dueDateRegex,
+            );
             if (dueDateMatch !== null) {
                 dueDate = window.moment(dueDateMatch[1], dateFormat);
-                description = description.replace(dateFormatOptions.dueDateRegex, '').trim();
+                description = description
+                    .replace(dateFormatOptions.dueDateRegex, '')
+                    .trim();
                 matched = true;
             }
 
@@ -315,7 +325,7 @@ export class Task {
     }
 
     public toString(layoutOptions?: LayoutOptions): string {
-        const dateFormat = Task.getDateFormat()
+        const dateFormat = Task.getDateFormat();
         layoutOptions = layoutOptions ?? new LayoutOptions();
         let taskString = this.description;
 

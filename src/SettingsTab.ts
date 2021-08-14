@@ -1,11 +1,12 @@
 import { PluginSettingTab, Setting } from 'obsidian';
 
 import { getSettings, updateSettings } from './Settings';
-import { Task } from './Task'
+import { Task } from './Task';
 import type TasksPlugin from './main';
 
 export class SettingsTab extends PluginSettingTab {
     private readonly plugin: TasksPlugin;
+    private customDateFormattingSetting?: Setting;
 
     constructor({ plugin }: { plugin: TasksPlugin }) {
         super(plugin.app, plugin);
@@ -72,28 +73,28 @@ export class SettingsTab extends PluginSettingTab {
         containerEl.createEl('h3', { text: 'Custom Date Formatting' });
 
         // checkbox for locking custom date format : boolean
-        let customDateFormattingSetting : Setting;
         const lockFormatSetting = new Setting(containerEl)
             .setName('Lock Custom Date Format:')
             .addToggle((toggle) => {
                 toggle
                     .setValue(settingsOnDisplay.disableDateFormat)
                     .onChange(async (value) => {
-                        customDateFormattingSetting.setDisabled(value)
+                        this.customDateFormattingSetting?.setDisabled(value);
                         updateSettings({ disableDateFormat: value });
                         await this.plugin.saveSettings();
                     });
             });
-          lockFormatSetting.descEl.innerHTML= "<span style='color:red'>WARNING</span>: If you already have tasks with a different date format, you may need to manually edit their format, otherwise they won't register dates correctly. They may be considered part of the Task Description. If your format is not a valid string, or the date may be considered invalid."
+        lockFormatSetting.descEl.innerHTML =
+            "<span style='color:red'>WARNING</span>: If you already have tasks with a different date format, you may need to manually edit their format, otherwise they won't register dates correctly. They may be considered part of the Task Description. If your format is not a valid string, or the date may be considered invalid.";
 
         // dropdown for custom date format
-        customDateFormattingSetting = new Setting(containerEl)
+        this.customDateFormattingSetting = new Setting(containerEl)
             .setName('Custom Date Format:')
             .setDesc('Default: YYYY-MM-DD')
             .addDropdown((dropdown) => {
                 const settings = getSettings();
-                const options = Task.customDateFormats.map(obj=>obj.format)
-                options.forEach(option=>dropdown.addOption(option, option))
+                const options = Task.customDateFormats.map((obj) => obj.format);
+                options.forEach((option) => dropdown.addOption(option, option));
                 dropdown
                     .setValue(settings.customDateFormat)
                     .onChange(async (value) => {
