@@ -126,7 +126,7 @@ If you don't have a global filter set, all regular checklist items work:
 
 Tasks can have due dates.
 In order to specify the due date of a task, you must append the "due date signifier 📅" followed by the date it is due to the end of the task.
-The date must be in the format `YYYY-MM-DD`, meaning `Year-Month-Day` with leading zeros.
+The date must be in the format `YYYY-MM-DD` (see **Date Formatting options** below for an alternative), meaning `Year-Month-Day` with leading zeros.
 For example: `📅 2021-04-09` means the task is due on the 9th of April, 2021.
 
 ```
@@ -137,6 +137,12 @@ Instead of adding the emoji and the date manually, you can use the `Tasks: Creat
 When you use the command, you can also set a due date like "Monday", "tomorrow", or "next week" and Tasks will automatically save the date in the correct format.
 
 **You can only put block links (`^link-name`) behind the due/done dates. Anything else will break the parsing of dates and recurrence rules.**
+
+#### Date Formatting options
+
+If you are new to using this plugin, feel free to change the format to a few different defined formats such as `MM-DD-YYYY` or `DD-MM-YYYY` in `Settings > Plugin Options > Tasks`. If you do so, make sure the format is in accordance with your `Daily notes` plugin as well.
+
+If you have been using this plugin for awhile, switching the format will invalidate all dates you've created in the past. They will be treated as either part of the `description`, or as an `invalid date`. You will need to manually go in and switch all dates to the proper format if you do this, which depending on your vault, may take some time.
 
 ### Recurring tasks (repetition)
 
