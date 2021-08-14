@@ -1,6 +1,5 @@
 import moment from 'moment';
 import { Status, Task } from '../src/Task';
-import { updateSettings, getSettings } from '../src/Settings';
 
 jest.mock('obsidian');
 window.moment = moment;
@@ -18,7 +17,14 @@ const constantDatesToTest = [
 ]
 
 
-function commonAssertions(options) {
+function commonAssertions(options : {
+  task : Task | null,
+  expectations : {
+    description : string,
+    dueDate : moment.Moment,
+    doneDate : moment.Moment,
+  },
+}) {
   const {task, expectations} = options
   expect(task).not.toBeNull();
   expect(task!.description).toEqual(expectations.description);

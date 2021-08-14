@@ -13,9 +13,9 @@ export enum Status {
 
 export class DateFormat {
     constructor(
-      public format: string,
-      public dueDateRegex: RegExp,
-      public doneDateRegex: RegExp
+        public format: string,
+        public dueDateRegex: RegExp,
+        public doneDateRegex: RegExp,
     ) {}
 }
 
@@ -112,13 +112,14 @@ export class Task {
         return customDateFormat.trim() || Task.defaultDateFormat;
     }
 
-    public static getSelectedDateFormatOptions(inputOptions? : any) {
-        const customDateFormat = inputOptions.forcedDateFormat || Task.getDateFormat();
+    public static getSelectedDateFormatOptions(inputOptions?: any) {
+        const customDateFormat =
+            inputOptions.forcedDateFormat || Task.getDateFormat();
         let options: DateFormat = Task.customDateFormats[0];
         for (let i = 0; i < Task.customDateFormats.length; i++) {
             const formatObject: DateFormat = Task.customDateFormats[i];
             if (formatObject.format == customDateFormat) {
-              options = formatObject
+                options = formatObject;
             }
         }
 
@@ -131,14 +132,14 @@ export class Task {
         sectionStart,
         sectionIndex,
         precedingHeader,
-        forcedDateFormat
+        forcedDateFormat,
     }: {
         line: string;
         path: string;
         sectionStart: number;
         sectionIndex: number;
         precedingHeader: string | null;
-        forcedDateFormat: string | null;
+        forcedDateFormat?: string | null;
     }): Task | null {
         const regexMatch = line.match(Task.taskRegex);
         if (regexMatch === null) {
@@ -185,7 +186,9 @@ export class Task {
         // Add a "max runs" failsafe to never end in an endless loop:
         const maxRuns = 4;
         let runs = 0;
-        const dateFormatOptions = Task.getSelectedDateFormatOptions({forcedDateFormat:forcedDateFormat});
+        const dateFormatOptions = Task.getSelectedDateFormatOptions({
+            forcedDateFormat: forcedDateFormat,
+        });
         do {
             matched = false;
             const doneDateMatch = description.match(
