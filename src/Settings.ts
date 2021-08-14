@@ -9,7 +9,7 @@ const defaultSettings: Settings = {
     globalFilter: '',
     removeGlobalFilter: false,
     disableDateFormat: true,
-    customDateFormat: '',
+    customDateFormat: 'YYYY-MM-DD',
 };
 
 let settings: Settings = { ...defaultSettings };
