@@ -3,7 +3,7 @@ import { LayoutOptions } from './LayoutOptions';
 
 import { Status, Task } from './Task';
 
-type Sorting = 'status' | 'due' | 'done' | 'path';
+type Sorting = 'status' | 'due' | 'done' | 'path' | 'description';
 
 export class Query {
     private _limit: number | undefined = undefined;
@@ -22,7 +22,8 @@ export class Query {
     private readonly pathRegexp = /^path (includes|does not include) (.*)/;
     private readonly descriptionRegexp =
         /^description (includes|does not include) (.*)/;
-    private readonly sortByRegexp = /^sort by (status|due|done|path)/;
+    private readonly sortByRegexp =
+        /^sort by (status|due|done|path|description)/;
 
     private readonly headingRegexp =
         /^heading (includes|does not include) (.*)/;

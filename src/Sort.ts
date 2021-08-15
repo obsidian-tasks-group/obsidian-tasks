@@ -2,7 +2,7 @@ import type { Task } from './Task';
 import type { Query } from './Query';
 import type moment from 'moment';
 
-type Comparator = (a: Task, b: Task) => -1 | 0 | 1;
+type Comparator = (a: Task, b: Task) => number;
 
 export class Sort {
     public static by(query: Pick<Query, 'sorting'>, tasks: Task[]): Task[] {
@@ -25,6 +25,9 @@ export class Sort {
                     break;
                 case 'path':
                     priorities.unshift(this.compareByPath);
+                    break;
+                case 'description':
+                    priorities.unshift(this.compareByDescription);
                     break;
             }
         }
@@ -93,5 +96,9 @@ export class Sort {
         } else {
             return 0;
         }
+    }
+
+    private static compareByDescription(a: Task, b: Task) {
+        return a.description.localeCompare(b.description);
     }
 }
