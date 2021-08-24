@@ -32,12 +32,13 @@ export class Task {
     /** The blockLink is a "^" annotation after the dates/recurrence rules. */
     public readonly blockLink: string;
 
-    public static readonly dateFormat = 'YYYY-MM-DD';
+    public static dateFormat: string;
+    public static dateLink: string;
     public static readonly taskRegex = /^([\s\t]*)[-*] +\[(.)\] *(.*)/u;
     // The following regexes end with `$` because they will be matched and
     // removed from the end until none are left.
-    public static readonly dueDateRegex = /[📅📆🗓] ?(\d{4}-\d{2}-\d{2})$/u;
-    public static readonly doneDateRegex = /✅ ?(\d{4}-\d{2}-\d{2})$/u;
+    public static readonly dueDateRegex = /[📅📆🗓] ?((\[\[)?[\d\-\s]*(\]\])?)$/u;
+    public static readonly doneDateRegex = /✅ ?((\[\[)?[\d\-\s]*(\]\])?)$/u;
     public static readonly recurrenceRegex = /🔁([a-zA-Z0-9, !]+)$/u;
     public static readonly blockLinkRegex = / \^[a-zA-Z0-9-]+$/u;
 
@@ -115,7 +116,9 @@ export class Task {
         // match[3] includes the whole body of the task after the brackets.
         const body = regexMatch[3].trim();
 
-        const { globalFilter } = getSettings();
+        const { globalFilter, dateLink, dateFormat } = getSettings();
+        Task.dateFormat = dateFormat;
+        Task.dateLink = dateLink;
         if (!body.includes(globalFilter)) {
             return null;
         }
@@ -284,14 +287,18 @@ export class Task {
 
         if (!layoutOptions.hideDueDate) {
             const dueDate: string = this.dueDate
-                ? ` 📅 ${this.dueDate.format(Task.dateFormat)}`
+                ? Task.dateLink
+                    ? `📅 [[${this.dueDate.format(Task.dateFormat)}]]`
+                    : ` 📅 ${this.dueDate.format(Task.dateFormat)}`
                 : '';
             taskString += dueDate;
         }
 
         if (!layoutOptions.hideDoneDate) {
             const doneDate: string = this.doneDate
-                ? ` ✅ ${this.doneDate.format(Task.dateFormat)}`
+                ? Task.dateLink 
+                ? ` ✅ [[${this.doneDate.format(Task.dateFormat)}]]`
+                : ` ✅ ${this.doneDate.format(Task.dateFormat)}`
                 : '';
             taskString += doneDate;
         }
