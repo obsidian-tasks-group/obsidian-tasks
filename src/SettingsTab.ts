@@ -70,7 +70,7 @@ export class SettingsTab extends PluginSettingTab {
             .addText((text) => {
                 const settings = getSettings();
 
-                text.setPlaceholder('[[YYYY-MM-DD]]')
+                text.setPlaceholder('YYYY-MM-DD')
                     .setValue(settings.dateFormat)
                     .onChange(async (value) => {
                         updateSettings({ dateFormat: value });
