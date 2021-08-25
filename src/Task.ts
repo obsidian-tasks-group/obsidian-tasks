@@ -38,8 +38,8 @@ export class Task {
     // The following regexes end with `$` because they will be matched and
     // removed from the end until none are left.
     public static readonly dueDateRegex =
-        /[📅📆🗓] ?((\[\[)?[\d\-\s]*(\]\])?)$/u;
-    public static readonly doneDateRegex = /✅ ?((\[\[)?[\d\-\s]*(\]\])?)$/u;
+        /[📅📆🗓] (\[\[)?([\d\w\-\s:]+)(\]\])?$/u;
+    public static readonly doneDateRegex = /✅ (\[\[)?([\w\d\-\s:]+)(\]\])?$/u;
     public static readonly recurrenceRegex = /🔁([a-zA-Z0-9, !]+)$/u;
     public static readonly blockLinkRegex = / \^[a-zA-Z0-9-]+$/u;
 
@@ -147,7 +147,12 @@ export class Task {
             matched = false;
             const doneDateMatch = description.match(Task.doneDateRegex);
             if (doneDateMatch !== null) {
-                doneDate = window.moment(doneDateMatch[1], Task.dateFormat);
+                console.log(doneDateMatch);
+                doneDate = window.moment(
+                    doneDateMatch[2],
+                    Task.dateFormat,
+                    true,
+                );
                 description = description
                     .replace(Task.doneDateRegex, '')
                     .trim();
@@ -156,7 +161,7 @@ export class Task {
 
             const dueDateMatch = description.match(Task.dueDateRegex);
             if (dueDateMatch !== null) {
-                dueDate = window.moment(dueDateMatch[1], Task.dateFormat);
+                dueDate = window.moment(dueDateMatch[2], Task.dateFormat, true);
                 description = description.replace(Task.dueDateRegex, '').trim();
                 matched = true;
             }
