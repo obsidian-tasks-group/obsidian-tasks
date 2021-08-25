@@ -37,8 +37,8 @@ export class Task {
     // The following regexes end with `$` because they will be matched and
     // removed from the end until none are left.
     public static readonly dueDateRegex =
-        /[📅📆🗓] (\[\[)?([\d\w\-\s:]+)(\]\])?$/u;
-    public static readonly doneDateRegex = /✅ (\[\[)?([\w\d\-\s:]+)(\]\])?$/u;
+        /[📅📆🗓] (\[\[)?([\w\-\s:]+)(\]\])?$/u;
+    public static readonly doneDateRegex = /✅ (\[\[)?([\w\-\s:]+)(\]\])?$/u;
     public static readonly recurrenceRegex = /🔁([a-zA-Z0-9, !]+)$/u;
     public static readonly blockLinkRegex = / \^[a-zA-Z0-9-]+$/u;
 
@@ -150,19 +150,33 @@ export class Task {
             matched = false;
             const doneDateMatch = description.match(Task.doneDateRegex);
             if (doneDateMatch !== null) {
-                console.log(doneDateMatch);
-                doneDate = window.moment(doneDateMatch[2], dateFormat, true);
-                description = description
-                    .replace(Task.doneDateRegex, '')
-                    .trim();
-                matched = true;
+                const match = doneDateMatch[2];
+                const isValid = window
+                    .moment(match, dateFormat, true)
+                    .isValid();
+                if (isValid) {
+                    console.log(doneDateMatch);
+                    doneDate = window.moment(match, dateFormat, true);
+                    description = description
+                        .replace(Task.doneDateRegex, '')
+                        .trim();
+                    matched = true;
+                }
             }
 
             const dueDateMatch = description.match(Task.dueDateRegex);
             if (dueDateMatch !== null) {
-                dueDate = window.moment(dueDateMatch[2], dateFormat, true);
-                description = description.replace(Task.dueDateRegex, '').trim();
-                matched = true;
+                const match = dueDateMatch[2];
+                const isValid = window
+                    .moment(match, dateFormat, true)
+                    .isValid();
+                if (isValid) {
+                    dueDate = window.moment(match, dateFormat, true);
+                    description = description
+                        .replace(Task.dueDateRegex, '')
+                        .trim();
+                    matched = true;
+                }
             }
 
             const recurrenceMatch = description.match(Task.recurrenceRegex);
