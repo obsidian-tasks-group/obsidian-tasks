@@ -155,7 +155,6 @@ export class Task {
                     .moment(match, dateFormat, true)
                     .isValid();
                 if (isValid) {
-                    console.log(doneDateMatch);
                     doneDate = window.moment(match, dateFormat, true);
                     description = description
                         .replace(Task.doneDateRegex, '')
