@@ -33,11 +33,12 @@ export class Task {
     public readonly blockLink: string;
 
     public static dateFormat: string;
-    public static dateLink: string;
+    public static dateLink: boolean;
     public static readonly taskRegex = /^([\s\t]*)[-*] +\[(.)\] *(.*)/u;
     // The following regexes end with `$` because they will be matched and
     // removed from the end until none are left.
-    public static readonly dueDateRegex = /[📅📆🗓] ?((\[\[)?[\d\-\s]*(\]\])?)$/u;
+    public static readonly dueDateRegex =
+        /[📅📆🗓] ?((\[\[)?[\d\-\s]*(\]\])?)$/u;
     public static readonly doneDateRegex = /✅ ?((\[\[)?[\d\-\s]*(\]\])?)$/u;
     public static readonly recurrenceRegex = /🔁([a-zA-Z0-9, !]+)$/u;
     public static readonly blockLinkRegex = / \^[a-zA-Z0-9-]+$/u;
@@ -296,9 +297,9 @@ export class Task {
 
         if (!layoutOptions.hideDoneDate) {
             const doneDate: string = this.doneDate
-                ? Task.dateLink 
-                ? ` ✅ [[${this.doneDate.format(Task.dateFormat)}]]`
-                : ` ✅ ${this.doneDate.format(Task.dateFormat)}`
+                ? Task.dateLink
+                    ? ` ✅ [[${this.doneDate.format(Task.dateFormat)}]]`
+                    : ` ✅ ${this.doneDate.format(Task.dateFormat)}`
                 : '';
             taskString += doneDate;
         }
