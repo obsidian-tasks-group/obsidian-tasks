@@ -2,6 +2,11 @@
 # yarn lockfile v1
 
 
+"@arkweid/lefthook@^0.7.6":
+  version "0.7.6"
+  resolved "https://registry.yarnpkg.com/@arkweid/lefthook/-/lefthook-0.7.6.tgz#0647f698a6ae9a42440846911a277a370359d861"
+  integrity sha512-dm8UE0+9sbDRFJ6BMYpOrg56W3/wpZq2eBkGsCM+iSBrEKQF8hXFZ4eEEBxo25yfEPNVZguN/FbZcRmkeCyRiA==
+
 "@babel/code-frame@7.12.11":
   version "7.12.11"
   resolved "https://registry.yarnpkg.com/@babel/code-frame/-/code-frame-7.12.11.tgz#f4ad435aa263db935b8f10f2c552d23fb716a63f"
