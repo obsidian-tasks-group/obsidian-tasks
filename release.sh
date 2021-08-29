@@ -54,7 +54,7 @@ then
     git commit -m"Update to version ${NEW_VERSION}"
     git tag "${NEW_VERSION}"
     git push
-    git push --tags
+    LEFTHOOK=0 git push --tags
   fi
 else
   echo "Exiting."
