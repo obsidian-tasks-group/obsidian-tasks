@@ -1,13 +1,16 @@
 import chrono from 'chrono-node';
-import { LayoutOptions } from 'LayoutOptions';
+import { LayoutOptions } from './LayoutOptions';
 
 import { Status, Task } from './Task';
+
+type Sorting = 'status' | 'due' | 'done' | 'path' | 'description';
 
 export class Query {
     private _limit: number | undefined = undefined;
     private _layoutOptions: LayoutOptions = new LayoutOptions();
     private _filters: ((task: Task) => boolean)[] = [];
     private _error: string | undefined = undefined;
+    private _sorting: Sorting[] = [];
 
     private readonly noDueString = 'no due date';
     private readonly dueRegexp = /^due (before|after|on)? ?(.*)/;
@@ -19,6 +22,9 @@ export class Query {
     private readonly pathRegexp = /^path (includes|does not include) (.*)/;
     private readonly descriptionRegexp =
         /^description (includes|does not include) (.*)/;
+    private readonly sortByRegexp =
+        /^sort by (status|due|done|path|description)/;
+
     private readonly headingRegexp =
         /^heading (includes|does not include) (.*)/;
 
@@ -83,6 +89,9 @@ export class Query {
                     case this.limitRegexp.test(line):
                         this.parseLimit({ line });
                         break;
+                    case this.sortByRegexp.test(line):
+                        this.parseSortBy({ line });
+                        break;
                     case this.hideOptionsRegexp.test(line):
                         this.parseHideOptions({ line });
                         break;
@@ -102,6 +111,10 @@ export class Query {
 
     public get filters(): ((task: Task) => boolean)[] {
         return this._filters;
+    }
+
+    public get sorting(): Sorting[] {
+        return this._sorting;
     }
 
     public get error(): string | undefined {
@@ -187,11 +200,15 @@ export class Query {
             const filterMethod = pathMatch[1];
             if (filterMethod === 'includes') {
                 this._filters.push((task: Task) =>
-                    task.path.includes(pathMatch[2]),
+                    this.stringIncludesCaseInsensitive(task.path, pathMatch[2]),
                 );
             } else if (pathMatch[1] === 'does not include') {
                 this._filters.push(
-                    (task: Task) => !task.path.includes(pathMatch[2]),
+                    (task: Task) =>
+                        !this.stringIncludesCaseInsensitive(
+                            task.path,
+                            pathMatch[2],
+                        ),
                 );
             } else {
                 this._error = 'do not understand query filter (path)';
@@ -244,7 +261,7 @@ export class Query {
             } else if (headingMatch[1] === 'does not include') {
                 this._filters.push(
                     (task: Task) =>
-                        task.precedingHeader !== null &&
+                        task.precedingHeader === null ||
                         !this.stringIncludesCaseInsensitive(
                             task.precedingHeader,
                             headingMatch[2],
@@ -266,6 +283,15 @@ export class Query {
             this._limit = limit;
         } else {
             this._error = 'do not understand query limit';
+        }
+    }
+
+    private parseSortBy({ line }: { line: string }): void {
+        const fieldMatch = line.match(this.sortByRegexp);
+        if (fieldMatch !== null) {
+            this._sorting.push(fieldMatch[1] as Sorting);
+        } else {
+            this._error = 'do not understand query sorting';
         }
     }
 

@@ -149,7 +149,7 @@ class QueryRenderChild extends MarkdownRenderChild {
             tasks = tasks.filter(filter);
         });
 
-        const tasksSortedLimited = Sort.byStatusThenDateThenPath(tasks).slice(
+        const tasksSortedLimited = Sort.by(this.query, tasks).slice(
             0,
             this.query.limit,
         );
@@ -223,8 +223,10 @@ class QueryRenderChild extends MarkdownRenderChild {
         fileName: string,
         task: Task,
     ) {
+        postInfo.addClass('tasks-backlink');
         postInfo.append(' (');
         const link = postInfo.createEl('a');
+
         link.href = fileName;
         link.setAttribute('data-href', fileName);
         link.rel = 'noopener';

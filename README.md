@@ -194,7 +194,7 @@ Examples of possible recurrence rules (mix and match as desired; these should be
 ### Querying and listing tasks
 
 You can list tasks from your entire vault by querying them using a `tasks` code block. You can edit the tasks from the query results by clicking on the little pencil icon next to them.
-Tasks are sorted by status, due date, and then path.
+Tasks are by default sorted by status, due date, and then path. You can change the sorting (see query options below).
 
 **⚠️ The result list will list tasks unindented.**
 See [#51](https://github.com/schemar/obsidian-tasks/issues/51) for a discussion around the topic.
@@ -206,9 +206,9 @@ The simplest way to query tasks is this:
     ```
 
 In preview mode, this will list *all* tasks from your vault, regardless of their properties like status.
-This is probably not what you want. Therefore, Tasks allows you to filter the tasks that you want to show.
+This is probably not what you want. Therefore, Tasks allows you to set query options to filter the tasks that you want to show.
 
-The following filters exist:
+The following query options exist:
 
 - `done`
 - `not done`
@@ -218,18 +218,25 @@ The following filters exist:
 - `is recurring`
 - `is not recurring`
 - `path (includes|does not include) <path>`
+    - Matches case-insensitive (disregards capitalization).
 - `description (includes|does not include) <string>`
     - Matches case-insensitive (disregards capitalization).
 - `heading (includes|does not include) <string>`
     - Whether or not the heading preceding the task includes the given string.
     - Always tries to match the closest heading above the task, regardless of heading level.
-    - Will never match a task that does not have a preceding heading in its file.
+    - `does not include` will match a task that does not have a preceding heading in its file.
     - Matches case-insensitive (disregards capitalization).
 - `exclude sub-items`
     - When this is set, the result list will only include tasks that are not indented in their file. It will only show tasks that are top level list items in their list.
 - `limit to <number> tasks`
     - Only lists the first `<number>` tasks of the result.
     - Shorthand is `limit <number>`.
+- `sort by (status|due|done|path|description)`
+    - Sorts the tasks by the given property.
+    - For example, `sort by due` will sort the tasks by due date.
+    - You cann add multiple `sort by` query options, each on an extra line.
+        - The first sort has the highest priority.
+        - Each subsequent `sort` will sort within the existing sorting.
 
 #### Dates
 `<date>` filters can be given in natural language or in formal notation.
@@ -348,11 +355,23 @@ Show one task that is due on the 5th of May and includes `#prio1` in its descrip
 
 #### Daily Agenda
 
-If you use the [calendar](https://github.com/liamcain/obsidian-calendar-plugin) plugin,
-you can use the following in your daily note *template* for an agenda. If you use this
-template, you have to create the daily note from within the calendar in order for it to
-work. If you don't create the daily note from the calendar, `{{date+14d:YYYY-MM-DD}}`
-won't be set to the date correctly.
+Using the default `Daily-notes` plugin, **templates** with syntax like
+`{{date+14d:YYYY-MM-DD}}` won't load dates properly. Nevertheless, **Liam Cain**,
+author of both the [Calendar Plugin](https://github.com/liamcain/obsidian-calendar-plugin)
+and [Periodic Notes Plugin](https://github.com/liamcain/obsidian-periodic-notes), has
+written code to create new daily notes (using both plugins) using the `date+Xd` format.
+Therefore, if you want to use this format instead of the standard `Daily-notes` syntax,
+make sure new notes are created via one of these two plugins, and not `Daily-notes`.
+
+- **Calendar Plugin**: Just tap the day on the Calendar UI and a new daily note will be created
+- **Periodic Notes Plugin**: Install, migrate from `Daily-notes` if needed, and tap the new `Open Today` ribbon on the left-side dock. Below is an example if today was August 14, 2021.
+
+| | Daily Notes | Calendar | Periodic Notes |
+|-|-------------|----------|----------------|
+| template syntax | `due on {{date+14d:YYYY-MM-DD}}` | `due on {{date+14d:YYYY-MM-DD}}` | `due on {{date+14d:YYYY-MM-DD}}` |
+| output | `due on {{date+14d:YYYY-MM-DD}}` | `due on 2021-08-28` | `due on 2021-08-28` |
+
+##### Example Daily Agenda **template**:
 
     ## Tasks
     ### Overdue
@@ -384,6 +403,19 @@ won't be set to the date correctly.
     ```tasks
     done on {{date:YYYY-MM-DD}}
     ```
+    
+#### Styling Tasks
+
+Each task entry has CSS styles that allow you to change the look and feel of how the tasks are displayed. The 
+following styles are avliable. 
+
+| Class                    | Usage                                                                                                          |
+| ------------------------ | -------------------------------------------------------------------------------------------------------------- |
+| plugin-tasks-query-result| This is applied to the UL used to hold all the tasks, each task is stored in a LI.                             |
+| plugin-tasks-list-item   | This is applied to the LI that holds each task and the INPUT element for it.                                   |
+| tasks-backlink           | This is applied to the SPAN that wraps the backlink if displayed on the task.                                  |
+| tasks-edit               | This is applied to the SPAN that wraps the edit button/icon shown next to the task that opens the task edit UI.|
+| task-list-item-checkbox  | This is applied to the INPUT element for the task.                                                             |
 
 ## Development
 Clone the repository, run `yarn` to install the dependencies, and run `yarn dev` to compile the plugin and watch file changes.
