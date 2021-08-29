@@ -35,7 +35,7 @@ export class Sort {
         }
 
         const comparators = defaultComparators.concat(userComparators);
-        for(const comparator of comparators) {
+        for (const comparator of comparators) {
             sortedTasks = sortedTasks.sort(comparator);
         }
 

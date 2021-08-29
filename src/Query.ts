@@ -261,7 +261,7 @@ export class Query {
             } else if (headingMatch[1] === 'does not include') {
                 this._filters.push(
                     (task: Task) =>
-                        task.precedingHeader !== null &&
+                        task.precedingHeader === null ||
                         !this.stringIncludesCaseInsensitive(
                             task.precedingHeader,
                             headingMatch[2],
