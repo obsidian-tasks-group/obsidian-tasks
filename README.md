@@ -182,7 +182,7 @@ Examples of possible recurrence rules (mix and match as desired; these should be
 ### Querying and listing tasks
 
 You can list tasks from your entire vault by querying them using a `tasks` code block. You can edit the tasks from the query results by clicking on the little pencil icon next to them.
-Tasks are sorted by status, due date, and then path.
+Tasks are by default sorted by status, due date, and then path. You can change the sorting (see query options below).
 
 **⚠️ The result list will list tasks unindented.**
 See [#51](https://github.com/schemar/obsidian-tasks/issues/51) for a discussion around the topic.
@@ -194,9 +194,9 @@ The simplest way to query tasks is this:
     ```
 
 In preview mode, this will list *all* tasks from your vault, regardless of their properties like status.
-This is probably not what you want. Therefore, Tasks allows you to filter the tasks that you want to show.
+This is probably not what you want. Therefore, Tasks allows you to set query options to filter the tasks that you want to show.
 
-The following filters exist:
+The following query options exist:
 
 - `done`
 - `not done`
@@ -219,6 +219,12 @@ The following filters exist:
 - `limit to <number> tasks`
     - Only lists the first `<number>` tasks of the result.
     - Shorthand is `limit <number>`.
+- `sort by (status|due|done|path|description)`
+    - Sorts the tasks by the given property.
+    - For example, `sort by due` will sort the tasks by due date.
+    - You cann add multiple `sort by` query options, each on an extra line.
+        - The first sort has the highest priority.
+        - Each subsequent `sort` will sort within the existing sorting.
 
 #### Dates
 `<date>` filters can be given in natural language or in formal notation.
