@@ -6,47 +6,40 @@ type Comparator = (a: Task, b: Task) => number;
 
 export class Sort {
     public static by(query: Pick<Query, 'sorting'>, tasks: Task[]): Task[] {
-        const priorities: Comparator[] = [
-            this.compareByStatus,
-            this.compareByDueDate,
+        let sortedTasks = [...tasks];
+        const defaultComparators: Comparator[] = [
             this.compareByPath,
+            this.compareByDueDate,
+            this.compareByStatus,
         ];
 
-        for (const sortProp of query.sorting.reverse()) {
+        const userComparators: Comparator[] = [];
+        for (const sortProp of query.sorting) {
             switch (sortProp) {
                 case 'status':
-                    priorities.unshift(this.compareByStatus);
+                    userComparators.unshift(this.compareByStatus);
                     break;
                 case 'due':
-                    priorities.unshift(this.compareByDueDate);
+                    userComparators.unshift(this.compareByDueDate);
                     break;
                 case 'done':
-                    priorities.unshift(this.compareByDoneDate);
+                    userComparators.unshift(this.compareByDoneDate);
                     break;
                 case 'path':
-                    priorities.unshift(this.compareByPath);
+                    userComparators.unshift(this.compareByPath);
                     break;
                 case 'description':
-                    priorities.unshift(this.compareByDescription);
+                    userComparators.unshift(this.compareByDescription);
                     break;
             }
         }
 
-        return tasks.sort(this.makeCompositeComparator(priorities));
-    }
+        const comparators = defaultComparators.concat(userComparators);
+        for(const comparator of comparators) {
+            sortedTasks = sortedTasks.sort(comparator);
+        }
 
-    private static makeCompositeComparator(
-        comparators: Comparator[],
-    ): Comparator {
-        return (a, b) => {
-            for (const comparator of comparators) {
-                const result = comparator(a, b);
-                if (result !== 0) {
-                    return result;
-                }
-            }
-            return 0;
-        };
+        return sortedTasks;
     }
 
     private static compareByStatus(a: Task, b: Task): -1 | 0 | 1 {
