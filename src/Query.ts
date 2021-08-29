@@ -200,11 +200,15 @@ export class Query {
             const filterMethod = pathMatch[1];
             if (filterMethod === 'includes') {
                 this._filters.push((task: Task) =>
-                    task.path.includes(pathMatch[2]),
+                    this.stringIncludesCaseInsensitive(task.path, pathMatch[2]),
                 );
             } else if (pathMatch[1] === 'does not include') {
                 this._filters.push(
-                    (task: Task) => !task.path.includes(pathMatch[2]),
+                    (task: Task) =>
+                        !this.stringIncludesCaseInsensitive(
+                            task.path,
+                            pathMatch[2],
+                        ),
                 );
             } else {
                 this._error = 'do not understand query filter (path)';
