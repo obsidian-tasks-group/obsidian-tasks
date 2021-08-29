@@ -206,6 +206,7 @@ The following filters exist:
 - `is recurring`
 - `is not recurring`
 - `path (includes|does not include) <path>`
+    - Matches case-insensitive (disregards capitalization).
 - `description (includes|does not include) <string>`
     - Matches case-insensitive (disregards capitalization).
 - `heading (includes|does not include) <string>`
