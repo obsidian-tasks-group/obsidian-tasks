@@ -40,7 +40,7 @@ export class Query {
     constructor({ source }: { source: string }) {
         source
             .split('\n')
-            .map((line: string) => line.trim().toLocaleLowerCase())
+            .map((line: string) => line.trim())
             .forEach((line: string) => {
                 switch (true) {
                     case line === '':
