@@ -61,10 +61,10 @@ describe('Sort', () => {
     });
 
     test('by due, path, status', () => {
-        const a = fromLine('- [ ] a 🗓 1970-01-01', '1');
-        const b = fromLine('- [x] b 🗓 1970-01-02', '2');
-        const c = fromLine('- [ ] c 🗓 1970-01-02', '1');
-        const d = fromLine('- [ ] d 🗓 1970-01-02', '2');
+        const a = fromLine('- [ ] a 🗓 1970-01-01', { path: '1' });
+        const b = fromLine('- [x] b 🗓 1970-01-02', { path: '2' });
+        const c = fromLine('- [ ] c 🗓 1970-01-02', { path: '1' });
+        const d = fromLine('- [ ] d 🗓 1970-01-02', { path: '2' });
         const expectedOrder = [
             a, // Sort by due date first.
             c, // Same due as the rest, but lower path.

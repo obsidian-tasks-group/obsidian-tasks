@@ -13,7 +13,7 @@ export class Sort {
         ];
 
         for (const { property, reverse } of query.sorting.reverse()) {
-            let comparator = this.comparators[property];
+            const comparator = this.comparators[property];
             comparators.unshift(
                 reverse ? this.makeReversedComparator(comparator) : comparator,
             );
