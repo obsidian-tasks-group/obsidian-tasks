@@ -16,6 +16,8 @@ export const defaultSettings: Settings = {
     recurrenceMarker: '🔁',
 };
 
+export const dueDateMarkerDefaultAlternatives = '📅📆🗓';
+
 let settings: Settings = { ...defaultSettings };
 
 export const getSettings = (): Settings => {

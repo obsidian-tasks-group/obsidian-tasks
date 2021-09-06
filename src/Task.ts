@@ -2,7 +2,11 @@ import { Component, MarkdownRenderer } from 'obsidian';
 import { RRule } from 'rrule';
 
 import { replaceTaskWithTasks } from './File';
-import { getSettings } from './Settings';
+import {
+    defaultSettings,
+    dueDateMarkerDefaultAlternatives,
+    getSettings,
+} from './Settings';
 import { LayoutOptions } from './LayoutOptions';
 import type { Moment } from 'moment';
 
@@ -108,15 +112,19 @@ export class Task {
             recurrenceMarker,
         } = getSettings();
         const dueDateRegex = new RegExp(
-            `${dueDateMarker}\\s+?${dateRegexString}$`,
+            `${
+                dueDateMarker === defaultSettings.dueDateMarker
+                    ? '[' + dueDateMarkerDefaultAlternatives + ']'
+                    : dueDateMarker
+            }\\s*?${dateRegexString}$`,
             'u',
         );
         const doneDateRegex = new RegExp(
-            `${doneDateMarker}\\s+?${dateRegexString}$`,
+            `${doneDateMarker}\\s*?${dateRegexString}$`,
             'u',
         );
         const recurrenceRegex = new RegExp(
-            `${recurrenceMarker}\\s+?([a-zA-Z0-9, !]+)$`,
+            `${recurrenceMarker}\\s*?([a-zA-Z0-9, !]+)$`,
             'u',
         );
 
