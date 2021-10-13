@@ -1,4 +1,4 @@
-import { Query } from '../src/Query';
+import { Query, Sorting } from '../src/Query';
 import { Status, Task } from '../src/Task';
 
 describe('Query', () => {
@@ -51,14 +51,14 @@ describe('Query', () => {
     });
 
     describe('sorting instructions', () => {
-        const cases: { input: string; output: string[] }[] = [
+        const cases: { input: string; output: Sorting[] }[] = [
             {
                 input: 'sort by status',
-                output: ['status'],
+                output: [['status', 'asc']],
             },
             {
-                input: 'sort by status\nsort by due',
-                output: ['status', 'due'],
+                input: 'sort by status\nsort by due desc',
+                output: [['status', 'asc'], ['due', 'desc']],
             },
         ];
         test.each(cases)('sorting as %p', ({ input, output }) => {

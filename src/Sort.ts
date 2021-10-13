@@ -1,10 +1,18 @@
-import type { Task } from './Task';
-import type { Query } from './Query';
 import type moment from 'moment';
+import type { Task } from './Task';
+import type { Query, SortProperty } from './Query';
 
 type Comparator = (a: Task, b: Task) => number;
 
 export class Sort {
+    private static comparatorMap: { [K in SortProperty]: Comparator } = {
+        status: this.compareByStatus,
+        due: this.compareByDueDate,
+        done: this.compareByDoneDate,
+        path: this.compareByPath,
+        description: this.compareByDescription,
+    };
+
     public static by(query: Pick<Query, 'sorting'>, tasks: Task[]): Task[] {
         let sortedTasks = [...tasks];
         const defaultComparators: Comparator[] = [
@@ -14,24 +22,14 @@ export class Sort {
         ];
 
         const userComparators: Comparator[] = [];
-        for (const sortProp of query.sorting) {
-            switch (sortProp) {
-                case 'status':
-                    userComparators.unshift(this.compareByStatus);
-                    break;
-                case 'due':
-                    userComparators.unshift(this.compareByDueDate);
-                    break;
-                case 'done':
-                    userComparators.unshift(this.compareByDoneDate);
-                    break;
-                case 'path':
-                    userComparators.unshift(this.compareByPath);
-                    break;
-                case 'description':
-                    userComparators.unshift(this.compareByDescription);
-                    break;
-            }
+
+        for (const [sortProp, sortDirection] of query.sorting) {
+            userComparators.push(
+                this.applyDirection(
+                    sortDirection,
+                    this.comparatorMap[sortProp],
+                ),
+            );
         }
 
         const comparators = defaultComparators.concat(userComparators);
@@ -40,6 +38,16 @@ export class Sort {
         }
 
         return sortedTasks;
+    }
+
+    private static applyDirection(
+        direction: 'asc' | 'desc',
+        sortFn: Comparator,
+    ): Comparator {
+        if (direction === 'desc') {
+            return (a: Task, b: Task) => 0 - sortFn(a, b);
+        }
+        return sortFn;
     }
 
     private static compareByStatus(a: Task, b: Task): -1 | 0 | 1 {

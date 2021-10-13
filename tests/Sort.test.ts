@@ -5,6 +5,11 @@ window.moment = moment;
 import { Task } from '../src/Task';
 import { Sort } from '../src/Sort';
 
+const due = ['due', 'asc'] as const;
+const done = ['done', 'asc'] as const;
+const path = ['path', 'asc'] as const;
+const status = ['status', 'asc'] as const;
+
 function fromLine(line: string, path = '') {
     return Task.fromLine({
         line,
@@ -20,16 +25,16 @@ describe('Sort', () => {
         const a = fromLine('- [x] bring out the trash 🗓 2021-09-12');
         const b = fromLine('- [ ] pet the cat 🗓 2021-09-15');
         const c = fromLine('- [ ] pet the cat 🗓 2021-09-18');
-        expect(Sort.by({ sorting: ['due'] }, [a, b, c])).toEqual([a, b, c]);
-        expect(Sort.by({ sorting: ['due'] }, [b, c, a])).toEqual([a, b, c]);
+        expect(Sort.by({ sorting: [due] }, [a, b, c])).toEqual([a, b, c]);
+        expect(Sort.by({ sorting: [due] }, [b, c, a])).toEqual([a, b, c]);
     });
 
     test('by done', () => {
         const a = fromLine('- [ ] bring out the trash 🗓 2021-09-12');
         const b = fromLine('- [x] pet the cat 🗓 2021-09-16 ✅ 2021-09-16');
         const c = fromLine('- [x] pet the cat 🗓 2021-09-15 ✅ 2021-09-15');
-        expect(Sort.by({ sorting: ['done'] }, [a, b, c])).toEqual([c, b, a]);
-        expect(Sort.by({ sorting: ['done'] }, [b, c, a])).toEqual([c, b, a]);
+        expect(Sort.by({ sorting: [done] }, [a, b, c])).toEqual([c, b, a]);
+        expect(Sort.by({ sorting: [done] }, [b, c, a])).toEqual([c, b, a]);
     });
 
     test('by due, path, status', () => {
@@ -43,8 +48,19 @@ describe('Sort', () => {
             d, // Same as b, but not done.
             b, // Done tasks are sorted after open tasks for status.
         ];
-        expect(
-            Sort.by({ sorting: ['due', 'path', 'status'] }, [a, b, c, d]),
-        ).toEqual(expectedOrder);
+        expect(Sort.by({ sorting: [due, path, status] }, [a, b, c, d])).toEqual(
+            expectedOrder,
+        );
+    });
+
+    test('by due desc', () => {
+        const a = fromLine('- [x] bring out the trash 🗓 2021-09-12');
+        const b = fromLine('- [ ] pet the cat 🗓 2021-09-15');
+        const c = fromLine('- [ ] pet the cat 🗓 2021-09-18');
+        expect(Sort.by({ sorting: [['due', 'desc']] }, [a, c, b])).toEqual([
+            c,
+            b,
+            a,
+        ]);
     });
 });

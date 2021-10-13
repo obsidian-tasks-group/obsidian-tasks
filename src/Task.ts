@@ -1,10 +1,10 @@
 import { Component, MarkdownRenderer } from 'obsidian';
 import { RRule } from 'rrule';
 
+import type { Moment } from 'moment';
 import { replaceTaskWithTasks } from './File';
 import { getSettings } from './Settings';
 import { LayoutOptions } from './LayoutOptions';
-import type { Moment } from 'moment';
 
 export enum Status {
     Todo = 'Todo',

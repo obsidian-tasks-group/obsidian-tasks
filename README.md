@@ -219,12 +219,14 @@ The following query options exist:
 - `limit to <number> tasks`
     - Only lists the first `<number>` tasks of the result.
     - Shorthand is `limit <number>`.
-- `sort by (status|due|done|path|description)`
+- `sort by (status|due|done|path|description) [desc]`
     - Sorts the tasks by the given property.
     - For example, `sort by due` will sort the tasks by due date.
-    - You cann add multiple `sort by` query options, each on an extra line.
+    - You can add multiple `sort by` query options, each on an extra line.
         - The first sort has the highest priority.
         - Each subsequent `sort` will sort within the existing sorting.
+    - You can add `desc` to the end of the line to sort in descending order
+        - e.g. `sort by due desc`
 
 #### Dates
 `<date>` filters can be given in natural language or in formal notation.
@@ -391,11 +393,11 @@ make sure new notes are created via one of these two plugins, and not `Daily-not
     ```tasks
     done on {{date:YYYY-MM-DD}}
     ```
-    
+
 #### Styling Tasks
 
-Each task entry has CSS styles that allow you to change the look and feel of how the tasks are displayed. The 
-following styles are avliable. 
+Each task entry has CSS styles that allow you to change the look and feel of how the tasks are displayed. The
+following styles are avliable.
 
 | Class                    | Usage                                                                                                          |
 | ------------------------ | -------------------------------------------------------------------------------------------------------------- |
