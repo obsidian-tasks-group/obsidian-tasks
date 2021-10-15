@@ -405,6 +405,12 @@ following styles are avliable.
 | tasks-edit               | This is applied to the SPAN that wraps the edit button/icon shown next to the task that opens the task edit UI.|
 | task-list-item-checkbox  | This is applied to the INPUT element for the task.                                                             |
 
+#### Notifications
+
+Within obsidian-tasks notifications can be made possible by utilizing [obsidian-reminder](https://github.com/uphy/obsidian-reminder). This utilizes the standard obsidian-tasks date (as the due date) and can be extended with an additional reminder date by including a ⏰ and a date/time in the format `⏰ YYYY-MM-DD HH:MM`. Further, a default reminder can be enabled based on the obsidian-tasks 'Due Date'. To enable this make sure obsidian-reminder has enabled the tasks plugin format as below:
+
+![obsidian-reminder setting](https://github.com/schemar/obsidian-tasks/raw/main/resources/screenshots/reminder.png)
+
 ## Development
 Clone the repository, run `yarn` to install the dependencies, and run `yarn dev` to compile the plugin and watch file changes.
 
