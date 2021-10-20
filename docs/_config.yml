@@ -5,6 +5,10 @@ url: "https://schemar.github.io" # the base hostname & protocol for your site, e
 
 permalink: pretty
 
+# Back to top link
+back_to_top: true
+back_to_top_text: "Back to top"
+
 # Aux links for the upper right navigation
 aux_links:
   "Obsidian Tasks on GitHub":
