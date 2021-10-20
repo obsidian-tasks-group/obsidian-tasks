@@ -8,7 +8,7 @@ has_toc: false
 
 # Global Filter
 
-ℹ You can set a global filter in the settings so that Tasks only matches specific checklist items.
+You can set a global filter in the settings so that Tasks only matches specific checklist items.
 For example, you could set it to `#tasks` to only track checklist items as task if they include the string `#tasks`.
 It doesn't have to be a tag. It can be any string.
 Leave it empty to regard all checklist items as tasks.
