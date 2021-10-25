@@ -10,7 +10,7 @@ export class InlineRenderer {
         );
     }
 
-    private renderer = this.markdownPostProcessor.bind(this);
+    public renderer = this.markdownPostProcessor.bind(this);
 
     private async markdownPostProcessor(
         element: HTMLElement,

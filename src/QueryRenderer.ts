@@ -28,7 +28,7 @@ export class QueryRenderer {
         );
     }
 
-    private renderer = this.addQueryRenderChild.bind(this);
+    public renderer = this.addQueryRenderChild.bind(this);
 
     private async addQueryRenderChild(
         source: string,
