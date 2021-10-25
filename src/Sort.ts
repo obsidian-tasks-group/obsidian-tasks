@@ -1,6 +1,6 @@
+import type moment from 'moment';
 import type { Task } from './Task';
 import type { Query } from './Query';
-import type moment from 'moment';
 
 type Comparator = (a: Task, b: Task) => number;
 
