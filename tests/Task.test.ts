@@ -1,3 +1,6 @@
+/**
+ * @jest-environment jsdom
+ */
 import moment from 'moment';
 import { Status, Task } from '../src/Task';
 

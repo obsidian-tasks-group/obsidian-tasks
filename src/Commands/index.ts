@@ -1,7 +1,7 @@
+import type { App, Editor, Plugin, View } from 'obsidian';
 import { createOrEdit } from './CreateOrEdit';
 
 import { toggleDone } from './ToggleDone';
-import type { App, Editor, Plugin, View } from 'obsidian';
 
 export class Commands {
     private readonly plugin: Plugin;
