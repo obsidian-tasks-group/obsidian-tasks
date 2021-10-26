@@ -295,6 +295,9 @@ export class Task {
             taskString += doneDate;
         }
 
+        const blockLink: string = this.blockLink ?? '';
+        taskString += blockLink;
+
         return taskString;
     }
 

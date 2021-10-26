@@ -104,7 +104,47 @@ describe('parsing', () => {
     });
 });
 
+describe('to string', () => {
+    it('retains the block link', () => {
+        // Arrange
+        const line = '- [ ] this is a task 📅 2021-09-12 ^my-precious';
+
+        // Act
+        const task: Task = Task.fromLine({
+            line,
+            path: '',
+            sectionStart: 0,
+            sectionIndex: 0,
+            precedingHeader: '',
+        }) as Task;
+
+        // Assert
+        expect(task.toFileLineString()).toStrictEqual(line);
+    });
+});
+
 describe('toggle', () => {
+    it('retains the block link', () => {
+        // Arrange
+        const line = '- [ ] this is a task 📅 2021-09-12 ^my-precious';
+
+        // Act
+        const task: Task = Task.fromLine({
+            line,
+            path: '',
+            sectionStart: 0,
+            sectionIndex: 0,
+            precedingHeader: '',
+        }) as Task;
+        const toggled: Task = task.toggle()[0];
+
+        // Assert
+        expect(toggled).not.toBeNull();
+        expect(toggled!.status).toStrictEqual(Status.Done);
+        expect(toggled!.doneDate).not.toBeNull();
+        expect(toggled!.blockLink).toEqual(' ^my-precious');
+    });
+
     test.concurrent.each([
         {
             recurrenceText: 'every 7 days',
@@ -178,7 +218,9 @@ describe('toggle', () => {
             });
             const nextTask: Task = task!.toggle()[0];
 
-            expect(nextTask.dueDate?.isSame(expectedNextDueDate)).toBeTruthy();
+            expect(nextTask.dueDate?.isSame(expectedNextDueDate)).toStrictEqual(
+                true,
+            );
         },
     );
 });
