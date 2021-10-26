@@ -17,7 +17,7 @@ describe('Query', () => {
                     precedingHeader: null,
                     dueDate: null,
                     doneDate: null,
-                    recurrenceRule: null,
+                    recurrence: null,
                     blockLink: '',
                 }),
                 new Task({
@@ -31,7 +31,7 @@ describe('Query', () => {
                     precedingHeader: null,
                     dueDate: null,
                     doneDate: null,
-                    recurrenceRule: null,
+                    recurrence: null,
                     blockLink: '',
                 }),
             ];
