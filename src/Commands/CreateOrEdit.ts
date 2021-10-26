@@ -71,7 +71,7 @@ const taskFromLine = ({ line, path }: { line: string; path: string }): Task => {
             originalStatusCharacter: ' ',
             dueDate: null,
             doneDate: null,
-            recurrenceRule: null,
+            recurrence: null,
             // We don't need the following fields to edit here in the editor.
             sectionStart: 0,
             sectionIndex: 0,
@@ -101,7 +101,7 @@ const taskFromLine = ({ line, path }: { line: string; path: string }): Task => {
         blockLink,
         dueDate: null,
         doneDate: null,
-        recurrenceRule: null,
+        recurrence: null,
         // We don't need the following fields to edit here in the editor.
         sectionStart: 0,
         sectionIndex: 0,
