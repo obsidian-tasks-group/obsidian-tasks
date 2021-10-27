@@ -223,7 +223,7 @@ export class Cache {
             return task.path !== file.path;
         });
 
-        // For each headings retrieve the lineNumber and the all applicable headings
+        // For each headings retrieve the lineNumber and all the applicable headings
         const nestedHeadings: [number, HeadingCache[]][] =
             this.getNestedHeadings({
                 headings: fileCache.headings,
@@ -348,6 +348,11 @@ export class Cache {
         }
     }
 
+    /**
+     * Find heading that contains the given line number.
+     *
+     * nestedHeadings must be ordered by line number DESC.
+     */
     private getHeadings({
         lineNumberTask,
         nestedHeadings,
@@ -365,11 +370,34 @@ export class Cache {
         return [];
     }
 
+    /**
+     * For each heading, return its line number and the breadcrumb of headings to reach it.
+     * Ordered by line number DESC.
+     *
+     * For example: the following file:
+     * ```
+     * # H1
+     * ## H2-1
+     * ### H3-1
+     * ## H2-2
+     * ### H3-2
+     * ```
+     * returns the equivalent of
+     * [
+     *  [4, [H1, H2-2, H3-2]],
+     *  [3, [H1, H2-2]],
+     *  [2, [H1, H2-1, H3-1]],
+     *  [1, [H1, H2-1]],
+     *  [0, [H1]],
+     *  [-1, []],
+     * ]
+     */
     private getNestedHeadings({
         headings,
     }: {
         headings: HeadingCache[] | undefined;
     }): [number, HeadingCache[]][] {
+        // At start of file, there should not be any heading.
         const nestedHeadings: [number, HeadingCache[]][] = [[-1, []]];
         if (headings === undefined) {
             return nestedHeadings;
@@ -377,6 +405,7 @@ export class Cache {
 
         let previousHeadings: HeadingCache[] = [];
         for (const heading of headings) {
+            // Should only keep headings that are parent of current heading.
             previousHeadings = previousHeadings.filter(
                 (h) => h.level < heading.level,
             );
