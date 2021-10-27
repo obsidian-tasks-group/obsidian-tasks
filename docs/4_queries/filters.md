@@ -73,6 +73,7 @@ The following filters exist:
     - Matches case-insensitive (disregards capitalization).
 - `description (includes|does not include) <string>`
     - Matches case-insensitive (disregards capitalization).
+    - Disregards the global filter when matching.
 - `heading (includes|does not include) <string>`
     - Whether or not the heading preceding the task includes the given string.
     - Always tries to match the closest heading above the task, regardless of heading level.
