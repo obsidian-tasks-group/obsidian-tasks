@@ -11,6 +11,8 @@ import { SettingsTab } from './SettingsTab';
 
 export default class TasksPlugin extends Plugin {
     private cache: Cache | undefined;
+    public inlineRenderer: InlineRenderer | undefined;
+    public queryRenderer: QueryRenderer | undefined;
 
     async onload() {
         console.log('loading plugin "tasks"');
@@ -29,8 +31,8 @@ export default class TasksPlugin extends Plugin {
             vault: this.app.vault,
             events,
         });
-        new InlineRenderer({ plugin: this });
-        new QueryRenderer({ plugin: this, events });
+        this.inlineRenderer = new InlineRenderer({ plugin: this });
+        this.queryRenderer = new QueryRenderer({ plugin: this, events });
         new Commands({ plugin: this });
     }
 

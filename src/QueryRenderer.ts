@@ -28,6 +28,8 @@ export class QueryRenderer {
         );
     }
 
+    public renderer = this.addQueryRenderChild.bind(this);
+
     private async addQueryRenderChild(
         source: string,
         element: HTMLElement,
