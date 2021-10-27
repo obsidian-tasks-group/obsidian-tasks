@@ -6,13 +6,13 @@ import { Task } from './Task';
 export class InlineRenderer {
     constructor({ plugin }: { plugin: Plugin }) {
         plugin.registerMarkdownPostProcessor(
-            this.markdownPostProcessor.bind(this),
+            this._markdownPostProcessor.bind(this),
         );
     }
 
-    public renderer = this.markdownPostProcessor.bind(this);
+    public markdownPostProcessor = this._markdownPostProcessor.bind(this);
 
-    private async markdownPostProcessor(
+    private async _markdownPostProcessor(
         element: HTMLElement,
         context: MarkdownPostProcessorContext,
     ): Promise<void> {

@@ -24,13 +24,13 @@ export class QueryRenderer {
 
         plugin.registerMarkdownCodeBlockProcessor(
             'tasks',
-            this.addQueryRenderChild.bind(this),
+            this._addQueryRenderChild.bind(this),
         );
     }
 
-    public renderer = this.addQueryRenderChild.bind(this);
+    public addQueryRenderChild = this._addQueryRenderChild.bind(this);
 
-    private async addQueryRenderChild(
+    private async _addQueryRenderChild(
         source: string,
         element: HTMLElement,
         context: MarkdownPostProcessorContext,
