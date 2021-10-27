@@ -1,3 +1,4 @@
+import type moment from 'moment';
 import type { Task } from './Task';
 import type { Query, Sorting } from './Query';
 import type moment from 'moment';

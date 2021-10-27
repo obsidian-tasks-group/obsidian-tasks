@@ -59,14 +59,10 @@ export class Query {
                         );
                         break;
                     case line === this.recurringString:
-                        this._filters.push(
-                            (task) => task.recurrenceRule !== null,
-                        );
+                        this._filters.push((task) => task.recurrence !== null);
                         break;
                     case line === this.notRecurringString:
-                        this._filters.push(
-                            (task) => task.recurrenceRule === null,
-                        );
+                        this._filters.push((task) => task.recurrence === null);
                         break;
                     case line === this.excludeSubItemsString:
                         this._filters.push((task) => task.indentation === '');
