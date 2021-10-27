@@ -26,9 +26,17 @@ The simplest way to create a new task is to create a new checklist item.
 The markdown syntax for checklist items is a list item that starts with spaced brackets: `- [ ] take out the trash`.
 Now Tasks tracks that you need to take out the trash!
 
-**⚠️ Whenever Tasks behaves in an unexpected way, please try restarting obsidian.**
+---
 
-**⚠️ Tasks only supports single-line checklist items.**
+Warning
+{: .label .label-yellow}
+*Whenever Tasks behaves in an unexpected way, please try restarting obsidian.*
+
+---
+
+Warning
+{: .label .label-yellow}
+*Tasks only supports single-line checklist items.*
 You cannot have checklist items that span across multiple lines.
 
 This works:
@@ -48,7 +56,25 @@ The following *does not work:*
       and then its description continues on the next line
 ```
 
-**⚠️ Tasks only supports checklist items in markdown files with the file extension `.md`**
+---
+
+Warning
+{: .label .label-yellow}
+*Tasks won't render spaces around list items if you have a list with empty lines.*
+
+```markdown
+- [ ] First task before the empty line
+
+- [ ] Another task. The empty line above will *not* result in the tasks being more spaced out.
+```
+
+---
+
+Warning
+{: .label .label-yellow}
+*Tasks only supports checklist items in markdown files with the file extension `.md`.*
+
+---
 
 A more convenient way to create a task is by using the `Tasks: Create or edit` command from the command palette.
 You can also bind a hotkey to the command.
