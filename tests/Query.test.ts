@@ -61,7 +61,7 @@ describe('Query', () => {
                 output: ['status', 'due'],
             },
         ];
-        test.each(cases)('sorting as %p', ({ input, output }) => {
+        it.concurrent.each(cases)('sorting as %j', ({ input, output }) => {
             const query = new Query({ source: input });
 
             expect(query.sorting).toEqual(output);
