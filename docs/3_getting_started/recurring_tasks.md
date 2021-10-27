@@ -45,10 +45,14 @@ If you mark the above task "done", the file will now look like this:
 
 The next Sunday after 25 April 2021 is on 2 May.
 
+---
+
 Important
 {: .label .label-yellow }
 
 *A recurring task should have a due date and the recurrence rule must appear before the due date on the line.*
+
+---
 
 In the editor there is no direct feedback to whether your recurrence rule is valid.
 You can validate that tasks understands your rule by using the `Tasks: Crete or edit` command when creating or editing a task.

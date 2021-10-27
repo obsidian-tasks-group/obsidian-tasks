@@ -1,6 +1,7 @@
 import chrono from 'chrono-node';
-import { LayoutOptions } from './LayoutOptions';
 
+import { getSettings } from './Settings';
+import { LayoutOptions } from './LayoutOptions';
 import { Status, Task } from './Task';
 
 export type SortingProperty =
@@ -224,10 +225,15 @@ export class Query {
         const descriptionMatch = line.match(this.descriptionRegexp);
         if (descriptionMatch !== null) {
             const filterMethod = descriptionMatch[1];
+            const globalFilter = getSettings().globalFilter;
+
             if (filterMethod === 'includes') {
                 this._filters.push((task: Task) =>
                     this.stringIncludesCaseInsensitive(
-                        task.description,
+                        // Remove global filter from description match if present.
+                        // This is necessary to match only on the content of the task, not
+                        // the global filter.
+                        task.description.replace(globalFilter, '').trim(),
                         descriptionMatch[2],
                     ),
                 );
@@ -235,7 +241,10 @@ export class Query {
                 this._filters.push(
                     (task: Task) =>
                         !this.stringIncludesCaseInsensitive(
-                            task.description,
+                            // Remove global filter from description match if present.
+                            // This is necessary to match only on the content of the task, not
+                            // the global filter.
+                            task.description.replace(globalFilter, '').trim(),
                             descriptionMatch[2],
                         ),
                 );
