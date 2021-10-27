@@ -21,7 +21,7 @@ nav_order: 6
 ## Daily Agenda
 
 Using the default `Daily-notes` plugin, **templates** with syntax like
-`{{date+14d:YYYY-MM-DD}}` won't load dates properly. Nevertheless, **Liam Cain**,
+{% raw %}`{{date+14d:YYYY-MM-DD}}`{% endraw %} won't load dates properly. Nevertheless, **Liam Cain**,
 author of both the [Calendar Plugin](https://github.com/liamcain/obsidian-calendar-plugin)
 and [Periodic Notes Plugin](https://github.com/liamcain/obsidian-periodic-notes), has
 written code to create new daily notes (using both plugins) using the `date+Xd` format.
@@ -33,8 +33,8 @@ make sure new notes are created via one of these two plugins, and not `Daily-not
 
 | | Daily Notes | Calendar | Periodic Notes |
 |-|-------------|----------|----------------|
-| template syntax | `due on {{date+14d:YYYY-MM-DD}}` | `due on {{date+14d:YYYY-MM-DD}}` | `due on {{date+14d:YYYY-MM-DD}}` |
-| output | `due on {{date+14d:YYYY-MM-DD}}` | `due on 2021-08-28` | `due on 2021-08-28` |
+| template syntax | `due on {% raw %}{{date+14d:YYYY-MM-DD}}{% endraw %}` | `due on {% raw %}{{date+14d:YYYY-MM-DD}}{% endraw %}` | `due on {% raw %}{{date+14d:YYYY-MM-DD}}{% endraw %}` |
+| output | `due on {% raw %}{{date+14d:YYYY-MM-DD}}{% endraw %}` | `due on 2021-08-28` | `due on 2021-08-28` |
 
 #### Example Daily Agenda **template**:
 
@@ -42,20 +42,20 @@ make sure new notes are created via one of these two plugins, and not `Daily-not
     ### Overdue
     ```tasks
     not done
-    due before {{date:YYYY-MM-DD}}
+    due before {% raw %}{{date:YYYY-MM-DD}}{% endraw %}
     ```
 
     ### Due today
     ```tasks
     not done
-    due on {{date:YYYY-MM-DD}}
+    due on {% raw %}{{date:YYYY-MM-DD}}{% endraw %}
     ```
 
     ### Due in the next two weeks
     ```tasks
     not done
-    due after {{date:YYYY-MM-DD}}
-    due before {{date+14d:YYYY-MM-DD}}
+    due after {% raw %}{{date:YYYY-MM-DD}}{% endraw %}
+    due before {% raw %}{{date+14d:YYYY-MM-DD}}{% endraw %}
     ```
 
     ### No due date
@@ -66,7 +66,7 @@ make sure new notes are created via one of these two plugins, and not `Daily-not
 
     ### Done today
     ```tasks
-    done on {{date:YYYY-MM-DD}}
+    done on {% raw %}{{date:YYYY-MM-DD}}{% endraw %}
     ```
 
 ---
