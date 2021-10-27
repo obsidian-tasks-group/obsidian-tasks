@@ -2,22 +2,24 @@ import type moment from 'moment';
 import type { Task } from './Task';
 import type { Query, SortingProperty } from './Query';
 
+import { getSettings } from './Settings';
+
 type Comparator = (a: Task, b: Task) => number;
 
 export class Sort {
     public static by(query: Pick<Query, 'sorting'>, tasks: Task[]): Task[] {
         const defaultComparators: Comparator[] = [
-            this.compareByStatus,
-            this.compareByDueDate,
-            this.compareByPath,
+            Sort.compareByStatus,
+            Sort.compareByDueDate,
+            Sort.compareByPath,
         ];
 
         const userComparators: Comparator[] = [];
 
         for (const { property, reverse } of query.sorting) {
-            const comparator = this.comparators[property];
+            const comparator = Sort.comparators[property];
             userComparators.push(
-                reverse ? this.makeReversedComparator(comparator) : comparator,
+                reverse ? Sort.makeReversedComparator(comparator) : comparator,
             );
         }
 
@@ -104,7 +106,59 @@ export class Sort {
         }
     }
 
+    /**
+     * Compare the description by how it is rendered in markdown.
+     *
+     * Does not use the MarkdownRenderer, but tries to match regexes instead
+     * in order to be simpler, faster, and not async.
+     */
     private static compareByDescription(a: Task, b: Task) {
-        return a.description.localeCompare(b.description);
+        return Sort.cleanDescription(a.description).localeCompare(
+            Sort.cleanDescription(b.description),
+        );
+    }
+
+    /**
+     * Removes `*`, `=`, and `[` from the beginning of the description.
+     *
+     * Will remove them only if they are closing.
+     * Properly reads links [[like this|one]] (note pipe).
+     */
+    private static cleanDescription(description: string): string {
+        const globalFilter = getSettings().globalFilter;
+        description = description.replace(globalFilter, '').trim();
+
+        const startsWithLinkRegex = /^\[\[?([^\]]*)\]/;
+        const linkRegexMatch = description.match(startsWithLinkRegex);
+        if (linkRegexMatch !== null) {
+            const innerLinkText = linkRegexMatch[1];
+            // For a link, we have to check whether it has another visible name set.
+            // For example `[[this is the link|but this is actually shown]]`.
+            description =
+                innerLinkText.substring(innerLinkText.indexOf('|') + 1) +
+                description.replace(startsWithLinkRegex, '');
+        }
+
+        const startsWithItalicOrBoldRegex = /^\*\*?([^*]*)\*/;
+        const italicBoldRegexMatch = description.match(
+            startsWithItalicOrBoldRegex,
+        );
+        if (italicBoldRegexMatch !== null) {
+            const innerItalicBoldText = italicBoldRegexMatch[1];
+            description =
+                innerItalicBoldText +
+                description.replace(startsWithLinkRegex, '');
+        }
+
+        const startsWithHighlightRegex = /^==?([^=]*)==/;
+        const highlightRegexMatch = description.match(startsWithHighlightRegex);
+        if (highlightRegexMatch !== null) {
+            const innerHighlightsText = highlightRegexMatch[1];
+            description =
+                innerHighlightsText +
+                description.replace(startsWithHighlightRegex, '');
+        }
+
+        return description;
     }
 }
