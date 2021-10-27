@@ -8,7 +8,7 @@ window.moment = moment;
 import { Task } from '../src/Task';
 import { Sort } from '../src/Sort';
 
-function fromLine({ line, path }: { line: string; path: string }) {
+function fromLine({ line, path = '' }: { line: string; path?: string }) {
     return Task.fromLine({
         line,
         path,
@@ -184,7 +184,9 @@ describe('Sort', () => {
         const four = fromLine({ line: '- [ ] d 📅 1970-01-02', path: '2' });
         const five = fromLine({ line: '- [ ] b 📅 1970-01-02', path: '3' });
         const six = fromLine({ line: '- [ ] d 📅 1970-01-01', path: '2' });
+
         const expectedOrder = [one, two, three, four, five, six];
+
         expect(
             Sort.by(
                 {
@@ -195,6 +197,34 @@ describe('Sort', () => {
                     ],
                 },
                 [six, five, one, four, three, two],
+            ),
+        ).toEqual(expectedOrder);
+    });
+
+    it('sorts correctly by the link name and not the markdown', () => {
+        const one = fromLine({
+            line: '- [ ] *ZZZ An early task that starts with an A; actually not italic since only one asterisk',
+        });
+        const two = fromLine({
+            line: '- [ ] [[Better be second]] with bla bla behind it',
+        });
+        const three = fromLine({
+            line: '- [ ] [[Another|Third it should be]] and not [last|ZZZ]',
+        });
+        const four = fromLine({
+            line: '- [ ] *Very italic text*',
+        });
+        const five = fromLine({
+            line: '- [ ] [@Zebra|Zebra] should be last for Zebra',
+        });
+
+        const expectedOrder = [one, two, three, four, five];
+        expect(
+            Sort.by(
+                {
+                    sorting: [{ property: 'description', reverse: false }],
+                },
+                [two, one, five, four, three],
             ),
         ).toEqual(expectedOrder);
     });

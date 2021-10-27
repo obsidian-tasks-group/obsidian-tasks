@@ -30,6 +30,14 @@ Each subsequent `sort` will sort within the existing sorting.
 
 ---
 
+Info
+{: .label .label-blue }
+Sorting by description should take into account `[[Links]]` and `[Links with an|Alias]` (note pipe).
+It should also take into account `*italics*` and `==highlights==`.
+It sorts by the text contained within.
+
+---
+
 ## Reverse sorting
 
 After the name of the property that you want to sort by, you can add the `reverse` keyword.
