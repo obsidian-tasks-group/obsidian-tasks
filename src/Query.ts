@@ -3,7 +3,13 @@ import { LayoutOptions } from './LayoutOptions';
 
 import { Status, Task } from './Task';
 
-type Sorting = 'status' | 'due' | 'done' | 'path' | 'description';
+export type SortingProperty =
+    | 'status'
+    | 'due'
+    | 'done'
+    | 'path'
+    | 'description';
+type Sorting = { property: SortingProperty; reverse: boolean };
 
 export class Query {
     private _limit: number | undefined = undefined;
@@ -23,7 +29,7 @@ export class Query {
     private readonly descriptionRegexp =
         /^description (includes|does not include) (.*)/;
     private readonly sortByRegexp =
-        /^sort by (status|due|done|path|description)/;
+        /^sort by (status|due|done|path|description)( reverse)?/;
 
     private readonly headingRegexp =
         /^heading (includes|does not include) (.*)/;
@@ -109,7 +115,7 @@ export class Query {
         return this._filters;
     }
 
-    public get sorting(): Sorting[] {
+    public get sorting() {
         return this._sorting;
     }
 
@@ -285,7 +291,10 @@ export class Query {
     private parseSortBy({ line }: { line: string }): void {
         const fieldMatch = line.match(this.sortByRegexp);
         if (fieldMatch !== null) {
-            this._sorting.push(fieldMatch[1] as Sorting);
+            this._sorting.push({
+                property: fieldMatch[1] as SortingProperty,
+                reverse: !!fieldMatch[2],
+            });
         } else {
             this._error = 'do not understand query sorting';
         }
