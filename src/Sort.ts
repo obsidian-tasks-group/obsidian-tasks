@@ -1,6 +1,6 @@
 import type moment from 'moment';
 import type { Task } from './Task';
-import type { Query } from './Query';
+import type { Query, SortingProperty } from './Query';
 
 type Comparator = (a: Task, b: Task) => number;
 
@@ -13,32 +13,32 @@ export class Sort {
         ];
 
         const userComparators: Comparator[] = [];
-        for (const sortProp of query.sorting) {
-            switch (sortProp) {
-                case 'status':
-                    userComparators.push(this.compareByStatus);
-                    break;
-                case 'due':
-                    userComparators.push(this.compareByDueDate);
-                    break;
-                case 'done':
-                    userComparators.push(this.compareByDoneDate);
-                    break;
-                case 'path':
-                    userComparators.push(this.compareByPath);
-                    break;
-                case 'description':
-                    userComparators.push(this.compareByDescription);
-                    break;
-            }
+
+        for (const { property, reverse } of query.sorting) {
+            const comparator = this.comparators[property];
+            userComparators.push(
+                reverse ? this.makeReversedComparator(comparator) : comparator,
+            );
         }
 
         return tasks.sort(
-            this.makeCompositeComparator([
+            Sort.makeCompositeComparator([
                 ...userComparators,
                 ...defaultComparators,
             ]),
         );
+    }
+
+    private static comparators: Record<SortingProperty, Comparator> = {
+        status: Sort.compareByStatus,
+        done: Sort.compareByDoneDate,
+        due: Sort.compareByDueDate,
+        path: Sort.compareByPath,
+        description: Sort.compareByDescription,
+    };
+
+    private static makeReversedComparator(comparator: Comparator): Comparator {
+        return (a, b) => (comparator(a, b) * -1) as -1 | 0 | 1;
     }
 
     private static makeCompositeComparator(

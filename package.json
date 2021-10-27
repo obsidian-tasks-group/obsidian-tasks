@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "rollup --config rollup.config.js -w",
     "build": "rollup --config rollup.config.js",
-    "lint": "eslint ./src --fix && tsc --noEmit --pretty && svelte-check",
+    "lint": "eslint ./src --fix && eslint ./tests --fix && tsc --noEmit --pretty && svelte-check",
     "test": "jest --ci",
     "test:dev": "jest --watch"
   },

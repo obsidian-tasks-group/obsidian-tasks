@@ -26,33 +26,68 @@ describe('Sort', () => {
         const four = fromLine({ line: '- [x] d 📅 1970-01-02', path: '2' });
         const five = fromLine({ line: '- [x] b 📅 1970-01-02', path: '3' });
         const six = fromLine({ line: '- [x] d 📅 1970-01-03', path: '2' });
-        const expectedOrder = [
-            one,
-            two,
-            three,
-            four,
-            five,
-            six,
-        ];
+        const expectedOrder = [one, two, three, four, five, six];
         expect(
             Sort.by({ sorting: [] }, [six, five, one, four, two, three]),
         ).toEqual(expectedOrder);
     });
 
     it('sorts correctly by due', () => {
-        const one = fromLine({ line: '- [x] bring out the trash 📅 2021-09-12', path: '' });
-        const two = fromLine({ line: '- [ ] pet the cat 📅 2021-09-15', path: '' });
-        const three = fromLine({ line: '- [ ] pet the cat 📅 2021-09-18', path: '' });
-        expect(Sort.by({ sorting: ['due'] }, [one, two, three])).toEqual([one, two, three]);
-        expect(Sort.by({ sorting: ['due'] }, [two, three, one])).toEqual([one, two, three]);
+        const one = fromLine({
+            line: '- [x] bring out the trash 📅 2021-09-12',
+            path: '',
+        });
+        const two = fromLine({
+            line: '- [ ] pet the cat 📅 2021-09-15',
+            path: '',
+        });
+        const three = fromLine({
+            line: '- [ ] pet the cat 📅 2021-09-18',
+            path: '',
+        });
+        expect(
+            Sort.by({ sorting: [{ property: 'due', reverse: false }] }, [
+                one,
+                two,
+                three,
+            ]),
+        ).toEqual([one, two, three]);
+        expect(
+            Sort.by({ sorting: [{ property: 'due', reverse: false }] }, [
+                two,
+                three,
+                one,
+            ]),
+        ).toEqual([one, two, three]);
     });
 
     it('sorts correctly by done', () => {
-        const one = fromLine({ line: '- [x] pet the cat 📅 2021-09-15 ✅ 2021-09-15', path: '' });
-        const two = fromLine({ line: '- [x] pet the cat 📅 2021-09-16 ✅ 2021-09-16', path: '' });
-        const three = fromLine({ line: '- [ ] bring out the trash 📅 2021-09-12', path: '' });
-        expect(Sort.by({ sorting: ['done'] }, [three, two, one])).toEqual([one, two, three]);
-        expect(Sort.by({ sorting: ['done'] }, [two, one, three])).toEqual([one, two, three]);
+        const one = fromLine({
+            line: '- [x] pet the cat 📅 2021-09-15 ✅ 2021-09-15',
+            path: '',
+        });
+        const two = fromLine({
+            line: '- [x] pet the cat 📅 2021-09-16 ✅ 2021-09-16',
+            path: '',
+        });
+        const three = fromLine({
+            line: '- [ ] bring out the trash 📅 2021-09-12',
+            path: '',
+        });
+        expect(
+            Sort.by({ sorting: [{ property: 'done', reverse: false }] }, [
+                three,
+                two,
+                one,
+            ]),
+        ).toEqual([one, two, three]);
+        expect(
+            Sort.by({ sorting: [{ property: 'done', reverse: false }] }, [
+                two,
+                one,
+                three,
+            ]),
+        ).toEqual([one, two, three]);
     });
 
     it('sorts correctly by due, path, status', () => {
@@ -67,23 +102,100 @@ describe('Sort', () => {
             four, // Done tasks are sorted after open tasks for status.
         ];
         expect(
-            Sort.by({ sorting: ['due', 'path', 'status'] }, [one, four, two, three]),
+            Sort.by(
+                {
+                    sorting: [
+                        { property: 'due', reverse: false },
+                        { property: 'path', reverse: false },
+                        { property: 'status', reverse: false },
+                    ],
+                },
+                [one, four, two, three],
+            ),
         ).toEqual(expectedOrder);
     });
 
     it('sorts correctly by description, done', () => {
-        const one = fromLine({ line: '- [ ] a 📅 1970-01-02 ✅ 1971-01-01', path: '' });
-        const two = fromLine({ line: '- [ ] a 📅 1970-01-02 ✅ 1971-01-03', path: '' });
-        const three = fromLine({ line: '- [ ] b 📅 1970-01-01 ✅ 1971-01-01', path: '' });
-        const four = fromLine({ line: '- [ ] b 📅 1970-01-02 ✅ 1971-01-02', path: '' });
-        const expectedOrder = [
-            one,
-            two,
-            three,
-            four,
-        ];
+        const one = fromLine({
+            line: '- [ ] a 📅 1970-01-02 ✅ 1971-01-01',
+            path: '',
+        });
+        const two = fromLine({
+            line: '- [ ] a 📅 1970-01-02 ✅ 1971-01-03',
+            path: '',
+        });
+        const three = fromLine({
+            line: '- [ ] b 📅 1970-01-01 ✅ 1971-01-01',
+            path: '',
+        });
+        const four = fromLine({
+            line: '- [ ] b 📅 1970-01-02 ✅ 1971-01-02',
+            path: '',
+        });
+        const expectedOrder = [one, two, three, four];
         expect(
-            Sort.by({ sorting: ['description', 'done'] }, [three, one, two, four]),
+            Sort.by(
+                {
+                    sorting: [
+                        { property: 'description', reverse: false },
+                        { property: 'done', reverse: false },
+                    ],
+                },
+                [three, one, two, four],
+            ),
+        ).toEqual(expectedOrder);
+    });
+
+    it('sorts correctly by description reverse, done', () => {
+        const one = fromLine({
+            line: '- [ ] b 📅 1970-01-01 ✅ 1971-01-01',
+            path: '',
+        });
+        const two = fromLine({
+            line: '- [ ] b 📅 1970-01-02 ✅ 1971-01-02',
+            path: '',
+        });
+        const three = fromLine({
+            line: '- [ ] a 📅 1970-01-02 ✅ 1971-01-01',
+            path: '',
+        });
+        const four = fromLine({
+            line: '- [ ] a 📅 1970-01-02 ✅ 1971-01-03',
+            path: '',
+        });
+        const expectedOrder = [one, two, three, four];
+        expect(
+            Sort.by(
+                {
+                    sorting: [
+                        { property: 'description', reverse: true },
+                        { property: 'done', reverse: false },
+                    ],
+                },
+                [two, four, three, one],
+            ),
+        ).toEqual(expectedOrder);
+    });
+
+    it('sorts correctly by complex sorting incl. reverse', () => {
+        const one = fromLine({ line: '- [x] a 📅 1970-01-03', path: '3' });
+        const two = fromLine({ line: '- [x] c 📅 1970-01-02', path: '2' });
+        const three = fromLine({ line: '- [x] d 📅 1970-01-02', path: '3' });
+        const four = fromLine({ line: '- [ ] d 📅 1970-01-02', path: '2' });
+        const five = fromLine({ line: '- [ ] b 📅 1970-01-02', path: '3' });
+        const six = fromLine({ line: '- [ ] d 📅 1970-01-01', path: '2' });
+        const expectedOrder = [one, two, three, four, five, six];
+        expect(
+            Sort.by(
+                {
+                    sorting: [
+                        { property: 'status', reverse: true },
+                        { property: 'due', reverse: true },
+                        { property: 'path', reverse: false },
+                    ],
+                },
+                [six, five, one, four, three, two],
+            ),
         ).toEqual(expectedOrder);
     });
 });
