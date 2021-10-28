@@ -24,15 +24,15 @@ Track tasks across your entire vault.
 Query them and mark them as done wherever you want.
 Supports due dates, recurring tasks (repetition), done dates, sub-set of checklist items, and filtering.
 
-*You can toggle the task status in any view or query and it will update the source file.*
+You can toggle the task status in any view or query and it will update the source file.
 
-> Please submit bugs here: https://github.com/schemar/obsidian-tasks/issues
+> Please submit bugs [here](https://github.com/schemar/obsidian-tasks/issues).
 >
-> Please submit ideas here: https://github.com/schemar/obsidian-tasks/discussions/categories/ideas
+> Please submit ideas [here](https://github.com/schemar/obsidian-tasks/discussions/categories/ideas).
 >
-> Please ask for help here: https://github.com/schemar/obsidian-tasks/discussions/categories/q-a
+> Please ask for help [here](https://github.com/schemar/obsidian-tasks/discussions/categories/q-a).
 
-For changes in each release, please check the releases page: https://github.com/schemar/obsidian-tasks/releases
+For changes in each release, please check the [releases page](https://github.com/schemar/obsidian-tasks/releases).
 
 ---
 
