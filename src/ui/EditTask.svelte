@@ -221,14 +221,14 @@
         </div>
         <hr />
         <div class="tasks-modal-section">
-            <label for="start">Start</label>
+            <label for="due">Due</label>
             <input
-                bind:value={editableTask.startDate}
-                id="start"
+                bind:value={editableTask.dueDate}
+                id="due"
                 type="text"
                 placeholder="Try 'Monday' or 'tomorrow'."
             />
-            <code>🛫 {@html parsedStartDate}</code>
+            <code>📅 {@html parsedDueDate}</code>
         </div>
         <div class="tasks-modal-section">
             <label for="scheduled">Scheduled</label>
@@ -241,14 +241,14 @@
             <code>⏳ {@html parsedScheduledDate}</code>
         </div>
         <div class="tasks-modal-section">
-            <label for="due">Due</label>
+            <label for="start">Start</label>
             <input
-                bind:value={editableTask.dueDate}
-                id="due"
+                bind:value={editableTask.startDate}
+                id="start"
                 type="text"
                 placeholder="Try 'Monday' or 'tomorrow'."
             />
-            <code>📅 {@html parsedDueDate}</code>
+            <code>🛫 {@html parsedStartDate}</code>
         </div>
         <hr />
         <div class="tasks-modal-section">
