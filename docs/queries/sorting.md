@@ -3,10 +3,23 @@ layout: default
 title: Sorting
 nav_order: 2
 parent: Queries
-has_toc: false
 ---
 
 # Sorting
+{: .no_toc }
+
+<details open markdown="block">
+  <summary>
+    Table of contents
+  </summary>
+  {: .text-delta }
+1. TOC
+{:toc}
+</details>
+
+---
+
+## Basics
 
 By default Tasks sorts tasks by:
 
@@ -19,6 +32,8 @@ To sort the results of a query different from the default, you must add at least
 You can sort tasks by the following properties:
 
 1. `status` (done or todo)
+2. `start` (the date when the task starts)
+2. `scheduled` (the date when the task is scheduled)
 2. `due` (the date when the task is due)
 3. `done` (the date when the task was done)
 4. `path` (the path to the file that contains the task)

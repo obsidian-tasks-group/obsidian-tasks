@@ -59,10 +59,40 @@ You can validate that tasks understands your rule by using the `Tasks: Crete or 
 
 ---
 
+## Priority of Dates
+
+A task can have [various dates]({{ site.baseurl }}{% link getting-started/advanced.md %}).
+When a task has multiple dates, one of them is selected as reference date based on the following priorities:
+
+1. Due date
+2. Scheduled date
+3. Start date
+
+If more dates than the reference date exist on the orginial recurring task, the next occurrence will have the same dates.
+All dates of the next occurring task will have the relative distance to the reference date that they had on the original task.
+
+For example: A task has a due date and a scheduled date.
+The scheduled date is set 2 days before the due date.
+The task is set to repeat every two weeks.
+
+```markdown
+- [ ] Mow the lawn 🔁 every 2 weeks ⏳ 2021-10-28 📅 2021-10-30
+```
+
+The new task will have the due date advanced by two weeks and a scheduled date that is two days before the due date, like on the original task.
+
+```markdown
+- [ ] Mow the lawn 🔁 every 2 weeks ⏳ 2021-11-11 📅 2021-11-13
+```
+
+---
+
 ## Known Issues
 
 1. You can *not* use rules where recurrence happens a certain number of times (`for x times`). Tasks doesn't link the tasks and doesn't know how often it occurred.
 2. You can *not* use rules where recurrence ends on a specific date (`until "date"`). There is a bug in [`rrule`](https://github.com/jakubroztocil/rrule) where `until "date"` rules are not converted to the correct text. As a consequence, every subsequent task's "until" date will be one day earlier than the one before.
+
+---
 
 ## Examples
 

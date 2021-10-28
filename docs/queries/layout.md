@@ -13,8 +13,10 @@ The following options exist:
 
 - `edit button`
 - `backlink`
-- `done date`
+- `start date`
+- `scheduled date`
 - `due date`
+- `done date`
 - `recurrence rule`
 - `task count`
 
