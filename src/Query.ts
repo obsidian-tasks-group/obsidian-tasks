@@ -6,6 +6,8 @@ import { Status, Task } from './Task';
 
 export type SortingProperty =
     | 'status'
+    | 'start'
+    | 'scheduled'
     | 'due'
     | 'done'
     | 'path'
@@ -19,6 +21,12 @@ export class Query {
     private _error: string | undefined = undefined;
     private _sorting: Sorting[] = [];
 
+    private readonly noStartString = 'no start date';
+    private readonly startRegexp = /^starts (before|after|on)? ?(.*)/;
+
+    private readonly noScheduledString = 'no scheduled date';
+    private readonly scheduledRegexp = /^scheduled (before|after|on)? ?(.*)/;
+
     private readonly noDueString = 'no due date';
     private readonly dueRegexp = /^due (before|after|on)? ?(.*)/;
 
@@ -30,13 +38,13 @@ export class Query {
     private readonly descriptionRegexp =
         /^description (includes|does not include) (.*)/;
     private readonly sortByRegexp =
-        /^sort by (status|due|done|path|description)( reverse)?/;
+        /^sort by (status|start|scheduled|due|done|path|description)( reverse)?/;
 
     private readonly headingRegexp =
         /^heading (includes|does not include) (.*)/;
 
     private readonly hideOptionsRegexp =
-        /^hide (task count|backlink|done date|due date|recurrence rule|edit button)/;
+        /^hide (task count|backlink|start date|scheduled date|done date|due date|recurrence rule|edit button)/;
 
     private readonly recurringString = 'is recurring';
     private readonly notRecurringString = 'is not recurring';
@@ -71,8 +79,22 @@ export class Query {
                     case line === this.excludeSubItemsString:
                         this._filters.push((task) => task.indentation === '');
                         break;
+                    case line === this.noStartString:
+                        this._filters.push((task) => task.startDate === null);
+                        break;
+                    case line === this.noScheduledString:
+                        this._filters.push(
+                            (task) => task.scheduledDate === null,
+                        );
+                        break;
                     case line === this.noDueString:
                         this._filters.push((task) => task.dueDate === null);
+                        break;
+                    case this.startRegexp.test(line):
+                        this.parseStartFilter({ line });
+                        break;
+                    case this.scheduledRegexp.test(line):
+                        this.parseScheduledFilter({ line });
                         break;
                     case this.dueRegexp.test(line):
                         this.parseDueFilter({ line });
@@ -129,21 +151,94 @@ export class Query {
         if (hideOptionsMatch !== null) {
             const option = hideOptionsMatch[1].trim().toLowerCase();
 
-            if (option === 'task count') {
-                this._layoutOptions.hideTaskCount = true;
-            } else if (option === 'backlink') {
-                this._layoutOptions.hideBacklinks = true;
-            } else if (option === 'done date') {
-                this._layoutOptions.hideDoneDate = true;
-            } else if (option === 'due date') {
-                this._layoutOptions.hideDueDate = true;
-            } else if (option === 'recurrence rule') {
-                this._layoutOptions.hideRecurrenceRule = true;
-            } else if (option === 'edit button') {
-                this._layoutOptions.hideEditButton = true;
-            } else {
-                this._error = 'do not understand hide option';
+            switch (option) {
+                case 'task count':
+                    this._layoutOptions.hideTaskCount = true;
+                    break;
+                case 'backlink':
+                    this._layoutOptions.hideBacklinks = true;
+                    break;
+                case 'start date':
+                    this._layoutOptions.hideStartDate = true;
+                    break;
+                case 'scheduled date':
+                    this._layoutOptions.hideScheduledDate = true;
+                    break;
+                case 'due date':
+                    this._layoutOptions.hideDueDate = true;
+                    break;
+                case 'done date':
+                    this._layoutOptions.hideDoneDate = true;
+                    break;
+                case 'recurrenc rule':
+                    this._layoutOptions.hideRecurrenceRule = true;
+                    break;
+                case 'edit button':
+                    this._layoutOptions.hideEditButton = true;
+                    break;
+                default:
+                    this._error = 'do not understand hide option';
             }
+        }
+    }
+
+    private parseStartFilter({ line }: { line: string }): void {
+        const startMatch = line.match(this.startRegexp);
+        if (startMatch !== null) {
+            const filterDate = this.parseDate(startMatch[2]);
+            if (!filterDate.isValid()) {
+                this._error = 'do not understand start date';
+            }
+
+            let filter;
+            if (startMatch[1] === 'before') {
+                filter = (task: Task) =>
+                    task.startDate
+                        ? task.startDate.isBefore(filterDate)
+                        : false;
+            } else if (startMatch[1] === 'after') {
+                filter = (task: Task) =>
+                    task.startDate ? task.startDate.isAfter(filterDate) : false;
+            } else {
+                filter = (task: Task) =>
+                    task.startDate ? task.startDate.isSame(filterDate) : false;
+            }
+
+            this._filters.push(filter);
+        } else {
+            this._error = 'do not understand query filter (start date)';
+        }
+    }
+
+    private parseScheduledFilter({ line }: { line: string }): void {
+        const scheduledMatch = line.match(this.scheduledRegexp);
+        if (scheduledMatch !== null) {
+            const filterDate = this.parseDate(scheduledMatch[2]);
+            if (!filterDate.isValid()) {
+                this._error = 'do not understand scheduled date';
+            }
+
+            let filter;
+            if (scheduledMatch[1] === 'before') {
+                filter = (task: Task) =>
+                    task.scheduledDate
+                        ? task.scheduledDate.isBefore(filterDate)
+                        : false;
+            } else if (scheduledMatch[1] === 'after') {
+                filter = (task: Task) =>
+                    task.scheduledDate
+                        ? task.scheduledDate.isAfter(filterDate)
+                        : false;
+            } else {
+                filter = (task: Task) =>
+                    task.scheduledDate
+                        ? task.scheduledDate.isSame(filterDate)
+                        : false;
+            }
+
+            this._filters.push(filter);
+        } else {
+            this._error = 'do not understand query filter (scheduled date)';
         }
     }
 

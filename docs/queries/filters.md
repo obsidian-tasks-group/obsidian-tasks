@@ -65,6 +65,10 @@ The following filters exist:
 - `done`
 - `not done`
 - `done (before|after|on) <date>`
+- `no start date`
+- `starts (before|after|on) <date>`
+- `no scheduled date`
+- `scheduled (before|after|on) <date>`
 - `no due date`
 - `due (before|after|on) <date>`
 - `is recurring`

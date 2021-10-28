@@ -6,20 +6,6 @@ has_children: true
 ---
 
 # Getting Started
-{: .no_toc }
-
-<details open markdown="block">
-  <summary>
-    Table of contents
-  </summary>
-  {: .text-delta }
-1. TOC
-{:toc}
-</details>
-
----
-
-## Usage
 
 Tasks tracks your checklist items from your vault.
 The simplest way to create a new task is to create a new checklist item.

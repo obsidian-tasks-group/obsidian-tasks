@@ -21,3 +21,7 @@ Instead of adding the emoji and the date manually, you can use the `Tasks: Creat
 When you use the command, you can also set a due date like "Monday", "tomorrow", or "next week" and Tasks will automatically save the date in the correct format.
 
 **You can only put block links (`^link-name`) behind the due/done dates. Anything else will break the parsing of dates and recurrence rules.**
+
+---
+
+See [Advanced]({{ site.baseurl }}{% link getting-started/advanced.md %}#additional-dates) for more dates you can use.

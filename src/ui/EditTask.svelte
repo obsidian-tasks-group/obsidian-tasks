@@ -13,19 +13,65 @@
         description: string;
         status: Status;
         recurrenceRule: string;
+        startDate: string;
+        scheduledDate: string;
         dueDate: string;
         doneDate: string;
     } = {
         description: '',
         status: Status.Todo,
         recurrenceRule: '',
+        startDate: '',
+        scheduledDate: '',
         dueDate: '',
         doneDate: '',
     };
 
+    let parsedStartDate: string = '';
+    let parsedScheduledDate: string = '';
     let parsedDueDate: string = '';
     let parsedRecurrence: string = '';
     let parsedDone: string = '';
+
+    $: {
+        if (!editableTask.startDate) {
+            parsedStartDate = '<i>no start date</>';
+        } else {
+            const parsed = chrono.parseDate(
+                editableTask.startDate,
+                new Date(),
+                {
+                    forwardDate: true,
+                },
+            );
+            if (parsed !== null) {
+                parsedStartDate = window.moment(parsed).format('YYYY-MM-DD');
+            } else {
+                parsedStartDate = '<i>invalid start date</i>';
+            }
+        }
+    }
+
+    $: {
+        if (!editableTask.scheduledDate) {
+            parsedScheduledDate = '<i>no scheduled date</>';
+        } else {
+            const parsed = chrono.parseDate(
+                editableTask.scheduledDate,
+                new Date(),
+                {
+                    forwardDate: true,
+                },
+            );
+            if (parsed !== null) {
+                parsedScheduledDate = window
+                    .moment(parsed)
+                    .format('YYYY-MM-DD');
+            } else {
+                parsedScheduledDate = '<i>invalid scheduled date</i>';
+            }
+        }
+    }
 
     $: {
         if (!editableTask.dueDate) {
@@ -49,7 +95,9 @@
             parsedRecurrence =
                 Recurrence.fromText({
                     recurrenceRuleText: editableTask.recurrenceRule,
-                    // Only for representation in the modal, no due date required.
+                    // Only for representation in the modal, no dates required.
+                    startDate: null,
+                    scheduledDate: null,
                     dueDate: null,
                 })?.toText() ?? '<i>invalid recurrence rule</i>';
         }
@@ -78,6 +126,12 @@
             description,
             status: task.status,
             recurrenceRule: task.recurrence ? task.recurrence.toText() : '',
+            startDate: task.startDate
+                ? task.startDate.format('YYYY-MM-DD')
+                : '',
+            scheduledDate: task.scheduledDate
+                ? task.scheduledDate.format('YYYY-MM-DD')
+                : '',
             dueDate: task.dueDate ? task.dueDate.format('YYYY-MM-DD') : '',
             doneDate: task.doneDate ? task.doneDate.format('YYYY-MM-DD') : '',
         };
@@ -91,6 +145,26 @@
         let description = editableTask.description.trim();
         if (!description.includes(globalFilter)) {
             description = globalFilter + ' ' + description;
+        }
+
+        let startDate: moment.Moment | null = null;
+        const parsedStartDate = chrono.parseDate(
+            editableTask.startDate,
+            new Date(),
+            { forwardDate: true },
+        );
+        if (parsedStartDate !== null) {
+            startDate = window.moment(parsedStartDate);
+        }
+
+        let scheduledDate: moment.Moment | null = null;
+        const parsedScheduledDate = chrono.parseDate(
+            editableTask.scheduledDate,
+            new Date(),
+            { forwardDate: true },
+        );
+        if (parsedScheduledDate !== null) {
+            scheduledDate = window.moment(parsedScheduledDate);
         }
 
         let dueDate: moment.Moment | null = null;
@@ -107,6 +181,8 @@
         if (editableTask.recurrenceRule) {
             recurrence = Recurrence.fromText({
                 recurrenceRuleText: editableTask.recurrenceRule,
+                startDate,
+                scheduledDate,
                 dueDate,
             });
         }
@@ -116,6 +192,8 @@
             description,
             status: editableTask.status,
             recurrence,
+            startDate,
+            scheduledDate,
             dueDate,
             doneDate: window
                 .moment(editableTask.doneDate, 'YYYY-MM-DD')
@@ -142,6 +220,26 @@
             />
         </div>
         <hr />
+        <div class="tasks-modal-section">
+            <label for="start">Start</label>
+            <input
+                bind:value={editableTask.startDate}
+                id="start"
+                type="text"
+                placeholder="Try 'Monday' or 'tomorrow'."
+            />
+            <code>🛫 {@html parsedStartDate}</code>
+        </div>
+        <div class="tasks-modal-section">
+            <label for="scheduled">Scheduled</label>
+            <input
+                bind:value={editableTask.scheduledDate}
+                id="scheduled"
+                type="text"
+                placeholder="Try 'Monday' or 'tomorrow'."
+            />
+            <code>⏳ {@html parsedScheduledDate}</code>
+        </div>
         <div class="tasks-modal-section">
             <label for="due">Due</label>
             <input
