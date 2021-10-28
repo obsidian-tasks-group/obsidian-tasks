@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Recurring Tasks (Repetition)
-nav_order: 3
+nav_order: 4
 parent: Getting Started
 has_toc: false
 ---

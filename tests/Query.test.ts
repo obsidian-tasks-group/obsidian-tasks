@@ -1,6 +1,6 @@
 import { getSettings, updateSettings } from '../src/Settings';
 import { Query } from '../src/Query';
-import { Status, Task } from '../src/Task';
+import { Priority, Status, Task } from '../src/Task';
 
 describe('Query', () => {
     describe('filtering', () => {
@@ -16,6 +16,7 @@ describe('Query', () => {
                     sectionIndex: 0,
                     originalStatusCharacter: ' ',
                     precedingHeader: null,
+                    priority: Priority.None,
                     startDate: null,
                     scheduledDate: null,
                     dueDate: null,
@@ -32,6 +33,7 @@ describe('Query', () => {
                     sectionIndex: 0,
                     originalStatusCharacter: ' ',
                     precedingHeader: null,
+                    priority: Priority.None,
                     startDate: null,
                     scheduledDate: null,
                     dueDate: null,

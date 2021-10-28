@@ -11,6 +11,14 @@ export enum Status {
     Done = 'Done',
 }
 
+// Sort low below none.
+export enum Priority {
+    High = '1',
+    Medium = '2',
+    None = '3',
+    Low = '4',
+}
+
 export class Task {
     public readonly status: Status;
     public readonly description: string;
@@ -26,10 +34,14 @@ export class Task {
      */
     public readonly originalStatusCharacter: string;
     public readonly precedingHeader: string | null;
+
+    public readonly priority: Priority;
+
     public readonly startDate: Moment | null;
     public readonly scheduledDate: Moment | null;
     public readonly dueDate: Moment | null;
     public readonly doneDate: Moment | null;
+
     public readonly recurrence: Recurrence | null;
     /** The blockLink is a "^" annotation after the dates/recurrence rules. */
     public readonly blockLink: string;
@@ -38,6 +50,7 @@ export class Task {
     public static readonly taskRegex = /^([\s\t]*)[-*] +\[(.)\] *(.*)/u;
     // The following regexes end with `$` because they will be matched and
     // removed from the end until none are left.
+    public static readonly priorityRegex = /([⏫🔼🔽])$/u;
     public static readonly startDateRegex = /🛫 ?(\d{4}-\d{2}-\d{2})$/u;
     public static readonly scheduledDateRegex = /[⏳⌛] ?(\d{4}-\d{2}-\d{2})$/u;
     public static readonly dueDateRegex = /[📅📆🗓] ?(\d{4}-\d{2}-\d{2})$/u;
@@ -54,6 +67,7 @@ export class Task {
         sectionIndex,
         originalStatusCharacter,
         precedingHeader,
+        priority,
         startDate,
         scheduledDate,
         dueDate,
@@ -69,6 +83,7 @@ export class Task {
         sectionIndex: number;
         originalStatusCharacter: string;
         precedingHeader: string | null;
+        priority: Priority;
         startDate: moment.Moment | null;
         scheduledDate: moment.Moment | null;
         dueDate: moment.Moment | null;
@@ -84,10 +99,14 @@ export class Task {
         this.sectionIndex = sectionIndex;
         this.originalStatusCharacter = originalStatusCharacter;
         this.precedingHeader = precedingHeader;
+
+        this.priority = priority;
+
         this.startDate = startDate;
         this.scheduledDate = scheduledDate;
         this.dueDate = dueDate;
         this.doneDate = doneDate;
+
         this.recurrence = recurrence;
         this.blockLink = blockLink;
     }
@@ -143,16 +162,37 @@ export class Task {
         // description in any order. The loop should only run once if the
         // strings are in the expected order after the description.
         let matched: boolean;
+        let priority: Priority = Priority.None;
         let startDate: Moment | null = null;
         let scheduledDate: Moment | null = null;
         let dueDate: Moment | null = null;
         let doneDate: Moment | null = null;
         let recurrence: Recurrence | null = null;
         // Add a "max runs" failsafe to never end in an endless loop:
-        const maxRuns = 6;
+        const maxRuns = 7;
         let runs = 0;
         do {
             matched = false;
+            const priorityMatch = description.match(Task.priorityRegex);
+            if (priorityMatch !== null) {
+                switch (priorityMatch[1]) {
+                    case '🔽':
+                        priority = Priority.Low;
+                        break;
+                    case '🔼':
+                        priority = Priority.Medium;
+                        break;
+                    case '⏫':
+                        priority = Priority.High;
+                        break;
+                }
+
+                description = description
+                    .replace(Task.priorityRegex, '')
+                    .trim();
+                matched = true;
+            }
+
             const doneDateMatch = description.match(Task.doneDateRegex);
             if (doneDateMatch !== null) {
                 doneDate = window.moment(doneDateMatch[1], Task.dateFormat);
@@ -219,6 +259,7 @@ export class Task {
             sectionIndex,
             originalStatusCharacter: statusString,
             precedingHeader,
+            priority,
             startDate,
             scheduledDate,
             dueDate,
@@ -312,6 +353,20 @@ export class Task {
     public toString(layoutOptions?: LayoutOptions): string {
         layoutOptions = layoutOptions ?? new LayoutOptions();
         let taskString = this.description;
+
+        if (!layoutOptions.hidePriority) {
+            let priority: string = '';
+
+            if (this.priority === Priority.High) {
+                priority = ' ⏫';
+            } else if (this.priority === Priority.Medium) {
+                priority = ' 🔼';
+            } else if (this.priority === Priority.Low) {
+                priority = ' 🔽';
+            }
+
+            taskString += priority;
+        }
 
         if (!layoutOptions.hideRecurrenceRule) {
             const recurrenceRule: string = this.recurrence

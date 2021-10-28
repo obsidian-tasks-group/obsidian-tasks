@@ -22,7 +22,6 @@
 }
 
 .tasks-modal label {
-    display: block;
     margin: 5px 0 5px 0;
 }
 
@@ -31,9 +30,9 @@
 }
 
 .tasks-modal hr {
-    margin: 0;
+    margin: 10px 0 10px 0;
 }
 
-.tasks-modal-section {
-    margin-bottom: 1rem;
+.tasks-modal-date {
+    margin-bottom: 10px;
 }
