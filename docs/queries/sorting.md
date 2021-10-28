@@ -25,13 +25,15 @@ By default Tasks sorts tasks by:
 
 1. Status
 2. Due date
-3. Path
+3. Priority
+4. Path
 
 To sort the results of a query different from the default, you must add at least one `sort by` line to the query.
 
 You can sort tasks by the following properties:
 
 1. `status` (done or todo)
+2. `priority` (priority of the task; "low" is below "none")
 2. `start` (the date when the task starts)
 2. `scheduled` (the date when the task is scheduled)
 2. `due` (the date when the task is due)

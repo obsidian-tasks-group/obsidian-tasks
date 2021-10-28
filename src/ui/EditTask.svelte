@@ -3,7 +3,7 @@
     import { onMount } from 'svelte';
     import { Recurrence } from '../Recurrence';
     import { getSettings } from '../Settings';
-    import { Status, Task } from '../Task';
+    import { Priority, Status, Task } from '../Task';
 
     export let task: Task;
     export let onSubmit: (updatedTasks: Task[]) => void | Promise<void>;
@@ -12,6 +12,7 @@
     let editableTask: {
         description: string;
         status: Status;
+        priority: 'none' | 'low' | 'medium' | 'high';
         recurrenceRule: string;
         startDate: string;
         scheduledDate: string;
@@ -20,6 +21,7 @@
     } = {
         description: '',
         status: Status.Todo,
+        priority: 'none',
         recurrenceRule: '',
         startDate: '',
         scheduledDate: '',
@@ -122,9 +124,20 @@
             .replace(globalFilter, '')
             .replace('  ', ' ')
             .trim();
+
+        let priority: 'none' | 'low' | 'medium' | 'high' = 'none';
+        if (task.priority === Priority.Low) {
+            priority = 'low';
+        } else if (task.priority === Priority.Medium) {
+            priority = 'medium';
+        } else if (task.priority === Priority.High) {
+            priority = 'high';
+        }
+
         editableTask = {
             description,
             status: task.status,
+            priority,
             recurrenceRule: task.recurrence ? task.recurrence.toText() : '',
             startDate: task.startDate
                 ? task.startDate.format('YYYY-MM-DD')
@@ -187,10 +200,26 @@
             });
         }
 
+        let parsedPriority: Priority;
+        switch (editableTask.priority) {
+            case 'low':
+                parsedPriority = Priority.Low;
+                break;
+            case 'medium':
+                parsedPriority = Priority.Medium;
+                break;
+            case 'high':
+                parsedPriority = Priority.High;
+                break;
+            default:
+                parsedPriority = Priority.None;
+        }
+
         const updatedTask = new Task({
             ...task,
             description,
             status: editableTask.status,
+            priority: parsedPriority,
             recurrence,
             startDate,
             scheduledDate,
@@ -221,34 +250,17 @@
         </div>
         <hr />
         <div class="tasks-modal-section">
-            <label for="due">Due</label>
-            <input
-                bind:value={editableTask.dueDate}
-                id="due"
-                type="text"
-                placeholder="Try 'Monday' or 'tomorrow'."
-            />
-            <code>📅 {@html parsedDueDate}</code>
-        </div>
-        <div class="tasks-modal-section">
-            <label for="scheduled">Scheduled</label>
-            <input
-                bind:value={editableTask.scheduledDate}
-                id="scheduled"
-                type="text"
-                placeholder="Try 'Monday' or 'tomorrow'."
-            />
-            <code>⏳ {@html parsedScheduledDate}</code>
-        </div>
-        <div class="tasks-modal-section">
-            <label for="start">Start</label>
-            <input
-                bind:value={editableTask.startDate}
-                id="start"
-                type="text"
-                placeholder="Try 'Monday' or 'tomorrow'."
-            />
-            <code>🛫 {@html parsedStartDate}</code>
+            <label for="priority">Priority</label>
+            <select
+                bind:value={editableTask.priority}
+                id="priority"
+                class="dropdown"
+            >
+                <option value="none">None</option>
+                <option value="high">⏫ High</option>
+                <option value="medium">🔼 Medium</option>
+                <option value="low">🔽 Low</option>
+            </select>
         </div>
         <hr />
         <div class="tasks-modal-section">
@@ -260,6 +272,39 @@
                 placeholder="Try 'every 2 weeks on Thursday'."
             />
             <code>🔁 {@html parsedRecurrence}</code>
+        </div>
+        <hr />
+        <div class="tasks-modal-section">
+            <div class="tasks-modal-date">
+                <label for="due">Due</label>
+                <input
+                    bind:value={editableTask.dueDate}
+                    id="due"
+                    type="text"
+                    placeholder="Try 'Monday' or 'tomorrow'."
+                />
+                <code>📅 {@html parsedDueDate}</code>
+            </div>
+            <div class="tasks-modal-date">
+                <label for="scheduled">Scheduled</label>
+                <input
+                    bind:value={editableTask.scheduledDate}
+                    id="scheduled"
+                    type="text"
+                    placeholder="Try 'Monday' or 'tomorrow'."
+                />
+                <code>⏳ {@html parsedScheduledDate}</code>
+            </div>
+            <div class="tasks-modal-date">
+                <label for="start">Start</label>
+                <input
+                    bind:value={editableTask.startDate}
+                    id="start"
+                    type="text"
+                    placeholder="Try 'Monday' or 'tomorrow'."
+                />
+                <code>🛫 {@html parsedStartDate}</code>
+            </div>
         </div>
         <hr />
         <div class="tasks-modal-section">

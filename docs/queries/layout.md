@@ -13,6 +13,7 @@ The following options exist:
 
 - `edit button`
 - `backlink`
+- `priority`
 - `start date`
 - `scheduled date`
 - `due date`

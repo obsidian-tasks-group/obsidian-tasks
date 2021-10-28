@@ -60,31 +60,66 @@ Instead you would have two queries, one for each condition:
 
 ## List of Available Filters
 
-The following filters exist:
+### Done Date
 
 - `done`
 - `not done`
 - `done (before|after|on) <date>`
+
+### Priority
+
+- `priority is (above|below)? (low|none|medium|high)`
+
+#### Examples
+{: .no_toc }
+
+    ```tasks
+    not done
+    priority is above none
+    ```
+
+    ```tasks
+    priority is high
+    ```
+
+### Start Date
 - `no start date`
 - `starts (before|after|on) <date>`
+
+### Scheduled Date
 - `no scheduled date`
 - `scheduled (before|after|on) <date>`
+
+### Due Date
+
 - `no due date`
 - `due (before|after|on) <date>`
+
+### Recurrence
+
 - `is recurring`
 - `is not recurring`
+
+### File Path
+
 - `path (includes|does not include) <path>`
     - Matches case-insensitive (disregards capitalization).
+
+### Description
+
 - `description (includes|does not include) <string>`
     - Matches case-insensitive (disregards capitalization).
     - Disregards the global filter when matching.
+
+### Heading
+
 - `heading (includes|does not include) <string>`
     - Whether or not the heading preceding the task includes the given string.
     - Always tries to match the closest heading above the task, regardless of heading level.
     - `does not include` will match a task that does not have a preceding heading in its file.
     - Matches case-insensitive (disregards capitalization).
+
+### Sub-Items
+
 - `exclude sub-items`
     - When this is set, the result list will only include tasks that are not indented in their file. It will only show tasks that are top level list items in their list.
-- `limit to <number> tasks`
-    - Only lists the first `<number>` tasks of the result.
-    - Shorthand is `limit <number>`.

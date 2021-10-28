@@ -11,6 +11,7 @@ export class Sort {
         const defaultComparators: Comparator[] = [
             Sort.compareByStatus,
             Sort.compareByDueDate,
+            Sort.compareByPriority,
             Sort.compareByPath,
         ];
 
@@ -33,6 +34,7 @@ export class Sort {
 
     private static comparators: Record<SortingProperty, Comparator> = {
         description: Sort.compareByDescription,
+        priority: Sort.compareByPriority,
         start: Sort.compareByStartDate,
         scheduled: Sort.compareByScheduledDate,
         due: Sort.compareByDueDate,
@@ -67,6 +69,10 @@ export class Sort {
         } else {
             return 0;
         }
+    }
+
+    private static compareByPriority(a: Task, b: Task): number {
+        return a.priority.localeCompare(b.priority);
     }
 
     private static compareByStartDate(a: Task, b: Task): -1 | 0 | 1 {

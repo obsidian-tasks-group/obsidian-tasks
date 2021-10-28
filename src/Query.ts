@@ -2,10 +2,11 @@ import chrono from 'chrono-node';
 
 import { getSettings } from './Settings';
 import { LayoutOptions } from './LayoutOptions';
-import { Status, Task } from './Task';
+import { Priority, Status, Task } from './Task';
 
 export type SortingProperty =
     | 'status'
+    | 'priority'
     | 'start'
     | 'scheduled'
     | 'due'
@@ -20,6 +21,9 @@ export class Query {
     private _filters: ((task: Task) => boolean)[] = [];
     private _error: string | undefined = undefined;
     private _sorting: Sorting[] = [];
+
+    private readonly priorityRegexp =
+        /^priority (is )?(above|below)? ?(low|none|medium|high)/;
 
     private readonly noStartString = 'no start date';
     private readonly startRegexp = /^starts (before|after|on)? ?(.*)/;
@@ -38,13 +42,13 @@ export class Query {
     private readonly descriptionRegexp =
         /^description (includes|does not include) (.*)/;
     private readonly sortByRegexp =
-        /^sort by (status|start|scheduled|due|done|path|description)( reverse)?/;
+        /^sort by (status|priority|start|scheduled|due|done|path|description)( reverse)?/;
 
     private readonly headingRegexp =
         /^heading (includes|does not include) (.*)/;
 
     private readonly hideOptionsRegexp =
-        /^hide (task count|backlink|start date|scheduled date|done date|due date|recurrence rule|edit button)/;
+        /^hide (task count|backlink|priority|start date|scheduled date|done date|due date|recurrence rule|edit button)/;
 
     private readonly recurringString = 'is recurring';
     private readonly notRecurringString = 'is not recurring';
@@ -89,6 +93,9 @@ export class Query {
                         break;
                     case line === this.noDueString:
                         this._filters.push((task) => task.dueDate === null);
+                        break;
+                    case this.priorityRegexp.test(line):
+                        this.parsePriorityFilter({ line });
                         break;
                     case this.startRegexp.test(line):
                         this.parseStartFilter({ line });
@@ -158,6 +165,9 @@ export class Query {
                 case 'backlink':
                     this._layoutOptions.hideBacklinks = true;
                     break;
+                case 'priority':
+                    this._layoutOptions.hidePriority = true;
+                    break;
                 case 'start date':
                     this._layoutOptions.hideStartDate = true;
                     break;
@@ -182,12 +192,61 @@ export class Query {
         }
     }
 
+    private parsePriorityFilter({ line }: { line: string }): void {
+        const priorityMatch = line.match(this.priorityRegexp);
+        if (priorityMatch !== null) {
+            const filterPriorityString = priorityMatch[3];
+            let filterPriority: Priority | null = null;
+
+            switch (filterPriorityString) {
+                case 'low':
+                    filterPriority = Priority.Low;
+                    break;
+                case 'none':
+                    filterPriority = Priority.None;
+                    break;
+                case 'medium':
+                    filterPriority = Priority.Medium;
+                    break;
+                case 'high':
+                    filterPriority = Priority.High;
+                    break;
+            }
+
+            if (filterPriority === null) {
+                this._error = 'do not understand priority';
+                return;
+            }
+
+            let filter;
+            if (priorityMatch[2] === 'above') {
+                filter = (task: Task) =>
+                    task.priority
+                        ? task.priority.localeCompare(filterPriority!) < 0
+                        : false;
+            } else if (priorityMatch[2] === 'below') {
+                filter = (task: Task) =>
+                    task.priority
+                        ? task.priority.localeCompare(filterPriority!) > 0
+                        : false;
+            } else {
+                filter = (task: Task) =>
+                    task.priority ? task.priority === filterPriority : false;
+            }
+
+            this._filters.push(filter);
+        } else {
+            this._error = 'do not understand query filter (priority date)';
+        }
+    }
+
     private parseStartFilter({ line }: { line: string }): void {
         const startMatch = line.match(this.startRegexp);
         if (startMatch !== null) {
             const filterDate = this.parseDate(startMatch[2]);
             if (!filterDate.isValid()) {
                 this._error = 'do not understand start date';
+                return;
             }
 
             let filter;
@@ -248,6 +307,7 @@ export class Query {
             const filterDate = this.parseDate(dueMatch[2]);
             if (!filterDate.isValid()) {
                 this._error = 'do not understand due date';
+                return;
             }
 
             let filter;
@@ -274,6 +334,7 @@ export class Query {
             const filterDate = this.parseDate(doneMatch[2]);
             if (!filterDate.isValid()) {
                 this._error = 'do not understand done date';
+                return;
             }
 
             let filter;
