@@ -32,11 +32,13 @@ export class Sort {
     }
 
     private static comparators: Record<SortingProperty, Comparator> = {
-        status: Sort.compareByStatus,
-        done: Sort.compareByDoneDate,
-        due: Sort.compareByDueDate,
-        path: Sort.compareByPath,
         description: Sort.compareByDescription,
+        start: Sort.compareByStartDate,
+        scheduled: Sort.compareByScheduledDate,
+        due: Sort.compareByDueDate,
+        done: Sort.compareByDoneDate,
+        path: Sort.compareByPath,
+        status: Sort.compareByStatus,
     };
 
     private static makeReversedComparator(comparator: Comparator): Comparator {
@@ -65,6 +67,14 @@ export class Sort {
         } else {
             return 0;
         }
+    }
+
+    private static compareByStartDate(a: Task, b: Task): -1 | 0 | 1 {
+        return Sort.compareByDate(a.startDate, b.startDate);
+    }
+
+    private static compareByScheduledDate(a: Task, b: Task): -1 | 0 | 1 {
+        return Sort.compareByDate(a.scheduledDate, b.scheduledDate);
     }
 
     private static compareByDueDate(a: Task, b: Task): -1 | 0 | 1 {

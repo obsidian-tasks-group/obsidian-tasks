@@ -26,6 +26,8 @@ export class Task {
      */
     public readonly originalStatusCharacter: string;
     public readonly precedingHeader: string | null;
+    public readonly startDate: Moment | null;
+    public readonly scheduledDate: Moment | null;
     public readonly dueDate: Moment | null;
     public readonly doneDate: Moment | null;
     public readonly recurrence: Recurrence | null;
@@ -36,6 +38,8 @@ export class Task {
     public static readonly taskRegex = /^([\s\t]*)[-*] +\[(.)\] *(.*)/u;
     // The following regexes end with `$` because they will be matched and
     // removed from the end until none are left.
+    public static readonly startDateRegex = /🛫 ?(\d{4}-\d{2}-\d{2})$/u;
+    public static readonly scheduledDateRegex = /[⏳⌛] ?(\d{4}-\d{2}-\d{2})$/u;
     public static readonly dueDateRegex = /[📅📆🗓] ?(\d{4}-\d{2}-\d{2})$/u;
     public static readonly doneDateRegex = /✅ ?(\d{4}-\d{2}-\d{2})$/u;
     public static readonly recurrenceRegex = /🔁([a-zA-Z0-9, !]+)$/u;
@@ -50,6 +54,8 @@ export class Task {
         sectionIndex,
         originalStatusCharacter,
         precedingHeader,
+        startDate,
+        scheduledDate,
         dueDate,
         doneDate,
         recurrence,
@@ -63,6 +69,8 @@ export class Task {
         sectionIndex: number;
         originalStatusCharacter: string;
         precedingHeader: string | null;
+        startDate: moment.Moment | null;
+        scheduledDate: moment.Moment | null;
         dueDate: moment.Moment | null;
         doneDate: moment.Moment | null;
         recurrence: Recurrence | null;
@@ -76,6 +84,8 @@ export class Task {
         this.sectionIndex = sectionIndex;
         this.originalStatusCharacter = originalStatusCharacter;
         this.precedingHeader = precedingHeader;
+        this.startDate = startDate;
+        this.scheduledDate = scheduledDate;
         this.dueDate = dueDate;
         this.doneDate = doneDate;
         this.recurrence = recurrence;
@@ -133,11 +143,13 @@ export class Task {
         // description in any order. The loop should only run once if the
         // strings are in the expected order after the description.
         let matched: boolean;
+        let startDate: Moment | null = null;
+        let scheduledDate: Moment | null = null;
         let dueDate: Moment | null = null;
         let doneDate: Moment | null = null;
         let recurrence: Recurrence | null = null;
         // Add a "max runs" failsafe to never end in an endless loop:
-        const maxRuns = 4;
+        const maxRuns = 6;
         let runs = 0;
         do {
             matched = false;
@@ -157,10 +169,35 @@ export class Task {
                 matched = true;
             }
 
+            const scheduledDateMatch = description.match(
+                Task.scheduledDateRegex,
+            );
+            if (scheduledDateMatch !== null) {
+                scheduledDate = window.moment(
+                    scheduledDateMatch[1],
+                    Task.dateFormat,
+                );
+                description = description
+                    .replace(Task.scheduledDateRegex, '')
+                    .trim();
+                matched = true;
+            }
+
+            const startDateMatch = description.match(Task.startDateRegex);
+            if (startDateMatch !== null) {
+                startDate = window.moment(startDateMatch[1], Task.dateFormat);
+                description = description
+                    .replace(Task.startDateRegex, '')
+                    .trim();
+                matched = true;
+            }
+
             const recurrenceMatch = description.match(Task.recurrenceRegex);
             if (recurrenceMatch !== null) {
                 recurrence = Recurrence.fromText({
                     recurrenceRuleText: recurrenceMatch[1].trim(),
+                    startDate,
+                    scheduledDate,
                     dueDate,
                 });
 
@@ -182,6 +219,8 @@ export class Task {
             sectionIndex,
             originalStatusCharacter: statusString,
             precedingHeader,
+            startDate,
+            scheduledDate,
             dueDate,
             doneDate,
             recurrence,
@@ -281,6 +320,20 @@ export class Task {
             taskString += recurrenceRule;
         }
 
+        if (!layoutOptions.hideStartDate) {
+            const startDate: string = this.startDate
+                ? ` 🛫 ${this.startDate.format(Task.dateFormat)}`
+                : '';
+            taskString += startDate;
+        }
+
+        if (!layoutOptions.hideScheduledDate) {
+            const scheduledDate: string = this.scheduledDate
+                ? ` ⏳ ${this.scheduledDate.format(Task.dateFormat)}`
+                : '';
+            taskString += scheduledDate;
+        }
+
         if (!layoutOptions.hideDueDate) {
             const dueDate: string = this.dueDate
                 ? ` 📅 ${this.dueDate.format(Task.dateFormat)}`
@@ -318,8 +371,15 @@ export class Task {
     public toggle(): Task[] {
         const newStatus: Status =
             this.status === Status.Todo ? Status.Done : Status.Todo;
+
         let newDoneDate = null;
-        let nextOccurrence: Moment | null = null;
+
+        let nextOccurrence: {
+            startDate: Moment | null;
+            scheduledDate: Moment | null;
+            dueDate: Moment | null;
+        } | null = null;
+
         if (newStatus !== Status.Todo) {
             newDoneDate = window.moment();
 
@@ -341,7 +401,7 @@ export class Task {
         if (nextOccurrence !== null) {
             const nextTask = new Task({
                 ...this,
-                dueDate: nextOccurrence,
+                ...nextOccurrence,
                 // New occurrences cannot have the same block link.
                 // And random block links don't help.
                 blockLink: '',
