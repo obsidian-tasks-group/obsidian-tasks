@@ -8,19 +8,6 @@ has_children: true
 # Queries
 {: .no_toc }
 
-<details open markdown="block">
-  <summary>
-    Table of contents
-  </summary>
-  {: .text-delta }
-1. TOC
-{:toc}
-</details>
-
----
-
-## Querying and listing tasks
-
 You can list tasks from your entire vault by querying them using a `tasks` code block. You can edit the tasks from the query results by clicking on the little pencil icon next to them.
 Tasks are by default sorted by status, due date, and then path. You can change the sorting (see query options below).
 

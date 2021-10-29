@@ -86,6 +86,16 @@ Instead you would have two queries, one for each condition:
 - `no start date`
 - `starts (before|after|on) <date>`
 
+When filtering queries by [start date]({{ site.baseurl }}{% link getting-started/dates.md %}#-start),
+the result will include tasks without a start date.
+This way, you can use the start date as a filter to filter out any tasks that you cannot yet work on.
+
+Such filter could be:
+
+    ```tasks
+    starts before tomorrow
+    ```
+
 ### Scheduled Date
 - `no scheduled date`
 - `scheduled (before|after|on) <date>`
