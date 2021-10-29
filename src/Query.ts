@@ -252,15 +252,13 @@ export class Query {
             let filter;
             if (startMatch[1] === 'before') {
                 filter = (task: Task) =>
-                    task.startDate
-                        ? task.startDate.isBefore(filterDate)
-                        : false;
+                    task.startDate ? task.startDate.isBefore(filterDate) : true;
             } else if (startMatch[1] === 'after') {
                 filter = (task: Task) =>
-                    task.startDate ? task.startDate.isAfter(filterDate) : false;
+                    task.startDate ? task.startDate.isAfter(filterDate) : true;
             } else {
                 filter = (task: Task) =>
-                    task.startDate ? task.startDate.isSame(filterDate) : false;
+                    task.startDate ? task.startDate.isSame(filterDate) : true;
             }
 
             this._filters.push(filter);
