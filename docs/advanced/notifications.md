@@ -1,7 +1,8 @@
 ---
 layout: default
 title: Notifications
-nav_order: 5
+nav_order: 3
+parent: Advanced
 has_toc: false
 ---
 

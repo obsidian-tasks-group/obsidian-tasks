@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Recurring Tasks (Repetition)
+title: Recurring Tasks
 nav_order: 4
 parent: Getting Started
 has_toc: false
@@ -61,7 +61,7 @@ You can validate that tasks understands your rule by using the `Tasks: Crete or 
 
 ## Priority of Dates
 
-A task can have [various dates]({{ site.baseurl }}{% link getting-started/advanced.md %}).
+A task can have [various dates]({{ site.baseurl }}{% link getting-started/dates.md %}).
 When a task has multiple dates, one of them is selected as reference date based on the following priorities:
 
 1. Due date
