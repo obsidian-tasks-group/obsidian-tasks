@@ -17,6 +17,13 @@ Warning
 The result list will list tasks unindented.
 See [#51](https://github.com/schemar/obsidian-tasks/issues/51) for a discussion around the topic.
 Do not hesitate to contribute 😊
+
+---
+
+Warning
+{: .label .label-yellow }
+The result list will not contain any footnotes of the original task.
+The footnotes will *not* be carried over to documents with ```tasks blocks.
 </div>
 
 The simplest way to query tasks is this:

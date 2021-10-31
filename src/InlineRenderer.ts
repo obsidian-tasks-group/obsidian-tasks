@@ -124,6 +124,19 @@ export class InlineRenderer {
                 }
             }
 
+            // Re-set the original footnotes.
+            // The newly rendered HTML won't have the correct indexes and links
+            // from the original document.
+            const originalFootnotes =
+                renderedElement.querySelectorAll('[data-footnote-id]');
+            const newFootnotes =
+                taskElement.querySelectorAll('[data-footnote-id]');
+            if (originalFootnotes.length === newFootnotes.length) {
+                for (let i = 0; i < originalFootnotes.length; i++) {
+                    newFootnotes[i].replaceWith(originalFootnotes[i]);
+                }
+            }
+
             renderedElement.replaceWith(taskElement);
         }
     }
