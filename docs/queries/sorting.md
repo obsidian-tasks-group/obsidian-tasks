@@ -21,25 +21,21 @@ parent: Queries
 
 ## Basics
 
-By default Tasks sorts tasks by:
-
-1. Status
-2. Due date
-3. Priority
-4. Path
+By default Tasks sorts tasks by [a calculated score we call "urgency"]({{ site.baseurl }}{% link advanced/urgency.md %}).
 
 To sort the results of a query different from the default, you must add at least one `sort by` line to the query.
 
 You can sort tasks by the following properties:
 
-1. `status` (done or todo)
-2. `priority` (priority of the task; "low" is below "none")
-2. `start` (the date when the task starts)
+1. `urgency` ([urgency]({{ site.baseurl }}{% link advanced/urgency.md %}))
+2. `status` (done or todo)
+3. `priority` (priority of the task; "low" is below "none")
+4. `start` (the date when the task starts)
 2. `scheduled` (the date when the task is scheduled)
 2. `due` (the date when the task is due)
-3. `done` (the date when the task was done)
-4. `path` (the path to the file that contains the task)
-5. `description` (the description of the task)
+5. `done` (the date when the task was done)
+6. `path` (the path to the file that contains the task)
+7. `description` (the description of the task)
 
 You cann add multiple `sort by` query options, each on an extra line.
 The first sort has the highest priority.
@@ -49,9 +45,22 @@ Each subsequent `sort` will sort within the existing sorting.
 
 Info
 {: .label .label-blue }
+If you want tasks to be sorted the way they were sorted before urgency was introduced,
+add the following `sort` expressions to your queries:
+
+    ```tasks
+    sort by status
+    sort by due
+    sort by path
+    ```
+
+---
+
+Info
+{: .label .label-blue }
 Sorting by description should take into account `[[Links]]` and `[Links with an|Alias]` (note pipe).
 It should also take into account `*italics*` and `==highlights==`.
-It sorts by the text contained within.
+It sorts by the text that's visible in preview mode.
 
 ---
 

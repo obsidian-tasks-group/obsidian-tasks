@@ -5,6 +5,7 @@ import { LayoutOptions } from './LayoutOptions';
 import { Priority, Status, Task } from './Task';
 
 export type SortingProperty =
+    | 'urgency'
     | 'status'
     | 'priority'
     | 'start'
@@ -42,7 +43,7 @@ export class Query {
     private readonly descriptionRegexp =
         /^description (includes|does not include) (.*)/;
     private readonly sortByRegexp =
-        /^sort by (status|priority|start|scheduled|due|done|path|description)( reverse)?/;
+        /^sort by (urgency|status|priority|start|scheduled|due|done|path|description)( reverse)?/;
 
     private readonly headingRegexp =
         /^heading (includes|does not include) (.*)/;

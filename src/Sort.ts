@@ -9,6 +9,7 @@ type Comparator = (a: Task, b: Task) => number;
 export class Sort {
     public static by(query: Pick<Query, 'sorting'>, tasks: Task[]): Task[] {
         const defaultComparators: Comparator[] = [
+            Sort.compareByUrgency,
             Sort.compareByStatus,
             Sort.compareByDueDate,
             Sort.compareByPriority,
@@ -33,6 +34,7 @@ export class Sort {
     }
 
     private static comparators: Record<SortingProperty, Comparator> = {
+        urgency: Sort.compareByUrgency,
         description: Sort.compareByDescription,
         priority: Sort.compareByPriority,
         start: Sort.compareByStartDate,
@@ -59,6 +61,11 @@ export class Sort {
             }
             return 0;
         };
+    }
+
+    private static compareByUrgency(a: Task, b: Task): number {
+        // Higher urgency should be sorted earlier.
+        return b.urgency - a.urgency;
     }
 
     private static compareByStatus(a: Task, b: Task): -1 | 0 | 1 {
