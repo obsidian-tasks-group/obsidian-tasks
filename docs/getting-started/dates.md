@@ -21,8 +21,7 @@ You don't have to use all available dates.
 Maybe due dates are sufficient for you.
 Don't over-engineer your task management.
 
----
-
+<div class="code-example" markdown="1">
 Info
 {: .label .label-blue }
 Instead of adding an emoji and a date manually, you can use the `Tasks: Create or edit` command when creating or editing a task.
@@ -32,7 +31,8 @@ When you use the command, you can also set dates like "Monday", "tomorrow", or "
 
 Warning
 {: .label .label-yellow }
-*You can only put block links (`^link-name`) after the dates. Anything else will break the parsing of dates and recurrence rules.*
+You can only put block links (`^link-name`) after the dates. Anything else will break the parsing of dates and recurrence rules.
+</div>
 
 ---
 
