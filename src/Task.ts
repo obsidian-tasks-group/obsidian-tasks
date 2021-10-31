@@ -350,6 +350,10 @@ export class Task {
         li.setAttr('data-line', listIndex);
         checkbox.setAttr('data-line', listIndex);
 
+        if (layoutOptions?.shortMode) {
+            this.addTooltip({ li });
+        }
+
         return li;
     }
 
@@ -371,38 +375,38 @@ export class Task {
             taskString += priority;
         }
 
-        if (!layoutOptions.hideRecurrenceRule) {
-            const recurrenceRule: string = this.recurrence
-                ? ` 🔁 ${this.recurrence.toText()}`
-                : '';
+        if (!layoutOptions.hideRecurrenceRule && this.recurrence) {
+            const recurrenceRule: string = layoutOptions.shortMode
+                ? ' 🔁'
+                : ` 🔁 ${this.recurrence.toText()}`;
             taskString += recurrenceRule;
         }
 
-        if (!layoutOptions.hideStartDate) {
-            const startDate: string = this.startDate
-                ? ` 🛫 ${this.startDate.format(Task.dateFormat)}`
-                : '';
+        if (!layoutOptions.hideStartDate && this.startDate) {
+            const startDate: string = layoutOptions.shortMode
+                ? ' 🛫'
+                : ` 🛫 ${this.startDate.format(Task.dateFormat)}`;
             taskString += startDate;
         }
 
-        if (!layoutOptions.hideScheduledDate) {
-            const scheduledDate: string = this.scheduledDate
-                ? ` ⏳ ${this.scheduledDate.format(Task.dateFormat)}`
-                : '';
+        if (!layoutOptions.hideScheduledDate && this.scheduledDate) {
+            const scheduledDate: string = layoutOptions.shortMode
+                ? ' ⏳'
+                : ` ⏳ ${this.scheduledDate.format(Task.dateFormat)}`;
             taskString += scheduledDate;
         }
 
-        if (!layoutOptions.hideDueDate) {
-            const dueDate: string = this.dueDate
-                ? ` 📅 ${this.dueDate.format(Task.dateFormat)}`
-                : '';
+        if (!layoutOptions.hideDueDate && this.dueDate) {
+            const dueDate: string = layoutOptions.shortMode
+                ? ' 📅'
+                : ` 📅 ${this.dueDate.format(Task.dateFormat)}`;
             taskString += dueDate;
         }
 
-        if (!layoutOptions.hideDoneDate) {
-            const doneDate: string = this.doneDate
-                ? ` ✅ ${this.doneDate.format(Task.dateFormat)}`
-                : '';
+        if (!layoutOptions.hideDoneDate && this.doneDate) {
+            const doneDate: string = layoutOptions.shortMode
+                ? ' ✅'
+                : ` ✅ ${this.doneDate.format(Task.dateFormat)}`;
             taskString += doneDate;
         }
 
@@ -479,5 +483,93 @@ export class Task {
         }
 
         return this._urgency;
+    }
+
+    private addTooltip({ li }: { li: HTMLElement }): void {
+        if (
+            this.recurrence ||
+            this.startDate ||
+            this.scheduledDate ||
+            this.dueDate ||
+            this.doneDate
+        ) {
+            li.addEventListener('mouseover', (event: MouseEvent) => {
+                const hoveringCheckbox = li.querySelector(
+                    ":hover[type='checkbox']",
+                );
+                if (hoveringCheckbox) {
+                    // No tooltip over checkbox. When clicking a checkbox, the task
+                    // would disappear and the tooltip would stay forever (no `onmouseout`).
+                    return;
+                }
+
+                const tooltip = document.body.createDiv();
+                tooltip.addClasses(['tooltip', 'mod-right']);
+                tooltip.style.setProperty('position', 'absolute');
+                tooltip.style.setProperty('top', `${event.pageY}px`);
+                tooltip.style.setProperty('left', `${event.pageX}px`);
+
+                if (this.recurrence) {
+                    const recurrenceDiv = tooltip.createDiv();
+                    recurrenceDiv.setText(`🔁 ${this.recurrence.toText()}`);
+                }
+
+                if (this.startDate) {
+                    const startDateDiv = tooltip.createDiv();
+                    startDateDiv.setText(
+                        Task.toTooltipDate({
+                            signifier: '🛫',
+                            date: this.startDate,
+                        }),
+                    );
+                }
+
+                if (this.scheduledDate) {
+                    const scheduledDateDiv = tooltip.createDiv();
+                    scheduledDateDiv.setText(
+                        Task.toTooltipDate({
+                            signifier: '⏳',
+                            date: this.scheduledDate,
+                        }),
+                    );
+                }
+
+                if (this.dueDate) {
+                    const dueDateDiv = tooltip.createDiv();
+                    dueDateDiv.setText(
+                        Task.toTooltipDate({
+                            signifier: '📅',
+                            date: this.dueDate,
+                        }),
+                    );
+                }
+
+                if (this.doneDate) {
+                    const doneDateDiv = tooltip.createDiv();
+                    doneDateDiv.setText(
+                        Task.toTooltipDate({
+                            signifier: '✅',
+                            date: this.doneDate,
+                        }),
+                    );
+                }
+
+                li.addEventListener('mouseout', () => {
+                    tooltip.remove();
+                });
+            });
+        }
+    }
+
+    private static toTooltipDate({
+        signifier,
+        date,
+    }: {
+        signifier: string;
+        date: Moment;
+    }): string {
+        return `${signifier} ${date.format(Task.dateFormat)} (${date.from(
+            window.moment().startOf('day'),
+        )})`;
     }
 }

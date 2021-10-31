@@ -50,6 +50,7 @@ export class Query {
 
     private readonly hideOptionsRegexp =
         /^hide (task count|backlink|priority|start date|scheduled date|done date|due date|recurrence rule|edit button)/;
+    private readonly shortModeRegexp = /^short/;
 
     private readonly recurringString = 'is recurring';
     private readonly notRecurringString = 'is not recurring';
@@ -94,6 +95,9 @@ export class Query {
                         break;
                     case line === this.noDueString:
                         this._filters.push((task) => task.dueDate === null);
+                        break;
+                    case this.shortModeRegexp.test(line):
+                        this._layoutOptions.shortMode = true;
                         break;
                     case this.priorityRegexp.test(line):
                         this.parsePriorityFilter({ line });
