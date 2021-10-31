@@ -41,17 +41,16 @@ There are two ways to mark a task done:
 A "done" task will have the date it was done appended to the end of its line.
 For example: `✅ 2021-04-09` means the task was done on the 9th of April, 2021.
 
+<div class="code-example" markdown="1">
+Warning
+{: .label .label-yellow}
+Whenever Tasks behaves in an unexpected way, please try restarting obsidian.
+
 ---
 
 Warning
 {: .label .label-yellow}
-*Whenever Tasks behaves in an unexpected way, please try restarting obsidian.*
-
----
-
-Warning
-{: .label .label-yellow}
-*Tasks only supports single-line checklist items.*
+Tasks only supports single-line checklist items.
 You cannot have checklist items that span across multiple lines.
 
 This works:
@@ -75,7 +74,7 @@ The following *does not work:*
 
 Warning
 {: .label .label-yellow}
-*Tasks won't render spaces around list items if you have a list with empty lines.*
+Tasks won't render spaces around list items if you have a list with empty lines.
 
 ```markdown
 - [ ] First task before the empty line
@@ -87,6 +86,5 @@ Warning
 
 Warning
 {: .label .label-yellow}
-*Tasks only supports checklist items in markdown files with the file extension `.md`.*
-
----
+Tasks only supports checklist items in markdown files with the file extension `.md`.
+</div>
