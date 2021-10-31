@@ -177,6 +177,10 @@ class QueryRenderChild extends MarkdownRenderChild {
                 layoutOptions: this.query.layoutOptions,
             });
 
+            // Remove all footnotes. They don't re-appear in another document.
+            const footnotes = listItem.querySelectorAll('[data-footnote-id]');
+            footnotes.forEach((footnote) => footnote.remove());
+
             const postInfo = listItem.createSpan();
 
             if (

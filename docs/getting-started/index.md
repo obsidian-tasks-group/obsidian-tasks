@@ -74,6 +74,17 @@ The following *does not work:*
 
 Warning
 {: .label .label-yellow}
+Tasks can only render inline footnotes. Regular footnotes are not supported.
+
+```markdown
+- [ ] This is a task^[with a working inline footnote]
+- [ ] This footnote *will not work*[^notworking]
+```
+
+---
+
+Warning
+{: .label .label-yellow}
 Tasks won't render spaces around list items if you have a list with empty lines.
 
 ```markdown
