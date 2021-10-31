@@ -293,31 +293,34 @@ export class Task {
             taskAsString = taskAsString.replace(globalFilter, '').trim();
         }
 
+        const textSpan = li.createSpan();
+        textSpan.addClass('tasks-list-text');
+
         await MarkdownRenderer.renderMarkdown(
             taskAsString,
-            li,
+            textSpan,
             this.path,
             null as unknown as Component,
         );
 
         // Unwrap the p-tag that was created by the MarkdownRenderer:
-        const pElement = li.querySelector('p');
+        const pElement = textSpan.querySelector('p');
         if (pElement !== null) {
             while (pElement.firstChild) {
-                li.insertBefore(pElement.firstChild, pElement);
+                textSpan.insertBefore(pElement.firstChild, pElement);
             }
             pElement.remove();
         }
 
         // Remove an empty trailing p-tag that the MarkdownRenderer appends when there is a block link:
-        li.findAll('p').forEach((pElement) => {
+        textSpan.findAll('p').forEach((pElement) => {
             if (!pElement.hasChildNodes()) {
                 pElement.remove();
             }
         });
 
         // Remove the footnote that the MarkdownRenderer appends when there is a footnote in the task:
-        li.findAll('.footnotes').forEach((footnoteElement) => {
+        textSpan.findAll('.footnotes').forEach((footnoteElement) => {
             footnoteElement.remove();
         });
 
@@ -351,7 +354,7 @@ export class Task {
         checkbox.setAttr('data-line', listIndex);
 
         if (layoutOptions?.shortMode) {
-            this.addTooltip({ li });
+            this.addTooltip({ element: textSpan });
         }
 
         return li;
@@ -485,7 +488,7 @@ export class Task {
         return this._urgency;
     }
 
-    private addTooltip({ li }: { li: HTMLElement }): void {
+    private addTooltip({ element }: { element: HTMLElement }): void {
         if (
             this.recurrence ||
             this.startDate ||
@@ -493,21 +496,9 @@ export class Task {
             this.dueDate ||
             this.doneDate
         ) {
-            li.addEventListener('mouseover', (event: MouseEvent) => {
-                const hoveringCheckbox = li.querySelector(
-                    ":hover[type='checkbox']",
-                );
-                if (hoveringCheckbox) {
-                    // No tooltip over checkbox. When clicking a checkbox, the task
-                    // would disappear and the tooltip would stay forever (no `onmouseout`).
-                    return;
-                }
-
-                const tooltip = document.body.createDiv();
+            element.addEventListener('mouseenter', () => {
+                const tooltip = element.createDiv();
                 tooltip.addClasses(['tooltip', 'mod-right']);
-                tooltip.style.setProperty('position', 'absolute');
-                tooltip.style.setProperty('top', `${event.pageY}px`);
-                tooltip.style.setProperty('left', `${event.pageX}px`);
 
                 if (this.recurrence) {
                     const recurrenceDiv = tooltip.createDiv();
@@ -554,7 +545,7 @@ export class Task {
                     );
                 }
 
-                li.addEventListener('mouseout', () => {
+                element.addEventListener('mouseleave', () => {
                     tooltip.remove();
                 });
             });
