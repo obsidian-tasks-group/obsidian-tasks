@@ -16,6 +16,17 @@
     cursor: pointer;
 }
 
+.tasks-list-text {
+    position: relative;
+}
+
+.tasks-list-text .tooltip {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    white-space: nowrap;
+}
+
 .tasks-setting-important {
     color: red;
     font-weight: bold;
