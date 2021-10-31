@@ -185,7 +185,7 @@ export class Query {
                 case 'done date':
                     this._layoutOptions.hideDoneDate = true;
                     break;
-                case 'recurrenc rule':
+                case 'recurrence rule':
                     this._layoutOptions.hideRecurrenceRule = true;
                     break;
                 case 'edit button':
