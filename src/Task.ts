@@ -5,6 +5,7 @@ import { replaceTaskWithTasks } from './File';
 import { getSettings } from './Settings';
 import { LayoutOptions } from './LayoutOptions';
 import { Recurrence } from './Recurrence';
+import { Urgency } from './Urgency';
 
 export enum Status {
     Todo = 'Todo',
@@ -57,6 +58,8 @@ export class Task {
     public static readonly doneDateRegex = /✅ ?(\d{4}-\d{2}-\d{2})$/u;
     public static readonly recurrenceRegex = /🔁([a-zA-Z0-9, !]+)$/u;
     public static readonly blockLinkRegex = / \^[a-zA-Z0-9-]+$/u;
+
+    private _urgency: number | null = null;
 
     constructor({
         status,
@@ -468,5 +471,13 @@ export class Task {
         newTasks.push(toggledTask);
 
         return newTasks;
+    }
+
+    public get urgency(): number {
+        if (this._urgency === null) {
+            this._urgency = Urgency.calculate(this);
+        }
+
+        return this._urgency;
     }
 }

@@ -14,3 +14,4 @@ Follow the steps below to install Tasks.
 3. Check the settings. It makes sense to set the global filter early on (if you want one).
 4. Replace the "Toggle checklist status" hotkey with "Tasks: Toggle Done".
     - I recommend you remove the original toggle hotkey and set the "Tasks" toggle to `Ctrl + Enter` (or `Cmd + Enter` on a mac).
+5. Optional: bind a hotkey to the command `Tasks: Create or edit` to have quick access to the Tasks modal.
