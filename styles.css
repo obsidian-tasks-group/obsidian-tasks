@@ -16,13 +16,23 @@
     cursor: pointer;
 }
 
+.tasks-list-text {
+    position: relative;
+}
+
+.tasks-list-text .tooltip {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    white-space: nowrap;
+}
+
 .tasks-setting-important {
     color: red;
     font-weight: bold;
 }
 
 .tasks-modal label {
-    display: block;
     margin: 5px 0 5px 0;
 }
 
@@ -31,9 +41,9 @@
 }
 
 .tasks-modal hr {
-    margin: 0;
+    margin: 10px 0 10px 0;
 }
 
-.tasks-modal-section {
-    margin-bottom: 1rem;
+.tasks-modal-date {
+    margin-bottom: 10px;
 }

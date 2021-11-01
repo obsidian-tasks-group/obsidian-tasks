@@ -1,45 +1,71 @@
-import type { Task } from './Task';
-import type { Query } from './Query';
 import type moment from 'moment';
+import type { Task } from './Task';
+import type { Query, SortingProperty } from './Query';
+
+import { getSettings } from './Settings';
 
 type Comparator = (a: Task, b: Task) => number;
 
 export class Sort {
     public static by(query: Pick<Query, 'sorting'>, tasks: Task[]): Task[] {
-        let sortedTasks = [...tasks];
         const defaultComparators: Comparator[] = [
-            this.compareByPath,
-            this.compareByDueDate,
-            this.compareByStatus,
+            Sort.compareByUrgency,
+            Sort.compareByStatus,
+            Sort.compareByDueDate,
+            Sort.compareByPriority,
+            Sort.compareByPath,
         ];
 
         const userComparators: Comparator[] = [];
-        for (const sortProp of query.sorting) {
-            switch (sortProp) {
-                case 'status':
-                    userComparators.unshift(this.compareByStatus);
-                    break;
-                case 'due':
-                    userComparators.unshift(this.compareByDueDate);
-                    break;
-                case 'done':
-                    userComparators.unshift(this.compareByDoneDate);
-                    break;
-                case 'path':
-                    userComparators.unshift(this.compareByPath);
-                    break;
-                case 'description':
-                    userComparators.unshift(this.compareByDescription);
-                    break;
+
+        for (const { property, reverse } of query.sorting) {
+            const comparator = Sort.comparators[property];
+            userComparators.push(
+                reverse ? Sort.makeReversedComparator(comparator) : comparator,
+            );
+        }
+
+        return tasks.sort(
+            Sort.makeCompositeComparator([
+                ...userComparators,
+                ...defaultComparators,
+            ]),
+        );
+    }
+
+    private static comparators: Record<SortingProperty, Comparator> = {
+        urgency: Sort.compareByUrgency,
+        description: Sort.compareByDescription,
+        priority: Sort.compareByPriority,
+        start: Sort.compareByStartDate,
+        scheduled: Sort.compareByScheduledDate,
+        due: Sort.compareByDueDate,
+        done: Sort.compareByDoneDate,
+        path: Sort.compareByPath,
+        status: Sort.compareByStatus,
+    };
+
+    private static makeReversedComparator(comparator: Comparator): Comparator {
+        return (a, b) => (comparator(a, b) * -1) as -1 | 0 | 1;
+    }
+
+    private static makeCompositeComparator(
+        comparators: Comparator[],
+    ): Comparator {
+        return (a, b) => {
+            for (const comparator of comparators) {
+                const result = comparator(a, b);
+                if (result !== 0) {
+                    return result;
+                }
             }
-        }
+            return 0;
+        };
+    }
 
-        const comparators = defaultComparators.concat(userComparators);
-        for (const comparator of comparators) {
-            sortedTasks = sortedTasks.sort(comparator);
-        }
-
-        return sortedTasks;
+    private static compareByUrgency(a: Task, b: Task): number {
+        // Higher urgency should be sorted earlier.
+        return b.urgency - a.urgency;
     }
 
     private static compareByStatus(a: Task, b: Task): -1 | 0 | 1 {
@@ -50,6 +76,18 @@ export class Sort {
         } else {
             return 0;
         }
+    }
+
+    private static compareByPriority(a: Task, b: Task): number {
+        return a.priority.localeCompare(b.priority);
+    }
+
+    private static compareByStartDate(a: Task, b: Task): -1 | 0 | 1 {
+        return Sort.compareByDate(a.startDate, b.startDate);
+    }
+
+    private static compareByScheduledDate(a: Task, b: Task): -1 | 0 | 1 {
+        return Sort.compareByDate(a.scheduledDate, b.scheduledDate);
     }
 
     private static compareByDueDate(a: Task, b: Task): -1 | 0 | 1 {
@@ -91,7 +129,59 @@ export class Sort {
         }
     }
 
+    /**
+     * Compare the description by how it is rendered in markdown.
+     *
+     * Does not use the MarkdownRenderer, but tries to match regexes instead
+     * in order to be simpler, faster, and not async.
+     */
     private static compareByDescription(a: Task, b: Task) {
-        return a.description.localeCompare(b.description);
+        return Sort.cleanDescription(a.description).localeCompare(
+            Sort.cleanDescription(b.description),
+        );
+    }
+
+    /**
+     * Removes `*`, `=`, and `[` from the beginning of the description.
+     *
+     * Will remove them only if they are closing.
+     * Properly reads links [[like this|one]] (note pipe).
+     */
+    private static cleanDescription(description: string): string {
+        const globalFilter = getSettings().globalFilter;
+        description = description.replace(globalFilter, '').trim();
+
+        const startsWithLinkRegex = /^\[\[?([^\]]*)\]/;
+        const linkRegexMatch = description.match(startsWithLinkRegex);
+        if (linkRegexMatch !== null) {
+            const innerLinkText = linkRegexMatch[1];
+            // For a link, we have to check whether it has another visible name set.
+            // For example `[[this is the link|but this is actually shown]]`.
+            description =
+                innerLinkText.substring(innerLinkText.indexOf('|') + 1) +
+                description.replace(startsWithLinkRegex, '');
+        }
+
+        const startsWithItalicOrBoldRegex = /^\*\*?([^*]*)\*/;
+        const italicBoldRegexMatch = description.match(
+            startsWithItalicOrBoldRegex,
+        );
+        if (italicBoldRegexMatch !== null) {
+            const innerItalicBoldText = italicBoldRegexMatch[1];
+            description =
+                innerItalicBoldText +
+                description.replace(startsWithLinkRegex, '');
+        }
+
+        const startsWithHighlightRegex = /^==?([^=]*)==/;
+        const highlightRegexMatch = description.match(startsWithHighlightRegex);
+        if (highlightRegexMatch !== null) {
+            const innerHighlightsText = highlightRegexMatch[1];
+            description =
+                innerHighlightsText +
+                description.replace(startsWithHighlightRegex, '');
+        }
+
+        return description;
     }
 }

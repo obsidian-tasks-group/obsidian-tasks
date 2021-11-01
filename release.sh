@@ -49,12 +49,21 @@ then
   echo
   if [[ $REPLY =~ ^[Yy]$ ]]
   then
-
     git add -A .
     git commit -m"Update to version ${NEW_VERSION}"
     git tag "${NEW_VERSION}"
     git push
     LEFTHOOK=0 git push --tags
+  fi
+  
+  read -p "Update documentation? [y/N] " -n 1 -r
+  echo
+  if [[ $REPLY =~ ^[Yy]$ ]]
+  then
+    git switch gh-pages
+    git merge main
+    LEFTHOOK=0 git push
+    git switch -
   fi
 else
   echo "Exiting."

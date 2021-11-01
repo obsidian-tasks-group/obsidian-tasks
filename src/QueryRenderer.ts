@@ -3,7 +3,9 @@ import {
     EventRef,
     MarkdownPostProcessorContext,
     MarkdownRenderChild,
+    Notice,
     Plugin,
+    parseLinktext,
 } from 'obsidian';
 
 import { State } from './Cache';
@@ -24,11 +26,13 @@ export class QueryRenderer {
 
         plugin.registerMarkdownCodeBlockProcessor(
             'tasks',
-            this.addQueryRenderChild.bind(this),
+            this._addQueryRenderChild.bind(this),
         );
     }
 
-    private async addQueryRenderChild(
+    public addQueryRenderChild = this._addQueryRenderChild.bind(this);
+
+    private async _addQueryRenderChild(
         source: string,
         element: HTMLElement,
         context: MarkdownPostProcessorContext,
@@ -116,11 +120,36 @@ class QueryRenderChild extends MarkdownRenderChild {
     }
 
     private async render({ tasks, state }: { tasks: Task[]; state: State }) {
+        tasks.map(async (task) => {
+            if (task.description.startsWith('![[')) {
+                const link = parseLinktext(task.description);
+                const subpath = link.subpath
+                    .replace('#^', '')
+                    .replace(']]', '');
+                if (link) {
+                    const file = app.metadataCache.getFirstLinkpathDest(
+                        link.path.replace('![[', ''),
+                        task.path,
+                    );
+                    const content =
+                        file && (await app.vault.read(file)).split('\n');
+                    const blocks =
+                        file && app.metadataCache.getFileCache(file)?.blocks;
+                    const line = blocks && blocks[subpath]?.position.start.line;
+                    if (line) {
+                        task.description = content[line]
+                            .split(' ^')[0]
+                            .replace('- ', '');
+                    }
+                }
+            }
+        });
         const content = this.containerEl.createEl('div');
         if (state === State.Warm && this.query.error === undefined) {
             const { taskList, tasksCount } = await this.createTasksList({
                 tasks,
                 content,
+                app: this.app,
             });
             content.appendChild(taskList);
             if (!this.query.layoutOptions.hideTaskCount) {
@@ -134,16 +163,17 @@ class QueryRenderChild extends MarkdownRenderChild {
         } else {
             content.setText('Loading Tasks ...');
         }
-
         this.containerEl.firstChild?.replaceWith(content);
     }
 
     private async createTasksList({
         tasks,
         content,
+        app,
     }: {
         tasks: Task[];
         content: HTMLDivElement;
+        app: App;
     }): Promise<{ taskList: HTMLUListElement; tasksCount: number }> {
         this.query.filters.forEach((filter) => {
             tasks = tasks.filter(filter);
@@ -174,6 +204,10 @@ class QueryRenderChild extends MarkdownRenderChild {
                 listIndex: i,
                 layoutOptions: this.query.layoutOptions,
             });
+
+            // Remove all footnotes. They don't re-appear in another document.
+            const footnotes = listItem.querySelectorAll('[data-footnote-id]');
+            footnotes.forEach((footnote) => footnote.remove());
 
             const postInfo = listItem.createSpan();
 
