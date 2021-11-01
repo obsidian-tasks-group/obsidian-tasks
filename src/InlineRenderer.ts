@@ -1,16 +1,18 @@
 import { getSettings } from 'Settings';
 
-import { Task } from './Task';
 import type { MarkdownPostProcessorContext, Plugin } from 'obsidian';
+import { Task } from './Task';
 
 export class InlineRenderer {
     constructor({ plugin }: { plugin: Plugin }) {
         plugin.registerMarkdownPostProcessor(
-            this.markdownPostProcessor.bind(this),
+            this._markdownPostProcessor.bind(this),
         );
     }
 
-    private async markdownPostProcessor(
+    public markdownPostProcessor = this._markdownPostProcessor.bind(this);
+
+    private async _markdownPostProcessor(
         element: HTMLElement,
         context: MarkdownPostProcessorContext,
     ): Promise<void> {
@@ -18,12 +20,31 @@ export class InlineRenderer {
         const renderedElements = element
             .findAll('.task-list-item')
             .filter((taskItem) => {
+                const linesText = taskItem.textContent?.split('\n');
+                if (linesText === undefined) {
+                    return false;
+                }
+
                 // Only the first line. Can be multiple lines if an LI element contains an UL.
                 // Want to match the top level LI independently from its children.
                 // There was a false positive, when the LI wasn't a task itself, but contained the
                 // global filter in child LIs.
-                const firstLineText = taskItem.textContent?.split('\n')[0];
-                return firstLineText?.includes(globalFilter);
+                let firstLineText: string | null = null;
+
+                // The first line is the first line that is not empty. Empty lines can exist when
+                // the checklist in markdown includes blank lines (see #313).
+                for (let i = 0; i < linesText.length; i = i + 1) {
+                    if (linesText[i] !== '') {
+                        firstLineText = linesText[i];
+                        break;
+                    }
+                }
+
+                if (firstLineText === null) {
+                    return false;
+                }
+
+                return firstLineText.includes(globalFilter);
             });
         if (renderedElements.length === 0) {
             // No tasks means nothing to do.
@@ -100,6 +121,19 @@ export class InlineRenderer {
                     taskElement.prepend(renderedChild);
                 } else if (renderedChild.nodeName.toLowerCase() === 'ul') {
                     taskElement.append(renderedChild);
+                }
+            }
+
+            // Re-set the original footnotes.
+            // The newly rendered HTML won't have the correct indexes and links
+            // from the original document.
+            const originalFootnotes =
+                renderedElement.querySelectorAll('[data-footnote-id]');
+            const newFootnotes =
+                taskElement.querySelectorAll('[data-footnote-id]');
+            if (originalFootnotes.length === newFootnotes.length) {
+                for (let i = 0; i < originalFootnotes.length; i++) {
+                    newFootnotes[i].replaceWith(originalFootnotes[i]);
                 }
             }
 

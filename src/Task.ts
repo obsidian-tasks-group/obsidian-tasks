@@ -1,14 +1,23 @@
 import { Component, MarkdownRenderer } from 'obsidian';
-import { RRule } from 'rrule';
 
+import type { Moment } from 'moment';
 import { replaceTaskWithTasks } from './File';
 import { getSettings } from './Settings';
 import { LayoutOptions } from './LayoutOptions';
-import type { Moment } from 'moment';
+import { Recurrence } from './Recurrence';
+import { Urgency } from './Urgency';
 
 export enum Status {
     Todo = 'Todo',
     Done = 'Done',
+}
+
+// Sort low below none.
+export enum Priority {
+    High = '1',
+    Medium = '2',
+    None = '3',
+    Low = '4',
 }
 
 export class Task {
@@ -26,11 +35,17 @@ export class Task {
      */
     public readonly originalStatusCharacter: string;
     public readonly precedingHeader: string | null;
+
+    public readonly priority: Priority;
+
+    public readonly startDate: Moment | null;
+    public readonly scheduledDate: Moment | null;
     public readonly dueDate: Moment | null;
     public readonly doneDate: Moment | null;
     public readonly dateFormat: string;
     public readonly dateLink: boolean;
     public readonly recurrenceRule: RRule | null;
+    public readonly recurrence: Recurrence | null;
     /** The blockLink is a "^" annotation after the dates/recurrence rules. */
     public readonly blockLink: string;
     public static readonly taskRegex = /^([\s\t]*)[-*] +\[(.)\] *(.*)/u;
@@ -40,7 +55,12 @@ export class Task {
         / [📅📆🗓] (\[\[)?([\w\-\s:]+)(\]\])?$/u;
     public static readonly doneDateRegex = / ✅ (\[\[)?([\w\-\s:]+)(\]\])?$/u;
     public static readonly recurrenceRegex = / 🔁([a-zA-Z0-9, !]+)$/u;
+    public static readonly priorityRegex = /([⏫🔼🔽])$/u;
+    public static readonly startDateRegex = /🛫 ?(\d{4}-\d{2}-\d{2})$/u;
+    public static readonly scheduledDateRegex = /[⏳⌛] ?(\d{4}-\d{2}-\d{2})$/u;
     public static readonly blockLinkRegex = / \^[a-zA-Z0-9-]+$/u;
+
+    private _urgency: number | null = null;
 
     constructor({
         status,
@@ -51,9 +71,12 @@ export class Task {
         sectionIndex,
         originalStatusCharacter,
         precedingHeader,
+        priority,
+        startDate,
+        scheduledDate,
         dueDate,
         doneDate,
-        recurrenceRule,
+        recurrence,
         blockLink,
         dateFormat,
         dateLink,
@@ -66,9 +89,12 @@ export class Task {
         sectionIndex: number;
         originalStatusCharacter: string;
         precedingHeader: string | null;
+        priority: Priority;
+        startDate: moment.Moment | null;
+        scheduledDate: moment.Moment | null;
         dueDate: moment.Moment | null;
         doneDate: moment.Moment | null;
-        recurrenceRule: RRule | null;
+        recurrence: Recurrence | null;
         blockLink: string;
         dateFormat: string;
         dateLink: boolean;
@@ -81,9 +107,15 @@ export class Task {
         this.sectionIndex = sectionIndex;
         this.originalStatusCharacter = originalStatusCharacter;
         this.precedingHeader = precedingHeader;
+
+        this.priority = priority;
+
+        this.startDate = startDate;
+        this.scheduledDate = scheduledDate;
         this.dueDate = dueDate;
         this.doneDate = doneDate;
-        this.recurrenceRule = recurrenceRule;
+
+        this.recurrence = recurrence;
         this.blockLink = blockLink;
         this.dateFormat = dateFormat;
         this.dateLink = dateLink;
@@ -140,14 +172,37 @@ export class Task {
         // description in any order. The loop should only run once if the
         // strings are in the expected order after the description.
         let matched: boolean;
+        let priority: Priority = Priority.None;
+        let startDate: Moment | null = null;
+        let scheduledDate: Moment | null = null;
         let dueDate: Moment | null = null;
         let doneDate: Moment | null = null;
-        let recurrenceRule: RRule | null = null;
+        let recurrence: Recurrence | null = null;
         // Add a "max runs" failsafe to never end in an endless loop:
-        const maxRuns = 4;
+        const maxRuns = 7;
         let runs = 0;
         do {
             matched = false;
+            const priorityMatch = description.match(Task.priorityRegex);
+            if (priorityMatch !== null) {
+                switch (priorityMatch[1]) {
+                    case '🔽':
+                        priority = Priority.Low;
+                        break;
+                    case '🔼':
+                        priority = Priority.Medium;
+                        break;
+                    case '⏫':
+                        priority = Priority.High;
+                        break;
+                }
+
+                description = description
+                    .replace(Task.priorityRegex, '')
+                    .trim();
+                matched = true;
+            }
+
             const doneDateMatch = description.match(Task.doneDateRegex);
             if (doneDateMatch !== null) {
                 const match = doneDateMatch[2];
@@ -178,13 +233,37 @@ export class Task {
                 }
             }
 
+            const scheduledDateMatch = description.match(
+                Task.scheduledDateRegex,
+            );
+            if (scheduledDateMatch !== null) {
+                scheduledDate = window.moment(
+                    scheduledDateMatch[1],
+                    Task.dateFormat,
+                );
+                description = description
+                    .replace(Task.scheduledDateRegex, '')
+                    .trim();
+                matched = true;
+            }
+
+            const startDateMatch = description.match(Task.startDateRegex);
+            if (startDateMatch !== null) {
+                startDate = window.moment(startDateMatch[1], Task.dateFormat);
+                description = description
+                    .replace(Task.startDateRegex, '')
+                    .trim();
+                matched = true;
+            }
+
             const recurrenceMatch = description.match(Task.recurrenceRegex);
             if (recurrenceMatch !== null) {
-                try {
-                    recurrenceRule = RRule.fromText(recurrenceMatch[1].trim());
-                } catch (error) {
-                    // Could not read recurrence rule. User possibly not done typing.
-                }
+                recurrence = Recurrence.fromText({
+                    recurrenceRuleText: recurrenceMatch[1].trim(),
+                    startDate,
+                    scheduledDate,
+                    dueDate,
+                });
 
                 description = description
                     .replace(Task.recurrenceRegex, '')
@@ -204,9 +283,12 @@ export class Task {
             sectionIndex,
             originalStatusCharacter: statusString,
             precedingHeader,
+            priority,
+            startDate,
+            scheduledDate,
             dueDate,
             doneDate,
-            recurrenceRule,
+            recurrence,
             blockLink,
             dateFormat,
             dateLink,
@@ -234,31 +316,34 @@ export class Task {
             taskAsString = taskAsString.replace(globalFilter, '').trim();
         }
 
+        const textSpan = li.createSpan();
+        textSpan.addClass('tasks-list-text');
+
         await MarkdownRenderer.renderMarkdown(
             taskAsString,
-            li,
+            textSpan,
             this.path,
             null as unknown as Component,
         );
 
         // Unwrap the p-tag that was created by the MarkdownRenderer:
-        const pElement = li.querySelector('p');
+        const pElement = textSpan.querySelector('p');
         if (pElement !== null) {
             while (pElement.firstChild) {
-                li.insertBefore(pElement.firstChild, pElement);
+                textSpan.insertBefore(pElement.firstChild, pElement);
             }
             pElement.remove();
         }
 
         // Remove an empty trailing p-tag that the MarkdownRenderer appends when there is a block link:
-        li.findAll('p').forEach((pElement) => {
+        textSpan.findAll('p').forEach((pElement) => {
             if (!pElement.hasChildNodes()) {
                 pElement.remove();
             }
         });
 
         // Remove the footnote that the MarkdownRenderer appends when there is a footnote in the task:
-        li.findAll('.footnotes').forEach((footnoteElement) => {
+        textSpan.findAll('.footnotes').forEach((footnoteElement) => {
             footnoteElement.remove();
         });
 
@@ -291,6 +376,10 @@ export class Task {
         li.setAttr('data-line', listIndex);
         checkbox.setAttr('data-line', listIndex);
 
+        if (layoutOptions?.shortMode) {
+            this.addTooltip({ element: textSpan });
+        }
+
         return li;
     }
 
@@ -298,30 +387,57 @@ export class Task {
         layoutOptions = layoutOptions ?? new LayoutOptions();
         let taskString = this.description;
 
-        if (!layoutOptions.hideRecurrenceRule) {
-            const recurrenceRule: string = this.recurrenceRule
-                ? ` 🔁 ${this.recurrenceRule.toText()}`
-                : '';
+        if (!layoutOptions.hidePriority) {
+            let priority: string = '';
+
+            if (this.priority === Priority.High) {
+                priority = ' ⏫';
+            } else if (this.priority === Priority.Medium) {
+                priority = ' 🔼';
+            } else if (this.priority === Priority.Low) {
+                priority = ' 🔽';
+            }
+
+            taskString += priority;
+        }
+
+        if (!layoutOptions.hideRecurrenceRule && this.recurrence) {
+            const recurrenceRule: string = layoutOptions.shortMode
+                ? ' 🔁'
+                : ` 🔁 ${this.recurrence.toText()}`;
             taskString += recurrenceRule;
         }
 
-        if (!layoutOptions.hideDueDate) {
-            const dueDate: string = this.dueDate
-                ? this.dateLink
-                    ? ` 📅 [[${this.dueDate.format(this.dateFormat)}]]`
-                    : ` 📅 ${this.dueDate.format(this.dateFormat)}`
-                : '';
+        if (!layoutOptions.hideStartDate && this.startDate) {
+            const startDate: string = layoutOptions.shortMode
+                ? ' 🛫'
+                : ` 🛫 ${this.startDate.format(Task.dateFormat)}`;
+            taskString += startDate;
+        }
+
+        if (!layoutOptions.hideScheduledDate && this.scheduledDate) {
+            const scheduledDate: string = layoutOptions.shortMode
+                ? ' ⏳'
+                : ` ⏳ ${this.scheduledDate.format(Task.dateFormat)}`;
+            taskString += scheduledDate;
+        }
+
+        if (!layoutOptions.hideDueDate && this.dueDate) {
+            const dueDate: string = layoutOptions.shortMode
+                ? ' 📅'
+                : ` 📅 ${this.dueDate.format(Task.dateFormat)}`;
             taskString += dueDate;
         }
 
-        if (!layoutOptions.hideDoneDate) {
-            const doneDate: string = this.doneDate
-                ? this.dateLink
-                    ? ` ✅ [[${this.doneDate.format(this.dateFormat)}]]`
-                    : ` ✅ ${this.doneDate.format(this.dateFormat)}`
-                : '';
+        if (!layoutOptions.hideDoneDate && this.doneDate) {
+            const doneDate: string = layoutOptions.shortMode
+                ? ' ✅'
+                : ` ✅ ${this.doneDate.format(Task.dateFormat)}`;
             taskString += doneDate;
         }
+
+        const blockLink: string = this.blockLink ?? '';
+        taskString += blockLink;
 
         return taskString;
     }
@@ -337,43 +453,27 @@ export class Task {
      *
      * Toggling can result in more than one returned task in the case of
      * recurrence. If it is a recurring task, the toggled task will be returned
-     * toether with the next occurrence in the order `[next, toggled]`. If the
+     * together with the next occurrence in the order `[next, toggled]`. If the
      * task is not recurring, it will return `[toggled]`.
      */
     public toggle(): Task[] {
         const newStatus: Status =
             this.status === Status.Todo ? Status.Done : Status.Todo;
+
         let newDoneDate = null;
-        let nextOccurrence: Moment | undefined;
+
+        let nextOccurrence: {
+            startDate: Moment | null;
+            scheduledDate: Moment | null;
+            dueDate: Moment | null;
+        } | null = null;
+
         if (newStatus !== Status.Todo) {
             newDoneDate = window.moment();
 
             // If this task is no longer todo, we need to check if it is recurring:
-            if (this.recurrenceRule !== null) {
-                // If no due date, next occurrence is after "today".
-                const dtStart: Moment =
-                    this.dueDate !== null ? this.dueDate : window.moment();
-                // RRule disregards the timezone:
-                dtStart.endOf('day').utc(true);
-
-                // Create a new rrule with `dtstart` set so that the date of
-                // the new occurrence is calculated based on the original due
-                // date and not based on today.
-                const rrule = new RRule({
-                    ...this.recurrenceRule.options,
-                    dtstart: dtStart.toDate(),
-                });
-
-                // The next occurrence should happen after today or the due
-                // date, whatever is later.
-                const today = window.moment().endOf('day').utc(true);
-                const after = today.isAfter(dtStart) ? today : dtStart;
-                const next = rrule.after(after.toDate(), false);
-
-                if (next !== null) {
-                    // Re-add the timezone that RRule disregarded:
-                    nextOccurrence = window.moment.utc(next);
-                }
+            if (this.recurrence !== null) {
+                nextOccurrence = this.recurrence.next();
             }
         }
 
@@ -386,10 +486,10 @@ export class Task {
 
         const newTasks: Task[] = [];
 
-        if (nextOccurrence !== undefined) {
+        if (nextOccurrence !== null) {
             const nextTask = new Task({
                 ...this,
-                dueDate: nextOccurrence,
+                ...nextOccurrence,
                 // New occurrences cannot have the same block link.
                 // And random block links don't help.
                 blockLink: '',
@@ -401,5 +501,89 @@ export class Task {
         newTasks.push(toggledTask);
 
         return newTasks;
+    }
+
+    public get urgency(): number {
+        if (this._urgency === null) {
+            this._urgency = Urgency.calculate(this);
+        }
+
+        return this._urgency;
+    }
+
+    private addTooltip({ element }: { element: HTMLElement }): void {
+        if (
+            this.recurrence ||
+            this.startDate ||
+            this.scheduledDate ||
+            this.dueDate ||
+            this.doneDate
+        ) {
+            element.addEventListener('mouseenter', () => {
+                const tooltip = element.createDiv();
+                tooltip.addClasses(['tooltip', 'mod-right']);
+
+                if (this.recurrence) {
+                    const recurrenceDiv = tooltip.createDiv();
+                    recurrenceDiv.setText(`🔁 ${this.recurrence.toText()}`);
+                }
+
+                if (this.startDate) {
+                    const startDateDiv = tooltip.createDiv();
+                    startDateDiv.setText(
+                        Task.toTooltipDate({
+                            signifier: '🛫',
+                            date: this.startDate,
+                        }),
+                    );
+                }
+
+                if (this.scheduledDate) {
+                    const scheduledDateDiv = tooltip.createDiv();
+                    scheduledDateDiv.setText(
+                        Task.toTooltipDate({
+                            signifier: '⏳',
+                            date: this.scheduledDate,
+                        }),
+                    );
+                }
+
+                if (this.dueDate) {
+                    const dueDateDiv = tooltip.createDiv();
+                    dueDateDiv.setText(
+                        Task.toTooltipDate({
+                            signifier: '📅',
+                            date: this.dueDate,
+                        }),
+                    );
+                }
+
+                if (this.doneDate) {
+                    const doneDateDiv = tooltip.createDiv();
+                    doneDateDiv.setText(
+                        Task.toTooltipDate({
+                            signifier: '✅',
+                            date: this.doneDate,
+                        }),
+                    );
+                }
+
+                element.addEventListener('mouseleave', () => {
+                    tooltip.remove();
+                });
+            });
+        }
+    }
+
+    private static toTooltipDate({
+        signifier,
+        date,
+    }: {
+        signifier: string;
+        date: Moment;
+    }): string {
+        return `${signifier} ${date.format(Task.dateFormat)} (${date.from(
+            window.moment().startOf('day'),
+        )})`;
     }
 }

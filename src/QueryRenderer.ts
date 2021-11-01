@@ -26,11 +26,13 @@ export class QueryRenderer {
 
         plugin.registerMarkdownCodeBlockProcessor(
             'tasks',
-            this.addQueryRenderChild.bind(this),
+            this._addQueryRenderChild.bind(this),
         );
     }
 
-    private async addQueryRenderChild(
+    public addQueryRenderChild = this._addQueryRenderChild.bind(this);
+
+    private async _addQueryRenderChild(
         source: string,
         element: HTMLElement,
         context: MarkdownPostProcessorContext,
@@ -202,6 +204,10 @@ class QueryRenderChild extends MarkdownRenderChild {
                 listIndex: i,
                 layoutOptions: this.query.layoutOptions,
             });
+
+            // Remove all footnotes. They don't re-appear in another document.
+            const footnotes = listItem.querySelectorAll('[data-footnote-id]');
+            footnotes.forEach((footnote) => footnote.remove());
 
             const postInfo = listItem.createSpan();
 

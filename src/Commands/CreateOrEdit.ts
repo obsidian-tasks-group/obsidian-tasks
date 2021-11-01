@@ -1,7 +1,7 @@
 import { App, Editor, MarkdownView, View } from 'obsidian';
 import { getSettings } from 'Settings';
 import { TaskModal } from '../TaskModal';
-import { Status, Task } from '../Task';
+import { Priority, Status, Task } from '../Task';
 
 export const createOrEdit = (
     checking: boolean,
@@ -70,11 +70,15 @@ const taskFromLine = ({ line, path }: { line: string; path: string }): Task => {
             path,
             indentation: '',
             originalStatusCharacter: ' ',
+            priority: Priority.None,
+            startDate: null,
+            scheduledDate: null,
             dueDate: null,
             doneDate: null,
             dateFormat,
             dateLink,
             recurrenceRule: null,
+            recurrence: null,
             // We don't need the following fields to edit here in the editor.
             sectionStart: 0,
             sectionIndex: 0,
@@ -102,11 +106,15 @@ const taskFromLine = ({ line, path }: { line: string; path: string }): Task => {
         indentation,
         originalStatusCharacter: statusString,
         blockLink,
+        priority: Priority.None,
+        startDate: null,
+        scheduledDate: null,
         dueDate: null,
         doneDate: null,
         dateFormat,
         dateLink,
         recurrenceRule: null,
+        recurrence: null,
         // We don't need the following fields to edit here in the editor.
         sectionStart: 0,
         sectionIndex: 0,
