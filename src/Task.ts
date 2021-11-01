@@ -13,7 +13,7 @@ export enum Status {
 
 export class Task {
     public readonly status: Status;
-    public readonly description: string;
+    public description: string;
     public readonly path: string;
     public readonly indentation: string;
     /** Line number where the section starts that contains this task. */
@@ -37,9 +37,9 @@ export class Task {
     // The following regexes end with `$` because they will be matched and
     // removed from the end until none are left.
     public static readonly dueDateRegex =
-        /[📅📆🗓] (\[\[)?([\w\-\s:]+)(\]\])?$/u;
-    public static readonly doneDateRegex = /✅ (\[\[)?([\w\-\s:]+)(\]\])?$/u;
-    public static readonly recurrenceRegex = /🔁([a-zA-Z0-9, !]+)$/u;
+        / [📅📆🗓] (\[\[)?([\w\-\s:]+)(\]\])?$/u;
+    public static readonly doneDateRegex = / ✅ (\[\[)?([\w\-\s:]+)(\]\])?$/u;
+    public static readonly recurrenceRegex = / 🔁([a-zA-Z0-9, !]+)$/u;
     public static readonly blockLinkRegex = / \^[a-zA-Z0-9-]+$/u;
 
     constructor({
@@ -308,7 +308,7 @@ export class Task {
         if (!layoutOptions.hideDueDate) {
             const dueDate: string = this.dueDate
                 ? this.dateLink
-                    ? `📅 [[${this.dueDate.format(this.dateFormat)}]]`
+                    ? ` 📅 [[${this.dueDate.format(this.dateFormat)}]]`
                     : ` 📅 ${this.dueDate.format(this.dateFormat)}`
                 : '';
             taskString += dueDate;
