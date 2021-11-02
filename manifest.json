@@ -1,7 +1,7 @@
 {
   "id": "obsidian-tasks-plugin",
-  "name": "Tasks - shabegom fork",
-  "version": "668",
+  "name": "Tasks",
+  "version": "1.4.1",
   "minAppVersion": "0.12.17",
   "description": "Task management for Obsidian",
   "author": "Martin Schenck",
