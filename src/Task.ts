@@ -600,7 +600,7 @@ export class Task {
         signifier: string;
         date: Moment;
     }): string {
-        return `${signifier} ${date.format(this.dateFormat)} (${date.from(
+        return `${signifier} ${date.format('YYYY-MM-DD')} (${date.from(
             window.moment().startOf('day'),
         )})`;
     }
