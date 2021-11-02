@@ -1,9 +1,12 @@
+export const dateFormats = ['YYYY-MM-DD', 'YYYYMMDD'];
+export type DateFormat = typeof dateFormats[number]; // All formats in the array of dateFormats.
+
 export interface Settings {
     globalFilter: string;
     removeGlobalFilter: boolean;
     setDoneDate: boolean;
-    dateFormat: string;
-    dateLink: boolean;
+    dateFormat: DateFormat;
+    linkDates: boolean;
 }
 
 const defaultSettings: Settings = {
@@ -11,7 +14,7 @@ const defaultSettings: Settings = {
     removeGlobalFilter: false,
     setDoneDate: true,
     dateFormat: 'YYYY-MM-DD',
-    dateLink: false,
+    linkDates: false,
 };
 
 let settings: Settings = { ...defaultSettings };

@@ -1,6 +1,7 @@
 import { PluginSettingTab, Setting } from 'obsidian';
+
 import type TasksPlugin from './main';
-import { getSettings, updateSettings } from './Settings';
+import { DateFormat, getSettings, updateSettings } from './Settings';
 
 export class SettingsTab extends PluginSettingTab {
     private readonly plugin: TasksPlugin;
@@ -21,6 +22,8 @@ export class SettingsTab extends PluginSettingTab {
             text: 'Changing any settings requires a restart of obsidian.',
         });
 
+        containerEl.createEl('hr');
+        containerEl.createEl('h3', { text: 'Global Filter' });
         new Setting(containerEl)
             .setName('Global task filter')
             .setDesc(
@@ -79,31 +82,60 @@ export class SettingsTab extends PluginSettingTab {
                     });
             });
 
+        containerEl.createEl('hr');
+        containerEl.createEl('h3', { text: 'Dates' });
+        containerEl.createEl('hr');
+        containerEl.createEl('div', {
+            cls: 'setting-item-description',
+            text:
+                'Changing any date settings will change the storage of future tasks only.\n' +
+                'This means that all tasks currently in the vault will remain the same.\n' +
+                'Tasks will still understand all your tasks with the old format.\n\n' +
+                'When you toggle a tasks status, edit a task using the modal, or create a new task, it will be stored with the new format.',
+        });
+        containerEl.createEl('br');
+        containerEl.createEl('div', {
+            cls: 'setting-item-description',
+            text: 'Tasks shown in preview mode or query results will immediately reflect the change (after a reload of obsidian).',
+        });
+        containerEl.createEl('br');
+        containerEl.createEl('div', {
+            cls: 'setting-item-description',
+            text: 'Please note that the modal for "creating or editing" tasks does not support all date formats in its date inputs!',
+        });
+
         new Setting(containerEl)
-            .setName('Task Date Format')
-            .setDesc('Set the date format for task due dates')
-            .addText((text) => {
+            .setName('Date format')
+            .setDesc(
+                'All dates (for example due and done dates) will be saved in this format.',
+            )
+            .addDropdown((dropDown) => {
                 const settings = getSettings();
 
-                text.setPlaceholder('YYYY-MM-DD')
+                dropDown
+                    .addOption(
+                        'YYYY-MM-DD',
+                        'YYYY-MM-DD (for example 2021-10-15)',
+                    )
+                    .addOption('YYYYMMDD', 'YYYYMMDD (for example 20211015)')
                     .setValue(settings.dateFormat)
                     .onChange(async (value) => {
-                        updateSettings({ dateFormat: value });
+                        updateSettings({ dateFormat: value as DateFormat });
 
                         await this.plugin.saveSettings();
                     });
             });
 
         new Setting(containerEl)
-            .setName('Date is a link')
+            .setName('Store links as dates')
             .setDesc(
-                'Enabling this makes the due date a link to the Daily Notes Page',
+                'Enabling this surrounds dates (for example due and done dates) with [[]] when a task is saved.',
             )
             .addToggle((toggle) => {
                 const settings = getSettings();
 
-                toggle.setValue(settings.dateLink).onChange(async (value) => {
-                    updateSettings({ dateLink: value });
+                toggle.setValue(settings.linkDates).onChange(async (value) => {
+                    updateSettings({ linkDates: value });
 
                     await this.plugin.saveSettings();
                 });

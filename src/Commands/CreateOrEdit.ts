@@ -1,5 +1,4 @@
 import { App, Editor, MarkdownView, View } from 'obsidian';
-import { getSettings } from 'Settings';
 import { TaskModal } from '../TaskModal';
 import { Priority, Status, Task } from '../Task';
 
@@ -52,7 +51,7 @@ const taskFromLine = ({ line, path }: { line: string; path: string }): Task => {
         sectionIndex: 0, // We don't need this to toggle it here in the editor.
         precedingHeader: null, // We don't need this to toggle it here in the editor.
     });
-    const { dateFormat, dateLink } = getSettings();
+
     if (task !== null) {
         return task;
     }
@@ -75,8 +74,6 @@ const taskFromLine = ({ line, path }: { line: string; path: string }): Task => {
             scheduledDate: null,
             dueDate: null,
             doneDate: null,
-            dateFormat,
-            dateLink,
             recurrence: null,
             // We don't need the following fields to edit here in the editor.
             sectionStart: 0,
@@ -110,8 +107,6 @@ const taskFromLine = ({ line, path }: { line: string; path: string }): Task => {
         scheduledDate: null,
         dueDate: null,
         doneDate: null,
-        dateFormat,
-        dateLink,
         recurrence: null,
         // We don't need the following fields to edit here in the editor.
         sectionStart: 0,
