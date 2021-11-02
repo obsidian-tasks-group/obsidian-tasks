@@ -47,7 +47,8 @@
                 },
             );
             if (parsed !== null) {
-                parsedStartDate = window.moment(parsed).format('YYYY-MM-DD');
+                const {dateFormat} = getSettings()
+                parsedStartDate = window.moment(parsed).format(dateFormat);
             } else {
                 parsedStartDate = '<i>invalid start date</i>';
             }
@@ -66,9 +67,10 @@
                 },
             );
             if (parsed !== null) {
+                const {dateFormat} = getSettings()
                 parsedScheduledDate = window
                     .moment(parsed)
-                    .format('YYYY-MM-DD');
+                    .format(dateFormat);
             } else {
                 parsedScheduledDate = '<i>invalid scheduled date</i>';
             }

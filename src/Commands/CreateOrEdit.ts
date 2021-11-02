@@ -77,7 +77,6 @@ const taskFromLine = ({ line, path }: { line: string; path: string }): Task => {
             doneDate: null,
             dateFormat,
             dateLink,
-            recurrenceRule: null,
             recurrence: null,
             // We don't need the following fields to edit here in the editor.
             sectionStart: 0,
@@ -113,7 +112,6 @@ const taskFromLine = ({ line, path }: { line: string; path: string }): Task => {
         doneDate: null,
         dateFormat,
         dateLink,
-        recurrenceRule: null,
         recurrence: null,
         // We don't need the following fields to edit here in the editor.
         sectionStart: 0,

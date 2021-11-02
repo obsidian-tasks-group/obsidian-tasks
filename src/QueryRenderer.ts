@@ -3,7 +3,6 @@ import {
     EventRef,
     MarkdownPostProcessorContext,
     MarkdownRenderChild,
-    Notice,
     Plugin,
     parseLinktext,
 } from 'obsidian';
@@ -127,14 +126,15 @@ class QueryRenderChild extends MarkdownRenderChild {
                     .replace('#^', '')
                     .replace(']]', '');
                 if (link) {
-                    const file = app.metadataCache.getFirstLinkpathDest(
+                    const file = this.app.metadataCache.getFirstLinkpathDest(
                         link.path.replace('![[', ''),
                         task.path,
                     );
                     const content =
-                        file && (await app.vault.read(file)).split('\n');
+                        file && (await this.app.vault.read(file)).split('\n');
                     const blocks =
-                        file && app.metadataCache.getFileCache(file)?.blocks;
+                        file &&
+                        this.app.metadataCache.getFileCache(file)?.blocks;
                     const line = blocks && blocks[subpath]?.position.start.line;
                     if (line) {
                         task.description = content[line]
@@ -169,7 +169,6 @@ class QueryRenderChild extends MarkdownRenderChild {
     private async createTasksList({
         tasks,
         content,
-        app,
     }: {
         tasks: Task[];
         content: HTMLDivElement;
