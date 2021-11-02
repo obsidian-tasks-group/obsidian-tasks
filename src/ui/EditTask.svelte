@@ -47,7 +47,8 @@
                 },
             );
             if (parsed !== null) {
-                parsedStartDate = window.moment(parsed).format('YYYY-MM-DD');
+                const {dateFormat} = getSettings()
+                parsedStartDate = window.moment(parsed).format(dateFormat);
             } else {
                 parsedStartDate = '<i>invalid start date</i>';
             }
@@ -66,9 +67,10 @@
                 },
             );
             if (parsed !== null) {
+                const {dateFormat} = getSettings()
                 parsedScheduledDate = window
                     .moment(parsed)
-                    .format('YYYY-MM-DD');
+                    .format(dateFormat);
             } else {
                 parsedScheduledDate = '<i>invalid scheduled date</i>';
             }
@@ -83,7 +85,8 @@
                 forwardDate: true,
             });
             if (parsed !== null) {
-                parsedDueDate = window.moment(parsed).format('YYYY-MM-DD');
+                const {dateFormat} = getSettings()
+                parsedDueDate = window.moment(parsed).format(dateFormat);
             } else {
                 parsedDueDate = '<i>invalid due date</i>';
             }
@@ -111,7 +114,8 @@
         } else {
             const parsed = chrono.parseDate(editableTask.doneDate);
             if (parsed !== null) {
-                parsedDone = window.moment(parsed).format('YYYY-MM-DD');
+                const {dateFormat} = getSettings()
+                parsedDone = window.moment(parsed).format(dateFormat);
             } else {
                 parsedDone = '<i>invalid done date</i>';
             }
@@ -119,11 +123,8 @@
     }
 
     onMount(() => {
-        const { globalFilter } = getSettings();
-        const description = task.description
-            .replace(globalFilter, '')
-            .replace('  ', ' ')
-            .trim();
+        const { globalFilter, dateFormat } = getSettings();
+        const description = task.description.replace(globalFilter, '').replace('  ', ' ').trim();
 
         let priority: 'none' | 'low' | 'medium' | 'high' = 'none';
         if (task.priority === Priority.Low) {
@@ -140,13 +141,13 @@
             priority,
             recurrenceRule: task.recurrence ? task.recurrence.toText() : '',
             startDate: task.startDate
-                ? task.startDate.format('YYYY-MM-DD')
+                ? task.startDate.format(dateFormat)
                 : '',
             scheduledDate: task.scheduledDate
-                ? task.scheduledDate.format('YYYY-MM-DD')
+                ? task.scheduledDate.format(dateFormat)
                 : '',
-            dueDate: task.dueDate ? task.dueDate.format('YYYY-MM-DD') : '',
-            doneDate: task.doneDate ? task.doneDate.format('YYYY-MM-DD') : '',
+            dueDate: task.dueDate ? task.dueDate.format(dateFormat) : '',
+            doneDate: task.doneDate ? task.doneDate.format(dateFormat) : '',
         };
         setTimeout(() => {
             descriptionInput.focus();
@@ -154,7 +155,7 @@
     });
 
     const _onSubmit = () => {
-        const { globalFilter } = getSettings();
+        const { globalFilter, dateFormat } = getSettings();
         let description = editableTask.description.trim();
         if (!description.includes(globalFilter)) {
             description = globalFilter + ' ' + description;
@@ -224,11 +225,7 @@
             startDate,
             scheduledDate,
             dueDate,
-            doneDate: window
-                .moment(editableTask.doneDate, 'YYYY-MM-DD')
-                .isValid()
-                ? window.moment(editableTask.doneDate, 'YYYY-MM-DD')
-                : null,
+            doneDate: window.moment(editableTask.doneDate, dateFormat).isValid() ? window.moment(editableTask.doneDate, dateFormat) : null,
         });
 
         onSubmit([updatedTask]);
