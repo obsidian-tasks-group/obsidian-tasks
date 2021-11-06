@@ -279,6 +279,7 @@ class QueryRenderChild extends MarkdownRenderChild {
       link.setAttribute('data-href', fileName);
       link.rel = 'noopener';
       link.target = '_blank';
+      link.addClass('internal-link');
       link.addClass('internal-link-short-mode');
             
       let linkText = '🔗';
