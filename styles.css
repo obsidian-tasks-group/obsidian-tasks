@@ -16,7 +16,7 @@
     cursor: pointer;
 }
 
-.internal-link-short-mode {
+.internal-link.internal-link-short-mode {
     text-decoration: none;
 }
 
