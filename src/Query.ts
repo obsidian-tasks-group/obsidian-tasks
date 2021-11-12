@@ -389,10 +389,14 @@ export class Query {
             if (filterMethod === 'includes') {
                 this._filters.push((task: Task) =>
                     this.stringIncludesCaseInsensitive(
-                        // Remove global filter from description match if present.
+                        // Remove global filter from originalTaskBody match if present.
                         // This is necessary to match only on the content of the task, not
                         // the global filter.
-                        task.description.replace(globalFilter, '').trim(),
+                        // originalTaskBody is used for the description query as it contains
+                        // all the date meta that a user would expect to be there. There
+                        // was a break in functionality that caused issue #399 and this
+                        // resolved it.
+                        task.originalTaskBody.replace(globalFilter, '').trim(),
                         descriptionMatch[2],
                     ),
                 );
@@ -400,10 +404,16 @@ export class Query {
                 this._filters.push(
                     (task: Task) =>
                         !this.stringIncludesCaseInsensitive(
-                            // Remove global filter from description match if present.
+                            // Remove global filter from originalTaskBody match if present.
                             // This is necessary to match only on the content of the task, not
                             // the global filter.
-                            task.description.replace(globalFilter, '').trim(),
+                            // originalTaskBody is used for the description query as it contains
+                            // all the date meta that a user would expect to be there. There
+                            // was a break in functionality that caused issue #399 and this
+                            // resolved it.
+                            task.originalTaskBody
+                                .replace(globalFilter, '')
+                                .trim(),
                             descriptionMatch[2],
                         ),
                 );

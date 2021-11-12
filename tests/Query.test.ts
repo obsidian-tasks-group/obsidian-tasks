@@ -23,6 +23,7 @@ describe('Query', () => {
                     doneDate: null,
                     recurrence: null,
                     blockLink: '',
+                    originalTaskBody: '',
                 }),
                 new Task({
                     status: Status.Todo,
@@ -40,6 +41,7 @@ describe('Query', () => {
                     doneDate: null,
                     recurrence: null,
                     blockLink: '',
+                    originalTaskBody: '',
                 }),
             ];
             const input = 'path includes ab/c d';
@@ -133,6 +135,59 @@ describe('Query', () => {
             expect(filteredTasks.length).toEqual(2);
             expect(filteredTasks[0]).toEqual(tasks[1]);
             expect(filteredTasks[1]).toEqual(tasks[2]);
+
+            // Cleanup
+            updateSettings(originalSettings);
+        });
+
+        it('description filters out emoji for does not include', () => {
+            // Arrange
+            const originalSettings = getSettings();
+            updateSettings({ globalFilter: '#task' });
+            const tasks: Task[] = [
+                Task.fromLine({
+                    line: '- [ ] #task this does not include the word; only in the global filter',
+                    sectionStart: 0,
+                    sectionIndex: 0,
+                    path: '',
+                    precedingHeader: '',
+                }),
+                Task.fromLine({
+                    line: '- [ ] #task this does: task',
+                    sectionStart: 0,
+                    sectionIndex: 0,
+                    path: '',
+                    precedingHeader: '',
+                }),
+                Task.fromLine({
+                    line: '- [ ] #task Do something on this date 📅 2021-07-09',
+                    sectionStart: 0,
+                    sectionIndex: 0,
+                    path: '',
+                    precedingHeader: '',
+                }),
+                Task.fromLine({
+                    line: '- [x] #task This was done! ✅ 2021-08-09 ',
+                    sectionStart: 0,
+                    sectionIndex: 0,
+                    path: '',
+                    precedingHeader: '',
+                }),
+            ] as Task[];
+            const input = 'description does not include 📅';
+            const query = new Query({ source: input });
+
+            // Act
+            let filteredTasks = [...tasks];
+            query.filters.forEach((filter) => {
+                filteredTasks = filteredTasks.filter(filter);
+            });
+
+            // Assert
+            expect(filteredTasks.length).toEqual(3);
+            expect(filteredTasks[0]).toEqual(tasks[0]);
+            expect(filteredTasks[1]).toEqual(tasks[1]);
+            expect(filteredTasks[2]).toEqual(tasks[3]);
 
             // Cleanup
             updateSettings(originalSettings);

@@ -1,6 +1,6 @@
 import { Component, MarkdownRenderer } from 'obsidian';
 
-import type { Moment } from 'moment';
+import moment, { Moment } from 'moment';
 import { replaceTaskWithTasks } from './File';
 import { getSettings } from './Settings';
 import { LayoutOptions } from './LayoutOptions';
@@ -34,6 +34,12 @@ export class Task {
      * Required to be added to the LI the same way obsidian does as a `data-task` attribute.
      */
     public readonly originalStatusCharacter: string;
+
+    /**
+     * The original body of the task after the - [.]
+     */
+    public readonly originalTaskBody: string;
+
     public readonly precedingHeader: string | null;
 
     public readonly priority: Priority;
@@ -77,6 +83,7 @@ export class Task {
         doneDate,
         recurrence,
         blockLink,
+        originalTaskBody,
     }: {
         status: Status;
         description: string;
@@ -93,6 +100,7 @@ export class Task {
         doneDate: moment.Moment | null;
         recurrence: Recurrence | null;
         blockLink: string;
+        originalTaskBody: string;
     }) {
         this.status = status;
         this.description = description;
@@ -112,6 +120,8 @@ export class Task {
 
         this.recurrence = recurrence;
         this.blockLink = blockLink;
+
+        this.originalTaskBody = originalTaskBody;
     }
 
     public static fromLine({
@@ -146,6 +156,7 @@ export class Task {
 
         // match[3] includes the whole body of the task after the brackets.
         const body = regexMatch[3].trim();
+        const originalTaskBody = body;
 
         const { globalFilter } = getSettings();
         if (!body.includes(globalFilter)) {
@@ -198,7 +209,7 @@ export class Task {
 
             const doneDateMatch = description.match(Task.doneDateRegex);
             if (doneDateMatch !== null) {
-                doneDate = window.moment(doneDateMatch[1], Task.dateFormat);
+                doneDate = moment(doneDateMatch[1], Task.dateFormat);
                 description = description
                     .replace(Task.doneDateRegex, '')
                     .trim();
@@ -207,7 +218,7 @@ export class Task {
 
             const dueDateMatch = description.match(Task.dueDateRegex);
             if (dueDateMatch !== null) {
-                dueDate = window.moment(dueDateMatch[1], Task.dateFormat);
+                dueDate = moment(dueDateMatch[1], Task.dateFormat);
                 description = description.replace(Task.dueDateRegex, '').trim();
                 matched = true;
             }
@@ -216,10 +227,7 @@ export class Task {
                 Task.scheduledDateRegex,
             );
             if (scheduledDateMatch !== null) {
-                scheduledDate = window.moment(
-                    scheduledDateMatch[1],
-                    Task.dateFormat,
-                );
+                scheduledDate = moment(scheduledDateMatch[1], Task.dateFormat);
                 description = description
                     .replace(Task.scheduledDateRegex, '')
                     .trim();
@@ -228,7 +236,7 @@ export class Task {
 
             const startDateMatch = description.match(Task.startDateRegex);
             if (startDateMatch !== null) {
-                startDate = window.moment(startDateMatch[1], Task.dateFormat);
+                startDate = moment(startDateMatch[1], Task.dateFormat);
                 description = description
                     .replace(Task.startDateRegex, '')
                     .trim();
@@ -269,6 +277,7 @@ export class Task {
             doneDate,
             recurrence,
             blockLink,
+            originalTaskBody,
         });
 
         return task;
@@ -446,7 +455,7 @@ export class Task {
         } | null = null;
 
         if (newStatus !== Status.Todo) {
-            newDoneDate = window.moment();
+            newDoneDate = moment();
 
             // If this task is no longer todo, we need to check if it is recurring:
             if (this.recurrence !== null) {
@@ -560,7 +569,7 @@ export class Task {
         date: Moment;
     }): string {
         return `${signifier} ${date.format(Task.dateFormat)} (${date.from(
-            window.moment().startOf('day'),
+            moment().startOf('day'),
         )})`;
     }
 }
