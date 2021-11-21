@@ -37,7 +37,7 @@ You can sort tasks by the following properties:
 6. `path` (the path to the file that contains the task)
 7. `description` (the description of the task)
 
-You cann add multiple `sort by` query options, each on an extra line.
+You can add multiple `sort by` query options, each on an extra line.
 The first sort has the highest priority.
 Each subsequent `sort` will sort within the existing sorting.
 
