@@ -6,10 +6,14 @@ You can remove/leave some fields to make different types of tasks. And each one 
 
 ## Some Examples 
 - Task with due date only `#task {{VALUE: task name}} 📅 {{VDATE:due date,YYYY-MM-DD}}` ;
+
+https://user-images.githubusercontent.com/38974541/143467768-cf183171-296c-4229-81ca-a8f820b7a66e.mov
 - Task with priority and reminder and due date `#task {{VALUE: task name}} ⏰ {{VDATE:reminder date and time,YYYY-MM-DD HH:mm}} {{VALUE:⏫,🔼,🔽, }}  📅 {{VDATE:due date,YYYY-MM-DD}}` ;
+
+https://user-images.githubusercontent.com/38974541/143468599-ae598f7d-cc84-4fc9-8293-eae72cf81f8a.mov
 - Task with recurrence and scheduled date and start date `#task {{VALUE: task name}} 🔁 {{VALUE:recurrence}} 🛫 {{VDATE:start date,YYYY-MM-DD}} ⏳ {{VDATE:scheduled date,YYYY-MM-DD}}`.
 
-
+https://user-images.githubusercontent.com/38974541/143468440-c83b5f91-c923-4f30-9c52-7c69e64978c9.mov
 ## How to add quickadd command
 1. Install [nldates](https://github.com/argenos/nldates-obsidian) and [quickadd](https://github.com/chhoumann/quickadd) ;
 2. choose the `capture` choice, then make it visible on the command palette by clicking on the flash emoji ;
