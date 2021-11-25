@@ -7,7 +7,6 @@ has_toc: false
 ---
 
 # Notifications
-
 Within Tasks, notifications can be made possible by utilizing [obsidian-reminder](https://github.com/uphy/obsidian-reminder).
 This utilizes the standard Tasks date (as the due date) and can be extended with an additional reminder date by including a ⏰ and a date/time in the format `⏰ YYYY-MM-DD HH:MM`.
 Further, a default reminder can be enabled based on the Tasks' 'Due Date'.
@@ -16,7 +15,11 @@ To enable this make sure obsidian-reminder has enabled the tasks plugin format a
 ![obsidian-reminder setting](https://github.com/schemar/obsidian-tasks/raw/main/resources/screenshots/reminder.png)
 
 *Note that this is a screenshot of the reminder plugin's settings and not Tasks.*
-
+## How to write the reminder date
 When writing the task, the order is important :
 - If it's a normal task write in this format `task name ⏰ YYYY-MM-DD HH:mm 📅 YYYY-MM-DD`
 - If it's a repeating task write in this format `task name ⏰ YYYY-MM-DD HH:mm  🔁 every *** 📅 YYYY-MM-DD`
+## How to complete the reminder
+The reminder date doesn't change when completing the task, the date will change only when you complete it from the reminder popup or from the notification
+
+![image](https://user-images.githubusercontent.com/38974541/143463881-e4af4b91-426f-48e8-938e-4a1053b06677.png)
