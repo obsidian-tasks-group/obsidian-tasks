@@ -11,7 +11,7 @@ You can remove/leave some fields to make different types of tasks. And each one 
 
 
 ## How to add quickadd command
-1. Install [nldates](https://github.com/argenos/nldates-obsidian) and [quickadd plugin](https://github.com/chhoumann/quickadd) ;
+1. Install [nldates](https://github.com/argenos/nldates-obsidian) and [quickadd](https://github.com/chhoumann/quickadd) ;
 2. choose the `capture` choice, then make it visible on the command palette by clicking on the flash emoji ;
 3. Enable the `save as task` option, then enable the `capture format` option and paste your custom format ;
 4. You're done.
