@@ -7,6 +7,7 @@ has_toc: false
 ---
 
 # Notifications
+
 Within Tasks, notifications can be made possible by utilizing [obsidian-reminder](https://github.com/uphy/obsidian-reminder).
 This utilizes the standard Tasks date (as the due date) and can be extended with an additional reminder date by including a ⏰ and a date/time in the format `⏰ YYYY-MM-DD HH:MM`.
 Further, a default reminder can be enabled based on the Tasks' 'Due Date'.
