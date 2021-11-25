@@ -21,6 +21,6 @@ When writing the task, the order is important :
 - If it's a normal task write in this format `task name ⏰ YYYY-MM-DD HH:mm 📅 YYYY-MM-DD`
 - If it's a repeating task write in this format `task name ⏰ YYYY-MM-DD HH:mm  🔁 every *** 📅 YYYY-MM-DD`
 ## How to complete the reminder
-The reminder date doesn't change when completing the task, the date will change only when you complete it from the reminder popup or from the notification
+The reminder date doesn't change when completing the task as of yet, the date will change only when you complete it from the reminder popup or from the notification
 
-![image](https://user-images.githubusercontent.com/38974541/143463881-e4af4b91-426f-48e8-938e-4a1053b06677.png)
+![image](https://user-images.githubusercontent.com/38974541/143463881-e4af4b91-426f-48e8-938e-4a1053b06677.png) ![image](https://user-images.githubusercontent.com/38974541/143464983-542675ae-a467-41c0-aaca-1075c42f8328.png)
