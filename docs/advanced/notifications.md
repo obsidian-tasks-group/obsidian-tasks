@@ -16,7 +16,7 @@ To enable this make sure obsidian-reminder has enabled the tasks plugin format a
 ![obsidian-reminder setting](https://github.com/schemar/obsidian-tasks/raw/main/resources/screenshots/reminder.png)
 
 *Note that this is a screenshot of the reminder plugin's settings and not Tasks.*
-## How to write the reminder date
+## Where to add the reminder date
 The order is important when writing the task. You have to put the reminder date between the task name and the other fields :
 ```
 - [ ] #task task name ⏰ YYYY-MM-DD HH:mm ⏫  🔁 every *** 🛫 YYYY-MM-DD ⏳ YYYY-MM-DD 📅 YYYY-MM-DD
