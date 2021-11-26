@@ -1,6 +1,9 @@
 # Integration with Quickadd plugin
 
-Additional to the official command to create a task, you can use a quickadd command with a custom capture format : `#task {{VALUE: task name}} ⏰ {{VDATE:reminder date and time,YYYY-MM-DD HH:mm}} {{VALUE:⏫,🔼,🔽, }} 🔁 {{VALUE:recurrence}} 🛫 {{VDATE:start date,YYYY-MM-DD}} ⏳ {{VDATE:scheduled date,YYYY-MM-DD}} 📅 {{VDATE:due date,YYYY-MM-DD}}`.
+Additional to the official command to create a task, you can use a quickadd command with a custom capture format : 
+```
+#task {{VALUE: task name}} ⏰ {{VDATE:reminder date and time,YYYY-MM-DD HH:mm}} {{VALUE:⏫,🔼,🔽, }} 🔁 {{VALUE:recurrence}} 🛫 {{VDATE:start date,YYYY-MM-DD}} ⏳ {{VDATE:scheduled date,YYYY-MM-DD}} 📅 {{VDATE:due date,YYYY-MM-DD}}
+```
 
 You can remove/leave some fields to make different types of tasks. And each one can have its own command. 
 
