@@ -19,7 +19,7 @@ To enable this make sure obsidian-reminder has enabled the tasks plugin format a
 ## How to write the reminder date
 The order is important when writing the task. You have to put the reminder date between the task name and the other fields :
 ```
-- [ ] #task task name ⏰  YYYY-MM-DD HH:mm ⏫  🔁  every *** 🛫 YYYY-MM-DD ⏳ 2021-11-26 📅  YYYY-MM-DD
+- [ ] #task task name ⏰ YYYY-MM-DD HH:mm ⏫  🔁 every *** 🛫 YYYY-MM-DD ⏳ YYYY-MM-DD 📅 YYYY-MM-DD
 ```
 ## How to complete the reminder
 The reminder date doesn't change when completing the task as of yet, the date will change only when you complete it from the reminder popup or from the notification.
