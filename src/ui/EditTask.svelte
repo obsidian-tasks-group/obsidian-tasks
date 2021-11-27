@@ -180,7 +180,9 @@
             var elem = document.getElementById('task-modal-reminder');
 
             if (elem) {
-                elem.parentNode.removeChild(elem);
+                if (elem.parentNode) {
+                    elem.parentNode.removeChild(elem);
+                }
             }
         }
         setTimeout(() => {
