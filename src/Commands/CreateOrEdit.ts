@@ -80,6 +80,7 @@ const taskFromLine = ({ line, path }: { line: string; path: string }): Task => {
             sectionIndex: 0,
             precedingHeader: null,
             blockLink: '',
+            reminderTime: null,
         });
     }
 
@@ -107,6 +108,7 @@ const taskFromLine = ({ line, path }: { line: string; path: string }): Task => {
         scheduledDate: null,
         dueDate: null,
         doneDate: null,
+        reminderTime: null,
         recurrence: null,
         // We don't need the following fields to edit here in the editor.
         sectionStart: 0,

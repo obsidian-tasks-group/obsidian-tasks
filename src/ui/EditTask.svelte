@@ -11,6 +11,7 @@
     let descriptionInput: HTMLInputElement;
     let editableTask: {
         description: string;
+        reminderTime: string;
         status: Status;
         priority: 'none' | 'low' | 'medium' | 'high';
         recurrenceRule: string;
@@ -20,6 +21,7 @@
         doneDate: string;
     } = {
         description: '',
+        reminderTime: '',
         status: Status.Todo,
         priority: 'none',
         recurrenceRule: '',
@@ -30,6 +32,7 @@
     };
 
     let parsedStartDate: string = '';
+    let parsedReminderTime: string = '';
     let parsedScheduledDate: string = '';
     let parsedDueDate: string = '';
     let parsedRecurrence: string = '';
@@ -71,6 +74,27 @@
                     .format('YYYY-MM-DD');
             } else {
                 parsedScheduledDate = '<i>invalid scheduled date</i>';
+            }
+        }
+    }
+    // reminder parsing. Apparently it supports am/pm format!
+    $: {
+        if (!editableTask.reminderTime) {
+            parsedReminderTime = '<i>no reminder</>';
+        } else {
+            const parsed = chrono.parseDate(
+                editableTask.reminderTime,
+                new Date(),
+                {
+                    forwardDate: true,
+                },
+            );
+            if (parsed !== null) {
+                parsedReminderTime = window
+                    .moment(parsed)
+                    .format('YYYY-MM-DD HH:mm');
+            } else {
+                parsedReminderTime = '<i>invalid reminder</i>';
             }
         }
     }
@@ -133,7 +157,6 @@
         } else if (task.priority === Priority.High) {
             priority = 'high';
         }
-
         editableTask = {
             description,
             status: task.status,
@@ -147,7 +170,19 @@
                 : '',
             dueDate: task.dueDate ? task.dueDate.format('YYYY-MM-DD') : '',
             doneDate: task.doneDate ? task.doneDate.format('YYYY-MM-DD') : '',
+            reminderTime: task.reminderTime
+                ? task.reminderTime.format('YYYY-MM-DD HH:mm')
+                : '',
         };
+        //Only load reminder panel if activated in settings
+        const { reminder } = getSettings();
+        if (!reminder) {
+            var elem = document.getElementById('task-modal-reminder');
+
+            if (elem) {
+                elem.parentNode.removeChild(elem);
+            }
+        }
         setTimeout(() => {
             descriptionInput.focus();
         }, 10);
@@ -190,6 +225,19 @@
             dueDate = window.moment(parsedDueDate);
         }
 
+        let reminderTime: moment.Moment | null = null;
+        const parsedReminderTime = chrono.parseDate(
+            editableTask.reminderTime,
+            new Date(),
+            { forwardDate: true },
+        );
+        if (parsedReminderTime !== null) {
+            reminderTime = window.moment(
+                parsedReminderTime,
+                'YYYY-MM-DD HH:mm',
+            );
+        }
+
         let recurrence: Recurrence | null = null;
         if (editableTask.recurrenceRule) {
             recurrence = Recurrence.fromText({
@@ -224,6 +272,7 @@
             startDate,
             scheduledDate,
             dueDate,
+            reminderTime: reminderTime,
             doneDate: window
                 .moment(editableTask.doneDate, 'YYYY-MM-DD')
                 .isValid()
@@ -269,7 +318,7 @@
                 bind:value={editableTask.recurrenceRule}
                 id="description"
                 type="text"
-                placeholder="Try 'every 2 weeks on Thursday'."
+                placeholder="I've changed this"
             />
             <code>🔁 {@html parsedRecurrence}</code>
         </div>
@@ -304,6 +353,21 @@
                     placeholder="Try 'Monday' or 'tomorrow'."
                 />
                 <code>🛫 {@html parsedStartDate}</code>
+            </div>
+            <!--- Reminder div --->
+            <div
+                style="visibility: visible;"
+                class="tasks-modal-date"
+                id="task-modal-reminder"
+            >
+                <label for="reminder">⏰ Reminder</label>
+                <input
+                    bind:value={editableTask.reminderTime}
+                    id="reminder"
+                    type="text"
+                    placeholder="Try 'today 12:34 am' or '2021-02-21'"
+                />
+                <code>⏰ {@html parsedReminderTime}</code>
             </div>
         </div>
         <hr />

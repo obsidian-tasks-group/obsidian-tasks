@@ -42,6 +42,7 @@ export class Task {
     public readonly scheduledDate: Moment | null;
     public readonly dueDate: Moment | null;
     public readonly doneDate: Moment | null;
+    public readonly reminderTime: Moment | null; //reminder attribute
 
     public readonly recurrence: Recurrence | null;
     /** The blockLink is a "^" annotation after the dates/recurrence rules. */
@@ -57,6 +58,8 @@ export class Task {
     public static readonly dueDateRegex = /[📅📆🗓] ?(\d{4}-\d{2}-\d{2})$/u;
     public static readonly doneDateRegex = /✅ ?(\d{4}-\d{2}-\d{2})$/u;
     public static readonly recurrenceRegex = /🔁([a-zA-Z0-9, !]+)$/u;
+    public static readonly reminderRegex =
+        /⏰ ?(\d{4}-\d{2}-\d{2}) ?((0[0-9]|1[0-9]|2[0-3]):([0-5][0-9]))$/u; //reminder regex
     public static readonly blockLinkRegex = / \^[a-zA-Z0-9-]+$/u;
 
     private _urgency: number | null = null;
@@ -77,6 +80,7 @@ export class Task {
         doneDate,
         recurrence,
         blockLink,
+        reminderTime, //reminder attribute, same as dueDate but with time
     }: {
         status: Status;
         description: string;
@@ -93,6 +97,7 @@ export class Task {
         doneDate: moment.Moment | null;
         recurrence: Recurrence | null;
         blockLink: string;
+        reminderTime: moment.Moment | null; //reminder attribute, same as dueDate but with time
     }) {
         this.status = status;
         this.description = description;
@@ -112,6 +117,7 @@ export class Task {
 
         this.recurrence = recurrence;
         this.blockLink = blockLink;
+        this.reminderTime = reminderTime; //reminder attribute, same as dueDate but with time
     }
 
     public static fromLine({
@@ -171,8 +177,9 @@ export class Task {
         let dueDate: Moment | null = null;
         let doneDate: Moment | null = null;
         let recurrence: Recurrence | null = null;
+        let reminderTime: Moment | null = null;
         // Add a "max runs" failsafe to never end in an endless loop:
-        const maxRuns = 7;
+        const maxRuns = 10;
         let runs = 0;
         do {
             matched = false;
@@ -250,6 +257,19 @@ export class Task {
                 matched = true;
             }
 
+            //parse reminder from line. The format is YYY-MM-DD HH:mm, so it's necesar to use reminderMatch[1]+" "+reminderMatch[2]
+            const reminderMatch = description.match(Task.reminderRegex);
+            if (reminderMatch !== null) {
+                reminderTime = window.moment(
+                    reminderMatch[1] + ' ' + reminderMatch[2],
+                    Task.dateFormat + ' HH:mm',
+                );
+                description = description
+                    .replace(Task.reminderRegex, '')
+                    .trim();
+                matched = true;
+            }
+
             runs++;
         } while (matched && runs <= maxRuns);
 
@@ -269,6 +289,7 @@ export class Task {
             doneDate,
             recurrence,
             blockLink,
+            reminderTime,
         });
 
         return task;
@@ -363,6 +384,13 @@ export class Task {
     public toString(layoutOptions?: LayoutOptions): string {
         layoutOptions = layoutOptions ?? new LayoutOptions();
         let taskString = this.description;
+        //Reminder can't be inshort mode, otherwise obsidian-reminder won't work!!!!
+        if (this.reminderTime) {
+            const reminderTime: string = ` ⏰ ${this.reminderTime.format(
+                Task.dateFormat + ' HH:mm',
+            )}`;
+            taskString += reminderTime;
+        }
 
         if (!layoutOptions.hidePriority) {
             let priority: string = '';
@@ -458,6 +486,7 @@ export class Task {
             ...this,
             status: newStatus,
             doneDate: newDoneDate,
+            reminderTime: this.reminderTime,
             originalStatusCharacter: newStatus === Status.Done ? 'x' : ' ',
         });
 
@@ -467,6 +496,7 @@ export class Task {
             const nextTask = new Task({
                 ...this,
                 ...nextOccurrence,
+                reminderTime: this.reminderTime,
                 // New occurrences cannot have the same block link.
                 // And random block links don't help.
                 blockLink: '',
