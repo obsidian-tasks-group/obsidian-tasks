@@ -320,7 +320,7 @@
                 bind:value={editableTask.recurrenceRule}
                 id="description"
                 type="text"
-                placeholder="I've changed this"
+                placeholder="Try 'every 2 weeks on Thursday'."
             />
             <code>🔁 {@html parsedRecurrence}</code>
         </div>
