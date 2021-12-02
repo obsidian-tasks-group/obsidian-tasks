@@ -233,8 +233,8 @@ class QueryRenderChild extends MarkdownRenderChild {
         postInfo.append(' (');
         const link = postInfo.createEl('a');
 
-        link.href = fileName;
-        link.setAttribute('data-href', fileName);
+        link.href = task.path;
+        link.setAttribute('data-href', task.path);
         link.rel = 'noopener';
         link.target = '_blank';
         link.addClass('internal-link');
