@@ -24,7 +24,7 @@ https://user-images.githubusercontent.com/38974541/143468440-c83b5f91-c923-4f30-
 4. You're done.
 
 ## Tip for repeated dates (to reduce friction)
-If you notice that you are adding the same dates multiple times, say for example the due date and the reminder date are the same. 
+If you notice that you are adding the same date multiple times, say for example the due date and the reminder date are the same. 
 Then you can give them the same name, this way you'll write the date only once and Quickadd will instert it in multiple places.
 
 Here is the format for the current example :
