@@ -34,6 +34,7 @@ export class Task {
      * Required to be added to the LI the same way obsidian does as a `data-task` attribute.
      */
     public readonly originalStatusCharacter: string;
+    public readonly subtags: string;
     public readonly precedingHeader: string | null;
 
     public readonly priority: Priority;
@@ -51,6 +52,7 @@ export class Task {
     public static readonly taskRegex = /^([\s\t]*)[-*] +\[(.)\] *(.*)/u;
     // The following regexes end with `$` because they will be matched and
     // removed from the end until none are left.
+    public static readonly tagsRegex = /(#[^/\s]*)(\/[^\s]*)*\s/u;
     public static readonly priorityRegex = /([⏫🔼🔽])$/u;
     public static readonly startDateRegex = /🛫 ?(\d{4}-\d{2}-\d{2})$/u;
     public static readonly scheduledDateRegex = /[⏳⌛] ?(\d{4}-\d{2}-\d{2})$/u;
@@ -69,6 +71,7 @@ export class Task {
         sectionStart,
         sectionIndex,
         originalStatusCharacter,
+        subtags,
         precedingHeader,
         priority,
         startDate,
@@ -85,6 +88,7 @@ export class Task {
         sectionStart: number;
         sectionIndex: number;
         originalStatusCharacter: string;
+        subtags: string;
         precedingHeader: string | null;
         priority: Priority;
         startDate: moment.Moment | null;
@@ -100,6 +104,7 @@ export class Task {
         this.indentation = indentation;
         this.sectionStart = sectionStart;
         this.sectionIndex = sectionIndex;
+        this.subtags = subtags;
         this.originalStatusCharacter = originalStatusCharacter;
         this.precedingHeader = precedingHeader;
 
@@ -153,6 +158,14 @@ export class Task {
         }
 
         let description = body;
+
+        // check for any number of subtags
+        let subtags: string = '';
+        const tagsMatch = description.match(Task.tagsRegex);
+        if (tagsMatch !== null) {
+            subtags = typeof tagsMatch[2] !== 'undefined' ? tagsMatch[2] : ''; // keep just the subtag(s)
+            description = description.replace(Task.tagsRegex, '').trim(); // removes the global filter as well
+        }
 
         const blockLinkMatch = description.match(this.blockLinkRegex);
         const blockLink = blockLinkMatch !== null ? blockLinkMatch[0] : '';
@@ -261,6 +274,7 @@ export class Task {
             sectionStart,
             sectionIndex,
             originalStatusCharacter: statusString,
+            subtags,
             precedingHeader,
             priority,
             startDate,
@@ -289,8 +303,8 @@ export class Task {
 
         let taskAsString = this.toString(layoutOptions);
         const { globalFilter, removeGlobalFilter } = getSettings();
-        if (removeGlobalFilter) {
-            taskAsString = taskAsString.replace(globalFilter, '').trim();
+        if (!removeGlobalFilter) {
+            taskAsString = globalFilter + this.subtags + ' ' + taskAsString;
         }
 
         const textSpan = li.createSpan();

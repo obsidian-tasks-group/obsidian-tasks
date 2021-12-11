@@ -23,6 +23,7 @@ describe('Query', () => {
                     doneDate: null,
                     recurrence: null,
                     blockLink: '',
+                    subtags: '',
                 }),
                 new Task({
                     status: Status.Todo,
@@ -40,6 +41,7 @@ describe('Query', () => {
                     doneDate: null,
                     recurrence: null,
                     blockLink: '',
+                    subtags: '',
                 }),
             ];
             const input = 'path includes ab/c d';
@@ -130,9 +132,8 @@ describe('Query', () => {
             });
 
             // Assert
-            expect(filteredTasks.length).toEqual(2);
-            expect(filteredTasks[0]).toEqual(tasks[1]);
-            expect(filteredTasks[1]).toEqual(tasks[2]);
+            expect(filteredTasks.length).toEqual(1);
+            expect(filteredTasks[0]).toEqual(tasks[2]);
 
             // Cleanup
             updateSettings(originalSettings);

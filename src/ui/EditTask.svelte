@@ -9,6 +9,7 @@
     export let onSubmit: (updatedTasks: Task[]) => void | Promise<void>;
 
     let descriptionInput: HTMLInputElement;
+    let SubTagsInput: HTMLInputElement;
     let editableTask: {
         description: string;
         status: Status;
@@ -18,6 +19,7 @@
         scheduledDate: string;
         dueDate: string;
         doneDate: string;
+        subTags: string;
     } = {
         description: '',
         status: Status.Todo,
@@ -27,6 +29,7 @@
         scheduledDate: '',
         dueDate: '',
         doneDate: '',
+        subTags: ''
     };
 
     let parsedStartDate: string = '';
@@ -121,7 +124,7 @@
     onMount(() => {
         const { globalFilter } = getSettings();
         const description = task.description
-            .replace(globalFilter, '')
+            .replace(globalFilter + task.subtags, '')
             .replace('  ', ' ')
             .trim();
 
@@ -147,6 +150,7 @@
                 : '',
             dueDate: task.dueDate ? task.dueDate.format('YYYY-MM-DD') : '',
             doneDate: task.doneDate ? task.doneDate.format('YYYY-MM-DD') : '',
+            subTags: task.subtags
         };
         setTimeout(() => {
             descriptionInput.focus();
@@ -157,7 +161,7 @@
         const { globalFilter } = getSettings();
         let description = editableTask.description.trim();
         if (!description.includes(globalFilter)) {
-            description = globalFilter + ' ' + description;
+            description = globalFilter + editableTask.subTags + ' ' + description;
         }
 
         let startDate: moment.Moment | null = null;
@@ -305,6 +309,17 @@
                 />
                 <code>🛫 {@html parsedStartDate}</code>
             </div>
+        </div>
+        <hr />
+        <div class="tasks-modal-section">
+            <label for="subtags">Subtags (optional)</label>
+            <input
+                bind:value={editableTask.subTags}
+                bind:this={SubTagsInput}
+                id="subTags"
+                type="text"
+                placeholder="Try appending a subtag with '/subtag'"
+            />
         </div>
         <hr />
         <div class="tasks-modal-section">
