@@ -36,6 +36,7 @@ export class Sort {
     private static comparators: Record<SortingProperty, Comparator> = {
         urgency: Sort.compareByUrgency,
         description: Sort.compareByDescription,
+        subtag: Sort.compareBySubTags,
         priority: Sort.compareByPriority,
         start: Sort.compareByStartDate,
         scheduled: Sort.compareByScheduledDate,
@@ -139,6 +140,30 @@ export class Sort {
         return Sort.cleanDescription(a.description).localeCompare(
             Sort.cleanDescription(b.description),
         );
+    }
+
+    /**
+     * Compare the subtags by how it is rendered in markdown.
+     *
+     * Does not use the MarkdownRenderer, but tries to match regexes instead
+     * in order to be simpler, faster, and not async.
+     */
+    private static compareBySubTags(a: Task, b: Task): -1 | 0 | 1 {
+        if (a.subtags !== '' && b.subtags === '') {
+            return -1;
+        } else if (a.subtags === '' && b.subtags !== '') {
+            return 1;
+        } else if (a.subtags !== '' && b.subtags !== '') {
+            if (a.subtags > b.subtags) {
+                return 1;
+            } else if (a.subtags < b.subtags) {
+                return -1;
+            } else {
+                return 0;
+            }
+        } else {
+            return 0;
+        }
     }
 
     /**
