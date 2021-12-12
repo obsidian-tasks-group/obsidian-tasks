@@ -237,7 +237,7 @@
             description,
             status: editableTask.status,
             priority: parsedPriority,
-            subtags: editableTask.subtags,
+            subtags: editableTask.subTags,
             recurrence,
             startDate,
             scheduledDate,
