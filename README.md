@@ -8,6 +8,8 @@ Track tasks across your entire vault. Query them and mark them as done wherever 
 
 *You can toggle the task status in any view or query and it will update the source file.*
 
+⚠️ **Tasks does not yet support Obsidian's "Live Preview". Once "Live Preview" supports the whole feature set, we will make sure Tasks is compatible.**
+
 ---
 
 For changes in each release, please check the releases page: https://github.com/schemar/obsidian-tasks/releases
