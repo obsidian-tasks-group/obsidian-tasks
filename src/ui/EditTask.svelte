@@ -268,6 +268,17 @@
         </div>
         <hr />
         <div class="tasks-modal-section">
+            <label for="subtags">Subtags (optional)</label>
+            <input
+                bind:value={editableTask.subTags}
+                bind:this={SubTagsInput}
+                id="subTags"
+                type="text"
+                placeholder="Try appending a subtag with '/subtag'"
+            />
+        </div>
+        <hr />
+        <div class="tasks-modal-section">
             <label for="recurrence">Recurrence</label>
             <input
                 bind:value={editableTask.recurrenceRule}
@@ -309,17 +320,6 @@
                 />
                 <code>🛫 {@html parsedStartDate}</code>
             </div>
-        </div>
-        <hr />
-        <div class="tasks-modal-section">
-            <label for="subtags">Subtags (optional)</label>
-            <input
-                bind:value={editableTask.subTags}
-                bind:this={SubTagsInput}
-                id="subTags"
-                type="text"
-                placeholder="Try appending a subtag with '/subtag'"
-            />
         </div>
         <hr />
         <div class="tasks-modal-section">
