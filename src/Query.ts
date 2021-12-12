@@ -58,6 +58,8 @@ export class Query {
     private readonly limitRegexp = /^limit (to )?(\d+)( tasks?)?/;
     private readonly excludeSubItemsString = 'exclude sub-items';
 
+    private readonly tagRegexp = /^tag (includes|does not include) (.*)/;
+
     constructor({ source }: { source: string }) {
         source
             .split('\n')
@@ -119,6 +121,9 @@ export class Query {
                         break;
                     case this.descriptionRegexp.test(line):
                         this.parseDescriptionFilter({ line });
+                        break;
+                    case this.tagRegexp.test(line):
+                        this.parseTagFilter({ line });
                         break;
                     case this.headingRegexp.test(line):
                         this.parseHeadingFilter({ line });
@@ -405,6 +410,39 @@ export class Query {
                             // the global filter.
                             task.description.replace(globalFilter, '').trim(),
                             descriptionMatch[2],
+                        ),
+                );
+            } else {
+                this._error = 'do not understand query filter (description)';
+            }
+        } else {
+            this._error = 'do not understand query filter (description)';
+        }
+    }
+
+    private parseTagFilter({ line }: { line: string }): void {
+        const tagMatch = line.match(this.tagRegexp);
+        if (tagMatch !== null) {
+            const filterMethod = tagMatch[1];
+            if (filterMethod === 'includes') {
+                this._filters.push((task: Task) =>
+                    this.stringIncludesCaseInsensitive(
+                        // Remove global filter from description match if present.
+                        // This is necessary to match only on the content of the task, not
+                        // the global filter.
+                        task.subtags,
+                        tagMatch[2],
+                    ),
+                );
+            } else if (tagMatch[1] === 'does not include') {
+                this._filters.push(
+                    (task: Task) =>
+                        !this.stringIncludesCaseInsensitive(
+                            // Remove global filter from description match if present.
+                            // This is necessary to match only on the content of the task, not
+                            // the global filter.
+                            task.subtags,
+                            tagMatch[2],
                         ),
                 );
             } else {
