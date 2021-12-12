@@ -121,6 +121,11 @@ Such filter could be:
     - Matches case-insensitive (disregards capitalization).
     - Disregards the global filter when matching.
 
+### Tags or Sub Tags
+- `tag  (includes|does not include) <string>`
+    - Matches case-insensitive (disregards capitalization).
+    - Disregards the global filter when matching.
+
 ### Heading
 
 - `heading (includes|does not include) <string>`
