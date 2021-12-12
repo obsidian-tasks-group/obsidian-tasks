@@ -36,6 +36,7 @@
     let parsedScheduledDate: string = '';
     let parsedDueDate: string = '';
     let parsedRecurrence: string = '';
+    let parsedSubTags: string = '';
     let parsedDone: string = '';
 
     $: {
@@ -90,6 +91,18 @@
             } else {
                 parsedDueDate = '<i>invalid due date</i>';
             }
+        }
+    }
+
+    $: {
+        const { globalFilter } = getSettings();
+        if (!editableTask.subTags) {
+            parsedSubTags = '<i>' + globalFilter + '</>';
+        } else {
+            if (editableTask.subTags.substring(0, 1) !== '/') {
+                editableTask.subTags = '/' + editableTask.subTags;
+            }
+            parsedSubTags = '<i>' + globalFilter + editableTask.subTags + '</>';
         }
     }
 
@@ -224,6 +237,7 @@
             description,
             status: editableTask.status,
             priority: parsedPriority,
+            subtags: editableTask.subtags,
             recurrence,
             startDate,
             scheduledDate,
@@ -268,7 +282,7 @@
         </div>
         <hr />
         <div class="tasks-modal-section">
-            <label for="subtags">Subtags (optional)</label>
+            <label for="subtags">Subtags</label>
             <input
                 bind:value={editableTask.subTags}
                 bind:this={SubTagsInput}
@@ -276,6 +290,7 @@
                 type="text"
                 placeholder="Try appending a subtag with '/subtag'"
             />
+            <code>Tags: {@html parsedSubTags}</code>
         </div>
         <hr />
         <div class="tasks-modal-section">
