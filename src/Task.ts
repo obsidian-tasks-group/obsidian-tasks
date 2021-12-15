@@ -468,8 +468,10 @@ export class Task {
             }
         }
 
+        const { globalFilter } = getSettings();
         const toggledTask = new Task({
             ...this,
+            description: globalFilter + this.subtags + ' ' + this.description,
             status: newStatus,
             doneDate: newDoneDate,
             originalStatusCharacter: newStatus === Status.Done ? 'x' : ' ',
