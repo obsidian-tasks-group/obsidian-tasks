@@ -314,6 +314,36 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
+"@codemirror/rangeset@^0.19.4":
+  version "0.19.4"
+  resolved "https://registry.yarnpkg.com/@codemirror/rangeset/-/rangeset-0.19.4.tgz#a49b7b6237a57139ca5e3539975f7427f82821a7"
+  integrity sha512-VOqdYJbLZj3EFVkDn13RLnzmRxrgs6dKGLD5LppPBxzbG1CWYbmqXKYWy9mVTEnYZ1PzH2w6vGzyUuToEWiFDQ==
+  dependencies:
+    "@codemirror/state" "^0.19.0"
+
+"@codemirror/state@^0.19.0", "@codemirror/state@^0.19.3", "@codemirror/state@^0.19.6":
+  version "0.19.6"
+  resolved "https://registry.yarnpkg.com/@codemirror/state/-/state-0.19.6.tgz#d631f041d39ce41b7891b099fca26cb1fdb9763e"
+  integrity sha512-sqIQZE9VqwQj7D4c2oz9mfLhlT1ElAzGB5lO1lE33BPyrdNy1cJyCIOecT4cn4VeJOFrnjOeu+IftZ3zqdFETw==
+  dependencies:
+    "@codemirror/text" "^0.19.0"
+
+"@codemirror/text@^0.19.0":
+  version "0.19.5"
+  resolved "https://registry.yarnpkg.com/@codemirror/text/-/text-0.19.5.tgz#75033af2476214e79eae22b81ada618815441c18"
+  integrity sha512-Syu5Xc7tZzeUAM/y4fETkT0zgGr48rDG+w4U38bPwSIUr+L9S/7w2wDE1WGNzjaZPz12F6gb1gxWiSTg9ocLow==
+
+"@codemirror/view@^0.19.31", "@codemirror/view@^0.19.34":
+  version "0.19.34"
+  resolved "https://registry.yarnpkg.com/@codemirror/view/-/view-0.19.34.tgz#d253fa9db4c405bc43495a8d20829c81791d4ad6"
+  integrity sha512-X62xoOXVOMugVif/Wj6aVKUApZO1dc/gRPEKt6vearaq4Wke4uMnsR3raEqGHw5w6X0SSuN2xpAer+Pgx7qh3A==
+  dependencies:
+    "@codemirror/rangeset" "^0.19.4"
+    "@codemirror/state" "^0.19.3"
+    "@codemirror/text" "^0.19.0"
+    style-mod "^4.0.0"
+    w3c-keyname "^2.2.4"
+
 "@eslint/eslintrc@^0.4.3":
   version "0.4.3"
   resolved "https://registry.yarnpkg.com/@eslint/eslintrc/-/eslintrc-0.4.3.tgz#9e42981ef035beb3dd49add17acb96e8ff6f394c"
@@ -3066,11 +3096,13 @@ object.values@^1.1.5:
     define-properties "^1.1.3"
     es-abstract "^1.19.1"
 
-obsidian@^0.12.17:
-  version "0.12.17"
-  resolved "https://registry.yarnpkg.com/obsidian/-/obsidian-0.12.17.tgz#8efe75310d0e3988cdeccfbb176d3a8ff7b363c7"
-  integrity sha512-YvCAlRym9D8zNPXt6Ez8QubSTVGoChx6lb58zqI13Dcrz3l1lgUO+pcOGDiD5Qa67nzDZLXo3aV2rqkCCpTvGQ==
+obsidian@0.13.21:
+  version "0.13.21"
+  resolved "https://registry.yarnpkg.com/obsidian/-/obsidian-0.13.21.tgz#1add830d8452270c608d5f5b25f75c3237af9677"
+  integrity sha512-ifrX4TclHZMlxRQt6mMYolucw3yy6VEbm/l/tl/BNTBT5uTHruP+k39DQ4wqPSeQApkR6VKlx/pY/DnSxqLOXw==
   dependencies:
+    "@codemirror/state" "^0.19.6"
+    "@codemirror/view" "^0.19.31"
     "@types/codemirror" "0.0.108"
     moment "2.29.1"
 
@@ -3593,6 +3625,11 @@ strip-json-comments@^3.1.0, strip-json-comments@^3.1.1:
   resolved "https://registry.yarnpkg.com/strip-json-comments/-/strip-json-comments-3.1.1.tgz#31f1281b3832630434831c310c01cccda8cbe006"
   integrity sha512-6fPc+R4ihwqP6N/aIv2f1gMH8lOVtWQHoqC4yK6oSDVVocumAsfCqjkXnqiYMhmMwS/mEHLp7Vehlt3ql6lEig==
 
+style-mod@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/style-mod/-/style-mod-4.0.0.tgz#97e7c2d68b592975f2ca7a63d0dd6fcacfe35a01"
+  integrity sha512-OPhtyEjyyN9x3nhPsu76f52yUGXiZcgvsrFVtvTkyGRQJ0XK+GPc6ov1z+lRpbeabka+MYEQxOYRnt5nF30aMw==
+
 supports-color@^5.3.0:
   version "5.5.0"
   resolved "https://registry.yarnpkg.com/supports-color/-/supports-color-5.5.0.tgz#e2e69a44ac8772f78a1ec0b35b689df6530efc8f"
@@ -3877,6 +3914,11 @@ w3c-hr-time@^1.0.2:
   integrity sha512-z8P5DvDNjKDoFIHK7q8r8lackT6l+jo/Ye3HOle7l9nICP9lf1Ci25fy9vHd0JOWewkIFzXIEig3TdKT7JQ5fQ==
   dependencies:
     browser-process-hrtime "^1.0.0"
+
+w3c-keyname@^2.2.4:
+  version "2.2.4"
+  resolved "https://registry.yarnpkg.com/w3c-keyname/-/w3c-keyname-2.2.4.tgz#4ade6916f6290224cdbd1db8ac49eab03d0eef6b"
+  integrity sha512-tOhfEwEzFLJzf6d1ZPkYfGj+FWhIpBux9ppoP3rlclw3Z0BZv3N7b7030Z1kYth+6rDuAsXUFr+d0VE6Ed1ikw==
 
 w3c-xmlserializer@^2.0.0:
   version "2.0.0"

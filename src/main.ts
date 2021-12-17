@@ -5,6 +5,7 @@ import { Commands } from './Commands';
 import { Events } from './Events';
 import { initializeFile } from './File';
 import { InlineRenderer } from './InlineRenderer';
+import { newLivePreviewExtension } from './LivePreviewExtension';
 import { QueryRenderer } from './QueryRenderer';
 import { getSettings, updateSettings } from './Settings';
 import { SettingsTab } from './SettingsTab';
@@ -33,6 +34,8 @@ export default class TasksPlugin extends Plugin {
         });
         this.inlineRenderer = new InlineRenderer({ plugin: this });
         this.queryRenderer = new QueryRenderer({ plugin: this, events });
+
+        this.registerEditorExtension(newLivePreviewExtension());
         new Commands({ plugin: this });
     }
 
