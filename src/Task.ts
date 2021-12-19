@@ -303,8 +303,11 @@ export class Task {
 
         let taskAsString = this.toString(layoutOptions);
         const { globalFilter, removeGlobalFilter } = getSettings();
-        if (!removeGlobalFilter) {
-            taskAsString = globalFilter + this.subtags + ' ' + taskAsString;
+        if (removeGlobalFilter) {
+            taskAsString = taskAsString.replace(
+                globalFilter + this.subtags + ' ',
+                '',
+            );
         }
 
         const textSpan = li.createSpan();
@@ -377,6 +380,11 @@ export class Task {
     public toString(layoutOptions?: LayoutOptions): string {
         layoutOptions = layoutOptions ?? new LayoutOptions();
         let taskString = this.description;
+
+        const { globalFilter } = getSettings();
+        if (globalFilter !== '') {
+            taskString = globalFilter + this.subtags + ' ' + taskString;
+        }
 
         if (!layoutOptions.hidePriority) {
             let priority: string = '';
@@ -468,10 +476,8 @@ export class Task {
             }
         }
 
-        const { globalFilter } = getSettings();
         const toggledTask = new Task({
             ...this,
-            description: globalFilter + this.subtags + ' ' + this.description,
             status: newStatus,
             doneDate: newDoneDate,
             originalStatusCharacter: newStatus === Status.Done ? 'x' : ' ',
