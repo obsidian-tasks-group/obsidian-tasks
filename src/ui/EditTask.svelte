@@ -167,7 +167,6 @@
     });
 
     const _onSubmit = () => {
-        const { globalFilter } = getSettings();
         let description = editableTask.description.trim();
 
         let startDate: moment.Moment | null = null;
