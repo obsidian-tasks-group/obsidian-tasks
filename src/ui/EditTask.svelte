@@ -96,14 +96,10 @@
 
     $: {
         const { globalFilter } = getSettings();
-        if (!editableTask.subTags) {
-            parsedSubTags = '<i>' + globalFilter + '</>';
-        } else {
-            if (editableTask.subTags.substring(0, 1) !== '/') {
-                editableTask.subTags = '/' + editableTask.subTags;
-            }
-            parsedSubTags = '<i>' + globalFilter + editableTask.subTags + '</>';
+        if (editableTask.subTags !== '' && editableTask.subTags.substring(0, 1) !== '/') {
+            editableTask.subTags = '/' + editableTask.subTags;
         }
+        parsedSubTags = '<i>' + globalFilter + editableTask.subTags + '</>';
     }
 
     $: {
@@ -173,9 +169,6 @@
     const _onSubmit = () => {
         const { globalFilter } = getSettings();
         let description = editableTask.description.trim();
-        if (!description.includes(globalFilter)) {
-            description = globalFilter + editableTask.subTags + ' ' + description;
-        }
 
         let startDate: moment.Moment | null = null;
         const parsedStartDate = chrono.parseDate(
