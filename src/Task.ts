@@ -50,9 +50,9 @@ export class Task {
 
     public static readonly dateFormat = 'YYYY-MM-DD';
     public static readonly taskRegex = /^([\s\t]*)[-*] +\[(.)\] *(.*)/u;
+    public static readonly tagsRegex = /(#[^/\s]+)(\/[^\s]+)*\s/u;
     // The following regexes end with `$` because they will be matched and
     // removed from the end until none are left.
-    public static readonly tagsRegex = /(#[^/\s]*)(\/[^\s]*)*\s/u;
     public static readonly priorityRegex = /([⏫🔼🔽])$/u;
     public static readonly startDateRegex = /🛫 ?(\d{4}-\d{2}-\d{2})$/u;
     public static readonly scheduledDateRegex = /[⏳⌛] ?(\d{4}-\d{2}-\d{2})$/u;
