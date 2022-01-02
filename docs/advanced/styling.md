@@ -9,7 +9,7 @@ has_toc: false
 # Styling Tasks
 
 Each task entry has CSS styles that allow you to change the look and feel of how the tasks are displayed. The 
-following styles are avliable. 
+following styles are available. 
 
 | Class                    | Usage                                                                                                          |
 | ------------------------ | -------------------------------------------------------------------------------------------------------------- |
