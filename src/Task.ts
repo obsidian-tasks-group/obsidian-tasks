@@ -52,10 +52,14 @@ export class Task {
     // The following regexes end with `$` because they will be matched and
     // removed from the end until none are left.
     public static readonly priorityRegex = /([⏫🔼🔽])$/u;
-    public static readonly startDateRegex = /🛫 ?(\d{4}-\d{2}-\d{2})$/u;
-    public static readonly scheduledDateRegex = /[⏳⌛] ?(\d{4}-\d{2}-\d{2})$/u;
-    public static readonly dueDateRegex = /[📅📆🗓] ?(\d{4}-\d{2}-\d{2})$/u;
-    public static readonly doneDateRegex = /✅ ?(\d{4}-\d{2}-\d{2})$/u;
+    public static readonly startDateRegex =
+        /🛫 ?(?:\[\[)?(\d{4}-\d{2}-\d{2})(?:\]\])?$/u;
+    public static readonly scheduledDateRegex =
+        /[⏳⌛] ?(?:\[\[)?(\d{4}-\d{2}-\d{2})(?:\]\])?$/u;
+    public static readonly dueDateRegex =
+        /[📅📆🗓] ?(?:\[\[)?(\d{4}-\d{2}-\d{2})(?:\]\])?$/u;
+    public static readonly doneDateRegex =
+        /✅ ?(?:\[\[)?(\d{4}-\d{2}-\d{2})(?:\]\])?$/u;
     public static readonly recurrenceRegex = /🔁([a-zA-Z0-9, !]+)$/u;
     public static readonly blockLinkRegex = / \^[a-zA-Z0-9-]+$/u;
 
