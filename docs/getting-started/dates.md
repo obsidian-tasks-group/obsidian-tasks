@@ -26,15 +26,10 @@ Info
 {: .label .label-blue }
 Instead of adding an emoji and a date manually, you can use the `Tasks: Create or edit` command when creating or editing a task.
 When you use the command, you can also set dates like "Monday", "tomorrow", or "next week" and Tasks will automatically save the date in the correct format.
-
----
-
-Warning
-{: .label .label-yellow }
-You can only put block links (`^link-name`) after the dates. Anything else will break the parsing of dates and recurrence rules.
 </div>
 
 ---
+
 
 ## 📅 Due
 
