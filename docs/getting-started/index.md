@@ -96,6 +96,20 @@ Tasks won't render spaces around list items if you have a list with empty lines.
 ---
 
 Warning
+{: .label .label-yellow }
+You can only put block links (`^link-name`) after metadata such as dates. Anything else will break the parsing of dates, priorities and recurrence rules.
+
+```markdown
+- [ ] Task with priority placed before tag *priority will not be recognized* 🔼 #tag
+- [ ] Task with date placed before tag *date will not be recognized* 📅 2021-04-09 #tag
+- [ ] Task with block link *works* 📅 2021-04-09 ^e5bebf
+- [ ] Task with tag before priority *works* #tag 🔼
+
+```
+
+---
+
+Warning
 {: .label .label-yellow}
 Tasks only supports checklist items in markdown files with the file extension `.md`.
 </div>
