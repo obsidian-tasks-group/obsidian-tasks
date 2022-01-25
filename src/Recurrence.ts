@@ -1,8 +1,11 @@
 import type { Moment } from 'moment';
 import { RRule } from 'rrule';
 
+import { getSettings } from './Settings';
+
 export class Recurrence {
     private readonly rrule: RRule;
+    private readonly strict: boolean;
     private readonly startDate: Moment | null;
     private readonly scheduledDate: Moment | null;
     private readonly dueDate: Moment | null;
@@ -22,20 +25,25 @@ export class Recurrence {
      */
     private readonly referenceDate: Moment | null;
 
+    private static readonly strictRecurrencePrefix = 'strictly ';
+
     constructor({
         rrule,
+        strict,
         referenceDate,
         startDate,
         scheduledDate,
         dueDate,
     }: {
         rrule: RRule;
+        strict: boolean;
         referenceDate: Moment | null;
         startDate: Moment | null;
         scheduledDate: Moment | null;
         dueDate: Moment | null;
     }) {
         this.rrule = rrule;
+        this.strict = strict;
         this.referenceDate = referenceDate;
         this.startDate = startDate;
         this.scheduledDate = scheduledDate;
@@ -53,8 +61,21 @@ export class Recurrence {
         scheduledDate: Moment | null;
         dueDate: Moment | null;
     }): Recurrence | null {
+        const { enforceStrictRecurrence } = getSettings();
+
         try {
-            const options = RRule.parseText(recurrenceRuleText);
+            const [strict, ruleText] = enforceStrictRecurrence
+                ? [true, recurrenceRuleText]
+                : [
+                      recurrenceRuleText.startsWith(
+                          this.strictRecurrencePrefix,
+                      ),
+                      recurrenceRuleText
+                          .replace(this.strictRecurrencePrefix, '')
+                          .trim(),
+                  ];
+
+            const options = RRule.parseText(ruleText);
             if (options !== null) {
                 // Pick the reference date for recurrence based on importance.
                 // Assuming due date has the highest priority.
@@ -79,6 +100,7 @@ export class Recurrence {
                 const rrule = new RRule(options);
                 return new Recurrence({
                     rrule,
+                    strict,
                     referenceDate,
                     startDate,
                     scheduledDate,
@@ -93,7 +115,12 @@ export class Recurrence {
     }
 
     public toText(): string {
-        return this.rrule.toText();
+        const { enforceStrictRecurrence } = getSettings();
+
+        const ruleText = this.rrule.toText();
+        return this.strict && !enforceStrictRecurrence
+            ? `strictly ${ruleText}`
+            : ruleText;
     }
 
     /**
@@ -130,47 +157,45 @@ export class Recurrence {
             let scheduledDate: Moment | null = null;
             let dueDate: Moment | null = null;
 
+            // handler to compute future dates offset by original difference and over "due" difference
+            const computeNextDate = (date: Moment): Moment => {
+                const originalDifference = window.moment.duration(
+                    date.diff(this.referenceDate),
+                );
+
+                // Cloning so that original won't be manipulated:
+                const nextCopy = window.moment(nextOccurrence);
+                // Rounding days to handle cross daylight-savings-time recurrences.
+                nextCopy.add(Math.round(originalDifference.asDays()), 'days');
+
+                // if strict, then done day is not relevant
+                if (this.strict) {
+                    return nextCopy;
+                }
+
+                // calculate days over "due"
+                const today = window.moment().startOf('day').utc(true);
+                const doneDifference = window.moment.duration(
+                    today.diff(this.referenceDate),
+                );
+
+                // Rounding days to handle cross daylight-savings-time recurrences.
+                nextCopy.add(Math.round(doneDifference.asDays()), 'days');
+
+                return nextCopy;
+            };
+
             // Only if a reference date is given. A reference date will exist if at
             // least one of the other dates is set.
             if (this.referenceDate) {
                 if (this.startDate) {
-                    const originalDifference = window.moment.duration(
-                        this.startDate.diff(this.referenceDate),
-                    );
-
-                    // Cloning so that original won't be manipulated:
-                    startDate = window.moment(nextOccurrence);
-                    // Rounding days to handle cross daylight-savings-time recurrences.
-                    startDate.add(
-                        Math.round(originalDifference.asDays()),
-                        'days',
-                    );
+                    startDate = computeNextDate(this.startDate);
                 }
                 if (this.scheduledDate) {
-                    const originalDifference = window.moment.duration(
-                        this.scheduledDate.diff(this.referenceDate),
-                    );
-
-                    // Cloning so that original won't be manipulated:
-                    scheduledDate = window.moment(nextOccurrence);
-                    // Rounding days to handle cross daylight-savings-time recurrences.
-                    scheduledDate.add(
-                        Math.round(originalDifference.asDays()),
-                        'days',
-                    );
+                    scheduledDate = computeNextDate(this.scheduledDate);
                 }
                 if (this.dueDate) {
-                    const originalDifference = window.moment.duration(
-                        this.dueDate.diff(this.referenceDate),
-                    );
-
-                    // Cloning so that original won't be manipulated:
-                    dueDate = window.moment(nextOccurrence);
-                    // Rounding days to handle cross daylight-savings-time recurrences.
-                    dueDate.add(
-                        Math.round(originalDifference.asDays()),
-                        'days',
-                    );
+                    dueDate = computeNextDate(this.dueDate);
                 }
             }
 
