@@ -85,9 +85,9 @@ export class SettingsTab extends PluginSettingTab {
             cls: 'setting-item-description',
             text:
                 'Previous versions did not have a concept of strict and/or loose recurrence for tasks and instead only supported strict recurrence.\n' +
-                'Disabling this setting will change the behavior of all existing recurring tasks to loosely recurring tasks, therefore consider updating your vault before changing this setting.\n' +
+                'Disabling this setting will change the behavior of all existing recurring tasks to loosely recurring. Consider updating your vault before changing this setting.\n' +
                 'If disabled, "🔁 every 10 days" will translate to loose recurrence and will be scheduled 10 days after the "done" date rather than the "due" date.\n' +
-                'To get strict recurrence, include "strictly" before "every", e.g. "🔁 strictly every 10 days" will translate to strict recurrence.',
+                'To get strict recurrence, include "strictly" before "every", e.g. "🔁 strictly every 10 days".',
         });
     }
 }

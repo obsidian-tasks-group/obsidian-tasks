@@ -119,7 +119,7 @@ export class Recurrence {
 
         const ruleText = this.rrule.toText();
         return this.strict && !enforceStrictRecurrence
-            ? `strictly ${ruleText}`
+            ? Recurrence.strictRecurrencePrefix + ruleText
             : ruleText;
     }
 
