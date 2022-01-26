@@ -44,7 +44,7 @@ For example: `✅ 2021-04-09` means the task was done on the 9th of April, 2021.
 <div class="code-example" markdown="1">
 Warning
 {: .label .label-yellow}
-Whenever Tasks behaves in an unexpected way, please try restarting obsidian.
+Whenever Tasks behaves in an unexpected way, please try restarting Obsidian.
 
 ---
 
