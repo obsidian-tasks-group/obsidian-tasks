@@ -89,7 +89,7 @@ export class Recurrence {
                     referenceDate = window.moment(startDate);
                 }
 
-                if (referenceDate !== null) {
+                if (strict && referenceDate !== null) {
                     options.dtstart = window
                         .moment(referenceDate)
                         .startOf('day')
@@ -131,20 +131,24 @@ export class Recurrence {
         scheduledDate: Moment | null;
         dueDate: Moment | null;
     } | null {
-        // The next occurrence should happen based on the original reference
-        // date if possible. Otherwise, base it on today.
-        let after: Moment;
-        if (this.referenceDate !== null) {
-            // Clone to not alter the original reference date.
-            after = window.moment(this.referenceDate);
+        let next: Date;
+        if (this.strict) {
+            // The next occurrence should happen based on the original reference
+            const after = window
+                .moment(this.referenceDate)
+                .endOf('day')
+                .utc(true);
+
+            next = this.rrule.after(after.toDate());
         } else {
-            after = window.moment();
+            // the next occurence should happen based off the current date
+            const today = window.moment();
+            const lenientRule = new RRule({
+                ...this.rrule.origOptions,
+                dtstart: today.startOf('day').utc(true).toDate(),
+            });
+            next = lenientRule.after(today.endOf('day').utc(true).toDate());
         }
-
-        after.endOf('day');
-        after.utc(true);
-
-        const next = this.rrule.after(after.toDate());
 
         if (next !== null) {
             // Re-add the timezone that RRule disregarded:
@@ -157,45 +161,47 @@ export class Recurrence {
             let scheduledDate: Moment | null = null;
             let dueDate: Moment | null = null;
 
-            // handler to compute future dates offset by original difference and over "due" difference
-            const computeNextDate = (date: Moment): Moment => {
-                const originalDifference = window.moment.duration(
-                    date.diff(this.referenceDate),
-                );
-
-                // Cloning so that original won't be manipulated:
-                const nextCopy = window.moment(nextOccurrence);
-                // Rounding days to handle cross daylight-savings-time recurrences.
-                nextCopy.add(Math.round(originalDifference.asDays()), 'days');
-
-                // if strict, then done day is not relevant
-                if (this.strict) {
-                    return nextCopy;
-                }
-
-                // calculate days over "due"
-                const today = window.moment().startOf('day').utc(true);
-                const doneDifference = window.moment.duration(
-                    today.diff(this.referenceDate),
-                );
-
-                // Rounding days to handle cross daylight-savings-time recurrences.
-                nextCopy.add(Math.round(doneDifference.asDays()), 'days');
-
-                return nextCopy;
-            };
-
             // Only if a reference date is given. A reference date will exist if at
             // least one of the other dates is set.
             if (this.referenceDate) {
                 if (this.startDate) {
-                    startDate = computeNextDate(this.startDate);
+                    const originalDifference = window.moment.duration(
+                        this.startDate.diff(this.referenceDate),
+                    );
+
+                    // Cloning so that original won't be manipulated:
+                    startDate = window.moment(nextOccurrence);
+                    // Rounding days to handle cross daylight-savings-time recurrences.
+                    startDate.add(
+                        Math.round(originalDifference.asDays()),
+                        'days',
+                    );
                 }
                 if (this.scheduledDate) {
-                    scheduledDate = computeNextDate(this.scheduledDate);
+                    const originalDifference = window.moment.duration(
+                        this.scheduledDate.diff(this.referenceDate),
+                    );
+
+                    // Cloning so that original won't be manipulated:
+                    scheduledDate = window.moment(nextOccurrence);
+                    // Rounding days to handle cross daylight-savings-time recurrences.
+                    scheduledDate.add(
+                        Math.round(originalDifference.asDays()),
+                        'days',
+                    );
                 }
                 if (this.dueDate) {
-                    dueDate = computeNextDate(this.dueDate);
+                    const originalDifference = window.moment.duration(
+                        this.dueDate.diff(this.referenceDate),
+                    );
+
+                    // Cloning so that original won't be manipulated:
+                    dueDate = window.moment(nextOccurrence);
+                    // Rounding days to handle cross daylight-savings-time recurrences.
+                    dueDate.add(
+                        Math.round(originalDifference.asDays()),
+                        'days',
+                    );
                 }
             }
 
