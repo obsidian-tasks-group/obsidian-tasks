@@ -154,10 +154,12 @@
     });
 
     const _onSubmit = () => {
-        const { globalFilter } = getSettings();
+        const { globalFilter, appendGlobalFilter } = getSettings();
         let description = editableTask.description.trim();
         if (!description.includes(globalFilter)) {
-            description = globalFilter + ' ' + description;
+            description = appendGlobalFilter ?
+                `${description} ${globalFilter}` :  // Append if chosen,
+                `${globalFilter} ${description}`;   // prepend otherwise.
         }
 
         let startDate: moment.Moment | null = null;

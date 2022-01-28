@@ -64,5 +64,22 @@ export class SettingsTab extends PluginSettingTab {
                         await this.plugin.saveSettings();
                     });
             });
+
+        new Setting(containerEl)
+            .setName('Create task with global filter at end')
+            .setDesc(
+                'Enabling this places the global filter at the end of the task description. Some plugins, such as Day Planner, might require this, or you might prefer how it looks.',
+            )
+            .addToggle((toggle) => {
+                const settings = getSettings();
+
+                toggle
+                    .setValue(settings.appendGlobalFilter)
+                    .onChange(async (value) => {
+                        updateSettings({ appendGlobalFilter: value });
+
+                        await this.plugin.saveSettings();
+                    });
+            });
     }
 }
