@@ -1,4 +1,3 @@
 ```tasks
-done
-hide done date
+not done
 ```

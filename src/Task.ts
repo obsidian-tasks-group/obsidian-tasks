@@ -1,10 +1,9 @@
-import { Component, MarkdownRenderer } from 'obsidian';
-
 import type { Moment } from 'moment';
+import { Component, MarkdownRenderer } from 'obsidian';
 import { replaceTaskWithTasks } from './File';
-import { getSettings } from './Settings';
 import { LayoutOptions } from './LayoutOptions';
 import { Recurrence } from './Recurrence';
+import { getSettings } from './Settings';
 import { Urgency } from './Urgency';
 
 export enum Status {
@@ -446,7 +445,11 @@ export class Task {
         } | null = null;
 
         if (newStatus !== Status.Todo) {
-            newDoneDate = window.moment();
+            // Set done date only if setting value is true
+            const { setDoneDate } = getSettings();
+            if (setDoneDate) {
+                newDoneDate = window.moment();
+            }
 
             // If this task is no longer todo, we need to check if it is recurring:
             if (this.recurrence !== null) {
