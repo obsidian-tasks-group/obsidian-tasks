@@ -185,10 +185,20 @@ class QueryRenderChild extends MarkdownRenderChild {
 
             if (
                 !this.query.layoutOptions.hideBacklinks &&
+                !this.query.layoutOptions.shortMode &&
                 fileName !== undefined
             ) {
                 this.addBacklinks(postInfo, fileName, task);
             }
+            
+
+            if (
+                !this.query.layoutOptions.hideBacklinks &&
+                this.query.layoutOptions.shortMode &&
+                fileName !== undefined
+            ) {
+              this.addShortBacklinks(postInfo, fileName, task);
+            }            
 
             if (!this.query.layoutOptions.hideEditButton) {
                 this.addEditButton(postInfo, task);
@@ -256,4 +266,30 @@ class QueryRenderChild extends MarkdownRenderChild {
         link.setText(linkText);
         postInfo.append(')');
     }
+    
+    private addShortBacklinks(
+        postInfo: HTMLSpanElement,
+        fileName: string,
+        task: Task,
+    ) {
+      postInfo.addClass('tasks-backlink');
+      const link = postInfo.createEl('a');
+            
+      link.href = fileName;
+      link.setAttribute('data-href', fileName);
+      link.rel = 'noopener';
+      link.target = '_blank';
+      link.addClass('internal-link');
+      link.addClass('internal-link-short-mode');
+            
+      let linkText = '🔗';
+      if (task.precedingHeader !== null) {
+          link.href = link.href + '#' + task.precedingHeader;
+          link.setAttribute(
+              'data-href', 
+              link.getAttribute('data-href') + '#' + task.precedingHeader
+          );
+      }
+      link.setText(linkText);
+  }    
 }

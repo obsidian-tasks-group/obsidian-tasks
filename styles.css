@@ -16,6 +16,10 @@
     cursor: pointer;
 }
 
+.internal-link.internal-link-short-mode {
+    text-decoration: none;
+}
+
 .tasks-list-text {
     position: relative;
 }
