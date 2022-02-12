@@ -185,20 +185,14 @@ class QueryRenderChild extends MarkdownRenderChild {
 
             if (
                 !this.query.layoutOptions.hideBacklinks &&
-                !this.query.layoutOptions.shortMode &&
                 fileName !== undefined
             ) {
-                this.addBacklinks(postInfo, fileName, task);
+                this.addBacklinks(
+                    postInfo,
+                    task,
+                    this.query.layoutOptions.shortMode,
+                );
             }
-            
-
-            if (
-                !this.query.layoutOptions.hideBacklinks &&
-                this.query.layoutOptions.shortMode &&
-                fileName !== undefined
-            ) {
-              this.addShortBacklinks(postInfo, fileName, task);
-            }            
 
             if (!this.query.layoutOptions.hideEditButton) {
                 this.addEditButton(postInfo, task);
@@ -236,11 +230,13 @@ class QueryRenderChild extends MarkdownRenderChild {
 
     private addBacklinks(
         postInfo: HTMLSpanElement,
-        fileName: string,
         task: Task,
+        shortMode: boolean,
     ) {
         postInfo.addClass('tasks-backlink');
-        postInfo.append(' (');
+        if (!shortMode) {
+            postInfo.append(' (');
+        }
         const link = postInfo.createEl('a');
 
         link.href = task.path;
@@ -248,48 +244,28 @@ class QueryRenderChild extends MarkdownRenderChild {
         link.rel = 'noopener';
         link.target = '_blank';
         link.addClass('internal-link');
+        if (shortMode) {
+            link.addClass('internal-link-short-mode');
+        }
 
-        let linkText = fileName;
+        let linkText: string;
+        if (shortMode) {
+            linkText = ' 🔗';
+        } else {
+            linkText = task.linkText ?? '';
+        }
+
         if (task.precedingHeader !== null) {
             link.href = link.href + '#' + task.precedingHeader;
             link.setAttribute(
                 'data-href',
                 link.getAttribute('data-href') + '#' + task.precedingHeader,
             );
-
-            // Otherwise, this wouldn't provide additinoal information and only take up space.
-            if (task.precedingHeader !== fileName) {
-                linkText = linkText + ' > ' + task.precedingHeader;
-            }
         }
 
         link.setText(linkText);
-        postInfo.append(')');
+        if (!shortMode) {
+            postInfo.append(')');
+        }
     }
-    
-    private addShortBacklinks(
-        postInfo: HTMLSpanElement,
-        fileName: string,
-        task: Task,
-    ) {
-      postInfo.addClass('tasks-backlink');
-      const link = postInfo.createEl('a');
-            
-      link.href = fileName;
-      link.setAttribute('data-href', fileName);
-      link.rel = 'noopener';
-      link.target = '_blank';
-      link.addClass('internal-link');
-      link.addClass('internal-link-short-mode');
-            
-      let linkText = '🔗';
-      if (task.precedingHeader !== null) {
-          link.href = link.href + '#' + task.precedingHeader;
-          link.setAttribute(
-              'data-href', 
-              link.getAttribute('data-href') + '#' + task.precedingHeader
-          );
-      }
-      link.setText(linkText);
-  }    
 }
