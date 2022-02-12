@@ -188,7 +188,11 @@ class QueryRenderChild extends MarkdownRenderChild {
                 !this.query.layoutOptions.hideBacklinks &&
                 filePath !== undefined
             ) {
-                this.addBacklinks(postInfo, filePath, task);
+                this.addBacklinks(
+                    postInfo,
+                    task,
+                    this.query.layoutOptions.shortMode,
+                );
             }
 
             if (!this.query.layoutOptions.hideEditButton) {
@@ -227,52 +231,60 @@ class QueryRenderChild extends MarkdownRenderChild {
 
     private addBacklinks(
         postInfo: HTMLSpanElement,
-        filePath: string,
         task: Task,
+        shortMode: boolean,
     ) {
         postInfo.addClass('tasks-backlink');
-        postInfo.append(' (');
+        if (!shortMode) {
+            postInfo.append(' (');
+        }
         const link = postInfo.createEl('a');
 
-        link.href = filePath;
-        link.setAttribute('data-href', filePath);
+        link.href = task.path;
+        link.setAttribute('data-href', task.path);
         link.rel = 'noopener';
         link.target = '_blank';
         link.addClass('internal-link');
-
-        // Set link text to either file name (if unique in the vault) or file path.
-        let linkText = filePath;
-        const fileNameMatch = filePath.match(/[^/]*$/i);
-        // @ts-ignore fileNameMatch[0] is never null, because the pattern matches always.
-        const fileName = fileNameMatch[0];
-        // Check if other files exist in the vault with a same name.
-        const filesWithSameName = this.app.vault
-            .getMarkdownFiles()
-            .filter((file: TFile) => {
-                if (file.basename === fileName) {
-                    // Found a file with the same name (it might actually be the same file, but we'll take that into account later.)
-                    return true;
-                }
-            });
-        if (filesWithSameName.length == 1) {
-            // Only one file has the name fileName, so the name is unique.
-            // Use fileName as link text instead of the full path. This only affects the displayed text - link target is always set to the full path.
-            linkText = fileName;
+        if (shortMode) {
+            link.addClass('internal-link-short-mode');
         }
+
+        let linkText: string;
+        if (shortMode) {
+            linkText = ' 🔗';
+        } else {
+          // Set link text to either file name (if unique in the vault) or file path.
+          let linkText = filePath;
+          const fileNameMatch = filePath.match(/[^/]*$/i);
+          // @ts-ignore fileNameMatch[0] is never null, because the pattern matches always.
+          const fileName = fileNameMatch[0];
+          // Check if other files exist in the vault with a same name.
+          const filesWithSameName = this.app.vault
+              .getMarkdownFiles()
+              .filter((file: TFile) => {
+                  if (file.basename === fileName) {
+                      // Found a file with the same name (it might actually be the same file, but we'll take that into account later.)
+                      return true;
+                  }
+              });
+          if (filesWithSameName.length == 1) {
+              // Only one file has the name fileName, so the name is unique.
+              // Use fileName as link text instead of the full path. This only affects the displayed text - link target is always set to the full path.
+              linkText = fileName;
+          }
+        }
+
         if (task.precedingHeader !== null) {
             link.href = link.href + '#' + task.precedingHeader;
             link.setAttribute(
                 'data-href',
                 link.getAttribute('data-href') + '#' + task.precedingHeader,
             );
-
-            // Otherwise, this wouldn't provide additinoal information and only take up space.
-            if (task.precedingHeader !== fileName) {
-                linkText = linkText + ' > ' + task.precedingHeader;
-            }
         }
 
         link.setText(linkText);
-        postInfo.append(')');
+        if (!shortMode) {
+            postInfo.append(')');
+        }
     }
 }

@@ -53,7 +53,7 @@ A recurring task should have a due date and the recurrence rule must appear befo
 </div>
 
 In the editor there is no direct feedback to whether your recurrence rule is valid.
-You can validate that tasks understands your rule by using the `Tasks: Crete or edit` command when creating or editing a task.
+You can validate that tasks understands your rule by using the `Tasks: Create or edit` command when creating or editing a task.
 
 ---
 
@@ -104,5 +104,6 @@ Examples of possible recurrence rules (mix and match as desired; these should be
 -   `🔁 every month on the 1st`
 -   `🔁 every 6 months on the 2nd Wednesday`
 -   `🔁 every January on the 15th`
+-   `🔁 every April and December on the 1st and 24th` (meaning every *April 1st* and *December 24th*)
 -   `🔁 every year`
 

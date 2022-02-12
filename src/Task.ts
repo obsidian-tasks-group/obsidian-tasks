@@ -488,68 +488,90 @@ export class Task {
         return this._urgency;
     }
 
-    private addTooltip({ element }: { element: HTMLElement }): void {
-        if (
-            this.recurrence ||
-            this.startDate ||
-            this.scheduledDate ||
-            this.dueDate ||
-            this.doneDate
-        ) {
-            element.addEventListener('mouseenter', () => {
-                const tooltip = element.createDiv();
-                tooltip.addClasses(['tooltip', 'mod-right']);
-
-                if (this.recurrence) {
-                    const recurrenceDiv = tooltip.createDiv();
-                    recurrenceDiv.setText(`🔁 ${this.recurrence.toText()}`);
-                }
-
-                if (this.startDate) {
-                    const startDateDiv = tooltip.createDiv();
-                    startDateDiv.setText(
-                        Task.toTooltipDate({
-                            signifier: '🛫',
-                            date: this.startDate,
-                        }),
-                    );
-                }
-
-                if (this.scheduledDate) {
-                    const scheduledDateDiv = tooltip.createDiv();
-                    scheduledDateDiv.setText(
-                        Task.toTooltipDate({
-                            signifier: '⏳',
-                            date: this.scheduledDate,
-                        }),
-                    );
-                }
-
-                if (this.dueDate) {
-                    const dueDateDiv = tooltip.createDiv();
-                    dueDateDiv.setText(
-                        Task.toTooltipDate({
-                            signifier: '📅',
-                            date: this.dueDate,
-                        }),
-                    );
-                }
-
-                if (this.doneDate) {
-                    const doneDateDiv = tooltip.createDiv();
-                    doneDateDiv.setText(
-                        Task.toTooltipDate({
-                            signifier: '✅',
-                            date: this.doneDate,
-                        }),
-                    );
-                }
-
-                element.addEventListener('mouseleave', () => {
-                    tooltip.remove();
-                });
-            });
+    public get filename(): string | null {
+        const fileNameMatch = this.path.match(/([^/]+)\.md$/);
+        if (fileNameMatch !== null) {
+            return fileNameMatch[1];
+        } else {
+            return null;
         }
+    }
+
+    public get linkText(): string | null {
+        let linkText = this.filename;
+        if (linkText === null) {
+            return null;
+        }
+        // Otherwise, this wouldn't provide additional information and only take up space.
+        if (
+            this.precedingHeader !== null &&
+            this.precedingHeader !== linkText
+        ) {
+            linkText = linkText + ' > ' + this.precedingHeader;
+        }
+
+        return linkText;
+    }
+
+    private addTooltip({ element }: { element: HTMLElement }): void {
+        element.addEventListener('mouseenter', () => {
+            const tooltip = element.createDiv();
+            tooltip.addClasses(['tooltip', 'mod-right']);
+
+            if (this.recurrence) {
+                const recurrenceDiv = tooltip.createDiv();
+                recurrenceDiv.setText(`🔁 ${this.recurrence.toText()}`);
+            }
+
+            if (this.startDate) {
+                const startDateDiv = tooltip.createDiv();
+                startDateDiv.setText(
+                    Task.toTooltipDate({
+                        signifier: '🛫',
+                        date: this.startDate,
+                    }),
+                );
+            }
+
+            if (this.scheduledDate) {
+                const scheduledDateDiv = tooltip.createDiv();
+                scheduledDateDiv.setText(
+                    Task.toTooltipDate({
+                        signifier: '⏳',
+                        date: this.scheduledDate,
+                    }),
+                );
+            }
+
+            if (this.dueDate) {
+                const dueDateDiv = tooltip.createDiv();
+                dueDateDiv.setText(
+                    Task.toTooltipDate({
+                        signifier: '📅',
+                        date: this.dueDate,
+                    }),
+                );
+            }
+
+            if (this.doneDate) {
+                const doneDateDiv = tooltip.createDiv();
+                doneDateDiv.setText(
+                    Task.toTooltipDate({
+                        signifier: '✅',
+                        date: this.doneDate,
+                    }),
+                );
+            }
+
+            if (this.linkText) {
+                const backlinkDiv = tooltip.createDiv();
+                backlinkDiv.setText(`🔗 ${this.linkText}`);
+            }
+
+            element.addEventListener('mouseleave', () => {
+                tooltip.remove();
+            });
+        });
     }
 
     private static toTooltipDate({
