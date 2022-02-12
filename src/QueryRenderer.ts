@@ -4,6 +4,7 @@ import {
     MarkdownPostProcessorContext,
     MarkdownRenderChild,
     Plugin,
+    TFile,
 } from 'obsidian';
 
 import { State } from './Cache';
@@ -165,10 +166,10 @@ class QueryRenderChild extends MarkdownRenderChild {
         for (let i = 0; i < tasksCount; i++) {
             const task = tasksSortedLimited[i];
 
-            let fileName: string | undefined;
-            const fileNameMatch = task.path.match(/([^/]+)\.md$/);
-            if (fileNameMatch !== null) {
-                fileName = fileNameMatch[1];
+            let filePath: string | undefined;
+            const filePathMatch = task.path.match(/^(.+)\.md$/);
+            if (filePathMatch !== null) {
+                filePath = filePathMatch[1];
             }
 
             const listItem = await task.toLi({
@@ -185,7 +186,7 @@ class QueryRenderChild extends MarkdownRenderChild {
 
             if (
                 !this.query.layoutOptions.hideBacklinks &&
-                fileName !== undefined
+                filePath !== undefined
             ) {
                 this.addBacklinks(
                     postInfo,
@@ -252,7 +253,25 @@ class QueryRenderChild extends MarkdownRenderChild {
         if (shortMode) {
             linkText = ' 🔗';
         } else {
-            linkText = task.linkText ?? '';
+          // Set link text to either file name (if unique in the vault) or file path.
+          let linkText = filePath;
+          const fileNameMatch = filePath.match(/[^/]*$/i);
+          // @ts-ignore fileNameMatch[0] is never null, because the pattern matches always.
+          const fileName = fileNameMatch[0];
+          // Check if other files exist in the vault with a same name.
+          const filesWithSameName = this.app.vault
+              .getMarkdownFiles()
+              .filter((file: TFile) => {
+                  if (file.basename === fileName) {
+                      // Found a file with the same name (it might actually be the same file, but we'll take that into account later.)
+                      return true;
+                  }
+              });
+          if (filesWithSameName.length == 1) {
+              // Only one file has the name fileName, so the name is unique.
+              // Use fileName as link text instead of the full path. This only affects the displayed text - link target is always set to the full path.
+              linkText = fileName;
+          }
         }
 
         if (task.precedingHeader !== null) {
