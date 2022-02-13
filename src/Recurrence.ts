@@ -1,8 +1,6 @@
 import type { Moment } from 'moment';
 import { RRule } from 'rrule';
 
-import { getSettings } from './Settings';
-
 export class Recurrence {
     private readonly rrule: RRule;
     private readonly strict: boolean;
@@ -24,8 +22,6 @@ export class Recurrence {
      * "starts one week before it is due".
      */
     private readonly referenceDate: Moment | null;
-
-    private static readonly strictRecurrencePrefix = 'strictly ';
 
     constructor({
         rrule,
@@ -61,21 +57,18 @@ export class Recurrence {
         scheduledDate: Moment | null;
         dueDate: Moment | null;
     }): Recurrence | null {
-        const { enforceStrictRecurrence } = getSettings();
-
         try {
-            const [strict, ruleText] = enforceStrictRecurrence
-                ? [true, recurrenceRuleText]
-                : [
-                      recurrenceRuleText.startsWith(
-                          this.strictRecurrencePrefix,
-                      ),
-                      recurrenceRuleText
-                          .replace(this.strictRecurrencePrefix, '')
-                          .trim(),
-                  ];
+            const match = recurrenceRuleText.match(
+                /^([a-z0-9, !]+?)(when done)?$/i,
+            );
+            if (match == null) {
+                return null;
+            }
 
-            const options = RRule.parseText(ruleText);
+            const isolatedRuleText = match[1].trim();
+            const lenient = match[2] !== undefined;
+
+            const options = RRule.parseText(isolatedRuleText);
             if (options !== null) {
                 // Pick the reference date for recurrence based on importance.
                 // Assuming due date has the highest priority.
@@ -89,7 +82,7 @@ export class Recurrence {
                     referenceDate = window.moment(startDate);
                 }
 
-                if (strict && referenceDate !== null) {
+                if (!lenient && referenceDate !== null) {
                     options.dtstart = window
                         .moment(referenceDate)
                         .startOf('day')
@@ -100,7 +93,7 @@ export class Recurrence {
                 const rrule = new RRule(options);
                 return new Recurrence({
                     rrule,
-                    strict,
+                    strict: !lenient,
                     referenceDate,
                     startDate,
                     scheduledDate,
@@ -115,12 +108,9 @@ export class Recurrence {
     }
 
     public toText(): string {
-        const { enforceStrictRecurrence } = getSettings();
-
-        const ruleText = this.rrule.toText();
-        return this.strict && !enforceStrictRecurrence
-            ? Recurrence.strictRecurrencePrefix + ruleText
-            : ruleText;
+        return [this.rrule.toText(), !this.strict && 'when done']
+            .filter(Boolean)
+            .join(' ');
     }
 
     /**

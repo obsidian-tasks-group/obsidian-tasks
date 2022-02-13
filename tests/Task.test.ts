@@ -3,7 +3,6 @@
  */
 import moment from 'moment';
 import { Status, Task } from '../src/Task';
-import { getSettings, updateSettings } from '../src/Settings';
 
 jest.mock('obsidian');
 window.moment = moment;
@@ -147,7 +146,6 @@ describe('toggle done', () => {
     });
 
     type RecurrenceCase = {
-        strict: boolean;
         interval: string;
         due?: string;
         scheduled?: string;
@@ -160,191 +158,162 @@ describe('toggle done', () => {
 
     const recurrenceCases: Array<RecurrenceCase> = [
         {
-            strict: true,
-            interval: '7 days',
+            interval: 'every 7 days',
             due: '2021-02-21',
             nextDue: '2021-02-28',
         },
         {
-            strict: false,
-            interval: '7 days',
+            interval: 'every 7 days when done',
             due: '2021-02-21',
             today: '2021-02-18',
             nextDue: '2021-02-25',
         },
         {
-            strict: false,
-            interval: '7 days',
+            interval: 'every 7 days when done',
             due: '2021-02-21',
             today: '2021-02-22',
             nextDue: '2021-03-01',
         },
         {
-            strict: true,
-            interval: 'day',
+            interval: 'every day',
             due: '2021-02-21',
             nextDue: '2021-02-22',
         },
         {
-            strict: false,
-            interval: 'day',
+            interval: 'every day when done',
             due: '2021-02-21',
             today: '2022-01-04',
             nextDue: '2022-01-05',
         },
         {
-            strict: true,
-            interval: '4 weeks',
+            interval: 'every 4 weeks',
             due: '2021-10-15',
             nextDue: '2021-11-12',
         },
         {
-            strict: true,
-            interval: '4 weeks',
+            interval: 'every 4 weeks',
             due: '2021-10-12',
             nextDue: '2021-11-09',
         },
         {
-            strict: true,
-            interval: '4 weeks',
+            interval: 'every 4 weeks',
             due: '2022-10-12',
             nextDue: '2022-11-09',
         },
         {
-            strict: true,
-            interval: '4 weeks',
+            interval: 'every 4 weeks',
             due: '2033-10-12',
             nextDue: '2033-11-09',
         },
         {
-            strict: false,
-            interval: '3 weeks',
+            interval: 'every 3 weeks when done',
             due: '2022-01-10',
             today: '2021-01-14',
             nextDue: '2021-02-04',
         },
         {
-            strict: true,
-            interval: 'month',
+            interval: 'every month',
             due: '2021-10-15',
             nextDue: '2021-11-15',
         },
         {
-            strict: true,
-            interval: 'month',
+            interval: 'every month',
             due: '2021-10-18',
             nextDue: '2021-11-18',
         },
         {
-            strict: false,
-            interval: 'month',
+            interval: 'every month when done',
             due: '2021-10-18',
             today: '2021-10-16',
             nextDue: '2021-11-16',
         },
         {
-            strict: false,
-            interval: 'month',
+            interval: 'every month when done',
             due: '2021-10-18',
             today: '2021-10-24',
             nextDue: '2021-11-24',
         },
         {
-            strict: true,
-            interval: 'month on the 2nd Wednesday',
+            interval: 'every month on the 2nd Wednesday',
             due: '2021-09-08',
             nextDue: '2021-10-13',
         },
         {
-            strict: false,
-            interval: 'month on the 2nd Wednesday',
+            interval: 'every month on the 2nd Wednesday when done',
             due: '2021-09-08',
             today: '2021-09-15',
             nextDue: '2021-10-13',
         },
         {
-            strict: false,
-            interval: 'month on the 2nd Wednesday',
+            interval: 'every month on the 2nd Wednesday when done',
             due: '2021-09-08',
             today: '2021-10-12',
             nextDue: '2021-10-13',
         },
         {
-            strict: false,
-            interval: 'month on the 2nd Wednesday',
+            interval: 'every month on the 2nd Wednesday when done',
             due: '2021-09-08',
             today: '2021-10-13',
             nextDue: '2021-11-10',
         },
         {
-            strict: true,
-            interval: '3 months on the 3rd Thursday',
+            interval: 'every 3 months on the 3rd Thursday',
             due: '2021-04-15',
             nextDue: '2021-07-15',
         },
         {
-            strict: true,
-            interval: '3 months on the 3rd Thursday',
+            interval: 'every 3 months on the 3rd Thursday',
             due: '2021-08-19',
             nextDue: '2021-11-18',
         },
         {
-            strict: true,
-            interval: '3 months on the 3rd Thursday',
+            interval: 'every 3 months on the 3rd Thursday',
             due: '2021-09-16',
             nextDue: '2021-12-16',
         },
         {
-            strict: true,
-            interval: 'week on Monday, Wednesday, Friday',
+            interval: 'every week on Monday, Wednesday, Friday',
             due: '2022-01-24',
             nextDue: '2022-01-26',
         },
         {
-            strict: false,
-            interval: 'week on Monday, Wednesday, Friday',
+            interval: 'every week on Monday, Wednesday, Friday when done',
             due: '2022-01-24',
             today: '2022-01-25',
             nextDue: '2022-01-26',
         },
         {
-            strict: false,
-            interval: 'week on Monday, Wednesday, Friday',
+            interval: 'every week on Monday, Wednesday, Friday when done',
             due: '2022-01-24',
             today: '2022-01-26',
             nextDue: '2022-01-28',
         },
         {
-            strict: true,
-            interval: '5 days',
+            interval: 'every 5 days',
             start: '2021-10-10',
             nextStart: '2021-10-15',
         },
         {
-            strict: true,
-            interval: '5 days',
+            interval: 'every 5 days',
             scheduled: '2021-10-10',
             nextScheduled: '2021-10-15',
         },
         {
-            strict: true,
-            interval: '5 days',
+            interval: 'every 5 days',
             start: '2021-10-10',
             due: '2021-10-11',
             nextStart: '2021-10-15',
             nextDue: '2021-10-16',
         },
         {
-            strict: true,
-            interval: '5 days',
+            interval: 'every 5 days',
             scheduled: '2021-10-10',
             due: '2021-10-11',
             nextScheduled: '2021-10-15',
             nextDue: '2021-10-16',
         },
         {
-            strict: true,
-            interval: '5 days',
+            interval: 'every 5 days',
             start: '2021-10-09',
             scheduled: '2021-10-10',
             due: '2021-10-11',
@@ -353,8 +322,7 @@ describe('toggle done', () => {
             nextDue: '2021-10-16',
         },
         {
-            strict: false,
-            interval: '10 days',
+            interval: 'every 10 days when done',
             start: '2021-10-05',
             scheduled: '2021-10-07',
             due: '2021-10-09',
@@ -364,8 +332,7 @@ describe('toggle done', () => {
             nextDue: '2021-10-14',
         },
         {
-            strict: false,
-            interval: '10 days',
+            interval: 'every 10 days when done',
             start: '2021-10-05',
             scheduled: '2021-10-07',
             due: '2021-10-09',
@@ -375,8 +342,7 @@ describe('toggle done', () => {
             nextDue: '2021-10-16',
         },
         {
-            strict: false,
-            interval: '10 days',
+            interval: 'every 10 days when done',
             start: '2021-10-05',
             scheduled: '2021-10-07',
             due: '2021-10-09',
@@ -386,8 +352,7 @@ describe('toggle done', () => {
             nextDue: '2021-10-18',
         },
         {
-            strict: false,
-            interval: '10 days',
+            interval: 'every 10 days when done',
             start: '2021-10-05',
             scheduled: '2021-10-07',
             due: '2021-10-09',
@@ -398,89 +363,55 @@ describe('toggle done', () => {
         },
     ];
 
-    describe.each([
-        [
-            'enforceStrictRecurrence',
-            { enforceStrictRecurrence: true, strict: true, prefix: 'every' },
-        ],
-        [
-            'strict recurrence',
-            {
-                enforceStrictRecurrence: false,
-                strict: true,
-                prefix: 'strictly every',
-            },
-        ],
-        [
-            'lenient recurrence',
-            { enforceStrictRecurrence: false, strict: false, prefix: 'every' },
-        ],
-    ])('w/ %s', (_, { enforceStrictRecurrence, strict, prefix }) => {
-        const originalSettings = getSettings();
+    test.concurrent.each<RecurrenceCase>(recurrenceCases)(
+        'recurs correctly (%j)',
+        ({
+            interval,
+            due,
+            scheduled,
+            start,
+            today,
+            nextDue,
+            nextScheduled,
+            nextStart,
+        }) => {
+            const todaySpy = jest
+                .spyOn(Date, 'now')
+                .mockReturnValue(moment(today).valueOf());
 
-        beforeAll(() => {
-            updateSettings({ enforceStrictRecurrence });
-        });
+            const line = [
+                '- [ ] I am task',
+                `🔁 ${interval}`,
+                !!scheduled && `⏳ ${scheduled}`,
+                !!due && `📅 ${due}`,
+                !!start && `🛫 ${start}`,
+            ]
+                .filter(Boolean)
+                .join(' ');
 
-        afterAll(() => {
-            updateSettings(originalSettings);
-        });
+            const task = Task.fromLine({
+                line,
+                path: '',
+                precedingHeader: '',
+                sectionStart: 0,
+                sectionIndex: 0,
+            });
 
-        const filteredCases: Array<RecurrenceCase> = recurrenceCases.filter(
-            (rc) => rc.strict === strict,
-        );
+            const nextTask: Task = task!.toggle()[0];
 
-        test.concurrent.each<RecurrenceCase>(filteredCases)(
-            'recurs correctly (%j)',
-            ({
-                interval,
-                due,
-                scheduled,
-                start,
-                today,
+            expect({
+                nextDue: nextTask.dueDate?.format('YYYY-MM-DD'),
+                nextScheduled: nextTask.scheduledDate?.format('YYYY-MM-DD'),
+                nextStart: nextTask.startDate?.format('YYYY-MM-DD'),
+            }).toMatchObject({
                 nextDue,
                 nextScheduled,
                 nextStart,
-            }) => {
-                const todaySpy = jest
-                    .spyOn(Date, 'now')
-                    .mockReturnValue(moment(today).valueOf());
+            });
 
-                const line = [
-                    '- [ ] I am task',
-                    `🔁 ${prefix} ${interval}`,
-                    !!scheduled && `⏳ ${scheduled}`,
-                    !!due && `📅 ${due}`,
-                    !!start && `🛫 ${start}`,
-                ]
-                    .filter(Boolean)
-                    .join(' ');
+            expect(nextTask.recurrence?.toText()).toBe(interval);
 
-                const task = Task.fromLine({
-                    line,
-                    path: '',
-                    precedingHeader: '',
-                    sectionStart: 0,
-                    sectionIndex: 0,
-                });
-
-                const nextTask: Task = task!.toggle()[0];
-
-                expect(
-                    nextTask.dueDate === null ||
-                        nextTask.dueDate.isSame(nextDue),
-                ).toBe(true);
-                expect(
-                    nextTask.scheduledDate === null ||
-                        nextTask.scheduledDate.isSame(nextScheduled),
-                ).toBe(true);
-                expect(
-                    nextTask.startDate === null ||
-                        nextTask.startDate.isSame(nextStart),
-                ).toBe(true);
-
-                todaySpy.mockClear();
-            },
-        );
-    });
+            todaySpy.mockClear();
+        },
+    );
 });
