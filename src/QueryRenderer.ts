@@ -142,14 +142,7 @@ class QueryRenderChild extends MarkdownRenderChild {
         tasks: Task[];
         content: HTMLDivElement;
     }): Promise<{ taskList: HTMLUListElement; tasksCount: number }> {
-        this.query.filters.forEach((filter) => {
-            tasks = tasks.filter(filter);
-        });
-
-        const tasksSortedLimited = Sort.by(this.query, tasks).slice(
-            0,
-            this.query.limit,
-        );
+        const tasksSortedLimited = this.applyQueryToTasks(tasks);
         const tasksCount = tasksSortedLimited.length;
 
         const taskList = content.createEl('ul');
@@ -191,6 +184,18 @@ class QueryRenderChild extends MarkdownRenderChild {
         }
 
         return { taskList, tasksCount };
+    }
+
+    private applyQueryToTasks(tasks: Task[]) {
+        this.query.filters.forEach((filter) => {
+            tasks = tasks.filter(filter);
+        });
+
+        const tasksSortedLimited = Sort.by(this.query, tasks).slice(
+            0,
+            this.query.limit,
+        );
+        return tasksSortedLimited;
     }
 
     private addEditButton(postInfo: HTMLSpanElement, task: Task) {
