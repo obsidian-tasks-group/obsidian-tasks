@@ -218,15 +218,6 @@ class QueryRenderChild extends MarkdownRenderChild {
         });
     }
 
-    private addTaskCount(content: HTMLDivElement, tasksCount: number) {
-        if (!this.query.layoutOptions.hideTaskCount) {
-            content.createDiv({
-                text: `${tasksCount} task${tasksCount !== 1 ? 's' : ''}`,
-                cls: 'tasks-count',
-            });
-        }
-    }
-
     private addBacklinks(
         postInfo: HTMLSpanElement,
         task: Task,
@@ -265,6 +256,15 @@ class QueryRenderChild extends MarkdownRenderChild {
         link.setText(linkText);
         if (!shortMode) {
             postInfo.append(')');
+        }
+    }
+
+    private addTaskCount(content: HTMLDivElement, tasksCount: number) {
+        if (!this.query.layoutOptions.hideTaskCount) {
+            content.createDiv({
+                text: `${tasksCount} task${tasksCount !== 1 ? 's' : ''}`,
+                cls: 'tasks-count',
+            });
         }
     }
 }
