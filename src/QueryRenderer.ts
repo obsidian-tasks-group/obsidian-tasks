@@ -191,11 +191,7 @@ class QueryRenderChild extends MarkdownRenderChild {
             tasks = tasks.filter(filter);
         });
 
-        const tasksSortedLimited = Sort.by(this.query, tasks).slice(
-            0,
-            this.query.limit,
-        );
-        return tasksSortedLimited;
+        return Sort.by(this.query, tasks).slice(0, this.query.limit);
     }
 
     private addEditButton(postInfo: HTMLSpanElement, task: Task) {
