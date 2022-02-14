@@ -125,12 +125,7 @@ class QueryRenderChild extends MarkdownRenderChild {
                 content,
             });
             content.appendChild(taskList);
-            if (!this.query.layoutOptions.hideTaskCount) {
-                content.createDiv({
-                    text: `${tasksCount} task${tasksCount !== 1 ? 's' : ''}`,
-                    cls: 'tasks-count',
-                });
-            }
+            this.addTaskCount(content, tasksCount);
         } else if (this.query.error !== undefined) {
             content.setText(`Tasks query: ${this.query.error}`);
         } else {
@@ -220,6 +215,15 @@ class QueryRenderChild extends MarkdownRenderChild {
             });
             taskModal.open();
         });
+    }
+
+    private addTaskCount(content: HTMLDivElement, tasksCount: number) {
+        if (!this.query.layoutOptions.hideTaskCount) {
+            content.createDiv({
+                text: `${tasksCount} task${tasksCount !== 1 ? 's' : ''}`,
+                cls: 'tasks-count',
+            });
+        }
     }
 
     private addBacklinks(
