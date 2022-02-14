@@ -120,9 +120,10 @@ class QueryRenderChild extends MarkdownRenderChild {
     private async render({ tasks, state }: { tasks: Task[]; state: State }) {
         const content = this.containerEl.createEl('div');
         if (state === State.Warm && this.query.error === undefined) {
+            const tasksSortedLimited = this.applyQueryToTasks(tasks);
             const { taskList, tasksCount } = await this.createTasksList({
-                tasks,
-                content,
+                tasks: tasksSortedLimited,
+                content: content,
             });
             content.appendChild(taskList);
             this.addTaskCount(content, tasksCount);
@@ -142,8 +143,7 @@ class QueryRenderChild extends MarkdownRenderChild {
         tasks: Task[];
         content: HTMLDivElement;
     }): Promise<{ taskList: HTMLUListElement; tasksCount: number }> {
-        const tasksSortedLimited = this.applyQueryToTasks(tasks);
-        const tasksCount = tasksSortedLimited.length;
+        const tasksCount = tasks.length;
 
         const taskList = content.createEl('ul');
         taskList.addClasses([
@@ -151,7 +151,7 @@ class QueryRenderChild extends MarkdownRenderChild {
             'plugin-tasks-query-result',
         ]);
         for (let i = 0; i < tasksCount; i++) {
-            const task = tasksSortedLimited[i];
+            const task = tasks[i];
 
             const listItem = await task.toLi({
                 parentUlElement: taskList,
