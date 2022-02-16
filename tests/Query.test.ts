@@ -162,4 +162,14 @@ describe('Query', () => {
             expect(query.sorting).toEqual(output);
         });
     });
+    describe('comments', () => {
+        it('ignores comments', () => {
+            // Arrange
+            const input = '# I am a comment, which will be ignored';
+            const query = new Query({ source: input });
+
+            // Assert
+            expect(query.error).toBeUndefined();
+        });
+    });
 });
