@@ -58,6 +58,8 @@ export class Query {
     private readonly limitRegexp = /^limit (to )?(\d+)( tasks?)?/;
     private readonly excludeSubItemsString = 'exclude sub-items';
 
+    private readonly commentRegexp = /^#.*/;
+
     constructor({ source }: { source: string }) {
         source
             .split('\n')
@@ -131,6 +133,9 @@ export class Query {
                         break;
                     case this.hideOptionsRegexp.test(line):
                         this.parseHideOptions({ line });
+                        break;
+                    case this.commentRegexp.test(line):
+                        // Comment lines are ignored
                         break;
                     default:
                         this._error = 'do not understand query';
