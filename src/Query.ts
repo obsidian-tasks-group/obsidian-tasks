@@ -267,39 +267,27 @@ export class Query {
             let filter;
             if (happensMatch[1] === 'before') {
                 filter = (task: Task) => {
-                    if (task.startDate) {
-                        return task.startDate.isBefore(filterDate);
-                    } else if (task.scheduledDate) {
-                        return task.scheduledDate.isBefore(filterDate);
-                    } else if (task.dueDate) {
-                        return task.dueDate.isBefore(filterDate);
-                    } else {
-                        return false;
-                    }
+                    return Array.of(
+                        task.startDate,
+                        task.scheduledDate,
+                        task.dueDate,
+                    ).some((date) => date && date.isBefore(filterDate));
                 };
             } else if (happensMatch[1] === 'after') {
                 filter = (task: Task) => {
-                    if (task.startDate) {
-                        return task.startDate.isAfter(filterDate);
-                    } else if (task.scheduledDate) {
-                        return task.scheduledDate.isAfter(filterDate);
-                    } else if (task.dueDate) {
-                        return task.dueDate.isAfter(filterDate);
-                    } else {
-                        return false;
-                    }
+                    return Array.of(
+                        task.startDate,
+                        task.scheduledDate,
+                        task.dueDate,
+                    ).some((date) => date && date.isAfter(filterDate));
                 };
             } else {
                 filter = (task: Task) => {
-                    if (task.startDate) {
-                        return task.startDate.isSame(filterDate);
-                    } else if (task.scheduledDate) {
-                        return task.scheduledDate.isSame(filterDate);
-                    } else if (task.dueDate) {
-                        return task.dueDate.isSame(filterDate);
-                    } else {
-                        return false;
-                    }
+                    return Array.of(
+                        task.startDate,
+                        task.scheduledDate,
+                        task.dueDate,
+                    ).some((date) => date && date.isSame(filterDate));
                 };
             }
 
