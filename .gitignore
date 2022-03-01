@@ -9,10 +9,6 @@ yarn-error.log
 # build
 main.js
 *.js.map
-test-vault/.obsidian/workspace
-test-vault/.obsidian/plugins/obsidian-tasks/*.css
-test-vault/.obsidian/plugins/obsidian-tasks/*.js
-test-vault/.obsidian/plugins/obsidian-tasks/*.json
 
 # obsidian
 data.json
