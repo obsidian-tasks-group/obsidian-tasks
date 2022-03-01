@@ -165,12 +165,6 @@ class QueryRenderChild extends MarkdownRenderChild {
         for (let i = 0; i < tasksCount; i++) {
             const task = tasksSortedLimited[i];
 
-            let fileName: string | undefined;
-            const fileNameMatch = task.path.match(/([^/]+)\.md$/);
-            if (fileNameMatch !== null) {
-                fileName = fileNameMatch[1];
-            }
-
             const listItem = await task.toLi({
                 parentUlElement: taskList,
                 listIndex: i,
@@ -185,9 +179,13 @@ class QueryRenderChild extends MarkdownRenderChild {
 
             if (
                 !this.query.layoutOptions.hideBacklinks &&
-                fileName !== undefined
+                task.filename !== undefined
             ) {
-                this.addBacklinks(postInfo, fileName, task);
+                this.addBacklinks(
+                    postInfo,
+                    task,
+                    this.query.layoutOptions.shortMode,
+                );
             }
 
             if (!this.query.layoutOptions.hideEditButton) {
@@ -226,11 +224,13 @@ class QueryRenderChild extends MarkdownRenderChild {
 
     private addBacklinks(
         postInfo: HTMLSpanElement,
-        fileName: string,
         task: Task,
+        shortMode: boolean,
     ) {
         postInfo.addClass('tasks-backlink');
-        postInfo.append(' (');
+        if (!shortMode) {
+            postInfo.append(' (');
+        }
         const link = postInfo.createEl('a');
 
         link.href = task.path;
@@ -238,22 +238,28 @@ class QueryRenderChild extends MarkdownRenderChild {
         link.rel = 'noopener';
         link.target = '_blank';
         link.addClass('internal-link');
+        if (shortMode) {
+            link.addClass('internal-link-short-mode');
+        }
 
-        let linkText = fileName;
+        let linkText: string;
+        if (shortMode) {
+            linkText = ' 🔗';
+        } else {
+            linkText = task.linkText ?? '';
+        }
+
         if (task.precedingHeader !== null) {
             link.href = link.href + '#' + task.precedingHeader;
             link.setAttribute(
                 'data-href',
                 link.getAttribute('data-href') + '#' + task.precedingHeader,
             );
-
-            // Otherwise, this wouldn't provide additinoal information and only take up space.
-            if (task.precedingHeader !== fileName) {
-                linkText = linkText + ' > ' + task.precedingHeader;
-            }
         }
 
         link.setText(linkText);
-        postInfo.append(')');
+        if (!shortMode) {
+            postInfo.append(')');
+        }
     }
 }
