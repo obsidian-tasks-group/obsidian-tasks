@@ -278,11 +278,13 @@ export class Task {
         parentUlElement,
         listIndex,
         layoutOptions,
+        isFilenameUnique,
     }: {
         parentUlElement: HTMLElement;
         /** The nth item in this list (including non-tasks). */
         listIndex: number;
         layoutOptions?: LayoutOptions;
+        isFilenameUnique?: boolean;
     }): Promise<HTMLLIElement> {
         const li: HTMLLIElement = parentUlElement.createEl('li');
         li.addClasses(['task-list-item', 'plugin-tasks-list-item']);
@@ -354,7 +356,7 @@ export class Task {
         checkbox.setAttr('data-line', listIndex);
 
         if (layoutOptions?.shortMode) {
-            this.addTooltip({ element: textSpan });
+            this.addTooltip({ element: textSpan, isFilenameUnique });
         }
 
         return li;
@@ -497,11 +499,30 @@ export class Task {
         }
     }
 
-    public get linkText(): string | null {
-        let linkText = this.filename;
+    /**
+     * Returns the text that should be displayed to the user when linking to the origin of the task
+     *
+     * @param isFilenameUnique {boolean|null} Whether the name of the file that contains the task is unique in the vault.
+     *                                        If it is undefined, the outcome will be the same as with a unique file name: the file name only.
+     *                                        If set to `true`, the full path will be returned.
+     */
+    public getLinkText({
+        isFilenameUnique,
+    }: {
+        isFilenameUnique: boolean | undefined;
+    }): string | null {
+        let linkText: string | null;
+        if (isFilenameUnique) {
+            linkText = this.filename;
+        } else {
+            // A slash at the beginning indicates this is a path, not a filename.
+            linkText = '/' + this.path;
+        }
+
         if (linkText === null) {
             return null;
         }
+
         // Otherwise, this wouldn't provide additional information and only take up space.
         if (
             this.precedingHeader !== null &&
@@ -513,7 +534,13 @@ export class Task {
         return linkText;
     }
 
-    private addTooltip({ element }: { element: HTMLElement }): void {
+    private addTooltip({
+        element,
+        isFilenameUnique,
+    }: {
+        element: HTMLElement;
+        isFilenameUnique: boolean | undefined;
+    }): void {
         element.addEventListener('mouseenter', () => {
             const tooltip = element.createDiv();
             tooltip.addClasses(['tooltip', 'mod-right']);
@@ -563,9 +590,10 @@ export class Task {
                 );
             }
 
-            if (this.linkText) {
+            const linkText = this.getLinkText({ isFilenameUnique });
+            if (linkText) {
                 const backlinkDiv = tooltip.createDiv();
-                backlinkDiv.setText(`🔗 ${this.linkText}`);
+                backlinkDiv.setText(`🔗 ${linkText}`);
             }
 
             element.addEventListener('mouseleave', () => {
