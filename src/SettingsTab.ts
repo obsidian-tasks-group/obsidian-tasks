@@ -64,5 +64,25 @@ export class SettingsTab extends PluginSettingTab {
                         await this.plugin.saveSettings();
                     });
             });
+
+        containerEl.createEl('div', {
+            cls: 'setting-item-description',
+            text: 'Enable reminder on edit/create task (requires obsidian-reminder plugin)',
+        });
+
+        new Setting(containerEl)
+            .setName('Enable reminder on edit/creat task')
+            .setDesc(
+                'Enable reminder on edit/create task (requires obsidian-reminder plugin)',
+            )
+            .addToggle((toggle) => {
+                const settings = getSettings();
+
+                toggle.setValue(settings.reminder).onChange(async (value) => {
+                    updateSettings({ reminder: value });
+
+                    await this.plugin.saveSettings();
+                });
+            });
     }
 }

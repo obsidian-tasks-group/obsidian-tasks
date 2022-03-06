@@ -23,6 +23,7 @@ describe('Query', () => {
                     doneDate: null,
                     recurrence: null,
                     blockLink: '',
+                    reminderTime: null,
                 }),
                 new Task({
                     status: Status.Todo,
@@ -40,6 +41,7 @@ describe('Query', () => {
                     doneDate: null,
                     recurrence: null,
                     blockLink: '',
+                    reminderTime: null,
                 }),
             ];
             const input = 'path includes ab/c d';
