@@ -4,6 +4,7 @@ import {
     MarkdownPostProcessorContext,
     MarkdownRenderChild,
     Plugin,
+    TFile,
 } from 'obsidian';
 
 import { State } from './Cache';
@@ -164,11 +165,13 @@ class QueryRenderChild extends MarkdownRenderChild {
         ]);
         for (let i = 0; i < tasksCount; i++) {
             const task = tasksSortedLimited[i];
+            const isFilenameUnique = this.isFilenameUnique({ task });
 
             const listItem = await task.toLi({
                 parentUlElement: taskList,
                 listIndex: i,
                 layoutOptions: this.query.layoutOptions,
+                isFilenameUnique,
             });
 
             // Remove all footnotes. They don't re-appear in another document.
@@ -176,16 +179,10 @@ class QueryRenderChild extends MarkdownRenderChild {
             footnotes.forEach((footnote) => footnote.remove());
 
             const postInfo = listItem.createSpan();
+            const shortMode = this.query.layoutOptions.shortMode;
 
-            if (
-                !this.query.layoutOptions.hideBacklinks &&
-                task.filename !== undefined
-            ) {
-                this.addBacklinks(
-                    postInfo,
-                    task,
-                    this.query.layoutOptions.shortMode,
-                );
+            if (!this.query.layoutOptions.hideBacklinks) {
+                this.addBacklinks(postInfo, task, shortMode, isFilenameUnique);
             }
 
             if (!this.query.layoutOptions.hideEditButton) {
@@ -226,6 +223,7 @@ class QueryRenderChild extends MarkdownRenderChild {
         postInfo: HTMLSpanElement,
         task: Task,
         shortMode: boolean,
+        isFilenameUnique: boolean | undefined,
     ) {
         postInfo.addClass('tasks-backlink');
         if (!shortMode) {
@@ -242,13 +240,6 @@ class QueryRenderChild extends MarkdownRenderChild {
             link.addClass('internal-link-short-mode');
         }
 
-        let linkText: string;
-        if (shortMode) {
-            linkText = ' 🔗';
-        } else {
-            linkText = task.linkText ?? '';
-        }
-
         if (task.precedingHeader !== null) {
             link.href = link.href + '#' + task.precedingHeader;
             link.setAttribute(
@@ -257,9 +248,36 @@ class QueryRenderChild extends MarkdownRenderChild {
             );
         }
 
+        let linkText: string;
+        if (shortMode) {
+            linkText = ' 🔗';
+        } else {
+            linkText = task.getLinkText({ isFilenameUnique }) ?? '';
+        }
+
         link.setText(linkText);
         if (!shortMode) {
             postInfo.append(')');
         }
+    }
+
+    private isFilenameUnique({ task }: { task: Task }): boolean | undefined {
+        // Will match the filename without extension (the file's "basename").
+        const filenameMatch = task.path.match(/([^/]*)\..+$/i);
+        if (filenameMatch === null) {
+            return undefined;
+        }
+
+        const filename = filenameMatch[1];
+        const allFilesWithSameName = this.app.vault
+            .getMarkdownFiles()
+            .filter((file: TFile) => {
+                if (file.basename === filename) {
+                    // Found a file with the same name (it might actually be the same file, but we'll take that into account later.)
+                    return true;
+                }
+            });
+
+        return allFilesWithSameName.length < 2;
     }
 }
