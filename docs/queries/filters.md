@@ -56,6 +56,8 @@ Instead you would have two queries, one for each condition:
     path includes GitHub
     ```
 
+To create more complex matching rules, see [Include and Exclude Filters](../advanced/include-exclude.md).
+
 ---
 
 ## List of Available Filters
@@ -107,8 +109,14 @@ Such filter could be:
 
 ### Recurrence
 
-- `is recurring`
+- `is recurring <string>?`
 - `is not recurring`
+
+Tasks can filtered by a specific recurrence rule by specifying `<string>`. For example:
+
+    ```tasks
+    is recurring every day
+    ```
 
 ### File Path
 

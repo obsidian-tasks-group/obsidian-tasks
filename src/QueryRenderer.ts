@@ -147,10 +147,20 @@ class QueryRenderChild extends MarkdownRenderChild {
         tasks: Task[];
         content: HTMLDivElement;
     }): Promise<{ taskList: HTMLUListElement; tasksCount: number }> {
+        // Handle absolute filters
         this.query.filters.forEach((filter) => {
             tasks = tasks.filter(filter);
         });
-
+        // Handle exclude filters
+        this.query.excludeFilters.forEach((filter) => {
+            tasks = tasks.filter((task) => !filter(task));
+        });
+        // Handle include filters
+        if (this.query.includeFilters.length > 0) {
+            tasks = tasks.filter((task) =>
+                this.query.includeFilters.some((filter) => filter(task)),
+            );
+        }
         const tasksSortedLimited = Sort.by(this.query, tasks).slice(
             0,
             this.query.limit,

@@ -20,9 +20,13 @@ export class Query {
     private _limit: number | undefined = undefined;
     private _layoutOptions: LayoutOptions = new LayoutOptions();
     private _filters: ((task: Task) => boolean)[] = [];
+    private _includeFilters: ((task: Task) => boolean)[] = [];
+    private _excludeFilters: ((task: Task) => boolean)[] = [];
     private _error: string | undefined = undefined;
     private _sorting: Sorting[] = [];
 
+    private includeString = 'include:';
+    private excludeString = 'exclude:';
     private readonly priorityRegexp =
         /^priority (is )?(above|below)? ?(low|none|medium|high)/;
 
@@ -52,7 +56,7 @@ export class Query {
         /^hide (task count|backlink|priority|start date|scheduled date|done date|due date|recurrence rule|edit button)/;
     private readonly shortModeRegexp = /^short/;
 
-    private readonly recurringString = 'is recurring';
+    private readonly recurringRegexp = /^is recurring($| (.+))/;
     private readonly notRecurringString = 'is not recurring';
 
     private readonly limitRegexp = /^limit (to )?(\d+)( tasks?)?/;
@@ -61,6 +65,7 @@ export class Query {
     private readonly commentRegexp = /^#.*/;
 
     constructor({ source }: { source: string }) {
+        let filters = this._filters;
         source
             .split('\n')
             .map((line: string) => line.trim())
@@ -68,62 +73,62 @@ export class Query {
                 switch (true) {
                     case line === '':
                         break;
+                    case line === this.includeString:
+                        filters = this._includeFilters;
+                        break;
+                    case line === this.excludeString:
+                        filters = this._excludeFilters;
+                        break;
                     case line === this.doneString:
-                        this._filters.push(
-                            (task) => task.status === Status.Done,
-                        );
+                        filters.push((task) => task.status === Status.Done);
                         break;
                     case line === this.notDoneString:
-                        this._filters.push(
-                            (task) => task.status !== Status.Done,
-                        );
+                        filters.push((task) => task.status !== Status.Done);
                         break;
-                    case line === this.recurringString:
-                        this._filters.push((task) => task.recurrence !== null);
+                    case this.recurringRegexp.test(line):
+                        this.parseRecurrenceFilter({ line }, filters);
                         break;
                     case line === this.notRecurringString:
-                        this._filters.push((task) => task.recurrence === null);
+                        filters.push((task) => task.recurrence === null);
                         break;
                     case line === this.excludeSubItemsString:
-                        this._filters.push((task) => task.indentation === '');
+                        filters.push((task) => task.indentation === '');
                         break;
                     case line === this.noStartString:
-                        this._filters.push((task) => task.startDate === null);
+                        filters.push((task) => task.startDate === null);
                         break;
                     case line === this.noScheduledString:
-                        this._filters.push(
-                            (task) => task.scheduledDate === null,
-                        );
+                        filters.push((task) => task.scheduledDate === null);
                         break;
                     case line === this.noDueString:
-                        this._filters.push((task) => task.dueDate === null);
+                        filters.push((task) => task.dueDate === null);
                         break;
                     case this.shortModeRegexp.test(line):
                         this._layoutOptions.shortMode = true;
                         break;
                     case this.priorityRegexp.test(line):
-                        this.parsePriorityFilter({ line });
+                        this.parsePriorityFilter({ line }, filters);
                         break;
                     case this.startRegexp.test(line):
-                        this.parseStartFilter({ line });
+                        this.parseStartFilter({ line }, filters);
                         break;
                     case this.scheduledRegexp.test(line):
-                        this.parseScheduledFilter({ line });
+                        this.parseScheduledFilter({ line }, filters);
                         break;
                     case this.dueRegexp.test(line):
-                        this.parseDueFilter({ line });
+                        this.parseDueFilter({ line }, filters);
                         break;
                     case this.doneRegexp.test(line):
-                        this.parseDoneFilter({ line });
+                        this.parseDoneFilter({ line }, filters);
                         break;
                     case this.pathRegexp.test(line):
-                        this.parsePathFilter({ line });
+                        this.parsePathFilter({ line }, filters);
                         break;
                     case this.descriptionRegexp.test(line):
-                        this.parseDescriptionFilter({ line });
+                        this.parseDescriptionFilter({ line }, filters);
                         break;
                     case this.headingRegexp.test(line):
-                        this.parseHeadingFilter({ line });
+                        this.parseHeadingFilter({ line }, filters);
                         break;
                     case this.limitRegexp.test(line):
                         this.parseLimit({ line });
@@ -153,6 +158,14 @@ export class Query {
 
     public get filters(): ((task: Task) => boolean)[] {
         return this._filters;
+    }
+
+    public get includeFilters(): ((task: Task) => boolean)[] {
+        return this._includeFilters;
+    }
+
+    public get excludeFilters(): ((task: Task) => boolean)[] {
+        return this._excludeFilters;
     }
 
     public get sorting() {
@@ -202,7 +215,31 @@ export class Query {
         }
     }
 
-    private parsePriorityFilter({ line }: { line: string }): void {
+    private parseRecurrenceFilter(
+        { line }: { line: string },
+        filters: ((task: Task) => boolean)[],
+    ): void {
+        const recurrentMatch = line.match(this.recurringRegexp);
+        if (recurrentMatch !== null) {
+            const recurrence = recurrentMatch[2];
+            if (recurrence !== undefined) {
+                filters.push(
+                    (task) =>
+                        task.recurrence !== null &&
+                        task.recurrence?.toText() == recurrence,
+                );
+            } else {
+                filters.push((task) => task.recurrence !== null);
+            }
+        } else {
+            this._error = 'do not understand query filter (recurrence)';
+        }
+    }
+
+    private parsePriorityFilter(
+        { line }: { line: string },
+        filters: ((task: Task) => boolean)[],
+    ): void {
         const priorityMatch = line.match(this.priorityRegexp);
         if (priorityMatch !== null) {
             const filterPriorityString = priorityMatch[3];
@@ -244,13 +281,16 @@ export class Query {
                     task.priority ? task.priority === filterPriority : false;
             }
 
-            this._filters.push(filter);
+            filters.push(filter);
         } else {
             this._error = 'do not understand query filter (priority date)';
         }
     }
 
-    private parseStartFilter({ line }: { line: string }): void {
+    private parseStartFilter(
+        { line }: { line: string },
+        filters: ((task: Task) => boolean)[],
+    ): void {
         const startMatch = line.match(this.startRegexp);
         if (startMatch !== null) {
             const filterDate = this.parseDate(startMatch[2]);
@@ -271,13 +311,16 @@ export class Query {
                     task.startDate ? task.startDate.isSame(filterDate) : true;
             }
 
-            this._filters.push(filter);
+            filters.push(filter);
         } else {
             this._error = 'do not understand query filter (start date)';
         }
     }
 
-    private parseScheduledFilter({ line }: { line: string }): void {
+    private parseScheduledFilter(
+        { line }: { line: string },
+        filters: ((task: Task) => boolean)[],
+    ): void {
         const scheduledMatch = line.match(this.scheduledRegexp);
         if (scheduledMatch !== null) {
             const filterDate = this.parseDate(scheduledMatch[2]);
@@ -303,13 +346,16 @@ export class Query {
                         : false;
             }
 
-            this._filters.push(filter);
+            filters.push(filter);
         } else {
             this._error = 'do not understand query filter (scheduled date)';
         }
     }
 
-    private parseDueFilter({ line }: { line: string }): void {
+    private parseDueFilter(
+        { line }: { line: string },
+        filters: ((task: Task) => boolean)[],
+    ): void {
         const dueMatch = line.match(this.dueRegexp);
         if (dueMatch !== null) {
             const filterDate = this.parseDate(dueMatch[2]);
@@ -330,13 +376,16 @@ export class Query {
                     task.dueDate ? task.dueDate.isSame(filterDate) : false;
             }
 
-            this._filters.push(filter);
+            filters.push(filter);
         } else {
             this._error = 'do not understand query filter (due date)';
         }
     }
 
-    private parseDoneFilter({ line }: { line: string }): void {
+    private parseDoneFilter(
+        { line }: { line: string },
+        filters: ((task: Task) => boolean)[],
+    ): void {
         const doneMatch = line.match(this.doneRegexp);
         if (doneMatch !== null) {
             const filterDate = this.parseDate(doneMatch[2]);
@@ -357,20 +406,23 @@ export class Query {
                     task.doneDate ? task.doneDate.isSame(filterDate) : false;
             }
 
-            this._filters.push(filter);
+            filters.push(filter);
         }
     }
 
-    private parsePathFilter({ line }: { line: string }): void {
+    private parsePathFilter(
+        { line }: { line: string },
+        filters: ((task: Task) => boolean)[],
+    ): void {
         const pathMatch = line.match(this.pathRegexp);
         if (pathMatch !== null) {
             const filterMethod = pathMatch[1];
             if (filterMethod === 'includes') {
-                this._filters.push((task: Task) =>
+                filters.push((task: Task) =>
                     this.stringIncludesCaseInsensitive(task.path, pathMatch[2]),
                 );
             } else if (pathMatch[1] === 'does not include') {
-                this._filters.push(
+                filters.push(
                     (task: Task) =>
                         !this.stringIncludesCaseInsensitive(
                             task.path,
@@ -385,14 +437,17 @@ export class Query {
         }
     }
 
-    private parseDescriptionFilter({ line }: { line: string }): void {
+    private parseDescriptionFilter(
+        { line }: { line: string },
+        filters: ((task: Task) => boolean)[],
+    ): void {
         const descriptionMatch = line.match(this.descriptionRegexp);
         if (descriptionMatch !== null) {
             const filterMethod = descriptionMatch[1];
             const globalFilter = getSettings().globalFilter;
 
             if (filterMethod === 'includes') {
-                this._filters.push((task: Task) =>
+                filters.push((task: Task) =>
                     this.stringIncludesCaseInsensitive(
                         // Remove global filter from description match if present.
                         // This is necessary to match only on the content of the task, not
@@ -402,7 +457,7 @@ export class Query {
                     ),
                 );
             } else if (descriptionMatch[1] === 'does not include') {
-                this._filters.push(
+                filters.push(
                     (task: Task) =>
                         !this.stringIncludesCaseInsensitive(
                             // Remove global filter from description match if present.
@@ -420,12 +475,15 @@ export class Query {
         }
     }
 
-    private parseHeadingFilter({ line }: { line: string }): void {
+    private parseHeadingFilter(
+        { line }: { line: string },
+        filters: ((task: Task) => boolean)[],
+    ): void {
         const headingMatch = line.match(this.headingRegexp);
         if (headingMatch !== null) {
             const filterMethod = headingMatch[1].toLowerCase();
             if (filterMethod === 'includes') {
-                this._filters.push(
+                filters.push(
                     (task: Task) =>
                         task.precedingHeader !== null &&
                         this.stringIncludesCaseInsensitive(
@@ -434,7 +492,7 @@ export class Query {
                         ),
                 );
             } else if (headingMatch[1] === 'does not include') {
-                this._filters.push(
+                filters.push(
                     (task: Task) =>
                         task.precedingHeader === null ||
                         !this.stringIncludesCaseInsensitive(
