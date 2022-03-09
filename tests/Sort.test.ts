@@ -20,12 +20,15 @@ function fromLine({ line, path = '' }: { line: string; path?: string }) {
 
 describe('Sort', () => {
     it('sorts correctly by default order', () => {
-        const one = fromLine({ line: '- [ ] a 📅 1970-01-01', path: '3' });
-        const two = fromLine({ line: '- [ ] c 📅 1970-01-02', path: '3' });
-        const three = fromLine({ line: '- [ ] d 📅 1970-01-03', path: '2' });
-        const four = fromLine({ line: '- [x] d 📅 1970-01-02', path: '2' });
-        const five = fromLine({ line: '- [x] b 📅 1970-01-02', path: '3' });
-        const six = fromLine({ line: '- [x] d 📅 1970-01-03', path: '2' });
+        const one = fromLine({ line: '- [ ] one 📅 1970-01-01', path: '3' });
+        const two = fromLine({ line: '- [ ] two 📅 1970-01-02', path: '3' });
+        const three = fromLine({
+            line: '- [ ] three 📅 1970-01-03',
+            path: '2',
+        });
+        const four = fromLine({ line: '- [x] four 📅 1970-01-03', path: '4' });
+        const five = fromLine({ line: '- [x] five 📅 1970-01-04', path: '2' });
+        const six = fromLine({ line: '- [x] six 📅 1970-01-04', path: '3' });
         const expectedOrder = [one, two, three, four, five, six];
         expect(
             Sort.by({ sorting: [] }, [six, five, one, four, two, three]),
