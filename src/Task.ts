@@ -55,7 +55,7 @@ export class Task {
     public static readonly scheduledDateRegex = /[⏳⌛] ?(\d{4}-\d{2}-\d{2})$/u;
     public static readonly dueDateRegex = /[📅📆🗓] ?(\d{4}-\d{2}-\d{2})$/u;
     public static readonly doneDateRegex = /✅ ?(\d{4}-\d{2}-\d{2})$/u;
-    public static readonly recurrenceRegex = /🔁 ?([a-z0-9, !]+)$/iu;
+    public static readonly recurrenceRegex = /🔁 ?([a-zA-Z0-9, !]+)$/iu;
     public static readonly blockLinkRegex = / \^[a-zA-Z0-9-]+$/u;
 
     private _urgency: number | null = null;
