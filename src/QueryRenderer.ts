@@ -121,17 +121,13 @@ class QueryRenderChild extends MarkdownRenderChild {
     private async render({ tasks, state }: { tasks: Task[]; state: State }) {
         const content = this.containerEl.createEl('div');
         if (state === State.Warm && this.query.error === undefined) {
+            const tasksSortedLimited = this.applyQueryToTasks(tasks);
             const { taskList, tasksCount } = await this.createTasksList({
-                tasks,
-                content,
+                tasks: tasksSortedLimited,
+                content: content,
             });
             content.appendChild(taskList);
-            if (!this.query.layoutOptions.hideTaskCount) {
-                content.createDiv({
-                    text: `${tasksCount} task${tasksCount !== 1 ? 's' : ''}`,
-                    cls: 'tasks-count',
-                });
-            }
+            this.addTaskCount(content, tasksCount);
         } else if (this.query.error !== undefined) {
             content.setText(`Tasks query: ${this.query.error}`);
         } else {
@@ -148,15 +144,7 @@ class QueryRenderChild extends MarkdownRenderChild {
         tasks: Task[];
         content: HTMLDivElement;
     }): Promise<{ taskList: HTMLUListElement; tasksCount: number }> {
-        this.query.filters.forEach((filter) => {
-            tasks = tasks.filter(filter);
-        });
-
-        const tasksSortedLimited = Sort.by(this.query, tasks).slice(
-            0,
-            this.query.limit,
-        );
-        const tasksCount = tasksSortedLimited.length;
+        const tasksCount = tasks.length;
 
         const taskList = content.createEl('ul');
         taskList.addClasses([
@@ -164,7 +152,7 @@ class QueryRenderChild extends MarkdownRenderChild {
             'plugin-tasks-query-result',
         ]);
         for (let i = 0; i < tasksCount; i++) {
-            const task = tasksSortedLimited[i];
+            const task = tasks[i];
             const isFilenameUnique = this.isFilenameUnique({ task });
 
             const listItem = await task.toLi({
@@ -193,6 +181,14 @@ class QueryRenderChild extends MarkdownRenderChild {
         }
 
         return { taskList, tasksCount };
+    }
+
+    private applyQueryToTasks(tasks: Task[]) {
+        this.query.filters.forEach((filter) => {
+            tasks = tasks.filter(filter);
+        });
+
+        return Sort.by(this.query, tasks).slice(0, this.query.limit);
     }
 
     private addEditButton(postInfo: HTMLSpanElement, task: Task) {
@@ -258,6 +254,15 @@ class QueryRenderChild extends MarkdownRenderChild {
         link.setText(linkText);
         if (!shortMode) {
             postInfo.append(')');
+        }
+    }
+
+    private addTaskCount(content: HTMLDivElement, tasksCount: number) {
+        if (!this.query.layoutOptions.hideTaskCount) {
+            content.createDiv({
+                text: `${tasksCount} task${tasksCount !== 1 ? 's' : ''}`,
+                cls: 'tasks-count',
+            });
         }
     }
 
