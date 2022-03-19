@@ -51,7 +51,11 @@ Whenever Tasks behaves in an unexpected way, please try restarting Obsidian.
 Warning
 {: .label .label-yellow}
 Tasks only supports single-line checklist items.
-You cannot have checklist items that span across multiple lines.
+
+The task list rendered through this plugin **and** the checklist items
+from which the task list is built render only the first line of the item.
+Text after the first line in a multi-line checklist item is
+ignored (but is unaffected in the stored `.md` file).
 
 This works:
 
