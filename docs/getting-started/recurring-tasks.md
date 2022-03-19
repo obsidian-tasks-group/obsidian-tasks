@@ -28,7 +28,7 @@ Every recurrence rule has to start with the word `every`.
 
 When you toggle the status of a recurring task to anything but "todo" (i.e. "done"), the orginal task that you wanted to toggle will be marked as done and get the done date appended to it, like any other task.
 In addition, *a new task will be put one line above the original task.*
-The new task will have the due date of the next occurrence after the due date of the original task.
+The new task will have updated dates based off the original task.
 
 Take as an example the following task:
 
@@ -54,6 +54,26 @@ A recurring task should have a due date and the recurrence rule must appear befo
 
 In the editor there is no direct feedback to whether your recurrence rule is valid.
 You can validate that tasks understands your rule by using the `Tasks: Create or edit` command when creating or editing a task.
+
+---
+
+## Strict vs Lenient
+
+There are two types of recurrence you can set for your tasks: strict or lenient. Strict recurrence is the default behavior and results in newly created tasks having dates relative to the original task rather than "today". For example:
+
+```
+- [ ] sweep the floors 🔁 every week ⏳ 2021-02-13
+- [x] sweep the floors 🔁 every week ⏳ 2021-02-06 ✅ 2022-02-13
+```
+
+Given the orignal scheduled date was missed, the newly created task is scheduled the same day the original task was completed. If you want to have tasks be scheduled relative to the "done" date rather than the original dates, then you will need to use lenient recurrence by adding `when done` to the end of the recurrence rule. Below is the same example when lenient:
+
+```
+- [ ] sweep the floors 🔁 every week when done ⏳ 2022-02-20
+- [x] sweep the floors 🔁 every week when done ⏳ 2021-02-06 ✅ 2022-02-13
+```
+
+Now the newly created task is scheduled 1 week after the task was completed rather than 1 week after it was originally scheduled.
 
 ---
 
@@ -96,6 +116,8 @@ The new task will have the due date advanced by two weeks and a scheduled date t
 
 Examples of possible recurrence rules (mix and match as desired; these should be considered inspirational):
 
+-   `🔁 every 3 days`
+-   `🔁 every 10 days when done`
 -   `🔁 every weekday` (meaning every Mon - Fri)
 -   `🔁 every week on Sunday`
 -   `🔁 every 2 weeks`
