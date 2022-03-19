@@ -1,11 +1,13 @@
 export interface Settings {
     globalFilter: string;
     removeGlobalFilter: boolean;
+    setDoneDate: boolean;
 }
 
 const defaultSettings: Settings = {
     globalFilter: '',
     removeGlobalFilter: false,
+    setDoneDate: true,
 };
 
 let settings: Settings = { ...defaultSettings };
