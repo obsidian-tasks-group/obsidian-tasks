@@ -26,6 +26,8 @@ export class Query {
     private readonly priorityRegexp =
         /^priority (is )?(above|below)? ?(low|none|medium|high)/;
 
+    private readonly happensRegexp = /^happens (before|after|on)? ?(.*)/;
+
     private readonly noStartString = 'no start date';
     private readonly startRegexp = /^starts (before|after|on)? ?(.*)/;
 
@@ -103,6 +105,9 @@ export class Query {
                         break;
                     case this.priorityRegexp.test(line):
                         this.parsePriorityFilter({ line });
+                        break;
+                    case this.happensRegexp.test(line):
+                        this.parseHappensFilter({ line });
                         break;
                     case this.startRegexp.test(line):
                         this.parseStartFilter({ line });
@@ -247,6 +252,48 @@ export class Query {
             this._filters.push(filter);
         } else {
             this._error = 'do not understand query filter (priority date)';
+        }
+    }
+
+    private parseHappensFilter({ line }: { line: string }): void {
+        const happensMatch = line.match(this.happensRegexp);
+        if (happensMatch !== null) {
+            const filterDate = this.parseDate(happensMatch[2]);
+            if (!filterDate.isValid()) {
+                this._error = 'do not understand happens date';
+                return;
+            }
+
+            let filter;
+            if (happensMatch[1] === 'before') {
+                filter = (task: Task) => {
+                    return Array.of(
+                        task.startDate,
+                        task.scheduledDate,
+                        task.dueDate,
+                    ).some((date) => date && date.isBefore(filterDate));
+                };
+            } else if (happensMatch[1] === 'after') {
+                filter = (task: Task) => {
+                    return Array.of(
+                        task.startDate,
+                        task.scheduledDate,
+                        task.dueDate,
+                    ).some((date) => date && date.isAfter(filterDate));
+                };
+            } else {
+                filter = (task: Task) => {
+                    return Array.of(
+                        task.startDate,
+                        task.scheduledDate,
+                        task.dueDate,
+                    ).some((date) => date && date.isSame(filterDate));
+                };
+            }
+
+            this._filters.push(filter);
+        } else {
+            this._error = 'do not understand query filter (happens date)';
         }
     }
 
