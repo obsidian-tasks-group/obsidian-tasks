@@ -3,6 +3,7 @@ import { RRule } from 'rrule';
 
 export class Recurrence {
     private readonly rrule: RRule;
+    private readonly strict: boolean;
     private readonly startDate: Moment | null;
     private readonly scheduledDate: Moment | null;
     private readonly dueDate: Moment | null;
@@ -24,18 +25,21 @@ export class Recurrence {
 
     constructor({
         rrule,
+        strict,
         referenceDate,
         startDate,
         scheduledDate,
         dueDate,
     }: {
         rrule: RRule;
+        strict: boolean;
         referenceDate: Moment | null;
         startDate: Moment | null;
         scheduledDate: Moment | null;
         dueDate: Moment | null;
     }) {
         this.rrule = rrule;
+        this.strict = strict;
         this.referenceDate = referenceDate;
         this.startDate = startDate;
         this.scheduledDate = scheduledDate;
@@ -54,7 +58,17 @@ export class Recurrence {
         dueDate: Moment | null;
     }): Recurrence | null {
         try {
-            const options = RRule.parseText(recurrenceRuleText);
+            const match = recurrenceRuleText.match(
+                /^([a-z0-9, !]+?)(when done)?$/i,
+            );
+            if (match == null) {
+                return null;
+            }
+
+            const isolatedRuleText = match[1].trim();
+            const lenient = match[2] !== undefined;
+
+            const options = RRule.parseText(isolatedRuleText);
             if (options !== null) {
                 // Pick the reference date for recurrence based on importance.
                 // Assuming due date has the highest priority.
@@ -68,7 +82,7 @@ export class Recurrence {
                     referenceDate = window.moment(startDate);
                 }
 
-                if (referenceDate !== null) {
+                if (!lenient && referenceDate !== null) {
                     options.dtstart = window
                         .moment(referenceDate)
                         .startOf('day')
@@ -79,6 +93,7 @@ export class Recurrence {
                 const rrule = new RRule(options);
                 return new Recurrence({
                     rrule,
+                    strict: !lenient,
                     referenceDate,
                     startDate,
                     scheduledDate,
@@ -93,7 +108,9 @@ export class Recurrence {
     }
 
     public toText(): string {
-        return this.rrule.toText();
+        return [this.rrule.toText(), !this.strict && 'when done']
+            .filter(Boolean)
+            .join(' ');
     }
 
     /**
@@ -104,20 +121,24 @@ export class Recurrence {
         scheduledDate: Moment | null;
         dueDate: Moment | null;
     } | null {
-        // The next occurrence should happen based on the original reference
-        // date if possible. Otherwise, base it on today.
-        let after: Moment;
-        if (this.referenceDate !== null) {
-            // Clone to not alter the original reference date.
-            after = window.moment(this.referenceDate);
+        let next: Date;
+        if (this.strict) {
+            // The next occurrence should happen based on the original reference
+            const after = window
+                .moment(this.referenceDate)
+                .endOf('day')
+                .utc(true);
+
+            next = this.rrule.after(after.toDate());
         } else {
-            after = window.moment();
+            // the next occurence should happen based off the current date
+            const today = window.moment();
+            const lenientRule = new RRule({
+                ...this.rrule.origOptions,
+                dtstart: today.startOf('day').utc(true).toDate(),
+            });
+            next = lenientRule.after(today.endOf('day').utc(true).toDate());
         }
-
-        after.endOf('day');
-        after.utc(true);
-
-        const next = this.rrule.after(after.toDate());
 
         if (next !== null) {
             // Re-add the timezone that RRule disregarded:
