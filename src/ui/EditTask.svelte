@@ -45,10 +45,8 @@
             return `<i>no ${type} date</>`;
         }
         for (let [key, val] of Object.entries(Abbrev)) {
-            console.log(key + val);
             date = date.replace(RegExp(`\\b${key}\\b`), val);
         }
-        console.log(date);
         const parsed = chrono.parseDate(date, forwardDate, {
             forwardDate: forwardDate != undefined,
         });
