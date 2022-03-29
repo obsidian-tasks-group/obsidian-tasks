@@ -42,7 +42,7 @@
         forwardDate: Date | undefined = undefined,
     ): string {
         if (!date) {
-            return `<i>no ${type} date</>`;
+            return `<i>no ${type} date</i>`;
         }
         for (let [key, val] of Object.entries(Abbrev)) {
             date = date.replace(RegExp(`\\b${key}\\b`), val);
@@ -53,7 +53,7 @@
         if (parsed !== null) {
             return window.moment(parsed).format('YYYY-MM-DD');
         }
-        return `<i>invalid ${type} date</>`;
+        return `<i>invalid ${type} date</i>`;
     }
 
     $: {
