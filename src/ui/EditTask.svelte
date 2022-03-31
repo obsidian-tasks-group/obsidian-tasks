@@ -36,6 +36,13 @@
     let parsedRecurrence: string = '';
     let parsedDone: string = '';
 
+    function doAutocomplete(date: string): string {
+        for (let [key, val] of Object.entries(Abbrev)) {
+            date = date.replace(RegExp(`\\b${key}\\s`), val);
+        }
+        return date;
+    }
+
     function parseDate(
         type: 'start' | 'scheduled' | 'due' | 'done',
         date: string,
@@ -43,9 +50,6 @@
     ): string {
         if (!date) {
             return `<i>no ${type} date</i>`;
-        }
-        for (let [key, val] of Object.entries(Abbrev)) {
-            date = date.replace(RegExp(`\\b${key}\\b`), val);
         }
         const parsed = chrono.parseDate(date, forwardDate, {
             forwardDate: forwardDate != undefined,
@@ -57,6 +61,9 @@
     }
 
     $: {
+        console.log(editableTask.startDate);
+        editableTask.startDate = doAutocomplete(editableTask.startDate);
+        console.log(editableTask.startDate);
         parsedStartDate = parseDate(
             'start',
             editableTask.startDate,
@@ -65,6 +72,7 @@
     }
 
     $: {
+        editableTask.scheduledDate = doAutocomplete(editableTask.scheduledDate);
         parsedScheduledDate = parseDate(
             'scheduled',
             editableTask.scheduledDate,
@@ -73,6 +81,7 @@
     }
 
     $: {
+        editableTask.dueDate = doAutocomplete(editableTask.dueDate);
         parsedDueDate = parseDate('due', editableTask.dueDate, new Date());
     }
 
