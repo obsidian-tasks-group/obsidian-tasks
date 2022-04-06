@@ -16,7 +16,8 @@
     - Make sure there are no uncommitted changes. Stash them if necessary.
 5. Wait for [GitHub Actions](https://github.com/schemar/obsidian-tasks/actions/workflows/release.yml) to create the new release
 6. Update the release description with the changes of the release
-7. Optional: Post to
+7. Merge `main` into `gh-pages` and push it to origin for the latest documentation to become public
+8. Optional: Post to
     - Obsidian Discord
     - r/ObsidianMD on Reddit
     - etc.
