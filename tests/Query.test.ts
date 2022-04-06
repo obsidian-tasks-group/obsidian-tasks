@@ -158,9 +158,75 @@ describe('Query', () => {
         };
 
         const HappensCases: Array<HappensCase> = [
+            // Assumptions made:
+            // - That the date-parsing is valid, and we do not need to validate dates
+
             {
+                // matches if due matches
+                happensFilter: 'happens on 2012-03-04',
+                due: '2012-03-04',
+                taskShouldMatch: true,
+            },
+            {
+                // matches if due scheduled matches
+                happensFilter: 'happens on 2012-03-04',
+                scheduled: '2012-03-04',
+                taskShouldMatch: true,
+            },
+            {
+                // matches if due start matches
+                happensFilter: 'happens on 2012-03-04',
+                start: '2012-03-04',
+                taskShouldMatch: true,
+            },
+            {
+                // the 'on' word is optional
+                happensFilter: 'happens 2012-03-04',
+                start: '2012-03-04',
+                taskShouldMatch: true,
+            },
+            {
+                // does NOT match if only done date matches
                 happensFilter: 'happens on 2012-03-04',
                 done: '2012-03-04',
+                taskShouldMatch: false,
+            },
+
+            {
+                // the 'before' word matches dates before the given date
+                happensFilter: 'happens before 2012-03-04',
+                start: '2012-03-02',
+                taskShouldMatch: true,
+            },
+            {
+                // the 'before' word does not match boundary date
+                happensFilter: 'happens before 2012-03-04',
+                start: '2012-03-04',
+                taskShouldMatch: false,
+            },
+            {
+                // the 'before' word does not match after boundary date
+                happensFilter: 'happens before 2012-03-04',
+                start: '2012-03-05',
+                taskShouldMatch: false,
+            },
+
+            {
+                // the 'after' word matches dates after the given date
+                happensFilter: 'happens after 2012-03-04',
+                start: '2012-03-05',
+                taskShouldMatch: true,
+            },
+            {
+                // the 'after' word does not match boundary date
+                happensFilter: 'happens after 2012-03-04',
+                start: '2012-03-04',
+                taskShouldMatch: false,
+            },
+            {
+                // the 'after' word does not match before boundary date
+                happensFilter: 'happens after 2012-03-04',
+                start: '2012-03-03',
                 taskShouldMatch: false,
             },
         ];
