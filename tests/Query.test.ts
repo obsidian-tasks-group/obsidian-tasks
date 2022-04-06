@@ -146,30 +146,68 @@ describe('Query', () => {
     });
 
     describe('filtering with "happens"', () => {
-        it('filters out a task that does not happen', () => {
-            // Arrange
-            const filter = 'happens on 2012-03-04';
-            const query = new Query({ source: filter });
+        type HappensCase = {
+            happensFilter: string;
 
-            const line = '- [ ] this is a task ✅ 2012-03-04'; // Done date should be ignored by 'happens'
-            const task: Task = Task.fromLine({
-                line,
-                path: '',
-                sectionStart: 0,
-                sectionIndex: 0,
-                precedingHeader: '',
-            }) as Task;
-            const tasks = [task];
+            due?: string;
+            scheduled?: string;
+            start?: string;
+            done?: string;
 
-            // Act
-            let filteredTasks = [...tasks];
-            query.filters.forEach((filter) => {
-                filteredTasks = filteredTasks.filter(filter);
-            });
+            taskShouldMatch: boolean;
+        };
 
-            // Assert
-            expect(filteredTasks.length).toEqual(0);
-        });
+        const HappensCases: Array<HappensCase> = [
+            {
+                happensFilter: 'happens on 2012-03-04',
+                done: '2012-03-04',
+                taskShouldMatch: false,
+            },
+        ];
+
+        test.concurrent.each<HappensCase>(HappensCases)(
+            'filters via "happens" correctly (%j)',
+            ({
+                happensFilter,
+                due,
+                scheduled,
+                start,
+                done,
+                taskShouldMatch,
+            }) => {
+                // Arrange
+                const query = new Query({ source: happensFilter });
+
+                const line = [
+                    '- [ ] this is a task',
+                    !!scheduled && `⏳ ${scheduled}`,
+                    !!due && `📅 ${due}`,
+                    !!start && `🛫 ${start}`,
+                    !!done && `✅ ${done}`,
+                ]
+                    .filter(Boolean)
+                    .join(' ');
+
+                const task = Task.fromLine({
+                    line,
+                    path: '',
+                    sectionStart: 0,
+                    sectionIndex: 0,
+                    precedingHeader: '',
+                }) as Task;
+                const tasks = [task];
+
+                // Act
+                let filteredTasks = [...tasks];
+                query.filters.forEach((filter) => {
+                    filteredTasks = filteredTasks.filter(filter);
+                });
+
+                // Assert
+                const taskMatched = filteredTasks.length == 1;
+                expect(taskMatched).toEqual(taskShouldMatch);
+            },
+        );
     });
 
     describe('sorting instructions', () => {
