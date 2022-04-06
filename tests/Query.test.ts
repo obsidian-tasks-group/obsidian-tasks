@@ -161,6 +161,8 @@ describe('Query', () => {
             // Assumptions made:
             // - That the date-parsing is valid, and we do not need to validate dates
 
+            // ----------------------------------------------------------------
+            // Simple date checks - using 'on'
             {
                 // matches if due matches
                 happensFilter: 'happens on 2012-03-04',
@@ -185,6 +187,9 @@ describe('Query', () => {
                 start: '2012-03-04',
                 taskShouldMatch: true,
             },
+
+            // ----------------------------------------------------------------
+            // Ignores 'done' date
             {
                 // does NOT match if only done date matches
                 happensFilter: 'happens on 2012-03-04',
@@ -192,6 +197,8 @@ describe('Query', () => {
                 taskShouldMatch: false,
             },
 
+            // ----------------------------------------------------------------
+            // 'before'
             {
                 // the 'before' word matches dates before the given date
                 happensFilter: 'happens before 2012-03-04',
@@ -211,6 +218,8 @@ describe('Query', () => {
                 taskShouldMatch: false,
             },
 
+            // ----------------------------------------------------------------
+            // 'after'
             {
                 // the 'after' word matches dates after the given date
                 happensFilter: 'happens after 2012-03-04',
