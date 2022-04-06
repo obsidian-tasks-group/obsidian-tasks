@@ -1,7 +1,6 @@
 import { PluginSettingTab, Setting } from 'obsidian';
-
-import { getSettings, updateSettings } from './Settings';
 import type TasksPlugin from './main';
+import { getSettings, updateSettings } from './Settings';
 
 export class SettingsTab extends PluginSettingTab {
     private readonly plugin: TasksPlugin;
@@ -61,6 +60,21 @@ export class SettingsTab extends PluginSettingTab {
                     .onChange(async (value) => {
                         updateSettings({ removeGlobalFilter: value });
 
+                        await this.plugin.saveSettings();
+                    });
+            });
+
+        new Setting(containerEl)
+            .setName('Set done date on every completed task')
+            .setDesc(
+                'Enabling this will add a timestamp ✅ YYYY-MM-DD at the end when a task is toggled to done',
+            )
+            .addToggle((toogle) => {
+                const settings = getSettings();
+                toogle
+                    .setValue(settings.setDoneDate)
+                    .onChange(async (value) => {
+                        updateSettings({ setDoneDate: value });
                         await this.plugin.saveSettings();
                     });
             });

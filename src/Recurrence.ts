@@ -3,14 +3,15 @@ import { RRule } from 'rrule';
 
 export class Recurrence {
     private readonly rrule: RRule;
+    private readonly baseOnToday: boolean;
     private readonly startDate: Moment | null;
     private readonly scheduledDate: Moment | null;
     private readonly dueDate: Moment | null;
 
     /**
-     * The reference date is used to calculate future occurences.
+     * The reference date is used to calculate future occurrences.
      *
-     * Future occurences will recur based on the reference date.
+     * Future occurrences will recur based on the reference date.
      * The reference date is the due date, if it is given.
      * Otherwise the scheduled date, if it is given. And so on.
      *
@@ -24,18 +25,21 @@ export class Recurrence {
 
     constructor({
         rrule,
+        baseOnToday,
         referenceDate,
         startDate,
         scheduledDate,
         dueDate,
     }: {
         rrule: RRule;
+        baseOnToday: boolean;
         referenceDate: Moment | null;
         startDate: Moment | null;
         scheduledDate: Moment | null;
         dueDate: Moment | null;
     }) {
         this.rrule = rrule;
+        this.baseOnToday = baseOnToday;
         this.referenceDate = referenceDate;
         this.startDate = startDate;
         this.scheduledDate = scheduledDate;
@@ -54,7 +58,17 @@ export class Recurrence {
         dueDate: Moment | null;
     }): Recurrence | null {
         try {
-            const options = RRule.parseText(recurrenceRuleText);
+            const match = recurrenceRuleText.match(
+                /^([a-zA-Z0-9, !]+?)( when done)?$/i,
+            );
+            if (match == null) {
+                return null;
+            }
+
+            const isolatedRuleText = match[1].trim();
+            const baseOnToday = match[2] !== undefined;
+
+            const options = RRule.parseText(isolatedRuleText);
             if (options !== null) {
                 // Pick the reference date for recurrence based on importance.
                 // Assuming due date has the highest priority.
@@ -68,9 +82,15 @@ export class Recurrence {
                     referenceDate = window.moment(startDate);
                 }
 
-                if (referenceDate !== null) {
+                if (!baseOnToday && referenceDate !== null) {
                     options.dtstart = window
                         .moment(referenceDate)
+                        .startOf('day')
+                        .utc(true)
+                        .toDate();
+                } else {
+                    options.dtstart = window
+                        .moment()
                         .startOf('day')
                         .utc(true)
                         .toDate();
@@ -79,6 +99,7 @@ export class Recurrence {
                 const rrule = new RRule(options);
                 return new Recurrence({
                     rrule,
+                    baseOnToday,
                     referenceDate,
                     startDate,
                     scheduledDate,
@@ -93,7 +114,12 @@ export class Recurrence {
     }
 
     public toText(): string {
-        return this.rrule.toText();
+        let text = this.rrule.toText();
+        if (this.baseOnToday) {
+            text += ' when done';
+        }
+
+        return text;
     }
 
     /**
@@ -104,20 +130,28 @@ export class Recurrence {
         scheduledDate: Moment | null;
         dueDate: Moment | null;
     } | null {
-        // The next occurrence should happen based on the original reference
-        // date if possible. Otherwise, base it on today.
-        let after: Moment;
-        if (this.referenceDate !== null) {
-            // Clone to not alter the original reference date.
-            after = window.moment(this.referenceDate);
+        let next: Date;
+        if (this.baseOnToday) {
+            // The next occurrence should happen based off the current date.
+            const today = window.moment();
+            const ruleBasedOnToday = new RRule({
+                ...this.rrule.origOptions,
+                dtstart: today.startOf('day').utc(true).toDate(),
+            });
+            next = ruleBasedOnToday.after(
+                today.endOf('day').utc(true).toDate(),
+            );
         } else {
-            after = window.moment();
+            // The next occurrence should happen based on the original reference
+            // date if possible. Otherwise, base it on today if we do not have a
+            // reference date.
+            const after = window
+                .moment(this.referenceDate) // Can be `null` to mean "today".
+                .endOf('day')
+                .utc(true);
+
+            next = this.rrule.after(after.toDate());
         }
-
-        after.endOf('day');
-        after.utc(true);
-
-        const next = this.rrule.after(after.toDate());
 
         if (next !== null) {
             // Re-add the timezone that RRule disregarded:
