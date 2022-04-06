@@ -1,6 +1,12 @@
+/**
+ * @jest-environment jsdom
+ */
+import moment from 'moment';
 import { getSettings, updateSettings } from '../src/Settings';
 import { Query } from '../src/Query';
 import { Priority, Status, Task } from '../src/Task';
+
+window.moment = moment;
 
 describe('Query', () => {
     describe('filtering', () => {
@@ -136,6 +142,33 @@ describe('Query', () => {
 
             // Cleanup
             updateSettings(originalSettings);
+        });
+    });
+
+    describe('filtering with "happens"', () => {
+        it('filters out a task that does not happen', () => {
+            // Arrange
+            const filter = 'happens on 2012-03-04';
+            const query = new Query({ source: filter });
+
+            const line = '- [ ] this is a task ✅ 2012-03-04'; // Done date should be ignored by 'happens'
+            const task: Task = Task.fromLine({
+                line,
+                path: '',
+                sectionStart: 0,
+                sectionIndex: 0,
+                precedingHeader: '',
+            }) as Task;
+            const tasks = [task];
+
+            // Act
+            let filteredTasks = [...tasks];
+            query.filters.forEach((filter) => {
+                filteredTasks = filteredTasks.filter(filter);
+            });
+
+            // Assert
+            expect(filteredTasks.length).toEqual(0);
         });
     });
 
