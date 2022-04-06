@@ -165,25 +165,25 @@ describe('Query', () => {
             // ----------------------------------------------------------------
             // Simple date checks - using 'on'
             {
-                description: 'matches if due matches',
+                description: 'on: should match if due matches',
                 happensFilter: 'happens on 2012-03-04',
                 due: '2012-03-04',
                 taskShouldMatch: true,
             },
             {
-                description: 'matches if due scheduled matches',
+                description: 'on: should match if scheduled matches',
                 happensFilter: 'happens on 2012-03-04',
                 scheduled: '2012-03-04',
                 taskShouldMatch: true,
             },
             {
-                description: 'matches if due start matches',
+                description: 'on: should match if start matches',
                 happensFilter: 'happens on 2012-03-04',
                 start: '2012-03-04',
                 taskShouldMatch: true,
             },
             {
-                description: 'the "on" word is optional',
+                description: 'on: the on keyword should be optional',
                 happensFilter: 'happens 2012-03-04',
                 start: '2012-03-04',
                 taskShouldMatch: true,
@@ -192,7 +192,7 @@ describe('Query', () => {
             // ----------------------------------------------------------------
             // Ignores 'done' date
             {
-                description: 'does NOT match if only done date matches',
+                description: 'on: should not match if only done date matches',
                 happensFilter: 'happens on 2012-03-04',
                 done: '2012-03-04',
                 taskShouldMatch: false,
@@ -202,20 +202,21 @@ describe('Query', () => {
             // 'before'
             {
                 description:
-                    'the "before" word matches dates before the given date',
+                    'before: should match if a date is before specified date',
                 happensFilter: 'happens before 2012-03-04',
                 start: '2012-03-02',
                 taskShouldMatch: true,
             },
             {
-                description: 'the "before" word does not match boundary date',
+                description:
+                    'before: should not match if a date is on specified date',
                 happensFilter: 'happens before 2012-03-04',
                 start: '2012-03-04',
                 taskShouldMatch: false,
             },
             {
                 description:
-                    'the "before" word does not match after boundary date',
+                    'before: should not match if a date is after specified date',
                 happensFilter: 'happens before 2012-03-04',
                 start: '2012-03-05',
                 taskShouldMatch: false,
@@ -225,20 +226,21 @@ describe('Query', () => {
             // 'after'
             {
                 description:
-                    'the "after" word matches dates after the given date',
+                    'after: should match if a date is after specified date',
                 happensFilter: 'happens after 2012-03-04',
                 start: '2012-03-05',
                 taskShouldMatch: true,
             },
             {
-                description: 'the "after" word does not match boundary date',
+                description:
+                    'after: should not match if a date is on specified date',
                 happensFilter: 'happens after 2012-03-04',
                 start: '2012-03-04',
                 taskShouldMatch: false,
             },
             {
                 description:
-                    'the "after" word does not match before boundary date',
+                    'after: should not match if a date is before specified date',
                 happensFilter: 'happens after 2012-03-04',
                 start: '2012-03-03',
                 taskShouldMatch: false,
@@ -248,7 +250,7 @@ describe('Query', () => {
             // multiple date values
             {
                 description:
-                    'matches "due" but neither of "scheduled" or "start"',
+                    'multiple dates in task: should match if any date matches',
                 happensFilter: 'happens on 2012-03-04',
                 due: '2012-03-04',
                 scheduled: '2012-03-05',
