@@ -238,6 +238,17 @@ describe('Query', () => {
                 start: '2012-03-03',
                 taskShouldMatch: false,
             },
+
+            // ----------------------------------------------------------------
+            // multiple date values
+            {
+                // matches 'due' but neither of 'scheduled' or 'start'
+                happensFilter: 'happens on 2012-03-04',
+                due: '2012-03-04',
+                scheduled: '2012-03-05',
+                start: '2012-03-06',
+                taskShouldMatch: true,
+            },
         ];
 
         test.concurrent.each<HappensCase>(HappensCases)(
