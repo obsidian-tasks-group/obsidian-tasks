@@ -1,6 +1,12 @@
+/**
+ * @jest-environment jsdom
+ */
+import moment from 'moment';
 import { getSettings, updateSettings } from '../src/Settings';
 import { Query } from '../src/Query';
 import { Priority, Status, Task } from '../src/Task';
+
+window.moment = moment;
 
 describe('Query', () => {
     describe('filtering', () => {
@@ -137,6 +143,165 @@ describe('Query', () => {
             // Cleanup
             updateSettings(originalSettings);
         });
+    });
+
+    describe('filtering with "happens"', () => {
+        type HappensCase = {
+            description: string;
+            happensFilter: string;
+
+            due?: string;
+            scheduled?: string;
+            start?: string;
+            done?: string;
+
+            taskShouldMatch: boolean;
+        };
+
+        const HappensCases: Array<HappensCase> = [
+            // Assumptions made:
+            // - That the date-parsing is valid, and we do not need to validate dates
+
+            // ----------------------------------------------------------------
+            // Simple date checks - using 'on'
+            {
+                description: 'on: should match if due matches',
+                happensFilter: 'happens on 2012-03-04',
+                due: '2012-03-04',
+                taskShouldMatch: true,
+            },
+            {
+                description: 'on: should match if scheduled matches',
+                happensFilter: 'happens on 2012-03-04',
+                scheduled: '2012-03-04',
+                taskShouldMatch: true,
+            },
+            {
+                description: 'on: should match if start matches',
+                happensFilter: 'happens on 2012-03-04',
+                start: '2012-03-04',
+                taskShouldMatch: true,
+            },
+            {
+                description: 'on: the on keyword should be optional',
+                happensFilter: 'happens 2012-03-04',
+                start: '2012-03-04',
+                taskShouldMatch: true,
+            },
+
+            // ----------------------------------------------------------------
+            // Ignores 'done' date
+            {
+                description: 'on: should not match if only done date matches',
+                happensFilter: 'happens on 2012-03-04',
+                done: '2012-03-04',
+                taskShouldMatch: false,
+            },
+
+            // ----------------------------------------------------------------
+            // 'before'
+            {
+                description:
+                    'before: should match if a date is before specified date',
+                happensFilter: 'happens before 2012-03-04',
+                start: '2012-03-02',
+                taskShouldMatch: true,
+            },
+            {
+                description:
+                    'before: should not match if a date is on specified date',
+                happensFilter: 'happens before 2012-03-04',
+                start: '2012-03-04',
+                taskShouldMatch: false,
+            },
+            {
+                description:
+                    'before: should not match if a date is after specified date',
+                happensFilter: 'happens before 2012-03-04',
+                start: '2012-03-05',
+                taskShouldMatch: false,
+            },
+
+            // ----------------------------------------------------------------
+            // 'after'
+            {
+                description:
+                    'after: should match if a date is after specified date',
+                happensFilter: 'happens after 2012-03-04',
+                start: '2012-03-05',
+                taskShouldMatch: true,
+            },
+            {
+                description:
+                    'after: should not match if a date is on specified date',
+                happensFilter: 'happens after 2012-03-04',
+                start: '2012-03-04',
+                taskShouldMatch: false,
+            },
+            {
+                description:
+                    'after: should not match if a date is before specified date',
+                happensFilter: 'happens after 2012-03-04',
+                start: '2012-03-03',
+                taskShouldMatch: false,
+            },
+
+            // ----------------------------------------------------------------
+            // multiple date values
+            {
+                description:
+                    'multiple dates in task: should match if any date matches',
+                happensFilter: 'happens on 2012-03-04',
+                due: '2012-03-04',
+                scheduled: '2012-03-05',
+                start: '2012-03-06',
+                taskShouldMatch: true,
+            },
+        ];
+
+        test.concurrent.each<HappensCase>(HappensCases)(
+            'filters via "happens" correctly (%j)',
+            ({
+                happensFilter,
+                due,
+                scheduled,
+                start,
+                done,
+                taskShouldMatch,
+            }) => {
+                // Arrange
+                const query = new Query({ source: happensFilter });
+
+                const line = [
+                    '- [ ] this is a task',
+                    !!scheduled && `⏳ ${scheduled}`,
+                    !!due && `📅 ${due}`,
+                    !!start && `🛫 ${start}`,
+                    !!done && `✅ ${done}`,
+                ]
+                    .filter(Boolean)
+                    .join(' ');
+
+                const task = Task.fromLine({
+                    line,
+                    path: '',
+                    sectionStart: 0,
+                    sectionIndex: 0,
+                    precedingHeader: '',
+                }) as Task;
+                const tasks = [task];
+
+                // Act
+                let filteredTasks = [...tasks];
+                query.filters.forEach((filter) => {
+                    filteredTasks = filteredTasks.filter(filter);
+                });
+
+                // Assert
+                const taskMatched = filteredTasks.length == 1;
+                expect(taskMatched).toEqual(taskShouldMatch);
+            },
+        );
     });
 
     describe('sorting instructions', () => {
