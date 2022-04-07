@@ -1,4 +1,4 @@
-import chrono from 'chrono-node';
+import * as chrono from 'chrono-node';
 
 import { getSettings } from './Settings';
 import { LayoutOptions } from './LayoutOptions';
