@@ -80,6 +80,8 @@ export class Recurrence {
                     referenceDate = window.moment(scheduledDate);
                 } else if (startDate) {
                     referenceDate = window.moment(startDate);
+                } else {
+                    referenceDate = window.moment();
                 }
 
                 if (!baseOnToday && referenceDate !== null) {
