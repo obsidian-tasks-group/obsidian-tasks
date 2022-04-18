@@ -42,7 +42,7 @@ Show all tasks that aren't done, are due on the 9th of April 2021, and where the
     not done
     due on 2021-04-09
     path includes GitHub
-    ````
+    ```
 
 ---
 
@@ -73,4 +73,4 @@ Show one task that is due on the 5th of May and includes `#prio1` in its descrip
     due on 2021-05-05
     description includes #prio1
     limit to 1 tasks
-    ````
+    ```
