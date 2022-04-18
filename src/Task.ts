@@ -304,11 +304,17 @@ export class Task {
             null as unknown as Component,
         );
 
+        // If the task is a block quote, the block quote wraps the p-tag that contains the content.
+        // In that case, we need to unwrap the p-tag *inside* the surrounding block quote.
+        // Otherwise, we unwrap the p-tag as a direct descendant of the textSpan.
+        const blockQuote = textSpan.querySelector('blockquote');
+        const directParentOfPTag = blockQuote ?? textSpan;
+
         // Unwrap the p-tag that was created by the MarkdownRenderer:
-        const pElement = textSpan.querySelector('p');
+        const pElement = directParentOfPTag.querySelector('p');
         if (pElement !== null) {
             while (pElement.firstChild) {
-                textSpan.insertBefore(pElement.firstChild, pElement);
+                directParentOfPTag.insertBefore(pElement.firstChild, pElement);
             }
             pElement.remove();
         }

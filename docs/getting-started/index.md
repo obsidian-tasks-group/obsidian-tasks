@@ -19,7 +19,7 @@ To list all open tasks in a markdown file, simply add a [query]({{ site.baseurl 
     ```
 
 Now you have a list of all open tasks! This is enough to get started with tasks.
-You can *optionally* start using one or more of the other features that Tasks offers.
+You can _optionally_ start using one or more of the other features that Tasks offers.
 Like, for example, [priorities]({{ site.baseurl }}{% link getting-started/priority.md %}) or [dates]({{ site.baseurl }}{% link getting-started/dates.md %}#start-date)
 
 A more convenient way to create a task is by using the `Tasks: Create or edit` command from the command palette.
@@ -60,18 +60,18 @@ ignored (but is unaffected in the stored `.md` file).
 This works:
 
 ```markdown
-- [ ] This is a task
-    - This is a sub-item
-    - Another sub-item
-    - [ ] And a sub task
-        - Even more details
+-   [ ] This is a task
+    -   This is a sub-item
+    -   Another sub-item
+    -   [ ] And a sub task
+        -   Even more details
 ```
 
-The following *does not work:*
+The following _does not work:_
 
 ```markdown
-- [ ] This task starts on this line
-      and then its description continues on the next line
+-   [ ] This task starts on this line
+        and then its description continues on the next line
 ```
 
 ---
@@ -81,9 +81,15 @@ Warning
 Tasks can only render inline footnotes. Regular footnotes are not supported.
 
 ```markdown
-- [ ] This is a task^[with a working inline footnote]
-- [ ] This footnote *will not work*[^notworking]
+-   [ ] This is a task^[with a working inline footnote]
+-   [ ] This footnote _will not work_[^notworking]
 ```
+
+---
+
+Warning
+{: .label .label-yellow}
+Tasks' support for block quotes inside tasks is limited. It renders correctly, but since Tasks only supports a single line, the meta-data of the task will be inside the block quote.
 
 ---
 
@@ -92,9 +98,9 @@ Warning
 Tasks won't render spaces around list items if you have a list with empty lines.
 
 ```markdown
-- [ ] First task before the empty line
+-   [ ] First task before the empty line
 
-- [ ] Another task. The empty line above will *not* result in the tasks being more spaced out.
+-   [ ] Another task. The empty line above will _not_ result in the tasks being more spaced out.
 ```
 
 ---
@@ -104,11 +110,10 @@ Warning
 You can only put block links (`^link-name`) after metadata such as dates. Anything else will break the parsing of dates, priorities and recurrence rules.
 
 ```markdown
-- [ ] Task with priority placed before tag *priority will not be recognized* 🔼 #tag
-- [ ] Task with date placed before tag *date will not be recognized* 📅 2021-04-09 #tag
-- [ ] Task with block link *works* 📅 2021-04-09 ^e5bebf
-- [ ] Task with tag before priority *works* #tag 🔼
-
+-   [ ] Task with priority placed before tag _priority will not be recognized_ 🔼 #tag
+-   [ ] Task with date placed before tag _date will not be recognized_ 📅 2021-04-09 #tag
+-   [ ] Task with block link _works_ 📅 2021-04-09 ^e5bebf
+-   [ ] Task with tag before priority _works_ #tag 🔼
 ```
 
 ---
@@ -116,4 +121,5 @@ You can only put block links (`^link-name`) after metadata such as dates. Anythi
 Warning
 {: .label .label-yellow}
 Tasks only supports checklist items in markdown files with the file extension `.md`.
+
 </div>
