@@ -361,9 +361,6 @@ describe('toggle done', () => {
             nextScheduled: '2021-10-18',
             nextDue: '2021-10-20',
         },
-        {
-            interval: 'every week',
-        },
     ];
 
     test.concurrent.each<RecurrenceCase>(recurrenceCases)(
