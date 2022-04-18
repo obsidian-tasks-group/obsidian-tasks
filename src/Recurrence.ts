@@ -84,7 +84,7 @@ export class Recurrence {
                     referenceDate = window.moment();
                 }
 
-                if (!baseOnToday && referenceDate !== null) {
+                if (!baseOnToday) {
                     options.dtstart = window
                         .moment(referenceDate)
                         .startOf('day')
