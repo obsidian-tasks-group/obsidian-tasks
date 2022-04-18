@@ -13,8 +13,9 @@ We use [GitHub pages](https://pages.github.com/) for our documentation.
 You can read more about it at their [official documentation](https://docs.github.com/en/pages).
 
 For documentation changes to show up at https://schemar.github.io/obsidian-tasks/ , they must be in the `gh-pages` branch.
-This means that you should create a PR to the `gh-pages` branch, if you want your update to be visible immediately.
-If you document an unreleased feature, the documentation should be merged into `main` instead. Ideally together with the related code changes.
+If you want to see your changes available immediately and not only after the next release, you should make your changes on the `gh-pages` branch.
+When you create a PR, it should merge into the `gh-pages` branch as well.
+If you document an unreleased feature, you should update the documentation on `main` instead. Ideally together with the related code changes.
 If this is confusing, don't worry.
 We will help you make this right once you opened the PR.
 
