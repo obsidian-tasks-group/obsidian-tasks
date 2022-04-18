@@ -1,5 +1,33 @@
 # Contribution Guidelines Obsidian Tasks
 
+Thank you for wanting to contribute to Obsidian Tasks!
+Every contribution is much appreciated!
+
+## Updating documentation
+
+The documentation resides under the `./docs` directory.
+It consists of markdown files, which [Jekyll](https://jekyllrb.com/) will transform into web pages that you can view at https://schemar.github.io/obsidian-tasks/ .
+In the simplest case, you can update the existing markdown file and create a pull request (PR) with your changes.
+
+We use [GitHub pages](https://pages.github.com/) for our documentation.
+You can read more about it at their [official documentation](https://docs.github.com/en/pages).
+
+For documentation changes to show up at https://schemar.github.io/obsidian-tasks/ , they must be in the `gh-pages` branch.
+This means that you should create a PR to the `gh-pages` branch, if you want your update to be visible immediately.
+If you document an unreleased feature, the documentation should be merged into `main` instead. Ideally together with the related code changes.
+If this is confusing, don't worry.
+We will help you make this right once you opened the PR.
+
+## Updating code
+
+Ideally, an [issue](https://github.com/schemar/obsidian-tasks/issues) already exists and we discussed your implementation in that issue before you open the pull request (PR).
+This is _not_ mandatory, but it helps improve the process and reduce unnecessary back-and-forth.
+
+Once you want to propose your changes, create a PR and we'll have a look when we have time.
+Discussion will take place inside the PR.
+
+If you can, please add/update tests and documentation where appropriate.
+
 ## FAQs
 
 ### How does Tasks handle status changes?
