@@ -21,7 +21,7 @@ export class Recurrence {
      * same relative distance to the due date as the original task. For example
      * "starts one week before it is due".
      */
-    private readonly referenceDate: Moment | null;
+    private readonly referenceDate: Moment;
 
     constructor({
         rrule,
@@ -33,7 +33,7 @@ export class Recurrence {
     }: {
         rrule: RRule;
         baseOnToday: boolean;
-        referenceDate: Moment | null;
+        referenceDate: Moment;
         startDate: Moment | null;
         scheduledDate: Moment | null;
         dueDate: Moment | null;
@@ -80,9 +80,11 @@ export class Recurrence {
                     referenceDate = window.moment(scheduledDate);
                 } else if (startDate) {
                     referenceDate = window.moment(startDate);
+                } else {
+                    referenceDate = window.moment();
                 }
 
-                if (!baseOnToday && referenceDate !== null) {
+                if (!baseOnToday) {
                     options.dtstart = window
                         .moment(referenceDate)
                         .startOf('day')
