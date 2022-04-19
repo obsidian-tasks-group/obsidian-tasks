@@ -124,7 +124,7 @@ class QueryRenderChild extends MarkdownRenderChild {
             const tasksSortedLimited = this.applyQueryToTasks(tasks);
             const { taskList, tasksCount } = await this.createTasksList({
                 tasks: tasksSortedLimited,
-                content: content,
+                content,
             });
             content.appendChild(taskList);
             this.addTaskCount(content, tasksCount);

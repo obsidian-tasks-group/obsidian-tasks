@@ -1,9 +1,10 @@
 import type { Moment } from 'moment';
 import { Component, MarkdownRenderer } from 'obsidian';
+
 import { replaceTaskWithTasks } from './File';
 import { LayoutOptions } from './LayoutOptions';
 import { Recurrence } from './Recurrence';
-import { getSettings } from './Settings';
+import { dateFormats, getSettings } from './Settings';
 import { Urgency } from './Urgency';
 
 export enum Status {
@@ -46,16 +47,32 @@ export class Task {
     /** The blockLink is a "^" annotation after the dates/recurrence rules. */
     public readonly blockLink: string;
 
-    public static readonly dateFormat = 'YYYY-MM-DD';
     public static readonly taskRegex = /^([\s\t]*)[-*] +\[(.)\] *(.*)/u;
+
     // The following regexes end with `$` because they will be matched and
     // removed from the end until none are left.
     public static readonly priorityRegex = /([⏫🔼🔽])$/u;
-    public static readonly startDateRegex = /🛫 ?(\d{4}-\d{2}-\d{2})$/u;
-    public static readonly scheduledDateRegex = /[⏳⌛] ?(\d{4}-\d{2}-\d{2})$/u;
-    public static readonly dueDateRegex = /[📅📆🗓] ?(\d{4}-\d{2}-\d{2})$/u;
-    public static readonly doneDateRegex = /✅ ?(\d{4}-\d{2}-\d{2})$/u;
-    public static readonly recurrenceRegex = /🔁 ?([a-zA-Z0-9, !]+)$/iu;
+
+    public static readonly dateRegex = '\\d{4}-?\\d{2}-?\\d{2}';
+    public static readonly dateOrLinkedDateRegex = `(${Task.dateRegex}|\\[\\[${Task.dateRegex}\\]\\])`;
+
+    public static readonly startDateRegex = new RegExp(
+        `🛫 ?${Task.dateOrLinkedDateRegex}$`,
+        'u',
+    );
+    public static readonly scheduledDateRegex = new RegExp(
+        `[⏳⌛] ?${Task.dateOrLinkedDateRegex}$`,
+        'u',
+    );
+    public static readonly dueDateRegex = new RegExp(
+        `[📅📆🗓] ?${Task.dateOrLinkedDateRegex}$`,
+        'u',
+    );
+    public static readonly doneDateRegex = new RegExp(
+        `✅ ?${Task.dateOrLinkedDateRegex}$`,
+        'u',
+    );
+    public static readonly recurrenceRegex = /🔁([a-zA-Z0-9, !]+)$/iu;
     public static readonly blockLinkRegex = / \^[a-zA-Z0-9-]+$/u;
 
     private _urgency: number | null = null;
@@ -197,7 +214,15 @@ export class Task {
 
             const doneDateMatch = description.match(Task.doneDateRegex);
             if (doneDateMatch !== null) {
-                doneDate = window.moment(doneDateMatch[1], Task.dateFormat);
+                const withoutLink = doneDateMatch[1].replace(/[[\]]/g, '');
+                doneDate = window.moment(withoutLink, dateFormats, true);
+                if (!doneDate.isValid) {
+                    console.error(
+                        'Cannot parse done date. It is not a valid date:',
+                        doneDateMatch[1],
+                    );
+                }
+
                 description = description
                     .replace(Task.doneDateRegex, '')
                     .trim();
@@ -206,7 +231,15 @@ export class Task {
 
             const dueDateMatch = description.match(Task.dueDateRegex);
             if (dueDateMatch !== null) {
-                dueDate = window.moment(dueDateMatch[1], Task.dateFormat);
+                const withoutLink = dueDateMatch[1].replace(/[[\]]/g, '');
+                dueDate = window.moment(withoutLink, dateFormats, true);
+                if (!dueDate.isValid) {
+                    console.error(
+                        'Cannot parse due date. It is not a valid date:',
+                        dueDateMatch[1],
+                    );
+                }
+
                 description = description.replace(Task.dueDateRegex, '').trim();
                 matched = true;
             }
@@ -215,10 +248,15 @@ export class Task {
                 Task.scheduledDateRegex,
             );
             if (scheduledDateMatch !== null) {
-                scheduledDate = window.moment(
-                    scheduledDateMatch[1],
-                    Task.dateFormat,
-                );
+                const withoutLink = scheduledDateMatch[1].replace(/[[\]]/g, '');
+                scheduledDate = window.moment(withoutLink, dateFormats, true);
+                if (!scheduledDate.isValid) {
+                    console.error(
+                        'Cannot parse scheduled date. It is not a valid date:',
+                        scheduledDateMatch[1],
+                    );
+                }
+
                 description = description
                     .replace(Task.scheduledDateRegex, '')
                     .trim();
@@ -227,7 +265,15 @@ export class Task {
 
             const startDateMatch = description.match(Task.startDateRegex);
             if (startDateMatch !== null) {
-                startDate = window.moment(startDateMatch[1], Task.dateFormat);
+                const withoutLink = startDateMatch[1].replace(/[[\]]/g, '');
+                startDate = window.moment(withoutLink, dateFormats, true);
+                if (!startDate.isValid) {
+                    console.error(
+                        'Cannot parse start date. It is not a valid date:',
+                        startDateMatch[1],
+                    );
+                }
+
                 description = description
                     .replace(Task.startDateRegex, '')
                     .trim();
@@ -369,6 +415,8 @@ export class Task {
 
     public toString(layoutOptions?: LayoutOptions): string {
         layoutOptions = layoutOptions ?? new LayoutOptions();
+        const { dateFormat, linkDates } = getSettings();
+
         let taskString = this.description;
 
         if (!layoutOptions.hidePriority) {
@@ -393,30 +441,51 @@ export class Task {
         }
 
         if (!layoutOptions.hideStartDate && this.startDate) {
+            let startDateFormatted = this.startDate.format(dateFormat);
+            if (linkDates) {
+                startDateFormatted = `[[${startDateFormatted}]]`;
+            }
+
             const startDate: string = layoutOptions.shortMode
                 ? ' 🛫'
-                : ` 🛫 ${this.startDate.format(Task.dateFormat)}`;
+                : ` 🛫 ${startDateFormatted}`;
             taskString += startDate;
         }
 
         if (!layoutOptions.hideScheduledDate && this.scheduledDate) {
+            let scheduledDateFormatted = this.scheduledDate.format(dateFormat);
+            if (linkDates) {
+                scheduledDateFormatted = `[[${scheduledDateFormatted}]]`;
+            }
+
             const scheduledDate: string = layoutOptions.shortMode
                 ? ' ⏳'
-                : ` ⏳ ${this.scheduledDate.format(Task.dateFormat)}`;
+                :
+                ` ⏳ ${scheduledDateFormatted}`;
             taskString += scheduledDate;
         }
 
         if (!layoutOptions.hideDueDate && this.dueDate) {
+            let dueDateFormatted = this.dueDate.format(dateFormat);
+            if (linkDates) {
+                dueDateFormatted = `[[${dueDateFormatted}]]`;
+            }
+
             const dueDate: string = layoutOptions.shortMode
                 ? ' 📅'
-                : ` 📅 ${this.dueDate.format(Task.dateFormat)}`;
+                : ` 📅 ${dueDateFormatted}`;
             taskString += dueDate;
         }
 
         if (!layoutOptions.hideDoneDate && this.doneDate) {
+            let doneDateFormatted = this.doneDate.format(dateFormat);
+            if (linkDates) {
+                doneDateFormatted = `[[${doneDateFormatted}]]`;
+            }
+
             const doneDate: string = layoutOptions.shortMode
                 ? ' ✅'
-                : ` ✅ ${this.doneDate.format(Task.dateFormat)}`;
+                : ` ✅ ${doneDateFormatted}`;
             taskString += doneDate;
         }
 
@@ -427,9 +496,8 @@ export class Task {
     }
 
     public toFileLineString(): string {
-        return `${this.indentation}- [${
-            this.originalStatusCharacter
-        }] ${this.toString()}`;
+        return `${this.indentation}- [${this.originalStatusCharacter
+            }] ${this.toString()}`;
     }
 
     /**
@@ -618,7 +686,9 @@ export class Task {
         signifier: string;
         date: Moment;
     }): string {
-        return `${signifier} ${date.format(Task.dateFormat)} (${date.from(
+        const { dateFormat } = getSettings();
+
+        return `${signifier} ${date.format(dateFormat)} (${date.from(
             window.moment().startOf('day'),
         )})`;
     }

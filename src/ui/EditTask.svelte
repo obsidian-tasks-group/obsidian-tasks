@@ -8,6 +8,8 @@
     export let task: Task;
     export let onSubmit: (updatedTasks: Task[]) => void | Promise<void>;
 
+    const { dateFormat } = getSettings();
+
     let descriptionInput: HTMLInputElement;
     let editableTask: {
         description: string;
@@ -47,7 +49,7 @@
                 },
             );
             if (parsed !== null) {
-                parsedStartDate = window.moment(parsed).format('YYYY-MM-DD');
+                parsedStartDate = window.moment(parsed).format(dateFormat);
             } else {
                 parsedStartDate = '<i>invalid start date</i>';
             }
@@ -66,9 +68,7 @@
                 },
             );
             if (parsed !== null) {
-                parsedScheduledDate = window
-                    .moment(parsed)
-                    .format('YYYY-MM-DD');
+                parsedScheduledDate = window.moment(parsed).format(dateFormat);
             } else {
                 parsedScheduledDate = '<i>invalid scheduled date</i>';
             }
@@ -83,7 +83,7 @@
                 forwardDate: true,
             });
             if (parsed !== null) {
-                parsedDueDate = window.moment(parsed).format('YYYY-MM-DD');
+                parsedDueDate = window.moment(parsed).format(dateFormat);
             } else {
                 parsedDueDate = '<i>invalid due date</i>';
             }
@@ -111,7 +111,7 @@
         } else {
             const parsed = chrono.parseDate(editableTask.doneDate);
             if (parsed !== null) {
-                parsedDone = window.moment(parsed).format('YYYY-MM-DD');
+                parsedDone = window.moment(parsed).format(dateFormat);
             } else {
                 parsedDone = '<i>invalid done date</i>';
             }
