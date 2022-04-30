@@ -232,6 +232,48 @@ describe('Query', () => {
                     expectedResult: ['- [ ] task 1'],
                 },
             ],
+            [
+                'by start date (before)',
+                {
+                    filters: ['starts before 2022-04-20'],
+                    tasks: [
+                        '- [ ] task 1',
+                        '- [ ] task 2 🛫 2022-04-15',
+                        '- [ ] task 3 🛫 2022-04-20',
+                        '- [ ] task 4 🛫 2022-04-25',
+                    ],
+                    expectedResult: [
+                        '- [ ] task 1', // reference: https://schemar.github.io/obsidian-tasks/queries/filters/#start-date
+                        '- [ ] task 2 🛫 2022-04-15',
+                    ],
+                },
+            ],
+            [
+                'by due date (before)',
+                {
+                    filters: ['due before 2022-04-20'],
+                    tasks: [
+                        '- [ ] task 1',
+                        '- [ ] task 2 📅 2022-04-15',
+                        '- [ ] task 3 📅 2022-04-20',
+                        '- [ ] task 4 📅 2022-04-25',
+                    ],
+                    expectedResult: ['- [ ] task 2 📅 2022-04-15'],
+                },
+            ],
+            [
+                'by scheduled date (before)',
+                {
+                    filters: ['scheduled before 2022-04-20'],
+                    tasks: [
+                        '- [ ] task 1',
+                        '- [ ] task 2 ⏳ 2022-04-15',
+                        '- [ ] task 3 ⏳ 2022-04-20',
+                        '- [ ] task 4 ⏳ 2022-04-25',
+                    ],
+                    expectedResult: ['- [ ] task 2 ⏳ 2022-04-15'],
+                },
+            ],
         ])(
             'should support filtering %s',
             (_, { tasks: allTaskLines, filters, expectedResult }) => {
