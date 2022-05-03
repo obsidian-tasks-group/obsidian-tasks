@@ -3,6 +3,7 @@
  */
 import moment from 'moment';
 import { Status, Task } from '../src/Task';
+import { getSettings, updateSettings } from '../src/Settings';
 
 jest.mock('obsidian');
 window.moment = moment;
@@ -37,6 +38,69 @@ describe('parsing', () => {
         expect(
             task!.doneDate!.isSame(moment('2021-06-20', 'YYYY-MM-DD')),
         ).toStrictEqual(true);
+    });
+
+    it('parses a task from a line and extract tags', () => {
+        // Arrange
+        const line =
+            '- [x] this is a done task #tagone #journal/daily 🗓 2021-09-12 ✅ 2021-06-20';
+        const path = 'this/is a path/to a/file.md';
+        const sectionStart = 1337;
+        const sectionIndex = 1209;
+        const precedingHeader = 'Eloquent Section';
+
+        // Act
+        const task = Task.fromLine({
+            line,
+            path,
+            sectionStart,
+            sectionIndex,
+            precedingHeader,
+        });
+
+        // Assert
+        expect(task).not.toBeNull();
+        expect(task!.description).toEqual(
+            'this is a done task #tagone #journal/daily',
+        );
+        expect(task!.status).toStrictEqual(Status.Done);
+        expect(task!.dueDate).not.toBeNull();
+        expect(
+            task!.dueDate!.isSame(moment('2021-09-12', 'YYYY-MM-DD')),
+        ).toStrictEqual(true);
+        expect(task!.doneDate).not.toBeNull();
+        expect(
+            task!.doneDate!.isSame(moment('2021-06-20', 'YYYY-MM-DD')),
+        ).toStrictEqual(true);
+        expect(task!.tags.length).toEqual(2);
+        expect(task!.tags[0]).toEqual('#tagone');
+        expect(task!.tags[1]).toEqual('#journal/daily');
+    });
+
+    it('returns null when task does not have global filter', () => {
+        // Arrange
+        const originalSettings = getSettings();
+        updateSettings({ globalFilter: '#task' });
+        const line = '- [x] this is a done task 🗓 2021-09-12 ✅ 2021-06-20';
+        const path = 'this/is a path/to a/file.md';
+        const sectionStart = 1337;
+        const sectionIndex = 1209;
+        const precedingHeader = 'Eloquent Section';
+
+        // Act
+        const task = Task.fromLine({
+            line,
+            path,
+            sectionStart,
+            sectionIndex,
+            precedingHeader,
+        });
+
+        // Assert
+        expect(task).toBeNull();
+
+        // Cleanup
+        updateSettings(originalSettings);
     });
 
     it('allows signifier emojis as part of the description', () => {
@@ -108,6 +172,24 @@ describe('to string', () => {
     it('retains the block link', () => {
         // Arrange
         const line = '- [ ] this is a task 📅 2021-09-12 ^my-precious';
+
+        // Act
+        const task: Task = Task.fromLine({
+            line,
+            path: '',
+            sectionStart: 0,
+            sectionIndex: 0,
+            precedingHeader: '',
+        }) as Task;
+
+        // Assert
+        expect(task.toFileLineString()).toStrictEqual(line);
+    });
+
+    it('retains the tags', () => {
+        // Arrange
+        const line =
+            '- [x] this is a done task #tagone #journal/daily 📅 2021-09-12 ✅ 2021-06-20';
 
         // Act
         const task: Task = Task.fromLine({

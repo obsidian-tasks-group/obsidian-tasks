@@ -1,0 +1,31 @@
+# See http://EditorConfig.org for more information about .editorconfig files.
+root = true
+
+[*]
+charset = utf-8
+indent_style = space
+indent_size = 4
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+[*.xml]
+indent_size = 2
+
+[*.json]
+indent_size = 2
+
+[*.{yml,yaml}]
+indent_size = 2
+
+[*.{md,mdx}]
+trim_trailing_whitespace = true
+
+[*.{htm,html,js,jsm,ts,tsx,mjs}]
+indent_size = 4
+
+[*.{cmd,bat,ps1}]
+end_of_line = crlf
+
+[*.sh]
+end_of_line = lf
+
