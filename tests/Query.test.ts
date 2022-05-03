@@ -447,36 +447,23 @@ describe('Query', () => {
                 taskShouldMatch,
             }) => {
                 // Arrange
-                const query = new Query({ source: happensFilter });
-
                 const line = [
                     '- [ ] this is a task',
+                    !!start && `🛫 ${start}`,
                     !!scheduled && `⏳ ${scheduled}`,
                     !!due && `📅 ${due}`,
-                    !!start && `🛫 ${start}`,
                     !!done && `✅ ${done}`,
                 ]
                     .filter(Boolean)
                     .join(' ');
 
-                const task = Task.fromLine({
-                    line,
-                    path: '',
-                    sectionStart: 0,
-                    sectionIndex: 0,
-                    precedingHeader: '',
-                }) as Task;
-                const tasks = [task];
+                const expectedResult: Array<string> = [];
+                if (taskShouldMatch) {
+                    expectedResult.push(line);
+                }
 
-                // Act
-                let filteredTasks = [...tasks];
-                query.filters.forEach((filter) => {
-                    filteredTasks = filteredTasks.filter(filter);
-                });
-
-                // Assert
-                const taskMatched = filteredTasks.length == 1;
-                expect(taskMatched).toEqual(taskShouldMatch);
+                // Act, Assert
+                shouldSupportFiltering([happensFilter], [line], expectedResult);
             },
         );
     });
