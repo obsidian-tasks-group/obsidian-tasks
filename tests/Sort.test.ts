@@ -228,4 +228,39 @@ describe('Sort', () => {
             ),
         ).toEqual(expectedOrder);
     });
+
+    it('sorts correctly by tag, done', () => {
+        const one = fromLine({
+            line: '- [ ] a #someday #home 📅 1970-01-01 ✅ 1971-01-01',
+            path: '',
+        });
+        const two = fromLine({
+            line: '- [ ] #task b #someday #home 📅 1970-01-02 ✅ 1971-01-02',
+            path: '',
+        });
+        const three = fromLine({
+            line: '- [ ] c #next #home 📅 1970-01-02 ✅ 1971-01-01',
+            path: '',
+        });
+        const four = fromLine({
+            line: '- [ ] d #urgent #home 📅 1970-01-02 ✅ 1971-01-03',
+            path: '',
+        });
+        const five = fromLine({
+            line: '- [ ] e 📅 1970-01-02 ✅ 1971-01-03',
+            path: '',
+        });
+        const expectedOrder = [three, one, two, four, five];
+        expect(
+            Sort.by(
+                {
+                    sorting: [
+                        { property: 'tag', reverse: false },
+                        { property: 'done', reverse: false },
+                    ],
+                },
+                [one, two, three, four, five],
+            ),
+        ).toEqual(expectedOrder);
+    });
 });
