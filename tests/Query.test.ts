@@ -8,6 +8,44 @@ import { Priority, Status, Task } from '../src/Task';
 
 window.moment = moment;
 
+type FilteringCase = {
+    filters: Array<string>;
+    tasks: Array<string>;
+    expectedResult: Array<string>;
+};
+
+function shouldSupportFiltering(
+    filters: Array<string>,
+    allTaskLines: Array<string>,
+    expectedResult: Array<string>,
+) {
+    // Arrange
+    const query = new Query({ source: filters.join('\n') });
+
+    const tasks = allTaskLines.map(
+        (taskLine) =>
+            Task.fromLine({
+                line: taskLine,
+                sectionStart: 0,
+                sectionIndex: 0,
+                path: '',
+                precedingHeader: '',
+            }) as Task,
+    );
+
+    // Act
+    let filteredTasks = [...tasks];
+    query.filters.forEach((filter) => {
+        filteredTasks = filteredTasks.filter(filter);
+    });
+
+    // Assert
+    const filteredTaskLines = filteredTasks.map(
+        (task) => `- [ ] ${task.toString()}`,
+    );
+    expect(filteredTaskLines).toMatchObject(expectedResult);
+}
+
 describe('Query', () => {
     describe('filtering', () => {
         it('filters paths case insensitive', () => {
@@ -146,12 +184,6 @@ describe('Query', () => {
             updateSettings(originalSettings);
         });
 
-        type FilteringCase = {
-            filters: Array<string>;
-            tasks: Array<string>;
-            expectedResult: Array<string>;
-        };
-
         test.concurrent.each<[string, FilteringCase]>([
             [
                 'by due date presence',
@@ -279,122 +311,55 @@ describe('Query', () => {
         ])(
             'should support filtering %s',
             (_, { tasks: allTaskLines, filters, expectedResult }) => {
-                // Arrange
-                const query = new Query({ source: filters.join('\n') });
-
-                const tasks = allTaskLines.map(
-                    (taskLine) =>
-                        Task.fromLine({
-                            line: taskLine,
-                            sectionStart: 0,
-                            sectionIndex: 0,
-                            path: '',
-                            precedingHeader: '',
-                        }) as Task,
-                );
-
-                // Act
-                let filteredTasks = [...tasks];
-                query.filters.forEach((filter) => {
-                    filteredTasks = filteredTasks.filter(filter);
-                });
-
-                // Assert
-                const filteredTaskLines = filteredTasks.map(
-                    (task) => `- [ ] ${task.toString()}`,
-                );
-                expect(filteredTaskLines).toMatchObject(expectedResult);
+                shouldSupportFiltering(filters, allTaskLines, expectedResult);
             },
         );
     });
 
-    it('filters based off a single tag', () => {
-        // Arrange
-        const originalSettings = getSettings();
-        updateSettings({ globalFilter: '#task' });
-        const tasks: Task[] = [
-            Task.fromLine({
-                line: '- [ ] #task something to do #later #work 📅 2021-09-12 ✅ 2021-06-20',
-                sectionStart: 0,
-                sectionIndex: 0,
-                path: '',
-                precedingHeader: '',
-            }),
-            Task.fromLine({
-                line: '- [ ] #task something to do #later #home 📅 2021-09-12 ✅ 2021-06-20',
-                sectionStart: 0,
-                sectionIndex: 0,
-                path: '',
-                precedingHeader: '',
-            }),
-            Task.fromLine({
-                line: '- [ ] #task get the milk 📅 2021-09-12 ✅ 2021-06-20',
-                sectionStart: 0,
-                sectionIndex: 0,
-                path: '',
-                precedingHeader: '',
-            }),
-        ] as Task[];
-        const input = 'tag includes #home';
-        const query = new Query({ source: input });
+    describe('filtering with "tag" and global task filter', () => {
+        test.concurrent.each<[string, FilteringCase]>([
+            [
+                'by tag presence',
+                {
+                    filters: ['tag includes #home'],
+                    tasks: [
+                        '- [ ] #task something to do #later #work 📅 2021-09-12 ✅ 2021-06-20',
+                        '- [ ] #task something to do #later #home 📅 2021-09-12 ✅ 2021-06-20',
+                        '- [ ] #task get the milk 📅 2021-09-12 ✅ 2021-06-20',
+                    ],
+                    expectedResult: [
+                        '- [ ] #task something to do #later #home 📅 2021-09-12 ✅ 2021-06-20',
+                    ],
+                },
+            ],
+            [
+                'by tag absence',
+                {
+                    filters: ['tag does not include #home'],
+                    tasks: [
+                        '- [ ] #task something to do #later #work 📅 2021-09-12 ✅ 2021-06-20',
+                        '- [ ] #task something to do #later #home 📅 2021-09-12 ✅ 2021-06-20',
+                        '- [ ] #task get the milk 📅 2021-09-12 ✅ 2021-06-20',
+                    ],
+                    expectedResult: [
+                        '- [ ] #task something to do #later #work 📅 2021-09-12 ✅ 2021-06-20',
+                        '- [ ] #task get the milk 📅 2021-09-12 ✅ 2021-06-20',
+                    ],
+                },
+            ],
+        ])(
+            'should support filtering of tags %s',
+            (_, { tasks: allTaskLines, filters, expectedResult }) => {
+                // Arrange
+                const originalSettings = getSettings();
+                updateSettings({ globalFilter: '#task' });
 
-        // Act
-        let filteredTasks = [...tasks];
-        query.filters.forEach((filter) => {
-            filteredTasks = filteredTasks.filter(filter);
-        });
+                shouldSupportFiltering(filters, allTaskLines, expectedResult);
 
-        // Assert
-        expect(filteredTasks.length).toEqual(1);
-        expect(filteredTasks[0]).toEqual(tasks[1]);
-
-        // Cleanup
-        updateSettings(originalSettings);
-    });
-
-    it('filters based off a tag not being present', () => {
-        // Arrange
-        const originalSettings = getSettings();
-        updateSettings({ globalFilter: '#task' });
-        const tasks: Task[] = [
-            Task.fromLine({
-                line: '- [ ] #task something to do #later #work 📅 2021-09-12 ✅ 2021-06-20',
-                sectionStart: 0,
-                sectionIndex: 0,
-                path: '',
-                precedingHeader: '',
-            }),
-            Task.fromLine({
-                line: '- [ ] #task something to do #later #home 📅 2021-09-12 ✅ 2021-06-20',
-                sectionStart: 0,
-                sectionIndex: 0,
-                path: '',
-                precedingHeader: '',
-            }),
-            Task.fromLine({
-                line: '- [ ] #task get the milk 📅 2021-09-12 ✅ 2021-06-20',
-                sectionStart: 0,
-                sectionIndex: 0,
-                path: '',
-                precedingHeader: '',
-            }),
-        ] as Task[];
-        const input = 'tag does not include #home';
-        const query = new Query({ source: input });
-
-        // Act
-        let filteredTasks = [...tasks];
-        query.filters.forEach((filter) => {
-            filteredTasks = filteredTasks.filter(filter);
-        });
-
-        // Assert
-        expect(filteredTasks.length).toEqual(2);
-        expect(filteredTasks[0]).toEqual(tasks[0]);
-        expect(filteredTasks[1]).toEqual(tasks[2]);
-
-        // Cleanup
-        updateSettings(originalSettings);
+                // Cleanup
+                updateSettings(originalSettings);
+            },
+        );
     });
 
     describe('filtering with "happens"', () => {
