@@ -6,13 +6,13 @@ Every contribution is much appreciated!
 ## Updating documentation
 
 The documentation resides under the `./docs` directory.
-It consists of markdown files, which [Jekyll](https://jekyllrb.com/) will transform into web pages that you can view at https://schemar.github.io/obsidian-tasks/ .
+It consists of markdown files, which [Jekyll](https://jekyllrb.com/) will transform into web pages that you can view at <https://schemar.github.io/obsidian-tasks/> .
 In the simplest case, you can update the existing markdown file and create a pull request (PR) with your changes.
 
 We use [GitHub pages](https://pages.github.com/) for our documentation.
 You can read more about it at their [official documentation](https://docs.github.com/en/pages).
 
-For documentation changes to show up at https://schemar.github.io/obsidian-tasks/ , they must be in the `gh-pages` branch.
+For documentation changes to show up at <https://schemar.github.io/obsidian-tasks/> , they must be in the `gh-pages` branch.
 If you want to see your changes available immediately and not only after the next release, you should make your changes on the `gh-pages` branch.
 When you create a PR, it should merge into the `gh-pages` branch as well.
 If you document an unreleased feature, you should update the documentation on `main` instead. Ideally together with the related code changes.
@@ -29,6 +29,21 @@ Discussion will take place inside the PR.
 
 If you can, please add/update tests and documentation where appropriate.
 
+## Setting up build environment
+
+This project uses Node 14.x, if you need to use a different version, look at using `nvm` to manage your Node versions. If you are using `nvm`, you can install the 14.x version of Node with `nvm install 14.19.1; nvm use 14.19.1`.
+
+To setup the local environment after cloning the repository, run the following commands:
+
+``` shell
+yarn
+yarn build
+yarn test
+yarn lint
+```
+
+Make sure you build, test and lint before pushing to the repository.
+
 ## FAQs
 
 ### How does Tasks handle status changes?
@@ -42,15 +57,15 @@ You can toggle a task‘s status by:
 
 The code is located as follows:
 
--   For 1.: ``./src/Commands/ToggleDone.ts`
--   2. and 4. use a checkbox created by `Task.toLi()`. There, the checkbox gets a click event handler.
--   For 3.: `./src/LivePreviewExtension.ts`
+- For 1.: ``./src/Commands/ToggleDone.ts`
+- 2. and 4. use a checkbox created by `Task.toLi()`. There, the checkbox gets a click event handler.
+- For 3.: `./src/LivePreviewExtension.ts`
 
 Toggle behavior:
 
--   1. toggles the line directly where the cursor is. In the file inside Obsidian‘s vault.
--   The click event listener of 2. and 4. uses File::replaceTaskWithTasks(). That, in turn, updates the file in Obsidian‘s Vault (like 1, but it needs to find the correct line).
--   3. toggles the line directly where the checkbox is. On the „document“ of CodeMirror (the library that Obsidian uses to show text on screen). That, in turn, updates the file in Obsidian‘s Vault, somehow.
+- 1. toggles the line directly where the cursor is. In the file inside Obsidian‘s vault.
+- The click event listener of 2. and 4. uses File::replaceTaskWithTasks(). That, in turn, updates the file in Obsidian‘s Vault (like 1, but it needs to find the correct line).
+- 3. toggles the line directly where the checkbox is. On the „document“ of CodeMirror (the library that Obsidian uses to show text on screen). That, in turn, updates the file in Obsidian‘s Vault, somehow.
 
 Obsidian writes the changes to disk at its own pace.
 

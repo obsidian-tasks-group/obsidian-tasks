@@ -43,6 +43,7 @@ export class Sort {
         done: Sort.compareByDoneDate,
         path: Sort.compareByPath,
         status: Sort.compareByStatus,
+        tag: Sort.compareByTag,
     };
 
     private static makeReversedComparator(comparator: Comparator): Comparator {
@@ -96,6 +97,17 @@ export class Sort {
 
     private static compareByDoneDate(a: Task, b: Task): -1 | 0 | 1 {
         return Sort.compareByDate(a.doneDate, b.doneDate);
+    }
+
+    // Currently sorts by first tag found only.
+    private static compareByTag(a: Task, b: Task): -1 | 0 | 1 {
+        if (a.tags[0] < b.tags[0]) {
+            return -1;
+        } else if (a.tags[0] > b.tags[0]) {
+            return 1;
+        } else {
+            return 0;
+        }
     }
 
     private static compareByDate(
