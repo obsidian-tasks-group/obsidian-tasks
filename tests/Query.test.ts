@@ -143,6 +143,167 @@ describe('Query', () => {
             // Cleanup
             updateSettings(originalSettings);
         });
+
+        type FilteringCase = {
+            filters: Array<string>;
+            tasks: Array<string>;
+            expectedResult: Array<string>;
+        };
+
+        test.concurrent.each<[string, FilteringCase]>([
+            [
+                'by due date presence',
+                {
+                    filters: ['has due date'],
+                    tasks: [
+                        '- [ ] task 1',
+                        '- [ ] task 2 🛫 2022-04-20 ⏳ 2022-04-20 📅 2022-04-20',
+                        '- [ ] task 3 📅 2022-04-20',
+                    ],
+                    expectedResult: [
+                        '- [ ] task 2 🛫 2022-04-20 ⏳ 2022-04-20 📅 2022-04-20',
+                        '- [ ] task 3 📅 2022-04-20',
+                    ],
+                },
+            ],
+            [
+                'by start date presence',
+                {
+                    filters: ['has start date'],
+                    tasks: [
+                        '- [ ] task 1',
+                        '- [ ] task 2 🛫 2022-04-20 ⏳ 2022-04-20 📅 2022-04-20',
+                        '- [ ] task 3 🛫 2022-04-20',
+                    ],
+                    expectedResult: [
+                        '- [ ] task 2 🛫 2022-04-20 ⏳ 2022-04-20 📅 2022-04-20',
+                        '- [ ] task 3 🛫 2022-04-20',
+                    ],
+                },
+            ],
+            [
+                'by scheduled date presence',
+                {
+                    filters: ['has scheduled date'],
+                    tasks: [
+                        '- [ ] task 1',
+                        '- [ ] task 2 🛫 2022-04-20 ⏳ 2022-04-20 📅 2022-04-20',
+                        '- [ ] task 3 ⏳ 2022-04-20',
+                    ],
+                    expectedResult: [
+                        '- [ ] task 2 🛫 2022-04-20 ⏳ 2022-04-20 📅 2022-04-20',
+                        '- [ ] task 3 ⏳ 2022-04-20',
+                    ],
+                },
+            ],
+            [
+                'by due date absence',
+                {
+                    filters: ['no due date'],
+                    tasks: [
+                        '- [ ] task 1',
+                        '- [ ] task 2 🛫 2022-04-20 ⏳ 2022-04-20 📅 2022-04-20',
+                        '- [ ] task 3 📅 2022-04-20',
+                    ],
+                    expectedResult: ['- [ ] task 1'],
+                },
+            ],
+            [
+                'by start date absence',
+                {
+                    filters: ['no start date'],
+                    tasks: [
+                        '- [ ] task 1',
+                        '- [ ] task 2 🛫 2022-04-20 ⏳ 2022-04-20 📅 2022-04-20',
+                        '- [ ] task 3 🛫 2022-04-20',
+                    ],
+                    expectedResult: ['- [ ] task 1'],
+                },
+            ],
+            [
+                'by scheduled date absence',
+                {
+                    filters: ['no scheduled date'],
+                    tasks: [
+                        '- [ ] task 1',
+                        '- [ ] task 2 🛫 2022-04-20 ⏳ 2022-04-20 📅 2022-04-20',
+                        '- [ ] task 3 ⏳ 2022-04-20',
+                    ],
+                    expectedResult: ['- [ ] task 1'],
+                },
+            ],
+            [
+                'by start date (before)',
+                {
+                    filters: ['starts before 2022-04-20'],
+                    tasks: [
+                        '- [ ] task 1',
+                        '- [ ] task 2 🛫 2022-04-15',
+                        '- [ ] task 3 🛫 2022-04-20',
+                        '- [ ] task 4 🛫 2022-04-25',
+                    ],
+                    expectedResult: [
+                        '- [ ] task 1', // reference: https://schemar.github.io/obsidian-tasks/queries/filters/#start-date
+                        '- [ ] task 2 🛫 2022-04-15',
+                    ],
+                },
+            ],
+            [
+                'by due date (before)',
+                {
+                    filters: ['due before 2022-04-20'],
+                    tasks: [
+                        '- [ ] task 1',
+                        '- [ ] task 2 📅 2022-04-15',
+                        '- [ ] task 3 📅 2022-04-20',
+                        '- [ ] task 4 📅 2022-04-25',
+                    ],
+                    expectedResult: ['- [ ] task 2 📅 2022-04-15'],
+                },
+            ],
+            [
+                'by scheduled date (before)',
+                {
+                    filters: ['scheduled before 2022-04-20'],
+                    tasks: [
+                        '- [ ] task 1',
+                        '- [ ] task 2 ⏳ 2022-04-15',
+                        '- [ ] task 3 ⏳ 2022-04-20',
+                        '- [ ] task 4 ⏳ 2022-04-25',
+                    ],
+                    expectedResult: ['- [ ] task 2 ⏳ 2022-04-15'],
+                },
+            ],
+        ])(
+            'should support filtering %s',
+            (_, { tasks: allTaskLines, filters, expectedResult }) => {
+                // Arrange
+                const query = new Query({ source: filters.join('\n') });
+
+                const tasks = allTaskLines.map(
+                    (taskLine) =>
+                        Task.fromLine({
+                            line: taskLine,
+                            sectionStart: 0,
+                            sectionIndex: 0,
+                            path: '',
+                            precedingHeader: '',
+                        }) as Task,
+                );
+
+                // Act
+                let filteredTasks = [...tasks];
+                query.filters.forEach((filter) => {
+                    filteredTasks = filteredTasks.filter(filter);
+                });
+
+                // Assert
+                const filteredTaskLines = filteredTasks.map(
+                    (task) => `- [ ] ${task.toString()}`,
+                );
+                expect(filteredTaskLines).toMatchObject(expectedResult);
+            },
+        );
     });
 
     describe('filtering with "happens"', () => {
