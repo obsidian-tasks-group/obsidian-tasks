@@ -316,48 +316,49 @@ describe('Query', () => {
         );
     });
     describe('filtering with "tag" and global task filter', () => {
-        it('filters based off a single tag', () => {
-            // Arrange
-            const originalSettings = getSettings();
-            updateSettings({ globalFilter: '#task' });
-            const filters = ['tag includes #home'];
-            const tasks = [
-                '- [ ] #task something to do #later #work 📅 2021-09-12 ✅ 2021-06-20',
-                '- [ ] #task something to do #later #home 📅 2021-09-12 ✅ 2021-06-20',
-                '- [ ] #task get the milk 📅 2021-09-12 ✅ 2021-06-20',
-            ];
+        test.concurrent.each<[string, FilteringCase]>([
+            [
+                'by tag presence',
+                {
+                    filters: ['tag includes #home'],
+                    tasks: [
+                        '- [ ] #task something to do #later #work 📅 2021-09-12 ✅ 2021-06-20',
+                        '- [ ] #task something to do #later #home 📅 2021-09-12 ✅ 2021-06-20',
+                        '- [ ] #task get the milk 📅 2021-09-12 ✅ 2021-06-20',
+                    ],
+                    expectedResult: [
+                        '- [ ] #task something to do #later #home 📅 2021-09-12 ✅ 2021-06-20',
+                    ],
+                },
+            ],
+            [
+                'by tag absence',
+                {
+                    filters: ['tag does not include #home'],
+                    tasks: [
+                        '- [ ] #task something to do #later #work 📅 2021-09-12 ✅ 2021-06-20',
+                        '- [ ] #task something to do #later #home 📅 2021-09-12 ✅ 2021-06-20',
+                        '- [ ] #task get the milk 📅 2021-09-12 ✅ 2021-06-20',
+                    ],
+                    expectedResult: [
+                        '- [ ] #task something to do #later #work 📅 2021-09-12 ✅ 2021-06-20',
+                        '- [ ] #task get the milk 📅 2021-09-12 ✅ 2021-06-20',
+                    ],
+                },
+            ],
+        ])(
+            'should support filtering of tags %s',
+            (_, { tasks: allTaskLines, filters, expectedResult }) => {
+                // Arrange
+                const originalSettings = getSettings();
+                updateSettings({ globalFilter: '#task' });
 
-            // Act, Assert
-            const expectedResult: Array<string> = [
-                '- [ ] #task something to do #later #home 📅 2021-09-12 ✅ 2021-06-20',
-            ];
-            shouldSupportFiltering(filters, tasks, expectedResult);
+                shouldSupportFiltering(filters, allTaskLines, expectedResult);
 
-            // Cleanup
-            updateSettings(originalSettings);
-        });
-
-        it('filters based off a tag not being present', () => {
-            // Arrange
-            const originalSettings = getSettings();
-            updateSettings({ globalFilter: '#task' });
-            const filters = ['tag does not include #home'];
-            const tasks = [
-                '- [ ] #task something to do #later #work 📅 2021-09-12 ✅ 2021-06-20',
-                '- [ ] #task something to do #later #home 📅 2021-09-12 ✅ 2021-06-20',
-                '- [ ] #task get the milk 📅 2021-09-12 ✅ 2021-06-20',
-            ];
-
-            // Act, Assert
-            const expectedResult: Array<string> = [
-                '- [ ] #task something to do #later #work 📅 2021-09-12 ✅ 2021-06-20',
-                '- [ ] #task get the milk 📅 2021-09-12 ✅ 2021-06-20',
-            ];
-            shouldSupportFiltering(filters, tasks, expectedResult);
-
-            // Cleanup
-            updateSettings(originalSettings);
-        });
+                // Cleanup
+                updateSettings(originalSettings);
+            },
+        );
     });
 
     describe('filtering with "happens"', () => {
