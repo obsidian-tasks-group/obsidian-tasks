@@ -315,6 +315,7 @@ describe('Query', () => {
             },
         );
     });
+
     describe('filtering with "tag" and global task filter', () => {
         test.concurrent.each<[string, FilteringCase]>([
             [
