@@ -89,6 +89,7 @@ Instead you would have two queries, one for each condition:
 ### Start Date
 
 -   `no start date`
+-   `has start date`
 -   `starts (before|after|on) <date>`
 
 When filtering queries by [start date]({{ site.baseurl }}{% link getting-started/dates.md %}#-start),
@@ -104,11 +105,13 @@ Such filter could be:
 ### Scheduled Date
 
 -   `no scheduled date`
+-   `has scheduled date`
 -   `scheduled (before|after|on) <date>`
 
 ### Due Date
 
 -   `no due date`
+-   `has due date`
 -   `due (before|after|on) <date>`
 
 ### Happens
