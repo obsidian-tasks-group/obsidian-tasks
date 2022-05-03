@@ -8,6 +8,12 @@ import { Priority, Status, Task } from '../src/Task';
 
 window.moment = moment;
 
+type FilteringCase = {
+    filters: Array<string>;
+    tasks: Array<string>;
+    expectedResult: Array<string>;
+};
+
 function shouldSupportFiltering(
     filters: Array<string>,
     allTaskLines: Array<string>,
@@ -177,12 +183,6 @@ describe('Query', () => {
             // Cleanup
             updateSettings(originalSettings);
         });
-
-        type FilteringCase = {
-            filters: Array<string>;
-            tasks: Array<string>;
-            expectedResult: Array<string>;
-        };
 
         test.concurrent.each<[string, FilteringCase]>([
             [
