@@ -545,8 +545,7 @@ export class Query {
         const limitMatch = line.match(this.limitRegexp);
         if (limitMatch !== null) {
             // limitMatch[2] is per regex always digits and therefore parsable.
-            const limit = Number.parseInt(limitMatch[2], 10);
-            this._limit = limit;
+            this._limit = Number.parseInt(limitMatch[2], 10);
         } else {
             this._error = 'do not understand query limit';
         }
