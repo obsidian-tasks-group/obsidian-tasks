@@ -320,41 +320,18 @@ describe('Query', () => {
         // Arrange
         const originalSettings = getSettings();
         updateSettings({ globalFilter: '#task' });
-        const tasks: Task[] = [
-            Task.fromLine({
-                line: '- [ ] #task something to do #later #work 📅 2021-09-12 ✅ 2021-06-20',
-                sectionStart: 0,
-                sectionIndex: 0,
-                path: '',
-                precedingHeader: '',
-            }),
-            Task.fromLine({
-                line: '- [ ] #task something to do #later #home 📅 2021-09-12 ✅ 2021-06-20',
-                sectionStart: 0,
-                sectionIndex: 0,
-                path: '',
-                precedingHeader: '',
-            }),
-            Task.fromLine({
-                line: '- [ ] #task get the milk 📅 2021-09-12 ✅ 2021-06-20',
-                sectionStart: 0,
-                sectionIndex: 0,
-                path: '',
-                precedingHeader: '',
-            }),
-        ] as Task[];
-        const input = 'tag includes #home';
-        const query = new Query({ source: input });
+        const filters = ['tag includes #home'];
+        const tasks = [
+            '- [ ] #task something to do #later #work 📅 2021-09-12 ✅ 2021-06-20',
+            '- [ ] #task something to do #later #home 📅 2021-09-12 ✅ 2021-06-20',
+            '- [ ] #task get the milk 📅 2021-09-12 ✅ 2021-06-20',
+        ];
 
-        // Act
-        let filteredTasks = [...tasks];
-        query.filters.forEach((filter) => {
-            filteredTasks = filteredTasks.filter(filter);
-        });
-
-        // Assert
-        expect(filteredTasks.length).toEqual(1);
-        expect(filteredTasks[0]).toEqual(tasks[1]);
+        // Act, Assert
+        const expectedResult: Array<string> = [
+            '- [ ] #task something to do #later #home 📅 2021-09-12 ✅ 2021-06-20',
+        ];
+        shouldSupportFiltering(filters, tasks, expectedResult);
 
         // Cleanup
         updateSettings(originalSettings);
