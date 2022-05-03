@@ -435,12 +435,15 @@ export class Query {
             const filterMethod = pathMatch[1];
             if (filterMethod === 'includes') {
                 this._filters.push((task: Task) =>
-                    this.stringIncludesCaseInsensitive(task.path, pathMatch[2]),
+                    Query.stringIncludesCaseInsensitive(
+                        task.path,
+                        pathMatch[2],
+                    ),
                 );
             } else if (pathMatch[1] === 'does not include') {
                 this._filters.push(
                     (task: Task) =>
-                        !this.stringIncludesCaseInsensitive(
+                        !Query.stringIncludesCaseInsensitive(
                             task.path,
                             pathMatch[2],
                         ),
@@ -484,7 +487,7 @@ export class Query {
 
             if (filterMethod === 'includes') {
                 this._filters.push((task: Task) =>
-                    this.stringIncludesCaseInsensitive(
+                    Query.stringIncludesCaseInsensitive(
                         // Remove global filter from description match if present.
                         // This is necessary to match only on the content of the task, not
                         // the global filter.
@@ -495,7 +498,7 @@ export class Query {
             } else if (descriptionMatch[1] === 'does not include') {
                 this._filters.push(
                     (task: Task) =>
-                        !this.stringIncludesCaseInsensitive(
+                        !Query.stringIncludesCaseInsensitive(
                             // Remove global filter from description match if present.
                             // This is necessary to match only on the content of the task, not
                             // the global filter.
@@ -519,7 +522,7 @@ export class Query {
                 this._filters.push(
                     (task: Task) =>
                         task.precedingHeader !== null &&
-                        this.stringIncludesCaseInsensitive(
+                        Query.stringIncludesCaseInsensitive(
                             task.precedingHeader,
                             headingMatch[2],
                         ),
@@ -528,7 +531,7 @@ export class Query {
                 this._filters.push(
                     (task: Task) =>
                         task.precedingHeader === null ||
-                        !this.stringIncludesCaseInsensitive(
+                        !Query.stringIncludesCaseInsensitive(
                             task.precedingHeader,
                             headingMatch[2],
                         ),
@@ -568,7 +571,7 @@ export class Query {
         return window.moment(chrono.parseDate(input)).startOf('day');
     }
 
-    private stringIncludesCaseInsensitive(
+    private static stringIncludesCaseInsensitive(
         haystack: string,
         needle: string,
     ): boolean {
