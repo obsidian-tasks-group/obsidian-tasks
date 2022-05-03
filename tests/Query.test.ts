@@ -106,34 +106,17 @@ describe('Query', () => {
             // Arrange
             const originalSettings = getSettings();
             updateSettings({ globalFilter: '#task' });
-            const tasks: Task[] = [
-                Task.fromLine({
-                    line: '- [ ] #task this does not include the word; only in the global filter',
-                    sectionStart: 0,
-                    sectionIndex: 0,
-                    path: '',
-                    precedingHeader: '',
-                }),
-                Task.fromLine({
-                    line: '- [ ] #task this does: task',
-                    sectionStart: 0,
-                    sectionIndex: 0,
-                    path: '',
-                    precedingHeader: '',
-                }),
-            ] as Task[];
-            const input = 'description includes task';
-            const query = new Query({ source: input });
+            const filters: Array<string> = ['description includes task'];
+            const tasks: Array<string> = [
+                '- [ ] #task this does not include the word; only in the global filter',
+                '- [ ] #task this does: task',
+            ];
+            const expectedResult: Array<string> = [
+                '- [ ] #task this does: task',
+            ];
 
-            // Act
-            let filteredTasks = [...tasks];
-            query.filters.forEach((filter) => {
-                filteredTasks = filteredTasks.filter(filter);
-            });
-
-            // Assert
-            expect(filteredTasks.length).toEqual(1);
-            expect(filteredTasks[0]).toEqual(tasks[1]);
+            // Act, Assert
+            shouldSupportFiltering(filters, tasks, expectedResult);
 
             // Cleanup
             updateSettings(originalSettings);
