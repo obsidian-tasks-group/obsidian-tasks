@@ -143,42 +143,19 @@ describe('Query', () => {
             // Arrange
             const originalSettings = getSettings();
             updateSettings({ globalFilter: '' });
-            const tasks: Task[] = [
-                Task.fromLine({
-                    line: '- [ ] this does not include the word at all',
-                    sectionStart: 0,
-                    sectionIndex: 0,
-                    path: '',
-                    precedingHeader: '',
-                }),
-                Task.fromLine({
-                    line: '- [ ] #task this includes the word as a tag',
-                    sectionStart: 0,
-                    sectionIndex: 0,
-                    path: '',
-                    precedingHeader: '',
-                }),
-                Task.fromLine({
-                    line: '- [ ] #task this does: task',
-                    sectionStart: 0,
-                    sectionIndex: 0,
-                    path: '',
-                    precedingHeader: '',
-                }),
-            ] as Task[];
-            const input = 'description includes task';
-            const query = new Query({ source: input });
+            const filters: Array<string> = ['description includes task'];
+            const tasks: Array<string> = [
+                '- [ ] this does not include the word at all',
+                '- [ ] #task this includes the word as a tag',
+                '- [ ] #task this does: task',
+            ];
+            const expectedResult: Array<string> = [
+                '- [ ] #task this includes the word as a tag',
+                '- [ ] #task this does: task',
+            ];
 
-            // Act
-            let filteredTasks = [...tasks];
-            query.filters.forEach((filter) => {
-                filteredTasks = filteredTasks.filter(filter);
-            });
-
-            // Assert
-            expect(filteredTasks.length).toEqual(2);
-            expect(filteredTasks[0]).toEqual(tasks[1]);
-            expect(filteredTasks[1]).toEqual(tasks[2]);
+            // Act, Assert
+            shouldSupportFiltering(filters, tasks, expectedResult);
 
             // Cleanup
             updateSettings(originalSettings);
