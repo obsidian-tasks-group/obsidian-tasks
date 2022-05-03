@@ -13,7 +13,8 @@ export type SortingProperty =
     | 'due'
     | 'done'
     | 'path'
-    | 'description';
+    | 'description'
+    | 'tag';
 type Sorting = { property: SortingProperty; reverse: boolean };
 
 export class Query {
@@ -44,8 +45,11 @@ export class Query {
     private readonly pathRegexp = /^path (includes|does not include) (.*)/;
     private readonly descriptionRegexp =
         /^description (includes|does not include) (.*)/;
+
+    private readonly tagRegexp = /^tag (includes|does not include) (.*)/;
+
     private readonly sortByRegexp =
-        /^sort by (urgency|status|priority|start|scheduled|due|done|path|description)( reverse)?/;
+        /^sort by (urgency|status|priority|start|scheduled|due|done|path|description|tag)( reverse)?/;
 
     private readonly headingRegexp =
         /^heading (includes|does not include) (.*)/;
@@ -126,6 +130,9 @@ export class Query {
                         break;
                     case this.descriptionRegexp.test(line):
                         this.parseDescriptionFilter({ line });
+                        break;
+                    case this.tagRegexp.test(line):
+                        this.parseTagFilter({ line });
                         break;
                     case this.headingRegexp.test(line):
                         this.parseHeadingFilter({ line });
@@ -429,6 +436,29 @@ export class Query {
             }
         } else {
             this._error = 'do not understand query filter (path)';
+        }
+    }
+
+    private parseTagFilter({ line }: { line: string }): void {
+        const tagMatch = line.match(this.tagRegexp);
+        if (tagMatch !== null) {
+            const filterMethod = tagMatch[1];
+
+            if (filterMethod === 'includes') {
+                this._filters.push(
+                    (task: Task) =>
+                        task.tags.find((el) => el === tagMatch[2]) != undefined,
+                );
+            } else if (tagMatch[1] === 'does not include') {
+                this._filters.push(
+                    (task: Task) =>
+                        task.tags.find((el) => el === tagMatch[2]) == undefined,
+                );
+            } else {
+                this._error = 'do not understand query filter (tag)';
+            }
+        } else {
+            this._error = 'do not understand query filter (tag)';
         }
     }
 

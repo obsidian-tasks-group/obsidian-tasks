@@ -35,6 +35,8 @@ export class Task {
     public readonly originalStatusCharacter: string;
     public readonly precedingHeader: string | null;
 
+    public readonly tags: string[];
+
     public readonly priority: Priority;
 
     public readonly startDate: Moment | null;
@@ -47,8 +49,17 @@ export class Task {
     public readonly blockLink: string;
 
     public static readonly dateFormat = 'YYYY-MM-DD';
+
+    // Main regex for parsing a line. It matches the following:
+    // - Indentation
+    // - Status character
+    // - Rest of task after checkbox markdown
     public static readonly taskRegex = /^([\s\t]*)[-*] +\[(.)\] *(.*)/u;
-    // The following regexes end with `$` because they will be matched and
+
+    // Match on block link at end.
+    public static readonly blockLinkRegex = / \^[a-zA-Z0-9-]+$/u;
+
+    // The following regex's end with `$` because they will be matched and
     // removed from the end until none are left.
     public static readonly priorityRegex = /([⏫🔼🔽])$/u;
     public static readonly startDateRegex = /🛫 ?(\d{4}-\d{2}-\d{2})$/u;
@@ -56,7 +67,8 @@ export class Task {
     public static readonly dueDateRegex = /[📅📆🗓] ?(\d{4}-\d{2}-\d{2})$/u;
     public static readonly doneDateRegex = /✅ ?(\d{4}-\d{2}-\d{2})$/u;
     public static readonly recurrenceRegex = /🔁 ?([a-zA-Z0-9, !]+)$/iu;
-    public static readonly blockLinkRegex = / \^[a-zA-Z0-9-]+$/u;
+
+    public static readonly hashTags = /#[^ !@#$%^&*(),.?":{}|<>]*/g;
 
     private _urgency: number | null = null;
 
@@ -76,6 +88,7 @@ export class Task {
         doneDate,
         recurrence,
         blockLink,
+        tags,
     }: {
         status: Status;
         description: string;
@@ -92,6 +105,7 @@ export class Task {
         doneDate: moment.Moment | null;
         recurrence: Recurrence | null;
         blockLink: string;
+        tags: string[];
     }) {
         this.status = status;
         this.description = description;
@@ -101,6 +115,8 @@ export class Task {
         this.sectionIndex = sectionIndex;
         this.originalStatusCharacter = originalStatusCharacter;
         this.precedingHeader = precedingHeader;
+
+        this.tags = tags;
 
         this.priority = priority;
 
@@ -113,6 +129,18 @@ export class Task {
         this.blockLink = blockLink;
     }
 
+    /**
+     * Takes the given line from a obsidian note and returns a Task object.
+     *
+     * @static
+     * @param {string} line - The full line in the note to parse.
+     * @param {string} path - Path to the note in obsidian.
+     * @param {number} sectionStart - Line number where the section starts that contains this task.
+     * @param {number} sectionIndex - The index of the nth task in its section.
+     * @param {(string | null)} precedingHeader - The header before this task.
+     * @return {*}  {(Task | null)}
+     * @memberof Task
+     */
     public static fromLine({
         line,
         path,
@@ -126,14 +154,27 @@ export class Task {
         sectionIndex: number;
         precedingHeader: string | null;
     }): Task | null {
+        // Check the line to see if it is a markdown task.
         const regexMatch = line.match(Task.taskRegex);
         if (regexMatch === null) {
             return null;
         }
 
-        const indentation = regexMatch[1];
-        const statusString = regexMatch[2].toLowerCase();
+        // match[3] includes the whole body of the task after the brackets.
+        const body = regexMatch[3].trim();
 
+        // return if task does not have the global filter. Do this before processing
+        // rest of match to improve performance.
+        const { globalFilter } = getSettings();
+        if (!body.includes(globalFilter)) {
+            return null;
+        }
+
+        let description = body;
+        const indentation = regexMatch[1];
+
+        // Get the status of the task, only todo and done supported.
+        const statusString = regexMatch[2].toLowerCase();
         let status: Status;
         switch (statusString) {
             case ' ':
@@ -143,16 +184,8 @@ export class Task {
                 status = Status.Done;
         }
 
-        // match[3] includes the whole body of the task after the brackets.
-        const body = regexMatch[3].trim();
-
-        const { globalFilter } = getSettings();
-        if (!body.includes(globalFilter)) {
-            return null;
-        }
-
-        let description = body;
-
+        // Match for block link and remove if found. Always expected to be
+        // at the end of the line.
         const blockLinkMatch = description.match(this.blockLinkRegex);
         const blockLink = blockLinkMatch !== null ? blockLinkMatch[0] : '';
 
@@ -170,6 +203,7 @@ export class Task {
         let dueDate: Moment | null = null;
         let doneDate: Moment | null = null;
         let recurrence: Recurrence | null = null;
+        let tags: any = [];
         // Add a "max runs" failsafe to never end in an endless loop:
         const maxRuns = 7;
         let runs = 0;
@@ -252,6 +286,14 @@ export class Task {
             runs++;
         } while (matched && runs <= maxRuns);
 
+        // Tags are found in the string and pulled out but not removed,
+        // so when returning the entire task it will match what the user
+        // entered.
+        const hashTagMatch = description.match(this.hashTags);
+        if (hashTagMatch !== null) {
+            tags = hashTagMatch;
+        }
+
         const task = new Task({
             status,
             description,
@@ -268,6 +310,7 @@ export class Task {
             doneDate,
             recurrence,
             blockLink,
+            tags,
         });
 
         return task;
@@ -367,6 +410,13 @@ export class Task {
         return li;
     }
 
+    /**
+     *
+     *
+     * @param {LayoutOptions} [layoutOptions]
+     * @return {*}  {string}
+     * @memberof Task
+     */
     public toString(layoutOptions?: LayoutOptions): string {
         layoutOptions = layoutOptions ?? new LayoutOptions();
         let taskString = this.description;
@@ -426,6 +476,12 @@ export class Task {
         return taskString;
     }
 
+    /**
+     * Returns the Task as a list item with a checkbox.
+     *
+     * @return {*}  {string}
+     * @memberof Task
+     */
     public toFileLineString(): string {
         return `${this.indentation}- [${
             this.originalStatusCharacter
