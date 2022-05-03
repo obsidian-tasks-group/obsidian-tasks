@@ -8,6 +8,38 @@ import { Priority, Status, Task } from '../src/Task';
 
 window.moment = moment;
 
+function shouldSupportFiltering(
+    filters: Array<string>,
+    allTaskLines: Array<string>,
+    expectedResult: Array<string>,
+) {
+    // Arrange
+    const query = new Query({ source: filters.join('\n') });
+
+    const tasks = allTaskLines.map(
+        (taskLine) =>
+            Task.fromLine({
+                line: taskLine,
+                sectionStart: 0,
+                sectionIndex: 0,
+                path: '',
+                precedingHeader: '',
+            }) as Task,
+    );
+
+    // Act
+    let filteredTasks = [...tasks];
+    query.filters.forEach((filter) => {
+        filteredTasks = filteredTasks.filter(filter);
+    });
+
+    // Assert
+    const filteredTaskLines = filteredTasks.map(
+        (task) => `- [ ] ${task.toString()}`,
+    );
+    expect(filteredTaskLines).toMatchObject(expectedResult);
+}
+
 describe('Query', () => {
     describe('filtering', () => {
         it('filters paths case insensitive', () => {
@@ -279,31 +311,7 @@ describe('Query', () => {
         ])(
             'should support filtering %s',
             (_, { tasks: allTaskLines, filters, expectedResult }) => {
-                // Arrange
-                const query = new Query({ source: filters.join('\n') });
-
-                const tasks = allTaskLines.map(
-                    (taskLine) =>
-                        Task.fromLine({
-                            line: taskLine,
-                            sectionStart: 0,
-                            sectionIndex: 0,
-                            path: '',
-                            precedingHeader: '',
-                        }) as Task,
-                );
-
-                // Act
-                let filteredTasks = [...tasks];
-                query.filters.forEach((filter) => {
-                    filteredTasks = filteredTasks.filter(filter);
-                });
-
-                // Assert
-                const filteredTaskLines = filteredTasks.map(
-                    (task) => `- [ ] ${task.toString()}`,
-                );
-                expect(filteredTaskLines).toMatchObject(expectedResult);
+                shouldSupportFiltering(filters, allTaskLines, expectedResult);
             },
         );
     });
