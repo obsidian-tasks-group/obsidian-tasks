@@ -8,6 +8,44 @@ import { Priority, Status, Task } from '../src/Task';
 
 window.moment = moment;
 
+type FilteringCase = {
+    filters: Array<string>;
+    tasks: Array<string>;
+    expectedResult: Array<string>;
+};
+
+function shouldSupportFiltering(
+    filters: Array<string>,
+    allTaskLines: Array<string>,
+    expectedResult: Array<string>,
+) {
+    // Arrange
+    const query = new Query({ source: filters.join('\n') });
+
+    const tasks = allTaskLines.map(
+        (taskLine) =>
+            Task.fromLine({
+                line: taskLine,
+                sectionStart: 0,
+                sectionIndex: 0,
+                path: '',
+                precedingHeader: '',
+            }) as Task,
+    );
+
+    // Act
+    let filteredTasks = [...tasks];
+    query.filters.forEach((filter) => {
+        filteredTasks = filteredTasks.filter(filter);
+    });
+
+    // Assert
+    const filteredTaskLines = filteredTasks.map(
+        (task) => `- [ ] ${task.toString()}`,
+    );
+    expect(filteredTaskLines).toMatchObject(expectedResult);
+}
+
 describe('Query', () => {
     describe('filtering', () => {
         it('filters paths case insensitive', () => {
@@ -68,34 +106,17 @@ describe('Query', () => {
             // Arrange
             const originalSettings = getSettings();
             updateSettings({ globalFilter: '#task' });
-            const tasks: Task[] = [
-                Task.fromLine({
-                    line: '- [ ] #task this does not include the word; only in the global filter',
-                    sectionStart: 0,
-                    sectionIndex: 0,
-                    path: '',
-                    precedingHeader: '',
-                }),
-                Task.fromLine({
-                    line: '- [ ] #task this does: task',
-                    sectionStart: 0,
-                    sectionIndex: 0,
-                    path: '',
-                    precedingHeader: '',
-                }),
-            ] as Task[];
-            const input = 'description includes task';
-            const query = new Query({ source: input });
+            const filters: Array<string> = ['description includes task'];
+            const tasks: Array<string> = [
+                '- [ ] #task this does not include the word; only in the global filter',
+                '- [ ] #task this does: task',
+            ];
+            const expectedResult: Array<string> = [
+                '- [ ] #task this does: task',
+            ];
 
-            // Act
-            let filteredTasks = [...tasks];
-            query.filters.forEach((filter) => {
-                filteredTasks = filteredTasks.filter(filter);
-            });
-
-            // Assert
-            expect(filteredTasks.length).toEqual(1);
-            expect(filteredTasks[0]).toEqual(tasks[1]);
+            // Act, Assert
+            shouldSupportFiltering(filters, tasks, expectedResult);
 
             // Cleanup
             updateSettings(originalSettings);
@@ -105,46 +126,200 @@ describe('Query', () => {
             // Arrange
             const originalSettings = getSettings();
             updateSettings({ globalFilter: '' });
-            const tasks: Task[] = [
-                Task.fromLine({
-                    line: '- [ ] this does not include the word at all',
-                    sectionStart: 0,
-                    sectionIndex: 0,
-                    path: '',
-                    precedingHeader: '',
-                }),
-                Task.fromLine({
-                    line: '- [ ] #task this includes the word as a tag',
-                    sectionStart: 0,
-                    sectionIndex: 0,
-                    path: '',
-                    precedingHeader: '',
-                }),
-                Task.fromLine({
-                    line: '- [ ] #task this does: task',
-                    sectionStart: 0,
-                    sectionIndex: 0,
-                    path: '',
-                    precedingHeader: '',
-                }),
-            ] as Task[];
-            const input = 'description includes task';
-            const query = new Query({ source: input });
+            const filters: Array<string> = ['description includes task'];
+            const tasks: Array<string> = [
+                '- [ ] this does not include the word at all',
+                '- [ ] #task this includes the word as a tag',
+                '- [ ] #task this does: task',
+            ];
+            const expectedResult: Array<string> = [
+                '- [ ] #task this includes the word as a tag',
+                '- [ ] #task this does: task',
+            ];
 
-            // Act
-            let filteredTasks = [...tasks];
-            query.filters.forEach((filter) => {
-                filteredTasks = filteredTasks.filter(filter);
-            });
-
-            // Assert
-            expect(filteredTasks.length).toEqual(2);
-            expect(filteredTasks[0]).toEqual(tasks[1]);
-            expect(filteredTasks[1]).toEqual(tasks[2]);
+            // Act, Assert
+            shouldSupportFiltering(filters, tasks, expectedResult);
 
             // Cleanup
             updateSettings(originalSettings);
         });
+
+        test.concurrent.each<[string, FilteringCase]>([
+            [
+                'by due date presence',
+                {
+                    filters: ['has due date'],
+                    tasks: [
+                        '- [ ] task 1',
+                        '- [ ] task 2 🛫 2022-04-20 ⏳ 2022-04-20 📅 2022-04-20',
+                        '- [ ] task 3 📅 2022-04-20',
+                    ],
+                    expectedResult: [
+                        '- [ ] task 2 🛫 2022-04-20 ⏳ 2022-04-20 📅 2022-04-20',
+                        '- [ ] task 3 📅 2022-04-20',
+                    ],
+                },
+            ],
+            [
+                'by start date presence',
+                {
+                    filters: ['has start date'],
+                    tasks: [
+                        '- [ ] task 1',
+                        '- [ ] task 2 🛫 2022-04-20 ⏳ 2022-04-20 📅 2022-04-20',
+                        '- [ ] task 3 🛫 2022-04-20',
+                    ],
+                    expectedResult: [
+                        '- [ ] task 2 🛫 2022-04-20 ⏳ 2022-04-20 📅 2022-04-20',
+                        '- [ ] task 3 🛫 2022-04-20',
+                    ],
+                },
+            ],
+            [
+                'by scheduled date presence',
+                {
+                    filters: ['has scheduled date'],
+                    tasks: [
+                        '- [ ] task 1',
+                        '- [ ] task 2 🛫 2022-04-20 ⏳ 2022-04-20 📅 2022-04-20',
+                        '- [ ] task 3 ⏳ 2022-04-20',
+                    ],
+                    expectedResult: [
+                        '- [ ] task 2 🛫 2022-04-20 ⏳ 2022-04-20 📅 2022-04-20',
+                        '- [ ] task 3 ⏳ 2022-04-20',
+                    ],
+                },
+            ],
+            [
+                'by due date absence',
+                {
+                    filters: ['no due date'],
+                    tasks: [
+                        '- [ ] task 1',
+                        '- [ ] task 2 🛫 2022-04-20 ⏳ 2022-04-20 📅 2022-04-20',
+                        '- [ ] task 3 📅 2022-04-20',
+                    ],
+                    expectedResult: ['- [ ] task 1'],
+                },
+            ],
+            [
+                'by start date absence',
+                {
+                    filters: ['no start date'],
+                    tasks: [
+                        '- [ ] task 1',
+                        '- [ ] task 2 🛫 2022-04-20 ⏳ 2022-04-20 📅 2022-04-20',
+                        '- [ ] task 3 🛫 2022-04-20',
+                    ],
+                    expectedResult: ['- [ ] task 1'],
+                },
+            ],
+            [
+                'by scheduled date absence',
+                {
+                    filters: ['no scheduled date'],
+                    tasks: [
+                        '- [ ] task 1',
+                        '- [ ] task 2 🛫 2022-04-20 ⏳ 2022-04-20 📅 2022-04-20',
+                        '- [ ] task 3 ⏳ 2022-04-20',
+                    ],
+                    expectedResult: ['- [ ] task 1'],
+                },
+            ],
+            [
+                'by start date (before)',
+                {
+                    filters: ['starts before 2022-04-20'],
+                    tasks: [
+                        '- [ ] task 1',
+                        '- [ ] task 2 🛫 2022-04-15',
+                        '- [ ] task 3 🛫 2022-04-20',
+                        '- [ ] task 4 🛫 2022-04-25',
+                    ],
+                    expectedResult: [
+                        '- [ ] task 1', // reference: https://schemar.github.io/obsidian-tasks/queries/filters/#start-date
+                        '- [ ] task 2 🛫 2022-04-15',
+                    ],
+                },
+            ],
+            [
+                'by due date (before)',
+                {
+                    filters: ['due before 2022-04-20'],
+                    tasks: [
+                        '- [ ] task 1',
+                        '- [ ] task 2 📅 2022-04-15',
+                        '- [ ] task 3 📅 2022-04-20',
+                        '- [ ] task 4 📅 2022-04-25',
+                    ],
+                    expectedResult: ['- [ ] task 2 📅 2022-04-15'],
+                },
+            ],
+            [
+                'by scheduled date (before)',
+                {
+                    filters: ['scheduled before 2022-04-20'],
+                    tasks: [
+                        '- [ ] task 1',
+                        '- [ ] task 2 ⏳ 2022-04-15',
+                        '- [ ] task 3 ⏳ 2022-04-20',
+                        '- [ ] task 4 ⏳ 2022-04-25',
+                    ],
+                    expectedResult: ['- [ ] task 2 ⏳ 2022-04-15'],
+                },
+            ],
+        ])(
+            'should support filtering %s',
+            (_, { tasks: allTaskLines, filters, expectedResult }) => {
+                shouldSupportFiltering(filters, allTaskLines, expectedResult);
+            },
+        );
+    });
+
+    describe('filtering with "tag" and global task filter', () => {
+        test.concurrent.each<[string, FilteringCase]>([
+            [
+                'by tag presence',
+                {
+                    filters: ['tag includes #home'],
+                    tasks: [
+                        '- [ ] #task something to do #later #work 📅 2021-09-12 ✅ 2021-06-20',
+                        '- [ ] #task something to do #later #home 📅 2021-09-12 ✅ 2021-06-20',
+                        '- [ ] #task get the milk 📅 2021-09-12 ✅ 2021-06-20',
+                    ],
+                    expectedResult: [
+                        '- [ ] #task something to do #later #home 📅 2021-09-12 ✅ 2021-06-20',
+                    ],
+                },
+            ],
+            [
+                'by tag absence',
+                {
+                    filters: ['tag does not include #home'],
+                    tasks: [
+                        '- [ ] #task something to do #later #work 📅 2021-09-12 ✅ 2021-06-20',
+                        '- [ ] #task something to do #later #home 📅 2021-09-12 ✅ 2021-06-20',
+                        '- [ ] #task get the milk 📅 2021-09-12 ✅ 2021-06-20',
+                    ],
+                    expectedResult: [
+                        '- [ ] #task something to do #later #work 📅 2021-09-12 ✅ 2021-06-20',
+                        '- [ ] #task get the milk 📅 2021-09-12 ✅ 2021-06-20',
+                    ],
+                },
+            ],
+        ])(
+            'should support filtering of tags %s',
+            (_, { tasks: allTaskLines, filters, expectedResult }) => {
+                // Arrange
+                const originalSettings = getSettings();
+                updateSettings({ globalFilter: '#task' });
+
+                shouldSupportFiltering(filters, allTaskLines, expectedResult);
+
+                // Cleanup
+                updateSettings(originalSettings);
+            },
+        );
     });
 
     it('filters based off a single tag', () => {
@@ -361,36 +536,23 @@ describe('Query', () => {
                 taskShouldMatch,
             }) => {
                 // Arrange
-                const query = new Query({ source: happensFilter });
-
                 const line = [
                     '- [ ] this is a task',
+                    !!start && `🛫 ${start}`,
                     !!scheduled && `⏳ ${scheduled}`,
                     !!due && `📅 ${due}`,
-                    !!start && `🛫 ${start}`,
                     !!done && `✅ ${done}`,
                 ]
                     .filter(Boolean)
                     .join(' ');
 
-                const task = Task.fromLine({
-                    line,
-                    path: '',
-                    sectionStart: 0,
-                    sectionIndex: 0,
-                    precedingHeader: '',
-                }) as Task;
-                const tasks = [task];
+                const expectedResult: Array<string> = [];
+                if (taskShouldMatch) {
+                    expectedResult.push(line);
+                }
 
-                // Act
-                let filteredTasks = [...tasks];
-                query.filters.forEach((filter) => {
-                    filteredTasks = filteredTasks.filter(filter);
-                });
-
-                // Assert
-                const taskMatched = filteredTasks.length == 1;
-                expect(taskMatched).toEqual(taskShouldMatch);
+                // Act, Assert
+                shouldSupportFiltering([happensFilter], [line], expectedResult);
             },
         );
     });
