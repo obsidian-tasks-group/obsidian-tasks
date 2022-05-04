@@ -30,12 +30,15 @@ export class Query {
     private readonly happensRegexp = /^happens (before|after|on)? ?(.*)/;
 
     private readonly noStartString = 'no start date';
+    private readonly hasStartString = 'has start date';
     private readonly startRegexp = /^starts (before|after|on)? ?(.*)/;
 
     private readonly noScheduledString = 'no scheduled date';
+    private readonly hasScheduledString = 'has scheduled date';
     private readonly scheduledRegexp = /^scheduled (before|after|on)? ?(.*)/;
 
     private readonly noDueString = 'no due date';
+    private readonly hasDueString = 'has due date';
     private readonly dueRegexp = /^due (before|after|on)? ?(.*)/;
 
     private readonly doneString = 'done';
@@ -103,6 +106,17 @@ export class Query {
                         break;
                     case line === this.noDueString:
                         this._filters.push((task) => task.dueDate === null);
+                        break;
+                    case line === this.hasStartString:
+                        this._filters.push((task) => task.startDate !== null);
+                        break;
+                    case line === this.hasScheduledString:
+                        this._filters.push(
+                            (task) => task.scheduledDate !== null,
+                        );
+                        break;
+                    case line === this.hasDueString:
+                        this._filters.push((task) => task.dueDate !== null);
                         break;
                     case this.shortModeRegexp.test(line):
                         this._layoutOptions.shortMode = true;
