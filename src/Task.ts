@@ -68,6 +68,7 @@ export class Task {
     public static readonly doneDateRegex = /✅ ?(\d{4}-\d{2}-\d{2})$/u;
     public static readonly recurrenceRegex = /🔁 ?([a-zA-Z0-9, !]+)$/iu;
 
+    // Regex to match all hash tags, basically hash followed by anything but the characters in the negation.
     public static readonly hashTags = /#[^ !@#$%^&*(),.?":{}|<>]*/g;
 
     private _urgency: number | null = null;
@@ -289,9 +290,10 @@ export class Task {
         // Tags are found in the string and pulled out but not removed,
         // so when returning the entire task it will match what the user
         // entered.
+        // The global filter will be removed from the collection.
         const hashTagMatch = description.match(this.hashTags);
         if (hashTagMatch !== null) {
-            tags = hashTagMatch;
+            tags = hashTagMatch.filter((tag) => tag !== globalFilter);
         }
 
         const task = new Task({
