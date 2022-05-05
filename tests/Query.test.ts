@@ -281,7 +281,7 @@ describe('Query', () => {
             [
                 'by tag presence',
                 {
-                    filters: ['tag includes #home'],
+                    filters: ['tags include #home'],
                     tasks: [
                         '- [ ] #task something to do #later #work 📅 2021-09-12 ✅ 2021-06-20',
                         '- [ ] #task something to do #later #home 📅 2021-09-12 ✅ 2021-06-20',
@@ -295,7 +295,95 @@ describe('Query', () => {
             [
                 'by tag absence',
                 {
-                    filters: ['tag does not include #home'],
+                    filters: ['tags do not include #home'],
+                    tasks: [
+                        '- [ ] #task something to do #later #work 📅 2021-09-12 ✅ 2021-06-20',
+                        '- [ ] #task something to do #later #home 📅 2021-09-12 ✅ 2021-06-20',
+                        '- [ ] #task get the milk 📅 2021-09-12 ✅ 2021-06-20',
+                    ],
+                    expectedResult: [
+                        '- [ ] #task something to do #later #work 📅 2021-09-12 ✅ 2021-06-20',
+                        '- [ ] #task get the milk 📅 2021-09-12 ✅ 2021-06-20',
+                    ],
+                },
+            ],
+            [
+                'by tag presence without hash',
+                {
+                    filters: ['tags include home'],
+                    tasks: [
+                        '- [ ] #task something to do #later #work 📅 2021-09-12 ✅ 2021-06-20',
+                        '- [ ] #task something to do #later #home 📅 2021-09-12 ✅ 2021-06-20',
+                        '- [ ] #task get the milk 📅 2021-09-12 ✅ 2021-06-20',
+                    ],
+                    expectedResult: [
+                        '- [ ] #task something to do #later #home 📅 2021-09-12 ✅ 2021-06-20',
+                    ],
+                },
+            ],
+            [
+                'by tag absence without hash',
+                {
+                    filters: ['tags do not include home'],
+                    tasks: [
+                        '- [ ] #task something to do #later #work 📅 2021-09-12 ✅ 2021-06-20',
+                        '- [ ] #task something to do #later #home 📅 2021-09-12 ✅ 2021-06-20',
+                        '- [ ] #task get the milk 📅 2021-09-12 ✅ 2021-06-20',
+                    ],
+                    expectedResult: [
+                        '- [ ] #task something to do #later #work 📅 2021-09-12 ✅ 2021-06-20',
+                        '- [ ] #task get the milk 📅 2021-09-12 ✅ 2021-06-20',
+                    ],
+                },
+            ],
+
+            [
+                'by tag presence case insensitive',
+                {
+                    filters: ['tags include #HoMe'],
+                    tasks: [
+                        '- [ ] #task something to do #later #work 📅 2021-09-12 ✅ 2021-06-20',
+                        '- [ ] #task something to do #later #home 📅 2021-09-12 ✅ 2021-06-20',
+                        '- [ ] #task get the milk 📅 2021-09-12 ✅ 2021-06-20',
+                    ],
+                    expectedResult: [
+                        '- [ ] #task something to do #later #home 📅 2021-09-12 ✅ 2021-06-20',
+                    ],
+                },
+            ],
+            [
+                'by tag absence case insensitive',
+                {
+                    filters: ['tags do not include #HoMe'],
+                    tasks: [
+                        '- [ ] #task something to do #later #work 📅 2021-09-12 ✅ 2021-06-20',
+                        '- [ ] #task something to do #later #home 📅 2021-09-12 ✅ 2021-06-20',
+                        '- [ ] #task get the milk 📅 2021-09-12 ✅ 2021-06-20',
+                    ],
+                    expectedResult: [
+                        '- [ ] #task something to do #later #work 📅 2021-09-12 ✅ 2021-06-20',
+                        '- [ ] #task get the milk 📅 2021-09-12 ✅ 2021-06-20',
+                    ],
+                },
+            ],
+            [
+                'by tag presence without hash case insensitive',
+                {
+                    filters: ['tags include HoMe'],
+                    tasks: [
+                        '- [ ] #task something to do #later #work 📅 2021-09-12 ✅ 2021-06-20',
+                        '- [ ] #task something to do #later #home 📅 2021-09-12 ✅ 2021-06-20',
+                        '- [ ] #task get the milk 📅 2021-09-12 ✅ 2021-06-20',
+                    ],
+                    expectedResult: [
+                        '- [ ] #task something to do #later #home 📅 2021-09-12 ✅ 2021-06-20',
+                    ],
+                },
+            ],
+            [
+                'by tag absence without hash case insensitive',
+                {
+                    filters: ['tags do not include HoMe'],
                     tasks: [
                         '- [ ] #task something to do #later #work 📅 2021-09-12 ✅ 2021-06-20',
                         '- [ ] #task something to do #later #home 📅 2021-09-12 ✅ 2021-06-20',
@@ -349,7 +437,7 @@ describe('Query', () => {
                 precedingHeader: '',
             }),
         ] as Task[];
-        const input = 'tag includes #home';
+        const input = 'tags include #home';
         const query = new Query({ source: input });
 
         // Act
@@ -393,7 +481,7 @@ describe('Query', () => {
                 precedingHeader: '',
             }),
         ] as Task[];
-        const input = 'tag does not include #home';
+        const input = 'tags do not include #home';
         const query = new Query({ source: input });
 
         // Act
