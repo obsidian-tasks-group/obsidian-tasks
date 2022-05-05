@@ -279,7 +279,7 @@ export class Query {
     private parseHappensFilter({ line }: { line: string }): void {
         const happensMatch = line.match(this.happensRegexp);
         if (happensMatch !== null) {
-            const filterDate = this.parseDate(happensMatch[2]);
+            const filterDate = Query.parseDate(happensMatch[2]);
             if (!filterDate.isValid()) {
                 this._error = 'do not understand happens date';
                 return;
@@ -321,7 +321,7 @@ export class Query {
     private parseStartFilter({ line }: { line: string }): void {
         const startMatch = line.match(this.startRegexp);
         if (startMatch !== null) {
-            const filterDate = this.parseDate(startMatch[2]);
+            const filterDate = Query.parseDate(startMatch[2]);
             if (!filterDate.isValid()) {
                 this._error = 'do not understand start date';
                 return;
@@ -348,7 +348,7 @@ export class Query {
     private parseScheduledFilter({ line }: { line: string }): void {
         const scheduledMatch = line.match(this.scheduledRegexp);
         if (scheduledMatch !== null) {
-            const filterDate = this.parseDate(scheduledMatch[2]);
+            const filterDate = Query.parseDate(scheduledMatch[2]);
             if (!filterDate.isValid()) {
                 this._error = 'do not understand scheduled date';
             }
@@ -380,7 +380,7 @@ export class Query {
     private parseDueFilter({ line }: { line: string }): void {
         const dueMatch = line.match(this.dueRegexp);
         if (dueMatch !== null) {
-            const filterDate = this.parseDate(dueMatch[2]);
+            const filterDate = Query.parseDate(dueMatch[2]);
             if (!filterDate.isValid()) {
                 this._error = 'do not understand due date';
                 return;
@@ -407,7 +407,7 @@ export class Query {
     private parseDoneFilter({ line }: { line: string }): void {
         const doneMatch = line.match(this.doneRegexp);
         if (doneMatch !== null) {
-            const filterDate = this.parseDate(doneMatch[2]);
+            const filterDate = Query.parseDate(doneMatch[2]);
             if (!filterDate.isValid()) {
                 this._error = 'do not understand done date';
                 return;
@@ -435,12 +435,15 @@ export class Query {
             const filterMethod = pathMatch[1];
             if (filterMethod === 'includes') {
                 this._filters.push((task: Task) =>
-                    this.stringIncludesCaseInsensitive(task.path, pathMatch[2]),
+                    Query.stringIncludesCaseInsensitive(
+                        task.path,
+                        pathMatch[2],
+                    ),
                 );
             } else if (pathMatch[1] === 'does not include') {
                 this._filters.push(
                     (task: Task) =>
-                        !this.stringIncludesCaseInsensitive(
+                        !Query.stringIncludesCaseInsensitive(
                             task.path,
                             pathMatch[2],
                         ),
@@ -497,7 +500,7 @@ export class Query {
 
             if (filterMethod === 'includes') {
                 this._filters.push((task: Task) =>
-                    this.stringIncludesCaseInsensitive(
+                    Query.stringIncludesCaseInsensitive(
                         // Remove global filter from description match if present.
                         // This is necessary to match only on the content of the task, not
                         // the global filter.
@@ -508,7 +511,7 @@ export class Query {
             } else if (descriptionMatch[1] === 'does not include') {
                 this._filters.push(
                     (task: Task) =>
-                        !this.stringIncludesCaseInsensitive(
+                        !Query.stringIncludesCaseInsensitive(
                             // Remove global filter from description match if present.
                             // This is necessary to match only on the content of the task, not
                             // the global filter.
@@ -532,7 +535,7 @@ export class Query {
                 this._filters.push(
                     (task: Task) =>
                         task.precedingHeader !== null &&
-                        this.stringIncludesCaseInsensitive(
+                        Query.stringIncludesCaseInsensitive(
                             task.precedingHeader,
                             headingMatch[2],
                         ),
@@ -541,7 +544,7 @@ export class Query {
                 this._filters.push(
                     (task: Task) =>
                         task.precedingHeader === null ||
-                        !this.stringIncludesCaseInsensitive(
+                        !Query.stringIncludesCaseInsensitive(
                             task.precedingHeader,
                             headingMatch[2],
                         ),
@@ -558,8 +561,7 @@ export class Query {
         const limitMatch = line.match(this.limitRegexp);
         if (limitMatch !== null) {
             // limitMatch[2] is per regex always digits and therefore parsable.
-            const limit = Number.parseInt(limitMatch[2], 10);
-            this._limit = limit;
+            this._limit = Number.parseInt(limitMatch[2], 10);
         } else {
             this._error = 'do not understand query limit';
         }
@@ -577,12 +579,12 @@ export class Query {
         }
     }
 
-    private parseDate(input: string): moment.Moment {
+    private static parseDate(input: string): moment.Moment {
         // Using start of day to correctly match on comparison with other dates (like equality).
         return window.moment(chrono.parseDate(input)).startOf('day');
     }
 
-    private stringIncludesCaseInsensitive(
+    private static stringIncludesCaseInsensitive(
         haystack: string,
         needle: string,
     ): boolean {
