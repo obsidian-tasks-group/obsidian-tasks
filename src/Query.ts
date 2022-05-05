@@ -49,7 +49,7 @@ export class Query {
     private readonly descriptionRegexp =
         /^description (includes|does not include) (.*)/;
 
-    private readonly tagRegexp = /^tag (includes|does not include) (.*)/;
+    private readonly tagRegexp = /^tags (include|do not include) (.*)/;
 
     private readonly sortByRegexp =
         /^sort by (urgency|status|priority|start|scheduled|due|done|path|description|tag)( reverse)?/;
@@ -472,17 +472,19 @@ export class Query {
             // Search is done sans the hash. If it is provided then strip it off.
             const search = tagMatch[2].replace(/^#/, '');
 
-            if (filterMethod === 'includes') {
+            if (filterMethod === 'include') {
                 this._filters.push(
                     (task: Task) =>
                         task.tags.find((tag) =>
                             tag.toLowerCase().includes(search.toLowerCase()),
                         ) !== undefined,
                 );
-            } else if (tagMatch[1] === 'does not include') {
+            } else if (tagMatch[1] === 'do not include') {
                 this._filters.push(
                     (task: Task) =>
-                        task.tags.find((el) => el === tagMatch[2]) == undefined,
+                        task.tags.find((tag) =>
+                            tag.toLowerCase().includes(search.toLowerCase()),
+                        ) == undefined,
                 );
             } else {
                 this._error = 'do not understand query filter (tag)';
