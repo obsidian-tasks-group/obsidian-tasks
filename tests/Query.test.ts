@@ -424,6 +424,18 @@ describe('Query', () => {
                     ],
                 },
             ],
+            [
+                'by tag presence when it is the global tag',
+                {
+                    filters: ['tags include task'],
+                    tasks: [
+                        '- [ ] #task something to do #later #work #TopLevelItem/sub 📅 2021-09-12 ✅ 2021-06-20',
+                        '- [ ] #task something to do #later #home 📅 2021-09-12 ✅ 2021-06-20',
+                        '- [ ] #task get the milk 📅 2021-09-12 ✅ 2021-06-20',
+                    ],
+                    expectedResult: [],
+                },
+            ],
         ])(
             'should support filtering of tags %s',
             (_, { tasks: allTaskLines, filters, expectedResult }) => {
