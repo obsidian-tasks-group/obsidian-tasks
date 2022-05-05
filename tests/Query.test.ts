@@ -395,6 +395,35 @@ describe('Query', () => {
                     ],
                 },
             ],
+            [
+                'by tag presence without hash case insensitive and substring',
+                {
+                    filters: ['tags include TopLevelItem'],
+                    tasks: [
+                        '- [ ] #task something to do #later #work #TopLevelItem/sub 📅 2021-09-12 ✅ 2021-06-20',
+                        '- [ ] #task something to do #later #home 📅 2021-09-12 ✅ 2021-06-20',
+                        '- [ ] #task get the milk 📅 2021-09-12 ✅ 2021-06-20',
+                    ],
+                    expectedResult: [
+                        '- [ ] #task something to do #later #work #TopLevelItem/sub 📅 2021-09-12 ✅ 2021-06-20',
+                    ],
+                },
+            ],
+            [
+                'by tag absence without hash case insensitive and substring',
+                {
+                    filters: ['tags do not include TopLevelItem'],
+                    tasks: [
+                        '- [ ] #task something to do #later #work #TopLevelItem/sub 📅 2021-09-12 ✅ 2021-06-20',
+                        '- [ ] #task something to do #later #home 📅 2021-09-12 ✅ 2021-06-20',
+                        '- [ ] #task get the milk 📅 2021-09-12 ✅ 2021-06-20',
+                    ],
+                    expectedResult: [
+                        '- [ ] #task something to do #later #home 📅 2021-09-12 ✅ 2021-06-20',
+                        '- [ ] #task get the milk 📅 2021-09-12 ✅ 2021-06-20',
+                    ],
+                },
+            ],
         ])(
             'should support filtering of tags %s',
             (_, { tasks: allTaskLines, filters, expectedResult }) => {
