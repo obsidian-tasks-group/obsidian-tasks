@@ -453,15 +453,28 @@ export class Query {
         }
     }
 
+    /**
+     * When a tag based filter is used this is the process to apply it.
+     * - Tags can be searched for with and without the hash tag at the start.
+     *
+     * @private
+     * @param {{ line: string }} { line }
+     * @memberof Query
+     */
     private parseTagFilter({ line }: { line: string }): void {
         const tagMatch = line.match(this.tagRegexp);
         if (tagMatch !== null) {
             const filterMethod = tagMatch[1];
 
+            // Search is done sans the hash. If it is provided then strip it off.
+            const search = tagMatch[2].replace(/^#/, '');
+
             if (filterMethod === 'includes') {
                 this._filters.push(
                     (task: Task) =>
-                        task.tags.find((el) => el === tagMatch[2]) != undefined,
+                        task.tags.find((tag) =>
+                            tag.toLowerCase().includes(search.toLowerCase()),
+                        ) !== undefined,
                 );
             } else if (tagMatch[1] === 'does not include') {
                 this._filters.push(
