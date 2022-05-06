@@ -1,4 +1,4 @@
-FROM ruby:3.0
+FROM ruby:2.7
 WORKDIR /code
 EXPOSE 4000
 COPY . .
