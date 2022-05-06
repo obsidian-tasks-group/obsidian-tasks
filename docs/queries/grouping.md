@@ -45,11 +45,27 @@ Task properties:
 You can add multiple `group by` query options, each on an extra line.
 The first group has the highest priority.
 
-Each subsequent `group` will best a new heading-level within the existing grouping:
+Each subsequent `group by` will generate a new heading-level within the existing grouping:
 
 - First `group by` is displayed as `h4` headings
 - Second `group by` is displayed as `h5` headings
 - Third and subsequent `group by` are displayed as `h6` headings
+
+---
+
+## Screenshots
+
+**TODO Change screenshot URLs to refer to main repo and branch**
+
+Here is an example Tasks result, without any `group by` commands:
+
+![Tasks Ungrouped](https://github.com/claremacrae/obsidian-tasks/raw/add-group-by-feature/resources/screenshots/tasks_ungrouped.png)
+Tasks not grouped.
+
+And here is what this might look like, when grouped by folder, filename and heading:
+
+![Tasks Ungrouped](https://github.com/claremacrae/obsidian-tasks/raw/add-group-by-feature/resources/screenshots/tasks_grouped.png)
+Tasks grouped.
 
 ---
 
