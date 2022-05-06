@@ -79,6 +79,11 @@ Tasks grouped.
 ## Notes
 
 - Headings are displayed in case-sensitive alphabetical order, not the original order
+- The order of operations ensures that grouping does not modify which tasks are displayed:
+  - all the filter commands are run
+  - then any sorting instructions are run
+  - then any `limit` instructions are run
+  - then finally any grouping instructions are run
 
 ---
 
