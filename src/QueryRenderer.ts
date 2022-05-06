@@ -9,6 +9,7 @@ import {
 
 import { State } from './Cache';
 import { replaceTaskWithTasks } from './File';
+import type { GroupHeading } from './Group';
 import { Query } from './Query';
 import { TaskModal } from './TaskModal';
 import type { Events } from './Events';
@@ -120,13 +121,18 @@ class QueryRenderChild extends MarkdownRenderChild {
     private async render({ tasks, state }: { tasks: Task[]; state: State }) {
         const content = this.containerEl.createEl('div');
         if (state === State.Warm && this.query.error === undefined) {
-            const tasksSortedLimited = this.query.applyQueryToTasks(tasks);
-            const { taskList, tasksCount } = await this.createTasksList({
-                tasks: tasksSortedLimited,
-                content: content,
-            });
-            content.appendChild(taskList);
-            this.addTaskCount(content, tasksCount);
+            const tasksSortedLimitedGrouped =
+                this.query.applyQueryToTasks(tasks);
+            for (const group of tasksSortedLimitedGrouped.groups) {
+                QueryRenderChild.addGroupHeadings(content, group.groupHeadings);
+                const { taskList } = await this.createTasksList({
+                    tasks: group.tasks,
+                    content: content,
+                });
+                content.appendChild(taskList);
+            }
+            const totalTasksCount = tasksSortedLimitedGrouped.totalTasksCount();
+            this.addTaskCount(content, totalTasksCount);
         } else if (this.query.error !== undefined) {
             content.setText(`Tasks query: ${this.query.error}`);
         } else {
@@ -181,7 +187,6 @@ class QueryRenderChild extends MarkdownRenderChild {
 
         return { taskList, tasksCount };
     }
-
     private addEditButton(postInfo: HTMLSpanElement, task: Task) {
         const editTaskPencil = postInfo.createEl('a', {
             cls: 'tasks-edit',
@@ -204,6 +209,39 @@ class QueryRenderChild extends MarkdownRenderChild {
             });
             taskModal.open();
         });
+    }
+
+    private static addGroupHeadings(
+        content: HTMLDivElement,
+        groupHeadings: GroupHeading[],
+    ) {
+        for (const heading of groupHeadings) {
+            QueryRenderChild.addGroupHeading(content, heading);
+        }
+    }
+
+    private static addGroupHeading(
+        content: HTMLDivElement,
+        group: GroupHeading,
+    ) {
+        const groupName = group.title;
+        const level = group.level;
+        let header: any;
+        // TODO Remove repetition
+        if (level == 0) {
+            header = content.createEl('h4', {
+                cls: 'tasks-group-heading',
+            });
+        } else if (level == 1) {
+            header = content.createEl('h5', {
+                cls: 'tasks-group-heading',
+            });
+        } else {
+            header = content.createEl('h6', {
+                cls: 'tasks-group-heading',
+            });
+        }
+        header.appendText(groupName);
     }
 
     private addBacklinks(

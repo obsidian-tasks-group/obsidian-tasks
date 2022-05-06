@@ -1,4 +1,5 @@
 import * as chrono from 'chrono-node';
+import { Group, TaskGroups } from './Group';
 
 import { getSettings } from './Settings';
 import { LayoutOptions } from './LayoutOptions';
@@ -18,12 +19,22 @@ export type SortingProperty =
     | 'tag';
 type Sorting = { property: SortingProperty; reverse: boolean };
 
+export type GroupingProperty =
+    | 'filename'
+    | 'folder'
+    | 'heading'
+    | 'linktext'
+    | 'path'
+    | 'status';
+export type Grouping = { property: GroupingProperty };
+
 export class Query {
     private _limit: number | undefined = undefined;
     private _layoutOptions: LayoutOptions = new LayoutOptions();
     private _filters: ((task: Task) => boolean)[] = [];
     private _error: string | undefined = undefined;
     private _sorting: Sorting[] = [];
+    private _grouping: Grouping[] = [];
 
     private readonly priorityRegexp =
         /^priority (is )?(above|below)? ?(low|none|medium|high)/;
@@ -54,6 +65,9 @@ export class Query {
 
     private readonly sortByRegexp =
         /^sort by (urgency|status|priority|start|scheduled|due|done|path|description|tag)( reverse)?/;
+
+    private readonly groupByRegexp =
+        /^group by (context|done|due|filename|folder|happens|heading|linktext|path|priority|referenceDateField|scheduled|start|status|urgency)/;
 
     private readonly headingRegexp =
         /^heading (includes|does not include) (.*)/;
@@ -158,6 +172,9 @@ export class Query {
                     case this.sortByRegexp.test(line):
                         this.parseSortBy({ line });
                         break;
+                    case this.groupByRegexp.test(line):
+                        this.parseGroupBy({ line });
+                        break;
                     case this.hideOptionsRegexp.test(line):
                         this.parseHideOptions({ line });
                         break;
@@ -165,7 +182,7 @@ export class Query {
                         // Comment lines are ignored
                         break;
                     default:
-                        this._error = 'do not understand query';
+                        this._error = `do not understand query: ${line}`;
                 }
             });
     }
@@ -186,16 +203,21 @@ export class Query {
         return this._sorting;
     }
 
+    public get grouping() {
+        return this._grouping;
+    }
+
     public get error(): string | undefined {
         return this._error;
     }
 
-    public applyQueryToTasks(tasks: Task[]): Task[] {
+    public applyQueryToTasks(tasks: Task[]): TaskGroups {
         this.filters.forEach((filter) => {
             tasks = tasks.filter(filter);
         });
 
-        return Sort.by(this, tasks).slice(0, this.limit);
+        const tasksSortedLimited = Sort.by(this, tasks).slice(0, this.limit);
+        return Group.by(this.grouping, tasksSortedLimited);
     }
 
     private parseHideOptions({ line }: { line: string }): void {
@@ -572,6 +594,17 @@ export class Query {
             });
         } else {
             this._error = 'do not understand query sorting';
+        }
+    }
+
+    private parseGroupBy({ line }: { line: string }): void {
+        const fieldMatch = line.match(this.groupByRegexp);
+        if (fieldMatch !== null) {
+            this._grouping.push({
+                property: fieldMatch[1] as GroupingProperty,
+            });
+        } else {
+            this._error = 'do not understand query grouping';
         }
     }
 
