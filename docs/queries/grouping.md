@@ -21,26 +21,32 @@ parent: Queries
 
 ## Basics
 
-By default Tasks displays tasks in a single list.
+By default, Tasks displays tasks in a single list.
 
-To divide the matching tasks up with headings, you can use the `group by` line to the query.
+To divide the matching tasks up with headings, you can add `group by` lines to the query.
+
+### Available grouping properties
 
 You can group by the following properties:
 
 File locations:
 
 1. `path` (the path to the file that contains the task, that is, the folder and the filename)
-2. `folder` (the folder to the file that contains the task, which will be `/` for files in root of the vault)
-3. `filename` (the filename of the file that contains the task, without the `.md` extension)
+1. `folder` (the folder to the file that contains the task, which will be `/` for files in root of the vault)
+1. `filename` (the filename of the file that contains the task, without the `.md` extension)
 
 File contents:
 
 1. `linktext` (the text that would be shown in the task's backlink, but with no link added)
-2. `heading` (the heading preceding the task, or `(No heading)` if there are no headings in the file)
+1. `heading` (the heading preceding the task, or `(No heading)` if there are no headings in the file)
 
 Task properties:
 
 1. `status` (Done or Todo, which is capitalized for visibility in the headings)
+    * Note that the Done group is displayed before the Todo group,
+      which differs from the Sorting ordering of this property.
+
+### Multiple groups
 
 You can add multiple `group by` query options, each on an extra line.
 This will create nested groups.
