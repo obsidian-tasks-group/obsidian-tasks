@@ -30,19 +30,20 @@ You can group by the following properties:
 File locations:
 
 1. `path` (the path to the file that contains the task, that is, the folder and the filename)
-2. `folder` (the folder to the file that contains the task)
-3. `filename` (the filename of the file that contains the task)
+2. `folder` (the folder to the file that contains the task, which will be `/` for files in root of the vault)
+3. `filename` (the filename of the file that contains the task, without the `.md` extension)
 
 File contents:
 
-1. `linktext`
-2. `heading`
+1. `linktext` (the text that would be shown in the task's backlink, but with no link added)
+2. `heading` (the heading preceding the task, or `(No heading)` if there are no headings in the file)
 
 Task properties:
 
-1. `status` (Done or Todo)
+1. `status` (Done or Todo, which is capitalized for visibility in the headings)
 
 You can add multiple `group by` query options, each on an extra line.
+This will create nested groups.
 The first group has the highest priority.
 
 Each subsequent `group by` will generate a new heading-level within the existing grouping:
@@ -66,6 +67,12 @@ And here is what this might look like, when grouped by folder, filename and head
 
 ![Tasks Ungrouped](https://github.com/claremacrae/obsidian-tasks/raw/add-group-by-feature/resources/screenshots/tasks_grouped.png)
 Tasks grouped.
+
+---
+
+## Notes
+
+- Headings are displayed in case-sensitive alphabetical order, not the original order
 
 ---
 
