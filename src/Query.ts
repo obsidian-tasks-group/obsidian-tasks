@@ -2,6 +2,7 @@ import * as chrono from 'chrono-node';
 
 import { getSettings } from './Settings';
 import { LayoutOptions } from './LayoutOptions';
+import { Sort } from './Sort';
 import { Priority, Status, Task } from './Task';
 
 export type SortingProperty =
@@ -187,6 +188,14 @@ export class Query {
 
     public get error(): string | undefined {
         return this._error;
+    }
+
+    public applyQueryToTasks(tasks: Task[]): Task[] {
+        this.filters.forEach((filter) => {
+            tasks = tasks.filter(filter);
+        });
+
+        return Sort.by(this, tasks).slice(0, this.limit);
     }
 
     private parseHideOptions({ line }: { line: string }): void {

@@ -10,7 +10,6 @@ import {
 import { State } from './Cache';
 import { replaceTaskWithTasks } from './File';
 import { Query } from './Query';
-import { Sort } from './Sort';
 import { TaskModal } from './TaskModal';
 import type { Events } from './Events';
 import type { Task } from './Task';
@@ -121,7 +120,7 @@ class QueryRenderChild extends MarkdownRenderChild {
     private async render({ tasks, state }: { tasks: Task[]; state: State }) {
         const content = this.containerEl.createEl('div');
         if (state === State.Warm && this.query.error === undefined) {
-            const tasksSortedLimited = this.applyQueryToTasks(tasks);
+            const tasksSortedLimited = this.query.applyQueryToTasks(tasks);
             const { taskList, tasksCount } = await this.createTasksList({
                 tasks: tasksSortedLimited,
                 content: content,
@@ -181,14 +180,6 @@ class QueryRenderChild extends MarkdownRenderChild {
         }
 
         return { taskList, tasksCount };
-    }
-
-    private applyQueryToTasks(tasks: Task[]) {
-        this.query.filters.forEach((filter) => {
-            tasks = tasks.filter(filter);
-        });
-
-        return Sort.by(this.query, tasks).slice(0, this.query.limit);
     }
 
     private addEditButton(postInfo: HTMLSpanElement, task: Task) {
