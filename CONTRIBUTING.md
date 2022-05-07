@@ -12,6 +12,9 @@ In the simplest case, you can update the existing markdown file and create a pul
 We use [GitHub pages](https://pages.github.com/) for our documentation.
 You can read more about it at their [official documentation](https://docs.github.com/en/pages).
 
+To generate the documentation site on your machine,
+see [docs/README.md](docs/README.md).
+
 For documentation changes to show up at <https://schemar.github.io/obsidian-tasks/> , they must be in the `gh-pages` branch.
 If you want to see your changes available immediately and not only after the next release, you should make your changes on the `gh-pages` branch.
 When you create a PR, it should merge into the `gh-pages` branch as well.
