@@ -689,17 +689,43 @@ describe('Query', () => {
     describe('sorting instructions', () => {
         const cases: {
             input: string;
-            output: { property: string; reverse: boolean }[];
+            output: {
+                property: string;
+                reverse: boolean;
+                propertyInstance: number;
+            }[];
         }[] = [
             {
                 input: 'sort by status',
-                output: [{ property: 'status', reverse: false }],
+                output: [
+                    {
+                        property: 'status',
+                        reverse: false,
+                        propertyInstance: 0,
+                    },
+                ],
             },
             {
                 input: 'sort by status\nsort by due',
                 output: [
-                    { property: 'status', reverse: false },
-                    { property: 'due', reverse: false },
+                    {
+                        property: 'status',
+                        reverse: false,
+                        propertyInstance: 0,
+                    },
+                    { property: 'due', reverse: false, propertyInstance: 0 },
+                ],
+            },
+            {
+                input: 'sort by tag',
+                output: [
+                    { property: 'tag', reverse: false, propertyInstance: 0 },
+                ],
+            },
+            {
+                input: 'sort by tag 2',
+                output: [
+                    { property: 'tag', reverse: false, propertyInstance: 2 },
                 ],
             },
         ];

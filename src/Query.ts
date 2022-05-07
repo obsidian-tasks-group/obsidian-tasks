@@ -15,7 +15,11 @@ export type SortingProperty =
     | 'path'
     | 'description'
     | 'tag';
-type Sorting = { property: SortingProperty; reverse: boolean };
+type Sorting = {
+    property: SortingProperty;
+    reverse: boolean;
+    propertyInstance: number;
+};
 
 export class Query {
     private _limit: number | undefined = undefined;
@@ -51,8 +55,10 @@ export class Query {
 
     private readonly tagRegexp = /^tags (include|do not include) (.*)/;
 
+    // If a tag is specified the user can also add a number to specify
+    // which one to sort by if there is more than one.
     private readonly sortByRegexp =
-        /^sort by (urgency|status|priority|start|scheduled|due|done|path|description|tag)( reverse)?/;
+        /^sort by (urgency|status|priority|start|scheduled|due|done|path|description|tag)( reverse)?[\s]*(\d+)?/;
 
     private readonly headingRegexp =
         /^heading (includes|does not include) (.*)/;
@@ -575,6 +581,7 @@ export class Query {
             this._sorting.push({
                 property: fieldMatch[1] as SortingProperty,
                 reverse: !!fieldMatch[2],
+                propertyInstance: isNaN(+fieldMatch[3]) ? 0 : +fieldMatch[3],
             });
         } else {
             this._error = 'do not understand query sorting';
