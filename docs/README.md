@@ -2,11 +2,11 @@
 
 ## Overview
 
-- For background, including which branch to work on, see ["Updating documentation" in CONTRIBUTING](../CONTRIBUTING.md#updating-documentation)
-- The documentation is written in Markdown
-- It is converted to HTML via Ruby and Jekyll
-  - Important: Ruby 2 is required, for example, Ruby 2.7
-- The published documentation is at <https://schemar.github.io/obsidian-tasks/>
+-   For background, including which branch to work on, see ["Updating documentation" in CONTRIBUTING](../CONTRIBUTING.md#updating-documentation)
+-   The documentation is written in Markdown
+-   It is converted to HTML via Ruby and Jekyll
+    -   Important: Ruby 2 is required, for example, Ruby 2.7
+-   The published documentation is at <https://schemar.github.io/obsidian-tasks/>
 
 ## Test documentation locally with Jekyll
 
@@ -50,9 +50,8 @@ If you can run docker, this is the easiest way.
 Now every time you want to see the docs locally, run:
 
 ```bash
-cd obsidian-tasks/
-docker-compose up
-#  (not docker compose up)
+cd obsidian-tasks/docs
+./docker_start
 ```
 
 You will eventually see output ending something like this:
@@ -76,14 +75,14 @@ This runs a web server inside Docker that you can view on your own machine.
 Look for the line containing `Server address:` and open that URL in your local browser.
 It will be something like <http://0.0.0.0:4000/obsidian-tasks/>.
 
-You can stop the service by running `docker-compose down` or by hitting Ctrl+C.
+You can stop the service by hitting `Ctrl+c`.
 
 ## Option 2: Running without Docker
 
 ### Prerequisites for using installed Jekyll
 
 1. Install ruby 2.x.
-    * It is important that you use a version 2 of ruby, not version 3, for example 2.7.0.
+    - It is important that you use a version 2 of ruby, not version 3, for example 2.7.0.
 1. Run:
     ```bash
     cd obsidian-tasks/
