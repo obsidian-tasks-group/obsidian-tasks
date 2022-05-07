@@ -62,14 +62,16 @@ Each subsequent `group by` will generate a new heading-level within the existing
 
 ## Screenshots
 
+**TODO Change screenshot URLs to refer to main repo and branch**
+
 Here is an example Tasks result, without any `group by` commands:
 
-![Tasks Ungrouped](../../resources/screenshots/tasks_ungrouped.png)
+![Tasks Ungrouped](https://github.com/claremacrae/obsidian-tasks/raw/add-group-by-feature/resources/screenshots/tasks_ungrouped.png)
 Tasks not grouped.
 
 And here is what this might look like, when grouped by folder, filename and heading:
 
-![Tasks Ungrouped](../..//resources/screenshots/tasks_grouped.png)
+![Tasks Ungrouped](https://github.com/claremacrae/obsidian-tasks/raw/add-group-by-feature/resources/screenshots/tasks_grouped.png)
 Tasks grouped.
 
 ---
