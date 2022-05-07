@@ -24,4 +24,4 @@ docker run --rm \
     -it \
     --volume "$PWD:/docs:Z" \
     --publish 4000:4000 \
-    "localhost/${TAG}"
+    "${TAG}"
