@@ -2,7 +2,7 @@
 
 ## Overview
 
-- For background, see ["Updating documentation" in CONTRIBUTING](../CONTRIBUTING.md#updating-documentation)
+- For background, including which branch to work on, see ["Updating documentation" in CONTRIBUTING](../CONTRIBUTING.md#updating-documentation)
 - The documentation is written in Markdown
 - It is converted to HTML via Ruby and Jekyll
   - Important: Ruby 2 is required, for example, Ruby 2.7
