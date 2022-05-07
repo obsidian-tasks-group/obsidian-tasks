@@ -12,6 +12,25 @@
 When making significant edits to the documentation, it is helpful to see what
 the published docs will look like. This allows spotting of problems like formatting oddities.
 
+There are two options for seeing what the published pages will look like:
+
+- Docker (recommended)
+- Installing Ruby 2 and Jekyll locally
+
+In both cases, once the Jekyll server is running and you are viewing it in your browser,
+there is a fast feedback cycle of:
+
+1. Edit a markdown page
+2. Wait a few seconds until you see console output like this:
+
+```text
+web_1  |       Regenerating: 1 file(s) changed at 2022-05-07 08:03:54
+web_1  |                     README.md
+web_1  |       Remote Theme: Using theme pmarsceill/just-the-docs
+web_1  |        Jekyll Feed: Generating feed for posts
+```
+3. Reload the page in your browser to see the changes
+
 ## Option 1: Testing via Docker
 
 If you can run docker, this is the easiest way.
@@ -52,11 +71,31 @@ This runs a web server inside Docker that you can view on your own machine.
 Look for the line containing `Server address:` and open that URL in your local browser.
 It will be something like <http://0.0.0.0:4000/obsidian-tasks/>.
 
-Note that you can edit the files on your local machine and
+Note that you can now edit the files on your local machine and
 then refresh in the browser a few seconds later.
 
-### Option 2: Testing via local installed Ruby and Jekyll
+## Option 2: Testing via local installed Ruby and Jekyll
 
+### Prerequisites for using installed Jekyll
 
+1. Install ruby. It is important that you use a version 2 of ruby, not version 3, for example 2.7.0.
+1. Install bundler: gem install bundler
+1. Go into the ./docs directory and run `bundle install` to install the dependencies, like jekyll.
 
-`bundle exec jekyll serve`
+You can find more information about these tools, and download links, at
+[Testing your GitHub Pages site locally with Jekyll](https://docs.github.com/en/pages/setting-up-a-github-pages-site-with-jekyll/testing-your-github-pages-site-locally-with-jekyll).
+
+### Seeing the docs via Jekyll
+
+Now every time you want to see the docs locally, run:
+
+```bash
+cd obsidian-tasks/docs
+bundle exec jekyll serve
+```
+
+In the output, look for the line containing `Server address:` and open that URL in your local browser.
+It will be something like <http://0.0.0.0:4000/obsidian-tasks/>.
+
+Note that you can now edit the files on your local machine and
+then refresh in the browser a few seconds later.
