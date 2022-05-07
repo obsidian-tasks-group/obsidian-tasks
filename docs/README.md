@@ -16,8 +16,8 @@ the published docs will look like. This allows spotting of problems like formatt
 
 See below for how to set up either of two options for creating the published pages during development:
 
-1. Docker (recommended)
-2. Installed Ruby and Jekyll
+1. Running inside a Docker container (recommended)
+2. Running without Docker
 
 ### Development cycle
 
@@ -35,7 +35,7 @@ there is a fast feedback cycle of:
     ```
 1. Reload the page in your browser to see the changes
 
-## Option 1: Testing via Docker
+## Option 1: Running inside a Docker container
 
 If you can run docker, this is the easiest way.
 
@@ -75,7 +75,9 @@ This runs a web server inside Docker that you can view on your own machine.
 Look for the line containing `Server address:` and open that URL in your local browser.
 It will be something like <http://0.0.0.0:4000/obsidian-tasks/>.
 
-## Option 2: Testing via local installed Ruby and Jekyll
+You can stop the service by running `docker-compose down` or by hitting Ctrl+C.
+
+## Option 2: Running without Docker
 
 ### Prerequisites for using installed Jekyll
 
