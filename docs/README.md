@@ -16,8 +16,8 @@ the published docs will look like. This allows spotting of problems like formatt
 
 See below for how to set up either of two options for creating the published pages during development:
 
-1. Running inside a Docker container (recommended)
-2. Running without Docker
+1. [Running inside a Docker container (recommended)](#option-1-running-inside-a-docker-container)
+2. [Running without Docker](#option-2-running-without-docker)
 
 ### Development cycle
 
