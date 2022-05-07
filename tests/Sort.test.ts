@@ -7,6 +7,7 @@ window.moment = moment;
 
 import { Task } from '../src/Task';
 import { Sort } from '../src/Sort';
+import { getSettings, updateSettings } from '../src/Settings';
 
 function fromLine({ line, path = '' }: { line: string; path?: string }) {
     return Task.fromLine({
@@ -46,18 +47,32 @@ describe('Sort', () => {
             path: '',
         });
         expect(
-            Sort.by({ sorting: [{ property: 'due', reverse: false }] }, [
-                one,
-                two,
-                three,
-            ]),
+            Sort.by(
+                {
+                    sorting: [
+                        {
+                            property: 'due',
+                            reverse: false,
+                            propertyInstance: 0,
+                        },
+                    ],
+                },
+                [one, two, three],
+            ),
         ).toEqual([one, two, three]);
         expect(
-            Sort.by({ sorting: [{ property: 'due', reverse: false }] }, [
-                two,
-                three,
-                one,
-            ]),
+            Sort.by(
+                {
+                    sorting: [
+                        {
+                            property: 'due',
+                            reverse: false,
+                            propertyInstance: 0,
+                        },
+                    ],
+                },
+                [two, three, one],
+            ),
         ).toEqual([one, two, three]);
     });
 
@@ -75,18 +90,32 @@ describe('Sort', () => {
             path: '',
         });
         expect(
-            Sort.by({ sorting: [{ property: 'done', reverse: false }] }, [
-                three,
-                two,
-                one,
-            ]),
+            Sort.by(
+                {
+                    sorting: [
+                        {
+                            property: 'done',
+                            reverse: false,
+                            propertyInstance: 0,
+                        },
+                    ],
+                },
+                [three, two, one],
+            ),
         ).toEqual([one, two, three]);
         expect(
-            Sort.by({ sorting: [{ property: 'done', reverse: false }] }, [
-                two,
-                one,
-                three,
-            ]),
+            Sort.by(
+                {
+                    sorting: [
+                        {
+                            property: 'done',
+                            reverse: false,
+                            propertyInstance: 0,
+                        },
+                    ],
+                },
+                [two, one, three],
+            ),
         ).toEqual([one, two, three]);
     });
 
@@ -105,9 +134,21 @@ describe('Sort', () => {
             Sort.by(
                 {
                     sorting: [
-                        { property: 'due', reverse: false },
-                        { property: 'path', reverse: false },
-                        { property: 'status', reverse: false },
+                        {
+                            property: 'due',
+                            reverse: false,
+                            propertyInstance: 0,
+                        },
+                        {
+                            property: 'path',
+                            reverse: false,
+                            propertyInstance: 0,
+                        },
+                        {
+                            property: 'status',
+                            reverse: false,
+                            propertyInstance: 0,
+                        },
                     ],
                 },
                 [one, four, two, three],
@@ -137,8 +178,16 @@ describe('Sort', () => {
             Sort.by(
                 {
                     sorting: [
-                        { property: 'description', reverse: false },
-                        { property: 'done', reverse: false },
+                        {
+                            property: 'description',
+                            reverse: false,
+                            propertyInstance: 0,
+                        },
+                        {
+                            property: 'done',
+                            reverse: false,
+                            propertyInstance: 0,
+                        },
                     ],
                 },
                 [three, one, two, four],
@@ -168,8 +217,16 @@ describe('Sort', () => {
             Sort.by(
                 {
                     sorting: [
-                        { property: 'description', reverse: true },
-                        { property: 'done', reverse: false },
+                        {
+                            property: 'description',
+                            reverse: true,
+                            propertyInstance: 0,
+                        },
+                        {
+                            property: 'done',
+                            reverse: false,
+                            propertyInstance: 0,
+                        },
                     ],
                 },
                 [two, four, three, one],
@@ -191,9 +248,17 @@ describe('Sort', () => {
             Sort.by(
                 {
                     sorting: [
-                        { property: 'status', reverse: true },
-                        { property: 'due', reverse: true },
-                        { property: 'path', reverse: false },
+                        {
+                            property: 'status',
+                            reverse: true,
+                            propertyInstance: 0,
+                        },
+                        { property: 'due', reverse: true, propertyInstance: 0 },
+                        {
+                            property: 'path',
+                            reverse: false,
+                            propertyInstance: 0,
+                        },
                     ],
                 },
                 [six, five, one, four, three, two],
@@ -222,45 +287,179 @@ describe('Sort', () => {
         expect(
             Sort.by(
                 {
-                    sorting: [{ property: 'description', reverse: false }],
+                    sorting: [
+                        {
+                            property: 'description',
+                            reverse: false,
+                            propertyInstance: 0,
+                        },
+                    ],
                 },
                 [two, one, five, four, three],
             ),
         ).toEqual(expectedOrder);
     });
+});
 
-    it('sorts correctly by tag, done', () => {
-        const one = fromLine({
-            line: '- [ ] a #someday #home 📅 1970-01-01 ✅ 1971-01-01',
-            path: '',
-        });
-        const two = fromLine({
-            line: '- [ ] #task b #someday #home 📅 1970-01-02 ✅ 1971-01-02',
-            path: '',
-        });
-        const three = fromLine({
-            line: '- [ ] c #next #home 📅 1970-01-02 ✅ 1971-01-01',
-            path: '',
-        });
-        const four = fromLine({
-            line: '- [ ] d #urgent #home 📅 1970-01-02 ✅ 1971-01-03',
-            path: '',
-        });
-        const five = fromLine({
-            line: '- [ ] e 📅 1970-01-02 ✅ 1971-01-03',
-            path: '',
-        });
-        const expectedOrder = [three, one, two, four, five];
+describe('Sort by tags', () => {
+    it('should sort correctly by tag defaulting to first with no global filter', () => {
+        const t1 = fromLine({ line: '- [ ] a #aaa #jjj' });
+        const t2 = fromLine({ line: '- [ ] a #ggg #ccc' });
+        const t3 = fromLine({ line: '- [ ] a #bbb #iii' });
+        const t4 = fromLine({ line: '- [ ] a #fff #aaa' });
+        const t5 = fromLine({ line: '- [ ] a #ccc #bbb' });
+        const t6 = fromLine({ line: '- [ ] a #eee #fff' });
+        const t7 = fromLine({ line: '- [ ] a #ddd #ggg' });
+        const t8 = fromLine({ line: '- [ ] a #hhh #eee' });
+        const t9 = fromLine({ line: '- [ ] a #iii #ddd' });
+        const t10 = fromLine({ line: '- [ ] a #jjj #hhh' });
+        const expectedOrder = [t1, t3, t5, t7, t6, t4, t2, t8, t9, t10];
         expect(
             Sort.by(
                 {
                     sorting: [
-                        { property: 'tag', reverse: false },
-                        { property: 'done', reverse: false },
+                        {
+                            property: 'tag',
+                            reverse: false,
+                            propertyInstance: 0,
+                        },
                     ],
                 },
-                [one, two, three, four, five],
+                [t1, t2, t3, t4, t5, t6, t7, t8, t9, t10],
             ),
         ).toEqual(expectedOrder);
+    });
+    it('should sort correctly by second tag with no global filter', () => {
+        const t1 = fromLine({ line: '- [ ] a #aaa #jjj' });
+        const t2 = fromLine({ line: '- [ ] a #ggg #ccc' });
+        const t3 = fromLine({ line: '- [ ] a #bbb #iii' });
+        const t4 = fromLine({ line: '- [ ] a #fff #aaa' });
+        const t5 = fromLine({ line: '- [ ] a #ccc #bbb' });
+        const t6 = fromLine({ line: '- [ ] a #eee #fff' });
+        const t7 = fromLine({ line: '- [ ] a #ddd #ggg' });
+        const t8 = fromLine({ line: '- [ ] a #hhh #eee' });
+        const t9 = fromLine({ line: '- [ ] a #iii #ddd' });
+        const t10 = fromLine({ line: '- [ ] a #jjj #hhh' });
+        const expectedOrder = [t4, t5, t2, t9, t8, t6, t7, t10, t3, t1];
+        expect(
+            Sort.by(
+                {
+                    sorting: [
+                        {
+                            property: 'tag',
+                            reverse: false,
+                            propertyInstance: 1,
+                        },
+                    ],
+                },
+                [t1, t2, t3, t4, t5, t6, t7, t8, t9, t10],
+            ),
+        ).toEqual(expectedOrder);
+    });
+    it('should sort correctly by tag defaulting to first with global filter', () => {
+        // Arrange
+        const originalSettings = getSettings();
+        updateSettings({ globalFilter: '#task' });
+
+        const t1 = fromLine({ line: '- [ ] #task a #aaa #jjj' });
+        const t2 = fromLine({ line: '- [ ] #task a #ggg #ccc' });
+        const t3 = fromLine({ line: '- [ ] #task a #bbb #iii' });
+        const t4 = fromLine({ line: '- [ ] #task a #fff #aaa' });
+        const t5 = fromLine({ line: '- [ ] #task a #ccc #bbb' });
+        const t6 = fromLine({ line: '- [ ] #task a #eee #fff' });
+        const t7 = fromLine({ line: '- [ ] #task a #ddd #ggg' });
+        const t8 = fromLine({ line: '- [ ] #task a #hhh #eee' });
+        const t9 = fromLine({ line: '- [ ] #task a #iii #ddd' });
+        const t10 = fromLine({ line: '- [ ] #task a #jjj #hhh' });
+        const t11 = fromLine({ line: '- [ ] #task a' });
+        const t12 = fromLine({ line: '- [ ] #task a #aaaa #aaaa' });
+        const t13 = fromLine({ line: '- [ ] #task a #bbbb ' });
+        const expectedOrder = [
+            t1,
+            t12,
+            t3,
+            t13,
+            t5,
+            t7,
+            t6,
+            t4,
+            t2,
+            t8,
+            t9,
+            t10,
+            t11,
+        ];
+
+        // Act
+        expect(
+            Sort.by(
+                {
+                    sorting: [
+                        {
+                            property: 'tag',
+                            reverse: false,
+                            propertyInstance: 0,
+                        },
+                    ],
+                },
+                [t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13],
+            ),
+        ).toEqual(expectedOrder);
+
+        // Cleanup
+        updateSettings(originalSettings);
+    });
+    it('should sort correctly by second tag with global filter', () => {
+        // Arrange
+        const originalSettings = getSettings();
+        updateSettings({ globalFilter: '#task' });
+
+        const t1 = fromLine({ line: '- [ ] #task a #aaa #jjj' });
+        const t2 = fromLine({ line: '- [ ] #task a #ggg #ccc' });
+        const t3 = fromLine({ line: '- [ ] #task a #bbb #iii' });
+        const t4 = fromLine({ line: '- [ ] #task a #fff #aaa' });
+        const t5 = fromLine({ line: '- [ ] #task a #ccc #bbb' });
+        const t6 = fromLine({ line: '- [ ] #task a #eee #fff' });
+        const t7 = fromLine({ line: '- [ ] #task a #ddd #ggg' });
+        const t8 = fromLine({ line: '- [ ] #task a #hhh #eee' });
+        const t9 = fromLine({ line: '- [ ] #task a #iii #ddd' });
+        const t10 = fromLine({ line: '- [ ] #task a #jjj #hhh' });
+        const t11 = fromLine({ line: '- [ ] #task a' });
+        const t12 = fromLine({ line: '- [ ] #task a #aaaa #aaaa' });
+        const t13 = fromLine({ line: '- [ ] #task a #bbbb ' });
+        const expectedOrder = [
+            t4,
+            t12,
+            t5,
+            t2,
+            t9,
+            t8,
+            t6,
+            t7,
+            t10,
+            t3,
+            t1,
+            t13,
+            t11,
+        ];
+
+        // Act
+        expect(
+            Sort.by(
+                {
+                    sorting: [
+                        {
+                            property: 'tag',
+                            reverse: false,
+                            propertyInstance: 1,
+                        },
+                    ],
+                },
+                [t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13],
+            ),
+        ).toEqual(expectedOrder);
+
+        // Cleanup
+        updateSettings(originalSettings);
     });
 });

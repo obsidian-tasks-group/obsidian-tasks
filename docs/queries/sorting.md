@@ -6,6 +6,7 @@ parent: Queries
 ---
 
 # Sorting
+
 {: .no_toc }
 
 <details open markdown="block">
@@ -36,6 +37,7 @@ You can sort tasks by the following properties:
 5. `done` (the date when the task was done)
 6. `path` (the path to the file that contains the task)
 7. `description` (the description of the task)
+8. `tag` (the description of the task)
 
 You can add multiple `sort by` query options, each on an extra line.
 The first sort has the highest priority.
@@ -69,6 +71,16 @@ If given, the sort order will be reverse for that property.
 
 Note that `reverse` will reverse the entire result set.
 For example, when you `sort by done reverse` and your query results contain tasks that do not have a done date, then those tasks without a done date will be listed first.
+
+## Tag sorting
+
+If you want to sort by tags, by default it will sort by the first tag found in the description. If you want to sort by a tag that comes after that then you can specify the index at the end of the query. All tasks should have the same amount of tags for optimal sorting and the tags in the same order. The index starts from 0 which is also the default.
+
+For example this query will sort by the second tag found in the description.
+
+    ```tasks
+    sort by tag 1
+    ```
 
 ---
 

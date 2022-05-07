@@ -106,7 +106,7 @@ export class Task {
         doneDate: moment.Moment | null;
         recurrence: Recurrence | null;
         blockLink: string;
-        tags: string[];
+        tags: string[] | [];
     }) {
         this.status = status;
         this.description = description;
