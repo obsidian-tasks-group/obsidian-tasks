@@ -1,0 +1,8 @@
+version: "3"
+services:
+  web:
+    build: .
+    ports:
+      - "4000:4000"
+    volumes:
+      - .:/code
