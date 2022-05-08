@@ -9,6 +9,8 @@ import { Urgency } from './Urgency';
 export enum Status {
     Todo = 'Todo',
     Done = 'Done',
+    InProgress = 'InProgress',
+    Cancelled = 'Cancelled',
 }
 
 // Sort low below none.
@@ -261,6 +263,12 @@ export class Task {
         switch (statusString) {
             case ' ':
                 status = Status.Todo;
+                break;
+            case '/':
+                status = Status.InProgress;
+                break;
+            case '-':
+                status = Status.Cancelled;
                 break;
             default:
                 status = Status.Done;
@@ -603,8 +611,27 @@ export class Task {
      * @memberof Task
      */
     public toggle(): Task[] {
-        const newStatus: Status =
-            this.status === Status.Todo ? Status.Done : Status.Todo;
+        let newStatus: Status;
+        let statusCharacter: string;
+
+        switch (this.status) {
+            case Status.Todo:
+                newStatus = Status.InProgress;
+                statusCharacter = '/';
+                break;
+            case Status.InProgress:
+                newStatus = Status.Cancelled;
+                statusCharacter = '-';
+                break;
+            case Status.Cancelled:
+                newStatus = Status.Done;
+                statusCharacter = 'x';
+                break;
+            case Status.Done:
+                newStatus = Status.Todo;
+                statusCharacter = ' ';
+                break;
+        }
 
         let newDoneDate = null;
 
@@ -614,7 +641,7 @@ export class Task {
             dueDate: Moment | null;
         } | null = null;
 
-        if (newStatus !== Status.Todo) {
+        if (newStatus === Status.Done) {
             // Set done date only if setting value is true
             const { setDoneDate } = getSettings();
             if (setDoneDate) {
@@ -631,7 +658,7 @@ export class Task {
             ...this,
             status: newStatus,
             doneDate: newDoneDate,
-            originalStatusCharacter: newStatus === Status.Done ? 'x' : ' ',
+            originalStatusCharacter: statusCharacter,
         });
 
         const newTasks: Task[] = [];
