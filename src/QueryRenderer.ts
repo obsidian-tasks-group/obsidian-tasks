@@ -227,11 +227,11 @@ class QueryRenderChild extends MarkdownRenderChild {
     ) {
         let header: any;
         // TODO Remove repetition
-        if (group.level == 0) {
+        if (group.nestingLevel == 0) {
             header = content.createEl('h4', {
                 cls: 'tasks-group-heading',
             });
-        } else if (group.level == 1) {
+        } else if (group.nestingLevel == 1) {
             header = content.createEl('h5', {
                 cls: 'tasks-group-heading',
             });
@@ -241,7 +241,7 @@ class QueryRenderChild extends MarkdownRenderChild {
                 cls: 'tasks-group-heading',
             });
         }
-        header.appendText(group.title);
+        header.appendText(group.name);
     }
 
     private addBacklinks(

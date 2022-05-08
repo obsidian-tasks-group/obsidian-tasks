@@ -102,13 +102,13 @@ export class Group {
 
 export class GroupHeading {
     // @ts-ignore
-    public readonly level: number;
+    public readonly nestingLevel: number;
     // @ts-ignore
-    public readonly title: string;
+    public readonly name: string;
 
     constructor(level: number, title: string) {
-        this.level = level;
-        this.title = title;
+        this.nestingLevel = level;
+        this.name = title;
     }
 }
 
@@ -150,8 +150,8 @@ export class TaskGroup {
         for (const heading of this.groupHeadings) {
             // These headings mimic the behaviour of QueryRenderer,
             // which uses 'h4', 'h5' and 'h6' for nested groups.
-            const headingPrefix = '#'.repeat(4 + heading.level);
-            output += `${headingPrefix} ${heading.title}\n`;
+            const headingPrefix = '#'.repeat(4 + heading.nestingLevel);
+            output += `${headingPrefix} ${heading.name}\n`;
         }
 
         output += this.tasksAsStringOfLines();
