@@ -153,9 +153,9 @@ export class IntermediateTaskGroups {
     }
 
     private getSortedGroups() {
-        // groups.keys() will be in the order the entries were added.
-        // Return a duplicate map, with the keys sorted:
-        // TODO This sorts urgency the wrong way round, with least urgent at the top
+        // groups.keys() will initially be in the order the entries were added,
+        // so effectively random.
+        // Return a duplicate map, with the keys sorted in alphabetical order:
         return new IntermediateTaskGroupsStorage(
             [...this.groups.entries()].sort(),
         );

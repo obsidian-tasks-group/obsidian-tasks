@@ -226,7 +226,9 @@ class QueryRenderChild extends MarkdownRenderChild {
         group: GroupHeading,
     ) {
         let header: any;
-        // TODO Remove repetition
+        // Is it possible to remove the repetition here?
+        // Ideally, by creating a variable that contains h4, h5 or h6
+        // and then only having one call to content.createEl().
         if (group.nestingLevel == 0) {
             header = content.createEl('h4', {
                 cls: 'tasks-group-heading',
