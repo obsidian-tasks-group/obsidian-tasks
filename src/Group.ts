@@ -101,14 +101,20 @@ export class Group {
 }
 
 export class GroupHeading {
-    // @ts-ignore
-    public readonly nestingLevel: number;
-    // @ts-ignore
-    public readonly name: string;
+    get nestingLevel(): number {
+        return this._nestingLevel;
+    }
+
+    get name(): string {
+        return this._name;
+    }
+
+    private readonly _nestingLevel: number;
+    private readonly _name: string;
 
     constructor(level: number, title: string) {
-        this.nestingLevel = level;
-        this.name = title;
+        this._nestingLevel = level;
+        this._name = title;
     }
 }
 
