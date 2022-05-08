@@ -225,24 +225,23 @@ class QueryRenderChild extends MarkdownRenderChild {
         content: HTMLDivElement,
         group: GroupHeading,
     ) {
-        const groupName = group.title;
-        const level = group.level;
         let header: any;
         // TODO Remove repetition
-        if (level == 0) {
+        if (group.level == 0) {
             header = content.createEl('h4', {
                 cls: 'tasks-group-heading',
             });
-        } else if (level == 1) {
+        } else if (group.level == 1) {
             header = content.createEl('h5', {
                 cls: 'tasks-group-heading',
             });
         } else {
+            // Headings nested to 2 or more levels are all displayed with 'h6:
             header = content.createEl('h6', {
                 cls: 'tasks-group-heading',
             });
         }
-        header.appendText(groupName);
+        header.appendText(group.title);
     }
 
     private addBacklinks(
