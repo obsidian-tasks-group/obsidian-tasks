@@ -23,6 +23,11 @@ export class IntermediateTaskGroupsStorage extends Map<string[], Task[]> {}
  * in alphabetical order by group names.
  *
  * It is essentially a thin wrapper around Map - see IntermediateTaskGroupsStorage.
+ *
+ * It is named "Intermediate" because its results are only temporary.
+ * They will be discarded once the final TaskGroups object is created.
+ *
+ * Ideally, this code would be simplified and moved in to TaskGroups.
  */
 export class IntermediateTaskGroups {
     public groups = new IntermediateTaskGroupsStorage();
