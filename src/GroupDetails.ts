@@ -179,17 +179,25 @@ export class GroupHeadings {
         }
     }
 
-    getHeadingsForTaskGroup(groups: string[]) {
+    /**
+     * Calculate the minimal set of headings that should be displayed
+     * before the tasks with the given group names.
+     *
+     * Data for each required heading is stored in a GroupHeading object.
+     * @param groupNames 0 or more group names, one per 'group by' line
+     */
+    getHeadingsForTaskGroup(groupNames: string[]): GroupHeading[] {
+        // See 'pjeby's answer' above for an explanation of this algorithm.
         const headingsForGroup = new Array<GroupHeading>();
-        for (let i = 0; i < groups.length; i++) {
-            const group = groups[i];
-            if (group != this.lastHeadingAtLevel[i]) {
-                headingsForGroup.push(new GroupHeading(i, group));
+        for (let level = 0; level < groupNames.length; level++) {
+            const group = groupNames[level];
+            if (group != this.lastHeadingAtLevel[level]) {
+                headingsForGroup.push(new GroupHeading(level, group));
                 // Reset all the lower heading levels to un-seen
-                for (let j = i; j < groups.length; j++) {
+                for (let j = level; j < groupNames.length; j++) {
                     this.lastHeadingAtLevel[j] = '';
                 }
-                this.lastHeadingAtLevel[i] = group;
+                this.lastHeadingAtLevel[level] = group;
             }
         }
         return headingsForGroup;
