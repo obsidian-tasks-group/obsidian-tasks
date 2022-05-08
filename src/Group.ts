@@ -65,7 +65,7 @@ export class Group {
         filename: Group.groupByFileName,
         folder: Group.groupByFolder,
         heading: Group.groupByHeading,
-        linktext: Group.groupByLinkText,
+        backlink: Group.groupByBacklink,
         path: Group.groupByPath,
         status: Group.groupByStatus,
     };
@@ -97,7 +97,7 @@ export class Group {
         return filename;
     }
 
-    private static groupByLinkText(task: Task): string {
+    private static groupByBacklink(task: Task): string {
         const linkText = task.getLinkText({ isFilenameUnique: true });
         if (linkText == null) {
             return 'Unknown Location';

@@ -23,7 +23,7 @@ export type GroupingProperty =
     | 'filename'
     | 'folder'
     | 'heading'
-    | 'linktext'
+    | 'backlink'
     | 'path'
     | 'status';
 export type Grouping = { property: GroupingProperty };
@@ -67,7 +67,7 @@ export class Query {
         /^sort by (urgency|status|priority|start|scheduled|due|done|path|description|tag)( reverse)?/;
 
     private readonly groupByRegexp =
-        /^group by (filename|folder|heading|linktext|path|status)/;
+        /^group by (filename|folder|heading|backlink|path|status)/;
 
     private readonly headingRegexp =
         /^heading (includes|does not include) (.*)/;

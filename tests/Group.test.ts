@@ -266,9 +266,9 @@ describe('Group names', () => {
         },
 
         // -----------------------------------------------------------
-        // group by linktext
+        // group by backlink
         {
-            groupBy: 'linktext',
+            groupBy: 'backlink',
             taskLine: '- [ ] xxx',
             expectedGroupName: 'c > heading',
             path: 'a/b/c.md',
