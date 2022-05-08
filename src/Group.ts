@@ -168,13 +168,11 @@ export class TaskGroup {
 
 export class TaskGroups {
     addTasks(initialGroups: IntermediateTaskGroups) {
-        const groupedTasksStorage = initialGroups.groups;
-
         // Get the headings
-        const grouper = new GroupHeadings(groupedTasksStorage);
+        const grouper = new GroupHeadings(initialGroups.groups);
 
         // Build a container of all the groups
-        for (const [groups, tasks] of groupedTasksStorage) {
+        for (const [groups, tasks] of initialGroups.groups) {
             const groupHeadings = grouper.getHeadingsForTaskGroup(groups);
             const taskGroup = new TaskGroup(groups, groupHeadings, tasks);
             this.add(taskGroup);
