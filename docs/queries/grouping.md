@@ -58,6 +58,27 @@ Each subsequent `group by` will generate a new heading-level within the existing
 - Second `group by` is displayed as `h5` headings
 - Third and subsequent `group by` are displayed as `h6` headings
 
+See the [screenshots below](#screenshots) for how this looks in practice.
+
+<div class="code-example" markdown="1">
+Info
+{: .label .label-blue }
+Headings are displayed in case-sensitive alphabetical order, not the original order.
+
+---
+
+Info
+{: .label .label-blue }
+The order of operations ensures that grouping does not modify which tasks are displayed, for example when the `limit` option is used:
+
+1. all the filter instructions are run
+1. then any sorting instructions are run
+1. then any `limit` instructions are run
+1. then finally any grouping instructions are run
+
+</div>
+
+
 ---
 
 ## Screenshots
@@ -73,17 +94,6 @@ And here is what this might look like, when grouped by folder, filename and head
 
 ![Tasks Ungrouped](https://github.com/claremacrae/obsidian-tasks/raw/add-group-by-feature/resources/screenshots/tasks_grouped.png)
 Tasks grouped.
-
----
-
-## Notes
-
-- Headings are displayed in case-sensitive alphabetical order, not the original order
-- The order of operations ensures that grouping does not modify which tasks are displayed:
-  - all the filter commands are run
-  - then any sorting instructions are run
-  - then any `limit` instructions are run
-  - then finally any grouping instructions are run
 
 ---
 
