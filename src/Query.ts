@@ -1,5 +1,6 @@
 import * as chrono from 'chrono-node';
 
+import type { App } from 'obsidian';
 import { getSettings } from './Settings';
 import { LayoutOptions } from './LayoutOptions';
 import { Sort } from './Sort';
@@ -28,6 +29,7 @@ export class Query {
     private _filters: ((task: Task) => boolean)[] = [];
     private _error: string | undefined = undefined;
     private _sorting: Sorting[] = [];
+    private app: App | null;
 
     private readonly priorityRegexp =
         /^priority (is )?(above|below)? ?(low|none|medium|high)/;
@@ -76,7 +78,8 @@ export class Query {
 
     private readonly commentRegexp = /^#.*/;
 
-    constructor({ source }: { source: string }) {
+    constructor({ source, app }: { source: string; app: App | null }) {
+        this.app = app;
         source
             .split('\n')
             .map((line: string) => line.trim())
@@ -294,7 +297,7 @@ export class Query {
     private parseHappensFilter({ line }: { line: string }): void {
         const happensMatch = line.match(this.happensRegexp);
         if (happensMatch !== null) {
-            const filterDate = Query.parseDate(happensMatch[2]);
+            const filterDate = this.parseDate(happensMatch[2]);
             if (!filterDate.isValid()) {
                 this._error = 'do not understand happens date';
                 return;
@@ -336,7 +339,7 @@ export class Query {
     private parseStartFilter({ line }: { line: string }): void {
         const startMatch = line.match(this.startRegexp);
         if (startMatch !== null) {
-            const filterDate = Query.parseDate(startMatch[2]);
+            const filterDate = this.parseDate(startMatch[2]);
             if (!filterDate.isValid()) {
                 this._error = 'do not understand start date';
                 return;
@@ -363,7 +366,7 @@ export class Query {
     private parseScheduledFilter({ line }: { line: string }): void {
         const scheduledMatch = line.match(this.scheduledRegexp);
         if (scheduledMatch !== null) {
-            const filterDate = Query.parseDate(scheduledMatch[2]);
+            const filterDate = this.parseDate(scheduledMatch[2]);
             if (!filterDate.isValid()) {
                 this._error = 'do not understand scheduled date';
             }
@@ -395,7 +398,7 @@ export class Query {
     private parseDueFilter({ line }: { line: string }): void {
         const dueMatch = line.match(this.dueRegexp);
         if (dueMatch !== null) {
-            const filterDate = Query.parseDate(dueMatch[2]);
+            const filterDate = this.parseDate(dueMatch[2]);
             if (!filterDate.isValid()) {
                 this._error = 'do not understand due date';
                 return;
@@ -422,7 +425,7 @@ export class Query {
     private parseDoneFilter({ line }: { line: string }): void {
         const doneMatch = line.match(this.doneRegexp);
         if (doneMatch !== null) {
-            const filterDate = Query.parseDate(doneMatch[2]);
+            const filterDate = this.parseDate(doneMatch[2]);
             if (!filterDate.isValid()) {
                 this._error = 'do not understand done date';
                 return;
@@ -597,9 +600,19 @@ export class Query {
         }
     }
 
-    private static parseDate(input: string): moment.Moment {
-        // Using start of day to correctly match on comparison with other dates (like equality).
-        return window.moment(chrono.parseDate(input)).startOf('day');
+    private parseDate(input: string): moment.Moment {
+        if (input == '{TITLE}') {
+            return window
+                .moment(
+                    chrono.parseDate(
+                        this.app?.workspace.getActiveFile()?.basename ?? '',
+                    ),
+                )
+                .startOf('day');
+        } else {
+            // Using start of day to correctly match on comparison with other dates (like equality).
+            return window.moment(chrono.parseDate(input)).startOf('day');
+        }
     }
 
     private static stringIncludesCaseInsensitive(

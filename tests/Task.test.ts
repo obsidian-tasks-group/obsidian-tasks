@@ -191,32 +191,28 @@ describe('parsing tags', () => {
         {
             markdownTask:
                 '- [x] #someglobaltasktag this is a done task #tagone 🗓 2021-09-12 ✅ 2021-06-20',
-            expectedDescription:
-                '#someglobaltasktag this is a done task #tagone',
+            expectedDescription: 'this is a done task #tagone',
             extractedTags: ['#tagone'],
             globalFilter: '#someglobaltasktag',
         },
         {
             markdownTask:
                 '- [x] #someglobaltasktag this is a done task #tagone #tagtwo 🗓 2021-09-12 ✅ 2021-06-20',
-            expectedDescription:
-                '#someglobaltasktag this is a done task #tagone #tagtwo',
+            expectedDescription: 'this is a done task #tagone #tagtwo',
             extractedTags: ['#tagone', '#tagtwo'],
             globalFilter: '#someglobaltasktag',
         },
         {
             markdownTask:
                 '- [ ] #someglobaltasktag this is a normal task #tagone 🗓 2021-09-12 ✅ 2021-06-20',
-            expectedDescription:
-                '#someglobaltasktag this is a normal task #tagone',
+            expectedDescription: 'this is a normal task #tagone',
             extractedTags: ['#tagone'],
             globalFilter: '#someglobaltasktag',
         },
         {
             markdownTask:
                 '- [ ] #someglobaltasktag this is a normal task #tagone #tagtwo 🗓 2021-09-12 ✅ 2021-06-20',
-            expectedDescription:
-                '#someglobaltasktag this is a normal task #tagone #tagtwo',
+            expectedDescription: 'this is a normal task #tagone #tagtwo',
             extractedTags: ['#tagone', '#tagtwo'],
             globalFilter: '#someglobaltasktag',
         },
@@ -224,7 +220,7 @@ describe('parsing tags', () => {
             markdownTask:
                 '- [ ] #someglobaltasktag this is a normal task #tagone #tag/with/depth #tagtwo 🗓 2021-09-12 ✅ 2021-06-20',
             expectedDescription:
-                '#someglobaltasktag this is a normal task #tagone #tag/with/depth #tagtwo',
+                'this is a normal task #tagone #tag/with/depth #tagtwo',
             extractedTags: ['#tagone', '#tag/with/depth', '#tagtwo'],
             globalFilter: '#someglobaltasktag',
         },
@@ -292,6 +288,56 @@ describe('to string', () => {
 
         // Assert
         expect(task.toFileLineString()).toStrictEqual(line);
+    });
+
+    it('should place global filter at end when appendGlobalFilter is true', () => {
+        // Arrange
+        const originalSettings = getSettings();
+        updateSettings({ globalFilter: '#GlobalFilter' });
+        updateSettings({ appendGlobalFilter: true });
+        const originalLine =
+            '- [x] #GlobalFilter this is a done task #tagone 📅 2021-09-12 ✅ 2021-06-20';
+        const expectedLine =
+            '- [x] this is a done task #tagone #GlobalFilter 📅 2021-09-12 ✅ 2021-06-20';
+        // Act
+        const task: Task = Task.fromLine({
+            line: originalLine,
+            path: '',
+            sectionStart: 0,
+            sectionIndex: 0,
+            precedingHeader: '',
+        }) as Task;
+
+        // Assert
+        expect(task.toFileLineString()).toStrictEqual(expectedLine);
+
+        // Cleanup
+        updateSettings(originalSettings);
+    });
+
+    it('should place global filter at start when appendGlobalFilter is false', () => {
+        // Arrange
+        const originalSettings = getSettings();
+        updateSettings({ globalFilter: '#GlobalFilter' });
+        updateSettings({ appendGlobalFilter: false });
+        const originalLine =
+            '- [x] #GlobalFilter this is a done task #tagone 📅 2021-09-12 ✅ 2021-06-20';
+        const expectedLine =
+            '- [x] #GlobalFilter this is a done task #tagone 📅 2021-09-12 ✅ 2021-06-20';
+        // Act
+        const task: Task = Task.fromLine({
+            line: originalLine,
+            path: '',
+            sectionStart: 0,
+            sectionIndex: 0,
+            precedingHeader: '',
+        }) as Task;
+
+        // Assert
+        expect(task.toFileLineString()).toStrictEqual(expectedLine);
+
+        // Cleanup
+        updateSettings(originalSettings);
     });
 });
 

@@ -65,6 +65,25 @@ export class SettingsTab extends PluginSettingTab {
             });
 
         new Setting(containerEl)
+            .setName('Create task with global filter at end')
+            .setDesc(
+                'Enabling this places the global filter at the end of the task description. Some plugins, such as Day Planner,\n' +
+                    'might require this, or you might prefer how it looks. If you change this when tasks are modified using the\n' +
+                    'Task edit box they will have the tag moved to the beginning or end of the description.',
+            )
+            .addToggle((toggle) => {
+                const settings = getSettings();
+
+                toggle
+                    .setValue(settings.appendGlobalFilter)
+                    .onChange(async (value) => {
+                        updateSettings({ appendGlobalFilter: value });
+
+                        await this.plugin.saveSettings();
+                    });
+            });
+
+        new Setting(containerEl)
             .setName('Set done date on every completed task')
             .setDesc(
                 'Enabling this will add a timestamp ✅ YYYY-MM-DD at the end when a task is toggled to done',

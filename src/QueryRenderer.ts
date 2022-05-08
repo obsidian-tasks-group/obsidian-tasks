@@ -72,7 +72,7 @@ class QueryRenderChild extends MarkdownRenderChild {
         this.events = events;
         this.source = source;
 
-        this.query = new Query({ source });
+        this.query = new Query({ source, app });
     }
 
     onload() {
@@ -110,7 +110,7 @@ class QueryRenderChild extends MarkdownRenderChild {
         const millisecondsToMidnight = midnight.getTime() - now.getTime();
 
         this.queryReloadTimeout = setTimeout(() => {
-            this.query = new Query({ source: this.source });
+            this.query = new Query({ source: this.source, app: this.app });
             // Process the current cache state:
             this.events.triggerRequestCacheUpdate(this.render.bind(this));
             this.reloadQueryAtMidnight();

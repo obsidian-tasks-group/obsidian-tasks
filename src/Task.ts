@@ -19,22 +19,82 @@ export enum Priority {
     Low = '4',
 }
 
+/**
+ * Main Task object, used to store all the task information of a checklist item on a page.
+ *
+ * @export
+ * @class Task
+ */
 export class Task {
+    // IDEA: Look at adding other states as a option.
+    // Examples:
+    // - [/] Task that is in progress.
+    // - [-] Task that is canceled.
+
+    /**
+     * The status of the task, only supports Todo and Done.
+     *
+     * @type {Status}
+     * @memberof Task
+     */
     public readonly status: Status;
+
+    /**
+     * This contains the description of the task including the user tags. The global filter is removed.
+     *
+     * @type {string}
+     * @memberof Task
+     */
     public readonly description: string;
+
+    /**
+     * Path to the file that contains this task.
+     *
+     * @type {string}
+     * @memberof Task
+     */
     public readonly path: string;
+
+    /**
+     * A string the length of the indentation of the task.
+     *
+     * @type {string}
+     * @memberof Task
+     */
     public readonly indentation: string;
-    /** Line number where the section starts that contains this task. */
+
+    /**
+     * Line number where the section starts that contains this task.
+     *
+     * @type {number}
+     * @memberof Task
+     */
     public readonly sectionStart: number;
-    /** The index of the nth task in its section. */
+
+    /**
+     * The index of the nth task in its section.
+     *
+     * @type {number}
+     * @memberof Task
+     */
     public readonly sectionIndex: number;
+
     /**
      * The original character from within `[]` in the document.
      * Required to be added to the LI the same way obsidian does as a `data-task` attribute.
+     *
+     * @type {string}
+     * @memberof Task
      */
     public readonly originalStatusCharacter: string;
     public readonly precedingHeader: string | null;
 
+    /**
+     * A collection of tags that are associated with the task. Will not contain the global filter.
+     *
+     * @type {string[]}
+     * @memberof Task
+     */
     public readonly tags: string[];
 
     public readonly priority: Priority;
@@ -45,22 +105,43 @@ export class Task {
     public readonly doneDate: Moment | null;
 
     public readonly recurrence: Recurrence | null;
-    /** The blockLink is a "^" annotation after the dates/recurrence rules. */
+
+    /**
+     * The blockLink is a "^" annotation after the dates/recurrence rules.
+     *
+     * @type {string}
+     * @memberof Task
+     */
     public readonly blockLink: string;
 
+    /**
+     * Default date format for any dates associated with the task.
+     *
+     * @static
+     * @memberof Task
+     */
     public static readonly dateFormat = 'YYYY-MM-DD';
 
-    // Main regex for parsing a line. It matches the following:
-    // - Indentation
-    // - Status character
-    // - Rest of task after checkbox markdown
+    /**
+     * Main regex for parsing a line. It matches the following:
+     * - Indentation
+     * - Status character
+     * - Rest of task after checkbox markdown
+     *
+     * @static
+     * @memberof Task
+     */
     public static readonly taskRegex = /^([\s\t]*)[-*] +\[(.)\] *(.*)/u;
 
-    // Match on block link at end.
+    /**
+     * Match on block link at end.
+     *
+     * @static
+     * @memberof Task
+     */
     public static readonly blockLinkRegex = / \^[a-zA-Z0-9-]+$/u;
 
-    // The following regex's end with `$` because they will be matched and
-    // removed from the end until none are left.
+    //* INFO: The following regex's end with `$` because they will be matched and removed from the end until none are left.
     public static readonly priorityRegex = /([⏫🔼🔽])$/u;
     public static readonly startDateRegex = /🛫 ?(\d{4}-\d{2}-\d{2})$/u;
     public static readonly scheduledDateRegex = /[⏳⌛] ?(\d{4}-\d{2}-\d{2})$/u;
@@ -68,7 +149,7 @@ export class Task {
     public static readonly doneDateRegex = /✅ ?(\d{4}-\d{2}-\d{2})$/u;
     public static readonly recurrenceRegex = /🔁 ?([a-zA-Z0-9, !]+)$/iu;
 
-    // Regex to match all hash tags, basically hash followed by anything but the characters in the negation.
+    //* INFO: Regex to match all hash tags, basically hash followed by anything but the characters in the negation.
     public static readonly hashTags = /#[^ !@#$%^&*(),.?":{}|<>]*/g;
 
     private _urgency: number | null = null;
@@ -296,6 +377,11 @@ export class Task {
             tags = hashTagMatch.filter((tag) => tag !== globalFilter);
         }
 
+        // Remove the global filter, it will be added back in the to string in the correct location.
+        if (globalFilter !== '') {
+            description = description.replace(globalFilter, '').trim();
+        }
+
         const task = new Task({
             status,
             description,
@@ -413,7 +499,7 @@ export class Task {
     }
 
     /**
-     *
+     * Converts the task back into a string, does not have the markdown list or task prefix.
      *
      * @param {LayoutOptions} [layoutOptions]
      * @return {*}  {string}
@@ -421,7 +507,23 @@ export class Task {
      */
     public toString(layoutOptions?: LayoutOptions): string {
         layoutOptions = layoutOptions ?? new LayoutOptions();
-        let taskString = this.description;
+
+        const { globalFilter, removeGlobalFilter, appendGlobalFilter } =
+            getSettings();
+
+        let taskString = '';
+
+        if (!removeGlobalFilter && appendGlobalFilter && globalFilter !== '') {
+            taskString = `${this.description} ${globalFilter}`;
+        } else if (
+            !removeGlobalFilter &&
+            !appendGlobalFilter &&
+            globalFilter !== ''
+        ) {
+            taskString = `${globalFilter} ${this.description}`;
+        } else {
+            taskString = this.description;
+        }
 
         if (!layoutOptions.hidePriority) {
             let priority: string = '';
@@ -497,6 +599,8 @@ export class Task {
      * recurrence. If it is a recurring task, the toggled task will be returned
      * together with the next occurrence in the order `[next, toggled]`. If the
      * task is not recurring, it will return `[toggled]`.
+     * @return {*}  {Task[]}
+     * @memberof Task
      */
     public toggle(): Task[] {
         const newStatus: Status =

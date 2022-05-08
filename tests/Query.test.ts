@@ -20,7 +20,7 @@ function shouldSupportFiltering(
     expectedResult: Array<string>,
 ) {
     // Arrange
-    const query = new Query({ source: filters.join('\n') });
+    const query = new Query({ source: filters.join('\n'), app: null });
 
     const tasks = allTaskLines.map(
         (taskLine) =>
@@ -89,7 +89,7 @@ describe('Query', () => {
                 }),
             ];
             const input = 'path includes ab/c d';
-            const query = new Query({ source: input });
+            const query = new Query({ source: input, app: null });
 
             // Act
             let filteredTasks = [...tasks];
@@ -479,7 +479,7 @@ describe('Query', () => {
             }),
         ] as Task[];
         const input = 'tags include #home';
-        const query = new Query({ source: input });
+        const query = new Query({ source: input, app: null });
 
         // Act
         let filteredTasks = [...tasks];
@@ -523,7 +523,7 @@ describe('Query', () => {
             }),
         ] as Task[];
         const input = 'tags do not include #home';
-        const query = new Query({ source: input });
+        const query = new Query({ source: input, app: null });
 
         // Act
         let filteredTasks = [...tasks];
@@ -730,7 +730,7 @@ describe('Query', () => {
             },
         ];
         it.concurrent.each(cases)('sorting as %j', ({ input, output }) => {
-            const query = new Query({ source: input });
+            const query = new Query({ source: input, app: null });
 
             expect(query.sorting).toEqual(output);
         });
@@ -739,7 +739,7 @@ describe('Query', () => {
         it('ignores comments', () => {
             // Arrange
             const input = '# I am a comment, which will be ignored';
-            const query = new Query({ source: input });
+            const query = new Query({ source: input, app: null });
 
             // Assert
             expect(query.error).toBeUndefined();

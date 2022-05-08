@@ -19,3 +19,6 @@ data.json
 
 # asdf
 .tool-versions
+
+# Coverage information from jest
+coverage
