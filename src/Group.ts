@@ -2,18 +2,28 @@ import { GroupHeadings, IntermediateTaskGroups } from './GroupDetails';
 import type { Grouping, GroupingProperty } from './Query';
 import type { Task } from './Task';
 
+/**
+ * A naming function, that takes a Task object and returns the corresponding group property name
+ */
 type Grouper = (task: Task) => string;
 
+/**
+ * Implementation of the 'group by' instruction.
+ */
 export class Group {
     /**
-     * Group a list of tasks, according to one or more properties
-     * @param grouping See GroupingProperty in Query.ts
-     * @param tasks A list of Task objects
+     * Group a list of tasks, according to one or more task properties
+     * @param grouping 0 or more Grouping values, one per 'group by' line
+     * @param tasks The tasks that match the task block's Query
      */
     public static by(grouping: Grouping[], tasks: Task[]): TaskGroups {
         return new TaskGroups(grouping, tasks);
     }
 
+    /**
+     * Return the Grouper functions matching the 'group by' lines
+     * @param grouping 0 or more Grouping values, one per 'group by' line
+     */
     public static getGroupersForGroups(grouping: Grouping[]) {
         const groupers: Grouper[] = [];
         for (const { property } of grouping) {
@@ -23,6 +33,11 @@ export class Group {
         return groupers;
     }
 
+    /**
+     * Return the group names for a single task
+     * @param groupers The Grouper functions indicating the requested types of group
+     * @param task
+     */
     public static getGroupNamesForTask(groupers: Grouper[], task: Task) {
         const keys = [];
         for (const grouper of groupers) {
@@ -32,6 +47,12 @@ export class Group {
         return keys;
     }
 
+    /**
+     * Return a single property name for a single task.
+     * A convenience method for unit tests.
+     * @param property
+     * @param task
+     */
     public static getGroupNameForTask(
         property: GroupingProperty,
         task: Task,
