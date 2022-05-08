@@ -63,18 +63,17 @@ export class IntermediateTaskGroups {
      * return the container that the previous task(s) were added to.
      *
      * Otherwise, create and return a new container.
-     * @param newKey
+     * @param newGroupNames
      * @private
      */
-    private getOrCreateGroupForGroupNames(newKey: string[]) {
-        for (const [key, taskGroup] of this.groups) {
-            // TODO Review for efficiency
-            if (JSON.stringify(key) == JSON.stringify(newKey)) {
+    private getOrCreateGroupForGroupNames(newGroupNames: string[]) {
+        for (const [groupNames, taskGroup] of this.groups) {
+            if (JSON.stringify(groupNames) == JSON.stringify(newGroupNames)) {
                 return taskGroup;
             }
         }
         const taskGroup: Task[] = [];
-        this.groups.set(newKey, taskGroup);
+        this.groups.set(newGroupNames, taskGroup);
         return taskGroup;
     }
 
