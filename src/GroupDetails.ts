@@ -7,7 +7,76 @@ import type { Task } from './Task';
  */
 
 /**
- * Storage used for the initial gruoping together of tasks.
+ * Explanation of the algorithms used here.
+ *
+ * The following text is taken from
+ * https://discord.com/channels/686053708261228577/840286264964022302/955240812973809674
+ *
+ * The Problem
+ * ===========
+ *
+ * Imagine that the user has supplied 3 'group by' instructions, and in order
+ * to present the results, we simply concatenate the group names together
+ * with '>'.
+ *
+ * So the display might look something like:
+ *      #### 10.0 > 2022-03-20 > Some heading name
+ *      - task 1
+ *      - task 2
+ *      #### 10.0 > 2022-03-22 > Some heading name
+ *      - task 7
+ *      - task 9
+ *
+ * The headings get very hard to read, very quickly.
+ *
+ * What we want instead is:
+ *      #### 10.0
+ *      ##### 2022-03-20
+ *      ###### Some heading name
+ *      - task 1
+ *      - task 2
+ *      ##### 2022-03-22
+ *      ###### Some heading name
+ *      - task 7
+ *      - task 9
+ *
+ * I'm struggling to get my head around how, in TS, I can store something like a tree structure,
+ * of arbitrary depth - to represent the grouped tasks.
+ *
+ * pjeby's answer
+ * ==============
+ *
+ * User pjeby replied:
+ * https://discord.com/channels/686053708261228577/840286264964022302/955579560034983946
+ *
+ * If all you're doing is generating headings, the simple algorithm would be to sort everything by a multi-value key -
+ * i.e., [level 1, level 2, ..., item sort key] -- then iterate the whole list and output a heading for each level
+ * where the value changed.
+ *
+ * i.e., you start with a [null, null, null, null....] "last seen" array and compare it item by item to the current
+ * item's data, and output a heading of the correct level if there's a change, updating the item in your
+ * "last seen" array.
+ *
+ * i.e. if the first item is different, output an H1 for the new value and set the rest of the array to null.
+ * If the second item is also different, output an H2, save the value, set the rest to null, and so on.
+ * After all the levels are checked, output the actual item.
+ * If there are no changes, then basically you'll just be outputting the item.
+ * No trees or graphs or whatnot needed.
+ *
+ * You could also just keep the last item and set a flag as soon as something doesn't match, and keep outputting
+ * headings as soon as the flag is set.
+ *
+ * What the code does
+ * ==================
+ *
+ * The IntermediateTaskGroups class below does the initial grouping and sorting.
+ *
+ * The GroupHeadings class below implements pjeby's heading detection algorithm, but instead of doing the printing directly,
+ * it returns the calculated heading levels in an array of GroupHeading objects, for later use in QueryRenderer.ts.
+ */
+
+/**
+ * Storage used for the initial grouping together of tasks.
  *
  * The keys of the map are the names of the groups.
  * For example, one set of keys might be ['Folder Name/', 'File Name']
@@ -93,6 +162,10 @@ export class IntermediateTaskGroups {
     }
 }
 
+/**
+ * GroupHeadings calculates which headings need to be displayed, for
+ * a given group of tasks.
+ */
 export class GroupHeadings {
     private lastHeadingAtLevel = new Array<string>();
 
