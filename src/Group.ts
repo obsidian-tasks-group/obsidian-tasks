@@ -11,10 +11,7 @@ export class Group {
      * @param tasks A list of Task objects
      */
     public static by(grouping: Grouping[], tasks: Task[]): TaskGroups {
-        const initialGroups = new IntermediateTaskGroups(grouping, tasks);
-        const taskGroups = new TaskGroups();
-        taskGroups.addTasks(initialGroups);
-        return taskGroups;
+        return new TaskGroups(grouping, tasks);
     }
 
     public static getGroupersForGroups(grouping: Grouping[]) {
@@ -167,6 +164,11 @@ export class TaskGroup {
 }
 
 export class TaskGroups {
+    constructor(grouping: Grouping[], tasks: Task[]) {
+        const initialGroups = new IntermediateTaskGroups(grouping, tasks);
+        this.addTasks(initialGroups);
+    }
+
     addTasks(initialGroups: IntermediateTaskGroups) {
         // Get the headings
         const grouper = new GroupHeadings(initialGroups.groups);
