@@ -85,18 +85,16 @@ The order of operations ensures that grouping does not modify which tasks are di
 
 ### Before
 
-**TODO Change screenshot URLs to refer to main repo and branch**
-
 Here is an example Tasks result, without any `group by` commands:
 
-![Tasks Ungrouped](https://github.com/claremacrae/obsidian-tasks/raw/add-group-by-feature/resources/screenshots/tasks_ungrouped.png)
+![Tasks Ungrouped](https://github.com/schemar/obsidian-tasks/raw/main/resources/screenshots/tasks_ungrouped.png)
 Tasks not grouped.
 
 ### After
 
 And here is what this might look like, when grouped by folder, filename and heading:
 
-![Tasks Grouped](https://github.com/claremacrae/obsidian-tasks/raw/add-group-by-feature/resources/screenshots/tasks_grouped.png)
+![Tasks Grouped](https://github.com/schemar/obsidian-tasks/raw/main/resources/screenshots/tasks_grouped.png)
 Tasks grouped.
 
 ---
