@@ -33,10 +33,6 @@ export class IntermediateTaskGroups {
      * @param tasks The tasks that match the task block's Query
      */
     constructor(grouping: Grouping[], tasks: Task[]) {
-        this.doInitialTaskGrouping(grouping, tasks);
-    }
-
-    private doInitialTaskGrouping(grouping: Grouping[], tasks: Task[]) {
         if (grouping.length === 0 || tasks.length === 0) {
             // There are no groups or no tasks: treat this as a single group,
             // with an empty group name.
