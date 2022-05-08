@@ -16,15 +16,15 @@ export class IntermediateTaskGroups {
             // There are no groups or no tasks: treat this as a single group,
             // with an empty group name.
             this.groups.set([], tasks);
-            return;
-        }
-        const groupers = Group.getGroupersForGroups(grouping);
+        } else {
+            const groupers = Group.getGroupersForGroups(grouping);
 
-        for (const task of tasks as Task[]) {
-            const keys = Group.getGroupNamesForTask(groupers, task);
-            this.addTask(keys, task);
+            for (const task of tasks as Task[]) {
+                const keys = Group.getGroupNamesForTask(groupers, task);
+                this.addTask(keys, task);
+            }
+            this.groups = this.getSortedGroups();
         }
-        this.groups = this.getSortedGroups();
     }
 
     private addTask(keys: string[], task: Task) {
