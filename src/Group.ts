@@ -169,7 +169,7 @@ export class TaskGroups {
         this.addTasks(initialGroups);
     }
 
-    addTasks(initialGroups: IntermediateTaskGroups) {
+    private addTasks(initialGroups: IntermediateTaskGroups) {
         // Get the headings
         const grouper = new GroupHeadings(initialGroups.groups);
 
@@ -181,7 +181,7 @@ export class TaskGroups {
         }
     }
 
-    add(taskGroup: TaskGroup) {
+    private add(taskGroup: TaskGroup) {
         this._groups.push(taskGroup);
     }
 
