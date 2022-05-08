@@ -187,6 +187,7 @@ class QueryRenderChild extends MarkdownRenderChild {
 
         return { taskList, tasksCount };
     }
+
     private addEditButton(postInfo: HTMLSpanElement, task: Task) {
         const editTaskPencil = postInfo.createEl('a', {
             cls: 'tasks-edit',
