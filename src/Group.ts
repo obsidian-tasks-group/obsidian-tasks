@@ -101,6 +101,11 @@ export class Group {
 }
 
 export class GroupHeading {
+    constructor(level: number, title: string) {
+        this._nestingLevel = level;
+        this._name = title;
+    }
+
     get nestingLevel(): number {
         return this._nestingLevel;
     }
@@ -111,11 +116,6 @@ export class GroupHeading {
 
     private readonly _nestingLevel: number;
     private readonly _name: string;
-
-    constructor(level: number, title: string) {
-        this._nestingLevel = level;
-        this._name = title;
-    }
 }
 
 export class TaskGroup {
