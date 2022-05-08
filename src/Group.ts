@@ -4,6 +4,23 @@ import type { Task } from './Task';
 
 type Grouper = (task: Task) => string;
 
+function addTasks(
+    initialGroups: IntermediateTaskGroups,
+    taskGroups: TaskGroups,
+) {
+    const groupedTasksStorage = initialGroups.groups;
+    // Get the headings
+
+    const grouper = new GroupHeadings(groupedTasksStorage);
+
+    // Build a container of all the groups
+    for (const [groups, tasks] of groupedTasksStorage) {
+        const groupHeadings = grouper.getHeadingsForTaskGroup(groups);
+        const taskGroup = new TaskGroup(groups, groupHeadings, tasks);
+        taskGroups.add(taskGroup);
+    }
+}
+
 export class Group {
     /**
      * Group a list of tasks, according to one or more properties
@@ -12,19 +29,8 @@ export class Group {
      */
     public static by(grouping: Grouping[], tasks: Task[]): TaskGroups {
         const initialGroups = new IntermediateTaskGroups(grouping, tasks);
-        const groupedTasksStorage = initialGroups.groups;
-
-        // Get the headings
-        const grouper = new GroupHeadings(groupedTasksStorage);
-
         const taskGroups = new TaskGroups();
-
-        // Build a container of all the groups
-        for (const [groups, tasks] of groupedTasksStorage) {
-            const groupHeadings = grouper.getHeadingsForTaskGroup(groups);
-            const taskGroup = new TaskGroup(groups, groupHeadings, tasks);
-            taskGroups.add(taskGroup);
-        }
+        addTasks(initialGroups, taskGroups);
         return taskGroups;
     }
 
