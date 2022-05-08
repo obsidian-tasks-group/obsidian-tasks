@@ -68,7 +68,13 @@ export class IntermediateTaskGroups {
      */
     private getOrCreateGroupForGroupNames(newGroupNames: string[]) {
         for (const [groupNames, taskGroup] of this.groups) {
-            if (JSON.stringify(groupNames) == JSON.stringify(newGroupNames)) {
+            // Is there a better way to check if the contents of two string arrays
+            // are identical?
+            // Use of JSON feels inefficient, and is O(n-squared) on the number
+            // of unique group-name combinations, so may scale badly if
+            // very large numbers of tasks are displayed.
+            // Related: https://stackoverflow.com/questions/7837456/how-to-compare-arrays-in-javascript
+            if (JSON.stringify(groupNames) === JSON.stringify(newGroupNames)) {
                 return taskGroup;
             }
         }
