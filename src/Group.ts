@@ -11,8 +11,8 @@ export class Group {
      * @param tasks A list of Task objects
      */
     public static by(grouping: Grouping[], tasks: Task[]): TaskGroups {
-        const groupedTasksStorage =
-            IntermediateTaskGroups.doInitialTaskGrouping(grouping, tasks);
+        const initialGroups = new IntermediateTaskGroups(grouping, tasks);
+        const groupedTasksStorage = initialGroups.groups;
 
         // Get the headings
         const grouper = new GroupHeadings(groupedTasksStorage);

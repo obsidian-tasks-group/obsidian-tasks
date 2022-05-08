@@ -7,25 +7,24 @@ export class IntermediateTaskGroupsStorage extends Map<string[], Task[]> {}
 export class IntermediateTaskGroups {
     public groups = new IntermediateTaskGroupsStorage();
 
-    public static doInitialTaskGrouping(
-        grouping: Grouping[],
-        tasks: Task[],
-    ): IntermediateTaskGroupsStorage {
+    constructor(grouping: Grouping[], tasks: Task[]) {
+        this.doInitialTaskGrouping(grouping, tasks);
+    }
+
+    private doInitialTaskGrouping(grouping: Grouping[], tasks: Task[]) {
         if (grouping.length === 0 || tasks.length === 0) {
             // There are no groups or no tasks: treat this as a single group,
             // with an empty group name.
-            const groups = new IntermediateTaskGroupsStorage();
-            groups.set([], tasks);
-            return groups;
+            this.groups.set([], tasks);
+            return;
         }
         const groupers = Group.getGroupersForGroups(grouping);
 
-        const groups = new IntermediateTaskGroups();
         for (const task of tasks as Task[]) {
             const keys = Group.getGroupNamesForTask(groupers, task);
-            groups.addTask(keys, task);
+            this.addTask(keys, task);
         }
-        return groups.getSortedGroups();
+        this.groups = this.getSortedGroups();
     }
 
     private addTask(keys: string[], task: Task) {
