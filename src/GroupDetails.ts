@@ -46,19 +46,27 @@ export class IntermediateTaskGroups {
             const groupers = Group.getGroupersForGroups(grouping);
 
             for (const task of tasks as Task[]) {
-                const keys = Group.getGroupNamesForTask(groupers, task);
-                this.addTask(keys, task);
+                const groupNames = Group.getGroupNamesForTask(groupers, task);
+                this.addTask(groupNames, task);
             }
             this.groups = this.getSortedGroups();
         }
     }
 
-    private addTask(keys: string[], task: Task) {
-        const groupForKey = this.getOrCreateGroupForKey(keys);
-        groupForKey?.push(task);
+    private addTask(groupNames: string[], task: Task) {
+        const groupForNames = this.getOrCreateGroupForGroupNames(groupNames);
+        groupForNames?.push(task);
     }
 
-    private getOrCreateGroupForKey(newKey: string[]) {
+    /**
+     * If a task has been seen before with this exact combination of group names,
+     * return the container that the previous task(s) were added to.
+     *
+     * Otherwise, create and return a new container.
+     * @param newKey
+     * @private
+     */
+    private getOrCreateGroupForGroupNames(newKey: string[]) {
         for (const [key, taskGroup] of this.groups) {
             // TODO Review for efficiency
             if (JSON.stringify(key) == JSON.stringify(newKey)) {
