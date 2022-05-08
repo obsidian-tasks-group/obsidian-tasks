@@ -220,6 +220,16 @@ describe('Group names', () => {
         // Maintenance Note: tests are in alphabetical order of 'groupBy' name
 
         // -----------------------------------------------------------
+        // group by backlink
+        {
+            groupBy: 'backlink',
+            taskLine: '- [ ] xxx',
+            expectedGroupName: 'c > heading',
+            path: 'a/b/c.md',
+            precedingHeading: 'heading',
+        },
+
+        // -----------------------------------------------------------
         // group by filename
         {
             groupBy: 'filename',
@@ -262,16 +272,6 @@ describe('Group names', () => {
             groupBy: 'heading',
             taskLine: '- [ ] xxx',
             expectedGroupName: 'heading',
-            precedingHeading: 'heading',
-        },
-
-        // -----------------------------------------------------------
-        // group by backlink
-        {
-            groupBy: 'backlink',
-            taskLine: '- [ ] xxx',
-            expectedGroupName: 'c > heading',
-            path: 'a/b/c.md',
             precedingHeading: 'heading',
         },
 

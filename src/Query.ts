@@ -20,10 +20,10 @@ export type SortingProperty =
 type Sorting = { property: SortingProperty; reverse: boolean };
 
 export type GroupingProperty =
+    | 'backlink'
     | 'filename'
     | 'folder'
     | 'heading'
-    | 'backlink'
     | 'path'
     | 'status';
 export type Grouping = { property: GroupingProperty };
@@ -67,7 +67,7 @@ export class Query {
         /^sort by (urgency|status|priority|start|scheduled|due|done|path|description|tag)( reverse)?/;
 
     private readonly groupByRegexp =
-        /^group by (filename|folder|heading|backlink|path|status)/;
+        /^group by (backlink|filename|folder|heading|path|status)/;
 
     private readonly headingRegexp =
         /^heading (includes|does not include) (.*)/;

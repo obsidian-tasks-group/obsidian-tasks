@@ -62,10 +62,10 @@ export class Group {
     }
 
     private static groupers: Record<GroupingProperty, Grouper> = {
+        backlink: Group.groupByBacklink,
         filename: Group.groupByFileName,
         folder: Group.groupByFolder,
         heading: Group.groupByHeading,
-        backlink: Group.groupByBacklink,
         path: Group.groupByPath,
         status: Group.groupByStatus,
     };
