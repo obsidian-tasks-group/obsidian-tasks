@@ -1,8 +1,4 @@
-import {
-    GroupHeadings,
-    IntermediateTaskGroups,
-    IntermediateTaskGroupsStorage,
-} from './GroupDetails';
+import { GroupHeadings, IntermediateTaskGroups } from './GroupDetails';
 import type { Grouping, GroupingProperty } from './Query';
 import type { Task } from './Task';
 
@@ -15,10 +11,11 @@ export class Group {
      * @param tasks A list of Task objects
      */
     public static by(grouping: Grouping[], tasks: Task[]): TaskGroups {
-        const groupedTasksStorage = Group.getIntermediateTaskGroupsStorage(
-            grouping,
-            tasks,
-        );
+        const groupedTasksStorage =
+            IntermediateTaskGroups.getIntermediateTaskGroupsStorage(
+                grouping,
+                tasks,
+            );
 
         // Get the headings
         const grouper = new GroupHeadings(groupedTasksStorage);
@@ -34,28 +31,7 @@ export class Group {
         return taskGroups;
     }
 
-    private static getIntermediateTaskGroupsStorage(
-        grouping: Grouping[],
-        tasks: Task[],
-    ): IntermediateTaskGroupsStorage {
-        if (grouping.length === 0 || tasks.length === 0) {
-            // There are no groups or no tasks: treat this as a single group,
-            // with an empty group name.
-            const groups = new IntermediateTaskGroupsStorage();
-            groups.set([], tasks);
-            return groups;
-        }
-        const groupers = this.getGroupersForGroups(grouping);
-
-        const groups = new IntermediateTaskGroups();
-        for (const task of tasks as Task[]) {
-            const keys = this.getGroupNamesForTask(groupers, task);
-            groups.addTask(keys, task);
-        }
-        return groups.getSortedGroups();
-    }
-
-    private static getGroupersForGroups(grouping: Grouping[]) {
+    public static getGroupersForGroups(grouping: Grouping[]) {
         const groupers: Grouper[] = [];
         for (const { property } of grouping) {
             const comparator = Group.groupers[property];
@@ -64,7 +40,7 @@ export class Group {
         return groupers;
     }
 
-    private static getGroupNamesForTask(groupers: Grouper[], task: Task) {
+    public static getGroupNamesForTask(groupers: Grouper[], task: Task) {
         const keys = [];
         for (const grouper of groupers) {
             const this_key = grouper(task);

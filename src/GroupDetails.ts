@@ -1,4 +1,5 @@
-import { GroupHeading } from './Group';
+import { Group, GroupHeading } from './Group';
+import type { Grouping } from './Query';
 import type { Task } from './Task';
 
 export class IntermediateTaskGroupsStorage extends Map<string[], Task[]> {}
@@ -6,7 +7,28 @@ export class IntermediateTaskGroupsStorage extends Map<string[], Task[]> {}
 export class IntermediateTaskGroups {
     public groups = new IntermediateTaskGroupsStorage();
 
-    addTask(keys: string[], task: Task) {
+    public static getIntermediateTaskGroupsStorage(
+        grouping: Grouping[],
+        tasks: Task[],
+    ): IntermediateTaskGroupsStorage {
+        if (grouping.length === 0 || tasks.length === 0) {
+            // There are no groups or no tasks: treat this as a single group,
+            // with an empty group name.
+            const groups = new IntermediateTaskGroupsStorage();
+            groups.set([], tasks);
+            return groups;
+        }
+        const groupers = Group.getGroupersForGroups(grouping);
+
+        const groups = new IntermediateTaskGroups();
+        for (const task of tasks as Task[]) {
+            const keys = Group.getGroupNamesForTask(groupers, task);
+            groups.addTask(keys, task);
+        }
+        return groups.getSortedGroups();
+    }
+
+    private addTask(keys: string[], task: Task) {
         const groupForKey = this.getOrCreateGroupForKey(keys);
         groupForKey?.push(task);
     }
@@ -23,7 +45,7 @@ export class IntermediateTaskGroups {
         return taskGroup;
     }
 
-    getSortedGroups() {
+    private getSortedGroups() {
         // groups.keys() will be in the order the entries were added.
         // Return a duplicate map, with the keys sorted:
         // TODO This sorts urgency the wrong way round, with least urgent at the top
