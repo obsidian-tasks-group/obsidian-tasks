@@ -2,11 +2,36 @@ import { Group, GroupHeading } from './Group';
 import type { Grouping } from './Query';
 import type { Task } from './Task';
 
+/*
+ * This file contains implementation details of Group.ts
+ */
+
+/**
+ * Storage used for the initial gruoping together of tasks.
+ *
+ * The keys of the map are the names of the groups.
+ * For example, one set of keys might be ['Folder Name/', 'File Name']
+ * and the values would be all the matching Tasks from that file.
+ *
+ * It would be nice to not export this, but at the time of writing,
+ * it is used in some of the tests.
+ */
 export class IntermediateTaskGroupsStorage extends Map<string[], Task[]> {}
 
+/**
+ * IntermediateTaskGroups does the initial grouping together of tasks,
+ * in alphabetical order by group names.
+ *
+ * It is essentially a thin wrapper around Map - see IntermediateTaskGroupsStorage.
+ */
 export class IntermediateTaskGroups {
     public groups = new IntermediateTaskGroupsStorage();
 
+    /**
+     * Group a list of tasks, according to one or more task properties
+     * @param grouping 0 or more Grouping values, one per 'group by' line
+     * @param tasks The tasks that match the task block's Query
+     */
     constructor(grouping: Grouping[], tasks: Task[]) {
         this.doInitialTaskGrouping(grouping, tasks);
     }
