@@ -67,7 +67,7 @@ export class Query {
         /^sort by (urgency|status|priority|start|scheduled|due|done|path|description|tag)( reverse)?/;
 
     private readonly groupByRegexp =
-        /^group by (context|done|due|filename|folder|happens|heading|linktext|path|priority|referenceDateField|scheduled|start|status|urgency)/;
+        /^group by (filename|folder|heading|linktext|path|status)/;
 
     private readonly headingRegexp =
         /^heading (includes|does not include) (.*)/;
