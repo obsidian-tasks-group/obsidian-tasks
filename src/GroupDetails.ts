@@ -155,7 +155,7 @@ export class IntermediateTaskGroups {
     private getSortedGroups() {
         // groups.keys() will initially be in the order the entries were added,
         // so effectively random.
-        // Return a duplicate map, with the keys sorted in alphabetical order:
+        // Return a duplicate map, with the keys (that is, group names) sorted in alphabetical order:
         return new IntermediateTaskGroupsStorage(
             [...this.groups.entries()].sort(),
         );
@@ -184,7 +184,6 @@ export class GroupHeadings {
         for (let i = 0; i < groups.length; i++) {
             const group = groups[i];
             if (group != this.lastHeadingAtLevel[i]) {
-                // console.log(i, group);
                 headingsForGroup.push(new GroupHeading(i, group));
                 // Reset all the lower heading levels to un-seen
                 for (let j = i; j < groups.length; j++) {

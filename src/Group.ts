@@ -150,8 +150,8 @@ export class GroupHeading {
 }
 
 /**
- * TaskGroup stores single group of tasks, that all share the same group names.
- * They are stored in a TaskGroups object.
+ * TaskGroup stores a single group of tasks, that all share the same group names.
+ * TaskGroup objects are stored in a TaskGroups object.
  *
  * For example, if the user supplied these 'group by' lines:
  *   group by folder
@@ -202,7 +202,7 @@ export class TaskGroup {
 
     /**
      * All the tasks that match the user's filters and that have the
-     * same group names.
+     * group names exactly matching groups().
      */
     get tasks(): Task[] {
         return this._tasks;
@@ -210,6 +210,8 @@ export class TaskGroup {
 
     /**
      * A markdown-format representation of all the tasks in this group.
+     *
+     * Useful for testing.
      */
     public tasksAsStringOfLines(): string {
         let output = '';
