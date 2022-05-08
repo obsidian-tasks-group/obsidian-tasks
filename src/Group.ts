@@ -146,16 +146,9 @@ export class GroupHeading {
 export class TaskGroup {
     /**
      * Constructor for TaskGroup
-     * @param {string[]} groups - the names of the group properties for this
-     *                            set of tasks, in the order of the 'group by'
-     *                            lines the user specified
-     * @param {GroupHeading[]} groupHeadings - The headings to be displayed in front
-     *                                         of this set of tasks, when rendering the results.
-     *                                         It only contains the minimal set of headings required
-     *                                         to separate this group of tasks from the previous
-     *                                         group of tasks.
-     * @param tasks {Task[]} - All the tasks that match the user's filters and that have the
-     *                         same group names.
+     * @param {string[]} groups - See groups() for details
+     * @param {GroupHeading[]} groupHeadings - See groupHeadings() for details
+     * @param tasks {Task[]} - See tasks() for details
      */
     constructor(
         groups: string[],
@@ -167,14 +160,29 @@ export class TaskGroup {
         this._tasks = tasks;
     }
 
+    /**
+     * The names of the group properties for this set of tasks,
+     * in the order of the 'group by' lines the user specified
+     */
     get groups(): string[] {
         return this._groups;
     }
 
+    /**
+     * The headings to be displayed in front of this set of tasks,
+     * when rendering the results.
+     *
+     * It only contains the minimal set of headings required to separate
+     * this group of tasks from the previous group of tasks.
+     */
     get groupHeadings(): GroupHeading[] {
         return this._groupHeadings;
     }
 
+    /**
+     * All the tasks that match the user's filters and that have the
+     * same group names.
+     */
     get tasks(): Task[] {
         return this._tasks;
     }
