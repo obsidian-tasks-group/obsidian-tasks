@@ -12,10 +12,7 @@ export class Group {
      */
     public static by(grouping: Grouping[], tasks: Task[]): TaskGroups {
         const groupedTasksStorage =
-            IntermediateTaskGroups.getIntermediateTaskGroupsStorage(
-                grouping,
-                tasks,
-            );
+            IntermediateTaskGroups.doInitialTaskGrouping(grouping, tasks);
 
         // Get the headings
         const grouper = new GroupHeadings(groupedTasksStorage);

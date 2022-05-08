@@ -7,7 +7,7 @@ export class IntermediateTaskGroupsStorage extends Map<string[], Task[]> {}
 export class IntermediateTaskGroups {
     public groups = new IntermediateTaskGroupsStorage();
 
-    public static getIntermediateTaskGroupsStorage(
+    public static doInitialTaskGrouping(
         grouping: Grouping[],
         tasks: Task[],
     ): IntermediateTaskGroupsStorage {
