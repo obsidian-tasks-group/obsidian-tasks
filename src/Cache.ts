@@ -98,7 +98,7 @@ export class Cache {
     }
 
     private subscribeToCache(): void {
-        const resolvedEventeReference = this.metadataCache.on(
+        const resolvedEventReference = this.metadataCache.on(
             'resolved',
             async () => {
                 // Resolved fires on every change.
@@ -109,7 +109,7 @@ export class Cache {
                 }
             },
         );
-        this.metadataCacheEventReferences.push(resolvedEventeReference);
+        this.metadataCacheEventReferences.push(resolvedEventReference);
 
         // Does not fire when starting up obsidian and only works for changes.
         const changedEventReference = this.metadataCache.on(

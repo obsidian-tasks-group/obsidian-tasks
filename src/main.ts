@@ -16,7 +16,9 @@ export default class TasksPlugin extends Plugin {
     public queryRenderer: QueryRenderer | undefined;
 
     async onload() {
-        console.log('loading plugin "tasks"');
+        console.log(
+            `loading plugin "${this.manifest.name}" v${this.manifest.version}`,
+        );
 
         await this.loadSettings();
         this.addSettingTab(new SettingsTab({ plugin: this }));
@@ -26,7 +28,7 @@ export default class TasksPlugin extends Plugin {
             vault: this.app.vault,
         });
 
-        const events = new Events({ obsidianEents: this.app.workspace });
+        const events = new Events({ obsidianEvents: this.app.workspace });
         this.cache = new Cache({
             metadataCache: this.app.metadataCache,
             vault: this.app.vault,
@@ -40,7 +42,9 @@ export default class TasksPlugin extends Plugin {
     }
 
     onunload() {
-        console.log('unloading plugin "tasks"');
+        console.log(
+            `unloading plugin "${this.manifest.name}" v${this.manifest.version}`,
+        );
         this.cache?.unload();
     }
 

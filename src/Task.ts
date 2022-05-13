@@ -519,18 +519,14 @@ export class Task {
         const { globalFilter, removeGlobalFilter, appendGlobalFilter } =
             getSettings();
 
-        let taskString = '';
+        let taskString = this.description.trim();
 
-        if (!removeGlobalFilter && appendGlobalFilter && globalFilter !== '') {
-            taskString = `${this.description} ${globalFilter}`;
-        } else if (
-            !removeGlobalFilter &&
-            !appendGlobalFilter &&
-            globalFilter !== ''
-        ) {
-            taskString = `${globalFilter} ${this.description}`;
-        } else {
-            taskString = this.description;
+        if (!removeGlobalFilter) {
+            if (appendGlobalFilter) {
+                taskString = `${taskString} ${globalFilter}`;
+            } else {
+                taskString = `${globalFilter} ${taskString}`;
+            }
         }
 
         if (!layoutOptions.hidePriority) {
@@ -585,7 +581,7 @@ export class Task {
         const blockLink: string = this.blockLink ?? '';
         taskString += blockLink;
 
-        return taskString;
+        return taskString.trim();
     }
 
     /**
