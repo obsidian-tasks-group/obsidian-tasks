@@ -154,11 +154,7 @@
     });
 
     const _onSubmit = () => {
-        const { globalFilter } = getSettings();
         let description = editableTask.description.trim();
-        if (!description.includes(globalFilter)) {
-            description = globalFilter + ' ' + description;
-        }
 
         let startDate: moment.Moment | null = null;
         const parsedStartDate = chrono.parseDate(
@@ -200,20 +196,13 @@
             });
         }
 
-        let parsedPriority: Priority;
-        switch (editableTask.priority) {
-            case 'low':
-                parsedPriority = Priority.Low;
-                break;
-            case 'medium':
-                parsedPriority = Priority.Medium;
-                break;
-            case 'high':
-                parsedPriority = Priority.High;
-                break;
-            default:
-                parsedPriority = Priority.None;
-        }
+        const parsedPriority: Priority =
+            {
+                low: Priority.Low,
+                medium: Priority.Medium,
+                high: Priority.High,
+                none: Priority.None,
+            }[editableTask.priority] || Priority.None;
 
         const updatedTask = new Task({
             ...task,

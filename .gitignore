@@ -19,3 +19,9 @@ data.json
 
 # asdf
 .tool-versions
+
+# Coverage information from jest
+coverage
+
+# Backup files from merge/changes should be ignored.
+*.bak

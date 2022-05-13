@@ -18,7 +18,7 @@ export const initializeFile = ({
 };
 
 /**
- * Replaces the original task with one or more new tassk.
+ * Replaces the original task with one or more new task.
  *
  * If you pass more than one replacement task, all subsequent tasks in the same
  * section must be re-rendered, as their section indexes change. Assuming that
