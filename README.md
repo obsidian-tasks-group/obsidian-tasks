@@ -10,14 +10,14 @@ _You can toggle the task status in any view or query and it will update the sour
 
 ---
 
-For changes in each release, please check the releases page: <https://github.com/schemar/obsidian-tasks/releases>
+For changes in each release, please check the releases page: https://github.com/schemar/obsidian-tasks/releases
 
 ---
 
 ## Screenshots
 
-- _All screenshots assume the [global filter](#filtering-checklist-items) `#task` which is not set by default (see also [installation](#installation))._
-- _The theme is [Obsidian Atom](https://github.com/kognise/obsidian-atom)._
+-   _All screenshots assume the [global filter](#filtering-checklist-items) `#task` which is not set by default (see also [installation](#installation))._
+-   _The theme is [Obsidian Atom](https://github.com/kognise/obsidian-atom)._
 
 ![ACME Tasks](https://github.com/schemar/obsidian-tasks/raw/main/resources/screenshots/acme.png)
 The `ACME` note has some tasks.

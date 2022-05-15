@@ -119,10 +119,18 @@ export class Sort {
         // Arrays start at 0 but the users specify a tag starting at 1.
         const tagInstanceToSortBy = Sort.tagPropertyInstance - 1;
 
-        // If the tag collection is smaller than the instance
-        // used to compare then they are just equal.
         if (
-            a.tags.length < Sort.tagPropertyInstance ||
+            a.tags.length < Sort.tagPropertyInstance &&
+            b.tags.length >= Sort.tagPropertyInstance
+        ) {
+            return 1;
+        } else if (
+            b.tags.length < Sort.tagPropertyInstance &&
+            a.tags.length >= Sort.tagPropertyInstance
+        ) {
+            return -1;
+        } else if (
+            a.tags.length < Sort.tagPropertyInstance &&
             b.tags.length < Sort.tagPropertyInstance
         ) {
             return 0;

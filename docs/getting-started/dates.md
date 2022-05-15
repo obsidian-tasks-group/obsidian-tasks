@@ -6,7 +6,6 @@ parent: Getting Started
 ---
 
 # Dates
-
 {: .no_toc }
 
 <details open markdown="block">
@@ -30,6 +29,7 @@ When you use the command, you can also set dates like "Monday", "tomorrow", or "
 </div>
 
 ---
+
 
 ## 📅 Due
 
@@ -75,8 +75,6 @@ This way, you can use the start date as a filter to filter out any tasks that yo
 
 Such filter could be:
 
-````markdown
-```tasks
-starts before tomorrow
-```
-````
+    ```tasks
+    starts before tomorrow
+    ```

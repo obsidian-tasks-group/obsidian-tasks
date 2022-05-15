@@ -301,19 +301,30 @@ describe('Sort', () => {
     });
 });
 
+/*
+ * All the test cases below have tasks with 0 or more tags against them. This is to
+ * ensure that the sorting can handle the ordering correctly when there are no tags or
+ * if one of th tasks has less tags than the other.
+ *
+ * There is also a task with additional characters in the name to ensure it is seen
+ * as bigger that one with the same initial characters.
+ */
 describe('Sort by tags', () => {
     it('should sort correctly by tag defaulting to first with no global filter', () => {
+        // Arrange
         const t1 = fromLine({ line: '- [ ] a #aaa #jjj' });
-        const t2 = fromLine({ line: '- [ ] a #ggg #ccc' });
-        const t3 = fromLine({ line: '- [ ] a #bbb #iii' });
-        const t4 = fromLine({ line: '- [ ] a #fff #aaa' });
-        const t5 = fromLine({ line: '- [ ] a #ccc #bbb' });
-        const t6 = fromLine({ line: '- [ ] a #eee #fff' });
-        const t7 = fromLine({ line: '- [ ] a #ddd #ggg' });
+        const t2 = fromLine({ line: '- [ ] a #bbb #iii' });
+        const t3 = fromLine({ line: '- [ ] a #ccc #bbb' });
+        const t4 = fromLine({ line: '- [ ] a #ddd #ggg' });
+        const t5 = fromLine({ line: '- [ ] a #eee #fff' });
+        const t6 = fromLine({ line: '- [ ] a #fff #aaa' });
+        const t7 = fromLine({ line: '- [ ] a #ggg #ccc' });
         const t8 = fromLine({ line: '- [ ] a #hhh #eee' });
         const t9 = fromLine({ line: '- [ ] a #iii #ddd' });
         const t10 = fromLine({ line: '- [ ] a #jjj #hhh' });
-        const expectedOrder = [t1, t3, t5, t7, t6, t4, t2, t8, t9, t10];
+        const expectedOrder = [t1, t2, t3, t4, t5, t6, t7, t8, t9, t10];
+
+        // Act / Assert
         expect(
             Sort.by(
                 {
@@ -325,17 +336,49 @@ describe('Sort by tags', () => {
                         },
                     ],
                 },
-                [t1, t2, t3, t4, t5, t6, t7, t8, t9, t10],
+                [t1, t3, t5, t7, t6, t4, t2, t8, t9, t10],
             ),
         ).toEqual(expectedOrder);
     });
-    it('should sort correctly by second tag with no global filter', () => {
-        const t4 = fromLine({ line: '- [ ] a #fff #aaa' });
+
+    it('should sort correctly reversed by tag defaulting to first with no global filter', () => {
+        // Arrange
+        const t1 = fromLine({ line: '- [ ] a #aaa #jjj' });
+        const t2 = fromLine({ line: '- [ ] a #bbb #iii' });
         const t3 = fromLine({ line: '- [ ] a #ccc #bbb' });
-        const t2 = fromLine({ line: '- [ ] a #ggg #ccc' });
-        const t1 = fromLine({ line: '- [ ] a #iii #ddd' });
+        const t4 = fromLine({ line: '- [ ] a #ddd #ggg' });
+        const t5 = fromLine({ line: '- [ ] a #eee #fff' });
+        const t6 = fromLine({ line: '- [ ] a #fff #aaa' });
+        const t7 = fromLine({ line: '- [ ] a #ggg #ccc' });
+        const t8 = fromLine({ line: '- [ ] a #hhh #eee' });
+        const t9 = fromLine({ line: '- [ ] a #iii #ddd' });
+        const t10 = fromLine({ line: '- [ ] a #jjj #hhh' });
+        const expectedOrder = [t10, t9, t8, t7, t6, t5, t4, t3, t2, t1];
+
+        // Act / Assert
+        expect(
+            Sort.by(
+                {
+                    sorting: [
+                        {
+                            property: 'tag',
+                            reverse: true,
+                            propertyInstance: 1,
+                        },
+                    ],
+                },
+                [t1, t3, t5, t7, t6, t4, t2, t8, t9, t10],
+            ),
+        ).toEqual(expectedOrder);
+    });
+
+    it('should sort correctly by second tag with no global filter', () => {
+        const t1 = fromLine({ line: '- [ ] a #fff #aaa' });
+        const t2 = fromLine({ line: '- [ ] a #ccc #bbb' });
+        const t3 = fromLine({ line: '- [ ] a #ggg #ccc' });
+        const t4 = fromLine({ line: '- [ ] a #iii #ddd' });
         const t5 = fromLine({ line: '- [ ] a #hhh #eee' });
-        const expectedOrder = [t4, t3, t2, t1, t5];
+        const expectedOrder = [t1, t2, t3, t4, t5];
         expect(
             Sort.by(
                 {
@@ -347,42 +390,67 @@ describe('Sort by tags', () => {
                         },
                     ],
                 },
-                [t1, t2, t3, t4, t5],
+                [t4, t3, t2, t1, t5],
             ),
         ).toEqual(expectedOrder);
     });
+
+    it('should sort correctly reversed by second tag with no global filter', () => {
+        const t1 = fromLine({ line: '- [ ] a #fff #aaa' });
+        const t2 = fromLine({ line: '- [ ] a #ccc #bbb' });
+        const t3 = fromLine({ line: '- [ ] a #ggg #ccc' });
+        const t4 = fromLine({ line: '- [ ] a #iii #ddd' });
+        const t5 = fromLine({ line: '- [ ] a #hhh #eee' });
+        const expectedOrder = [t5, t4, t3, t2, t1];
+        expect(
+            Sort.by(
+                {
+                    sorting: [
+                        {
+                            property: 'tag',
+                            reverse: true,
+                            propertyInstance: 2,
+                        },
+                    ],
+                },
+                [t4, t3, t2, t1, t5],
+            ),
+        ).toEqual(expectedOrder);
+    });
+
     it('should sort correctly by tag defaulting to first with global filter', () => {
         // Arrange
         const originalSettings = getSettings();
         updateSettings({ globalFilter: '#task' });
 
         const t1 = fromLine({ line: '- [ ] #task a #aaa #jjj' });
-        const t2 = fromLine({ line: '- [ ] #task a #ggg #ccc' });
+        const t2 = fromLine({ line: '- [ ] #task a #aaaa #aaaa' });
         const t3 = fromLine({ line: '- [ ] #task a #bbb #iii' });
-        const t4 = fromLine({ line: '- [ ] #task a #fff #aaa' });
+        const t4 = fromLine({ line: '- [ ] #task a #bbbb ' });
         const t5 = fromLine({ line: '- [ ] #task a #ccc #bbb' });
-        const t6 = fromLine({ line: '- [ ] #task a #eee #fff' });
-        const t7 = fromLine({ line: '- [ ] #task a #ddd #ggg' });
-        const t8 = fromLine({ line: '- [ ] #task a #hhh #eee' });
-        const t9 = fromLine({ line: '- [ ] #task a #iii #ddd' });
-        const t10 = fromLine({ line: '- [ ] #task a #jjj #hhh' });
-        const t11 = fromLine({ line: '- [ ] #task a' });
-        const t12 = fromLine({ line: '- [ ] #task a #aaaa #aaaa' });
-        const t13 = fromLine({ line: '- [ ] #task a #bbbb ' });
+        const t6 = fromLine({ line: '- [ ] #task a #ddd #ggg' });
+        const t7 = fromLine({ line: '- [ ] #task a #eee #fff' });
+        const t8 = fromLine({ line: '- [ ] #task a #fff #aaa' });
+        const t9 = fromLine({ line: '- [ ] #task a #ggg #ccc' });
+        const t10 = fromLine({ line: '- [ ] #task a #hhh #eee' });
+        const t11 = fromLine({ line: '- [ ] #task a #iii #ddd' });
+        const t12 = fromLine({ line: '- [ ] #task a #jjj #hhh' });
+        const t13 = fromLine({ line: '- [ ] #task a' });
+
         const expectedOrder = [
             t1,
-            t12,
-            t3,
-            t13,
-            t5,
-            t7,
-            t6,
-            t4,
             t2,
+            t3,
+            t4,
+            t5,
+            t6,
+            t7,
             t8,
             t9,
             t10,
             t11,
+            t12,
+            t13,
         ];
 
         // Act
@@ -397,27 +465,48 @@ describe('Sort by tags', () => {
                         },
                     ],
                 },
-                [t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13],
+                [t1, t12, t3, t13, t5, t7, t6, t4, t2, t8, t9, t10, t11],
             ),
         ).toEqual(expectedOrder);
 
         // Cleanup
         updateSettings(originalSettings);
     });
-    it('should sort correctly by second tag with global filter', () => {
+
+    it('should sort correctly reversed by tag defaulting to first with global filter', () => {
         // Arrange
         const originalSettings = getSettings();
         updateSettings({ globalFilter: '#task' });
 
-        const t4 = fromLine({ line: '- [ ] #task a #fff #aaa' });
-        const t5 = fromLine({ line: '- [ ] #task a #ccc #bbb' });
-        const t2 = fromLine({ line: '- [ ] #task a #ggg #ccc' });
-        const t3 = fromLine({ line: '- [ ] #task a #bbb #iii' });
         const t1 = fromLine({ line: '- [ ] #task a #aaa #jjj' });
-        const t6 = fromLine({ line: '- [ ] #task a' });
-        const t7 = fromLine({ line: '- [ ] #task a #aaaa #aaaa' });
-        const t8 = fromLine({ line: '- [ ] #task a #bbbb ' });
-        const expectedOrder = [t4, t7, t5, t2, t3, t1, t8, t6];
+        const t2 = fromLine({ line: '- [ ] #task a #aaaa #aaaa' });
+        const t3 = fromLine({ line: '- [ ] #task a #bbb #iii' });
+        const t4 = fromLine({ line: '- [ ] #task a #bbbb ' });
+        const t5 = fromLine({ line: '- [ ] #task a #ccc #bbb' });
+        const t6 = fromLine({ line: '- [ ] #task a #ddd #ggg' });
+        const t7 = fromLine({ line: '- [ ] #task a #eee #fff' });
+        const t8 = fromLine({ line: '- [ ] #task a #fff #aaa' });
+        const t9 = fromLine({ line: '- [ ] #task a #ggg #ccc' });
+        const t10 = fromLine({ line: '- [ ] #task a #hhh #eee' });
+        const t11 = fromLine({ line: '- [ ] #task a #iii #ddd' });
+        const t12 = fromLine({ line: '- [ ] #task a #jjj #hhh' });
+        const t13 = fromLine({ line: '- [ ] #task a' });
+
+        const expectedOrder = [
+            t13,
+            t12,
+            t11,
+            t10,
+            t9,
+            t8,
+            t7,
+            t6,
+            t5,
+            t4,
+            t3,
+            t2,
+            t1,
+        ];
 
         // Act
         expect(
@@ -426,14 +515,86 @@ describe('Sort by tags', () => {
                     sorting: [
                         {
                             property: 'tag',
-                            reverse: false,
-                            propertyInstance: 2,
+                            reverse: true,
+                            propertyInstance: 1,
                         },
                     ],
                 },
-                [t1, t2, t3, t4, t5, t6, t7, t8],
+                [t1, t12, t3, t13, t5, t7, t6, t4, t2, t8, t9, t10, t11],
             ),
         ).toEqual(expectedOrder);
+
+        // Cleanup
+        updateSettings(originalSettings);
+    });
+
+    it('should sort correctly by second tag with global filter', () => {
+        // Arrange
+        const originalSettings = getSettings();
+        updateSettings({ globalFilter: '#task' });
+
+        const t1 = fromLine({ line: '- [ ] #task a #fff #aaa' });
+        const t2 = fromLine({ line: '- [ ] #task a #aaaa #aaaa' });
+        const t3 = fromLine({ line: '- [ ] #task a #ccc #bbb' });
+        const t4 = fromLine({ line: '- [ ] #task a #ggg #ccc' });
+        const t5 = fromLine({ line: '- [ ] #task a #bbb #iii' });
+        const t6 = fromLine({ line: '- [ ] #task a #aaa #jjj' });
+        const t7 = fromLine({ line: '- [ ] #task a #bbbb' });
+        const t8 = fromLine({ line: '- [ ] #task a' });
+        const expectedOrder = [t1, t2, t3, t4, t5, t6, t7, t8];
+
+        // Act
+        const result = Sort.by(
+            {
+                sorting: [
+                    {
+                        property: 'tag',
+                        reverse: false,
+                        propertyInstance: 2,
+                    },
+                ],
+            },
+            [t4, t7, t5, t2, t3, t1, t8, t6],
+        );
+
+        // Assert
+        expect(result).toEqual(expectedOrder);
+
+        // Cleanup
+        updateSettings(originalSettings);
+    });
+
+    it('should sort correctly reversed by second tag with global filter', () => {
+        // Arrange
+        const originalSettings = getSettings();
+        updateSettings({ globalFilter: '#task' });
+
+        const t1 = fromLine({ line: '- [ ] #task a #fff #aaa' });
+        const t2 = fromLine({ line: '- [ ] #task a #aaaa #aaaa' });
+        const t3 = fromLine({ line: '- [ ] #task a #ccc #bbb' });
+        const t4 = fromLine({ line: '- [ ] #task a #ggg #ccc' });
+        const t5 = fromLine({ line: '- [ ] #task a #bbb #iii' });
+        const t6 = fromLine({ line: '- [ ] #task a #aaa #jjj' });
+        const t7 = fromLine({ line: '- [ ] #task a #bbbb' });
+        const t8 = fromLine({ line: '- [ ] #task a' });
+        const expectedOrder = [t8, t7, t6, t5, t4, t3, t2, t1];
+
+        // Act
+        const result = Sort.by(
+            {
+                sorting: [
+                    {
+                        property: 'tag',
+                        reverse: true,
+                        propertyInstance: 2,
+                    },
+                ],
+            },
+            [t4, t7, t5, t2, t3, t1, t8, t6],
+        );
+
+        // Assert
+        expect(result).toEqual(expectedOrder);
 
         // Cleanup
         updateSettings(originalSettings);
