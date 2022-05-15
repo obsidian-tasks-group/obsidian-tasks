@@ -154,13 +154,13 @@ because the tasks starts before tomorrow. Only one of the dates needs to match.
 
 ### Tags
 
-- `tags (include|does not include) <tag>`
+- `tags (include|do not include) <tag>` (Alternative grammar `tag (includes|does not include) <tag>` matching description syntax)
   - Matches case-insensitive (disregards capitalization).
   - Disregards the global filter when matching.
-  - The `#` is optional.
+  - The `#` is optional on the tag so `#home` and `home` will work to match `#home`.
   - The match is partial so `tags include foo` will match `#foo/bar` and `#foo-bar`.
 
 #### Tag Query Examples
 
-- `tag includes #todo`
-- `tag does not include #todo`
+- `tags include #todo`
+- `tags do not include #todo`

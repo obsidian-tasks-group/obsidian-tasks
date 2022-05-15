@@ -37,7 +37,7 @@ You can sort tasks by the following properties:
 5. `done` (the date when the task was done)
 6. `path` (the path to the file that contains the task)
 7. `description` (the description of the task)
-8. `tag` (the description of the task)
+8. `tags` (the tags associated with the task)
 
 You can add multiple `sort by` query options, each on an extra line.
 The first sort has the highest priority.
