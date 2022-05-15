@@ -6,12 +6,24 @@ import { Recurrence } from './Recurrence';
 import { getSettings } from './Settings';
 import { Urgency } from './Urgency';
 
+/**
+ * Collection of status types supported by the plugin.
+ * TODO: Make this a class so it can support other types and easier mapping to status character.
+ * @export
+ * @enum {number}
+ */
 export enum Status {
     Todo = 'Todo',
     Done = 'Done',
 }
 
-// Sort low below none.
+/**
+ * When sorting, make sure low always comes after none. This way any tasks with low will be below any exiting
+ * tasks that have no priority which would be the default.
+ *
+ * @export
+ * @enum {number}
+ */
 export enum Priority {
     High = '1',
     Medium = '2',
@@ -19,6 +31,14 @@ export enum Priority {
     Low = '4',
 }
 
+/**
+ * Task encapsulates the properties of the MarkDown task along with
+ * the extensions provided by this plugin. This is used to parse and
+ * generate the markdown task for all updates and replacements.
+ *
+ * @export
+ * @class Task
+ */
 export class Task {
     public readonly status: Status;
     public readonly description: string;
@@ -69,7 +89,13 @@ export class Task {
     public static readonly recurrenceRegex = /🔁 ?([a-zA-Z0-9, !]+)$/iu;
 
     // Regex to match all hash tags, basically hash followed by anything but the characters in the negation.
-    public static readonly hashTags = /#[^ !@#$%^&*(),.?":{}|<>]*/g;
+    // To ensure URLs are not caught it is looking of beginning of string tag and any
+    // tag that has a space in front of it. Any # that has a character in front
+    // of it will be ignored.
+    // EXAMPLE:
+    // description: '#dog #car http://www/ddd#ere #house'
+    // matches: #dog, #car, #house
+    public static readonly hashTags = /(^|\s)#[^ !@#$%^&*(),.?":{}|<>]*/g;
 
     private _urgency: number | null = null;
 
@@ -293,7 +319,9 @@ export class Task {
         // The global filter will be removed from the collection.
         const hashTagMatch = description.match(this.hashTags);
         if (hashTagMatch !== null) {
-            tags = hashTagMatch.filter((tag) => tag !== globalFilter);
+            tags = hashTagMatch
+                .filter((tag) => tag !== globalFilter)
+                .map((tag) => tag.trim());
         }
 
         const task = new Task({

@@ -228,6 +228,22 @@ describe('parsing tags', () => {
             extractedTags: ['#tagone', '#tag/with/depth', '#tagtwo'],
             globalFilter: '#someglobaltasktag',
         },
+        {
+            markdownTask:
+                '- [ ] Export [Cloud Feedly feeds](http://cloud.feedly.com/#opml) #context/pc_clare 🔁 every 4 weeks on Sunday ⏳ 2022-05-15',
+            expectedDescription:
+                'Export [Cloud Feedly feeds](http://cloud.feedly.com/#opml) #context/pc_clare',
+            extractedTags: ['#context/pc_clare'],
+            globalFilter: '',
+        },
+        {
+            markdownTask:
+                '- [ ] Review [savings accounts and interest rates](https://www.moneysavingexpert.com/tips/2022/04/20/#hiya) #context/pc_clare ⏳ 2022-05-06',
+            expectedDescription:
+                'Review [savings accounts and interest rates](https://www.moneysavingexpert.com/tips/2022/04/20/#hiya) #context/pc_clare',
+            extractedTags: ['#context/pc_clare'],
+            globalFilter: '',
+        },
     ])(
         'should parse $markdownTask and extract $extractedTags',
         ({
@@ -273,6 +289,7 @@ describe('to string', () => {
         }) as Task;
 
         // Assert
+        expect(task).not.toBeNull();
         expect(task.toFileLineString()).toStrictEqual(line);
     });
 

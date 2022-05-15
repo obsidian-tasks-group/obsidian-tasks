@@ -154,7 +154,7 @@ because the tasks starts before tomorrow. Only one of the dates needs to match.
 
 ### Tags
 
-- `tags (include|do not include) <tag>`
+- `tags (include|does not include) <tag>`
   - Matches case-insensitive (disregards capitalization).
   - Disregards the global filter when matching.
   - The `#` is optional.

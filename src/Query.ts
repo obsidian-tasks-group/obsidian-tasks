@@ -54,7 +54,9 @@ export class Query {
     private readonly descriptionRegexp =
         /^description (includes|does not include) (.*)/;
 
-    private readonly tagRegexp = /^tags (include|do not include) (.*)/;
+    // Handles both ways of referencing the tags query.
+    private readonly tagRegexp =
+        /^(tag|tags) (includes|does not include|include|do not include) (.*)/;
 
     // If a tag is specified the user can also add a number to specify
     // which one to sort by if there is more than one.
@@ -482,19 +484,22 @@ export class Query {
     private parseTagFilter({ line }: { line: string }): void {
         const tagMatch = line.match(this.tagRegexp);
         if (tagMatch !== null) {
-            const filterMethod = tagMatch[1];
+            const filterMethod = tagMatch[2];
 
             // Search is done sans the hash. If it is provided then strip it off.
-            const search = tagMatch[2].replace(/^#/, '');
+            const search = tagMatch[3].replace(/^#/, '');
 
-            if (filterMethod === 'include') {
+            if (filterMethod === 'include' || filterMethod === 'includes') {
                 this._filters.push(
                     (task: Task) =>
                         task.tags.find((tag) =>
                             tag.toLowerCase().includes(search.toLowerCase()),
                         ) !== undefined,
                 );
-            } else if (tagMatch[1] === 'do not include') {
+            } else if (
+                tagMatch[2] === 'do not include' ||
+                tagMatch[2] === 'does not include'
+            ) {
                 this._filters.push(
                     (task: Task) =>
                         task.tags.find((tag) =>
@@ -502,10 +507,10 @@ export class Query {
                         ) == undefined,
                 );
             } else {
-                this._error = 'do not understand query filter (tag)';
+                this._error = 'do not understand query filter (tag/tags)';
             }
         } else {
-            this._error = 'do not understand query filter (tag)';
+            this._error = 'do not understand query filter (tag/tags)';
         }
     }
 
@@ -590,7 +595,7 @@ export class Query {
             this._sorting.push({
                 property: fieldMatch[1] as SortingProperty,
                 reverse: !!fieldMatch[2],
-                propertyInstance: isNaN(+fieldMatch[3]) ? 0 : +fieldMatch[3],
+                propertyInstance: isNaN(+fieldMatch[3]) ? 1 : +fieldMatch[3],
             });
         } else {
             this._error = 'do not understand query sorting';

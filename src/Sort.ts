@@ -7,7 +7,7 @@ import { getSettings } from './Settings';
 type Comparator = (a: Task, b: Task) => number;
 
 export class Sort {
-    static tagPropertyInstance: number = 0;
+    static tagPropertyInstance: number = 1;
 
     public static by(query: Pick<Query, 'sorting'>, tasks: Task[]): Task[] {
         const defaultComparators: Comparator[] = [
@@ -104,7 +104,6 @@ export class Sort {
         return Sort.compareByDate(a.doneDate, b.doneDate);
     }
 
-    // Currently sorts by first tag found only.
     private static compareByTag(a: Task, b: Task): -1 | 0 | 1 {
         // If no tags then assume they are equal.
         if (a.tags.length === 0 && b.tags.length === 0) {
@@ -117,22 +116,21 @@ export class Sort {
             return -1;
         }
 
+        // Arrays start at 0 but the users specify a tag starting at 1.
+        const tagInstanceToSortBy = Sort.tagPropertyInstance - 1;
+
         // If the tag collection is smaller than the instance
         // used to compare then they are just equal.
         if (
-            Sort.tagPropertyInstance >= a.tags.length ||
-            Sort.tagPropertyInstance >= b.tags.length
+            a.tags.length < Sort.tagPropertyInstance ||
+            b.tags.length < Sort.tagPropertyInstance
         ) {
             return 0;
         }
 
-        if (
-            a.tags[Sort.tagPropertyInstance] < b.tags[Sort.tagPropertyInstance]
-        ) {
+        if (a.tags[tagInstanceToSortBy] < b.tags[tagInstanceToSortBy]) {
             return -1;
-        } else if (
-            a.tags[Sort.tagPropertyInstance] > b.tags[Sort.tagPropertyInstance]
-        ) {
+        } else if (a.tags[tagInstanceToSortBy] > b.tags[tagInstanceToSortBy]) {
             return 1;
         } else {
             return 0;
