@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "node esbuild.config.mjs",
     "build": "node esbuild.config.mjs production",
-    "lint": "eslint ./src --fix && eslint ./tests --fix && tsc --noEmit --pretty && svelte-check",
+    "lint_comment": "// TODO: #655 Add markdown linting to the lint command.",
+    "lint": "eslint ./src --fix && eslint ./tests --fix && tsc --noEmit --pretty && svelte-check && markdownlint-cli2-fix \"**/*.md\" \"#node_modules\"",
     "test": "jest --ci",
     "test:dev": "jest --watch"
   },
@@ -36,6 +37,7 @@
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-prettier": "^3.3.1",
     "jest": "^27.3.1",
+    "markdownlint-cli2": "^0.4.0",
     "moment": "^2.29.1",
     "obsidian": "0.13.21",
     "prettier": "^2.2.1",

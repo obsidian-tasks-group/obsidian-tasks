@@ -19,7 +19,7 @@ If a task has no priority at all, it is considered between low and medium priori
 This means that the priority of 🔽 low tasks is considered lower than the priority of tasks without any specific priority.
 The idea is that you can easily filter out unimportant tasks without needing to assign a priority to all relevant tasks.
 
-```
+```markdown
 - [ ] take out the trash 🔼
 ```
 

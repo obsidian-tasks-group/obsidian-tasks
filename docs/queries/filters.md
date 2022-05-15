@@ -25,12 +25,12 @@ parent: Queries
 `<date>` filters can be given in natural language or in formal notation.
 The following are some examples of valid `<date>` filters as inspiration:
 
--   `2021-05-05`
--   `today`
--   `tomorrow`
--   `next monday`
--   `last friday`
--   `in two weeks`
+- `2021-05-05`
+- `today`
+- `tomorrow`
+- `next monday`
+- `last friday`
+- `in two weeks`
 
 Note that if it is Wednesday and you write `tuesday`, Tasks assumes you mean "yesterday", as that is the closest Tuesday.
 Use `next tuesday` instead if you mean "next tuesday".
@@ -65,13 +65,13 @@ Instead you would have two queries, one for each condition:
 
 ### Done Date
 
--   `done`
--   `not done`
--   `done (before|after|on) <date>`
+- `done`
+- `not done`
+- `done (before|after|on) <date>`
 
 ### Priority
 
--   `priority is (above|below)? (low|none|medium|high)`
+- `priority is (above|below)? (low|none|medium|high)`
 
 #### Examples
 
@@ -88,9 +88,9 @@ Instead you would have two queries, one for each condition:
 
 ### Start Date
 
--   `no start date`
--   `has start date`
--   `starts (before|after|on) <date>`
+- `no start date`
+- `has start date`
+- `starts (before|after|on) <date>`
 
 When filtering queries by [start date]({{ site.baseurl }}{% link getting-started/dates.md %}#-start),
 the result will include tasks without a start date.
@@ -104,19 +104,19 @@ Such filter could be:
 
 ### Scheduled Date
 
--   `no scheduled date`
--   `has scheduled date`
--   `scheduled (before|after|on) <date>`
+- `no scheduled date`
+- `has scheduled date`
+- `scheduled (before|after|on) <date>`
 
 ### Due Date
 
--   `no due date`
--   `has due date`
--   `due (before|after|on) <date>`
+- `no due date`
+- `has due date`
+- `due (before|after|on) <date>`
 
 ### Happens
 
--   `happens (before|after|on) <date>`
+- `happens (before|after|on) <date>`
 
 `happens` returns any task for a matching start date, scheduled date, _or_ due date.
 For example, `happens before tomorrow` will return all tasks that are starting, scheduled, or due earlier than tomorrow.
@@ -125,29 +125,29 @@ because the tasks starts before tomorrow. Only one of the dates needs to match.
 
 ### Recurrence
 
--   `is recurring`
--   `is not recurring`
+- `is recurring`
+- `is not recurring`
 
 ### File Path
 
--   `path (includes|does not include) <path>`
-    -   Matches case-insensitive (disregards capitalization).
+- `path (includes|does not include) <path>`
+  - Matches case-insensitive (disregards capitalization).
 
 ### Description
 
--   `description (includes|does not include) <string>`
-    -   Matches case-insensitive (disregards capitalization).
-    -   Disregards the global filter when matching.
+- `description (includes|does not include) <string>`
+  - Matches case-insensitive (disregards capitalization).
+  - Disregards the global filter when matching.
 
 ### Heading
 
--   `heading (includes|does not include) <string>`
-    -   Whether or not the heading preceding the task includes the given string.
-    -   Always tries to match the closest heading above the task, regardless of heading level.
-    -   `does not include` will match a task that does not have a preceding heading in its file.
-    -   Matches case-insensitive (disregards capitalization).
+- `heading (includes|does not include) <string>`
+  - Whether or not the heading preceding the task includes the given string.
+  - Always tries to match the closest heading above the task, regardless of heading level.
+  - `does not include` will match a task that does not have a preceding heading in its file.
+  - Matches case-insensitive (disregards capitalization).
 
 ### Sub-Items
 
--   `exclude sub-items`
-    -   When this is set, the result list will only include tasks that are not indented in their file. It will only show tasks that are top level list items in their list.
+- `exclude sub-items`
+  - When this is set, the result list will only include tasks that are not indented in their file. It will only show tasks that are top level list items in their list.
