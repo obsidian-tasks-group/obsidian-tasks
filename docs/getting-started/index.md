@@ -14,9 +14,11 @@ Now Tasks tracks that you need to take out the trash!
 
 To list all open tasks in a markdown file, simply add a [query]({{ site.baseurl }}{% link queries/index.md %}) as a tasks code block like so:
 
-    ```tasks
-    not done
-    ```
+````markdown
+```tasks
+not done
+```
+````
 
 Now you have a list of all open tasks! This is enough to get started with tasks.
 You can _optionally_ start using one or more of the other features that Tasks offers.
