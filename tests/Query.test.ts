@@ -506,8 +506,8 @@ describe('Query', () => {
     describe('grouping instructions', () => {
         it('should default to ungrouped', () => {
             // Arrange
-            const input = '';
-            const query = new Query({ source: input });
+            const source = '';
+            const query = new Query({ source });
 
             // Assert
             expect(query.grouping.length).toEqual(0);
