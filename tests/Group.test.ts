@@ -44,8 +44,8 @@ describe('Grouping tasks', () => {
         const inputs = [a, b, c];
 
         // Act
-        const group_by: GroupingProperty = 'path';
-        const grouping = [{ property: group_by }];
+        const groupBy: GroupingProperty = 'path';
+        const grouping = [{ property: groupBy }];
         const groups = Group.by(grouping, inputs);
 
         // Assert
