@@ -13,7 +13,7 @@ window.moment = moment;
 export function getHeadingsForAllTaskGroups(
     groupedTasks: IntermediateTaskGroupsStorage,
 ) {
-    const headings = new Array<GroupHeading>();
+    const headings: GroupHeading[] = [];
     const grouper = new GroupHeadings(groupedTasks);
     for (const [key] of groupedTasks) {
         const groupHeadings = grouper.getHeadingsForTaskGroup(key);
