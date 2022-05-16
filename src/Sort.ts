@@ -7,6 +7,8 @@ import { getSettings } from './Settings';
 type Comparator = (a: Task, b: Task) => number;
 
 export class Sort {
+    static tagPropertyInstance: number = 1;
+
     public static by(query: Pick<Query, 'sorting'>, tasks: Task[]): Task[] {
         const defaultComparators: Comparator[] = [
             Sort.compareByUrgency,
@@ -18,11 +20,14 @@ export class Sort {
 
         const userComparators: Comparator[] = [];
 
-        for (const { property, reverse } of query.sorting) {
+        for (const { property, reverse, propertyInstance } of query.sorting) {
             const comparator = Sort.comparators[property];
             userComparators.push(
                 reverse ? Sort.makeReversedComparator(comparator) : comparator,
             );
+            if (property === 'tag') {
+                Sort.tagPropertyInstance = propertyInstance;
+            }
         }
 
         return tasks.sort(
@@ -99,11 +104,41 @@ export class Sort {
         return Sort.compareByDate(a.doneDate, b.doneDate);
     }
 
-    // Currently sorts by first tag found only.
     private static compareByTag(a: Task, b: Task): -1 | 0 | 1 {
-        if (a.tags[0] < b.tags[0]) {
+        // If no tags then assume they are equal.
+        if (a.tags.length === 0 && b.tags.length === 0) {
+            return 0;
+        } else if (a.tags.length === 0) {
+            // a is less than b
+            return 1;
+        } else if (b.tags.length === 0) {
+            // b is less than a
             return -1;
-        } else if (a.tags[0] > b.tags[0]) {
+        }
+
+        // Arrays start at 0 but the users specify a tag starting at 1.
+        const tagInstanceToSortBy = Sort.tagPropertyInstance - 1;
+
+        if (
+            a.tags.length < Sort.tagPropertyInstance &&
+            b.tags.length >= Sort.tagPropertyInstance
+        ) {
+            return 1;
+        } else if (
+            b.tags.length < Sort.tagPropertyInstance &&
+            a.tags.length >= Sort.tagPropertyInstance
+        ) {
+            return -1;
+        } else if (
+            a.tags.length < Sort.tagPropertyInstance &&
+            b.tags.length < Sort.tagPropertyInstance
+        ) {
+            return 0;
+        }
+
+        if (a.tags[tagInstanceToSortBy] < b.tags[tagInstanceToSortBy]) {
+            return -1;
+        } else if (a.tags[tagInstanceToSortBy] > b.tags[tagInstanceToSortBy]) {
             return 1;
         } else {
             return 0;

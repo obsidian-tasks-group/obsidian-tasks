@@ -40,43 +40,6 @@ describe('parsing', () => {
         ).toStrictEqual(true);
     });
 
-    it('parses a task from a line and extract tags', () => {
-        // Arrange
-        const line =
-            '- [x] this is a done task #tagone #journal/daily 🗓 2021-09-12 ✅ 2021-06-20';
-        const path = 'this/is a path/to a/file.md';
-        const sectionStart = 1337;
-        const sectionIndex = 1209;
-        const precedingHeader = 'Eloquent Section';
-
-        // Act
-        const task = Task.fromLine({
-            line,
-            path,
-            sectionStart,
-            sectionIndex,
-            precedingHeader,
-        });
-
-        // Assert
-        expect(task).not.toBeNull();
-        expect(task!.description).toEqual(
-            'this is a done task #tagone #journal/daily',
-        );
-        expect(task!.status).toStrictEqual(Status.Done);
-        expect(task!.dueDate).not.toBeNull();
-        expect(
-            task!.dueDate!.isSame(moment('2021-09-12', 'YYYY-MM-DD')),
-        ).toStrictEqual(true);
-        expect(task!.doneDate).not.toBeNull();
-        expect(
-            task!.doneDate!.isSame(moment('2021-06-20', 'YYYY-MM-DD')),
-        ).toStrictEqual(true);
-        expect(task!.tags.length).toEqual(2);
-        expect(task!.tags[0]).toEqual('#tagone');
-        expect(task!.tags[1]).toEqual('#journal/daily');
-    });
-
     it('returns null when task does not have global filter', () => {
         // Arrange
         const originalSettings = getSettings();
@@ -168,6 +131,149 @@ describe('parsing', () => {
     });
 });
 
+type TagParsingExpectations = {
+    markdownTask: string;
+    expectedDescription: string;
+    extractedTags: string[];
+    globalFilter: string;
+};
+
+function constructTaskFromLine(line: string) {
+    const task = Task.fromLine({
+        line,
+        path: 'file.md',
+        sectionStart: 0,
+        sectionIndex: 0,
+        precedingHeader: '',
+    });
+    return task;
+}
+
+describe('parsing tags', () => {
+    test.each<TagParsingExpectations>([
+        {
+            markdownTask:
+                '- [x] this is a done task #tagone 🗓 2021-09-12 ✅ 2021-06-20',
+            expectedDescription: 'this is a done task #tagone',
+            extractedTags: ['#tagone'],
+            globalFilter: '',
+        },
+        {
+            markdownTask:
+                '- [x] this is a done task #tagone #tagtwo 🗓 2021-09-12 ✅ 2021-06-20',
+            expectedDescription: 'this is a done task #tagone #tagtwo',
+            extractedTags: ['#tagone', '#tagtwo'],
+            globalFilter: '',
+        },
+        {
+            markdownTask:
+                '- [ ] this is a normal task #tagone 🗓 2021-09-12 ✅ 2021-06-20',
+            expectedDescription: 'this is a normal task #tagone',
+            extractedTags: ['#tagone'],
+            globalFilter: '',
+        },
+        {
+            markdownTask:
+                '- [ ] this is a normal task #tagone #tagtwo 🗓 2021-09-12 ✅ 2021-06-20',
+            expectedDescription: 'this is a normal task #tagone #tagtwo',
+            extractedTags: ['#tagone', '#tagtwo'],
+            globalFilter: '',
+        },
+        {
+            markdownTask:
+                '- [ ] this is a normal task #tagone #tag/with/depth #tagtwo 🗓 2021-09-12 ✅ 2021-06-20',
+            expectedDescription:
+                'this is a normal task #tagone #tag/with/depth #tagtwo',
+            extractedTags: ['#tagone', '#tag/with/depth', '#tagtwo'],
+            globalFilter: '',
+        },
+
+        {
+            markdownTask:
+                '- [x] #someglobaltasktag this is a done task #tagone 🗓 2021-09-12 ✅ 2021-06-20',
+            expectedDescription:
+                '#someglobaltasktag this is a done task #tagone',
+            extractedTags: ['#tagone'],
+            globalFilter: '#someglobaltasktag',
+        },
+        {
+            markdownTask:
+                '- [x] #someglobaltasktag this is a done task #tagone #tagtwo 🗓 2021-09-12 ✅ 2021-06-20',
+            expectedDescription:
+                '#someglobaltasktag this is a done task #tagone #tagtwo',
+            extractedTags: ['#tagone', '#tagtwo'],
+            globalFilter: '#someglobaltasktag',
+        },
+        {
+            markdownTask:
+                '- [ ] #someglobaltasktag this is a normal task #tagone 🗓 2021-09-12 ✅ 2021-06-20',
+            expectedDescription:
+                '#someglobaltasktag this is a normal task #tagone',
+            extractedTags: ['#tagone'],
+            globalFilter: '#someglobaltasktag',
+        },
+        {
+            markdownTask:
+                '- [ ] #someglobaltasktag this is a normal task #tagone #tagtwo 🗓 2021-09-12 ✅ 2021-06-20',
+            expectedDescription:
+                '#someglobaltasktag this is a normal task #tagone #tagtwo',
+            extractedTags: ['#tagone', '#tagtwo'],
+            globalFilter: '#someglobaltasktag',
+        },
+        {
+            markdownTask:
+                '- [ ] #someglobaltasktag this is a normal task #tagone #tag/with/depth #tagtwo 🗓 2021-09-12 ✅ 2021-06-20',
+            expectedDescription:
+                '#someglobaltasktag this is a normal task #tagone #tag/with/depth #tagtwo',
+            extractedTags: ['#tagone', '#tag/with/depth', '#tagtwo'],
+            globalFilter: '#someglobaltasktag',
+        },
+        {
+            markdownTask:
+                '- [ ] Export [Cloud Feedly feeds](http://cloud.feedly.com/#opml) #context/pc_clare 🔁 every 4 weeks on Sunday ⏳ 2022-05-15',
+            expectedDescription:
+                'Export [Cloud Feedly feeds](http://cloud.feedly.com/#opml) #context/pc_clare',
+            extractedTags: ['#context/pc_clare'],
+            globalFilter: '',
+        },
+        {
+            markdownTask:
+                '- [ ] Review [savings accounts and interest rates](https://www.moneysavingexpert.com/tips/2022/04/20/#hiya) #context/pc_clare ⏳ 2022-05-06',
+            expectedDescription:
+                'Review [savings accounts and interest rates](https://www.moneysavingexpert.com/tips/2022/04/20/#hiya) #context/pc_clare',
+            extractedTags: ['#context/pc_clare'],
+            globalFilter: '',
+        },
+    ])(
+        'should parse $markdownTask and extract $extractedTags',
+        ({
+            markdownTask,
+            expectedDescription,
+            extractedTags,
+            globalFilter,
+        }) => {
+            // Arrange
+            const originalSettings = getSettings();
+            if (globalFilter != '') {
+                updateSettings({ globalFilter: globalFilter });
+            }
+
+            // Act
+            const task = constructTaskFromLine(markdownTask);
+
+            // Assert
+            expect(task).not.toBeNull();
+            expect(task!.description).toEqual(expectedDescription);
+            expect(task!.tags).toStrictEqual(extractedTags);
+
+            // Cleanup
+            if (globalFilter != '') {
+                updateSettings(originalSettings);
+            }
+        },
+    );
+});
+
 describe('to string', () => {
     it('retains the block link', () => {
         // Arrange
@@ -183,6 +289,7 @@ describe('to string', () => {
         }) as Task;
 
         // Assert
+        expect(task).not.toBeNull();
         expect(task.toFileLineString()).toStrictEqual(line);
     });
 
