@@ -6,8 +6,8 @@
   "scripts": {
     "dev": "node esbuild.config.mjs",
     "build": "node esbuild.config.mjs production",
-    "lint_comment": "// TODO: #655 Add markdown linting to the lint command.",
     "lint": "eslint ./src --fix && eslint ./tests --fix && tsc --noEmit --pretty && svelte-check && markdownlint-cli2-fix \"**/*.md\" \"#node_modules\"",
+    "lint-markdown": "markdownlint-cli2-fix \"**/*.md\" \"#node_modules\"",
     "test": "jest --ci",
     "test:dev": "jest --watch"
   },

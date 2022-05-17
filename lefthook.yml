@@ -14,6 +14,9 @@ pre-commit:
     lint:
       glob: "*.ts"
       run: yarn lint {staged_files} && git add {staged_files}
+    lint-markdown:
+      glob: "*.md"
+      run: yarn lint-markdown {staged_files} && git add {staged_files}
     test:
       glob: "*.ts"
       run: yarn test {staged_files} --findRelatedTests --passWithNoTests
