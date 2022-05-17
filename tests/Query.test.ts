@@ -503,6 +503,8 @@ describe('Query', () => {
         });
     });
 
+    // This tests the parsing of 'group by' instructions.
+    // Group.test.ts tests the actual grouping code.
     describe('grouping instructions', () => {
         it('should default to ungrouped', () => {
             // Arrange
