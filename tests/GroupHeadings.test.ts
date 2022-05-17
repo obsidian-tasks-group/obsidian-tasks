@@ -2,11 +2,11 @@
  * @jest-environment jsdom
  */
 import moment from 'moment';
-import { GroupHeading } from '../src/Group';
 import {
     GroupHeadings,
     IntermediateTaskGroupsStorage,
 } from '../src/GroupDetails';
+import { GroupHeading } from '../src/Query/GroupHeading';
 
 window.moment = moment;
 

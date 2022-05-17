@@ -9,8 +9,8 @@ import {
 
 import { State } from './Cache';
 import { replaceTaskWithTasks } from './File';
-import type { GroupHeading } from './Group';
 import { Query } from './Query';
+import type { GroupHeading } from './Query/GroupHeading';
 import { TaskModal } from './TaskModal';
 import type { Events } from './Events';
 import type { Task } from './Task';

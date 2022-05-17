@@ -1,5 +1,6 @@
-import { Group, GroupHeading } from './Group';
+import { Group } from './Group';
 import type { Grouping } from './Query';
+import { GroupHeading } from './Query/GroupHeading';
 import type { Task } from './Task';
 
 /*
