@@ -90,6 +90,9 @@ export class Group {
     }
 
     private static groupByFileName(task: Task): string {
+        // Note current limitation: Tasks from different notes with the
+        // same name will be grouped together, even though they are in
+        // different files and their links will look different.
         const filename = task.filename;
         if (filename == null) {
             return 'Unknown Location';
