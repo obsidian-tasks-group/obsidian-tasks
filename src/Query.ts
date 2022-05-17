@@ -1,5 +1,6 @@
 import * as chrono from 'chrono-node';
-import { Group, TaskGroups } from './Group';
+import { Group } from './Group';
+import type { TaskGroups } from './Query/TaskGroups';
 
 import { getSettings } from './Settings';
 import { LayoutOptions } from './LayoutOptions';
