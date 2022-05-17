@@ -280,7 +280,7 @@ export class TaskGroups {
     }
 
     /**
-     * The total number of tasks matching the query - after applying any 'limit' instruction.
+     * The total number of tasks matching the query.
      */
     totalTasksCount() {
         let totalTasksCount = 0;
