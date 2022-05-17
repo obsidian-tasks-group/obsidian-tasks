@@ -110,12 +110,8 @@ export class Group {
     }
 
     private static groupByHeading(task: Task): string {
-        const defaultHeading = '(No heading)';
-        if (task.precedingHeader == null) {
-            return defaultHeading;
-        }
-        if (task.precedingHeader.length == 0) {
-            return defaultHeading;
+        if (task.precedingHeader == null || task.precedingHeader.length == 0) {
+            return '(No heading)';
         }
         return task.precedingHeader;
     }
