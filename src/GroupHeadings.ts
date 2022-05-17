@@ -78,7 +78,7 @@ import type { IntermediateTaskGroupsStorage } from './Query/IntermediateTaskGrou
  * GroupHeadings calculates which headings need to be displayed, for
  * a given group of tasks.
  *
- * See the explanation in GroupDetails.ts for how it works.
+ * See the explanation in GroupHeadings.ts for how it works.
  */
 export class GroupHeadings {
     private lastHeadingAtLevel = new Array<string>();

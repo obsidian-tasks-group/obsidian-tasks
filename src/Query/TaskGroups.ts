@@ -1,4 +1,4 @@
-import { GroupHeadings } from '../GroupDetails';
+import { GroupHeadings } from '../GroupHeadings';
 import type { Grouping } from '../Query';
 import type { Task } from '../Task';
 import { IntermediateTaskGroups } from './IntermediateTaskGroups';
