@@ -24,7 +24,7 @@ export class Group {
      * Return the Grouper functions matching the 'group by' lines
      * @param grouping 0 or more Grouping values, one per 'group by' line
      */
-    public static getGroupersForGroups(grouping: Grouping[]) {
+    public static getGroupersForAllQueryGroupings(grouping: Grouping[]) {
         const groupers: Grouper[] = [];
         for (const { property } of grouping) {
             const comparator = Group.groupers[property];

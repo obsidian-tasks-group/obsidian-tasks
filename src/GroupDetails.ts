@@ -112,7 +112,7 @@ export class IntermediateTaskGroups {
             // with an empty group name.
             this.groups.set([], tasks);
         } else {
-            const groupers = Group.getGroupersForGroups(grouping);
+            const groupers = Group.getGroupersForAllQueryGroupings(grouping);
 
             for (const task of tasks as Task[]) {
                 const groupNames = Group.getGroupNamesForTask(groupers, task);
