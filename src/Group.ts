@@ -165,28 +165,10 @@ export class GroupHeading {
  */
 export class TaskGroup {
     /**
-     * Constructor for TaskGroup
-     * @param {string[]} groups - See groups() for details
-     * @param {GroupHeading[]} groupHeadings - See groupHeadings() for details
-     * @param tasks {Task[]} - See tasks() for details
-     */
-    constructor(
-        groups: string[],
-        groupHeadings: GroupHeading[],
-        tasks: Task[],
-    ) {
-        this._groups = groups;
-        this._groupHeadings = groupHeadings;
-        this._tasks = tasks;
-    }
-
-    /**
      * The names of the group properties for this set of tasks,
      * in the order of the 'group by' lines the user specified
      */
-    get groups(): string[] {
-        return this._groups;
-    }
+    public readonly groups: string[];
 
     /**
      * The headings to be displayed in front of this set of tasks,
@@ -195,16 +177,28 @@ export class TaskGroup {
      * It only contains the minimal set of headings required to separate
      * this group of tasks from the previous group of tasks.
      */
-    get groupHeadings(): GroupHeading[] {
-        return this._groupHeadings;
-    }
+    public readonly groupHeadings: GroupHeading[];
 
     /**
      * All the tasks that match the user's filters and that have the
      * group names exactly matching groups().
      */
-    get tasks(): Task[] {
-        return this._tasks;
+    public readonly tasks: Task[];
+
+    /**
+     * Constructor for TaskGroup
+     * @param {string[]} groups - See this.groups for details
+     * @param {GroupHeading[]} groupHeadings - See this.groupHeadings for details
+     * @param tasks {Task[]} - See this.tasks for details
+     */
+    constructor(
+        groups: string[],
+        groupHeadings: GroupHeading[],
+        tasks: Task[],
+    ) {
+        this.groups = groups;
+        this.groupHeadings = groupHeadings;
+        this.tasks = tasks;
     }
 
     /**
@@ -241,10 +235,6 @@ export class TaskGroup {
         output += this.tasksAsStringOfLines();
         return output;
     }
-
-    private readonly _groups: string[];
-    private readonly _groupHeadings: GroupHeading[];
-    private readonly _tasks: Task[];
 }
 
 /**
