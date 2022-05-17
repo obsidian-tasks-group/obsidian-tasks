@@ -29,6 +29,9 @@ export class TaskGroup {
      *
      * It only contains the minimal set of headings required to separate
      * this group of tasks from the previous group of tasks.
+     *
+     * If there were no 'group by' instructions in the tasks code block,
+     * this will be empty.
      */
     public readonly groupHeadings: GroupHeading[];
 

@@ -124,7 +124,10 @@ class QueryRenderChild extends MarkdownRenderChild {
             const tasksSortedLimitedGrouped =
                 this.query.applyQueryToTasks(tasks);
             for (const group of tasksSortedLimitedGrouped.groups) {
+                // If there were no 'group by' instructions, group.groupHeadings
+                // will be empty, and no headings will be added.
                 QueryRenderChild.addGroupHeadings(content, group.groupHeadings);
+
                 const { taskList } = await this.createTasksList({
                     tasks: group.tasks,
                     content: content,
