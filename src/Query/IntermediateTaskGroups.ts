@@ -8,9 +8,6 @@ import { Group } from './Group';
  * The keys of the map are the names of the groups.
  * For example, one set of keys might be ['Folder Name/', 'File Name']
  * and the values would be all the matching Tasks from that file.
- *
- * It would be nice to not export this, but at the time of writing,
- * it is used in some of the tests.
  */
 export class IntermediateTaskGroupsStorage extends Map<string[], Task[]> {}
 
