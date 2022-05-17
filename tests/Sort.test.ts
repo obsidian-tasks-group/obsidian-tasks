@@ -5,18 +5,8 @@ import moment from 'moment';
 
 window.moment = moment;
 
-import { Task } from '../src/Task';
 import { Sort } from '../src/Sort';
-
-function fromLine({ line, path = '' }: { line: string; path?: string }) {
-    return Task.fromLine({
-        line,
-        path,
-        precedingHeader: '',
-        sectionIndex: 0,
-        sectionStart: 0,
-    })!;
-}
+import { fromLine } from './TestHelpers';
 
 describe('Sort', () => {
     it('sorts correctly by default order', () => {
