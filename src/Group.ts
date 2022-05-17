@@ -255,34 +255,18 @@ export class TaskGroups {
         this.addTasks(initialGroups);
     }
 
-    private addTasks(initialGroups: IntermediateTaskGroups) {
-        // Get the headings
-        const grouper = new GroupHeadings(initialGroups.groups);
-
-        // Build a container of all the groups
-        for (const [groups, tasks] of initialGroups.groups) {
-            const groupHeadings = grouper.getHeadingsForTaskGroup(groups);
-            const taskGroup = new TaskGroup(groups, groupHeadings, tasks);
-            this.add(taskGroup);
-        }
-    }
-
-    private add(taskGroup: TaskGroup) {
-        this._groups.push(taskGroup);
-    }
-
     /**
      * All the tasks matching the query, grouped together, and in the order
      * that they should be displayed.
      */
-    get groups(): TaskGroup[] {
+    public get groups(): TaskGroup[] {
         return this._groups;
     }
 
     /**
      * The total number of tasks matching the query.
      */
-    totalTasksCount() {
+    public totalTasksCount() {
         let totalTasksCount = 0;
         for (const group of this.groups) {
             totalTasksCount += group.tasks.length;
@@ -305,5 +289,21 @@ export class TaskGroups {
         const totalTasksCount = this.totalTasksCount();
         output += `\n${totalTasksCount} tasks\n`;
         return output;
+    }
+
+    private addTasks(initialGroups: IntermediateTaskGroups) {
+        // Get the headings
+        const grouper = new GroupHeadings(initialGroups.groups);
+
+        // Build a container of all the groups
+        for (const [groups, tasks] of initialGroups.groups) {
+            const groupHeadings = grouper.getHeadingsForTaskGroup(groups);
+            const taskGroup = new TaskGroup(groups, groupHeadings, tasks);
+            this.add(taskGroup);
+        }
+    }
+
+    private add(taskGroup: TaskGroup) {
+        this._groups.push(taskGroup);
     }
 }
