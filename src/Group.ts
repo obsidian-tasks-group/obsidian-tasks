@@ -125,6 +125,9 @@ export class Group {
  * GroupHeading contains the data needed to render one heading for a group of tasks
  */
 export class GroupHeading {
+    public readonly nestingLevel: number;
+    public readonly name: string;
+
     /**
      * Construct a GroupHeading object
      * @param {number} nestingLevel - How nested the heading is.
@@ -133,20 +136,9 @@ export class GroupHeading {
      * @param {string} name - The text to be displayed for the group
      */
     constructor(nestingLevel: number, name: string) {
-        this._nestingLevel = nestingLevel;
-        this._name = name;
+        this.nestingLevel = nestingLevel;
+        this.name = name;
     }
-
-    get nestingLevel(): number {
-        return this._nestingLevel;
-    }
-
-    get name(): string {
-        return this._name;
-    }
-
-    private readonly _nestingLevel: number;
-    private readonly _name: string;
 }
 
 /**
