@@ -1,6 +1,6 @@
-import type { Grouping, GroupingProperty } from './Query';
-import { TaskGroups } from './Query/TaskGroups';
-import type { Task } from './Task';
+import type { Grouping, GroupingProperty } from '../Query';
+import type { Task } from '../Task';
+import { TaskGroups } from './TaskGroups';
 
 /**
  * A naming function, that takes a Task object and returns the corresponding group property name
