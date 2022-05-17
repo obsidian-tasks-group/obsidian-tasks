@@ -1,5 +1,5 @@
-import { GroupHeading } from './Query/GroupHeading';
-import type { IntermediateTaskGroupsStorage } from './Query/IntermediateTaskGroups';
+import { GroupHeading } from './GroupHeading';
+import type { IntermediateTaskGroupsStorage } from './IntermediateTaskGroups';
 
 /*
  * This file contains implementation details of Group.ts

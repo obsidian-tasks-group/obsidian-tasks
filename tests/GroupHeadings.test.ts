@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 import moment from 'moment';
-import { GroupHeadings } from '../src/GroupHeadings';
+import { GroupHeadings } from '../src/Query/GroupHeadings';
 import { GroupHeading } from '../src/Query/GroupHeading';
 import { IntermediateTaskGroupsStorage } from '../src/Query/IntermediateTaskGroups';
 
