@@ -229,11 +229,11 @@ class QueryRenderChild extends MarkdownRenderChild {
         // Is it possible to remove the repetition here?
         // Ideally, by creating a variable that contains h4, h5 or h6
         // and then only having one call to content.createEl().
-        if (group.nestingLevel == 0) {
+        if (group.nestingLevel === 0) {
             header = content.createEl('h4', {
                 cls: 'tasks-group-heading',
             });
-        } else if (group.nestingLevel == 1) {
+        } else if (group.nestingLevel === 1) {
             header = content.createEl('h5', {
                 cls: 'tasks-group-heading',
             });

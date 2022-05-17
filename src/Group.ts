@@ -94,7 +94,7 @@ export class Group {
         // same name will be grouped together, even though they are in
         // different files and their links will look different.
         const filename = task.filename;
-        if (filename == null) {
+        if (filename === null) {
             return 'Unknown Location';
         }
         return filename;
@@ -102,7 +102,7 @@ export class Group {
 
     private static groupByBacklink(task: Task): string {
         const linkText = task.getLinkText({ isFilenameUnique: true });
-        if (linkText == null) {
+        if (linkText === null) {
             return 'Unknown Location';
         }
         return linkText;
@@ -113,7 +113,10 @@ export class Group {
     }
 
     private static groupByHeading(task: Task): string {
-        if (task.precedingHeader == null || task.precedingHeader.length == 0) {
+        if (
+            task.precedingHeader === null ||
+            task.precedingHeader.length === 0
+        ) {
             return '(No heading)';
         }
         return task.precedingHeader;
