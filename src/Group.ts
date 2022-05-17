@@ -242,6 +242,8 @@ export class TaskGroup {
  * instructions in the task block.
  */
 export class TaskGroups {
+    private _groups: TaskGroup[] = new Array<TaskGroup>();
+
     /**
      * Constructor for TaskGroups
      * @param {Grouping[]} groups - 0 or more Grouping values,
@@ -305,6 +307,4 @@ export class TaskGroups {
         output += `\n${totalTasksCount} tasks\n`;
         return output;
     }
-
-    private _groups: TaskGroup[] = new Array<TaskGroup>();
 }
