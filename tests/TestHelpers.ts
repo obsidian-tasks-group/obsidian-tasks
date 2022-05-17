@@ -1,5 +1,23 @@
 import { Task } from '../src/Task';
 
+export function fromLine({
+    line,
+    path = '',
+    precedingHeader = '',
+}: {
+    line: string;
+    path?: string;
+    precedingHeader?: string | null;
+}) {
+    return Task.fromLine({
+        line,
+        path,
+        precedingHeader,
+        sectionIndex: 0,
+        sectionStart: 0,
+    })!;
+}
+
 export function createTasksFromMarkdown(
     tasksAsMarkdown: string,
     path: string,

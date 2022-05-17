@@ -4,27 +4,10 @@
 import moment from 'moment';
 import { Group } from '../src/Group';
 import type { Grouping, GroupingProperty } from '../src/Query';
-import { Task } from '../src/Task';
+import type { Task } from '../src/Task';
+import { fromLine } from './TestHelpers';
 
 window.moment = moment;
-
-export function fromLine({
-    line,
-    path = '',
-    precedingHeader = '',
-}: {
-    line: string;
-    path?: string;
-    precedingHeader?: string | null;
-}) {
-    return Task.fromLine({
-        line,
-        path,
-        precedingHeader,
-        sectionIndex: 0,
-        sectionStart: 0,
-    })!;
-}
 
 function checkGroupNameOfTask(
     task: Task,
