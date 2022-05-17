@@ -9,18 +9,18 @@ import { Task } from '../src/Task';
 window.moment = moment;
 
 export function fromLine({
-    taskLine,
+    line,
     path = '',
-    precedingHeading = '',
+    precedingHeader = '',
 }: {
-    taskLine: string;
+    line: string;
     path?: string;
-    precedingHeading?: string | null;
+    precedingHeader?: string | null;
 }) {
     return Task.fromLine({
-        line: taskLine,
+        line,
         path,
-        precedingHeader: precedingHeading,
+        precedingHeader,
         sectionIndex: 0,
         sectionStart: 0,
     })!;
@@ -38,9 +38,9 @@ function checkGroupNameOfTask(
 describe('Grouping tasks', () => {
     it('groups correctly by path', () => {
         // Arrange
-        const a = fromLine({ taskLine: '- [ ] a', path: 'file2.md' });
-        const b = fromLine({ taskLine: '- [ ] b', path: 'file1.md' });
-        const c = fromLine({ taskLine: '- [ ] c', path: 'file1.md' });
+        const a = fromLine({ line: '- [ ] a', path: 'file2.md' });
+        const b = fromLine({ line: '- [ ] b', path: 'file1.md' });
+        const c = fromLine({ line: '- [ ] c', path: 'file1.md' });
         const inputs = [a, b, c];
 
         // Act
@@ -71,9 +71,9 @@ describe('Grouping tasks', () => {
 
     it('groups correctly by default grouping', () => {
         // Arrange
-        const a = fromLine({ taskLine: '- [ ] a 📅 1970-01-01', path: '2.md' });
-        const b = fromLine({ taskLine: '- [ ] b 📅 1970-01-02', path: '3.md' });
-        const c = fromLine({ taskLine: '- [ ] c 📅 1970-01-02', path: '3.md' });
+        const a = fromLine({ line: '- [ ] a 📅 1970-01-01', path: '2.md' });
+        const b = fromLine({ line: '- [ ] b 📅 1970-01-02', path: '3.md' });
+        const c = fromLine({ line: '- [ ] c 📅 1970-01-02', path: '3.md' });
         const inputs = [a, b, c];
 
         // Act
@@ -113,15 +113,15 @@ describe('Grouping tasks', () => {
 
     it('sorts group names correctly', () => {
         const a = fromLine({
-            taskLine: '- [ ] third file path',
+            line: '- [ ] third file path',
             path: 'd/e/f.md',
         });
         const b = fromLine({
-            taskLine: '- [ ] second file path',
+            line: '- [ ] second file path',
             path: 'b/c/d.md',
         });
         const c = fromLine({
-            taskLine: '- [ ] first file path, alphabetically',
+            line: '- [ ] first file path, alphabetically',
             path: 'a/b/c.md',
         });
         const inputs = [a, b, c];
@@ -157,15 +157,15 @@ describe('Grouping tasks', () => {
     it('should create nested headings if multiple groups used', () => {
         // Arrange
         const t1 = fromLine({
-            taskLine: '- [ ] Task 1 - but path is 2nd, alphabetically',
+            line: '- [ ] Task 1 - but path is 2nd, alphabetically',
             path: 'folder_b/folder_c/file_c.md',
         });
         const t2 = fromLine({
-            taskLine: '- [ ] Task 2 - but path is 2nd, alphabetically',
+            line: '- [ ] Task 2 - but path is 2nd, alphabetically',
             path: 'folder_b/folder_c/file_d.md',
         });
         const t3 = fromLine({
-            taskLine: '- [ ] Task 3 - but path is 1st, alphabetically',
+            line: '- [ ] Task 3 - but path is 1st, alphabetically',
             path: 'folder_a/folder_b/file_c.md',
         });
         const tasks = [t1, t2, t3];
@@ -304,9 +304,9 @@ describe('Group names', () => {
         'assigns correct group name (%j)',
         ({ groupBy, taskLine, path, expectedGroupName, precedingHeading }) => {
             const task = fromLine({
-                taskLine: taskLine,
+                line: taskLine,
                 path: path ? path : '',
-                precedingHeading: precedingHeading,
+                precedingHeader: precedingHeading,
             });
             checkGroupNameOfTask(task, groupBy, expectedGroupName);
         },
