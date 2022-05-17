@@ -215,6 +215,13 @@ class QueryRenderChild extends MarkdownRenderChild {
         });
     }
 
+    /**
+     * Display headings for a group of tasks.
+     * @param content
+     * @param groupHeadings - The headings to display. This can be an empty array,
+     *                        in which case no headings will be added.
+     * @private
+     */
     private static addGroupHeadings(
         content: HTMLDivElement,
         groupHeadings: GroupHeading[],
