@@ -39,12 +39,12 @@ export class Group {
      * @param task
      */
     public static getGroupNamesForTask(groupers: Grouper[], task: Task) {
-        const keys = [];
+        const groupNames = [];
         for (const grouper of groupers) {
-            const this_key = grouper(task);
-            keys.push(this_key);
+            const groupName = grouper(task);
+            groupNames.push(groupName);
         }
-        return keys;
+        return groupNames;
     }
 
     /**
