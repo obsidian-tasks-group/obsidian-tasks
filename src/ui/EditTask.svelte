@@ -1,9 +1,10 @@
 <script lang="ts">
     import chrono from 'chrono-node';
+    import { Status } from '../Status';
     import { onMount } from 'svelte';
     import { Recurrence } from '../Recurrence';
     import { getSettings } from '../Settings';
-    import { Priority, Status, Task } from '../Task';
+    import { Priority, Task } from '../Task';
 
     export let task: Task;
     export let onSubmit: (updatedTasks: Task[]) => void | Promise<void>;
@@ -20,7 +21,7 @@
         doneDate: string;
     } = {
         description: '',
-        status: Status.Todo,
+        status: Status.TODO,
         priority: 'none',
         recurrenceRule: '',
         startDate: '',
@@ -313,7 +314,7 @@
                 <input
                     type="checkbox"
                     class="task-list-item-checkbox tasks-modal-checkbox"
-                    checked={editableTask.status === Status.Done}
+                    checked={editableTask.status === Status.DONE}
                     disabled
                 />
                 <code>{editableTask.status}</code>

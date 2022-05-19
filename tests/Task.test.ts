@@ -2,7 +2,8 @@
  * @jest-environment jsdom
  */
 import moment from 'moment';
-import { Status, Task } from '../src/Task';
+import { Status } from '../src/Status';
+import { Task } from '../src/Task';
 import { getSettings, updateSettings } from '../src/Settings';
 
 jest.mock('obsidian');
@@ -29,7 +30,7 @@ describe('parsing', () => {
         // Assert
         expect(task).not.toBeNull();
         expect(task!.description).toEqual('this is a done task');
-        expect(task!.status).toStrictEqual(Status.Done);
+        expect(task!.status).toStrictEqual(Status.DONE);
         expect(task!.dueDate).not.toBeNull();
         expect(
             task!.dueDate!.isSame(moment('2021-09-12', 'YYYY-MM-DD')),
@@ -86,7 +87,7 @@ describe('parsing', () => {
         // Assert
         expect(task).not.toBeNull();
         expect(task!.description).toEqual('this is a ✅ done task');
-        expect(task!.status).toStrictEqual(Status.Done);
+        expect(task!.status).toStrictEqual(Status.DONE);
         expect(task!.dueDate).not.toBeNull();
         expect(
             task!.dueDate!.isSame(moment('2021-09-12', 'YYYY-MM-DD')),
@@ -118,7 +119,7 @@ describe('parsing', () => {
         // Assert
         expect(task).not.toBeNull();
         expect(task!.description).toEqual('this is a ✅ done task');
-        expect(task!.status).toStrictEqual(Status.Done);
+        expect(task!.status).toStrictEqual(Status.DONE);
         expect(task!.dueDate).not.toBeNull();
         expect(
             task!.dueDate!.isSame(moment('2021-09-12', 'YYYY-MM-DD')),
@@ -329,7 +330,7 @@ describe('toggle done', () => {
 
         // Assert
         expect(toggled).not.toBeNull();
-        expect(toggled!.status).toStrictEqual(Status.Done);
+        expect(toggled!.status).toStrictEqual(Status.DONE);
         expect(toggled!.doneDate).not.toBeNull();
         expect(toggled!.blockLink).toEqual(' ^my-precious');
     });

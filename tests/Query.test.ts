@@ -4,7 +4,8 @@
 import moment from 'moment';
 import { getSettings, updateSettings } from '../src/Settings';
 import { Query } from '../src/Query';
-import { Priority, Status, Task } from '../src/Task';
+import { Status } from '../src/Status';
+import { Priority, Task } from '../src/Task';
 
 window.moment = moment;
 
@@ -52,7 +53,7 @@ describe('Query', () => {
             // Arrange
             const tasks = [
                 new Task({
-                    status: Status.Todo,
+                    status: Status.TODO,
                     description: 'description',
                     path: 'Ab/C D',
                     indentation: '',
@@ -70,7 +71,7 @@ describe('Query', () => {
                     tags: [],
                 }),
                 new Task({
-                    status: Status.Todo,
+                    status: Status.TODO,
                     description: 'description',
                     path: 'FF/C D',
                     indentation: '',

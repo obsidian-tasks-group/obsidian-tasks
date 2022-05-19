@@ -2,12 +2,14 @@ export interface Settings {
     globalFilter: string;
     removeGlobalFilter: boolean;
     setDoneDate: boolean;
+    status_types: Array<[string, string, string]>;
 }
 
 const defaultSettings: Settings = {
     globalFilter: '',
     removeGlobalFilter: false,
     setDoneDate: true,
+    status_types: [['', '', '']],
 };
 
 let settings: Settings = { ...defaultSettings };

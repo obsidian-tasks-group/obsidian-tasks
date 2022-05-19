@@ -1,4 +1,5 @@
 import { Plugin } from 'obsidian';
+import { Status } from './Status';
 
 import { Cache } from './Cache';
 import { Commands } from './Commands';
@@ -9,14 +10,18 @@ import { newLivePreviewExtension } from './LivePreviewExtension';
 import { QueryRenderer } from './QueryRenderer';
 import { getSettings, updateSettings } from './Settings';
 import { SettingsTab } from './SettingsTab';
+import { StatusRegistry } from './StatusRegistry';
 
 export default class TasksPlugin extends Plugin {
     private cache: Cache | undefined;
     public inlineRenderer: InlineRenderer | undefined;
     public queryRenderer: QueryRenderer | undefined;
+    public statusRegistry: StatusRegistry | undefined;
 
     async onload() {
-        console.log('loading plugin "tasks"');
+        console.log(
+            `loading plugin "${this.manifest.name}" v${this.manifest.version}`,
+        );
 
         await this.loadSettings();
         this.addSettingTab(new SettingsTab({ plugin: this }));
@@ -26,7 +31,7 @@ export default class TasksPlugin extends Plugin {
             vault: this.app.vault,
         });
 
-        const events = new Events({ obsidianEents: this.app.workspace });
+        const events = new Events({ obsidianEvents: this.app.workspace });
         this.cache = new Cache({
             metadataCache: this.app.metadataCache,
             vault: this.app.vault,
@@ -34,13 +39,31 @@ export default class TasksPlugin extends Plugin {
         });
         this.inlineRenderer = new InlineRenderer({ plugin: this });
         this.queryRenderer = new QueryRenderer({ plugin: this, events });
+        this.statusRegistry = StatusRegistry.getInstance();
+
+        await this.loadTaskStatuses();
 
         this.registerEditorExtension(newLivePreviewExtension());
         new Commands({ plugin: this });
     }
 
+    async loadTaskStatuses() {
+        const { status_types } = getSettings();
+
+        status_types.forEach((status_type) => {
+            console.log(
+                `${this.manifest.name}: Adding custom status - [${status_type[0]}] ${status_type[1]} -> ${status_type[2]} `,
+            );
+            this.statusRegistry?.add(
+                new Status(status_type[0], status_type[1], status_type[2]),
+            );
+        });
+    }
+
     onunload() {
-        console.log('unloading plugin "tasks"');
+        console.log(
+            `unloading plugin "${this.manifest.name}" v${this.manifest.version}`,
+        );
         this.cache?.unload();
     }
 

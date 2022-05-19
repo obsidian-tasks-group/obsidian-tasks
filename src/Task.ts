@@ -1,21 +1,12 @@
 import type { Moment } from 'moment';
 import { Component, MarkdownRenderer } from 'obsidian';
+import { StatusRegistry } from './StatusRegistry';
+import type { Status } from './Status';
 import { replaceTaskWithTasks } from './File';
 import { LayoutOptions } from './LayoutOptions';
 import { Recurrence } from './Recurrence';
 import { getSettings } from './Settings';
 import { Urgency } from './Urgency';
-
-/**
- * Collection of status types supported by the plugin.
- * TODO: Make this a class so it can support other types and easier mapping to status character.
- * @export
- * @enum {number}
- */
-export enum Status {
-    Todo = 'Todo',
-    Done = 'Done',
-}
 
 /**
  * When sorting, make sure low always comes after none. This way any tasks with low will be below any exiting
@@ -200,15 +191,11 @@ export class Task {
         let description = body;
         const indentation = regexMatch[1];
 
-        // Get the status of the task, only todo and done supported.
+        // Get the status of the task.
         const statusString = regexMatch[2].toLowerCase();
-        let status: Status;
-        switch (statusString) {
-            case ' ':
-                status = Status.Todo;
-                break;
-            default:
-                status = Status.Done;
+        const status = StatusRegistry.getInstance().byIndicator(statusString);
+        if (status === null) {
+            throw new Error(`Missing status indicator: ${statusString}`);
         }
 
         // Match for block link and remove if found. Always expected to be
@@ -407,7 +394,7 @@ export class Task {
         const checkbox = li.createEl('input');
         checkbox.addClass('task-list-item-checkbox');
         checkbox.type = 'checkbox';
-        if (this.status !== Status.Todo) {
+        if (this.status.isCompleted()) {
             checkbox.checked = true;
             li.addClass('is-checked');
         }
@@ -527,8 +514,9 @@ export class Task {
      * task is not recurring, it will return `[toggled]`.
      */
     public toggle(): Task[] {
-        const newStatus: Status =
-            this.status === Status.Todo ? Status.Done : Status.Todo;
+        const newStatus = StatusRegistry.getInstance().getNextStatus(
+            this.status,
+        );
 
         let newDoneDate = null;
 
@@ -538,7 +526,7 @@ export class Task {
             dueDate: Moment | null;
         } | null = null;
 
-        if (newStatus !== Status.Todo) {
+        if (newStatus.isCompleted()) {
             // Set done date only if setting value is true
             const { setDoneDate } = getSettings();
             if (setDoneDate) {
@@ -555,7 +543,7 @@ export class Task {
             ...this,
             status: newStatus,
             doneDate: newDoneDate,
-            originalStatusCharacter: newStatus === Status.Done ? 'x' : ' ',
+            originalStatusCharacter: newStatus.indicator,
         });
 
         const newTasks: Task[] = [];

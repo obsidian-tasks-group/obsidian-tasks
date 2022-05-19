@@ -78,5 +78,101 @@ export class SettingsTab extends PluginSettingTab {
                         await this.plugin.saveSettings();
                     });
             });
+
+        containerEl.createEl('h3', { text: 'Tasks Status Types' });
+        containerEl.createEl('p', {
+            text: 'If you want to have the tasks support additional statuses outside of todo and done add them here with the status indicator.',
+        });
+
+        const { status_types } = getSettings();
+
+        status_types.forEach((status_type) => {
+            new Setting(this.containerEl)
+                .addExtraButton((extra) => {
+                    extra
+                        .setIcon('cross')
+                        .setTooltip('Delete')
+                        .onClick(async () => {
+                            const index = status_types.indexOf(status_type);
+                            if (index > -1) {
+                                status_types.splice(index, 1);
+                                updateSettings({
+                                    status_types: status_types,
+                                });
+                                await this.plugin.saveSettings();
+                                // Force refresh
+                                this.display();
+                            }
+                        });
+                })
+                .addText((text) => {
+                    const t = text
+                        .setPlaceholder('Status symbol')
+                        .setValue(status_type[0])
+                        .onChange(async (new_symbol) => {
+                            const index = status_types.indexOf(status_type);
+                            if (index > -1) {
+                                status_types[index][0] = new_symbol;
+                                updateSettings({
+                                    status_types: status_types,
+                                });
+                                await this.plugin.saveSettings();
+                            }
+                        });
+
+                    return t;
+                })
+                .addText((text) => {
+                    const t = text
+                        .setPlaceholder('Status name')
+                        .setValue(status_type[1])
+                        .onChange(async (new_name) => {
+                            const index = status_types.indexOf(status_type);
+                            if (index > -1) {
+                                status_types[index][1] = new_name;
+                                updateSettings({
+                                    status_types: status_types,
+                                });
+                                await this.plugin.saveSettings();
+                            }
+                        });
+                    return t;
+                })
+                .addText((text) => {
+                    const t = text
+                        .setPlaceholder('Next status symbol')
+                        .setValue(status_type[2])
+                        .onChange(async (new_symbol) => {
+                            const index = status_types.indexOf(status_type);
+                            if (index > -1) {
+                                status_types[index][2] = new_symbol;
+                                updateSettings({
+                                    status_types: status_types,
+                                });
+                                await this.plugin.saveSettings();
+                            }
+                        });
+
+                    return t;
+                });
+        });
+
+        this.containerEl.createEl('div');
+
+        const setting = new Setting(this.containerEl).addButton((button) => {
+            button
+                .setButtonText('Add New Task Status')
+                .setCta()
+                .onClick(async () => {
+                    status_types.push(['', '', '']);
+                    updateSettings({
+                        status_types: status_types,
+                    });
+                    await this.plugin.saveSettings();
+                    // Force refresh
+                    this.display();
+                });
+        });
+        setting.infoEl.remove();
     }
 }

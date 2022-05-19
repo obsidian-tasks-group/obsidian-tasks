@@ -75,9 +75,9 @@ export class Sort {
     }
 
     private static compareByStatus(a: Task, b: Task): -1 | 0 | 1 {
-        if (a.status < b.status) {
+        if (a.status.indicator > b.status.indicator) {
             return 1;
-        } else if (a.status > b.status) {
+        } else if (a.status.indicator < b.status.indicator) {
             return -1;
         } else {
             return 0;

@@ -3,7 +3,8 @@ import * as chrono from 'chrono-node';
 import { getSettings } from './Settings';
 import { LayoutOptions } from './LayoutOptions';
 import { Sort } from './Sort';
-import { Priority, Status, Task } from './Task';
+import { Status } from './Status';
+import { Priority, Task } from './Task';
 
 export type SortingProperty =
     | 'urgency'
@@ -88,12 +89,12 @@ export class Query {
                         break;
                     case line === this.doneString:
                         this._filters.push(
-                            (task) => task.status === Status.Done,
+                            (task) => task.status === Status.DONE,
                         );
                         break;
                     case line === this.notDoneString:
                         this._filters.push(
-                            (task) => task.status !== Status.Done,
+                            (task) => task.status !== Status.DONE,
                         );
                         break;
                     case line === this.recurringString:

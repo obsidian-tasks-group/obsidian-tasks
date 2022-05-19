@@ -1,6 +1,7 @@
 import { App, Editor, MarkdownView, View } from 'obsidian';
 import { TaskModal } from '../TaskModal';
-import { Priority, Status, Task } from '../Task';
+import { Status } from '../Status';
+import { Priority, Task } from '../Task';
 
 export const createOrEdit = (
     checking: boolean,
@@ -64,7 +65,7 @@ const taskFromLine = ({ line, path }: { line: string; path: string }): Task => {
         // Should never happen; everything in the regex is optional.
         console.error('Tasks: Cannot create task on line:', line);
         return new Task({
-            status: Status.Todo,
+            status: Status.TODO,
             description: '',
             path,
             indentation: '',
@@ -86,7 +87,7 @@ const taskFromLine = ({ line, path }: { line: string; path: string }): Task => {
 
     const indentation: string = nonTaskMatch[1];
     const statusString: string = nonTaskMatch[3] ?? ' ';
-    const status = statusString === ' ' ? Status.Todo : Status.Done;
+    const status = statusString === ' ' ? Status.TODO : Status.DONE;
     let description: string = nonTaskMatch[4];
 
     const blockLinkMatch = line.match(Task.blockLinkRegex);
