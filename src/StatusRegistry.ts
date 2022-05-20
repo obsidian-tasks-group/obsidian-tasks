@@ -12,6 +12,19 @@ export class StatusRegistry {
     private _registeredStatuses: Status[] = [];
 
     /**
+     * Returns all the registered statuses minus the empty status.
+     *
+     * @readonly
+     * @type {Status[]}
+     * @memberof StatusRegistry
+     */
+    public get registeredStatuses(): Status[] {
+        return this._registeredStatuses.filter(
+            ({ indicator }) => indicator !== Status.EMPTY.indicator,
+        );
+    }
+
+    /**
      * Creates an instance of Status and registers it for use. It will also check to see
      * if the default todo and done are registered and if not handle it internally.
      *
@@ -68,7 +81,7 @@ export class StatusRegistry {
     /**
      * Returns the registered status by the name assigned by the user.
      *
-     * @param {string} name
+     * @param {string} nameToFind
      * @return {*}  {Status}
      * @memberof StatusRegistry
      */
@@ -103,14 +116,6 @@ export class StatusRegistry {
      * @memberof StatusRegistry
      */
     public getNextStatus(status: Status): Status {
-        if (status.indicator === ' ') {
-            return Status.DONE;
-        }
-
-        if (status.indicator === 'x') {
-            return Status.TODO;
-        }
-
         if (status.nextStatusIndicator !== '') {
             const nextStatus = this.byIndicator(status.nextStatusIndicator);
             if (nextStatus !== null) {
@@ -157,14 +162,16 @@ export class StatusRegistry {
      * @memberof StatusRegistry
      */
     private addDefaultStatusTypes(): void {
-        if (!this.hasIndicator('')) {
-            this.add(Status.EMPTY);
-        }
-        if (!this.hasIndicator('x')) {
-            this.add(Status.DONE);
-        }
-        if (!this.hasIndicator(' ')) {
-            this.add(Status.TODO);
-        }
+        const defaultStatuses = [
+            Status.TODO,
+            Status.IN_PROGRESS,
+            Status.DONE,
+            Status.CANCELLED,
+            Status.EMPTY,
+        ];
+
+        defaultStatuses.forEach((status) => {
+            this.add(status);
+        });
     }
 }

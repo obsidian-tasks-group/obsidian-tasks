@@ -50,6 +50,9 @@ export default class TasksPlugin extends Plugin {
     async loadTaskStatuses() {
         const { status_types } = getSettings();
 
+        // Reset the registry as this may also come from a settings add/delete.
+        this.statusRegistry?.clearStatuses();
+
         status_types.forEach((status_type) => {
             console.log(
                 `${this.manifest.name}: Adding custom status - [${status_type[0]}] ${status_type[1]} -> ${status_type[2]} `,
@@ -74,5 +77,6 @@ export default class TasksPlugin extends Plugin {
 
     async saveSettings() {
         await this.saveData(getSettings());
+        await this.loadTaskStatuses();
     }
 }

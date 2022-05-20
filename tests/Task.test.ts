@@ -314,7 +314,7 @@ describe('to string', () => {
 });
 
 describe('toggle done', () => {
-    it('retains the block link', () => {
+    it('retains the block link through status transitions', () => {
         // Arrange
         const line = '- [ ] this is a task 📅 2021-09-12 ^my-precious';
 
@@ -330,8 +330,8 @@ describe('toggle done', () => {
 
         // Assert
         expect(toggled).not.toBeNull();
-        expect(toggled!.status).toStrictEqual(Status.DONE);
-        expect(toggled!.doneDate).not.toBeNull();
+        expect(toggled!.status).toStrictEqual(Status.IN_PROGRESS);
+        expect(toggled!.doneDate).toBeNull();
         expect(toggled!.blockLink).toEqual(' ^my-precious');
     });
 
@@ -570,7 +570,7 @@ describe('toggle done', () => {
                 .mockReturnValue(moment(today).valueOf());
 
             const line = [
-                '- [ ] I am task',
+                '- [/] I am task in progress',
                 `🔁 ${interval}`,
                 !!scheduled && `⏳ ${scheduled}`,
                 !!due && `📅 ${due}`,

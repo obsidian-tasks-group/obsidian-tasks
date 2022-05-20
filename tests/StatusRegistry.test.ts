@@ -22,6 +22,8 @@ describe('StatusRegistry', () => {
         expect(statusRegistry.byIndicator('x')).toEqual(Status.DONE);
         expect(statusRegistry.byIndicator('')).toEqual(Status.EMPTY);
         expect(statusRegistry.byIndicator(' ')).toEqual(Status.TODO);
+        expect(statusRegistry.byIndicator('-')).toEqual(Status.CANCELLED);
+        expect(statusRegistry.byIndicator('/')).toEqual(Status.IN_PROGRESS);
     });
 
     it('should allow task to toggle through standard transitions', () => {
@@ -47,10 +49,40 @@ describe('StatusRegistry', () => {
         expect(task).not.toBeNull();
         expect(task!.status).toEqual(Status.TODO);
 
-        const toggledDone = task?.toggle()[0];
+        const toggledInProgress = task?.toggle()[0];
+        expect(toggledInProgress?.status).toEqual(Status.IN_PROGRESS);
+
+        const toggledDone = toggledInProgress?.toggle()[0];
         expect(toggledDone?.status).toEqual(Status.DONE);
 
         const toggledTodo = toggledDone?.toggle()[0];
+        expect(toggledTodo?.status).toEqual(Status.TODO);
+    });
+
+    it('should allow task to toggle from cancelled to todo', () => {
+        // Arrange
+        const statusRegistry = StatusRegistry.getInstance();
+        statusRegistry.clearStatuses();
+        const line = '- [-] This is a cancelled task';
+        const path = 'file.md';
+        const sectionStart = 1337;
+        const sectionIndex = 1209;
+        const precedingHeader = 'Eloquent Section';
+        const task = Task.fromLine({
+            line,
+            path,
+            sectionStart,
+            sectionIndex,
+            precedingHeader,
+        });
+
+        // Act
+
+        // Assert
+        expect(task).not.toBeNull();
+        expect(task!.status).toEqual(Status.CANCELLED);
+
+        const toggledTodo = task?.toggle()[0];
         expect(toggledTodo?.status).toEqual(Status.TODO);
     });
 

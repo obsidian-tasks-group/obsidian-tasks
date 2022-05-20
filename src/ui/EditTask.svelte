@@ -5,6 +5,7 @@
     import { Recurrence } from '../Recurrence';
     import { getSettings } from '../Settings';
     import { Priority, Task } from '../Task';
+    import { StatusRegistry } from '../StatusRegistry';
 
     export let task: Task;
     export let onSubmit: (updatedTasks: Task[]) => void | Promise<void>;
@@ -35,6 +36,7 @@
     let parsedDueDate: string = '';
     let parsedRecurrence: string = '';
     let parsedDone: string = '';
+    let statusOptions = StatusRegistry.getInstance().registeredStatuses;
 
     $: {
         if (!editableTask.startDate) {
@@ -309,15 +311,26 @@
         </div>
         <hr />
         <div class="tasks-modal-section">
+            <label for="status">Status </label>
+            <select
+                bind:value={editableTask.status}
+                id="status"
+                class="dropdown"
+            >
+                {#each statusOptions as status}
+                    <option value={status}>{status.name}</option>
+                {/each}
+            </select>
+        </div>
+        <div class="tasks-modal-section">
             <div>
-                Status:
+                Completed:
                 <input
                     type="checkbox"
                     class="task-list-item-checkbox tasks-modal-checkbox"
                     checked={editableTask.status === Status.DONE}
                     disabled
                 />
-                <code>{editableTask.status}</code>
             </div>
             <div>
                 Done on:

@@ -1,4 +1,5 @@
 import { App, Editor, MarkdownView, View } from 'obsidian';
+import { StatusRegistry } from 'StatusRegistry';
 import { TaskModal } from '../TaskModal';
 import { Status } from '../Status';
 import { Priority, Task } from '../Task';
@@ -69,7 +70,6 @@ const taskFromLine = ({ line, path }: { line: string; path: string }): Task => {
             description: '',
             path,
             indentation: '',
-            originalStatusCharacter: ' ',
             priority: Priority.None,
             startDate: null,
             scheduledDate: null,
@@ -87,7 +87,7 @@ const taskFromLine = ({ line, path }: { line: string; path: string }): Task => {
 
     const indentation: string = nonTaskMatch[1];
     const statusString: string = nonTaskMatch[3] ?? ' ';
-    const status = statusString === ' ' ? Status.TODO : Status.DONE;
+    const status = StatusRegistry.getInstance().byIndicator(statusString);
     let description: string = nonTaskMatch[4];
 
     const blockLinkMatch = line.match(Task.blockLinkRegex);
@@ -102,7 +102,6 @@ const taskFromLine = ({ line, path }: { line: string; path: string }): Task => {
         description,
         path,
         indentation,
-        originalStatusCharacter: statusString,
         blockLink,
         priority: Priority.None,
         startDate: null,

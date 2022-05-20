@@ -1,4 +1,4 @@
-import { PluginSettingTab, Setting } from 'obsidian';
+import { Notice, PluginSettingTab, Setting } from 'obsidian';
 import type TasksPlugin from './main';
 import { getSettings, updateSettings } from './Settings';
 
@@ -79,10 +79,21 @@ export class SettingsTab extends PluginSettingTab {
                     });
             });
 
+        containerEl.createEl('hr');
         containerEl.createEl('h3', { text: 'Tasks Status Types' });
-        containerEl.createEl('p', {
-            text: 'If you want to have the tasks support additional statuses outside of todo and done add them here with the status indicator.',
+        const customStatusIntro = containerEl.createEl('p', {
+            text: 'If you want to have the tasks support additional statuses outside of the default ones add them here with the status indicator. ',
         });
+        customStatusIntro.insertAdjacentHTML(
+            'beforeend',
+            'By default the following statuses are supported:\n' +
+                '<ul>\n' +
+                '<li><strong>- [ ] Todo</strong> - This has a {space} between the brackets. Will toggle to In Progress.</li>\n' +
+                '<li><strong>- [/] In Progress</strong> - This has a {/} between the brackets. Will toggle to Done.</li>\n' +
+                '<li><strong>- [x] Done</strong> - This has a {x} between the brackets. Will toggle to Todo.</li>\n' +
+                '<li><strong>- [-] Cancelled</strong> - This has a {-} between the brackets. Will toggle to Todo.</li>\n' +
+                '</ul>\n',
+        );
 
         const { status_types } = getSettings();
 
@@ -110,14 +121,26 @@ export class SettingsTab extends PluginSettingTab {
                         .setPlaceholder('Status symbol')
                         .setValue(status_type[0])
                         .onChange(async (new_symbol) => {
-                            const index = status_types.indexOf(status_type);
-                            if (index > -1) {
-                                status_types[index][0] = new_symbol;
+                            // Check to see if they are adding in defaults and block. UI provides this information already.
+                            if ([' ', 'x', '-', '/'].includes(new_symbol)) {
+                                new Notice(
+                                    `The symbol ${new_symbol} is already in use.`,
+                                );
                                 updateSettings({
                                     status_types: status_types,
                                 });
                                 await this.plugin.saveSettings();
+                                // Force refresh
+                                this.display();
+                                return;
                             }
+
+                            await this.updateStatusSetting(
+                                status_types,
+                                status_type,
+                                0,
+                                new_symbol,
+                            );
                         });
 
                     return t;
@@ -127,14 +150,12 @@ export class SettingsTab extends PluginSettingTab {
                         .setPlaceholder('Status name')
                         .setValue(status_type[1])
                         .onChange(async (new_name) => {
-                            const index = status_types.indexOf(status_type);
-                            if (index > -1) {
-                                status_types[index][1] = new_name;
-                                updateSettings({
-                                    status_types: status_types,
-                                });
-                                await this.plugin.saveSettings();
-                            }
+                            await this.updateStatusSetting(
+                                status_types,
+                                status_type,
+                                1,
+                                new_name,
+                            );
                         });
                     return t;
                 })
@@ -143,21 +164,19 @@ export class SettingsTab extends PluginSettingTab {
                         .setPlaceholder('Next status symbol')
                         .setValue(status_type[2])
                         .onChange(async (new_symbol) => {
-                            const index = status_types.indexOf(status_type);
-                            if (index > -1) {
-                                status_types[index][2] = new_symbol;
-                                updateSettings({
-                                    status_types: status_types,
-                                });
-                                await this.plugin.saveSettings();
-                            }
+                            await this.updateStatusSetting(
+                                status_types,
+                                status_type,
+                                2,
+                                new_symbol,
+                            );
                         });
 
                     return t;
                 });
         });
 
-        this.containerEl.createEl('div');
+        containerEl.createEl('div');
 
         const setting = new Setting(this.containerEl).addButton((button) => {
             button
@@ -174,5 +193,101 @@ export class SettingsTab extends PluginSettingTab {
                 });
         });
         setting.infoEl.remove();
+
+        const addStatusesSupportedByMinimalTheme = new Setting(
+            this.containerEl,
+        ).addButton((button) => {
+            button
+                .setButtonText(
+                    'Add all Status types supported by Minimal Theme',
+                )
+                .setCta()
+                .onClick(async () => {
+                    const minimalSupportedStatuses: Array<
+                        [string, string, string]
+                    > = [
+                        ['>', 'Forwarded', 'x'],
+                        ['<', 'Schedule', 'x'],
+                        ['?', 'Question', 'x'],
+                        ['/', 'Incomplete', 'x'],
+                        ['!', 'Important', 'x'],
+                        ['"', 'Quote', 'x'],
+                        ['-', 'Canceled', 'x'],
+                        ['*', 'Star', 'x'],
+                        ['l', 'Location', 'x'],
+                        ['i', 'Info', 'x'],
+                        ['S', 'Amount/savings/money', 'x'],
+                        ['I', 'Idea/lightbulb', 'x'],
+                        ['f', 'Fire', 'x'],
+                        ['k', 'Key', 'x'],
+                        ['u', 'Up', 'x'],
+                        ['d', 'Down', 'x'],
+                        ['w', 'Win', 'x'],
+                        ['p', 'Pros', 'x'],
+                        ['c', 'Cons', 'x'],
+                        ['b', 'Bookmark', 'x'],
+                    ];
+
+                    minimalSupportedStatuses.forEach((importedStatus) => {
+                        console.log(importedStatus);
+                        const hasStatus = status_types.find((element) => {
+                            return (
+                                element[0] == importedStatus[0] &&
+                                element[1] == importedStatus[1] &&
+                                element[2] == importedStatus[2]
+                            );
+                        });
+                        if (!hasStatus) {
+                            status_types.push(importedStatus);
+                        } else {
+                            new Notice(
+                                `The status ${importedStatus[1]} (${importedStatus[0]}) is already added.`,
+                            );
+                        }
+                    });
+
+                    updateSettings({
+                        status_types: status_types,
+                    });
+                    await this.plugin.saveSettings();
+                    // Force refresh
+                    this.display();
+                });
+        });
+        addStatusesSupportedByMinimalTheme.infoEl.remove();
+
+        containerEl.createEl('hr');
+        containerEl.createEl('h3', { text: 'Documentation and Support' });
+        const supportAndInfoDiv = containerEl.createEl('div');
+
+        supportAndInfoDiv.insertAdjacentHTML(
+            'beforeend',
+            '<p>If you need help with this plugin, please check out the <a href="https://schemar.github.io/obsidian-tasks/">Tasks documentation</a>. Click on issues below if you find something that the documentation does not explain or if you find something now working as expected.</p>\n' +
+                '<a href="https://github.com/schemar/obsidian-tasks/issues"><img alt="GitHub issues" src="https://img.shields.io/github/issues/schemar/obsidian-tasks?style=for-the-badge"></a>\n' +
+                '<img alt="GitHub package.json version" src="https://img.shields.io/github/package-json/v/schemar/obsidian-tasks?style=for-the-badge">\n' +
+                '<img alt="GitHub all releases" src="https://img.shields.io/github/downloads/schemar/obsidian-tasks/total?style=for-the-badge">\n' +
+                '',
+        );
+    }
+
+    private async updateStatusSetting(
+        status_types: [string, string, string][],
+        status_type: [string, string, string],
+        valueIndex: number,
+        newValue: string,
+    ) {
+        const index = status_types.findIndex((element) => {
+            element[0] === status_type[0] &&
+                element[1] === status_type[1] &&
+                element[2] === status_type[2];
+        });
+
+        if (index > -1) {
+            status_types[index][valueIndex] = newValue;
+            updateSettings({
+                status_types: status_types,
+            });
+            await this.plugin.saveSettings();
+        }
     }
 }

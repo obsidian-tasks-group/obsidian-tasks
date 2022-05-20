@@ -40,7 +40,7 @@ export class Status {
     public statusRegistry: StatusRegistry | undefined;
 
     /**
-     * The default Done status.
+     * The default Done status. Goes to Todo when toggled.
      *
      * @static
      * @type {Status}
@@ -57,13 +57,31 @@ export class Status {
     public static EMPTY: Status = new Status('', 'EMPTY', '');
 
     /**
-     * The default Todo status.
+     * The default Todo status. Goes to In Progress when toggled.
      *
      * @static
      * @type {Status}
      * @memberof Status
      */
-    public static TODO: Status = new Status(' ', 'Todo', 'x');
+    public static TODO: Status = new Status(' ', 'Todo', '/');
+
+    /**
+     * The default Cancelled status. Goes to Todo when toggled.
+     *
+     * @static
+     * @type {Status}
+     * @memberof Status
+     */
+    public static CANCELLED: Status = new Status('-', 'Cancelled', ' ');
+
+    /**
+     * The default In Progress status. Goes to Done when toggled.
+     *
+     * @static
+     * @type {Status}
+     * @memberof Status
+     */
+    public static IN_PROGRESS: Status = new Status('/', 'In Progress', 'x');
 
     /**
      * Creates an instance of Status. The registry will be added later in the case

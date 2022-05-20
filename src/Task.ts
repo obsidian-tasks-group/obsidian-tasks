@@ -39,11 +39,6 @@ export class Task {
     public readonly sectionStart: number;
     /** The index of the nth task in its section. */
     public readonly sectionIndex: number;
-    /**
-     * The original character from within `[]` in the document.
-     * Required to be added to the LI the same way obsidian does as a `data-task` attribute.
-     */
-    public readonly originalStatusCharacter: string;
     public readonly precedingHeader: string | null;
 
     public readonly tags: string[];
@@ -97,7 +92,6 @@ export class Task {
         indentation,
         sectionStart,
         sectionIndex,
-        originalStatusCharacter,
         precedingHeader,
         priority,
         startDate,
@@ -114,7 +108,6 @@ export class Task {
         indentation: string;
         sectionStart: number;
         sectionIndex: number;
-        originalStatusCharacter: string;
         precedingHeader: string | null;
         priority: Priority;
         startDate: moment.Moment | null;
@@ -131,7 +124,6 @@ export class Task {
         this.indentation = indentation;
         this.sectionStart = sectionStart;
         this.sectionIndex = sectionIndex;
-        this.originalStatusCharacter = originalStatusCharacter;
         this.precedingHeader = precedingHeader;
 
         this.tags = tags;
@@ -318,7 +310,6 @@ export class Task {
             indentation,
             sectionStart,
             sectionIndex,
-            originalStatusCharacter: statusString,
             precedingHeader,
             priority,
             startDate,
@@ -416,7 +407,7 @@ export class Task {
         li.prepend(checkbox);
 
         // Set these to be compatible with stock obsidian lists:
-        li.setAttr('data-task', this.originalStatusCharacter.trim()); // Trim to ensure empty attribute for space. Same way as obsidian.
+        li.setAttr('data-task', this.status.indicator.trim()); // Trim to ensure empty attribute for space. Same way as obsidian.
         li.setAttr('data-line', listIndex);
         checkbox.setAttr('data-line', listIndex);
 
@@ -501,7 +492,7 @@ export class Task {
      */
     public toFileLineString(): string {
         return `${this.indentation}- [${
-            this.originalStatusCharacter
+            this.status.indicator
         }] ${this.toString()}`;
     }
 
@@ -543,7 +534,6 @@ export class Task {
             ...this,
             status: newStatus,
             doneDate: newDoneDate,
-            originalStatusCharacter: newStatus.indicator,
         });
 
         const newTasks: Task[] = [];
