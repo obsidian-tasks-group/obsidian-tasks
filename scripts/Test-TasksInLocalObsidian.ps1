@@ -13,9 +13,12 @@ $repoRoot = (Resolve-Path -Path $(git rev-parse --show-toplevel)).Path
 if (-not (Test-Path $ObsidianPluginRoot)) {
     Write-Error "Obsidian plugin root not found: $ObsidianPluginRoot"
     return
+} else {
+    Write-Host "Obsidian plugin root found: $ObsidianPluginRoot"
 }
 
 Push-Location $repoRoot
+Write-Host "Repo root: $repoRoot"
 
 yarn run build:dev
 
@@ -28,7 +31,9 @@ if ($?) {
         if ((Get-Item "$ObsidianPluginRoot/$PluginFolderName/$file" ).LinkType -ne 'SymbolicLink') {
             Write-Output "Removing $file from plugin folder and linking"
             Remove-Item "$ObsidianPluginRoot/$PluginFolderName/$file" -Force
-            New-Item -ItemType SymbolicLink -Path "$ObsidianPluginRoot/$PluginFolderName/$file" -Target "./$file"
+            New-Item -ItemType SymbolicLink -Path "$ObsidianPluginRoot/$PluginFolderName/$file" -Target "$repoRoot/$file"
+        } else {
+            (Get-Item "$ObsidianPluginRoot/$PluginFolderName/$file" ).LinkType
         }
     }
 

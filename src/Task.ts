@@ -324,6 +324,24 @@ export class Task {
         return task;
     }
 
+    /**
+     * Renders a list item the same way Obsidian does. Note that anything between the
+     * square brackets means it is 'checked' this is not the same as done.
+     *
+     * @param {{
+     *         parentUlElement: HTMLElement;
+     *         listIndex: number;
+     *         layoutOptions?: LayoutOptions;
+     *         isFilenameUnique?: boolean;
+     *     }} {
+     *         parentUlElement,
+     *         listIndex,
+     *         layoutOptions,
+     *         isFilenameUnique,
+     *     }
+     * @return {*}  {Promise<HTMLLIElement>}
+     * @memberof Task
+     */
     public async toLi({
         parentUlElement,
         listIndex,
@@ -336,13 +354,19 @@ export class Task {
         layoutOptions?: LayoutOptions;
         isFilenameUnique?: boolean;
     }): Promise<HTMLLIElement> {
-        const li: HTMLLIElement = parentUlElement.createEl('li');
-        li.addClasses(['task-list-item', 'plugin-tasks-list-item']);
-
         let taskAsString = this.toString(layoutOptions);
         const { globalFilter, removeGlobalFilter } = getSettings();
         if (removeGlobalFilter) {
             taskAsString = taskAsString.replace(globalFilter, '').trim();
+        }
+
+        // Generate top level list item.
+        const li: HTMLLIElement = parentUlElement.createEl('li');
+        li.setAttr('data-line', listIndex);
+        li.setAttr('data-task', this.status.indicator.trim()); // Trim to ensure empty attribute for space. Same way as obsidian.
+        li.addClasses(['task-list-item', 'plugin-tasks-list-item']);
+        if (this.status.indicator !== ' ') {
+            li.addClass('is-checked');
         }
 
         const textSpan = li.createSpan();
@@ -383,12 +407,13 @@ export class Task {
         });
 
         const checkbox = li.createEl('input');
-        checkbox.addClass('task-list-item-checkbox');
-        checkbox.type = 'checkbox';
-        if (this.status.isCompleted()) {
+        checkbox.setAttr('data-line', listIndex);
+        if (this.status.indicator !== ' ') {
             checkbox.checked = true;
-            li.addClass('is-checked');
         }
+        checkbox.type = 'checkbox';
+        checkbox.addClass('task-list-item-checkbox');
+
         checkbox.onClickEvent((event: MouseEvent) => {
             event.preventDefault();
             // It is required to stop propagation so that obsidian won't write the file with the
@@ -405,11 +430,6 @@ export class Task {
         });
 
         li.prepend(checkbox);
-
-        // Set these to be compatible with stock obsidian lists:
-        li.setAttr('data-task', this.status.indicator.trim()); // Trim to ensure empty attribute for space. Same way as obsidian.
-        li.setAttr('data-line', listIndex);
-        checkbox.setAttr('data-line', listIndex);
 
         if (layoutOptions?.shortMode) {
             this.addTooltip({ element: textSpan, isFilenameUnique });
