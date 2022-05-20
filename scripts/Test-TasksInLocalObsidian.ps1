@@ -22,10 +22,24 @@ yarn run build:dev
 if ($?) {
     Write-Output 'Build successful'
 
-    Write-Output "Copying to $ObsidianPluginRoot/$PluginFolderName"
-    Copy-Item ./main.js $ObsidianPluginRoot/$PluginFolderName/main.js -Force
-    Copy-Item ./styles.css $ObsidianPluginRoot/$PluginFolderName/styles.css -Force
-    Copy-Item ./manifest.json $ObsidianPluginRoot/$PluginFolderName/manifest.json -Force
+    $filesToLink = @('main.js', 'styles.css', 'manifest.json')
+
+    foreach ($file in $filesToLink ) {
+        if ((Get-Item "$ObsidianPluginRoot/$PluginFolderName/$file" ).LinkType -ne 'SymbolicLink') {
+            Write-Output "Removing $file from plugin folder and linking"
+            Remove-Item "$ObsidianPluginRoot/$PluginFolderName/$file" -Force
+            New-Item -ItemType SymbolicLink -Path "$ObsidianPluginRoot/$PluginFolderName/$file" -Target "./$file"
+        }
+    }
+
+    $hasHotReload = Test-Path "$ObsidianPluginRoot/$PluginFolderName/.hotreload"
+
+    if (!$hasHotReload) {
+        Write-Output 'Creating hotreload file'
+        '' | Set-Content "$ObsidianPluginRoot/$PluginFolderName/.hotreload"
+    }
+
+    yarn run dev
 
 } else {
     Write-Error 'Build failed'

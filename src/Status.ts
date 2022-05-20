@@ -106,7 +106,7 @@ export class Status {
 
     /**
      * Returns the completion status for a task, this is only supported
-     * when the tas is done/x.
+     * when the task is done/x.
      *
      * @return {*}  {boolean}
      * @memberof Status
