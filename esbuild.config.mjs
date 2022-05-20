@@ -161,6 +161,7 @@ esbuild
         ],
         format: 'cjs',
         logLevel: 'info',
+        minify: true,
         outfile: 'main.js',
         plugins: [
             esbuildSvelte({
