@@ -42,7 +42,7 @@ function shouldSupportFiltering(
 
     // Assert
     const filteredTaskLines = filteredTasks.map(
-        (task) => `- [ ] ${task.toString()}`,
+        (task) => task.toFileLineString(), //  `- [ ] ${task.toString()}`,
     );
     expect(filteredTaskLines).toMatchObject(expectedResult);
 }
@@ -696,5 +696,59 @@ describe('Query', () => {
             // Assert
             expect(query.error).toBeUndefined();
         });
+    });
+
+    const defaultTasksWithStatus = [
+        '- [ ] Something to do',
+        '- [/] Something I am doing',
+        '- [x] Something I have done',
+        '- [-] Something I will no longer do',
+    ];
+    describe('filtering with "status"', () => {
+        const TagFilteringCases: Array<[string, FilteringCase]> = [
+            [
+                'by valid status is',
+                {
+                    filters: ['status is x'],
+                    tasks: defaultTasksWithStatus,
+                    expectedResult: ['- [x] Something I have done'],
+                },
+            ],
+            [
+                'by valid status is not',
+                {
+                    filters: ['status is not x'],
+                    tasks: defaultTasksWithStatus,
+                    expectedResult: [
+                        '- [ ] Something to do',
+                        '- [/] Something I am doing',
+                        '- [-] Something I will no longer do',
+                    ],
+                },
+            ],
+            [
+                'by valid status new',
+                {
+                    filters: ['status is /'],
+                    tasks: defaultTasksWithStatus,
+                    expectedResult: ['- [/] Something I am doing'],
+                },
+            ],
+            [
+                'by invalid status',
+                {
+                    filters: ['status is z'],
+                    tasks: defaultTasksWithStatus,
+                    expectedResult: defaultTasksWithStatus,
+                },
+            ],
+        ];
+
+        test.concurrent.each<[string, FilteringCase]>(TagFilteringCases)(
+            'should filter status %s',
+            (_, { tasks: allTaskLines, filters, expectedResult }) => {
+                shouldSupportFiltering(filters, allTaskLines, expectedResult);
+            },
+        );
     });
 });
