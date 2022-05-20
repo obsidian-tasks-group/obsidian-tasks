@@ -151,3 +151,16 @@ because the tasks starts before tomorrow. Only one of the dates needs to match.
 
 - `exclude sub-items`
   - When this is set, the result list will only include tasks that are not indented in their file. It will only show tasks that are top level list items in their list.
+
+### Tags
+
+- `tags (include|do not include) <tag>` (Alternative grammar `tag (includes|does not include) <tag>` matching description syntax)
+  - Matches case-insensitive (disregards capitalization).
+  - Disregards the global filter when matching.
+  - The `#` is optional on the tag so `#home` and `home` will work to match `#home`.
+  - The match is partial so `tags include foo` will match `#foo/bar` and `#foo-bar`.
+
+#### Tag Query Examples
+
+- `tags include #todo`
+- `tags do not include #todo`

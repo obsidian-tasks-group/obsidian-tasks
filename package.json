@@ -6,8 +6,8 @@
   "scripts": {
     "dev": "node esbuild.config.mjs",
     "build": "node esbuild.config.mjs production",
-    "lint": "eslint ./src --fix && eslint ./tests --fix && tsc --noEmit --pretty && svelte-check && markdownlint-cli2-fix \"**/*.md\" \"#node_modules\"",
-    "lint-markdown": "markdownlint-cli2-fix \"**/*.md\" \"#node_modules\"",
+    "lint": "markdownlint-cli2-fix \"**/*.md\" \"#node_modules\" && eslint ./src --fix && eslint ./tests --fix && tsc --noEmit --pretty && svelte-check",
+    "lint:markdown": "markdownlint-cli2-fix \"**/*.md\" \"#node_modules\"",
     "test": "jest --ci",
     "test:dev": "jest --watch"
   },
