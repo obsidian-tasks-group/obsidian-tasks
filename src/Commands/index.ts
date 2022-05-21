@@ -1,5 +1,7 @@
 import type { App, Editor, Plugin, View } from 'obsidian';
+
 import { createOrEdit } from './CreateOrEdit';
+//import { selectStatus } from './SelectStatus';
 
 import { toggleDone } from './ToggleDone';
 
@@ -32,5 +34,12 @@ export class Commands {
             icon: 'check-in-circle',
             editorCheckCallback: toggleDone,
         });
+
+        // plugin.addCommand({
+        //     id: 'select-status-modal',
+        //     name: 'Select Status',
+        //     icon: 'check-in-circle',
+        //     editorCheckCallback: selectStatus,
+        // });
     }
 }
