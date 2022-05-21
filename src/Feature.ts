@@ -8,15 +8,6 @@ export type FeatureFlag = {
  * @since {date}
  */
 export class Feature {
-    static readonly CUSTOM_TASK_STATUS = new Feature(
-        'CUSTOM_TASK_STATUS',
-        0,
-        'Enables adding custom status types to tasks.',
-        'Custom Task Status',
-        false,
-        false,
-    );
-
     static readonly TASK_STATUS_MENU = new Feature(
         'TASK_STATUS_MENU',
         0,
@@ -27,7 +18,7 @@ export class Feature {
     );
 
     static get values(): Feature[] {
-        return [this.CUSTOM_TASK_STATUS, this.TASK_STATUS_MENU];
+        return [this.TASK_STATUS_MENU];
     }
 
     static get settingsFlags(): FeatureFlag {
