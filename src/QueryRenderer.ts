@@ -10,6 +10,7 @@ import {
 import { State } from './Cache';
 import { replaceTaskWithTasks } from './File';
 import { Query } from './Query';
+import type { GroupHeading } from './Query/GroupHeading';
 import { TaskModal } from './TaskModal';
 import type { Events } from './Events';
 import type { Task } from './Task';
@@ -120,13 +121,21 @@ class QueryRenderChild extends MarkdownRenderChild {
     private async render({ tasks, state }: { tasks: Task[]; state: State }) {
         const content = this.containerEl.createEl('div');
         if (state === State.Warm && this.query.error === undefined) {
-            const tasksSortedLimited = this.query.applyQueryToTasks(tasks);
-            const { taskList, tasksCount } = await this.createTasksList({
-                tasks: tasksSortedLimited,
-                content: content,
-            });
-            content.appendChild(taskList);
-            this.addTaskCount(content, tasksCount);
+            const tasksSortedLimitedGrouped =
+                this.query.applyQueryToTasks(tasks);
+            for (const group of tasksSortedLimitedGrouped.groups) {
+                // If there were no 'group by' instructions, group.groupHeadings
+                // will be empty, and no headings will be added.
+                QueryRenderChild.addGroupHeadings(content, group.groupHeadings);
+
+                const { taskList } = await this.createTasksList({
+                    tasks: group.tasks,
+                    content: content,
+                });
+                content.appendChild(taskList);
+            }
+            const totalTasksCount = tasksSortedLimitedGrouped.totalTasksCount();
+            this.addTaskCount(content, totalTasksCount);
         } else if (this.query.error !== undefined) {
             content.setText(`Tasks query: ${this.query.error}`);
         } else {
@@ -204,6 +213,47 @@ class QueryRenderChild extends MarkdownRenderChild {
             });
             taskModal.open();
         });
+    }
+
+    /**
+     * Display headings for a group of tasks.
+     * @param content
+     * @param groupHeadings - The headings to display. This can be an empty array,
+     *                        in which case no headings will be added.
+     * @private
+     */
+    private static addGroupHeadings(
+        content: HTMLDivElement,
+        groupHeadings: GroupHeading[],
+    ) {
+        for (const heading of groupHeadings) {
+            QueryRenderChild.addGroupHeading(content, heading);
+        }
+    }
+
+    private static addGroupHeading(
+        content: HTMLDivElement,
+        group: GroupHeading,
+    ) {
+        let header: any;
+        // Is it possible to remove the repetition here?
+        // Ideally, by creating a variable that contains h4, h5 or h6
+        // and then only having one call to content.createEl().
+        if (group.nestingLevel === 0) {
+            header = content.createEl('h4', {
+                cls: 'tasks-group-heading',
+            });
+        } else if (group.nestingLevel === 1) {
+            header = content.createEl('h5', {
+                cls: 'tasks-group-heading',
+            });
+        } else {
+            // Headings nested to 2 or more levels are all displayed with 'h6:
+            header = content.createEl('h6', {
+                cls: 'tasks-group-heading',
+            });
+        }
+        header.appendText(group.name);
     }
 
     private addBacklinks(
