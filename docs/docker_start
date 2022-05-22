@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+set -exuo pipefail
+
+TAG="obsidian-tasks-docs:latest"
+
+message () {
+    printf "\n#\n#\n# %s\n#\n#\n" "$1"
+}
+
+# Check if a built image exists.
+# If not, we need to build it first.
+if [[ "$(docker images -q $TAG 2>/dev/null)" == "" ]]; then
+    message "First time starting the server."
+    message "We need to build the image first ..."
+    docker build --tag $TAG .
+fi
+
+message "Stop the server with Ctrl-c"
+
+# Actually run the jekyll server.
+# Volume with :Z is required for linux users due to SELinux.
+docker run --rm \
+    -it \
+    --volume "$PWD:/docs:Z" \
+    --publish 4000:4000 \
+    "${TAG}"
