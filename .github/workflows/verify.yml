@@ -22,3 +22,12 @@ jobs:
 
       - name: Run Jest
         run: yarn run test
+        
+      - name: Archive verified build
+        uses: actions/upload-artifact@v3
+        with:
+          name: dist-verified
+          path: |
+            main.js
+            manifest.json
+            styles.css        
