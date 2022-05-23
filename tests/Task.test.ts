@@ -4,7 +4,8 @@
 import moment from 'moment';
 import { Status } from '../src/Status';
 import { Task } from '../src/Task';
-import { getSettings, updateSettings } from '../src/Settings';
+import { getSettings, toggleFeature, updateSettings } from '../src/Settings';
+import { Feature } from '../src/Feature';
 
 jest.mock('obsidian');
 window.moment = moment;
@@ -192,32 +193,28 @@ describe('parsing tags', () => {
         {
             markdownTask:
                 '- [x] #someglobaltasktag this is a done task #tagone 🗓 2021-09-12 ✅ 2021-06-20',
-            expectedDescription:
-                '#someglobaltasktag this is a done task #tagone',
+            expectedDescription: 'this is a done task #tagone',
             extractedTags: ['#tagone'],
             globalFilter: '#someglobaltasktag',
         },
         {
             markdownTask:
                 '- [x] #someglobaltasktag this is a done task #tagone #tagtwo 🗓 2021-09-12 ✅ 2021-06-20',
-            expectedDescription:
-                '#someglobaltasktag this is a done task #tagone #tagtwo',
+            expectedDescription: 'this is a done task #tagone #tagtwo',
             extractedTags: ['#tagone', '#tagtwo'],
             globalFilter: '#someglobaltasktag',
         },
         {
             markdownTask:
                 '- [ ] #someglobaltasktag this is a normal task #tagone 🗓 2021-09-12 ✅ 2021-06-20',
-            expectedDescription:
-                '#someglobaltasktag this is a normal task #tagone',
+            expectedDescription: 'this is a normal task #tagone',
             extractedTags: ['#tagone'],
             globalFilter: '#someglobaltasktag',
         },
         {
             markdownTask:
                 '- [ ] #someglobaltasktag this is a normal task #tagone #tagtwo 🗓 2021-09-12 ✅ 2021-06-20',
-            expectedDescription:
-                '#someglobaltasktag this is a normal task #tagone #tagtwo',
+            expectedDescription: 'this is a normal task #tagone #tagtwo',
             extractedTags: ['#tagone', '#tagtwo'],
             globalFilter: '#someglobaltasktag',
         },
@@ -225,7 +222,7 @@ describe('parsing tags', () => {
             markdownTask:
                 '- [ ] #someglobaltasktag this is a normal task #tagone #tag/with/depth #tagtwo 🗓 2021-09-12 ✅ 2021-06-20',
             expectedDescription:
-                '#someglobaltasktag this is a normal task #tagone #tag/with/depth #tagtwo',
+                'this is a normal task #tagone #tag/with/depth #tagtwo',
             extractedTags: ['#tagone', '#tag/with/depth', '#tagtwo'],
             globalFilter: '#someglobaltasktag',
         },
@@ -275,6 +272,13 @@ describe('parsing tags', () => {
     );
 });
 
+type GlobalFilterParsingExpectations = {
+    location: string;
+    scenario: string;
+    initialTask: string;
+    expectedTask: string;
+};
+
 describe('to string', () => {
     it('retains the block link', () => {
         // Arrange
@@ -311,6 +315,77 @@ describe('to string', () => {
         // Assert
         expect(task.toFileLineString()).toStrictEqual(line);
     });
+
+    test.each<GlobalFilterParsingExpectations>([
+        {
+            location: 'append',
+            scenario: 'at front',
+            initialTask:
+                '- [x] #globalfilter this is a done task #tagone #journal/daily 📅 2021-09-12 ✅ 2021-06-20',
+            expectedTask:
+                '- [x] this is a done task #tagone #journal/daily #globalfilter 📅 2021-09-12 ✅ 2021-06-20',
+        },
+        {
+            location: 'append',
+            scenario: 'at end',
+            initialTask:
+                '- [x] this is a done task #tagone #journal/daily #globalfilter 📅 2021-09-12 ✅ 2021-06-20',
+            expectedTask:
+                '- [x] this is a done task #tagone #journal/daily #globalfilter 📅 2021-09-12 ✅ 2021-06-20',
+        },
+        {
+            location: 'append',
+            scenario: 'in middle',
+            initialTask:
+                '- [x] this is a done task #globalfilter #tagone #journal/daily  📅 2021-09-12 ✅ 2021-06-20',
+            expectedTask:
+                '- [x] this is a done task #tagone #journal/daily #globalfilter 📅 2021-09-12 ✅ 2021-06-20',
+        },
+        {
+            location: 'prepend',
+            scenario: 'at front',
+            initialTask:
+                '- [x] #globalfilter this is a done task #tagone #journal/daily 📅 2021-09-12 ✅ 2021-06-20',
+            expectedTask:
+                '- [x] #globalfilter this is a done task #tagone #journal/daily 📅 2021-09-12 ✅ 2021-06-20',
+        },
+        {
+            location: 'prepend',
+            scenario: 'at end',
+            initialTask:
+                '- [x] this is a done task #tagone #journal/daily #globalfilter 📅 2021-09-12 ✅ 2021-06-20',
+            expectedTask:
+                '- [x] #globalfilter this is a done task #tagone #journal/daily 📅 2021-09-12 ✅ 2021-06-20',
+        },
+        {
+            location: 'prepend',
+            scenario: 'in middle',
+            initialTask:
+                '- [x] this is a done task #globalfilter #tagone #journal/daily  📅 2021-09-12 ✅ 2021-06-20',
+            expectedTask:
+                '- [x] #globalfilter this is a done task #tagone #journal/daily 📅 2021-09-12 ✅ 2021-06-20',
+        },
+    ])(
+        'should $location global filter when $scenario',
+        ({ location, initialTask, expectedTask }) => {
+            // Arrange
+            const originalSettings = getSettings();
+            updateSettings({ globalFilter: '#globalfilter' });
+            if (location === 'append') {
+                toggleFeature(Feature.APPEND_GLOBAL_FILTER.internalName, true);
+            }
+            // Act
+            const task = constructTaskFromLine(initialTask);
+
+            // Assert
+            expect(task).not.toBeNull();
+            expect(task?.toFileLineString()).toStrictEqual(expectedTask);
+
+            // Cleanup
+            updateSettings(originalSettings);
+            toggleFeature(Feature.APPEND_GLOBAL_FILTER.internalName, false);
+        },
+    );
 });
 
 describe('toggle done', () => {

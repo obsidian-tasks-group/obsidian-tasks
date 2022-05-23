@@ -3,9 +3,10 @@
     import { Status } from '../Status';
     import { onMount } from 'svelte';
     import { Recurrence } from '../Recurrence';
-    import { getSettings } from '../Settings';
+    import { getSettings, isFeatureEnabled } from '../Settings';
     import { Priority, Task } from '../Task';
     import { StatusRegistry } from '../StatusRegistry';
+    import { Feature } from 'Feature';
 
     export let task: Task;
     export let onSubmit: (updatedTasks: Task[]) => void | Promise<void>;
@@ -158,9 +159,17 @@
 
     const _onSubmit = () => {
         const { globalFilter } = getSettings();
+
         let description = editableTask.description.trim();
+
+        // Check to see if the global filter was added by user.
         if (!description.includes(globalFilter)) {
-            description = globalFilter + ' ' + description;
+            if (isFeatureEnabled(Feature.APPEND_GLOBAL_FILTER.internalName)) {
+                description = `${description} ${globalFilter}`;
+            } else {
+                // Default is to have filter at front.
+                description = `${globalFilter} ${description}`;
+            }
         }
 
         let startDate: moment.Moment | null = null;

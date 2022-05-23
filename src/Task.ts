@@ -5,8 +5,9 @@ import type { Status } from './Status';
 import { replaceTaskWithTasks } from './File';
 import { LayoutOptions } from './LayoutOptions';
 import { Recurrence } from './Recurrence';
-import { getSettings } from './Settings';
+import { getSettings, isFeatureEnabled } from './Settings';
 import { Urgency } from './Urgency';
+import { Feature } from './Feature';
 
 /**
  * When sorting, make sure low always comes after none. This way any tasks with low will be below any exiting
@@ -180,7 +181,14 @@ export class Task {
             return null;
         }
 
-        let description = body;
+        // Global filter is applied via edit or to string and no
+        // longer needs to be on the description. If this happens
+        // there may be a double space. So all double spaces are made
+        // single like the UI processing.
+        let description = body
+            .replace(globalFilter, '')
+            .replace('  ', ' ')
+            .trim();
         const indentation = regexMatch[1];
 
         // Get the status of the task.
@@ -356,6 +364,8 @@ export class Task {
     }): Promise<HTMLLIElement> {
         let taskAsString = this.toString(layoutOptions);
         const { globalFilter, removeGlobalFilter } = getSettings();
+
+        // Hide the global filter when rendering the query results.
         if (removeGlobalFilter) {
             taskAsString = taskAsString.replace(globalFilter, '').trim();
         }
@@ -439,7 +449,8 @@ export class Task {
     }
 
     /**
-     *
+     * Returns a string representation of the task. This is the entire body after the
+     * markdown task prefix. ( - [ ] )
      *
      * @param {LayoutOptions} [layoutOptions]
      * @return {*}  {string}
@@ -447,7 +458,16 @@ export class Task {
      */
     public toString(layoutOptions?: LayoutOptions): string {
         layoutOptions = layoutOptions ?? new LayoutOptions();
-        let taskString = this.description;
+
+        let taskString = this.description.trim();
+        const { globalFilter } = getSettings();
+
+        if (isFeatureEnabled(Feature.APPEND_GLOBAL_FILTER.internalName)) {
+            taskString = `${taskString} ${globalFilter}`.trim();
+        } else {
+            // Default is to have filter at front.
+            taskString = `${globalFilter} ${taskString}`.trim();
+        }
 
         if (!layoutOptions.hidePriority) {
             let priority: string = '';
@@ -513,7 +533,7 @@ export class Task {
     public toFileLineString(): string {
         return `${this.indentation}- [${
             this.status.indicator
-        }] ${this.toString()}`;
+        }] ${this.toString().trim()}`;
     }
 
     /**
