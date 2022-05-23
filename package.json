@@ -6,9 +6,11 @@
   "scripts": {
     "dev": "node esbuild.config.mjs",
     "build": "node esbuild.config.mjs production",
+    "build:dev": "node esbuild.config.mjs development",
     "lint": "eslint ./src --fix && eslint ./tests --fix && tsc --noEmit --pretty && svelte-check",
     "test": "jest --ci",
-    "test:dev": "jest --watch"
+    "test:dev": "jest --watch",
+    "test:obsidian": "pwsh -ExecutionPolicy Unrestricted -NoProfile -File ./scripts/Test-TasksInLocalObsidian.ps1"
   },
   "keywords": [
     "obsidian",
