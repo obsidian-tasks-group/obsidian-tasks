@@ -131,6 +131,7 @@ THE SOFTWARE.
 `;
 
 const prod = (process.argv[2] === 'production');
+const dev = process.argv[2] === 'development';
 
 esbuild.build({
   banner: {
@@ -160,6 +161,7 @@ esbuild.build({
   ],
   format: 'cjs',
   logLevel: "info",
+  minify: prod ? true : false,    
   outfile: 'main.js',
   plugins: [
     esbuildSvelte({
@@ -169,5 +171,5 @@ esbuild.build({
   sourcemap: prod ? false : 'inline',
   target: 'es2016',
   treeShaking: true,
-  watch: !prod,
+  watch: !prod && !dev,
 }).catch(() => process.exit(1));
