@@ -8,18 +8,18 @@ export class DueDateField {
     ) {
         let filter;
         let error;
-        const dueMatch = line.match(instructionRegexp);
-        if (dueMatch !== null) {
-            const filterDate = Query.parseDate(dueMatch[2]);
+        const match = line.match(instructionRegexp);
+        if (match !== null) {
+            const filterDate = Query.parseDate(match[2]);
             if (!filterDate.isValid()) {
                 error = 'do not understand due date';
             } else {
-                if (dueMatch[1] === 'before') {
+                if (match[1] === 'before') {
                     filter = (task: Task) =>
                         task.dueDate
                             ? task.dueDate.isBefore(filterDate)
                             : false;
-                } else if (dueMatch[1] === 'after') {
+                } else if (match[1] === 'after') {
                     filter = (task: Task) =>
                         task.dueDate ? task.dueDate.isAfter(filterDate) : false;
                 } else {
