@@ -6,6 +6,7 @@ import { getSettings } from './Settings';
 import { LayoutOptions } from './LayoutOptions';
 import { Sort } from './Sort';
 import { Priority, Status, Task } from './Task';
+import { DoneDateField } from './Query/Filter/DoneDateField';
 import { DueDateField } from './Query/Filter/DueDateField';
 
 export type SortingProperty =
@@ -60,7 +61,6 @@ export class Query {
 
     private readonly doneString = 'done';
     private readonly notDoneString = 'not done';
-    private readonly doneRegexp = /^done (before|after|on)? ?(.*)/;
 
     private readonly pathRegexp = /^path (includes|does not include) (.*)/;
     private readonly descriptionRegexp =
@@ -160,7 +160,7 @@ export class Query {
                     case new DueDateField().canCreateFilterForLine(line):
                         this.parseDueFilter({ line });
                         break;
-                    case this.doneRegexp.test(line):
+                    case new DoneDateField().canCreateFilterForLine(line):
                         this.parseDoneFilter({ line });
                         break;
                     case this.pathRegexp.test(line):
@@ -418,8 +418,8 @@ export class Query {
     }
 
     private parseDueFilter({ line }: { line: string }): void {
-        const dueDateField = new DueDateField();
-        const { filter, error } = dueDateField.createFilterOrErrorMessage(line);
+        const field = new DueDateField();
+        const { filter, error } = field.createFilterOrErrorMessage(line);
 
         if (filter) {
             this._filters.push(filter);
@@ -429,27 +429,13 @@ export class Query {
     }
 
     private parseDoneFilter({ line }: { line: string }): void {
-        const doneMatch = line.match(this.doneRegexp);
-        if (doneMatch !== null) {
-            const filterDate = Query.parseDate(doneMatch[2]);
-            if (!filterDate.isValid()) {
-                this._error = 'do not understand done date';
-                return;
-            }
+        const field = new DoneDateField();
+        const { filter, error } = field.createFilterOrErrorMessage(line);
 
-            let filter;
-            if (doneMatch[1] === 'before') {
-                filter = (task: Task) =>
-                    task.doneDate ? task.doneDate.isBefore(filterDate) : false;
-            } else if (doneMatch[1] === 'after') {
-                filter = (task: Task) =>
-                    task.doneDate ? task.doneDate.isAfter(filterDate) : false;
-            } else {
-                filter = (task: Task) =>
-                    task.doneDate ? task.doneDate.isSame(filterDate) : false;
-            }
-
+        if (filter) {
             this._filters.push(filter);
+        } else {
+            this._error = error;
         }
     }
 
