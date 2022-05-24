@@ -8,6 +8,7 @@ import { Sort } from './Sort';
 import { Priority, Status, Task } from './Task';
 import { DoneDateField } from './Query/Filter/DoneDateField';
 import { DueDateField } from './Query/Filter/DueDateField';
+import { ScheduledDateField } from './Query/Filter/ScheduledDateField';
 
 export type SortingProperty =
     | 'urgency'
@@ -54,7 +55,6 @@ export class Query {
 
     private readonly noScheduledString = 'no scheduled date';
     private readonly hasScheduledString = 'has scheduled date';
-    private readonly scheduledRegexp = /^scheduled (before|after|on)? ?(.*)/;
 
     private readonly noDueString = 'no due date';
     private readonly hasDueString = 'has due date';
@@ -154,7 +154,7 @@ export class Query {
                     case this.startRegexp.test(line):
                         this.parseStartFilter({ line });
                         break;
-                    case this.scheduledRegexp.test(line):
+                    case new ScheduledDateField().canCreateFilterForLine(line):
                         this.parseScheduledFilter({ line });
                         break;
                     case new DueDateField().canCreateFilterForLine(line):
@@ -386,34 +386,13 @@ export class Query {
     }
 
     private parseScheduledFilter({ line }: { line: string }): void {
-        const scheduledMatch = line.match(this.scheduledRegexp);
-        if (scheduledMatch !== null) {
-            const filterDate = Query.parseDate(scheduledMatch[2]);
-            if (!filterDate.isValid()) {
-                this._error = 'do not understand scheduled date';
-            }
+        const field = new ScheduledDateField();
+        const { filter, error } = field.createFilterOrErrorMessage(line);
 
-            let filter;
-            if (scheduledMatch[1] === 'before') {
-                filter = (task: Task) => {
-                    const date = task.scheduledDate;
-                    return date ? date.isBefore(filterDate) : false;
-                };
-            } else if (scheduledMatch[1] === 'after') {
-                filter = (task: Task) => {
-                    const date = task.scheduledDate;
-                    return date ? date.isAfter(filterDate) : false;
-                };
-            } else {
-                filter = (task: Task) => {
-                    const date = task.scheduledDate;
-                    return date ? date.isSame(filterDate) : false;
-                };
-            }
-
+        if (filter) {
             this._filters.push(filter);
         } else {
-            this._error = 'do not understand query filter (scheduled date)';
+            this._error = error;
         }
     }
 
