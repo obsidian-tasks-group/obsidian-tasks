@@ -427,10 +427,13 @@ export class Query {
         }
     }
 
-    private createDueFilterOrErrorMessage(line: string) {
+    private createDueFilterOrErrorMessage(
+        line: string,
+        instructionRegexp: RegExp = this.dueRegexp,
+    ) {
         let filter;
         let error;
-        const dueMatch = line.match(this.dueRegexp);
+        const dueMatch = line.match(instructionRegexp);
         if (dueMatch !== null) {
             const filterDate = Query.parseDate(dueMatch[2]);
             if (!filterDate.isValid()) {
