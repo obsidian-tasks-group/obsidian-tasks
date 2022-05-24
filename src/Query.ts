@@ -423,22 +423,23 @@ export class Query {
             const filterDate = Query.parseDate(dueMatch[2]);
             if (!filterDate.isValid()) {
                 this._error = 'do not understand due date';
-                return;
-            }
-
-            let filter;
-            if (dueMatch[1] === 'before') {
-                filter = (task: Task) =>
-                    task.dueDate ? task.dueDate.isBefore(filterDate) : false;
-            } else if (dueMatch[1] === 'after') {
-                filter = (task: Task) =>
-                    task.dueDate ? task.dueDate.isAfter(filterDate) : false;
             } else {
-                filter = (task: Task) =>
-                    task.dueDate ? task.dueDate.isSame(filterDate) : false;
-            }
+                let filter;
+                if (dueMatch[1] === 'before') {
+                    filter = (task: Task) =>
+                        task.dueDate
+                            ? task.dueDate.isBefore(filterDate)
+                            : false;
+                } else if (dueMatch[1] === 'after') {
+                    filter = (task: Task) =>
+                        task.dueDate ? task.dueDate.isAfter(filterDate) : false;
+                } else {
+                    filter = (task: Task) =>
+                        task.dueDate ? task.dueDate.isSame(filterDate) : false;
+                }
 
-            this._filters.push(filter);
+                this._filters.push(filter);
+            }
         } else {
             this._error = 'do not understand query filter (due date)';
         }
