@@ -420,7 +420,7 @@ export class Query {
 
     private parseDueFilter({ line }: { line: string }): void {
         const dueDateField = new DueDateField();
-        const { filter, error } = dueDateField.createDueFilterOrErrorMessage(
+        const { filter, error } = dueDateField.createFilterOrErrorMessage(
             line,
             this.dueRegexp,
         );

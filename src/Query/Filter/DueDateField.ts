@@ -2,10 +2,7 @@ import type { Task } from '../../Task';
 import { Query } from '../../Query';
 
 export class DueDateField {
-    public createDueFilterOrErrorMessage(
-        line: string,
-        instructionRegexp: RegExp,
-    ) {
+    public createFilterOrErrorMessage(line: string, instructionRegexp: RegExp) {
         let filter;
         let error;
         const match = line.match(instructionRegexp);
