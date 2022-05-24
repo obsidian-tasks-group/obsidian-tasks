@@ -21,12 +21,12 @@ export class DueDateField {
                     };
                 } else if (match[1] === 'after') {
                     filter = (task: Task) => {
-                        const date = task.dueDate;
+                        const date = this.date(task);
                         return date ? date.isAfter(filterDate) : false;
                     };
                 } else {
                     filter = (task: Task) => {
-                        const date = task.dueDate;
+                        const date = this.date(task);
                         return date ? date.isSame(filterDate) : false;
                     };
                 }
