@@ -16,7 +16,7 @@ export class DueDateField {
             } else {
                 if (match[1] === 'before') {
                     filter = (task: Task) => {
-                        const date = task.dueDate;
+                        const date = this.date(task);
                         return date ? date.isBefore(filterDate) : false;
                     };
                 } else if (match[1] === 'after') {
@@ -35,5 +35,9 @@ export class DueDateField {
             error = 'do not understand query filter (due date)';
         }
         return { filter: filter, error };
+    }
+
+    private date(task: Task) {
+        return task.dueDate;
     }
 }
