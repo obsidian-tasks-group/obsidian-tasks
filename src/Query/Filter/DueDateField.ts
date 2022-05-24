@@ -10,7 +10,7 @@ export class DueDateField {
     public createFilterOrErrorMessage(line: string) {
         let filter;
         let error;
-        const match = line.match(DueDateField.dueRegexp);
+        const match = line.match(this.filterRegexp());
         if (match !== null) {
             const filterDate = Query.parseDate(match[2]);
             if (!filterDate.isValid()) {
@@ -40,6 +40,10 @@ export class DueDateField {
                 ' date)';
         }
         return { filter: filter, error };
+    }
+
+    private filterRegexp() {
+        return DueDateField.dueRegexp;
     }
 
     private fieldName() {
