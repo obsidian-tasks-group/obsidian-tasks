@@ -162,8 +162,7 @@ export class Query {
                     case new DueDateField().canCreateFilterForLine(line):
                         this.parseDueFilter({ line });
                         break;
-                    case new DoneDateField().canCreateFilterForLine(line):
-                        this.parseDoneFilter({ line });
+                    case this.parseFilter(line, new DoneDateField()):
                         break;
                     case this.pathRegexp.test(line):
                         this.parsePathFilter({ line });
@@ -413,14 +412,18 @@ export class Query {
         }
     }
 
-    private parseDoneFilter({ line }: { line: string }): void {
-        const field = new DoneDateField();
-        const { filter, error } = field.createFilterOrErrorMessage(line);
+    private parseFilter(line: string, field: DateField) {
+        if (field.canCreateFilterForLine(line)) {
+            const { filter, error } = field.createFilterOrErrorMessage(line);
 
-        if (filter) {
-            this._filters.push(filter);
+            if (filter) {
+                this._filters.push(filter);
+            } else {
+                this._error = error;
+            }
+            return true;
         } else {
-            this._error = error;
+            return false;
         }
     }
 
