@@ -419,11 +419,12 @@ export class Query {
 
     private parseDueFilter({ line }: { line: string }): void {
         let filter;
+        let error;
         const dueMatch = line.match(this.dueRegexp);
         if (dueMatch !== null) {
             const filterDate = Query.parseDate(dueMatch[2]);
             if (!filterDate.isValid()) {
-                this._error = 'do not understand due date';
+                error = 'do not understand due date';
             } else {
                 if (dueMatch[1] === 'before') {
                     filter = (task: Task) =>
@@ -439,11 +440,13 @@ export class Query {
                 }
             }
         } else {
-            this._error = 'do not understand query filter (due date)';
+            error = 'do not understand query filter (due date)';
         }
 
         if (filter) {
             this._filters.push(filter);
+        } else {
+            this._error = error;
         }
     }
 
