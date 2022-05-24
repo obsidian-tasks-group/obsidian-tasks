@@ -14,4 +14,7 @@ export class DueDateField extends DateField {
     protected date(task: Task): Moment | null {
         return task.dueDate;
     }
+    protected filterResultIfFieldMissing() {
+        return false;
+    }
 }
