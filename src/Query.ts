@@ -6,6 +6,7 @@ import { getSettings } from './Settings';
 import { LayoutOptions } from './LayoutOptions';
 import { Sort } from './Sort';
 import { Priority, Status, Task } from './Task';
+import { DueDateField } from './Query/Filter/DueDateField';
 
 export type SortingProperty =
     | 'urgency'
@@ -418,7 +419,8 @@ export class Query {
     }
 
     private parseDueFilter({ line }: { line: string }): void {
-        const { filter, error } = this.createDueFilterOrErrorMessage(
+        const dueDateField = new DueDateField();
+        const { filter, error } = dueDateField.createDueFilterOrErrorMessage(
             line,
             this.dueRegexp,
         );
@@ -428,37 +430,6 @@ export class Query {
         } else {
             this._error = error;
         }
-    }
-
-    private createDueFilterOrErrorMessage(
-        line: string,
-        instructionRegexp: RegExp,
-    ) {
-        let filter;
-        let error;
-        const dueMatch = line.match(instructionRegexp);
-        if (dueMatch !== null) {
-            const filterDate = Query.parseDate(dueMatch[2]);
-            if (!filterDate.isValid()) {
-                error = 'do not understand due date';
-            } else {
-                if (dueMatch[1] === 'before') {
-                    filter = (task: Task) =>
-                        task.dueDate
-                            ? task.dueDate.isBefore(filterDate)
-                            : false;
-                } else if (dueMatch[1] === 'after') {
-                    filter = (task: Task) =>
-                        task.dueDate ? task.dueDate.isAfter(filterDate) : false;
-                } else {
-                    filter = (task: Task) =>
-                        task.dueDate ? task.dueDate.isSame(filterDate) : false;
-                }
-            }
-        } else {
-            error = 'do not understand query filter (due date)';
-        }
-        return { filter: filter, error };
     }
 
     private parseDoneFilter({ line }: { line: string }): void {
@@ -653,7 +624,7 @@ export class Query {
         }
     }
 
-    private static parseDate(input: string): moment.Moment {
+    static parseDate(input: string): moment.Moment {
         // Using start of day to correctly match on comparison with other dates (like equality).
         return window.moment(chrono.parseDate(input)).startOf('day');
     }
