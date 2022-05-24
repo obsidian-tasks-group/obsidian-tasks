@@ -624,7 +624,7 @@ export class Query {
         }
     }
 
-    static parseDate(input: string): moment.Moment {
+    public static parseDate(input: string): moment.Moment {
         // Using start of day to correctly match on comparison with other dates (like equality).
         return window.moment(chrono.parseDate(input)).startOf('day');
     }
