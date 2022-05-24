@@ -12,7 +12,7 @@ export class DueDateField {
         if (match !== null) {
             const filterDate = Query.parseDate(match[2]);
             if (!filterDate.isValid()) {
-                error = 'do not understand due date';
+                error = 'do not understand ' + this.fieldName() + ' date';
             } else {
                 if (match[1] === 'before') {
                     filter = (task: Task) => {
@@ -32,9 +32,16 @@ export class DueDateField {
                 }
             }
         } else {
-            error = 'do not understand query filter (due date)';
+            error =
+                'do not understand query filter (' +
+                this.fieldName() +
+                ' date)';
         }
         return { filter: filter, error };
+    }
+
+    private fieldName() {
+        return 'due';
     }
 
     private date(task: Task) {
