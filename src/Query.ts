@@ -387,6 +387,10 @@ export class Query {
 
     private parseScheduledFilter({ line }: { line: string }): void {
         const field = new ScheduledDateField();
+        this.parseLineWithFieldFilter(line, field);
+    }
+
+    private parseLineWithFieldFilter(line: string, field: ScheduledDateField) {
         const { filter, error } = field.createFilterOrErrorMessage(line);
 
         if (filter) {
