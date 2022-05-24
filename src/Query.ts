@@ -418,7 +418,10 @@ export class Query {
     }
 
     private parseDueFilter({ line }: { line: string }): void {
-        const { filter, error } = this.createDueFilterOrErrorMessage(line);
+        const { filter, error } = this.createDueFilterOrErrorMessage(
+            line,
+            this.dueRegexp,
+        );
 
         if (filter) {
             this._filters.push(filter);
@@ -429,7 +432,7 @@ export class Query {
 
     private createDueFilterOrErrorMessage(
         line: string,
-        instructionRegexp: RegExp = this.dueRegexp,
+        instructionRegexp: RegExp,
     ) {
         let filter;
         let error;
