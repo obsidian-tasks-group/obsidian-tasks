@@ -494,6 +494,31 @@ describe('Query', () => {
         });
     });
 
+    describe('filtering with "done"', () => {
+        const TagFilteringCases: Array<[string, FilteringCase]> = [
+            [
+                'done before',
+                {
+                    filters: ['done before 2022-12-23'],
+                    tasks: [
+                        '- [ ] I am done before filter, and should pass ✅ 2022-12-01',
+                        '- [ ] I have no done date, so should fail',
+                    ],
+                    expectedResult: [
+                        '- [ ] I am done before filter, and should pass ✅ 2022-12-01',
+                    ],
+                },
+            ],
+        ];
+
+        test.concurrent.each<[string, FilteringCase]>(TagFilteringCases)(
+            'should filter with done %s',
+            (_, { tasks: allTaskLines, filters, expectedResult }) => {
+                shouldSupportFiltering(filters, allTaskLines, expectedResult);
+            },
+        );
+    });
+
     describe('filtering with "happens"', () => {
         type HappensCase = {
             description: string;
