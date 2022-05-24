@@ -4,8 +4,8 @@ import { Query } from '../../Query';
 export class DueDateField {
     private static readonly dueRegexp = /^due (before|after|on)? ?(.*)/;
 
-    public static canCreateFilterForLine(line: string) {
-        return DueDateField.dueRegexp.test(line);
+    public canCreateFilterForLine(line: string) {
+        return this.filterRegexp().test(line);
     }
     public createFilterOrErrorMessage(line: string) {
         let filter;
