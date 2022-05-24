@@ -395,20 +395,20 @@ export class Query {
 
             let filter;
             if (scheduledMatch[1] === 'before') {
-                filter = (task: Task) =>
-                    task.scheduledDate
-                        ? task.scheduledDate.isBefore(filterDate)
-                        : false;
+                filter = (task: Task) => {
+                    const date = task.scheduledDate;
+                    return date ? date.isBefore(filterDate) : false;
+                };
             } else if (scheduledMatch[1] === 'after') {
-                filter = (task: Task) =>
-                    task.scheduledDate
-                        ? task.scheduledDate.isAfter(filterDate)
-                        : false;
+                filter = (task: Task) => {
+                    const date = task.scheduledDate;
+                    return date ? date.isAfter(filterDate) : false;
+                };
             } else {
-                filter = (task: Task) =>
-                    task.scheduledDate
-                        ? task.scheduledDate.isSame(filterDate)
-                        : false;
+                filter = (task: Task) => {
+                    const date = task.scheduledDate;
+                    return date ? date.isSame(filterDate) : false;
+                };
             }
 
             this._filters.push(filter);
