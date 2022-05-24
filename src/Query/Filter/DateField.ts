@@ -49,10 +49,6 @@ export abstract class DateField extends Field {
         return { filter: filter, error };
     }
 
-    protected abstract filterRegexp(): RegExp;
-
-    protected abstract fieldName(): string;
-
     protected abstract date(task: Task): Moment | null;
 
     protected abstract filterResultIfFieldMissing(): boolean;
