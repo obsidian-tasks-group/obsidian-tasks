@@ -6,6 +6,8 @@ import { getSettings } from './Settings';
 import { LayoutOptions } from './LayoutOptions';
 import { Sort } from './Sort';
 import { Priority, Status, Task } from './Task';
+
+import type { DateField } from './Query/Filter/DateField';
 import { DoneDateField } from './Query/Filter/DoneDateField';
 import { DueDateField } from './Query/Filter/DueDateField';
 import { ScheduledDateField } from './Query/Filter/ScheduledDateField';
@@ -390,7 +392,7 @@ export class Query {
         this.parseLineWithFieldFilter(line, field);
     }
 
-    private parseLineWithFieldFilter(line: string, field: ScheduledDateField) {
+    private parseLineWithFieldFilter(line: string, field: DateField) {
         const { filter, error } = field.createFilterOrErrorMessage(line);
 
         if (filter) {
