@@ -11,6 +11,7 @@ import type { DateField } from './Query/Filter/DateField';
 import { DoneDateField } from './Query/Filter/DoneDateField';
 import { DueDateField } from './Query/Filter/DueDateField';
 import { ScheduledDateField } from './Query/Filter/ScheduledDateField';
+import { StartDateField } from './Query/Filter/StartDateField';
 
 export type SortingProperty =
     | 'urgency'
@@ -53,7 +54,6 @@ export class Query {
 
     private readonly noStartString = 'no start date';
     private readonly hasStartString = 'has start date';
-    private readonly startRegexp = /^starts (before|after|on)? ?(.*)/;
 
     private readonly noScheduledString = 'no scheduled date';
     private readonly hasScheduledString = 'has scheduled date';
@@ -153,8 +153,7 @@ export class Query {
                     case this.happensRegexp.test(line):
                         this.parseHappensFilter({ line });
                         break;
-                    case this.startRegexp.test(line):
-                        this.parseStartFilter({ line });
+                    case this.parseFilter(line, new StartDateField()):
                         break;
                     case this.parseFilter(line, new ScheduledDateField()):
                         break;
@@ -354,33 +353,6 @@ export class Query {
             this._filters.push(filter);
         } else {
             this._error = 'do not understand query filter (happens date)';
-        }
-    }
-
-    private parseStartFilter({ line }: { line: string }): void {
-        const startMatch = line.match(this.startRegexp);
-        if (startMatch !== null) {
-            const filterDate = Query.parseDate(startMatch[2]);
-            if (!filterDate.isValid()) {
-                this._error = 'do not understand start date';
-                return;
-            }
-
-            let filter;
-            if (startMatch[1] === 'before') {
-                filter = (task: Task) =>
-                    task.startDate ? task.startDate.isBefore(filterDate) : true;
-            } else if (startMatch[1] === 'after') {
-                filter = (task: Task) =>
-                    task.startDate ? task.startDate.isAfter(filterDate) : true;
-            } else {
-                filter = (task: Task) =>
-                    task.startDate ? task.startDate.isSame(filterDate) : true;
-            }
-
-            this._filters.push(filter);
-        } else {
-            this._error = 'do not understand query filter (start date)';
         }
     }
 
