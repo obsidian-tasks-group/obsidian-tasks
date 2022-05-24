@@ -15,16 +15,20 @@ export class DueDateField {
                 error = 'do not understand due date';
             } else {
                 if (match[1] === 'before') {
-                    filter = (task: Task) =>
-                        task.dueDate
-                            ? task.dueDate.isBefore(filterDate)
-                            : false;
+                    filter = (task: Task) => {
+                        const date = task.dueDate;
+                        return date ? date.isBefore(filterDate) : false;
+                    };
                 } else if (match[1] === 'after') {
-                    filter = (task: Task) =>
-                        task.dueDate ? task.dueDate.isAfter(filterDate) : false;
+                    filter = (task: Task) => {
+                        const date = task.dueDate;
+                        return date ? date.isAfter(filterDate) : false;
+                    };
                 } else {
-                    filter = (task: Task) =>
-                        task.dueDate ? task.dueDate.isSame(filterDate) : false;
+                    filter = (task: Task) => {
+                        const date = task.dueDate;
+                        return date ? date.isSame(filterDate) : false;
+                    };
                 }
             }
         } else {
