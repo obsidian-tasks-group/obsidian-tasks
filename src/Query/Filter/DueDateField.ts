@@ -7,10 +7,10 @@ export class DueDateField {
     public static canCreateFilterForLine(line: string) {
         return DueDateField.dueRegexp.test(line);
     }
-    public createFilterOrErrorMessage(line: string, instructionRegexp: RegExp) {
+    public createFilterOrErrorMessage(line: string) {
         let filter;
         let error;
-        const match = line.match(instructionRegexp);
+        const match = line.match(DueDateField.dueRegexp);
         if (match !== null) {
             const filterDate = Query.parseDate(match[2]);
             if (!filterDate.isValid()) {

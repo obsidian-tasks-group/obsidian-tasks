@@ -57,7 +57,6 @@ export class Query {
 
     private readonly noDueString = 'no due date';
     private readonly hasDueString = 'has due date';
-    private readonly dueRegexp = /^due (before|after|on)? ?(.*)/;
 
     private readonly doneString = 'done';
     private readonly notDoneString = 'not done';
@@ -420,10 +419,7 @@ export class Query {
 
     private parseDueFilter({ line }: { line: string }): void {
         const dueDateField = new DueDateField();
-        const { filter, error } = dueDateField.createFilterOrErrorMessage(
-            line,
-            this.dueRegexp,
-        );
+        const { filter, error } = dueDateField.createFilterOrErrorMessage(line);
 
         if (filter) {
             this._filters.push(filter);
