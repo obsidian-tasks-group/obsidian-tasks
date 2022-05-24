@@ -159,8 +159,7 @@ export class Query {
                     case new ScheduledDateField().canCreateFilterForLine(line):
                         this.parseScheduledFilter({ line });
                         break;
-                    case new DueDateField().canCreateFilterForLine(line):
-                        this.parseDueFilter({ line });
+                    case this.parseFilter(line, new DueDateField()):
                         break;
                     case this.parseFilter(line, new DoneDateField()):
                         break;
@@ -392,17 +391,6 @@ export class Query {
     }
 
     private parseLineWithFieldFilter(line: string, field: DateField) {
-        const { filter, error } = field.createFilterOrErrorMessage(line);
-
-        if (filter) {
-            this._filters.push(filter);
-        } else {
-            this._error = error;
-        }
-    }
-
-    private parseDueFilter({ line }: { line: string }): void {
-        const field = new DueDateField();
         const { filter, error } = field.createFilterOrErrorMessage(line);
 
         if (filter) {
