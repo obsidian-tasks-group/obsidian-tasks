@@ -1,10 +1,11 @@
+import type { Moment } from 'moment';
 import type { Task } from '../../Task';
 import { Query } from '../../Query';
 
 export class DueDateField {
     private static readonly dueRegexp = /^due (before|after|on)? ?(.*)/;
 
-    public canCreateFilterForLine(line: string) {
+    public canCreateFilterForLine(line: string): boolean {
         return this.filterRegexp().test(line);
     }
     public createFilterOrErrorMessage(line: string) {
@@ -42,15 +43,15 @@ export class DueDateField {
         return { filter: filter, error };
     }
 
-    private filterRegexp() {
+    private filterRegexp(): RegExp {
         return DueDateField.dueRegexp;
     }
 
-    private fieldName() {
+    private fieldName(): string {
         return 'due';
     }
 
-    private date(task: Task) {
+    private date(task: Task): Moment | null {
         return task.dueDate;
     }
 }
