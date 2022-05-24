@@ -3,7 +3,9 @@ import { Query } from '../../Query';
 import type { Task } from '../../Task';
 
 export abstract class DateField {
-    public abstract canCreateFilterForLine(line: string): boolean;
+    public canCreateFilterForLine(line: string): boolean {
+        return this.filterRegexp().test(line);
+    }
 
     public createFilterOrErrorMessage(line: string) {
         let filter;

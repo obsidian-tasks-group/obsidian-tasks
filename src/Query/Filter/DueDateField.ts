@@ -5,9 +5,6 @@ import { DateField } from './DateField';
 export class DueDateField extends DateField {
     private static readonly dueRegexp = /^due (before|after|on)? ?(.*)/;
 
-    public canCreateFilterForLine(line: string): boolean {
-        return this.filterRegexp().test(line);
-    }
     protected filterRegexp(): RegExp {
         return DueDateField.dueRegexp;
     }
