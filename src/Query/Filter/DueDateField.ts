@@ -2,6 +2,11 @@ import type { Task } from '../../Task';
 import { Query } from '../../Query';
 
 export class DueDateField {
+    private static readonly dueRegexp = /^due (before|after|on)? ?(.*)/;
+
+    public static canCreateFilterForLine(line: string) {
+        return DueDateField.dueRegexp.test(line);
+    }
     public createFilterOrErrorMessage(line: string, instructionRegexp: RegExp) {
         let filter;
         let error;

@@ -158,7 +158,7 @@ export class Query {
                     case this.scheduledRegexp.test(line):
                         this.parseScheduledFilter({ line });
                         break;
-                    case this.dueRegexp.test(line):
+                    case DueDateField.canCreateFilterForLine(line):
                         this.parseDueFilter({ line });
                         break;
                     case this.doneRegexp.test(line):
