@@ -156,8 +156,7 @@ export class Query {
                     case this.startRegexp.test(line):
                         this.parseStartFilter({ line });
                         break;
-                    case new ScheduledDateField().canCreateFilterForLine(line):
-                        this.parseScheduledFilter({ line });
+                    case this.parseFilter(line, new ScheduledDateField()):
                         break;
                     case this.parseFilter(line, new DueDateField()):
                         break;
@@ -382,21 +381,6 @@ export class Query {
             this._filters.push(filter);
         } else {
             this._error = 'do not understand query filter (start date)';
-        }
-    }
-
-    private parseScheduledFilter({ line }: { line: string }): void {
-        const field = new ScheduledDateField();
-        this.parseLineWithFieldFilter(line, field);
-    }
-
-    private parseLineWithFieldFilter(line: string, field: DateField) {
-        const { filter, error } = field.createFilterOrErrorMessage(line);
-
-        if (filter) {
-            this._filters.push(filter);
-        } else {
-            this._error = error;
         }
     }
 
