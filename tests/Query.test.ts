@@ -519,6 +519,31 @@ describe('Query', () => {
         );
     });
 
+    describe('filtering with "scheduled"', () => {
+        const TagFilteringCases: Array<[string, FilteringCase]> = [
+            [
+                'scheduled after',
+                {
+                    filters: ['scheduled after 2022-12-23'],
+                    tasks: [
+                        '- [ ] I am scheduled after filter, and should pass ⏳ 2022-12-31',
+                        '- [ ] I have no scheduled date, so should fail',
+                    ],
+                    expectedResult: [
+                        '- [ ] I am scheduled after filter, and should pass ⏳ 2022-12-31',
+                    ],
+                },
+            ],
+        ];
+
+        test.concurrent.each<[string, FilteringCase]>(TagFilteringCases)(
+            'should filter with done %s',
+            (_, { tasks: allTaskLines, filters, expectedResult }) => {
+                shouldSupportFiltering(filters, allTaskLines, expectedResult);
+            },
+        );
+    });
+
     describe('filtering with "happens"', () => {
         type HappensCase = {
             description: string;
