@@ -537,7 +537,7 @@ describe('Query', () => {
         ];
 
         test.concurrent.each<[string, FilteringCase]>(TagFilteringCases)(
-            'should filter with done %s',
+            'should filter with scheduled %s',
             (_, { tasks: allTaskLines, filters, expectedResult }) => {
                 shouldSupportFiltering(filters, allTaskLines, expectedResult);
             },
