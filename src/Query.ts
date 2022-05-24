@@ -418,6 +418,16 @@ export class Query {
     }
 
     private parseDueFilter({ line }: { line: string }): void {
+        const { filter, error } = this.createDueFilterOrErrorMessage(line);
+
+        if (filter) {
+            this._filters.push(filter);
+        } else {
+            this._error = error;
+        }
+    }
+
+    private createDueFilterOrErrorMessage(line: string) {
         let filter;
         let error;
         const dueMatch = line.match(this.dueRegexp);
@@ -442,12 +452,7 @@ export class Query {
         } else {
             error = 'do not understand query filter (due date)';
         }
-
-        if (filter) {
-            this._filters.push(filter);
-        } else {
-            this._error = error;
-        }
+        return { filter: filter, error };
     }
 
     private parseDoneFilter({ line }: { line: string }): void {
