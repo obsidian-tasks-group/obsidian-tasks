@@ -1,8 +1,9 @@
 import type { Moment } from 'moment';
 import { Query } from '../../Query';
 import type { Task } from '../../Task';
+import { Field } from './Field';
 
-export abstract class DateField {
+export abstract class DateField extends Field {
     public canCreateFilterForLine(line: string): boolean {
         return this.filterRegexp().test(line);
     }
