@@ -6,10 +6,6 @@ import { FilterOrErrorMessage } from './Filter';
 export class HappensDateField extends Field {
     private static readonly happensRegexp = /^happens (before|after|on)? ?(.*)/;
 
-    canCreateFilterForLine(line: string): boolean {
-        return this.filterRegexp().test(line);
-    }
-
     createFilterOrErrorMessage(line: string): { filter: any; error: any } {
         let filter;
         let error;

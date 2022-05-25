@@ -5,10 +5,6 @@ import { Field } from './Field';
 import { FilterOrErrorMessage } from './Filter';
 
 export abstract class DateField extends Field {
-    public canCreateFilterForLine(line: string): boolean {
-        return this.filterRegexp().test(line);
-    }
-
     public createFilterOrErrorMessage(line: string): FilterOrErrorMessage {
         let filter;
         let error;

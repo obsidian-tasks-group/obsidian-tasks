@@ -1,7 +1,9 @@
 import type { FilterOrErrorMessage } from './Filter';
 
 export abstract class Field {
-    public abstract canCreateFilterForLine(line: string): boolean;
+    public canCreateFilterForLine(line: string): boolean {
+        return this.filterRegexp().test(line);
+    }
 
     public abstract createFilterOrErrorMessage(
         line: string,
