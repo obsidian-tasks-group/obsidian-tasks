@@ -2,13 +2,14 @@ import type { Moment } from 'moment';
 import { Query } from '../../Query';
 import type { Task } from '../../Task';
 import { Field } from './Field';
+import { FilterOrErrorMessage } from './Filter';
 
 export abstract class DateField extends Field {
     public canCreateFilterForLine(line: string): boolean {
         return this.filterRegexp().test(line);
     }
 
-    public createFilterOrErrorMessage(line: string) {
+    public createFilterOrErrorMessage(line: string): FilterOrErrorMessage {
         let filter;
         let error;
         const match = line.match(this.filterRegexp());
@@ -46,7 +47,10 @@ export abstract class DateField extends Field {
                 this.fieldName() +
                 ' date)';
         }
-        return { filter: filter, error };
+        const result = new FilterOrErrorMessage();
+        result.filter = filter;
+        result.error = error;
+        return result;
     }
 
     protected abstract date(task: Task): Moment | null;
