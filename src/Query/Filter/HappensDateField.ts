@@ -3,6 +3,10 @@ import { Query } from '../../Query';
 import { Field } from './Field';
 import { FilterOrErrorMessage } from './Filter';
 
+/**
+ * Support the 'happens' search instruction, which searches all of
+ * start, scheduled and due dates.
+ */
 export class HappensDateField extends Field {
     private static readonly happensRegexp = /^happens (before|after|on)? ?(.*)/;
 

@@ -2,6 +2,9 @@ import type { Moment } from 'moment';
 import type { Task } from '../../Task';
 import { DateField } from './DateField';
 
+/**
+ * Support the 'due' search instruction.
+ */
 export class DueDateField extends DateField {
     private static readonly dueRegexp = /^due (before|after|on)? ?(.*)/;
 

@@ -2,6 +2,9 @@ import type { Moment } from 'moment';
 import type { Task } from '../../Task';
 import { DateField } from './DateField';
 
+/**
+ * Support the 'starts' search instruction.
+ */
 export class StartDateField extends DateField {
     private static readonly startRegexp = /^starts (before|after|on)? ?(.*)/;
 
