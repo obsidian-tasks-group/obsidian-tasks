@@ -269,6 +269,19 @@ describe('Query', () => {
                     expectedResult: ['- [ ] task 2 ⏳ 2022-04-15'],
                 },
             ],
+            [
+                'by done date (before)',
+                {
+                    filters: ['done before 2022-12-23'],
+                    tasks: [
+                        '- [ ] I am done before filter, and should pass ✅ 2022-12-01',
+                        '- [ ] I have no done date, so should fail',
+                    ],
+                    expectedResult: [
+                        '- [ ] I am done before filter, and should pass ✅ 2022-12-01',
+                    ],
+                },
+            ],
         ])(
             'should support filtering %s',
             (_, { tasks: allTaskLines, filters, expectedResult }) => {
@@ -492,56 +505,6 @@ describe('Query', () => {
             // Cleanup
             updateSettings(originalSettings);
         });
-    });
-
-    describe('filtering with "done"', () => {
-        const TagFilteringCases: Array<[string, FilteringCase]> = [
-            [
-                'done before',
-                {
-                    filters: ['done before 2022-12-23'],
-                    tasks: [
-                        '- [ ] I am done before filter, and should pass ✅ 2022-12-01',
-                        '- [ ] I have no done date, so should fail',
-                    ],
-                    expectedResult: [
-                        '- [ ] I am done before filter, and should pass ✅ 2022-12-01',
-                    ],
-                },
-            ],
-        ];
-
-        test.concurrent.each<[string, FilteringCase]>(TagFilteringCases)(
-            'should filter with done %s',
-            (_, { tasks: allTaskLines, filters, expectedResult }) => {
-                shouldSupportFiltering(filters, allTaskLines, expectedResult);
-            },
-        );
-    });
-
-    describe('filtering with "scheduled"', () => {
-        const TagFilteringCases: Array<[string, FilteringCase]> = [
-            [
-                'scheduled after',
-                {
-                    filters: ['scheduled after 2022-12-23'],
-                    tasks: [
-                        '- [ ] I am scheduled after filter, and should pass ⏳ 2022-12-31',
-                        '- [ ] I have no scheduled date, so should fail',
-                    ],
-                    expectedResult: [
-                        '- [ ] I am scheduled after filter, and should pass ⏳ 2022-12-31',
-                    ],
-                },
-            ],
-        ];
-
-        test.concurrent.each<[string, FilteringCase]>(TagFilteringCases)(
-            'should filter with scheduled %s',
-            (_, { tasks: allTaskLines, filters, expectedResult }) => {
-                shouldSupportFiltering(filters, allTaskLines, expectedResult);
-            },
-        );
     });
 
     describe('filtering with "happens"', () => {
