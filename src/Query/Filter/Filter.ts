@@ -8,7 +8,7 @@ type Filter = (task: Task) => boolean;
 
 /**
  * A class which stores one of:
- * - A filter
+ * - A Filter
  * - An error message
  *
  * This is really currently a convenience for returning date from
