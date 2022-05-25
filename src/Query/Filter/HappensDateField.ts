@@ -6,10 +6,7 @@ import { FilterOrErrorMessage } from './Filter';
 export class HappensDateField extends Field {
     private static readonly happensRegexp = /^happens (before|after|on)? ?(.*)/;
 
-    public createFilterOrErrorMessage(line: string): {
-        filter: any;
-        error: any;
-    } {
+    public createFilterOrErrorMessage(line: string): FilterOrErrorMessage {
         const result = new FilterOrErrorMessage();
         const happensMatch = line.match(this.filterRegexp());
         if (happensMatch !== null) {
