@@ -9,6 +9,7 @@ import { Priority, Status, Task } from './Task';
 import type { Field } from './Query/Filter/Field';
 import { DoneDateField } from './Query/Filter/DoneDateField';
 import { DueDateField } from './Query/Filter/DueDateField';
+import { PathField } from './Query/Filter/PathField';
 import { ScheduledDateField } from './Query/Filter/ScheduledDateField';
 import { StartDateField } from './Query/Filter/StartDateField';
 import { HappensDateField } from './Query/Filter/HappensDateField';
@@ -62,7 +63,6 @@ export class Query {
     private readonly doneString = 'done';
     private readonly notDoneString = 'not done';
 
-    private readonly pathRegexp = /^path (includes|does not include) (.*)/;
     private readonly descriptionRegexp =
         /^description (includes|does not include) (.*)/;
 
@@ -158,8 +158,7 @@ export class Query {
                         break;
                     case this.parseFilter(line, new DoneDateField()):
                         break;
-                    case this.pathRegexp.test(line):
-                        this.parsePathFilter({ line });
+                    case this.parseFilter(line, new PathField()):
                         break;
                     case this.descriptionRegexp.test(line):
                         this.parseDescriptionFilter({ line });
@@ -326,33 +325,6 @@ export class Query {
         }
     }
 
-    private parsePathFilter({ line }: { line: string }): void {
-        const pathMatch = line.match(this.pathRegexp);
-        if (pathMatch !== null) {
-            const filterMethod = pathMatch[1];
-            if (filterMethod === 'includes') {
-                this._filters.push((task: Task) =>
-                    Query.stringIncludesCaseInsensitive(
-                        task.path,
-                        pathMatch[2],
-                    ),
-                );
-            } else if (pathMatch[1] === 'does not include') {
-                this._filters.push(
-                    (task: Task) =>
-                        !Query.stringIncludesCaseInsensitive(
-                            task.path,
-                            pathMatch[2],
-                        ),
-                );
-            } else {
-                this._error = 'do not understand query filter (path)';
-            }
-        } else {
-            this._error = 'do not understand query filter (path)';
-        }
-    }
-
     /**
      * When a tag based filter is used this is the process to apply it.
      * - Tags can be searched for with and without the hash tag at the start.
@@ -493,7 +465,7 @@ export class Query {
         }
     }
 
-    private static stringIncludesCaseInsensitive(
+    public static stringIncludesCaseInsensitive(
         haystack: string,
         needle: string,
     ): boolean {
