@@ -9,6 +9,13 @@ import { TaskBuilder } from './TaskBuilder';
 
 window.moment = moment;
 
+/**
+ * Convenience function to test a Filter on a single Task
+ *
+ * @param filter - a FilterOrErrorMessage, which should have a valid Filter.
+ * @param task - the Task to filter.
+ * @param expected true if the task should match the filter, and false otherwise.
+ */
 function testTaskFilter(
     filter: FilterOrErrorMessage,
     task: Task,
