@@ -4,27 +4,10 @@
 import moment from 'moment';
 import { DueDateField } from '../../../src/Query/Filter/DueDateField';
 import type { FilterOrErrorMessage } from '../../../src/Query/Filter/Filter';
-import type { Task } from '../../../src/Task';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
+import { testTaskFilter } from '../../TestingTools/FilterTestHelpers';
 
 window.moment = moment;
-
-/**
- * Convenience function to test a Filter on a single Task
- *
- * @param filter - a FilterOrErrorMessage, which should have a valid Filter.
- * @param task - the Task to filter.
- * @param expected true if the task should match the filter, and false otherwise.
- */
-function testTaskFilter(
-    filter: FilterOrErrorMessage,
-    task: Task,
-    expected: boolean,
-) {
-    expect(filter.filter).toBeDefined();
-    expect(filter.error).toBeUndefined();
-    expect(filter.filter!(task)).toEqual(expected);
-}
 
 function testTaskFilterForTaskWithDueDate(
     filter: FilterOrErrorMessage,
