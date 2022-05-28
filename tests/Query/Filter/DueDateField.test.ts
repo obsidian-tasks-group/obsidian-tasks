@@ -19,6 +19,15 @@ function testTaskFilter(
     expect(filter.filter!(task)).toEqual(expected);
 }
 
+function testTaskFilterForTaskWithDueDate(
+    filter: FilterOrErrorMessage,
+    builder: TaskBuilder,
+    dueDate: string | null,
+    expected: boolean,
+) {
+    testTaskFilter(filter, builder.dueDate(dueDate).build(), expected);
+}
+
 describe('due date', () => {
     it('by due date (before)', () => {
         // Arrange
@@ -28,9 +37,9 @@ describe('due date', () => {
         const builder = new TaskBuilder();
 
         // Act, Assert
-        testTaskFilter(filter, builder.dueDate(null).build(), false);
-        testTaskFilter(filter, builder.dueDate('2022-04-15').build(), true);
-        testTaskFilter(filter, builder.dueDate('2022-04-20').build(), false);
-        testTaskFilter(filter, builder.dueDate('2022-04-25').build(), false);
+        testTaskFilterForTaskWithDueDate(filter, builder, null, false);
+        testTaskFilterForTaskWithDueDate(filter, builder, '2022-04-15', true);
+        testTaskFilterForTaskWithDueDate(filter, builder, '2022-04-20', false);
+        testTaskFilterForTaskWithDueDate(filter, builder, '2022-04-25', false);
     });
 });
