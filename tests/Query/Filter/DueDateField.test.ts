@@ -21,10 +21,10 @@ function testTaskFilter(
 
 function testTaskFilterForTaskWithDueDate(
     filter: FilterOrErrorMessage,
-    builder: TaskBuilder,
     dueDate: string | null,
     expected: boolean,
 ) {
+    const builder = new TaskBuilder();
     testTaskFilter(filter, builder.dueDate(dueDate).build(), expected);
 }
 
@@ -34,12 +34,11 @@ describe('due date', () => {
         const filter = new DueDateField().createFilterOrErrorMessage(
             'due before 2022-04-20',
         );
-        const builder = new TaskBuilder();
 
         // Act, Assert
-        testTaskFilterForTaskWithDueDate(filter, builder, null, false);
-        testTaskFilterForTaskWithDueDate(filter, builder, '2022-04-15', true);
-        testTaskFilterForTaskWithDueDate(filter, builder, '2022-04-20', false);
-        testTaskFilterForTaskWithDueDate(filter, builder, '2022-04-25', false);
+        testTaskFilterForTaskWithDueDate(filter, null, false);
+        testTaskFilterForTaskWithDueDate(filter, '2022-04-15', true);
+        testTaskFilterForTaskWithDueDate(filter, '2022-04-20', false);
+        testTaskFilterForTaskWithDueDate(filter, '2022-04-25', false);
     });
 });
