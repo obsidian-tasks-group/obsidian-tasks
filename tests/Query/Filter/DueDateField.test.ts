@@ -8,19 +8,25 @@ import { TaskBuilder } from './TaskBuilder';
 window.moment = moment;
 
 describe('due date', () => {
-    it('parses a task from a line', () => {
+    it('by due date (before)', () => {
         // Arrange
-        // Arrange
-        const filterOrError = new DueDateField().createFilterOrErrorMessage(
-            'due on today',
+        const filter = new DueDateField().createFilterOrErrorMessage(
+            'due before 2022-04-20',
         );
         const builder = new TaskBuilder();
-        const taskWithoutDueDate = builder.dueDate(null).build();
-
         // Assert
-        expect(filterOrError.filter).toBeDefined();
-        expect(filterOrError.error).toBeUndefined();
+        expect(filter.filter).toBeDefined();
+        expect(filter.error).toBeUndefined();
 
-        expect(filterOrError.filter!(taskWithoutDueDate)).toEqual(false);
+        expect(filter.filter!(builder.dueDate(null).build())).toEqual(false);
+        expect(filter.filter!(builder.dueDate('2022-04-15').build())).toEqual(
+            true,
+        );
+        expect(filter.filter!(builder.dueDate('2022-04-20').build())).toEqual(
+            false,
+        );
+        expect(filter.filter!(builder.dueDate('2022-04-25').build())).toEqual(
+            false,
+        );
     });
 });
