@@ -1,6 +1,6 @@
 import type { Moment } from 'moment';
-import { Query } from '../../Query';
 import type { Task } from '../../Task';
+import { DateParser } from '../DateParser';
 import { Field } from './Field';
 import { FilterOrErrorMessage } from './Filter';
 
@@ -14,7 +14,7 @@ export abstract class DateField extends Field {
         const result = new FilterOrErrorMessage();
         const match = line.match(this.filterRegexp());
         if (match !== null) {
-            const filterDate = Query.parseDate(match[2]);
+            const filterDate = DateParser.parseDate(match[2]);
             if (!filterDate.isValid()) {
                 result.error =
                     'do not understand ' + this.fieldName() + ' date';
