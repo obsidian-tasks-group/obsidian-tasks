@@ -1,5 +1,4 @@
 import type { Task } from '../../Task';
-import { Query } from '../../Query';
 import { Field } from './Field';
 import { FilterOrErrorMessage } from './Filter';
 
@@ -11,13 +10,13 @@ export abstract class TextField extends Field {
             const filterMethod = match[1];
             if (filterMethod === 'includes') {
                 result.filter = (task: Task) =>
-                    Query.stringIncludesCaseInsensitive(
+                    TextField.stringIncludesCaseInsensitive(
                         this.value(task),
                         match[2],
                     );
             } else if (match[1] === 'does not include') {
                 result.filter = (task: Task) =>
-                    !Query.stringIncludesCaseInsensitive(
+                    !TextField.stringIncludesCaseInsensitive(
                         this.value(task),
                         match[2],
                     );
@@ -28,6 +27,15 @@ export abstract class TextField extends Field {
             result.error = `do not understand query filter (${this.fieldName()})`;
         }
         return result;
+    }
+
+    public static stringIncludesCaseInsensitive(
+        haystack: string,
+        needle: string,
+    ): boolean {
+        return haystack
+            .toLocaleLowerCase()
+            .includes(needle.toLocaleLowerCase());
     }
 
     protected abstract filterRegexp(): RegExp;

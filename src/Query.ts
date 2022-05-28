@@ -13,6 +13,7 @@ import { PathField } from './Query/Filter/PathField';
 import { ScheduledDateField } from './Query/Filter/ScheduledDateField';
 import { StartDateField } from './Query/Filter/StartDateField';
 import { HappensDateField } from './Query/Filter/HappensDateField';
+import { TextField } from './Query/Filter/TextField';
 
 export type SortingProperty =
     | 'urgency'
@@ -374,7 +375,7 @@ export class Query {
 
             if (filterMethod === 'includes') {
                 this._filters.push((task: Task) =>
-                    Query.stringIncludesCaseInsensitive(
+                    TextField.stringIncludesCaseInsensitive(
                         // Remove global filter from description match if present.
                         // This is necessary to match only on the content of the task, not
                         // the global filter.
@@ -385,7 +386,7 @@ export class Query {
             } else if (descriptionMatch[1] === 'does not include') {
                 this._filters.push(
                     (task: Task) =>
-                        !Query.stringIncludesCaseInsensitive(
+                        !TextField.stringIncludesCaseInsensitive(
                             // Remove global filter from description match if present.
                             // This is necessary to match only on the content of the task, not
                             // the global filter.
@@ -409,7 +410,7 @@ export class Query {
                 this._filters.push(
                     (task: Task) =>
                         task.precedingHeader !== null &&
-                        Query.stringIncludesCaseInsensitive(
+                        TextField.stringIncludesCaseInsensitive(
                             task.precedingHeader,
                             headingMatch[2],
                         ),
@@ -418,7 +419,7 @@ export class Query {
                 this._filters.push(
                     (task: Task) =>
                         task.precedingHeader === null ||
-                        !Query.stringIncludesCaseInsensitive(
+                        !TextField.stringIncludesCaseInsensitive(
                             task.precedingHeader,
                             headingMatch[2],
                         ),
@@ -463,14 +464,5 @@ export class Query {
         } else {
             this._error = 'do not understand query grouping';
         }
-    }
-
-    public static stringIncludesCaseInsensitive(
-        haystack: string,
-        needle: string,
-    ): boolean {
-        return haystack
-            .toLocaleLowerCase()
-            .includes(needle.toLocaleLowerCase());
     }
 }
