@@ -1,5 +1,5 @@
 import type { Task } from '../../Task';
-import { Query } from '../../Query';
+import { DateParser } from '../DateParser';
 import { Field } from './Field';
 import { FilterOrErrorMessage } from './Filter';
 
@@ -14,7 +14,7 @@ export class HappensDateField extends Field {
         const result = new FilterOrErrorMessage();
         const happensMatch = line.match(this.filterRegexp());
         if (happensMatch !== null) {
-            const filterDate = Query.parseDate(happensMatch[2]);
+            const filterDate = DateParser.parseDate(happensMatch[2]);
             if (!filterDate.isValid()) {
                 result.error = 'do not understand happens date';
             } else {

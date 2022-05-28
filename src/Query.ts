@@ -1,4 +1,3 @@
-import * as chrono from 'chrono-node';
 import { Group } from './Query/Group';
 import type { TaskGroups } from './Query/TaskGroups';
 
@@ -492,11 +491,6 @@ export class Query {
         } else {
             this._error = 'do not understand query grouping';
         }
-    }
-
-    public static parseDate(input: string): moment.Moment {
-        // Using start of day to correctly match on comparison with other dates (like equality).
-        return window.moment(chrono.parseDate(input)).startOf('day');
     }
 
     private static stringIncludesCaseInsensitive(
