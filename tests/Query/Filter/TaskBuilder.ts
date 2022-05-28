@@ -2,6 +2,7 @@
 import type { Moment } from 'moment';
 import { Priority, Status, Task } from '../../../src/Task';
 import type { Recurrence } from '../../../src/Recurrence';
+import { DateParser } from '../../../src/Query/DateParser';
 
 /**
  * A fluent class for creating tasks for tests.
@@ -9,6 +10,11 @@ import type { Recurrence } from '../../../src/Recurrence';
  * This uses the Builder Pattern.
  *
  * See TaskBuilder.build() for an example of use.
+ *
+ * IMPORTANT: Changed values are retained after calls to .build()
+ *            There is no way to reset a TaskBuilder to its default
+ *            start currently.
+ *            Create a new TaskBuilder object to start from a clean state,
  */
 export class TaskBuilder {
     private _status: Status = Status.Todo;
@@ -127,8 +133,12 @@ export class TaskBuilder {
         return this;
     }
 
-    public dueDate(dueDate: Moment | null): TaskBuilder {
-        this._dueDate = dueDate;
+    public dueDate(dueDate: string | null): TaskBuilder {
+        if (dueDate) {
+            this._dueDate = DateParser.parseDate(dueDate);
+        } else {
+            this._dueDate = null;
+        }
         return this;
     }
 
