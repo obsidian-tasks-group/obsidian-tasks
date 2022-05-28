@@ -9,6 +9,7 @@ import { Priority, Status, Task } from './Task';
 import type { Field } from './Query/Filter/Field';
 import { DoneDateField } from './Query/Filter/DoneDateField';
 import { DueDateField } from './Query/Filter/DueDateField';
+import { HeadingField } from './Query/Filter/HeadingField';
 import { PathField } from './Query/Filter/PathField';
 import { ScheduledDateField } from './Query/Filter/ScheduledDateField';
 import { StartDateField } from './Query/Filter/StartDateField';
@@ -78,9 +79,6 @@ export class Query {
 
     private readonly groupByRegexp =
         /^group by (backlink|filename|folder|heading|path|status)/;
-
-    private readonly headingRegexp =
-        /^heading (includes|does not include) (.*)/;
 
     private readonly hideOptionsRegexp =
         /^hide (task count|backlink|priority|start date|scheduled date|done date|due date|recurrence rule|edit button)/;
@@ -167,8 +165,7 @@ export class Query {
                     case this.tagRegexp.test(line):
                         this.parseTagFilter({ line });
                         break;
-                    case this.headingRegexp.test(line):
-                        this.parseHeadingFilter({ line });
+                    case this.parseFilter(line, new HeadingField()):
                         break;
                     case this.limitRegexp.test(line):
                         this.parseLimit({ line });
@@ -399,36 +396,6 @@ export class Query {
             }
         } else {
             this._error = 'do not understand query filter (description)';
-        }
-    }
-
-    private parseHeadingFilter({ line }: { line: string }): void {
-        const headingMatch = line.match(this.headingRegexp);
-        if (headingMatch !== null) {
-            const filterMethod = headingMatch[1].toLowerCase();
-            if (filterMethod === 'includes') {
-                this._filters.push(
-                    (task: Task) =>
-                        task.precedingHeader !== null &&
-                        TextField.stringIncludesCaseInsensitive(
-                            task.precedingHeader,
-                            headingMatch[2],
-                        ),
-                );
-            } else if (headingMatch[1] === 'does not include') {
-                this._filters.push(
-                    (task: Task) =>
-                        task.precedingHeader === null ||
-                        !TextField.stringIncludesCaseInsensitive(
-                            task.precedingHeader,
-                            headingMatch[2],
-                        ),
-                );
-            } else {
-                this._error = 'do not understand query filter (heading)';
-            }
-        } else {
-            this._error = 'do not understand query filter (heading)';
         }
     }
 
