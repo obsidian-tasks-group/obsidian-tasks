@@ -123,13 +123,13 @@ export class TaskBuilder {
         return this;
     }
 
-    public startDate(startDate: Moment | null): TaskBuilder {
-        this._startDate = startDate;
+    public startDate(startDate: string | null): TaskBuilder {
+        this._startDate = TaskBuilder.parseDate(startDate);
         return this;
     }
 
-    public scheduledDate(scheduledDate: Moment | null): TaskBuilder {
-        this._scheduledDate = scheduledDate;
+    public scheduledDate(scheduledDate: string | null): TaskBuilder {
+        this._scheduledDate = TaskBuilder.parseDate(scheduledDate);
         return this;
     }
 
@@ -138,8 +138,8 @@ export class TaskBuilder {
         return this;
     }
 
-    public doneDate(doneDate: Moment | null): TaskBuilder {
-        this._doneDate = doneDate;
+    public doneDate(doneDate: string | null): TaskBuilder {
+        this._doneDate = TaskBuilder.parseDate(doneDate);
         return this;
     }
 
