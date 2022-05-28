@@ -134,11 +134,7 @@ export class TaskBuilder {
     }
 
     public dueDate(dueDate: string | null): TaskBuilder {
-        if (dueDate) {
-            this._dueDate = DateParser.parseDate(dueDate);
-        } else {
-            this._dueDate = null;
-        }
+        this._dueDate = TaskBuilder.parseDate(dueDate);
         return this;
     }
 
@@ -155,5 +151,13 @@ export class TaskBuilder {
     public blockLink(blockLink: string): TaskBuilder {
         this._blockLink = blockLink;
         return this;
+    }
+
+    private static parseDate(date: string | null): moment.Moment | null {
+        if (date) {
+            return DateParser.parseDate(date);
+        } else {
+            return null;
+        }
     }
 }
