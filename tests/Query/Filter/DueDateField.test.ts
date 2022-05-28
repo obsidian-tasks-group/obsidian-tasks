@@ -5,7 +5,7 @@ import moment from 'moment';
 import { DueDateField } from '../../../src/Query/Filter/DueDateField';
 import type { FilterOrErrorMessage } from '../../../src/Query/Filter/Filter';
 import type { Task } from '../../../src/Task';
-import { TaskBuilder } from './TaskBuilder';
+import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 
 window.moment = moment;
 
