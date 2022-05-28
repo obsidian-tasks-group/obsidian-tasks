@@ -153,7 +153,7 @@ export class TaskBuilder {
         return this;
     }
 
-    private static parseDate(date: string | null): moment.Moment | null {
+    private static parseDate(date: string | null): Moment | null {
         if (date) {
             return DateParser.parseDate(date);
         } else {
