@@ -1,12 +1,12 @@
 import { Group } from './Query/Group';
 import type { TaskGroups } from './Query/TaskGroups';
 
-import { getSettings } from './Settings';
 import { LayoutOptions } from './LayoutOptions';
 import { Sort } from './Sort';
 import { Priority, Status, Task } from './Task';
 
 import type { Field } from './Query/Filter/Field';
+import { DescriptionField } from './Query/Filter/DescriptionField';
 import { DoneDateField } from './Query/Filter/DoneDateField';
 import { DueDateField } from './Query/Filter/DueDateField';
 import { HeadingField } from './Query/Filter/HeadingField';
@@ -14,7 +14,6 @@ import { PathField } from './Query/Filter/PathField';
 import { ScheduledDateField } from './Query/Filter/ScheduledDateField';
 import { StartDateField } from './Query/Filter/StartDateField';
 import { HappensDateField } from './Query/Filter/HappensDateField';
-import { TextField } from './Query/Filter/TextField';
 
 export type SortingProperty =
     | 'urgency'
@@ -64,9 +63,6 @@ export class Query {
 
     private readonly doneString = 'done';
     private readonly notDoneString = 'not done';
-
-    private readonly descriptionRegexp =
-        /^description (includes|does not include) (.*)/;
 
     // Handles both ways of referencing the tags query.
     private readonly tagRegexp =
@@ -159,8 +155,7 @@ export class Query {
                         break;
                     case this.parseFilter(line, new PathField()):
                         break;
-                    case this.descriptionRegexp.test(line):
-                        this.parseDescriptionFilter({ line });
+                    case this.parseFilter(line, new DescriptionField()):
                         break;
                     case this.tagRegexp.test(line):
                         this.parseTagFilter({ line });
@@ -361,40 +356,6 @@ export class Query {
             }
         } else {
             this._error = 'do not understand query filter (tag/tags)';
-        }
-    }
-
-    private parseDescriptionFilter({ line }: { line: string }): void {
-        const descriptionMatch = line.match(this.descriptionRegexp);
-        if (descriptionMatch !== null) {
-            const filterMethod = descriptionMatch[1];
-            const globalFilter = getSettings().globalFilter;
-
-            if (filterMethod === 'includes') {
-                const filter = (task: Task) =>
-                    TextField.stringIncludesCaseInsensitive(
-                        // Remove global filter from description match if present.
-                        // This is necessary to match only on the content of the task, not
-                        // the global filter.
-                        task.description.replace(globalFilter, '').trim(),
-                        descriptionMatch[2],
-                    );
-                this._filters.push(filter);
-            } else if (descriptionMatch[1] === 'does not include') {
-                const filter = (task: Task) =>
-                    !TextField.stringIncludesCaseInsensitive(
-                        // Remove global filter from description match if present.
-                        // This is necessary to match only on the content of the task, not
-                        // the global filter.
-                        task.description.replace(globalFilter, '').trim(),
-                        descriptionMatch[2],
-                    );
-                this._filters.push(filter);
-            } else {
-                this._error = 'do not understand query filter (description)';
-            }
-        } else {
-            this._error = 'do not understand query filter (description)';
         }
     }
 
