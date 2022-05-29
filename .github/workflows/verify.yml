@@ -1,9 +1,9 @@
 name: Verify Commit
 on:
   push:
-    branches: [ "*" ]
+    branches: ['*']
   pull_request:
-    branches: [ main ]
+    branches: [main]
 jobs:
   validate:
     runs-on: ubuntu-latest
@@ -20,5 +20,17 @@ jobs:
       - name: Run TypeScript compiler ESLint
         run: yarn run lint
 
+      - name: Run Markdown Lint
+        run: yarn run lint:markdown
+
       - name: Run Jest
         run: yarn run test
+
+      - name: Archive verified build
+        uses: actions/upload-artifact@v3
+        with:
+          name: dist-verified
+          path: |
+            main.js
+            manifest.json
+            styles.css

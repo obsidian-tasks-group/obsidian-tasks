@@ -32,12 +32,12 @@ You can sort tasks by the following properties:
 2. `status` (done or todo)
 3. `priority` (priority of the task; "low" is below "none")
 4. `start` (the date when the task starts)
-2. `scheduled` (the date when the task is scheduled)
-2. `due` (the date when the task is due)
-5. `done` (the date when the task was done)
-6. `path` (the path to the file that contains the task)
-7. `description` (the description of the task)
-8. `tags` (the tags associated with the task)
+5. `scheduled` (the date when the task is scheduled)
+6. `due` (the date when the task is due)
+7. `done` (the date when the task was done)
+8. `path` (the path to the file that contains the task)
+9. `description` (the description of the task)
+10. `tag` (the description of the task)
 
 You can add multiple `sort by` query options, each on an extra line.
 The first sort has the highest priority.

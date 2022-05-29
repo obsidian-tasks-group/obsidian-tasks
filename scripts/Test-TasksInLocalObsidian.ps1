@@ -1,11 +1,7 @@
-﻿[CmdletBinding()]
-param (
-    [Parameter(HelpMessage = 'The path to the plugins folder uner the .obsidian directory.')]
-    [String]
-    $ObsidianPluginRoot = $env:OBSIDIAN_PLUGIN_ROOT,
-    [Parameter(HelpMessage = 'The folder name of the plugin to copy the files to.')]
-    [String]
-    $PluginFolderName = 'obsidian-tasks-plugin'
+[CmdletBinding()]
+[Parameter(HelpMessage = 'The folder name of the plugin to copy the files to.')]
+[String]
+$PluginFolderName = 'obsidian-tasks-plugin'
 )
 
 $repoRoot = (Resolve-Path -Path $(git rev-parse --show-toplevel)).Path
@@ -47,6 +43,10 @@ if ($?) {
     yarn run dev
 
 } else {
+    Write-Error 'Build failed'
+}
+
+Pop-Location
     Write-Error 'Build failed'
 }
 
