@@ -7,6 +7,7 @@ import {
     TFile,
 } from 'obsidian';
 
+import type { IQuery } from './IQuery';
 import { State } from './Cache';
 import { replaceTaskWithTasks } from './File';
 import { Query } from './Query';
@@ -51,7 +52,8 @@ class QueryRenderChild extends MarkdownRenderChild {
     private readonly app: App;
     private readonly events: Events;
     private readonly source: string;
-    private query: Query;
+    private query: IQuery;
+    private queryType: string;
 
     private renderEventRef: EventRef | undefined;
     private queryReloadTimeout: NodeJS.Timeout | undefined;
@@ -73,7 +75,20 @@ class QueryRenderChild extends MarkdownRenderChild {
         this.events = events;
         this.source = source;
 
-        this.query = new Query({ source });
+        // The engine is chosen on the basis of the code block language. Currently
+        // there is only the main engine for the plugin, this allows others to be
+        // added later.
+        switch (this.containerEl.className) {
+            case 'block-language-tasks':
+                this.query = new Query({ source });
+                this.queryType = 'tasks';
+                break;
+
+            default:
+                this.query = new Query({ source });
+                this.queryType = 'tasks';
+                break;
+        }
     }
 
     onload() {
@@ -119,6 +134,10 @@ class QueryRenderChild extends MarkdownRenderChild {
     }
 
     private async render({ tasks, state }: { tasks: Task[]; state: State }) {
+        console.debug(
+            `Render ${this.queryType} called for ${tasks.length} tasks, state: ${state}`,
+        );
+
         const content = this.containerEl.createEl('div');
         if (state === State.Warm && this.query.error === undefined) {
             const tasksSortedLimitedGrouped =
