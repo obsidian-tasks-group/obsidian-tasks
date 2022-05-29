@@ -6,6 +6,7 @@ parent: Queries
 ---
 
 # Grouping
+
 {: .no_toc }
 
 <details open markdown="block">
@@ -34,7 +35,7 @@ File locations:
 1. `path` (the path to the file that contains the task, that is, the folder and the filename)
 1. `folder` (the folder to the file that contains the task, which will be `/` for files in root of the vault)
 1. `filename` (the filename of the file that contains the task, without the `.md` extension)
-    *  Note that tasks from different notes with the same file name will be grouped together in the same group.
+    * Note that tasks from different notes with the same file name will be grouped together in the same group.
 
 File contents:
 
@@ -55,9 +56,9 @@ The first group has the highest priority.
 
 Each subsequent `group by` will generate a new heading-level within the existing grouping:
 
-- First `group by` is displayed as `h4` headings
-- Second `group by` is displayed as `h5` headings
-- Third and subsequent `group by` are displayed as `h6` headings
+* First `group by` is displayed as `h4` headings
+* Second `group by` is displayed as `h5` headings
+* Third and subsequent `group by` are displayed as `h6` headings
 
 See the [screenshots below](#screenshots) for how this looks in practice.
 
@@ -78,7 +79,6 @@ The order of operations ensures that grouping does not modify which tasks are di
 1. then finally any grouping instructions are run
 
 </div>
-
 
 ---
 

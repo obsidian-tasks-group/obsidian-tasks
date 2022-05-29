@@ -15,13 +15,13 @@ Leave it empty to regard all checklist items as tasks.
 
 Example with global filter `#task`:
 
-```
+```markdown
 - [ ] #task take out the trash
 ```
 
 If you don't have a global filter set, all regular checklist items will be considered a task:
 
-```
+```markdown
 - [ ] take out the trash
 ```
 

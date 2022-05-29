@@ -20,7 +20,7 @@ _Note that this is a screenshot of the reminder plugin's settings and not Tasks.
 
 The order is important when writing the task. You have to put the reminder date between the task name and the other fields :
 
-```
+```markdown
 - [ ] #task task name ⏰ YYYY-MM-DD HH:mm ⏫  🔁 every *** 🛫 YYYY-MM-DD ⏳ YYYY-MM-DD 📅 YYYY-MM-DD
 ```
 

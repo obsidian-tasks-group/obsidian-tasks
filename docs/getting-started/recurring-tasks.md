@@ -34,13 +34,13 @@ The new task will have updated dates based off the original task.
 
 Take as an example the following task:
 
-```
+```markdown
 - [ ] take out the trash 🔁 every Sunday 📅 2021-04-25
 ```
 
 If you mark the above task "done", the file will now look like this:
 
-```
+```markdown
 -   [ ] take out the trash 🔁 every Sunday 📅 2021-05-02
 -   [x] take out the trash 🔁 every Sunday 📅 2021-04-25 ✅ 2021-04-24
 ```
@@ -67,7 +67,7 @@ The default behavior results in newly created tasks having dates relative to the
 
 For example, given that today is the 13. February 2022 and you just completed the lower task:
 
-```
+```markdown
 - [ ] sweep the floors 🔁 every week ⏳ 2021-02-13
 - [x] sweep the floors 🔁 every week ⏳ 2021-02-06 ✅ 2022-02-13
 ```
@@ -76,10 +76,10 @@ Since you missed the original scheduled date,
 the newly created task is scheduled one week after the original scheduled date: the same day you completed the original task.
 
 If you want to have tasks be scheduled relative to the "done" date rather than the original dates,
-then you will need to add ` when done` to the end of the recurrence rule.
+then you will need to add `when done` to the end of the recurrence rule.
 Below is the same example as above, but this time the new task is scheduled based on the current date when you completed the task:
 
-```
+```markdown
 - [ ] sweep the floors 🔁 every week when done ⏳ 2022-02-20
 - [x] sweep the floors 🔁 every week when done ⏳ 2021-02-06 ✅ 2022-02-13
 ```
@@ -127,15 +127,15 @@ The new task will have the due date advanced by two weeks and a scheduled date t
 
 Examples of possible recurrence rules (mix and match as desired; these should be considered inspirational):
 
--   `🔁 every 3 days`
--   `🔁 every 10 days when done`
--   `🔁 every weekday` (meaning every Mon - Fri)
--   `🔁 every week on Sunday`
--   `🔁 every 2 weeks`
--   `🔁 every 3 weeks on Friday`
--   `🔁 every 2 months`
--   `🔁 every month on the 1st`
--   `🔁 every 6 months on the 2nd Wednesday`
--   `🔁 every January on the 15th`
--   `🔁 every April and December on the 1st and 24th` (meaning every _April 1st_ and _December 24th_)
--   `🔁 every year`
+- `🔁 every 3 days`
+- `🔁 every 10 days when done`
+- `🔁 every weekday` (meaning every Mon - Fri)
+- `🔁 every week on Sunday`
+- `🔁 every 2 weeks`
+- `🔁 every 3 weeks on Friday`
+- `🔁 every 2 months`
+- `🔁 every month on the 1st`
+- `🔁 every 6 months on the 2nd Wednesday`
+- `🔁 every January on the 15th`
+- `🔁 every April and December on the 1st and 24th` (meaning every _April 1st_ and _December 24th_)
+- `🔁 every year`

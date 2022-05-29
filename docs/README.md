@@ -2,11 +2,11 @@
 
 ## Overview
 
--   For background, including which branch to work on, see ["Updating documentation" in CONTRIBUTING](../CONTRIBUTING.md#updating-documentation)
--   The documentation is written in Markdown
--   It is converted to HTML via Ruby and Jekyll
-    -   Important: Ruby 2 is required, for example, Ruby 2.7
--   The published documentation is at <https://schemar.github.io/obsidian-tasks/>
+- For background, including which branch to work on, see ["Updating documentation" in CONTRIBUTING](../CONTRIBUTING.md#updating-documentation)
+- The documentation is written in Markdown
+- It is converted to HTML via Ruby and Jekyll
+  - Important: Ruby 2 is required, for example, Ruby 2.7
+- The published documentation is at <https://schemar.github.io/obsidian-tasks/>
 
 ## Test documentation locally with Jekyll
 
@@ -27,6 +27,7 @@ there is a fast feedback cycle of:
 
 1. Edit a markdown page
 1. Wait a few seconds until you see console output like this:
+
     ```text
     web_1  |       Regenerating: 1 file(s) changed at 2022-05-07 08:03:54
     web_1  |                     README.md
@@ -34,6 +35,7 @@ there is a fast feedback cycle of:
     web_1  |        Jekyll Feed: Generating feed for posts
     web_1  |                     ...done in 4.02288725 seconds.
     ```
+
 1. Reload the page in your browser to see the changes
 
 ## Option 1: Running inside a Docker container
@@ -84,6 +86,7 @@ You can stop the service by hitting `Ctrl+c`.
 1. Install ruby 2.x.
     - It is important that you use a version 2 of ruby, not version 3, for example 2.7.0.
 1. Run:
+
     ```bash
     cd obsidian-tasks/
     gem install bundler
