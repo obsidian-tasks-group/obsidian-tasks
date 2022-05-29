@@ -45,7 +45,7 @@ yarn test
 yarn lint
 ```
 
-Make sure you build, test and lint before pushing to the repository. Left hook is used to cover these checks before commit and push. To run just the markdown lint you can use `yarn run lint-markdown`.
+Make sure you build, test and lint before pushing to the repository. Left hook is used to cover these checks before commit and push. To run just the markdown lint you can use `yarn run lint:markdown`.
 
 ## FAQs
 
