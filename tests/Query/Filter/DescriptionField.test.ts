@@ -2,6 +2,18 @@ import { DescriptionField } from '../../../src/Query/Filter/DescriptionField';
 import { getSettings, updateSettings } from '../../../src/Settings';
 import { testTaskFilter } from '../../TestingTools/FilterTestHelpers';
 import { fromLine } from '../../TestHelpers';
+import type { FilterOrErrorMessage } from '../../../src/Query/Filter/Filter';
+
+function testDescriptionFilter(
+    filter: FilterOrErrorMessage,
+    line: string,
+    expected: boolean,
+) {
+    const task = fromLine({
+        line,
+    });
+    testTaskFilter(filter, task, expected);
+}
 
 describe('description', () => {
     it('can instantiate', () => {
@@ -21,18 +33,13 @@ describe('description', () => {
         );
 
         // Act, Assert
-        testTaskFilter(
+        testDescriptionFilter(
             filter,
-            fromLine({
-                line: '- [ ] #task this does not include the word; only in the global filter',
-            })!,
+            '- [ ] #task this does not include the word; only in the global filter',
+
             false,
         );
-        testTaskFilter(
-            filter,
-            fromLine({ line: '- [ ] #task this does: task' })!,
-            true,
-        );
+        testDescriptionFilter(filter, '- [ ] #task this does: task', true);
 
         // Cleanup
         updateSettings(originalSettings);
@@ -47,29 +54,19 @@ describe('description', () => {
         );
 
         // Act, Assert
-        testTaskFilter(
+        testDescriptionFilter(
             filter,
-            fromLine({
-                line: '- [ ] this does not include the word at all',
-            })!,
+            '- [ ] this does not include the word at all',
             false,
         );
 
-        testTaskFilter(
+        testDescriptionFilter(
             filter,
-            fromLine({
-                line: '- [ ] #task this includes the word as a tag',
-            })!,
+            '- [ ] #task this includes the word as a tag',
             true,
         );
 
-        testTaskFilter(
-            filter,
-            fromLine({
-                line: '- [ ] #task this does: task',
-            })!,
-            true,
-        );
+        testDescriptionFilter(filter, '- [ ] #task this does: task', true);
 
         // Cleanup
         updateSettings(originalSettings);
