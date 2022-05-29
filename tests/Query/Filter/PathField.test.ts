@@ -20,6 +20,7 @@ describe('path', () => {
         );
 
         // Assert
+        testTaskFilterForTaskWithPath(filter, '', false);
         testTaskFilterForTaskWithPath(filter, '/some/path/file.md', true);
         testTaskFilterForTaskWithPath(filter, '/SoMe/PaTh/file.md', true);
         testTaskFilterForTaskWithPath(filter, '/other/path/file.md', false);
@@ -32,6 +33,7 @@ describe('path', () => {
         );
 
         // Assert
+        testTaskFilterForTaskWithPath(filter, '', true);
         testTaskFilterForTaskWithPath(filter, '/some/path/file.md', false);
         testTaskFilterForTaskWithPath(filter, '/other/path/file.md', true);
     });
