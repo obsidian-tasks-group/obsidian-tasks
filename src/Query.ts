@@ -7,6 +7,7 @@ import { Sort } from './Sort';
 import { Status } from './Status';
 import { Priority, Task } from './Task';
 import { StatusRegistry } from './StatusRegistry';
+import type { IQuery } from './IQuery';
 
 import type { Field } from './Query/Filter/Field';
 import { DoneDateField } from './Query/Filter/DoneDateField';
@@ -41,7 +42,9 @@ export type GroupingProperty =
     | 'status';
 export type Grouping = { property: GroupingProperty };
 
-export class Query {
+export class Query implements IQuery {
+    public source: string;
+
     private _limit: number | undefined = undefined;
     private _layoutOptions: LayoutOptions = new LayoutOptions();
     private _filters: ((task: Task) => boolean)[] = [];
@@ -98,6 +101,7 @@ export class Query {
     private readonly commentRegexp = /^#.*/;
 
     constructor({ source }: { source: string }) {
+        this.source = source;
         source
             .split('\n')
             .map((line: string) => line.trim())
