@@ -1,4 +1,3 @@
-import * as chrono from 'chrono-node';
 import { Group } from './Query/Group';
 import type { TaskGroups } from './Query/TaskGroups';
 
@@ -7,6 +6,13 @@ import { LayoutOptions } from './LayoutOptions';
 import { Sort } from './Sort';
 import { Priority, Status, Task } from './Task';
 import type { IQuery } from './IQuery';
+
+import type { Field } from './Query/Filter/Field';
+import { DoneDateField } from './Query/Filter/DoneDateField';
+import { DueDateField } from './Query/Filter/DueDateField';
+import { ScheduledDateField } from './Query/Filter/ScheduledDateField';
+import { StartDateField } from './Query/Filter/StartDateField';
+import { HappensDateField } from './Query/Filter/HappensDateField';
 
 export type SortingProperty =
     | 'urgency'
@@ -47,23 +53,17 @@ export class Query implements IQuery {
     private readonly priorityRegexp =
         /^priority (is )?(above|below)? ?(low|none|medium|high)/;
 
-    private readonly happensRegexp = /^happens (before|after|on)? ?(.*)/;
-
     private readonly noStartString = 'no start date';
     private readonly hasStartString = 'has start date';
-    private readonly startRegexp = /^starts (before|after|on)? ?(.*)/;
 
     private readonly noScheduledString = 'no scheduled date';
     private readonly hasScheduledString = 'has scheduled date';
-    private readonly scheduledRegexp = /^scheduled (before|after|on)? ?(.*)/;
 
     private readonly noDueString = 'no due date';
     private readonly hasDueString = 'has due date';
-    private readonly dueRegexp = /^due (before|after|on)? ?(.*)/;
 
     private readonly doneString = 'done';
     private readonly notDoneString = 'not done';
-    private readonly doneRegexp = /^done (before|after|on)? ?(.*)/;
 
     private readonly pathRegexp = /^path (includes|does not include) (.*)/;
     private readonly descriptionRegexp =
@@ -152,20 +152,15 @@ export class Query implements IQuery {
                     case this.priorityRegexp.test(line):
                         this.parsePriorityFilter({ line });
                         break;
-                    case this.happensRegexp.test(line):
-                        this.parseHappensFilter({ line });
+                    case this.parseFilter(line, new HappensDateField()):
                         break;
-                    case this.startRegexp.test(line):
-                        this.parseStartFilter({ line });
+                    case this.parseFilter(line, new StartDateField()):
                         break;
-                    case this.scheduledRegexp.test(line):
-                        this.parseScheduledFilter({ line });
+                    case this.parseFilter(line, new ScheduledDateField()):
                         break;
-                    case this.dueRegexp.test(line):
-                        this.parseDueFilter({ line });
+                    case this.parseFilter(line, new DueDateField()):
                         break;
-                    case this.doneRegexp.test(line):
-                        this.parseDoneFilter({ line });
+                    case this.parseFilter(line, new DoneDateField()):
                         break;
                     case this.pathRegexp.test(line):
                         this.parsePathFilter({ line });
@@ -320,156 +315,18 @@ export class Query implements IQuery {
         }
     }
 
-    private parseHappensFilter({ line }: { line: string }): void {
-        const happensMatch = line.match(this.happensRegexp);
-        if (happensMatch !== null) {
-            const filterDate = Query.parseDate(happensMatch[2]);
-            if (!filterDate.isValid()) {
-                this._error = 'do not understand happens date';
-                return;
-            }
+    private parseFilter(line: string, field: Field) {
+        if (field.canCreateFilterForLine(line)) {
+            const { filter, error } = field.createFilterOrErrorMessage(line);
 
-            let filter;
-            if (happensMatch[1] === 'before') {
-                filter = (task: Task) => {
-                    return Array.of(
-                        task.startDate,
-                        task.scheduledDate,
-                        task.dueDate,
-                    ).some((date) => date && date.isBefore(filterDate));
-                };
-            } else if (happensMatch[1] === 'after') {
-                filter = (task: Task) => {
-                    return Array.of(
-                        task.startDate,
-                        task.scheduledDate,
-                        task.dueDate,
-                    ).some((date) => date && date.isAfter(filterDate));
-                };
+            if (filter) {
+                this._filters.push(filter);
             } else {
-                filter = (task: Task) => {
-                    return Array.of(
-                        task.startDate,
-                        task.scheduledDate,
-                        task.dueDate,
-                    ).some((date) => date && date.isSame(filterDate));
-                };
+                this._error = error;
             }
-
-            this._filters.push(filter);
+            return true;
         } else {
-            this._error = 'do not understand query filter (happens date)';
-        }
-    }
-
-    private parseStartFilter({ line }: { line: string }): void {
-        const startMatch = line.match(this.startRegexp);
-        if (startMatch !== null) {
-            const filterDate = Query.parseDate(startMatch[2]);
-            if (!filterDate.isValid()) {
-                this._error = 'do not understand start date';
-                return;
-            }
-
-            let filter;
-            if (startMatch[1] === 'before') {
-                filter = (task: Task) =>
-                    task.startDate ? task.startDate.isBefore(filterDate) : true;
-            } else if (startMatch[1] === 'after') {
-                filter = (task: Task) =>
-                    task.startDate ? task.startDate.isAfter(filterDate) : true;
-            } else {
-                filter = (task: Task) =>
-                    task.startDate ? task.startDate.isSame(filterDate) : true;
-            }
-
-            this._filters.push(filter);
-        } else {
-            this._error = 'do not understand query filter (start date)';
-        }
-    }
-
-    private parseScheduledFilter({ line }: { line: string }): void {
-        const scheduledMatch = line.match(this.scheduledRegexp);
-        if (scheduledMatch !== null) {
-            const filterDate = Query.parseDate(scheduledMatch[2]);
-            if (!filterDate.isValid()) {
-                this._error = 'do not understand scheduled date';
-            }
-
-            let filter;
-            if (scheduledMatch[1] === 'before') {
-                filter = (task: Task) =>
-                    task.scheduledDate
-                        ? task.scheduledDate.isBefore(filterDate)
-                        : false;
-            } else if (scheduledMatch[1] === 'after') {
-                filter = (task: Task) =>
-                    task.scheduledDate
-                        ? task.scheduledDate.isAfter(filterDate)
-                        : false;
-            } else {
-                filter = (task: Task) =>
-                    task.scheduledDate
-                        ? task.scheduledDate.isSame(filterDate)
-                        : false;
-            }
-
-            this._filters.push(filter);
-        } else {
-            this._error = 'do not understand query filter (scheduled date)';
-        }
-    }
-
-    private parseDueFilter({ line }: { line: string }): void {
-        const dueMatch = line.match(this.dueRegexp);
-        if (dueMatch !== null) {
-            const filterDate = Query.parseDate(dueMatch[2]);
-            if (!filterDate.isValid()) {
-                this._error = 'do not understand due date';
-                return;
-            }
-
-            let filter;
-            if (dueMatch[1] === 'before') {
-                filter = (task: Task) =>
-                    task.dueDate ? task.dueDate.isBefore(filterDate) : false;
-            } else if (dueMatch[1] === 'after') {
-                filter = (task: Task) =>
-                    task.dueDate ? task.dueDate.isAfter(filterDate) : false;
-            } else {
-                filter = (task: Task) =>
-                    task.dueDate ? task.dueDate.isSame(filterDate) : false;
-            }
-
-            this._filters.push(filter);
-        } else {
-            this._error = 'do not understand query filter (due date)';
-        }
-    }
-
-    private parseDoneFilter({ line }: { line: string }): void {
-        const doneMatch = line.match(this.doneRegexp);
-        if (doneMatch !== null) {
-            const filterDate = Query.parseDate(doneMatch[2]);
-            if (!filterDate.isValid()) {
-                this._error = 'do not understand done date';
-                return;
-            }
-
-            let filter;
-            if (doneMatch[1] === 'before') {
-                filter = (task: Task) =>
-                    task.doneDate ? task.doneDate.isBefore(filterDate) : false;
-            } else if (doneMatch[1] === 'after') {
-                filter = (task: Task) =>
-                    task.doneDate ? task.doneDate.isAfter(filterDate) : false;
-            } else {
-                filter = (task: Task) =>
-                    task.doneDate ? task.doneDate.isSame(filterDate) : false;
-            }
-
-            this._filters.push(filter);
+            return false;
         }
     }
 
@@ -638,11 +495,6 @@ export class Query implements IQuery {
         } else {
             this._error = 'do not understand query grouping';
         }
-    }
-
-    private static parseDate(input: string): moment.Moment {
-        // Using start of day to correctly match on comparison with other dates (like equality).
-        return window.moment(chrono.parseDate(input)).startOf('day');
     }
 
     private static stringIncludesCaseInsensitive(

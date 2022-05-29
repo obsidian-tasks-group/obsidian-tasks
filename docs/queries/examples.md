@@ -85,4 +85,3 @@ All open tasks that are due today or earlier, sorted by due date, then grouped t
     sort by due
     group by folder
     ```
-

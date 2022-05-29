@@ -110,7 +110,7 @@ The scores are as follows:
 
 ## Examples
 
-```
+```markdown
 A task that is due today, has a "medium" priority, is not scheduled, and has no start date:
 urgency = 9.0 + 3.9 + 0.0 + 0.0 = 12.9
 
