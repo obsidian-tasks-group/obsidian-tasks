@@ -1,6 +1,6 @@
 {
   "name": "obsidian-tasks",
-  "version": "1.5.1",
+  "version": "1.6.0",
   "description": "Task management for the Obsidian knowledge base",
   "main": "main.js",
   "scripts": {
@@ -8,6 +8,7 @@
     "build": "node esbuild.config.mjs production",
     "build:dev": "node esbuild.config.mjs development",
     "lint": "eslint ./src --fix && eslint ./tests --fix && tsc --noEmit --pretty && svelte-check",
+    "lint:markdown": "markdownlint-cli2-fix \"**/*.md\" \"#node_modules\"",
     "test": "jest --ci",
     "test:dev": "jest --watch",
     "test:obsidian": "pwsh -ExecutionPolicy Unrestricted -NoProfile -File ./scripts/Test-TasksInLocalObsidian.ps1"
@@ -38,6 +39,7 @@
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-prettier": "^3.3.1",
     "jest": "^27.3.1",
+    "markdownlint-cli2": "^0.4.0",
     "moment": "^2.29.1",
     "obsidian": "0.13.21",
     "prettier": "^2.2.1",

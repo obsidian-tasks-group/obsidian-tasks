@@ -13,7 +13,7 @@ Additional to the official command to create a task, you can use a quickadd comm
 
 For example:
 
-```
+```markdown
 {% raw %}#task {{VALUE:task name}} ⏰ {{VDATE:reminder date and time,YYYY-MM-DD HH:mm}} {{VALUE:⏫,🔼,🔽, }} 🔁 {{VALUE:recurrence}} 🛫 {{VDATE:start date,YYYY-MM-DD}} ⏳ {{VDATE:scheduled date,YYYY-MM-DD}} 📅 {{VDATE:due date,YYYY-MM-DD}}{% endraw %}
 ```
 
@@ -62,6 +62,6 @@ Then you can give them the same name, this way you'll write the date only once a
 
 Here is the format for the current example:
 
-```
+```markdown
 {% raw %}#task {{VALUE:task name}} ⏰ {{VDATE:same date,YYYY-MM-DD}} {{VDATE:time,HH:mm}} 📅 {{VDATE:same date,YYYY-MM-DD}}{% endraw %}
 ```
