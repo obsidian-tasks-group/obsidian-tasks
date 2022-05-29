@@ -54,8 +54,10 @@ export interface IQuery {
      * from the cache and returns a TaskGroup collection. If there is no grouping
      * then the TaskGroup collection will contain a single TaskGroup with all tasks
      * found using the query.
-     *      *
-     * @memberof IQuery
+     *
+     * @param {Task[]} tasks
+     * @return {*}  {TaskGroups}
+     * @memberof Query
      */
     applyQueryToTasks: (tasks: Task[]) => TaskGroups;
 }
