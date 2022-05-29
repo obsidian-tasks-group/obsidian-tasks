@@ -11,7 +11,7 @@
     "lint:markdown": "markdownlint-cli2-fix \"**/*.md\" \"#node_modules\"",
     "test": "jest --ci",
     "test:dev": "jest --watch",
-    "test:obsidian": "pwsh -ExecutionPolicy Unrestricted -NoProfile -File ./scripts/Test-TasksInLocalObsidian.ps1"
+    "deploy:local": "pwsh -ExecutionPolicy Unrestricted -NoProfile -File ./scripts/Test-TasksInLocalObsidian.ps1"
   },
   "keywords": [
     "obsidian",
