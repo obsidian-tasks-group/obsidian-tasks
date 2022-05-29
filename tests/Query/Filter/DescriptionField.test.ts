@@ -16,14 +16,6 @@ function testDescriptionFilter(
 }
 
 describe('description', () => {
-    it('can instantiate', () => {
-        const filter = new DescriptionField().createFilterOrErrorMessage(
-            'description includes wibble',
-        );
-        expect(filter.filter).toBeDefined();
-        expect(filter.error).toBeUndefined();
-    });
-
     it('ignores the global filter when filtering', () => {
         // Arrange
         const originalSettings = getSettings();
