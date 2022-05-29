@@ -371,26 +371,25 @@ export class Query {
             const globalFilter = getSettings().globalFilter;
 
             if (filterMethod === 'includes') {
-                this._filters.push((task: Task) =>
+                const filter = (task: Task) =>
                     TextField.stringIncludesCaseInsensitive(
                         // Remove global filter from description match if present.
                         // This is necessary to match only on the content of the task, not
                         // the global filter.
                         task.description.replace(globalFilter, '').trim(),
                         descriptionMatch[2],
-                    ),
-                );
+                    );
+                this._filters.push(filter);
             } else if (descriptionMatch[1] === 'does not include') {
-                this._filters.push(
-                    (task: Task) =>
-                        !TextField.stringIncludesCaseInsensitive(
-                            // Remove global filter from description match if present.
-                            // This is necessary to match only on the content of the task, not
-                            // the global filter.
-                            task.description.replace(globalFilter, '').trim(),
-                            descriptionMatch[2],
-                        ),
-                );
+                const filter = (task: Task) =>
+                    !TextField.stringIncludesCaseInsensitive(
+                        // Remove global filter from description match if present.
+                        // This is necessary to match only on the content of the task, not
+                        // the global filter.
+                        task.description.replace(globalFilter, '').trim(),
+                        descriptionMatch[2],
+                    );
+                this._filters.push(filter);
             } else {
                 this._error = 'do not understand query filter (description)';
             }
