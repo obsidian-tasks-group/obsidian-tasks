@@ -32,6 +32,33 @@ Discussion will take place inside the PR.
 
 If you can, please add/update tests and documentation where appropriate.
 
+## Maintaining the tests
+
+The tests use the [ts-jest](https://www.npmjs.com/package/ts-jest) wrapper around the
+[jest](https://jestjs.io) test framework.
+
+The [Expect](https://jestjs.io/docs/expect) page is a good reference for the many jest testing features.
+
+### Snapshot Tests
+
+For testing more complex objects, some of the tests here use Jest's
+[Snapshot Testing](https://jestjs.io/docs/snapshot-testing) facility, which is similar to
+[Approval Tests](https://approvaltests.com) but easier to use in JavaScript.
+
+For readability of snapshots, we favour [Inline Snapshots](https://jestjs.io/docs/snapshot-testing#inline-snapshots),
+which are saved in the source code. See that documentation for how to easily update the inline
+snapshot, if the output is intended to be changed.
+
+### Jest and the WebStorm IDE
+
+The WebStorm IDE has a [helpful page](https://www.jetbrains.com/help/webstorm/running-unit-tests-on-jest.html)
+on how it makes testing with jest easy.
+
+Note in particular the
+[Snapshot testing section](https://www.jetbrains.com/help/webstorm/running-unit-tests-on-jest.html#ws_jest_snapshot_testing)
+for how to view the diffs in the event of snapshot test failures, and also how to update the saved snapshot
+of one or all snapshot failures.
+
 ## Setting up build environment
 
 This project uses Node 14.x, if you need to use a different version, look at using `nvm` to manage your Node versions. If you are using `nvm`, you can install the 14.x version of Node with `nvm install 14.19.1; nvm use 14.19.1`.

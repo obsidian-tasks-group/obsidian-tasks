@@ -5,6 +5,7 @@ import moment from 'moment';
 import { getSettings, updateSettings } from '../src/Settings';
 import { Query } from '../src/Query';
 import { Priority, Status, Task } from '../src/Task';
+import { createTasksFromMarkdown } from './TestHelpers';
 
 window.moment = moment;
 
@@ -243,19 +244,6 @@ describe('Query', () => {
                 },
             ],
             [
-                'by due date (before)',
-                {
-                    filters: ['due before 2022-04-20'],
-                    tasks: [
-                        '- [ ] task 1',
-                        '- [ ] task 2 📅 2022-04-15',
-                        '- [ ] task 3 📅 2022-04-20',
-                        '- [ ] task 4 📅 2022-04-25',
-                    ],
-                    expectedResult: ['- [ ] task 2 📅 2022-04-15'],
-                },
-            ],
-            [
                 'by scheduled date (before)',
                 {
                     filters: ['scheduled before 2022-04-20'],
@@ -266,6 +254,19 @@ describe('Query', () => {
                         '- [ ] task 4 ⏳ 2022-04-25',
                     ],
                     expectedResult: ['- [ ] task 2 ⏳ 2022-04-15'],
+                },
+            ],
+            [
+                'by done date (before)',
+                {
+                    filters: ['done before 2022-12-23'],
+                    tasks: [
+                        '- [ ] I am done before filter, and should pass ✅ 2022-12-01',
+                        '- [ ] I have no done date, so should fail',
+                    ],
+                    expectedResult: [
+                        '- [ ] I am done before filter, and should pass ✅ 2022-12-01',
+                    ],
                 },
             ],
         ])(
@@ -696,6 +697,84 @@ describe('Query', () => {
 
             // Assert
             expect(query.error).toBeUndefined();
+        });
+    });
+
+    // This tests the parsing of 'group by' instructions.
+    // Group.test.ts tests the actual grouping code.
+    describe('grouping instructions', () => {
+        it('should default to ungrouped', () => {
+            // Arrange
+            const source = '';
+            const query = new Query({ source });
+
+            // Assert
+            expect(query.grouping.length).toEqual(0);
+        });
+
+        it('should parse a supported group command without error', () => {
+            // Arrange
+            const input = 'group by path';
+            const query = new Query({ source: input });
+
+            // Assert
+            expect(query.error).toBeUndefined();
+            expect(query.grouping.length).toEqual(1);
+        });
+
+        it('should log meaningful error for supported group type', () => {
+            // Arrange
+            const input = 'group by xxxx';
+            const query = new Query({ source: input });
+
+            // Assert
+            // Check that the error message contains the actual problem line
+            expect(query.error).toContain(input);
+            expect(query.grouping.length).toEqual(0);
+        });
+
+        it('should apply limit correctly, after sorting tasks', () => {
+            // Arrange
+            const input = `
+                # sorting by status will move the incomplete tasks first
+                sort by status
+
+                # grouping by status will give two groups: Done and Todo
+                group by status
+
+                # Apply a limit, to test which tasks make it to
+                limit 2
+                `;
+            const query = new Query({ source: input });
+
+            const tasksAsMarkdown = `
+- [x] Task 1 - should not appear in output
+- [x] Task 2 - should not appear in output
+- [ ] Task 3 - will be sorted to 1st place, so should pass limit
+- [ ] Task 4 - will be sorted to 2nd place, so should pass limit
+- [ ] Task 5 - should not appear in output
+- [ ] Task 6 - should not appear in output
+            `;
+
+            const tasks = createTasksFromMarkdown(
+                tasksAsMarkdown,
+                'some_markdown_file',
+                'Some Heading',
+            );
+
+            // Act
+            const groups = query.applyQueryToTasks(tasks);
+
+            // Assert
+            expect(groups.groups.length).toEqual(1);
+            const soleTaskGroup = groups.groups[0];
+            const expectedTasks = `
+- [ ] Task 3 - will be sorted to 1st place, so should pass limit
+- [ ] Task 4 - will be sorted to 2nd place, so should pass limit
+`;
+            expect('\n' + soleTaskGroup.tasksAsStringOfLines()).toStrictEqual(
+                expectedTasks,
+            );
         });
     });
 });

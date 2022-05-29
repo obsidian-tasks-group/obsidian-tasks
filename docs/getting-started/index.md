@@ -37,7 +37,7 @@ There are two ways to mark a task done:
 1. In preview mode, click the checkbox at the beginning of the task to toggle the status between "todo" and "done".
 2. In edit mode, use the command `Tasks: Toggle Done`.
     - The command will only be available if the cursor is on a line with a checklist item.
-    - You can map he command to a hotkey in order to quickly toggle statuses in the editor view (I recommend to replace the original "Toggle checklist status" with it).
+    - You can map the command to a hotkey in order to quickly toggle statuses in the editor view (I recommend to replace the original "Toggle checklist status" with it).
     - If the checklist item is not a task (e.g. due to a global filter), the command will toggle it like a regular checklist item.
 
 A "done" task will have the date it was done appended to the end of its line.

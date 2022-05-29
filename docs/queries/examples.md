@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Examples
-nav_order: 6
+nav_order: 7
 parent: Queries
 has_toc: false
 ---
@@ -73,4 +73,15 @@ Show one task that is due on the 5th of May and includes `#prio1` in its descrip
     due on 2021-05-05
     description includes #prio1
     limit to 1 tasks
+    ```
+
+---
+
+All open tasks that are due today or earlier, sorted by due date, then grouped together by the folder containing the task:
+
+    ```tasks
+    not done
+    due before tomorrow
+    sort by due
+    group by folder
     ```
