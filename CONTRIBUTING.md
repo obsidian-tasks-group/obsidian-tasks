@@ -74,6 +74,16 @@ yarn lint
 
 Make sure you build, test and lint before pushing to the repository. Left hook is used to cover these checks before commit and push. To run just the markdown lint you can use `yarn run lint:markdown`.
 
+## Local development
+
+When developing locally, you can use the `yarn dev` command to start a development build. This will cause a rebuild of the code base every time you make a change so you can see if there are any code errors.
+
+If you want to build and test in a local obsidian vault use `yarn run build:dev` this will generate the `main.js` in the root of the repository which has the sourcemap in it to make debugging using the development console (`Ctrl+Shift+i`) in Obsidian easier.
+
+To make it simpler to work on the files you can use `deploy:local` which will create a symbolic link to the plugins folder for this plugin (`obsidian-tasks-plugin`). When ever a build occurs using `yarn run dev` or `yarn run build:dev` the plugin will be updated in the obsidian vault you are targeting using the `OBSIDIAN_PLUGIN_ROOT` environment variable.
+
+It is recommended you use the [Hot-Reload](https://github.com/pjeby/hot-reload) plugin to automatically reload the plugin when files change. The script will create a `.hotreload` file in the root of the repository to assist.
+
 ## FAQs
 
 ### How does Tasks handle status changes?
