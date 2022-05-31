@@ -74,8 +74,6 @@ describe('priority error cases', () => {
             'priority is no-such-priority',
         );
         expect(filter.filter).toBeUndefined();
-        expect(filter.error).toBe(
-            'do not understand query filter (priority date)',
-        );
+        expect(filter.error).toBe('do not understand query filter (priority)');
     });
 });
