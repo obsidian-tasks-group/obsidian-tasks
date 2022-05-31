@@ -1,5 +1,6 @@
 import type { FilterOrErrorMessage } from '../../src/Query/Filter/Filter';
 import type { Task } from '../../src/Task';
+import { Query } from '../../src/Query';
 
 /**
  * Convenience function to test a Filter on a single Task
@@ -16,4 +17,36 @@ export function testTaskFilter(
     expect(filter.filter).toBeDefined();
     expect(filter.error).toBeUndefined();
     expect(filter.filter!(task)).toEqual(expected);
+}
+
+/**
+ * Convenience function to test a Filter on a single Task
+ *
+ * This is to help with porting filter code out of Query and in to Field classes.
+ * Unit tests can be first written using the Query class for filtering, and then
+ * later updated to use testTaskFilter() instead
+ *
+ * @param filter - A string, such as 'priority is high'
+ * @param task - the Task to filter
+ * @param expected - true if the task should match the filter, and false otherwise.
+ */
+export function testTaskFilterViaQuery(
+    filter: string,
+    task: Task,
+    expected: boolean,
+) {
+    // Arrange
+    const query = new Query({ source: filter });
+
+    const tasks = [task];
+
+    // Act
+    let filteredTasks = [...tasks];
+    query.filters.forEach((filter) => {
+        filteredTasks = filteredTasks.filter(filter);
+    });
+    const matched = filteredTasks.length === 1;
+
+    // Assert
+    expect(matched).toEqual(expected);
 }
