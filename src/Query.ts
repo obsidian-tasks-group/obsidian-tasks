@@ -288,22 +288,20 @@ export class Query implements IQuery {
             const search = tagMatch[3].replace(/^#/, '');
 
             if (filterMethod === 'include' || filterMethod === 'includes') {
-                this._filters.push(
-                    (task: Task) =>
-                        task.tags.find((tag) =>
-                            tag.toLowerCase().includes(search.toLowerCase()),
-                        ) !== undefined,
-                );
+                const filter = (task: Task) =>
+                    task.tags.find((tag) =>
+                        tag.toLowerCase().includes(search.toLowerCase()),
+                    ) !== undefined;
+                this._filters.push(filter);
             } else if (
                 tagMatch[2] === 'do not include' ||
                 tagMatch[2] === 'does not include'
             ) {
-                this._filters.push(
-                    (task: Task) =>
-                        task.tags.find((tag) =>
-                            tag.toLowerCase().includes(search.toLowerCase()),
-                        ) == undefined,
-                );
+                const filter = (task: Task) =>
+                    task.tags.find((tag) =>
+                        tag.toLowerCase().includes(search.toLowerCase()),
+                    ) == undefined;
+                this._filters.push(filter);
             } else {
                 this._error = 'do not understand query filter (tag/tags)';
             }
