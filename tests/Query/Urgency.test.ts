@@ -44,30 +44,33 @@ describe('urgency - scheduled date component', () => {
     // below clearer
     const lowPriority = new TaskBuilder().priority(Priority.Low);
 
-    // Today or earlier: 5.0
-    testUrgencyOnDate(
-        '2022-01-23',
-        lowPriority.scheduledDate('2022-01-23'), // today
-        5.0,
-    );
-    testUrgencyOnDate(
-        '2022-01-23',
-        lowPriority.scheduledDate('2022-01-01'), // earlier than today
-        5.0,
-    );
+    it('scheduled Today or earlier: 5.0', () => {
+        testUrgencyOnDate(
+            '2022-01-23',
+            lowPriority.scheduledDate('2022-01-23'), // today
+            5.0,
+        );
+        testUrgencyOnDate(
+            '2022-01-23',
+            lowPriority.scheduledDate('2022-01-01'), // earlier than today
+            5.0,
+        );
+    });
 
-    // Tomorrow or later: 0.0
-    testUrgencyOnDate(
-        '2007-01-24',
-        lowPriority.scheduledDate('2007-01-25'), // tomorrow
-        0.0,
-    );
-    testUrgencyOnDate(
-        '2007-01-24',
-        lowPriority.scheduledDate('2007-05-31'), // later
-        0.0,
-    );
+    it('scheduled Tomorrow or later: 0.0', () => {
+        testUrgencyOnDate(
+            '2007-01-24',
+            lowPriority.scheduledDate('2007-01-25'), // tomorrow
+            0.0,
+        );
+        testUrgencyOnDate(
+            '2007-01-24',
+            lowPriority.scheduledDate('2007-05-31'), // later
+            0.0,
+        );
+    });
 
-    // None: 0.0
-    testUrgency(lowPriority.scheduledDate(null), 0.0);
+    it('not scheduled: 0.0', () => {
+        testUrgency(lowPriority.scheduledDate(null), 0.0);
+    });
 });
