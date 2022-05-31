@@ -89,9 +89,9 @@ describe('urgency - due date component', () => {
     });
 
     it('More than 14 days until due: 0.2', () => {
-        testUrgencyForDueDate(15, 2.4); // // documentation says: 0.2
-        testUrgencyForDueDate(40, 2.4); // // documentation says: 0.2
-        testUrgencyForDueDate(200, 2.4); // // documentation says: 0.2
+        testUrgencyForDueDate(15, 0.2);
+        testUrgencyForDueDate(40, 0.2);
+        testUrgencyForDueDate(200, 0.2);
     });
 
     it('not due: 0.0', () => {

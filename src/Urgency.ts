@@ -23,7 +23,7 @@ export class Urgency {
                 // Due between 7 days (+7) ago and in 14 days (-14)
                 dueMultiplier = ((daysOverdue + 14.0) * 0.8) / 21.0 + 0.2;
             } else {
-                dueMultiplier = 0.2; // > 2 wks
+                dueMultiplier = 1.0 / 60.0; // > 2 wks
             }
 
             urgency += dueMultiplier * Urgency.dueCoefficient;
