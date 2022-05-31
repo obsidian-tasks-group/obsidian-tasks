@@ -6,7 +6,7 @@
 - The documentation is written in Markdown
 - It is converted to HTML via Ruby and Jekyll
   - Important: Ruby 2 is required, for example, Ruby 2.7
-- The published documentation is at <https://schemar.github.io/obsidian-tasks/>
+- The published documentation is at <https://obsidian-tasks-group.github.io/obsidian-tasks/>
 
 ## Test documentation locally with Jekyll
 

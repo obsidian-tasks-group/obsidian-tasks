@@ -18,7 +18,7 @@ export class StartDateField extends DateField {
         return task.startDate;
     }
     protected filterResultIfFieldMissing() {
-        // reference: https://schemar.github.io/obsidian-tasks/queries/filters/#start-date
+        // reference: https://obsidian-tasks-group.github.io/obsidian-tasks/queries/filters/#start-date
         return true;
     }
 }
