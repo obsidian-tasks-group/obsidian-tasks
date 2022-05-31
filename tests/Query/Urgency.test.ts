@@ -15,6 +15,12 @@ function testUrgency(builder: TaskBuilder, expectedScore: number) {
     expect(Urgency.calculate(task)).toBeCloseTo(expectedScore, 5); // 5 digits after decimal point
 }
 
+/**
+ * Simulate the current date, then test the urgency for a task created by the builder
+ * @param today
+ * @param builder
+ * @param expectedScore
+ */
 function testUrgencyOnDate(
     today: string,
     builder: TaskBuilder,
@@ -40,41 +46,8 @@ function lowPriorityBuilder() {
     return new TaskBuilder().priority(Priority.Low);
 }
 
-function testUrgencyForDueDate(daysToDate: number, expectedScore: number) {
-    const today = '2022-10-31';
-    const dueAsString = calculateRelativeDate(today, daysToDate);
-
-    testUrgencyOnDate(
-        today,
-        lowPriorityBuilder().dueDate(dueAsString),
-        expectedScore,
-    );
-}
-
-function testUrgencyForStartDate(daysToDate: number, expectedScore: number) {
-    const today = '1997-03-27';
-    const startAsString = calculateRelativeDate(today, daysToDate);
-
-    testUrgencyOnDate(
-        today,
-        lowPriorityBuilder().startDate(startAsString),
-        expectedScore,
-    );
-}
-
-function testUrgencyForScheduledDate(
-    daysToDate: number,
-    expectedScore: number,
-) {
-    const today = '2029-12-31';
-    const scheduledAsString = calculateRelativeDate(today, daysToDate);
-
-    testUrgencyOnDate(
-        today,
-        lowPriorityBuilder().scheduledDate(scheduledAsString),
-        expectedScore,
-    );
-}
+// -----------------------------------------------------------------
+// Priority tests
 
 describe('urgency - priority component', () => {
     it('should score correctly for priority', () => {
@@ -85,6 +58,20 @@ describe('urgency - priority component', () => {
         testUrgency(builder.priority(Priority.Low), 0.0);
     });
 });
+
+// -----------------------------------------------------------------
+// Due Date tests
+
+function testUrgencyForDueDate(daysToDate: number, expectedScore: number) {
+    const today = '2022-10-31';
+    const dueAsString = calculateRelativeDate(today, daysToDate);
+
+    testUrgencyOnDate(
+        today,
+        lowPriorityBuilder().dueDate(dueAsString),
+        expectedScore,
+    );
+}
 
 describe('urgency - due date component', () => {
     it('More than 7 days overdue: 12.0', () => {
@@ -113,6 +100,23 @@ describe('urgency - due date component', () => {
     });
 });
 
+// -----------------------------------------------------------------
+// Scheduled Date tests
+
+function testUrgencyForScheduledDate(
+    daysToDate: number,
+    expectedScore: number,
+) {
+    const today = '2029-12-31';
+    const scheduledAsString = calculateRelativeDate(today, daysToDate);
+
+    testUrgencyOnDate(
+        today,
+        lowPriorityBuilder().scheduledDate(scheduledAsString),
+        expectedScore,
+    );
+}
+
 describe('urgency - scheduled date component', () => {
     const lowPriority = lowPriorityBuilder();
 
@@ -130,6 +134,20 @@ describe('urgency - scheduled date component', () => {
         testUrgency(lowPriority.scheduledDate(null), 0.0);
     });
 });
+
+// -----------------------------------------------------------------
+// Start Date tests
+
+function testUrgencyForStartDate(daysToDate: number, expectedScore: number) {
+    const today = '1997-03-27';
+    const startAsString = calculateRelativeDate(today, daysToDate);
+
+    testUrgencyOnDate(
+        today,
+        lowPriorityBuilder().startDate(startAsString),
+        expectedScore,
+    );
+}
 
 describe('urgency - start date component', () => {
     const lowPriority = lowPriorityBuilder();
