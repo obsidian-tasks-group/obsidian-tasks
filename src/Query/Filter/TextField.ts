@@ -2,6 +2,11 @@ import type { Task } from '../../Task';
 import { Field } from './Field';
 import { FilterOrErrorMessage } from './Filter';
 
+/**
+ * TextField is an abstract base class to help implement
+ * all the filter instructions that act on a single type of string
+ * value, such as the description or file path.
+ */
 export abstract class TextField extends Field {
     public createFilterOrErrorMessage(line: string): FilterOrErrorMessage {
         const result = new FilterOrErrorMessage();

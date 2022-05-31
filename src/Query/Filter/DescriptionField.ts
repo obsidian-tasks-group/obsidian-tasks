@@ -20,6 +20,11 @@ export class DescriptionField extends TextField {
         return DescriptionField.descriptionRegexp;
     }
 
+    /**
+     * Return the task's description, with any global tag removed
+     * @param task
+     * @protected
+     */
     protected value(task: Task): string {
         // Remove global filter from description match if present.
         // This is necessary to match only on the content of the task, not

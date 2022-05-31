@@ -1,6 +1,9 @@
 import type { Task } from '../../Task';
 import { TextField } from './TextField';
 
+/** Support the 'heading' search instruction.
+ *
+ */
 export class HeadingField extends TextField {
     private static readonly headingRegexp =
         /^heading (includes|does not include) (.*)/;

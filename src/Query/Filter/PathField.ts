@@ -1,6 +1,9 @@
 import type { Task } from '../../Task';
 import { TextField } from './TextField';
 
+/** Support the 'path' search instruction.
+ *
+ */
 export class PathField extends TextField {
     private static readonly pathRegexp =
         /^path (includes|does not include) (.*)/;
