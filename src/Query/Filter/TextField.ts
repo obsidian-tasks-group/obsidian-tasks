@@ -47,5 +47,10 @@ export abstract class TextField extends Field {
 
     protected abstract fieldName(): string;
 
+    /**
+     * Returns the field's value, or an empty string if the value is null
+     * @param task
+     * @protected
+     */
     protected abstract value(task: Task): string;
 }
