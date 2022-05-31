@@ -15,7 +15,6 @@ function testTaskFilterForTaskWithPriority(
     testTaskFilter(filterOrError, builder.priority(priority).build(), expected);
 }
 
-// /^priority (is )?(above|below)? ?(low|none|medium|high)/;
 describe('priority is', () => {
     it('priority is high', () => {
         const filter = 'priority is high';
