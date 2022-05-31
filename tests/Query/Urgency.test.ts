@@ -53,11 +53,11 @@ function testUrgencyForDueDate(daysToDate: number, expectedScore: number) {
 
 function testUrgencyForStartDate(daysToDate: number, expectedScore: number) {
     const today = '1997-03-27';
-    const dueAsString = calculateRelativeDate(today, daysToDate);
+    const startAsString = calculateRelativeDate(today, daysToDate);
 
     testUrgencyOnDate(
         today,
-        lowPriorityBuilder().startDate(dueAsString),
+        lowPriorityBuilder().startDate(startAsString),
         expectedScore,
     );
 }
@@ -67,11 +67,11 @@ function testUrgencyForScheduledDate(
     expectedScore: number,
 ) {
     const today = '2029-12-31';
-    const dueAsString = calculateRelativeDate(today, daysToDate);
+    const scheduledAsString = calculateRelativeDate(today, daysToDate);
 
     testUrgencyOnDate(
         today,
-        lowPriorityBuilder().scheduledDate(dueAsString),
+        lowPriorityBuilder().scheduledDate(scheduledAsString),
         expectedScore,
     );
 }
