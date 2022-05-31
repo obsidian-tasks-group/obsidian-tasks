@@ -36,10 +36,18 @@ function calculateRelativeDate(today: string, daysInFuture: number) {
     return relativeDate.format('YYYY-MM-DD');
 }
 
+/**
+ * Return a TaskBuilder to create a Task with Low Priority.
+ *
+ * Priority Low adds zero to the score, which means the
+ * test for other parts of the priority calculation becomes clearer.
+ */
+function lowPriorityBuilder() {
+    return new TaskBuilder().priority(Priority.Low);
+}
+
 function testUrgencyForDueDate(daysToDate: number, expectedScore: number) {
-    // Priority Low adds zero to the score, which means the code
-    // below clearer
-    const lowPriority = new TaskBuilder().priority(Priority.Low);
+    const lowPriority = lowPriorityBuilder();
 
     const today = '2022-10-31';
     const dueAsString = calculateRelativeDate(today, daysToDate);
@@ -79,15 +87,13 @@ describe('urgency - due date component', () => {
     });
 
     it('not due: 0.0', () => {
-        const lowPriority = new TaskBuilder().priority(Priority.Low);
+        const lowPriority = lowPriorityBuilder();
         testUrgency(lowPriority.dueDate(null), 0.0);
     });
 });
 
 describe('urgency - scheduled date component', () => {
-    // Priority Low adds zero to the score, which means the code
-    // below clearer
-    const lowPriority = new TaskBuilder().priority(Priority.Low);
+    const lowPriority = lowPriorityBuilder();
 
     it('scheduled Today or earlier: 5.0', () => {
         testUrgencyOnDate(
@@ -121,9 +127,7 @@ describe('urgency - scheduled date component', () => {
 });
 
 describe('urgency - start date component', () => {
-    // Priority Low adds zero to the score, which means the code
-    // below clearer
-    const lowPriority = new TaskBuilder().priority(Priority.Low);
+    const lowPriority = lowPriorityBuilder();
 
     it('start Today or earlier: 0.0', () => {
         testUrgencyOnDate(
