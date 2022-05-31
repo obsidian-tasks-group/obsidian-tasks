@@ -49,7 +49,7 @@ The scores are as follows:
     <td>Range of <code>12.0</code> to <code>0.2</code></td>
   </tr>
   <tr>
-    <td>Example for "today": <code>9.0</code></td>
+    <td>Example for "today": <code>6.6</code></td>
   </tr>
   <tr>
     <td>More than 14 days until due</td>
