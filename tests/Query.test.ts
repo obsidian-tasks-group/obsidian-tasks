@@ -132,8 +132,8 @@ describe('Query', () => {
             });
 
             // Assert
-            expect(filteredTasks.length).toEqual(1);
-            expect(filteredTasks[0]).toEqual(tasks[2]);
+            expect(filteredTasks.length).toEqual(2);
+            expect(filteredTasks[0]).toEqual(tasks[1]);
 
             // Cleanup
             updateSettings(originalSettings);

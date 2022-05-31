@@ -50,9 +50,9 @@ export class Task {
 
     public static readonly dateFormat = 'YYYY-MM-DD';
     public static readonly taskRegex = /^([\s\t]*)[-*] +\[(.)\] *(.*)/u;
-    public static readonly tagsRegex = /(#[^/\s]+)(\/[^\s]+)*\s/u;
     // The following regexes end with `$` because they will be matched and
     // removed from the end until none are left.
+    public static readonly tagsRegex = /(#[^/\s]+)(\/[^\s]+)\s/u;
     public static readonly priorityRegex = /([⏫🔼🔽])$/u;
     public static readonly startDateRegex = /🛫 ?(\d{4}-\d{2}-\d{2})$/u;
     public static readonly scheduledDateRegex = /[⏳⌛] ?(\d{4}-\d{2}-\d{2})$/u;
@@ -119,6 +119,18 @@ export class Task {
         this.blockLink = blockLink;
     }
 
+    /**
+     * Takes the given line from a obsidian note and returns a Task object.
+     *
+     * @static
+     * @param {string} line - The full line in the note to parse.
+     * @param {string} path - Path to the note in obsidian.
+     * @param {number} sectionStart - Line number where the section starts that contains this task.
+     * @param {number} sectionIndex - The index of the nth task in its section.
+     * @param {(string | null)} precedingHeader - The header before this task.
+     * @return {*}  {(Task | null)}
+     * @memberof Task
+     */
     public static fromLine({
         line,
         path,
@@ -163,8 +175,11 @@ export class Task {
         let subtags: string = '';
         const tagsMatch = description.match(Task.tagsRegex);
         if (tagsMatch !== null) {
-            subtags = typeof tagsMatch[2] !== 'undefined' ? tagsMatch[2] : ''; // keep just the subtag(s)
-            description = description.replace(Task.tagsRegex, '').trim(); // removes the global filter as well
+            if (tagsMatch[1] === globalFilter) {
+                subtags =
+                    typeof tagsMatch[2] !== 'undefined' ? tagsMatch[2] : ''; // keep just the subtag(s)
+                description = description.replace(Task.tagsRegex, '').trim(); // removes the global filter as well
+            }
         }
 
         const blockLinkMatch = description.match(this.blockLinkRegex);
