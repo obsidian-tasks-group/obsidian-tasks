@@ -17,7 +17,7 @@ export class Urgency {
                 window.moment().diff(task.dueDate) / Urgency.milliSecondsPerDay;
 
             let dueMultiplier: number;
-            const factor = 1.0 / 60.0; // See issue #691
+            const factor = 0.2 / Urgency.dueCoefficient; // See issue #691
             if (daysOverdue >= 7.0) {
                 dueMultiplier = 1.0; // < 1 wk ago
             } else if (daysOverdue >= -14.0) {
