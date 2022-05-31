@@ -3,7 +3,7 @@ import type { TaskGroups } from './Query/TaskGroups';
 
 import { LayoutOptions } from './LayoutOptions';
 import { Sort } from './Sort';
-import { Priority, Status, Task } from './Task';
+import { Status, Task } from './Task';
 import type { IQuery } from './IQuery';
 
 import type { Field } from './Query/Filter/Field';
@@ -12,6 +12,7 @@ import { DoneDateField } from './Query/Filter/DoneDateField';
 import { DueDateField } from './Query/Filter/DueDateField';
 import { HeadingField } from './Query/Filter/HeadingField';
 import { PathField } from './Query/Filter/PathField';
+import { PriorityField } from './Query/Filter/PriorityField';
 import { ScheduledDateField } from './Query/Filter/ScheduledDateField';
 import { StartDateField } from './Query/Filter/StartDateField';
 import { HappensDateField } from './Query/Filter/HappensDateField';
@@ -51,9 +52,6 @@ export class Query implements IQuery {
     private _error: string | undefined = undefined;
     private _sorting: Sorting[] = [];
     private _grouping: Grouping[] = [];
-
-    private readonly priorityRegexp =
-        /^priority (is )?(above|below)? ?(low|none|medium|high)/;
 
     private readonly noStartString = 'no start date';
     private readonly hasStartString = 'has start date';
@@ -144,8 +142,7 @@ export class Query implements IQuery {
                     case this.shortModeRegexp.test(line):
                         this._layoutOptions.shortMode = true;
                         break;
-                    case this.priorityRegexp.test(line):
-                        this.parsePriorityFilter({ line });
+                    case this.parseFilter(line, new PriorityField()):
                         break;
                     case this.parseFilter(line, new HappensDateField()):
                         break;
@@ -256,54 +253,6 @@ export class Query implements IQuery {
                 default:
                     this._error = 'do not understand hide option';
             }
-        }
-    }
-
-    private parsePriorityFilter({ line }: { line: string }): void {
-        const priorityMatch = line.match(this.priorityRegexp);
-        if (priorityMatch !== null) {
-            const filterPriorityString = priorityMatch[3];
-            let filterPriority: Priority | null = null;
-
-            switch (filterPriorityString) {
-                case 'low':
-                    filterPriority = Priority.Low;
-                    break;
-                case 'none':
-                    filterPriority = Priority.None;
-                    break;
-                case 'medium':
-                    filterPriority = Priority.Medium;
-                    break;
-                case 'high':
-                    filterPriority = Priority.High;
-                    break;
-            }
-
-            if (filterPriority === null) {
-                this._error = 'do not understand priority';
-                return;
-            }
-
-            let filter;
-            if (priorityMatch[2] === 'above') {
-                filter = (task: Task) =>
-                    task.priority
-                        ? task.priority.localeCompare(filterPriority!) < 0
-                        : false;
-            } else if (priorityMatch[2] === 'below') {
-                filter = (task: Task) =>
-                    task.priority
-                        ? task.priority.localeCompare(filterPriority!) > 0
-                        : false;
-            } else {
-                filter = (task: Task) =>
-                    task.priority ? task.priority === filterPriority : false;
-            }
-
-            this._filters.push(filter);
-        } else {
-            this._error = 'do not understand query filter (priority date)';
         }
     }
 
