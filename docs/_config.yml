@@ -1,7 +1,7 @@
 title: Obsidian Tasks
 description: Task management for Obsidian
 baseurl: "/obsidian-tasks" # the subpath of your site, e.g. /blog
-url: "https://schemar.github.io" # the base hostname & protocol for your site, e.g. http://example.com
+url: "https://obsidian-tasks-group.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 
 permalink: pretty
 
@@ -24,4 +24,3 @@ gh_edit_view_mode: "tree" # "tree" or "edit" if you want the user to jump into t
 
 # Build settings
 remote_theme: pmarsceill/just-the-docs
-

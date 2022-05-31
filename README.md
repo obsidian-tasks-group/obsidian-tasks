@@ -2,7 +2,7 @@
 
 <p align="center">Task management for the <a href="https://obsidian.md/">Obsidian</a> knowledge base.</p>
 
-<p align="center"><a href="https://schemar.github.io/obsidian-tasks/">Documentation</a></p>
+<p align="center"><a href="https://obsidian-tasks-group.github.io/obsidian-tasks/">Documentation</a></p>
 
 Track tasks across your entire vault. Query them and mark them as done wherever you want. Supports due dates, recurring tasks (repetition), done dates, sub-set of checklist items, and filtering.
 
@@ -43,7 +43,7 @@ Follow the steps below to install Tasks.
 
 ## Documentation
 
-For user documentation, please check [https://schemar.github.io/obsidian-tasks/](https://schemar.github.io/obsidian-tasks/).
+For user documentation, please check [https://obsidian-tasks-group.github.io/obsidian-tasks/](https://obsidian-tasks-group.github.io/obsidian-tasks/).
 
 ## Development
 

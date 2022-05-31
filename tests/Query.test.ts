@@ -196,7 +196,7 @@ describe('Query', () => {
                         '- [ ] task 4 🛫 2022-04-25',
                     ],
                     expectedResult: [
-                        '- [ ] task 1', // reference: https://schemar.github.io/obsidian-tasks/queries/filters/#start-date
+                        '- [ ] task 1', // reference: https://obsidian-tasks-group.github.io/obsidian-tasks/queries/filters/#start-date
                         '- [ ] task 2 🛫 2022-04-15',
                     ],
                 },
