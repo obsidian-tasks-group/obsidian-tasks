@@ -1,5 +1,11 @@
 <h1 align="center">Obsidian Tasks</h1>
 
+<p align="center"><b>⚠ IMPORTANT ⚠<b></p>
+<p align="center">The repository moved. The old documentation is no longer accessible. The documentation now lives at:</p>
+<p align="center"><a href="https://obsidian-tasks-group.github.io/obsidian-tasks/">https://obsidian-tasks-group.github.io/obsidian-tasks/</a></p>
+
+---
+
 <p align="center">Task management for the <a href="https://obsidian.md/">Obsidian</a> knowledge base.</p>
 
 <p align="center"><a href="https://obsidian-tasks-group.github.io/obsidian-tasks/">Documentation</a></p>
