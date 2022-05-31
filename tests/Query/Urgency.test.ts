@@ -30,15 +30,19 @@ function testUrgencyOnDate(
     todaySpy.mockClear();
 }
 
-function testUrgencyForDueDate(daysToDueDate: number, expectedScore: number) {
+function calculateRelativeDate(today: string, daysInFuture: number) {
+    const todayAsDate = DateParser.parseDate(today);
+    const relativeDate = todayAsDate.add(daysInFuture, 'd');
+    return relativeDate.format('YYYY-MM-DD');
+}
+
+function testUrgencyForDueDate(daysToDate: number, expectedScore: number) {
     // Priority Low adds zero to the score, which means the code
     // below clearer
     const lowPriority = new TaskBuilder().priority(Priority.Low);
 
     const today = '2022-10-31';
-    const todayAsDate = DateParser.parseDate(today);
-    const dueAsDate = todayAsDate.add(daysToDueDate, 'd');
-    const dueAsString = dueAsDate.format('YYYY-MM-DD');
+    const dueAsString = calculateRelativeDate(today, daysToDate);
 
     testUrgencyOnDate(today, lowPriority.dueDate(dueAsString), expectedScore);
 }
