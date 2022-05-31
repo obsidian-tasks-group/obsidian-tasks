@@ -1,6 +1,7 @@
 import { Priority } from '../../../src/Task';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
-import { testTaskFilterViaQuery } from '../../TestingTools/FilterTestHelpers';
+import { testTaskFilter } from '../../TestingTools/FilterTestHelpers';
+import { PriorityField } from '../../../src/Query/Filter/PriorityField';
 
 function testTaskFilterForTaskWithPriority(
     filter: string,
@@ -8,8 +9,10 @@ function testTaskFilterForTaskWithPriority(
     expected: boolean,
 ) {
     const builder = new TaskBuilder();
-    const task = builder.priority(priority).build();
-    testTaskFilterViaQuery(filter, task, expected);
+    const filterOrError = new PriorityField().createFilterOrErrorMessage(
+        filter,
+    );
+    testTaskFilter(filterOrError, builder.priority(priority).build(), expected);
 }
 
 // /^priority (is )?(above|below)? ?(low|none|medium|high)/;
