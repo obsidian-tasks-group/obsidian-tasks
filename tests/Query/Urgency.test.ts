@@ -39,6 +39,51 @@ describe('urgency - priority component', () => {
     });
 });
 
+describe('urgency - due date component', () => {
+    // Priority Low adds zero to the score, which means the code
+    // below clearer
+    const lowPriority = new TaskBuilder().priority(Priority.Low);
+
+    it('More than 7 days overdue: 12.0', () => {
+        testUrgencyOnDate(
+            '2022-10-31',
+            lowPriority.dueDate('2022-10-01'),
+            12.0,
+        );
+    });
+
+    it('Due between 7 days ago and in 14 days: Range of 12.0 to 0.2', () => {
+        const today = '2022-10-31';
+        testUrgencyOnDate(
+            today, // today's date
+            lowPriority.dueDate(today), // due date of task
+            8.8, // documentation says this should be 9.0
+        );
+    });
+
+    it('Due 7 days ago 12.0', () => {
+        const today = '2022-10-08';
+        const seven_days_ago = '2022-10-01';
+        testUrgencyOnDate(
+            today,
+            lowPriority.dueDate(seven_days_ago),
+            12, // documentation says this should be 9.0
+        );
+    });
+
+    it('More than 14 days until due: 0.2', () => {
+        testUrgencyOnDate(
+            '2022-10-01',
+            lowPriority.dueDate('2022-10-25'),
+            2.4, // documentation says this should be 0.2
+        );
+    });
+
+    it('not due: 0.0', () => {
+        testUrgency(lowPriority.dueDate(null), 0.0);
+    });
+});
+
 describe('urgency - scheduled date component', () => {
     // Priority Low adds zero to the score, which means the code
     // below clearer
