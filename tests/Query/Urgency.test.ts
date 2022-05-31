@@ -74,3 +74,39 @@ describe('urgency - scheduled date component', () => {
         testUrgency(lowPriority.scheduledDate(null), 0.0);
     });
 });
+
+describe('urgency - start date component', () => {
+    // Priority Low adds zero to the score, which means the code
+    // below clearer
+    const lowPriority = new TaskBuilder().priority(Priority.Low);
+
+    it('start Today or earlier: 0.0', () => {
+        testUrgencyOnDate(
+            '2022-01-23',
+            lowPriority.startDate('2022-01-23'), // today
+            0.0,
+        );
+        testUrgencyOnDate(
+            '2022-01-23',
+            lowPriority.startDate('2022-01-01'), // earlier than today
+            0.0,
+        );
+    });
+
+    it('start Tomorrow or later: -3.0', () => {
+        testUrgencyOnDate(
+            '2007-01-24',
+            lowPriority.startDate('2007-01-25'), // tomorrow
+            -3.0,
+        );
+        testUrgencyOnDate(
+            '2007-01-24',
+            lowPriority.startDate('2007-05-31'), // later
+            -3.0,
+        );
+    });
+
+    it('not scheduled: 0.0', () => {
+        testUrgency(lowPriority.startDate(null), 0.0);
+    });
+});
