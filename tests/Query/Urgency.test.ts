@@ -47,12 +47,39 @@ function lowPriorityBuilder() {
 }
 
 function testUrgencyForDueDate(daysToDate: number, expectedScore: number) {
-    const lowPriority = lowPriorityBuilder();
-
     const today = '2022-10-31';
     const dueAsString = calculateRelativeDate(today, daysToDate);
 
-    testUrgencyOnDate(today, lowPriority.dueDate(dueAsString), expectedScore);
+    testUrgencyOnDate(
+        today,
+        lowPriorityBuilder().dueDate(dueAsString),
+        expectedScore,
+    );
+}
+
+function testUrgencyForStartDate(daysToDate: number, expectedScore: number) {
+    const today = '1997-03-27';
+    const dueAsString = calculateRelativeDate(today, daysToDate);
+
+    testUrgencyOnDate(
+        today,
+        lowPriorityBuilder().startDate(dueAsString),
+        expectedScore,
+    );
+}
+
+function testUrgencyForScheduledDate(
+    daysToDate: number,
+    expectedScore: number,
+) {
+    const today = '2029-12-31';
+    const dueAsString = calculateRelativeDate(today, daysToDate);
+
+    testUrgencyOnDate(
+        today,
+        lowPriorityBuilder().scheduledDate(dueAsString),
+        expectedScore,
+    );
 }
 
 describe('urgency - priority component', () => {
@@ -96,29 +123,13 @@ describe('urgency - scheduled date component', () => {
     const lowPriority = lowPriorityBuilder();
 
     it('scheduled Today or earlier: 5.0', () => {
-        testUrgencyOnDate(
-            '2022-01-23',
-            lowPriority.scheduledDate('2022-01-23'), // today
-            5.0,
-        );
-        testUrgencyOnDate(
-            '2022-01-23',
-            lowPriority.scheduledDate('2022-01-01'), // earlier than today
-            5.0,
-        );
+        testUrgencyForScheduledDate(0, 5.0);
+        testUrgencyForScheduledDate(-20, 5.0);
     });
 
     it('scheduled Tomorrow or later: 0.0', () => {
-        testUrgencyOnDate(
-            '2007-01-24',
-            lowPriority.scheduledDate('2007-01-25'), // tomorrow
-            0.0,
-        );
-        testUrgencyOnDate(
-            '2007-01-24',
-            lowPriority.scheduledDate('2007-05-31'), // later
-            0.0,
-        );
+        testUrgencyForScheduledDate(1, 0.0);
+        testUrgencyForScheduledDate(39, 0.0);
     });
 
     it('not scheduled: 0.0', () => {
@@ -130,29 +141,13 @@ describe('urgency - start date component', () => {
     const lowPriority = lowPriorityBuilder();
 
     it('start Today or earlier: 0.0', () => {
-        testUrgencyOnDate(
-            '2022-01-23',
-            lowPriority.startDate('2022-01-23'), // today
-            0.0,
-        );
-        testUrgencyOnDate(
-            '2022-01-23',
-            lowPriority.startDate('2022-01-01'), // earlier than today
-            0.0,
-        );
+        testUrgencyForStartDate(0, 0.0);
+        testUrgencyForStartDate(-22, 0.0);
     });
 
     it('start Tomorrow or later: -3.0', () => {
-        testUrgencyOnDate(
-            '2007-01-24',
-            lowPriority.startDate('2007-01-25'), // tomorrow
-            -3.0,
-        );
-        testUrgencyOnDate(
-            '2007-01-24',
-            lowPriority.startDate('2007-05-31'), // later
-            -3.0,
-        );
+        testUrgencyForStartDate(1, -3.0);
+        testUrgencyForStartDate(67, -3.0);
     });
 
     it('not scheduled: 0.0', () => {
