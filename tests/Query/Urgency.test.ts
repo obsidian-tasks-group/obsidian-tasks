@@ -6,7 +6,7 @@ import moment from 'moment';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { Urgency } from '../../src/Urgency';
 import { Priority } from '../../src/Task';
-import { DateParser } from '../../src/Query/DateParser';
+import { calculateRelativeDate } from '../TestingTools/DateTestHelpers';
 
 window.moment = moment;
 
@@ -28,12 +28,6 @@ function testUrgencyOnDate(
     testUrgency(builder, expectedScore);
 
     todaySpy.mockClear();
-}
-
-function calculateRelativeDate(today: string, daysInFuture: number) {
-    const todayAsDate = DateParser.parseDate(today);
-    const relativeDate = todayAsDate.add(daysInFuture, 'd');
-    return relativeDate.format('YYYY-MM-DD');
 }
 
 /**
