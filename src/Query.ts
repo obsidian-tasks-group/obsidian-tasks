@@ -1,15 +1,17 @@
 import { Group } from './Query/Group';
 import type { TaskGroups } from './Query/TaskGroups';
 
-import { getSettings } from './Settings';
 import { LayoutOptions } from './LayoutOptions';
 import { Sort } from './Sort';
 import { Priority, Status, Task } from './Task';
 import type { IQuery } from './IQuery';
 
 import type { Field } from './Query/Filter/Field';
+import { DescriptionField } from './Query/Filter/DescriptionField';
 import { DoneDateField } from './Query/Filter/DoneDateField';
 import { DueDateField } from './Query/Filter/DueDateField';
+import { HeadingField } from './Query/Filter/HeadingField';
+import { PathField } from './Query/Filter/PathField';
 import { ScheduledDateField } from './Query/Filter/ScheduledDateField';
 import { StartDateField } from './Query/Filter/StartDateField';
 import { HappensDateField } from './Query/Filter/HappensDateField';
@@ -65,10 +67,6 @@ export class Query implements IQuery {
     private readonly doneString = 'done';
     private readonly notDoneString = 'not done';
 
-    private readonly pathRegexp = /^path (includes|does not include) (.*)/;
-    private readonly descriptionRegexp =
-        /^description (includes|does not include) (.*)/;
-
     // Handles both ways of referencing the tags query.
     private readonly tagRegexp =
         /^(tag|tags) (includes|does not include|include|do not include) (.*)/;
@@ -80,9 +78,6 @@ export class Query implements IQuery {
 
     private readonly groupByRegexp =
         /^group by (backlink|filename|folder|heading|path|status)/;
-
-    private readonly headingRegexp =
-        /^heading (includes|does not include) (.*)/;
 
     private readonly hideOptionsRegexp =
         /^hide (task count|backlink|priority|start date|scheduled date|done date|due date|recurrence rule|edit button)/;
@@ -162,17 +157,14 @@ export class Query implements IQuery {
                         break;
                     case this.parseFilter(line, new DoneDateField()):
                         break;
-                    case this.pathRegexp.test(line):
-                        this.parsePathFilter({ line });
+                    case this.parseFilter(line, new PathField()):
                         break;
-                    case this.descriptionRegexp.test(line):
-                        this.parseDescriptionFilter({ line });
+                    case this.parseFilter(line, new DescriptionField()):
                         break;
                     case this.tagRegexp.test(line):
                         this.parseTagFilter({ line });
                         break;
-                    case this.headingRegexp.test(line):
-                        this.parseHeadingFilter({ line });
+                    case this.parseFilter(line, new HeadingField()):
                         break;
                     case this.limitRegexp.test(line):
                         this.parseLimit({ line });
@@ -330,33 +322,6 @@ export class Query implements IQuery {
         }
     }
 
-    private parsePathFilter({ line }: { line: string }): void {
-        const pathMatch = line.match(this.pathRegexp);
-        if (pathMatch !== null) {
-            const filterMethod = pathMatch[1];
-            if (filterMethod === 'includes') {
-                this._filters.push((task: Task) =>
-                    Query.stringIncludesCaseInsensitive(
-                        task.path,
-                        pathMatch[2],
-                    ),
-                );
-            } else if (pathMatch[1] === 'does not include') {
-                this._filters.push(
-                    (task: Task) =>
-                        !Query.stringIncludesCaseInsensitive(
-                            task.path,
-                            pathMatch[2],
-                        ),
-                );
-            } else {
-                this._error = 'do not understand query filter (path)';
-            }
-        } else {
-            this._error = 'do not understand query filter (path)';
-        }
-    }
-
     /**
      * When a tag based filter is used this is the process to apply it.
      * - Tags can be searched for with and without the hash tag at the start.
@@ -398,71 +363,6 @@ export class Query implements IQuery {
         }
     }
 
-    private parseDescriptionFilter({ line }: { line: string }): void {
-        const descriptionMatch = line.match(this.descriptionRegexp);
-        if (descriptionMatch !== null) {
-            const filterMethod = descriptionMatch[1];
-            const globalFilter = getSettings().globalFilter;
-
-            if (filterMethod === 'includes') {
-                this._filters.push((task: Task) =>
-                    Query.stringIncludesCaseInsensitive(
-                        // Remove global filter from description match if present.
-                        // This is necessary to match only on the content of the task, not
-                        // the global filter.
-                        task.description.replace(globalFilter, '').trim(),
-                        descriptionMatch[2],
-                    ),
-                );
-            } else if (descriptionMatch[1] === 'does not include') {
-                this._filters.push(
-                    (task: Task) =>
-                        !Query.stringIncludesCaseInsensitive(
-                            // Remove global filter from description match if present.
-                            // This is necessary to match only on the content of the task, not
-                            // the global filter.
-                            task.description.replace(globalFilter, '').trim(),
-                            descriptionMatch[2],
-                        ),
-                );
-            } else {
-                this._error = 'do not understand query filter (description)';
-            }
-        } else {
-            this._error = 'do not understand query filter (description)';
-        }
-    }
-
-    private parseHeadingFilter({ line }: { line: string }): void {
-        const headingMatch = line.match(this.headingRegexp);
-        if (headingMatch !== null) {
-            const filterMethod = headingMatch[1].toLowerCase();
-            if (filterMethod === 'includes') {
-                this._filters.push(
-                    (task: Task) =>
-                        task.precedingHeader !== null &&
-                        Query.stringIncludesCaseInsensitive(
-                            task.precedingHeader,
-                            headingMatch[2],
-                        ),
-                );
-            } else if (headingMatch[1] === 'does not include') {
-                this._filters.push(
-                    (task: Task) =>
-                        task.precedingHeader === null ||
-                        !Query.stringIncludesCaseInsensitive(
-                            task.precedingHeader,
-                            headingMatch[2],
-                        ),
-                );
-            } else {
-                this._error = 'do not understand query filter (heading)';
-            }
-        } else {
-            this._error = 'do not understand query filter (heading)';
-        }
-    }
-
     private parseLimit({ line }: { line: string }): void {
         const limitMatch = line.match(this.limitRegexp);
         if (limitMatch !== null) {
@@ -495,14 +395,5 @@ export class Query implements IQuery {
         } else {
             this._error = 'do not understand query grouping';
         }
-    }
-
-    private static stringIncludesCaseInsensitive(
-        haystack: string,
-        needle: string,
-    ): boolean {
-        return haystack
-            .toLocaleLowerCase()
-            .includes(needle.toLocaleLowerCase());
     }
 }

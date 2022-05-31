@@ -103,48 +103,6 @@ describe('Query', () => {
             expect(filteredTasks[0]).toEqual(tasks[0]);
         });
 
-        it('ignores the global filter when filtering', () => {
-            // Arrange
-            const originalSettings = getSettings();
-            updateSettings({ globalFilter: '#task' });
-            const filters: Array<string> = ['description includes task'];
-            const tasks: Array<string> = [
-                '- [ ] #task this does not include the word; only in the global filter',
-                '- [ ] #task this does: task',
-            ];
-            const expectedResult: Array<string> = [
-                '- [ ] #task this does: task',
-            ];
-
-            // Act, Assert
-            shouldSupportFiltering(filters, tasks, expectedResult);
-
-            // Cleanup
-            updateSettings(originalSettings);
-        });
-
-        it('works without a global filter', () => {
-            // Arrange
-            const originalSettings = getSettings();
-            updateSettings({ globalFilter: '' });
-            const filters: Array<string> = ['description includes task'];
-            const tasks: Array<string> = [
-                '- [ ] this does not include the word at all',
-                '- [ ] #task this includes the word as a tag',
-                '- [ ] #task this does: task',
-            ];
-            const expectedResult: Array<string> = [
-                '- [ ] #task this includes the word as a tag',
-                '- [ ] #task this does: task',
-            ];
-
-            // Act, Assert
-            shouldSupportFiltering(filters, tasks, expectedResult);
-
-            // Cleanup
-            updateSettings(originalSettings);
-        });
-
         test.concurrent.each<[string, FilteringCase]>([
             [
                 'by due date presence',
