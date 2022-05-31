@@ -17,13 +17,14 @@ export class Urgency {
                 window.moment().diff(task.dueDate) / Urgency.milliSecondsPerDay;
 
             let dueMultiplier: number;
+            const factor = 1.0 / 60.0; // See issue #691
             if (daysOverdue >= 7.0) {
                 dueMultiplier = 1.0; // < 1 wk ago
             } else if (daysOverdue >= -14.0) {
                 // Due between 7 days (+7) ago and in 14 days (-14)
-                dueMultiplier = ((daysOverdue + 14.0) * 0.8) / 21.0 + 0.2;
+                dueMultiplier = ((daysOverdue + 14.0) * 0.8) / 21.0 + factor;
             } else {
-                dueMultiplier = 1.0 / 60.0; // > 2 wks
+                dueMultiplier = factor; // > 2 wks
             }
 
             urgency += dueMultiplier * Urgency.dueCoefficient;
