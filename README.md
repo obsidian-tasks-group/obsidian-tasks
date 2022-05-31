@@ -10,7 +10,7 @@ _You can toggle the task status in any view or query and it will update the sour
 
 ---
 
-For changes in each release, please check the releases page: <https://github.com/schemar/obsidian-tasks/releases>
+For changes in each release, please check the releases page: <https://github.com/obsidian-tasks-group/obsidian-tasks/releases>
 
 ---
 
@@ -19,16 +19,16 @@ For changes in each release, please check the releases page: <https://github.com
 - _All screenshots assume the [global filter](#filtering-checklist-items) `#task` which is not set by default (see also [installation](#installation))._
 - _The theme is [Obsidian Atom](https://github.com/kognise/obsidian-atom)._
 
-![ACME Tasks](https://github.com/schemar/obsidian-tasks/raw/main/resources/screenshots/acme.png)
+![ACME Tasks](https://github.com/obsidian-tasks-group/obsidian-tasks/raw/main/resources/screenshots/acme.png)
 The `ACME` note has some tasks.
 
-![Important Project Tasks](https://github.com/schemar/obsidian-tasks/raw/main/resources/screenshots/important_project.png)
+![Important Project Tasks](https://github.com/obsidian-tasks-group/obsidian-tasks/raw/main/resources/screenshots/important_project.png)
 The `Important Project` note also has some tasks.
 
-![Tasks Queries](https://github.com/schemar/obsidian-tasks/raw/main/resources/screenshots/tasks_queries.png)
+![Tasks Queries](https://github.com/obsidian-tasks-group/obsidian-tasks/raw/main/resources/screenshots/tasks_queries.png)
 The `Tasks` note gathers all tasks from the vault and displays them using queries.
 
-![Create or Edit Modal](https://github.com/schemar/obsidian-tasks/raw/main/resources/screenshots/modal.png)
+![Create or Edit Modal](https://github.com/obsidian-tasks-group/obsidian-tasks/raw/main/resources/screenshots/modal.png)
 The `Tasks: Create or edit` command helps you when editing a task.
 
 ## Installation
