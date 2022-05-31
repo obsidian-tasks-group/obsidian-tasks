@@ -6,6 +6,7 @@ import moment from 'moment';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { Urgency } from '../../src/Urgency';
 import { Priority } from '../../src/Task';
+import { DateParser } from '../../src/Query/DateParser';
 
 window.moment = moment;
 
@@ -29,6 +30,19 @@ const testUrgencyOnDate = (
     todaySpy.mockClear();
 };
 
+function testUrgencyForDueDate(daysToDueDate: number, expectedScore: number) {
+    // Priority Low adds zero to the score, which means the code
+    // below clearer
+    const lowPriority = new TaskBuilder().priority(Priority.Low);
+
+    const today = '2022-10-31';
+    const todayAsDate = DateParser.parseDate(today);
+    const dueAsDate = todayAsDate.add(daysToDueDate, 'd');
+    const dueAsString = dueAsDate.format('YYYY-MM-DD');
+
+    testUrgencyOnDate(today, lowPriority.dueDate(dueAsString), expectedScore);
+}
+
 describe('urgency - priority component', () => {
     it('should score correctly for priority', () => {
         const builder = new TaskBuilder();
@@ -40,46 +54,28 @@ describe('urgency - priority component', () => {
 });
 
 describe('urgency - due date component', () => {
-    // Priority Low adds zero to the score, which means the code
-    // below clearer
-    const lowPriority = new TaskBuilder().priority(Priority.Low);
-
     it('More than 7 days overdue: 12.0', () => {
-        testUrgencyOnDate(
-            '2022-10-31',
-            lowPriority.dueDate('2022-10-01'),
-            12.0,
-        );
+        testUrgencyForDueDate(-200, 12.0);
+        testUrgencyForDueDate(-8, 12.0);
     });
 
     it('Due between 7 days ago and in 14 days: Range of 12.0 to 0.2', () => {
-        const today = '2022-10-31';
-        testUrgencyOnDate(
-            today, // today's date
-            lowPriority.dueDate(today), // due date of task
-            8.8, // documentation says this should be 9.0
-        );
-    });
-
-    it('Due 7 days ago 12.0', () => {
-        const today = '2022-10-08';
-        const seven_days_ago = '2022-10-01';
-        testUrgencyOnDate(
-            today,
-            lowPriority.dueDate(seven_days_ago),
-            12, // documentation says this should be 9.0
-        );
+        testUrgencyForDueDate(-7, 12.0);
+        testUrgencyForDueDate(0, 8.8); // documentation says: 9.0 for "today"
+        testUrgencyForDueDate(1, 8.342857);
+        testUrgencyForDueDate(6, 6.0571428);
+        testUrgencyForDueDate(13, 2.857142);
+        testUrgencyForDueDate(14, 2.4); // documentation says: 0.2
     });
 
     it('More than 14 days until due: 0.2', () => {
-        testUrgencyOnDate(
-            '2022-10-01',
-            lowPriority.dueDate('2022-10-25'),
-            2.4, // documentation says this should be 0.2
-        );
+        testUrgencyForDueDate(15, 2.4); // // documentation says: 0.2
+        testUrgencyForDueDate(40, 2.4); // // documentation says: 0.2
+        testUrgencyForDueDate(200, 2.4); // // documentation says: 0.2
     });
 
     it('not due: 0.0', () => {
+        const lowPriority = new TaskBuilder().priority(Priority.Low);
         testUrgency(lowPriority.dueDate(null), 0.0);
     });
 });
