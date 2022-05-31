@@ -15,11 +15,11 @@ function testUrgency(builder: TaskBuilder, expectedScore: number) {
     expect(Urgency.calculate(task)).toBeCloseTo(expectedScore, 5); // 5 digits after decimal point
 }
 
-const testUrgencyOnDate = (
+function testUrgencyOnDate(
     today: string,
     builder: TaskBuilder,
     expectedScore: number,
-) => {
+) {
     // TODO Remove this duplication from Task.test.ts
     const todaySpy = jest
         .spyOn(Date, 'now')
@@ -28,7 +28,7 @@ const testUrgencyOnDate = (
     testUrgency(builder, expectedScore);
 
     todaySpy.mockClear();
-};
+}
 
 function testUrgencyForDueDate(daysToDueDate: number, expectedScore: number) {
     // Priority Low adds zero to the score, which means the code
