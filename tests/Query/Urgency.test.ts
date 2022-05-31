@@ -62,9 +62,9 @@ describe('urgency - due date component', () => {
     it('Due between 7 days ago and in 14 days: Range of 12.0 to 0.2', () => {
         testUrgencyForDueDate(-7, 12.0);
         testUrgencyForDueDate(0, 8.8); // documentation says: 9.0 for "today"
-        testUrgencyForDueDate(1, 8.342857);
-        testUrgencyForDueDate(6, 6.0571428);
-        testUrgencyForDueDate(13, 2.857142);
+        testUrgencyForDueDate(1, 8.34286);
+        testUrgencyForDueDate(6, 6.05714);
+        testUrgencyForDueDate(13, 2.85714);
         testUrgencyForDueDate(14, 2.4); // documentation says: 0.2
     });
 
