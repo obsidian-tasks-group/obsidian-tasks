@@ -52,7 +52,7 @@ export const replaceTaskWithTasks = async ({
 /**
  * This is a workaround to re-try when the returned file cache is `undefined`.
  * Retrying after a while may return a valid file cache.
- * Reported in https://github.com/schemar/obsidian-tasks/issues/87
+ * Reported in https://github.com/obsidian-tasks-group/obsidian-tasks/issues/87
  */
 const tryRepetitive = async ({
     originalTask,

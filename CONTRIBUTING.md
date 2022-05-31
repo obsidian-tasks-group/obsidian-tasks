@@ -24,7 +24,7 @@ We will help you make this right once you opened the PR.
 
 ## Updating code
 
-Ideally, an [issue](https://github.com/schemar/obsidian-tasks/issues) already exists and we discussed your implementation in that issue before you open the pull request (PR).
+Ideally, an [issue](https://github.com/obsidian-tasks-group/obsidian-tasks/issues) already exists and we discussed your implementation in that issue before you open the pull request (PR).
 This is _not_ mandatory, but it helps improve the process and reduce unnecessary back-and-forth.
 
 Once you want to propose your changes, create a PR and we'll have a look when we have time.
@@ -119,7 +119,7 @@ Obsidian writes the changes to disk at its own pace.
 3. Check the current version of the obsidian dependency in `package.json` (e.g. `0.13.21`)
 4. Run `./release.sh <new tasks version> <obsidian version>`
     - Make sure there are no uncommitted changes. Stash them if necessary.
-5. Wait for [GitHub Actions](https://github.com/schemar/obsidian-tasks/actions/workflows/release.yml) to create the new release
+5. Wait for [GitHub Actions](https://github.com/obsidian-tasks-group/obsidian-tasks/actions/workflows/release.yml) to create the new release
 6. Update the release description with the changes of the release
     - On the release page, GitHub provides a button to auto-generate release notes which works nicely.
     - Also update the attached zip file by adding the version number to the end of the name after the dash (e.g. `obsidian-tasks-1.4.1.zip`)

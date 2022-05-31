@@ -27,13 +27,13 @@ Supports due dates, recurring tasks (repetition), done dates, sub-set of checkli
 
 You can toggle the task status in any view or query and it will update the source file.
 
-> Please submit bugs [here](https://github.com/schemar/obsidian-tasks/issues).
+> Please submit bugs [here](https://github.com/obsidian-tasks-group/obsidian-tasks/issues).
 >
-> Please submit ideas [here](https://github.com/schemar/obsidian-tasks/discussions/categories/ideas).
+> Please submit ideas [here](https://github.com/obsidian-tasks-group/obsidian-tasks/discussions/categories/ideas).
 >
-> Please ask for help [here](https://github.com/schemar/obsidian-tasks/discussions/categories/q-a).
+> Please ask for help [here](https://github.com/obsidian-tasks-group/obsidian-tasks/discussions/categories/q-a).
 
-For changes in each release, please check the [releases page](https://github.com/schemar/obsidian-tasks/releases).
+For changes in each release, please check the [releases page](https://github.com/obsidian-tasks-group/obsidian-tasks/releases).
 
 ---
 
@@ -42,14 +42,14 @@ For changes in each release, please check the [releases page](https://github.com
 - *All screenshots assume the global filter `#task` which is not set by default (see also "Getting Started").*
 - *The theme is [Obsidian Atom](https://github.com/kognise/obsidian-atom).*
 
-![ACME Tasks](https://github.com/schemar/obsidian-tasks/raw/main/resources/screenshots/acme.png)
+![ACME Tasks](https://github.com/obsidian-tasks-group/obsidian-tasks/raw/main/resources/screenshots/acme.png)
 The `ACME` note has some tasks.
 
-![Important Project Tasks](https://github.com/schemar/obsidian-tasks/raw/main/resources/screenshots/important_project.png)
+![Important Project Tasks](https://github.com/obsidian-tasks-group/obsidian-tasks/raw/main/resources/screenshots/important_project.png)
 The `Important Project` note also has some tasks.
 
-![Tasks Queries](https://github.com/schemar/obsidian-tasks/raw/main/resources/screenshots/tasks_queries.png)
+![Tasks Queries](https://github.com/obsidian-tasks-group/obsidian-tasks/raw/main/resources/screenshots/tasks_queries.png)
 The `Tasks` note gathers all tasks from the vault and displays them using queries.
 
-![Create or Edit Modal](https://github.com/schemar/obsidian-tasks/raw/main/resources/screenshots/modal.png)
+![Create or Edit Modal](https://github.com/obsidian-tasks-group/obsidian-tasks/raw/main/resources/screenshots/modal.png)
 The `Tasks: Create or edit` command helps you when editing a task.
