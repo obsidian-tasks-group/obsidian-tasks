@@ -51,7 +51,7 @@ export class PriorityField extends Field {
 
             result.filter = filter;
         } else {
-            result.error = 'do not understand query filter (priority date)';
+            result.error = 'do not understand query filter (priority)';
         }
         return result;
     }
