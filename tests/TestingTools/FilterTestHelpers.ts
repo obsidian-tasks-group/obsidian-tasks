@@ -1,5 +1,5 @@
 import type { FilterOrErrorMessage } from '../../src/Query/Filter/Filter';
-import type { Task } from '../../src/Task';
+import { Task } from '../../src/Task';
 import { Query } from '../../src/Query';
 
 /**
@@ -49,4 +49,42 @@ export function testTaskFilterViaQuery(
 
     // Assert
     expect(matched).toEqual(expected);
+}
+
+export type FilteringCase = {
+    filters: Array<string>;
+    tasks: Array<string>;
+    expectedResult: Array<string>;
+};
+
+export function shouldSupportFiltering(
+    filters: Array<string>,
+    allTaskLines: Array<string>,
+    expectedResult: Array<string>,
+) {
+    // Arrange
+    const query = new Query({ source: filters.join('\n') });
+
+    const tasks = allTaskLines.map(
+        (taskLine) =>
+            Task.fromLine({
+                line: taskLine,
+                sectionStart: 0,
+                sectionIndex: 0,
+                path: '',
+                precedingHeader: '',
+            }) as Task,
+    );
+
+    // Act
+    let filteredTasks = [...tasks];
+    query.filters.forEach((filter) => {
+        filteredTasks = filteredTasks.filter(filter);
+    });
+
+    // Assert
+    const filteredTaskLines = filteredTasks.map(
+        (task) => `- [ ] ${task.toString()}`,
+    );
+    expect(filteredTaskLines).toMatchObject(expectedResult);
 }
