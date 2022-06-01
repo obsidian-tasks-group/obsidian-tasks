@@ -16,6 +16,7 @@ import { PriorityField } from './Query/Filter/PriorityField';
 import { ScheduledDateField } from './Query/Filter/ScheduledDateField';
 import { StartDateField } from './Query/Filter/StartDateField';
 import { HappensDateField } from './Query/Filter/HappensDateField';
+import { TagsField } from './Query/Filter/TagsField';
 
 export type SortingProperty =
     | 'urgency'
@@ -64,10 +65,6 @@ export class Query implements IQuery {
 
     private readonly doneString = 'done';
     private readonly notDoneString = 'not done';
-
-    // Handles both ways of referencing the tags query.
-    private readonly tagRegexp =
-        /^(tag|tags) (includes|does not include|include|do not include) (.*)/;
 
     // If a tag is specified the user can also add a number to specify
     // which one to sort by if there is more than one.
@@ -158,8 +155,7 @@ export class Query implements IQuery {
                         break;
                     case this.parseFilter(line, new DescriptionField()):
                         break;
-                    case this.tagRegexp.test(line):
-                        this.parseTagFilter({ line });
+                    case this.parseFilter(line, new TagsField()):
                         break;
                     case this.parseFilter(line, new HeadingField()):
                         break;
@@ -268,47 +264,6 @@ export class Query implements IQuery {
             return true;
         } else {
             return false;
-        }
-    }
-
-    /**
-     * When a tag based filter is used this is the process to apply it.
-     * - Tags can be searched for with and without the hash tag at the start.
-     *
-     * @private
-     * @param {{ line: string }} { line }
-     * @memberof Query
-     */
-    private parseTagFilter({ line }: { line: string }): void {
-        const tagMatch = line.match(this.tagRegexp);
-        if (tagMatch !== null) {
-            const filterMethod = tagMatch[2];
-
-            // Search is done sans the hash. If it is provided then strip it off.
-            const search = tagMatch[3].replace(/^#/, '');
-
-            if (filterMethod === 'include' || filterMethod === 'includes') {
-                this._filters.push(
-                    (task: Task) =>
-                        task.tags.find((tag) =>
-                            tag.toLowerCase().includes(search.toLowerCase()),
-                        ) !== undefined,
-                );
-            } else if (
-                tagMatch[2] === 'do not include' ||
-                tagMatch[2] === 'does not include'
-            ) {
-                this._filters.push(
-                    (task: Task) =>
-                        task.tags.find((tag) =>
-                            tag.toLowerCase().includes(search.toLowerCase()),
-                        ) == undefined,
-                );
-            } else {
-                this._error = 'do not understand query filter (tag/tags)';
-            }
-        } else {
-            this._error = 'do not understand query filter (tag/tags)';
         }
     }
 
