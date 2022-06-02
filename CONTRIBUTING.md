@@ -97,15 +97,15 @@ You can toggle a task‘s status by:
 
 The code is located as follows:
 
-- For 1.: ``./src/Commands/ToggleDone.ts`
-- 2. and 4. use a checkbox created by `Task.toLi()`. There, the checkbox gets a click event handler.
+- For 1.: `./src/Commands/ToggleDone.ts`
+- Numbers 2. and 4. use a checkbox created by `Task.toLi()`. There, the checkbox gets a click event handler.
 - For 3.: `./src/LivePreviewExtension.ts`
 
 Toggle behavior:
 
-- 1. toggles the line directly where the cursor is. In the file inside Obsidian‘s vault.
-- The click event listener of 2. and 4. uses File::replaceTaskWithTasks(). That, in turn, updates the file in Obsidian‘s Vault (like 1, but it needs to find the correct line).
-- 3. toggles the line directly where the checkbox is. On the „document“ of CodeMirror (the library that Obsidian uses to show text on screen). That, in turn, updates the file in Obsidian‘s Vault, somehow.
+- Number 1. toggles the line directly where the cursor is. In the file inside Obsidian‘s vault.
+- The click event listener of 2. and 4. uses `File::replaceTaskWithTasks()`. That, in turn, updates the file in Obsidian‘s Vault (like 1, but it needs to find the correct line).
+- Number 3. toggles the line directly where the checkbox is. On the „document“ of CodeMirror (the library that Obsidian uses to show text on screen). That, in turn, updates the file in Obsidian‘s Vault, somehow.
 
 Obsidian writes the changes to disk at its own pace.
 
