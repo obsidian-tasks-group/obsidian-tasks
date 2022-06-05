@@ -129,6 +129,39 @@ describe('parsing', () => {
         ).toStrictEqual(true);
         expect(task!.blockLink).toEqual(' ^my-precious');
     });
+
+    it('also works with dataview completed tag [✅:: 2022-06-05]', () => {
+        // Arrange
+        const line =
+            '- [x] this is a ✅ done task 🗓 2021-09-12 [✅:: 2022-06-05] ^my-precious  ';
+        const path = 'this/is a path/to a/file.md';
+        const sectionStart = 1337;
+        const sectionIndex = 1209;
+        const precedingHeader = 'Eloquent Section';
+
+        // Act
+        const task = Task.fromLine({
+            line,
+            path,
+            sectionStart,
+            sectionIndex,
+            precedingHeader,
+        });
+
+        // Assert
+        expect(task).not.toBeNull();
+        expect(task!.description).toEqual('this is a ✅ done task');
+        expect(task!.status).toStrictEqual(Status.Done);
+        expect(task!.dueDate).not.toBeNull();
+        expect(
+            task!.dueDate!.isSame(moment('2021-09-12', 'YYYY-MM-DD')),
+        ).toStrictEqual(true);
+        expect(task!.doneDate).not.toBeNull();
+        expect(
+            task!.doneDate!.isSame(moment('2022-06-05', 'YYYY-MM-DD')),
+        ).toStrictEqual(true);
+        expect(task!.blockLink).toEqual(' ^my-precious');
+    });
 });
 
 type TagParsingExpectations = {
