@@ -92,6 +92,8 @@ Instead you would have two queries, one for each condition:
 - `has start date`
 - `starts (before|after|on) <date>`
 
+> `has start date` was Introduced in Tasks 1.6.0.
+
 When filtering queries by [start date]({{ site.baseurl }}{% link getting-started/dates.md %}#-start),
 the result will include tasks without a start date.
 This way, you can use the start date as a filter to filter out any tasks that you cannot yet work on.
@@ -108,11 +110,15 @@ Such filter could be:
 - `has scheduled date`
 - `scheduled (before|after|on) <date>`
 
+> `has scheduled date` was introduced in Tasks 1.6.0.
+
 ### Due Date
 
 - `no due date`
 - `has due date`
 - `due (before|after|on) <date>`
+
+> `has due date` was introduced in Tasks 1.6.0.
 
 ### Happens
 
@@ -153,6 +159,8 @@ because the tasks starts before tomorrow. Only one of the dates needs to match.
   - When this is set, the result list will only include tasks that are not indented in their file. It will only show tasks that are top level list items in their list.
 
 ### Tags
+
+> Introduced in Tasks 1.6.0.
 
 - `tags (include|do not include) <tag>` (Alternative grammar `tag (includes|does not include) <tag>` matching description syntax)
   - Matches case-insensitive (disregards capitalization).
