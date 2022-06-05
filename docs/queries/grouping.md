@@ -22,6 +22,8 @@ parent: Queries
 
 ## Basics
 
+> Introduced in Tasks 1.6.0.
+
 By default, Tasks displays tasks in a single list.
 
 To divide the matching tasks up with headings, you can add `group by` lines to the query.

@@ -9,11 +9,29 @@ The documentation resides under the `./docs` directory.
 It consists of markdown files, which [Jekyll](https://jekyllrb.com/) will transform into web pages that you can view at <https://obsidian-tasks-group.github.io/obsidian-tasks/> .
 In the simplest case, you can update the existing markdown file and create a pull request (PR) with your changes.
 
+### Version numbers in documentation
+
+We have introduced version markers to the documentation, to show users in which version a specific feature was introduced.
+This means that newly written documentation should be tagged with a placeholder, which will be replaced with the actual
+version upon release.
+
+There are 2 styles of placeholders used through the documentation, Please pick the one that
+fits your text better. (If in doubt, take a look at the existing version tags for other features.)
+
+- `> Introduced in Tasks X.Y.Z`
+  - This placeholder is usually used after a section heading.
+- `> X (Y and Z) was introduced in Tasks X.Y.Z`
+  - This placeholder is used when you need to tag a sub-part of something, for example a list.
+
+### How the documentation is generated
+
 We use [GitHub pages](https://pages.github.com/) for our documentation.
 You can read more about it at their [official documentation](https://docs.github.com/en/pages).
 
 To generate the documentation site on your machine,
 see [docs/README.md](docs/README.md).
+
+### Documentation and branches
 
 For documentation changes to show up at <https://obsidian-tasks-group.github.io/obsidian-tasks/> , they must be in the `gh-pages` branch.
 If you want to see your changes available immediately and not only after the next release, you should make your changes on the `gh-pages` branch.
@@ -116,14 +134,15 @@ Obsidian writes the changes to disk at its own pace.
     - Backwards incompatible change: increase major version
     - New functionality: increase minor version
     - Only bug fixes: increase patch version
-3. Check the current version of the obsidian dependency in `package.json` (e.g. `0.13.21`)
-4. Run `./release.sh <new tasks version> <obsidian version>`
+3. Having decided on the new version, replace all `X.Y.Z` in the documentation with the new version number.
+4. Check the current version of the obsidian dependency in `package.json` (e.g. `0.13.21`)
+5. Run `./release.sh <new tasks version> <obsidian version>`
     - Make sure there are no uncommitted changes. Stash them if necessary.
-5. Wait for [GitHub Actions](https://github.com/obsidian-tasks-group/obsidian-tasks/actions/workflows/release.yml) to create the new release
-6. Update the release description with the changes of the release
+6. Wait for [GitHub Actions](https://github.com/obsidian-tasks-group/obsidian-tasks/actions/workflows/release.yml) to create the new release
+7. Update the release description with the changes of the release
     - On the release page, GitHub provides a button to auto-generate release notes which works nicely.
     - Also update the attached zip file by adding the version number to the end of the name after the dash (e.g. `obsidian-tasks-1.4.1.zip`)
-7. Optional: Post to
+8. Optional: Post to
     - Obsidian Discord
     - r/ObsidianMD on Reddit
     - etc.
