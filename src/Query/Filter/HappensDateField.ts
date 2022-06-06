@@ -10,9 +10,26 @@ import { FilterOrErrorMessage } from './Filter';
  */
 export class HappensDateField extends Field {
     private static readonly happensRegexp = /^happens (before|after|on)? ?(.*)/;
+    private static readonly instructionForFieldPresence = 'has happens date';
+    private static readonly instructionForFieldAbsence = 'no happens date';
 
     public createFilterOrErrorMessage(line: string): FilterOrErrorMessage {
         const result = new FilterOrErrorMessage();
+
+        if (line === HappensDateField.instructionForFieldPresence) {
+            const result = new FilterOrErrorMessage();
+            result.filter = (task: Task) =>
+                this.dates(task).some((date) => date !== null);
+            return result;
+        }
+
+        if (line === HappensDateField.instructionForFieldAbsence) {
+            const result = new FilterOrErrorMessage();
+            result.filter = (task: Task) =>
+                !this.dates(task).some((date) => date !== null);
+            return result;
+        }
+
         const happensMatch = line.match(this.filterRegexp());
         if (happensMatch !== null) {
             const filterDate = DateParser.parseDate(happensMatch[2]);
