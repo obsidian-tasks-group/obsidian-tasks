@@ -11,6 +11,16 @@ export class DoneDateField extends DateField {
     private static readonly instructionForFieldPresence = 'has done date';
     private static readonly instructionForFieldAbsence = 'no done date';
 
+    public canCreateFilterForLine(line: string): boolean {
+        if (line === DoneDateField.instructionForFieldPresence) {
+            return true;
+        }
+        if (line === DoneDateField.instructionForFieldAbsence) {
+            return true;
+        }
+        return super.canCreateFilterForLine(line);
+    }
+
     public createFilterOrErrorMessage(line: string): FilterOrErrorMessage {
         if (line === DoneDateField.instructionForFieldPresence) {
             const result = new FilterOrErrorMessage();
