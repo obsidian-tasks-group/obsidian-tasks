@@ -13,6 +13,16 @@ export class HappensDateField extends Field {
     private static readonly instructionForFieldPresence = 'has happens date';
     private static readonly instructionForFieldAbsence = 'no happens date';
 
+    public canCreateFilterForLine(line: string): boolean {
+        if (line === HappensDateField.instructionForFieldPresence) {
+            return true;
+        }
+        if (line === HappensDateField.instructionForFieldAbsence) {
+            return true;
+        }
+        return super.canCreateFilterForLine(line);
+    }
+
     public createFilterOrErrorMessage(line: string): FilterOrErrorMessage {
         const result = new FilterOrErrorMessage();
 
