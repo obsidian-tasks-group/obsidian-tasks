@@ -58,7 +58,7 @@ Task properties:
 1. `done`
     * The done date of the task, including the week-day, or `No done date`.
 
-> `start`, `scheduled`, `due`, `done` grouping was introduced in Tasks 1.7.0.
+> `start`, `scheduled`, `due` and `done` grouping options were introduced in Tasks 1.7.0.
 
 ### Multiple groups
 
