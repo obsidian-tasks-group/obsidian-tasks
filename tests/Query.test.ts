@@ -27,11 +27,12 @@ describe('Query', () => {
      */
     describe('should recognise supported filters', () => {
         // TODO Add all other supported filters
+        // In alphabetical order, please
         const filters = [
             'has done date',
+            'has happens date',
             'no done date',
             'no happens date',
-            'has happens date',
         ];
 
         test.concurrent.each<string>(filters)('recognises %j', (filter) => {
