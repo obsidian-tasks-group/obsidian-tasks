@@ -213,6 +213,32 @@ describe('Group names', () => {
         },
 
         // -----------------------------------------------------------
+        // group by done
+        {
+            groupBy: 'done',
+            taskLine: '- [ ] a ✅ 1970-01-01',
+            expectedGroupName: '1970-01-01 Thursday',
+        },
+        {
+            groupBy: 'done',
+            taskLine: '- [ ] a',
+            expectedGroupName: 'No done date',
+        },
+
+        // -----------------------------------------------------------
+        // group by due
+        {
+            groupBy: 'due',
+            taskLine: '- [ ] a 📅 1970-01-01',
+            expectedGroupName: '1970-01-01 Thursday',
+        },
+        {
+            groupBy: 'due',
+            taskLine: '- [ ] a',
+            expectedGroupName: 'No due date',
+        },
+
+        // -----------------------------------------------------------
         // group by filename
         {
             groupBy: 'filename',
@@ -265,6 +291,32 @@ describe('Group names', () => {
             taskLine: '- [ ] a',
             path: 'a/b/c.md',
             expectedGroupName: 'a/b/c',
+        },
+
+        // -----------------------------------------------------------
+        // group by scheduled
+        {
+            groupBy: 'scheduled',
+            taskLine: '- [ ] a ⏳ 1970-01-01',
+            expectedGroupName: '1970-01-01 Thursday',
+        },
+        {
+            groupBy: 'scheduled',
+            taskLine: '- [ ] a',
+            expectedGroupName: 'No scheduled date',
+        },
+
+        // -----------------------------------------------------------
+        // group by start
+        {
+            groupBy: 'start',
+            taskLine: '- [ ] a 🛫 1970-01-01',
+            expectedGroupName: '1970-01-01 Thursday',
+        },
+        {
+            groupBy: 'start',
+            taskLine: '- [ ] a',
+            expectedGroupName: 'No start date',
         },
 
         // -----------------------------------------------------------
