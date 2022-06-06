@@ -29,8 +29,7 @@ describe('Query', () => {
         // TODO Add all other supported filters
         const filters = ['has done date', 'no done date'];
 
-        // TODO Make this run concurrently
-        for (const filter of filters) {
+        test.concurrent.each<string>(filters)('recognises %j', (filter) => {
             // Arrange
             const query = new Query({ source: filter });
 
@@ -38,7 +37,7 @@ describe('Query', () => {
             expect(query.error).toBeUndefined();
             expect(query.filters.length).toEqual(1);
             expect(query.filters[0]).toBeDefined();
-        }
+        });
     });
 
     describe('filtering', () => {
