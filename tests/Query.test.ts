@@ -14,7 +14,7 @@ window.moment = moment;
 
 describe('Query', () => {
     /**
-     * As more and more filters are added via the DateField class, and tested
+     * As more and more filters are added via the Field class, and tested
      * outside of this test file, there is the chance that someone thinks that
      * they have correctly added a new filter option, but forgotten to register
      * it in the Query class.
