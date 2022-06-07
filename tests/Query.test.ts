@@ -13,6 +13,39 @@ import {
 window.moment = moment;
 
 describe('Query', () => {
+    /**
+     * As more and more filters are added via the Field class, and tested
+     * outside of this test file, there is the chance that someone thinks that
+     * they have correctly added a new filter option, but forgotten to register
+     * it in the Query class.
+     *
+     * This test exists as a growing list of sample filters, and purely checks
+     * that the Query class parses them successfully.
+     *
+     * A failure here means that the Query constructor is missing code to recognise
+     * one of the supported queries/filters.
+     */
+    describe('should recognise supported filters', () => {
+        // TODO Add all other supported filters
+        // In alphabetical order, please
+        const filters = [
+            'has done date',
+            'has happens date',
+            'no done date',
+            'no happens date',
+        ];
+
+        test.concurrent.each<string>(filters)('recognises %j', (filter) => {
+            // Arrange
+            const query = new Query({ source: filter });
+
+            // Assert
+            expect(query.error).toBeUndefined();
+            expect(query.filters.length).toEqual(1);
+            expect(query.filters[0]).toBeDefined();
+        });
+    });
+
     describe('filtering', () => {
         it('filters paths case insensitive', () => {
             // Arrange

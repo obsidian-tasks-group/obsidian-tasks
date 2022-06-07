@@ -67,7 +67,11 @@ Instead you would have two queries, one for each condition:
 
 - `done`
 - `not done`
+- `no done date`
+- `has done date`
 - `done (before|after|on) <date>`
+
+> `no done date` and `has done date` were introduced in Tasks 1.7.0.
 
 ### Priority
 
@@ -128,6 +132,13 @@ Such filter could be:
 For example, `happens before tomorrow` will return all tasks that are starting, scheduled, or due earlier than tomorrow.
 If a task starts today and is due in a week from today, `happens before tomorrow` will match,
 because the tasks starts before tomorrow. Only one of the dates needs to match.
+
+- `no happens date`
+  - Return tasks where _none_ of start date, scheduled date, and due date are set.
+- `has happens date`
+  - Return tasks where _any_ of start date, scheduled date, _or_ due date are set.
+
+> `no happens date` and `has happens date` were introduced in Tasks 1.7.0.
 
 ### Recurrence
 
