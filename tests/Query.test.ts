@@ -19,7 +19,7 @@ describe('Query', () => {
      * they have correctly added a new filter option, but forgotten to register
      * it in the Query class.
      *
-     * This test exists has a growing list of sample filters, and purely checks
+     * This test exists as a growing list of sample filters, and purely checks
      * that the Query class parses them successfully.
      *
      * A failure here means that the Query constructor is missing code to recognise
