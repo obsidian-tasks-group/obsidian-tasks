@@ -9,9 +9,6 @@ has_toc: false
 
 This table summarizes the filters and other options available inside a `tasks` block.
 
-Its words may wrap in your browser, making it possibly confusing.
-The first column contains two lines. The other columns all contain one line.
-
 | Presence<br>Absence                          | Filter                                                                             | Sort<br>Group                               | Display                |
 | -------------------------------------------- | ---------------------------------------------------------------------------------- | ------------------------------------------- | ---------------------- |
 | `done`<br>`not done`                         |                                                                                    | `sort by status`<br>`group by status`       |                        |
