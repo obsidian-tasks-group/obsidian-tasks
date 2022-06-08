@@ -22,7 +22,7 @@ This table summarizes the filters and other options available inside a `tasks` b
 | `has scheduled date`<br>`no  scheduled date` | `scheduled (before, after, on) <date>`                                             | `sort by scheduled`<br>`group by scheduled` | `hide scheduled date`  |
 | `has due date`<br>`no  due date`             | `due (before, after, on) <date>`                                                   | `sort by due`<br>`group by due`             | `hide due date`        |
 | `has happens date`<br>`no  happens date`     | `happens (before, after, on) <date>`                                               |                                             |                        |
-| `is recurring`<br>`is not recurring`         |                                                                                    |                                             | `hide recurrence rule` |
+|                                              | `is recurring`<br>`is not recurring`                                               |                                             | `hide recurrence rule` |
 |                                              | `priority is (above, below)? (low, none, medium, high)`                            | `sort by priority`                          | `hide priority`        |
 |                                              |                                                                                    | `sort by urgency`                           |                        |
 |                                              | `path (includes, does not include) <path>`                                         | `sort by path`<br>`group by path`           |                        |
