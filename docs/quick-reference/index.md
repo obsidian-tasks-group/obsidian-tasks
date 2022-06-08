@@ -7,9 +7,14 @@ has_toc: false
 
 # Quick Reference
 
+[1]: https://obsidian-tasks-group.github.io/obsidian-tasks/queries/filters/
+[2]: https://obsidian-tasks-group.github.io/obsidian-tasks/queries/sorting/
+[3]: https://obsidian-tasks-group.github.io/obsidian-tasks/queries/grouping/
+[4]: https://obsidian-tasks-group.github.io/obsidian-tasks/queries/layout/
+
 This table summarizes the filters and other options available inside a `tasks` block.
 
-| Presence<br>Absence                          | Filter                                                                             | Sort<br>Group                               | Display                |
+| Presence<br>Absence                          | [Filter][1]                                                                        | [Sort][2]<br>[Group][3]                     | [Display][4]           |
 | -------------------------------------------- | ---------------------------------------------------------------------------------- | ------------------------------------------- | ---------------------- |
 | `done`<br>`not done`                         |                                                                                    | `sort by status`<br>`group by status`       |                        |
 | `has done date`<br>`no  done date`           | `done (before, after, on) <date>`                                                  | `sort by done`<br>`group by done`           | `hide done date`       |
