@@ -16,7 +16,7 @@ This table summarizes the filters and other options available inside a `tasks` b
 
 | Presence<br>Absence                          | [Filter][1]                                                                        | [Sort][2]<br>[Group][3]                     | [Display][4]           |
 | -------------------------------------------- | ---------------------------------------------------------------------------------- | ------------------------------------------- | ---------------------- |
-| `done`<br>`not done`                         |                                                                                    | `sort by status`<br>`group by status`       |                        |
+|                                              | `done`<br>`not done`                                                               | `sort by status`<br>`group by status`       |                        |
 | `has done date`<br>`no  done date`           | `done (before, after, on) <date>`                                                  | `sort by done`<br>`group by done`           | `hide done date`       |
 | `has start date`<br>`no  start date`         | `starts (before, after, on) <date>`                                                | `sort by start`<br>`group by start`         | `hide start date`      |
 | `has scheduled date`<br>`no  scheduled date` | `scheduled (before, after, on) <date>`                                             | `sort by scheduled`<br>`group by scheduled` | `hide scheduled date`  |
