@@ -1,17 +1,19 @@
 ---
 name: Issue Template
-about: Use this template to create a new issue.
+about: Use this template to report a bug. Feature requests should be entered in a Discussion - under Ideas. In both cases, please check existing reports first, to see if the problem has been reported already, to avoid duplicates.
 title: ''
 labels: ''
 assignees: ''
 
 ---
 
+<!--
 Issue tracker is **ONLY** used for reporting bugs. New feature ideas should be discussed in the [ideas section](https://github.com/obsidian-tasks-group/obsidian-tasks/discussions/categories/ideas). Please use the [Q&A section](https://github.com/obsidian-tasks-group/obsidian-tasks/discussions/categories/q-a) for supporting issues. Please use the search function.
 
 If you encountered the issue after you installed, updated, or reloaded the tasks plugin, please try restarting obsidian before reporting the bug.
 
 If you want to report a bug, please follow the guide lines below to help me resolve it.
+-->
 
 ## Expected Behavior
 <!--- Tell us what should happen -->
