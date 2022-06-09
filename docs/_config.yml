@@ -9,6 +9,9 @@ permalink: pretty
 back_to_top: true
 back_to_top_text: "Back to top"
 
+# Wider than default, to improve display of Quick Reference table:
+color_scheme: wider-content
+
 # Aux links for the upper right navigation
 aux_links:
   "Obsidian Tasks on GitHub":
