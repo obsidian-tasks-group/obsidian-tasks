@@ -1,6 +1,6 @@
 ---
 name: Issue Template
-about: Use this template to report a bug. Feature requests should be entered in a Discussion - under Ideas. In both cases, please check existing reports first, to see if the problem has been reported already, to avoid duplicates.
+about: Use this template to report a bug. Feature requests go instead in a Discussion - under Ideas. In both cases, please check existing reports first, to avoid duplicates.
 title: ''
 labels: ''
 assignees: ''
