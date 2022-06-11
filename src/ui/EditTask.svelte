@@ -4,7 +4,7 @@
     import { Recurrence } from '../Recurrence';
     import { getSettings } from '../Settings';
     import { Priority, Status, Task } from '../Task';
-    import Abbrev from '../Abbrev';
+    import DateAbbreviations from '../DateAbbreviations';
 
     export let task: Task;
     export let onSubmit: (updatedTasks: Task[]) => void | Promise<void>;
@@ -39,7 +39,7 @@
     let datePlaceholder = "Try 'Monday' or 'tomorrow'.";
 
     function doAutocomplete(date: string): string {
-        for (let [key, val] of Object.entries(Abbrev)) {
+        for (let [key, val] of Object.entries(DateAbbreviations)) {
             date = date.replace(RegExp(`\\b${key}\\s`), val);
         }
         return date;
