@@ -61,9 +61,7 @@
     }
 
     $: {
-        console.log(editableTask.startDate);
         editableTask.startDate = doAutocomplete(editableTask.startDate);
-        console.log(editableTask.startDate);
         parsedStartDate = parseDate(
             'start',
             editableTask.startDate,
