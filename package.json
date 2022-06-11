@@ -52,6 +52,6 @@
   },
   "dependencies": {
     "chrono-node": "2.2.6",
-    "rrule": "^2.6.8"
+    "rrule": "^2.7.0"
   }
 }
