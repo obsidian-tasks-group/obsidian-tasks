@@ -32,7 +32,7 @@
     "@typescript-eslint/parser": "^5.2.0",
     "async-mutex": "^0.3.1",
     "builtin-modules": "^3.2.0",
-    "esbuild": "0.14.43",
+    "esbuild": "0.13.15",
     "esbuild-svelte": "^0.6.0",
     "eslint": "^7.22.0",
     "eslint-config-prettier": "^8.1.0",
