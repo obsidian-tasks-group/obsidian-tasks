@@ -36,6 +36,8 @@
     let parsedRecurrence: string = '';
     let parsedDone: string = '';
 
+    let datePlaceholder = "Try 'Monday' or 'tomorrow'.";
+
     function doAutocomplete(date: string): string {
         for (let [key, val] of Object.entries(Abbrev)) {
             date = date.replace(RegExp(`\\b${key}\\s`), val);
@@ -265,7 +267,7 @@
                     bind:value={editableTask.dueDate}
                     id="due"
                     type="text"
-                    placeholder="Try 'Monday' or 'tomorrow'."
+                    placeholder={datePlaceholder}
                 />
                 <code>📅 {@html parsedDueDate}</code>
             </div>
@@ -275,7 +277,7 @@
                     bind:value={editableTask.scheduledDate}
                     id="scheduled"
                     type="text"
-                    placeholder="Try 'Monday' or 'tomorrow'."
+                    placeholder={datePlaceholder}
                 />
                 <code>⏳ {@html parsedScheduledDate}</code>
             </div>
@@ -285,7 +287,7 @@
                     bind:value={editableTask.startDate}
                     id="start"
                     type="text"
-                    placeholder="Try 'Monday' or 'tomorrow'."
+                    placeholder={datePlaceholder}
                 />
                 <code>🛫 {@html parsedStartDate}</code>
             </div>
