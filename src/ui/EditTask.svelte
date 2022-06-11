@@ -37,7 +37,7 @@
     let parsedDone: string = '';
 
     // 'weekend' abbreviation ommitted due to lack of space.
-    let datePlaceholder = "Try 'Monday' or 'tomorrow', or td,tm,yd,tw,nw or we then space.";
+    let datePlaceholder = "Try 'Monday' or 'tomorrow', or [td|tm|yd|tw|nw|we] then space.";
 
     function doAutocomplete(date: string): string {
         for (let [key, val] of Object.entries(DateAbbreviations)) {
