@@ -4,7 +4,7 @@
     import { Recurrence } from '../Recurrence';
     import { getSettings } from '../Settings';
     import { Priority, Status, Task } from '../Task';
-    import Abbrev from '../Abbrev';
+    import DateAbbreviations from '../DateAbbreviations';
 
     export let task: Task;
     export let onSubmit: (updatedTasks: Task[]) => void | Promise<void>;
@@ -36,8 +36,11 @@
     let parsedRecurrence: string = '';
     let parsedDone: string = '';
 
+    // 'weekend' abbreviation ommitted due to lack of space.
+    let datePlaceholder = "Try 'Monday' or 'tomorrow', or [td|tm|yd|tw|nw|we] then space.";
+
     function doAutocomplete(date: string): string {
-        for (let [key, val] of Object.entries(Abbrev)) {
+        for (let [key, val] of Object.entries(DateAbbreviations)) {
             date = date.replace(RegExp(`\\b${key}\\s`), val);
         }
         return date;
@@ -61,9 +64,7 @@
     }
 
     $: {
-        console.log(editableTask.startDate);
         editableTask.startDate = doAutocomplete(editableTask.startDate);
-        console.log(editableTask.startDate);
         parsedStartDate = parseDate(
             'start',
             editableTask.startDate,
@@ -267,7 +268,7 @@
                     bind:value={editableTask.dueDate}
                     id="due"
                     type="text"
-                    placeholder="Try 'Monday' or 'tomorrow'."
+                    placeholder={datePlaceholder}
                 />
                 <code>📅 {@html parsedDueDate}</code>
             </div>
@@ -277,7 +278,7 @@
                     bind:value={editableTask.scheduledDate}
                     id="scheduled"
                     type="text"
-                    placeholder="Try 'Monday' or 'tomorrow'."
+                    placeholder={datePlaceholder}
                 />
                 <code>⏳ {@html parsedScheduledDate}</code>
             </div>
@@ -287,7 +288,7 @@
                     bind:value={editableTask.startDate}
                     id="start"
                     type="text"
-                    placeholder="Try 'Monday' or 'tomorrow'."
+                    placeholder={datePlaceholder}
                 />
                 <code>🛫 {@html parsedStartDate}</code>
             </div>
