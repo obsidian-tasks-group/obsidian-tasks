@@ -4,7 +4,7 @@
     import { Recurrence } from '../Recurrence';
     import { getSettings } from '../Settings';
     import { Priority, Status, Task } from '../Task';
-    import DateAbbreviations from '../DateAbbreviations';
+    import { doAutocomplete } from '../DateAbbreviations';
 
     export let task: Task;
     export let onSubmit: (updatedTasks: Task[]) => void | Promise<void>;
@@ -39,12 +39,6 @@
     // 'weekend' abbreviation ommitted due to lack of space.
     let datePlaceholder = "Try 'Monday' or 'tomorrow', or [td|tm|yd|tw|nw|we] then space.";
 
-    function doAutocomplete(date: string): string {
-        for (let [key, val] of Object.entries(DateAbbreviations)) {
-            date = date.replace(RegExp(`\\b${key}\\s`), val);
-        }
-        return date;
-    }
 
     function parseDate(
         type: 'start' | 'scheduled' | 'due' | 'done',
