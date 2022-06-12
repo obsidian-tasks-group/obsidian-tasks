@@ -16,7 +16,7 @@ Tasks are by default sorted by status, due date, and then path. You can change t
 Warning
 {: .label .label-yellow }
 The result list will list tasks unindented.
-See [#51](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/51) for a discussion around the topic.
+See [#60](https://github.com/obsidian-tasks-group/obsidian-tasks/discussions/60) for a discussion around the topic.
 Do not hesitate to contribute 😊
 
 ---
