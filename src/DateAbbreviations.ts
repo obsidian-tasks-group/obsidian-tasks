@@ -21,7 +21,7 @@ const abbreviations = {
  */
 export function doAutocomplete(date: string): string {
     for (const [key, val] of Object.entries(abbreviations)) {
-        date = date.replace(RegExp(`\\b${key}\\s`), val);
+        date = date.replace(RegExp(`\\b${key}\\s`, 'i'), val);
     }
     return date;
 }

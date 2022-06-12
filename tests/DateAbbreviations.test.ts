@@ -10,4 +10,14 @@ describe('DateAbbreviations', () => {
         expect(doAutocomplete('weekend ')).toEqual('sat');
         expect(doAutocomplete('we ')).toEqual('sat');
     });
+
+    it('should expand abbreviations with capital letters', () => {
+        expect(doAutocomplete('Td ')).toEqual('today');
+        expect(doAutocomplete('tM ')).toEqual('tomorrow');
+        expect(doAutocomplete('WeekEnd ')).toEqual('sat');
+    });
+
+    it('should not expand other words', () => {
+        expect(doAutocomplete('sunshine ')).toEqual('sunshine ');
+    });
 });
