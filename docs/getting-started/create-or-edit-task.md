@@ -23,7 +23,7 @@ has_toc: false
 
 ## Introduction
 
-![Create or Edit Modal](https://github.com/obsidian-tasks-group/obsidian-tasks/raw/main/resources/screenshots/modal.png)
+![Create or Edit Modal](https://github.com/obsidian-tasks-group/obsidian-tasks/raw/gh-pages/resources/screenshots/modal.png)
 The `Tasks: Create or edit` command helps you when adding or editing a task.
 
 ## Opening the 'Create or edit Task' Modal

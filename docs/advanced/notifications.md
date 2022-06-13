@@ -13,7 +13,7 @@ This utilizes the standard Tasks date (as the due date) and can be extended with
 Further, a default reminder can be enabled based on the Tasks' 'Due Date'.
 To enable this make sure obsidian-reminder has enabled the tasks plugin format as below:
 
-![obsidian-reminder setting](https://github.com/obsidian-tasks-group/obsidian-tasks/raw/main/resources/screenshots/reminder.png)
+![obsidian-reminder setting](https://github.com/obsidian-tasks-group/obsidian-tasks/raw/gh-pages/resources/screenshots/reminder.png)
 _Note that this is a screenshot of the reminder plugin's settings and not Tasks._
 
 ## Where to add the reminder date
