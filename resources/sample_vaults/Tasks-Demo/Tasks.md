@@ -5,7 +5,7 @@
 ```tasks
 ```
 
-## Open tasks from ACME
+## Open tasks from Important Project
 
 ```tasks
 not done
@@ -23,6 +23,7 @@ due before 2021-12-06
 
 ```tasks
 not done
+due before 2021-12-06
 short mode
 ```
 

@@ -17,7 +17,7 @@ For changes in each release, please check the releases page: <https://github.com
 ## Screenshots
 
 - _All screenshots assume the [global filter](#filtering-checklist-items) `#task` which is not set by default (see also [installation](#installation))._
-- _The theme is [Obsidian Atom](https://github.com/kognise/obsidian-atom)._
+- _The theme is default Obsidian theme._
 
 ![ACME Tasks](https://github.com/obsidian-tasks-group/obsidian-tasks/raw/main/resources/screenshots/acme.png)
 The `ACME` note has some tasks.
