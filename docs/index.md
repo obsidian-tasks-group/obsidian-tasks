@@ -40,7 +40,7 @@ For changes in each release, please check the [releases page](https://github.com
 ## Screenshots
 
 - *All screenshots assume the global filter `#task` which is not set by default (see also "Getting Started").*
-- *The theme is [Obsidian Atom](https://github.com/kognise/obsidian-atom).*
+- *The theme is default Obsidian theme.*
 
 ![ACME Tasks](https://github.com/obsidian-tasks-group/obsidian-tasks/raw/main/resources/screenshots/acme.png)
 The `ACME` note has some tasks.
