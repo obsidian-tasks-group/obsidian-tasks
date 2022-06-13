@@ -20,5 +20,8 @@ data.json
 # asdf
 .tool-versions
 
+# files in sample vaults
+/resources/sample_vaults/Tasks-Demo/.obsidian/workspace
+
 # Backup files.
 *.bak
