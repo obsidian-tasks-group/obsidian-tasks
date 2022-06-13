@@ -7,12 +7,12 @@ node_modules
 yarn-error.log
 
 # build
-main.js
+/main.js
 *.js.map
 .log
 
 # obsidian
-data.json
+/data.json
 
 # osx
 .DS_Store
