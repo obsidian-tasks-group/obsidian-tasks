@@ -4,7 +4,7 @@
   "version": "1.7.0",
   "minAppVersion": "0.13.21",
   "description": "Task management for Obsidian",
-  "author": "Martin Schenck",
+  "author": "Martin Schenck and Clare Macrae",
   "authorUrl": "https://github.com/obsidian-tasks-group",
   "isDesktopOnly": false
 }
