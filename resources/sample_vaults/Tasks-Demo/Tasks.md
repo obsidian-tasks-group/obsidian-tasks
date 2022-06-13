@@ -5,7 +5,7 @@
 ```tasks
 ```
 
-## Open tasks from ACME
+## Open tasks from Important Project
 
 ```tasks
 not done
