@@ -1,0 +1,5 @@
+{
+  "globalFilter": "#task",
+  "removeGlobalFilter": true,
+  "setDoneDate": true
+}
