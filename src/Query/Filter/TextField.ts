@@ -8,17 +8,28 @@ import { FilterOrErrorMessage } from './Filter';
  * value, such as the description or file path.
  */
 export abstract class TextField extends Field {
+    const regexpPattern = /^\/(.*)\/$/;
+
     public createFilterOrErrorMessage(line: string): FilterOrErrorMessage {
         const result = new FilterOrErrorMessage();
         const match = Field.getMatch(this.filterRegexp(), line);
         if (match !== null) {
             const filterMethod = match[1];
             if (filterMethod === 'includes') {
-                result.filter = (task: Task) =>
-                    TextField.stringIncludesCaseInsensitive(
-                        this.value(task),
-                        match[2],
-                    );
+                const queryString = match[2];
+                const regexpMatch = queryString.match(regexpPattern);
+                if (regexpMatch !== null) {
+                    const pattern = regexpMatch[1];
+                    const regexp = new RegExp(pattern);
+                    result.filter = (task: Task) => 
+                        this.value(task).match(regexp);
+                } else {   
+                    result.filter = (task: Task) =>
+                        TextField.stringIncludesCaseInsensitive(
+                            this.value(task),
+                            match[2],
+                        );
+                }
             } else if (match[1] === 'does not include') {
                 result.filter = (task: Task) =>
                     !TextField.stringIncludesCaseInsensitive(
