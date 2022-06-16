@@ -10,7 +10,7 @@ import type { TaskBuilder } from './TaskBuilder';
  * @param taskBuilder - a TaskBuilder, populated with the require values for the test.
  * @param expected true if the task should match the filter, and false otherwise.
  */
-export function testTaskFilter(
+export function testFilter(
     filter: FilterOrErrorMessage,
     taskBuilder: TaskBuilder,
     expected: boolean,
