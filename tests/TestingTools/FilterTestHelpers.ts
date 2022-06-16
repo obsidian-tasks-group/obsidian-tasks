@@ -7,7 +7,8 @@ import type { TaskBuilder } from './TaskBuilder';
  * Convenience function to test a Filter on a single Task
  *
  * @param filter - a FilterOrErrorMessage, which should have a valid Filter.
- * @param taskBuilder - a TaskBuilder, populated with the require values for the test.
+ * @param taskBuilder - a TaskBuilder, populated with the required values for the test. For example:
+ *                          new TaskBuilder().startDate('2022-04-15')
  * @param expected true if the task should match the filter, and false otherwise.
  */
 export function testFilter(
