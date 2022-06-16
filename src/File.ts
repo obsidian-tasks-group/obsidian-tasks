@@ -1,6 +1,6 @@
 import { ListItemCache, MetadataCache, TFile, Vault } from 'obsidian';
 
-import { getSettings } from './Settings';
+import { getSettings } from './config/Settings';
 import type { Task } from './Task';
 
 let metadataCache: MetadataCache | undefined;

@@ -1,0 +1,101 @@
+[
+  {
+    "text": "Tasks",
+    "level": "h1",
+    "class": "",
+    "open": true,
+    "notice": {
+      "class": "",
+      "text": "Task management for Obsidian",
+      "html": ""
+    },
+    "settings": []
+  },
+  {
+    "text": "Task Settings",
+    "level": "h2",
+    "class": "",
+    "open": true,
+    "notice": {
+      "class": "tasks-setting-important",
+      "text": "Changing any settings requires a restart of obsidian.",
+      "html": null
+    },
+    "settings": [
+      {
+        "name": "Global task filter",
+        "description": "The global filter will be applied to all checklist items.",
+        "type": "text",
+        "placeholder": "Enter a tag like #task here to limit queries to only tasks with this tag.",
+        "settingName": "globalFilter",
+        "featureFlag": "",
+        "notice": {
+          "class": "setting-item-description",
+          "text": "The global filter will be applied to all checklist items to filter out 'non-task' checklist items.\n A checklist item must include the specified string in its description in order to be considered a task.\n For example, if you set the global filter to '#task', the Tasks plugin will only handle checklist items tagged with '#task'.\n Other checklist items will remain normal checklist items and not appear in queries or get a done date set.\n Leave empty if you want all checklist items from your vault to be tasks managed by this plugin.",
+          "html": null
+        }
+      },
+      {
+        "name": "Remove global filter from description",
+        "description": "Enabling this removes the string that you set as global filter from the task description when displaying a task.",
+        "type": "checkbox",
+        "placeholder": false,
+        "settingName": "removeGlobalFilter",
+        "featureFlag": "",
+        "notice": null
+      },
+      {
+        "name": "Set done date on every completed task",
+        "description": "Enabling this will add a timestamp ✅ YYYY-MM-DD at the end when a task is toggled to done.",
+        "type": "checkbox",
+        "placeholder": true,
+        "settingName": "setDoneDate",
+        "featureFlag": "",
+        "notice": null
+      },
+      {
+        "name": "Append global filter",
+        "description": "When this is enabled the global filter if specified will be appended to the task by default. Existing tasks will be updated on any edits.",
+        "type": "checkbox",
+        "placeholder": false,
+        "settingName": "appendGlobalFilter",
+        "featureFlag": "APPEND_GLOBAL_FILTER",
+        "notice": null
+      }
+    ]
+  },
+  {
+    "text": "Optional or in development features",
+    "level": "h3",
+    "class": "",
+    "open": false,
+    "notice": {
+      "class": "",
+      "text": "The following features are in development or optional, stability is indicated next to the feature. While we try to make sure there is good test coverage and validation for every change there is always a chance of bugs.",
+      "html": ""
+    },
+    "settings": [
+      {
+        "name": "",
+        "description": "",
+        "type": "function",
+        "placeholder": "",
+        "settingName": "insertFeatureFlags",
+        "featureFlag": "",
+        "notice": null
+      }
+    ]
+  },
+  {
+    "text": "Documentation and Support",
+    "level": "h3",
+    "class": "",
+    "open": true,
+    "notice": {
+      "class": "",
+      "text": "",
+      "html": "<p>If you need help with this plugin, please check out the <a href='https://github.com/obsidian-tasks-group/obsidian-tasks/'>Tasks documentation</a>. Click on issues below if you find something that the documentation does not explain or if you find something now working as expected.</p> <a href='https://github.com/obsidian-tasks-group/obsidian-tasks/issues'><img alt='GitHub issues' src='https://img.shields.io/github/issues/obsidian-tasks-group/obsidian-tasks?style=for-the-badge'></a> <img alt='GitHub package.json version' src='https://img.shields.io/github/package-json/v/obsidian-tasks-group/obsidian-tasks?style=for-the-badge'> <img alt='GitHub all releases' src='https://img.shields.io/github/downloads/obsidian-tasks-group/obsidian-tasks/total?style=for-the-badge'>"
+    },
+    "settings": []
+  }
+]

@@ -1,6 +1,5 @@
-import { getSettings } from 'Settings';
-
 import type { MarkdownPostProcessorContext, Plugin } from 'obsidian';
+import { getSettings } from './config/Settings';
 import { Task } from './Task';
 
 export class InlineRenderer {
