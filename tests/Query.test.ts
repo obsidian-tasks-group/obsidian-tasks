@@ -44,60 +44,7 @@ describe('Query parsing', () => {
             'no scheduled date',
             'no start date',
             'not done',
-
-            // TODO Test other kinds of instruction
-            // '# Comment lines are ignored',
-            // 'group by backlink',
-            // 'group by done',
-            // 'group by due',
-            // 'group by filename',
-            // 'group by folder',
-            // 'group by heading',
-            // 'group by path',
-            // 'group by scheduled',
-            // 'group by start',
-            // 'group by status',
-
-            // 'hide backlink',
-            // 'hide done date',
-            // 'hide due date',
-            // 'hide edit button',
-            // 'hide priority',
-            // 'hide recurrence rule',
-            // 'hide scheduled date',
-            // 'hide start date',
-            // 'hide task count',
-
-            // 'limit 42',
-            // 'limit to 42 tasks',
-
-            // 'short mode',
-            // 'short',
-
-            // 'sort by description reverse',
-            // 'sort by description',
-            // 'sort by done reverse',
-            // 'sort by done',
-            // 'sort by due reverse',
-            // 'sort by due',
-            // 'sort by path reverse',
-            // 'sort by path',
-            // 'sort by priority reverse',
-            // 'sort by priority',
-            // 'sort by scheduled reverse',
-            // 'sort by scheduled',
-            // 'sort by start reverse',
-            // 'sort by start',
-            // 'sort by status reverse',
-            // 'sort by status',
-            // 'sort by tag 5',
-            // 'sort by tag reverse 3',
-            // 'sort by tag reverse',
-            // 'sort by tag',
-            // 'sort by urgency reverse',
-            // 'sort by urgency',
         ];
-
         test.concurrent.each<string>(filters)('recognises %j', (filter) => {
             // Arrange
             const query = new Query({ source: filter });
@@ -108,6 +55,58 @@ describe('Query parsing', () => {
             expect(query.filters[0]).toBeDefined();
         });
     });
+
+    // TODO Test other kinds of instruction
+    // '# Comment lines are ignored',
+    // 'group by backlink',
+    // 'group by done',
+    // 'group by due',
+    // 'group by filename',
+    // 'group by folder',
+    // 'group by heading',
+    // 'group by path',
+    // 'group by scheduled',
+    // 'group by start',
+    // 'group by status',
+
+    // 'hide backlink',
+    // 'hide done date',
+    // 'hide due date',
+    // 'hide edit button',
+    // 'hide priority',
+    // 'hide recurrence rule',
+    // 'hide scheduled date',
+    // 'hide start date',
+    // 'hide task count',
+
+    // 'limit 42',
+    // 'limit to 42 tasks',
+
+    // 'short mode',
+    // 'short',
+
+    // 'sort by description reverse',
+    // 'sort by description',
+    // 'sort by done reverse',
+    // 'sort by done',
+    // 'sort by due reverse',
+    // 'sort by due',
+    // 'sort by path reverse',
+    // 'sort by path',
+    // 'sort by priority reverse',
+    // 'sort by priority',
+    // 'sort by scheduled reverse',
+    // 'sort by scheduled',
+    // 'sort by start reverse',
+    // 'sort by start',
+    // 'sort by status reverse',
+    // 'sort by status',
+    // 'sort by tag 5',
+    // 'sort by tag reverse 3',
+    // 'sort by tag reverse',
+    // 'sort by tag',
+    // 'sort by urgency reverse',
+    // 'sort by urgency',
 });
 
 describe('Query', () => {
