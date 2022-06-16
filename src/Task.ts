@@ -3,8 +3,13 @@ import { Component, MarkdownRenderer } from 'obsidian';
 import { replaceTaskWithTasks } from './File';
 import { LayoutOptions } from './LayoutOptions';
 import { Recurrence } from './Recurrence';
-import { getSettings } from './Settings';
+import {
+    getGeneralSetting,
+    getSettings,
+    isFeatureEnabled,
+} from './config/Settings';
 import { Urgency } from './Urgency';
+import { Feature } from './config/Feature';
 
 /**
  * Collection of status types supported by the plugin.
@@ -441,7 +446,10 @@ export class Task {
     }
 
     /**
-     *
+     * This is called to render the task in markdown and as part of
+     * the query results. This complicates some of the logic and needs
+     * to be split out long term so render is not part of the base Task
+     * and markdown structure.
      *
      * @param {LayoutOptions} [layoutOptions]
      * @return {*}  {string}
@@ -449,7 +457,21 @@ export class Task {
      */
     public toString(layoutOptions?: LayoutOptions): string {
         layoutOptions = layoutOptions ?? new LayoutOptions();
-        let taskString = this.description;
+        let taskString = this.description.trim();
+
+        const globalFilter = getGeneralSetting('globalFilter');
+
+        // New feature. Only enabled if user turns on the APPEND_GLOBAL_FILTER feature. Will
+        // append the filter rather than forcing it to the front.
+        if (
+            isFeatureEnabled(Feature.APPEND_GLOBAL_FILTER.internalName) &&
+            getGeneralSetting('appendGlobalFilter')
+        ) {
+            taskString = `${taskString} ${globalFilter}`.trim();
+        } else {
+            // Default is to have filter at front.
+            taskString = `${globalFilter} ${taskString}`.trim();
+        }
 
         if (!layoutOptions.hidePriority) {
             let priority: string = '';

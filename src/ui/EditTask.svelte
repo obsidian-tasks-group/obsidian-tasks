@@ -2,7 +2,7 @@
     import chrono from 'chrono-node';
     import { onMount } from 'svelte';
     import { Recurrence } from '../Recurrence';
-    import { getSettings } from '../Settings';
+    import { getSettings } from '../config/Settings';
     import { Priority, Status, Task } from '../Task';
     import { doAutocomplete } from '../DateAbbreviations';
 
@@ -37,8 +37,8 @@
     let parsedDone: string = '';
 
     // 'weekend' abbreviation ommitted due to lack of space.
-    let datePlaceholder = "Try 'Monday' or 'tomorrow', or [td|tm|yd|tw|nw|we] then space.";
-
+    let datePlaceholder =
+        "Try 'Monday' or 'tomorrow', or [td|tm|yd|tw|nw|we] then space.";
 
     function parseDate(
         type: 'start' | 'scheduled' | 'due' | 'done',
@@ -135,11 +135,7 @@
     });
 
     const _onSubmit = () => {
-        const { globalFilter } = getSettings();
         let description = editableTask.description.trim();
-        if (!description.includes(globalFilter)) {
-            description = globalFilter + ' ' + description;
-        }
 
         let startDate: moment.Moment | null = null;
         const parsedStartDate = chrono.parseDate(

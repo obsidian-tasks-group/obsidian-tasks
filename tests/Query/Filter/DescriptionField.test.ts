@@ -1,5 +1,5 @@
 import { DescriptionField } from '../../../src/Query/Filter/DescriptionField';
-import { getSettings, updateSettings } from '../../../src/Settings';
+import { getSettings, updateSettings } from '../../../src/config/Settings';
 import { testTaskFilter } from '../../TestingTools/FilterTestHelpers';
 import { fromLine } from '../../TestHelpers';
 import type { FilterOrErrorMessage } from '../../../src/Query/Filter/Filter';
