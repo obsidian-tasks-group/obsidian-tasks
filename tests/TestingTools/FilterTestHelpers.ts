@@ -16,7 +16,7 @@ export function testFilter(
     expected: boolean,
 ) {
     const task = taskBuilder.build();
-    testTaskFilter2(filter, task, expected);
+    testTaskFilter(filter, task, expected);
 }
 
 /**
@@ -26,7 +26,7 @@ export function testFilter(
  * @param task - the Task to filter.
  * @param expected true if the task should match the filter, and false otherwise.
  */
-export function testTaskFilter2(
+export function testTaskFilter(
     filter: FilterOrErrorMessage,
     task: Task,
     expected: boolean,
