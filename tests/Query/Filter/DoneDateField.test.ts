@@ -5,7 +5,7 @@ import moment from 'moment';
 import { DoneDateField } from '../../../src/Query/Filter/DoneDateField';
 import type { FilterOrErrorMessage } from '../../../src/Query/Filter/Filter';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
-import { testTaskFilter } from '../../TestingTools/FilterTestHelpers';
+import { testFilter } from '../../TestingTools/FilterTestHelpers';
 
 window.moment = moment;
 
@@ -15,7 +15,7 @@ function testTaskFilterForTaskWithDoneDate(
     expected: boolean,
 ) {
     const builder = new TaskBuilder();
-    testTaskFilter(filter, builder.doneDate(doneDate).build(), expected);
+    testFilter(filter, builder.doneDate(doneDate), expected);
 }
 
 describe('done date', () => {

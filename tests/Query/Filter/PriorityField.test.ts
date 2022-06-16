@@ -1,6 +1,6 @@
 import { Priority } from '../../../src/Task';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
-import { testTaskFilter } from '../../TestingTools/FilterTestHelpers';
+import { testFilter } from '../../TestingTools/FilterTestHelpers';
 import { PriorityField } from '../../../src/Query/Filter/PriorityField';
 
 function testTaskFilterForTaskWithPriority(
@@ -12,7 +12,7 @@ function testTaskFilterForTaskWithPriority(
     const filterOrError = new PriorityField().createFilterOrErrorMessage(
         filter,
     );
-    testTaskFilter(filterOrError, builder.priority(priority).build(), expected);
+    testFilter(filterOrError, builder.priority(priority), expected);
 }
 
 describe('priority is', () => {
