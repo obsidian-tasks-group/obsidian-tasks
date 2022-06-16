@@ -91,18 +91,70 @@ describe('Query parsing', () => {
         });
     });
 
+    describe('should recognise sort instructions', () => {
+        // In alphabetical order, please
+        const filters = [
+            'sort by description reverse',
+            'sort by description',
+            'sort by done reverse',
+            'sort by done',
+            'sort by due reverse',
+            'sort by due',
+            'sort by path reverse',
+            'sort by path',
+            'sort by priority reverse',
+            'sort by priority',
+            'sort by scheduled reverse',
+            'sort by scheduled',
+            'sort by start reverse',
+            'sort by start',
+            'sort by status reverse',
+            'sort by status',
+            'sort by tag 5',
+            'sort by tag reverse 3',
+            'sort by tag reverse',
+            'sort by tag',
+            'sort by urgency reverse',
+            'sort by urgency',
+        ];
+        test.concurrent.each<string>(filters)('recognises %j', (filter) => {
+            // Arrange
+            const query = new Query({ source: filter });
+
+            // Assert
+            expect(query.error).toBeUndefined();
+            expect(query.sorting.length).toEqual(1);
+            expect(query.sorting[0]).toBeDefined();
+        });
+    });
+
+    describe('should recognise group instructions', () => {
+        // In alphabetical order, please
+        const filters = [
+            'group by backlink',
+            'group by done',
+            'group by due',
+            'group by filename',
+            'group by folder',
+            'group by heading',
+            'group by path',
+            'group by scheduled',
+            'group by start',
+            'group by status',
+        ];
+        test.concurrent.each<string>(filters)('recognises %j', (filter) => {
+            // Arrange
+            const query = new Query({ source: filter });
+
+            // Assert
+            expect(query.error).toBeUndefined();
+            expect(query.grouping.length).toEqual(1);
+            expect(query.grouping[0]).toBeDefined();
+        });
+    });
+
     // TODO Test other kinds of instruction
     // '# Comment lines are ignored',
-    // 'group by backlink',
-    // 'group by done',
-    // 'group by due',
-    // 'group by filename',
-    // 'group by folder',
-    // 'group by heading',
-    // 'group by path',
-    // 'group by scheduled',
-    // 'group by start',
-    // 'group by status',
 
     // 'hide backlink',
     // 'hide done date',
@@ -119,29 +171,6 @@ describe('Query parsing', () => {
 
     // 'short mode',
     // 'short',
-
-    // 'sort by description reverse',
-    // 'sort by description',
-    // 'sort by done reverse',
-    // 'sort by done',
-    // 'sort by due reverse',
-    // 'sort by due',
-    // 'sort by path reverse',
-    // 'sort by path',
-    // 'sort by priority reverse',
-    // 'sort by priority',
-    // 'sort by scheduled reverse',
-    // 'sort by scheduled',
-    // 'sort by start reverse',
-    // 'sort by start',
-    // 'sort by status reverse',
-    // 'sort by status',
-    // 'sort by tag 5',
-    // 'sort by tag reverse 3',
-    // 'sort by tag reverse',
-    // 'sort by tag',
-    // 'sort by urgency reverse',
-    // 'sort by urgency',
 });
 
 describe('Query', () => {
