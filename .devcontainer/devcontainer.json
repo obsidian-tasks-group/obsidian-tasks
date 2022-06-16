@@ -1,0 +1,64 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
+// https://github.com/microsoft/vscode-dev-containers/tree/v0.234.0/containers/typescript-node
+{
+    "name": "Node.js & TypeScript",
+    "build": {
+      "dockerfile": "Dockerfile",
+      // Update 'VARIANT' to pick a Node version: 18, 16, 14.
+      // Append -bullseye or -buster to pin to an OS version.
+      // Use -bullseye variants on local on arm64/Apple Silicon.
+      "args": {
+        "VARIANT": "16-bullseye"
+      }
+    },
+    "postCreateCommand": "pwsh scripts/install-dev-tools.ps1",
+    // Set *default* container specific settings.json values on container create.
+    "settings": {},
+    // Add the IDs of extensions you want installed when the container is created.
+    "extensions": [
+      "aaron-bond.better-comments",
+      "adam-bender.commit-message-editor",
+      "aljazsim.tsco",
+      "cmstead.js-codeformer",
+      "DavidAnson.vscode-markdownlint",
+      "dbaeumer.vscode-eslint",
+      "donjayamanne.githistory",
+      "eamodio.gitlens",
+      "EditorConfig.EditorConfig",
+      "esbenp.prettier-vscode",
+      "GitHub.codespaces",
+      "GitHub.copilot",
+      "GitHub.remotehub",
+      "GitHub.vscode-pull-request-github",
+      "kisstkondoros.vscode-codemetrics",
+      "lbragile.line-width-indicator",
+      "mhutchie.git-graph",
+      "ms-vscode.powershell",
+      "ms-vscode.test-adapter-converter",
+      "oouo-diogo-perdigao.docthis",
+      "Orta.vscode-jest",
+      "RafaelMartinez.svelte-preview",
+      "redhat.vscode-commons",
+      "redhat.vscode-xml",
+      "redhat.vscode-yaml",
+      "richie5um2.vscode-sort-json",
+      "ryanluker.vscode-coverage-gutters",
+      "stackbreak.comment-divider",
+      "stephen-riley.regexworkbench",
+      "streetsidesoftware.code-spell-checker",
+      "svelte.svelte-vscode",
+      "Tyriar.sort-lines",
+      "vscode-icons-team.vscode-icons",
+      "vsls-contrib.gistfs",
+      "waderyan.gitblame",
+      "yzhang.markdown-all-in-one"
+    ],
+    // Use 'forwardPorts' to make a list of ports inside the container available locally.
+    // "forwardPorts": [],
+    // Use 'postCreateCommand' to run commands after the container is created.
+    // "postCreateCommand": "yarn install",
+    // Comment out to connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
+    "remoteUser": "node",
+    "features": {}
+  }
+  
