@@ -9,11 +9,7 @@ function testTaskFilterForHeading(
     expected: boolean,
 ) {
     const builder = new TaskBuilder();
-    testTaskFilter(
-        filter,
-        builder.precedingHeader(precedingHeader).build(),
-        expected,
-    );
+    testTaskFilter(filter, builder.precedingHeader(precedingHeader), expected);
 }
 
 describe('heading', () => {

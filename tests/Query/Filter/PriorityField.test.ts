@@ -12,7 +12,7 @@ function testTaskFilterForTaskWithPriority(
     const filterOrError = new PriorityField().createFilterOrErrorMessage(
         filter,
     );
-    testTaskFilter(filterOrError, builder.priority(priority).build(), expected);
+    testTaskFilter(filterOrError, builder.priority(priority), expected);
 }
 
 describe('priority is', () => {

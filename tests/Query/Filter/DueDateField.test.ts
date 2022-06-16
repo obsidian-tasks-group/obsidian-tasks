@@ -15,7 +15,7 @@ function testTaskFilterForTaskWithDueDate(
     expected: boolean,
 ) {
     const builder = new TaskBuilder();
-    testTaskFilter(filter, builder.dueDate(dueDate).build(), expected);
+    testTaskFilter(filter, builder.dueDate(dueDate), expected);
 }
 
 describe('due date', () => {

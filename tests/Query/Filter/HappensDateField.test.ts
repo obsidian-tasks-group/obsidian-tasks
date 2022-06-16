@@ -16,31 +16,19 @@ describe('happens date', () => {
         );
 
         // Act, Assert
-        testTaskFilter(filter, new TaskBuilder().dueDate(null).build(), false);
+        testTaskFilter(filter, new TaskBuilder().dueDate(null), false);
 
         // scheduled, start and due all contribute to happens:
         testTaskFilter(
             filter,
-            new TaskBuilder().scheduledDate('2022-04-15').build(),
+            new TaskBuilder().scheduledDate('2022-04-15'),
             true,
         );
-        testTaskFilter(
-            filter,
-            new TaskBuilder().startDate('2022-04-15').build(),
-            true,
-        );
-        testTaskFilter(
-            filter,
-            new TaskBuilder().dueDate('2022-04-15').build(),
-            true,
-        );
+        testTaskFilter(filter, new TaskBuilder().startDate('2022-04-15'), true);
+        testTaskFilter(filter, new TaskBuilder().dueDate('2022-04-15'), true);
 
         // Done date is ignored by happens
-        testTaskFilter(
-            filter,
-            new TaskBuilder().doneDate('2022-04-15').build(),
-            false,
-        );
+        testTaskFilter(filter, new TaskBuilder().doneDate('2022-04-15'), false);
     });
 
     it('by happens date absence', () => {
@@ -50,30 +38,22 @@ describe('happens date', () => {
         );
 
         // Act, Assert
-        testTaskFilter(filter, new TaskBuilder().dueDate(null).build(), true);
+        testTaskFilter(filter, new TaskBuilder().dueDate(null), true);
 
         // scheduled, start and due all contribute to happens:
         testTaskFilter(
             filter,
-            new TaskBuilder().scheduledDate('2022-04-15').build(),
+            new TaskBuilder().scheduledDate('2022-04-15'),
             false,
         );
         testTaskFilter(
             filter,
-            new TaskBuilder().startDate('2022-04-15').build(),
+            new TaskBuilder().startDate('2022-04-15'),
             false,
         );
-        testTaskFilter(
-            filter,
-            new TaskBuilder().dueDate('2022-04-15').build(),
-            false,
-        );
+        testTaskFilter(filter, new TaskBuilder().dueDate('2022-04-15'), false);
 
         // Done date is ignored by happens
-        testTaskFilter(
-            filter,
-            new TaskBuilder().doneDate('2022-04-15').build(),
-            true,
-        );
+        testTaskFilter(filter, new TaskBuilder().doneDate('2022-04-15'), true);
     });
 });

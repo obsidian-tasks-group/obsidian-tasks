@@ -1,6 +1,23 @@
 import type { FilterOrErrorMessage } from '../../src/Query/Filter/Filter';
 import { Task } from '../../src/Task';
 import { Query } from '../../src/Query';
+import type { TaskBuilder } from './TaskBuilder';
+
+/**
+ * Convenience function to test a Filter on a single Task
+ *
+ * @param filter - a FilterOrErrorMessage, which should have a valid Filter.
+ * @param taskBuilder - a TaskBuilder, populated with the require values for the test.
+ * @param expected true if the task should match the filter, and false otherwise.
+ */
+export function testTaskFilter(
+    filter: FilterOrErrorMessage,
+    taskBuilder: TaskBuilder,
+    expected: boolean,
+) {
+    const task = taskBuilder.build();
+    testTaskFilter2(filter, task, expected);
+}
 
 /**
  * Convenience function to test a Filter on a single Task
@@ -9,7 +26,7 @@ import { Query } from '../../src/Query';
  * @param task - the Task to filter.
  * @param expected true if the task should match the filter, and false otherwise.
  */
-export function testTaskFilter(
+export function testTaskFilter2(
     filter: FilterOrErrorMessage,
     task: Task,
     expected: boolean,

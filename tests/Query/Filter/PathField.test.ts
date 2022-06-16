@@ -9,7 +9,7 @@ function testTaskFilterForTaskWithPath(
     expected: boolean,
 ) {
     const builder = new TaskBuilder();
-    testTaskFilter(filter, builder.path(path).build(), expected);
+    testTaskFilter(filter, builder.path(path), expected);
 }
 
 describe('path', () => {

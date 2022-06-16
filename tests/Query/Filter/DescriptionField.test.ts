@@ -1,6 +1,6 @@
 import { DescriptionField } from '../../../src/Query/Filter/DescriptionField';
 import { getSettings, updateSettings } from '../../../src/Settings';
-import { testTaskFilter } from '../../TestingTools/FilterTestHelpers';
+import { testTaskFilter2 } from '../../TestingTools/FilterTestHelpers';
 import { fromLine } from '../../TestHelpers';
 import type { FilterOrErrorMessage } from '../../../src/Query/Filter/Filter';
 
@@ -12,7 +12,7 @@ function testDescriptionFilter(
     const task = fromLine({
         line,
     });
-    testTaskFilter(filter, task, expected);
+    testTaskFilter2(filter, task, expected);
 }
 
 describe('description', () => {

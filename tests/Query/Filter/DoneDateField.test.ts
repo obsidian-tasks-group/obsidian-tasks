@@ -15,7 +15,7 @@ function testTaskFilterForTaskWithDoneDate(
     expected: boolean,
 ) {
     const builder = new TaskBuilder();
-    testTaskFilter(filter, builder.doneDate(doneDate).build(), expected);
+    testTaskFilter(filter, builder.doneDate(doneDate), expected);
 }
 
 describe('done date', () => {
