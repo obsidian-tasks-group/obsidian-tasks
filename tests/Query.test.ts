@@ -153,24 +153,32 @@ describe('Query parsing', () => {
         });
     });
 
-    // TODO Test other kinds of instruction
-    // '# Comment lines are ignored',
+    describe('should recognise other instructions', () => {
+        // In alphabetical order, please
+        const filters = [
+            '# Comment lines are ignored',
+            'hide backlink',
+            'hide done date',
+            'hide due date',
+            'hide edit button',
+            'hide priority',
+            'hide recurrence rule',
+            'hide scheduled date',
+            'hide start date',
+            'hide task count',
+            'limit 42',
+            'limit to 42 tasks',
+            'short mode',
+            'short',
+        ];
+        test.concurrent.each<string>(filters)('recognises %j', (filter) => {
+            // Arrange
+            const query = new Query({ source: filter });
 
-    // 'hide backlink',
-    // 'hide done date',
-    // 'hide due date',
-    // 'hide edit button',
-    // 'hide priority',
-    // 'hide recurrence rule',
-    // 'hide scheduled date',
-    // 'hide start date',
-    // 'hide task count',
-
-    // 'limit 42',
-    // 'limit to 42 tasks',
-
-    // 'short mode',
-    // 'short',
+            // Assert
+            expect(query.error).toBeUndefined();
+        });
+    });
 });
 
 describe('Query', () => {
