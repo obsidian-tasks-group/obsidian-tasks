@@ -12,7 +12,7 @@ import {
 
 window.moment = moment;
 
-describe('Query', () => {
+describe('Query parsing', () => {
     /**
      * As more and more filters are added via the Field class, and tested
      * outside of this test file, there is the chance that someone thinks that
@@ -108,7 +108,9 @@ describe('Query', () => {
             expect(query.filters[0]).toBeDefined();
         });
     });
+});
 
+describe('Query', () => {
     describe('filtering', () => {
         it('filters paths case insensitive', () => {
             // Arrange
