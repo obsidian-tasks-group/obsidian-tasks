@@ -19,6 +19,9 @@ function testRecurringFilter(
 }
 
 describe('recurring', () => {
+    const non_recurring = '- [ ] non-recurring task';
+    const recurring = '- [ ] recurring 🔁 every day 📅 2022-06-17';
+
     it('is recurring', () => {
         // Arrange
         const filter = new RecurringField().createFilterOrErrorMessage(
@@ -26,12 +29,8 @@ describe('recurring', () => {
         );
 
         // Assert
-        testRecurringFilter(filter, '- [ ] non-recurring task', false);
-        testRecurringFilter(
-            filter,
-            '- [ ] recurring 🔁 every day 📅 2022-06-17',
-            true,
-        );
+        testRecurringFilter(filter, non_recurring, false);
+        testRecurringFilter(filter, recurring, true);
     });
 
     it('is not recurring', () => {
@@ -41,11 +40,7 @@ describe('recurring', () => {
         );
 
         // Assert
-        testRecurringFilter(filter, '- [ ] non-recurring task', true);
-        testRecurringFilter(
-            filter,
-            '- [ ] recurring 🔁 every day 📅 2022-06-17',
-            false,
-        );
+        testRecurringFilter(filter, non_recurring, true);
+        testRecurringFilter(filter, recurring, false);
     });
 });
