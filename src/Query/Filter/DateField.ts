@@ -10,8 +10,32 @@ import { FilterOrErrorMessage } from './Filter';
  * value, such as the done date.
  */
 export abstract class DateField extends Field {
+    private readonly instructionForFieldPresence = `has ${this.fieldName()} date`;
+    private readonly instructionForFieldAbsence = `no ${this.fieldName()} date`;
+
+    public canCreateFilterForLine(line: string): boolean {
+        if (line === this.instructionForFieldPresence) {
+            return true;
+        }
+        if (line === this.instructionForFieldAbsence) {
+            return true;
+        }
+        return super.canCreateFilterForLine(line);
+    }
+
     public createFilterOrErrorMessage(line: string): FilterOrErrorMessage {
         const result = new FilterOrErrorMessage();
+
+        if (line === this.instructionForFieldPresence) {
+            result.filter = (task: Task) => this.date(task) !== null;
+            return result;
+        }
+
+        if (line === this.instructionForFieldAbsence) {
+            result.filter = (task: Task) => this.date(task) === null;
+            return result;
+        }
+
         const match = line.match(this.filterRegexp());
         if (match !== null) {
             const filterDate = DateParser.parseDate(match[2]);
