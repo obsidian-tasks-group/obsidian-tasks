@@ -41,8 +41,8 @@ export class HappensDateField extends Field {
         }
 
         const happensMatch = HappensDateField.getMatch(
-            line,
             this.filterRegexp(),
+            line,
         );
         if (happensMatch !== null) {
             const filterDate = DateParser.parseDate(happensMatch[2]);
