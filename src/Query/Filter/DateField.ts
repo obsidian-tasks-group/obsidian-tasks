@@ -36,7 +36,7 @@ export abstract class DateField extends Field {
             return result;
         }
 
-        const match = line.match(this.filterRegexp());
+        const match = Field.getMatch(this.filterRegexp(), line);
         if (match !== null) {
             const filterDate = DateParser.parseDate(match[2]);
             if (!filterDate.isValid()) {

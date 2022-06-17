@@ -40,7 +40,7 @@ export class HappensDateField extends Field {
             return result;
         }
 
-        const happensMatch = line.match(this.filterRegexp());
+        const happensMatch = Field.getMatch(this.filterRegexp(), line);
         if (happensMatch !== null) {
             const filterDate = DateParser.parseDate(happensMatch[2]);
             if (!filterDate.isValid()) {
