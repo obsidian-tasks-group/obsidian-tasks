@@ -1,4 +1,4 @@
-import { getSettings, updateSettings } from '../../../src/Settings';
+import { getSettings, updateSettings } from '../../../src/config/Settings';
 import type { FilteringCase } from '../../TestingTools/FilterTestHelpers';
 import { shouldSupportFiltering } from '../../TestingTools/FilterTestHelpers';
 
