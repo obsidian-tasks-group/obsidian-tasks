@@ -56,7 +56,6 @@ describe('Query parsing', () => {
             'no scheduled date',
             'no start date',
             'not done',
-            'not done',
             'path does not include some/path',
             'path includes some/path',
             'priority is above none',
