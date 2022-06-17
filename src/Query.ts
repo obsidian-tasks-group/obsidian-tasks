@@ -58,15 +58,6 @@ export class Query implements IQuery {
     private _sorting: Sorting[] = [];
     private _grouping: Grouping[] = [];
 
-    private readonly noStartString = 'no start date';
-    private readonly hasStartString = 'has start date';
-
-    private readonly noScheduledString = 'no scheduled date';
-    private readonly hasScheduledString = 'has scheduled date';
-
-    private readonly noDueString = 'no due date';
-    private readonly hasDueString = 'has due date';
-
     private readonly doneString = 'done';
     private readonly notDoneString = 'not done';
 
@@ -117,28 +108,6 @@ export class Query implements IQuery {
                         break;
                     case line === this.excludeSubItemsString:
                         this._filters.push((task) => task.indentation === '');
-                        break;
-                    case line === this.noStartString:
-                        this._filters.push((task) => task.startDate === null);
-                        break;
-                    case line === this.noScheduledString:
-                        this._filters.push(
-                            (task) => task.scheduledDate === null,
-                        );
-                        break;
-                    case line === this.noDueString:
-                        this._filters.push((task) => task.dueDate === null);
-                        break;
-                    case line === this.hasStartString:
-                        this._filters.push((task) => task.startDate !== null);
-                        break;
-                    case line === this.hasScheduledString:
-                        this._filters.push(
-                            (task) => task.scheduledDate !== null,
-                        );
-                        break;
-                    case line === this.hasDueString:
-                        this._filters.push((task) => task.dueDate !== null);
                         break;
                     case this.shortModeRegexp.test(line):
                         this._layoutOptions.shortMode = true;
