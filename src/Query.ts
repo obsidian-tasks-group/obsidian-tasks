@@ -3,7 +3,7 @@ import type { TaskGroups } from './Query/TaskGroups';
 
 import { LayoutOptions } from './LayoutOptions';
 import { Sort } from './Sort';
-import { Status, Task } from './Task';
+import type { Task } from './Task';
 import type { IQuery } from './IQuery';
 
 import type { Field } from './Query/Filter/Field';
@@ -16,6 +16,7 @@ import { PriorityField } from './Query/Filter/PriorityField';
 import { ScheduledDateField } from './Query/Filter/ScheduledDateField';
 import { StartDateField } from './Query/Filter/StartDateField';
 import { HappensDateField } from './Query/Filter/HappensDateField';
+import { StatusField } from './Query/Filter/StatusField';
 import { TagsField } from './Query/Filter/TagsField';
 
 export type SortingProperty =
@@ -58,9 +59,6 @@ export class Query implements IQuery {
     private _sorting: Sorting[] = [];
     private _grouping: Grouping[] = [];
 
-    private readonly doneString = 'done';
-    private readonly notDoneString = 'not done';
-
     // If a tag is specified the user can also add a number to specify
     // which one to sort by if there is more than one.
     private readonly sortByRegexp =
@@ -90,16 +88,6 @@ export class Query implements IQuery {
                 switch (true) {
                     case line === '':
                         break;
-                    case line === this.doneString:
-                        this._filters.push(
-                            (task) => task.status === Status.Done,
-                        );
-                        break;
-                    case line === this.notDoneString:
-                        this._filters.push(
-                            (task) => task.status !== Status.Done,
-                        );
-                        break;
                     case line === this.recurringString:
                         this._filters.push((task) => task.recurrence !== null);
                         break;
@@ -111,6 +99,8 @@ export class Query implements IQuery {
                         break;
                     case this.shortModeRegexp.test(line):
                         this._layoutOptions.shortMode = true;
+                        break;
+                    case this.parseFilter(line, new StatusField()):
                         break;
                     case this.parseFilter(line, new PriorityField()):
                         break;
