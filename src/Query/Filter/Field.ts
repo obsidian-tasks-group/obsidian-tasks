@@ -22,7 +22,7 @@ export abstract class Field {
      * @param line - A line from a ```tasks``` block.
      */
     public canCreateFilterForLine(line: string): boolean {
-        return this.filterRegexp().test(line);
+        return Field.lineMatchesFilter(this.filterRegexp, line);
     }
 
     /**
@@ -33,6 +33,19 @@ export abstract class Field {
     public abstract createFilterOrErrorMessage(
         line: string,
     ): FilterOrErrorMessage;
+
+    /**
+     * Does the given line match the given filter?
+     * @param filterRegexp - A RegExp regular expression, that specifies one query instruction.
+     * @param line - A line from a tasks code block query.
+     * @protected
+     */
+    protected static lineMatchesFilter(
+        filterRegexp: () => RegExp,
+        line: string,
+    ): boolean {
+        return filterRegexp().test(line);
+    }
 
     /**
      * Return a regular expression that will match a correctly-formed
