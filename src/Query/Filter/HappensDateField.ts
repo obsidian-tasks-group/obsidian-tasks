@@ -75,13 +75,6 @@ export class HappensDateField extends Field {
         return result;
     }
 
-    private static getMatch(
-        line: string,
-        filterRegexp: RegExp,
-    ): RegExpMatchArray | null {
-        return line.match(filterRegexp);
-    }
-
     protected filterRegexp(): RegExp {
         return HappensDateField.happensRegexp;
     }

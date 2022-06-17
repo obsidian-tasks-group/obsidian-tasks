@@ -48,6 +48,19 @@ export abstract class Field {
     }
 
     /**
+     * Return the match for the given filter, or null if it does not match
+     * @param line - A line from a tasks code block query.
+     * @param filterRegexp - A RegExp regular expression, that specifies one query instruction.
+     * @protected
+     */
+    protected static getMatch(
+        line: string,
+        filterRegexp: RegExp,
+    ): RegExpMatchArray | null {
+        return line.match(filterRegexp);
+    }
+
+    /**
      * Return a regular expression that will match a correctly-formed
      * instruction line for filtering Tasks by inspecting the value of this field.
      * @protected
