@@ -40,7 +40,10 @@ export class HappensDateField extends Field {
             return result;
         }
 
-        const happensMatch = line.match(this.filterRegexp());
+        const happensMatch = HappensDateField.getMatch(
+            line,
+            this.filterRegexp(),
+        );
         if (happensMatch !== null) {
             const filterDate = DateParser.parseDate(happensMatch[2]);
             if (!filterDate.isValid()) {
@@ -70,6 +73,13 @@ export class HappensDateField extends Field {
             result.error = 'do not understand query filter (happens date)';
         }
         return result;
+    }
+
+    private static getMatch(
+        line: string,
+        filterRegexp: RegExp,
+    ): RegExpMatchArray | null {
+        return line.match(filterRegexp);
     }
 
     protected filterRegexp(): RegExp {
