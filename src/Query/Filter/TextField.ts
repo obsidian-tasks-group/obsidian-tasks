@@ -10,7 +10,7 @@ import { FilterOrErrorMessage } from './Filter';
 export abstract class TextField extends Field {
     public createFilterOrErrorMessage(line: string): FilterOrErrorMessage {
         const result = new FilterOrErrorMessage();
-        const match = line.match(this.filterRegexp());
+        const match = Field.getMatch(this.filterRegexp(), line);
         if (match !== null) {
             const filterMethod = match[1];
             if (filterMethod === 'includes') {
