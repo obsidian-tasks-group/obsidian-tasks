@@ -19,13 +19,13 @@ describe('Query parsing', () => {
      * they have correctly added a new filter option, but forgotten to register
      * it in the Query class.
      *
-     * This test exists as a growing list of sample filters, and purely checks
+     * This set of tests exists as a growing list of sample filters, and purely checks
      * that the Query class parses them successfully.
      *
      * A failure here means that the Query constructor is missing code to recognise
-     * one of the supported queries/filters.
+     * one of the supported instructions.
      */
-    describe('should recognise supported filters', () => {
+    describe('should recognise every supported filter', () => {
         // In alphabetical order, please
         const filters = [
             'description does not include wibble',
@@ -91,7 +91,7 @@ describe('Query parsing', () => {
         });
     });
 
-    describe('should recognise sort instructions', () => {
+    describe('should recognise every sort instruction', () => {
         // In alphabetical order, please
         const filters = [
             'sort by description reverse',
@@ -128,7 +128,7 @@ describe('Query parsing', () => {
         });
     });
 
-    describe('should recognise group instructions', () => {
+    describe('should recognise every group instruction', () => {
         // In alphabetical order, please
         const filters = [
             'group by backlink',
@@ -153,7 +153,7 @@ describe('Query parsing', () => {
         });
     });
 
-    describe('should recognise other instructions', () => {
+    describe('should recognise every other instruction', () => {
         // In alphabetical order, please
         const filters = [
             '# Comment lines are ignored',
