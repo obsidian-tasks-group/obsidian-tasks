@@ -27,13 +27,11 @@ export abstract class DateField extends Field {
         const result = new FilterOrErrorMessage();
 
         if (line === this.instructionForFieldPresence) {
-            const result = new FilterOrErrorMessage();
             result.filter = (task: Task) => this.date(task) !== null;
             return result;
         }
 
         if (line === this.instructionForFieldAbsence) {
-            const result = new FilterOrErrorMessage();
             result.filter = (task: Task) => this.date(task) === null;
             return result;
         }
