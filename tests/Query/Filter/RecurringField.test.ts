@@ -21,6 +21,8 @@ function testRecurringFilter(
 describe('recurring', () => {
     const non_recurring = '- [ ] non-recurring task';
     const recurring = '- [ ] recurring 🔁 every day 📅 2022-06-17';
+    // Invalid recurrence rules are discarded, and treated as non-recurring
+    const invalid = '- [ ] recurring 🔁 invalid rule 📅 2022-06-17';
 
     it('is recurring', () => {
         // Arrange
@@ -31,6 +33,7 @@ describe('recurring', () => {
         // Assert
         testRecurringFilter(filter, non_recurring, false);
         testRecurringFilter(filter, recurring, true);
+        testRecurringFilter(filter, invalid, false);
     });
 
     it('is not recurring', () => {
@@ -42,5 +45,6 @@ describe('recurring', () => {
         // Assert
         testRecurringFilter(filter, non_recurring, true);
         testRecurringFilter(filter, recurring, false);
+        testRecurringFilter(filter, invalid, true);
     });
 });
