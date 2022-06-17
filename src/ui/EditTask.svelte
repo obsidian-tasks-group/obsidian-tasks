@@ -2,7 +2,7 @@
     import chrono from 'chrono-node';
     import { onMount } from 'svelte';
     import { Recurrence } from '../Recurrence';
-    import { getSettings } from '../Settings';
+    import { getSettings } from '../config/Settings';
     import { Priority, Status, Task } from '../Task';
     import { doAutocomplete } from '../DateAbbreviations';
 
