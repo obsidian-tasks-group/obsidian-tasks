@@ -73,9 +73,10 @@ export abstract class Field {
     /**
      * Return a regular expression that will match a correctly-formed
      * instruction line for filtering Tasks by inspecting the value of this field.
+     * Or null, if this field does not have a regex-based instruction.
      * @protected
      */
-    protected abstract filterRegexp(): RegExp;
+    protected abstract filterRegexp(): RegExp | null;
 
     /**
      * Return the name of this field, to be used in error messages.

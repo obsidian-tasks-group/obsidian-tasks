@@ -35,8 +35,7 @@ export class StatusField extends Field {
         return 'status';
     }
 
-    protected filterRegexp(): RegExp {
-        // TODO Consider throwing - or making the method optional???
-        return RegExp('NO SUCH FIELD');
+    protected filterRegexp(): RegExp | null {
+        return null;
     }
 }

@@ -43,7 +43,7 @@ export abstract class TextField extends Field {
             .includes(needle.toLocaleLowerCase());
     }
 
-    protected abstract filterRegexp(): RegExp;
+    protected abstract filterRegexp(): RegExp | null;
 
     protected abstract fieldName(): string;
 
