@@ -37,24 +37,37 @@ export abstract class Field {
     /**
      * Does the given line match the given filter?
      * @param filter - A RegExp regular expression, that specifies one query instruction.
+     *                 Or null, if the field does not support regexp-based filtering.
      * @param line - A line from a tasks code block query.
      * @protected
      */
-    protected static lineMatchesFilter(filter: RegExp, line: string): boolean {
-        return filter.test(line);
+    protected static lineMatchesFilter(
+        filter: RegExp | null,
+        line: string,
+    ): boolean {
+        if (filter) {
+            return filter.test(line);
+        } else {
+            return false;
+        }
     }
 
     /**
      * Return the match for the given filter, or null if it does not match
      * @param filterRegexp - A RegExp regular expression, that specifies one query instruction.
+     *                       Or null, if the field does not support regexp-based filtering.
      * @param line - A line from a tasks code block query.
      * @protected
      */
     protected static getMatch(
-        filterRegexp: RegExp,
+        filterRegexp: RegExp | null,
         line: string,
     ): RegExpMatchArray | null {
-        return line.match(filterRegexp);
+        if (filterRegexp) {
+            return line.match(filterRegexp);
+        } else {
+            return null;
+        }
     }
 
     /**
