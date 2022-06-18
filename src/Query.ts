@@ -16,6 +16,7 @@ import { PriorityField } from './Query/Filter/PriorityField';
 import { ScheduledDateField } from './Query/Filter/ScheduledDateField';
 import { StartDateField } from './Query/Filter/StartDateField';
 import { HappensDateField } from './Query/Filter/HappensDateField';
+import { RecurringField } from './Query/Filter/RecurringField';
 import { StatusField } from './Query/Filter/StatusField';
 import { TagsField } from './Query/Filter/TagsField';
 
@@ -71,9 +72,6 @@ export class Query implements IQuery {
         /^hide (task count|backlink|priority|start date|scheduled date|done date|due date|recurrence rule|edit button)/;
     private readonly shortModeRegexp = /^short/;
 
-    private readonly recurringString = 'is recurring';
-    private readonly notRecurringString = 'is not recurring';
-
     private readonly limitRegexp = /^limit (to )?(\d+)( tasks?)?/;
     private readonly excludeSubItemsString = 'exclude sub-items';
 
@@ -88,12 +86,6 @@ export class Query implements IQuery {
                 switch (true) {
                     case line === '':
                         break;
-                    case line === this.recurringString:
-                        this._filters.push((task) => task.recurrence !== null);
-                        break;
-                    case line === this.notRecurringString:
-                        this._filters.push((task) => task.recurrence === null);
-                        break;
                     case line === this.excludeSubItemsString:
                         this._filters.push((task) => task.indentation === '');
                         break;
@@ -101,6 +93,8 @@ export class Query implements IQuery {
                         this._layoutOptions.shortMode = true;
                         break;
                     case this.parseFilter(line, new StatusField()):
+                        break;
+                    case this.parseFilter(line, new RecurringField()):
                         break;
                     case this.parseFilter(line, new PriorityField()):
                         break;
