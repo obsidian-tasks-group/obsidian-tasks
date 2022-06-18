@@ -1,4 +1,4 @@
-# README - User Support
+# README - Manual Testing
 
 ## Purpose
 
