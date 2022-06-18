@@ -297,12 +297,11 @@ class QueryRenderChild extends MarkdownRenderChild {
         }
 
         if (task.precedingHeader !== null) {
-            link.href = link.href + '#' + task.precedingHeader.replace('#', '');
+            const sanitisedHeading = task.precedingHeader.replace('#', '');
+            link.href = link.href + '#' + sanitisedHeading;
             link.setAttribute(
                 'data-href',
-                link.getAttribute('data-href') +
-                    '#' +
-                    task.precedingHeader.replace('#', ''),
+                link.getAttribute('data-href') + '#' + sanitisedHeading,
             );
         }
 
