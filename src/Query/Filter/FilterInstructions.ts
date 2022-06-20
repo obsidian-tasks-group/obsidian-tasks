@@ -1,11 +1,11 @@
-import type { FilterInstruction } from './FilterInstruction';
-import { FilterOrErrorMessage } from './Filter';
+import { FilterInstruction } from './FilterInstruction';
+import { Filter, FilterOrErrorMessage } from './Filter';
 
 export class FilterInstructions {
     private readonly _filters: FilterInstruction[] = [];
 
-    public push(filter: FilterInstruction) {
-        this._filters.push(filter);
+    public push(instruction: string, filter: Filter) {
+        this._filters.push(new FilterInstruction(instruction, filter));
     }
 
     public canCreateFilterForLine(line: string): boolean {

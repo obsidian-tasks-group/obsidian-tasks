@@ -1,6 +1,5 @@
 import { Field } from './Field';
 import type { FilterOrErrorMessage } from './Filter';
-import { FilterInstruction } from './FilterInstruction';
 import { FilterInstructions } from './FilterInstructions';
 
 export class RecurringField extends Field {
@@ -8,18 +7,10 @@ export class RecurringField extends Field {
 
     constructor() {
         super();
+        this._filters.push('is recurring', (task) => task.recurrence !== null);
         this._filters.push(
-            new FilterInstruction(
-                'is recurring',
-                (task) => task.recurrence !== null,
-            ),
-        );
-
-        this._filters.push(
-            new FilterInstruction(
-                'is not recurring',
-                (task) => task.recurrence === null,
-            ),
+            'is not recurring',
+            (task) => task.recurrence === null,
         );
     }
 

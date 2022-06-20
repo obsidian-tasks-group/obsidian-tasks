@@ -1,7 +1,6 @@
 import { Status, Task } from '../../Task';
 import { Field } from './Field';
 import type { FilterOrErrorMessage } from './Filter';
-import { FilterInstruction } from './FilterInstruction';
 import { FilterInstructions } from './FilterInstructions';
 
 export class StatusField extends Field {
@@ -10,18 +9,10 @@ export class StatusField extends Field {
     constructor() {
         super();
 
+        this._filters.push('done', (task: Task) => task.status === Status.Done);
         this._filters.push(
-            new FilterInstruction(
-                'done',
-                (task: Task) => task.status === Status.Done,
-            ),
-        );
-
-        this._filters.push(
-            new FilterInstruction(
-                'not done',
-                (task: Task) => task.status !== Status.Done,
-            ),
+            'not done',
+            (task: Task) => task.status !== Status.Done,
         );
     }
 
