@@ -1,33 +1,34 @@
 import { Field } from './Field';
-import { FilterOrErrorMessage } from './Filter';
+import type { FilterOrErrorMessage } from './Filter';
+import { FilterInstruction } from './FilterInstruction';
+import { FilterInstructions } from './FilterInstructions';
 
 export class RecurringField extends Field {
-    private readonly instructionForFieldPresence = 'is recurring';
-    private readonly instructionForFieldAbsence = 'is not recurring';
+    private readonly _filters = new FilterInstructions();
 
-    public canCreateFilterForLine(line: string): boolean {
-        return (
-            line === this.instructionForFieldAbsence ||
-            line === this.instructionForFieldPresence
+    constructor() {
+        super();
+        this._filters.push(
+            new FilterInstruction(
+                'is recurring',
+                (task) => task.recurrence !== null,
+            ),
+        );
+
+        this._filters.push(
+            new FilterInstruction(
+                'is not recurring',
+                (task) => task.recurrence === null,
+            ),
         );
     }
 
+    public canCreateFilterForLine(line: string): boolean {
+        return this._filters.canCreateFilterForLine(line);
+    }
+
     public createFilterOrErrorMessage(line: string): FilterOrErrorMessage {
-        const result = new FilterOrErrorMessage();
-
-        if (line === this.instructionForFieldPresence) {
-            result.filter = (task) => task.recurrence !== null;
-            return result;
-        }
-
-        if (line === this.instructionForFieldAbsence) {
-            result.filter = (task) => task.recurrence === null;
-            return result;
-        }
-
-        result.error = `do not understand filter: ${line}`;
-
-        return result;
+        return this._filters.createFilterOrErrorMessage(line);
     }
 
     protected fieldName(): string {
