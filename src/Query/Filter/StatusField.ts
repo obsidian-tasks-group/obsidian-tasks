@@ -1,10 +1,11 @@
 import { Status, Task } from '../../Task';
 import { Field } from './Field';
-import { FilterOrErrorMessage } from './Filter';
+import type { FilterOrErrorMessage } from './Filter';
 import { FilterInstruction } from './FilterInstruction';
+import { FilterInstructions } from './FilterInstructions';
 
 export class StatusField extends Field {
-    private readonly _filters: FilterInstruction[] = [];
+    private readonly _filters = new FilterInstructions();
 
     constructor() {
         super();
@@ -25,25 +26,11 @@ export class StatusField extends Field {
     }
 
     public canCreateFilterForLine(line: string): boolean {
-        for (const filter of this._filters) {
-            if (filter.canCreateFilterForLine(line)) {
-                return true;
-            }
-        }
-        return false;
+        return this._filters.canCreateFilterForLine(line);
     }
 
     public createFilterOrErrorMessage(line: string): FilterOrErrorMessage {
-        for (const filter of this._filters) {
-            const x = filter.createFilterOrErrorMessage(line);
-            if (x.error === undefined) {
-                return x;
-            }
-        }
-
-        const result = new FilterOrErrorMessage();
-        result.error = `do not understand filter: ${line}`;
-        return result;
+        return this._filters.createFilterOrErrorMessage(line);
     }
 
     protected fieldName(): string {
