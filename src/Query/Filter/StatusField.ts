@@ -9,8 +9,8 @@ export class StatusField extends Field {
     constructor() {
         super();
 
-        this._filters.push('done', (task: Task) => task.status === Status.Done);
-        this._filters.push(
+        this._filters.add('done', (task: Task) => task.status === Status.Done);
+        this._filters.add(
             'not done',
             (task: Task) => task.status !== Status.Done,
         );

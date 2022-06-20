@@ -7,8 +7,8 @@ export class RecurringField extends Field {
 
     constructor() {
         super();
-        this._filters.push('is recurring', (task) => task.recurrence !== null);
-        this._filters.push(
+        this._filters.add('is recurring', (task) => task.recurrence !== null);
+        this._filters.add(
             'is not recurring',
             (task) => task.recurrence === null,
         );

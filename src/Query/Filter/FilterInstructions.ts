@@ -4,7 +4,7 @@ import { Filter, FilterOrErrorMessage } from './Filter';
 export class FilterInstructions {
     private readonly _filters: FilterInstruction[] = [];
 
-    public push(instruction: string, filter: Filter) {
+    public add(instruction: string, filter: Filter) {
         this._filters.push(new FilterInstruction(instruction, filter));
     }
 
