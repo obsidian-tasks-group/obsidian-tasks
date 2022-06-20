@@ -4,7 +4,7 @@ import type { Task } from '../../Task';
  * A filtering function, that takes a Task object and returns
  * whether it matches a particular filtering instruction.
  */
-type Filter = (task: Task) => boolean;
+export type Filter = (task: Task) => boolean;
 
 /**
  * A class which stores one of:
