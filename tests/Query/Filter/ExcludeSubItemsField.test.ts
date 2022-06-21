@@ -12,11 +12,8 @@ describe('sub-items', () => {
         );
 
         // Assert
-        testTaskFilter(filter, fromLine({ line: '- [ ] I am a task' }), true);
-        testTaskFilter(
-            filter,
-            fromLine({ line: '    - [ ] I am a sub-task' }),
-            false,
-        );
+        testTaskFilter(filter, fromLine({ line: '- [ ] Task' }), true);
+        testTaskFilter(filter, fromLine({ line: '  - [ ] Subtask1' }), false);
+        testTaskFilter(filter, fromLine({ line: '    - [ ] Subtask2' }), false);
     });
 });
