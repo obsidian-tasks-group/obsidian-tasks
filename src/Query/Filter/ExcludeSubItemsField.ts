@@ -2,6 +2,9 @@ import { Field } from './Field';
 import type { FilterOrErrorMessage } from './Filter';
 import { FilterInstructions } from './FilterInstructions';
 
+/**
+ * Implements 'exclude sub-items' filter
+ */
 export class ExcludeSubItemsField extends Field {
     private readonly _filters = new FilterInstructions();
 
