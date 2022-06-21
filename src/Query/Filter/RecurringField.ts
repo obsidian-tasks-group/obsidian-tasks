@@ -1,10 +1,6 @@
-import { Field } from './Field';
-import type { FilterOrErrorMessage } from './Filter';
-import { FilterInstructions } from './FilterInstructions';
+import { FilterInstructionsBasedField } from './FilterInstructionsBasedField';
 
-export class RecurringField extends Field {
-    private readonly _filters = new FilterInstructions();
-
+export class RecurringField extends FilterInstructionsBasedField {
     constructor() {
         super();
         this._filters.add('is recurring', (task) => task.recurrence !== null);
@@ -14,19 +10,7 @@ export class RecurringField extends Field {
         );
     }
 
-    public canCreateFilterForLine(line: string): boolean {
-        return this._filters.canCreateFilterForLine(line);
-    }
-
-    public createFilterOrErrorMessage(line: string): FilterOrErrorMessage {
-        return this._filters.createFilterOrErrorMessage(line);
-    }
-
     protected fieldName(): string {
         return 'recurring';
-    }
-
-    protected filterRegexp(): RegExp | null {
-        return null;
     }
 }

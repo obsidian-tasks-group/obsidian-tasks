@@ -1,5 +1,3 @@
-// 'exclude sub-items'
-
 import { testTaskFilter } from '../../TestingTools/FilterTestHelpers';
 import { fromLine } from '../../TestHelpers';
 import { ExcludeSubItemsField } from '../../../src/Query/Filter/ExcludeSubItemsField';
