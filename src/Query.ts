@@ -10,6 +10,7 @@ import type { Field } from './Query/Filter/Field';
 import { DescriptionField } from './Query/Filter/DescriptionField';
 import { DoneDateField } from './Query/Filter/DoneDateField';
 import { DueDateField } from './Query/Filter/DueDateField';
+import { ExcludeSubItemsField } from './Query/Filter/ExcludeSubItemsField';
 import { HeadingField } from './Query/Filter/HeadingField';
 import { PathField } from './Query/Filter/PathField';
 import { PriorityField } from './Query/Filter/PriorityField';
@@ -73,7 +74,6 @@ export class Query implements IQuery {
     private readonly shortModeRegexp = /^short/;
 
     private readonly limitRegexp = /^limit (to )?(\d+)( tasks?)?/;
-    private readonly excludeSubItemsString = 'exclude sub-items';
 
     private readonly commentRegexp = /^#.*/;
 
@@ -85,9 +85,6 @@ export class Query implements IQuery {
             .forEach((line: string) => {
                 switch (true) {
                     case line === '':
-                        break;
-                    case line === this.excludeSubItemsString:
-                        this._filters.push((task) => task.indentation === '');
                         break;
                     case this.shortModeRegexp.test(line):
                         this._layoutOptions.shortMode = true;
@@ -115,6 +112,8 @@ export class Query implements IQuery {
                     case this.parseFilter(line, new TagsField()):
                         break;
                     case this.parseFilter(line, new HeadingField()):
+                        break;
+                    case this.parseFilter(line, new ExcludeSubItemsField()):
                         break;
                     case this.limitRegexp.test(line):
                         this.parseLimit({ line });
