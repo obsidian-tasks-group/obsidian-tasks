@@ -1,6 +1,15 @@
 import { FilterInstruction } from './FilterInstruction';
 import { Filter, FilterOrErrorMessage } from './Filter';
 
+/**
+ * Implementation of a collection of instructions for filtering tasks.
+ *
+ * @example
+ *     private readonly _filters = new FilterInstructions();
+ *     this._filters.add('is recurring', (task) => task.recurrence !== null);
+ *
+ * @see FilterInstruction
+ */
 export class FilterInstructions {
     private readonly _filters: FilterInstruction[] = [];
 

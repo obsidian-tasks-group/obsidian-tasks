@@ -2,8 +2,16 @@ import { Filter, FilterOrErrorMessage } from './Filter';
 
 /**
  * Implementation of a single instruction for filtering tasks, and its corresponding predicate.
- * An example call is:
+ *
+ * This is really a helper to simplify the implementation of individual filter
+ * instructions, hiding away the details of parsing individual instruction lines.
+ *
+ * This will usually be accessed via {@link FilterInstructions.add}
+ *
+ * @example
  *  new FilterInstruction( 'done', (task: Task) => task.status === Status.Done )
+ *
+ * @see FilterInstructions
  */
 export class FilterInstruction {
     private readonly _instruction: string;
