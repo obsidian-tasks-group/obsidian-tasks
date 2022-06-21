@@ -8,9 +8,6 @@ import { Filter, FilterOrErrorMessage } from './Filter';
  *
  * This will usually be accessed via {@link FilterInstructions.add}
  *
- * @example
- *  new FilterInstruction( 'done', (task: Task) => task.status === Status.Done )
- *
  * @see FilterInstructions
  */
 export class FilterInstruction {
