@@ -1,11 +1,7 @@
 import { Status, Task } from '../../Task';
-import { Field } from './Field';
-import type { FilterOrErrorMessage } from './Filter';
-import { FilterInstructions } from './FilterInstructions';
+import { FilterInstructionsBasedField } from './FilterInstructionsBasedField';
 
-export class StatusField extends Field {
-    private readonly _filters = new FilterInstructions();
-
+export class StatusField extends FilterInstructionsBasedField {
     constructor() {
         super();
 
@@ -16,19 +12,7 @@ export class StatusField extends Field {
         );
     }
 
-    public canCreateFilterForLine(line: string): boolean {
-        return this._filters.canCreateFilterForLine(line);
-    }
-
-    public createFilterOrErrorMessage(line: string): FilterOrErrorMessage {
-        return this._filters.createFilterOrErrorMessage(line);
-    }
-
     protected fieldName(): string {
         return 'status';
-    }
-
-    protected filterRegexp(): RegExp | null {
-        return null;
     }
 }
