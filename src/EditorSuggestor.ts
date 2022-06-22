@@ -8,7 +8,7 @@ import {
     TFile,
 } from 'obsidian';
 
-import type { Settings } from './Settings';
+import type { Settings } from './config/Settings';
 
 import * as task from './Task';
 import { DateParser } from './Query/DateParser';
@@ -235,13 +235,13 @@ export class EditorSuggestor extends EditorSuggest<SuggestInfo> {
                 appendText: `${task.prioritySymbols.Low} `,
                 context: context,
             });
-            if (!line.contains(task.recurrenceSymbol))
-                suggestions.push({
-                    displayText: `${task.recurrenceSymbol} recurring (repeat)`,
-                    appendText: `${task.recurrenceSymbol} `,
-                    context: context,
-                });
         }
+        if (!line.contains(task.recurrenceSymbol))
+            suggestions.push({
+                displayText: `${task.recurrenceSymbol} recurring (repeat)`,
+                appendText: `${task.recurrenceSymbol} `,
+                context: context,
+            });
 
         return suggestions;
     }

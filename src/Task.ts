@@ -245,6 +245,8 @@ export class Task {
         let doneDate: Moment | null = null;
         let recurrence: Recurrence | null = null;
         let tags: any = [];
+        // Tags that are removed from the end while parsing, but we want to add them back for being part of the description
+        let trailingTags = '';
         // Add a "max runs" failsafe to never end in an endless loop:
         const maxRuns = 7;
         let runs = 0;
@@ -330,10 +332,17 @@ export class Task {
             if (tagsMatch != null) {
                 description = description.replace(Task.tagsRegex, '').trim();
                 matched = true;
+                trailingTags = [trailingTags, tagsMatch[0]].join(' ');
             }
 
             runs++;
         } while (matched && runs <= maxRuns);
+
+        // Add back any trailing tags to the description. We removed them so we can parse the rest of the
+        // components but now we want them back.
+        // The goal is for a task of them form 'Do something #tag1 (due) tomorrow #tag2 (start) today'
+        // to actually have the description 'Do something #tag1 #tag2'
+        description += trailingTags;
 
         // Tags are found in the string and pulled out but not removed,
         // so when returning the entire task it will match what the user
