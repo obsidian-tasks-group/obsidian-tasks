@@ -70,7 +70,7 @@ export class EditorSuggestor extends EditorSuggest<SuggestInfo> {
      */
     getSuggestions(context: EditorSuggestContext): SuggestInfo[] {
         const line = context.query;
-        let suggestions: SuggestInfo[] = [];
+        let suggestions: SuggestInfo[] | null = [];
 
         const currentCursor = context.editor.getCursor();
 
@@ -101,8 +101,10 @@ export class EditorSuggestor extends EditorSuggest<SuggestInfo> {
         let addedSuggestions = false;
         if (wordMatch && wordMatch.length > 0) {
             const wordUnderCursor = wordMatch[0];
-            const minMatch = 1;
-            if (wordUnderCursor.length >= minMatch) {
+            if (
+                wordUnderCursor.length >=
+                Math.max(1, this.settings.autoSuggestMinMatch)
+            ) {
                 const filteredSuggestions = morePossibleSuggestions.filter(
                     (suggestInfo) =>
                         suggestInfo.displayText
@@ -123,13 +125,17 @@ export class EditorSuggestor extends EditorSuggest<SuggestInfo> {
             }
         }
         // That's where we're adding all the suggestions in case there's nothing specific to match
-        if (!addedSuggestions)
+        // (and we're allowed by the settings to bring back a zero-sized match)
+        if (!addedSuggestions && this.settings.autoSuggestMinMatch === 0)
             suggestions = suggestions.concat(morePossibleSuggestions);
 
         // Unless we have a suggestion that is a match for something the user is currently typing, add
         // an 'Enter' entry in the beginning of the menu, so an Enter press will move to the next line
         // rather than insert a suggestion
-        if (!suggestions.some((value) => value.suggestionType === 'match')) {
+        if (
+            suggestions.length > 0 &&
+            !suggestions.some((value) => value.suggestionType === 'match')
+        ) {
             // No actual match, only default ones
             suggestions.unshift({
                 suggestionType: 'empty',
@@ -142,7 +148,10 @@ export class EditorSuggestor extends EditorSuggest<SuggestInfo> {
         // Either way, after all the aggregations above, never suggest more than maxTotalSuggestions
         suggestions = suggestions.slice(0, maxTotalSuggestions);
 
-        return suggestions;
+        // If we're left with no suggestions, signal to Obsidian we don't want the menu
+        if (suggestions.length == 0) suggestions = null;
+
+        return suggestions as SuggestInfo[];
     }
 
     renderSuggestion(value: SuggestInfo, el: HTMLElement) {
@@ -283,6 +292,9 @@ export class EditorSuggestor extends EditorSuggest<SuggestInfo> {
         if (dateMatch && dateMatch.length >= 2) {
             const datePrefix = dateMatch[1];
             const dateString = dateMatch[2];
+            if (dateString.length < this.settings.autoSuggestMinMatch) {
+                return [];
+            }
             // Try to parse the entered text as a valid date.
             // We pass forwardDate=true to parseDate because we expect due, start and scheduled dates to
             // be in the future, i.e. if today is Sunday and the user typed "due <Enter> Saturday", she
@@ -387,6 +399,8 @@ export class EditorSuggestor extends EditorSuggest<SuggestInfo> {
         if (recurrenceMatch && recurrenceMatch.length >= 2) {
             const recurrencePrefix = recurrenceMatch[1];
             const recurrenceString = recurrenceMatch[2];
+            if (recurrenceString.length < this.settings.autoSuggestMinMatch)
+                return [];
             if (recurrenceString.length > 0) {
                 // If the text matches a valid recurence description, present it as a 1st suggestion.
                 // We also add a nice checkmark in this case to denote it's a complete valid recurrence description

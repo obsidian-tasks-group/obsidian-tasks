@@ -3,6 +3,7 @@ export interface Settings {
     removeGlobalFilter: boolean;
     setDoneDate: boolean;
     autoSuggestInEditor: boolean;
+    autoSuggestMinMatch: number;
 }
 
 const defaultSettings: Settings = {
@@ -10,6 +11,7 @@ const defaultSettings: Settings = {
     removeGlobalFilter: false,
     setDoneDate: true,
     autoSuggestInEditor: true,
+    autoSuggestMinMatch: 0,
 };
 
 let settings: Settings = { ...defaultSettings };

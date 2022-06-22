@@ -93,5 +93,22 @@ export class SettingsTab extends PluginSettingTab {
                         await this.plugin.saveSettings();
                     });
             });
+
+        new Setting(containerEl)
+            .setName('Minimal match length for auto-suggest')
+            .setDesc(
+                'If higher than 0, an auto-suggest will be triggered only if the beginning of a relevant keyword will be recognized',
+            )
+            .addSlider((slider) => {
+                const settings = getSettings();
+                slider
+                    .setLimits(0, 3, 1)
+                    .setValue(settings.autoSuggestMinMatch)
+                    .setDynamicTooltip()
+                    .onChange(async (value) => {
+                        updateSettings({ autoSuggestMinMatch: value });
+                        await this.plugin.saveSettings();
+                    });
+            });
     }
 }
