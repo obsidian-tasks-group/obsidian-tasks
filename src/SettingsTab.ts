@@ -78,5 +78,20 @@ export class SettingsTab extends PluginSettingTab {
                         await this.plugin.saveSettings();
                     });
             });
+
+        new Setting(containerEl)
+            .setName('Auto-suggest task content')
+            .setDesc(
+                'Enabling this will open an intelligent suggest window while typing inside a recognized task line',
+            )
+            .addToggle((toggle) => {
+                const settings = getSettings();
+                toggle
+                    .setValue(settings.autoSuggestInEditor)
+                    .onChange(async (value) => {
+                        updateSettings({ autoSuggestInEditor: value });
+                        await this.plugin.saveSettings();
+                    });
+            });
     }
 }

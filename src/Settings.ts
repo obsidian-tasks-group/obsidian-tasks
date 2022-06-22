@@ -2,12 +2,14 @@ export interface Settings {
     globalFilter: string;
     removeGlobalFilter: boolean;
     setDoneDate: boolean;
+    autoSuggestInEditor: boolean;
 }
 
 const defaultSettings: Settings = {
     globalFilter: '',
     removeGlobalFilter: false,
     setDoneDate: true,
+    autoSuggestInEditor: true,
 };
 
 let settings: Settings = { ...defaultSettings };

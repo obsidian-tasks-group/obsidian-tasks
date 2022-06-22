@@ -9,6 +9,7 @@ import { newLivePreviewExtension } from './LivePreviewExtension';
 import { QueryRenderer } from './QueryRenderer';
 import { getSettings, updateSettings } from './Settings';
 import { SettingsTab } from './SettingsTab';
+import { EditorSuggestor } from './EditorSuggestor';
 
 export default class TasksPlugin extends Plugin {
     private cache: Cache | undefined;
@@ -36,6 +37,9 @@ export default class TasksPlugin extends Plugin {
         this.queryRenderer = new QueryRenderer({ plugin: this, events });
 
         this.registerEditorExtension(newLivePreviewExtension());
+        this.registerEditorSuggest(
+            new EditorSuggestor(this.app, getSettings()),
+        );
         new Commands({ plugin: this });
     }
 
