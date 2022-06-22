@@ -7,8 +7,8 @@ import { initializeFile } from './File';
 import { InlineRenderer } from './InlineRenderer';
 import { newLivePreviewExtension } from './LivePreviewExtension';
 import { QueryRenderer } from './QueryRenderer';
-import { getSettings, updateSettings } from './Settings';
-import { SettingsTab } from './SettingsTab';
+import { getSettings, updateSettings } from './config/Settings';
+import { SettingsTab } from './config/SettingsTab';
 import { EditorSuggestor } from './EditorSuggestor';
 
 export default class TasksPlugin extends Plugin {

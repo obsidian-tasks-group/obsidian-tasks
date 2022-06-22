@@ -1,5 +1,5 @@
 import { PluginSettingTab, Setting } from 'obsidian';
-import type TasksPlugin from './main';
+import type TasksPlugin from '../main';
 import { getSettings, updateSettings } from './Settings';
 
 export class SettingsTab extends PluginSettingTab {

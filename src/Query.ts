@@ -3,19 +3,22 @@ import type { TaskGroups } from './Query/TaskGroups';
 
 import { LayoutOptions } from './LayoutOptions';
 import { Sort } from './Sort';
-import { Status, Task } from './Task';
+import type { Task } from './Task';
 import type { IQuery } from './IQuery';
 
 import type { Field } from './Query/Filter/Field';
 import { DescriptionField } from './Query/Filter/DescriptionField';
 import { DoneDateField } from './Query/Filter/DoneDateField';
 import { DueDateField } from './Query/Filter/DueDateField';
+import { ExcludeSubItemsField } from './Query/Filter/ExcludeSubItemsField';
 import { HeadingField } from './Query/Filter/HeadingField';
 import { PathField } from './Query/Filter/PathField';
 import { PriorityField } from './Query/Filter/PriorityField';
 import { ScheduledDateField } from './Query/Filter/ScheduledDateField';
 import { StartDateField } from './Query/Filter/StartDateField';
 import { HappensDateField } from './Query/Filter/HappensDateField';
+import { RecurringField } from './Query/Filter/RecurringField';
+import { StatusField } from './Query/Filter/StatusField';
 import { TagsField } from './Query/Filter/TagsField';
 
 export type SortingProperty =
@@ -58,18 +61,6 @@ export class Query implements IQuery {
     private _sorting: Sorting[] = [];
     private _grouping: Grouping[] = [];
 
-    private readonly noStartString = 'no start date';
-    private readonly hasStartString = 'has start date';
-
-    private readonly noScheduledString = 'no scheduled date';
-    private readonly hasScheduledString = 'has scheduled date';
-
-    private readonly noDueString = 'no due date';
-    private readonly hasDueString = 'has due date';
-
-    private readonly doneString = 'done';
-    private readonly notDoneString = 'not done';
-
     // If a tag is specified the user can also add a number to specify
     // which one to sort by if there is more than one.
     private readonly sortByRegexp =
@@ -82,11 +73,7 @@ export class Query implements IQuery {
         /^hide (task count|backlink|priority|start date|scheduled date|done date|due date|recurrence rule|edit button)/;
     private readonly shortModeRegexp = /^short/;
 
-    private readonly recurringString = 'is recurring';
-    private readonly notRecurringString = 'is not recurring';
-
     private readonly limitRegexp = /^limit (to )?(\d+)( tasks?)?/;
-    private readonly excludeSubItemsString = 'exclude sub-items';
 
     private readonly commentRegexp = /^#.*/;
 
@@ -99,49 +86,12 @@ export class Query implements IQuery {
                 switch (true) {
                     case line === '':
                         break;
-                    case line === this.doneString:
-                        this._filters.push(
-                            (task) => task.status === Status.Done,
-                        );
-                        break;
-                    case line === this.notDoneString:
-                        this._filters.push(
-                            (task) => task.status !== Status.Done,
-                        );
-                        break;
-                    case line === this.recurringString:
-                        this._filters.push((task) => task.recurrence !== null);
-                        break;
-                    case line === this.notRecurringString:
-                        this._filters.push((task) => task.recurrence === null);
-                        break;
-                    case line === this.excludeSubItemsString:
-                        this._filters.push((task) => task.indentation === '');
-                        break;
-                    case line === this.noStartString:
-                        this._filters.push((task) => task.startDate === null);
-                        break;
-                    case line === this.noScheduledString:
-                        this._filters.push(
-                            (task) => task.scheduledDate === null,
-                        );
-                        break;
-                    case line === this.noDueString:
-                        this._filters.push((task) => task.dueDate === null);
-                        break;
-                    case line === this.hasStartString:
-                        this._filters.push((task) => task.startDate !== null);
-                        break;
-                    case line === this.hasScheduledString:
-                        this._filters.push(
-                            (task) => task.scheduledDate !== null,
-                        );
-                        break;
-                    case line === this.hasDueString:
-                        this._filters.push((task) => task.dueDate !== null);
-                        break;
                     case this.shortModeRegexp.test(line):
                         this._layoutOptions.shortMode = true;
+                        break;
+                    case this.parseFilter(line, new StatusField()):
+                        break;
+                    case this.parseFilter(line, new RecurringField()):
                         break;
                     case this.parseFilter(line, new PriorityField()):
                         break;
@@ -162,6 +112,8 @@ export class Query implements IQuery {
                     case this.parseFilter(line, new TagsField()):
                         break;
                     case this.parseFilter(line, new HeadingField()):
+                        break;
+                    case this.parseFilter(line, new ExcludeSubItemsField()):
                         break;
                     case this.limitRegexp.test(line):
                         this.parseLimit({ line });

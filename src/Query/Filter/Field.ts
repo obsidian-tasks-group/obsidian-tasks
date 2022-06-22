@@ -22,7 +22,7 @@ export abstract class Field {
      * @param line - A line from a ```tasks``` block.
      */
     public canCreateFilterForLine(line: string): boolean {
-        return this.filterRegexp().test(line);
+        return Field.lineMatchesFilter(this.filterRegexp(), line);
     }
 
     /**
@@ -35,11 +35,48 @@ export abstract class Field {
     ): FilterOrErrorMessage;
 
     /**
-     * Return a regular expression that will match a correctly-formed
-     * instruction line for filtering Tasks by inspecting the value of this field.
+     * Does the given line match the given filter?
+     * @param filter - A RegExp regular expression, that specifies one query instruction.
+     *                 Or null, if the field does not support regexp-based filtering.
+     * @param line - A line from a tasks code block query.
      * @protected
      */
-    protected abstract filterRegexp(): RegExp;
+    protected static lineMatchesFilter(
+        filter: RegExp | null,
+        line: string,
+    ): boolean {
+        if (filter) {
+            return filter.test(line);
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Return the match for the given filter, or null if it does not match
+     * @param filterRegexp - A RegExp regular expression, that specifies one query instruction.
+     *                       Or null, if the field does not support regexp-based filtering.
+     * @param line - A line from a tasks code block query.
+     * @protected
+     */
+    protected static getMatch(
+        filterRegexp: RegExp | null,
+        line: string,
+    ): RegExpMatchArray | null {
+        if (filterRegexp) {
+            return line.match(filterRegexp);
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * Return a regular expression that will match a correctly-formed
+     * instruction line for filtering Tasks by inspecting the value of this field.
+     * Or null, if this field does not have a regex-based instruction.
+     * @protected
+     */
+    protected abstract filterRegexp(): RegExp | null;
 
     /**
      * Return the name of this field, to be used in error messages.

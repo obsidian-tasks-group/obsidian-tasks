@@ -3,7 +3,7 @@ import { Component, MarkdownRenderer } from 'obsidian';
 import { replaceTaskWithTasks } from './File';
 import { LayoutOptions } from './LayoutOptions';
 import { Recurrence } from './Recurrence';
-import { getSettings } from './Settings';
+import { getSettings } from './config/Settings';
 import { Urgency } from './Urgency';
 
 /**

@@ -22,6 +22,7 @@ yarn-error.log
 
 # files in sample vaults
 /resources/sample_vaults/Tasks-Demo/.obsidian/workspace
+.hotreload
 
 # Backup files.
 *.bak
