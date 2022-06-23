@@ -332,7 +332,11 @@ export class Task {
             if (tagsMatch != null) {
                 description = description.replace(Task.tagsRegex, '').trim();
                 matched = true;
-                trailingTags = [trailingTags, tagsMatch[0]].join(' ');
+                // Adding to the left because the matching is done right-to-left
+                trailingTags =
+                    trailingTags.length > 0
+                        ? [tagsMatch[0], trailingTags].join(' ')
+                        : tagsMatch[0];
             }
 
             runs++;
@@ -342,7 +346,7 @@ export class Task {
         // components but now we want them back.
         // The goal is for a task of them form 'Do something #tag1 (due) tomorrow #tag2 (start) today'
         // to actually have the description 'Do something #tag1 #tag2'
-        description += trailingTags;
+        if (trailingTags.length > 0) description += ' ' + trailingTags;
 
         // Tags are found in the string and pulled out but not removed,
         // so when returning the entire task it will match what the user

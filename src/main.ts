@@ -9,7 +9,7 @@ import { newLivePreviewExtension } from './LivePreviewExtension';
 import { QueryRenderer } from './QueryRenderer';
 import { getSettings, updateSettings } from './config/Settings';
 import { SettingsTab } from './config/SettingsTab';
-import { EditorSuggestor } from './EditorSuggestor';
+import { EditorSuggestor } from './Suggestor/EditorSuggestorPopup';
 
 export default class TasksPlugin extends Plugin {
     private cache: Cache | undefined;
