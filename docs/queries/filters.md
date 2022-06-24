@@ -25,11 +25,13 @@ parent: Queries
 `<date>` filters can be given in natural language or in formal notation.
 The following are some examples of valid `<date>` filters as inspiration:
 
-- `2021-05-05`
+- `2021-05-25`
+- `yesterday`
 - `today`
 - `tomorrow`
 - `next monday`
 - `last friday`
+- `14 days ago`
 - `in two weeks`
 
 Note that if it is Wednesday and you write `tuesday`, Tasks assumes you mean "yesterday", as that is the closest Tuesday.
@@ -39,7 +41,7 @@ When the day changes, relative dates like `due today` are re-evaluated so that t
 
 ---
 
-## Matching
+## Matching - Workaround for Boolean OR
 
 All filters of a query have to match in order for a task to be listed.
 This means you cannot show tasks that have "GitHub in the path and have no due date or are due after 2021-04-04".
@@ -61,7 +63,7 @@ Instead you would have two queries, one for each condition:
 
 ---
 
-## List of Available Filters
+## Filters for Dates in Tasks
 
 ### Done Date
 
@@ -73,22 +75,21 @@ Instead you would have two queries, one for each condition:
 
 > `no done date` and `has done date` were introduced in Tasks 1.7.0.
 
-### Priority
+### Due Date
 
-- `priority is (above|below)? (low|none|medium|high)`
+- `no due date`
+- `has due date`
+- `due (before|after|on) <date>`
 
-#### Examples
+> `has due date` was introduced in Tasks 1.6.0.
 
-{: .no_toc }
+### Scheduled Date
 
-    ```tasks
-    not done
-    priority is above none
-    ```
+- `no scheduled date`
+- `has scheduled date`
+- `scheduled (before|after|on) <date>`
 
-    ```tasks
-    priority is high
-    ```
+> `has scheduled date` was introduced in Tasks 1.6.0.
 
 ### Start Date
 
@@ -108,22 +109,6 @@ Such filter could be:
     starts before tomorrow
     ```
 
-### Scheduled Date
-
-- `no scheduled date`
-- `has scheduled date`
-- `scheduled (before|after|on) <date>`
-
-> `has scheduled date` was introduced in Tasks 1.6.0.
-
-### Due Date
-
-- `no due date`
-- `has due date`
-- `due (before|after|on) <date>`
-
-> `has due date` was introduced in Tasks 1.6.0.
-
 ### Happens
 
 - `happens (before|after|on) <date>`
@@ -140,15 +125,9 @@ because the tasks starts before tomorrow. Only one of the dates needs to match.
 
 > `no happens date` and `has happens date` were introduced in Tasks 1.7.0.
 
-### Recurrence
+## Filters for Other Task Properties
 
-- `is recurring`
-- `is not recurring`
-
-### File Path
-
-- `path (includes|does not include) <path>`
-  - Matches case-insensitive (disregards capitalization).
+As well as the date-related searches above, these filters search other properties in individual tasks.
 
 ### Description
 
@@ -156,13 +135,32 @@ because the tasks starts before tomorrow. Only one of the dates needs to match.
   - Matches case-insensitive (disregards capitalization).
   - Disregards the global filter when matching.
 
-### Heading
+### Priority
 
-- `heading (includes|does not include) <string>`
-  - Whether or not the heading preceding the task includes the given string.
-  - Always tries to match the closest heading above the task, regardless of heading level.
-  - `does not include` will match a task that does not have a preceding heading in its file.
-  - Matches case-insensitive (disregards capitalization).
+- `priority is (above|below)? (low|none|medium|high)`
+
+#### Examples
+
+{: .no_toc }
+
+    ```tasks
+    not done
+    priority is above none
+    ```
+
+    ```tasks
+    priority is high
+    ```
+
+### Recurrence
+
+- `is recurring`
+- `is not recurring`
+
+### Status
+
+- `done`
+- `not done`
 
 ### Sub-Items
 
@@ -183,3 +181,20 @@ because the tasks starts before tomorrow. Only one of the dates needs to match.
 
 - `tags include #todo`
 - `tags do not include #todo`
+
+## Filters for File Properties
+
+These filters allow searching for tasks in particular files and sections of files.
+
+### File Path
+
+- `path (includes|does not include) <path>`
+  - Matches case-insensitive (disregards capitalization).
+
+### Heading
+
+- `heading (includes|does not include) <string>`
+  - Whether or not the heading preceding the task includes the given string.
+  - Always tries to match the closest heading above the task, regardless of heading level.
+  - `does not include` will match a task that does not have a preceding heading in its file.
+  - Matches case-insensitive (disregards capitalization).
