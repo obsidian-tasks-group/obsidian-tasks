@@ -127,10 +127,11 @@ because the tasks starts before tomorrow. Only one of the dates needs to match.
 
 ## Filters for Other Task Properties
 
-### Status
+### Description
 
-- `done`
-- `not done`
+- `description (includes|does not include) <string>`
+  - Matches case-insensitive (disregards capitalization).
+  - Disregards the global filter when matching.
 
 ### Priority
 
@@ -154,11 +155,10 @@ because the tasks starts before tomorrow. Only one of the dates needs to match.
 - `is recurring`
 - `is not recurring`
 
-### Description
+### Status
 
-- `description (includes|does not include) <string>`
-  - Matches case-insensitive (disregards capitalization).
-  - Disregards the global filter when matching.
+- `done`
+- `not done`
 
 ### Sub-Items
 
@@ -182,15 +182,15 @@ because the tasks starts before tomorrow. Only one of the dates needs to match.
 
 ## Filters for File Properties
 
+### File Path
+
+- `path (includes|does not include) <path>`
+  - Matches case-insensitive (disregards capitalization).
+
 ### Heading
 
 - `heading (includes|does not include) <string>`
   - Whether or not the heading preceding the task includes the given string.
   - Always tries to match the closest heading above the task, regardless of heading level.
   - `does not include` will match a task that does not have a preceding heading in its file.
-  - Matches case-insensitive (disregards capitalization).
-
-### File Path
-
-- `path (includes|does not include) <path>`
   - Matches case-insensitive (disregards capitalization).
