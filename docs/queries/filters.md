@@ -127,6 +127,8 @@ because the tasks starts before tomorrow. Only one of the dates needs to match.
 
 ## Filters for Other Task Properties
 
+As well as the date-related searches above, these filters search other properties in individual tasks.
+
 ### Description
 
 - `description (includes|does not include) <string>`
@@ -181,6 +183,8 @@ because the tasks starts before tomorrow. Only one of the dates needs to match.
 - `tags do not include #todo`
 
 ## Filters for File Properties
+
+These filters allow searching for tasks in particular files and sections of files.
 
 ### File Path
 
