@@ -25,11 +25,13 @@ parent: Queries
 `<date>` filters can be given in natural language or in formal notation.
 The following are some examples of valid `<date>` filters as inspiration:
 
-- `2021-05-05`
+- `2021-05-25`
+- `yesterday`
 - `today`
 - `tomorrow`
 - `next monday`
 - `last friday`
+- `14 days ago`
 - `in two weeks`
 
 Note that if it is Wednesday and you write `tuesday`, Tasks assumes you mean "yesterday", as that is the closest Tuesday.
