@@ -127,6 +127,11 @@ because the tasks starts before tomorrow. Only one of the dates needs to match.
 
 ## Filters for Other Task Properties
 
+### Status
+
+- `done`
+- `not done`
+
 ### Priority
 
 - `priority is (above|below)? (low|none|medium|high)`
