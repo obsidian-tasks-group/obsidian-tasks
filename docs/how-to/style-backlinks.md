@@ -55,14 +55,16 @@ We could also use `short mode`, which would replace the backlink text with an ic
 
 We can de-emphasize the text in the backlinks, with [this CSS snippet](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/docs-add-backlink-style-examples-2/resources/sample_vaults/Tasks-Demo/.obsidian/snippets/tasks-plugin-backlinks-small-grey.css):
 
-    /* By David Phillips (autonia) https://github.com/autonia
-       From https://github.com/obsidian-tasks-group/obsidian-tasks/discussions/622#discussioncomment-2649299
-    */
-    .tasks-backlink {
-        font-size: 0.7em;
-        opacity: 0.6;
-        filter: grayscale(60%);
-    }
+```css
+/* By David Phillips (autonia) https://github.com/autonia
+   From https://github.com/obsidian-tasks-group/obsidian-tasks/discussions/622#discussioncomment-2649299
+*/
+.tasks-backlink {
+    font-size: 0.7em;
+    opacity: 0.6;
+    filter: grayscale(60%);
+}
+```
 
 Which gives us this result:
 
@@ -72,13 +74,15 @@ Which gives us this result:
 
 Or we can replace the backlink text with an icon, with [this CSS snippet](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/docs-add-backlink-style-examples-2/resources/sample_vaults/Tasks-Demo/.obsidian/snippets/tasks-plugin-backlinks-icon.css):
 
-    /* By Anna Kornfeld Simpson (@AnnaKornfeldSimpson) https://github.com/AnnaKornfeldSimpson
-       From https://github.com/obsidian-tasks-group/obsidian-tasks/discussions/834#discussioncomment-3028600
-    */
-    li.plugin-tasks-list-item > span.tasks-backlink > a {
-        content: url(https://github.githubassets.com/images/icons/emoji/unicode/1f517.png);
-        height: .9em;
-    }
+```css
+/* By Anna Kornfeld Simpson (@AnnaKornfeldSimpson) https://github.com/AnnaKornfeldSimpson
+   From https://github.com/obsidian-tasks-group/obsidian-tasks/discussions/834#discussioncomment-3028600
+*/
+li.plugin-tasks-list-item > span.tasks-backlink > a {
+    content: url(https://github.githubassets.com/images/icons/emoji/unicode/1f517.png);
+    height: .9em;
+}
+```
 
 Which gives us this result:
 
