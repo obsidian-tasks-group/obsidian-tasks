@@ -1,0 +1,7 @@
+/* By Anna Kornfeld Simpson (@AnnaKornfeldSimpson) https://github.com/AnnaKornfeldSimpson
+   From https://github.com/obsidian-tasks-group/obsidian-tasks/discussions/834#discussioncomment-3028600
+*/
+li.plugin-tasks-list-item > span.tasks-backlink > a {
+    content: url(https://github.githubassets.com/images/icons/emoji/unicode/1f517.png);
+    height: .9em;
+}
