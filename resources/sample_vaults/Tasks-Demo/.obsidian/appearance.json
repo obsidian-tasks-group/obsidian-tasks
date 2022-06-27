@@ -1,3 +1,4 @@
 {
-  "theme": "moonstone"
+  "theme": "moonstone",
+  "enabledCssSnippets": []
 }
