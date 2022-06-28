@@ -6,7 +6,6 @@ import { Recurrence } from '../Recurrence';
 import * as task from '../Task';
 
 const datePrefixCharacters = `${task.startDateSymbol}${task.scheduledDateSymbol}${task.dueDateSymbol}`;
-const maxTotalSuggestions = 6;
 
 /*
  * A suggestion presented to the user and some metadata about it.
@@ -97,8 +96,8 @@ export function buildSuggestions(
         });
     }
 
-    // Either way, after all the aggregations above, never suggest more than maxTotalSuggestions
-    suggestions = suggestions.slice(0, maxTotalSuggestions);
+    // Either way, after all the aggregations above, never suggest more than the max items
+    suggestions = suggestions.slice(0, settings.autoSuggestMaxItems);
 
     return suggestions;
 }
@@ -224,7 +223,8 @@ function addDatesSuggestions(
         // If we get a partial match with some of the suggestions (e.g. the user started typing "to"),
         // we use that for matches ("tomorrow", "today" etc).
         // Otherwise, we just display the list of suggestions, and either way, truncate them eventually to
-        // a max number
+        // a max number. We want the max number to be around half the total allowed matches, to also allow
+        // some global generic matches (e.g. task components) to find their way to the menu
         const minMatch = 1;
         const maxGenericSuggestions = 5;
         let genericMatches = genericSuggestions
@@ -323,9 +323,11 @@ function addRecurrenceSuggestions(
         // If we get a partial match with some of the suggestions (e.g. the user started typing "every d"),
         // we use that for matches ("every day").
         // Otherwise, we just display the list of suggestions, and either way, truncate them eventually to
-        // a max number
+        // a max number.
+        // In the case of recurrence rules, the max number should be small enough to allow users to "escape"
+        // the mode of writing a recurrence rule, i.e. we should leave enough space for component suggestions
         const minMatch = 1;
-        const maxGenericDateSuggestions = 5;
+        const maxGenericDateSuggestions = settings.autoSuggestMaxItems / 2;
         let genericMatches = genericSuggestions
             .filter(
                 (value) =>
@@ -336,8 +338,12 @@ function addRecurrenceSuggestions(
                         .includes(recurrenceString.toLowerCase()),
             )
             .slice(0, maxGenericDateSuggestions);
-        if (genericMatches.length === 0) {
-            // Do completely generic date suggestions
+        if (
+            genericMatches.length === 0 &&
+            recurrenceString.trim().length === 0
+        ) {
+            // We have no actual match so do completely generic recurrence suggestions, but not if
+            // there *was* a text to match (because it means the user is actually typing something else)
             genericMatches = genericSuggestions.slice(
                 0,
                 maxGenericDateSuggestions,

@@ -110,5 +110,22 @@ export class SettingsTab extends PluginSettingTab {
                         await this.plugin.saveSettings();
                     });
             });
+
+        new Setting(containerEl)
+            .setName('Maximal number of auto-suggestions to shown')
+            .setDesc(
+                'How many suggestions should be shown when an auto-suggest menu pops up (including the "⏎" option).',
+            )
+            .addSlider((slider) => {
+                const settings = getSettings();
+                slider
+                    .setLimits(3, 12, 1)
+                    .setValue(settings.autoSuggestMaxItems)
+                    .setDynamicTooltip()
+                    .onChange(async (value) => {
+                        updateSettings({ autoSuggestMaxItems: value });
+                        await this.plugin.saveSettings();
+                    });
+            });
     }
 }

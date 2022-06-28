@@ -4,6 +4,7 @@ export interface Settings {
     setDoneDate: boolean;
     autoSuggestInEditor: boolean;
     autoSuggestMinMatch: number;
+    autoSuggestMaxItems: number;
 }
 
 const defaultSettings: Settings = {
@@ -12,6 +13,7 @@ const defaultSettings: Settings = {
     setDoneDate: true,
     autoSuggestInEditor: true,
     autoSuggestMinMatch: 0,
+    autoSuggestMaxItems: 6,
 };
 
 let settings: Settings = { ...defaultSettings };
