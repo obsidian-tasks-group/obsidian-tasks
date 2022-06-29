@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 import moment from 'moment';
-import { Status, Task } from '../src/Task';
+import { Priority, Status, Task } from '../src/Task';
 import { getSettings, updateSettings } from '../src/config/Settings';
 
 jest.mock('obsidian');
@@ -128,6 +128,34 @@ describe('parsing', () => {
             task!.doneDate!.isSame(moment('2021-06-20', 'YYYY-MM-DD')),
         ).toStrictEqual(true);
         expect(task!.blockLink).toEqual(' ^my-precious');
+    });
+
+    it('supports tag anywhere in the description and separates them correctly from signifier emojis', () => {
+        // Arrange
+        const line =
+            '- [ ] this is a task due 📅 2021-09-12 #inside_tag ⏫ #some/tags_with_underscore';
+        const path = 'this/is a path/to a/file.md';
+        const sectionStart = 1337;
+        const sectionIndex = 1209;
+        const precedingHeader = 'Eloquent Section';
+
+        // Act
+        const task = Task.fromLine({
+            line,
+            path,
+            sectionStart,
+            sectionIndex,
+            precedingHeader,
+        });
+
+        // Assert
+        expect(task).not.toBeNull();
+        expect(task!.description).toEqual(
+            'this is a task due #inside_tag #some/tags_with_underscore',
+        );
+        expect(task!.dueDate).not.toBeNull();
+        expect(task!.dueDate!.isSame(moment('2021-09-12', 'YYYY-MM-DD')));
+        expect(task!.priority == Priority.High);
     });
 });
 
@@ -603,4 +631,41 @@ describe('toggle done', () => {
             todaySpy.mockClear();
         },
     );
+
+    it('supports recurrence rule after a due date', () => {
+        // Arrange
+        const line =
+            '- [ ] this is a task 🗓 2021-09-12 ✅ 2021-06-20 🔁 every day';
+        const path = 'this/is a path/to a/file.md';
+        const sectionStart = 1337;
+        const sectionIndex = 1209;
+        const precedingHeader = 'Eloquent Section';
+
+        // Act
+        const task = Task.fromLine({
+            line,
+            path,
+            sectionStart,
+            sectionIndex,
+            precedingHeader,
+        });
+
+        // Assert
+        expect(task).not.toBeNull();
+        expect(task!.dueDate).not.toBeNull();
+        expect(
+            task!.dueDate!.isSame(moment('2021-09-12', 'YYYY-MM-DD')),
+        ).toStrictEqual(true);
+
+        const nextTask: Task = task!.toggle()[0];
+        expect({
+            nextDue: nextTask.dueDate?.format('YYYY-MM-DD'),
+            nextScheduled: nextTask.scheduledDate?.format('YYYY-MM-DD'),
+            nextStart: nextTask.startDate?.format('YYYY-MM-DD'),
+        }).toMatchObject({
+            nextDue: '2021-09-13',
+            nextScheduled: undefined,
+            nextStart: undefined,
+        });
+    });
 });
