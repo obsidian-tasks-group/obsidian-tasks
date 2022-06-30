@@ -297,7 +297,7 @@ class QueryRenderChild extends MarkdownRenderChild {
         }
 
         if (task.precedingHeader !== null) {
-            const sanitisedHeading = task.precedingHeader.replace('#', '');
+            const sanitisedHeading = task.precedingHeader.replace(/#/g, '');
             link.href = link.href + '#' + sanitisedHeading;
             link.setAttribute(
                 'data-href',
