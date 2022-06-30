@@ -13,8 +13,9 @@ export class Urgency {
 
         if (task.dueDate !== null) {
             // Map a range of 21 days to the value 0.2 - 1.0
-            const daysOverdue =
-                window.moment().diff(task.dueDate) / Urgency.milliSecondsPerDay;
+            const daysOverdue = Math.round(
+                window.moment().diff(task.dueDate) / Urgency.milliSecondsPerDay,
+            );
 
             let dueMultiplier: number;
             if (daysOverdue >= 7.0) {
