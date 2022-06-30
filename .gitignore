@@ -2,9 +2,6 @@
 *.iml
 .idea
 
-#VS Code
-.vscode
-
 # npm
 node_modules
 yarn-error.log

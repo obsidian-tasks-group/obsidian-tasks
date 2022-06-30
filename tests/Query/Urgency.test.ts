@@ -63,7 +63,7 @@ describe('urgency - priority component', () => {
 // Due Date tests
 
 function testUrgencyForDueDate(daysToDate: number, expectedScore: number) {
-    const today = '2022-10-15';
+    const today = '2022-10-31';
     const dueAsString = calculateRelativeDate(today, daysToDate);
 
     testUrgencyOnDate(
