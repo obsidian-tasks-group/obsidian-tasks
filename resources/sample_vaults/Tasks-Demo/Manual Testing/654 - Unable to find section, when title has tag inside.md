@@ -2,7 +2,7 @@
 
 - [Unable to find section, when title has tag inside · Issue #654 · obsidian-tasks-group/obsidian-tasks · GitHub](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/654)
 
-## Section with tag in #example-tag
+## Section with tag in #example-tag and #another-tag
 
 - [ ] #task Task in section with tag in heading name
 
