@@ -41,7 +41,7 @@ describe('path', () => {
     it('by path (includes regex)', () => {
         // Arrange
         const filter = new PathField().createFilterOrErrorMessage(
-            'path regex matches w.bble',
+            'path regex matches /w.bble/',
         );
 
         // Assert
