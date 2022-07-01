@@ -8,7 +8,7 @@ import { FilterOrErrorMessage } from './Filter';
  * value, such as the description or file path.
  */
 export abstract class TextField extends Field {
-    const regexpPattern = /^\/(.*)\/$/;
+    private static readonly regexpPattern = /^\/(.*)\/$/;
 
     public createFilterOrErrorMessage(line: string): FilterOrErrorMessage {
         const result = new FilterOrErrorMessage();
@@ -17,13 +17,13 @@ export abstract class TextField extends Field {
             const filterMethod = match[1];
             if (filterMethod === 'includes') {
                 const queryString = match[2];
-                const regexpMatch = queryString.match(regexpPattern);
+                const regexpMatch = queryString.match(TextField.regexpPattern);
                 if (regexpMatch !== null) {
                     const pattern = regexpMatch[1];
                     const regexp = new RegExp(pattern);
-                    result.filter = (task: Task) => 
-                        this.value(task).match(regexp);
-                } else {   
+                    result.filter = (task: Task) =>
+                        this.value(task).match(regexp) !== null;
+                } else {
                     result.filter = (task: Task) =>
                         TextField.stringIncludesCaseInsensitive(
                             this.value(task),
