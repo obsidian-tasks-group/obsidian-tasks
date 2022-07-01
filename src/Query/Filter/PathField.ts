@@ -9,7 +9,7 @@ import { TextField } from './TextField';
  */
 export class PathField extends TextField {
     private static readonly pathRegexp =
-        /^path (includes|does not include) (.*)/;
+        /^path (includes|does not include|regex matches) (.*)/;
 
     protected filterRegexp(): RegExp {
         return PathField.pathRegexp;
