@@ -26,10 +26,16 @@ export abstract class TextField extends Field {
                         match[2],
                     );
             } else if (match[1] === 'regex matches') {
-                const pattern = match[2];
-                const regexp = new RegExp(pattern);
-                result.filter = (task: Task) =>
-                    this.value(task).match(regexp) !== null;
+                // Trim the leading and trailing '/'
+                const regexPattern = /^\/(.*)\/$/;
+                const query = match[2].match(regexPattern);
+
+                if (query !== null) {
+                    result.filter = (task: Task) =>
+                        this.value(task).match(query![1]) !== null;
+                } else {
+                    result.error = `cannot parse regex (${this.fieldName()}); check your leading and trailing slashes for your query`;
+                }
             } else {
                 result.error = `do not understand query filter (${this.fieldName()})`;
             }
