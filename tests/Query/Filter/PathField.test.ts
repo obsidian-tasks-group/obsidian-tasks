@@ -37,4 +37,17 @@ describe('path', () => {
         testTaskFilterForTaskWithPath(filter, '/some/path/file.md', false);
         testTaskFilterForTaskWithPath(filter, '/other/path/file.md', true);
     });
+
+    it('by path (includes regex)', () => {
+        // Arrange
+        const filter = new PathField().createFilterOrErrorMessage(
+            'path includes /w.bble/',
+        );
+
+        // Assert
+        testTaskFilterForTaskWithPath(filter, '', false);
+        testTaskFilterForTaskWithPath(filter, '/some/path/wibble.md', true);
+        testTaskFilterForTaskWithPath(filter, '/some/path/wobble.md', true);
+        testTaskFilterForTaskWithPath(filter, '/other/path/file.md', false);
+    });
 });
