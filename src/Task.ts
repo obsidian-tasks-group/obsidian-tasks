@@ -31,6 +31,19 @@ export enum Priority {
     Low = '4',
 }
 
+export const prioritySymbols = {
+    High: '⏫',
+    Medium: '🔼',
+    Low: '🔽',
+    None: '',
+};
+
+export const recurrenceSymbol = '🔁';
+export const startDateSymbol = '🛫';
+export const scheduledDateSymbol = '⏳';
+export const dueDateSymbol = '📅';
+export const doneDateSymbol = '✅';
+
 /**
  * Task encapsulates the properties of the MarkDown task along with
  * the extensions provided by this plugin. This is used to parse and
@@ -239,13 +252,13 @@ export class Task {
             const priorityMatch = description.match(Task.priorityRegex);
             if (priorityMatch !== null) {
                 switch (priorityMatch[1]) {
-                    case '🔽':
+                    case prioritySymbols.Low:
                         priority = Priority.Low;
                         break;
-                    case '🔼':
+                    case prioritySymbols.Medium:
                         priority = Priority.Medium;
                         break;
-                    case '⏫':
+                    case prioritySymbols.High:
                         priority = Priority.High;
                         break;
                 }
@@ -455,11 +468,11 @@ export class Task {
             let priority: string = '';
 
             if (this.priority === Priority.High) {
-                priority = ' ⏫';
+                priority = ' ' + prioritySymbols.High;
             } else if (this.priority === Priority.Medium) {
-                priority = ' 🔼';
+                priority = ' ' + prioritySymbols.Medium;
             } else if (this.priority === Priority.Low) {
-                priority = ' 🔽';
+                priority = ' ' + prioritySymbols.Low;
             }
 
             taskString += priority;
@@ -467,36 +480,40 @@ export class Task {
 
         if (!layoutOptions.hideRecurrenceRule && this.recurrence) {
             const recurrenceRule: string = layoutOptions.shortMode
-                ? ' 🔁'
-                : ` 🔁 ${this.recurrence.toText()}`;
+                ? ' ' + recurrenceSymbol
+                : ` ${recurrenceSymbol} ${this.recurrence.toText()}`;
             taskString += recurrenceRule;
         }
 
         if (!layoutOptions.hideStartDate && this.startDate) {
             const startDate: string = layoutOptions.shortMode
-                ? ' 🛫'
-                : ` 🛫 ${this.startDate.format(Task.dateFormat)}`;
+                ? ' ' + startDateSymbol
+                : ` ${startDateSymbol} ${this.startDate.format(
+                      Task.dateFormat,
+                  )}`;
             taskString += startDate;
         }
 
         if (!layoutOptions.hideScheduledDate && this.scheduledDate) {
             const scheduledDate: string = layoutOptions.shortMode
-                ? ' ⏳'
-                : ` ⏳ ${this.scheduledDate.format(Task.dateFormat)}`;
+                ? ' ' + scheduledDateSymbol
+                : ` ${scheduledDateSymbol} ${this.scheduledDate.format(
+                      Task.dateFormat,
+                  )}`;
             taskString += scheduledDate;
         }
 
         if (!layoutOptions.hideDueDate && this.dueDate) {
             const dueDate: string = layoutOptions.shortMode
-                ? ' 📅'
-                : ` 📅 ${this.dueDate.format(Task.dateFormat)}`;
+                ? ' ' + dueDateSymbol
+                : ` ${dueDateSymbol} ${this.dueDate.format(Task.dateFormat)}`;
             taskString += dueDate;
         }
 
         if (!layoutOptions.hideDoneDate && this.doneDate) {
             const doneDate: string = layoutOptions.shortMode
-                ? ' ✅'
-                : ` ✅ ${this.doneDate.format(Task.dateFormat)}`;
+                ? ' ' + doneDateSymbol
+                : ` ${doneDateSymbol} ${this.doneDate.format(Task.dateFormat)}`;
             taskString += doneDate;
         }
 
@@ -642,14 +659,16 @@ export class Task {
 
             if (this.recurrence) {
                 const recurrenceDiv = tooltip.createDiv();
-                recurrenceDiv.setText(`🔁 ${this.recurrence.toText()}`);
+                recurrenceDiv.setText(
+                    `${recurrenceSymbol} ${this.recurrence.toText()}`,
+                );
             }
 
             if (this.startDate) {
                 const startDateDiv = tooltip.createDiv();
                 startDateDiv.setText(
                     Task.toTooltipDate({
-                        signifier: '🛫',
+                        signifier: startDateSymbol,
                         date: this.startDate,
                     }),
                 );
@@ -659,7 +678,7 @@ export class Task {
                 const scheduledDateDiv = tooltip.createDiv();
                 scheduledDateDiv.setText(
                     Task.toTooltipDate({
-                        signifier: '⏳',
+                        signifier: scheduledDateSymbol,
                         date: this.scheduledDate,
                     }),
                 );
@@ -669,7 +688,7 @@ export class Task {
                 const dueDateDiv = tooltip.createDiv();
                 dueDateDiv.setText(
                     Task.toTooltipDate({
-                        signifier: '📅',
+                        signifier: dueDateSymbol,
                         date: this.dueDate,
                     }),
                 );
@@ -679,7 +698,7 @@ export class Task {
                 const doneDateDiv = tooltip.createDiv();
                 doneDateDiv.setText(
                     Task.toTooltipDate({
-                        signifier: '✅',
+                        signifier: doneDateSymbol,
                         date: this.doneDate,
                     }),
                 );
