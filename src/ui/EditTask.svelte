@@ -4,6 +4,7 @@
     import { Recurrence } from '../Recurrence';
     import { getSettings } from '../config/Settings';
     import { Priority, Status, Task } from '../Task';
+    import { prioritySymbols, recurrenceSymbol, startDateSymbol, scheduledDateSymbol, dueDateSymbol } from '../Task';
     import { doAutocomplete } from '../DateAbbreviations';
 
     export let task: Task;
@@ -238,9 +239,9 @@
                 class="dropdown"
             >
                 <option value="none">None</option>
-                <option value="high">⏫ High</option>
-                <option value="medium">🔼 Medium</option>
-                <option value="low">🔽 Low</option>
+                <option value="high">{prioritySymbols.High} High</option>
+                <option value="medium">{prioritySymbols.Medium} Medium</option>
+                <option value="low">{prioritySymbols.Low} Low</option>
             </select>
         </div>
         <hr />
@@ -252,7 +253,7 @@
                 type="text"
                 placeholder="Try 'every 2 weeks on Thursday'."
             />
-            <code>🔁 {@html parsedRecurrence}</code>
+            <code>{recurrenceSymbol} {@html parsedRecurrence}</code>
         </div>
         <hr />
         <div class="tasks-modal-section">
@@ -264,7 +265,7 @@
                     type="text"
                     placeholder={datePlaceholder}
                 />
-                <code>📅 {@html parsedDueDate}</code>
+                <code>{dueDateSymbol} {@html parsedDueDate}</code>
             </div>
             <div class="tasks-modal-date">
                 <label for="scheduled">Scheduled</label>
@@ -274,7 +275,7 @@
                     type="text"
                     placeholder={datePlaceholder}
                 />
-                <code>⏳ {@html parsedScheduledDate}</code>
+                <code>{scheduledDateSymbol} {@html parsedScheduledDate}</code>
             </div>
             <div class="tasks-modal-date">
                 <label for="start">Start</label>
@@ -284,7 +285,7 @@
                     type="text"
                     placeholder={datePlaceholder}
                 />
-                <code>🛫 {@html parsedStartDate}</code>
+                <code>{startDateSymbol} {@html parsedStartDate}</code>
             </div>
         </div>
         <hr />
