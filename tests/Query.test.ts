@@ -17,13 +17,13 @@ describe('Query parsing', () => {
      * As more and more filters are added via the Field class, and tested
      * outside of this test file, there is the chance that someone thinks that
      * they have correctly added a new filter option, but forgotten to register
-     * it in the Query class.
+     * it in the FilterParser.ts file.
      *
      * This set of tests exists as a growing list of sample filters, and purely checks
      * that the Query class parses them successfully.
      *
-     * A failure here means that the Query constructor is missing code to recognise
-     * one of the supported instructions.
+     * A failure here means that the Query constructor or FilterParser.ts is missing code to
+     * recognise one of the supported instructions.
      */
     describe('should recognise every supported filter', () => {
         // In alphabetical order, please
@@ -169,6 +169,22 @@ describe('Query parsing', () => {
             'limit to 42 tasks',
             'short mode',
             'short',
+        ];
+        test.concurrent.each<string>(filters)('recognises %j', (filter) => {
+            // Arrange
+            const query = new Query({ source: filter });
+
+            // Assert
+            expect(query.error).toBeUndefined();
+        });
+    });
+
+    describe('should recognize boolean queries', () => {
+        const filters = [
+            '# Comment lines are ignored',
+            '(description includes wibble) OR (has due date)',
+            '(has due date) OR ((has start date) AND (due after 2021-12-27))',
+            '(is not recurring) XOR ((path includes ab/c) OR (happens before 2021-12-27))',
         ];
         test.concurrent.each<string>(filters)('recognises %j', (filter) => {
             // Arrange
@@ -510,6 +526,126 @@ describe('Query', () => {
 
                 // Act, Assert
                 shouldSupportFiltering([happensFilter], [line], expectedResult);
+            },
+        );
+    });
+
+    describe('filtering with boolean operators', () => {
+        test.concurrent.each<[string, FilteringCase]>([
+            [
+                'simple OR',
+                {
+                    filters: [
+                        '"has due date" OR (description includes special)',
+                    ],
+                    tasks: [
+                        '- [ ] task 1',
+                        '- [ ] task 2 🛫 2022-04-20 ⏳ 2022-04-20 📅 2022-04-20',
+                        '- [ ] task 3 📅 2022-04-20',
+                        '- [ ] special task 4',
+                    ],
+                    expectedResult: [
+                        '- [ ] task 2 🛫 2022-04-20 ⏳ 2022-04-20 📅 2022-04-20',
+                        '- [ ] task 3 📅 2022-04-20',
+                        '- [ ] special task 4',
+                    ],
+                },
+            ],
+            [
+                'simple AND',
+                {
+                    filters: [
+                        '(has start date) AND "description includes some"',
+                    ],
+                    tasks: [
+                        '- [ ] task 1',
+                        '- [ ] some task 2 🛫 2022-04-20 ⏳ 2022-04-20 📅 2022-04-20',
+                        '- [ ] any task 3 🛫 2022-04-20',
+                        '- [ ] special task 4',
+                    ],
+                    expectedResult: [
+                        '- [ ] some task 2 🛫 2022-04-20 ⏳ 2022-04-20 📅 2022-04-20',
+                    ],
+                },
+            ],
+            [
+                'simple AND NOT',
+                {
+                    filters: [
+                        '(has start date) AND NOT (description includes some)',
+                    ],
+                    tasks: [
+                        '- [ ] task 1',
+                        '- [ ] some task 2 🛫 2022-04-20 ⏳ 2022-04-20 📅 2022-04-20',
+                        '- [ ] any task 3 🛫 2022-04-20',
+                        '- [ ] special task 4',
+                    ],
+                    expectedResult: ['- [ ] any task 3 🛫 2022-04-20'],
+                },
+            ],
+            [
+                'simple OR NOT',
+                {
+                    filters: [
+                        '(has start date) OR NOT (description includes special)',
+                    ],
+                    tasks: [
+                        '- [ ] task 1',
+                        '- [ ] some task 2 🛫 2022-04-20 ⏳ 2022-04-20 📅 2022-04-20',
+                        '- [ ] any task 3 🛫 2022-04-20',
+                        '- [ ] special task 4',
+                    ],
+                    expectedResult: [
+                        '- [ ] task 1',
+                        '- [ ] some task 2 🛫 2022-04-20 ⏳ 2022-04-20 📅 2022-04-20',
+                        '- [ ] any task 3 🛫 2022-04-20',
+                    ],
+                },
+            ],
+            [
+                'AND-first composition',
+                {
+                    filters: [
+                        '(has start date) AND ((description includes some) OR (has due date))',
+                    ],
+                    tasks: [
+                        '- [ ] task 1',
+                        '- [ ] some task 2 🛫 2022-04-20 ⏳ 2022-04-20 📅 2022-04-20',
+                        '- [ ] any task 3 🛫 2022-04-20',
+                        '- [ ] any task 4 🛫 2022-04-20 📅 2022-04-20',
+                        '- [ ] special task 4',
+                    ],
+                    expectedResult: [
+                        '- [ ] some task 2 🛫 2022-04-20 ⏳ 2022-04-20 📅 2022-04-20',
+                        '- [ ] any task 4 🛫 2022-04-20 📅 2022-04-20',
+                    ],
+                },
+            ],
+            [
+                'OR-first composition',
+                {
+                    filters: [
+                        '(has start date) OR ((description includes special) AND (has due date))',
+                    ],
+                    tasks: [
+                        '- [ ] special task 1',
+                        '- [ ] some task 2 🛫 2022-04-20 ⏳ 2022-04-20 📅 2022-04-20',
+                        '- [ ] any task 3 🛫 2022-04-20',
+                        '- [ ] any task 4 🛫 2022-04-20 📅 2022-04-20',
+                        '- [ ] special task 4 📅 2022-04-20',
+                    ],
+                    expectedResult: [
+                        '- [ ] some task 2 🛫 2022-04-20 ⏳ 2022-04-20 📅 2022-04-20',
+                        '- [ ] any task 3 🛫 2022-04-20',
+                        '- [ ] any task 4 🛫 2022-04-20 📅 2022-04-20',
+                        '- [ ] special task 4 📅 2022-04-20',
+                    ],
+                },
+            ],
+        ])(
+            'should support boolean filtering %s',
+            (_, { tasks: allTaskLines, filters, expectedResult }) => {
+                shouldSupportFiltering(filters, allTaskLines, expectedResult);
             },
         );
     });

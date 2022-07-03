@@ -41,22 +41,18 @@ When the day changes, relative dates like `due today` are re-evaluated so that t
 
 ## Matching
 
-All filters of a query have to match in order for a task to be listed.
-This means you cannot show tasks that have "GitHub in the path and have no due date or are due after 2021-04-04".
-Instead you would have two queries, one for each condition:
-
-    ### Not due
+Each line of a query has to match in order for a task to be listed.
+In other words, lines are considered to have an 'AND' operator between them.
+Within each line, you can use the boolean operators AND, OR, AND NOT, OR NOT and XOR, as long as individual filters are wrapped in parenthesis or quotes:
 
     ```tasks
-    no due date
+    (no due date) OR (due after 2021-04-04)
     path includes GitHub
     ```
 
-    ### Due after 2021-04-04
-
     ```tasks
     due after 2021-04-04
-    path includes GitHub
+    (path includes GitHub) AND NOT "tags include #todo"
     ```
 
 ---
