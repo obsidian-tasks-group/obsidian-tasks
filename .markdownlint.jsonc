@@ -1,5 +1,6 @@
 {
   "MD013": false, // Ignore the line length rule.
   "MD025": false, // Allow the title in the front matter and markdown heading one to match.
-  "MD033": false // Allow Inline HTML.
+  "MD033": false, // Allow Inline HTML.
+  "MD046": false // Allow fenced code blocks, for syntax hughlighting.
 }
