@@ -109,6 +109,9 @@ export class Task {
     // description: '#dog #car http://www/ddd#ere #house'
     // matches: #dog, #car, #house
     public static readonly hashTags = /(^|\s)#[^ !@#$%^&*(),.?":{}|<>]*/g;
+    public static readonly hashTagsFromEnd = new RegExp(
+        this.hashTags.source + '$',
+    );
 
     private _urgency: number | null = null;
 
@@ -242,10 +245,16 @@ export class Task {
         let scheduledDate: Moment | null = null;
         let dueDate: Moment | null = null;
         let doneDate: Moment | null = null;
+        let recurrenceRule: string = '';
         let recurrence: Recurrence | null = null;
         let tags: any = [];
+        // Tags that are removed from the end while parsing, but we want to add them back for being part of the description.
+        // In the original task description they are possibly mixed with other components
+        // (e.g. #tag1 <due date> #tag2), they do not have to all trail all task components,
+        // but eventually we want to paste them back to the task description at the end
+        let trailingTags = '';
         // Add a "max runs" failsafe to never end in an endless loop:
-        const maxRuns = 7;
+        const maxRuns = 20;
         let runs = 0;
         do {
             matched = false;
@@ -310,21 +319,50 @@ export class Task {
 
             const recurrenceMatch = description.match(Task.recurrenceRegex);
             if (recurrenceMatch !== null) {
-                recurrence = Recurrence.fromText({
-                    recurrenceRuleText: recurrenceMatch[1].trim(),
-                    startDate,
-                    scheduledDate,
-                    dueDate,
-                });
-
+                // Save the recurrence rule, but *do not parse it yet*.
+                // Creating the Recurrence object requires a reference date (e.g. a due date),
+                // and it might appear in the next (earlier in the line) tokens to parse
+                recurrenceRule = recurrenceMatch[1].trim();
                 description = description
                     .replace(Task.recurrenceRegex, '')
                     .trim();
                 matched = true;
             }
 
+            // Match tags from the end to allow users to mix the various task components with
+            // tags. These tags will be added back to the description below
+            const tagsMatch = description.match(Task.hashTagsFromEnd);
+            if (tagsMatch != null) {
+                description = description
+                    .replace(Task.hashTagsFromEnd, '')
+                    .trim();
+                matched = true;
+                const tagName = tagsMatch[0].trim();
+                // Adding to the left because the matching is done right-to-left
+                trailingTags =
+                    trailingTags.length > 0
+                        ? [tagName, trailingTags].join(' ')
+                        : tagName;
+            }
+
             runs++;
         } while (matched && runs <= maxRuns);
+
+        // Now that we have all the task details, parse the recurrence rule if we found any
+        if (recurrenceRule.length > 0) {
+            recurrence = Recurrence.fromText({
+                recurrenceRuleText: recurrenceRule,
+                startDate,
+                scheduledDate,
+                dueDate,
+            });
+        }
+
+        // Add back any trailing tags to the description. We removed them so we can parse the rest of the
+        // components but now we want them back.
+        // The goal is for a task of them form 'Do something #tag1 (due) tomorrow #tag2 (start) today'
+        // to actually have the description 'Do something #tag1 #tag2'
+        if (trailingTags.length > 0) description += ' ' + trailingTags;
 
         // Tags are found in the string and pulled out but not removed,
         // so when returning the entire task it will match what the user
