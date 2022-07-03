@@ -1,25 +1,11 @@
 import { Group } from './Query/Group';
+import { parseFilter } from './Query/FilterParser';
 import type { TaskGroups } from './Query/TaskGroups';
 
 import { LayoutOptions } from './LayoutOptions';
 import { Sort } from './Sort';
 import type { Task } from './Task';
 import type { IQuery } from './IQuery';
-
-import type { Field } from './Query/Filter/Field';
-import { DescriptionField } from './Query/Filter/DescriptionField';
-import { DoneDateField } from './Query/Filter/DoneDateField';
-import { DueDateField } from './Query/Filter/DueDateField';
-import { ExcludeSubItemsField } from './Query/Filter/ExcludeSubItemsField';
-import { HeadingField } from './Query/Filter/HeadingField';
-import { PathField } from './Query/Filter/PathField';
-import { PriorityField } from './Query/Filter/PriorityField';
-import { ScheduledDateField } from './Query/Filter/ScheduledDateField';
-import { StartDateField } from './Query/Filter/StartDateField';
-import { HappensDateField } from './Query/Filter/HappensDateField';
-import { RecurringField } from './Query/Filter/RecurringField';
-import { StatusField } from './Query/Filter/StatusField';
-import { TagsField } from './Query/Filter/TagsField';
 
 export type SortingProperty =
     | 'urgency'
@@ -89,32 +75,6 @@ export class Query implements IQuery {
                     case this.shortModeRegexp.test(line):
                         this._layoutOptions.shortMode = true;
                         break;
-                    case this.parseFilter(line, new StatusField()):
-                        break;
-                    case this.parseFilter(line, new RecurringField()):
-                        break;
-                    case this.parseFilter(line, new PriorityField()):
-                        break;
-                    case this.parseFilter(line, new HappensDateField()):
-                        break;
-                    case this.parseFilter(line, new StartDateField()):
-                        break;
-                    case this.parseFilter(line, new ScheduledDateField()):
-                        break;
-                    case this.parseFilter(line, new DueDateField()):
-                        break;
-                    case this.parseFilter(line, new DoneDateField()):
-                        break;
-                    case this.parseFilter(line, new PathField()):
-                        break;
-                    case this.parseFilter(line, new DescriptionField()):
-                        break;
-                    case this.parseFilter(line, new TagsField()):
-                        break;
-                    case this.parseFilter(line, new HeadingField()):
-                        break;
-                    case this.parseFilter(line, new ExcludeSubItemsField()):
-                        break;
                     case this.limitRegexp.test(line):
                         this.parseLimit({ line });
                         break;
@@ -129,6 +89,8 @@ export class Query implements IQuery {
                         break;
                     case this.commentRegexp.test(line):
                         // Comment lines are ignored
+                        break;
+                    case this.parseFilter(line):
                         break;
                     default:
                         this._error = `do not understand query: ${line}`;
@@ -208,19 +170,14 @@ export class Query implements IQuery {
         }
     }
 
-    private parseFilter(line: string, field: Field) {
-        if (field.canCreateFilterForLine(line)) {
-            const { filter, error } = field.createFilterOrErrorMessage(line);
-
-            if (filter) {
-                this._filters.push(filter);
-            } else {
-                this._error = error;
-            }
+    private parseFilter(line: string) {
+        const filterOrError = parseFilter(line);
+        if (filterOrError != null) {
+            if (filterOrError.filter) this._filters.push(filterOrError.filter);
+            else this._error = filterOrError.error;
             return true;
-        } else {
-            return false;
         }
+        return false;
     }
 
     private parseLimit({ line }: { line: string }): void {
