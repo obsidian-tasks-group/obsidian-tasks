@@ -111,7 +111,6 @@ export class Task {
     public static readonly hashTags = /(^|\s)#[^ !@#$%^&*(),.?":{}|<>]*/g;
     public static readonly hashTagsFromEnd = new RegExp(
         this.hashTags.source + '$',
-        'g',
     );
 
     private _urgency: number | null = null;
@@ -255,7 +254,7 @@ export class Task {
         // but eventually we want to paste them back to the task description at the end
         let trailingTags = '';
         // Add a "max runs" failsafe to never end in an endless loop:
-        const maxRuns = 7;
+        const maxRuns = 20;
         let runs = 0;
         do {
             matched = false;
@@ -330,8 +329,8 @@ export class Task {
                 matched = true;
             }
 
-            // Match tags from the end of the task description, not to be actually used,
-            // but just to allow the user to end a task description with tags
+            // Match tags from the end to allow users to mix the various task components with
+            // tags. These tags will be added back to the description below
             const tagsMatch = description.match(Task.hashTagsFromEnd);
             if (tagsMatch != null) {
                 description = description
