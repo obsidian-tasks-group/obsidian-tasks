@@ -15,26 +15,26 @@ import { BooleanField } from './Filter/BooleanField';
 
 import type { FilterOrErrorMessage } from './Filter/Filter';
 
-const fieldTypes = [
-    BooleanField,
-    StatusField,
-    RecurringField,
-    PriorityField,
-    HappensDateField,
-    StartDateField,
-    ScheduledDateField,
-    DueDateField,
-    DoneDateField,
-    PathField,
-    DescriptionField,
-    TagsField,
-    HeadingField,
-    ExcludeSubItemsField,
+const fieldCreators = [
+    () => new BooleanField(),
+    () => new StatusField(),
+    () => new RecurringField(),
+    () => new PriorityField(),
+    () => new HappensDateField(),
+    () => new StartDateField(),
+    () => new ScheduledDateField(),
+    () => new DueDateField(),
+    () => new DoneDateField(),
+    () => new PathField(),
+    () => new DescriptionField(),
+    () => new TagsField(),
+    () => new HeadingField(),
+    () => new ExcludeSubItemsField(),
 ];
 
 export function parseFilter(filterString: string): FilterOrErrorMessage | null {
-    for (const fieldType of fieldTypes) {
-        const field = new fieldType();
+    for (const creator of fieldCreators) {
+        const field = creator();
         if (field.canCreateFilterForLine(filterString))
             return field.createFilterOrErrorMessage(filterString);
     }
