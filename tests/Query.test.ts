@@ -603,6 +603,24 @@ describe('Query', () => {
                 },
             ],
             [
+                'simple XOR',
+                {
+                    filters: [
+                        '(has start date) XOR (description includes special)',
+                    ],
+                    tasks: [
+                        '- [ ] task 1',
+                        '- [ ] special task 2 🛫 2022-04-20 ⏳ 2022-04-20 📅 2022-04-20',
+                        '- [ ] any task 3 🛫 2022-04-20',
+                        '- [ ] special task 4',
+                    ],
+                    expectedResult: [
+                        '- [ ] any task 3 🛫 2022-04-20',
+                        '- [ ] special task 4',
+                    ],
+                },
+            ],
+            [
                 'AND-first composition',
                 {
                     filters: [

@@ -12,7 +12,8 @@ import { Filter, FilterOrErrorMessage } from './Filter';
  * The filters can be mixed and matched with any boolean operators as long as the individual filters are
  * wrapped in either paranthesis or quotes -- (filter1) or "filter1".
  * What happens internally is that when the boolean field is asked to create a filter, it parses the boolean
- * query into a logical postfix structure, with the individual filter components as "identifier" tokens.
+ * query into a logical postfix expression (https://en.wikipedia.org/wiki/Reverse_Polish_notation),
+ * with the individual filter components as "identifier" tokens.
  * These identifiers have an associated actual Filter (which is cached during the query parsing).
  * The returned Filter of the whole boolean query is eventually a function that for each Task object,
  * evaluates the complete postfix expression by going through the individual filters and then resolving
@@ -97,6 +98,8 @@ export class BooleanField extends Field {
      * This run a Task object through a complete boolean expression.
      * It basically resolves the postfix expression until it is reduced into a single boolean value,
      * which is the result of the complete expression.
+     * See here how it works: http://www.btechsmartclass.com/data_structures/postfix-evaluation.html
+     * Another reference: https://www.tutorialspoint.com/Evaluate-Postfix-Expression
      */
     private filterTaskWithParsedQuery(
         task: Task,
@@ -132,8 +135,14 @@ export class BooleanField extends Field {
                     const arg1 = toBool(booleanStack.pop());
                     const arg2 = toBool(booleanStack.pop());
                     booleanStack.push(toString(arg1 && arg2));
+                } else if (token.value === 'XOR') {
+                    const arg1 = toBool(booleanStack.pop());
+                    const arg2 = toBool(booleanStack.pop());
+                    booleanStack.push(
+                        toString((arg1 && !arg2) || (!arg1 && arg2)),
+                    );
                 } else {
-                    throw Error('Unsuppoted operator' + token.value);
+                    throw Error('Unsuppoted operator ' + token.value);
                 }
             } else {
                 throw Error('Unsupported token type:' + token);
