@@ -48,6 +48,7 @@ describe('path', () => {
         testTaskFilterForTaskWithPath(filter, '', false);
         testTaskFilterForTaskWithPath(filter, '/some/path/wibble.md', true);
         testTaskFilterForTaskWithPath(filter, '/some/path/wobble.md', true);
+        testTaskFilterForTaskWithPath(filter, '/some/path/WobblE.md', false); // confirm case-sensitive
         testTaskFilterForTaskWithPath(filter, '/other/path/file.md', false);
     });
 });
