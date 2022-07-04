@@ -621,6 +621,19 @@ describe('Query', () => {
                 },
             ],
             [
+                'simple NOT',
+                {
+                    filters: ['NOT (has start date)'],
+                    tasks: [
+                        '- [ ] task 1',
+                        '- [ ] special task 2 🛫 2022-04-20 ⏳ 2022-04-20 📅 2022-04-20',
+                        '- [ ] any task 3 🛫 2022-04-20',
+                        '- [ ] special task 4',
+                    ],
+                    expectedResult: ['- [ ] task 1', '- [ ] special task 4'],
+                },
+            ],
+            [
                 'AND-first composition',
                 {
                     filters: [
@@ -658,6 +671,22 @@ describe('Query', () => {
                         '- [ ] any task 4 🛫 2022-04-20 📅 2022-04-20',
                         '- [ ] special task 4 📅 2022-04-20',
                     ],
+                },
+            ],
+            [
+                'NOT-first composition',
+                {
+                    filters: [
+                        'NOT ((has start date) OR (description includes special))',
+                    ],
+                    tasks: [
+                        '- [ ] regular task 1',
+                        '- [ ] some task 2 🛫 2022-04-20 ⏳ 2022-04-20 📅 2022-04-20',
+                        '- [ ] any task 3 🛫 2022-04-20',
+                        '- [ ] any task 4 🛫 2022-04-20 📅 2022-04-20',
+                        '- [ ] special task 4 📅 2022-04-20',
+                    ],
+                    expectedResult: ['- [ ] regular task 1'],
                 },
             ],
         ])(
