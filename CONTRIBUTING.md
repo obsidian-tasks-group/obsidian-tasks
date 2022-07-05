@@ -127,6 +127,15 @@ Toggle behavior:
 
 Obsidian writes the changes to disk at its own pace.
 
+### How do I test a GitHub build of the Tasks plugin?
+
+1. Go to the [Verify Commit actions page](https://github.com/obsidian-tasks-group/obsidian-tasks/actions/workflows/verify.yml).
+2. Click on the build of the code version you want to test. For example, you might click on the build for a particular pull request, or the most recent build on `main`.
+3. In the Artifacts section at the bottom, click on **dist-verified** to download a build of the plugin.
+4. Expand the downloaded `dist-verified.zip` file
+5. Copy the files in the expanded folder to the `.obsidian/plugins/obsidian-tasks-plugin/` folder in your vault, over-writing the previous files.
+6. Restart Obsidian.
+
 ### How do I make a release?
 
 1. Check out the `main` branch
