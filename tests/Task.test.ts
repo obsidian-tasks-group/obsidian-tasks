@@ -122,6 +122,40 @@ describe('parsing', () => {
         expect(task!.dueDate!.isSame(moment('2021-09-12', 'YYYY-MM-DD')));
         expect(task!.priority == Priority.High);
     });
+
+    it('supports parsing large number of values', () => {
+        // Arrange
+        const line =
+            '- [ ] Wobble ⏫  #tag1 ✅ 2022-07-02 #tag2  📅 2022-07-02 #tag3 ⏳ 2022-07-02 #tag4 🛫 2022-07-02 #tag5  🔁 every day  #tag6 #tag7 #tag8 #tag9 #tag10';
+
+        // Act
+        const task = fromLine({
+            line,
+        });
+
+        // Assert
+        expect(task).not.toBeNull();
+        expect(task!.description).toEqual(
+            'Wobble #tag1 #tag2 #tag3 #tag4 #tag5 #tag6 #tag7 #tag8 #tag9 #tag10',
+        );
+        expect(task!.dueDate!.isSame(moment('022-07-02', 'YYYY-MM-DD')));
+        expect(task!.doneDate!.isSame(moment('022-07-02', 'YYYY-MM-DD')));
+        expect(task!.startDate!.isSame(moment('022-07-02', 'YYYY-MM-DD')));
+        expect(task!.scheduledDate!.isSame(moment('022-07-02', 'YYYY-MM-DD')));
+        expect(task!.priority == Priority.High);
+        expect(task!.tags).toStrictEqual([
+            '#tag1',
+            '#tag2',
+            '#tag3',
+            '#tag4',
+            '#tag5',
+            '#tag6',
+            '#tag7',
+            '#tag8',
+            '#tag9',
+            '#tag10',
+        ]);
+    });
 });
 
 type TagParsingExpectations = {
@@ -132,14 +166,13 @@ type TagParsingExpectations = {
 };
 
 function constructTaskFromLine(line: string) {
-    const task = Task.fromLine({
+    return Task.fromLine({
         line,
         path: 'file.md',
         sectionStart: 0,
         sectionIndex: 0,
         precedingHeader: '',
     });
-    return task;
 }
 
 describe('parsing tags', () => {
@@ -224,17 +257,17 @@ describe('parsing tags', () => {
         },
         {
             markdownTask:
-                '- [ ] Export [Cloud Feedly feeds](http://cloud.feedly.com/#opml) #context/pc_clare 🔁 every 4 weeks on Sunday ⏳ 2022-05-15 #context/more_context',
+                '- [ ] Export [Cloud Feedly feeds](https://cloud.feedly.com/#opml) #context/pc_clare 🔁 every 4 weeks on Sunday ⏳ 2022-05-15 #context/more_context',
             expectedDescription:
-                'Export [Cloud Feedly feeds](http://cloud.feedly.com/#opml) #context/pc_clare #context/more_context',
+                'Export [Cloud Feedly feeds](https://cloud.feedly.com/#opml) #context/pc_clare #context/more_context',
             extractedTags: ['#context/pc_clare', '#context/more_context'],
             globalFilter: '',
         },
         {
             markdownTask:
-                '- [ ] Export [Cloud Feedly feeds](http://cloud.feedly.com/#opml) #context/pc_clare ⏳ 2022-05-15 🔁 every 4 weeks on Sunday #context/more_context',
+                '- [ ] Export [Cloud Feedly feeds](https://cloud.feedly.com/#opml) #context/pc_clare ⏳ 2022-05-15 🔁 every 4 weeks on Sunday #context/more_context',
             expectedDescription:
-                'Export [Cloud Feedly feeds](http://cloud.feedly.com/#opml) #context/pc_clare #context/more_context',
+                'Export [Cloud Feedly feeds](https://cloud.feedly.com/#opml) #context/pc_clare #context/more_context',
             extractedTags: ['#context/pc_clare', '#context/more_context'],
             globalFilter: '',
         },
@@ -618,39 +651,5 @@ describe('toggle done', () => {
             nextScheduled: undefined,
             nextStart: undefined,
         });
-    });
-
-    it('supports parsing large number of values', () => {
-        // Arrange
-        const line =
-            '- [ ] Wobble ⏫  #tag1 ✅ 2022-07-02 #tag2  📅 2022-07-02 #tag3 ⏳ 2022-07-02 #tag4 🛫 2022-07-02 #tag5  🔁 every day  #tag6 #tag7 #tag8 #tag9 #tag10';
-
-        // Act
-        const task = fromLine({
-            line,
-        });
-
-        // Assert
-        expect(task).not.toBeNull();
-        expect(task!.description).toEqual(
-            'Wobble #tag1 #tag2 #tag3 #tag4 #tag5 #tag6 #tag7 #tag8 #tag9 #tag10',
-        );
-        expect(task!.dueDate!.isSame(moment('022-07-02', 'YYYY-MM-DD')));
-        expect(task!.doneDate!.isSame(moment('022-07-02', 'YYYY-MM-DD')));
-        expect(task!.startDate!.isSame(moment('022-07-02', 'YYYY-MM-DD')));
-        expect(task!.scheduledDate!.isSame(moment('022-07-02', 'YYYY-MM-DD')));
-        expect(task!.priority == Priority.High);
-        expect(task!.tags).toStrictEqual([
-            '#tag1',
-            '#tag2',
-            '#tag3',
-            '#tag4',
-            '#tag5',
-            '#tag6',
-            '#tag7',
-            '#tag8',
-            '#tag9',
-            '#tag10',
-        ]);
     });
 });
