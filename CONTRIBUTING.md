@@ -136,6 +136,10 @@ Obsidian writes the changes to disk at its own pace.
 5. Copy the files in the expanded folder to the `.obsidian/plugins/obsidian-tasks-plugin/` folder in your vault, over-writing the previous files.
 6. Restart Obsidian.
 
+### How do I smoke-test the Tasks plugin?
+
+Follow the steps in `resources/sample_vaults/Tasks-Demo/Manual Testing/Smoke Testing the Tasks Plugin.md`.
+
 ### How do I make a release?
 
 1. Check out the `main` branch
