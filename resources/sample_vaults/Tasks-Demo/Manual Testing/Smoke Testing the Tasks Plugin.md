@@ -92,7 +92,7 @@ heading includes Rendering of Task Blocks
 ### Create or edit Task modal
 
 - This text should copied in to the task Description, after following steps below
-- [ ] #task Click on the list item above, then do the following steps and checks:
+- [ ] #task Switch to **Live Preview** or **Source mode**, Click on the list item above, then do the following numbered steps and checks:
     1. run **Tasks: Create or edit task**
     2. **Check** that the text in the list item is copied in to the Description field
     3. Type some values in to the fields
