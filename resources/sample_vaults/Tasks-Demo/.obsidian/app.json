@@ -4,5 +4,6 @@
   "useTab": false,
   "readableLineLength": false,
   "newFileLocation": "current",
-  "attachmentFolderPath": "./"
+  "attachmentFolderPath": "./",
+  "spellcheck": true
 }
