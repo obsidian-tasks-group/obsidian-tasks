@@ -23,7 +23,7 @@ describe('boolean query', () => {
         it('AND', () => {
             // Arrange
             const filter = new BooleanField().createFilterOrErrorMessage(
-                '(description includes d1) AND (description includes d2)',
+                '"description includes d1" AND "description includes d2"', // Use "..." instead of (), for completeness
             );
 
             // Act, Assert
