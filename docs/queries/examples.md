@@ -27,6 +27,16 @@ All open tasks that are due within the next two weeks, but are not overdue (due 
 
 ---
 
+All open tasks that are due within the next two weeks, and either have the #inbox tag, or are in an Inbox note:
+
+    ```tasks
+    not done
+    (due after yesterday) AND (due before in two weeks)
+    (tags include #inbox) OR (path includes Inbox)
+    ```
+
+---
+
 All done tasks that are anywhere in the vault under a `tasks` heading (e.g. `## Tasks`):
 
     ```tasks
