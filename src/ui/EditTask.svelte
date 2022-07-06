@@ -36,6 +36,7 @@
     let parsedDueDate: string = '';
     let parsedRecurrence: string = '';
     let parsedDone: string = '';
+    let removedGlobalFilter: boolean = false;
 
     // 'weekend' abbreviation ommitted due to lack of space.
     let datePlaceholder = "Try 'Monday' or 'tomorrow', or [td|tm|yd|tw|nw|we] then space.";
@@ -102,6 +103,7 @@
 
     onMount(() => {
         const { globalFilter } = getSettings();
+        if (task.description.includes(globalFilter)) removedGlobalFilter = true;
         const description = task.description
             .replace(globalFilter, '')
             .replace('  ', ' ')
@@ -138,7 +140,7 @@
     const _onSubmit = () => {
         const { globalFilter } = getSettings();
         let description = editableTask.description.trim();
-        if (!description.includes(globalFilter)) {
+        if (removedGlobalFilter) {
             description = globalFilter + ' ' + description;
         }
 
