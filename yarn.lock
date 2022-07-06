@@ -1083,6 +1083,11 @@ binary-extensions@^2.0.0:
   resolved "https://registry.yarnpkg.com/binary-extensions/-/binary-extensions-2.2.0.tgz#75f502eeaf9ffde42fc98829645be4ea76bd9e2d"
   integrity sha512-jDctJ/IVQbZoJykoeHbhXpOlNBqGNcwXJKJog42E5HDPUwQTSdjCHdihjj0DlnheQ7blbT6dHOafNAiS8ooQKA==
 
+boon-js@^2.0.3:
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/boon-js/-/boon-js-2.0.3.tgz#8ebfaf219908b9d9259d050ac9de079ebbd7d4b7"
+  integrity sha512-xcLS25RHhH/Bl+toajfOnTzynzWOJSRYG0m2W/8RePZ2xqPPblYmKgd/nZWbA4U7PQ2ohq49YxIWhsUJWvGwXQ==
+
 brace-expansion@^1.1.7:
   version "1.1.11"
   resolved "https://registry.yarnpkg.com/brace-expansion/-/brace-expansion-1.1.11.tgz#3c7fcbf529d87226f3d2f52b966ff5271eb441dd"
