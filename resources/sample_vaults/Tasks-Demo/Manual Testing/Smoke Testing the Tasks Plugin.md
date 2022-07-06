@@ -24,6 +24,9 @@
   - See the [FAQs in the CONTRIBUTING page](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/CONTRIBUTING.md#faqs).
 - This note is a self-contained set of steps to check. You should check off tasks beginning `- [ ] check:` as you complete each section.
 
+> [!Important]
+> Several task blocks in this file depend of the the file name being unchanged. Please don't rename the file before running the tests.
+
 ---
 
 ## Remaining tests
