@@ -19,6 +19,7 @@ function testWithDescription(
 }
 
 describe('boolean query', () => {
+    // These tests are intended to be really simple, so it is easy to reason about the correct behaviour of the code.
     describe('basic operators', () => {
         it('AND', () => {
             // Arrange
