@@ -16,7 +16,6 @@ import { BooleanField } from './Filter/BooleanField';
 import type { FilterOrErrorMessage } from './Filter/Filter';
 
 const fieldCreators = [
-    () => new BooleanField(),
     () => new StatusField(),
     () => new RecurringField(),
     () => new PriorityField(),
@@ -30,6 +29,7 @@ const fieldCreators = [
     () => new TagsField(),
     () => new HeadingField(),
     () => new ExcludeSubItemsField(),
+    () => new BooleanField(),
 ];
 
 export function parseFilter(filterString: string): FilterOrErrorMessage | null {

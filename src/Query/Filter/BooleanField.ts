@@ -20,11 +20,12 @@ import { Filter, FilterOrErrorMessage } from './Filter';
  * the expression into a single boolean entity.
  */
 export class BooleanField extends Field {
-    private static readonly basicBooleanRegexp = /.*(AND|OR|XOR|NOT).*/g;
+    private readonly basicBooleanRegexp = /.*(AND|OR|XOR|NOT)\s*[("].*/g;
+    private readonly supportedOperators = ['AND', 'OR', 'XOR', 'NOT'];
     private subFields: Record<string, Filter> = {};
 
     protected filterRegexp(): RegExp {
-        return BooleanField.basicBooleanRegexp;
+        return this.basicBooleanRegexp;
     }
 
     public createFilterOrErrorMessage(line: string): FilterOrErrorMessage {
@@ -70,6 +71,19 @@ export class BooleanField extends Field {
                         } else if (parsedField.filter) {
                             this.subFields[token.value] = parsedField.filter;
                         }
+                    }
+                } else if (token.name === 'OPERATOR') {
+                    // While we're already iterating over the expression, although we don't need the operators at
+                    // this stage but only in filterTaskWithParsedQuery below, we're using the opportunity to verify
+                    // they are valid. If we won't, then an invalid operator will only be detected when the query is
+                    // run on a task
+                    if (token.value == undefined) {
+                        result.error = 'empty operator in boolean query';
+                        return result;
+                    }
+                    if (!this.supportedOperators.includes(token.value)) {
+                        result.error = `unknown boolean operator '${token.value}'`;
+                        return result;
                     }
                 }
             }
