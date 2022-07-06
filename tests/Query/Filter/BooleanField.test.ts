@@ -97,7 +97,12 @@ describe('boolean query', () => {
         });
     });
 
-    describe('error cases', () => {
+    describe('error cases - to show error messages', () => {
+        it('empty line', () => {
+            const filter = new BooleanField().createFilterOrErrorMessage('');
+            expect(filter.error).toStrictEqual('empty line');
+        });
+
         it('Invalid AND', () => {
             const filter = new BooleanField().createFilterOrErrorMessage(
                 'AND (description includes d1)',
@@ -116,6 +121,26 @@ describe('boolean query', () => {
             );
         });
 
-        // TODO Check all error cases are reached - see breakpoints
+        it('Invalid sub-expression', () => {
+            const filter = new BooleanField().createFilterOrErrorMessage(
+                'NOT (description blahblah d1)',
+            );
+            expect(filter.error).toStrictEqual(
+                "couldn't parse sub-expression 'description blahblah d1'",
+            );
+        });
+
+        it('Invalid sub-expression - gives error', () => {
+            const filter = new BooleanField().createFilterOrErrorMessage(
+                'NOT (happens before blahblahblah)',
+            );
+            expect(filter.error).toStrictEqual(
+                "couldn't parse sub-expression 'happens before blahblahblah': do not understand happens date",
+            );
+        });
+
+        // Have not managed to create instructions that trigger these errors:
+        //      result.error = 'empty operator in boolean query';
+        //      result.error = `unknown boolean operator '${token.value}'`;
     });
 });
