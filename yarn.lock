@@ -1589,12 +1589,10 @@ esbuild-sunos-64@0.13.15:
   resolved "https://registry.yarnpkg.com/esbuild-sunos-64/-/esbuild-sunos-64-0.13.15.tgz#d0b6454a88375ee8d3964daeff55c85c91c7cef4"
   integrity sha512-lbivT9Bx3t1iWWrSnGyBP9ODriEvWDRiweAs69vI+miJoeKwHWOComSRukttbuzjZ8r1q0mQJ8Z7yUsDJ3hKdw==
 
-esbuild-svelte@^0.6.0:
-  version "0.6.0"
-  resolved "https://registry.yarnpkg.com/esbuild-svelte/-/esbuild-svelte-0.6.0.tgz#bc606a9249eeb66c32cb4c83df422927a612d801"
-  integrity sha512-XxfVGWWIIagrL8ElwE5im10hGeJWH8xDKplFmg/B64GGwc3i2k96Y6/NiDdskB8ZZ3gABsG2r3hXdH6Nb+ck3w==
-  dependencies:
-    svelte "^3.44.1"
+esbuild-svelte@^0.7.1:
+  version "0.7.1"
+  resolved "https://registry.yarnpkg.com/esbuild-svelte/-/esbuild-svelte-0.7.1.tgz#5390e2c66937fed51dffa9d4d8ed0547a6628357"
+  integrity sha512-83vRAJ2OmoKxmK+rLFZVmyv5bJ8ahsYQwJ2RGmNAlHBIHq4ENUwA/hiwA2+AohrWD1BgZnGPMj8DL3l0I0xkug==
 
 esbuild-windows-32@0.13.15:
   version "0.13.15"
@@ -3839,7 +3837,7 @@ svelte-preprocess@^4.0.0, svelte-preprocess@^4.10.1:
     sorcery "^0.10.0"
     strip-indent "^3.0.0"
 
-svelte@^3.44.1, svelte@^3.48.0:
+svelte@^3.48.0:
   version "3.48.0"
   resolved "https://registry.yarnpkg.com/svelte/-/svelte-3.48.0.tgz#f98c866d45e155bad8e1e88f15f9c03cd28753d3"
   integrity sha512-fN2YRm/bGumvjUpu6yI3BpvZnpIm9I6A7HR4oUNYd7ggYyIwSA/BX7DJ+UXXffLp6XNcUijyLvttbPVCYa/3xQ==
