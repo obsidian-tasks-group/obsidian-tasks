@@ -630,10 +630,10 @@
   resolved "https://registry.yarnpkg.com/@tootallnate/once/-/once-1.1.2.tgz#ccb91445360179a04e7fe6aff78c00ffc1eeaf82"
   integrity sha512-RbzJvlNzmRq5c3O09UipeuXno4tA1FE6ikOjxZK0tuxVv3412l64l5t1W5pj4+rJq9vpkm/kwiR07aZXnsKPxw==
 
-"@tsconfig/svelte@^1.0.10":
-  version "1.0.13"
-  resolved "https://registry.yarnpkg.com/@tsconfig/svelte/-/svelte-1.0.13.tgz#2fa34376627192c0d643ce54964915e2bd3a58e4"
-  integrity sha512-5lYJP45Xllo4yE/RUBccBT32eBlRDbqN8r1/MIvQbKxW3aFqaYPCNgm8D5V20X4ShHcwvYWNlKg3liDh1MlBoA==
+"@tsconfig/svelte@^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@tsconfig/svelte/-/svelte-3.0.0.tgz#b06e059209f04c414de0069f2f0e2796d979fc6f"
+  integrity sha512-pYrtLtOwku/7r1i9AMONsJMVYAtk3hzOfiGNekhtq5tYBGA7unMve8RvUclKLMT3PrihvJqUmzsRGh0RP84hKg==
 
 "@types/babel__core@^7.0.0", "@types/babel__core@^7.1.14":
   version "7.1.16"
