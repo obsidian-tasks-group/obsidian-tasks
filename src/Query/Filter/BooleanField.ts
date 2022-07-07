@@ -59,17 +59,18 @@ export class BooleanField extends Field {
             // final token in the expression
             for (const token of postfixExpression) {
                 if (token.name === 'IDENTIFIER' && token.value) {
-                    if (!(token.value in this.subFields)) {
-                        const parsedField = parseFilter(token.value);
+                    const identifier = token.value.trim();
+                    if (!(identifier in this.subFields)) {
+                        const parsedField = parseFilter(identifier);
                         if (parsedField === null) {
-                            result.error = `couldn't parse sub-expression '${token.value}'`;
+                            result.error = `couldn't parse sub-expression '${identifier}'`;
                             return result;
                         }
                         if (parsedField.error) {
-                            result.error = `couldn't parse sub-expression '${token.value}': ${parsedField.error}`;
+                            result.error = `couldn't parse sub-expression '${identifier}': ${parsedField.error}`;
                             return result;
                         } else if (parsedField.filter) {
-                            this.subFields[token.value] = parsedField.filter;
+                            this.subFields[identifier] = parsedField.filter;
                         }
                     }
                 } else if (token.name === 'OPERATOR') {
@@ -132,7 +133,7 @@ export class BooleanField extends Field {
                 // For each identifier we created earlier the corresponding Filter, so now we can just evaluate the given
                 // task for each identifier that we find in the postfix expression.
                 if (token.value == null) throw Error('null token value'); // This should not happen
-                const filter = this.subFields[token.value];
+                const filter = this.subFields[token.value.trim()];
                 const result = filter(task);
                 booleanStack.push(toString(result));
             } else if (token.name === 'OPERATOR') {
