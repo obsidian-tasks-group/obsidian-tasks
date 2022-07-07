@@ -1,11 +1,5 @@
-import {
-    EventRef,
-    MetadataCache,
-    SectionCache,
-    TAbstractFile,
-    TFile,
-    Vault,
-} from 'obsidian';
+import { MetadataCache, TAbstractFile, TFile, Vault } from 'obsidian';
+import type { EventRef, SectionCache } from 'obsidian';
 import { Mutex } from 'async-mutex';
 
 import { Task } from './Task';
