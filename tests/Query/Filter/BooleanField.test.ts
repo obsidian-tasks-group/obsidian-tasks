@@ -96,6 +96,18 @@ describe('boolean query', () => {
             testWithDescription(filter, 'd2', false);
             testWithDescription(filter, 'd1 d2', true);
         });
+
+        it('input components dirty with whitespaces', () => {
+            const filter = new BooleanField().createFilterOrErrorMessage(
+                ' (description includes #context/location1) OR (description includes #context/location2 ) OR (  description includes #context/location3 ) OR   (  description includes #context/location4 )',
+            );
+
+            testWithDescription(filter, 'none', false);
+            testWithDescription(filter, 'xxx #context/location1', true);
+            testWithDescription(filter, 'xxx #context/location2', true);
+            testWithDescription(filter, 'xxx #context/location3', true);
+            testWithDescription(filter, 'xxx #context/location4', true);
+        });
     });
 
     describe('error cases - to show error messages', () => {
