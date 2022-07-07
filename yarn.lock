@@ -1083,6 +1083,11 @@ binary-extensions@^2.0.0:
   resolved "https://registry.yarnpkg.com/binary-extensions/-/binary-extensions-2.2.0.tgz#75f502eeaf9ffde42fc98829645be4ea76bd9e2d"
   integrity sha512-jDctJ/IVQbZoJykoeHbhXpOlNBqGNcwXJKJog42E5HDPUwQTSdjCHdihjj0DlnheQ7blbT6dHOafNAiS8ooQKA==
 
+boon-js@^2.0.3:
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/boon-js/-/boon-js-2.0.3.tgz#8ebfaf219908b9d9259d050ac9de079ebbd7d4b7"
+  integrity sha512-xcLS25RHhH/Bl+toajfOnTzynzWOJSRYG0m2W/8RePZ2xqPPblYmKgd/nZWbA4U7PQ2ohq49YxIWhsUJWvGwXQ==
+
 brace-expansion@^1.1.7:
   version "1.1.11"
   resolved "https://registry.yarnpkg.com/brace-expansion/-/brace-expansion-1.1.11.tgz#3c7fcbf529d87226f3d2f52b966ff5271eb441dd"
@@ -1649,10 +1654,10 @@ escodegen@^2.0.0:
   optionalDependencies:
     source-map "~0.6.1"
 
-eslint-config-prettier@^8.1.0:
-  version "8.3.0"
-  resolved "https://registry.yarnpkg.com/eslint-config-prettier/-/eslint-config-prettier-8.3.0.tgz#f7471b20b6fe8a9a9254cc684454202886a2dd7a"
-  integrity sha512-BgZuLUSeKzvlL/VUjx/Yb787VQ26RU3gGjA3iiFvdsp/2bMfVIWUVP7tjxtjS0e+HP409cPlPvNkQloz8C91ew==
+eslint-config-prettier@^8.5.0:
+  version "8.5.0"
+  resolved "https://registry.yarnpkg.com/eslint-config-prettier/-/eslint-config-prettier-8.5.0.tgz#5a81680ec934beca02c7b1a61cf8ca34b66feab1"
+  integrity sha512-obmWKLUNCnhtQRKc+tmnYuQl0pFU1ibYJQ5BGhTVB08bHe9wC8qUeG7c08dj9XX+AuPj1YSGSQIHl1pnDHZR0Q==
 
 eslint-import-resolver-node@^0.3.6:
   version "0.3.6"
@@ -3103,10 +3108,15 @@ mkdirp@^0.5.1:
   dependencies:
     minimist "^1.2.5"
 
-moment@2.29.1, moment@^2.29.1:
-  version "2.29.1"
-  resolved "https://registry.yarnpkg.com/moment/-/moment-2.29.1.tgz#b2be769fa31940be9eeea6469c075e35006fa3d3"
-  integrity sha512-kHmoybcPV8Sqy59DwNDY3Jefr64lK/by/da0ViFcuA4DH0vQg5Q6Ze5VimxkfQNSC+Mls/Kx53s7TjP1RhFEDQ==
+moment@2.29.2:
+  version "2.29.2"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.29.2.tgz#00910c60b20843bcba52d37d58c628b47b1f20e4"
+  integrity sha512-UgzG4rvxYpN15jgCmVJwac49h9ly9NurikMWGPdVxm8GZD6XjkKPxDTjQQ43gtGgnV3X0cAyWDdP2Wexoquifg==
+
+moment@^2.29.4:
+  version "2.29.4"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.29.4.tgz#3dbe052889fe7c1b2ed966fcb3a77328964ef108"
+  integrity sha512-5LC9SOxjSc2HF6vO2CyuTDNivEdoz2IvyJJGj6X8DJ0eFyfszE0QiEd+iXmBvUP3WHxSjFH/vIsA0EN00cgr8w==
 
 mri@^1.1.0:
   version "1.2.0"
@@ -3194,15 +3204,15 @@ object.values@^1.1.5:
     define-properties "^1.1.3"
     es-abstract "^1.19.1"
 
-obsidian@0.13.21:
-  version "0.13.21"
-  resolved "https://registry.yarnpkg.com/obsidian/-/obsidian-0.13.21.tgz#1add830d8452270c608d5f5b25f75c3237af9677"
-  integrity sha512-ifrX4TclHZMlxRQt6mMYolucw3yy6VEbm/l/tl/BNTBT5uTHruP+k39DQ4wqPSeQApkR6VKlx/pY/DnSxqLOXw==
+obsidian@0.14.6:
+  version "0.14.6"
+  resolved "https://registry.yarnpkg.com/obsidian/-/obsidian-0.14.6.tgz#010e16da3a1a7725f5e91beb9f14ec8abd00c15d"
+  integrity sha512-oXPJ8Zt10WhN19bk5l4mZuXRZbbdT1QoMgxGGJ0bB7UcJa0bozDzugS5L/QiV9gDoujpUPxDWNVahEel6r0Fpw==
   dependencies:
     "@codemirror/state" "^0.19.6"
     "@codemirror/view" "^0.19.31"
     "@types/codemirror" "0.0.108"
-    moment "2.29.1"
+    moment "2.29.2"
 
 once@^1.3.0:
   version "1.4.0"

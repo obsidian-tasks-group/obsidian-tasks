@@ -13,18 +13,10 @@ describe('parsing', () => {
     it('parses a task from a line', () => {
         // Arrange
         const line = '- [x] this is a done task 🗓 2021-09-12 ✅ 2021-06-20';
-        const path = 'this/is a path/to a/file.md';
-        const sectionStart = 1337;
-        const sectionIndex = 1209;
-        const precedingHeader = 'Eloquent Section';
 
         // Act
-        const task = Task.fromLine({
+        const task = fromLine({
             line,
-            path,
-            sectionStart,
-            sectionIndex,
-            precedingHeader,
         });
 
         // Assert
@@ -46,18 +38,10 @@ describe('parsing', () => {
         const originalSettings = getSettings();
         updateSettings({ globalFilter: '#task' });
         const line = '- [x] this is a done task 🗓 2021-09-12 ✅ 2021-06-20';
-        const path = 'this/is a path/to a/file.md';
-        const sectionStart = 1337;
-        const sectionIndex = 1209;
-        const precedingHeader = 'Eloquent Section';
 
         // Act
-        const task = Task.fromLine({
+        const task = fromLine({
             line,
-            path,
-            sectionStart,
-            sectionIndex,
-            precedingHeader,
         });
 
         // Assert
@@ -70,18 +54,10 @@ describe('parsing', () => {
     it('allows signifier emojis as part of the description', () => {
         // Arrange
         const line = '- [x] this is a ✅ done task 🗓 2021-09-12 ✅ 2021-06-20';
-        const path = 'this/is a path/to a/file.md';
-        const sectionStart = 1337;
-        const sectionIndex = 1209;
-        const precedingHeader = 'Eloquent Section';
 
         // Act
-        const task = Task.fromLine({
+        const task = fromLine({
             line,
-            path,
-            sectionStart,
-            sectionIndex,
-            precedingHeader,
         });
 
         // Assert
@@ -102,18 +78,10 @@ describe('parsing', () => {
         // Arrange
         const line =
             '- [x] this is a ✅ done task 🗓 2021-09-12 ✅ 2021-06-20 ^my-precious  ';
-        const path = 'this/is a path/to a/file.md';
-        const sectionStart = 1337;
-        const sectionIndex = 1209;
-        const precedingHeader = 'Eloquent Section';
 
         // Act
-        const task = Task.fromLine({
+        const task = fromLine({
             line,
-            path,
-            sectionStart,
-            sectionIndex,
-            precedingHeader,
         });
 
         // Assert
@@ -154,6 +122,40 @@ describe('parsing', () => {
         expect(task!.dueDate!.isSame(moment('2021-09-12', 'YYYY-MM-DD')));
         expect(task!.priority == Priority.High);
     });
+
+    it('supports parsing large number of values', () => {
+        // Arrange
+        const line =
+            '- [ ] Wobble ⏫  #tag1 ✅ 2022-07-02 #tag2  📅 2022-07-02 #tag3 ⏳ 2022-07-02 #tag4 🛫 2022-07-02 #tag5  🔁 every day  #tag6 #tag7 #tag8 #tag9 #tag10';
+
+        // Act
+        const task = fromLine({
+            line,
+        });
+
+        // Assert
+        expect(task).not.toBeNull();
+        expect(task!.description).toEqual(
+            'Wobble #tag1 #tag2 #tag3 #tag4 #tag5 #tag6 #tag7 #tag8 #tag9 #tag10',
+        );
+        expect(task!.dueDate!.isSame(moment('022-07-02', 'YYYY-MM-DD')));
+        expect(task!.doneDate!.isSame(moment('022-07-02', 'YYYY-MM-DD')));
+        expect(task!.startDate!.isSame(moment('022-07-02', 'YYYY-MM-DD')));
+        expect(task!.scheduledDate!.isSame(moment('022-07-02', 'YYYY-MM-DD')));
+        expect(task!.priority == Priority.High);
+        expect(task!.tags).toStrictEqual([
+            '#tag1',
+            '#tag2',
+            '#tag3',
+            '#tag4',
+            '#tag5',
+            '#tag6',
+            '#tag7',
+            '#tag8',
+            '#tag9',
+            '#tag10',
+        ]);
+    });
 });
 
 type TagParsingExpectations = {
@@ -164,14 +166,13 @@ type TagParsingExpectations = {
 };
 
 function constructTaskFromLine(line: string) {
-    const task = Task.fromLine({
+    return Task.fromLine({
         line,
         path: 'file.md',
         sectionStart: 0,
         sectionIndex: 0,
         precedingHeader: '',
     });
-    return task;
 }
 
 describe('parsing tags', () => {
@@ -256,17 +257,17 @@ describe('parsing tags', () => {
         },
         {
             markdownTask:
-                '- [ ] Export [Cloud Feedly feeds](http://cloud.feedly.com/#opml) #context/pc_clare 🔁 every 4 weeks on Sunday ⏳ 2022-05-15 #context/more_context',
+                '- [ ] Export [Cloud Feedly feeds](https://cloud.feedly.com/#opml) #context/pc_clare 🔁 every 4 weeks on Sunday ⏳ 2022-05-15 #context/more_context',
             expectedDescription:
-                'Export [Cloud Feedly feeds](http://cloud.feedly.com/#opml) #context/pc_clare #context/more_context',
+                'Export [Cloud Feedly feeds](https://cloud.feedly.com/#opml) #context/pc_clare #context/more_context',
             extractedTags: ['#context/pc_clare', '#context/more_context'],
             globalFilter: '',
         },
         {
             markdownTask:
-                '- [ ] Export [Cloud Feedly feeds](http://cloud.feedly.com/#opml) #context/pc_clare ⏳ 2022-05-15 🔁 every 4 weeks on Sunday #context/more_context',
+                '- [ ] Export [Cloud Feedly feeds](https://cloud.feedly.com/#opml) #context/pc_clare ⏳ 2022-05-15 🔁 every 4 weeks on Sunday #context/more_context',
             expectedDescription:
-                'Export [Cloud Feedly feeds](http://cloud.feedly.com/#opml) #context/pc_clare #context/more_context',
+                'Export [Cloud Feedly feeds](https://cloud.feedly.com/#opml) #context/pc_clare #context/more_context',
             extractedTags: ['#context/pc_clare', '#context/more_context'],
             globalFilter: '',
         },
@@ -314,12 +315,8 @@ describe('to string', () => {
         const line = '- [ ] this is a task 📅 2021-09-12 ^my-precious';
 
         // Act
-        const task: Task = Task.fromLine({
+        const task: Task = fromLine({
             line,
-            path: '',
-            sectionStart: 0,
-            sectionIndex: 0,
-            precedingHeader: '',
         }) as Task;
 
         // Assert
@@ -333,12 +330,8 @@ describe('to string', () => {
             '- [x] this is a done task #tagone 📅 2021-09-12 ✅ 2021-06-20 #journal/daily';
 
         // Act
-        const task: Task = Task.fromLine({
+        const task: Task = fromLine({
             line,
-            path: '',
-            sectionStart: 0,
-            sectionIndex: 0,
-            precedingHeader: '',
         }) as Task;
 
         // Assert
@@ -354,12 +347,8 @@ describe('toggle done', () => {
         const line = '- [ ] this is a task 📅 2021-09-12 ^my-precious';
 
         // Act
-        const task: Task = Task.fromLine({
+        const task: Task = fromLine({
             line,
-            path: '',
-            sectionStart: 0,
-            sectionIndex: 0,
-            precedingHeader: '',
         }) as Task;
         const toggled: Task = task.toggle()[0];
 
@@ -614,12 +603,8 @@ describe('toggle done', () => {
                 .filter(Boolean)
                 .join(' ');
 
-            const task = Task.fromLine({
+            const task = fromLine({
                 line,
-                path: '',
-                precedingHeader: '',
-                sectionStart: 0,
-                sectionIndex: 0,
             });
 
             const nextTask: Task = task!.toggle()[0];
@@ -643,18 +628,10 @@ describe('toggle done', () => {
     it('supports recurrence rule after a due date', () => {
         // Arrange
         const line = '- [ ] this is a task 🗓 2021-09-12 🔁 every day';
-        const path = 'this/is a path/to a/file.md';
-        const sectionStart = 1337;
-        const sectionIndex = 1209;
-        const precedingHeader = 'Eloquent Section';
 
         // Act
-        const task = Task.fromLine({
+        const task = fromLine({
             line,
-            path,
-            sectionStart,
-            sectionIndex,
-            precedingHeader,
         });
 
         // Assert
@@ -674,39 +651,5 @@ describe('toggle done', () => {
             nextScheduled: undefined,
             nextStart: undefined,
         });
-    });
-
-    it('supports parsing large number of values', () => {
-        // Arrange
-        const line =
-            '- [ ] Wobble ⏫  #tag1 ✅ 2022-07-02 #tag2  📅 2022-07-02 #tag3 ⏳ 2022-07-02 #tag4 🛫 2022-07-02 #tag5  🔁 every day  #tag6 #tag7 #tag8 #tag9 #tag10';
-
-        // Act
-        const task = fromLine({
-            line,
-        });
-
-        // Assert
-        expect(task).not.toBeNull();
-        expect(task!.description).toEqual(
-            'Wobble #tag1 #tag2 #tag3 #tag4 #tag5 #tag6 #tag7 #tag8 #tag9 #tag10',
-        );
-        expect(task!.dueDate!.isSame(moment('022-07-02', 'YYYY-MM-DD')));
-        expect(task!.doneDate!.isSame(moment('022-07-02', 'YYYY-MM-DD')));
-        expect(task!.startDate!.isSame(moment('022-07-02', 'YYYY-MM-DD')));
-        expect(task!.scheduledDate!.isSame(moment('022-07-02', 'YYYY-MM-DD')));
-        expect(task!.priority == Priority.High);
-        expect(task!.tags).toStrictEqual([
-            '#tag1',
-            '#tag2',
-            '#tag3',
-            '#tag4',
-            '#tag5',
-            '#tag6',
-            '#tag7',
-            '#tag8',
-            '#tag9',
-            '#tag10',
-        ]);
     });
 });

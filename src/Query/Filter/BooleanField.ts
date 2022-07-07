@@ -156,10 +156,10 @@ export class BooleanField extends Field {
                         toString((arg1 && !arg2) || (!arg1 && arg2)),
                     );
                 } else {
-                    throw Error('Unsuppoted operator ' + token.value);
+                    throw Error('Unsupported operator: ' + token.value);
                 }
             } else {
-                throw Error('Unsupported token type:' + token);
+                throw Error('Unsupported token type: ' + token);
             }
         }
         // Eventually the result of the expression for this Task is the only item left in the boolean stack
