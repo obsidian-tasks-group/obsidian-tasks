@@ -1,16 +1,14 @@
-import {
-    App,
-    Editor,
+import { App, Editor, EditorSuggest, TFile } from 'obsidian';
+import type {
     EditorPosition,
-    EditorSuggest,
     EditorSuggestContext,
     EditorSuggestTriggerInfo,
-    TFile,
 } from 'obsidian';
 
 import type { Settings } from '../config/Settings';
 import * as task from '../Task';
-import { SuggestInfo, buildSuggestions } from './Suggestor';
+import { buildSuggestions } from './Suggestor';
+import type { SuggestInfo } from './Suggestor';
 
 export type SuggestInfoWithContext = SuggestInfo & {
     context: EditorSuggestContext;

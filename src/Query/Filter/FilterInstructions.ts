@@ -1,5 +1,6 @@
 import { FilterInstruction } from './FilterInstruction';
-import { Filter, FilterOrErrorMessage } from './Filter';
+import { FilterOrErrorMessage } from './Filter';
+import type { Filter } from './Filter';
 
 /**
  * Implementation of a collection of instructions for filtering tasks.
