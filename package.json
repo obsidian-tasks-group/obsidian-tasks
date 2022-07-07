@@ -27,7 +27,6 @@
     "@codemirror/view": "^6.0.2",
     "@tsconfig/svelte": "^3.0.0",
     "@types/jest": "^26.0.22",
-    "@types/node": "^16.11.6",
     "@typescript-eslint/eslint-plugin": "^5.2.0",
     "@typescript-eslint/parser": "^5.2.0",
     "async-mutex": "^0.3.1",
