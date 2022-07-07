@@ -50,8 +50,8 @@
     "typescript": "^4.4.4"
   },
   "dependencies": {
-      "boon-js": "^2.0.3",
-      "chrono-node": "2.2.6",
-      "rrule": "^2.7.0"
+    "boon-js": "^2.0.3",
+    "chrono-node": "2.3.9",
+    "rrule": "^2.7.0"
   }
 }
