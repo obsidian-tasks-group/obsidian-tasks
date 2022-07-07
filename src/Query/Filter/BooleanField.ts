@@ -1,9 +1,11 @@
-import { PostfixExpression, parse as boonParse } from 'boon-js';
+import { parse as boonParse } from 'boon-js';
+import type { PostfixExpression } from 'boon-js';
 
 import { parseFilter } from '../FilterParser';
 import type { Task } from '../../Task';
 import { Field } from './Field';
-import { Filter, FilterOrErrorMessage } from './Filter';
+import { FilterOrErrorMessage } from './Filter';
+import type { Filter } from './Filter';
 
 /**
  * BooleanField is a 'container' field type that parses a high-level filtering query of

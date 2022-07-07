@@ -5,10 +5,8 @@ import moment from 'moment';
 import { Query } from '../src/Query';
 import { Priority, Status, Task } from '../src/Task';
 import { createTasksFromMarkdown, fromLine } from './TestHelpers';
-import {
-    FilteringCase,
-    shouldSupportFiltering,
-} from './TestingTools/FilterTestHelpers';
+import { shouldSupportFiltering } from './TestingTools/FilterTestHelpers';
+import type { FilteringCase } from './TestingTools/FilterTestHelpers';
 
 window.moment = moment;
 
