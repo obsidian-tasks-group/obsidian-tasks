@@ -4,21 +4,21 @@
   "description": "Task management for the Obsidian knowledge base",
   "main": "main.js",
   "scripts": {
-      "dev": "node esbuild.config.mjs",
-      "build": "node esbuild.config.mjs production",
-      "build:dev": "node esbuild.config.mjs development",
-      "lint": "eslint ./src --fix && eslint ./tests --fix && tsc --noEmit --pretty && svelte-check",
-      "lint:markdown": "markdownlint-cli2-fix \"**/*.md\" \"#node_modules\"",
-      "test": "jest --ci",
-      "test:dev": "jest --watch",
-      "deploy:local": "pwsh -ExecutionPolicy Unrestricted -NoProfile -File ./scripts/Test-TasksInLocalObsidian.ps1"
+    "dev": "node esbuild.config.mjs",
+    "build": "node esbuild.config.mjs production",
+    "build:dev": "node esbuild.config.mjs development",
+    "lint": "eslint ./src --fix && eslint ./tests --fix && tsc --noEmit --pretty && svelte-check",
+    "lint:markdown": "markdownlint-cli2-fix \"**/*.md\" \"#node_modules\"",
+    "test": "jest --ci",
+    "test:dev": "jest --watch",
+    "deploy:local": "pwsh -ExecutionPolicy Unrestricted -NoProfile -File ./scripts/Test-TasksInLocalObsidian.ps1"
   },
   "keywords": [
-      "obsidian",
-      "obsidian-plugin",
-      "obsidian-tasks",
-      "task-manager",
-      "task-management"
+    "obsidian",
+    "obsidian-plugin",
+    "obsidian-tasks",
+    "task-manager",
+    "task-management"
   ],
   "author": "Martin Schenck",
   "license": "MIT",
