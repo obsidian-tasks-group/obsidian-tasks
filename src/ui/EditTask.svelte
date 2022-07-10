@@ -1,10 +1,16 @@
 <script lang="ts">
-    import chrono from 'chrono-node';
+    import * as chrono from 'chrono-node';
     import { onMount } from 'svelte';
     import { Recurrence } from '../Recurrence';
     import { getSettings } from '../config/Settings';
     import { Priority, Status, Task } from '../Task';
-    import { prioritySymbols, recurrenceSymbol, startDateSymbol, scheduledDateSymbol, dueDateSymbol } from '../Task';
+    import {
+        prioritySymbols,
+        recurrenceSymbol,
+        startDateSymbol,
+        scheduledDateSymbol,
+        dueDateSymbol,
+    } from '../Task';
     import { doAutocomplete } from '../DateAbbreviations';
 
     export let task: Task;
@@ -38,8 +44,8 @@
     let parsedDone: string = '';
 
     // 'weekend' abbreviation ommitted due to lack of space.
-    let datePlaceholder = "Try 'Monday' or 'tomorrow', or [td|tm|yd|tw|nw|we] then space.";
-
+    let datePlaceholder =
+        "Try 'Monday' or 'tomorrow', or [td|tm|yd|tw|nw|we] then space.";
 
     function parseDate(
         type: 'start' | 'scheduled' | 'due' | 'done',
