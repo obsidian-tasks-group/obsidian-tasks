@@ -20,17 +20,14 @@ parent: Queries
 
 ---
 
-## Introduction
+## Summary
 
 > Introduced in Tasks 1.9.0.
 
-Tasks now has full, generic and flexible support for combining filters together, via boolean expressions, as part of the plugin's query engine.
+The [individual filters]({{ site.baseurl }}{% link queries/filters.md %}) provided by Tasks can be combined together in powerful ways, by wrapping each of them in `(` and `)`,
+and then joining them with boolean operators such as `AND`, `OR` and `NOT`.
 
-It is fully backwards-compatible, so earlier searches still work. This new feature adds the full flexibility of `OR` queries and the full power of boolean composition.
-
-## Syntax
-
-The syntax looks like this:
+For example:
 
 ````text
 ```tasks
@@ -40,15 +37,22 @@ not done
 ```
 ````
 
-Lines continue to have an implicit `AND` relation (thus the full retention of backwards compatibility), but a line can now have multiple filters composed with `AND`, `OR`, `NOT`, `AND NOT`, `OR NOT` and `XOR` with parentheses.
+Each of the 3 lines in the above tasks block represents an individual filter, and only tasks which match _all_ of the filters
+are displayed.
 
----
+## Syntax
 
-Warning
-{: .label .label-yellow }
-It is possible to use double quotes `"` to surround filters, but this can sometimes give misleading results when nested in complex queries, so we recommend use `(` and `)` to build up boolean combinations.
+1 or more filters can be combined together in a line, via boolean operators, to create a new, powerful, flexible filer.
 
----
+The following rules apply:
+
+- Each individual filter must be surrounded by parentheses: `(` and `)`.
+- Operators supported are: `AND`, `OR`, `NOT`, `AND NOT`, `OR NOT` and `XOR`.
+- The operators require a space on either side.
+- There is no practical limit to the number of filters combined on each line, nor the level of nesting of parentheses.
+- It is possible to use double quotes `"` to surround filters, but this can sometimes give misleading results when nested in complex queries, so we recommend using `(` and `)` to build up boolean combinations.
+
+Technically speaking, lines continue to have an implicit `AND` relation (thus the full retention of backwards compatibility), but a line can now have multiple filters composed with `AND`, `OR`, `NOT`, `AND NOT`, `OR NOT` and `XOR` with parentheses.
 
 ## Boolean Operators
 
