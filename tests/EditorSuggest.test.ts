@@ -120,7 +120,14 @@ describe('auto-complete', () => {
                 originalSettings,
             );
             for (const suggestion of suggestions) {
-                const suggestionAsText = `${suggestion.displayText}: ${suggestion.appendText}`;
+                // The 'new line' replacement adds a trailing space at the end of a line,
+                // which causes auto-formatting to then make the test fail.
+                // So we replace the 'new line' character with some fixed text.
+                let replacementText = `${suggestion.appendText}`;
+                if (replacementText === '\n') {
+                    replacementText = '<new line>';
+                }
+                const suggestionAsText = `${suggestion.displayText}: ${replacementText}`;
                 if (!allSuggestions.includes(suggestionAsText)) {
                     allSuggestions.push(suggestionAsText);
                 }
@@ -129,8 +136,7 @@ describe('auto-complete', () => {
         expect(allSuggestions).toMatchInlineSnapshot(`
             Array [
               "- [ ] some task",
-              "⏎: 
-            ",
+              "⏎: <new line>",
               "📅 due date: 📅 ",
               "🛫 start date: 🛫 ",
               "⏳ scheduled date: ⏳ ",
