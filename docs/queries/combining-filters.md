@@ -48,6 +48,7 @@ The following rules apply:
 
 - Each individual filter must be surrounded by parentheses: `(` and `)`.
 - Operators supported are: `AND`, `OR`, `NOT`, `AND NOT`, `OR NOT` and `XOR`.
+- The operators are case-sensitive: they must be capitalised.
 - The operators must be surrounded by spaces.
 - Use more `(` and `)` to nest further filters together.
 - There is no practical limit to the number of filters combined on each line, nor the level of nesting of parentheses.
@@ -224,6 +225,42 @@ of the filters, **and also tasks that match all three of the filters**.
 </div>
 
 ## Examples
+
+### Managing tasks via file path and tag
+
+I have tasks for People in our weekly meeting notes and then I might reference a tag using their name in other notes:
+
+````text
+```tasks
+not done
+(path includes Peter) OR (tags includes #Peter)
+```
+````
+
+### Finding tasks that are waiting
+
+I want to find tasks that are waiting for something else. But 'waiting' can be spelled in several different ways:
+
+````text
+```tasks
+not done
+(description includes waiting) OR (description includes waits) OR (description includes wartet)
+```
+````
+
+### Daily notes tasks, for days other than today
+
+I want to see tasks from anywhere in my vault with the tag `#DailyNote` or tasks in my daily notes folder, but NOT tasks in today's daily note.
+
+````text
+```tasks
+not done
+(tags include #DailyNote) OR ((path includes daily/Notes/Folder/) AND (path does not include 2022-07-11))
+```
+````
+
+See [Daily Agenda]({{ site.baseurl }}{% link advanced/daily-agenda.md %}) for how to use templates
+to embed dates in to daily notes.
 
 ### Combined GTD Contexts
 
