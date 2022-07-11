@@ -117,7 +117,7 @@ describe('auto-complete', () => {
             '- [ ] some task',
             '- [ ] some task 🔁 ',
             `- [ ] some task ${task.dueDateSymbol} `,
-            `- [ ] some task ${task.scheduledDateSymbol} `, // this one is not generating any output, and I cannot work out why
+            `- [ ] some task ${task.scheduledDateSymbol} `,
             `- [ ] some task ${task.startDateSymbol} `,
         ];
         const allSuggestions: string[] = [];
@@ -125,7 +125,7 @@ describe('auto-complete', () => {
             allSuggestions.push(line);
             const suggestions: SuggestInfo[] = buildSuggestions(
                 line,
-                19,
+                line.length - 1,
                 originalSettings,
             );
             for (const suggestion of suggestions) {
@@ -182,6 +182,18 @@ describe('auto-complete', () => {
               "next month (2022-08-11): 📅 2022-08-11 ",
               "next year (2023-07-11): 📅 2023-07-11 ",
               "- [ ] some task ⏳ ",
+              "today (2022-07-11): ⏳ 2022-07-11 ",
+              "tomorrow (2022-07-12): ⏳ 2022-07-12 ",
+              "Sunday (2022-07-17): ⏳ 2022-07-17 ",
+              "Monday (2022-07-18): ⏳ 2022-07-18 ",
+              "Tuesday (2022-07-12): ⏳ 2022-07-12 ",
+              "Wednesday (2022-07-13): ⏳ 2022-07-13 ",
+              "Thursday (2022-07-14): ⏳ 2022-07-14 ",
+              "Friday (2022-07-15): ⏳ 2022-07-15 ",
+              "Saturday (2022-07-16): ⏳ 2022-07-16 ",
+              "next week (2022-07-18): ⏳ 2022-07-18 ",
+              "next month (2022-08-11): ⏳ 2022-08-11 ",
+              "next year (2023-07-11): ⏳ 2023-07-11 ",
               "- [ ] some task 🛫 ",
               "today (2022-07-11): 🛫 2022-07-11 ",
               "tomorrow (2022-07-12): 🛫 2022-07-12 ",
