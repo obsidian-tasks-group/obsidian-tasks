@@ -60,7 +60,7 @@ Here is the complete set of all available text, with dates that would be generat
 | today (2022-07-11)      | 2022-07-11                 |
 | tomorrow (2022-07-12)   | 2022-07-12                 |
 | Sunday (2022-07-17)     | 2022-07-17                 |
-| Monday (2022-07-18)     | 2022-07-18                 |
+| Monday (2022-07-11)     | 2022-07-11                 |
 | Tuesday (2022-07-12)    | 2022-07-12                 |
 | Wednesday (2022-07-13)  | 2022-07-13                 |
 | Thursday (2022-07-14)   | 2022-07-14                 |
