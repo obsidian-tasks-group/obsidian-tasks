@@ -92,22 +92,34 @@ not done
 ```
 ````
 
-Beware: In conversation, a request to show me things in the `inbox` file or folder and things with tag `#inbox` must be represented in boolean logic with `OR`, as we accept tasks where _either_ condition is met.
+Beware: In conversation, a request to show me tasks in files with `inbox` in the path _and_ things with tag `#inbox` must be represented in boolean logic with `OR`, as we accept tasks where _either_ condition is met.
 
 ### NOT
 
 > Require the filter **not** to match
 
+For example, these two are equivalent
+
+````text
+path does not include inbox
+````
+
+````text
+NOT (path includes inbox)
+````
+
+`NOT` is also useful for negating a more complex expression.
+
 Opposite of:
 
 ````text
-( (path includes x) OR (description includes #x) )
+(path includes x) OR (description includes #x)
 ````
 
 Is:
 
 ````text
-( (path does not include x) AND (description does not include #x) )
+(path does not include x) AND (description does not include #x)
 ````
 
 Simpler is:
