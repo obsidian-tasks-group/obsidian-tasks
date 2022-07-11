@@ -55,6 +55,49 @@ The following rules apply:
 
 Technically speaking, lines continue to have an implicit `AND` relation (thus the full retention of backwards compatibility), but a line can now have multiple filters composed with `AND`, `OR`, `NOT`, `AND NOT`, `OR NOT` and `XOR` with parentheses.
 
+### Execution Priority
+
+Operators are evaluated in this order:
+
+1. NOT
+2. XOR
+3. AND
+4. OR
+
+So these two blocks are exactly equivalent - note the extra brackets in the second one:
+
+````text
+```tasks
+not done
+(tag includes #XX) OR (tag includes #YY) AND (tag includes #ZZ)
+```
+````
+
+````text
+```tasks
+not done
+(tag includes #XX) OR ( (tag includes #YY) AND (tag includes #ZZ) )
+```
+````
+
+And these two are also exactly equivalent:
+
+````text
+```tasks
+not done
+(tag includes #XX) AND (tag includes #YY) OR (tag includes #ZZ)
+```
+````
+
+````text
+```tasks
+not done
+( (tag includes #XX) AND (tag includes #YY) ) OR (tag includes #ZZ)
+```
+````
+
+When building a complex combination of expressions, it is safest to use `(` and `)` liberally, so you can be confident you get your intended behaviour.
+
 ## Boolean Operators
 
 ### AND
@@ -158,49 +201,6 @@ not done
 ````
 
 It will not show tasks with both `inbox` in the path and the tag `#inbox` is the task line.
-
-## Priority
-
-Operators are evaluated in this order:
-
-1. NOT
-2. XOR
-3. AND
-4. OR
-
-So these two blocks are exactly equivalent - note the extra brackets in the second one:
-
-````text
-```tasks
-not done
-(tag includes #XX) OR (tag includes #YY) AND (tag includes #ZZ)
-```
-````
-
-````text
-```tasks
-not done
-(tag includes #XX) OR ( (tag includes #YY) AND (tag includes #ZZ) )
-```
-````
-
-And these two are also exactly equivalent:
-
-````text
-```tasks
-not done
-(tag includes #XX) AND (tag includes #YY) OR (tag includes #ZZ)
-```
-````
-
-````text
-```tasks
-not done
-( (tag includes #XX) AND (tag includes #YY) ) OR (tag includes #ZZ)
-```
-````
-
-When building a complex combination of expressions, it is safest to use `(` and `)` liberally, so you can be confident you get your intended behaviour.
 
 ## Examples
 
