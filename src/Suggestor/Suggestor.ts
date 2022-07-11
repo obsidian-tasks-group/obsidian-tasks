@@ -226,7 +226,12 @@ function addDatesSuggestions(
         // a max number. We want the max number to be around half the total allowed matches, to also allow
         // some global generic matches (e.g. task components) to find their way to the menu
         const minMatch = 1;
-        const maxGenericSuggestions = 5;
+
+        // Temporary comment, for accessing all suggestions, when writing the documentation
+        // DO NOT MERGE THIS CHANGE TO MAIN!!!
+        // const maxGenericSuggestions = 5;
+        const maxGenericSuggestions = 80;
+
         let genericMatches = genericSuggestions
             .filter(
                 (value) =>
