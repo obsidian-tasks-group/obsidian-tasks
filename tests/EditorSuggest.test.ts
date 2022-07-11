@@ -6,6 +6,8 @@ import { getSettings } from '../src/config/Settings';
 import { buildSuggestions } from '../src/Suggestor/Suggestor';
 import type { SuggestInfo } from '../src/Suggestor/Suggestor';
 
+import * as task from '../src/Task';
+
 window.moment = moment;
 
 describe('auto-complete', () => {
@@ -114,9 +116,9 @@ describe('auto-complete', () => {
         const lines = [
             '- [ ] some task',
             '- [ ] some task 🔁 ',
-            '- [ ] some task 📅 ',
-            '- [ ] some task ⏳ ', // this one is not generating any output, and I cannot work out why
-            '- [ ] some task 🛫 ',
+            `- [ ] some task ${task.dueDateSymbol} `,
+            `- [ ] some task ${task.scheduledDateSymbol} `, // this one is not generating any output, and I cannot work out why
+            `- [ ] some task ${task.startDateSymbol} `,
         ];
         const allSuggestions: string[] = [];
         for (const line of lines) {
