@@ -128,35 +128,6 @@ Simpler is:
 NOT ( (path includes x) OR (description includes #x) )
 ```
 
-Suppose you use `#context` tags so say where a task can be done, so that when you are in that location, you can
-find all the things you could choose to do.
-
-And suppose that several of these locations are close by each other, so when you are in one place, you can easily do things in one of the other places.
-
-````text
-# Show all tasks I CAN do in this area:
-(tags include #context/loc1) OR (tags include #context/loc2) OR (tags include #context/loc3)
-````
-
-An easy way to see all the other tasks not possible in this area would be to use `NOT( )` around the original query:
-
-````text
-# Show all tasks I CANNOT do in this area - EASY WAY:
-NOT ( (tags include #context/loc1) OR (tags include #context/loc2) OR (tags include #context/loc3) )
-````
-
-The nice thing about the above `NOT` use is that if a new context gets added to the group in future, it can be added to both task blocks via a simple find-and-replace.
-
-The above is much easier to maintain than the harder option of:
-
-- Changing all the `includes` to `does not include`
-- Changing all the `OR` to `AND`
-
-````text
-# Show all tasks I CANNOT do in this area - HARD WAY
-(tags do not include #context/loc1) AND (tags do not include #context/loc2 ) AND (tags do not include #context/loc3)
-````
-
 ### AND NOT
 
 > Require the 1st filter to match, and also the second one to not match
@@ -231,3 +202,42 @@ not done
 When building a complex combination of expressions, it is safest to use `(` and `)` liberally, so you can be confident you get your intended behaviour.
 
 ## Examples
+
+### Combined GTD Contexts
+
+Suppose you use "Getting Things Done"-style `#context` tags to say where a task can be done, so that when you are in a particular location, you can
+find all the things you could choose to do.
+
+And suppose that several of these locations are close by each other, so when you are in one place, you can easily do things in one of the other places.
+
+#### In One of Several Locations
+
+You could select any of the nearly locations with:
+
+````text
+# Show all tasks I CAN do in this area:
+(tags include #context/loc1) OR (tags include #context/loc2) OR (tags include #context/loc3)
+````
+
+#### In None of Several Locations
+
+Now suppose you would like to review all the other tasks, that you cannot do in the location, for some reason.
+
+An easy way to see all the _other_ tasks not possible in this area would be to use `NOT( )` around the original query:
+
+````text
+# Show all tasks I CANNOT do in this area - EASY WAY:
+NOT ( (tags include #context/loc1) OR (tags include #context/loc2) OR (tags include #context/loc3) )
+````
+
+The nice thing about the above `NOT` use is that if a new context gets added to the group in the future, it can be added to both task blocks via a simple find-and-replace.
+
+The above is much easier to maintain than the other option of:
+
+- Changing all the `includes` to `does not include`
+- Changing all the `OR` to `AND`
+
+````text
+# Show all tasks I CANNOT do in this area - HARD WAY
+(tags do not include #context/loc1) AND (tags do not include #context/loc2 ) AND (tags do not include #context/loc3)
+````
