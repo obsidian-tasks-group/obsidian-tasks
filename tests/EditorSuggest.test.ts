@@ -108,8 +108,8 @@ describe('auto-complete', () => {
             '- [ ] some task',
             '- [ ] some task 🔁 ',
             '- [ ] some task 📅 ',
+            '- [ ] some task ⏳ ', // this one is not generating any output, and I cannot work out why
             '- [ ] some task 🛫 ',
-            '- [ ] some task ⏳ ',
         ];
         const allSuggestions: string[] = [];
         for (const line of lines) {
@@ -165,6 +165,7 @@ describe('auto-complete', () => {
               "next week (2022-07-18): 📅 2022-07-18 ",
               "next month (2022-08-11): 📅 2022-08-11 ",
               "next year (2023-07-11): 📅 2023-07-11 ",
+              "- [ ] some task ⏳ ",
               "- [ ] some task 🛫 ",
               "today (2022-07-11): 🛫 2022-07-11 ",
               "tomorrow (2022-07-12): 🛫 2022-07-12 ",
@@ -178,7 +179,6 @@ describe('auto-complete', () => {
               "next week (2022-07-18): 🛫 2022-07-18 ",
               "next month (2022-08-11): 🛫 2022-08-11 ",
               "next year (2023-07-11): 🛫 2023-07-11 ",
-              "- [ ] some task ⏳ ",
             ]
         `);
     });
