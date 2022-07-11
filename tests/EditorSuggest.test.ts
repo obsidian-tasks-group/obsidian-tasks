@@ -144,6 +144,9 @@ describe('auto-complete', () => {
             }
         }
 
+        // CAUTION: In obsidian, when using this feature on a 'Monday' expands to the execution date.
+        // In these tests, it expands to the Next Monday.
+
         expect('\n' + allSuggestions.join('\n') + '\n').toMatchInlineSnapshot(`
             "
             | ⏎ | <new line> |
