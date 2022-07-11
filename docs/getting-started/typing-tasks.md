@@ -30,6 +30,8 @@ The [Priorities]({{ site.baseurl }}{% link getting-started/priority.md %}), [Dat
 If you prefer to type your tasks, instead of using a dialog, there is now a mechanism that does a
 lot of the typing of emojis and dates for you!
 
+It is best understood by watching a [video of it in action](https://user-images.githubusercontent.com/10722656/175102574-78b0f851-cc48-4255-a40e-d3036bec5bb6.gif).
+
 ## Available Text
 
 Here is the complete set of all available text, with dates that would be generated when used on 11th July 2022.
