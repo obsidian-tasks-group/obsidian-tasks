@@ -49,6 +49,7 @@ The following rules apply:
 - Each individual filter must be surrounded by parentheses: `(` and `)`.
 - Operators supported are: `AND`, `OR`, `NOT`, `AND NOT`, `OR NOT` and `XOR`.
 - The operators require a space on either side.
+- Use more `(` and `)` to nest further filters together
 - There is no practical limit to the number of filters combined on each line, nor the level of nesting of parentheses.
 - It is possible to use double quotes `"` to surround filters, but this can sometimes give misleading results when nested in complex queries, so we recommend using `(` and `)` to build up boolean combinations.
 
@@ -96,9 +97,9 @@ Beware: In conversation, a request to show me tasks in files with `inbox` in the
 
 ### NOT
 
-> Require the filter **not** to match
+> Require the filter **not** to be matched
 
-For example, these two are equivalent
+For a trivial example, these two are equivalent
 
 ````text
 path does not include inbox
@@ -108,25 +109,27 @@ path does not include inbox
 NOT (path includes inbox)
 ````
 
-`NOT` is also useful for negating a more complex expression.
+---
 
-Opposite of:
+`NOT` is more useful for negating more complex expressions.
+
+For a more realistic example, the opposite of this:
 
 ````text
 (path includes x) OR (description includes #x)
 ````
 
-Is:
-
-````text
-(path does not include x) AND (description does not include #x)
-````
-
-Simpler is:
+... can be expressed without any checking of new logic like this:
 
 ```text
 NOT ( (path includes x) OR (description includes #x) )
 ```
+
+The other way of expressing it requires more care and thought:
+
+````text
+(path does not include x) AND (description does not include #x)
+````
 
 ### AND NOT
 
@@ -155,8 +158,6 @@ not done
 ````
 
 It will not show tasks with both `inbox` in the path and the tag `#inbox` is the task line.
-
-## Nesting
 
 ## Priority
 
@@ -208,7 +209,7 @@ When building a complex combination of expressions, it is safest to use `(` and 
 Suppose you use "Getting Things Done"-style `#context` tags to say where a task can be done, so that when you are in a particular location, you can
 find all the things you could choose to do.
 
-And suppose that several of these locations are close by each other, so when you are in one place, you can easily do things in one of the other places.
+And suppose that several of these locations are close by each other, so when you are in one place, you can easily do things in any of the other places.
 
 #### In One of Several Locations
 
@@ -223,7 +224,7 @@ You could select any of the nearly locations with:
 
 Now suppose you would like to review all the other tasks, that you cannot do in the location, for some reason.
 
-An easy way to see all the _other_ tasks not possible in this area would be to use `NOT( )` around the original query:
+An easy way to review all the _other_ tasks not possible in this area would be to use `NOT( )` around the original query:
 
 ````text
 # Show all tasks I CANNOT do in this area - EASY WAY:
