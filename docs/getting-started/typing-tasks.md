@@ -36,7 +36,7 @@ Here is the complete set of all available text, with dates that would be generat
 
 | Searchable Text         | Text that is added         |
 | ----------------------- | -------------------------- |
-| ⏎                       | \<new line>                 |
+| ⏎                       | \<new line>                |
 | ⏫ high priority        | ⏫                         |
 | 🔼 medium priority      | 🔼                         |
 | 🔽 low priority         | 🔽                         |
@@ -55,41 +55,17 @@ Here is the complete set of all available text, with dates that would be generat
 | every week on Friday    | 🔁 every week on Friday    |
 | every week on Saturday  | 🔁 every week on Saturday  |
 | 📅 due date             | 📅                         |
-| today (2022-07-11)      | 📅 2022-07-11              |
-| tomorrow (2022-07-12)   | 📅 2022-07-12              |
-| Sunday (2022-07-17)     | 📅 2022-07-17              |
-| Monday (2022-07-18)     | 📅 2022-07-18              |
-| Tuesday (2022-07-12)    | 📅 2022-07-12              |
-| Wednesday (2022-07-13)  | 📅 2022-07-13              |
-| Thursday (2022-07-14)   | 📅 2022-07-14              |
-| Friday (2022-07-15)     | 📅 2022-07-15              |
-| Saturday (2022-07-16)   | 📅 2022-07-16              |
-| next week (2022-07-18)  | 📅 2022-07-18              |
-| next month (2022-08-11) | 📅 2022-08-11              |
-| next year (2023-07-11)  | 📅 2023-07-11              |
 | ⏳ scheduled date       | ⏳                         |
-| today (2022-07-11)      | ⏳ 2022-07-11              |
-| tomorrow (2022-07-12)   | ⏳ 2022-07-12              |
-| Sunday (2022-07-17)     | ⏳ 2022-07-17              |
-| Monday (2022-07-18)     | ⏳ 2022-07-18              |
-| Tuesday (2022-07-12)    | ⏳ 2022-07-12              |
-| Wednesday (2022-07-13)  | ⏳ 2022-07-13              |
-| Thursday (2022-07-14)   | ⏳ 2022-07-14              |
-| Friday (2022-07-15)     | ⏳ 2022-07-15              |
-| Saturday (2022-07-16)   | ⏳ 2022-07-16              |
-| next week (2022-07-18)  | ⏳ 2022-07-18              |
-| next month (2022-08-11) | ⏳ 2022-08-11              |
-| next year (2023-07-11)  | ⏳ 2023-07-11              |
 | 🛫 start date           | 🛫                         |
-| today (2022-07-11)      | 🛫 2022-07-11              |
-| tomorrow (2022-07-12)   | 🛫 2022-07-12              |
-| Sunday (2022-07-17)     | 🛫 2022-07-17              |
-| Monday (2022-07-18)     | 🛫 2022-07-18              |
-| Tuesday (2022-07-12)    | 🛫 2022-07-12              |
-| Wednesday (2022-07-13)  | 🛫 2022-07-13              |
-| Thursday (2022-07-14)   | 🛫 2022-07-14              |
-| Friday (2022-07-15)     | 🛫 2022-07-15              |
-| Saturday (2022-07-16)   | 🛫 2022-07-16              |
-| next week (2022-07-18)  | 🛫 2022-07-18              |
-| next month (2022-08-11) | 🛫 2022-08-11              |
-| next year (2023-07-11)  | 🛫 2023-07-11              |
+| today (2022-07-11)      | 2022-07-11                 |
+| tomorrow (2022-07-12)   | 2022-07-12                 |
+| Sunday (2022-07-17)     | 2022-07-17                 |
+| Monday (2022-07-18)     | 2022-07-18                 |
+| Tuesday (2022-07-12)    | 2022-07-12                 |
+| Wednesday (2022-07-13)  | 2022-07-13                 |
+| Thursday (2022-07-14)   | 2022-07-14                 |
+| Friday (2022-07-15)     | 2022-07-15                 |
+| Saturday (2022-07-16)   | 2022-07-16                 |
+| next week (2022-07-18)  | 2022-07-18                 |
+| next month (2022-08-11) | 2022-08-11                 |
+| next year (2023-07-11)  | 2023-07-11                 |
