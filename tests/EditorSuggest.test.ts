@@ -104,6 +104,13 @@ describe('auto-complete', () => {
         // Arrange
         const originalSettings = getSettings();
         originalSettings.autoSuggestMaxItems = 200;
+
+        // This does not change the date used in the suggestions below.
+        // It was a failed attempt at allowing this test to be independent of date of the run.
+        // const todaySpy = jest
+        //     .spyOn(Date, 'now')
+        //     .mockReturnValue(moment('2022-06-11').valueOf());
+
         const lines = [
             '- [ ] some task',
             '- [ ] some task 🔁 ',
@@ -133,6 +140,7 @@ describe('auto-complete', () => {
                 }
             }
         }
+
         expect(allSuggestions).toMatchInlineSnapshot(`
             Array [
               "- [ ] some task",
@@ -187,5 +195,7 @@ describe('auto-complete', () => {
               "next year (2023-07-11): 🛫 2023-07-11 ",
             ]
         `);
+
+        // todaySpy.mockClear();
     });
 });
