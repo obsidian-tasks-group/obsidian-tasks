@@ -37,7 +37,7 @@ not done
 ```
 ````
 
-Each of the 3 lines in the above tasks block represents an individual filter, and only tasks which match _all_ of the filters
+Each of the 3 lines in the above tasks block represents an individual filter, and only tasks which match _all_ 3 of the filter lines
 are displayed.
 
 ## Syntax
@@ -58,7 +58,9 @@ Technically speaking, lines continue to have an implicit `AND` relation (thus th
 
 ### AND
 
-When you combine filters together with `AND`, only tasks that match every filter will be shown.
+> Require **every** filter to match
+
+When you combine filters together with `AND`, only tasks that match _every_ filter will be shown.
 
 For example:
 
@@ -66,7 +68,7 @@ For example:
 (has start date) AND (description includes some)
 ````
 
-Tasks requires every filter line to be matched, so the above example is equivalent to:
+Tasks requires every filter line to be matched, so the above example is equivalent to this:
 
 ````text
 has start date
@@ -76,6 +78,8 @@ description includes some
 `AND` becomes particularly valuable when used in conjunction with `OR` and `NOT`.
 
 ### OR
+
+> Require **any** filter to match
 
 When you combine filters together with `OR`, tasks which match _at least one_ of the filters will be shown.
 
@@ -91,6 +95,8 @@ not done
 Beware: In conversation, a request to show me things in the `inbox` file or folder and things with tag `#inbox` must be represented in boolean logic with `OR`, as we accept tasks where _either_ condition is met.
 
 ### NOT
+
+> Require the filter **not** to match
 
 Opposite of:
 
@@ -141,9 +147,15 @@ The above is much easier to maintain than the harder option of:
 
 ### AND NOT
 
+> Require the 1st filter to match, and also the second one to not match
+
 ### OR NOT
 
+> Require either the 1st filter to match, or the second one to not match.
+
 ### XOR
+
+> Require **only one** of two filters to match
 
 `XOR`, or `exclusive or` shows tasks which match _only one_ of the conditions provided.
 
