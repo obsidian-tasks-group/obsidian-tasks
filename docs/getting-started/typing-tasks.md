@@ -37,9 +37,6 @@ Here is the complete set of all available text, with dates that would be generat
 | Searchable Text         | Text that is added         |
 | ----------------------- | -------------------------- |
 | ⏎                       | \<new line>                 |
-| 📅 due date             | 📅                         |
-| 🛫 start date           | 🛫                         |
-| ⏳ scheduled date       | ⏳                         |
 | ⏫ high priority        | ⏫                         |
 | 🔼 medium priority      | 🔼                         |
 | 🔽 low priority         | 🔽                         |
@@ -57,6 +54,7 @@ Here is the complete set of all available text, with dates that would be generat
 | every week on Thursday  | 🔁 every week on Thursday  |
 | every week on Friday    | 🔁 every week on Friday    |
 | every week on Saturday  | 🔁 every week on Saturday  |
+| 📅 due date             | 📅                         |
 | today (2022-07-11)      | 📅 2022-07-11              |
 | tomorrow (2022-07-12)   | 📅 2022-07-12              |
 | Sunday (2022-07-17)     | 📅 2022-07-17              |
@@ -69,6 +67,7 @@ Here is the complete set of all available text, with dates that would be generat
 | next week (2022-07-18)  | 📅 2022-07-18              |
 | next month (2022-08-11) | 📅 2022-08-11              |
 | next year (2023-07-11)  | 📅 2023-07-11              |
+| ⏳ scheduled date       | ⏳                         |
 | today (2022-07-11)      | ⏳ 2022-07-11              |
 | tomorrow (2022-07-12)   | ⏳ 2022-07-12              |
 | Sunday (2022-07-17)     | ⏳ 2022-07-17              |
@@ -81,6 +80,7 @@ Here is the complete set of all available text, with dates that would be generat
 | next week (2022-07-18)  | ⏳ 2022-07-18              |
 | next month (2022-08-11) | ⏳ 2022-08-11              |
 | next year (2023-07-11)  | ⏳ 2023-07-11              |
+| 🛫 start date           | 🛫                         |
 | today (2022-07-11)      | 🛫 2022-07-11              |
 | tomorrow (2022-07-12)   | 🛫 2022-07-12              |
 | Sunday (2022-07-17)     | 🛫 2022-07-17              |
