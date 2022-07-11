@@ -122,7 +122,7 @@ describe('auto-complete', () => {
         ];
         const allSuggestions: string[] = [];
         for (const line of lines) {
-            allSuggestions.push(`| ${line} | |`);
+            // allSuggestions.push(`| ${line} | |`);
             const suggestions: SuggestInfo[] = buildSuggestions(
                 line,
                 line.length - 1,
@@ -146,7 +146,6 @@ describe('auto-complete', () => {
 
         expect('\n' + allSuggestions.join('\n') + '\n').toMatchInlineSnapshot(`
             "
-            | - [ ] some task | |
             | ⏎ | <new line> |
             | 📅 due date | 📅  |
             | 🛫 start date | 🛫  |
@@ -155,7 +154,6 @@ describe('auto-complete', () => {
             | 🔼 medium priority | 🔼  |
             | 🔽 low priority | 🔽  |
             | 🔁 recurring (repeat) | 🔁  |
-            | - [ ] some task 🔁  | |
             | every | 🔁 every  |
             | every day | 🔁 every day  |
             | every week | 🔁 every week  |
@@ -169,7 +167,6 @@ describe('auto-complete', () => {
             | every week on Thursday | 🔁 every week on Thursday  |
             | every week on Friday | 🔁 every week on Friday  |
             | every week on Saturday | 🔁 every week on Saturday  |
-            | - [ ] some task 📅  | |
             | today (2022-07-11) | 📅 2022-07-11  |
             | tomorrow (2022-07-12) | 📅 2022-07-12  |
             | Sunday (2022-07-17) | 📅 2022-07-17  |
@@ -182,7 +179,6 @@ describe('auto-complete', () => {
             | next week (2022-07-18) | 📅 2022-07-18  |
             | next month (2022-08-11) | 📅 2022-08-11  |
             | next year (2023-07-11) | 📅 2023-07-11  |
-            | - [ ] some task ⏳  | |
             | today (2022-07-11) | ⏳ 2022-07-11  |
             | tomorrow (2022-07-12) | ⏳ 2022-07-12  |
             | Sunday (2022-07-17) | ⏳ 2022-07-17  |
@@ -195,7 +191,6 @@ describe('auto-complete', () => {
             | next week (2022-07-18) | ⏳ 2022-07-18  |
             | next month (2022-08-11) | ⏳ 2022-08-11  |
             | next year (2023-07-11) | ⏳ 2023-07-11  |
-            | - [ ] some task 🛫  | |
             | today (2022-07-11) | 🛫 2022-07-11  |
             | tomorrow (2022-07-12) | 🛫 2022-07-12  |
             | Sunday (2022-07-17) | 🛫 2022-07-17  |
