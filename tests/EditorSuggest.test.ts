@@ -111,412 +111,68 @@ describe('auto-complete', () => {
             '- [ ] some task 🛫 ',
             '- [ ] some task ⏳ ',
         ];
-        const allSuggestions: SuggestInfo[] = [];
+        const allSuggestions: string[] = [];
         for (const line of lines) {
             const suggestions: SuggestInfo[] = buildSuggestions(
                 line,
                 19,
                 originalSettings,
             );
-            allSuggestions.push(...suggestions);
+            for (const suggestion of suggestions) {
+                const suggestionAsText = `${suggestion.displayText}: ${suggestion.appendText}`;
+                if (!allSuggestions.includes(suggestionAsText)) {
+                    allSuggestions.push(suggestionAsText);
+                }
+            }
         }
         expect(allSuggestions).toMatchInlineSnapshot(`
             Array [
-              Object {
-                "appendText": "
+              "⏎: 
             ",
-                "displayText": "⏎",
-                "suggestionType": "empty",
-              },
-              Object {
-                "appendText": "📅 ",
-                "displayText": "📅 due date",
-              },
-              Object {
-                "appendText": "🛫 ",
-                "displayText": "🛫 start date",
-              },
-              Object {
-                "appendText": "⏳ ",
-                "displayText": "⏳ scheduled date",
-              },
-              Object {
-                "appendText": "⏫ ",
-                "displayText": "⏫ high priority",
-              },
-              Object {
-                "appendText": "🔼 ",
-                "displayText": "🔼 medium priority",
-              },
-              Object {
-                "appendText": "🔽 ",
-                "displayText": "🔽 low priority",
-              },
-              Object {
-                "appendText": "🔁 ",
-                "displayText": "🔁 recurring (repeat)",
-              },
-              Object {
-                "appendText": "🔁 every ",
-                "displayText": "every",
-                "insertAt": 16,
-                "insertSkip": 3,
-                "suggestionType": "match",
-              },
-              Object {
-                "appendText": "🔁 every day ",
-                "displayText": "every day",
-                "insertAt": 16,
-                "insertSkip": 3,
-                "suggestionType": "match",
-              },
-              Object {
-                "appendText": "🔁 every week ",
-                "displayText": "every week",
-                "insertAt": 16,
-                "insertSkip": 3,
-                "suggestionType": "match",
-              },
-              Object {
-                "appendText": "🔁 every month ",
-                "displayText": "every month",
-                "insertAt": 16,
-                "insertSkip": 3,
-                "suggestionType": "match",
-              },
-              Object {
-                "appendText": "🔁 every month on the ",
-                "displayText": "every month on the",
-                "insertAt": 16,
-                "insertSkip": 3,
-                "suggestionType": "match",
-              },
-              Object {
-                "appendText": "🔁 every year ",
-                "displayText": "every year",
-                "insertAt": 16,
-                "insertSkip": 3,
-                "suggestionType": "match",
-              },
-              Object {
-                "appendText": "🔁 every week on Sunday ",
-                "displayText": "every week on Sunday",
-                "insertAt": 16,
-                "insertSkip": 3,
-                "suggestionType": "match",
-              },
-              Object {
-                "appendText": "🔁 every week on Monday ",
-                "displayText": "every week on Monday",
-                "insertAt": 16,
-                "insertSkip": 3,
-                "suggestionType": "match",
-              },
-              Object {
-                "appendText": "🔁 every week on Tuesday ",
-                "displayText": "every week on Tuesday",
-                "insertAt": 16,
-                "insertSkip": 3,
-                "suggestionType": "match",
-              },
-              Object {
-                "appendText": "🔁 every week on Wednesday ",
-                "displayText": "every week on Wednesday",
-                "insertAt": 16,
-                "insertSkip": 3,
-                "suggestionType": "match",
-              },
-              Object {
-                "appendText": "🔁 every week on Thursday ",
-                "displayText": "every week on Thursday",
-                "insertAt": 16,
-                "insertSkip": 3,
-                "suggestionType": "match",
-              },
-              Object {
-                "appendText": "🔁 every week on Friday ",
-                "displayText": "every week on Friday",
-                "insertAt": 16,
-                "insertSkip": 3,
-                "suggestionType": "match",
-              },
-              Object {
-                "appendText": "🔁 every week on Saturday ",
-                "displayText": "every week on Saturday",
-                "insertAt": 16,
-                "insertSkip": 3,
-                "suggestionType": "match",
-              },
-              Object {
-                "appendText": "📅 ",
-                "displayText": "📅 due date",
-              },
-              Object {
-                "appendText": "🛫 ",
-                "displayText": "🛫 start date",
-              },
-              Object {
-                "appendText": "⏳ ",
-                "displayText": "⏳ scheduled date",
-              },
-              Object {
-                "appendText": "⏫ ",
-                "displayText": "⏫ high priority",
-              },
-              Object {
-                "appendText": "🔼 ",
-                "displayText": "🔼 medium priority",
-              },
-              Object {
-                "appendText": "🔽 ",
-                "displayText": "🔽 low priority",
-              },
-              Object {
-                "appendText": "📅 2022-07-11 ",
-                "displayText": "today (2022-07-11)",
-                "insertAt": 16,
-                "insertSkip": 3,
-                "suggestionType": "match",
-              },
-              Object {
-                "appendText": "📅 2022-07-12 ",
-                "displayText": "tomorrow (2022-07-12)",
-                "insertAt": 16,
-                "insertSkip": 3,
-                "suggestionType": "match",
-              },
-              Object {
-                "appendText": "📅 2022-07-17 ",
-                "displayText": "Sunday (2022-07-17)",
-                "insertAt": 16,
-                "insertSkip": 3,
-                "suggestionType": "match",
-              },
-              Object {
-                "appendText": "📅 2022-07-18 ",
-                "displayText": "Monday (2022-07-18)",
-                "insertAt": 16,
-                "insertSkip": 3,
-                "suggestionType": "match",
-              },
-              Object {
-                "appendText": "📅 2022-07-12 ",
-                "displayText": "Tuesday (2022-07-12)",
-                "insertAt": 16,
-                "insertSkip": 3,
-                "suggestionType": "match",
-              },
-              Object {
-                "appendText": "📅 2022-07-13 ",
-                "displayText": "Wednesday (2022-07-13)",
-                "insertAt": 16,
-                "insertSkip": 3,
-                "suggestionType": "match",
-              },
-              Object {
-                "appendText": "📅 2022-07-14 ",
-                "displayText": "Thursday (2022-07-14)",
-                "insertAt": 16,
-                "insertSkip": 3,
-                "suggestionType": "match",
-              },
-              Object {
-                "appendText": "📅 2022-07-15 ",
-                "displayText": "Friday (2022-07-15)",
-                "insertAt": 16,
-                "insertSkip": 3,
-                "suggestionType": "match",
-              },
-              Object {
-                "appendText": "📅 2022-07-16 ",
-                "displayText": "Saturday (2022-07-16)",
-                "insertAt": 16,
-                "insertSkip": 3,
-                "suggestionType": "match",
-              },
-              Object {
-                "appendText": "📅 2022-07-18 ",
-                "displayText": "next week (2022-07-18)",
-                "insertAt": 16,
-                "insertSkip": 3,
-                "suggestionType": "match",
-              },
-              Object {
-                "appendText": "📅 2022-08-11 ",
-                "displayText": "next month (2022-08-11)",
-                "insertAt": 16,
-                "insertSkip": 3,
-                "suggestionType": "match",
-              },
-              Object {
-                "appendText": "📅 2023-07-11 ",
-                "displayText": "next year (2023-07-11)",
-                "insertAt": 16,
-                "insertSkip": 3,
-                "suggestionType": "match",
-              },
-              Object {
-                "appendText": "🛫 ",
-                "displayText": "🛫 start date",
-              },
-              Object {
-                "appendText": "⏳ ",
-                "displayText": "⏳ scheduled date",
-              },
-              Object {
-                "appendText": "⏫ ",
-                "displayText": "⏫ high priority",
-              },
-              Object {
-                "appendText": "🔼 ",
-                "displayText": "🔼 medium priority",
-              },
-              Object {
-                "appendText": "🔽 ",
-                "displayText": "🔽 low priority",
-              },
-              Object {
-                "appendText": "🔁 ",
-                "displayText": "🔁 recurring (repeat)",
-              },
-              Object {
-                "appendText": "🛫 2022-07-11 ",
-                "displayText": "today (2022-07-11)",
-                "insertAt": 16,
-                "insertSkip": 3,
-                "suggestionType": "match",
-              },
-              Object {
-                "appendText": "🛫 2022-07-12 ",
-                "displayText": "tomorrow (2022-07-12)",
-                "insertAt": 16,
-                "insertSkip": 3,
-                "suggestionType": "match",
-              },
-              Object {
-                "appendText": "🛫 2022-07-17 ",
-                "displayText": "Sunday (2022-07-17)",
-                "insertAt": 16,
-                "insertSkip": 3,
-                "suggestionType": "match",
-              },
-              Object {
-                "appendText": "🛫 2022-07-18 ",
-                "displayText": "Monday (2022-07-18)",
-                "insertAt": 16,
-                "insertSkip": 3,
-                "suggestionType": "match",
-              },
-              Object {
-                "appendText": "🛫 2022-07-12 ",
-                "displayText": "Tuesday (2022-07-12)",
-                "insertAt": 16,
-                "insertSkip": 3,
-                "suggestionType": "match",
-              },
-              Object {
-                "appendText": "🛫 2022-07-13 ",
-                "displayText": "Wednesday (2022-07-13)",
-                "insertAt": 16,
-                "insertSkip": 3,
-                "suggestionType": "match",
-              },
-              Object {
-                "appendText": "🛫 2022-07-14 ",
-                "displayText": "Thursday (2022-07-14)",
-                "insertAt": 16,
-                "insertSkip": 3,
-                "suggestionType": "match",
-              },
-              Object {
-                "appendText": "🛫 2022-07-15 ",
-                "displayText": "Friday (2022-07-15)",
-                "insertAt": 16,
-                "insertSkip": 3,
-                "suggestionType": "match",
-              },
-              Object {
-                "appendText": "🛫 2022-07-16 ",
-                "displayText": "Saturday (2022-07-16)",
-                "insertAt": 16,
-                "insertSkip": 3,
-                "suggestionType": "match",
-              },
-              Object {
-                "appendText": "🛫 2022-07-18 ",
-                "displayText": "next week (2022-07-18)",
-                "insertAt": 16,
-                "insertSkip": 3,
-                "suggestionType": "match",
-              },
-              Object {
-                "appendText": "🛫 2022-08-11 ",
-                "displayText": "next month (2022-08-11)",
-                "insertAt": 16,
-                "insertSkip": 3,
-                "suggestionType": "match",
-              },
-              Object {
-                "appendText": "🛫 2023-07-11 ",
-                "displayText": "next year (2023-07-11)",
-                "insertAt": 16,
-                "insertSkip": 3,
-                "suggestionType": "match",
-              },
-              Object {
-                "appendText": "📅 ",
-                "displayText": "📅 due date",
-              },
-              Object {
-                "appendText": "⏳ ",
-                "displayText": "⏳ scheduled date",
-              },
-              Object {
-                "appendText": "⏫ ",
-                "displayText": "⏫ high priority",
-              },
-              Object {
-                "appendText": "🔼 ",
-                "displayText": "🔼 medium priority",
-              },
-              Object {
-                "appendText": "🔽 ",
-                "displayText": "🔽 low priority",
-              },
-              Object {
-                "appendText": "🔁 ",
-                "displayText": "🔁 recurring (repeat)",
-              },
-              Object {
-                "appendText": "
-            ",
-                "displayText": "⏎",
-                "suggestionType": "empty",
-              },
-              Object {
-                "appendText": "📅 ",
-                "displayText": "📅 due date",
-              },
-              Object {
-                "appendText": "🛫 ",
-                "displayText": "🛫 start date",
-              },
-              Object {
-                "appendText": "⏫ ",
-                "displayText": "⏫ high priority",
-              },
-              Object {
-                "appendText": "🔼 ",
-                "displayText": "🔼 medium priority",
-              },
-              Object {
-                "appendText": "🔽 ",
-                "displayText": "🔽 low priority",
-              },
-              Object {
-                "appendText": "🔁 ",
-                "displayText": "🔁 recurring (repeat)",
-              },
+              "📅 due date: 📅 ",
+              "🛫 start date: 🛫 ",
+              "⏳ scheduled date: ⏳ ",
+              "⏫ high priority: ⏫ ",
+              "🔼 medium priority: 🔼 ",
+              "🔽 low priority: 🔽 ",
+              "🔁 recurring (repeat): 🔁 ",
+              "every: 🔁 every ",
+              "every day: 🔁 every day ",
+              "every week: 🔁 every week ",
+              "every month: 🔁 every month ",
+              "every month on the: 🔁 every month on the ",
+              "every year: 🔁 every year ",
+              "every week on Sunday: 🔁 every week on Sunday ",
+              "every week on Monday: 🔁 every week on Monday ",
+              "every week on Tuesday: 🔁 every week on Tuesday ",
+              "every week on Wednesday: 🔁 every week on Wednesday ",
+              "every week on Thursday: 🔁 every week on Thursday ",
+              "every week on Friday: 🔁 every week on Friday ",
+              "every week on Saturday: 🔁 every week on Saturday ",
+              "today (2022-07-11): 📅 2022-07-11 ",
+              "tomorrow (2022-07-12): 📅 2022-07-12 ",
+              "Sunday (2022-07-17): 📅 2022-07-17 ",
+              "Monday (2022-07-18): 📅 2022-07-18 ",
+              "Tuesday (2022-07-12): 📅 2022-07-12 ",
+              "Wednesday (2022-07-13): 📅 2022-07-13 ",
+              "Thursday (2022-07-14): 📅 2022-07-14 ",
+              "Friday (2022-07-15): 📅 2022-07-15 ",
+              "Saturday (2022-07-16): 📅 2022-07-16 ",
+              "next week (2022-07-18): 📅 2022-07-18 ",
+              "next month (2022-08-11): 📅 2022-08-11 ",
+              "next year (2023-07-11): 📅 2023-07-11 ",
+              "today (2022-07-11): 🛫 2022-07-11 ",
+              "tomorrow (2022-07-12): 🛫 2022-07-12 ",
+              "Sunday (2022-07-17): 🛫 2022-07-17 ",
+              "Monday (2022-07-18): 🛫 2022-07-18 ",
+              "Tuesday (2022-07-12): 🛫 2022-07-12 ",
+              "Wednesday (2022-07-13): 🛫 2022-07-13 ",
+              "Thursday (2022-07-14): 🛫 2022-07-14 ",
+              "Friday (2022-07-15): 🛫 2022-07-15 ",
+              "Saturday (2022-07-16): 🛫 2022-07-16 ",
+              "next week (2022-07-18): 🛫 2022-07-18 ",
+              "next month (2022-08-11): 🛫 2022-08-11 ",
+              "next year (2023-07-11): 🛫 2023-07-11 ",
             ]
         `);
     });
