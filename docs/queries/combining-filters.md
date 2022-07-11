@@ -32,11 +32,13 @@ It is fully backwards-compatible, so earlier searches still work. This new featu
 
 The syntax looks like this:
 
-    ```tasks
-    not done
-    (due after yesterday) AND (due before in two weeks)
-    (tags include #inbox) OR (path includes Inbox) OR (heading includes Inbox)
-    ```
+````text
+```tasks
+not done
+(due after yesterday) AND (due before in two weeks)
+(tags include #inbox) OR (path includes Inbox) OR (heading includes Inbox)
+```
+````
 
 Lines continue to have an implicit `AND` relation (thus the full retention of backwards compatibility), but a line can now have multiple filters composed with `AND`, `OR`, `NOT`, `AND NOT`, `OR NOT` and `XOR` with parentheses.
 
@@ -56,12 +58,16 @@ When you combine filters together with `AND`, only tasks that match every filter
 
 For example:
 
-    (has start date) AND (description includes some)
+````text
+(has start date) AND (description includes some)
+````
 
 Tasks requires every filter line to be matched, so the above example is equivalent to:
 
-    has start date
-    description includes some
+````text
+has start date
+description includes some
+````
 
 `AND` becomes particularly valuable when used in conjunction with `OR` and `NOT`.
 
@@ -71,10 +77,12 @@ When you combine filters together with `OR`, tasks which match _at least one_ of
 
 For example, to show both tasks in files with `inbox` in their path and where the tag `#inbox` is on the task line:
 
-    ```tasks
-    not done
-    (path includes inbox) OR (description includes #inbox)
-    ```
+````text
+```tasks
+not done
+(path includes inbox) OR (description includes #inbox)
+```
+````
 
 Beware: In conversation, a request to show me things in the `inbox` file or folder and things with tag `#inbox` must be represented in boolean logic with `OR`, as we accept tasks where _either_ condition is met.
 
@@ -82,29 +90,38 @@ Beware: In conversation, a request to show me things in the `inbox` file or fold
 
 Opposite of:
 
-    ((path includes x) OR (description includes #x))
+````text
+( (path includes x) OR (description includes #x) )
+````
 
 Is:
 
-    ((path does not include x) AND (description does not include #x))
+````text
+( (path does not include x) AND (description does not include #x) )
+````
 
 Simpler is:
 
-    NOT ((path includes x) OR (description includes #x))
+```text
+NOT ( (path includes x) OR (description includes #x) )
+```
 
 Suppose you use `#context` tags so say where a task can be done, so that when you are in that location, you can
 find all the things you could choose to do.
 
 And suppose that several of these locations are close by each other, so when you are in one place, you can easily do things in one of the other places.
 
-
-    # Show all tasks I CAN do in this area:
-    (description includes #context/loc1) OR (description includes #context/loc2) OR (description includes #context/loc3)
+````text
+# Show all tasks I CAN do in this area:
+(tags include #context/loc1) OR (tags include #context/loc2) OR (tags include #context/loc3)
+````
 
 An easy way to see all the other tasks not possible in this area would be to use `NOT( )` around the original query:
 
-    # Show all tasks I CANNOT do in this area - EASY WAY:
-    NOT ((description includes #context/loc1) OR (description includes #context/loc2) OR (description includes #context/loc3))
+````text
+# Show all tasks I CANNOT do in this area - EASY WAY:
+NOT ( (tags include #context/loc1) OR (tags include #context/loc2) OR (tags include #context/loc3) )
+````
 
 The nice thing about the above `NOT` use is that if a new context gets added to the group in future, it can be added to both task blocks via a simple find-and-replace.
 
@@ -113,8 +130,10 @@ The above is much easier to maintain than the harder option of:
 - Changing all the `includes` to `does not include`
 - Changing all the `OR` to `AND`
 
-    # Show all tasks I CANNOT do in this area - HARD WAY:
-    (description does not include #context/loc1) AND (description does not include #context/loc2 ) AND (  description does not include #context/loc3 )
+````text
+# Show all tasks I CANNOT do in this area - HARD WAY
+(tags do not include #context/loc1) AND (tags do not include #context/loc2 ) AND (tags do not include #context/loc3)
+````
 
 ### AND NOT
 
@@ -129,10 +148,12 @@ For example, to show tasks:
 - either in files with `inbox` in their path
 - or where the tag `#inbox` is on the task line:
 
-    ```tasks
-    not done
-    (path includes inbox) XOR (description includes #inbox)
-    ```
+````text
+```tasks
+not done
+(path includes inbox) XOR (description includes #inbox)
+```
+````
 
 It will not show tasks with both `inbox` in the path and the tag `#inbox` is the task line.
 
@@ -149,27 +170,35 @@ Operators are evaluated in this order:
 
 So these two blocks are exactly equivalent - note the extra brackets in the second one:
 
-    ```tasks
-    not done
-    (description includes XXXXXX) OR (description includes YYYYYY) AND (description includes ZZZZZZ)
-    ```
+````text
+```tasks
+not done
+(tag includes #XX) OR (tag includes #YY) AND (tag includes #ZZ)
+```
+````
 
-    ```tasks
-    not done
-    (description includes XXXXXX) OR ((description includes YYYYYY) AND (description includes ZZZZZZ))
-    ```
+````text
+```tasks
+not done
+(tag includes #XX) OR ( (tag includes #YY) AND (tag includes #ZZ) )
+```
+````
 
 And these two are also exactly equivalent:
 
-    ```tasks
-    not done
-    (description includes XXXXXX) AND (description includes YYYYYY) OR (description includes ZZZZZZ)
-    ```
+````text
+```tasks
+not done
+(tag includes #XX) AND (tag includes #YY) OR (tag includes #ZZ)
+```
+````
 
-    ```tasks
-    not done
-    ((description includes XXXXXX) AND (description includes YYYYYY)) OR (description includes ZZZZZZ)
-    ```
+````text
+```tasks
+not done
+( (tag includes #XX) AND (tag includes #YY) ) OR (tag includes #ZZ)
+```
+````
 
 When building a complex combination of expressions, it is safest to use `(` and `)` liberally, so you can be confident you get your intended behaviour.
 
