@@ -375,7 +375,7 @@ export class Task {
                 .map((tag) => tag.trim());
         }
 
-        const task = new Task({
+        return new Task({
             status,
             description,
             path,
@@ -393,8 +393,6 @@ export class Task {
             blockLink,
             tags,
         });
-
-        return task;
     }
 
     public async toLi({
