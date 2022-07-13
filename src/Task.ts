@@ -693,6 +693,7 @@ export class Task {
             'indentation',
             'sectionStart',
             'sectionIndex',
+            'originalStatusCharacter',
         ];
         for (const el of args) {
             if (this[el] !== other[el]) return false;

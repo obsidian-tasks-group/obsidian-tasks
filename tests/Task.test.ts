@@ -744,7 +744,16 @@ describe('equality', () => {
         expect(lhs).not.toBeIdenticalTo(new TaskBuilder().sectionIndex(2));
     });
 
-    // originalStatusCharacter: string;
+    it('should check originalStatusCharacter', () => {
+        const lhs = new TaskBuilder().originalStatusCharacter(' ');
+        expect(lhs).toBeIdenticalTo(
+            new TaskBuilder().originalStatusCharacter(' '),
+        );
+        expect(lhs).not.toBeIdenticalTo(
+            new TaskBuilder().originalStatusCharacter('x'),
+        );
+    });
+
     // precedingHeader: string | null;
     // priority: Priority;
     // startDate: moment.Moment | null;
