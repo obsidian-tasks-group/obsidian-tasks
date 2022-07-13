@@ -777,7 +777,15 @@ describe('equality', () => {
         );
     });
 
-    // startDate: moment.Moment | null;
+    it('should check startDate', () => {
+        const lhs = new TaskBuilder().startDate('2012-12-27');
+        expect(lhs).toBeIdenticalTo(new TaskBuilder().startDate('2012-12-27'));
+        expect(lhs).not.toBeIdenticalTo(new TaskBuilder().startDate(null));
+        expect(lhs).not.toBeIdenticalTo(
+            new TaskBuilder().startDate('2012-12-26'),
+        );
+    });
+
     // scheduledDate: moment.Moment | null;
     // dueDate: moment.Moment | null;
     // doneDate: moment.Moment | null;

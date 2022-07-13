@@ -686,7 +686,7 @@ export class Task {
         // Based on ideas from koala. AquaCat and javalent in Discord:
         // https://discord.com/channels/686053708261228577/840286264964022302/996735200388186182
         // and later.
-        const args: Array<keyof Task> = [
+        let args: Array<keyof Task> = [
             'status',
             'description',
             'path',
@@ -699,6 +699,20 @@ export class Task {
         ];
         for (const el of args) {
             if (this[el] !== other[el]) return false;
+        }
+
+        // Compare Date fields
+        args = ['startDate'];
+        for (const el of args) {
+            const date1 = this[el] as Moment | null;
+            const date2 = other[el] as Moment | null;
+            if (date1 === null && date2 !== null) {
+                return false;
+            } else if (date1 !== null && date2 === null) {
+                return false;
+            } else if (date1 && date2 && !date1!.isSame(date2!)) {
+                return false;
+            }
         }
         return true;
     }
