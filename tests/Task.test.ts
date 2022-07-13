@@ -684,7 +684,9 @@ export function toBeIdenticalTo(builder1: TaskBuilder, builder2: TaskBuilder) {
         };
     }
     return {
-        message: () => 'Tasks are identical, but are treated as different',
+        message: () => {
+            return 'Tasks should be identical, but are treated as different';
+        },
         pass: false,
     };
 }
@@ -711,21 +713,17 @@ describe('equality', () => {
     });
 
     it('should check path', () => {
-        const builder = new TaskBuilder();
-        const task1 = builder.path('same file.md').build();
-
-        expect(task1.identicalTo(builder.path('same file.md').build())).toEqual(
-            true,
+        const lhs = new TaskBuilder().path('same test file.md');
+        expect(lhs).toBeIdenticalTo(
+            new TaskBuilder().path('same test file.md'),
         );
-
         // Check it is case-sensitive
-        expect(task1.identicalTo(builder.path('Same File.md').build())).toEqual(
-            false,
+        expect(lhs).not.toBeIdenticalTo(
+            new TaskBuilder().path('Same Test File.md'),
         );
-
-        expect(
-            task1.identicalTo(builder.path('different file.md').build()),
-        ).toEqual(false);
+        expect(lhs).not.toBeIdenticalTo(
+            new TaskBuilder().path('different text.md'),
+        );
     });
 
     // indentation: string;
