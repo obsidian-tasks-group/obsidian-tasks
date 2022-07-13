@@ -685,11 +685,15 @@ export class Task {
     }
 
     identicalTo(other: Task) {
-        if (this.status !== other.status) {
-            return false;
-        }
-        if (this.description !== other.description) {
-            return false;
+        // Based on ideas from koala and AquaCat in Discord:
+        // https://discord.com/channels/686053708261228577/840286264964022302/996735200388186182
+        // and later.
+        const args = ['status', 'description'];
+        for (const el of args) {
+            // 'as any' suppresses TS7053
+            if ((this as any)[el] !== (other as any)[el]) {
+                return false;
+            }
         }
         return true;
     }
