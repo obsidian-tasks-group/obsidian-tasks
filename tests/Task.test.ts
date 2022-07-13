@@ -681,7 +681,24 @@ describe('equality', () => {
         ).toEqual(false);
     });
 
-    // path: string;
+    it('should check path', () => {
+        const builder = new TaskBuilder();
+        const task1 = builder.path('same file.md').build();
+
+        expect(task1.identicalTo(builder.path('same file.md').build())).toEqual(
+            true,
+        );
+
+        // Check it is case-sensitive
+        expect(task1.identicalTo(builder.path('Same File.md').build())).toEqual(
+            false,
+        );
+
+        expect(
+            task1.identicalTo(builder.path('different file.md').build()),
+        ).toEqual(false);
+    });
+
     // indentation: string;
     // sectionStart: number;
     // sectionIndex: number;
