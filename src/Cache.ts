@@ -207,14 +207,14 @@ export class Cache {
             listItems = [];
         }
 
-        const fileContent = await this.vault.cachedRead(file);
-        const fileLines = fileContent.split('\n');
-
         // Remove all tasks from this file from the cache before
         // adding the ones that are currently in the file.
         this.tasks = this.tasks.filter((task: Task) => {
             return task.path !== file.path;
         });
+
+        const fileContent = await this.vault.cachedRead(file);
+        const fileLines = fileContent.split('\n');
 
         // We want to store section information with every task so
         // that we can use that when we post process the markdown
