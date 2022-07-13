@@ -767,7 +767,16 @@ describe('equality', () => {
         );
     });
 
-    // priority: Priority;
+    it('should check priority', () => {
+        const lhs = new TaskBuilder().priority(Priority.Medium);
+        expect(lhs).toBeIdenticalTo(
+            new TaskBuilder().priority(Priority.Medium),
+        );
+        expect(lhs).not.toBeIdenticalTo(
+            new TaskBuilder().priority(Priority.None),
+        );
+    });
+
     // startDate: moment.Moment | null;
     // scheduledDate: moment.Moment | null;
     // dueDate: moment.Moment | null;
