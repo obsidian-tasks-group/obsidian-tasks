@@ -655,16 +655,51 @@ describe('toggle done', () => {
     });
 });
 
+declare global {
+    namespace jest {
+        interface Matchers<R> {
+            toBeIdenticalTo(builder2: TaskBuilder): R;
+        }
+
+        interface Expect {
+            toBeIdenticalTo(builder2: TaskBuilder): any;
+        }
+
+        interface InverseAsymmetricMatchers {
+            toBeIdenticalTo(builder2: TaskBuilder): any;
+        }
+    }
+}
+
+export function toBeIdenticalTo(builder1: TaskBuilder, builder2: TaskBuilder) {
+    const task1 = builder1.build();
+    const task2 = builder2.build();
+    const pass = task1.identicalTo(task2);
+
+    if (pass) {
+        return {
+            message: () =>
+                'Tasks treated as identical, but should be different',
+            pass: true,
+        };
+    }
+    return {
+        message: () => 'Tasks are identical, but are treated as different',
+        pass: false,
+    };
+}
+
+expect.extend({
+    toBeIdenticalTo,
+});
+
 describe('equality', () => {
     it('should check status', () => {
-        const builder = new TaskBuilder();
-        const task1 = builder.status(Status.Todo).build();
-
-        expect(task1.identicalTo(builder.status(Status.Todo).build())).toEqual(
-            true,
+        expect(new TaskBuilder().status(Status.Todo)).toBeIdenticalTo(
+            new TaskBuilder().status(Status.Todo),
         );
-        expect(task1.identicalTo(builder.status(Status.Done).build())).toEqual(
-            false,
+        expect(new TaskBuilder().status(Status.Todo)).not.toBeIdenticalTo(
+            new TaskBuilder().status(Status.Done),
         );
     });
 
