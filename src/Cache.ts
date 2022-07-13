@@ -208,12 +208,6 @@ export class Cache {
             listItems = [];
         }
 
-        // Remove all tasks from this file from the cache before
-        // adding the ones that are currently in the file.
-        this.tasks = this.tasks.filter((task: Task) => {
-            return task.path !== file.path;
-        });
-
         const fileContent = await this.vault.cachedRead(file);
         const newTasks = Cache.getTasksFromFileContent(
             fileContent,
@@ -221,6 +215,13 @@ export class Cache {
             fileCache,
             file,
         );
+
+        // Remove all tasks from this file from the cache before
+        // adding the ones that are currently in the file.
+        this.tasks = this.tasks.filter((task: Task) => {
+            return task.path !== file.path;
+        });
+
         this.tasks.push(...newTasks);
 
         // All updated, inform our subscribers.
