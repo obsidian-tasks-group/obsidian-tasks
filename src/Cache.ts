@@ -230,7 +230,7 @@ export class Cache {
                 ) {
                     // We went past the current section (or this is the first task).
                     // Find the section that is relevant for this task and the following of the same section.
-                    currentSection = this.getSection({
+                    currentSection = Cache.getSection({
                         lineNumberTask: listItem.position.start.line,
                         sections: fileCache.sections,
                     });
@@ -248,7 +248,7 @@ export class Cache {
                     path: file.path,
                     sectionStart: currentSection.position.start.line,
                     sectionIndex,
-                    precedingHeader: this.getPrecedingHeader({
+                    precedingHeader: Cache.getPrecedingHeader({
                         lineNumberTask: listItem.position.start.line,
                         sections: fileCache.sections,
                         fileLines,
@@ -266,7 +266,7 @@ export class Cache {
         this.notifySubscribers();
     }
 
-    private getSection({
+    private static getSection({
         lineNumberTask,
         sections,
     }: {
@@ -290,7 +290,7 @@ export class Cache {
         return null;
     }
 
-    private getPrecedingHeader({
+    private static getPrecedingHeader({
         lineNumberTask,
         sections,
         fileLines,
