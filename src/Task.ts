@@ -685,15 +685,12 @@ export class Task {
     }
 
     identicalTo(other: Task) {
-        // Based on ideas from koala and AquaCat in Discord:
+        // Based on ideas from koala. AquaCat and javalent in Discord:
         // https://discord.com/channels/686053708261228577/840286264964022302/996735200388186182
         // and later.
-        const args = ['status', 'description'];
+        const args: Array<keyof Task> = ['status', 'description'];
         for (const el of args) {
-            // 'as any' suppresses TS7053
-            if ((this as any)[el] !== (other as any)[el]) {
-                return false;
-            }
+            if (this[el] !== other[el]) return false;
         }
         return true;
     }
