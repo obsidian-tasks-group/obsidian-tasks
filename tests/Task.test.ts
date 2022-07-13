@@ -701,16 +701,13 @@ describe('equality', () => {
     });
 
     it('should check description', () => {
-        const builder = new TaskBuilder();
-        const task1 = builder.description('same text').build();
-
-        expect(
-            task1.identicalTo(builder.description('same text').build()),
-        ).toEqual(true);
-
-        expect(
-            task1.identicalTo(builder.description('different text').build()),
-        ).toEqual(false);
+        const lhs = new TaskBuilder().description('same long initial text');
+        expect(lhs).toBeIdenticalTo(
+            new TaskBuilder().description('same long initial text'),
+        );
+        expect(lhs).not.toBeIdenticalTo(
+            new TaskBuilder().description('different text'),
+        );
     });
 
     it('should check path', () => {
