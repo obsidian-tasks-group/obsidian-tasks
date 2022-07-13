@@ -692,6 +692,7 @@ export class Task {
             'path',
             'indentation',
             'sectionStart',
+            'sectionIndex',
         ];
         for (const el of args) {
             if (this[el] !== other[el]) return false;

@@ -738,7 +738,12 @@ describe('equality', () => {
         expect(lhs).not.toBeIdenticalTo(new TaskBuilder().sectionStart(2));
     });
 
-    // sectionIndex: number;
+    it('should check sectionIndex', () => {
+        const lhs = new TaskBuilder().sectionIndex(0);
+        expect(lhs).toBeIdenticalTo(new TaskBuilder().sectionIndex(0));
+        expect(lhs).not.toBeIdenticalTo(new TaskBuilder().sectionIndex(2));
+    });
+
     // originalStatusCharacter: string;
     // precedingHeader: string | null;
     // priority: Priority;
