@@ -5,6 +5,7 @@ import moment from 'moment';
 import { Priority, Status, Task } from '../src/Task';
 import { getSettings, updateSettings } from '../src/config/Settings';
 import { fromLine } from './TestHelpers';
+import { TaskBuilder } from './TestingTools/TaskBuilder';
 
 jest.mock('obsidian');
 window.moment = moment;
@@ -652,4 +653,46 @@ describe('toggle done', () => {
             nextStart: undefined,
         });
     });
+});
+
+describe('equality', () => {
+    it('should check status', () => {
+        const builder = new TaskBuilder();
+        const task1 = builder.status(Status.Todo).build();
+
+        expect(task1.identicalTo(builder.status(Status.Todo).build())).toEqual(
+            true,
+        );
+        expect(task1.identicalTo(builder.status(Status.Done).build())).toEqual(
+            false,
+        );
+    });
+
+    it('should check description', () => {
+        const builder = new TaskBuilder();
+        const task1 = builder.description('same text').build();
+
+        expect(
+            task1.identicalTo(builder.description('same text').build()),
+        ).toEqual(true);
+
+        expect(
+            task1.identicalTo(builder.description('different text').build()),
+        ).toEqual(false);
+    });
+
+    // path: string;
+    // indentation: string;
+    // sectionStart: number;
+    // sectionIndex: number;
+    // originalStatusCharacter: string;
+    // precedingHeader: string | null;
+    // priority: Priority;
+    // startDate: moment.Moment | null;
+    // scheduledDate: moment.Moment | null;
+    // dueDate: moment.Moment | null;
+    // doneDate: moment.Moment | null;
+    // recurrence: Recurrence | null;
+    // blockLink: string;
+    // tags: string[] | [];
 });

@@ -684,6 +684,16 @@ export class Task {
         return linkText;
     }
 
+    identicalTo(other: Task) {
+        if (this.status !== other.status) {
+            return false;
+        }
+        if (this.description !== other.description) {
+            return false;
+        }
+        return true;
+    }
+
     private addTooltip({
         element,
         isFilenameUnique,
