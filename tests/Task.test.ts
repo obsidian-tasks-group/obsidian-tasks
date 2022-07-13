@@ -732,7 +732,12 @@ describe('equality', () => {
         expect(lhs).not.toBeIdenticalTo(new TaskBuilder().indentation('    '));
     });
 
-    // sectionStart: number;
+    it('should check sectionStart', () => {
+        const lhs = new TaskBuilder().sectionStart(0);
+        expect(lhs).toBeIdenticalTo(new TaskBuilder().sectionStart(0));
+        expect(lhs).not.toBeIdenticalTo(new TaskBuilder().sectionStart(2));
+    });
+
     // sectionIndex: number;
     // originalStatusCharacter: string;
     // precedingHeader: string | null;
