@@ -702,6 +702,19 @@ export class Task {
             if (this[el] !== other[el]) return false;
         }
 
+        // Compare tags
+        if (this.tags.length !== other.tags.length) {
+            return false;
+        }
+        // Tags are the same only if the values are in the same order
+        if (
+            !this.tags.every(function (element, index) {
+                return element === other.tags[index];
+            })
+        ) {
+            return false;
+        }
+
         // Compare Date fields
         args = ['startDate', 'scheduledDate', 'dueDate', 'doneDate'];
         for (const el of args) {

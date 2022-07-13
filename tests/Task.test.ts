@@ -823,5 +823,9 @@ describe('equality', () => {
         expect(lhs).not.toBeIdenticalTo(new TaskBuilder().blockLink('dcf64c'));
     });
 
-    // tags: string[] | [];
+    it('should check tags', () => {
+        const lhs = new TaskBuilder().tags([]);
+        expect(lhs).toBeIdenticalTo(new TaskBuilder().tags([]));
+        expect(lhs).not.toBeIdenticalTo(new TaskBuilder().tags(['#stuff']));
+    });
 });
