@@ -215,7 +215,13 @@ export class Cache {
         });
 
         const fileContent = await this.vault.cachedRead(file);
-        this.getTasksFromFileContent(fileContent, listItems, fileCache, file);
+        const newTasks = this.getTasksFromFileContent(
+            fileContent,
+            listItems,
+            fileCache,
+            file,
+        );
+        this.tasks.push(...newTasks);
 
         // All updated, inform our subscribers.
         this.notifySubscribers();
@@ -226,7 +232,8 @@ export class Cache {
         listItems: ListItemCache[],
         fileCache: CachedMetadata,
         file: TFile,
-    ) {
+    ): Task[] {
+        const tasks: Task[] = [];
         const fileLines = fileContent.split('\n');
 
         // We want to store section information with every task so
@@ -270,10 +277,12 @@ export class Cache {
 
                 if (task !== null) {
                     sectionIndex++;
-                    this.tasks.push(task);
+                    tasks.push(task);
                 }
             }
         }
+
+        return tasks;
     }
 
     private static getSection({
