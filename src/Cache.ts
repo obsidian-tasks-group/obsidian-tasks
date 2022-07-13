@@ -1,4 +1,5 @@
 import { MetadataCache, TAbstractFile, TFile, Vault } from 'obsidian';
+import type { CachedMetadata, ListItemCache } from 'obsidian';
 import type { EventRef, SectionCache } from 'obsidian';
 import { Mutex } from 'async-mutex';
 
@@ -214,6 +215,18 @@ export class Cache {
         });
 
         const fileContent = await this.vault.cachedRead(file);
+        this.getTasksFromFileContent(fileContent, listItems, fileCache, file);
+
+        // All updated, inform our subscribers.
+        this.notifySubscribers();
+    }
+
+    private getTasksFromFileContent(
+        fileContent: string,
+        listItems: ListItemCache[],
+        fileCache: CachedMetadata,
+        file: TFile,
+    ) {
         const fileLines = fileContent.split('\n');
 
         // We want to store section information with every task so
@@ -261,9 +274,6 @@ export class Cache {
                 }
             }
         }
-
-        // All updated, inform our subscribers.
-        this.notifySubscribers();
     }
 
     private static getSection({
