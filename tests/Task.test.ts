@@ -786,7 +786,17 @@ describe('equality', () => {
         );
     });
 
-    // scheduledDate: moment.Moment | null;
+    it('should check scheduledDate', () => {
+        const lhs = new TaskBuilder().scheduledDate('2012-12-27');
+        expect(lhs).toBeIdenticalTo(
+            new TaskBuilder().scheduledDate('2012-12-27'),
+        );
+        expect(lhs).not.toBeIdenticalTo(new TaskBuilder().scheduledDate(null));
+        expect(lhs).not.toBeIdenticalTo(
+            new TaskBuilder().scheduledDate('2012-12-26'),
+        );
+    });
+
     // dueDate: moment.Moment | null;
     // doneDate: moment.Moment | null;
     // recurrence: Recurrence | null;

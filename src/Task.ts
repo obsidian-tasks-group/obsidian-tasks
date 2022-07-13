@@ -702,7 +702,7 @@ export class Task {
         }
 
         // Compare Date fields
-        args = ['startDate'];
+        args = ['startDate', 'scheduledDate'];
         for (const el of args) {
             const date1 = this[el] as Moment | null;
             const date2 = other[el] as Moment | null;
