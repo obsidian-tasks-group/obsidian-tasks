@@ -28,3 +28,41 @@ describe('Recurrence', () => {
         });
     });
 });
+
+describe('Recurrence equality', () => {
+    it('differing only in rule text', () => {
+        const weekly = Recurrence.fromText({
+            recurrenceRuleText: 'every week',
+            startDate: null,
+            scheduledDate: null,
+            dueDate: null,
+        }) as Recurrence;
+        const daily = Recurrence.fromText({
+            recurrenceRuleText: 'every day',
+            startDate: null,
+            scheduledDate: null,
+            dueDate: null,
+        }) as Recurrence;
+        expect(weekly.identicalTo(daily)).toBe(false);
+    });
+
+    it('differing only in "when done"', () => {
+        const weekly = Recurrence.fromText({
+            recurrenceRuleText: 'every week',
+            startDate: null,
+            scheduledDate: null,
+            dueDate: null,
+        }) as Recurrence;
+        const weeklyWhenDone = Recurrence.fromText({
+            recurrenceRuleText: 'every week when done',
+            startDate: null,
+            scheduledDate: null,
+            dueDate: null,
+        }) as Recurrence;
+        expect(weekly?.identicalTo(weeklyWhenDone)).toBe(false);
+    });
+
+    // startDate: Moment | null;
+    // scheduledDate: Moment | null;
+    // dueDate: Moment | null;
+});

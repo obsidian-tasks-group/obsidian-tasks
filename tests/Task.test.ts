@@ -820,45 +820,21 @@ describe('equality', () => {
         const lhs = new TaskBuilder().recurrence(null);
         expect(lhs).toBeIdenticalTo(new TaskBuilder().recurrence(null));
 
-        it('differing only in rule text', () => {
-            const weekly = Recurrence.fromText({
-                recurrenceRuleText: 'every week',
-                startDate: null,
-                scheduledDate: null,
-                dueDate: null,
-            });
-            const daily = Recurrence.fromText({
-                recurrenceRuleText: 'every day',
-                startDate: null,
-                scheduledDate: null,
-                dueDate: null,
-            });
-            expect(new TaskBuilder().recurrence(weekly)).not.toBeIdenticalTo(
-                new TaskBuilder().recurrence(daily),
-            );
+        const weekly = Recurrence.fromText({
+            recurrenceRuleText: 'every week',
+            startDate: null,
+            scheduledDate: null,
+            dueDate: null,
         });
-
-        it('differing only in "when done"', () => {
-            const weekly = Recurrence.fromText({
-                recurrenceRuleText: 'every week',
-                startDate: null,
-                scheduledDate: null,
-                dueDate: null,
-            });
-            const weeklyWhenDone = Recurrence.fromText({
-                recurrenceRuleText: 'every week when done',
-                startDate: null,
-                scheduledDate: null,
-                dueDate: null,
-            });
-            expect(new TaskBuilder().recurrence(weekly)).not.toBeIdenticalTo(
-                new TaskBuilder().recurrence(weeklyWhenDone),
-            );
+        const daily = Recurrence.fromText({
+            recurrenceRuleText: 'every day',
+            startDate: null,
+            scheduledDate: null,
+            dueDate: null,
         });
-
-        // startDate: Moment | null;
-        // scheduledDate: Moment | null;
-        // dueDate: Moment | null;
+        expect(new TaskBuilder().recurrence(weekly)).not.toBeIdenticalTo(
+            new TaskBuilder().recurrence(daily),
+        );
     });
 
     it('should check blockLink', () => {
