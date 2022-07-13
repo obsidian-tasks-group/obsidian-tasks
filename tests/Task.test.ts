@@ -797,6 +797,15 @@ describe('equality', () => {
         );
     });
 
+    it('should check dueDate', () => {
+        const lhs = new TaskBuilder().dueDate('2012-12-27');
+        expect(lhs).toBeIdenticalTo(new TaskBuilder().dueDate('2012-12-27'));
+        expect(lhs).not.toBeIdenticalTo(new TaskBuilder().dueDate(null));
+        expect(lhs).not.toBeIdenticalTo(
+            new TaskBuilder().dueDate('2012-12-26'),
+        );
+    });
+
     // dueDate: moment.Moment | null;
     // doneDate: moment.Moment | null;
     // recurrence: Recurrence | null;
