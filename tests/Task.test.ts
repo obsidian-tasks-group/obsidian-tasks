@@ -754,7 +754,19 @@ describe('equality', () => {
         );
     });
 
-    // precedingHeader: string | null;
+    it('should check precedingHeader', () => {
+        const lhs = new TaskBuilder().precedingHeader('Heading 1');
+        expect(lhs).toBeIdenticalTo(
+            new TaskBuilder().precedingHeader('Heading 1'),
+        );
+        expect(lhs).not.toBeIdenticalTo(
+            new TaskBuilder().precedingHeader('Different Heading'),
+        );
+        expect(lhs).not.toBeIdenticalTo(
+            new TaskBuilder().precedingHeader(null),
+        );
+    });
+
     // priority: Priority;
     // startDate: moment.Moment | null;
     // scheduledDate: moment.Moment | null;

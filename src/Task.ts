@@ -694,6 +694,7 @@ export class Task {
             'sectionStart',
             'sectionIndex',
             'originalStatusCharacter',
+            'precedingHeader',
         ];
         for (const el of args) {
             if (this[el] !== other[el]) return false;
