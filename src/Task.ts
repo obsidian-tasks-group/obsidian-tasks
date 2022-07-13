@@ -728,6 +728,21 @@ export class Task {
                 return false;
             }
         }
+
+        const recurrence1 = this.recurrence;
+        const recurrence2 = other.recurrence;
+        if (recurrence1 === null && recurrence2 !== null) {
+            return false;
+        } else if (recurrence1 !== null && recurrence2 === null) {
+            return false;
+        } else if (
+            recurrence1 &&
+            recurrence2 &&
+            !recurrence1!.identicalTo(recurrence2!)
+        ) {
+            return false;
+        }
+
         return true;
     }
 

@@ -219,4 +219,14 @@ export class Recurrence {
 
         return null;
     }
+
+    public identicalTo(other: Recurrence) {
+        if (this.toText() !== other.toText()) {
+            return false;
+        }
+        if (this.baseOnToday !== other.baseOnToday) {
+            return false;
+        }
+        return true;
+    }
 }

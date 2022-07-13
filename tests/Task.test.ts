@@ -4,6 +4,7 @@
 import moment from 'moment';
 import { Priority, Status, Task } from '../src/Task';
 import { getSettings, updateSettings } from '../src/config/Settings';
+import { Recurrence } from '../src/Recurrence';
 import { fromLine } from './TestHelpers';
 import { TaskBuilder } from './TestingTools/TaskBuilder';
 
@@ -815,7 +816,50 @@ describe('equality', () => {
         );
     });
 
-    // recurrence: Recurrence | null;
+    describe('should check recurrence', () => {
+        const lhs = new TaskBuilder().recurrence(null);
+        expect(lhs).toBeIdenticalTo(new TaskBuilder().recurrence(null));
+
+        it('differing only in rule text', () => {
+            const weekly = Recurrence.fromText({
+                recurrenceRuleText: 'every week',
+                startDate: null,
+                scheduledDate: null,
+                dueDate: null,
+            });
+            const daily = Recurrence.fromText({
+                recurrenceRuleText: 'every day',
+                startDate: null,
+                scheduledDate: null,
+                dueDate: null,
+            });
+            expect(new TaskBuilder().recurrence(weekly)).not.toBeIdenticalTo(
+                new TaskBuilder().recurrence(daily),
+            );
+        });
+
+        it('differing only in "when done"', () => {
+            const weekly = Recurrence.fromText({
+                recurrenceRuleText: 'every week',
+                startDate: null,
+                scheduledDate: null,
+                dueDate: null,
+            });
+            const weeklyWhenDone = Recurrence.fromText({
+                recurrenceRuleText: 'every week when done',
+                startDate: null,
+                scheduledDate: null,
+                dueDate: null,
+            });
+            expect(new TaskBuilder().recurrence(weekly)).not.toBeIdenticalTo(
+                new TaskBuilder().recurrence(weeklyWhenDone),
+            );
+        });
+
+        // startDate: Moment | null;
+        // scheduledDate: Moment | null;
+        // dueDate: Moment | null;
+    });
 
     it('should check blockLink', () => {
         const lhs = new TaskBuilder().blockLink('');
