@@ -806,8 +806,15 @@ describe('equality', () => {
         );
     });
 
-    // dueDate: moment.Moment | null;
-    // doneDate: moment.Moment | null;
+    it('should check doneDate', () => {
+        const lhs = new TaskBuilder().doneDate('2012-12-27');
+        expect(lhs).toBeIdenticalTo(new TaskBuilder().doneDate('2012-12-27'));
+        expect(lhs).not.toBeIdenticalTo(new TaskBuilder().doneDate(null));
+        expect(lhs).not.toBeIdenticalTo(
+            new TaskBuilder().doneDate('2012-12-26'),
+        );
+    });
+
     // recurrence: Recurrence | null;
     // blockLink: string;
     // tags: string[] | [];
