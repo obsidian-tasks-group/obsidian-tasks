@@ -726,7 +726,12 @@ describe('equality', () => {
         );
     });
 
-    // indentation: string;
+    it('should check indentation', () => {
+        const lhs = new TaskBuilder().indentation('');
+        expect(lhs).toBeIdenticalTo(new TaskBuilder().indentation(''));
+        expect(lhs).not.toBeIdenticalTo(new TaskBuilder().indentation('    '));
+    });
+
     // sectionStart: number;
     // sectionIndex: number;
     // originalStatusCharacter: string;

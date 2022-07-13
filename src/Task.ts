@@ -688,7 +688,12 @@ export class Task {
         // Based on ideas from koala. AquaCat and javalent in Discord:
         // https://discord.com/channels/686053708261228577/840286264964022302/996735200388186182
         // and later.
-        const args: Array<keyof Task> = ['status', 'description', 'path'];
+        const args: Array<keyof Task> = [
+            'status',
+            'description',
+            'path',
+            'indentation',
+        ];
         for (const el of args) {
             if (this[el] !== other[el]) return false;
         }
