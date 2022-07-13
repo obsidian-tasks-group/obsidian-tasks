@@ -816,6 +816,12 @@ describe('equality', () => {
     });
 
     // recurrence: Recurrence | null;
-    // blockLink: string;
+
+    it('should check blockLink', () => {
+        const lhs = new TaskBuilder().blockLink('');
+        expect(lhs).toBeIdenticalTo(new TaskBuilder().blockLink(''));
+        expect(lhs).not.toBeIdenticalTo(new TaskBuilder().blockLink('dcf64c'));
+    });
+
     // tags: string[] | [];
 });

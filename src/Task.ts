@@ -696,6 +696,7 @@ export class Task {
             'originalStatusCharacter',
             'precedingHeader',
             'priority',
+            'blockLink',
         ];
         for (const el of args) {
             if (this[el] !== other[el]) return false;
