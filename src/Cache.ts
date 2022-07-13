@@ -215,7 +215,7 @@ export class Cache {
         });
 
         const fileContent = await this.vault.cachedRead(file);
-        const newTasks = this.getTasksFromFileContent(
+        const newTasks = Cache.getTasksFromFileContent(
             fileContent,
             listItems,
             fileCache,
@@ -227,7 +227,7 @@ export class Cache {
         this.notifySubscribers();
     }
 
-    private getTasksFromFileContent(
+    private static getTasksFromFileContent(
         fileContent: string,
         listItems: ListItemCache[],
         fileCache: CachedMetadata,
