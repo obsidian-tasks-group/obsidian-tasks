@@ -695,12 +695,9 @@ expect.extend({
 
 describe('equality', () => {
     it('should check status', () => {
-        expect(new TaskBuilder().status(Status.Todo)).toBeIdenticalTo(
-            new TaskBuilder().status(Status.Todo),
-        );
-        expect(new TaskBuilder().status(Status.Todo)).not.toBeIdenticalTo(
-            new TaskBuilder().status(Status.Done),
-        );
+        const lhs = new TaskBuilder().status(Status.Todo);
+        expect(lhs).toBeIdenticalTo(new TaskBuilder().status(Status.Todo));
+        expect(lhs).not.toBeIdenticalTo(new TaskBuilder().status(Status.Done));
     });
 
     it('should check description', () => {
