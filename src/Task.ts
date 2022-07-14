@@ -705,6 +705,17 @@ export class Task {
         );
     }
 
+    /**
+     * Compare all the fields in another Task, to detect any differences from this one.
+     *
+     * If any field is different in any way, it will return false.
+     *
+     * This is used in some optimisations, to avoid work if an edit to file
+     * does not change any tasks, so it is vital that its definition
+     * of identical is very strict.
+     *
+     * @param other
+     */
     public identicalTo(other: Task) {
         // Based on ideas from koala. AquaCat and javalent in Discord:
         // https://discord.com/channels/686053708261228577/840286264964022302/996735200388186182
