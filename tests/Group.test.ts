@@ -333,6 +333,24 @@ describe('Group names', () => {
         },
 
         // -----------------------------------------------------------
+        // group by tags
+        {
+            groupBy: 'tags',
+            taskLine: '- [ ] a #tag1',
+            expectedGroupNames: ['#tag1'],
+        },
+        {
+            groupBy: 'tags',
+            taskLine: '- [ ] a #tag1 #tag2',
+            expectedGroupNames: ['#tag1', '#tag2'],
+        },
+        {
+            groupBy: 'tags',
+            taskLine: '- [x] a',
+            expectedGroupNames: ['(No tags)'],
+        },
+
+        // -----------------------------------------------------------
     ];
 
     test.concurrent.each<GroupNameCase>(groupNameCases)(

@@ -46,6 +46,7 @@ export class Group {
         scheduled: Group.groupByScheduledDate,
         start: Group.groupByStartDate,
         status: Group.groupByStatus,
+        tags: Group.groupByTags,
     };
 
     private static groupByStartDate(task: Task): string[] {
@@ -124,5 +125,12 @@ export class Group {
             return ['(No heading)'];
         }
         return [task.precedingHeader];
+    }
+
+    private static groupByTags(task: Task): string[] {
+        if (task.tags.length == 0) {
+            return ['(No tags)'];
+        }
+        return task.tags;
     }
 }
