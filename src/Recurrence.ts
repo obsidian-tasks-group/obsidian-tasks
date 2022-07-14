@@ -233,6 +233,9 @@ export class Recurrence {
         if (Sort.compareByDate(this.startDate, other.startDate) !== 0) {
             return false;
         }
+        if (Sort.compareByDate(this.scheduledDate, other.scheduledDate) !== 0) {
+            return false;
+        }
         return true;
     }
 }

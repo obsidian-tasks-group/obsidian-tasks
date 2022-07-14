@@ -48,24 +48,34 @@ describe('Recurrence equality', () => {
     it('differing only in startDate', () => {
         // Two different dates
         const date1Recurrence = new RecurrenceBuilder()
-            .rule('every week')
             .startDate('2021-10-21')
             .build();
 
         const date2Recurrence = new RecurrenceBuilder()
-            .rule('every week')
             .startDate('1998-03-13')
             .build();
 
-        const nullRecurrence = new RecurrenceBuilder()
-            .rule('every week')
-            .startDate(null)
-            .build();
+        const nullRecurrence = new RecurrenceBuilder().startDate(null).build();
 
         expect(date1Recurrence?.identicalTo(date1Recurrence)).toBe(true);
         expect(date1Recurrence?.identicalTo(date2Recurrence)).toBe(false);
         expect(date1Recurrence?.identicalTo(nullRecurrence)).toBe(false);
         expect(nullRecurrence?.identicalTo(date1Recurrence)).toBe(false);
+    });
+
+    it('differing only in scheduledDate', () => {
+        // Two different dates
+        // No need to replicate the null checks in startDate
+        const date1Recurrence = new RecurrenceBuilder()
+            .scheduledDate('2021-10-21')
+            .build();
+
+        const date2Recurrence = new RecurrenceBuilder()
+            .scheduledDate('1998-03-13')
+            .build();
+
+        expect(date1Recurrence?.identicalTo(date1Recurrence)).toBe(true);
+        expect(date1Recurrence?.identicalTo(date2Recurrence)).toBe(false);
     });
 
     // scheduledDate: Moment | null;
