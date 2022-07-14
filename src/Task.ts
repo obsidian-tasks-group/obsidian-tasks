@@ -683,6 +683,28 @@ export class Task {
         return linkText;
     }
 
+    /**
+     * Compare two lists of Task objects, and report whether their
+     * tasks are identical in the same order.
+     *
+     * This can be useful for optimising code if it is guaranteed that
+     * there are no possible differences in the tasks in a file
+     * after an edit, for example.
+     *
+     * If any field is different in any task, it will return false.
+     *
+     * @param oldTasks
+     * @param newTasks
+     */
+    static tasksListsIdentical(oldTasks: Task[], newTasks: Task[]): boolean {
+        if (oldTasks.length !== newTasks.length) {
+            return false;
+        }
+        return oldTasks.every((oldTask, index) =>
+            oldTask.identicalTo(newTasks[index]),
+        );
+    }
+
     public identicalTo(other: Task) {
         // Based on ideas from koala. AquaCat and javalent in Discord:
         // https://discord.com/channels/686053708261228577/840286264964022302/996735200388186182
