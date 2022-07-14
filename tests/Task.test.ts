@@ -696,7 +696,7 @@ expect.extend({
     toBeIdenticalTo,
 });
 
-describe('equality', () => {
+describe('identicalTo', () => {
     it('should check status', () => {
         const lhs = new TaskBuilder().status(Status.Todo);
         expect(lhs).toBeIdenticalTo(new TaskBuilder().status(Status.Todo));

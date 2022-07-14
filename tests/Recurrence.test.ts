@@ -30,7 +30,7 @@ describe('Recurrence', () => {
     });
 });
 
-describe('Recurrence equality', () => {
+describe('identicalTo', () => {
     it('differing only in rule text', () => {
         const weekly = new RecurrenceBuilder().rule('every week').build();
         const daily = new RecurrenceBuilder().rule('every day').build();
