@@ -721,7 +721,7 @@ export class Task {
         for (const el of args) {
             const date1 = this[el] as Moment | null;
             const date2 = other[el] as Moment | null;
-            if (!(Sort.compareByDate(date1, date2) == 0)) {
+            if (Sort.compareByDate(date1, date2) !== 0) {
                 return false;
             }
         }
