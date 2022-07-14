@@ -1,5 +1,6 @@
 import type { Moment } from 'moment';
 import { RRule } from 'rrule';
+import { Sort } from './Sort';
 
 export class Recurrence {
     private readonly rrule: RRule;
@@ -225,6 +226,11 @@ export class Recurrence {
             return false;
         }
         if (this.baseOnToday !== other.baseOnToday) {
+            return false;
+        }
+
+        // Compare Date fields
+        if (Sort.compareByDate(this.startDate, other.startDate) !== 0) {
             return false;
         }
         return true;
