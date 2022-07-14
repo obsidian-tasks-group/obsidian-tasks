@@ -4,6 +4,7 @@
 import moment from 'moment';
 import { Recurrence } from '../src/Recurrence';
 import { DateParser } from '../src/Query/DateParser';
+import { RecurrenceBuilder } from './TestingTools/RecurrenceBuilder';
 
 jest.mock('obsidian');
 window.moment = moment;
@@ -48,18 +49,10 @@ describe('Recurrence equality', () => {
     });
 
     it('differing only in "when done"', () => {
-        const weekly = Recurrence.fromText({
-            recurrenceRuleText: 'every week',
-            startDate: null,
-            scheduledDate: null,
-            dueDate: null,
-        }) as Recurrence;
-        const weeklyWhenDone = Recurrence.fromText({
-            recurrenceRuleText: 'every week when done',
-            startDate: null,
-            scheduledDate: null,
-            dueDate: null,
-        }) as Recurrence;
+        const weekly = new RecurrenceBuilder().rule('every week').build();
+        const weeklyWhenDone = new RecurrenceBuilder()
+            .rule('every week when done')
+            .build();
         expect(weekly?.identicalTo(weeklyWhenDone)).toBe(false);
     });
 
