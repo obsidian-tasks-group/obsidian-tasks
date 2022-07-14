@@ -222,9 +222,6 @@ export class Recurrence {
     }
 
     public identicalTo(other: Recurrence) {
-        if (this.toText() !== other.toText()) {
-            return false;
-        }
         if (this.baseOnToday !== other.baseOnToday) {
             return false;
         }
@@ -239,6 +236,7 @@ export class Recurrence {
         if (Sort.compareByDate(this.dueDate, other.dueDate) !== 0) {
             return false;
         }
-        return true;
+
+        return this.toText() === other.toText(); // this also checks baseOnToday
     }
 }
