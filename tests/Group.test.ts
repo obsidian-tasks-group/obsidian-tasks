@@ -9,13 +9,13 @@ import { fromLine } from './TestHelpers';
 
 window.moment = moment;
 
-function checkGroupNameOfTask(
+function checkGroupNamesOfTask(
     task: Task,
     property: GroupingProperty,
-    expectedGroupName: string,
+    expectedGroupNames: string[],
 ) {
-    const group = Group.getGroupNameForTask(property, task);
-    expect(group).toEqual(expectedGroupName);
+    const group = Group.getGroupNamesForTask(property, task);
+    expect(group).toEqual(expectedGroupNames);
 }
 
 describe('Grouping tasks', () => {
@@ -194,7 +194,7 @@ describe('Group names', () => {
     type GroupNameCase = {
         groupBy: GroupingProperty;
         taskLine: string;
-        expectedGroupName: string;
+        expectedGroupNames: string[];
         path?: string;
         precedingHeading?: string | null;
     };
@@ -207,7 +207,7 @@ describe('Group names', () => {
         {
             groupBy: 'backlink',
             taskLine: '- [ ] xxx',
-            expectedGroupName: 'c > heading',
+            expectedGroupNames: ['c > heading'],
             path: 'a/b/c.md',
             precedingHeading: 'heading',
         },
@@ -217,12 +217,12 @@ describe('Group names', () => {
         {
             groupBy: 'done',
             taskLine: '- [ ] a ✅ 1970-01-01',
-            expectedGroupName: '1970-01-01 Thursday',
+            expectedGroupNames: ['1970-01-01 Thursday'],
         },
         {
             groupBy: 'done',
             taskLine: '- [ ] a',
-            expectedGroupName: 'No done date',
+            expectedGroupNames: ['No done date'],
         },
 
         // -----------------------------------------------------------
@@ -230,12 +230,12 @@ describe('Group names', () => {
         {
             groupBy: 'due',
             taskLine: '- [ ] a 📅 1970-01-01',
-            expectedGroupName: '1970-01-01 Thursday',
+            expectedGroupNames: ['1970-01-01 Thursday'],
         },
         {
             groupBy: 'due',
             taskLine: '- [ ] a',
-            expectedGroupName: 'No due date',
+            expectedGroupNames: ['No due date'],
         },
 
         // -----------------------------------------------------------
@@ -243,7 +243,7 @@ describe('Group names', () => {
         {
             groupBy: 'filename',
             taskLine: '- [ ] a',
-            expectedGroupName: 'c',
+            expectedGroupNames: ['c'],
             path: 'a/b/c.md',
         },
 
@@ -252,14 +252,14 @@ describe('Group names', () => {
         {
             groupBy: 'folder',
             taskLine: '- [ ] a',
-            expectedGroupName: 'a/b/',
+            expectedGroupNames: ['a/b/'],
             path: 'a/b/c.md',
         },
         {
             // file in root of vault:
             groupBy: 'folder',
             taskLine: '- [ ] a',
-            expectedGroupName: '/',
+            expectedGroupNames: ['/'],
             path: 'a.md',
         },
 
@@ -268,19 +268,19 @@ describe('Group names', () => {
         {
             groupBy: 'heading',
             taskLine: '- [ ] xxx',
-            expectedGroupName: '(No heading)',
+            expectedGroupNames: ['(No heading)'],
             precedingHeading: null,
         },
         {
             groupBy: 'heading',
             taskLine: '- [ ] xxx',
-            expectedGroupName: '(No heading)',
+            expectedGroupNames: ['(No heading)'],
             precedingHeading: '',
         },
         {
             groupBy: 'heading',
             taskLine: '- [ ] xxx',
-            expectedGroupName: 'heading',
+            expectedGroupNames: ['heading'],
             precedingHeading: 'heading',
         },
 
@@ -290,7 +290,7 @@ describe('Group names', () => {
             groupBy: 'path',
             taskLine: '- [ ] a',
             path: 'a/b/c.md',
-            expectedGroupName: 'a/b/c',
+            expectedGroupNames: ['a/b/c'],
         },
 
         // -----------------------------------------------------------
@@ -298,12 +298,12 @@ describe('Group names', () => {
         {
             groupBy: 'scheduled',
             taskLine: '- [ ] a ⏳ 1970-01-01',
-            expectedGroupName: '1970-01-01 Thursday',
+            expectedGroupNames: ['1970-01-01 Thursday'],
         },
         {
             groupBy: 'scheduled',
             taskLine: '- [ ] a',
-            expectedGroupName: 'No scheduled date',
+            expectedGroupNames: ['No scheduled date'],
         },
 
         // -----------------------------------------------------------
@@ -311,12 +311,12 @@ describe('Group names', () => {
         {
             groupBy: 'start',
             taskLine: '- [ ] a 🛫 1970-01-01',
-            expectedGroupName: '1970-01-01 Thursday',
+            expectedGroupNames: ['1970-01-01 Thursday'],
         },
         {
             groupBy: 'start',
             taskLine: '- [ ] a',
-            expectedGroupName: 'No start date',
+            expectedGroupNames: ['No start date'],
         },
 
         // -----------------------------------------------------------
@@ -324,12 +324,12 @@ describe('Group names', () => {
         {
             groupBy: 'status',
             taskLine: '- [ ] a',
-            expectedGroupName: 'Todo',
+            expectedGroupNames: ['Todo'],
         },
         {
             groupBy: 'status',
             taskLine: '- [x] a',
-            expectedGroupName: 'Done',
+            expectedGroupNames: ['Done'],
         },
 
         // -----------------------------------------------------------
@@ -337,13 +337,13 @@ describe('Group names', () => {
 
     test.concurrent.each<GroupNameCase>(groupNameCases)(
         'assigns correct group name (%j)',
-        ({ groupBy, taskLine, path, expectedGroupName, precedingHeading }) => {
+        ({ groupBy, taskLine, path, expectedGroupNames, precedingHeading }) => {
             const task = fromLine({
                 line: taskLine,
                 path: path ? path : '',
                 precedingHeader: precedingHeading,
             });
-            checkGroupNameOfTask(task, groupBy, expectedGroupName);
+            checkGroupNamesOfTask(task, groupBy, expectedGroupNames);
         },
     );
 });
