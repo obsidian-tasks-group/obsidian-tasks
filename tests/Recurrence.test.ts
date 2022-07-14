@@ -3,7 +3,6 @@
  */
 import moment from 'moment';
 import { Recurrence } from '../src/Recurrence';
-import { DateParser } from '../src/Query/DateParser';
 import { RecurrenceBuilder } from './TestingTools/RecurrenceBuilder';
 
 jest.mock('obsidian');
@@ -33,18 +32,8 @@ describe('Recurrence', () => {
 
 describe('Recurrence equality', () => {
     it('differing only in rule text', () => {
-        const weekly = Recurrence.fromText({
-            recurrenceRuleText: 'every week',
-            startDate: null,
-            scheduledDate: null,
-            dueDate: null,
-        }) as Recurrence;
-        const daily = Recurrence.fromText({
-            recurrenceRuleText: 'every day',
-            startDate: null,
-            scheduledDate: null,
-            dueDate: null,
-        }) as Recurrence;
+        const weekly = new RecurrenceBuilder().rule('every week').build();
+        const daily = new RecurrenceBuilder().rule('every day').build();
         expect(weekly.identicalTo(daily)).toBe(false);
     });
 
@@ -57,30 +46,21 @@ describe('Recurrence equality', () => {
     });
 
     it('differing only in startDate', () => {
-        const date1 = DateParser.parseDate('2021-10-21');
-        const date2 = DateParser.parseDate('1998-03-13');
-
         // Two different dates
-        const date1Recurrence = Recurrence.fromText({
-            recurrenceRuleText: 'every week',
-            startDate: date1,
-            scheduledDate: null,
-            dueDate: null,
-        }) as Recurrence;
+        const date1Recurrence = new RecurrenceBuilder()
+            .rule('every week')
+            .startDate('2021-10-21')
+            .build();
 
-        const date2Recurrence = Recurrence.fromText({
-            recurrenceRuleText: 'every week',
-            startDate: date2,
-            scheduledDate: null,
-            dueDate: null,
-        }) as Recurrence;
+        const date2Recurrence = new RecurrenceBuilder()
+            .rule('every week')
+            .startDate('1998-03-13')
+            .build();
 
-        const nullRecurrence = Recurrence.fromText({
-            recurrenceRuleText: 'every week',
-            startDate: null,
-            scheduledDate: null,
-            dueDate: null,
-        }) as Recurrence;
+        const nullRecurrence = new RecurrenceBuilder()
+            .rule('every week')
+            .startDate(null)
+            .build();
 
         expect(date1Recurrence?.identicalTo(date1Recurrence)).toBe(true);
         expect(date1Recurrence?.identicalTo(date2Recurrence)).toBe(false);
