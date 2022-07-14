@@ -78,6 +78,18 @@ describe('Recurrence equality', () => {
         expect(date1Recurrence?.identicalTo(date2Recurrence)).toBe(false);
     });
 
-    // scheduledDate: Moment | null;
-    // dueDate: Moment | null;
+    it('differing only in dueDate', () => {
+        // Two different dates
+        // No need to replicate the null checks in startDate
+        const date1Recurrence = new RecurrenceBuilder()
+            .dueDate('2021-10-21')
+            .build();
+
+        const date2Recurrence = new RecurrenceBuilder()
+            .dueDate('1998-03-13')
+            .build();
+
+        expect(date1Recurrence?.identicalTo(date1Recurrence)).toBe(true);
+        expect(date1Recurrence?.identicalTo(date2Recurrence)).toBe(false);
+    });
 });
