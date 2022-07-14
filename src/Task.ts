@@ -5,6 +5,7 @@ import { LayoutOptions } from './LayoutOptions';
 import { Recurrence } from './Recurrence';
 import { getSettings } from './config/Settings';
 import { Urgency } from './Urgency';
+import { Sort } from './Sort';
 
 /**
  * Collection of status types supported by the plugin.
@@ -720,11 +721,7 @@ export class Task {
         for (const el of args) {
             const date1 = this[el] as Moment | null;
             const date2 = other[el] as Moment | null;
-            if (date1 === null && date2 !== null) {
-                return false;
-            } else if (date1 !== null && date2 === null) {
-                return false;
-            } else if (date1 && date2 && !date1!.isSame(date2!)) {
+            if (!(Sort.compareByDate(date1, date2) == 0)) {
                 return false;
             }
         }
