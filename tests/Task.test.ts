@@ -4,9 +4,9 @@
 import moment from 'moment';
 import { Priority, Status, Task } from '../src/Task';
 import { getSettings, updateSettings } from '../src/config/Settings';
-import { Recurrence } from '../src/Recurrence';
 import { fromLine } from './TestHelpers';
 import { TaskBuilder } from './TestingTools/TaskBuilder';
+import { RecurrenceBuilder } from './TestingTools/RecurrenceBuilder';
 
 jest.mock('obsidian');
 window.moment = moment;
@@ -820,21 +820,12 @@ describe('identicalTo', () => {
         const lhs = new TaskBuilder().recurrence(null);
         expect(lhs).toBeIdenticalTo(new TaskBuilder().recurrence(null));
 
-        const weekly = Recurrence.fromText({
-            recurrenceRuleText: 'every week',
-            startDate: null,
-            scheduledDate: null,
-            dueDate: null,
-        });
-        const daily = Recurrence.fromText({
-            recurrenceRuleText: 'every day',
-            startDate: null,
-            scheduledDate: null,
-            dueDate: null,
-        });
+        const weekly = new RecurrenceBuilder().rule('every week').build();
+        const daily = new RecurrenceBuilder().rule('every day').build();
         expect(new TaskBuilder().recurrence(weekly)).not.toBeIdenticalTo(
             new TaskBuilder().recurrence(daily),
         );
+        // Note: There are more thorough tests of Recurrence.identicalTo() in Recurrence.test.ts.
     });
 
     it('should check blockLink', () => {
