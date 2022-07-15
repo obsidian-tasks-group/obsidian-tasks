@@ -37,6 +37,7 @@ export class QueryRenderer {
                 events: this.events,
                 container: element,
                 source,
+                sourcePath: context.sourcePath,
             }),
         );
     }
@@ -46,6 +47,7 @@ class QueryRenderChild extends MarkdownRenderChild {
     private readonly app: App;
     private readonly events: Events;
     private readonly source: string;
+    private readonly sourcePath: string;
     private query: IQuery;
     private queryType: string;
 
@@ -57,17 +59,20 @@ class QueryRenderChild extends MarkdownRenderChild {
         events,
         container,
         source,
+        sourcePath,
     }: {
         app: App;
         events: Events;
         container: HTMLElement;
         source: string;
+        sourcePath: string;
     }) {
         super(container);
 
         this.app = app;
         this.events = events;
         this.source = source;
+        this.sourcePath = sourcePath;
 
         // The engine is chosen on the basis of the code block language. Currently
         // there is only the main engine for the plugin, this allows others to be
@@ -129,7 +134,7 @@ class QueryRenderChild extends MarkdownRenderChild {
 
     private async render({ tasks, state }: { tasks: Task[]; state: State }) {
         console.debug(
-            `Render ${this.queryType} called for ${tasks.length} tasks, state: ${state}`,
+            `Render ${this.queryType} called for a block in active file "${this.sourcePath}", to select from ${tasks.length} tasks: plugin state: ${state}`,
         );
 
         const content = this.containerEl.createEl('div');
@@ -148,6 +153,9 @@ class QueryRenderChild extends MarkdownRenderChild {
                 content.appendChild(taskList);
             }
             const totalTasksCount = tasksSortedLimitedGrouped.totalTasksCount();
+            console.debug(
+                `${totalTasksCount} of ${tasks.length} tasks displayed in a block in "${this.sourcePath}"`,
+            );
             this.addTaskCount(content, totalTasksCount);
         } else if (this.query.error !== undefined) {
             content.setText(`Tasks query: ${this.query.error}`);
