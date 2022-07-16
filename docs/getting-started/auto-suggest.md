@@ -42,7 +42,7 @@ Here is a more detailed walk through of the creation of a new task, which can be
 
 1. As you are type a task, the auto-complete menu pops up to show some common options:
 
-    ![Auto-suggest task content settings](https://github.com/obsidian-tasks-group/obsidian-tasks/raw/docs-document-typing-tasks/resources/screenshots/auto-suggest-menu-initial-menu.png)
+    ![auto-suggest-menu-initial-menu](https://github.com/obsidian-tasks-group/obsidian-tasks/raw/docs-document-typing-tasks/resources/screenshots/auto-suggest-menu-initial-menu.png)
 
 2. You can keep typing, or select one of the menu items in a variety of ways:
 
@@ -52,23 +52,23 @@ Here is a more detailed walk through of the creation of a new task, which can be
 
 3. Here we selected the 'high priority' item, and so now the menu is updated to show the next most likely items you might want to add. We are going to select 'recurring (repeat)' from this menu:
 
-    ![Auto-suggest task content settings](https://github.com/obsidian-tasks-group/obsidian-tasks/raw/docs-document-typing-tasks/resources/screenshots/auto-suggest-menu-after-priority.png)
+    ![auto-suggest-menu-after-priority](https://github.com/obsidian-tasks-group/obsidian-tasks/raw/docs-document-typing-tasks/resources/screenshots/auto-suggest-menu-after-priority.png)
 
 4. Now the repeat emoji has been added, the menu offers a few common options for recurrences:
 
-    ![Auto-suggest task content settings](https://github.com/obsidian-tasks-group/obsidian-tasks/raw/docs-document-typing-tasks/resources/screenshots/auto-suggest-menu-after-repeat-emoji.png)
+    ![auto-suggest-menu-after-repeat-emoji](https://github.com/obsidian-tasks-group/obsidian-tasks/raw/docs-document-typing-tasks/resources/screenshots/auto-suggest-menu-after-repeat-emoji.png)
 
 5. We chose `every week`, which was added to our task, and now the menu shows the remaining possible emojis:
 
-    ![Auto-suggest task content settings](https://github.com/obsidian-tasks-group/obsidian-tasks/raw/docs-document-typing-tasks/resources/screenshots/auto-suggest-menu-after-repeat-text.png)
+    ![auto-suggest-menu-after-repeat-text](https://github.com/obsidian-tasks-group/obsidian-tasks/raw/docs-document-typing-tasks/resources/screenshots/auto-suggest-menu-after-repeat-text.png)
 
 6. We selected the 'due date', and so now the menu offers a selection of commonly-used dates, calculated based on the current date:
 
-    ![Auto-suggest task content settings](https://github.com/obsidian-tasks-group/obsidian-tasks/raw/docs-document-typing-tasks/resources/screenshots/auto-suggest-menu-after-due-emoji.png)
+    ![auto-suggest-menu-after-due-emoji](https://github.com/obsidian-tasks-group/obsidian-tasks/raw/docs-document-typing-tasks/resources/screenshots/auto-suggest-menu-after-due-emoji.png)
 
 7. Now our task is complete:
 
-    ![Auto-suggest task content settings](https://github.com/obsidian-tasks-group/obsidian-tasks/raw/docs-document-typing-tasks/resources/screenshots/auto-suggest-menu-after-due-emoji.png)
+    ![auto-suggest-menu-after-due-emoji](https://github.com/obsidian-tasks-group/obsidian-tasks/raw/docs-document-typing-tasks/resources/screenshots/auto-suggest-menu-after-due-emoji.png)
 
 ## Details
 
@@ -121,7 +121,7 @@ At first glance, they both look correct.
 
 However, the first sign of a problem is in Reading view:
 
-![Auto-suggest task content settings](https://github.com/obsidian-tasks-group/obsidian-tasks/raw/docs-document-typing-tasks/resources/screenshots/auto-suggest-preview-incorrect-task.png)
+![auto-suggest-preview-incorrect-task](https://github.com/obsidian-tasks-group/obsidian-tasks/raw/docs-document-typing-tasks/resources/screenshots/auto-suggest-preview-incorrect-task.png)
 
 In the first task, the recurrence and due date appear at the end of the line, in the order that they would be written out by the ‘Create or edit Task’ Modal.
 
@@ -131,7 +131,7 @@ If you are concerned that a task is being missed out of searches, or you just wa
 
 Our second task looks like this. Note that the due date is shown in the Description box, and there is 'no due date':
 
-![Auto-suggest task content settings](https://github.com/obsidian-tasks-group/obsidian-tasks/raw/docs-document-typing-tasks/resources/screenshots/auto-suggest-edit-incorrect-task.png)
+![auto-suggest-edit-incorrect-task](https://github.com/obsidian-tasks-group/obsidian-tasks/raw/docs-document-typing-tasks/resources/screenshots/auto-suggest-edit-incorrect-task.png)
 
 ### How do I see more suggestions?
 
@@ -189,7 +189,7 @@ Note that like all Tasks settings, after any changes, Obsidian needs to be resta
 
 These are the settings currently available for this feature:
 
-![Auto-suggest task content settings](https://github.com/obsidian-tasks-group/obsidian-tasks/raw/docs-document-typing-tasks/resources/screenshots/settings-auto-suggest-task-content.png)
+![settings-auto-suggest-task-content](https://github.com/obsidian-tasks-group/obsidian-tasks/raw/docs-document-typing-tasks/resources/screenshots/settings-auto-suggest-task-content.png)
 
 ### Auto-suggest task content
 
