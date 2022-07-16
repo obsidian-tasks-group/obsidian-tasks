@@ -83,45 +83,7 @@ Here is a more detailed walk through of the creation of a new task, which can be
   - It does not yet support Done Date.
   - It does not yet offer `when done`.
 
-## Settings
-
-Note that like all Tasks settings, after any changes, Obsidian needs to be restarted for the new settings to take effect.
-
-These are the settings currently available for this feature:
-
-![Auto-suggest task content settings](https://github.com/obsidian-tasks-group/obsidian-tasks/raw/docs-document-typing-tasks/resources/screenshots/settings-auto-suggest-task-content.png)
-
-### Auto-suggest task content
-
-This allows the entire auto-suggest feature to be disabled. It is turned on by default.
-
-### Minimum match length for auto-suggest
-
-By default, the auto-suggest menu pops up before you have even typed any non-space characters.
-As you become more familiar with the options it offers, this can get annoying, and you may
-find that you prefer to just type a few characters instead.
-
-You can make the menu pop up less often, by increasing this setting from 0 to 1, 2 or 3,
-which will mean that the menu will only pop up when you have typed
-at least the specified number of characters to find a match.
-
-### Maximum number of auto-suggestions to show
-
-How many suggestions should be shown when an auto-suggest menu pops up (including the "⏎" option).
-
-The default is 6, and you can select any value from 3 to 12.
-
 ## Common Questions
-
-### How do I see more suggestions?
-
-Increase the 'Maximum number of auto-suggestions to show' value in settings (and re-start Obsidian) so that the menu will contain more options.
-
-There are many more suggestions available than are first shown in the popup menu. As you type more characters, the suggestions shown will be more specific to what you typed.
-
-### How do I make the menu pop up less?
-
-Increase the 'Minimum match length for auto-suggest' value in settings (and re-start Obsidian) so that the menu will only appear when you have typed a few characters from your chosen menu option.
 
 ### What do I need to know about the order of items in a task?
 
@@ -171,6 +133,16 @@ Our second task looks like this. Note that the due date is shown in the Descript
 
 ![Auto-suggest task content settings](https://github.com/obsidian-tasks-group/obsidian-tasks/raw/docs-document-typing-tasks/resources/screenshots/auto-suggest-edit-incorrect-task.png)
 
+### How do I see more suggestions?
+
+Increase the 'Maximum number of auto-suggestions to show' value in settings (and re-start Obsidian) so that the menu will contain more options.
+
+There are many more suggestions available than are first shown in the popup menu. As you type more characters, the suggestions shown will be more specific to what you typed.
+
+### How do I make the menu pop up less?
+
+Increase the 'Minimum match length for auto-suggest' value in settings (and re-start Obsidian) so that the menu will only appear when you have typed a few characters from your chosen menu option.
+
 ### What keywords may I type to make auto-suggest write the emoji for me?
 
 Here is the complete set of all available text that is added to the auto-suggest menu, with dates that would be generated when used on 11th July 2022.
@@ -210,3 +182,31 @@ Here is the complete set of all available text that is added to the auto-suggest
 | next week (2022-07-18)  | 2022-07-18                 |
 | next month (2022-08-11) | 2022-08-11                 |
 | next year (2023-07-11)  | 2023-07-11                 |
+
+## Settings
+
+Note that like all Tasks settings, after any changes, Obsidian needs to be restarted for the new settings to take effect.
+
+These are the settings currently available for this feature:
+
+![Auto-suggest task content settings](https://github.com/obsidian-tasks-group/obsidian-tasks/raw/docs-document-typing-tasks/resources/screenshots/settings-auto-suggest-task-content.png)
+
+### Auto-suggest task content
+
+This allows the entire auto-suggest feature to be disabled. It is turned on by default.
+
+### Minimum match length for auto-suggest
+
+By default, the auto-suggest menu pops up before you have even typed any non-space characters.
+As you become more familiar with the options it offers, this can get annoying, and you may
+find that you prefer to just type a few characters instead.
+
+You can make the menu pop up less often, by increasing this setting from 0 to 1, 2 or 3,
+which will mean that the menu will only pop up when you have typed
+at least the specified number of characters to find a match.
+
+### Maximum number of auto-suggestions to show
+
+How many suggestions should be shown when an auto-suggest menu pops up (including the "⏎" option).
+
+The default is 6, and you can select any value from 3 to 12.
