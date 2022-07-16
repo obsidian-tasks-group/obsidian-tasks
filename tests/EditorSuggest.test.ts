@@ -102,7 +102,9 @@ describe('auto-complete', () => {
         expect(suggestions[1].displayText).toEqual('every day');
     });
 
-    // Test disabled until I can figure out how to set the date
+    // Test disabled until I can figure out:
+    // 1. how to set the date.
+    // 2. how to set maxGenericSuggestions in Suggestor.ts to higher than 5.
     it.skip('show all suggested text', () => {
         // Arrange
         const originalSettings = getSettings();
