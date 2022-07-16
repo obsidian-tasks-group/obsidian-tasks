@@ -28,13 +28,17 @@ has_toc: false
 The [Priorities]({{ site.baseurl }}{% link getting-started/priority.md %}), [Dates]({{ site.baseurl }}{% link getting-started/dates.md %}) and [Recurring Tasks]({{ site.baseurl }}{% link getting-started/recurring-tasks.md %}) pages show various emojis and special phrases that the Tasks plugin recognises, when searching for tasks.
 
 If you prefer to type your tasks, instead of using a dialog, there is now an intelligent auto-suggest completion mechanism that does a
-lot of the typing of emojis and dates for you!
+lot of the typing of emojis and dates for you.
+
+It is particularly powerful when creating and editing tasks on mobile phones.
 
 ### Video Demo
 
-It is best understood by watching a [video of it in action](https://user-images.githubusercontent.com/10722656/175102574-78b0f851-cc48-4255-a40e-d3036bec5bb6.gif).
+It is perhaps best understood by watching a [video of it in action](https://user-images.githubusercontent.com/10722656/175102574-78b0f851-cc48-4255-a40e-d3036bec5bb6.gif).
 
 ### Walk Through
+
+Here is a more detailed walk through of the creation of a new task, which can be done entirely using the keyboard if you wish.
 
 1. As you are type a task, the auto-complete menu pops up to show some common options:
 
@@ -69,9 +73,15 @@ It is best understood by watching a [video of it in action](https://user-images.
 ## Details
 
 - The auto-suggest menu works in both Source mode and Live Preview.
-- It does not yet support Done Date.
-- It does not yet offer `when done`.
+- It triggers only on lines that look like tasks.
+  - If you use a global task filter, such as `#task`, you will need to provide `- [ ] #task` before the menu pops up.
+  - If you don't use a global task filter you will need to provide `- [ ]` before the menu pops up.
 - There are many more recognized options than are showing in the menus, including many more dates, such as `2 months`, `15 days`.
+- You can mix tags in between the emojis (as of Tasks 1.9.0), but you must not mix description text amongst the tags and signifier emojis.
+  - See 'What do I need to know about the order of items in a task?' below.
+- The following are not yet supported:
+  - It does not yet support Done Date.
+  - It does not yet offer `when done`.
 
 ## Settings
 
@@ -113,17 +123,57 @@ There are many more suggestions available than are first shown in the popup menu
 
 Increase the 'Minimum match length for auto-suggest' value in settings (and re-start Obsidian) so that the menu will only appear when you have typed a few characters from your chosen menu option.
 
-### How do I check that my Task is formatted correctly for Tasks to find all the important dates?
+### What do I need to know about the order of items in a task?
 
-Open in create or edit task, other strategies if they exist?
+The order of text, tags and signifier emojis matters.
 
-### (reword this one probably!) I increased the minimum match length
+Specifically, Tasks reads back from the end of the line, searching for:
 
-What keywords do I need to type to make autocomplete write the emoji for me?
+- signifier emojis (due, scheduled, recurring, priority)
+- tags
 
-## Available Text
+As part of the launch of auto-suggest, Tasks now allows tags to be mixed in the middle of the emojis, and at the end of the line.
 
-Here is the complete set of all available text, with dates that would be generated when used on 11th July 2022.
+As soon as it finds any unrecognised text, it stops reading, and ignores any emojis to the left of that unrecognised text.
+
+<div class="code-example" markdown="1">
+Warning
+{: .label .label-yellow}
+Mixing any descriptive text in amongst the emojis and their values **will cause emojis before the descriptive text to not be recognised by Tasks, and not be searchable**.
+</div>
+
+See the next section for how to check your tasks, as you start using this powerful feature.
+
+### How can I check that my Task is formatted correctly?
+
+The Tasks plugin's ability to search tasks depends on the information in the tasks matching the plugin's parsing behaviour, described in the previous section. If not, tasks may be silently missed out from task searches.
+
+Consider these two tasks (in a vault that does not have a global tag filter):
+
+```text
+- [ ] Do stuff at the #office by 📅 2022-07-18 #project-x 🔁 every week #testing
+- [ ] Do stuff at the #office by 📅 2022-07-18 for #project-x 🔁 every week #testing
+```
+
+At first glance, they both look correct.
+
+However, the first sign of a problem is in Reading view:
+
+![Auto-suggest task content settings](https://github.com/obsidian-tasks-group/obsidian-tasks/raw/docs-document-typing-tasks/resources/screenshots/auto-suggest-preview-incorrect-task.png)
+
+In the first task, the recurrence and due date appear at the end of the line, in the order that they would be written out by the ‘Create or edit Task’ Modal.
+
+However, in the second task, only the recurrence is at the end of the line. This is because the due date has not been recognised, due to the unrecognised word **for** mixed after the due date emoji, causing that property not to be recognised by tasks.
+
+If you are concerned that a task is being missed out of searches, or you just want to check it, you can click on its line and open the [‘Create or edit Task’ Modal]({{ site.baseurl }}{% link getting-started/create-or-edit-task.md %}) and check that there are no unwanted emojis in the description field.
+
+Our second task looks like this. Note that the due date is shown in the Description box, and there is 'no due date':
+
+![Auto-suggest task content settings](https://github.com/obsidian-tasks-group/obsidian-tasks/raw/docs-document-typing-tasks/resources/screenshots/auto-suggest-edit-incorrect-task.png)
+
+### What keywords may I type to make auto-suggest write the emoji for me?
+
+Here is the complete set of all available text that is added to the auto-suggest menu, with dates that would be generated when used on 11th July 2022.
 
 | Searchable Text         | Text that is added         |
 | ----------------------- | -------------------------- |
@@ -160,7 +210,3 @@ Here is the complete set of all available text, with dates that would be generat
 | next week (2022-07-18)  | 2022-07-18                 |
 | next month (2022-08-11) | 2022-08-11                 |
 | next year (2023-07-11)  | 2023-07-11                 |
-
-## Limitations and Known issues
-
-With a link back up to how to check formatting.
