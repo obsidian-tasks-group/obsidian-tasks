@@ -37,7 +37,7 @@ export class QueryRenderer {
                 events: this.events,
                 container: element,
                 source,
-                sourcePath: context.sourcePath,
+                filePath: context.sourcePath,
             }),
         );
     }
@@ -59,20 +59,20 @@ class QueryRenderChild extends MarkdownRenderChild {
         events,
         container,
         source,
-        sourcePath,
+        filePath,
     }: {
         app: App;
         events: Events;
         container: HTMLElement;
         source: string;
-        sourcePath: string;
+        filePath: string;
     }) {
         super(container);
 
         this.app = app;
         this.events = events;
         this.source = source;
-        this.filePath = sourcePath;
+        this.filePath = filePath;
 
         // The engine is chosen on the basis of the code block language. Currently
         // there is only the main engine for the plugin, this allows others to be
