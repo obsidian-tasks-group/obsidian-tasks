@@ -46,8 +46,8 @@ export class QueryRenderer {
 class QueryRenderChild extends MarkdownRenderChild {
     private readonly app: App;
     private readonly events: Events;
-    private readonly source: string;
-    private readonly filePath: string;
+    private readonly source: string; // The complete text in the instruction block, such as 'not done\nshort mode'
+    private readonly filePath: string; // The path of the file that contains the instruction block
     private query: IQuery;
     private queryType: string;
 
