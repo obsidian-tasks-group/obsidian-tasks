@@ -40,9 +40,14 @@ It is perhaps best understood by watching a [video of it in action](https://user
 
 Here is a more detailed walk through of the creation of a new task, which can be done entirely using the keyboard if you wish.
 
-1. As you are type a task, the auto-complete menu pops up to show some common options:
+1. As you are typing a task, the auto-suggest menu pops up to show some common options:
 
     ![auto-suggest-menu-initial-menu](https://github.com/obsidian-tasks-group/obsidian-tasks/raw/docs-document-typing-tasks/resources/screenshots/auto-suggest-menu-initial-menu.png)
+
+    **Note**: the auto-suggest menu pops up only if the cursor is in a line that is recognized as a task, that is, the line contains:
+
+     - a bullet with a checkbox (`- [ ]` or `* [ ]`)
+     - and the global filter (if any)
 
 2. You can keep typing, or select one of the menu items in a variety of ways:
 
@@ -90,6 +95,7 @@ Here is a more detailed walk through of the creation of a new task, which can be
     - Done Date can be added either with the 'Tasks: Toggle task done' command or by clicking the task's checkbox when in Live Preview or Reading views.
   - It does not yet offer `when done`.
     - This phrase still needs to be typed manually.
+- It currently pops up when editing completed tasks. This may be changed in future.
 
 ## Common Questions
 
