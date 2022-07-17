@@ -28,7 +28,7 @@ export class RecurrenceBuilder {
      *
      *  const builder = new RecurrenceBuilder();
      *  const recurrence = builder
-     *      .rule('every week')
+     *      .rule('every week when done')
      *      .startDate('2022-07-14')
      *      .build();
      */
