@@ -79,20 +79,34 @@ Here is a more detailed walk through of the creation of a new task, which can be
 
 ## Details
 
-- The auto-suggest menu works in both Source mode and Live Preview.
-- It triggers only on lines that look like tasks.
-  - If you use a global task filter, such as `#task`, you will need to provide `- [ ] #task` before the menu pops up.
-  - If you don't use a global task filter you will need to provide `- [ ]` before the menu pops up.
-- The menu is smart: it will only offer valid options. For example, if you have already added a due date, that option will be removed from the menu.
+The auto-suggest menu works in both Source mode and Live Preview.
+
+It triggers only on lines that will be recognised as tasks by the Tasks plugin:
+
+- If you use a global task filter, for example `#task`, you will need to provide `- [ ] #task` before the menu pops up.
+- If you don't use a global task filter, you will only need to provide `- [ ]` before the menu pops up.
+- It also recognises lists starting with asterisk (`*`) characters.
+
+The menu is smart: it will only offer valid options:
+
+- For example, if you have already added a due date, that option will be removed from the menu.
 - When the `⏎` item is shown at the top of the menu, it is given as a default option to enter a new line instead of choosing a suggestion. It is only shown when there is no concrete match.
 - There are many more recognized options than are showing in the menus, including many more dates, such as `2 months`, `15 days`.
-- The auto-suggest menu supports powerful keyboard control:
-  - Example: type some fraction of the word `start` and you will get a suggestion to turn it into the start emoji. Pressing `<enter>` then immediately adds the start emoji: 🛫.
-  - The filtering matches anywhere. For example, if you haven't yet added any dates to the task, typing `du` would then offer `📅 due date` and `⏳ scheduled date`.
-  - You can use the up/down arrow keys on your keyboard, then press `<enter>` to select from the menu.
-  - The menu is controlled by the 'Minimum match length for auto-suggest' setting. The higher its value, the more you have to type before the menu pops up.
+
+The auto-suggest menu supports powerful keyboard control:
+
+- Example: type some fraction of the word `start` and you will get a suggestion to turn it into the start emoji. Pressing `<enter>` then immediately adds the start emoji: 🛫.
+- The filtering matches anywhere. For example, if you haven't yet added any dates to the task, typing `du` would then offer `📅 due date` and `⏳ scheduled date`.
+- You can use the up/down arrow keys on your keyboard, then press `<enter>` to select from the menu.
+- The menu is controlled by the 'Minimum match length for auto-suggest' setting. The higher its value, the more you have to type before the menu pops up.
+
+Things to be aware of, to make sure your Tasks searches work as you intend:
+
 - You can mix tags in between the emojis (as of Tasks 1.9.0), but you must not mix description text amongst the tags and signifier emojis.
   - See 'What do I need to know about the order of items in a task?' below.
+
+There are some things that might be improved in future releases:
+
 - The following are not yet supported:
   - It does not yet support Done Date.
     - Done Date can be added either with the 'Tasks: Toggle task done' command or by clicking the task's checkbox when in Live Preview or Reading views.
