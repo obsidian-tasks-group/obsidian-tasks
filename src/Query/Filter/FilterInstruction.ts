@@ -1,4 +1,5 @@
-import { Filter, FilterOrErrorMessage } from './Filter';
+import { FilterOrErrorMessage } from './Filter';
+import type { Filter } from './Filter';
 
 /**
  * Implementation of a single instruction for filtering tasks, and its corresponding predicate.

@@ -32,6 +32,12 @@ This table summarizes the filters and other options available inside a `tasks` b
 |                                                                                        |                                             | `group by backlink` | `hide backlink`        |
 | `description (includes, does not include) <string>`                                    | `sort by description`                       |                     |                        |
 | `tag (includes, does not include) <tag>`<br>`tags (include, do not include) <tag>`     | `sort by tag`<br>`sort by tag <tag_number>` |                     |                        |
+| `(filter 1) AND (filter 2)`                                                            |                                             |                     |                        |
+| `(filter 1) OR (filter 2)`                                                             |                                             |                     |                        |
+| `NOT (filter 1)`                                                                       |                                             |                     |                        |
+| `(filter 1) XOR (filter 2)`                                                            |                                             |                     |                        |
+| `(filter 1) AND NOT (filter 2)`                                                        |                                             |                     |                        |
+| `(filter 1) OR NOT (filter 2)`                                                         |                                             |                     |                        |
 | `exclude sub-items`                                                                    |                                             |                     |                        |
 | `limit to <number> tasks`<br>`limit <number>`                                          |                                             |                     |                        |
 

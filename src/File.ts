@@ -1,4 +1,5 @@
-import { ListItemCache, MetadataCache, TFile, Vault } from 'obsidian';
+import { MetadataCache, TFile, Vault } from 'obsidian';
+import type { ListItemCache } from 'obsidian';
 
 import { getSettings } from './config/Settings';
 import type { Task } from './Task';

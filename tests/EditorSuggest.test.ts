@@ -3,7 +3,8 @@
  */
 import moment from 'moment';
 import { getSettings } from '../src/config/Settings';
-import { SuggestInfo, buildSuggestions } from '../src/Suggestor/Suggestor';
+import { buildSuggestions } from '../src/Suggestor/Suggestor';
+import type { SuggestInfo } from '../src/Suggestor/Suggestor';
 
 window.moment = moment;
 

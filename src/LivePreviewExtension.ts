@@ -1,4 +1,5 @@
-import { EditorView, PluginValue, ViewPlugin } from '@codemirror/view';
+import { EditorView, ViewPlugin } from '@codemirror/view';
+import type { PluginValue } from '@codemirror/view';
 
 import { Task } from './Task';
 

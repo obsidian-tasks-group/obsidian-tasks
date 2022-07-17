@@ -41,11 +41,13 @@ When the day changes, relative dates like `due today` are re-evaluated so that t
 
 ---
 
-## Matching
+## Matching multiple filters
+
+> Boolean combinations were introduced in Tasks 1.9.0
 
 Each line of a query has to match in order for a task to be listed.
 In other words, lines are considered to have an 'AND' operator between them.
-Within each line, you can use the boolean operators NOT, AND, OR, AND NOT, OR NOT and XOR, as long as individual filters are wrapped in parenthesis or quotes:
+Within each line, you can use the boolean operators `NOT`, `AND`, `OR`, `AND NOT`, `OR NOT` and `XOR`, as long as individual filters are wrapped in parentheses or double quotes:
 
     ```tasks
     (no due date) OR (due after 2021-04-04)
@@ -56,6 +58,8 @@ Within each line, you can use the boolean operators NOT, AND, OR, AND NOT, OR NO
     due after 2021-04-04
     (path includes GitHub) AND NOT "tags include #todo"
     ```
+
+For full details of combining filters with boolean operators, see [Combining Filters]({{ site.baseurl }}{% link queries/combining-filters.md %}).
 
 ---
 

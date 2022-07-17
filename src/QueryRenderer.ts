@@ -1,11 +1,5 @@
-import {
-    App,
-    EventRef,
-    MarkdownPostProcessorContext,
-    MarkdownRenderChild,
-    Plugin,
-    TFile,
-} from 'obsidian';
+import { App, MarkdownRenderChild, Plugin, TFile } from 'obsidian';
+import type { EventRef, MarkdownPostProcessorContext } from 'obsidian';
 
 import type { IQuery } from './IQuery';
 import { State } from './Cache';
