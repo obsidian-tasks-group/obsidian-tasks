@@ -145,7 +145,7 @@ export class Sort {
         }
     }
 
-    private static compareByDate(
+    public static compareByDate(
         a: moment.Moment | null,
         b: moment.Moment | null,
     ): -1 | 0 | 1 {
