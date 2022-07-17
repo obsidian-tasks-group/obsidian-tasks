@@ -720,6 +720,10 @@ export class Task {
         // Based on ideas from koala. AquaCat and javalent in Discord:
         // https://discord.com/channels/686053708261228577/840286264964022302/996735200388186182
         // and later.
+        //
+        // Note: sectionStart changes every time a line is added or deleted before
+        //       any of the tasks in a file. This does mean that redrawing of tasks blocks
+        //       happens more often than is ideal.
         let args: Array<keyof Task> = [
             'status',
             'description',
