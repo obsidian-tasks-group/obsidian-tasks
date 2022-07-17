@@ -49,11 +49,13 @@ Here is a more detailed walk through of the creation of a new task, which can be
      - a bullet with a checkbox (`- [ ]` or `* [ ]`)
      - and the global filter (if any)
 
-2. You can keep typing, or select one of the menu items in a variety of ways:
+2. You can keep typing (to ignore the suggestions), or select one of the menu items in a variety of ways:
 
     - mouse-click on menu item
     - use the up/down keyboard keys and then type `Return` or `Enter`
     - type a few more characters, to make the menu items more specific. For example, type `pri` to show all the options for setting the task's priority.
+
+    **Note**: When the `⏎` item is shown at the top of the menu, it is given as a default option to enter a new line instead of choosing a suggestion. It is only shown when there is no concrete match.
 
 3. Here we selected the 'high priority' item, and so now the menu is updated to show the next most likely items you might want to add. We are going to select 'recurring (repeat)' from this menu:
 
@@ -82,6 +84,7 @@ Here is a more detailed walk through of the creation of a new task, which can be
   - If you use a global task filter, such as `#task`, you will need to provide `- [ ] #task` before the menu pops up.
   - If you don't use a global task filter you will need to provide `- [ ]` before the menu pops up.
 - The menu is smart: it will only offer valid options. For example, if you have already added a due date, that option will be removed from the menu.
+- When the `⏎` item is shown at the top of the menu, it is given as a default option to enter a new line instead of choosing a suggestion. It is only shown when there is no concrete match.
 - There are many more recognized options than are showing in the menus, including many more dates, such as `2 months`, `15 days`.
 - The auto-suggest menu supports powerful keyboard control:
   - Example: type some fraction of the word `start` and you will get a suggestion to turn it into the start emoji. Pressing `<enter>` then immediately adds the start emoji: 🛫.
