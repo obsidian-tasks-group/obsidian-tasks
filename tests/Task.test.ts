@@ -158,6 +158,42 @@ describe('parsing', () => {
             '#tag10',
         ]);
     });
+
+    it('supports parsing of emojis with multiple spaces', () => {
+        // Arrange
+        const lines = [
+            '- [ ] Wobble ✅2022-07-01 📅2022-07-02 ⏳2022-07-03 🛫2022-07-04 🔁every day',
+            '- [ ] Wobble ✅ 2022-07-01 📅 2022-07-02 ⏳ 2022-07-03 🛫 2022-07-04 🔁 every day',
+            '- [ ] Wobble ✅  2022-07-01 📅  2022-07-02 ⏳  2022-07-03 🛫  2022-07-04 🔁  every day',
+        ];
+        // Act
+        for (const line of lines) {
+            const task = fromLine({
+                line,
+            });
+
+            // Assert
+            expect({
+                _input: line, // Line is included, so it is shown in any failure output
+                description: task.description,
+                done: task.doneDate?.format('YYYY-MM-DD'),
+                due: task.dueDate?.format('YYYY-MM-DD'),
+                scheduled: task.scheduledDate?.format('YYYY-MM-DD'),
+                start: task.startDate?.format('YYYY-MM-DD'),
+                priority: task.priority,
+                recurrence: task.recurrence?.toText(),
+            }).toMatchObject({
+                _input: line,
+                description: 'Wobble',
+                done: '2022-07-01',
+                due: '2022-07-02',
+                scheduled: '2022-07-03',
+                start: '2022-07-04',
+                priority: '3',
+                recurrence: 'every day',
+            });
+        }
+    });
 });
 
 type TagParsingExpectations = {
