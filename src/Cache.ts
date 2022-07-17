@@ -231,7 +231,7 @@ export class Cache {
 
         if (this.getState() == State.Warm) {
             console.debug(
-                `At least one task or its heading has changed in ${file.path}: triggering a refresh of all active Tasks blocks in Live Preview and Reading mode views.`,
+                `At least one task, its line number or its heading has changed in ${file.path}: triggering a refresh of all active Tasks blocks in Live Preview and Reading mode views.`,
             );
         }
 
