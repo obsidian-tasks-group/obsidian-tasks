@@ -109,7 +109,7 @@
 
     // Escape a string so it can be used as part of a RegExp literally.
     // Taken from https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#escaping
-    function escapeRegExp(s) {
+    function escapeRegExp(s: string) {
         return s.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1");
     }
 
