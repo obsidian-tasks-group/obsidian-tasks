@@ -104,6 +104,9 @@ Things to be aware of, to make sure your Tasks searches work as you intend:
 
 - You can mix tags in between the emojis (as of Tasks 1.9.0), but you must not mix description text amongst the tags and signifier emojis.
   - See 'What do I need to know about the order of items in a task?' below.
+- Tasks currently **ignores date and recurrence emojis with 2 or more spaces after the emoji** and before its value.
+  - Because the spaces between the emojis and the following text are invisible in most views, this is a serious limitation.
+  - Please be careful to ensure you have only a single space in these locations.
 
 There are some things that might be improved in future releases:
 
