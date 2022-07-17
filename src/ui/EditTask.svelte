@@ -107,13 +107,27 @@
         parsedDone = parseDate('done', editableTask.doneDate);
     }
 
+    // Escape a string so it can be used as part of a RegExp literally.
+    // Taken from https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#escaping
+    function escapeRegExp(s) {
+        return s.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1");
+    }
+
     onMount(() => {
         const { globalFilter } = getSettings();
-        if (task.description.includes(globalFilter)) removedGlobalFilter = true;
-        const description = task.description
-            .replace(globalFilter, '')
-            .replace('  ', ' ')
-            .trim();
+        let description = task.description;
+        // Search for the global filter for the purpose of removing it from the description, but do so only
+        // if it is a separate word (preceding the beginning of line or a space and followed by the end of line
+        // or a space), because we don't want to cut-off nested tags like #task/subtag.
+        // If the global filter exists as part of a nested tag, we keep it untouched.
+        const globalFilterRegex = RegExp('(^|\\s)' + escapeRegExp(globalFilter) + '($|\\s)', 'ug');
+        if (globalFilter.length > 0 && task.description.search(globalFilterRegex) > -1) {
+            description = description
+                .replace(globalFilterRegex, '$1$2')
+                .replace('  ', ' ')
+                .trim();
+            removedGlobalFilter = true;
+        }
 
         let priority: 'none' | 'low' | 'medium' | 'high' = 'none';
         if (task.priority === Priority.Low) {
