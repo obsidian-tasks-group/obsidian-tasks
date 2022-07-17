@@ -5,6 +5,8 @@ import moment from 'moment';
 import { Priority, Status, Task } from '../src/Task';
 import { getSettings, updateSettings } from '../src/config/Settings';
 import { fromLine } from './TestHelpers';
+import { TaskBuilder } from './TestingTools/TaskBuilder';
+import { RecurrenceBuilder } from './TestingTools/RecurrenceBuilder';
 
 jest.mock('obsidian');
 window.moment = moment;
@@ -651,5 +653,216 @@ describe('toggle done', () => {
             nextScheduled: undefined,
             nextStart: undefined,
         });
+    });
+});
+
+declare global {
+    namespace jest {
+        interface Matchers<R> {
+            toBeIdenticalTo(builder2: TaskBuilder): R;
+        }
+
+        interface Expect {
+            toBeIdenticalTo(builder2: TaskBuilder): any;
+        }
+
+        interface InverseAsymmetricMatchers {
+            toBeIdenticalTo(builder2: TaskBuilder): any;
+        }
+    }
+}
+
+export function toBeIdenticalTo(builder1: TaskBuilder, builder2: TaskBuilder) {
+    const task1 = builder1.build();
+    const task2 = builder2.build();
+    const pass = task1.identicalTo(task2);
+
+    if (pass) {
+        return {
+            message: () =>
+                'Tasks treated as identical, but should be different',
+            pass: true,
+        };
+    }
+    return {
+        message: () => {
+            return 'Tasks should be identical, but are treated as different';
+        },
+        pass: false,
+    };
+}
+
+expect.extend({
+    toBeIdenticalTo,
+});
+
+describe('identicalTo', () => {
+    it('should check status', () => {
+        const lhs = new TaskBuilder().status(Status.Todo);
+        expect(lhs).toBeIdenticalTo(new TaskBuilder().status(Status.Todo));
+        expect(lhs).not.toBeIdenticalTo(new TaskBuilder().status(Status.Done));
+    });
+
+    it('should check description', () => {
+        const lhs = new TaskBuilder().description('same long initial text');
+        expect(lhs).toBeIdenticalTo(
+            new TaskBuilder().description('same long initial text'),
+        );
+        expect(lhs).not.toBeIdenticalTo(
+            new TaskBuilder().description('different text'),
+        );
+    });
+
+    it('should check path', () => {
+        const lhs = new TaskBuilder().path('same test file.md');
+        expect(lhs).toBeIdenticalTo(
+            new TaskBuilder().path('same test file.md'),
+        );
+        // Check it is case-sensitive
+        expect(lhs).not.toBeIdenticalTo(
+            new TaskBuilder().path('Same Test File.md'),
+        );
+        expect(lhs).not.toBeIdenticalTo(
+            new TaskBuilder().path('different text.md'),
+        );
+    });
+
+    it('should check indentation', () => {
+        const lhs = new TaskBuilder().indentation('');
+        expect(lhs).toBeIdenticalTo(new TaskBuilder().indentation(''));
+        expect(lhs).not.toBeIdenticalTo(new TaskBuilder().indentation('    '));
+    });
+
+    it('should check sectionStart', () => {
+        const lhs = new TaskBuilder().sectionStart(0);
+        expect(lhs).toBeIdenticalTo(new TaskBuilder().sectionStart(0));
+        expect(lhs).not.toBeIdenticalTo(new TaskBuilder().sectionStart(2));
+    });
+
+    it('should check sectionIndex', () => {
+        const lhs = new TaskBuilder().sectionIndex(0);
+        expect(lhs).toBeIdenticalTo(new TaskBuilder().sectionIndex(0));
+        expect(lhs).not.toBeIdenticalTo(new TaskBuilder().sectionIndex(2));
+    });
+
+    it('should check originalStatusCharacter', () => {
+        const lhs = new TaskBuilder().originalStatusCharacter(' ');
+        expect(lhs).toBeIdenticalTo(
+            new TaskBuilder().originalStatusCharacter(' '),
+        );
+        expect(lhs).not.toBeIdenticalTo(
+            new TaskBuilder().originalStatusCharacter('x'),
+        );
+    });
+
+    it('should check precedingHeader', () => {
+        const lhs = new TaskBuilder().precedingHeader('Heading 1');
+        expect(lhs).toBeIdenticalTo(
+            new TaskBuilder().precedingHeader('Heading 1'),
+        );
+        expect(lhs).not.toBeIdenticalTo(
+            new TaskBuilder().precedingHeader('Different Heading'),
+        );
+        expect(lhs).not.toBeIdenticalTo(
+            new TaskBuilder().precedingHeader(null),
+        );
+    });
+
+    it('should check priority', () => {
+        const lhs = new TaskBuilder().priority(Priority.Medium);
+        expect(lhs).toBeIdenticalTo(
+            new TaskBuilder().priority(Priority.Medium),
+        );
+        expect(lhs).not.toBeIdenticalTo(
+            new TaskBuilder().priority(Priority.None),
+        );
+    });
+
+    it('should check startDate', () => {
+        const lhs = new TaskBuilder().startDate('2012-12-27');
+        expect(lhs).toBeIdenticalTo(new TaskBuilder().startDate('2012-12-27'));
+        expect(lhs).not.toBeIdenticalTo(new TaskBuilder().startDate(null));
+        expect(lhs).not.toBeIdenticalTo(
+            new TaskBuilder().startDate('2012-12-26'),
+        );
+    });
+
+    it('should check scheduledDate', () => {
+        const lhs = new TaskBuilder().scheduledDate('2012-12-27');
+        expect(lhs).toBeIdenticalTo(
+            new TaskBuilder().scheduledDate('2012-12-27'),
+        );
+        expect(lhs).not.toBeIdenticalTo(new TaskBuilder().scheduledDate(null));
+        expect(lhs).not.toBeIdenticalTo(
+            new TaskBuilder().scheduledDate('2012-12-26'),
+        );
+    });
+
+    it('should check dueDate', () => {
+        const lhs = new TaskBuilder().dueDate('2012-12-27');
+        expect(lhs).toBeIdenticalTo(new TaskBuilder().dueDate('2012-12-27'));
+        expect(lhs).not.toBeIdenticalTo(new TaskBuilder().dueDate(null));
+        expect(lhs).not.toBeIdenticalTo(
+            new TaskBuilder().dueDate('2012-12-26'),
+        );
+    });
+
+    it('should check doneDate', () => {
+        const lhs = new TaskBuilder().doneDate('2012-12-27');
+        expect(lhs).toBeIdenticalTo(new TaskBuilder().doneDate('2012-12-27'));
+        expect(lhs).not.toBeIdenticalTo(new TaskBuilder().doneDate(null));
+        expect(lhs).not.toBeIdenticalTo(
+            new TaskBuilder().doneDate('2012-12-26'),
+        );
+    });
+
+    describe('should check recurrence', () => {
+        const lhs = new TaskBuilder().recurrence(null);
+        expect(lhs).toBeIdenticalTo(new TaskBuilder().recurrence(null));
+
+        const weekly = new RecurrenceBuilder().rule('every week').build();
+        const daily = new RecurrenceBuilder().rule('every day').build();
+        expect(new TaskBuilder().recurrence(weekly)).not.toBeIdenticalTo(
+            new TaskBuilder().recurrence(daily),
+        );
+        // Note: There are more thorough tests of Recurrence.identicalTo() in Recurrence.test.ts.
+    });
+
+    it('should check blockLink', () => {
+        const lhs = new TaskBuilder().blockLink('');
+        expect(lhs).toBeIdenticalTo(new TaskBuilder().blockLink(''));
+        expect(lhs).not.toBeIdenticalTo(new TaskBuilder().blockLink('dcf64c'));
+    });
+
+    it('should check tags', () => {
+        const lhs = new TaskBuilder().tags([]);
+        expect(lhs).toBeIdenticalTo(new TaskBuilder().tags([]));
+        expect(lhs).not.toBeIdenticalTo(new TaskBuilder().tags(['#stuff']));
+    });
+});
+
+describe('checking if task lists are identical', () => {
+    it('should treat empty lists as identical', () => {
+        const list1: Task[] = [];
+        const list2: Task[] = [];
+        expect(Task.tasksListsIdentical(list1, list2)).toBe(true);
+    });
+
+    it('should treat different sized lists as different', () => {
+        const list1: Task[] = [];
+        const list2: Task[] = [new TaskBuilder().build()];
+        expect(Task.tasksListsIdentical(list1, list2)).toBe(false);
+    });
+
+    it('should detect matching tasks as same', () => {
+        const list1: Task[] = [new TaskBuilder().description('1').build()];
+        const list2: Task[] = [new TaskBuilder().description('1').build()];
+        expect(Task.tasksListsIdentical(list1, list2)).toBe(true);
+    });
+
+    it('should detect non-matching tasks as different', () => {
+        const list1: Task[] = [new TaskBuilder().description('1').build()];
+        const list2: Task[] = [new TaskBuilder().description('2').build()];
+        expect(Task.tasksListsIdentical(list1, list2)).toBe(false);
     });
 });
