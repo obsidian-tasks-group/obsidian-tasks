@@ -82,7 +82,7 @@ export class SettingsTab extends PluginSettingTab {
         new Setting(containerEl)
             .setName('Auto-suggest task content')
             .setDesc(
-                'Enabling this will open an intelligent suggest window while typing inside a recognized task line',
+                'Enabling this will open an intelligent suggest menu while typing inside a recognized task line.',
             )
             .addToggle((toggle) => {
                 const settings = getSettings();
@@ -95,9 +95,9 @@ export class SettingsTab extends PluginSettingTab {
             });
 
         new Setting(containerEl)
-            .setName('Minimal match length for auto-suggest')
+            .setName('Minimum match length for auto-suggest')
             .setDesc(
-                'If higher than 0, an auto-suggest will be triggered only if the beginning of a relevant keyword will be recognized',
+                'If higher than 0, auto-suggest will be triggered only when the beginning of any supported keywords is recognized.',
             )
             .addSlider((slider) => {
                 const settings = getSettings();
@@ -112,7 +112,7 @@ export class SettingsTab extends PluginSettingTab {
             });
 
         new Setting(containerEl)
-            .setName('Maximal number of auto-suggestions to shown')
+            .setName('Maximum number of auto-suggestions to show')
             .setDesc(
                 'How many suggestions should be shown when an auto-suggest menu pops up (including the "⏎" option).',
             )

@@ -27,6 +27,13 @@ Info
 {: .label .label-blue }
 Instead of adding an emoji and a date manually, you can use the `Tasks: Create or edit` command when creating or editing a task.
 When you use the command, you can also set dates like "Monday", "tomorrow", or "next week" and Tasks will automatically save the date in the correct format.
+You can find out more in [‘Create or edit Task’ Modal]({{ site.baseurl }}{% link getting-started/create-or-edit-task.md %}).
+</div>
+
+<div class="code-example" markdown="1">
+Info
+{: .label .label-blue }
+If you prefer to type, it is now very easy to add emojis and other information for you tasks using [Intelligent Auto-Suggest]({{ site.baseurl }}{% link getting-started/auto-suggest.md %}).
 </div>
 
 ---
