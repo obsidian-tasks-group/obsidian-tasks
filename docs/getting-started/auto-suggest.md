@@ -143,6 +143,8 @@ There are many more suggestions available than are first shown in the popup menu
 
 Increase the 'Minimum match length for auto-suggest' value in settings (and re-start Obsidian) so that the menu will only appear when you have typed a few characters from your chosen menu option.
 
+For example, if you set the `Minimum match length for auto-suggest` to 3, you would need to type in your task "pri" or "hig" or "med" or "low" to get auto-suggest for the priority emoji(s).
+
 ### What keywords may I type to make auto-suggest write the emoji for me?
 
 Here is the complete set of all available text that is added to the auto-suggest menu, with dates that would be generated when used on 11th July 2022.
