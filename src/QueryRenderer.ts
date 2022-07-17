@@ -47,7 +47,7 @@ class QueryRenderChild extends MarkdownRenderChild {
     private readonly app: App;
     private readonly events: Events;
     private readonly source: string;
-    private readonly sourcePath: string;
+    private readonly filePath: string;
     private query: IQuery;
     private queryType: string;
 
@@ -72,7 +72,7 @@ class QueryRenderChild extends MarkdownRenderChild {
         this.app = app;
         this.events = events;
         this.source = source;
-        this.sourcePath = sourcePath;
+        this.filePath = sourcePath;
 
         // The engine is chosen on the basis of the code block language. Currently
         // there is only the main engine for the plugin, this allows others to be
@@ -134,7 +134,7 @@ class QueryRenderChild extends MarkdownRenderChild {
 
     private async render({ tasks, state }: { tasks: Task[]; state: State }) {
         console.debug(
-            `Render ${this.queryType} called for a block in active file "${this.sourcePath}", to select from ${tasks.length} tasks: plugin state: ${state}`,
+            `Render ${this.queryType} called for a block in active file "${this.filePath}", to select from ${tasks.length} tasks: plugin state: ${state}`,
         );
 
         const content = this.containerEl.createEl('div');
@@ -154,7 +154,7 @@ class QueryRenderChild extends MarkdownRenderChild {
             }
             const totalTasksCount = tasksSortedLimitedGrouped.totalTasksCount();
             console.debug(
-                `${totalTasksCount} of ${tasks.length} tasks displayed in a block in "${this.sourcePath}"`,
+                `${totalTasksCount} of ${tasks.length} tasks displayed in a block in "${this.filePath}"`,
             );
             this.addTaskCount(content, totalTasksCount);
         } else if (this.query.error !== undefined) {
