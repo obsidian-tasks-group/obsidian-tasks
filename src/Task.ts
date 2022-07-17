@@ -768,7 +768,7 @@ export class Task {
         } else if (
             recurrence1 &&
             recurrence2 &&
-            !recurrence1!.identicalTo(recurrence2!)
+            !recurrence1.identicalTo(recurrence2)
         ) {
             return false;
         }
