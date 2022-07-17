@@ -76,12 +76,20 @@ Here is a more detailed walk through of the creation of a new task, which can be
 - It triggers only on lines that look like tasks.
   - If you use a global task filter, such as `#task`, you will need to provide `- [ ] #task` before the menu pops up.
   - If you don't use a global task filter you will need to provide `- [ ]` before the menu pops up.
+- The menu is smart: it will only offer valid options. For example, if you have already added a due date, that option will be removed from the menu.
 - There are many more recognized options than are showing in the menus, including many more dates, such as `2 months`, `15 days`.
+- The auto-suggest menu supports powerful keyboard control:
+  - Example: type some fraction of the word `start` and you will get a suggestion to turn it into the start emoji. Pressing `<enter>` then immediately adds the start emoji: 🛫.
+  - The filtering matches anywhere. For example, if you haven't yet added any dates to the task, typing `du` would then offer `📅 due date` and `⏳ scheduled date`.
+  - You can use the up/down arrow keys on your keyboard, then press `<enter>` to select from the menu.
+  - The menu is controlled by the 'Minimum match length for auto-suggest' setting. The higher its value, the more you have to type before the menu pops up.
 - You can mix tags in between the emojis (as of Tasks 1.9.0), but you must not mix description text amongst the tags and signifier emojis.
   - See 'What do I need to know about the order of items in a task?' below.
 - The following are not yet supported:
   - It does not yet support Done Date.
+    - Done Date can be added either with the 'Tasks: Toggle task done' command or by clicking the task's checkbox when in Live Preview or Reading views.
   - It does not yet offer `when done`.
+    - This phrase still needs to be typed manually.
 
 ## Common Questions
 
@@ -108,7 +116,7 @@ See the next section for how to check your tasks, as you start using this powerf
 
 ### How can I check that my Task is formatted correctly?
 
-The Tasks plugin's ability to search tasks depends on the information in the tasks matching the plugin's parsing behaviour, described in the previous section. If not, tasks may be silently missed out from task searches.
+The Tasks plugin's ability to search tasks depends on the information in the tasks matching the plugin's parsing behaviour, described in the previous section. If not, tasks may be silently omitted from task searches.
 
 Consider these two tasks (in a vault that does not have a global tag filter):
 
@@ -148,6 +156,13 @@ For example, if you set the `Minimum match length for auto-suggest` to 3, you wo
 ### What keywords may I type to make auto-suggest write the emoji for me?
 
 Here is the complete set of all available text that is added to the auto-suggest menu, with dates that would be generated when used on 11th July 2022.
+
+As you type, the options are filtered. For example, if you haven't yet added any dates to the task, typing `du` would then offer:
+
+- `📅 due date`
+- `⏳ scheduled date`
+
+Similarly, you can type some fraction of the word `start` (of whatever length is needed by the 'Minimum match length' setting) and you will get a suggestion to turn it into the emoji. Pressing `<enter>` then immediately adds the start emoji: 🛫.
 
 | Searchable Text         | Text that is added         |
 | ----------------------- | -------------------------- |
