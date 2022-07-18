@@ -42,7 +42,7 @@ will be displayed.
 
 ## Syntax
 
-1 or more filters can be combined together in a line, via boolean operators, to create a new, powerful, flexible filer.
+One or more filters can be combined together in a line, via boolean operators, to create a new, powerful, flexible filter.
 
 The following rules apply:
 
@@ -175,7 +175,7 @@ The other way of expressing it requires more care and thought:
 
 ### AND NOT
 
-> Require the 1st filter to match, and also the second one to not match
+> Require the first filter to match, and also the second one to not match
 
 For example:
 
@@ -185,7 +185,7 @@ For example:
 
 ### OR NOT
 
-> Require either the 1st filter to match, or the second one to not match.
+> Require either the first filter to match, or the second one to not match.
 
 For example:
 
@@ -202,7 +202,8 @@ For example:
 For example, to show tasks:
 
 - either in files with `inbox` in their path
-- or where the tag `#inbox` is on the task line:
+- or where the tag `#inbox` is on the task line
+- but not both:
 
 ````text
 ```tasks
@@ -271,7 +272,7 @@ And suppose that several of these locations are close by each other, so when you
 
 #### In One of Several Locations
 
-You could select any of the nearly locations with:
+You could select any of the nearby locations with:
 
 ````text
 # Show all tasks I CAN do in this area:

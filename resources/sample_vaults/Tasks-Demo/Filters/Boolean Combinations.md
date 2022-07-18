@@ -35,7 +35,9 @@ not done
 (tags includes #XX) OR (tags includes #YY)
 ```
 
-## Examples with XOR
+## (Advanced) Examples with XOR
+
+`XOR` is an advanced feature that can give surprising results, as the examples here show.
 
 ### XOR
 

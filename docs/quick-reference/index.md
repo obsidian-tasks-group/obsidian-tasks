@@ -38,6 +38,7 @@ This table summarizes the filters and other options available inside a `tasks` b
 | `(filter 1) XOR (filter 2)`                                                            |                                             |                     |                        |
 | `(filter 1) AND NOT (filter 2)`                                                        |                                             |                     |                        |
 | `(filter 1) OR NOT (filter 2)`                                                         |                                             |                     |                        |
+| `(filter 1) AND ((filter 2) OR (filter 3))`                                            |                                             |                     |                        |
 | `exclude sub-items`                                                                    |                                             |                     |                        |
 | `limit to <number> tasks`<br>`limit <number>`                                          |                                             |                     |                        |
 
