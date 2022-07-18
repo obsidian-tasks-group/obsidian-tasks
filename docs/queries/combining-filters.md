@@ -175,7 +175,7 @@ The other way of expressing it requires more care and thought:
 
 ### AND NOT
 
-> Require the 1st filter to match, and also the second one to not match
+> Require the first filter to match, and also the second one to not match
 
 For example:
 
@@ -185,7 +185,7 @@ For example:
 
 ### OR NOT
 
-> Require either the 1st filter to match, or the second one to not match.
+> Require either the first filter to match, or the second one to not match.
 
 For example:
 
