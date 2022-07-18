@@ -271,7 +271,7 @@ And suppose that several of these locations are close by each other, so when you
 
 #### In One of Several Locations
 
-You could select any of the nearly locations with:
+You could select any of the nearby locations with:
 
 ````text
 # Show all tasks I CAN do in this area:
