@@ -42,7 +42,7 @@ will be displayed.
 
 ## Syntax
 
-1 or more filters can be combined together in a line, via boolean operators, to create a new, powerful, flexible filer.
+One or more filters can be combined together in a line, via boolean operators, to create a new, powerful, flexible filter.
 
 The following rules apply:
 
