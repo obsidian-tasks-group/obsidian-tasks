@@ -202,7 +202,8 @@ For example:
 For example, to show tasks:
 
 - either in files with `inbox` in their path
-- or where the tag `#inbox` is on the task line:
+- or where the tag `#inbox` is on the task line
+- but not both:
 
 ````text
 ```tasks
