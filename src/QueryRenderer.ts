@@ -133,12 +133,16 @@ class QueryRenderChild extends MarkdownRenderChild {
     }
 
     private async render({ tasks, state }: { tasks: Task[]; state: State }) {
-        console.debug(
-            `Render ${this.queryType} called for a block in active file "${this.filePath}", to select from ${tasks.length} tasks: plugin state: ${state}`,
-        );
+        // Don't log anything here, for any state, as it generates huge amounts of
+        // console messages in large vaults, if Obsidian was opened with any
+        // notes with tasks code blocks in Reading or Live Preview mode.
 
         const content = this.containerEl.createEl('div');
         if (state === State.Warm && this.query.error === undefined) {
+            console.debug(
+                `Render ${this.queryType} called for a block in active file "${this.filePath}", to select from ${tasks.length} tasks: plugin state: ${state}`,
+            );
+
             const tasksSortedLimitedGrouped =
                 this.query.applyQueryToTasks(tasks);
             for (const group of tasksSortedLimitedGrouped.groups) {
