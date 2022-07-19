@@ -1,4 +1,11 @@
-import { App, MarkdownRenderChild, Plugin, TFile } from 'obsidian';
+import {
+    App,
+    Component,
+    MarkdownRenderChild,
+    MarkdownRenderer,
+    Plugin,
+    TFile,
+} from 'obsidian';
 import type { EventRef, MarkdownPostProcessorContext } from 'obsidian';
 
 import type { IQuery } from './IQuery';
@@ -256,7 +263,7 @@ class QueryRenderChild extends MarkdownRenderChild {
         }
     }
 
-    private static addGroupHeading(
+    private static async addGroupHeading(
         content: HTMLDivElement,
         group: GroupHeading,
     ) {
@@ -278,7 +285,12 @@ class QueryRenderChild extends MarkdownRenderChild {
                 cls: 'tasks-group-heading',
             });
         }
-        header.appendText(group.name);
+        await MarkdownRenderer.renderMarkdown(
+            group.name,
+            header,
+            '/',
+            null as unknown as Component,
+        );
     }
 
     private addBacklinks(
