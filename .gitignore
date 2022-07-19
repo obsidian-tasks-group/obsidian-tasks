@@ -2,6 +2,9 @@
 *.iml
 .idea
 
+# vscode
+.vscode/*.code-workspace
+
 # npm
 node_modules
 yarn-error.log
@@ -14,6 +17,9 @@ yarn-error.log
 # obsidian
 /data.json
 /.obsidian
+
+# jest coverage files
+/coverage
 
 # osx
 .DS_Store
