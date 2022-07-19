@@ -155,7 +155,7 @@ class QueryRenderChild extends MarkdownRenderChild {
             for (const group of tasksSortedLimitedGrouped.groups) {
                 // If there were no 'group by' instructions, group.groupHeadings
                 // will be empty, and no headings will be added.
-                QueryRenderChild.addGroupHeadings(content, group.groupHeadings);
+                this.addGroupHeadings(content, group.groupHeadings);
 
                 const { taskList } = await this.createTasksList({
                     tasks: group.tasks,
@@ -254,16 +254,16 @@ class QueryRenderChild extends MarkdownRenderChild {
      *                        in which case no headings will be added.
      * @private
      */
-    private static addGroupHeadings(
+    private addGroupHeadings(
         content: HTMLDivElement,
         groupHeadings: GroupHeading[],
     ) {
         for (const heading of groupHeadings) {
-            QueryRenderChild.addGroupHeading(content, heading);
+            this.addGroupHeading(content, heading);
         }
     }
 
-    private static async addGroupHeading(
+    private async addGroupHeading(
         content: HTMLDivElement,
         group: GroupHeading,
     ) {
@@ -288,7 +288,7 @@ class QueryRenderChild extends MarkdownRenderChild {
         await MarkdownRenderer.renderMarkdown(
             group.name,
             header,
-            '/',
+            this.filePath,
             null as unknown as Component,
         );
     }
