@@ -1,6 +1,5 @@
 import {
     App,
-    Component,
     MarkdownRenderChild,
     MarkdownRenderer,
     Plugin,
@@ -289,7 +288,7 @@ class QueryRenderChild extends MarkdownRenderChild {
             group.name,
             header,
             this.filePath,
-            null as unknown as Component,
+            this,
         );
     }
 
