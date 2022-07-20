@@ -107,12 +107,7 @@
     }
 
     onMount(() => {
-        const { globalFilter } = getSettings();
-        const description = task.description
-            .replace(globalFilter, '')
-            .replace('  ', ' ')
-            .trim();
-
+        const description = task.getDescriptionWithoutGlobalFilter();
         let priority: 'none' | 'low' | 'medium' | 'high' = 'none';
         if (task.priority === Priority.Low) {
             priority = 'low';
