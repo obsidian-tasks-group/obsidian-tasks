@@ -318,7 +318,7 @@ describe('parsing tags', () => {
             globalFilter: '',
         },
     ])(
-        'should parse $markdownTask and extract $extractedTags',
+        'should parse "$markdownTask" and extract "$extractedTags"',
         ({
             markdownTask,
             expectedDescription,
@@ -960,11 +960,10 @@ describe('check removal of the global filter', () => {
         {
             globalFilter: '#t',
             markdownTask: '- [ ] task with #t multiple global filters #t',
-            // This is not the behavior we eventually want, but this is the existing situation
             expectedDescription: 'task with multiple global filters #t',
         },
     ])(
-        'should parse $markdownTask and extract $expectedDescription',
+        'should parse "$markdownTask" and extract "$expectedDescription"',
         ({ globalFilter, markdownTask, expectedDescription }) => {
             // Arrange
             const originalSettings = getSettings();
