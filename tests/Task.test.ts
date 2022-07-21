@@ -318,7 +318,7 @@ describe('parsing tags', () => {
             globalFilter: '',
         },
     ])(
-        'should parse $markdownTask and extract $extractedTags',
+        'should parse "$markdownTask" and extract "$extractedTags"',
         ({
             markdownTask,
             expectedDescription,
@@ -901,4 +901,89 @@ describe('checking if task lists are identical', () => {
         const list2: Task[] = [new TaskBuilder().description('2').build()];
         expect(Task.tasksListsIdentical(list1, list2)).toBe(false);
     });
+});
+
+describe('check removal of the global filter', () => {
+    type GlobalFilterRemovalExpectation = {
+        globalFilter: string;
+        markdownTask: string;
+        expectedDescription: string;
+    };
+
+    test.each<GlobalFilterRemovalExpectation>([
+        {
+            globalFilter: '#task',
+            markdownTask: '- [ ] #task this is a very simple task',
+            expectedDescription: 'this is a very simple task',
+        },
+        {
+            globalFilter: '',
+            markdownTask: '- [ ] #task this is a very simple task',
+            expectedDescription: '#task this is a very simple task',
+        },
+        {
+            globalFilter: '🞋',
+            markdownTask: '- [ ] task with emoji 🞋 global filter',
+            expectedDescription: 'task with emoji global filter',
+        },
+        {
+            globalFilter: '#t',
+            markdownTask: '- [ ] task with #t global filter in the middle',
+            expectedDescription: 'task with global filter in the middle',
+        },
+        {
+            globalFilter: '#t',
+            markdownTask: '- [ ] task with global filter in the end #t',
+            expectedDescription: 'task with global filter in the end',
+        },
+        {
+            globalFilter: '#t',
+            markdownTask:
+                '- [ ] task with global filter in the end and some spaces  #t  ',
+            expectedDescription:
+                'task with global filter in the end and some spaces',
+        },
+        {
+            globalFilter: '#complex/global/filter',
+            markdownTask:
+                '- [ ] task with #complex/global/filter in the middle',
+            expectedDescription: 'task with in the middle',
+        },
+        {
+            globalFilter: '#task',
+            markdownTask:
+                '- [ ] task with an extension of the global filter #task/with/extension',
+            // This is not the behavior we eventually want, but this is the existing situation
+            expectedDescription:
+                'task with an extension of the global filter /with/extension',
+        },
+        {
+            globalFilter: '#t',
+            markdownTask: '- [ ] task with #t multiple global filters #t',
+            expectedDescription: 'task with multiple global filters #t',
+        },
+    ])(
+        'should parse "$markdownTask" and extract "$expectedDescription"',
+        ({ globalFilter, markdownTask, expectedDescription }) => {
+            // Arrange
+            const originalSettings = getSettings();
+            if (globalFilter != '') {
+                updateSettings({ globalFilter: globalFilter });
+            }
+
+            // Act
+            const task = constructTaskFromLine(markdownTask);
+
+            // Assert
+            expect(task).not.toBeNull();
+            expect(task!.getDescriptionWithoutGlobalFilter()).toEqual(
+                expectedDescription,
+            );
+
+            // Cleanup
+            if (globalFilter != '') {
+                updateSettings(originalSettings);
+            }
+        },
+    );
 });
