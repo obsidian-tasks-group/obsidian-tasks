@@ -137,6 +137,42 @@ describe('Grouping tasks', () => {
         `);
     });
 
+    it('handles tasks matching multiple groups correctly', () => {
+        const a = fromLine({
+            line: '- [ ] Task 1 #group1',
+        });
+        const b = fromLine({
+            line: '- [ ] Task 2 #group2 #group1',
+        });
+        const c = fromLine({
+            line: '- [ ] Task 3 #group2',
+        });
+        const inputs = [a, b, c];
+
+        const group_by: GroupingProperty = 'tags';
+        const grouping = [{ property: group_by }];
+        const groups = Group.by(grouping, inputs);
+        expect(groups.toString()).toMatchInlineSnapshot(`
+            "
+            Group names: [#group1]
+            #### #group1
+            - [ ] Task 1 #group1
+            - [ ] Task 2 #group2 #group1
+
+            ---
+
+            Group names: [#group2]
+            #### #group2
+            - [ ] Task 2 #group2 #group1
+            - [ ] Task 3 #group2
+
+            ---
+
+            3 tasks
+            "
+        `);
+    });
+
     it('should create nested headings if multiple groups used', () => {
         // Arrange
         const t1 = fromLine({
