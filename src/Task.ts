@@ -861,4 +861,12 @@ export class Task {
             window.moment().startOf('day'),
         )})`;
     }
+
+    public getDescriptionWithoutGlobalFilter() {
+        const { globalFilter } = getSettings();
+        return this.description
+            .replace(globalFilter, '')
+            .replace('  ', ' ')
+            .trim();
+    }
 }
