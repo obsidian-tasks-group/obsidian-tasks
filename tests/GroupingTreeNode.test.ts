@@ -6,6 +6,7 @@ import { GroupingTreeNode } from '../src/Query/GroupingTreeNode';
 describe('Grouping Tree', () => {
     it('correctly generates all paths', () => {
         // Arrange
+
         // Build the following tree
         //              Root[1, 2, 3, 4, 5, 6]
         //             /                 \
@@ -14,8 +15,6 @@ describe('Grouping Tree', () => {
         //        D[1]                  E[3, 4]       F[4, 5, 6]
         //                                            /        \
         //                                          G[4]       H[5, 6]
-
-        // Let's start building the tree
         const tree = new GroupingTreeNode<number>([1, 2, 3, 4, 5, 6]);
         const b = new GroupingTreeNode<number>([1, 5, 6]);
         const c = new GroupingTreeNode<number>([3, 4, 5, 6]);
@@ -32,25 +31,28 @@ describe('Grouping Tree', () => {
         f.children.set('G', g);
         f.children.set('H', h);
 
-        // Validation
+        // Act
         const allLeafs = tree.generateAllPaths();
+
+        // Assert
         const expected = new Map<string[], number[]>();
         expected.set(['B', 'D'], [1]);
         expected.set(['C', 'E'], [3, 4]);
         expected.set(['C', 'F', 'G'], [4]);
         expected.set(['C', 'F', 'H'], [5, 6]);
-
-        // Assert
         expect(allLeafs).toEqual(expected);
     });
 
     it("generates correct map when the node doesn't have children", () => {
+        // Arrange
         const tree = new GroupingTreeNode<number>([1, 2, 3, 4, 5, 6]);
+
+        // Act
         const allLeafs = tree.generateAllPaths();
 
+        // Assert
         const expected = new Map<string[], number[]>();
         expected.set([], [1, 2, 3, 4, 5, 6]);
-
         expect(allLeafs).toEqual(expected);
     });
 });
