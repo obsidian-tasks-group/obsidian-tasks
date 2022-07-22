@@ -31,7 +31,7 @@ This table summarizes the filters and other options available inside a `tasks` b
 | `heading (includes, does not include) <string>`                                        |                                             | `group by heading`  |                        |
 |                                                                                        |                                             | `group by backlink` | `hide backlink`        |
 | `description (includes, does not include) <string>`                                    | `sort by description`                       |                     |                        |
-| `tag (includes, does not include) <tag>`<br>`tags (include, do not include) <tag>`     | `sort by tag`<br>`sort by tag <tag_number>` |                     |                        |
+| `tag (includes, does not include) <tag>`<br>`tags (include, do not include) <tag>`     | `sort by tag`<br>`sort by tag <tag_number>` | `group by tags`     |                        |
 | `(filter 1) AND (filter 2)`                                                            |                                             |                     |                        |
 | `(filter 1) OR (filter 2)`                                                             |                                             |                     |                        |
 | `NOT (filter 1)`                                                                       |                                             |                     |                        |
