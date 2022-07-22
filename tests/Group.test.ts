@@ -334,22 +334,22 @@ describe('Group names', () => {
         {
             groupBy: 'priority',
             taskLine: '- [ ] a ⏫',
-            expectedGroupNames: ['Priority 1'],
+            expectedGroupNames: ['Priority 1: High'],
         },
         {
             groupBy: 'priority',
             taskLine: '- [ ] a 🔼',
-            expectedGroupNames: ['Priority 2'],
+            expectedGroupNames: ['Priority 2: Medium'],
         },
         {
             groupBy: 'priority',
             taskLine: '- [ ] a',
-            expectedGroupNames: ['Priority 3'],
+            expectedGroupNames: ['Priority 3: None'],
         },
         {
             groupBy: 'priority',
             taskLine: '- [ ] a 🔽',
-            expectedGroupNames: ['Priority 4'],
+            expectedGroupNames: ['Priority 4: Low'],
         },
 
         // -----------------------------------------------------------

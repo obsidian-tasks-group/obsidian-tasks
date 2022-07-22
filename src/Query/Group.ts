@@ -1,5 +1,6 @@
 import type { Grouping, GroupingProperty } from '../Query';
 import type { Task } from '../Task';
+import { PriorityAsNumber } from '../Task';
 import { TaskGroups } from './TaskGroups';
 
 /**
@@ -53,7 +54,8 @@ export class Group {
     };
 
     private static groupByPriority(task: Task): string[] {
-        return [`Priority ${task.priority}`];
+        const priorityName = PriorityAsNumber[task.priority];
+        return [`Priority ${task.priority}: ${priorityName}`];
     }
 
     private static groupByRecurrence(task: Task): string[] {
