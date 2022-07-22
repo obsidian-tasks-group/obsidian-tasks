@@ -43,6 +43,7 @@ export class Group {
         folder: Group.groupByFolder,
         heading: Group.groupByHeading,
         path: Group.groupByPath,
+        priority: Group.groupByPriority,
         recurrence: Group.groupByRecurrence,
         recurring: Group.groupByRecurring,
         scheduled: Group.groupByScheduledDate,
@@ -50,6 +51,10 @@ export class Group {
         status: Group.groupByStatus,
         tags: Group.groupByTags,
     };
+
+    private static groupByPriority(task: Task): string[] {
+        return [`Priority ${task.priority}`];
+    }
 
     private static groupByRecurrence(task: Task): string[] {
         if (task.recurrence !== null) {

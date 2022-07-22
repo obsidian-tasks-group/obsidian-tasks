@@ -330,6 +330,29 @@ describe('Group names', () => {
         },
 
         // -----------------------------------------------------------
+        // group by priority
+        {
+            groupBy: 'priority',
+            taskLine: '- [ ] a ⏫',
+            expectedGroupNames: ['Priority 1'],
+        },
+        {
+            groupBy: 'priority',
+            taskLine: '- [ ] a 🔼',
+            expectedGroupNames: ['Priority 2'],
+        },
+        {
+            groupBy: 'priority',
+            taskLine: '- [ ] a',
+            expectedGroupNames: ['Priority 3'],
+        },
+        {
+            groupBy: 'priority',
+            taskLine: '- [ ] a 🔽',
+            expectedGroupNames: ['Priority 4'],
+        },
+
+        // -----------------------------------------------------------
         // group by recurrence
         {
             groupBy: 'recurrence',
