@@ -43,11 +43,29 @@ export class Group {
         folder: Group.groupByFolder,
         heading: Group.groupByHeading,
         path: Group.groupByPath,
+        recurrence: Group.groupByRecurrence,
+        recurring: Group.groupByRecurring,
         scheduled: Group.groupByScheduledDate,
         start: Group.groupByStartDate,
         status: Group.groupByStatus,
         tags: Group.groupByTags,
     };
+
+    private static groupByRecurrence(task: Task): string[] {
+        if (task.recurrence !== null) {
+            return [task.recurrence!.toText()];
+        } else {
+            return ['None'];
+        }
+    }
+
+    private static groupByRecurring(task: Task): string[] {
+        if (task.recurrence !== null) {
+            return ['Recurring'];
+        } else {
+            return ['Not Recurring'];
+        }
+    }
 
     private static groupByStartDate(task: Task): string[] {
         return [Group.stringFromDate(task.startDate, 'start')];
