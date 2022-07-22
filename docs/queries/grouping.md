@@ -57,12 +57,19 @@ Task properties:
     * The due date of the task, including the week-day, or `No due date`.
 1. `done`
     * The done date of the task, including the week-day, or `No done date`.
+1. `recurring`
+    * Whether the task is recurring: either `Recurring` or `Not Recurring`.
+1. `recurrence`
+    * The recurrence rule of the task, for example `every week on Sunday`, or `None` for non-recurring tasks.
+    * Note that the text displayed is generated programmatically and standardised, and so may not exactly match the text in any manually typed tasks. For example, a task with `🔁 every Sunday` is grouped in `every week on Sunday`.
 1. `tags`
     * The tags of the tasks or `(No tags)`. If the task has multiple tags, it will show up under every tag.
 
 > `start`, `scheduled`, `due` and `done` grouping options were introduced in Tasks 1.7.0.
 >
 > `tags` grouping option was introduced in Tasks 1.10.0.
+>
+> `recurring` and `recurrence` grouping options were introduced in Tasks 1.11.0.
 
 ### Multiple groups
 
