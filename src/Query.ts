@@ -34,7 +34,8 @@ export type GroupingProperty =
     | 'path'
     | 'scheduled'
     | 'start'
-    | 'status';
+    | 'status'
+    | 'tags';
 export type Grouping = { property: GroupingProperty };
 
 export class Query implements IQuery {
@@ -53,7 +54,7 @@ export class Query implements IQuery {
         /^sort by (urgency|status|priority|start|scheduled|due|done|path|description|tag)( reverse)?[\s]*(\d+)?/;
 
     private readonly groupByRegexp =
-        /^group by (backlink|done|due|filename|folder|heading|path|scheduled|start|status)/;
+        /^group by (backlink|done|due|filename|folder|heading|path|scheduled|start|status|tags)/;
 
     private readonly hideOptionsRegexp =
         /^hide (task count|backlink|priority|start date|scheduled date|done date|due date|recurrence rule|edit button)/;

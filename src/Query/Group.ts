@@ -5,7 +5,7 @@ import { TaskGroups } from './TaskGroups';
 /**
  * A naming function, that takes a Task object and returns the corresponding group property name
  */
-type Grouper = (task: Task) => string;
+type Grouper = (task: Task) => string[];
 
 /**
  * Implementation of the 'group by' instruction.
@@ -23,42 +23,14 @@ export class Group {
     }
 
     /**
-     * Return the Grouper functions matching the 'group by' lines
-     * @param grouping 0 or more Grouping values, one per 'group by' line
-     */
-    public static getGroupersForAllQueryGroupings(grouping: Grouping[]) {
-        const groupers: Grouper[] = [];
-        for (const { property } of grouping) {
-            const comparator = Group.groupers[property];
-            groupers.push(comparator);
-        }
-        return groupers;
-    }
-
-    /**
-     * Return the group names for a single task
-     * @param groupers The Grouper functions indicating the requested types of group
-     * @param task
-     */
-    public static getGroupNamesForTask(groupers: Grouper[], task: Task) {
-        const groupNames = [];
-        for (const grouper of groupers) {
-            const groupName = grouper(task);
-            groupNames.push(groupName);
-        }
-        return groupNames;
-    }
-
-    /**
-     * Return a single property name for a single task.
-     * A convenience method for unit tests.
+     * Return the properties of a single task for the passed grouping property
      * @param property
      * @param task
      */
-    public static getGroupNameForTask(
+    public static getGroupNamesForTask(
         property: GroupingProperty,
         task: Task,
-    ): string {
+    ): string[] {
         const grouper = Group.groupers[property];
         return grouper(task);
     }
@@ -74,38 +46,42 @@ export class Group {
         scheduled: Group.groupByScheduledDate,
         start: Group.groupByStartDate,
         status: Group.groupByStatus,
+        tags: Group.groupByTags,
     };
 
-    private static groupByStartDate(task: Task): string {
-        return Group.groupByDate(task.startDate, 'start');
+    private static groupByStartDate(task: Task): string[] {
+        return [Group.stringFromDate(task.startDate, 'start')];
     }
 
-    private static groupByScheduledDate(task: Task): string {
-        return Group.groupByDate(task.scheduledDate, 'scheduled');
+    private static groupByScheduledDate(task: Task): string[] {
+        return [Group.stringFromDate(task.scheduledDate, 'scheduled')];
     }
 
-    private static groupByDueDate(task: Task): string {
-        return Group.groupByDate(task.dueDate, 'due');
+    private static groupByDueDate(task: Task): string[] {
+        return [Group.stringFromDate(task.dueDate, 'due')];
     }
 
-    private static groupByDoneDate(task: Task): string {
-        return Group.groupByDate(task.doneDate, 'done');
+    private static groupByDoneDate(task: Task): string[] {
+        return [Group.stringFromDate(task.doneDate, 'done')];
     }
 
-    private static groupByDate(date: moment.Moment | null, field: string) {
+    private static stringFromDate(
+        date: moment.Moment | null,
+        field: string,
+    ): string {
         if (date === null) {
             return 'No ' + field + ' date';
         }
         return date.format(Group.groupDateFormat);
     }
 
-    private static groupByPath(task: Task): string {
+    private static groupByPath(task: Task): string[] {
         // Does this need to be made stricter?
         // Is there a better way of getting the file name?
-        return task.path.replace('.md', '');
+        return [task.path.replace('.md', '')];
     }
 
-    private static groupByFolder(task: Task): string {
+    private static groupByFolder(task: Task): string[] {
         const path = task.path;
         const fileNameWithExtension = task.filename + '.md';
         const folder = path.substring(
@@ -113,41 +89,48 @@ export class Group {
             path.lastIndexOf(fileNameWithExtension),
         );
         if (folder === '') {
-            return '/';
+            return ['/'];
         }
-        return folder;
+        return [folder];
     }
 
-    private static groupByFileName(task: Task): string {
+    private static groupByFileName(task: Task): string[] {
         // Note current limitation: Tasks from different notes with the
         // same name will be grouped together, even though they are in
         // different files and their links will look different.
         const filename = task.filename;
         if (filename === null) {
-            return 'Unknown Location';
+            return ['Unknown Location'];
         }
-        return filename;
+        return [filename];
     }
 
-    private static groupByBacklink(task: Task): string {
+    private static groupByBacklink(task: Task): string[] {
         const linkText = task.getLinkText({ isFilenameUnique: true });
         if (linkText === null) {
-            return 'Unknown Location';
+            return ['Unknown Location'];
         }
-        return linkText;
+        return [linkText];
     }
 
-    private static groupByStatus(task: Task): string {
-        return task.status;
+    private static groupByStatus(task: Task): string[] {
+        return [task.status];
     }
 
-    private static groupByHeading(task: Task): string {
+    private static groupByHeading(task: Task): string[] {
         if (
             task.precedingHeader === null ||
             task.precedingHeader.length === 0
         ) {
-            return '(No heading)';
+            return ['(No heading)'];
         }
-        return task.precedingHeader;
+        return [task.precedingHeader];
+    }
+
+    private static groupByTags(task: Task): string[] {
+        if (task.tags.length == 0) {
+            return ['(No tags)'];
+        }
+        return task.tags;
     }
 }

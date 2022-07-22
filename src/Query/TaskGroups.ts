@@ -10,6 +10,7 @@ import { TaskGroup } from './TaskGroup';
  */
 export class TaskGroups {
     private _groups: TaskGroup[] = new Array<TaskGroup>();
+    private _totalTaskCount = 0;
 
     /**
      * Constructor for TaskGroups
@@ -19,6 +20,10 @@ export class TaskGroups {
      *                         matching the query, already in sort order
      */
     constructor(groups: Grouping[], tasks: Task[]) {
+        // Grouping doesn't change the number of tasks, and all the tasks
+        // will be shown in at least one group.
+        this._totalTaskCount = tasks.length;
+
         const initialGroups = new IntermediateTaskGroups(groups, tasks);
         this.addTasks(initialGroups);
     }
@@ -35,11 +40,7 @@ export class TaskGroups {
      * The total number of tasks matching the query.
      */
     public totalTasksCount() {
-        let totalTasksCount = 0;
-        for (const group of this.groups) {
-            totalTasksCount += group.tasks.length;
-        }
-        return totalTasksCount;
+        return this._totalTaskCount;
     }
 
     /**
