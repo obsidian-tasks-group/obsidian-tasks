@@ -330,6 +330,42 @@ describe('Group names', () => {
         },
 
         // -----------------------------------------------------------
+        // group by recurrence
+        {
+            groupBy: 'recurrence',
+            taskLine: '- [ ] a',
+            expectedGroupNames: ['None'],
+        },
+        {
+            groupBy: 'recurrence',
+            taskLine: '- [ ] a 🔁 every Sunday',
+            expectedGroupNames: ['every week on Sunday'],
+        },
+        {
+            groupBy: 'recurrence',
+            taskLine: '- [ ] a 🔁 every Sunday when done',
+            expectedGroupNames: ['every week on Sunday when done'],
+        },
+        {
+            groupBy: 'recurrence',
+            taskLine: '- [ ] a 🔁 every 6 months on the 2nd Wednesday',
+            expectedGroupNames: ['every 6 months on the 2nd Wednesday'],
+        },
+
+        // -----------------------------------------------------------
+        // group by recurring
+        {
+            groupBy: 'recurring',
+            taskLine: '- [ ] a',
+            expectedGroupNames: ['Not Recurring'],
+        },
+        {
+            groupBy: 'recurring',
+            taskLine: '- [ ] a 🔁 every Sunday',
+            expectedGroupNames: ['Recurring'],
+        },
+
+        // -----------------------------------------------------------
         // group by scheduled
         {
             groupBy: 'scheduled',
