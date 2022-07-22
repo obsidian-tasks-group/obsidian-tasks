@@ -32,6 +32,8 @@ export type GroupingProperty =
     | 'folder'
     | 'heading'
     | 'path'
+    | 'recurrence'
+    | 'recurring'
     | 'scheduled'
     | 'start'
     | 'status'
@@ -54,7 +56,7 @@ export class Query implements IQuery {
         /^sort by (urgency|status|priority|start|scheduled|due|done|path|description|tag)( reverse)?[\s]*(\d+)?/;
 
     private readonly groupByRegexp =
-        /^group by (backlink|done|due|filename|folder|heading|path|scheduled|start|status|tags)/;
+        /^group by (backlink|done|due|filename|folder|heading|path|recurrence|recurring|scheduled|start|status|tags)/;
 
     private readonly hideOptionsRegexp =
         /^hide (task count|backlink|priority|start date|scheduled date|done date|due date|recurrence rule|edit button)/;
