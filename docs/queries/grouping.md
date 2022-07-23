@@ -70,6 +70,7 @@ Task properties:
     * Note that the text displayed is generated programmatically and standardised, and so may not exactly match the text in any manually typed tasks. For example, a task with `🔁 every Sunday` is grouped in `every week on Sunday`.
 1. `tags`
     * The tags of the tasks or `(No tags)`. If the task has multiple tags, it will show up under every tag.
+    * Note that tasks with subtags on their global filter will be grouped separately.
 
 > `start`, `scheduled`, `due` and `done` grouping options were introduced in Tasks 1.7.0.
 >

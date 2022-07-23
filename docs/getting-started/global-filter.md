@@ -19,6 +19,14 @@ Example with global filter `#task`:
 - [ ] #task take out the trash
 ```
 
+If your global filter is a tag, it supports subtags.
+
+Example with global filter `#task`:
+
+```markdown
+- [ ] #task/chores take out the trash
+```
+
 If you don't have a global filter set, all regular checklist items will be considered a task:
 
 ```markdown

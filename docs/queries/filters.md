@@ -173,7 +173,7 @@ As well as the date-related searches above, these filters search other propertie
 
 - `tags (include|do not include) <tag>` (Alternative grammar `tag (includes|does not include) <tag>` matching description syntax)
   - Matches case-insensitive (disregards capitalization).
-  - Disregards the global filter when matching.
+  - Disregards the global filter when matching _unless the tasks's global filter includes subtags_.
   - The `#` is optional on the tag so `#home` and `home` will work to match `#home`.
   - The match is partial so `tags include foo` will match `#foo/bar` and `#foo-bar`.
 
