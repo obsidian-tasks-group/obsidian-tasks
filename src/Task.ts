@@ -70,7 +70,7 @@ export class Task {
     public readonly precedingHeader: string | null;
 
     public readonly tags: string[];
-
+    public readonly subTags: string;
     public readonly priority: Priority;
 
     public readonly startDate: Moment | null;
@@ -110,6 +110,8 @@ export class Task {
     // description: '#dog #car http://www/ddd#ere #house'
     // matches: #dog, #car, #house
     public static readonly hashTags = /(^|\s)#[^ !@#$%^&*(),.?":{}|<>]*/g;
+    public static readonly subTagRegex =
+        /(#[^/\s]+)(\/[^ !@#$%^&*(),.?":{}|<>]+)/u;
     public static readonly hashTagsFromEnd = new RegExp(
         this.hashTags.source + '$',
     );
@@ -133,6 +135,7 @@ export class Task {
         recurrence,
         blockLink,
         tags,
+        subTags,
     }: {
         status: Status;
         description: string;
@@ -150,6 +153,7 @@ export class Task {
         recurrence: Recurrence | null;
         blockLink: string;
         tags: string[] | [];
+        subTags: string;
     }) {
         this.status = status;
         this.description = description;
@@ -161,6 +165,7 @@ export class Task {
         this.precedingHeader = precedingHeader;
 
         this.tags = tags;
+        this.subTags = subTags;
 
         this.priority = priority;
 
@@ -235,6 +240,16 @@ export class Task {
 
         if (blockLink !== '') {
             description = description.replace(this.blockLinkRegex, '').trim();
+        }
+
+        // check for any number of subtags on the global filter
+        let subTags: string = '';
+        const tagsMatch = description.match(Task.subTagRegex);
+        if (tagsMatch !== null) {
+            if (tagsMatch[1] === globalFilter) {
+                subTags =
+                    typeof tagsMatch[2] !== 'undefined' ? tagsMatch[2] : ''; // keep just the subtag(s)
+            }
         }
 
         // Keep matching and removing special strings from the end of the
@@ -393,6 +408,7 @@ export class Task {
             recurrence,
             blockLink,
             tags,
+            subTags,
         });
     }
 
@@ -414,7 +430,9 @@ export class Task {
         let taskAsString = this.toString(layoutOptions);
         const { globalFilter, removeGlobalFilter } = getSettings();
         if (removeGlobalFilter) {
-            taskAsString = taskAsString.replace(globalFilter, '').trim();
+            taskAsString = taskAsString
+                .replace(globalFilter + this.subTags, '')
+                .trim();
         }
 
         const textSpan = li.createSpan();
@@ -862,11 +880,17 @@ export class Task {
         )})`;
     }
 
-    public getDescriptionWithoutGlobalFilter() {
+    public getDescriptionWithoutGlobalFilter(extractSubTags: Boolean = true) {
         const { globalFilter } = getSettings();
-        return this.description
-            .replace(globalFilter, '')
-            .replace('  ', ' ')
-            .trim();
+        let subTagsExtracted = '';
+        if (this.subTags !== '' && extractSubTags) {
+            subTagsExtracted = ' ' + this.subTags;
+        }
+        return (
+            this.description
+                .replace(globalFilter + this.subTags, '')
+                .replace('  ', ' ')
+                .trim() + subTagsExtracted
+        );
     }
 }

@@ -81,6 +81,7 @@ const taskFromLine = ({ line, path }: { line: string; path: string }): Task => {
             precedingHeader: null,
             blockLink: '',
             tags: [],
+            subTags: '',
         });
     }
 
@@ -114,5 +115,6 @@ const taskFromLine = ({ line, path }: { line: string; path: string }): Task => {
         sectionIndex: 0,
         precedingHeader: null,
         tags: [],
+        subTags: '',
     });
 };
