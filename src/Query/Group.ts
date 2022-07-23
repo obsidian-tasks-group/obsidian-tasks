@@ -1,5 +1,6 @@
 import type { Grouping, GroupingProperty } from '../Query';
 import type { Task } from '../Task';
+import { Priority } from '../Task';
 import { TaskGroups } from './TaskGroups';
 
 /**
@@ -43,6 +44,7 @@ export class Group {
         folder: Group.groupByFolder,
         heading: Group.groupByHeading,
         path: Group.groupByPath,
+        priority: Group.groupByPriority,
         recurrence: Group.groupByRecurrence,
         recurring: Group.groupByRecurring,
         scheduled: Group.groupByScheduledDate,
@@ -50,6 +52,25 @@ export class Group {
         status: Group.groupByStatus,
         tags: Group.groupByTags,
     };
+
+    private static groupByPriority(task: Task): string[] {
+        let priorityName = 'ERROR';
+        switch (task.priority) {
+            case Priority.High:
+                priorityName = 'High';
+                break;
+            case Priority.Medium:
+                priorityName = 'Medium';
+                break;
+            case Priority.None:
+                priorityName = 'None';
+                break;
+            case Priority.Low:
+                priorityName = 'Low';
+                break;
+        }
+        return [`Priority ${task.priority}: ${priorityName}`];
+    }
 
     private static groupByRecurrence(task: Task): string[] {
         if (task.recurrence !== null) {
