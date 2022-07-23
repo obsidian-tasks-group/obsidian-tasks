@@ -57,15 +57,24 @@ describe('accessing earliest happens date', () => {
         ).toBeNull();
     });
 
-    it('should return due if only date set', () => {
+    function checkEarliestHappensDate(
+        taskBuilder: TaskBuilder,
+        expectedEarliestHappensDate: string,
+    ) {
         const earliest = new HappensDateField().earliestDate(
-            new TaskBuilder().dueDate('1989-12-17').build(),
+            taskBuilder.build(),
         );
         expect({
             earliest: earliest?.format('YYYY-MM-DD'),
         }).toMatchObject({
-            earliest: '1989-12-17',
+            earliest: expectedEarliestHappensDate,
         });
+    }
+
+    it('should return due if only date set', () => {
+        const taskBuilder = new TaskBuilder().dueDate('1989-12-17');
+        const expectedEarliestHappensDate = '1989-12-17';
+        checkEarliestHappensDate(taskBuilder, expectedEarliestHappensDate);
     });
 
     it('should return start if only date set', () => {
