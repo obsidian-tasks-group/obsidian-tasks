@@ -32,13 +32,6 @@ export enum Priority {
     Low = '4',
 }
 
-export enum PriorityAsNumber {
-    High = 1,
-    Medium = 2,
-    None = 3,
-    Low = 4,
-}
-
 export const prioritySymbols = {
     High: '⏫',
     Medium: '🔼',
