@@ -27,6 +27,7 @@ This table summarizes the filters and other options available inside a `tasks` b
 | `priority is (above, below)? (low, none, medium, high)`                                | `sort by priority`                          | `group by priority`   | `hide priority`        |
 |                                                                                        | `sort by urgency`                           |                       |                        |
 | `path (includes, does not include) <path>`                                             | `sort by path`                              | `group by path`       |                        |
+|                                                                                        |                                             | `group by root`       |                        |
 |                                                                                        |                                             | `group by folder`     |                        |
 |                                                                                        |                                             | `group by filename`   |                        |
 | `heading (includes, does not include) <string>`                                        |                                             | `group by heading`    |                        |
