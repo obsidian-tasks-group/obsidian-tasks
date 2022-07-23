@@ -40,6 +40,8 @@ File locations:
 1. `filename` (the filename of the file that contains the task, without the `.md` extension)
     * Note that tasks from different notes with the same file name will be grouped together in the same group.
 
+> `root` grouping option was introduced in Tasks 1.11.0.
+
 File contents:
 
 1. `backlink` (the text that would be shown in the task's backlink, combining the task's file name and heading, but with no link added)
@@ -57,6 +59,8 @@ Task date properties:
     * The done date of the task, including the week-day, or `No done date`.
 1. `happens`
     * The earliest of start date, scheduled date, and due date, including the week-day, or `No happens date` if none of those are set.
+
+> `happens` grouping option was introduced in Tasks 1.11.0.
 
 Task properties - other:
 
@@ -81,7 +85,7 @@ Task properties - other:
 >
 > `tags` grouping option was introduced in Tasks 1.10.0.
 >
-> `recurring` and `recurrence` grouping options were introduced in Tasks 1.11.0.
+> `priority`, `recurring` and `recurrence` grouping options were introduced in Tasks 1.11.0.
 
 ### Multiple groups
 
