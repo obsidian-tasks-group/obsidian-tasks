@@ -72,9 +72,10 @@ describe('accessing earliest happens date', () => {
     }
 
     it('should return due if only date set', () => {
-        const taskBuilder = new TaskBuilder().dueDate('1989-12-17');
-        const expectedEarliestHappensDate = '1989-12-17';
-        checkEarliestHappensDate(taskBuilder, expectedEarliestHappensDate);
+        checkEarliestHappensDate(
+            new TaskBuilder().dueDate('1989-12-17'),
+            '1989-12-17',
+        );
     });
 
     it('should return start if only date set', () => {
