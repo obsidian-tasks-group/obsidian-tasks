@@ -24,7 +24,7 @@ This table summarizes the filters and other options available inside a `tasks` b
 | `happens (before, after, on) <date>`<br>`has happens date`<br>`no  happens date`       |                                             |                       |                        |
 | `is recurring`<br>`is not recurring`                                                   |                                             | `group by recurring`  |                        |
 |                                                                                        |                                             | `group by recurrence` | `hide recurrence rule` |
-| `priority is (above, below)? (low, none, medium, high)`                                | `sort by priority`                          |                       | `hide priority`        |
+| `priority is (above, below)? (low, none, medium, high)`                                | `sort by priority`                          | `group by priority`   | `hide priority`        |
 |                                                                                        | `sort by urgency`                           |                       |                        |
 | `path (includes, does not include) <path>`                                             | `sort by path`                              | `group by path`       |                        |
 |                                                                                        |                                             | `group by folder`     |                        |
