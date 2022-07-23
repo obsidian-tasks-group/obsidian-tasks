@@ -79,39 +79,26 @@ describe('accessing earliest happens date', () => {
     });
 
     it('should return start if only date set', () => {
-        const earliest = new HappensDateField().earliestDate(
-            new TaskBuilder().startDate('1989-12-17').build(),
+        checkEarliestHappensDate(
+            new TaskBuilder().startDate('1989-12-17'),
+            '1989-12-17',
         );
-        expect({
-            earliest: earliest?.format('YYYY-MM-DD'),
-        }).toMatchObject({
-            earliest: '1989-12-17',
-        });
     });
 
     it('should return scheduled if only date set', () => {
-        const earliest = new HappensDateField().earliestDate(
-            new TaskBuilder().scheduledDate('1989-12-17').build(),
+        checkEarliestHappensDate(
+            new TaskBuilder().scheduledDate('1989-12-17'),
+            '1989-12-17',
         );
-        expect({
-            earliest: earliest?.format('YYYY-MM-DD'),
-        }).toMatchObject({
-            earliest: '1989-12-17',
-        });
     });
 
     it('should return earliest if all dates set', () => {
-        const earliest = new HappensDateField().earliestDate(
+        checkEarliestHappensDate(
             new TaskBuilder()
                 .dueDate('1989-12-17')
                 .startDate('1999-12-17')
-                .scheduledDate('2009-12-17')
-                .build(),
+                .scheduledDate('2009-12-17'),
+            '1989-12-17',
         );
-        expect({
-            earliest: earliest?.format('YYYY-MM-DD'),
-        }).toMatchObject({
-            earliest: '1989-12-17',
-        });
     });
 });
