@@ -51,7 +51,7 @@ describe('happens date', () => {
 });
 
 describe('accessing earliest happens date', () => {
-    it('should return none if no dates set', () => {
+    it('should return null if no dates set', () => {
         expect(
             new HappensDateField().earliestDate(new TaskBuilder().build()),
         ).toBeNull();
