@@ -153,7 +153,7 @@ export class Group {
     }
 
     private static groupByRoot(task: Task): string[] {
-        const path = task.path.replace('\\', '/');
+        const path = task.path.replace(/\\/g, '/');
         const separatorIndex = path.indexOf('/');
         if (separatorIndex == -1) {
             return ['/'];
