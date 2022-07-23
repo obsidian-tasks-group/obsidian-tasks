@@ -26,6 +26,7 @@
         scheduledDate: string;
         dueDate: string;
         doneDate: string;
+        subTags: string;
     } = {
         description: '',
         status: Status.Todo,
@@ -35,6 +36,7 @@
         scheduledDate: '',
         dueDate: '',
         doneDate: '',
+        subTags: '',
     };
 
     let parsedStartDate: string = '';
@@ -42,6 +44,7 @@
     let parsedDueDate: string = '';
     let parsedRecurrence: string = '';
     let parsedDone: string = '';
+    let parsedSubTags: string = '';
 
     // 'weekend' abbreviation ommitted due to lack of space.
     let datePlaceholder =
@@ -88,6 +91,14 @@
     }
 
     $: {
+        const { globalFilter } = getSettings();
+        if (editableTask.subTags !== '' && editableTask.subTags.substring(0, 1) !== '/') {
+            editableTask.subTags = '/' + editableTask.subTags;
+        }
+        parsedSubTags = '<i>' + globalFilter + editableTask.subTags + '</>';
+    }
+
+    $: {
         if (!editableTask.recurrenceRule) {
             parsedRecurrence = '<i>not recurring</>';
         } else {
@@ -107,7 +118,7 @@
     }
 
     onMount(() => {
-        const description = task.getDescriptionWithoutGlobalFilter();
+        const description = task.getDescriptionWithoutGlobalFilter(false);
         let priority: 'none' | 'low' | 'medium' | 'high' = 'none';
         if (task.priority === Priority.Low) {
             priority = 'low';
@@ -130,6 +141,7 @@
                 : '',
             dueDate: task.dueDate ? task.dueDate.format('YYYY-MM-DD') : '',
             doneDate: task.doneDate ? task.doneDate.format('YYYY-MM-DD') : '',
+            subTags: task.subTags
         };
         setTimeout(() => {
             descriptionInput.focus();
@@ -140,7 +152,7 @@
         const { globalFilter } = getSettings();
         let description = editableTask.description.trim();
         if (!description.includes(globalFilter)) {
-            description = globalFilter + ' ' + description;
+            description = globalFilter + editableTask.subTags + ' ' + description;
         }
 
         let startDate: moment.Moment | null = null;
@@ -244,6 +256,17 @@
                 <option value="medium">{prioritySymbols.Medium} Medium</option>
                 <option value="low">{prioritySymbols.Low} Low</option>
             </select>
+        </div>
+        <hr />
+        <div class="tasks-modal-section">
+            <label for="subtags">Subtags</label>
+            <input
+                bind:value={editableTask.subTags}
+                id="subTags"
+                type="text"
+                placeholder="Try appending a subtag with '/subtag'"
+            />
+            <code>Tags: {@html parsedSubTags}</code>
         </div>
         <hr />
         <div class="tasks-modal-section">

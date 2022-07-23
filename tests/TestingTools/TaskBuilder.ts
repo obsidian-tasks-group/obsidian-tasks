@@ -28,6 +28,7 @@ export class TaskBuilder {
     private _originalStatusCharacter: string = '';
     private _precedingHeader: string | null = null;
     private _tags: string[] = [];
+    private _subTags: string = '';
     private _priority: Priority = Priority.None;
 
     private _startDate: Moment | null = null;
@@ -68,6 +69,7 @@ export class TaskBuilder {
             recurrence: this._recurrence,
             blockLink: this._blockLink,
             tags: this._tags,
+            subTags: this._subTags,
         });
     }
 
