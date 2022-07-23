@@ -54,6 +54,8 @@ Task date properties:
     * The due date of the task, including the week-day, or `No due date`.
 1. `done`
     * The done date of the task, including the week-day, or `No done date`.
+1. `happens`
+    * The earliest of start date, scheduled date, and due date, including the week-day, or `No happens date` if none of those are set.
 
 Task properties - other:
 
