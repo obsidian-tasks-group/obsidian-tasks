@@ -2,6 +2,7 @@ import type { Grouping, GroupingProperty } from '../Query';
 import type { Task } from '../Task';
 import { Priority } from '../Task';
 import { TaskGroups } from './TaskGroups';
+import { HappensDateField } from './Filter/HappensDateField';
 
 /**
  * A naming function, that takes a Task object and returns the corresponding group property name
@@ -42,6 +43,7 @@ export class Group {
         due: Group.groupByDueDate,
         filename: Group.groupByFileName,
         folder: Group.groupByFolder,
+        happens: Group.groupByHappensDate,
         heading: Group.groupByHeading,
         path: Group.groupByPath,
         priority: Group.groupByPriority,
@@ -102,6 +104,11 @@ export class Group {
 
     private static groupByDoneDate(task: Task): string[] {
         return [Group.stringFromDate(task.doneDate, 'done')];
+    }
+
+    private static groupByHappensDate(task: Task): string[] {
+        const earliestDateIfAny = new HappensDateField().earliestDate(task);
+        return [Group.stringFromDate(earliestDateIfAny, 'happens')];
     }
 
     private static stringFromDate(

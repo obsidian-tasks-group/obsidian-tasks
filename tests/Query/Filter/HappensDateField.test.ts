@@ -49,3 +49,56 @@ describe('happens date', () => {
         testFilter(filter, new TaskBuilder().doneDate('2022-04-15'), true);
     });
 });
+
+describe('accessing earliest happens date', () => {
+    it('should return null if no dates set', () => {
+        expect(
+            new HappensDateField().earliestDate(new TaskBuilder().build()),
+        ).toBeNull();
+    });
+
+    function checkEarliestHappensDate(
+        taskBuilder: TaskBuilder,
+        expectedEarliestHappensDate: string,
+    ) {
+        const earliest = new HappensDateField().earliestDate(
+            taskBuilder.build(),
+        );
+        expect({
+            earliest: earliest?.format('YYYY-MM-DD'),
+        }).toMatchObject({
+            earliest: expectedEarliestHappensDate,
+        });
+    }
+
+    it('should return due if only date set', () => {
+        checkEarliestHappensDate(
+            new TaskBuilder().dueDate('1989-12-17'),
+            '1989-12-17',
+        );
+    });
+
+    it('should return start if only date set', () => {
+        checkEarliestHappensDate(
+            new TaskBuilder().startDate('1989-12-17'),
+            '1989-12-17',
+        );
+    });
+
+    it('should return scheduled if only date set', () => {
+        checkEarliestHappensDate(
+            new TaskBuilder().scheduledDate('1989-12-17'),
+            '1989-12-17',
+        );
+    });
+
+    it('should return earliest if all dates set', () => {
+        checkEarliestHappensDate(
+            new TaskBuilder()
+                .dueDate('1989-12-17')
+                .startDate('1999-12-17')
+                .scheduledDate('2009-12-17'),
+            '1989-12-17',
+        );
+    });
+});

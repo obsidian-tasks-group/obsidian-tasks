@@ -44,11 +44,8 @@ File contents:
 1. `backlink` (the text that would be shown in the task's backlink, combining the task's file name and heading, but with no link added)
 1. `heading` (the heading preceding the task, or `(No heading)` if there are no headings in the file)
 
-Task properties:
+Task date properties:
 
-1. `status` (Done or Todo, which is capitalized for visibility in the headings)
-    * Note that the Done group is displayed before the Todo group,
-      which differs from the Sorting ordering of this property.
 1. `start`
    * The start date of the task, including the week-day, or `No start date`.
 1. `scheduled`
@@ -57,6 +54,14 @@ Task properties:
     * The due date of the task, including the week-day, or `No due date`.
 1. `done`
     * The done date of the task, including the week-day, or `No done date`.
+1. `happens`
+    * The earliest of start date, scheduled date, and due date, including the week-day, or `No happens date` if none of those are set.
+
+Task properties - other:
+
+1. `status` (Done or Todo, which is capitalized for visibility in the headings)
+    * Note that the Done group is displayed before the Todo group,
+      which differs from the Sorting ordering of this property.
 1. `priority`
     * The priority of the task, namely one of:
         * `Priority 1: High`
