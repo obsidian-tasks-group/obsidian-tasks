@@ -57,6 +57,12 @@ Task properties:
     * The due date of the task, including the week-day, or `No due date`.
 1. `done`
     * The done date of the task, including the week-day, or `No done date`.
+1. `priority`
+    * The priority of the task, namely one of:
+        * `Priority 1: High`
+        * `Priority 2: Medium`
+        * `Priority 3: None`
+        * `Priority 4: Low`
 1. `recurring`
     * Whether the task is recurring: either `Recurring` or `Not Recurring`.
 1. `recurrence`

@@ -166,6 +166,7 @@ describe('Query parsing', () => {
             'group by folder',
             'group by heading',
             'group by path',
+            'group by priority',
             'group by recurrence',
             'group by recurring',
             'group by scheduled',
