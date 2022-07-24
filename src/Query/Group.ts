@@ -2,6 +2,7 @@ import type { Grouping, GroupingProperty } from '../Query';
 import type { Task } from '../Task';
 import { Priority } from '../Task';
 import { TaskGroups } from './TaskGroups';
+import { HappensDateField } from './Filter/HappensDateField';
 
 /**
  * A naming function, that takes a Task object and returns the corresponding group property name
@@ -42,11 +43,13 @@ export class Group {
         due: Group.groupByDueDate,
         filename: Group.groupByFileName,
         folder: Group.groupByFolder,
+        happens: Group.groupByHappensDate,
         heading: Group.groupByHeading,
         path: Group.groupByPath,
         priority: Group.groupByPriority,
         recurrence: Group.groupByRecurrence,
         recurring: Group.groupByRecurring,
+        root: Group.groupByRoot,
         scheduled: Group.groupByScheduledDate,
         start: Group.groupByStartDate,
         status: Group.groupByStatus,
@@ -104,6 +107,11 @@ export class Group {
         return [Group.stringFromDate(task.doneDate, 'done')];
     }
 
+    private static groupByHappensDate(task: Task): string[] {
+        const earliestDateIfAny = new HappensDateField().earliestDate(task);
+        return [Group.stringFromDate(earliestDateIfAny, 'happens')];
+    }
+
     private static stringFromDate(
         date: moment.Moment | null,
         field: string,
@@ -142,6 +150,15 @@ export class Group {
             return ['Unknown Location'];
         }
         return [filename];
+    }
+
+    private static groupByRoot(task: Task): string[] {
+        const path = task.path.replace(/\\/g, '/');
+        const separatorIndex = path.indexOf('/');
+        if (separatorIndex == -1) {
+            return ['/'];
+        }
+        return [path.substring(0, separatorIndex + 1)];
     }
 
     private static groupByBacklink(task: Task): string[] {

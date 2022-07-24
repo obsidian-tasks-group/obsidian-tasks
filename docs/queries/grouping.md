@@ -35,20 +35,20 @@ You can group by the following properties:
 File locations:
 
 1. `path` (the path to the file that contains the task, that is, the folder and the filename)
+1. `root` (the top-level folder of the file that contains the task, that is, the first directory in the path, which will be `/` for files in root of the vault)
 1. `folder` (the folder to the file that contains the task, which will be `/` for files in root of the vault)
 1. `filename` (the filename of the file that contains the task, without the `.md` extension)
     * Note that tasks from different notes with the same file name will be grouped together in the same group.
+
+> `root` grouping option was introduced in Tasks 1.11.0.
 
 File contents:
 
 1. `backlink` (the text that would be shown in the task's backlink, combining the task's file name and heading, but with no link added)
 1. `heading` (the heading preceding the task, or `(No heading)` if there are no headings in the file)
 
-Task properties:
+Task date properties:
 
-1. `status` (Done or Todo, which is capitalized for visibility in the headings)
-    * Note that the Done group is displayed before the Todo group,
-      which differs from the Sorting ordering of this property.
 1. `start`
    * The start date of the task, including the week-day, or `No start date`.
 1. `scheduled`
@@ -57,6 +57,16 @@ Task properties:
     * The due date of the task, including the week-day, or `No due date`.
 1. `done`
     * The done date of the task, including the week-day, or `No done date`.
+1. `happens`
+    * The earliest of start date, scheduled date, and due date, including the week-day, or `No happens date` if none of those are set.
+
+> `happens` grouping option was introduced in Tasks 1.11.0.
+
+Task properties - other:
+
+1. `status` (Done or Todo, which is capitalized for visibility in the headings)
+    * Note that the Done group is displayed before the Todo group,
+      which differs from the Sorting ordering of this property.
 1. `priority`
     * The priority of the task, namely one of:
         * `Priority 1: High`
@@ -76,7 +86,7 @@ Task properties:
 >
 > `tags` grouping option was introduced in Tasks 1.10.0.
 >
-> `recurring` and `recurrence` grouping options were introduced in Tasks 1.11.0.
+> `priority`, `recurring` and `recurrence` grouping options were introduced in Tasks 1.11.0.
 
 ### Multiple groups
 

@@ -21,12 +21,13 @@ This table summarizes the filters and other options available inside a `tasks` b
 | `starts (before, after, on) <date>`<br>`has start date`<br>`no  start date`            | `sort by start`                             | `group by start`      | `hide start date`      |
 | `scheduled (before, after, on) <date>`<br>`has scheduled date`<br>`no  scheduled date` | `sort by scheduled`                         | `group by scheduled`  | `hide scheduled date`  |
 | `due (before, after, on) <date>`<br>`has due date`<br>`no  due date`                   | `sort by due`                               | `group by due`        | `hide due date`        |
-| `happens (before, after, on) <date>`<br>`has happens date`<br>`no  happens date`       |                                             |                       |                        |
+| `happens (before, after, on) <date>`<br>`has happens date`<br>`no  happens date`       |                                             | `group by happens`    |                        |
 | `is recurring`<br>`is not recurring`                                                   |                                             | `group by recurring`  |                        |
 |                                                                                        |                                             | `group by recurrence` | `hide recurrence rule` |
 | `priority is (above, below)? (low, none, medium, high)`                                | `sort by priority`                          | `group by priority`   | `hide priority`        |
 |                                                                                        | `sort by urgency`                           |                       |                        |
 | `path (includes, does not include) <path>`                                             | `sort by path`                              | `group by path`       |                        |
+|                                                                                        |                                             | `group by root`       |                        |
 |                                                                                        |                                             | `group by folder`     |                        |
 |                                                                                        |                                             | `group by filename`   |                        |
 | `heading (includes, does not include) <string>`                                        |                                             | `group by heading`    |                        |
