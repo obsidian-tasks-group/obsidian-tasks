@@ -13,6 +13,7 @@ yarn-error.log
 
 # obsidian
 /data.json
+/.obsidian
 
 # osx
 .DS_Store

@@ -208,10 +208,8 @@ export class Cache {
             listItems = [];
         }
 
-        // Remove all tasks from this file from the cache before
-        // adding the ones that are currently in the file.
-        this.tasks = this.tasks.filter((task: Task) => {
-            return task.path !== file.path;
+        const oldTasks = this.tasks.filter((task: Task) => {
+            return task.path === file.path;
         });
 
         const fileContent = await this.vault.cachedRead(file);
@@ -221,6 +219,30 @@ export class Cache {
             fileCache,
             file,
         );
+
+        // If there are no changes in any of the tasks, there's
+        // nothing to do, so just return.
+        if (Task.tasksListsIdentical(oldTasks, newTasks)) {
+            // This code kept for now, to allow for debugging during development.
+            // It is too verbose to release to users.
+            // if (this.getState() == State.Warm) {
+            //     console.debug(`Tasks unchanged in ${file.path}`);
+            // }
+            return;
+        }
+
+        if (this.getState() == State.Warm) {
+            console.debug(
+                `At least one task, its line number or its heading has changed in ${file.path}: triggering a refresh of all active Tasks blocks in Live Preview and Reading mode views.`,
+            );
+        }
+
+        // Remove all tasks from this file from the cache before
+        // adding the ones that are currently in the file.
+        this.tasks = this.tasks.filter((task: Task) => {
+            return task.path !== file.path;
+        });
+
         this.tasks.push(...newTasks);
 
         // All updated, inform our subscribers.

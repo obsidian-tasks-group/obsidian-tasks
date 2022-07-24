@@ -5,6 +5,7 @@ import { LayoutOptions } from './LayoutOptions';
 import { Recurrence } from './Recurrence';
 import { getSettings } from './config/Settings';
 import { Urgency } from './Urgency';
+import { Sort } from './Sort';
 
 /**
  * Collection of status types supported by the plugin.
@@ -95,10 +96,10 @@ export class Task {
     // The following regex's end with `$` because they will be matched and
     // removed from the end until none are left.
     public static readonly priorityRegex = /([⏫🔼🔽])$/u;
-    public static readonly startDateRegex = /🛫 ?(\d{4}-\d{2}-\d{2})$/u;
-    public static readonly scheduledDateRegex = /[⏳⌛] ?(\d{4}-\d{2}-\d{2})$/u;
-    public static readonly dueDateRegex = /[📅📆🗓] ?(\d{4}-\d{2}-\d{2})$/u;
-    public static readonly doneDateRegex = /✅ ?(\d{4}-\d{2}-\d{2})$/u;
+    public static readonly startDateRegex = /🛫 *(\d{4}-\d{2}-\d{2})$/u;
+    public static readonly scheduledDateRegex = /[⏳⌛] *(\d{4}-\d{2}-\d{2})$/u;
+    public static readonly dueDateRegex = /[📅📆🗓] *(\d{4}-\d{2}-\d{2})$/u;
+    public static readonly doneDateRegex = /✅ *(\d{4}-\d{2}-\d{2})$/u;
     public static readonly recurrenceRegex = /🔁 ?([a-zA-Z0-9, !]+)$/iu;
 
     // Regex to match all hash tags, basically hash followed by anything but the characters in the negation.
@@ -375,7 +376,7 @@ export class Task {
                 .map((tag) => tag.trim());
         }
 
-        const task = new Task({
+        return new Task({
             status,
             description,
             path,
@@ -393,8 +394,6 @@ export class Task {
             blockLink,
             tags,
         });
-
-        return task;
     }
 
     public async toLi({
@@ -684,6 +683,103 @@ export class Task {
         return linkText;
     }
 
+    /**
+     * Compare two lists of Task objects, and report whether their
+     * tasks are identical in the same order.
+     *
+     * This can be useful for optimising code if it is guaranteed that
+     * there are no possible differences in the tasks in a file
+     * after an edit, for example.
+     *
+     * If any field is different in any task, it will return false.
+     *
+     * @param oldTasks
+     * @param newTasks
+     */
+    static tasksListsIdentical(oldTasks: Task[], newTasks: Task[]): boolean {
+        if (oldTasks.length !== newTasks.length) {
+            return false;
+        }
+        return oldTasks.every((oldTask, index) =>
+            oldTask.identicalTo(newTasks[index]),
+        );
+    }
+
+    /**
+     * Compare all the fields in another Task, to detect any differences from this one.
+     *
+     * If any field is different in any way, it will return false.
+     *
+     * This is used in some optimisations, to avoid work if an edit to file
+     * does not change any tasks, so it is vital that its definition
+     * of identical is very strict.
+     *
+     * @param other
+     */
+    public identicalTo(other: Task) {
+        // Based on ideas from koala. AquaCat and javalent in Discord:
+        // https://discord.com/channels/686053708261228577/840286264964022302/996735200388186182
+        // and later.
+        //
+        // Note: sectionStart changes every time a line is added or deleted before
+        //       any of the tasks in a file. This does mean that redrawing of tasks blocks
+        //       happens more often than is ideal.
+        let args: Array<keyof Task> = [
+            'status',
+            'description',
+            'path',
+            'indentation',
+            'sectionStart',
+            'sectionIndex',
+            'originalStatusCharacter',
+            'precedingHeader',
+            'priority',
+            'blockLink',
+        ];
+        for (const el of args) {
+            if (this[el] !== other[el]) return false;
+        }
+
+        // Compare tags
+        if (this.tags.length !== other.tags.length) {
+            return false;
+        }
+        // Tags are the same only if the values are in the same order
+        if (
+            !this.tags.every(function (element, index) {
+                return element === other.tags[index];
+            })
+        ) {
+            return false;
+        }
+
+        // Compare Date fields
+        args = ['startDate', 'scheduledDate', 'dueDate', 'doneDate'];
+        for (const el of args) {
+            const date1 = this[el] as Moment | null;
+            const date2 = other[el] as Moment | null;
+            if (Sort.compareByDate(date1, date2) !== 0) {
+                return false;
+            }
+        }
+
+        const recurrence1 = this.recurrence;
+        const recurrence2 = other.recurrence;
+        if (recurrence1 === null && recurrence2 !== null) {
+            return false;
+        } else if (recurrence1 !== null && recurrence2 === null) {
+            return false;
+        } else if (
+            recurrence1 &&
+            recurrence2 &&
+            !recurrence1.identicalTo(recurrence2)
+        ) {
+            return false;
+        }
+
+        return true;
+    }
+
     private addTooltip({
         element,
         isFilenameUnique,
@@ -764,5 +860,39 @@ export class Task {
         return `${signifier} ${date.format(Task.dateFormat)} (${date.from(
             window.moment().startOf('day'),
         )})`;
+    }
+
+    /*
+     * Escape a string so it can be used as part of a RegExp literally.
+     * Taken from https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#escaping
+     */
+    private escapeRegExp(s: string) {
+        return s.replace(/([.*+?^=!:${}()|[]\/\\])/g, '\\$1');
+    }
+
+    /*
+     * Search for the global filter for the purpose of removing it from the description, but do so only
+     * if it is a separate word (preceding the beginning of line or a space and followed by the end of line
+     * or a space), because we don't want to cut-off nested tags like #task/subtag.
+     * If the global filter exists as part of a nested tag, we keep it untouched.
+     */
+    public getDescriptionWithoutGlobalFilter() {
+        const { globalFilter } = getSettings();
+        let description = this.description;
+        // This matches the global filter (after escaping it) only when it's a complete word
+        const globalFilterRegex = RegExp(
+            '(^|\\s)' + this.escapeRegExp(globalFilter) + '($|\\s)',
+            'ug',
+        );
+        if (
+            globalFilter.length > 0 &&
+            this.description.search(globalFilterRegex) > -1
+        ) {
+            description = description
+                .replace(globalFilterRegex, '$1$2')
+                .replace('  ', ' ')
+                .trim();
+        }
+        return description;
     }
 }

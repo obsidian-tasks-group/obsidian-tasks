@@ -1,6 +1,7 @@
 import type { Grouping } from '../Query';
 import type { Task } from '../Task';
 import { Group } from './Group';
+import { GroupingTreeNode } from './GroupingTreeNode';
 
 /**
  * Storage used for the initial grouping together of tasks.
@@ -10,6 +11,31 @@ import { Group } from './Group';
  * and the values would be all the matching Tasks from that file.
  */
 export class IntermediateTaskGroupsStorage extends Map<string[], Task[]> {}
+
+/*
+ * A tree of tasks where every level in the tree corresponds to a grouping property.
+ *
+ * For example, if we have:
+ * # Heading 1
+ * - [ ] Task 1
+ * # Heading 2
+ * - [ ] Task 2
+ * - [X] Task 3
+ *
+ * And we group by heading then status, the tree will look like:
+ *
+ *                   Root [T1, T2, T3]
+ *                     /              \
+ *              Heading 1 [T1]     Heading [T2, T3]
+ *                   |               /        \
+ *               TODO [T1]     TODO [T2]    Done [T3]
+ *
+ * The nice property of this tree is that every path from the root to a leaf, maps
+ * to how the tasks will be rendered.
+ *
+ * NOTE: The same task can appear in multiple leaf nodes, if it matches multiple paths.
+ */
+class TaskGroupingTreeNode extends GroupingTreeNode<Task> {}
 
 /**
  * IntermediateTaskGroups does the initial grouping together of tasks,
@@ -27,53 +53,53 @@ export class IntermediateTaskGroups {
 
     /**
      * Group a list of tasks, according to one or more task properties
-     * @param grouping 0 or more Grouping values, one per 'group by' line
+     * @param groupings 0 or more Grouping values, one per 'group by' line
      * @param tasks The tasks that match the task block's Query
      */
-    constructor(grouping: Grouping[], tasks: Task[]) {
-        if (grouping.length === 0 || tasks.length === 0) {
-            // There are no groups or no tasks: treat this as a single group,
-            // with an empty group name.
-            this.groups.set([], tasks);
-        } else {
-            const groupers = Group.getGroupersForAllQueryGroupings(grouping);
-
-            for (const task of tasks) {
-                const groupNames = Group.getGroupNamesForTask(groupers, task);
-                this.addTask(groupNames, task);
-            }
-            this.groups = this.getSortedGroups();
-        }
-    }
-
-    private addTask(groupNames: string[], task: Task) {
-        const groupForNames = this.getOrCreateGroupForGroupNames(groupNames);
-        groupForNames?.push(task);
+    constructor(groupings: Grouping[], tasks: Task[]) {
+        const tree = this.buildGroupingTree(groupings, tasks);
+        this.groups = tree.generateAllPaths();
+        this.groups = this.getSortedGroups();
     }
 
     /**
-     * If a task has been seen before with this exact combination of group names,
-     * return the container that the previous task(s) were added to.
-     *
-     * Otherwise, create and return a new container.
-     * @param newGroupNames
-     * @private
+     * Returns a grouping tree that groups the passed @tasks by the passed @groupings.
      */
-    private getOrCreateGroupForGroupNames(newGroupNames: string[]) {
-        for (const [groupNames, taskGroup] of this.groups) {
-            // Is there a better way to check if the contents of two string arrays
-            // are identical?
-            // Use of JSON feels inefficient, and is O(n-squared) on the number
-            // of unique group-name combinations, so may scale badly if
-            // very large numbers of tasks are displayed.
-            // Related: https://stackoverflow.com/questions/7837456/how-to-compare-arrays-in-javascript
-            if (JSON.stringify(groupNames) === JSON.stringify(newGroupNames)) {
-                return taskGroup;
+    private buildGroupingTree(
+        groupings: Grouping[],
+        tasks: Task[],
+    ): TaskGroupingTreeNode {
+        // The tree is build layer by layer, starting from the root.
+        // At every level, we iterate on the nodes of that level to generate
+        // the next one using the next grouping.
+
+        // The root of the tree contains all the tasks.
+        const root = new TaskGroupingTreeNode(tasks);
+
+        let currentTreeLevel = [root];
+        for (const grouping of groupings) {
+            const nextTreeLevel = [];
+            for (const currentTreeNode of currentTreeLevel) {
+                for (const task of currentTreeNode.values) {
+                    const groupNames = Group.getGroupNamesForTask(
+                        grouping.property,
+                        task,
+                    );
+                    for (const groupName of groupNames) {
+                        let child = currentTreeNode.children.get(groupName);
+                        if (child === undefined) {
+                            child = new TaskGroupingTreeNode([]);
+                            currentTreeNode.children.set(groupName, child);
+                            nextTreeLevel.push(child);
+                        }
+                        child.values.push(task);
+                    }
+                }
             }
+            currentTreeLevel = nextTreeLevel;
         }
-        const taskGroup: Task[] = [];
-        this.groups.set(newGroupNames, taskGroup);
-        return taskGroup;
+
+        return root;
     }
 
     private getSortedGroups() {

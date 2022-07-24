@@ -42,7 +42,7 @@
     let parsedDueDate: string = '';
     let parsedRecurrence: string = '';
     let parsedDone: string = '';
-    let removedGlobalFilter: boolean = false;
+    let addGlobalFilterOnSave: boolean = false;
 
     // 'weekend' abbreviation ommitted due to lack of space.
     let datePlaceholder =
@@ -107,28 +107,15 @@
         parsedDone = parseDate('done', editableTask.doneDate);
     }
 
-    // Escape a string so it can be used as part of a RegExp literally.
-    // Taken from https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#escaping
-    function escapeRegExp(s: string) {
-        return s.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1");
-    }
 
     onMount(() => {
         const { globalFilter } = getSettings();
-        let description = task.description;
-        // Search for the global filter for the purpose of removing it from the description, but do so only
-        // if it is a separate word (preceding the beginning of line or a space and followed by the end of line
-        // or a space), because we don't want to cut-off nested tags like #task/subtag.
-        // If the global filter exists as part of a nested tag, we keep it untouched.
-        const globalFilterRegex = RegExp('(^|\\s)' + escapeRegExp(globalFilter) + '($|\\s)', 'ug');
-        if (globalFilter.length > 0 && task.description.search(globalFilterRegex) > -1) {
-            description = description
-                .replace(globalFilterRegex, '$1$2')
-                .replace('  ', ' ')
-                .trim();
-            removedGlobalFilter = true;
-        }
-
+        const description = task.getDescriptionWithoutGlobalFilter();
+        // If we're displaying to the user the description without the global filter (i.e. it was removed in the method
+        // above), or if the description did not include a global filter in the first place, we'll add the global filter
+        // when saving the task
+        if (description != task.description || description.indexOf(globalFilter) == -1)
+            addGlobalFilterOnSave = true;
         let priority: 'none' | 'low' | 'medium' | 'high' = 'none';
         if (task.priority === Priority.Low) {
             priority = 'low';
@@ -160,7 +147,7 @@
     const _onSubmit = () => {
         const { globalFilter } = getSettings();
         let description = editableTask.description.trim();
-        if (removedGlobalFilter) {
+        if (addGlobalFilterOnSave) {
             description = globalFilter + ' ' + description;
         }
 

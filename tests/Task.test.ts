@@ -5,6 +5,8 @@ import moment from 'moment';
 import { Priority, Status, Task } from '../src/Task';
 import { getSettings, updateSettings } from '../src/config/Settings';
 import { fromLine } from './TestHelpers';
+import { TaskBuilder } from './TestingTools/TaskBuilder';
+import { RecurrenceBuilder } from './TestingTools/RecurrenceBuilder';
 
 jest.mock('obsidian');
 window.moment = moment;
@@ -156,6 +158,42 @@ describe('parsing', () => {
             '#tag10',
         ]);
     });
+
+    it('supports parsing of emojis with multiple spaces', () => {
+        // Arrange
+        const lines = [
+            '- [ ] Wobble ✅2022-07-01 📅2022-07-02 ⏳2022-07-03 🛫2022-07-04 🔁every day',
+            '- [ ] Wobble ✅ 2022-07-01 📅 2022-07-02 ⏳ 2022-07-03 🛫 2022-07-04 🔁 every day',
+            '- [ ] Wobble ✅  2022-07-01 📅  2022-07-02 ⏳  2022-07-03 🛫  2022-07-04 🔁  every day',
+        ];
+        // Act
+        for (const line of lines) {
+            const task = fromLine({
+                line,
+            });
+
+            // Assert
+            expect({
+                _input: line, // Line is included, so it is shown in any failure output
+                description: task.description,
+                done: task.doneDate?.format('YYYY-MM-DD'),
+                due: task.dueDate?.format('YYYY-MM-DD'),
+                scheduled: task.scheduledDate?.format('YYYY-MM-DD'),
+                start: task.startDate?.format('YYYY-MM-DD'),
+                priority: task.priority,
+                recurrence: task.recurrence?.toText(),
+            }).toMatchObject({
+                _input: line,
+                description: 'Wobble',
+                done: '2022-07-01',
+                due: '2022-07-02',
+                scheduled: '2022-07-03',
+                start: '2022-07-04',
+                priority: '3',
+                recurrence: 'every day',
+            });
+        }
+    });
 });
 
 type TagParsingExpectations = {
@@ -280,7 +318,7 @@ describe('parsing tags', () => {
             globalFilter: '',
         },
     ])(
-        'should parse $markdownTask and extract $extractedTags',
+        'should parse "$markdownTask" and extract "$extractedTags"',
         ({
             markdownTask,
             expectedDescription,
@@ -652,4 +690,300 @@ describe('toggle done', () => {
             nextStart: undefined,
         });
     });
+});
+
+declare global {
+    namespace jest {
+        interface Matchers<R> {
+            toBeIdenticalTo(builder2: TaskBuilder): R;
+        }
+
+        interface Expect {
+            toBeIdenticalTo(builder2: TaskBuilder): any;
+        }
+
+        interface InverseAsymmetricMatchers {
+            toBeIdenticalTo(builder2: TaskBuilder): any;
+        }
+    }
+}
+
+export function toBeIdenticalTo(builder1: TaskBuilder, builder2: TaskBuilder) {
+    const task1 = builder1.build();
+    const task2 = builder2.build();
+    const pass = task1.identicalTo(task2);
+
+    if (pass) {
+        return {
+            message: () =>
+                'Tasks treated as identical, but should be different',
+            pass: true,
+        };
+    }
+    return {
+        message: () => {
+            return 'Tasks should be identical, but are treated as different';
+        },
+        pass: false,
+    };
+}
+
+expect.extend({
+    toBeIdenticalTo,
+});
+
+describe('identicalTo', () => {
+    it('should check status', () => {
+        const lhs = new TaskBuilder().status(Status.Todo);
+        expect(lhs).toBeIdenticalTo(new TaskBuilder().status(Status.Todo));
+        expect(lhs).not.toBeIdenticalTo(new TaskBuilder().status(Status.Done));
+    });
+
+    it('should check description', () => {
+        const lhs = new TaskBuilder().description('same long initial text');
+        expect(lhs).toBeIdenticalTo(
+            new TaskBuilder().description('same long initial text'),
+        );
+        expect(lhs).not.toBeIdenticalTo(
+            new TaskBuilder().description('different text'),
+        );
+    });
+
+    it('should check path', () => {
+        const lhs = new TaskBuilder().path('same test file.md');
+        expect(lhs).toBeIdenticalTo(
+            new TaskBuilder().path('same test file.md'),
+        );
+        // Check it is case-sensitive
+        expect(lhs).not.toBeIdenticalTo(
+            new TaskBuilder().path('Same Test File.md'),
+        );
+        expect(lhs).not.toBeIdenticalTo(
+            new TaskBuilder().path('different text.md'),
+        );
+    });
+
+    it('should check indentation', () => {
+        const lhs = new TaskBuilder().indentation('');
+        expect(lhs).toBeIdenticalTo(new TaskBuilder().indentation(''));
+        expect(lhs).not.toBeIdenticalTo(new TaskBuilder().indentation('    '));
+    });
+
+    it('should check sectionStart', () => {
+        const lhs = new TaskBuilder().sectionStart(0);
+        expect(lhs).toBeIdenticalTo(new TaskBuilder().sectionStart(0));
+        expect(lhs).not.toBeIdenticalTo(new TaskBuilder().sectionStart(2));
+    });
+
+    it('should check sectionIndex', () => {
+        const lhs = new TaskBuilder().sectionIndex(0);
+        expect(lhs).toBeIdenticalTo(new TaskBuilder().sectionIndex(0));
+        expect(lhs).not.toBeIdenticalTo(new TaskBuilder().sectionIndex(2));
+    });
+
+    it('should check originalStatusCharacter', () => {
+        const lhs = new TaskBuilder().originalStatusCharacter(' ');
+        expect(lhs).toBeIdenticalTo(
+            new TaskBuilder().originalStatusCharacter(' '),
+        );
+        expect(lhs).not.toBeIdenticalTo(
+            new TaskBuilder().originalStatusCharacter('x'),
+        );
+    });
+
+    it('should check precedingHeader', () => {
+        const lhs = new TaskBuilder().precedingHeader('Heading 1');
+        expect(lhs).toBeIdenticalTo(
+            new TaskBuilder().precedingHeader('Heading 1'),
+        );
+        expect(lhs).not.toBeIdenticalTo(
+            new TaskBuilder().precedingHeader('Different Heading'),
+        );
+        expect(lhs).not.toBeIdenticalTo(
+            new TaskBuilder().precedingHeader(null),
+        );
+    });
+
+    it('should check priority', () => {
+        const lhs = new TaskBuilder().priority(Priority.Medium);
+        expect(lhs).toBeIdenticalTo(
+            new TaskBuilder().priority(Priority.Medium),
+        );
+        expect(lhs).not.toBeIdenticalTo(
+            new TaskBuilder().priority(Priority.None),
+        );
+    });
+
+    it('should check startDate', () => {
+        const lhs = new TaskBuilder().startDate('2012-12-27');
+        expect(lhs).toBeIdenticalTo(new TaskBuilder().startDate('2012-12-27'));
+        expect(lhs).not.toBeIdenticalTo(new TaskBuilder().startDate(null));
+        expect(lhs).not.toBeIdenticalTo(
+            new TaskBuilder().startDate('2012-12-26'),
+        );
+    });
+
+    it('should check scheduledDate', () => {
+        const lhs = new TaskBuilder().scheduledDate('2012-12-27');
+        expect(lhs).toBeIdenticalTo(
+            new TaskBuilder().scheduledDate('2012-12-27'),
+        );
+        expect(lhs).not.toBeIdenticalTo(new TaskBuilder().scheduledDate(null));
+        expect(lhs).not.toBeIdenticalTo(
+            new TaskBuilder().scheduledDate('2012-12-26'),
+        );
+    });
+
+    it('should check dueDate', () => {
+        const lhs = new TaskBuilder().dueDate('2012-12-27');
+        expect(lhs).toBeIdenticalTo(new TaskBuilder().dueDate('2012-12-27'));
+        expect(lhs).not.toBeIdenticalTo(new TaskBuilder().dueDate(null));
+        expect(lhs).not.toBeIdenticalTo(
+            new TaskBuilder().dueDate('2012-12-26'),
+        );
+    });
+
+    it('should check doneDate', () => {
+        const lhs = new TaskBuilder().doneDate('2012-12-27');
+        expect(lhs).toBeIdenticalTo(new TaskBuilder().doneDate('2012-12-27'));
+        expect(lhs).not.toBeIdenticalTo(new TaskBuilder().doneDate(null));
+        expect(lhs).not.toBeIdenticalTo(
+            new TaskBuilder().doneDate('2012-12-26'),
+        );
+    });
+
+    describe('should check recurrence', () => {
+        const lhs = new TaskBuilder().recurrence(null);
+        expect(lhs).toBeIdenticalTo(new TaskBuilder().recurrence(null));
+
+        const weekly = new RecurrenceBuilder().rule('every week').build();
+        const daily = new RecurrenceBuilder().rule('every day').build();
+        expect(new TaskBuilder().recurrence(weekly)).not.toBeIdenticalTo(
+            new TaskBuilder().recurrence(daily),
+        );
+        // Note: There are more thorough tests of Recurrence.identicalTo() in Recurrence.test.ts.
+    });
+
+    it('should check blockLink', () => {
+        const lhs = new TaskBuilder().blockLink('');
+        expect(lhs).toBeIdenticalTo(new TaskBuilder().blockLink(''));
+        expect(lhs).not.toBeIdenticalTo(new TaskBuilder().blockLink('dcf64c'));
+    });
+
+    it('should check tags', () => {
+        const lhs = new TaskBuilder().tags([]);
+        expect(lhs).toBeIdenticalTo(new TaskBuilder().tags([]));
+        expect(lhs).not.toBeIdenticalTo(new TaskBuilder().tags(['#stuff']));
+    });
+});
+
+describe('checking if task lists are identical', () => {
+    it('should treat empty lists as identical', () => {
+        const list1: Task[] = [];
+        const list2: Task[] = [];
+        expect(Task.tasksListsIdentical(list1, list2)).toBe(true);
+    });
+
+    it('should treat different sized lists as different', () => {
+        const list1: Task[] = [];
+        const list2: Task[] = [new TaskBuilder().build()];
+        expect(Task.tasksListsIdentical(list1, list2)).toBe(false);
+    });
+
+    it('should detect matching tasks as same', () => {
+        const list1: Task[] = [new TaskBuilder().description('1').build()];
+        const list2: Task[] = [new TaskBuilder().description('1').build()];
+        expect(Task.tasksListsIdentical(list1, list2)).toBe(true);
+    });
+
+    it('should detect non-matching tasks as different', () => {
+        const list1: Task[] = [new TaskBuilder().description('1').build()];
+        const list2: Task[] = [new TaskBuilder().description('2').build()];
+        expect(Task.tasksListsIdentical(list1, list2)).toBe(false);
+    });
+});
+
+describe('check removal of the global filter', () => {
+    type GlobalFilterRemovalExpectation = {
+        globalFilter: string;
+        markdownTask: string;
+        expectedDescription: string;
+    };
+
+    test.each<GlobalFilterRemovalExpectation>([
+        {
+            globalFilter: '#task',
+            markdownTask: '- [ ] #task this is a very simple task',
+            expectedDescription: 'this is a very simple task',
+        },
+        {
+            globalFilter: '',
+            markdownTask: '- [ ] #task this is a very simple task',
+            expectedDescription: '#task this is a very simple task',
+        },
+        {
+            globalFilter: '🞋',
+            markdownTask: '- [ ] task with emoji 🞋 global filter',
+            expectedDescription: 'task with emoji global filter',
+        },
+        {
+            globalFilter: '#t',
+            markdownTask: '- [ ] task with #t global filter in the middle',
+            expectedDescription: 'task with global filter in the middle',
+        },
+        {
+            globalFilter: '#t',
+            markdownTask: '- [ ] task with global filter in the end #t',
+            expectedDescription: 'task with global filter in the end',
+        },
+        {
+            globalFilter: '#t',
+            markdownTask:
+                '- [ ] task with global filter in the end and some spaces  #t  ',
+            expectedDescription:
+                'task with global filter in the end and some spaces',
+        },
+        {
+            globalFilter: '#complex/global/filter',
+            markdownTask:
+                '- [ ] task with #complex/global/filter in the middle',
+            expectedDescription: 'task with in the middle',
+        },
+        {
+            globalFilter: '#task',
+            markdownTask:
+                '- [ ] task with an extension of the global filter #task/with/extension',
+            // This is not the behavior we eventually want, but this is the existing situation
+            expectedDescription:
+                'task with an extension of the global filter #task/with/extension',
+        },
+        {
+            globalFilter: '#t',
+            markdownTask: '- [ ] task with #t multiple global filters #t',
+            expectedDescription: 'task with multiple global filters',
+        },
+    ])(
+        'should parse "$markdownTask" and extract "$expectedDescription"',
+        ({ globalFilter, markdownTask, expectedDescription }) => {
+            // Arrange
+            const originalSettings = getSettings();
+            if (globalFilter != '') {
+                updateSettings({ globalFilter: globalFilter });
+            }
+
+            // Act
+            const task = constructTaskFromLine(markdownTask);
+
+            // Assert
+            expect(task).not.toBeNull();
+            expect(task!.getDescriptionWithoutGlobalFilter()).toEqual(
+                expectedDescription,
+            );
+
+            // Cleanup
+            if (globalFilter != '') {
+                updateSettings(originalSettings);
+            }
+        },
+    );
 });
