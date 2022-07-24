@@ -42,6 +42,7 @@
     let parsedDueDate: string = '';
     let parsedRecurrence: string = '';
     let parsedDone: string = '';
+    let addGlobalFilterOnSave: boolean = false;
 
     // 'weekend' abbreviation ommitted due to lack of space.
     let datePlaceholder =
@@ -106,8 +107,15 @@
         parsedDone = parseDate('done', editableTask.doneDate);
     }
 
+
     onMount(() => {
+        const { globalFilter } = getSettings();
         const description = task.getDescriptionWithoutGlobalFilter();
+        // If we're displaying to the user the description without the global filter (i.e. it was removed in the method
+        // above), or if the description did not include a global filter in the first place, we'll add the global filter
+        // when saving the task
+        if (description != task.description || description.indexOf(globalFilter) == -1)
+            addGlobalFilterOnSave = true;
         let priority: 'none' | 'low' | 'medium' | 'high' = 'none';
         if (task.priority === Priority.Low) {
             priority = 'low';
@@ -139,7 +147,7 @@
     const _onSubmit = () => {
         const { globalFilter } = getSettings();
         let description = editableTask.description.trim();
-        if (!description.includes(globalFilter)) {
+        if (addGlobalFilterOnSave) {
             description = globalFilter + ' ' + description;
         }
 
