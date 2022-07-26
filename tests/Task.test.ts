@@ -962,6 +962,50 @@ describe('check removal of the global filter', () => {
             markdownTask: '- [ ] task with #t multiple global filters #t',
             expectedDescription: 'task with multiple global filters',
         },
+        {
+            globalFilter: '#t',
+            markdownTask: '- [ ] #t', // confirm behaviour when the description is empty
+            expectedDescription: '',
+        },
+
+        // Thorough use of global tag in all locations
+        {
+            globalFilter: '#t',
+            markdownTask: '- [ ] #t 1 #t 2 #t', // tag removed at beginning, middle and end
+            expectedDescription: '1 2',
+        },
+        {
+            globalFilter: '#t',
+            markdownTask: '- [ ] #tx 1 x#t #tx 2 x#t', // tag not removed if non-empty non-tag characters before or after it
+            expectedDescription: '#tx 1 x#t #tx 2 x#t',
+        },
+        {
+            globalFilter: '#t',
+            // tag not removed if non-empty characters before or after it.
+            // Include at least one occurrence of tag, so we don't pass by luck.
+            markdownTask: '- [ ] #t/x 1 x#t #t/x 2 #t #t/x',
+            expectedDescription: '#t/x 1 x#t #t/x 2 #t/x',
+        },
+
+        // Test with special character that should be escaped
+        {
+            // THIS CURRENTLY FAILS
+            // Expected: "1 2"
+            // Received: "* 1 * 2 *"
+            globalFilter: '*',
+            markdownTask: '- [ ] * 1 * 2 *', // tag removed at beginning, middle and end
+            expectedDescription: '1 2',
+        },
+        {
+            // THIS CURRENTLY FAILS
+            // Expected: "*x 1 x* *x 2 x*"
+            // Received: "*x 1 x* *x 2 * x*"
+            globalFilter: '*',
+            // tag not removed if non-empty characters before or after it.
+            // Include at least one occurrence of tag, so we don't pass by luck.
+            markdownTask: '- [ ] *x 1 x* *x 2 * x*',
+            expectedDescription: '*x 1 x* *x 2 x*',
+        },
     ])(
         'should parse "$markdownTask" and extract "$expectedDescription"',
         ({ globalFilter, markdownTask, expectedDescription }) => {
