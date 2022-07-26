@@ -967,45 +967,6 @@ describe('check removal of the global filter', () => {
             markdownTask: '- [ ] #t', // confirm behaviour when the description is empty
             expectedDescription: '',
         },
-
-        // Thorough use of global tag in all locations
-        {
-            globalFilter: '#t',
-            markdownTask: '- [ ] #t 1 #t 2 #t', // tag removed at beginning, middle and end
-            expectedDescription: '1 2',
-        },
-        {
-            globalFilter: '#t',
-            markdownTask: '- [ ] #tx 1 x#t #tx 2 x#t', // tag not removed if non-empty non-tag characters before or after it
-            expectedDescription: '#tx 1 x#t #tx 2 x#t',
-        },
-        {
-            globalFilter: '#t',
-            // tag not removed if non-empty characters before or after it.
-            // Include at least one occurrence of tag, so we don't pass by luck.
-            markdownTask: '- [ ] #t/x 1 x#t #t/x 2 #t #t/x',
-            expectedDescription: '#t/x 1 x#t #t/x 2 #t/x',
-        },
-
-        // Test with special character that should be escaped
-        {
-            // THIS CURRENTLY FAILS
-            // Expected: "1 2"
-            // Received: "* 1 * 2 *"
-            globalFilter: '*',
-            markdownTask: '- [ ] * 1 * 2 *', // tag removed at beginning, middle and end
-            expectedDescription: '1 2',
-        },
-        {
-            // THIS CURRENTLY FAILS
-            // Expected: "*x 1 x* *x 2 x*"
-            // Received: "*x 1 x* *x 2 * x*"
-            globalFilter: '*',
-            // tag not removed if non-empty characters before or after it.
-            // Include at least one occurrence of tag, so we don't pass by luck.
-            markdownTask: '- [ ] *x 1 x* *x 2 * x*',
-            expectedDescription: '*x 1 x* *x 2 x*',
-        },
     ])(
         'should parse "$markdownTask" and extract "$expectedDescription"',
         ({ globalFilter, markdownTask, expectedDescription }) => {
@@ -1023,6 +984,65 @@ describe('check removal of the global filter', () => {
             expect(task!.getDescriptionWithoutGlobalFilter()).toEqual(
                 expectedDescription,
             );
+
+            // Cleanup
+            if (globalFilter != '') {
+                updateSettings(originalSettings);
+            }
+        },
+    );
+
+    function checkDescription(
+        markdownLine: string,
+        expectedDescription: string,
+    ) {
+        const task = constructTaskFromLine(markdownLine);
+
+        // Assert
+        console.log(markdownLine);
+        expect(task).not.toBeNull();
+        expect(task!.getDescriptionWithoutGlobalFilter()).toEqual(
+            expectedDescription,
+        );
+    }
+
+    test.each<GlobalFilterRemovalExpectation>([
+        {
+            globalFilter: '#t',
+            markdownTask: 'UNUSED',
+            expectedDescription: 'UNUSED',
+        },
+        {
+            globalFilter: '*',
+            markdownTask: 'UNUSED',
+            expectedDescription: 'UNUSED',
+        },
+    ])(
+        'should parse global filter "$globalFilter" edge cases correctly',
+        ({ globalFilter }) => {
+            // Arrange
+            const originalSettings = getSettings();
+            if (globalFilter != '') {
+                updateSettings({ globalFilter: globalFilter });
+            }
+
+            // Act
+
+            // global filter removed at beginning, middle and end
+            let markdownLine = `- [ ] ${globalFilter} 1 ${globalFilter} 2 ${globalFilter}`;
+            let expectedDescription = '1 2';
+            checkDescription(markdownLine, expectedDescription);
+
+            // global filter not removed if non-empty non-tag characters before or after it
+            markdownLine = `- [ ] ${globalFilter}x 1 x${globalFilter} ${globalFilter}x 2 x${globalFilter}`;
+            expectedDescription = `${globalFilter}x 1 x${globalFilter} ${globalFilter}x 2 x${globalFilter}`;
+            checkDescription(markdownLine, expectedDescription);
+
+            // global filter not removed if non-empty sub-tag characters after it.
+            // Include at least one occurrence of global filter, so we don't pass by luck.
+            markdownLine = `- [ ] ${globalFilter}/x 1 x${globalFilter} ${globalFilter}/x 2 ${globalFilter} ${globalFilter}/x`;
+            expectedDescription = `${globalFilter}/x 1 x${globalFilter} ${globalFilter}/x 2 ${globalFilter}/x`;
+            checkDescription(markdownLine, expectedDescription);
 
             // Cleanup
             if (globalFilter != '') {
