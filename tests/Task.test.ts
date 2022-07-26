@@ -1057,6 +1057,9 @@ describe('check removal of the global filter exhaustively', () => {
         {
             globalFilter: ']',
         },
+        {
+            globalFilter: '\\',
+        },
     ])(
         'should parse global filter "$globalFilter" edge cases correctly',
         ({ globalFilter }) => {
