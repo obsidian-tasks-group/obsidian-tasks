@@ -1030,7 +1030,12 @@ describe('check removal of the global filter exhaustively', () => {
         {
             globalFilter: '^',
         },
-        // = alone does not fail
+        {
+            // Failed attempt at creating a failing test for when = was not escaped.
+            // When I make Task.escapeRegExp() escape =, I get:
+            // Invalid regular expression: /(^|\s)hello\=world($|\s)/: Invalid escape
+            globalFilter: 'hello=world',
+        },
         // ! alone does not fail
         // : alone does not fail
         {

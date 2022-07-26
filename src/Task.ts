@@ -871,6 +871,8 @@ export class Task {
         Original line:
         return s.replace(/([.*+?^=!:${}()|[]\/\\])/g, '\\$1');
         */
+        // NOTE: = is not escaped, as doing so gives error:
+        //         Invalid regular expression: /(^|\s)hello\=world($|\s)/: Invalid escape
         return s.replace(/([.*+?^${}()|[\]/\\])/g, '\\$1');
     }
 
