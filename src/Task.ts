@@ -867,6 +867,10 @@ export class Task {
      * Taken from https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#escaping
      */
     private escapeRegExp(s: string) {
+        /*
+        Original line:
+        return s.replace(/([.*+?^=!:${}()|[]\/\\])/g, '\\$1');
+        */
         return s.replace(/([.*+?^${}()])/g, '\\$1');
     }
 
