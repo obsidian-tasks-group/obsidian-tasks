@@ -953,7 +953,6 @@ describe('check removal of the global filter', () => {
             globalFilter: '#task',
             markdownTask:
                 '- [ ] task with an extension of the global filter #task/with/extension',
-            // This is not the behavior we eventually want, but this is the existing situation
             expectedDescription:
                 'task with an extension of the global filter #task/with/extension',
         },
