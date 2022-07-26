@@ -1005,7 +1005,6 @@ describe('check removal of the global filter exhaustively', () => {
         const task = constructTaskFromLine(markdownLine);
 
         // Assert
-        console.log(markdownLine);
         expect(task).not.toBeNull();
         expect(task!.getDescriptionWithoutGlobalFilter()).toEqual(
             expectedDescription,
