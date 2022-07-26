@@ -991,6 +991,12 @@ describe('check removal of the global filter', () => {
             }
         },
     );
+});
+
+describe('check removal of the global filter exhaustively', () => {
+    type GlobalFilterRemoval = {
+        globalFilter: string;
+    };
 
     function checkDescription(
         markdownLine: string,
@@ -1006,16 +1012,12 @@ describe('check removal of the global filter', () => {
         );
     }
 
-    test.each<GlobalFilterRemovalExpectation>([
+    test.each<GlobalFilterRemoval>([
         {
             globalFilter: '#t',
-            markdownTask: 'UNUSED',
-            expectedDescription: 'UNUSED',
         },
         {
             globalFilter: '*',
-            markdownTask: 'UNUSED',
-            expectedDescription: 'UNUSED',
         },
     ])(
         'should parse global filter "$globalFilter" edge cases correctly',
