@@ -1017,6 +1017,9 @@ describe('check removal of the global filter exhaustively', () => {
             globalFilter: '#t',
         },
         {
+            globalFilter: '.',
+        },
+        {
             globalFilter: '*',
         },
     ])(
