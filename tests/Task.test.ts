@@ -1058,6 +1058,10 @@ describe('check removal of the global filter exhaustively', () => {
             globalFilter: ']',
         },
         {
+            // Failed attempt at creating a failing test for when / was not escaped
+            globalFilter: '///',
+        },
+        {
             globalFilter: '\\',
         },
     ])(
