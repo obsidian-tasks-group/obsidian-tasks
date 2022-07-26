@@ -1030,6 +1030,9 @@ describe('check removal of the global filter exhaustively', () => {
         {
             globalFilter: '^',
         },
+        // = alone does not fail
+        // ! alone does not fail
+        // : alone does not fail
         {
             globalFilter: '$',
         },
