@@ -54,7 +54,11 @@ export abstract class TextField extends Field {
             .includes(needle.toLocaleLowerCase());
     }
 
-    protected abstract filterRegexp(): RegExp | null;
+    protected filterRegexp(): RegExp {
+        return new RegExp(
+            `^${this.fieldName()} (includes|does not include) (.*)`,
+        );
+    }
 
     protected abstract fieldName(): string;
 

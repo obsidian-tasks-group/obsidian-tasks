@@ -5,12 +5,6 @@ import { TextField } from './TextField';
  *
  */
 export class HeadingField extends TextField {
-    protected filterRegexp(): RegExp {
-        return new RegExp(
-            `^${this.fieldName()} (includes|does not include) (.*)`,
-        );
-    }
-
     protected fieldName(): string {
         return 'heading';
     }
