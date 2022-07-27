@@ -117,9 +117,9 @@ describe('path', () => {
 
         // Assert
         expect(filter).toBeValid();
-        expect(filter).not.toMatchTaskWithPath('');
         expect(filter).toMatchTaskWithPath('/some/path/wibble.md');
         expect(filter).toMatchTaskWithPath('/some/path/wobble.md');
+        expect(filter).not.toMatchTaskWithPath('');
         expect(filter).not.toMatchTaskWithPath('/some/path/WobblE.md'); // confirm case-sensitive
         expect(filter).not.toMatchTaskWithPath('/other/path/file.md');
     });
