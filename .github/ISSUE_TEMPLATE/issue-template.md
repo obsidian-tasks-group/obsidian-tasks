@@ -25,6 +25,7 @@ If you want to report a bug, please follow the guide lines below to help me reso
 <!-- Which exact steps can I take to reproduce the issue? -->
 
 ## Context (Environment)
+
 * Obsidian version:
 * Tasks version:
 * [ ] I have tried it with all other plugins disabled and the error still occurs
