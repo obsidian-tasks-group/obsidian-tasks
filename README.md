@@ -16,7 +16,7 @@ For changes in each release, please check the releases page: <https://github.com
 
 ## Screenshots
 
-- _All screenshots assume the [global filter](#filtering-checklist-items) `#task` which is not set by default (see also [installation](#installation))._
+- _All screenshots assume the [global filter](https://obsidian-tasks-group.github.io/obsidian-tasks/getting-started/global-filter/) `#task` which is not set by default (see also [installation](https://obsidian-tasks-group.github.io/obsidian-tasks/installation/))._
 - _The theme is default Obsidian theme._
 
 ![ACME Tasks](https://github.com/obsidian-tasks-group/obsidian-tasks/raw/gh-pages/resources/screenshots/acme.png)
