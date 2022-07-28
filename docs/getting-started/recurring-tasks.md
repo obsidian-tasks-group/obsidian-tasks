@@ -135,7 +135,9 @@ Examples of possible recurrence rules (mix and match as desired; these should be
 - `🔁 every 3 weeks on Friday`
 - `🔁 every 2 months`
 - `🔁 every month on the 1st`
+- `🔁 every month on the last`
 - `🔁 every 6 months on the 2nd Wednesday`
 - `🔁 every January on the 15th`
+- `🔁 every February on the last`
 - `🔁 every April and December on the 1st and 24th` (meaning every _April 1st_ and _December 24th_)
 - `🔁 every year`
