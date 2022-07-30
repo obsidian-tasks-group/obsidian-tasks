@@ -72,13 +72,13 @@ const toggleLine = ({ line, path }: { line: string; path: string }): string => {
             // 1. a list item
             // 2. a simple text line
 
-            const listItemRegex = /^([\s\t]*)([-*])/;
+            const listItemRegex = /^([\s\t>]*)([-*])/;
             if (listItemRegex.test(line)) {
                 // Let's convert the list item to a checklist item.
                 toggledLine = line.replace(listItemRegex, '$1$2 [ ]');
             } else {
                 // Let's convert the line to a list item.
-                toggledLine = line.replace(/^([\s\t]*)/, '$1- ');
+                toggledLine = line.replace(/^([\s\t>]*)/, '$1- ');
             }
         }
     }
