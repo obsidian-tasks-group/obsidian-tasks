@@ -85,7 +85,7 @@ export class Task {
     public static readonly dateFormat = 'YYYY-MM-DD';
 
     // Main regex for parsing a line. It matches the following:
-    // - Indentation
+    // - Indentation (including > for potentially nested blockquotes or Obsidian callouts)
     // - Status character
     // - Rest of task after checkbox markdown
     public static readonly taskRegex = /^([\s\t>]*)[-*] +\[(.)\] *(.*)/u;
