@@ -214,10 +214,12 @@ describe('parsing', () => {
                 _input: line, // Line is included, so it is shown in any failure output
                 description: task.description,
                 due: task.dueDate?.format('YYYY-MM-DD'),
+                indentation: task.indentation,
             }).toMatchObject({
                 _input: line,
                 description: 'Task inside a blockquote or callout',
                 due: '2022-07-29',
+                indentation: line.split('-')[0],
             });
         }
     });
