@@ -88,7 +88,7 @@ export class Task {
     // - Indentation
     // - Status character
     // - Rest of task after checkbox markdown
-    public static readonly taskRegex = /^([\s\t]*)[-*] +\[(.)\] *(.*)/u;
+    public static readonly taskRegex = /^([\s\t>]*)[-*] +\[(.)\] *(.*)/u;
 
     // Match on block link at end.
     public static readonly blockLinkRegex = / \^[a-zA-Z0-9-]+$/u;

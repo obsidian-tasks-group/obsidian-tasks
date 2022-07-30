@@ -194,6 +194,33 @@ describe('parsing', () => {
             });
         }
     });
+
+    it('supports parsing of tasks inside blockquotes or callouts', () => {
+        // Arrange
+        const lines = [
+            '> - [ ] Task inside a blockquote or callout 📅2022-07-29',
+            '>>> - [ ] Task inside a blockquote or callout 📅2022-07-29',
+            '> > > - [ ] Task inside a blockquote or callout 📅2022-07-29',
+        ];
+
+        // Act
+        for (const line of lines) {
+            const task = fromLine({
+                line,
+            });
+
+            // Assert
+            expect({
+                _input: line, // Line is included, so it is shown in any failure output
+                description: task.description,
+                due: task.dueDate?.format('YYYY-MM-DD'),
+            }).toMatchObject({
+                _input: line,
+                description: 'Task inside a blockquote or callout',
+                due: '2022-07-29',
+            });
+        }
+    });
 });
 
 type TagParsingExpectations = {
@@ -317,6 +344,20 @@ describe('parsing tags', () => {
             extractedTags: ['#context/pc_clare'],
             globalFilter: '',
         },
+        {
+            markdownTask: '> - [ ] Task inside a blockquote or callout #tagone',
+            expectedDescription: 'Task inside a blockquote or callout #tagone',
+            extractedTags: ['#tagone'],
+            globalFilter: '',
+        },
+        {
+            markdownTask:
+                '>>> - [ ] Task inside a nested blockquote or callout #tagone',
+            expectedDescription:
+                'Task inside a nested blockquote or callout #tagone',
+            extractedTags: ['#tagone'],
+            globalFilter: '',
+        },
     ])(
         'should parse "$markdownTask" and extract "$extractedTags"',
         ({
@@ -348,6 +389,18 @@ describe('parsing tags', () => {
 });
 
 describe('to string', () => {
+    it('retains the indentation', () => {
+        const line = '> > > - [ ] Task inside a nested blockquote or callout';
+
+        // Act
+        const task: Task = fromLine({
+            line,
+        }) as Task;
+
+        // Assert
+        expect(task).not.toBeNull();
+        expect(task.toFileLineString()).toStrictEqual(line);
+    });
     it('retains the block link', () => {
         // Arrange
         const line = '- [ ] this is a task 📅 2021-09-12 ^my-precious';
