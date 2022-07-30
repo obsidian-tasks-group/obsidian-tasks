@@ -14,4 +14,20 @@ describe('sub-items', () => {
         testTaskFilter(filter, fromLine({ line: '  - [ ] Subtask1' }), false);
         testTaskFilter(filter, fromLine({ line: '    - [ ] Subtask2' }), false);
     });
+    it('subitem has more than one space after last > of blockquotes or callouts', () => {
+        // Arrange
+        const filter = new ExcludeSubItemsField().createFilterOrErrorMessage(
+            'exclude sub-items',
+        );
+
+        // Assert
+        testTaskFilter(filter, fromLine({ line: '> - [ ] Task' }), true);
+        testTaskFilter(filter, fromLine({ line: '> > - [ ] Task' }), true);
+        testTaskFilter(filter, fromLine({ line: '>>  - [ ] Subtask1' }), false);
+        testTaskFilter(
+            filter,
+            fromLine({ line: '> >  - [ ] Subtask2' }),
+            false,
+        );
+    });
 });
