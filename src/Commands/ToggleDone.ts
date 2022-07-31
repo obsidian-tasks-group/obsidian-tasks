@@ -33,20 +33,53 @@ export const toggleDone = (checking: boolean, editor: Editor, view: View) => {
 
     const toggledLine = toggleLine({ line, path });
     editor.setLine(lineNumber, toggledLine);
+    const newCursorPosition = editor.getCursor();
 
-    // The cursor is moved to either the beginning of the line (usually) or the end of the line (if it was already at the end) by default.
-    // Put the cursor back where it was on the line (if there is "text" on the line -- preserves behavior but buggy, will fix in future PR).
-    if (/[^ [\]*-]/.test(toggledLine)) {
+    /* Cursor positions are 0-based for both "line" and "ch" offsets.
+     * If "ch" offset bigger than the line length, will just continue to next line(s).
+     * By default "editor.setLine()" appears to either keep the cursor at the end of the line if it is already there,
+     * ...or move it to the beginning if it is anywhere else. Licat explained this (on Discord) as "sticking" to one side or another.
+     * Previously, Tasks would reset+move-right the cursor if there was any text in the line, including something inside the checkbox,
+     * moving right by toggledLine.length - line.length (still moves right, but by less if the toggledLine is shorter than the old).
+     * This missed the need to move right on the blank line to "- " case (issue #460).
+     * This also meant the cursor moved nonsensically if it was before any newly inserted text,
+     * such as a done date at the end of the line, or after the ">" when "> -" -> "> - [ ]".
+     */
+
+    /* Cases:
+    0) Toggle Task Done on [\s\t>]* produces "$1- " Adds 2 chars. Issue: #460 if the line is blank.
+    1) Toggle Task Done on [\s\t>]*- produces "$1- [ ] ". Adds 4 chars.
+    2) Toggle Task Done on "- Wibble" produces "- [ ] Wibble". Adds 4 chars.
+    3) Toggle Task Done on "- [ ] Wibble" with global filter not present produces "- [x] Wibble". No length change.
+    4) Toggle Task Done on "- [ ] Wibble" with no global filter produces "- [x] Wibble ✅ YYYY-MM-DD". Adds 13 chars.
+        Current behavior has cursor move right 13 characters, regardless of start position. Issue #449
+    5) Toggle Task Done on "- [x] Wibble ✅ YYYY-MM-DD" with global filter present produces "- [] Wibble". Removes 13 chars. Cursor moves left 13 characters sometimes, otherwise behavior is confusing.
+    */
+
+    /* Cases (another way):
+    0) Line got shorter: done date removed from end of task, cursor should reset or be moved to new end if reset position is too long.
+    1) Line stayed the same length: Checking & unchecking textbox that is not a task - cursor should reset.
+    2) Line got longer:
+        a) Dash could have been added. Find it in new text: if cursor was at or right of where it was added, move the cursor right 2.
+        b) Empty checkbox could have been added. If cursor was after the (in old or new), it should move right by 3.
+        c) Done emoji and date could have been added to the end. Cursor should reset if 0, and stay end of line otherwise.
+        d) Recurring task could have been added to the beginning and done emoji and date added to the end. Current behavior adds so much to the offset to make this right.
+
+    So cursor should be reset if 0, which includes being moved to new end if got shorter. Then might need to move right 2 or 3.
+    */
+
+    if (newCursorPosition.ch === 0) {
+        // If setLine moved the cursor to the beginning of the line adjust it
         editor.setCursor({
             line: cursorPosition.line,
-            // Need to move the cursor by the distance we added to the beginning.
+            // Works for recurring tasks, done date removal, checking non-task checkboxes, and when the cursor is after any additions
             ch: cursorPosition.ch + toggledLine.length - line.length,
         });
     }
 };
 
 const toggleLine = ({ line, path }: { line: string; path: string }): string => {
-    let toggledLine: string = line;
+    let toggledLine = line;
 
     const task = Task.fromLine({
         line,
