@@ -75,6 +75,7 @@ export const toggleDone = (checking: boolean, editor: Editor, view: View) => {
             // Works for recurring tasks, done date removal, checking non-task checkboxes, and when the cursor is after any additions
             ch: cursorPosition.ch + toggledLine.length - line.length,
         });
+        // Need some additional logic for if the cursor is before additions of dash, checkbox or done date just put it at cursorPosition.ch and not add the line difference
     }
 };
 
