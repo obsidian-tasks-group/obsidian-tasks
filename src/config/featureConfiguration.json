@@ -1,53 +1,5 @@
 [
   {
-    "index": 0,
-    "internalName": "TASK_STATUS_MENU",
-    "displayName": "Task Status Menu",
-    "description": "Enables a right click menu for each task to allow you to select the task Status from the available next transition states.",
-    "enabledByDefault": false,
-    "stable": false
-  },
-  {
-    "index": 1,
-    "internalName": "APPEND_GLOBAL_FILTER",
-    "displayName": "Creates / Supports tasks with the global filter at end",
-    "description": "Enabling this places the global filter at the end of the task description. Some plugins, such as Day Planner, \nmight require this, or you might prefer how it looks. If you change this when tasks are modified using the \nTask edit box they will have the tag moved to the beginning or end of the description.",
-    "enabledByDefault": false,
-    "stable": false
-  },
-  {
-    "index": 2,
-    "internalName": "ENABLE_SQL_QUERY",
-    "displayName": "Enabled SQL based queries",
-    "description": "Enable the ability to use SQL based queries to find tasks. This new syntax can be used by annotating the code block \nwith \"task-sql\" instead of \"task\"",
-    "enabledByDefault": false,
-    "stable": false
-  },
-  {
-    "index": 3,
-    "internalName": "ENABLE_TEMPLATE_RENDERING",
-    "displayName": "Enable templated rendering",
-    "description": "This is an enhanced form of rendering the query results that allows the user full control over the format of the rendered task that a query returns. It uses handlebars based templates with helpers that ensure the results work with Obsidian removing the need for user to know the internals of the Obsidian HTML structure.",
-    "enabledByDefault": false,
-    "stable": false
-  },
-  {
-    "index": 4,
-    "internalName": "ENABLE_ORIGINAL_TASK_REGISTRATION",
-    "displayName": "Enable original task plugin query processing",
-    "description": "This plugin is synced with the original tasks plugin, if you enable this you only need to have this plugin installed. This also means the rendering logic will work for the original string based queries as well.",
-    "enabledByDefault": false,
-    "stable": false
-  },
-  {
-    "index": 5,
-    "internalName": "ENABLE_INLINE_TEMPLATE",
-    "displayName": "Enable templates to be defined along with query.",
-    "description": "Experimental feature to allow you to use templates inline with the query to override the default one.",
-    "enabledByDefault": false,
-    "stable": false
-  },
-  {
     "index": 9999,
     "internalName": "INTERNAL_TESTING_ENABLED_BY_DEFAULT",
     "displayName": "Test Item. Used to validate the Feature Framework.",
