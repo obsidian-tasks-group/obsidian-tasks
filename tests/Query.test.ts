@@ -840,12 +840,12 @@ describe('Query', () => {
             const query = new Query({ source: input });
 
             const tasksAsMarkdown = `
-> > - [x] Task 1 - should not appear in output
-> > - [x] Task 2 - should not appear in output
-> > - [ ] Task 3 - will be sorted to 1st place, so should pass limit
-> > - [ ] Task 4 - will be sorted to 2nd place, so should pass limit
-> > - [ ] Task 5 - should not appear in output
-> > - [ ] Task 6 - should not appear in output
+- [x] Task 1 - should not appear in output
+- [x] Task 2 - should not appear in output
+- [ ] Task 3 - will be sorted to 1st place, so should pass limit
+- [ ] Task 4 - will be sorted to 2nd place, so should pass limit
+- [ ] Task 5 - should not appear in output
+- [ ] Task 6 - should not appear in output
             `;
 
             const tasks = createTasksFromMarkdown(
@@ -861,8 +861,8 @@ describe('Query', () => {
             expect(groups.groups.length).toEqual(1);
             const soleTaskGroup = groups.groups[0];
             const expectedTasks = `
-> > - [ ] Task 3 - will be sorted to 1st place, so should pass limit
-> > - [ ] Task 4 - will be sorted to 2nd place, so should pass limit
+- [ ] Task 3 - will be sorted to 1st place, so should pass limit
+- [ ] Task 4 - will be sorted to 2nd place, so should pass limit
 `;
             expect('\n' + soleTaskGroup.tasksAsStringOfLines()).toStrictEqual(
                 expectedTasks,
