@@ -3416,9 +3416,10 @@ object.values@^1.1.5:
     define-properties "^1.1.3"
     es-abstract "^1.19.1"
 
-obsidian@obsidianmd/obsidian-api#8b59126fdf633578a40a164c724addd82c7185a1:
-  version "0.15.4"
-  resolved "https://codeload.github.com/obsidianmd/obsidian-api/tar.gz/8b59126fdf633578a40a164c724addd82c7185a1"
+obsidian@0.15.9:
+  version "0.15.9"
+  resolved "https://registry.yarnpkg.com/obsidian/-/obsidian-0.15.9.tgz#b6e0b566952643db6b55f7e74fbba6d7140fe4a2"
+  integrity sha512-w3JL/IM3/U61rjFSFIFDSv+pcHn3mH1EIRN40kBkC/lGYqjFSPbr6daQe08QkskBz/GAYIeBoaKQIcgU9vV3LQ==
   dependencies:
     "@types/codemirror" "0.0.108"
     moment "2.29.4"
