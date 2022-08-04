@@ -1032,6 +1032,10 @@ describe('check removal of the global filter exhaustively', () => {
         {
             globalFilter: '#t',
         },
+        // The characters listed below are the ones that are - or were - escaped by
+        // Task.escapeRegExp().
+        // See the developer.mozilla.org reference in that method.
+        // This test validates the escaping of each of those characters.
         {
             globalFilter: '.',
         },
