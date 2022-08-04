@@ -1,5 +1,10 @@
 # Boolean Combinations
 
+This file contains a few examples that were useful when testing
+the feature to allow Boolean combining of filters.
+
+Full documentation is available: see [Combining Filters](https://obsidian-tasks-group.github.io/obsidian-tasks/queries/combining-filters/).
+
 ## Sample tasks for the searches below
 
 - [ ] #task task 1 #XX
