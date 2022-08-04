@@ -979,6 +979,11 @@ describe('check removal of the global filter', () => {
             markdownTask: '- [ ] task with #t multiple global filters #t',
             expectedDescription: 'task with multiple global filters',
         },
+        {
+            globalFilter: '#t',
+            markdownTask: '- [ ] #t', // confirm behaviour when the description is empty
+            expectedDescription: '',
+        },
     ])(
         'should parse "$markdownTask" and extract "$expectedDescription"',
         ({ globalFilter, markdownTask, expectedDescription }) => {
@@ -996,6 +1001,131 @@ describe('check removal of the global filter', () => {
             expect(task!.getDescriptionWithoutGlobalFilter()).toEqual(
                 expectedDescription,
             );
+
+            // Cleanup
+            if (globalFilter != '') {
+                updateSettings(originalSettings);
+            }
+        },
+    );
+});
+
+describe('check removal of the global filter exhaustively', () => {
+    type GlobalFilterRemoval = {
+        globalFilter: string;
+    };
+
+    function checkDescription(
+        markdownLine: string,
+        expectedDescription: string,
+    ) {
+        const task = constructTaskFromLine(markdownLine);
+
+        // Assert
+        expect(task).not.toBeNull();
+        expect(task!.getDescriptionWithoutGlobalFilter()).toEqual(
+            expectedDescription,
+        );
+    }
+
+    test.each<GlobalFilterRemoval>([
+        {
+            globalFilter: '#t',
+        },
+        // The characters listed below are the ones that are - or were - escaped by
+        // Task.escapeRegExp().
+        // See the developer.mozilla.org reference in that method.
+        // This test validates the escaping of each of those characters.
+        {
+            globalFilter: '.',
+        },
+        {
+            globalFilter: '*',
+        },
+        {
+            globalFilter: '+',
+        },
+        {
+            globalFilter: '?',
+        },
+        {
+            globalFilter: '^',
+        },
+        {
+            // Failed attempt at creating a failing test for when = was not escaped.
+            // When I make Task.escapeRegExp() escape =, I get:
+            // Invalid regular expression: /(^|\s)hello\=world($|\s)/: Invalid escape
+            globalFilter: 'hello=world',
+        },
+        {
+            // Failed attempt at creating a failing test for when ! was not escaped.
+            // When I make Task.escapeRegExp() escape !, I get:
+            // Invalid regular expression: /(^|\s)hello\!world($|\s)/: Invalid escape
+            globalFilter: 'hello!world',
+        },
+        {
+            // Failed attempt at creating a failing test for when : was not escaped.
+            // When I make Task.escapeRegExp() escape :, I get:
+            // Invalid regular expression: /(^|\s)hello\:world($|\s)/: Invalid escape
+            globalFilter: 'hello:world',
+        },
+        {
+            globalFilter: '$',
+        },
+        {
+            globalFilter: '{',
+        },
+        {
+            globalFilter: '}',
+        },
+        {
+            globalFilter: '(',
+        },
+        {
+            globalFilter: ')',
+        },
+        {
+            globalFilter: '|',
+        },
+        {
+            globalFilter: '[',
+        },
+        {
+            globalFilter: ']',
+        },
+        {
+            // Failed attempt at creating a failing test for when / was not escaped
+            globalFilter: '///',
+        },
+        {
+            globalFilter: '\\',
+        },
+    ])(
+        'should parse global filter "$globalFilter" edge cases correctly',
+        ({ globalFilter }) => {
+            // Arrange
+            const originalSettings = getSettings();
+            if (globalFilter != '') {
+                updateSettings({ globalFilter: globalFilter });
+            }
+
+            // Act
+
+            // global filter removed at beginning, middle and end
+            let markdownLine = `- [ ] ${globalFilter} 1 ${globalFilter} 2 ${globalFilter}`;
+            let expectedDescription = '1 2';
+            checkDescription(markdownLine, expectedDescription);
+
+            // global filter not removed if non-empty non-tag characters before or after it
+            markdownLine = `- [ ] ${globalFilter}x 1 x${globalFilter} ${globalFilter}x 2 x${globalFilter}`;
+            expectedDescription = `${globalFilter}x 1 x${globalFilter} ${globalFilter}x 2 x${globalFilter}`;
+            checkDescription(markdownLine, expectedDescription);
+
+            // global filter not removed if non-empty sub-tag characters after it.
+            // Include at least one occurrence of global filter, so we don't pass by luck.
+            markdownLine = `- [ ] ${globalFilter}/x 1 x${globalFilter} ${globalFilter}/x 2 ${globalFilter} ${globalFilter}/x`;
+            expectedDescription = `${globalFilter}/x 1 x${globalFilter} ${globalFilter}/x 2 ${globalFilter}/x`;
+            checkDescription(markdownLine, expectedDescription);
 
             // Cleanup
             if (globalFilter != '') {
