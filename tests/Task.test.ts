@@ -394,7 +394,25 @@ describe('toggle done', () => {
         expect(toggled).not.toBeNull();
         expect(toggled!.status).toStrictEqual(Status.Done);
         expect(toggled!.doneDate).not.toBeNull();
+        expect(toggled!.originalStatusCharacter).toStrictEqual('x');
         expect(toggled!.blockLink).toEqual(' ^my-precious');
+    });
+
+    it('removes done date after untoggle', () => {
+        // Arrange
+        const line = '- [x] I thought I finished ✅ 2021-09-12';
+
+        // Act
+        const task: Task = fromLine({
+            line,
+        }) as Task;
+        const toggled: Task = task.toggle()[0];
+
+        // Assert
+        expect(toggled).not.toBeNull();
+        expect(toggled!.status).toStrictEqual(Status.Todo);
+        expect(toggled!.originalStatusCharacter).toStrictEqual(' ');
+        expect(toggled!.doneDate).toBeNull();
     });
 
     type RecurrenceCase = {
@@ -953,7 +971,6 @@ describe('check removal of the global filter', () => {
             globalFilter: '#task',
             markdownTask:
                 '- [ ] task with an extension of the global filter #task/with/extension',
-            // This is not the behavior we eventually want, but this is the existing situation
             expectedDescription:
                 'task with an extension of the global filter #task/with/extension',
         },

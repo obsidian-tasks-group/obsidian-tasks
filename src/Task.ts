@@ -862,7 +862,7 @@ export class Task {
         )})`;
     }
 
-    /*
+    /**
      * Escape a string so it can be used as part of a RegExp literally.
      * Taken from https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#escaping
      */
@@ -885,15 +885,13 @@ export class Task {
     public getDescriptionWithoutGlobalFilter() {
         const { globalFilter } = getSettings();
         let description = this.description;
+        if (globalFilter.length === 0) return description;
         // This matches the global filter (after escaping it) only when it's a complete word
         const globalFilterRegex = RegExp(
             '(^|\\s)' + this.escapeRegExp(globalFilter) + '($|\\s)',
             'ug',
         );
-        if (
-            globalFilter.length > 0 &&
-            this.description.search(globalFilterRegex) > -1
-        ) {
+        if (this.description.search(globalFilterRegex) > -1) {
             description = description
                 .replace(globalFilterRegex, '$1$2')
                 .replace('  ', ' ')

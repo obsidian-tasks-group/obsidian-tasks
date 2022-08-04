@@ -113,7 +113,9 @@
         const description = task.getDescriptionWithoutGlobalFilter();
         // If we're displaying to the user the description without the global filter (i.e. it was removed in the method
         // above), or if the description did not include a global filter in the first place, we'll add the global filter
-        // when saving the task
+        // when saving the task.
+        // Another special case is when the global filter is empty: in this case there's an "empty" match in the `indexOf`
+        // (it returns 0), and thus we *don't* set addGlobalFilterOnSave.
         if (description != task.description || description.indexOf(globalFilter) == -1)
             addGlobalFilterOnSave = true;
         let priority: 'none' | 'low' | 'medium' | 'high' = 'none';
