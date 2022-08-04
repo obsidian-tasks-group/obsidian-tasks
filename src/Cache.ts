@@ -1,6 +1,6 @@
 import { MetadataCache, TAbstractFile, TFile, Vault } from 'obsidian';
-import type { CachedMetadata, ListItemCache } from 'obsidian';
-import type { EventRef, SectionCache } from 'obsidian';
+import type { CachedMetadata, EventRef } from 'obsidian';
+import type { HeadingCache, ListItemCache, SectionCache } from 'obsidian';
 import { Mutex } from 'async-mutex';
 
 import { Task } from './Task';
@@ -290,11 +290,10 @@ export class Cache {
                     path: file.path,
                     sectionStart: currentSection.position.start.line,
                     sectionIndex,
-                    precedingHeader: Cache.getPrecedingHeader({
-                        lineNumberTask: listItem.position.start.line,
-                        sections: fileCache.sections,
-                        fileLines,
-                    }),
+                    precedingHeader: Cache.getPrecedingHeader(
+                        listItem.position.start.line,
+                        fileCache.headings,
+                    ),
                 });
 
                 if (task !== null) {
@@ -320,7 +319,6 @@ export class Cache {
 
         for (const section of sections) {
             if (
-                section.type === 'list' &&
                 section.position.start.line <= lineNumberTask &&
                 section.position.end.line >= lineNumberTask
             ) {
@@ -331,44 +329,22 @@ export class Cache {
         return null;
     }
 
-    private static getPrecedingHeader({
-        lineNumberTask,
-        sections,
-        fileLines,
-    }: {
-        lineNumberTask: number;
-        sections: SectionCache[] | undefined;
-        fileLines: string[];
-    }): string | null {
-        if (sections === undefined) {
+    private static getPrecedingHeader(
+        lineNumberTask: number,
+        headings: HeadingCache[] | undefined,
+    ): string | null {
+        if (headings === undefined) {
             return null;
         }
 
-        let precedingHeaderSection: SectionCache | undefined;
-        for (const section of sections) {
-            if (section.type === 'heading') {
-                if (section.position.start.line > lineNumberTask) {
-                    // Break out of the loop as the last header was the preceding one.
-                    break;
-                }
-                precedingHeaderSection = section;
+        let precedingHeading: string | null = null;
+
+        for (const heading of headings) {
+            if (heading.position.start.line > lineNumberTask) {
+                return precedingHeading;
             }
+            precedingHeading = heading.heading;
         }
-        if (precedingHeaderSection === undefined) {
-            return null;
-        }
-
-        const lineNumberPrecedingHeader =
-            precedingHeaderSection.position.start.line;
-
-        const linePrecedingHeader = fileLines[lineNumberPrecedingHeader];
-
-        const headerRegex = /^#+ +(.*)/u;
-        const headerMatch = linePrecedingHeader.match(headerRegex);
-        if (headerMatch === null) {
-            return null;
-        } else {
-            return headerMatch[1];
-        }
+        return precedingHeading;
     }
 }
