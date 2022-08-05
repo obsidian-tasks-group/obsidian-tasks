@@ -20,7 +20,7 @@
     "task-manager",
     "task-management"
   ],
-  "author": "Martin Schenck",
+  "author": "Martin Schenck and Clare Macrae",
   "license": "MIT",
   "devDependencies": {
     "@arkweid/lefthook": "^0.7.6",
