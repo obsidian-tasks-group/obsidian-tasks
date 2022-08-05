@@ -52,7 +52,7 @@ class LivePreviewExtension implements PluginValue {
                     'obsidian-tasks-plugin warning: Clicking a checkbox inside a callout in Live Preview not supported. \n' +
                     'Undo your change, then either click the line of the task and use the "Toggle Task Done" command, or switch to Reading View to click the checkbox.';
                 console.warn(msg);
-                new Notice(msg, 3000);
+                new Notice(msg, 30000);
             }
             return false;
         }
