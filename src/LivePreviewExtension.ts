@@ -34,8 +34,14 @@ class LivePreviewExtension implements PluginValue {
             return false;
         }
 
-        // Right now Obsidian API does not give us a way to handle checkbox clicks inside rendered-widgets-in-LP such as callouts.
-        // However, tasks from "task" query codeblocks handle themselves, so be specific about error messaging.
+        /* Right now Obsidian API does not give us a way to handle checkbox clicks inside rendered-widgets-in-LP such as
+         * callouts, tables, and transclusions because `this.view.posAtDOM` will return the beginning of the widget
+         * as the position for any click inside the widget.
+         * For callouts, this means that the task will never be found, since the `lineAt` will be the beginning of the callout.
+         * Therefore, produce an error message pop-up using Obsidian's "Notice" feature, log a console warning, then return.
+         */
+
+        // Tasks from "task" query codeblocks handle themselves thanks to `toLi`, so be specific about error messaging, but still return.
         const ancestor = target.closest(
             'ul.plugin-tasks-query-result, div.callout-content',
         );
@@ -44,7 +50,7 @@ class LivePreviewExtension implements PluginValue {
                 // Error message for now.
                 const msg =
                     'obsidian-tasks-plugin warning: Clicking a checkbox inside a callout in Live Preview not supported. \n' +
-                    'Click the line of the task and use "Toggle Task Done" command, or switch to Reading View to click the checkbox.';
+                    'Undo your change, then either click the line of the task and use the "Toggle Task Done" command, or switch to Reading View to click the checkbox.';
                 console.warn(msg);
                 new Notice(msg, 3000);
             }
