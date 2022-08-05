@@ -200,7 +200,7 @@ describe('parsing', () => {
         const lines = [
             '> - [ ] Task inside a blockquote or callout 📅2022-07-29',
             '>>> - [ ] Task inside a blockquote or callout 📅2022-07-29',
-            '> > > - [ ] Task inside a blockquote or callout 📅2022-07-29',
+            '> > > * [ ] Task inside a blockquote or callout 📅2022-07-29',
         ];
 
         // Act
@@ -219,7 +219,7 @@ describe('parsing', () => {
                 _input: line,
                 description: 'Task inside a blockquote or callout',
                 due: '2022-07-29',
-                indentation: line.split('-')[0],
+                indentation: line.split(/[-*]/)[0],
             });
         }
     });
@@ -324,7 +324,7 @@ describe('parsing tags', () => {
         },
         {
             markdownTask:
-                '- [ ] Export [Cloud Feedly feeds](https://cloud.feedly.com/#opml) #context/pc_clare 🔁 every 4 weeks on Sunday ⏳ 2022-05-15 #context/more_context',
+                '* [ ] Export [Cloud Feedly feeds](https://cloud.feedly.com/#opml) #context/pc_clare 🔁 every 4 weeks on Sunday ⏳ 2022-05-15 #context/more_context',
             expectedDescription:
                 'Export [Cloud Feedly feeds](https://cloud.feedly.com/#opml) #context/pc_clare #context/more_context',
             extractedTags: ['#context/pc_clare', '#context/more_context'],
@@ -354,7 +354,7 @@ describe('parsing tags', () => {
         },
         {
             markdownTask:
-                '>>> - [ ] Task inside a nested blockquote or callout #tagone',
+                '>>> * [ ] Task inside a nested blockquote or callout #tagone',
             expectedDescription:
                 'Task inside a nested blockquote or callout #tagone',
             extractedTags: ['#tagone'],
