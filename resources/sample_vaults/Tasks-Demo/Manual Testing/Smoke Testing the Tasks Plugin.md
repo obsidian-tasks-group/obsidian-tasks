@@ -63,7 +63,7 @@ Work through all the tasks below, until zero tasks remain in this query:
 
 ### Recurring Tasks
 
-Confirm that when a recurring task is completed, a new task is created, all the date fields are incremented, and the indentation is correct.
+Confirm that when a recurring task is completed, a new task is created, all the date fields are incremented, and the indentation is unchanged.
 
 > [!Todo]
 >
