@@ -123,4 +123,19 @@ describe('path', () => {
         expect(filter).not.toMatchTaskWithPath('/some/path/WobblE.md'); // confirm case-sensitive
         expect(filter).not.toMatchTaskWithPath('/other/path/file.md');
     });
+
+    it('by path (regex matches) with flags', () => {
+        // Arrange
+        const filter = new PathField().createFilterOrErrorMessage(
+            'path regex matches /w.bble/i',
+        );
+
+        // Assert
+        expect(filter).toBeValid();
+        expect(filter).toMatchTaskWithPath('/some/path/wibble.md');
+        expect(filter).toMatchTaskWithPath('/some/path/wobble.md');
+        expect(filter).not.toMatchTaskWithPath('');
+        expect(filter).toMatchTaskWithPath('/some/path/WobblE.md'); // confirm case-insensitive (flag)
+        expect(filter).not.toMatchTaskWithPath('/other/path/file.md');
+    });
 });
