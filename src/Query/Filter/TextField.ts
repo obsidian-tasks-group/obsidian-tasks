@@ -25,7 +25,9 @@ export abstract class TextField extends Field {
                         ),
                         filterMethod,
                     );
-            } else if (['regex matches', 'regex does not match'].includes(filterMethod)) {
+            } else if (
+                ['regex matches', 'regex does not match'].includes(filterMethod)
+            ) {
                 // Trim the leading and trailing '/'
                 const regexPattern =
                     /\/((?![*+?])(?:[^\r\n\[/\\]|\\.|\[(?:[^\r\n\]\\]|\\.)*\])+)\/((?:g(?:im?|mi?)?|i(?:gm?|mg?)?|m(?:gi?|ig?)?)?)/;
