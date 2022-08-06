@@ -117,4 +117,15 @@ describe('description', () => {
         expect(filter).not.toMatchTaskWithDescription('- [ ] this does not start with the pattern');
         expect(filter).toMatchTaskWithDescription('- [ ] task does start with the pattern');
     });
+
+    it('works negating regexes', () => {
+        // Arrange
+        const filter = new DescriptionField().createFilterOrErrorMessage(
+            'description regex does not match /^task/'
+        );
+
+        // Assert
+        expect(filter).toMatchTaskWithDescription('- [ ] this does not start with the pattern');
+        expect(filter).not.toMatchTaskWithDescription('- [ ] task does start with the pattern');
+    })
 });
