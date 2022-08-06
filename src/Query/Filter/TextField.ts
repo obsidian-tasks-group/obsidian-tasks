@@ -8,7 +8,7 @@ import { FilterOrErrorMessage } from './Filter';
  * value, such as the description or file path.
  */
 export abstract class TextField extends Field {
-    private maybeNegate(match:boolean, filterMethod:String) {
+    private maybeNegate(match: boolean, filterMethod: String) {
         return filterMethod.match(/not/) ? !match : match;
     }
     public createFilterOrErrorMessage(line: string): FilterOrErrorMessage {
@@ -23,7 +23,7 @@ export abstract class TextField extends Field {
                             this.value(task),
                             match[2],
                         ),
-                        filterMethod
+                        filterMethod,
                     );
             } else if (['regex matches', 'regex does not match'].includes(filterMethod)) {
                 // Trim the leading and trailing '/'
@@ -32,16 +32,16 @@ export abstract class TextField extends Field {
                 const query = match[2].match(regexPattern);
 
                 if (query !== null) {
-                    result.filter = (task: Task) => this.maybeNegate(
-                        this.value(task).match(
-                            new RegExp(query[1], query[2]),
-                        ) !== null,
-                        filterMethod
-                    );
+                    result.filter = (task: Task) =>
+                        this.maybeNegate(
+                            this.value(task).match(
+                                new RegExp(query[1], query[2]),
+                            ) !== null,
+                            filterMethod,
+                        );
                 } else {
                     result.error = `cannot parse regex (${this.fieldName()}); check your leading and trailing slashes for your query`;
                 }
-
             } else {
                 result.error = `do not understand query filter (${this.fieldName()})`;
             }
