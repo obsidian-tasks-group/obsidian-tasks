@@ -28,7 +28,7 @@ export abstract class TextField extends Field {
             } else if (
                 ['regex matches', 'regex does not match'].includes(filterMethod)
             ) {
-                // Trim the leading and trailing '/'
+                // Courtesy of https://stackoverflow.com/questions/17843691/javascript-regex-to-match-a-regex
                 const regexPattern =
                     /\/((?![*+?])(?:[^\r\n\[/\\]|\\.|\[(?:[^\r\n\]\\]|\\.)*\])+)\/((?:g(?:im?|mi?)?|i(?:gm?|mg?)?|m(?:gi?|ig?)?)?)/;
                 const query = match[2].match(regexPattern);
