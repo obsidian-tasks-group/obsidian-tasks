@@ -5,11 +5,8 @@ body:
     attributes:
       value: |
         <h2>Before you start</h2>
-        **Please make sure you are on the latest version of Tasks.**
-
-  - type: markdown
-    attributes:
-      value: If you encountered the issue after you installed, updated, or reloaded the Tasks plugin, **please try restarting obsidian before reporting the bug**.
+        1. Please **make sure you are on the latest version of Tasks.**
+        1. If you encountered the issue after you installed, updated, or reloaded the Tasks plugin, **please try restarting obsidian before reporting the bug**.
 
   - type: textarea
     id: expected
@@ -36,14 +33,14 @@ body:
       description: |
         Which exact steps can a developer take to reproduce the issue?
         The more detail you provide, the easier it will be to narrow down and fix the bug.
-        We can only fix a problem if we can rerproduce it, so please paste in any relevant text, such as example tasks and/or queries.
+        Please paste in any relevant text, such as example tasks and/or queries.
     validations:
       required: true
 
   - type: checkboxes
     id: operating-systems
     attributes:
-      label: Which Operating Systems have you used?
+      label: Which Operating Systems are you using?
       description: You may select more than one.
       options:
         - label: Android
