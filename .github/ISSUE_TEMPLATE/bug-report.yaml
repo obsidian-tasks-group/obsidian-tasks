@@ -4,9 +4,9 @@ body:
   - type: markdown
     attributes:
       value: |
-        <h2>Before you start</h2>
-        1. Please **make sure you are on the latest version of Tasks.**
-        1. If you encountered the issue after you installed, updated, or reloaded the Tasks plugin, **please try restarting obsidian before reporting the bug**.
+        ## Before you start
+        Please **make sure you are on the latest version of Tasks.**
+        If you encountered the issue after you installed, updated, or reloaded the Tasks plugin, **please try restarting obsidian before reporting the bug**.
 
   - type: textarea
     id: expected
