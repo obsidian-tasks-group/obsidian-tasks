@@ -194,6 +194,35 @@ describe('parsing', () => {
             });
         }
     });
+
+    it('supports parsing of tasks inside blockquotes or callouts', () => {
+        // Arrange
+        const lines = [
+            '> - [ ] Task inside a blockquote or callout 📅2022-07-29',
+            '>>> - [ ] Task inside a blockquote or callout 📅2022-07-29',
+            '> > > * [ ] Task inside a blockquote or callout 📅2022-07-29',
+        ];
+
+        // Act
+        for (const line of lines) {
+            const task = fromLine({
+                line,
+            });
+
+            // Assert
+            expect({
+                _input: line, // Line is included, so it is shown in any failure output
+                description: task.description,
+                due: task.dueDate?.format('YYYY-MM-DD'),
+                indentation: task.indentation,
+            }).toMatchObject({
+                _input: line,
+                description: 'Task inside a blockquote or callout',
+                due: '2022-07-29',
+                indentation: line.split(/[-*]/)[0],
+            });
+        }
+    });
 });
 
 type TagParsingExpectations = {
@@ -295,7 +324,7 @@ describe('parsing tags', () => {
         },
         {
             markdownTask:
-                '- [ ] Export [Cloud Feedly feeds](https://cloud.feedly.com/#opml) #context/pc_clare 🔁 every 4 weeks on Sunday ⏳ 2022-05-15 #context/more_context',
+                '* [ ] Export [Cloud Feedly feeds](https://cloud.feedly.com/#opml) #context/pc_clare 🔁 every 4 weeks on Sunday ⏳ 2022-05-15 #context/more_context',
             expectedDescription:
                 'Export [Cloud Feedly feeds](https://cloud.feedly.com/#opml) #context/pc_clare #context/more_context',
             extractedTags: ['#context/pc_clare', '#context/more_context'],
@@ -315,6 +344,20 @@ describe('parsing tags', () => {
             expectedDescription:
                 'Review [savings accounts and interest rates](https://www.moneysavingexpert.com/tips/2022/04/20/#hiya) #context/pc_clare',
             extractedTags: ['#context/pc_clare'],
+            globalFilter: '',
+        },
+        {
+            markdownTask: '> - [ ] Task inside a blockquote or callout #tagone',
+            expectedDescription: 'Task inside a blockquote or callout #tagone',
+            extractedTags: ['#tagone'],
+            globalFilter: '',
+        },
+        {
+            markdownTask:
+                '>>> * [ ] Task inside a nested blockquote or callout #tagone',
+            expectedDescription:
+                'Task inside a nested blockquote or callout #tagone',
+            extractedTags: ['#tagone'],
             globalFilter: '',
         },
     ])(
@@ -348,6 +391,18 @@ describe('parsing tags', () => {
 });
 
 describe('to string', () => {
+    it('retains the indentation', () => {
+        const line = '> > > - [ ] Task inside a nested blockquote or callout';
+
+        // Act
+        const task: Task = fromLine({
+            line,
+        }) as Task;
+
+        // Assert
+        expect(task).not.toBeNull();
+        expect(task.toFileLineString()).toStrictEqual(line);
+    });
     it('retains the block link', () => {
         // Arrange
         const line = '- [ ] this is a task 📅 2021-09-12 ^my-precious';

@@ -63,12 +63,17 @@ Work through all the tasks below, until zero tasks remain in this query:
 
 ### Recurring Tasks
 
-Confirm that when a recurring task is completed, a new task is created and all the date fields are incremented.
+Confirm that when a recurring task is completed, a new task is created, all the date fields are incremented, and the indentation is unchanged.
 
-- [ ] #task Complete this recurring task in **Source view** using **Tasks: Toggle task done** command 🔁 every day 🛫 2022-02-17 ⏳ 2022-02-18 📅 2022-02-19
-- [ ] #task Complete this recurring task in **Reading view**🔁 every day 🛫 2022-02-17 ⏳ 2022-02-18 📅 2022-02-19
+> [!Todo]
+>
+> - [ ] #task Complete this recurring task in **Source view** using **Tasks: Toggle task done** command 🔁 every day 🛫 2022-02-17 ⏳ 2022-02-18 📅 2022-02-19
+>
+> > - [ ] #task Complete this recurring task in **Reading view**🔁 every day 🛫 2022-02-17 ⏳ 2022-02-18 📅 2022-02-19
+
 - [ ] #task Complete this recurring task in **Live Preview**🔁 every day 🛫 2022-02-17 ⏳ 2022-02-18 📅 2022-02-19
-- [ ] #task **check**: Checked all above steps for **recurring tasks** worked
+
+> - [ ] #task **check**: Checked all above steps for **recurring tasks** worked
 
 ### Rendering of Task Blocks
 

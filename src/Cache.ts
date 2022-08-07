@@ -1,6 +1,6 @@
 import { MetadataCache, TAbstractFile, TFile, Vault } from 'obsidian';
-import type { CachedMetadata, ListItemCache } from 'obsidian';
-import type { EventRef, SectionCache } from 'obsidian';
+import type { CachedMetadata, EventRef } from 'obsidian';
+import type { ListItemCache, SectionCache } from 'obsidian';
 import { Mutex } from 'async-mutex';
 
 import { Task } from './Task';
@@ -320,7 +320,6 @@ export class Cache {
 
         for (const section of sections) {
             if (
-                section.type === 'list' &&
                 section.position.start.line <= lineNumberTask &&
                 section.position.end.line >= lineNumberTask
             ) {

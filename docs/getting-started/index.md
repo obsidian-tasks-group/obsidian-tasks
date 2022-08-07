@@ -80,6 +80,22 @@ The following _does not work:_
 
 Warning
 {: .label .label-yellow}
+Tasks can read tasks that are inside blockquotes or [Obsidian's built-in callouts](https://help.obsidian.md/How+to/Use+callouts).
+However, in the Live Preview editor mode (pencil icon in lower right corner), tasks written inside callouts cannot be completed by clicking the checkbox.
+You will see a warning; use the command `Tasks: Toggle Done`, or switch to Reading View (book icon in lower right corner) to click the checkbox.
+Completing a task by clicking its checkbox from a `tasks` query block _will_ work in any editor mode, even if the query is inside a callout.
+
+---
+
+Warning
+{: .label .label-yellow}
+
+Tasks cannot read tasks that are inside code blocks, such as the ones used by the Admonitions plugin. Use Obsidian's built-in callouts instead.
+
+---
+
+Warning
+{: .label .label-yellow}
 Tasks can only render inline footnotes. Regular footnotes are not supported.
 
 ```markdown
