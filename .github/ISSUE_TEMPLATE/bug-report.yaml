@@ -3,17 +3,17 @@ description: File a bug report
 body:
   - type: markdown
     attributes:
-      value: '**Please make sure you are on the latest version.**'
+      value: '<h2>Before you start</h2>**Please make sure you are on the latest version of Tasks.**'
 
   - type: markdown
     attributes:
-      value: If you encountered the issue after you installed, updated, or reloaded the tasks plugin, please try restarting obsidian before reporting the bug.<br>If you want to report a bug, please follow the guide lines below to help me resolve it.
+      value: If you encountered the issue after you installed, updated, or reloaded the Tasks plugin, **please try restarting obsidian before reporting the bug**.
 
   - type: textarea
     id: expected
     attributes:
       label: Expected Behavior
-      description: Tell us what should happen
+      description: Tell us what **should** happen.
     validations:
       required: true
 
@@ -21,7 +21,7 @@ body:
     id: what-happened
     attributes:
       label: Current behaviour
-      description: Tell us what happens instead of the expected behavior
+      description: Tell us what happens instead of the expected behavior.<br>Adding of screenshots really helps.
     validations:
       required: true
 
@@ -29,7 +29,7 @@ body:
     id: reproduce
     attributes:
       label: Steps to reproduce
-      description: Which exact steps can a developer take to reproduce the issue?<br>The more detail you provide, the easier it will be to narrow down and fix the bug
+      description: Which exact steps can a developer take to reproduce the issue?<br>The more detail you provide, the easier it will be to narrow down and fix the bug.<br>We can only fix a problem if we can rerproduce it, so please paste in any relevant text, such as example tasks and/or queries.
     validations:
       required: true
 
