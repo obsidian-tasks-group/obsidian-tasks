@@ -16,8 +16,8 @@ interface CacheUpdateData {
 export class Events {
     private obsidianEvents: ObsidianEvents;
 
-    constructor({ obsidianEents }: { obsidianEents: ObsidianEvents }) {
-        this.obsidianEvents = obsidianEents;
+    constructor({ obsidianEvents }: { obsidianEvents: ObsidianEvents }) {
+        this.obsidianEvents = obsidianEvents;
     }
 
     public onCacheUpdate(
