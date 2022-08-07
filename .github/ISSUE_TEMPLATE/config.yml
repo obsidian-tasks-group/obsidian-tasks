@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Ask a question
+    url: https://github.com/obsidian-tasks-group/obsidian-tasks/discussions/new?category=q-a
+    about: Ask for help with using the Tasks plugin
+  - name: Suggest a new feature
+    url: hhttps://github.com/obsidian-tasks-group/obsidian-tasks/discussions/new?category=ideas
+    about: Request a new feature or improvement in the Tasks plugin. Please search existing Ideas first, and up-vote, to avoid Duplicates.
