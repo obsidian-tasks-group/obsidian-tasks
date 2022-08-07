@@ -1,0 +1,78 @@
+name: Bug Report
+description: File a bug report - new, improved form!
+labels: ["type: bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Before you start
+        Please **make sure you are on the latest version of Tasks.**
+        If you encountered the issue after you installed, updated, or reloaded the Tasks plugin, **please try restarting obsidian before reporting the bug**.
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected Behavior
+      description: Tell us what **should** happen.
+    validations:
+      required: true
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: Current behaviour
+      description: |
+        Tell us what happens instead of the expected behavior.
+        Adding of screenshots really helps.
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps to reproduce
+      description: |
+        Which exact steps can a developer take to reproduce the issue?
+        The more detail you provide, the easier it will be to narrow down and fix the bug.
+        Please paste in any relevant text, such as example tasks and/or queries.
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: operating-systems
+    attributes:
+      label: Which Operating Systems are you using?
+      description: You may select more than one.
+      options:
+        - label: Android
+        - label: iPhone/iPad
+        - label: Linux
+        - label: macOS
+        - label: Windows
+
+  - type: input
+    id: obsidian-version
+    attributes:
+      label: Obsidian Version
+      description: Which Obsidian version are you using?
+      placeholder: 0.15.9
+    validations:
+      required: true
+
+  - type: input
+    id: tasks-version
+    attributes:
+      label: Tasks Plugin Version
+      description: Which Tasks version are you using?
+      placeholder: 1.11.0
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: other-plugins-disabled
+    attributes:
+      label: Checks
+      description: Please confirm
+      options:
+        - label: I have tried it with all other plugins disabled and the error still occurs
+          required: false
