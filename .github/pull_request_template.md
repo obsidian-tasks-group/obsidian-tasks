@@ -15,11 +15,22 @@
 ## Screenshots (if appropriate)
 
 ## Types of changes
+
 <!--- What types of changes does your code introduce? Put an `x` in all the boxes that apply: -->
-- [ ] Bug fix (non-breaking change which fixes an issue)
-- [ ] Refactor (non-breaking change which only improves the design or structure of existing code, and making no changes to its external behaviour)
-- [ ] New feature (non-breaking change which adds functionality)
-- [ ] Breaking change (fix or feature that would cause existing functionality to not work as expected)
+
+Changes visible to users:
+
+- [ ] **Bug fix** (prefix: `fix` - non-breaking change which fixes an issue)
+- [ ] **New feature** (prefix: `feat` - non-breaking change which adds functionality)
+- [ ] **Breaking change** (prefix: `feat!!` or `fix!!` - fix or feature that would cause existing functionality to not work as expected)
+- [ ] **Documentation** (prefix: `docs` - improvements to any documentation content)
+- [ ] **Sample vault** (prefix: `sample` - improvements to the sample vault)
+
+Internal changes:
+
+- [ ] **Refactor** (prefix: `refactor` - non-breaking change which only improves the design or structure of existing code, and making no changes to its external behaviour)
+- [ ] **Tests** (prefix: `test` - additions and improvements to unit tests and the smoke tests)
+- [ ] **Infrastructure** (prefix: `chore` - examples include GitHub Actions, issue templates)
 
 ## Checklist
 <!--- Go over all the following points, and put an `x` in all the boxes that apply. -->
