@@ -82,6 +82,8 @@ Warning
 {: .label .label-yellow}
 Tasks can read tasks that are inside blockquotes or [Obsidian's built-in callouts](https://help.obsidian.md/How+to/Use+callouts).
 
+> Reading tasks inside callouts and blockquotes was introduced in Tasks 1.11.1
+
 However, under the following very specific circumstance, Tasks cannot add or remove completion dates or make the next copy of a recurring task:
 
 - Obsidian is in Live Preview editor mode (pencil icon in lower right corner),
