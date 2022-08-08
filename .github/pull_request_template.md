@@ -44,4 +44,14 @@ Internal changes:
 - [ ] I have updated the documentation accordingly.
 - [ ] My change has adequate Unit Test coverage.
 
-By creating a Pull Request you agree to our [Code of Conduct](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/CODE_OF_CONDUCT.md). For further guidance on contributing please see [contributing guide](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/CONTRIBUTING.md)
+## Terms
+
+<!--
+By submitting this pull request, you must agree to follow our
+[contributing guide](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/CONTRIBUTING.md) and
+[Code of Conduct](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/CODE_OF_CONDUCT.md).
+Put an x in the boxes to confirm you agree.
+-->
+
+- [ ] My contribution follow this project's [contributing guide](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/CONTRIBUTING.md)
+- [ ] I agree to follow this project's [Code of Conduct](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/CODE_OF_CONDUCT.md)
