@@ -100,7 +100,7 @@ const toggleChecklistItem = ({
 }): string => {
     // It's a checklist item, let's toggle it.
     const indentation = regexMatch[1];
-    const statusString = regexMatch[2]; //.toLowerCase();
+    const statusString = regexMatch[2].toLowerCase();
     const body = regexMatch[3];
 
     const toggledStatusString = statusString === ' ' ? 'x' : ' ';
