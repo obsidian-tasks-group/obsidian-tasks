@@ -58,8 +58,7 @@ const taskFromLine = ({ line, path }: { line: string; path: string }): Task => {
 
     // If we are not on a line of a task, we take what we have.
     // The non-task line can still be a checklist, for example if it is lacking the global filter.
-    const nonTaskRegex: RegExp = /^([\s\t>]*)[-*]? *(\[(.)\])? *(.*)/u;
-    const nonTaskMatch = line.match(nonTaskRegex);
+    const nonTaskMatch = line.match(Task.nonTaskRegex);
     if (nonTaskMatch === null) {
         // Should never happen; everything in the regex is optional.
         console.error('Tasks: Cannot create task on line:', line);

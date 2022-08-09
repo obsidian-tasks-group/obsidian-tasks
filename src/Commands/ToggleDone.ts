@@ -34,15 +34,13 @@ export const toggleDone = (checking: boolean, editor: Editor, view: View) => {
     const toggledLine = toggleLine({ line, path });
     editor.setLine(lineNumber, toggledLine);
 
-    // The cursor is moved to the end of the line by default.
-    // If there is text on the line, put the cursor back where it was on the line.
-    if (/[^ [\]*-]/.test(toggledLine)) {
-        editor.setCursor({
-            line: cursorPosition.line,
-            // Need to move the cursor by the distance we added to the beginning.
-            ch: cursorPosition.ch + toggledLine.length - line.length,
-        });
-    }
+    // The cursor is moved to either the beginning of the line (usually) or the end of the line (if it was already at the end) by default.
+    // Put the cursor back where it was on the line.
+    editor.setCursor({
+        line: cursorPosition.line,
+        // Need to move the cursor by the distance we added to the beginning.
+        ch: cursorPosition.ch + toggledLine.length - line.length,
+    });
 };
 
 const toggleLine = ({ line, path }: { line: string; path: string }): string => {
@@ -72,13 +70,12 @@ const toggleLine = ({ line, path }: { line: string; path: string }): string => {
             // 1. a list item
             // 2. a simple text line
 
-            const listItemRegex = /^([\s\t>]*)([-*])/;
-            if (listItemRegex.test(line)) {
+            if (Task.listItemRegex.test(line)) {
                 // Let's convert the list item to a checklist item.
-                toggledLine = line.replace(listItemRegex, '$1$2 [ ]');
+                toggledLine = line.replace(Task.listItemRegex, '$1$2 [ ]');
             } else {
                 // Let's convert the line to a list item.
-                toggledLine = line.replace(/^([\s\t>]*)/, '$1- ');
+                toggledLine = line.replace(Task.indentationRegex, '$1- ');
             }
         }
     }
@@ -103,7 +100,7 @@ const toggleChecklistItem = ({
 }): string => {
     // It's a checklist item, let's toggle it.
     const indentation = regexMatch[1];
-    const statusString = regexMatch[2].toLowerCase();
+    const statusString = regexMatch[2]; //.toLowerCase();
     const body = regexMatch[3];
 
     const toggledStatusString = statusString === ' ' ? 'x' : ' ';
