@@ -223,6 +223,17 @@ Similarly, you can type some fraction of the word `start` (of whatever length is
 | next month (2022-08-11) | 2022-08-11                 |
 | next year (2023-07-11)  | 2023-07-11                 |
 
+### How can I use auto-suggest features from other plugins together with the Tasks auto-suggest?
+
+Obsidian plugins such as Tasks cannot tell if you have auto-suggest features from other plugins enabled.
+Therefore it is user responsibility to manage conflicts between auto-suggest features.
+
+The Tasks auto-suggest will only appear on lines that start `- [ ]` and contain the global filter (if one is set).
+If you want to use auto-suggest features from another plugin on such lines, make sure that plugin's settings for auto-suggest
+appearance do not overlap with the keywords listed above,
+then increase the 'Minimum match length for auto-suggest' value in the Tasks settings to more characters than used to activate the other plugin's auto-suggest,
+and re-start Obsidian.
+
 ## Settings
 
 Note that like all Tasks settings, after any changes, Obsidian needs to be restarted for the new settings to take effect.
