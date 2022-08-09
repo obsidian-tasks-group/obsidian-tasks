@@ -18,15 +18,35 @@ _Note that this is a screenshot of the reminder plugin's settings and not Tasks.
 
 ## Where to add the reminder date
 
-The order is important when writing the task. You have to put the reminder date between the task name and the other fields :
+The order is important when writing the task. Tasks requires the reminder date after the task description and before any other Tasks fields. Reminders [requires no content between the reminder date and the due date](https://uphy.github.io/obsidian-reminder/guide/interop-tasks.html#distinguish-due-date-and-reminder-date).
 
 ```markdown
-- [ ] #task task name ⏰ YYYY-MM-DD HH:mm ⏫  🔁 every *** 🛫 YYYY-MM-DD ⏳ YYYY-MM-DD 📅 YYYY-MM-DD
+- [ ] #task task name ⏰ YYYY-MM-DD HH:mm 📅 YYYY-MM-DD ⏫ 🔁 every week 🛫 YYYY-MM-DD ⏳ YYYY-MM-DD
 ```
+
+---
+
+Warning
+{: .label .label-yellow}
+The output of the "Create or Edit Tasks" command will not put the due date directly behind the reminder date where Reminders wants it.
+You must fix this manually if you want to use the Reminders "defer" command;
+**otherwise (as of August 2022), using the Reminders "defer" command will overwrite all information between the ⏰ and 📅 emoji!**
+See [this issue in Reminders to check the current status](https://github.com/uphy/obsidian-reminder/issues/100).
+
+---
 
 ## How to complete the reminder
 
-The reminder date doesn't change when completing the task as of yet, the date will change only when you complete it from the reminder popup or from the notification.
+The reminder date doesn't change when completing the task, the date will change only when you complete it from the reminder popup or from the notification.
 
 ![image](https://user-images.githubusercontent.com/38974541/143463881-e4af4b91-426f-48e8-938e-4a1053b06677.png)
 ![image](https://user-images.githubusercontent.com/38974541/143464983-542675ae-a467-41c0-aaca-1075c42f8328.png)
+
+---
+
+Warning
+{: .label .label-yellow}
+Completing recurring tasks does not work correctly with Reminders as of August 2022.
+See [this issue in Reminders to check the current status](https://github.com/uphy/obsidian-reminder/issues/93).
+
+---
