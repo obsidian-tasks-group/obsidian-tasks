@@ -139,10 +139,14 @@ short mode
 ### Extra slashes
 
 ```tasks
-path regex matches /Manual Testing/Regular Expression Searches/
+path regex matches /Filters/Regular Expression Searches/
 ```
 
 Should give an error. Intention was to only match tasks in this file - but it matches all in this file.
+
+```tasks
+path regex matches /Filters\/Regular Expression Searches/
+```
 
 ### Missing `/`
 
