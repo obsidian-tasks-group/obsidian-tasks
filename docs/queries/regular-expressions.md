@@ -56,7 +56,21 @@ The components of a regex search filter are:
 4. Optionally, an extra [flag](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#advanced_searching_with_flags) at the end, such as `i`, that can change the meaning of the expression
    - Note that many of the allowed flags are not relevant in the Tasks context, because there are no multi-line searches or global searches, for example.
 
-Notes:
+Case-sensitive example, showing the components:
+
+```text
+description regex matches /pc_abigail|pc_edwina|at_work/
+^1          ^2            ^3
+```
+
+Case-INsensitive example, showing the components:
+
+```text
+description regex matches /pc_abigail|pc_edwina|at_work/i
+^1          ^2            ^3                            ^4
+```
+
+## Notes
 
 - Regex searches are **case-sensitive**, unlike the simpler  `includes` and  `does not include`
 - A regex search can be made **insensitive** by appending a `i` flag after the closing `/`, for example: `/I aM cAsE INsensitive because of the LiTle i after the closing slash/i`
@@ -87,6 +101,20 @@ Here are a few examples of the [many special characters](https://www.rexegg.com/
 - [Regex Testing Tool: regex101](https://regex101.com/): Select the flavor 'ECMAScript (JavaScript)'
 - Implemented using [JavaScript's RegExp implementation](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions)
 - Supports [JavaScript RegExp Flags](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#advanced_searching_with_flags), although not all of them are relevant in this context.
+
+## Known limitations
+
+Please be aware of the following limitations in Tasks' implementation of regular expression searching:
+
+- The single error message `Tasks query: cannot parse regex (description); check your leading and trailing slashes for your query` may mean any of:
+  - The opening or closing `/` is missing from the query.
+  - The regular expression is not valid, for example `description regex matches /[123/`.
+- No error when part of the pattern is lost, for example because unescaped slashes are used inside the pattern.
+  - For example, `path regex matches /a/b/c/d/` actually searches for `path regex matches /a/`.
+  - In this case, the query should be `path regex matches /a\/b\/c\/d/`.
+- Illegal flags are ignored.
+  - For example, the query `description regex matches /CASE/&` should give an error that `&` (and similar) are unrecognised flags.
+- The `tag` or `tags` instruction does not yet support regular expression searches.
 
 ## Regular expression examples
 
