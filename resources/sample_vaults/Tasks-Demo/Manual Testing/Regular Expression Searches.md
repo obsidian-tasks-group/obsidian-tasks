@@ -130,9 +130,47 @@ short mode
 ```tasks
 # Any nondigit
 description regex matches /^\D+$/
-limit 50
+limit 10
 short mode
 ```
+
+## Invalid regex searches
+
+### Extra slashes
+
+```tasks
+path regex matches /Manual Testing/Regular Expression Searches/
+```
+
+Should give an error. Intention was to only match tasks in this file - but it matches all in this file.
+
+### Missing `/`
+
+```tasks
+description regex matches CASE
+```
+
+Gives:
+`Tasks query: cannot parse regex (description); check your leading and trailing slashes for your query`
+
+### Invalid flag
+
+```tasks
+description regex matches /CASE/&
+```
+
+Works. Should complain about invalid flag.
+
+### Mismatched square brackets
+
+```tasks
+description regex matches /[123/
+```
+
+Gives:
+`Tasks query: cannot parse regex (description); check your leading and trailing slashes for your query`
+
+- [ ] Would like it to give a meaningful error message about what the regex error is.
 
 ## Possible developer actions
 
@@ -141,3 +179,4 @@ Intentionally without `#task` as not intended to be picked up by example searche
 - [ ] Work out how to prevent `path regex matches /a/b/c/d/` from confusingly only searching `path regex matches /a/`.
 - [ ] Add regex support to `tag`/`tags` filter.
 - [ ] Specific error message if there are no `/` at beginning and end of query - I'm finding it really easy to forget to include these.
+- [ ] Include the problem line in the error message.
