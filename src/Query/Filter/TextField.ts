@@ -30,7 +30,7 @@ export abstract class TextField extends Field {
             ) {
                 // Courtesy of https://stackoverflow.com/questions/17843691/javascript-regex-to-match-a-regex
                 const regexPattern =
-                    /\/((?![*+?])(?:[^\r\n[/\\]|\\.|\[(?:[^\r\n\]\\]|\\.)*\])+)\/((?:g(?:im?|mi?)?|i(?:gm?|mg?)?|m(?:gi?|ig?)?)?)/;
+                    /\/((?![*+?])(?:[^\r\n[/\\]|\\.|\[(?:[^\r\n\]\\]|\\.)*])+)\/((?:g(?:im?|mi?)?|i(?:gm?|mg?)?|m(?:gi?|ig?)?)?)/;
                 const query = match[2].match(regexPattern);
 
                 if (query !== null) {
