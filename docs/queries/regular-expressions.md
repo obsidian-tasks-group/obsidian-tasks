@@ -115,6 +115,7 @@ Please be aware of the following limitations in Tasks' implementation of regular
 - Illegal flags are ignored.
   - For example, the query `description regex matches /CASE/&` should give an error that `&` (and similar) are unrecognised flags.
 - The `tag` or `tags` instruction does not yet support regular expression searches.
+- [Lookahead and Lookbehind](https://www.regular-expressions.info/lookaround.html) searches are untested, and are presumed not to work on Apple mobile devices, or to cause serious performance problems with slow searches.
 
 ## Regular expression examples
 
