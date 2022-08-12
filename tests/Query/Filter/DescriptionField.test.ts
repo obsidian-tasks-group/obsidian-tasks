@@ -39,7 +39,6 @@ export function toMatchTaskWithDescription(
         line: description,
     });
 
-    console.log(filter);
     const matches = filter.filter!(task);
     if (!matches) {
         return {
