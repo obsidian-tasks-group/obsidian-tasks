@@ -15,6 +15,48 @@ function testDescriptionFilter(
     testTaskFilter(filter, task, expected);
 }
 
+declare global {
+    namespace jest {
+        interface Matchers<R> {
+            toMatchTaskWithDescription(description: string): R;
+        }
+
+        interface Expect {
+            toMatchTaskWithDescription(description: string): any;
+        }
+
+        interface InverseAsymmetricMatchers {
+            toMatchTaskWithDescription(description: string): any;
+        }
+    }
+}
+
+export function toMatchTaskWithDescription(
+    filter: FilterOrErrorMessage,
+    description: string,
+) {
+    const task = fromLine({
+        line: description,
+    });
+
+    const matches = filter.filter!(task);
+    if (!matches) {
+        return {
+            message: () => `unexpected failure to match task: ${description}`,
+            pass: false,
+        };
+    }
+
+    return {
+        message: () => `filter should not have matched task: ${description}`,
+        pass: true,
+    };
+}
+
+expect.extend({
+    toMatchTaskWithDescription,
+});
+
 describe('description', () => {
     it('ignores the global filter when filtering', () => {
         // Arrange
@@ -62,5 +104,35 @@ describe('description', () => {
 
         // Cleanup
         updateSettings(originalSettings);
+    });
+
+    it('works with regex', () => {
+        // Arrange
+        const filter = new DescriptionField().createFilterOrErrorMessage(
+            'description regex matches /^task/',
+        );
+
+        // Assert
+        expect(filter).not.toMatchTaskWithDescription(
+            '- [ ] this does not start with the pattern',
+        );
+        expect(filter).toMatchTaskWithDescription(
+            '- [ ] task does start with the pattern',
+        );
+    });
+
+    it('works negating regexes', () => {
+        // Arrange
+        const filter = new DescriptionField().createFilterOrErrorMessage(
+            'description regex does not match /^task/',
+        );
+
+        // Assert
+        expect(filter).toMatchTaskWithDescription(
+            '- [ ] this does not start with the pattern',
+        );
+        expect(filter).not.toMatchTaskWithDescription(
+            '- [ ] task does start with the pattern',
+        );
     });
 });

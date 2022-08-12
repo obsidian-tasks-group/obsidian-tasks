@@ -134,6 +134,10 @@ As well as the date-related searches above, these filters search other propertie
 - `description (includes|does not include) <string>`
   - Matches case-insensitive (disregards capitalization).
   - Disregards the global filter when matching.
+- `description (regex matches|regex does not match) <JavaScript-style Regex>`
+  - Matches based on [JavaScript's RegExp implementation](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions)
+  - Supports [JavaScript RegExp Flags](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#advanced_searching_with_flags)
+  - **_Use with extreme care; this is a tool for software developers or people willing to spend a lot of time reading complicated documentation_**
 
 ### Priority
 

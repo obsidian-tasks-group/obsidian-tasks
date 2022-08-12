@@ -5,13 +5,6 @@ import { TextField } from './TextField';
  *
  */
 export class HeadingField extends TextField {
-    private static readonly headingRegexp =
-        /^heading (includes|does not include) (.*)/;
-
-    protected filterRegexp(): RegExp {
-        return HeadingField.headingRegexp;
-    }
-
     protected fieldName(): string {
         return 'heading';
     }
