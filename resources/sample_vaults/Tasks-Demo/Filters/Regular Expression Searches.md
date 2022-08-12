@@ -118,6 +118,17 @@ limit 5
 
 ## Special characters
 
+### At least one digit in the description
+
+````text
+```tasks
+# Any digit
+description regex matches /\d/
+limit 5
+short mode
+```
+````
+
 ```tasks
 # Any digit
 description regex matches /\d/
@@ -125,7 +136,16 @@ limit 5
 short mode
 ```
 
----
+### No digits in the description
+
+````text
+```tasks
+# Any nondigit
+description regex matches /^\D+$/
+limit 10
+short mode
+```
+````
 
 ```tasks
 # Any nondigit
@@ -136,7 +156,13 @@ short mode
 
 ## Invalid regex searches
 
-### Extra slashes
+### Extra slashes truncate the query
+
+````text
+```tasks
+path regex matches /Filters/Regular Expression Searches/
+```
+````
 
 ```tasks
 path regex matches /Filters/Regular Expression Searches/
@@ -144,11 +170,25 @@ path regex matches /Filters/Regular Expression Searches/
 
 Should give an error. Intention was to only match tasks in this file - but it matches all in this file.
 
+This is how to do the above search correctly, adding a `\` before each `/` inside the pattern:
+
+````text
+```tasks
+path regex matches /Filters\/Regular Expression Searches/
+```
+````
+
 ```tasks
 path regex matches /Filters\/Regular Expression Searches/
 ```
 
 ### Missing `/`
+
+````text
+```tasks
+description regex matches CASE
+```
+````
 
 ```tasks
 description regex matches CASE
@@ -159,6 +199,12 @@ Gives:
 
 ### Invalid flag
 
+````text
+```tasks
+description regex matches /CASE/&
+```
+````
+
 ```tasks
 description regex matches /CASE/&
 ```
@@ -166,6 +212,12 @@ description regex matches /CASE/&
 Works. Should complain about invalid flag.
 
 ### Mismatched square brackets
+
+````text
+```tasks
+description regex matches /[123/
+```
+````
 
 ```tasks
 description regex matches /[123/
