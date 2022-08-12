@@ -35,8 +35,8 @@ export function toMatchTaskWithDescription(
     filter: FilterOrErrorMessage,
     description: string,
 ) {
-    const task = fromLine({ 
-        line: description
+    const task = fromLine({
+        line: description,
     });
 
     console.log(filter);
@@ -55,7 +55,7 @@ export function toMatchTaskWithDescription(
 }
 
 expect.extend({
-    toMatchTaskWithDescription
+    toMatchTaskWithDescription,
 });
 
 describe('description', () => {
@@ -110,22 +110,30 @@ describe('description', () => {
     it('works with regex', () => {
         // Arrange
         const filter = new DescriptionField().createFilterOrErrorMessage(
-            'description regex matches /^task/'
+            'description regex matches /^task/',
         );
 
         // Assert
-        expect(filter).not.toMatchTaskWithDescription('- [ ] this does not start with the pattern');
-        expect(filter).toMatchTaskWithDescription('- [ ] task does start with the pattern');
+        expect(filter).not.toMatchTaskWithDescription(
+            '- [ ] this does not start with the pattern',
+        );
+        expect(filter).toMatchTaskWithDescription(
+            '- [ ] task does start with the pattern',
+        );
     });
 
     it('works negating regexes', () => {
         // Arrange
         const filter = new DescriptionField().createFilterOrErrorMessage(
-            'description regex does not match /^task/'
+            'description regex does not match /^task/',
         );
 
         // Assert
-        expect(filter).toMatchTaskWithDescription('- [ ] this does not start with the pattern');
-        expect(filter).not.toMatchTaskWithDescription('- [ ] task does start with the pattern');
-    })
+        expect(filter).toMatchTaskWithDescription(
+            '- [ ] this does not start with the pattern',
+        );
+        expect(filter).not.toMatchTaskWithDescription(
+            '- [ ] task does start with the pattern',
+        );
+    });
 });
