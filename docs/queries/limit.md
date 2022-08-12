@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Limiting
-nav_order: 6
+nav_order: 7
 parent: Queries
 has_toc: false
 ---
