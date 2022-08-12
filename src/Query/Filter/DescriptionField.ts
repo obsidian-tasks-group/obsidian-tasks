@@ -9,15 +9,8 @@ import { TextField } from './TextField';
  * with the global filter (if any) removed.
  */
 export class DescriptionField extends TextField {
-    private static readonly descriptionRegexp =
-        /^description (includes|does not include) (.*)/;
-
     protected fieldName(): string {
         return 'description';
-    }
-
-    protected filterRegexp(): RegExp {
-        return DescriptionField.descriptionRegexp;
     }
 
     /**
