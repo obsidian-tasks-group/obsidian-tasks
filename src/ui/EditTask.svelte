@@ -107,7 +107,6 @@
         parsedDone = parseDate('done', editableTask.doneDate);
     }
 
-
     onMount(() => {
         const { globalFilter } = getSettings();
         const description = task.getDescriptionWithoutGlobalFilter();
@@ -116,7 +115,10 @@
         // when saving the task.
         // Another special case is when the global filter is empty: in this case there's an "empty" match in the `indexOf`
         // (it returns 0), and thus we *don't* set addGlobalFilterOnSave.
-        if (description != task.description || description.indexOf(globalFilter) == -1)
+        if (
+            description != task.description ||
+            description.indexOf(globalFilter) == -1
+        )
             addGlobalFilterOnSave = true;
         let priority: 'none' | 'low' | 'medium' | 'high' = 'none';
         if (task.priority === Priority.Low) {
