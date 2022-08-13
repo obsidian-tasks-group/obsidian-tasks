@@ -205,16 +205,14 @@ export class Cache {
             return task.path === file.path;
         });
 
-        let listItems = fileCache.listItems;
-        let fileContent = '';
+        const listItems = fileCache.listItems;
+        // When there is no list items cache, there are no tasks.
+        // Still continue to notify watchers of removal.
+
         let newTasks: Task[] = [];
-        if (listItems === undefined) {
-            // When there is no list items cache, there are no tasks.
-            // Still continue to notify watchers of removal.
-            listItems = [];
-        } else {
+        if (listItems !== undefined) {
             // Only read the file and process for tasks if there are list items.
-            fileContent = await this.vault.cachedRead(file);
+            const fileContent = await this.vault.cachedRead(file);
             newTasks = Cache.getTasksFromFileContent(
                 fileContent,
                 listItems,
