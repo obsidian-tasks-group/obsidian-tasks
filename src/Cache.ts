@@ -206,6 +206,9 @@ export class Cache {
         });
 
         const listItems = fileCache.listItems;
+        // When there is no list items cache, there are no tasks.
+        // Still continue to notify watchers of removal.
+
         let newTasks: Task[] = [];
         if (listItems !== undefined) {
             // Only read the file and process for tasks if there are list items.
@@ -216,9 +219,6 @@ export class Cache {
                 fileCache,
                 file,
             );
-        } else {
-            // When there is no list items cache, there are no tasks.
-            // Still continue to notify watchers of removal.
         }
 
         // If there are no changes in any of the tasks, there's
