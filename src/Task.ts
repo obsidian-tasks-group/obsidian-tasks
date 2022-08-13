@@ -780,6 +780,30 @@ export class Task {
         return true;
     }
 
+    /**
+     * Search for the global filter for the purpose of removing it from the description, but do so only
+     * if it is a separate word (preceding the beginning of line or a space and followed by the end of line
+     * or a space), because we don't want to cut-off nested tags like #task/subtag.
+     * If the global filter exists as part of a nested tag, we keep it untouched.
+     */
+    public getDescriptionWithoutGlobalFilter() {
+        const { globalFilter } = getSettings();
+        let description = this.description;
+        if (globalFilter.length === 0) return description;
+        // This matches the global filter (after escaping it) only when it's a complete word
+        const globalFilterRegex = RegExp(
+            '(^|\\s)' + this.escapeRegExp(globalFilter) + '($|\\s)',
+            'ug',
+        );
+        if (this.description.search(globalFilterRegex) > -1) {
+            description = description
+                .replace(globalFilterRegex, '$1$2')
+                .replace('  ', ' ')
+                .trim();
+        }
+        return description;
+    }
+
     private addTooltip(
         element: HTMLElement,
         isFilenameUnique: boolean | undefined,
@@ -860,29 +884,5 @@ export class Task {
         // a ? (all 3) or a ?< (! and =).
         // So theoretically if the ? are all escaped, those three characters do not have to be.
         return s.replace(/([.*+?^${}()|[\]/\\])/g, '\\$1');
-    }
-
-    /**
-     * Search for the global filter for the purpose of removing it from the description, but do so only
-     * if it is a separate word (preceding the beginning of line or a space and followed by the end of line
-     * or a space), because we don't want to cut-off nested tags like #task/subtag.
-     * If the global filter exists as part of a nested tag, we keep it untouched.
-     */
-    public getDescriptionWithoutGlobalFilter() {
-        const { globalFilter } = getSettings();
-        let description = this.description;
-        if (globalFilter.length === 0) return description;
-        // This matches the global filter (after escaping it) only when it's a complete word
-        const globalFilterRegex = RegExp(
-            '(^|\\s)' + this.escapeRegExp(globalFilter) + '($|\\s)',
-            'ug',
-        );
-        if (this.description.search(globalFilterRegex) > -1) {
-            description = description
-                .replace(globalFilterRegex, '$1$2')
-                .replace('  ', ' ')
-                .trim();
-        }
-        return description;
     }
 }
