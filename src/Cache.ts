@@ -1,6 +1,6 @@
 import { MetadataCache, TAbstractFile, TFile, Vault } from 'obsidian';
 import type { CachedMetadata, EventRef } from 'obsidian';
-import type { ListItemCache, SectionCache } from 'obsidian';
+import type { HeadingCache, ListItemCache, SectionCache } from 'obsidian';
 import { Mutex } from 'async-mutex';
 
 import { Task } from './Task';
@@ -201,24 +201,27 @@ export class Cache {
             return;
         }
 
-        let listItems = fileCache.listItems;
-        if (listItems === undefined) {
-            // When there is no list items cache, there are no tasks.
-            // Still continue to notify watchers of removal.
-            listItems = [];
-        }
-
         const oldTasks = this.tasks.filter((task: Task) => {
             return task.path === file.path;
         });
 
-        const fileContent = await this.vault.cachedRead(file);
-        const newTasks = Cache.getTasksFromFileContent(
-            fileContent,
-            listItems,
-            fileCache,
-            file,
-        );
+        let listItems = fileCache.listItems;
+        let fileContent = '';
+        let newTasks: Task[] = [];
+        if (listItems === undefined) {
+            // When there is no list items cache, there are no tasks.
+            // Still continue to notify watchers of removal.
+            listItems = [];
+        } else {
+            // Only read the file and process for tasks if there are list items.
+            fileContent = await this.vault.cachedRead(file);
+            newTasks = Cache.getTasksFromFileContent(
+                fileContent,
+                listItems,
+                fileCache,
+                file,
+            );
+        }
 
         // If there are no changes in any of the tasks, there's
         // nothing to do, so just return.
@@ -272,10 +275,10 @@ export class Cache {
                 ) {
                     // We went past the current section (or this is the first task).
                     // Find the section that is relevant for this task and the following of the same section.
-                    currentSection = Cache.getSection({
-                        lineNumberTask: listItem.position.start.line,
-                        sections: fileCache.sections,
-                    });
+                    currentSection = Cache.getSection(
+                        listItem.position.start.line,
+                        fileCache.sections,
+                    );
                     sectionIndex = 0;
                 }
 
@@ -290,11 +293,10 @@ export class Cache {
                     path: file.path,
                     sectionStart: currentSection.position.start.line,
                     sectionIndex,
-                    precedingHeader: Cache.getPrecedingHeader({
-                        lineNumberTask: listItem.position.start.line,
-                        sections: fileCache.sections,
-                        fileLines,
-                    }),
+                    precedingHeader: Cache.getPrecedingHeader(
+                        listItem.position.start.line,
+                        fileCache.headings,
+                    ),
                 });
 
                 if (task !== null) {
@@ -307,13 +309,10 @@ export class Cache {
         return tasks;
     }
 
-    private static getSection({
-        lineNumberTask,
-        sections,
-    }: {
-        lineNumberTask: number;
-        sections: SectionCache[] | undefined;
-    }): SectionCache | null {
+    private static getSection(
+        lineNumberTask: number,
+        sections: SectionCache[] | undefined,
+    ): SectionCache | null {
         if (sections === undefined) {
             return null;
         }
@@ -330,44 +329,22 @@ export class Cache {
         return null;
     }
 
-    private static getPrecedingHeader({
-        lineNumberTask,
-        sections,
-        fileLines,
-    }: {
-        lineNumberTask: number;
-        sections: SectionCache[] | undefined;
-        fileLines: string[];
-    }): string | null {
-        if (sections === undefined) {
+    private static getPrecedingHeader(
+        lineNumberTask: number,
+        headings: HeadingCache[] | undefined,
+    ): string | null {
+        if (headings === undefined) {
             return null;
         }
 
-        let precedingHeaderSection: SectionCache | undefined;
-        for (const section of sections) {
-            if (section.type === 'heading') {
-                if (section.position.start.line > lineNumberTask) {
-                    // Break out of the loop as the last header was the preceding one.
-                    break;
-                }
-                precedingHeaderSection = section;
+        let precedingHeader: string | null = null;
+
+        for (const heading of headings) {
+            if (heading.position.start.line > lineNumberTask) {
+                return precedingHeader;
             }
+            precedingHeader = heading.heading;
         }
-        if (precedingHeaderSection === undefined) {
-            return null;
-        }
-
-        const lineNumberPrecedingHeader =
-            precedingHeaderSection.position.start.line;
-
-        const linePrecedingHeader = fileLines[lineNumberPrecedingHeader];
-
-        const headerRegex = /^#+ +(.*)/u;
-        const headerMatch = linePrecedingHeader.match(headerRegex);
-        if (headerMatch === null) {
-            return null;
-        } else {
-            return headerMatch[1];
-        }
+        return precedingHeader;
     }
 }
