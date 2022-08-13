@@ -206,11 +206,10 @@ export class Cache {
         });
 
         const listItems = fileCache.listItems;
-        let fileContent = '';
         let newTasks: Task[] = [];
         if (listItems !== undefined) {
             // Only read the file and process for tasks if there are list items.
-            fileContent = await this.vault.cachedRead(file);
+            const fileContent = await this.vault.cachedRead(file);
             newTasks = Cache.getTasksFromFileContent(
                 fileContent,
                 listItems,
