@@ -484,7 +484,7 @@ export class Task {
         checkbox.setAttr('data-line', listIndex);
 
         if (layoutOptions?.shortMode) {
-            this.addTooltip({ element: textSpan, isFilenameUnique });
+            this.addTooltip(textSpan, isFilenameUnique);
         }
 
         return li;
@@ -780,13 +780,10 @@ export class Task {
         return true;
     }
 
-    private addTooltip({
-        element,
-        isFilenameUnique,
-    }: {
-        element: HTMLElement;
-        isFilenameUnique: boolean | undefined;
-    }): void {
+    private addTooltip(
+        element: HTMLElement,
+        isFilenameUnique: boolean | undefined,
+    ): void {
         element.addEventListener('mouseenter', () => {
             const tooltip = element.createDiv();
             tooltip.addClasses(['tooltip', 'mod-right']);
@@ -801,40 +798,28 @@ export class Task {
             if (this.startDate) {
                 const startDateDiv = tooltip.createDiv();
                 startDateDiv.setText(
-                    Task.toTooltipDate({
-                        signifier: startDateSymbol,
-                        date: this.startDate,
-                    }),
+                    Task.toTooltipDate(startDateSymbol, this.startDate),
                 );
             }
 
             if (this.scheduledDate) {
                 const scheduledDateDiv = tooltip.createDiv();
                 scheduledDateDiv.setText(
-                    Task.toTooltipDate({
-                        signifier: scheduledDateSymbol,
-                        date: this.scheduledDate,
-                    }),
+                    Task.toTooltipDate(scheduledDateSymbol, this.scheduledDate),
                 );
             }
 
             if (this.dueDate) {
                 const dueDateDiv = tooltip.createDiv();
                 dueDateDiv.setText(
-                    Task.toTooltipDate({
-                        signifier: dueDateSymbol,
-                        date: this.dueDate,
-                    }),
+                    Task.toTooltipDate(dueDateSymbol, this.dueDate),
                 );
             }
 
             if (this.doneDate) {
                 const doneDateDiv = tooltip.createDiv();
                 doneDateDiv.setText(
-                    Task.toTooltipDate({
-                        signifier: doneDateSymbol,
-                        date: this.doneDate,
-                    }),
+                    Task.toTooltipDate(doneDateSymbol, this.doneDate),
                 );
             }
 
@@ -850,13 +835,7 @@ export class Task {
         });
     }
 
-    private static toTooltipDate({
-        signifier,
-        date,
-    }: {
-        signifier: string;
-        date: Moment;
-    }): string {
+    private static toTooltipDate(signifier: string, date: Moment): string {
         return `${signifier} ${date.format(Task.dateFormat)} (${date.from(
             window.moment().startOf('day'),
         )})`;
