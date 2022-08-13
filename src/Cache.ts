@@ -220,7 +220,6 @@ export class Cache {
         } else {
             // When there is no list items cache, there are no tasks.
             // Still continue to notify watchers of removal.
-            listItems = [];
         }
 
         // If there are no changes in any of the tasks, there's
