@@ -9,13 +9,7 @@ export function fromLine({
     path?: string;
     precedingHeader?: string | null;
 }) {
-    return Task.fromLine({
-        line,
-        path,
-        precedingHeader,
-        sectionIndex: 0,
-        sectionStart: 0,
-    })!;
+    return Task.fromLine(line, path, 0, 0, precedingHeader)!;
 }
 
 export function createTasksFromMarkdown(
@@ -26,13 +20,7 @@ export function createTasksFromMarkdown(
     const taskLines = tasksAsMarkdown.split('\n');
     const tasks: Task[] = [];
     for (const line of taskLines) {
-        const task = Task.fromLine({
-            line: line,
-            path: path,
-            precedingHeader: precedingHeader,
-            sectionIndex: 0,
-            sectionStart: 0,
-        });
+        const task = Task.fromLine(line, path, 0, 0, precedingHeader);
         if (task) {
             tasks.push(task);
         }

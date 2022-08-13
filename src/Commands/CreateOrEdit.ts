@@ -25,7 +25,7 @@ export const createOrEdit = (
     const cursorPosition = editor.getCursor();
     const lineNumber = cursorPosition.line;
     const line = editor.getLine(lineNumber);
-    const task = taskFromLine({ line, path });
+    const task = taskFromLine(line, path);
 
     const onSubmit = (updatedTasks: Task[]): void => {
         const serialized = updatedTasks
@@ -43,14 +43,14 @@ export const createOrEdit = (
     taskModal.open();
 };
 
-const taskFromLine = ({ line, path }: { line: string; path: string }): Task => {
-    const task = Task.fromLine({
+const taskFromLine = (line: string, path: string): Task => {
+    const task = Task.fromLine(
         line,
         path,
-        sectionStart: 0, // We don't need this to toggle it here in the editor.
-        sectionIndex: 0, // We don't need this to toggle it here in the editor.
-        precedingHeader: null, // We don't need this to toggle it here in the editor.
-    });
+        0, // We don't need this to create the modal.
+        0, // We don't need this to create the modal.
+        null, // We don't need this to create the modal.
+    );
 
     if (task !== null) {
         return task;

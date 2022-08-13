@@ -182,22 +182,16 @@ export class Task {
      * @param {number} sectionStart - Line number where the section starts that contains this task.
      * @param {number} sectionIndex - The index of the nth task in its section.
      * @param {(string | null)} precedingHeader - The header before this task.
-     * @return {*}  {(Task | null)}
+     * @return {(Task | null)}
      * @memberof Task
      */
-    public static fromLine({
-        line,
-        path,
-        sectionStart,
-        sectionIndex,
-        precedingHeader,
-    }: {
-        line: string;
-        path: string;
-        sectionStart: number;
-        sectionIndex: number;
-        precedingHeader: string | null;
-    }): Task | null {
+    public static fromLine(
+        line: string,
+        path: string,
+        sectionStart: number,
+        sectionIndex: number,
+        precedingHeader: string | null,
+    ): Task | null {
         // Check the line to see if it is a markdown task.
         const regexMatch = line.match(Task.taskRegex);
         if (regexMatch === null) {
@@ -240,15 +234,15 @@ export class Task {
         // Keep matching and removing special strings from the end of the
         // description in any order. The loop should only run once if the
         // strings are in the expected order after the description.
-        let matched: boolean;
-        let priority: Priority = Priority.None;
+        let matched = false;
+        let priority = Priority.None;
         let startDate: Moment | null = null;
         let scheduledDate: Moment | null = null;
         let dueDate: Moment | null = null;
         let doneDate: Moment | null = null;
-        let recurrenceRule: string = '';
+        let recurrenceRule = '';
         let recurrence: Recurrence | null = null;
-        let tags: any = [];
+        let tags: string[] = [];
         // Tags that are removed from the end while parsing, but we want to add them back for being part of the description.
         // In the original task description they are possibly mixed with other components
         // (e.g. #tag1 <due date> #tag2), they do not have to all trail all task components,

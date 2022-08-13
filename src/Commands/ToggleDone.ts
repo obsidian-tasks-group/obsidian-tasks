@@ -48,13 +48,13 @@ export const toggleDone = (checking: boolean, editor: Editor, view: View) => {
 const toggleLine = ({ line, path }: { line: string; path: string }): string => {
     let toggledLine: string = line;
 
-    const task = Task.fromLine({
+    const task = Task.fromLine(
         line,
         path,
-        sectionStart: 0, // We don't need this to toggle it here in the editor.
-        sectionIndex: 0, // We don't need this to toggle it here in the editor.
-        precedingHeader: null, // We don't need this to toggle it here in the editor.
-    });
+        0, // We don't need this to toggle it here in the editor.
+        0, // We don't need this to toggle it here in the editor.
+        null, // We don't need this to toggle it here in the editor.
+    );
     if (task !== null) {
         toggledLine = toggleTask({ task });
     } else {

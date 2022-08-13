@@ -60,16 +60,16 @@ class LivePreviewExtension implements PluginValue {
         const { state } = this.view;
         const position = this.view.posAtDOM(target);
         const line = state.doc.lineAt(position);
-        const task = Task.fromLine({
-            line: line.text,
+        const task = Task.fromLine(
+            line.text,
             // None of this data is relevant here.
             // The task is created, toggled, and written back to the CM6 document,
             // replacing the old task in-place.
-            path: '',
-            sectionStart: 0,
-            sectionIndex: 0,
-            precedingHeader: null,
-        });
+            '',
+            0,
+            0,
+            null,
+        );
 
         console.debug(
             `Live Preview Extension: toggle called. Position: ${position} Line: ${line.text}`,

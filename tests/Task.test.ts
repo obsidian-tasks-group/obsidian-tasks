@@ -233,13 +233,7 @@ type TagParsingExpectations = {
 };
 
 function constructTaskFromLine(line: string) {
-    return Task.fromLine({
-        line,
-        path: 'file.md',
-        sectionStart: 0,
-        sectionIndex: 0,
-        precedingHeader: '',
-    });
+    return Task.fromLine(line, 'file.md', 0, 0, '');
 }
 
 describe('parsing tags', () => {

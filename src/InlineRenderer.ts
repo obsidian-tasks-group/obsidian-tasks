@@ -75,13 +75,13 @@ export class InlineRenderer {
                 continue;
             }
 
-            const task = Task.fromLine({
+            const task = Task.fromLine(
                 line,
                 path,
-                sectionStart: section.lineStart,
+                section.lineStart,
                 sectionIndex,
-                precedingHeader: null, // We don't need the preceding header for in-line rendering.
-            });
+                null, // We don't need the preceding header for in-line rendering.
+            );
             if (task !== null) {
                 fileTasks.push(task);
                 sectionIndex++;

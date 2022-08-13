@@ -84,14 +84,7 @@ export function shouldSupportFiltering(
     const query = new Query({ source: filters.join('\n') });
 
     const tasks = allTaskLines.map(
-        (taskLine) =>
-            Task.fromLine({
-                line: taskLine,
-                sectionStart: 0,
-                sectionIndex: 0,
-                path: '',
-                precedingHeader: '',
-            }) as Task,
+        (taskLine) => Task.fromLine(taskLine, '', 0, 0, '')!,
     );
 
     // Act

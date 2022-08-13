@@ -288,16 +288,16 @@ export class Cache {
                 }
 
                 const line = fileLines[listItem.position.start.line];
-                const task = Task.fromLine({
+                const task = Task.fromLine(
                     line,
-                    path: file.path,
-                    sectionStart: currentSection.position.start.line,
+                    file.path,
+                    currentSection.position.start.line,
                     sectionIndex,
-                    precedingHeader: Cache.getPrecedingHeader(
+                    Cache.getPrecedingHeader(
                         listItem.position.start.line,
                         fileCache.headings,
                     ),
-                });
+                );
 
                 if (task !== null) {
                     sectionIndex++;
