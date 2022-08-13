@@ -208,11 +208,7 @@ export class Cache {
         let listItems = fileCache.listItems;
         let fileContent = '';
         let newTasks: Task[] = [];
-        if (listItems === undefined) {
-            // When there is no list items cache, there are no tasks.
-            // Still continue to notify watchers of removal.
-            listItems = [];
-        } else {
+        if (listItems !== undefined) {
             // Only read the file and process for tasks if there are list items.
             fileContent = await this.vault.cachedRead(file);
             newTasks = Cache.getTasksFromFileContent(
@@ -221,6 +217,10 @@ export class Cache {
                 fileCache,
                 file,
             );
+        } else {
+            // When there is no list items cache, there are no tasks.
+            // Still continue to notify watchers of removal.
+            listItems = [];
         }
 
         // If there are no changes in any of the tasks, there's
