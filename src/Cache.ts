@@ -205,7 +205,7 @@ export class Cache {
             return task.path === file.path;
         });
 
-        let listItems = fileCache.listItems;
+        const listItems = fileCache.listItems;
         let fileContent = '';
         let newTasks: Task[] = [];
         if (listItems !== undefined) {
