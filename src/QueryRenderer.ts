@@ -188,12 +188,12 @@ class QueryRenderChild extends MarkdownRenderChild {
             const task = tasks[i];
             const isFilenameUnique = this.isFilenameUnique({ task });
 
-            const listItem = await task.toLi({
-                parentUlElement: taskList,
-                listIndex: i,
-                layoutOptions: this.query.layoutOptions,
+            const listItem = await task.toLi(
+                taskList,
+                i,
+                this.query.layoutOptions,
                 isFilenameUnique,
-            });
+            );
 
             // Remove all footnotes. They don't re-appear in another document.
             const footnotes = listItem.querySelectorAll('[data-footnote-id]');
@@ -315,7 +315,7 @@ class QueryRenderChild extends MarkdownRenderChild {
         if (shortMode) {
             linkText = ' 🔗';
         } else {
-            linkText = task.getLinkText({ isFilenameUnique }) ?? '';
+            linkText = task.getLinkText(isFilenameUnique) ?? '';
         }
 
         link.setText(linkText);

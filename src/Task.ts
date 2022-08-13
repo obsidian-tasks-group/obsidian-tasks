@@ -396,18 +396,13 @@ export class Task {
         });
     }
 
-    public async toLi({
-        parentUlElement,
-        listIndex,
-        layoutOptions,
-        isFilenameUnique,
-    }: {
-        parentUlElement: HTMLElement;
+    public async toLi(
+        parentUlElement: HTMLElement,
         /** The nth item in this list (including non-tasks). */
-        listIndex: number;
-        layoutOptions?: LayoutOptions;
-        isFilenameUnique?: boolean;
-    }): Promise<HTMLLIElement> {
+        listIndex: number,
+        layoutOptions?: LayoutOptions,
+        isFilenameUnique?: boolean,
+    ): Promise<HTMLLIElement> {
         const li: HTMLLIElement = parentUlElement.createEl('li');
         li.addClasses(['task-list-item', 'plugin-tasks-list-item']);
 
@@ -651,15 +646,11 @@ export class Task {
     /**
      * Returns the text that should be displayed to the user when linking to the origin of the task
      *
-     * @param isFilenameUnique {boolean|null} Whether the name of the file that contains the task is unique in the vault.
+     * @param isFilenameUnique {boolean|undefined} Whether the name of the file that contains the task is unique in the vault.
      *                                        If it is undefined, the outcome will be the same as with a unique file name: the file name only.
      *                                        If set to `true`, the full path will be returned.
      */
-    public getLinkText({
-        isFilenameUnique,
-    }: {
-        isFilenameUnique: boolean | undefined;
-    }): string | null {
+    public getLinkText(isFilenameUnique?: boolean): string | null {
         let linkText: string | null;
         if (isFilenameUnique) {
             linkText = this.filename;
@@ -847,7 +838,7 @@ export class Task {
                 );
             }
 
-            const linkText = this.getLinkText({ isFilenameUnique });
+            const linkText = this.getLinkText(isFilenameUnique);
             if (linkText) {
                 const backlinkDiv = tooltip.createDiv();
                 backlinkDiv.setText(`🔗 ${linkText}`);

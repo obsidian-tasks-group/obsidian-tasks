@@ -162,7 +162,7 @@ export class Group {
     }
 
     private static groupByBacklink(task: Task): string[] {
-        const linkText = task.getLinkText({ isFilenameUnique: true });
+        const linkText = task.getLinkText(true);
         if (linkText === null) {
             return ['Unknown Location'];
         }
