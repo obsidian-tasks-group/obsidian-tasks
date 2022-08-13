@@ -89,7 +89,7 @@ Here are a few examples of the [many special characters](https://www.rexegg.com/
 
 - `.` matches any character
 - `^` matches the start of the string (but when `[^inside brackets]`, it means "not")
-- `$` matches the start of the string
+- `$` matches the end of the string
 - `\` adds special meaning to some characters. For example:
   - `\d` matches one digit, from 0 to 9
   - `\D` matches character that is not a digit
