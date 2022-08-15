@@ -34,28 +34,6 @@ declare global {
     }
 }
 
-export function toMatchTaskWithDescription(
-    filter: FilterOrErrorMessage,
-    description: string,
-) {
-    const task = fromLine({
-        line: description,
-    });
-
-    const matches = filter.filter!(task);
-    if (!matches) {
-        return {
-            message: () => `unexpected failure to match task: ${description}`,
-            pass: false,
-        };
-    }
-
-    return {
-        message: () => `filter should not have matched task: ${description}`,
-        pass: true,
-    };
-}
-
 export function toBeValid(filter: FilterOrErrorMessage) {
     if (filter.filter === undefined) {
         return {
@@ -75,6 +53,28 @@ export function toBeValid(filter: FilterOrErrorMessage) {
 
     return {
         message: () => 'filter is unexpectedly valid',
+        pass: true,
+    };
+}
+
+export function toMatchTaskWithDescription(
+    filter: FilterOrErrorMessage,
+    description: string,
+) {
+    const task = fromLine({
+        line: description,
+    });
+
+    const matches = filter.filter!(task);
+    if (!matches) {
+        return {
+            message: () => `unexpected failure to match task: ${description}`,
+            pass: false,
+        };
+    }
+
+    return {
+        message: () => `filter should not have matched task: ${description}`,
         pass: true,
     };
 }
