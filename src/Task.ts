@@ -87,7 +87,7 @@ export class Task {
     // Matches indentation before a list marker (including > for potentially nested blockquotes or Obsidian callouts)
     public static readonly indentationRegex = /^([\s\t>]*)/;
 
-    // Matches but does not save - or * list markers.
+    // Matches (but does not save) - or * list markers.
     public static readonly listMarkerRegex = /[-*]/;
 
     // Matches a checkbox and saves the status character inside
@@ -109,7 +109,7 @@ export class Task {
         'u',
     );
 
-    // Used in CreateOrEdit.ts to parse indentation and status if present
+    // Used with the "Create or Edit Task" command to parse indentation and status if present
     public static readonly nonTaskRegex = new RegExp(
         this.indentationRegex.source +
             this.listMarkerRegex.source +
@@ -120,7 +120,7 @@ export class Task {
         'u',
     );
 
-    // Used in ToggleDone.ts to detect a list item that can get a checkbox added to it.
+    // Used with "Toggle Done" command to detect a list item that can get a checkbox added to it.
     public static readonly listItemRegex = new RegExp(
         this.indentationRegex.source + '(' + this.listMarkerRegex.source + ')',
     );
