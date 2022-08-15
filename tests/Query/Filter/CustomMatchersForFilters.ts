@@ -1,6 +1,16 @@
 import type { FilterOrErrorMessage } from '../../../src/Query/Filter/Filter';
 import { fromLine } from '../../TestHelpers';
 
+/* To use this code, you must add these lines:
+
+import { toMatchTaskWithDescription } from '<relative-path>/CustomMatchersForFilters';
+
+expect.extend({
+    toMatchTaskWithDescription,
+});
+
+ */
+
 declare global {
     namespace jest {
         interface Matchers<R> {
