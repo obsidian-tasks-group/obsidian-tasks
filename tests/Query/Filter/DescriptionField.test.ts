@@ -3,6 +3,7 @@ import { getSettings, updateSettings } from '../../../src/config/Settings';
 import { testTaskFilter } from '../../TestingTools/FilterTestHelpers';
 import { fromLine } from '../../TestHelpers';
 import type { FilterOrErrorMessage } from '../../../src/Query/Filter/Filter';
+import { toMatchTaskWithDescription } from '../../CustomMatchers/CustomMatchersForFilters';
 
 function testDescriptionFilter(
     filter: FilterOrErrorMessage,
@@ -13,44 +14,6 @@ function testDescriptionFilter(
         line,
     });
     testTaskFilter(filter, task, expected);
-}
-
-declare global {
-    namespace jest {
-        interface Matchers<R> {
-            toMatchTaskWithDescription(description: string): R;
-        }
-
-        interface Expect {
-            toMatchTaskWithDescription(description: string): any;
-        }
-
-        interface InverseAsymmetricMatchers {
-            toMatchTaskWithDescription(description: string): any;
-        }
-    }
-}
-
-export function toMatchTaskWithDescription(
-    filter: FilterOrErrorMessage,
-    description: string,
-) {
-    const task = fromLine({
-        line: description,
-    });
-
-    const matches = filter.filter!(task);
-    if (!matches) {
-        return {
-            message: () => `unexpected failure to match task: ${description}`,
-            pass: false,
-        };
-    }
-
-    return {
-        message: () => `filter should not have matched task: ${description}`,
-        pass: true,
-    };
 }
 
 expect.extend({
