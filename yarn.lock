@@ -3312,22 +3312,22 @@ markdownlint-cli2-formatter-default@0.0.3:
   resolved "https://registry.yarnpkg.com/markdownlint-cli2-formatter-default/-/markdownlint-cli2-formatter-default-0.0.3.tgz#5aecd6e576ad18801b76e58bbbaf0e916c583ab8"
   integrity sha512-QEAJitT5eqX1SNboOD+SO/LNBpu4P4je8JlR02ug2cLQAqmIhh8IJnSK7AcaHBHhNADqdGydnPpQOpsNcEEqCw==
 
-markdownlint-cli2@^0.5.0:
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/markdownlint-cli2/-/markdownlint-cli2-0.5.0.tgz#4d2c3545d2ab4e8b1d38dcb81e207602061eba32"
-  integrity sha512-lUirs0NEuIOIwfWCjVqBBKB5VXD+OceyviHuyjwOUAj/DWm5Pf8iJ23nMo/0ySH6svQJ9ddC+Dsq/X5Hd+yvnA==
+markdownlint-cli2@^0.5.1:
+  version "0.5.1"
+  resolved "https://registry.yarnpkg.com/markdownlint-cli2/-/markdownlint-cli2-0.5.1.tgz#b55b89301f422231a0fc6265794b28cf4da95a82"
+  integrity sha512-f3Nb1GF/c8YSrV/FntsCWzpa5mLFJRlO+wzEgv+lkNQjU6MZflUwc2FbyEDPTo6oVhP2VyUOkK0GkFgfuktl1w==
   dependencies:
     globby "13.1.2"
-    markdownlint "0.26.1"
+    markdownlint "0.26.2"
     markdownlint-cli2-formatter-default "0.0.3"
     micromatch "4.0.5"
     strip-json-comments "5.0.0"
     yaml "2.1.1"
 
-markdownlint@0.26.1:
-  version "0.26.1"
-  resolved "https://registry.yarnpkg.com/markdownlint/-/markdownlint-0.26.1.tgz#0f6ea2d0fc08c4f41c6e001b467736405327a392"
-  integrity sha512-8sLz1ktz5s4E0IDum2H9aiWLQU7RA5Eket9HUW5IRwfFnW2RD2ZyqYePW+z71tMc7lrFZc1+yPmlN9lirbJnlg==
+markdownlint@0.26.2:
+  version "0.26.2"
+  resolved "https://registry.yarnpkg.com/markdownlint/-/markdownlint-0.26.2.tgz#11d3d03e7f0dd3c2e239753ee8fd064a861d9237"
+  integrity sha512-2Am42YX2Ex5SQhRq35HxYWDfz1NLEOZWWN25nqd2h3AHRKsGRE+Qg1gt1++exW792eXTrR4jCNHfShfWk9Nz8w==
   dependencies:
     markdown-it "13.0.1"
 
