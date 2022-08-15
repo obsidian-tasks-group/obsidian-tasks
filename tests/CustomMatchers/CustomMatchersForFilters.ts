@@ -2,12 +2,12 @@ import type { FilterOrErrorMessage } from '../../src/Query/Filter/Filter';
 import { fromLine } from '../TestHelpers';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 
-/* Example usage (shown for toMatchTaskWithDescription(), but other matchers are available.
+/* Example usage (shown for toMatchTaskFromLine(), but other matchers are available.
 
-import { toMatchTaskWithDescription } from '<relative-path>/CustomMatchersForFilters';
+import { toMatchTaskFromLine } from '<relative-path>/CustomMatchersForFilters';
 
 expect.extend({
-    toMatchTaskWithDescription,
+    toMatchTaskFromLine,
 });
 
  */
@@ -16,19 +16,19 @@ declare global {
     namespace jest {
         interface Matchers<R> {
             toBeValid(): R;
-            toMatchTaskWithDescription(description: string): R;
+            toMatchTaskFromLine(description: string): R;
             toMatchTaskWithPath(path: string): R;
         }
 
         interface Expect {
             toBeValid(): any;
-            toMatchTaskWithDescription(description: string): any;
+            toMatchTaskFromLine(description: string): any;
             toMatchTaskWithPath(path: string): any;
         }
 
         interface InverseAsymmetricMatchers {
             toBeValid(): any;
-            toMatchTaskWithDescription(description: string): any;
+            toMatchTaskFromLine(description: string): any;
             toMatchTaskWithPath(path: string): any;
         }
     }
@@ -57,7 +57,7 @@ export function toBeValid(filter: FilterOrErrorMessage) {
     };
 }
 
-export function toMatchTaskWithDescription(
+export function toMatchTaskFromLine(
     filter: FilterOrErrorMessage,
     description: string,
 ) {
