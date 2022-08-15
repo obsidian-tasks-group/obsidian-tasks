@@ -2,7 +2,7 @@ import type { FilterOrErrorMessage } from '../../../src/Query/Filter/Filter';
 import { fromLine } from '../../TestHelpers';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 
-/* To use this code, you must add these lines:
+/* Example usage (shown for toMatchTaskWithDescription(), but other matchers are available.
 
 import { toMatchTaskWithDescription } from '<relative-path>/CustomMatchersForFilters';
 
