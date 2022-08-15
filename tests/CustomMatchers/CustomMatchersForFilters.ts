@@ -1,6 +1,6 @@
-import type { FilterOrErrorMessage } from '../../../src/Query/Filter/Filter';
-import { fromLine } from '../../TestHelpers';
-import { TaskBuilder } from '../../TestingTools/TaskBuilder';
+import type { FilterOrErrorMessage } from '../../src/Query/Filter/Filter';
+import { fromLine } from '../TestHelpers';
+import { TaskBuilder } from '../TestingTools/TaskBuilder';
 
 /* Example usage (shown for toMatchTaskWithDescription(), but other matchers are available.
 

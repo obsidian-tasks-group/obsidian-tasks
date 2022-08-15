@@ -2,7 +2,10 @@ import { PathField } from '../../../src/Query/Filter/PathField';
 import type { FilterOrErrorMessage } from '../../../src/Query/Filter/Filter';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { testFilter } from '../../TestingTools/FilterTestHelpers';
-import { toBeValid, toMatchTaskWithPath } from './CustomMatchersForFilters';
+import {
+    toBeValid,
+    toMatchTaskWithPath,
+} from '../../CustomMatchers/CustomMatchersForFilters';
 
 function testTaskFilterForTaskWithPath(
     filter: FilterOrErrorMessage,
