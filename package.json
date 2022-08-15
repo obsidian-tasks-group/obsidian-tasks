@@ -33,7 +33,7 @@
     "builtin-modules": "^3.3.0",
     "esbuild": "0.14.54",
     "esbuild-svelte": "^0.7.1",
-    "eslint": "^8.21.0",
+    "eslint": "^8.22.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-prettier": "^4.2.1",
