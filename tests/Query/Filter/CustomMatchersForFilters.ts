@@ -15,15 +15,21 @@ expect.extend({
 declare global {
     namespace jest {
         interface Matchers<R> {
+            toBeValid(): R;
             toMatchTaskWithDescription(description: string): R;
+            toMatchTaskWithPath(path: string): R;
         }
 
         interface Expect {
+            toBeValid(): any;
             toMatchTaskWithDescription(description: string): any;
+            toMatchTaskWithPath(path: string): any;
         }
 
         interface InverseAsymmetricMatchers {
+            toBeValid(): any;
             toMatchTaskWithDescription(description: string): any;
+            toMatchTaskWithPath(path: string): any;
         }
     }
 }
@@ -48,28 +54,6 @@ export function toMatchTaskWithDescription(
         message: () => `filter should not have matched task: ${description}`,
         pass: true,
     };
-}
-
-declare global {
-    namespace jest {
-        interface Matchers<R> {
-            toMatchTaskWithPath(path: string): R;
-
-            toBeValid(): R;
-        }
-
-        interface Expect {
-            toMatchTaskWithPath(path: string): any;
-
-            toBeValid(): any;
-        }
-
-        interface InverseAsymmetricMatchers {
-            toMatchTaskWithPath(path: string): any;
-
-            toBeValid(): any;
-        }
-    }
 }
 
 export function toBeValid(filter: FilterOrErrorMessage) {
