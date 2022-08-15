@@ -16,19 +16,19 @@ declare global {
     namespace jest {
         interface Matchers<R> {
             toBeValid(): R;
-            toMatchTaskFromLine(description: string): R;
+            toMatchTaskFromLine(line: string): R;
             toMatchTaskWithPath(path: string): R;
         }
 
         interface Expect {
             toBeValid(): any;
-            toMatchTaskFromLine(description: string): any;
+            toMatchTaskFromLine(line: string): any;
             toMatchTaskWithPath(path: string): any;
         }
 
         interface InverseAsymmetricMatchers {
             toBeValid(): any;
-            toMatchTaskFromLine(description: string): any;
+            toMatchTaskFromLine(line: string): any;
             toMatchTaskWithPath(path: string): any;
         }
     }
@@ -59,22 +59,22 @@ export function toBeValid(filter: FilterOrErrorMessage) {
 
 export function toMatchTaskFromLine(
     filter: FilterOrErrorMessage,
-    description: string,
+    line: string,
 ) {
     const task = fromLine({
-        line: description,
+        line: line,
     });
 
     const matches = filter.filter!(task);
     if (!matches) {
         return {
-            message: () => `unexpected failure to match task: ${description}`,
+            message: () => `unexpected failure to match task: ${line}`,
             pass: false,
         };
     }
 
     return {
-        message: () => `filter should not have matched task: ${description}`,
+        message: () => `filter should not have matched task: ${line}`,
         pass: true,
     };
 }
