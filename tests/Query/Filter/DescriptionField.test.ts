@@ -3,7 +3,7 @@ import { getSettings, updateSettings } from '../../../src/config/Settings';
 import { testTaskFilter } from '../../TestingTools/FilterTestHelpers';
 import { fromLine } from '../../TestHelpers';
 import type { FilterOrErrorMessage } from '../../../src/Query/Filter/Filter';
-import { toMatchTaskWithDescription } from '../../CustomMatchers/CustomMatchersForFilters';
+import { toMatchTaskFromLine } from '../../CustomMatchers/CustomMatchersForFilters';
 
 function testDescriptionFilter(
     filter: FilterOrErrorMessage,
@@ -17,7 +17,7 @@ function testDescriptionFilter(
 }
 
 expect.extend({
-    toMatchTaskWithDescription,
+    toMatchTaskFromLine,
 });
 
 describe('description', () => {
@@ -76,10 +76,10 @@ describe('description', () => {
         );
 
         // Assert
-        expect(filter).not.toMatchTaskWithDescription(
+        expect(filter).not.toMatchTaskFromLine(
             '- [ ] this does not start with the pattern',
         );
-        expect(filter).toMatchTaskWithDescription(
+        expect(filter).toMatchTaskFromLine(
             '- [ ] task does start with the pattern',
         );
     });
@@ -91,10 +91,10 @@ describe('description', () => {
         );
 
         // Assert
-        expect(filter).toMatchTaskWithDescription(
+        expect(filter).toMatchTaskFromLine(
             '- [ ] this does not start with the pattern',
         );
-        expect(filter).not.toMatchTaskWithDescription(
+        expect(filter).not.toMatchTaskFromLine(
             '- [ ] task does start with the pattern',
         );
     });

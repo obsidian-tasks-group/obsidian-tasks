@@ -2,13 +2,53 @@ import type { FilterOrErrorMessage } from '../../src/Query/Filter/Filter';
 import { fromLine } from '../TestHelpers';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 
-/* Example usage (shown for toMatchTaskWithDescription(), but other matchers are available.
+/**
+ @summary
+ This file contains Jest custom matchers, for idiomatic testing of filtering
+ via Field classes.
 
-import { toMatchTaskWithDescription } from '<relative-path>/CustomMatchersForFilters';
+ @description
+ These matchers are a more idiomatic way of testing custom objects via
+ the Jest test framework than the helper functions in tests/TestingTools/
+ and various testing helpers in individual x.test.ts files.
+ <br>
 
-expect.extend({
-    toMatchTaskWithDescription,
+ When they fail, they show the line number at the call site, rather
+ than some line buried down in the helper function, in other words, a much
+ more useful call stack/traceback.
+ <br>
+
+ They can also generate much more informative error messages describing
+ the failure.
+ <br>
+
+ Example usage (shown for  {@link toMatchTaskFromLine}, but other matchers are available:
+ <br>
+
+ @example
+
+ // Setup:
+ import { toMatchTaskFromLine } from '<relative-path>/CustomMatchersForFilters';
+
+ expect.extend({
+    toMatchTaskFromLine,
 });
+
+ // Inside it() and describe() blocks:
+ it('works negating regexes', () => {
+        // Arrange
+        const filter = new DescriptionField().createFilterOrErrorMessage(
+            'description regex does not match /^task/',
+        );
+
+        // Assert
+        expect(filter).toMatchTaskFromLine(
+            '- [ ] this does not start with the pattern',
+        );
+        expect(filter).not.toMatchTaskFromLine(
+            '- [ ] task does start with the pattern',
+        );
+    });
 
  */
 
@@ -16,19 +56,19 @@ declare global {
     namespace jest {
         interface Matchers<R> {
             toBeValid(): R;
-            toMatchTaskWithDescription(description: string): R;
+            toMatchTaskFromLine(line: string): R;
             toMatchTaskWithPath(path: string): R;
         }
 
         interface Expect {
             toBeValid(): any;
-            toMatchTaskWithDescription(description: string): any;
+            toMatchTaskFromLine(line: string): any;
             toMatchTaskWithPath(path: string): any;
         }
 
         interface InverseAsymmetricMatchers {
             toBeValid(): any;
-            toMatchTaskWithDescription(description: string): any;
+            toMatchTaskFromLine(line: string): any;
             toMatchTaskWithPath(path: string): any;
         }
     }
@@ -57,24 +97,24 @@ export function toBeValid(filter: FilterOrErrorMessage) {
     };
 }
 
-export function toMatchTaskWithDescription(
+export function toMatchTaskFromLine(
     filter: FilterOrErrorMessage,
-    description: string,
+    line: string,
 ) {
     const task = fromLine({
-        line: description,
+        line: line,
     });
 
     const matches = filter.filter!(task);
     if (!matches) {
         return {
-            message: () => `unexpected failure to match task: ${description}`,
+            message: () => `unexpected failure to match task: ${line}`,
             pass: false,
         };
     }
 
     return {
-        message: () => `filter should not have matched task: ${description}`,
+        message: () => `filter should not have matched task: ${line}`,
         pass: true,
     };
 }
