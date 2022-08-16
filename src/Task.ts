@@ -91,7 +91,7 @@ export class Task {
     public static readonly listMarkerRegex = /[-*]/;
 
     // Matches a checkbox and saves the status character inside
-    public static readonly checkboxRegex = /\[(.)\]/;
+    public static readonly checkboxRegex = /\[(.)\]/u;
 
     // Matches the rest of the task after the checkbox.
     public static readonly afterCheckboxRegex = / *(.*)/u;
