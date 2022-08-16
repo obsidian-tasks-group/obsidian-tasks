@@ -84,11 +84,46 @@ export class Task {
 
     public static readonly dateFormat = 'YYYY-MM-DD';
 
+    // Matches indentation before a list marker (including > for potentially nested blockquotes or Obsidian callouts)
+    public static readonly indentationRegex = /^([\s\t>]*)/;
+
+    // Matches (but does not save) - or * list markers.
+    public static readonly listMarkerRegex = /[-*]/;
+
+    // Matches a checkbox and saves the status character inside
+    public static readonly checkboxRegex = /\[(.)\]/u;
+
+    // Matches the rest of the task after the checkbox.
+    public static readonly afterCheckboxRegex = / *(.*)/u;
+
     // Main regex for parsing a line. It matches the following:
-    // - Indentation (including > for potentially nested blockquotes or Obsidian callouts)
+    // - Indentation
     // - Status character
     // - Rest of task after checkbox markdown
-    public static readonly taskRegex = /^([\s\t>]*)[-*] +\[(.)\] *(.*)/u;
+    public static readonly taskRegex = new RegExp(
+        this.indentationRegex.source +
+            this.listMarkerRegex.source +
+            ' +' +
+            this.checkboxRegex.source +
+            this.afterCheckboxRegex.source,
+        'u',
+    );
+
+    // Used with the "Create or Edit Task" command to parse indentation and status if present
+    public static readonly nonTaskRegex = new RegExp(
+        this.indentationRegex.source +
+            this.listMarkerRegex.source +
+            '? *(' +
+            this.checkboxRegex.source +
+            ')?' +
+            this.afterCheckboxRegex.source,
+        'u',
+    );
+
+    // Used with "Toggle Done" command to detect a list item that can get a checkbox added to it.
+    public static readonly listItemRegex = new RegExp(
+        this.indentationRegex.source + '(' + this.listMarkerRegex.source + ')',
+    );
 
     // Match on block link at end.
     public static readonly blockLinkRegex = / \^[a-zA-Z0-9-]+$/u;
