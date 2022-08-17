@@ -233,6 +233,7 @@ Gives:
 Intentionally without `#task` as not intended to be picked up by example searches above.
 
 - [ ] Work out how to prevent `path regex matches /a/b/c/d/` from confusingly only searching `path regex matches /a/`.
+  - Logged in [#1037](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1037)
 - [ ] Add regex support to `tag`/`tags` filter.
 - [ ] Specific error message if there are no `/` at beginning and end of query - I'm finding it really easy to forget to include these.
 - [ ] Include the problem line in the error message.
