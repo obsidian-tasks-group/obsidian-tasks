@@ -140,7 +140,7 @@ short mode
 
 ````text
 ```tasks
-# Any nondigit
+# At least one non-digit
 description regex matches /^\D+$/
 limit 10
 short mode
@@ -148,7 +148,7 @@ short mode
 ````
 
 ```tasks
-# Any nondigit
+# At least one non-digit
 description regex matches /^\D+$/
 limit 10
 short mode
