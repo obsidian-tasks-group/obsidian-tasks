@@ -1,3 +1,4 @@
+import type { Task } from '../../src/Task';
 import type { FilterOrErrorMessage } from '../../src/Query/Filter/Filter';
 import { fromLine } from '../TestHelpers';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
@@ -100,14 +101,7 @@ export function toBeValid(filter: FilterOrErrorMessage) {
     };
 }
 
-export function toMatchTaskFromLine(
-    filter: FilterOrErrorMessage,
-    line: string,
-) {
-    const task = fromLine({
-        line: line,
-    });
-
+function toMatchTask(filter: FilterOrErrorMessage, task: Task, line: string) {
     const matches = filter.filter!(task);
     if (!matches) {
         return {
@@ -120,6 +114,16 @@ export function toMatchTaskFromLine(
         message: () => `filter should not have matched task: ${line}`,
         pass: true,
     };
+}
+
+export function toMatchTaskFromLine(
+    filter: FilterOrErrorMessage,
+    line: string,
+) {
+    const task = fromLine({
+        line: line,
+    });
+    return toMatchTask(filter, task, line);
 }
 
 export function toMatchTaskWithHeading(
