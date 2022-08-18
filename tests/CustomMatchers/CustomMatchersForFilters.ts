@@ -57,18 +57,21 @@ declare global {
         interface Matchers<R> {
             toBeValid(): R;
             toMatchTaskFromLine(line: string): R;
+            toMatchTaskWithHeading(heading: string | null): R;
             toMatchTaskWithPath(path: string): R;
         }
 
         interface Expect {
             toBeValid(): any;
             toMatchTaskFromLine(line: string): any;
+            toMatchTaskWithHeading(heading: string | null): any;
             toMatchTaskWithPath(path: string): any;
         }
 
         interface InverseAsymmetricMatchers {
             toBeValid(): any;
             toMatchTaskFromLine(line: string): any;
+            toMatchTaskWithHeading(heading: string | null): any;
             toMatchTaskWithPath(path: string): any;
         }
     }
@@ -115,6 +118,27 @@ export function toMatchTaskFromLine(
 
     return {
         message: () => `filter should not have matched task: ${line}`,
+        pass: true,
+    };
+}
+
+export function toMatchTaskWithHeading(
+    filter: FilterOrErrorMessage,
+    heading: string,
+) {
+    const builder = new TaskBuilder();
+    const task = builder.precedingHeader(heading).build();
+
+    const matches = filter.filter!(task);
+    if (!matches) {
+        return {
+            message: () => `unexpected failure to match task: ${heading}`,
+            pass: false,
+        };
+    }
+
+    return {
+        message: () => `filter should not have matched task: ${heading}`,
         pass: true,
     };
 }
