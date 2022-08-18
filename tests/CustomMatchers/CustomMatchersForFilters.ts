@@ -101,17 +101,19 @@ export function toBeValid(filter: FilterOrErrorMessage) {
     };
 }
 
-function toMatchTask(filter: FilterOrErrorMessage, task: Task, line: string) {
+function toMatchTask(filter: FilterOrErrorMessage, task: Task) {
     const matches = filter.filter!(task);
     if (!matches) {
         return {
-            message: () => `unexpected failure to match task: ${line}`,
+            message: () =>
+                `unexpected failure to match task: ${task.toFileLineString()}`,
             pass: false,
         };
     }
 
     return {
-        message: () => `filter should not have matched task: ${line}`,
+        message: () =>
+            `filter should not have matched task: ${task.toFileLineString()}`,
         pass: true,
     };
 }
@@ -123,7 +125,7 @@ export function toMatchTaskFromLine(
     const task = fromLine({
         line: line,
     });
-    return toMatchTask(filter, task, line);
+    return toMatchTask(filter, task);
 }
 
 export function toMatchTaskWithHeading(
