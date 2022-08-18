@@ -8,9 +8,6 @@ import { FilterOrErrorMessage } from './Filter';
  * value, such as the description or file path.
  */
 export abstract class TextField extends Field {
-    private maybeNegate(match: boolean, filterMethod: String) {
-        return filterMethod.match(/not/) ? !match : match;
-    }
     public createFilterOrErrorMessage(line: string): FilterOrErrorMessage {
         const result = new FilterOrErrorMessage();
         const match = Field.getMatch(this.filterRegexp(), line);
@@ -76,4 +73,8 @@ export abstract class TextField extends Field {
      * @protected
      */
     protected abstract value(task: Task): string;
+
+    private maybeNegate(match: boolean, filterMethod: String) {
+        return filterMethod.match(/not/) ? !match : match;
+    }
 }
