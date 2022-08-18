@@ -57,6 +57,7 @@ declare global {
     namespace jest {
         interface Matchers<R> {
             toBeValid(): R;
+            toMatchTask(task: Task): R;
             toMatchTaskFromLine(line: string): R;
             toMatchTaskWithHeading(heading: string | null): R;
             toMatchTaskWithPath(path: string): R;
@@ -64,6 +65,7 @@ declare global {
 
         interface Expect {
             toBeValid(): any;
+            toMatchTask(task: Task): any;
             toMatchTaskFromLine(line: string): any;
             toMatchTaskWithHeading(heading: string | null): any;
             toMatchTaskWithPath(path: string): any;
@@ -71,6 +73,7 @@ declare global {
 
         interface InverseAsymmetricMatchers {
             toBeValid(): any;
+            toMatchTask(task: Task): any;
             toMatchTaskFromLine(line: string): any;
             toMatchTaskWithHeading(heading: string | null): any;
             toMatchTaskWithPath(path: string): any;
@@ -101,7 +104,7 @@ export function toBeValid(filter: FilterOrErrorMessage) {
     };
 }
 
-function toMatchTask(filter: FilterOrErrorMessage, task: Task) {
+export function toMatchTask(filter: FilterOrErrorMessage, task: Task) {
     const matches = filter.filter!(task);
     if (!matches) {
         return {
