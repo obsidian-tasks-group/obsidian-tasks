@@ -76,3 +76,10 @@ body:
       options:
         - label: I have tried it with all other plugins disabled and the error still occurs
           required: false
+
+  - type: textarea
+    id: possible-solution
+    attributes:
+      label: Possible solution
+      description: |
+        Not obligatory, but please suggest a fix or reason for the bug, if you have an idea.
