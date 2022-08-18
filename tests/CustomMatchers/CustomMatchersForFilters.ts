@@ -1,3 +1,4 @@
+import type { Task } from '../../src/Task';
 import type { FilterOrErrorMessage } from '../../src/Query/Filter/Filter';
 import { fromLine } from '../TestHelpers';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
@@ -56,19 +57,25 @@ declare global {
     namespace jest {
         interface Matchers<R> {
             toBeValid(): R;
+            toMatchTask(task: Task): R;
             toMatchTaskFromLine(line: string): R;
+            toMatchTaskWithHeading(heading: string | null): R;
             toMatchTaskWithPath(path: string): R;
         }
 
         interface Expect {
             toBeValid(): any;
+            toMatchTask(task: Task): any;
             toMatchTaskFromLine(line: string): any;
+            toMatchTaskWithHeading(heading: string | null): any;
             toMatchTaskWithPath(path: string): any;
         }
 
         interface InverseAsymmetricMatchers {
             toBeValid(): any;
+            toMatchTask(task: Task): any;
             toMatchTaskFromLine(line: string): any;
+            toMatchTaskWithHeading(heading: string | null): any;
             toMatchTaskWithPath(path: string): any;
         }
     }
@@ -97,6 +104,23 @@ export function toBeValid(filter: FilterOrErrorMessage) {
     };
 }
 
+export function toMatchTask(filter: FilterOrErrorMessage, task: Task) {
+    const matches = filter.filter!(task);
+    if (!matches) {
+        return {
+            message: () =>
+                `unexpected failure to match task: ${task.toFileLineString()}`,
+            pass: false,
+        };
+    }
+
+    return {
+        message: () =>
+            `filter should not have matched task: ${task.toFileLineString()}`,
+        pass: true,
+    };
+}
+
 export function toMatchTaskFromLine(
     filter: FilterOrErrorMessage,
     line: string,
@@ -104,19 +128,16 @@ export function toMatchTaskFromLine(
     const task = fromLine({
         line: line,
     });
+    return toMatchTask(filter, task);
+}
 
-    const matches = filter.filter!(task);
-    if (!matches) {
-        return {
-            message: () => `unexpected failure to match task: ${line}`,
-            pass: false,
-        };
-    }
-
-    return {
-        message: () => `filter should not have matched task: ${line}`,
-        pass: true,
-    };
+export function toMatchTaskWithHeading(
+    filter: FilterOrErrorMessage,
+    heading: string,
+) {
+    const builder = new TaskBuilder();
+    const task = builder.precedingHeader(heading).build();
+    return toMatchTask(filter, task);
 }
 
 export function toMatchTaskWithPath(
@@ -125,17 +146,5 @@ export function toMatchTaskWithPath(
 ) {
     const builder = new TaskBuilder();
     const task = builder.path(path).build();
-
-    const matches = filter.filter!(task);
-    if (!matches) {
-        return {
-            message: () => `unexpected failure to match task: ${path}`,
-            pass: false,
-        };
-    }
-
-    return {
-        message: () => `filter should not have matched task: ${path}`,
-        pass: true,
-    };
+    return toMatchTask(filter, task);
 }
