@@ -15,7 +15,7 @@ export abstract class TextField extends Field {
             const filterMethod = match[1];
             if (['includes', 'does not include'].includes(filterMethod)) {
                 result.filter = (task: Task) =>
-                    this.maybeNegate(
+                    TextField.maybeNegate(
                         TextField.stringIncludesCaseInsensitive(
                             this.value(task),
                             match[2],
@@ -32,7 +32,7 @@ export abstract class TextField extends Field {
 
                 if (query !== null) {
                     result.filter = (task: Task) =>
-                        this.maybeNegate(
+                        TextField.maybeNegate(
                             this.value(task).match(
                                 new RegExp(query[1], query[2]),
                             ) !== null,
@@ -74,7 +74,7 @@ export abstract class TextField extends Field {
      */
     protected abstract value(task: Task): string;
 
-    private maybeNegate(match: boolean, filterMethod: String) {
+    private static maybeNegate(match: boolean, filterMethod: String) {
         return filterMethod.match(/not/) ? !match : match;
     }
 }
