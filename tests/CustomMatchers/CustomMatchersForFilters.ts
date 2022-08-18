@@ -134,19 +134,7 @@ export function toMatchTaskWithHeading(
 ) {
     const builder = new TaskBuilder();
     const task = builder.precedingHeader(heading).build();
-
-    const matches = filter.filter!(task);
-    if (!matches) {
-        return {
-            message: () => `unexpected failure to match task: ${heading}`,
-            pass: false,
-        };
-    }
-
-    return {
-        message: () => `filter should not have matched task: ${heading}`,
-        pass: true,
-    };
+    return toMatchTask(filter, task);
 }
 
 export function toMatchTaskWithPath(
@@ -155,17 +143,5 @@ export function toMatchTaskWithPath(
 ) {
     const builder = new TaskBuilder();
     const task = builder.path(path).build();
-
-    const matches = filter.filter!(task);
-    if (!matches) {
-        return {
-            message: () => `unexpected failure to match task: ${path}`,
-            pass: false,
-        };
-    }
-
-    return {
-        message: () => `filter should not have matched task: ${path}`,
-        pass: true,
-    };
+    return toMatchTask(filter, task);
 }
