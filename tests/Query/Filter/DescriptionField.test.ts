@@ -162,7 +162,9 @@ describe('description', () => {
             '- [ ] task does start with the pattern',
         );
     });
+});
 
+describe('search description for time stamps', () => {
     it('should find a time stamp in the description - simple version', () => {
         // Arrange
         const filter = new DescriptionField().createFilterOrErrorMessage(
@@ -263,5 +265,23 @@ describe('search description for sub-tags', () => {
             '- [ ] Do stuff #tag/subtag3/subsubtag5',
         );
         expect(filter).not.toMatchTaskFromLine('- [ ] Do stuff #tag');
+    });
+});
+
+describe('search description for Alternation (OR)', () => {
+    it('should search for one of several spellings of waiting', () => {
+        // Regex equivalent of:
+        //      (description includes waiting) OR (description includes waits) OR (description includes wartet)
+        // See https://obsidian-tasks-group.github.io/obsidian-tasks/queries/combining-filters/#finding-tasks-that-are-waiting
+
+        // Arrange
+        const filter = new DescriptionField().createFilterOrErrorMessage(
+            String.raw`description regex matches /waiting|waits|wartet/i`,
+        );
+
+        // Assert
+        expect(filter).toMatchTaskFromLine('- [ ] Do stuff waiting');
+        expect(filter).toMatchTaskFromLine('- [ ] Do stuff waits');
+        expect(filter).toMatchTaskFromLine('- [ ] Do stuff wartet');
     });
 });
