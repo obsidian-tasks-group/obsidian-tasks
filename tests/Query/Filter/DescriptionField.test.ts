@@ -252,14 +252,18 @@ describe('search description for short tags, excluding sub-tags', () => {
 });
 
 describe('search description for sub-tags', () => {
-    // Arrange
-    // $ is an end-of-input character.
-    // So this search will find the given tag at the end of any task description
-    const filter = new DescriptionField().createFilterOrErrorMessage(
-        String.raw`description regex matches /#tag\/subtag1\/subtag2/i`,
-    );
+    it('should search for a short tag anywhere', () => {
+        // Arrange
+        // $ is an end-of-input character.
+        // So this search will find the given tag at the end of any task description
+        const filter = new DescriptionField().createFilterOrErrorMessage(
+            String.raw`description regex matches /#tag\/subtag\/subsubtag/i`,
+        );
 
-    // Assert
-    expect(filter).toMatchTaskFromLine('- [ ] Do stuff #tag/subtag1/subtag2');
-    expect(filter).not.toMatchTaskFromLine('- [ ] Do stuff #tag');
+        // Assert
+        expect(filter).toMatchTaskFromLine(
+            '- [ ] Do stuff #tag/subtag/subsubtag',
+        );
+        expect(filter).not.toMatchTaskFromLine('- [ ] Do stuff #tag');
+    });
 });
