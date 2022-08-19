@@ -152,3 +152,47 @@ Find tasks containing a time in the description. This is more precise than the p
 ```text
 description regex matches /[012][0-9]:[0-5][0-9]/
 ```
+
+### Finding sub-tags
+
+Currently `tag` and `tags` searches do not yet support regular expressions. Therefore, for precise searching of tags, use  `description` instead.
+
+Suppose you wanted to search for tags of this form: `#tag/subtag3/subsubtag5`, where the `3` and the `5` are allowed to be any single digit.
+
+- We can use either `[0-9]` or `\d` to match a single digit.
+- To find a sub-tag, any `/` characters must be 'escaped' to prevent them truncating the rest of the search pattern.
+
+Escaping the `/` leads us to this instruction, which we have made case-insensitive to find capitalised tags too:
+
+```text
+description regex matches /#tag\/subtag[0-9]\/subsubtag[0-9]/i
+```
+
+### Finding short tags
+
+Currently `tag` and `tags` searches do not yet support regular expressions. Therefore, for precise searching of tags, use  `description` instead.
+
+Suppose you wanted to search for tasks with a very short tag in: `#t`, and to not match tags line `#task` and `#t/subtag`.
+
+The most general query is:
+
+```text
+(description regex matches /#t\s/i) OR (description regex matches /#t$/i)
+```
+
+We have made it case-insensitive to find capitalised tags too.
+
+The Boolean `OR` allows us to search for two different patterns, for a thorough search:
+
+- `description regex matches /#t\s/i`
+  - Matches `#t` or `#T`, followed by any white-space character. This might be a literal space, or it might be a tab, for example.
+  - It won't be a newline character though, as task descriptions are always exactly one line, with no newline character at the end.
+  - For example, this will match:
+    - `- [ ] #t Do stuff`
+    - `- [ ] Do #t stuff`
+  - But it will not match:
+    - `- [ ] Do stuff #t`
+- `description regex matches /#t$/i`
+  - Matches `#t` or `#T` at the very end of the task line (after all signifiers and trailing white space has been removed)
+  - For example, this will match:
+    - `- [ ] Do stuff #t`
