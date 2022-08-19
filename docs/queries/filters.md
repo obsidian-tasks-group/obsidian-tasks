@@ -140,6 +140,21 @@ As well as the date-related searches above, these filters search other propertie
 
 > `regex matches` and `regex does not match` were introduced in Tasks 1.12.0.
 
+For precise searches, it may help to know that `description`:
+
+- first removes all each task's signifier emojis and their values,
+- then removes any global filter,
+- then removes an trailing spaces
+- and then searches the remaining text
+
+For example:
+
+| Global Filter    | Task line                                                                | Text searched by `description`   |
+| ---------------- | ------------------------------------------------------------------------ | -------------------------------- |
+| No global filter | `'- [ ] Do stuff  ⏫  #tag1 ✅ 2022-08-12 #tag2/sub-tag '`               | `'Do stuff #tag1 #tag2/sub-tag'` |
+| `#task`          | `'- [ ] #task Do stuff  ⏫  #tag1 ✅ 2022-08-12 #tag2/sub-tag '`         | `'Do stuff #tag1 #tag2/sub-tag'` |
+| `global-filter`  | `'- [ ] global-filter Do stuff  ⏫  #tag1 ✅ 2022-08-12 #tag2/sub-tag '` | `'Do stuff #tag1 #tag2/sub-tag'` |
+
 ### Priority
 
 - `priority is (above|below)? (low|none|medium|high)`
