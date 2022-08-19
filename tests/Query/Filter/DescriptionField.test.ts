@@ -7,6 +7,7 @@ import { getSettings, updateSettings } from '../../../src/config/Settings';
 import { testTaskFilter } from '../../TestingTools/FilterTestHelpers';
 import { fromLine } from '../../TestHelpers';
 import type { FilterOrErrorMessage } from '../../../src/Query/Filter/Filter';
+import { BooleanField } from '../../../src/Query/Filter/BooleanField';
 import { toMatchTaskFromLine } from '../../CustomMatchers/CustomMatchersForFilters';
 
 window.moment = moment;
@@ -188,5 +189,68 @@ describe('description', () => {
         expect(filter).toMatchTaskFromLine('- [ ] Do me at 23:59');
         expect(filter).toMatchTaskFromLine('- [ ] Do me at 00:01');
         expect(filter).not.toMatchTaskFromLine('- [ ] Do me at 99:99');
+    });
+});
+
+describe('search description for short tags, excluding sub-tags', () => {
+    it('should search for a short tag anywhere in the line except the end', () => {
+        // Arrange
+        // \s is a whitespace character.
+        // In regular text, it would match a newline character, so would find
+        // text at the end of lines.
+        // However, task descriptions do not have end-of-line characters,
+        // so it does not match a tag at the end of the line.
+        const filter = new DescriptionField().createFilterOrErrorMessage(
+            'description regex matches /#t\\s/',
+        );
+
+        // Assert
+        expect(filter).toMatchTaskFromLine('- [ ] #t Do stuff');
+        expect(filter).toMatchTaskFromLine('- [ ] Do #t stuff');
+
+        // Confirm that tags at end of line are not found. (See comments above.)
+        expect(filter).not.toMatchTaskFromLine('- [ ] Do stuff #t');
+
+        // Confirm that tags with sub-tags are not found:
+        expect(filter).not.toMatchTaskFromLine('- [ ] #t/b Do stuff');
+        expect(filter).not.toMatchTaskFromLine('- [ ] Do #t/b stuff');
+        expect(filter).not.toMatchTaskFromLine('- [ ] Do stuff #t/b');
+    });
+
+    it('should search for a short tag at the end of the task', () => {
+        // Arrange
+        // $ is an end-of-input character.
+        // So this search will find the given tag at the end of any task description
+        const filter = new DescriptionField().createFilterOrErrorMessage(
+            'description regex matches /#t$/i',
+        );
+
+        // Assert
+        expect(filter).toMatchTaskFromLine('- [ ] Do stuff #t');
+
+        expect(filter).not.toMatchTaskFromLine('- [ ] #t Do stuff');
+        expect(filter).not.toMatchTaskFromLine('- [ ] Do #t stuff');
+
+        // Confirm that tags with sub-tags are not found:
+        expect(filter).not.toMatchTaskFromLine('- [ ] #t/b Do stuff');
+        expect(filter).not.toMatchTaskFromLine('- [ ] Do #t/b stuff');
+        expect(filter).not.toMatchTaskFromLine('- [ ] Do stuff #t/b');
+    });
+
+    it('should search for a short tag anywhere', () => {
+        // Arrange
+        const filter = new BooleanField().createFilterOrErrorMessage(
+            '(description regex matches /#t\\s/) OR (description regex matches /#t$/i)',
+        );
+
+        // Assert
+        expect(filter).toMatchTaskFromLine('- [ ] #t Do stuff');
+        expect(filter).toMatchTaskFromLine('- [ ] Do #t stuff');
+        expect(filter).toMatchTaskFromLine('- [ ] Do stuff #t');
+
+        // Confirm that tags with sub-tags are not found:
+        expect(filter).not.toMatchTaskFromLine('- [ ] #t/b Do stuff');
+        expect(filter).not.toMatchTaskFromLine('- [ ] Do #t/b stuff');
+        expect(filter).not.toMatchTaskFromLine('- [ ] Do stuff #t/b');
     });
 });
