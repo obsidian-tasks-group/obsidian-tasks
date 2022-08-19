@@ -98,4 +98,32 @@ describe('description', () => {
             '- [ ] task does start with the pattern',
         );
     });
+
+    it('should find a time stamp in the description - simple version', () => {
+        // Arrange
+        // In code, 2 backslashes are needed to create a single `\`
+        // In Obsidian, only one backslash is needed.
+        const filter = new DescriptionField().createFilterOrErrorMessage(
+            'description regex matches /\\d\\d:\\d\\d/',
+        );
+
+        // Assert
+        expect(filter).toMatchTaskFromLine('- [ ] Do me at 23:59');
+        expect(filter).toMatchTaskFromLine('- [ ] Do me at 00:01');
+        expect(filter).toMatchTaskFromLine('- [ ] Do me at 99:99');
+    });
+
+    it('should find a time stamp in the description - more precise version', () => {
+        // Arrange
+        // In code, 2 backslashes are needed to create a single `\`
+        // In Obsidian, only one backslash is needed.
+        const filter = new DescriptionField().createFilterOrErrorMessage(
+            'description regex matches /[012][0-9]:[0-5][0-9]/',
+        );
+
+        // Assert
+        expect(filter).toMatchTaskFromLine('- [ ] Do me at 23:59');
+        expect(filter).toMatchTaskFromLine('- [ ] Do me at 00:01');
+        expect(filter).not.toMatchTaskFromLine('- [ ] Do me at 99:99');
+    });
 });

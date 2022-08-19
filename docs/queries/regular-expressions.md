@@ -119,12 +119,36 @@ Please be aware of the following limitations in Tasks' implementation of regular
 
 ## Regular expression examples
 
-Example searches:
+Here are some example regex searches, to give some ideas of what can be done.
+
+### Searching the start of a field
+
+Find tasks whose description begins with Log, exact capitalisation:
 
 ```text
-# Find tasks whose description begins with Log, exact capitalisation
 description regex matches /^Log/
+```
 
-# Find tasks whose description begins with Log, ignoring capitalisation
+---
+
+Find tasks whose description begins with Log, ignoring capitalisation
+
+```text
 description regex matches /^Log/i
+```
+
+### Finding times
+
+Find tasks containing a time in the description - simple version. This matches invalid times, such as `99:99`, as `\d` means 'any digit'.
+
+```text
+description regex matches /\d\d:\d\d/
+```
+
+---
+
+Find tasks containing a time in the description. This is more precise than the previous example, thanks to specifying which digits are allowed in each position.
+
+```text
+description regex matches /[012][0-9]:[0-5][0-9]/
 ```
