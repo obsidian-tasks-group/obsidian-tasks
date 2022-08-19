@@ -197,7 +197,7 @@ describe('search description for short tags, excluding sub-tags', () => {
         // However, task descriptions do not have end-of-line characters,
         // so it does not match a tag at the end of the line.
         const filter = new DescriptionField().createFilterOrErrorMessage(
-            String.raw`description regex matches /#t\s/`,
+            String.raw`description regex matches /#t\s/i`,
         );
 
         // Assert
@@ -236,7 +236,7 @@ describe('search description for short tags, excluding sub-tags', () => {
     it('should search for a short tag anywhere', () => {
         // Arrange
         const filter = new BooleanField().createFilterOrErrorMessage(
-            String.raw`(description regex matches /#t\s/) OR (description regex matches /#t$/i)`,
+            String.raw`(description regex matches /#t\s/i) OR (description regex matches /#t$/i)`,
         );
 
         // Assert
