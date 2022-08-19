@@ -117,7 +117,6 @@ For a thorough, clear introduction to all the options, see [Regular expressions]
 Learning resources:
 
 - [Regular expressions](https://javascript.info/regular-expressions) at JavaScript.info
-- <https://javascript.info/regular-expressions>
 - [Regex Tutorial](https://regexone.com/)
 - [Regex Cheat Sheet](https://www.rexegg.com/regex-quickstart.html)
 
