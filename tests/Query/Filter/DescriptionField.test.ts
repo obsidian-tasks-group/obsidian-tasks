@@ -254,15 +254,13 @@ describe('search description for short tags, excluding sub-tags', () => {
 describe('search description for sub-tags', () => {
     it('should search for a short tag anywhere', () => {
         // Arrange
-        // $ is an end-of-input character.
-        // So this search will find the given tag at the end of any task description
         const filter = new DescriptionField().createFilterOrErrorMessage(
-            String.raw`description regex matches /#tag\/subtag\/subsubtag/i`,
+            String.raw`description regex matches /#tag\/subtag[0-9]\/subsubtag[0-9]/i`,
         );
 
         // Assert
         expect(filter).toMatchTaskFromLine(
-            '- [ ] Do stuff #tag/subtag/subsubtag',
+            '- [ ] Do stuff #tag/subtag3/subsubtag5',
         );
         expect(filter).not.toMatchTaskFromLine('- [ ] Do stuff #tag');
     });
