@@ -95,3 +95,35 @@ describe('path', () => {
         expect(filter).toMatchTaskWithPath('/other/path/file.md');
     });
 });
+
+describe('invalid unescaped slash should give helpful error text and not search', () => {
+    const filterWithUnescapedSlashes =
+        new PathField().createFilterOrErrorMessage(
+            'path regex matches /a/b/c/d/',
+        );
+
+    // This test demonstrates the issue logged in
+    // https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1037
+    //      'Work out how to prevent `path regex matches /a/b/c/d/` from
+    //       confusingly only searching `path regex matches /a/`.
+    // All these tests are marked as 'failing' because the code currently accepts
+    // an invalid search.
+    it.failing('should not be valid', () => {
+        expect(filterWithUnescapedSlashes).not.toBeValid();
+    });
+
+    it.failing('should have a meaningful error message', () => {
+        // The error message does not have to be exactly this.
+        // The main thing is that it should convey what the user needs to do
+        // to fix the expression.
+        expect(filterWithUnescapedSlashes.error).toEqual(
+            'An unescaped delimiter must be escaped; in most languages with a backslash (\\)',
+        );
+    });
+
+    it.failing('should not match a subset of requested path', () => {
+        // Once the issue is fixed, and filterWithUnescapedSlashes is not valid,
+        // this test should be deleted.
+        expect(filterWithUnescapedSlashes).not.toMatchTaskWithPath('/a/b.md');
+    });
+});

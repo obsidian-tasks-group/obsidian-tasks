@@ -134,10 +134,11 @@ As well as the date-related searches above, these filters search other propertie
 - `description (includes|does not include) <string>`
   - Matches case-insensitive (disregards capitalization).
   - Disregards the global filter when matching.
-- `description (regex matches|regex does not match) <JavaScript-style Regex>`
-  - Matches based on [JavaScript's RegExp implementation](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions)
-  - Supports [JavaScript RegExp Flags](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#advanced_searching_with_flags)
-  - **_Use with extreme care; this is a tool for software developers or people willing to spend a lot of time reading complicated documentation_**
+- `description (regex matches|regex does not match) /<JavaScript-style Regex>/`
+  - Does regular expression match (case-sensitive by default).
+  - Essential reading: [Regular Expression Searches]({{ site.baseurl }}{% link queries/regular-expressions.md %}).
+
+> `regex matches` and `regex does not match` were introduced in Tasks 1.12.0.
 
 ### Priority
 
@@ -194,6 +195,11 @@ These filters allow searching for tasks in particular files and sections of file
 
 - `path (includes|does not include) <path>`
   - Matches case-insensitive (disregards capitalization).
+- `path (regex matches|regex does not match) /<JavaScript-style Regex>/`
+  - Does regular expression match (case-sensitive by default).
+  - Essential reading: [Regular Expression Searches]({{ site.baseurl }}{% link queries/regular-expressions.md %}).
+
+> `regex matches` and `regex does not match` were introduced in Tasks 1.12.0.
 
 ### Heading
 
@@ -202,3 +208,10 @@ These filters allow searching for tasks in particular files and sections of file
   - Always tries to match the closest heading above the task, regardless of heading level.
   - `does not include` will match a task that does not have a preceding heading in its file.
   - Matches case-insensitive (disregards capitalization).
+- `heading (regex matches|regex does not match) /<JavaScript-style Regex>/`
+  - Whether or not the heading preceding the task includes the given regular expression.
+  - Always tries to match the closest heading above the task, regardless of heading level.
+  - `regex does not match` will match a task that does not have a preceding heading in its file.
+  - Essential reading: [Regular Expression Searches]({{ site.baseurl }}{% link queries/regular-expressions.md %}).
+
+> `regex matches` and `regex does not match` were introduced in Tasks 1.12.0.
