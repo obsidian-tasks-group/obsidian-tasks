@@ -53,7 +53,7 @@ describe('path', () => {
     it('by path (regex matches)', () => {
         // Arrange
         const filter = new PathField().createFilterOrErrorMessage(
-            'path regex matches /w.bble/',
+            String.raw`path regex matches /w.bble/`,
         );
 
         // Assert
@@ -68,7 +68,7 @@ describe('path', () => {
     it('by path (regex matches) with flags', () => {
         // Arrange
         const filter = new PathField().createFilterOrErrorMessage(
-            'path regex matches /w.bble/i',
+            String.raw`path regex matches /w.bble/i`,
         );
 
         // Assert
@@ -83,7 +83,7 @@ describe('path', () => {
     it('by path (regex does not match)', () => {
         // Arrange
         const filter = new PathField().createFilterOrErrorMessage(
-            'path regex does not match /w.bble/',
+            String.raw`path regex does not match /w.bble/`,
         );
 
         // Assert
@@ -99,7 +99,7 @@ describe('path', () => {
 describe('invalid unescaped slash should give helpful error text and not search', () => {
     const filterWithUnescapedSlashes =
         new PathField().createFilterOrErrorMessage(
-            'path regex matches /a/b/c/d/',
+            String.raw`path regex matches /a/b/c/d/`,
         );
 
     // This test demonstrates the issue logged in
