@@ -165,10 +165,8 @@ describe('description', () => {
 
     it('should find a time stamp in the description - simple version', () => {
         // Arrange
-        // In code, 2 backslashes are needed to create a single `\`
-        // In Obsidian, only one backslash is needed.
         const filter = new DescriptionField().createFilterOrErrorMessage(
-            'description regex matches /\\d\\d:\\d\\d/',
+            String.raw`description regex matches /\d\d:\d\d/`,
         );
 
         // Assert
@@ -179,8 +177,6 @@ describe('description', () => {
 
     it('should find a time stamp in the description - more precise version', () => {
         // Arrange
-        // In code, 2 backslashes are needed to create a single `\`
-        // In Obsidian, only one backslash is needed.
         const filter = new DescriptionField().createFilterOrErrorMessage(
             'description regex matches /[012][0-9]:[0-5][0-9]/',
         );
@@ -201,7 +197,7 @@ describe('search description for short tags, excluding sub-tags', () => {
         // However, task descriptions do not have end-of-line characters,
         // so it does not match a tag at the end of the line.
         const filter = new DescriptionField().createFilterOrErrorMessage(
-            'description regex matches /#t\\s/',
+            String.raw`description regex matches /#t\s/`,
         );
 
         // Assert
@@ -240,7 +236,7 @@ describe('search description for short tags, excluding sub-tags', () => {
     it('should search for a short tag anywhere', () => {
         // Arrange
         const filter = new BooleanField().createFilterOrErrorMessage(
-            '(description regex matches /#t\\s/) OR (description regex matches /#t$/i)',
+            String.raw`(description regex matches /#t\s/) OR (description regex matches /#t$/i)`,
         );
 
         // Assert
@@ -260,7 +256,7 @@ describe('search description for sub-tags', () => {
     // $ is an end-of-input character.
     // So this search will find the given tag at the end of any task description
     const filter = new DescriptionField().createFilterOrErrorMessage(
-        'description regex matches /#tag\\/subtag1\\/subtag2/i',
+        String.raw`description regex matches /#tag\/subtag1\/subtag2/i`,
     );
 
     // Assert
