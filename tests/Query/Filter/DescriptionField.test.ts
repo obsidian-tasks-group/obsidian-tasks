@@ -254,3 +254,16 @@ describe('search description for short tags, excluding sub-tags', () => {
         expect(filter).not.toMatchTaskFromLine('- [ ] Do stuff #t/b');
     });
 });
+
+describe('search description for sub-tags', () => {
+    // Arrange
+    // $ is an end-of-input character.
+    // So this search will find the given tag at the end of any task description
+    const filter = new DescriptionField().createFilterOrErrorMessage(
+        'description regex matches /#tag\\/subtag1\\/subtag2/i',
+    );
+
+    // Assert
+    expect(filter).toMatchTaskFromLine('- [ ] Do stuff #tag/subtag1/subtag2');
+    expect(filter).not.toMatchTaskFromLine('- [ ] Do stuff #tag');
+});
