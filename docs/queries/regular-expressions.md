@@ -88,6 +88,9 @@ If using regex searches, it is important to be aware of the available special ch
 Here are a few examples of the [many special characters](https://www.rexegg.com/regex-quickstart.html):
 
 - `.` matches any character
+- `[...]` means search for any of the characters in the square brackets.
+  - For example, `[aeiou]` will match any of an `a`, `e`, `i`, `o` or `u`.
+  - See [Sets and ranges \[...\]](https://javascript.info/regexp-character-sets-and-ranges)
 - `^` matches the start of the string (but when `[^inside brackets]`, it means "not")
 - `$` matches the end of the string
 - `\` adds special meaning to some characters. For example:
