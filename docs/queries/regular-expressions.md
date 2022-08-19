@@ -135,7 +135,9 @@ Please be aware of the following limitations in Tasks' implementation of regular
 
 ## Regular expression examples
 
-Here are some example regex searches, to give some ideas of what can be done.
+Below are some example regex searches, to give some ideas of what can be done.
+
+There are some more examples in the [Tasks-Demo sample vault](https://github.com/obsidian-tasks-group/obsidian-tasks/tree/main/resources/sample_vaults/Tasks-Demo), in the file [Regular Expression Searches](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/resources/sample_vaults/Tasks-Demo/Filters/Regular%20Expression%20Searches.md).
 
 ### Searching the start of a field
 
