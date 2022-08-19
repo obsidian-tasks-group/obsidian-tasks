@@ -95,3 +95,12 @@ All open tasks that are due today or earlier, sorted by due date, then grouped t
     sort by due
     group by folder
     ```
+
+---
+
+All open tasks that begin with a time stamp in `HH:mm` format, followed by any white space character:
+
+    ```tasks
+    not done
+    description regex matches /^[012][0-9]:[0-5][0-9]\s/
+    ```

@@ -52,7 +52,7 @@ describe('heading', () => {
     it('by heading (regex matches - case sensitive)', () => {
         // Arrange
         const filter = new HeadingField().createFilterOrErrorMessage(
-            'heading regex matches /[Ii]nteresting Head.ng/',
+            String.raw`heading regex matches /[Ii]nteresting Head.ng/`,
         );
 
         // Act, Assert
@@ -65,7 +65,7 @@ describe('heading', () => {
     it('by heading (regex does not match - case in-sensitive)', () => {
         // Arrange
         const filter = new HeadingField().createFilterOrErrorMessage(
-            'heading regex does not match /[Ii]nteresting Head.ng/i',
+            String.raw`heading regex does not match /[Ii]nteresting Head.ng/i`,
         );
 
         // Act, Assert

@@ -140,6 +140,21 @@ As well as the date-related searches above, these filters search other propertie
 
 > `regex matches` and `regex does not match` were introduced in Tasks 1.12.0.
 
+For precise searches, it may help to know that `description`:
+
+- first removes all each task's signifier emojis and their values,
+- then removes any global filter,
+- then removes an trailing spaces
+- and then searches the remaining text
+
+For example:
+
+| Global Filter    | Task line                                                                | Text searched by `description`   |
+| ---------------- | ------------------------------------------------------------------------ | -------------------------------- |
+| No global filter | `'- [ ] Do stuff  ⏫  #tag1 ✅ 2022-08-12 #tag2/sub-tag '`               | `'Do stuff #tag1 #tag2/sub-tag'` |
+| `#task`          | `'- [ ] #task Do stuff  ⏫  #tag1 ✅ 2022-08-12 #tag2/sub-tag '`         | `'Do stuff #tag1 #tag2/sub-tag'` |
+| `global-filter`  | `'- [ ] global-filter Do stuff  ⏫  #tag1 ✅ 2022-08-12 #tag2/sub-tag '` | `'Do stuff #tag1 #tag2/sub-tag'` |
+
 ### Priority
 
 - `priority is (above|below)? (low|none|medium|high)`
@@ -209,7 +224,7 @@ These filters allow searching for tasks in particular files and sections of file
   - `does not include` will match a task that does not have a preceding heading in its file.
   - Matches case-insensitive (disregards capitalization).
 - `heading (regex matches|regex does not match) /<JavaScript-style Regex>/`
-  - Whether or not the heading preceding the task includes the given regular expression.
+  - Whether or not the heading preceding the task includes the given regular expression (case-sensitive by default).
   - Always tries to match the closest heading above the task, regardless of heading level.
   - `regex does not match` will match a task that does not have a preceding heading in its file.
   - Essential reading: [Regular Expression Searches]({{ site.baseurl }}{% link queries/regular-expressions.md %}).

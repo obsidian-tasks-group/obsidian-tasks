@@ -1,5 +1,10 @@
 # Regular Expression Searches
 
+This file contains a few examples that were useful when testing
+the feature to search for text using regular expressions.
+
+Full documentation is available: see [Regular Expressions](https://obsidian-tasks-group.github.io/obsidian-tasks/queries/regular-expressions/).
+
 ## Sample Tasks
 
 - [ ] #task Do thing 1 #context/pc_abigail
