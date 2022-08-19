@@ -15,10 +15,12 @@ export class DescriptionField extends TextField {
 
     /**
      * Return the task's description, with any global tag removed
+     *
+     * Promoted to public, to enable testing.
      * @param task
-     * @protected
+     * @public
      */
-    protected value(task: Task): string {
+    public value(task: Task): string {
         // Remove global filter from description match if present.
         // This is necessary to match only on the content of the task, not
         // the global filter.
