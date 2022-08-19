@@ -103,6 +103,8 @@ Here are a few examples of the [many special characters](https://javascript.info
   - `^` matches the start of the string (but when `[^inside brackets]`, it means "not")
   - `$` matches the end of the string
   - See [Anchors: string start ^ and end $](https://javascript.info/regexp-anchors)
+- `|` is an `OR` in regular expressions
+  - See [Alternation (OR) |](https://javascript.info/regexp-alternation)
 - `\` adds special meaning to some characters. For example:
   - `\d` matches one digit, from 0 to 9
   - `\D` matches character that is not a digit
@@ -166,6 +168,14 @@ Find tasks whose description begins with Log, ignoring capitalisation
 
 ```text
 description regex matches /^Log/i
+```
+
+### Finding tasks that are waiting
+
+I want to find tasks that are waiting for something else. But 'waiting' can be spelled in several different ways:
+
+```text
+description regex matches /waiting|waits|wartet/i
 ```
 
 ### Finding times
