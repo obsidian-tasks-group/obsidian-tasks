@@ -112,9 +112,19 @@ For a thorough, clear introduction to all the options, see [Regular expressions]
 
 ## Important links
 
+Learning resources:
+
+- [Regular expressions](https://javascript.info/regular-expressions) at JavaScript.info
+- <https://javascript.info/regular-expressions>
 - [Regex Tutorial](https://regexone.com/)
 - [Regex Cheat Sheet](https://www.rexegg.com/regex-quickstart.html)
+
+Online tools for experimenting with - and testing - regular expressions:
+
 - [Regex Testing Tool: regex101](https://regex101.com/): Select the flavor 'ECMAScript (JavaScript)'
+
+Implementation details:
+
 - Implemented using [JavaScript's RegExp implementation](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions)
 - Supports [JavaScript RegExp Flags](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#advanced_searching_with_flags), although not all of them are relevant in this context.
 
