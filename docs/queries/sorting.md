@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Sorting
-nav_order: 2
+nav_order: 4
 parent: Queries
 ---
 
