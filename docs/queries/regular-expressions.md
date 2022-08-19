@@ -78,6 +78,14 @@ description regex matches /pc_abigail|pc_edwina|at_work/i
 - Note that `tags` searches do not yet support regex searches.
   - As a workaround, search `description` instead.
 
+## Escaping special characters
+
+To search for any of the characters `[ \ ^ $ . | ? * + ( ) /` literally in Tasks, you should put a `\` character before each of them.
+
+This is called 'escaping'. See [Escaping, special characters](https://javascript.info/regexp-escaping).
+
+See the next section for the meaning of some of these characters.
+
 ## Special characters
 
 If using regex searches, it is important to be aware of the available special characters for several reasons:
@@ -85,17 +93,22 @@ If using regex searches, it is important to be aware of the available special ch
 1. They enable complex queries to written in simple ways
 2. They can cause confusing results or broken searches, if not "escaped" in the search.
 
-Here are a few examples of the [many special characters](https://www.rexegg.com/regex-quickstart.html):
+Here are a few examples of the [many special characters](https://javascript.info/regexp-escaping):
 
 - `.` matches any character
 - `[...]` means search for any of the characters in the square brackets.
   - For example, `[aeiou]` will match any of an `a`, `e`, `i`, `o` or `u`.
   - See [Sets and ranges \[...\]](https://javascript.info/regexp-character-sets-and-ranges)
-- `^` matches the start of the string (but when `[^inside brackets]`, it means "not")
-- `$` matches the end of the string
+- Start and end
+  - `^` matches the start of the string (but when `[^inside brackets]`, it means "not")
+  - `$` matches the end of the string
+  - See [Anchors: string start ^ and end $](https://javascript.info/regexp-anchors)
 - `\` adds special meaning to some characters. For example:
   - `\d` matches one digit, from 0 to 9
   - `\D` matches character that is not a digit
+  - See [Character classes](https://javascript.info/regexp-character-classes)
+
+For a thorough, clear introduction to all the options, see [Regular expressions](https://javascript.info/regular-expressions) at JavaScript.info.
 
 ## Important links
 
