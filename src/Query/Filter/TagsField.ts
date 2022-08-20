@@ -1,4 +1,5 @@
 import type { Task } from '../../Task';
+import { SubstringMatcher } from '../Matchers/SubstringMatcher';
 import { Field } from './Field';
 import { FilterOrErrorMessage } from './Filter';
 import { TextField } from './TextField';
@@ -23,10 +24,8 @@ export class TagsField extends Field {
             const search = tagMatch[3].replace(/^#/, '');
 
             if (filterMethod === 'include' || filterMethod === 'includes') {
-                result.filter = (task: Task) =>
-                    task.tags.find((tag) =>
-                        TextField.stringIncludesCaseInsensitive(tag, search),
-                    ) !== undefined;
+                const matcher = new SubstringMatcher(search);
+                result.filter = (task: Task) => matcher.matchesAnyOf(task.tags);
             } else if (
                 tagMatch[2] === 'do not include' ||
                 tagMatch[2] === 'does not include'
