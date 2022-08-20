@@ -2,6 +2,7 @@ import type { Task } from '../../Task';
 import { SubstringMatcher } from '../Matchers/SubstringMatcher';
 import { Field } from './Field';
 import { FilterOrErrorMessage } from './Filter';
+import { TextField } from './TextField';
 
 /**
  * Support the 'tag' and 'tags' search instructions.
@@ -24,14 +25,21 @@ export class TagsField extends Field {
 
             if (filterMethod === 'include' || filterMethod === 'includes') {
                 const matcher = new SubstringMatcher(search);
-                result.filter = (task: Task) => matcher.matchesAnyOf(task.tags);
+                result.filter = (task: Task) =>
+                    TextField.maybeNegate(
+                        matcher.matchesAnyOf(task.tags),
+                        filterMethod,
+                    );
             } else if (
                 tagMatch[2] === 'do not include' ||
                 tagMatch[2] === 'does not include'
             ) {
                 const matcher = new SubstringMatcher(search);
                 result.filter = (task: Task) =>
-                    !matcher.matchesAnyOf(task.tags);
+                    TextField.maybeNegate(
+                        matcher.matchesAnyOf(task.tags),
+                        filterMethod,
+                    );
             } else {
                 result.error = 'do not understand query filter (tag/tags)';
             }

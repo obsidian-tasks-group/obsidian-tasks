@@ -68,7 +68,7 @@ export abstract class TextField extends Field {
      */
     protected abstract value(task: Task): string;
 
-    private static maybeNegate(match: boolean, filterMethod: String) {
+    public static maybeNegate(match: boolean, filterMethod: String) {
         return filterMethod.match(/not/) ? !match : match;
     }
 }
