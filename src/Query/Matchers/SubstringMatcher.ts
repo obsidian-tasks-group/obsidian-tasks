@@ -26,10 +26,6 @@ export class SubstringMatcher extends IStringMatcher {
         );
     }
 
-    public matchesAnyOf(stringsToSearch: string[]) {
-        return stringsToSearch.some((s) => this.matches(s));
-    }
-
     public static stringIncludesCaseInsensitive(
         haystack: string,
         needle: string,

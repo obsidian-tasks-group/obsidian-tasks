@@ -10,4 +10,12 @@ export abstract class IStringMatcher {
      * @param stringToSearch
      */
     public abstract matches(stringToSearch: string): boolean;
+
+    /**
+     * Return whether any of the given strings matches this condition.
+     * @param stringsToSearch
+     */
+    public matchesAnyOf(stringsToSearch: string[]) {
+        return stringsToSearch.some((s) => this.matches(s));
+    }
 }
