@@ -10,7 +10,7 @@ describe('RegexMatcher', () => {
     });
 
     it('should construct regex from a valid string', () => {
-        const matcher = RegexMatcher.validateAndStruct('/hello world/i');
+        const matcher = RegexMatcher.validateAndConstruct('/hello world/i');
         expect(matcher).not.toBeNull();
         expect(matcher!.matches('hello world')).toStrictEqual(true);
         expect(matcher!.matches('HELLO world')).toStrictEqual(true); // Confirm that the flag 'i' is retained
@@ -18,7 +18,7 @@ describe('RegexMatcher', () => {
     });
 
     it('should not construct regex from an INvalid string', () => {
-        const matcher = RegexMatcher.validateAndStruct('I have no slashes');
+        const matcher = RegexMatcher.validateAndConstruct('I have no slashes');
         expect(matcher).toBeNull();
     });
 });

@@ -7,7 +7,7 @@ export class RegexMatcher implements IStringMatcher {
         this.regex = regex;
     }
 
-    static validateAndStruct(regexInput: string): RegexMatcher | null {
+    static validateAndConstruct(regexInput: string): RegexMatcher | null {
         // Courtesy of https://stackoverflow.com/questions/17843691/javascript-regex-to-match-a-regex
         const regexPattern =
             /\/((?![*+?])(?:[^\r\n[/\\]|\\.|\[(?:[^\r\n\]\\]|\\.)*])+)\/((?:g(?:im?|mi?)?|i(?:gm?|mg?)?|m(?:gi?|ig?)?)?)/;

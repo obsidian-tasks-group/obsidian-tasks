@@ -26,7 +26,7 @@ export abstract class TextField extends Field {
             } else if (
                 ['regex matches', 'regex does not match'].includes(filterMethod)
             ) {
-                const matcher = RegexMatcher.validateAndStruct(match[2]);
+                const matcher = RegexMatcher.validateAndConstruct(match[2]);
                 if (matcher !== null) {
                     result.filter = (task: Task) => {
                         return TextField.maybeNegate(
