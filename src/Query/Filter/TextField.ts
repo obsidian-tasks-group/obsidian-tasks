@@ -1,5 +1,6 @@
 import type { Task } from '../../Task';
 import { SubstringMatcher } from '../Matchers/SubstringMatcher';
+import { RegexMatcher } from '../Matchers/RegexMatcher';
 import { Field } from './Field';
 import { FilterOrErrorMessage } from './Filter';
 
@@ -31,13 +32,14 @@ export abstract class TextField extends Field {
                 const query = match[2].match(regexPattern);
 
                 if (query !== null) {
-                    result.filter = (task: Task) =>
-                        TextField.maybeNegate(
-                            this.value(task).match(
-                                new RegExp(query[1], query[2]),
-                            ) !== null,
+                    const regExp = new RegExp(query[1], query[2]);
+                    const matcher = new RegexMatcher(regExp);
+                    result.filter = (task: Task) => {
+                        return TextField.maybeNegate(
+                            matcher.matches(this.value(task)),
                             filterMethod,
                         );
+                    };
                 } else {
                     result.error = `cannot parse regex (${this.fieldName()}); check your leading and trailing slashes for your query`;
                 }
