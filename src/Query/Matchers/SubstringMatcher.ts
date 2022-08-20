@@ -1,7 +1,7 @@
 import { TextField } from '../Filter/TextField';
-import type { StringMatcher } from './StringMatcher';
+import type { IStringMatcher } from './IStringMatcher';
 
-export class SubstringMatcher implements StringMatcher {
+export class SubstringMatcher implements IStringMatcher {
     private readonly stringToFind: string;
 
     constructor(stringToFind: string) {

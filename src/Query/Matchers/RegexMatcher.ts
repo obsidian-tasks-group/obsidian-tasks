@@ -1,6 +1,6 @@
-import type { StringMatcher } from './StringMatcher';
+import type { IStringMatcher } from './IStringMatcher';
 
-export class RegexMatcher implements StringMatcher {
+export class RegexMatcher implements IStringMatcher {
     private readonly regex: RegExp;
 
     constructor(regex: RegExp) {
