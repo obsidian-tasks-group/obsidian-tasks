@@ -212,7 +212,7 @@ description regex matches /#tag\/subtag[0-9]\/subsubtag[0-9]/i
 
 Currently `tag` and `tags` searches do not yet support regular expressions. Therefore, for precise searching of tags, use  `description` instead.
 
-Suppose you wanted to search for tasks with a very short tag in: `#t`, and to not match tags line `#task` and `#t/subtag`.
+Suppose you wanted to search for tasks with a very short tag in: `#t`, and to not match tags like `#task` and `#t/subtag`.
 
 The most general query is:
 
@@ -233,6 +233,6 @@ The Boolean `OR` allows us to search for two different patterns, for a thorough 
   - But it will not match:
     - `- [ ] Do stuff #t`
 - `description regex matches /#t$/i`
-  - Matches `#t` or `#T` at the very end of the task line (after all signifiers and trailing white space has been removed)
+  - Matches `#t` or `#T` at the very end of the task line (after all signifiers and trailing white space have been removed)
   - For example, this will match:
     - `- [ ] Do stuff #t`
