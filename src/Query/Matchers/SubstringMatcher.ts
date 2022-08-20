@@ -1,4 +1,3 @@
-import { TextField } from '../Filter/TextField';
 import type { IStringMatcher } from './IStringMatcher';
 
 /**
@@ -20,9 +19,18 @@ export class SubstringMatcher implements IStringMatcher {
     }
 
     public matches(stringToSearch: string): boolean {
-        return TextField.stringIncludesCaseInsensitive(
+        return SubstringMatcher.stringIncludesCaseInsensitive(
             stringToSearch,
             this.stringToFind,
         );
+    }
+
+    public static stringIncludesCaseInsensitive(
+        haystack: string,
+        needle: string,
+    ): boolean {
+        return haystack
+            .toLocaleLowerCase()
+            .includes(needle.toLocaleLowerCase());
     }
 }

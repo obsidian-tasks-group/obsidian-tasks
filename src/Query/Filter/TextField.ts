@@ -50,9 +50,7 @@ export abstract class TextField extends Field {
         haystack: string,
         needle: string,
     ): boolean {
-        return haystack
-            .toLocaleLowerCase()
-            .includes(needle.toLocaleLowerCase());
+        return SubstringMatcher.stringIncludesCaseInsensitive(haystack, needle);
     }
 
     protected filterRegexp(): RegExp {
