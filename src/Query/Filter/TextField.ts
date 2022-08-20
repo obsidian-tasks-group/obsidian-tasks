@@ -26,14 +26,8 @@ export abstract class TextField extends Field {
             } else if (
                 ['regex matches', 'regex does not match'].includes(filterMethod)
             ) {
-                // Courtesy of https://stackoverflow.com/questions/17843691/javascript-regex-to-match-a-regex
-                const regexPattern =
-                    /\/((?![*+?])(?:[^\r\n[/\\]|\\.|\[(?:[^\r\n\]\\]|\\.)*])+)\/((?:g(?:im?|mi?)?|i(?:gm?|mg?)?|m(?:gi?|ig?)?)?)/;
-                const query = match[2].match(regexPattern);
-
-                if (query !== null) {
-                    const regExp = new RegExp(query[1], query[2]);
-                    const matcher = new RegexMatcher(regExp);
+                const matcher = RegexMatcher.validateAndStruct(match[2]);
+                if (matcher !== null) {
                     result.filter = (task: Task) => {
                         return TextField.maybeNegate(
                             matcher.matches(this.value(task)),
