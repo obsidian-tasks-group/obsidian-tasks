@@ -1,11 +1,11 @@
-import type { IStringMatcher } from './IStringMatcher';
+import { IStringMatcher } from './IStringMatcher';
 
 /**
  * Substring-based implementation of IStringMatcher.
  *
  * This does a case-insensitive search for the given string.
  */
-export class SubstringMatcher implements IStringMatcher {
+export class SubstringMatcher extends IStringMatcher {
     private readonly stringToFind: string;
 
     /**
@@ -15,6 +15,7 @@ export class SubstringMatcher implements IStringMatcher {
      *                                Searches will be case-insensitive.
      */
     public constructor(stringToFind: string) {
+        super();
         this.stringToFind = stringToFind;
     }
 
