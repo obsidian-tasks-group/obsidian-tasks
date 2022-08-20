@@ -15,11 +15,11 @@ export class SubstringMatcher implements IStringMatcher {
      * @param {string} stringToFind - The string to search for.
      *                                Searches will be case-insensitive.
      */
-    constructor(stringToFind: string) {
+    public constructor(stringToFind: string) {
         this.stringToFind = stringToFind;
     }
 
-    matches(stringToSearch: string): boolean {
+    public matches(stringToSearch: string): boolean {
         return TextField.stringIncludesCaseInsensitive(
             stringToSearch,
             this.stringToFind,

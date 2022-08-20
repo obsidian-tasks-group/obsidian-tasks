@@ -11,7 +11,7 @@ export class RegexMatcher implements IStringMatcher {
      *
      * @param regex {RegExp} - A valid regular expression
      */
-    constructor(regex: RegExp) {
+    public constructor(regex: RegExp) {
         this.regex = regex;
     }
 
@@ -23,7 +23,9 @@ export class RegexMatcher implements IStringMatcher {
      *                              It must begin with a /, and end either with / and optionally any
      *                              valid flags.
      */
-    static validateAndConstruct(regexInput: string): RegexMatcher | null {
+    public static validateAndConstruct(
+        regexInput: string,
+    ): RegexMatcher | null {
         // Courtesy of https://stackoverflow.com/questions/17843691/javascript-regex-to-match-a-regex
         const regexPattern =
             /\/((?![*+?])(?:[^\r\n[/\\]|\\.|\[(?:[^\r\n\]\\]|\\.)*])+)\/((?:g(?:im?|mi?)?|i(?:gm?|mg?)?|m(?:gi?|ig?)?)?)/;
