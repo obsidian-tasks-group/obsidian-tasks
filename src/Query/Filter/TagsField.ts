@@ -1,6 +1,7 @@
 import type { Task } from '../../Task';
 import { Field } from './Field';
 import { FilterOrErrorMessage } from './Filter';
+import { TextField } from './TextField';
 
 /**
  * Support the 'tag' and 'tags' search instructions.
@@ -24,7 +25,7 @@ export class TagsField extends Field {
             if (filterMethod === 'include' || filterMethod === 'includes') {
                 result.filter = (task: Task) =>
                     task.tags.find((tag) =>
-                        tag.toLowerCase().includes(search.toLowerCase()),
+                        TextField.stringIncludesCaseInsensitive(tag, search),
                     ) !== undefined;
             } else if (
                 tagMatch[2] === 'do not include' ||
@@ -32,7 +33,7 @@ export class TagsField extends Field {
             ) {
                 result.filter = (task: Task) =>
                     task.tags.find((tag) =>
-                        tag.toLowerCase().includes(search.toLowerCase()),
+                        TextField.stringIncludesCaseInsensitive(tag, search),
                     ) == undefined;
             } else {
                 result.error = 'do not understand query filter (tag/tags)';
