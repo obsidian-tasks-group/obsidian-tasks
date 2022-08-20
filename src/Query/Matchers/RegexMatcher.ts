@@ -1,9 +1,9 @@
-import type { IStringMatcher } from './IStringMatcher';
+import { IStringMatcher } from './IStringMatcher';
 
 /**
  * Regular-expression-based implementation of IStringMatcher.
  */
-export class RegexMatcher implements IStringMatcher {
+export class RegexMatcher extends IStringMatcher {
     private readonly regex: RegExp;
 
     /**
@@ -12,6 +12,7 @@ export class RegexMatcher implements IStringMatcher {
      * @param regex {RegExp} - A valid regular expression
      */
     public constructor(regex: RegExp) {
+        super();
         this.regex = regex;
     }
 

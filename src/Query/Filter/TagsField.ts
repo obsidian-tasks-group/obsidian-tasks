@@ -1,4 +1,5 @@
 import type { Task } from '../../Task';
+import { SubstringMatcher } from '../Matchers/SubstringMatcher';
 import { Field } from './Field';
 import { FilterOrErrorMessage } from './Filter';
 import { TextField } from './TextField';
@@ -22,19 +23,13 @@ export class TagsField extends Field {
             // Search is done sans the hash. If it is provided then strip it off.
             const search = tagMatch[3].replace(/^#/, '');
 
-            if (filterMethod === 'include' || filterMethod === 'includes') {
+            if (filterMethod.includes('include')) {
+                const matcher = new SubstringMatcher(search);
                 result.filter = (task: Task) =>
-                    task.tags.find((tag) =>
-                        TextField.stringIncludesCaseInsensitive(tag, search),
-                    ) !== undefined;
-            } else if (
-                tagMatch[2] === 'do not include' ||
-                tagMatch[2] === 'does not include'
-            ) {
-                result.filter = (task: Task) =>
-                    task.tags.find((tag) =>
-                        TextField.stringIncludesCaseInsensitive(tag, search),
-                    ) == undefined;
+                    TextField.maybeNegate(
+                        matcher.matchesAnyOf(task.tags),
+                        filterMethod,
+                    );
             } else {
                 result.error = 'do not understand query filter (tag/tags)';
             }
