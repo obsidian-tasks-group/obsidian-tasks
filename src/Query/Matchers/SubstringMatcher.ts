@@ -7,9 +7,9 @@ export class SubstringMatcher {
         this.stringToFind = stringToFind;
     }
 
-    public matches(textToFind: string): boolean {
+    public matches(stringToSearch: string): boolean {
         return TextField.stringIncludesCaseInsensitive(
-            textToFind,
+            stringToSearch,
             this.stringToFind,
         );
     }
