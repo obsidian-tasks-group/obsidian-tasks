@@ -1,4 +1,6 @@
 import type { Task } from '../../Task';
+import { SubstringMatcher } from '../Matchers/SubstringMatcher';
+import { RegexMatcher } from '../Matchers/RegexMatcher';
 import { Field } from './Field';
 import { FilterOrErrorMessage } from './Filter';
 
@@ -14,30 +16,24 @@ export abstract class TextField extends Field {
         if (match !== null) {
             const filterMethod = match[1];
             if (['includes', 'does not include'].includes(filterMethod)) {
-                result.filter = (task: Task) =>
-                    TextField.maybeNegate(
-                        TextField.stringIncludesCaseInsensitive(
-                            this.value(task),
-                            match[2],
-                        ),
+                const matcher = new SubstringMatcher(match[2]);
+                result.filter = (task: Task) => {
+                    return TextField.maybeNegate(
+                        matcher.matches(this.value(task)),
                         filterMethod,
                     );
+                };
             } else if (
                 ['regex matches', 'regex does not match'].includes(filterMethod)
             ) {
-                // Courtesy of https://stackoverflow.com/questions/17843691/javascript-regex-to-match-a-regex
-                const regexPattern =
-                    /\/((?![*+?])(?:[^\r\n[/\\]|\\.|\[(?:[^\r\n\]\\]|\\.)*])+)\/((?:g(?:im?|mi?)?|i(?:gm?|mg?)?|m(?:gi?|ig?)?)?)/;
-                const query = match[2].match(regexPattern);
-
-                if (query !== null) {
-                    result.filter = (task: Task) =>
-                        TextField.maybeNegate(
-                            this.value(task).match(
-                                new RegExp(query[1], query[2]),
-                            ) !== null,
+                const matcher = RegexMatcher.validateAndConstruct(match[2]);
+                if (matcher !== null) {
+                    result.filter = (task: Task) => {
+                        return TextField.maybeNegate(
+                            matcher.matches(this.value(task)),
                             filterMethod,
                         );
+                    };
                 } else {
                     result.error = `cannot parse regex (${this.fieldName()}); check your leading and trailing slashes for your query`;
                 }
@@ -54,9 +50,7 @@ export abstract class TextField extends Field {
         haystack: string,
         needle: string,
     ): boolean {
-        return haystack
-            .toLocaleLowerCase()
-            .includes(needle.toLocaleLowerCase());
+        return SubstringMatcher.stringIncludesCaseInsensitive(haystack, needle);
     }
 
     protected filterRegexp(): RegExp {
