@@ -14,10 +14,15 @@ export abstract class TextField extends Field {
     public createFilterOrErrorMessage(line: string): FilterOrErrorMessage {
         const match = Field.getMatch(this.filterRegexp(), line);
         if (match === null) {
+            // If Field.canCreateFilterForLine() has been checked, we should never get
+            // in to this block.
             return FilterOrErrorMessage.fromError(
                 `do not understand query filter (${this.fieldName()})`,
             );
         }
+
+        // Construct an IStringMatcher for this filter, or return
+        // if the inputs are invalid.
         const filterMethod = match[1];
         const searchString = match[2];
         let matcher: IStringMatcher | null = null;
@@ -42,6 +47,9 @@ export abstract class TextField extends Field {
             );
         }
 
+        // Finally, we can create the Filter, that takes a task
+        // and tests if it matches the string filtering rule
+        // represented by this object.
         return FilterOrErrorMessage.fromFilter((task: Task) => {
             return TextField.maybeNegate(
                 matcher!.matches(this.value(task)),
