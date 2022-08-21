@@ -20,25 +20,25 @@ export class TagsField extends Field {
             return FilterOrErrorMessage.fromError(
                 'do not understand query filter (tag/tags)',
             );
-        } else {
-            const filterMethod = tagMatch[2];
+        }
 
-            // Search is done sans the hash. If it is provided then strip it off.
-            const search = tagMatch[3].replace(/^#/, '');
+        const filterMethod = tagMatch[2];
 
-            if (filterMethod.includes('include')) {
-                const matcher = new SubstringMatcher(search);
-                return FilterOrErrorMessage.fromFilter((task: Task) => {
-                    return TextField.maybeNegate(
-                        matcher.matchesAnyOf(task.tags),
-                        filterMethod,
-                    );
-                });
-            } else {
-                return FilterOrErrorMessage.fromError(
-                    'do not understand query filter (tag/tags)',
+        // Search is done sans the hash. If it is provided then strip it off.
+        const search = tagMatch[3].replace(/^#/, '');
+
+        if (filterMethod.includes('include')) {
+            const matcher = new SubstringMatcher(search);
+            return FilterOrErrorMessage.fromFilter((task: Task) => {
+                return TextField.maybeNegate(
+                    matcher.matchesAnyOf(task.tags),
+                    filterMethod,
                 );
-            }
+            });
+        } else {
+            return FilterOrErrorMessage.fromError(
+                'do not understand query filter (tag/tags)',
+            );
         }
     }
 
