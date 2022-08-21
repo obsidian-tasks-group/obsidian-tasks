@@ -20,23 +20,22 @@ export class TagsField extends Field {
             return FilterOrErrorMessage.fromError(
                 'do not understand query filter (tag/tags)',
             );
-        } else {
-            const filterMethod = tagMatch[2];
-            const search = tagMatch[3];
+        }
+        const filterMethod = tagMatch[2];
+        const search = tagMatch[3];
 
-            if (filterMethod.includes('include')) {
-                const matcher = new SubstringMatcher(search);
-                return FilterOrErrorMessage.fromFilter((task: Task) => {
-                    return TextField.maybeNegate(
-                        matcher.matchesAnyOf(task.tags),
-                        filterMethod,
-                    );
-                });
-            } else {
-                return FilterOrErrorMessage.fromError(
-                    'do not understand query filter (tag/tags)',
+        if (filterMethod.includes('include')) {
+            const matcher = new SubstringMatcher(search);
+            return FilterOrErrorMessage.fromFilter((task: Task) => {
+                return TextField.maybeNegate(
+                    matcher.matchesAnyOf(task.tags),
+                    filterMethod,
                 );
-            }
+            });
+        } else {
+            return FilterOrErrorMessage.fromError(
+                'do not understand query filter (tag/tags)',
+            );
         }
     }
 
