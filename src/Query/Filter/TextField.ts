@@ -11,29 +11,32 @@ import { FilterOrErrorMessage } from './Filter';
  */
 export abstract class TextField extends Field {
     public createFilterOrErrorMessage(line: string): FilterOrErrorMessage {
-        const result = new FilterOrErrorMessage();
         const match = Field.getMatch(this.filterRegexp(), line);
         if (match !== null) {
             const filterMethod = match[1];
             if (['includes', 'does not include'].includes(filterMethod)) {
                 const matcher = new SubstringMatcher(match[2]);
+                const result = new FilterOrErrorMessage();
                 result.filter = (task: Task) => {
                     return TextField.maybeNegate(
                         matcher.matches(this.value(task)),
                         filterMethod,
                     );
                 };
+                return result;
             } else if (
                 ['regex matches', 'regex does not match'].includes(filterMethod)
             ) {
                 const matcher = RegexMatcher.validateAndConstruct(match[2]);
                 if (matcher !== null) {
+                    const result = new FilterOrErrorMessage();
                     result.filter = (task: Task) => {
                         return TextField.maybeNegate(
                             matcher.matches(this.value(task)),
                             filterMethod,
                         );
                     };
+                    return result;
                 } else {
                     return FilterOrErrorMessage.fromError(
                         `cannot parse regex (${this.fieldName()}); check your leading and trailing slashes for your query`,
@@ -49,7 +52,6 @@ export abstract class TextField extends Field {
                 `do not understand query filter (${this.fieldName()})`,
             );
         }
-        return result;
     }
 
     public static stringIncludesCaseInsensitive(
