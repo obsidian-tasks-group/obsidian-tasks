@@ -35,13 +35,19 @@ export abstract class TextField extends Field {
                         );
                     };
                 } else {
-                    result.error = `cannot parse regex (${this.fieldName()}); check your leading and trailing slashes for your query`;
+                    return FilterOrErrorMessage.fromError(
+                        `cannot parse regex (${this.fieldName()}); check your leading and trailing slashes for your query`,
+                    );
                 }
             } else {
-                result.error = `do not understand query filter (${this.fieldName()})`;
+                return FilterOrErrorMessage.fromError(
+                    `do not understand query filter (${this.fieldName()})`,
+                );
             }
         } else {
-            result.error = `do not understand query filter (${this.fieldName()})`;
+            return FilterOrErrorMessage.fromError(
+                `do not understand query filter (${this.fieldName()})`,
+            );
         }
         return result;
     }
