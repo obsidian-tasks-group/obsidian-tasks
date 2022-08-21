@@ -32,7 +32,11 @@ export abstract class TextField extends Field {
             ['regex matches', 'regex does not match'].includes(filterMethod)
         ) {
             const matcher = RegexMatcher.validateAndConstruct(match[2]);
-            if (matcher !== null) {
+            if (matcher === null) {
+                return FilterOrErrorMessage.fromError(
+                    `cannot parse regex (${this.fieldName()}); check your leading and trailing slashes for your query`,
+                );
+            } else {
                 const result = new FilterOrErrorMessage();
                 result.filter = (task: Task) => {
                     return TextField.maybeNegate(
@@ -41,10 +45,6 @@ export abstract class TextField extends Field {
                     );
                 };
                 return result;
-            } else {
-                return FilterOrErrorMessage.fromError(
-                    `cannot parse regex (${this.fieldName()}); check your leading and trailing slashes for your query`,
-                );
             }
         } else {
             return FilterOrErrorMessage.fromError(
