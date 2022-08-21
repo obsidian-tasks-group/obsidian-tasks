@@ -1,6 +1,7 @@
 import type { Task } from '../../Task';
 import { SubstringMatcher } from '../Matchers/SubstringMatcher';
 import { RegexMatcher } from '../Matchers/RegexMatcher';
+import type { IStringMatcher } from '../Matchers/IStringMatcher';
 import { Field } from './Field';
 import { FilterOrErrorMessage } from './Filter';
 
@@ -18,37 +19,36 @@ export abstract class TextField extends Field {
             );
         }
         const filterMethod = match[1];
+        let matcher: IStringMatcher | null = null;
         if (['includes', 'does not include'].includes(filterMethod)) {
-            const matcher = new SubstringMatcher(match[2]);
-            const result = new FilterOrErrorMessage();
-            result.filter = (task: Task) => {
-                return TextField.maybeNegate(
-                    matcher.matches(this.value(task)),
-                    filterMethod,
-                );
-            };
-            return result;
+            matcher = new SubstringMatcher(match[2]);
         } else if (
             ['regex matches', 'regex does not match'].includes(filterMethod)
         ) {
-            const matcher = RegexMatcher.validateAndConstruct(match[2]);
+            matcher = RegexMatcher.validateAndConstruct(match[2]);
             if (matcher === null) {
                 return FilterOrErrorMessage.fromError(
                     `cannot parse regex (${this.fieldName()}); check your leading and trailing slashes for your query`,
                 );
             }
-            const result = new FilterOrErrorMessage();
-            result.filter = (task: Task) => {
-                return TextField.maybeNegate(
-                    matcher.matches(this.value(task)),
-                    filterMethod,
-                );
-            };
-            return result;
         }
-        return FilterOrErrorMessage.fromError(
-            `do not understand query filter (${this.fieldName()})`,
-        );
+
+        if (matcher === null) {
+            // It's likely this can now never be reached.
+            // Retained for safety, for now.
+            return FilterOrErrorMessage.fromError(
+                `do not understand query filter (${this.fieldName()})`,
+            );
+        }
+
+        const result = new FilterOrErrorMessage();
+        result.filter = (task: Task) => {
+            return TextField.maybeNegate(
+                matcher!.matches(this.value(task)),
+                filterMethod,
+            );
+        };
+        return result;
     }
 
     public static stringIncludesCaseInsensitive(
