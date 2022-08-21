@@ -19,13 +19,14 @@ export abstract class TextField extends Field {
             );
         }
         const filterMethod = match[1];
+        const searchString = match[2];
         let matcher: IStringMatcher | null = null;
         if (['includes', 'does not include'].includes(filterMethod)) {
-            matcher = new SubstringMatcher(match[2]);
+            matcher = new SubstringMatcher(searchString);
         } else if (
             ['regex matches', 'regex does not match'].includes(filterMethod)
         ) {
-            matcher = RegexMatcher.validateAndConstruct(match[2]);
+            matcher = RegexMatcher.validateAndConstruct(searchString);
             if (matcher === null) {
                 return FilterOrErrorMessage.fromError(
                     `cannot parse regex (${this.fieldName()}); check your leading and trailing slashes for your query`,
