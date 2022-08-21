@@ -31,10 +31,14 @@ export class TagsField extends Field {
                         filterMethod,
                     );
             } else {
-                result.error = 'do not understand query filter (tag/tags)';
+                return FilterOrErrorMessage.fromError(
+                    'do not understand query filter (tag/tags)',
+                );
             }
         } else {
-            result.error = 'do not understand query filter (tag/tags)';
+            return FilterOrErrorMessage.fromError(
+                'do not understand query filter (tag/tags)',
+            );
         }
         return result;
     }
