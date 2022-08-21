@@ -36,16 +36,15 @@ export abstract class TextField extends Field {
                 return FilterOrErrorMessage.fromError(
                     `cannot parse regex (${this.fieldName()}); check your leading and trailing slashes for your query`,
                 );
-            } else {
-                const result = new FilterOrErrorMessage();
-                result.filter = (task: Task) => {
-                    return TextField.maybeNegate(
-                        matcher.matches(this.value(task)),
-                        filterMethod,
-                    );
-                };
-                return result;
             }
+            const result = new FilterOrErrorMessage();
+            result.filter = (task: Task) => {
+                return TextField.maybeNegate(
+                    matcher.matches(this.value(task)),
+                    filterMethod,
+                );
+            };
+            return result;
         } else {
             return FilterOrErrorMessage.fromError(
                 `do not understand query filter (${this.fieldName()})`,
