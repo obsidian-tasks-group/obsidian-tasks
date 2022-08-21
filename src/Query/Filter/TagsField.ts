@@ -16,7 +16,11 @@ export class TagsField extends Field {
 
     public createFilterOrErrorMessage(line: string): FilterOrErrorMessage {
         const tagMatch = Field.getMatch(this.filterRegexp(), line);
-        if (tagMatch !== null) {
+        if (tagMatch === null) {
+            return FilterOrErrorMessage.fromError(
+                'do not understand query filter (tag/tags)',
+            );
+        } else {
             const filterMethod = tagMatch[2];
             const search = tagMatch[3];
 
@@ -33,10 +37,6 @@ export class TagsField extends Field {
                     'do not understand query filter (tag/tags)',
                 );
             }
-        } else {
-            return FilterOrErrorMessage.fromError(
-                'do not understand query filter (tag/tags)',
-            );
         }
     }
 
