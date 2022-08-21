@@ -12,7 +12,11 @@ import { FilterOrErrorMessage } from './Filter';
 export abstract class TextField extends Field {
     public createFilterOrErrorMessage(line: string): FilterOrErrorMessage {
         const match = Field.getMatch(this.filterRegexp(), line);
-        if (match !== null) {
+        if (match === null) {
+            return FilterOrErrorMessage.fromError(
+                `do not understand query filter (${this.fieldName()})`,
+            );
+        } else {
             const filterMethod = match[1];
             if (['includes', 'does not include'].includes(filterMethod)) {
                 const matcher = new SubstringMatcher(match[2]);
@@ -47,10 +51,6 @@ export abstract class TextField extends Field {
                     `do not understand query filter (${this.fieldName()})`,
                 );
             }
-        } else {
-            return FilterOrErrorMessage.fromError(
-                `do not understand query filter (${this.fieldName()})`,
-            );
         }
     }
 
