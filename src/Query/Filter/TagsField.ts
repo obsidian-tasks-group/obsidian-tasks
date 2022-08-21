@@ -15,7 +15,6 @@ export class TagsField extends Field {
         /^(tag|tags) (includes|does not include|include|do not include) (.*)/;
 
     public createFilterOrErrorMessage(line: string): FilterOrErrorMessage {
-        const result = new FilterOrErrorMessage();
         const tagMatch = Field.getMatch(this.filterRegexp(), line);
         if (tagMatch !== null) {
             const filterMethod = tagMatch[2];
@@ -25,11 +24,12 @@ export class TagsField extends Field {
 
             if (filterMethod.includes('include')) {
                 const matcher = new SubstringMatcher(search);
-                result.filter = (task: Task) =>
-                    TextField.maybeNegate(
+                return FilterOrErrorMessage.fromFilter((task: Task) => {
+                    return TextField.maybeNegate(
                         matcher.matchesAnyOf(task.tags),
                         filterMethod,
                     );
+                });
             } else {
                 return FilterOrErrorMessage.fromError(
                     'do not understand query filter (tag/tags)',
@@ -40,7 +40,6 @@ export class TagsField extends Field {
                 'do not understand query filter (tag/tags)',
             );
         }
-        return result;
     }
 
     /**
