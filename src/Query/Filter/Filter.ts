@@ -22,4 +22,24 @@ export type Filter = (task: Task) => boolean;
 export class FilterOrErrorMessage {
     filter: Filter | undefined;
     error: string | undefined;
+
+    /**
+     * Construct a FilterOrErrorMessage with the filter.
+     * @param filter
+     */
+    public static fromFilter(filter: Filter): FilterOrErrorMessage {
+        const result = new FilterOrErrorMessage();
+        result.filter = filter;
+        return result;
+    }
+
+    /**
+     * Construct a FilterOrErrorMessage with the given error message.
+     * @param errorMessage
+     */
+    public static fromError(errorMessage: string): FilterOrErrorMessage {
+        const result = new FilterOrErrorMessage();
+        result.error = errorMessage;
+        return result;
+    }
 }
