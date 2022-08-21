@@ -45,11 +45,10 @@ export abstract class TextField extends Field {
                 );
             };
             return result;
-        } else {
-            return FilterOrErrorMessage.fromError(
-                `do not understand query filter (${this.fieldName()})`,
-            );
         }
+        return FilterOrErrorMessage.fromError(
+            `do not understand query filter (${this.fieldName()})`,
+        );
     }
 
     public static stringIncludesCaseInsensitive(
