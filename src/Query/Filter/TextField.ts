@@ -41,14 +41,12 @@ export abstract class TextField extends Field {
             );
         }
 
-        const result = new FilterOrErrorMessage();
-        result.filter = (task: Task) => {
+        return FilterOrErrorMessage.fromFilter((task: Task) => {
             return TextField.maybeNegate(
                 matcher!.matches(this.value(task)),
                 filterMethod,
             );
-        };
-        return result;
+        });
     }
 
     public static stringIncludesCaseInsensitive(

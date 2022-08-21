@@ -24,6 +24,16 @@ export class FilterOrErrorMessage {
     error: string | undefined;
 
     /**
+     * Construct a FilterOrErrorMessage with the filter.
+     * @param filter
+     */
+    public static fromFilter(filter: Filter): FilterOrErrorMessage {
+        const result = new FilterOrErrorMessage();
+        result.filter = filter;
+        return result;
+    }
+
+    /**
      * Construct a FilterOrErrorMessage with the given error message.
      * @param errorMessage
      */
