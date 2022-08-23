@@ -16,7 +16,7 @@ please see its [documentation](https://blacksmithgu.github.io/obsidian-dataview/
 
 ## Automatic Task Completion
 
-> Introduced in dataview 0.5.42
+> Introduced in Dataview 0.5.42
 
 If you use the "Set Done Date on every completed task" option in Tasks, you can configure Dataview so that clicking a task's checkbox from a Dataview query result will have the same behavior as clicking the checkbox in a Task query result or using the command `Tasks: Toggle Done`.
 
@@ -25,4 +25,4 @@ If you use the "Set Done Date on every completed task" option in Tasks, you can 
 2. Just below the "Automatic Task Completion" setting, enable the "Use Emoji Shortcut for Completion" setting.
 3. Close and then reopen Obsidian.
 
-Now, in Live Preview and Reading View, clicking a checkbox in a Dataview TASK query result will add or remove the ✅ YYYY-MM-DD completion date from a task's text, just like doing so from a Tasks query.
+Now, in Live Preview and Reading View, clicking a checkbox in a Dataview TASK query result will add or remove the `✅ YYYY-MM-DD` completion date from a task's text, just like doing so from a Tasks query.
