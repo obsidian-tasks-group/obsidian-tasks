@@ -25,6 +25,8 @@ If you use the "Set Done Date on every completed task" option in Tasks, you can 
 2. Just below the "Automatic Task Completion" setting, enable the "Use Emoji Shortcut for Completion" setting.
 3. Close and then reopen Obsidian.
 
+![Dataview settings page with Tasks-style done dates enabled](https://github.com/obsidian-tasks-group/obsidian-tasks/raw/gh-pages/resources/screenshots/dataview-settings.png)
+
 ---
 
 Warning
