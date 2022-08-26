@@ -1,8 +1,8 @@
 ---
 layout: default
 title: Dataview
-nav_order: 6
-parent: Advanced
+nav_order: 1
+parent: Other Plugins
 has_toc: false
 ---
 
