@@ -23,8 +23,8 @@
   "author": "Martin Schenck and Clare Macrae",
   "license": "MIT",
   "devDependencies": {
-    "@arkweid/lefthook": "^0.7.6",
     "@codemirror/view": "^6.2.0",
+    "@evilmartians/lefthook": "^1.1.1",
     "@tsconfig/svelte": "^3.0.0",
     "@types/jest": "^28.1.8",
     "@typescript-eslint/eslint-plugin": "^5.34.0",
