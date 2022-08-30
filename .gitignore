@@ -15,6 +15,9 @@ yarn-error.log
 /data.json
 /.obsidian
 
+# jest coverage files
+/coverage
+
 # osx
 .DS_Store
 

@@ -57,6 +57,28 @@ The tests use the [ts-jest](https://www.npmjs.com/package/ts-jest) wrapper aroun
 
 The [Expect](https://jestjs.io/docs/expect) page is a good reference for the many jest testing features.
 
+### Writing Tests for New or Refactored Code
+
+#### Think of it as testing user-visible features
+
+- Tests that test low-level implementation details are hard to maintain over time. Instead, test user-visible features.
+- Try to think of the purpose of the code that has missing tests.
+  - For example, in `taskFromLine()` in `src/Commands/CreateOrEdit.ts` the comments are quite useful in terms of showing the different scenarios being considered. Something like:
+        _already a task line with a global filter, already a task line missing the global filter, already a task line and there is no global filter, already a bullet item, not in a bullet item_
+  - These then would be good tests to write, i.e. test that each of those scenarios does actually behave as expected.
+  - And if the implementation changed in future, those tests would be extremely useful to the maintainer at the time.
+  - And if a new behaviour was added in future, it would be obvious how to add a new test for it.
+
+#### Location of code
+
+Often, untested code is in locations that you can't call in tests (e.g. because it uses some Obsidian code).
+All that needs to be done then is to refactor - via 'move method' or 'extract method') the code out to a different source file.
+For more about refactoring safely and easily, see the talk [Refactoring Superpowers: Make Your IDE Do Your Work, Faster and More Safely](https://www.youtube.com/watch?v=BX6gh2xNiuU).
+
+#### Then start writing tests
+
+If you struggle to name a Jest `it` test, think in terms of _should_: e.g. _should convert a line with no bullet to ..._
+
 ### Snapshot Tests
 
 For testing more complex objects, some of the tests here use Jest's
@@ -83,7 +105,7 @@ This project uses Node 14.x, if you need to use a different version, look at usi
 
 To setup the local environment after cloning the repository, run the following commands:
 
-``` shell
+```shell
 yarn
 yarn build
 yarn test
@@ -121,9 +143,9 @@ The code is located as follows:
 
 Toggle behavior:
 
-- Number 1. toggles the line directly where the cursor is. In the file inside Obsidian‘s vault.
+- Number 1. toggles the line directly where the cursor is in the file inside Obsidian's vault.
 - The click event listener of 2. and 4. uses `File::replaceTaskWithTasks()`. That, in turn, updates the file in Obsidian‘s Vault (like 1, but it needs to find the correct line).
-- Number 3. toggles the line directly where the checkbox is. On the „document“ of CodeMirror (the library that Obsidian uses to show text on screen). That, in turn, updates the file in Obsidian‘s Vault, somehow.
+- Number 3. toggles the line directly where the checkbox is on the "document" of CodeMirror (the library that Obsidian uses to show text on screen). That, in turn, updates the file in Obsidian's Vault.
 
 Obsidian writes the changes to disk at its own pace.
 
