@@ -114,7 +114,9 @@ Changing the last line to create a `text` block instead of a `tasks` one will sh
 
     dv.paragraph('```text\n' + query + '\n```');
 
-### Putting it in to a callout, for pretter output
+### Putting it in to a callout, for prettier output
+
+If you would like a more pleasing appearance for your Tasks results, you can put them in a [callout](https://help.obsidian.md/How+to/Use+callouts). In the example below, the results are displayed in a callout of type `todo`:
 
     ## Summary of Tasks within this note
 
