@@ -37,3 +37,7 @@ To get the correct behavior for recurring tasks from Dataview TASK query results
 and then use the "Tasks: Toggle Done" command or click the checkbox from there.
 
 ---
+
+## Related pages
+
+- [How to get all tasks in the current file]({{ site.baseurl }}{% link how-to/get-tasks-in-current-file.md %}) - an example of using the Dataview plugin to generate Tasks code blocks, to do things that Tasks alone cannot do.

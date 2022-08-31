@@ -134,3 +134,7 @@ Changing the last line to create a `text` block instead of a `tasks` one will sh
 
     dv.paragraph(callout('```tasks\n' + query + '\n```', 'todo'));
     ```
+
+## Related pages
+
+- [Dataview]({{ site.baseurl }}{% link other-plugins/dataview.md %})
