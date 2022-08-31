@@ -8,6 +8,19 @@ has_toc: false
 
 # Combining Dataview and Tasks
 
+{: .no_toc }
+
+<details open markdown="block">
+  <summary>
+    Table of contents
+  </summary>
+  {: .text-delta }
+1. TOC
+{:toc}
+</details>
+
+---
+
 The [Dataview](https://github.com/blacksmithgu/dataview) plugin provides many data analysis features for Obsidian vaults, including queries about tasks.
 This page only describes settings to maximize compatibility between Dataview and Tasks; for all other information on Dataview, including Dataview's names for the task emoji fields,
 please see its [documentation](https://blacksmithgu.github.io/obsidian-dataview/data-annotation/#tasks).
@@ -37,3 +50,7 @@ To get the correct behavior for recurring tasks from Dataview TASK query results
 and then use the "Tasks: Toggle Done" command or click the checkbox from there.
 
 ---
+
+## Related pages
+
+- [How to get all tasks in the current file]({{ site.baseurl }}{% link how-to/get-tasks-in-current-file.md %}) - an example of using the Dataview plugin to generate Tasks code blocks, to do things that Tasks alone cannot do.
