@@ -5,7 +5,7 @@ import { TextField } from './TextField';
  *
  */
 export class HeadingField extends TextField {
-    protected fieldName(): string {
+    public fieldName(): string {
         return 'heading';
     }
 

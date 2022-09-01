@@ -34,7 +34,7 @@ export class BooleanField extends Field {
         return this.parseLine(line);
     }
 
-    protected fieldName(): string {
+    public fieldName(): string {
         return 'boolean query';
     }
 

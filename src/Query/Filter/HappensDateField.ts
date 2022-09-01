@@ -97,7 +97,7 @@ export class HappensDateField extends Field {
         return Array.of(task.startDate, task.scheduledDate, task.dueDate);
     }
 
-    protected fieldName(): string {
+    public fieldName(): string {
         return 'happens';
     }
 }

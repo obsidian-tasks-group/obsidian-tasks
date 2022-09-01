@@ -43,7 +43,7 @@ export class TagsField extends Field {
      * Returns both forms of the field name, singular and plural.
      * @protected
      */
-    protected fieldName(): string {
+    public fieldName(): string {
         return 'tag/tags';
     }
 

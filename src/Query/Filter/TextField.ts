@@ -71,7 +71,7 @@ export abstract class TextField extends Field {
         );
     }
 
-    protected abstract fieldName(): string;
+    public abstract fieldName(): string;
 
     /**
      * Returns the field's value, or an empty string if the value is null

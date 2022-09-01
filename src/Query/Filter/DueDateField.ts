@@ -11,7 +11,7 @@ export class DueDateField extends DateField {
     protected filterRegexp(): RegExp {
         return DueDateField.dueRegexp;
     }
-    protected fieldName(): string {
+    public fieldName(): string {
         return 'due';
     }
     protected date(task: Task): Moment | null {

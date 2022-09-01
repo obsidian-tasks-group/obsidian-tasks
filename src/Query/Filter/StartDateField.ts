@@ -11,7 +11,7 @@ export class StartDateField extends DateField {
     protected filterRegexp(): RegExp {
         return StartDateField.startRegexp;
     }
-    protected fieldName(): string {
+    public fieldName(): string {
         return 'start';
     }
     protected date(task: Task): Moment | null {

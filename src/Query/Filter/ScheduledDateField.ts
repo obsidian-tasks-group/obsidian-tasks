@@ -12,7 +12,7 @@ export class ScheduledDateField extends DateField {
     protected filterRegexp(): RegExp {
         return ScheduledDateField.scheduledRegexp;
     }
-    protected fieldName(): string {
+    public fieldName(): string {
         return 'scheduled';
     }
     protected date(task: Task): Moment | null {

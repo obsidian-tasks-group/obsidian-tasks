@@ -8,7 +8,7 @@ import { TextField } from './TextField';
  *
  */
 export class PathField extends TextField {
-    protected fieldName(): string {
+    public fieldName(): string {
         return 'path';
     }
 

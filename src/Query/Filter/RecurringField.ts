@@ -10,7 +10,7 @@ export class RecurringField extends FilterInstructionsBasedField {
         );
     }
 
-    protected fieldName(): string {
+    public fieldName(): string {
         return 'recurring';
     }
 }
