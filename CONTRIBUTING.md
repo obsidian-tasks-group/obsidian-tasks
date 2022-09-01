@@ -203,7 +203,7 @@ Updates to the `obsidian` package may require additional changes to `manifest.js
 
 </details>
 
-Click the line above to expand this section.
+Click the "Expand Details" line above to expand or close the section.
 
 ## FAQs
 
