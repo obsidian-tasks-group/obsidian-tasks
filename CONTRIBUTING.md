@@ -140,12 +140,18 @@ Note in particular the
 for how to view the diffs in the event of snapshot test failures, and also how to update the saved snapshot
 of one or all snapshot failures.
 
+### Test Coverage
+
+`yarn run jest --coverage` will generate a coverage report in the `coverage` directory, which is ignored by this project's `.gitignore`.
+Your IDE may also be able to show you the test coverage of a source file.
+Adding tests where possible - see [Location of code](#location-of-code) for constraints to code not currently covered by the automated tests is a great way to contribute!
+
 ## Dependency Upgrades and Respository Maintenance
 
 Keeping dependencies up to date ensures the best experience and security for Tasks plugin users.
 This project uses Dependabot to help automate dependency updates, but some dependencies require manual testing
 before they can be merged.
-See the [FAQ entry on smoke-testing](#How do I smoke-test the Tasks plugin?) for how to manually test.
+See the [FAQ entry on smoke-testing](#how-do-i-smoke-test-the-tasks-plugin) for how to manually test.
 
 ## FAQs
 
