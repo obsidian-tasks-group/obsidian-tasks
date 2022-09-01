@@ -14,7 +14,7 @@ export class DoneDateField extends DateField {
     public fieldName(): string {
         return 'done';
     }
-    protected date(task: Task): Moment | null {
+    public date(task: Task): Moment | null {
         return task.doneDate;
     }
     protected filterResultIfFieldMissing() {

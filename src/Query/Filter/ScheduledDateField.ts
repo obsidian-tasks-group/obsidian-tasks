@@ -15,7 +15,7 @@ export class ScheduledDateField extends DateField {
     public fieldName(): string {
         return 'scheduled';
     }
-    protected date(task: Task): Moment | null {
+    public date(task: Task): Moment | null {
         return task.scheduledDate;
     }
     protected filterResultIfFieldMissing() {
