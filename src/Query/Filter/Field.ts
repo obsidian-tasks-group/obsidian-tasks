@@ -82,7 +82,7 @@ export abstract class Field {
      * Return the name of this field, to be used in error messages.
      * This usually matches the instruction name, but does not always
      * (see start and starts).
-     * @protected
+     * @public
      */
-    protected abstract fieldName(): string;
+    public abstract fieldName(): string;
 }

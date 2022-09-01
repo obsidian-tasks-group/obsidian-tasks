@@ -5,16 +5,16 @@ import { TextField } from './TextField';
  *
  */
 export class HeadingField extends TextField {
-    protected fieldName(): string {
+    public fieldName(): string {
         return 'heading';
     }
 
     /**
      * Returns the preceding heading, or an empty string if the heading is null
      * @param task
-     * @protected
+     * @public
      */
-    protected value(task: Task): string {
+    public value(task: Task): string {
         if (task.precedingHeader) {
             return task.precedingHeader;
         } else {
