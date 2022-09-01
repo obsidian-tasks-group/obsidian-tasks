@@ -9,7 +9,7 @@ import { TextField } from './TextField';
  * with the global filter (if any) removed.
  */
 export class DescriptionField extends TextField {
-    protected fieldName(): string {
+    public fieldName(): string {
         return 'description';
     }
 

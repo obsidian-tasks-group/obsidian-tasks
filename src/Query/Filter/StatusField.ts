@@ -12,7 +12,7 @@ export class StatusField extends FilterInstructionsBasedField {
         );
     }
 
-    protected fieldName(): string {
+    public fieldName(): string {
         return 'status';
     }
 }

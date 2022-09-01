@@ -56,7 +56,7 @@ export class PriorityField extends Field {
         return result;
     }
 
-    protected fieldName(): string {
+    public fieldName(): string {
         return 'priority';
     }
 

@@ -78,9 +78,9 @@ export abstract class DateField extends Field {
     /**
      * Return the task's value for this date field, if any.
      * @param task - a Task object
-     * @protected
+     * @public
      */
-    protected abstract date(task: Task): Moment | null;
+    public abstract date(task: Task): Moment | null;
 
     /**
      * Determine whether a task that does not have the particular date value
