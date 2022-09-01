@@ -45,6 +45,7 @@ describe('filename', () => {
         );
 
         // Assert
+        expect(filter).toBeValid();
         expect(filter).not.toMatchTaskWithPath('');
         expect(filter).toMatchTaskWithPath('/some/path/SeArch_Text.md');
         expect(filter).not.toMatchTaskWithPath('/other/search_text/file.md'); // Ignores text in folder names
@@ -57,6 +58,7 @@ describe('filename', () => {
         );
 
         // Assert
+        expect(filter).toBeValid();
         expect(filter).toMatchTaskWithPath('');
         expect(filter).toMatchTaskWithPath('/other/search_text/file.md'); // Ignores text in folder names
         expect(filter).not.toMatchTaskWithPath('/SoMe/PaTh/SeArcH_Text.md');
