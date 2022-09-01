@@ -76,9 +76,9 @@ export abstract class TextField extends Field {
     /**
      * Returns the field's value, or an empty string if the value is null
      * @param task
-     * @protected
+     * @public
      */
-    protected abstract value(task: Task): string;
+    public abstract value(task: Task): string;
 
     public static maybeNegate(match: boolean, filterMethod: String) {
         return filterMethod.match(/not/) ? !match : match;

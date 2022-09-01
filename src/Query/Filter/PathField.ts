@@ -15,9 +15,9 @@ export class PathField extends TextField {
     /**
      * Returns the file path including file extension, or an empty string if the path is null
      * @param task
-     * @protected
+     * @public
      */
-    protected value(task: Task): string {
+    public value(task: Task): string {
         return task.path;
     }
 }
