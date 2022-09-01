@@ -148,10 +148,62 @@ Adding tests where possible - see [Location of code](#location-of-code) for cons
 
 ## Dependency Upgrades and Respository Maintenance
 
+This section is most useful for maintainers of the repository and not necessary for typical documentation, code, or test contributions.
+
+<details><summary>Expand Details on Dependency Upgrades and Dependabot</summary>
+
 Keeping dependencies up to date ensures the best experience and security for Tasks plugin users.
 This project uses Dependabot to help automate dependency updates, but some dependencies require manual testing
 before they can be merged.
 See the [FAQ entry on smoke-testing](#how-do-i-smoke-test-the-tasks-plugin) for how to manually test.
+Multiple depdendency upgrades can be smoke-tested together in a batch.
+
+### Thought-Process for Deciding Whether a Dependency Needs Manual Testing
+
+- When in doubt, smoke-test. Smoke-testing of multiple dependency upgrades can be done in a batch, to reduce the time spent on this process.
+- **Definitely smoke test**: Anything that is involved in producing the built output to users. For example:
+  - esbuild (the build system)
+  - anything mentioned in the esbuild config file (e.g. `builtin-modules`, `svelte-preprocess`)
+  - obsidian
+  - all @codemirror
+  - moment
+  - everything in the "dependencies" (rather than dev-dependencies) list
+- **Automated testing sufficient**: Our linting, formatting, and testing code does not affect the built output and is run automatically on each PR, so it does not need smoke tests.
+    If all the automatic checks pass, these packages can be merged right away:
+  - `markdownlint`
+  - anything with `eslint` in it (including `@typescript/eslint*` which version bump weekly regardless of whether they have any changes)
+  - `svelte-check` (but not other svelte things, which are used in the build system)
+  - anything with `prettier`
+  - `lefthook`
+  - anything with `jest` in it (but see below for details).
+- For anything else, where and how is it being used? If it's only in tests, or only used by developers, no need to smoke test.
+
+### Dependency Groups
+
+Several dependencies come in groups (e.g. `@typescript/eslint*` or ones containing the word `jest`) that may need to be updated together.
+For example, `ts-jest` relies on having a matching major version with `jest` and its types (`@types/jest`).
+Every jest-related package that shares a major version number with `ts-jest`, `jest` etc must have an available upgrade to the new major version before any of them can be upgraded.
+Otherwise, automated testing may fail due to version mismatch.
+
+Dependabot does not know how to handle groups like this, so the maintainer must keep track of this.
+`yarn outdated` is a useful command-line tool for seeing whether there are upgrades available.
+
+### Dependency Notes and Special Cases
+
+Dependabot will not offer PRs for every package. For example, if a package is pinned to an exact version (e.g. `obsidian`) that is far behind the current,
+dependabot may not give any notification of an upgrade.
+Use `yarn outdated` every so often to see if there are any upgrades available.
+
+Note that yarn's `upgrade` and `upgrade-interactive` commands will respect the project's `package.json` which pins either major versions or a specific number.
+`yarn outdated` gives a better indication of what upgrades are available.
+To upgrade major version numbers or a dependency where a fixed version is used, you must
+manually edit the `package.json` file. **Note**: Be sure to run `yarn` after any edits to `package.json` to ensure the `yarn.lock` file is updated.
+
+Updates to the `obsidian` package may require additional changes to `manifest.json` and `versions.json` and should be handled with care so that Tasks users who are not on the latest version of Obsidian have time to update.
+
+</details>
+
+Click the line above to expand this section.
 
 ## FAQs
 
