@@ -518,10 +518,10 @@
     style-mod "^4.0.0"
     w3c-keyname "^2.2.4"
 
-"@codemirror/view@^6.2.0":
-  version "6.2.0"
-  resolved "https://registry.yarnpkg.com/@codemirror/view/-/view-6.2.0.tgz#bae4c486a84174bd9656af9c9d2bd709d5b26c9f"
-  integrity sha512-3emW1symh+GoteFMBPsltjmF790U/trouLILATh3JodbF/z98HvcQh2g3+H6dfNIHx16uNonsAF4mNzVr1TJNA==
+"@codemirror/view@^6.2.2":
+  version "6.2.2"
+  resolved "https://registry.yarnpkg.com/@codemirror/view/-/view-6.2.2.tgz#1198ee5c303fdd6b4384b8ea8bcc43378c7753b9"
+  integrity sha512-RwtFlBM/+xnv95urH1D8bVsX3KYLZGygGyZG2TZoXW2Q/GMrI+AuUXh7jBE1M38IOX3YnLTlp6RdgCx3Xo2jVA==
   dependencies:
     "@codemirror/state" "^6.0.0"
     style-mod "^4.0.0"
