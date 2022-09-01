@@ -9,9 +9,18 @@ The documentation resides under the `./docs` directory.
 It consists of markdown files, which [Jekyll](https://jekyllrb.com/) will transform into web pages that you can view at <https://obsidian-tasks-group.github.io/obsidian-tasks/> .
 In the simplest case, you can update the existing markdown file and create a pull request (PR) with your changes.
 
+### Documentation and branches
+
+For documentation changes to show up at <https://obsidian-tasks-group.github.io/obsidian-tasks/> , they must be in the `gh-pages` branch.
+If you want to see your changes available immediately and not only after the next release, you should make your changes on the `gh-pages` branch.
+When you create a PR, it should merge into the `gh-pages` branch as well.
+If you document an unreleased feature, you should update the documentation on `main` instead. Ideally together with the related code changes.
+If this is confusing, don't worry.
+We will help you make this right once you opened the PR.
+
 ### Version numbers in documentation
 
-We have introduced version markers to the documentation, to show users in which version a specific feature was introduced.
+We have introduced version markers to the documentation, to show users in which Tasks version a specific feature was introduced.
 This means that newly written documentation should be tagged with a placeholder, which will be replaced with the actual
 version upon release.
 
@@ -31,24 +40,56 @@ You can read more about it at their [official documentation](https://docs.github
 To generate the documentation site on your machine,
 see [docs/README.md](docs/README.md).
 
-### Documentation and branches
-
-For documentation changes to show up at <https://obsidian-tasks-group.github.io/obsidian-tasks/> , they must be in the `gh-pages` branch.
-If you want to see your changes available immediately and not only after the next release, you should make your changes on the `gh-pages` branch.
-When you create a PR, it should merge into the `gh-pages` branch as well.
-If you document an unreleased feature, you should update the documentation on `main` instead. Ideally together with the related code changes.
-If this is confusing, don't worry.
-We will help you make this right once you opened the PR.
-
 ## Updating code
 
-Ideally, an [issue](https://github.com/obsidian-tasks-group/obsidian-tasks/issues) already exists and we discussed your implementation in that issue before you open the pull request (PR).
+Ideally, an [issue](https://github.com/obsidian-tasks-group/obsidian-tasks/issues) or
+[Discussion](https://github.com/obsidian-tasks-group/obsidian-tasks/discussions) already exists
+and we discussed your implementation in that issue before you open the pull request (PR).
 This is _not_ mandatory, but it helps improve the process and reduce unnecessary back-and-forth.
 
 Once you want to propose your changes, create a PR and we'll have a look when we have time.
 Discussion will take place inside the PR.
 
 If you can, please add/update tests and documentation where appropriate.
+
+## Local setup and workflow for changes to code and tests
+
+This project uses the Yarn package manager for Javascript, and several formatting and linting tools.
+Below are specific setup instructions for changing code and tests, as well as tips for local development workflow.
+
+### Setting up build environment
+
+This project uses Node 14.x, if you also use a different version, look at using `nvm` to manage your Node versions.
+If you are using `nvm`, you can install the 14.x version of Node with `nvm install 14; nvm use <full version number you installed such as 14.19.3>`.
+
+To setup the local environment after cloning the repository, run the following commands:
+
+```shell
+yarn
+yarn build
+yarn test
+yarn lint
+yarn lint:markdown
+```
+
+Make sure you build, test and lint before pushing to the repository. Lefthook is used to cover these checks before commit and push.
+
+### Local development
+
+When developing locally, you can use the `yarn dev` command to start a development build.
+This will cause a rebuild of the code base every time you make a change so you can see if there are any code errors.
+
+Not all the functionality of Tasks can be tested via the automated tests. If you want to test your changes in a local obsidian vault use `yarn run build:dev`.
+This will generate the `main.js` in the root of the repository with a sourcemap in it to facilitate
+debugging using the development console (`Ctrl+Shift+i` on Windows or `Cmd+Shift+i` on Mac) in Obsidian.
+
+If your environment supports Powershell scripts (e.g. Windows), you can use `yarn deploy:local`
+which will create a symbolic link to the plugins folder for this plugin (`obsidian-tasks-plugin`).
+Whenever a build occurs using `yarn run dev` or `yarn run build:dev` the plugin will be updated
+in the obsidian vault you are targeting using the `OBSIDIAN_PLUGIN_ROOT` environment variable.
+It is recommended you use the [Hot-Reload](https://github.com/pjeby/hot-reload) plugin in that vault also;
+it will automatically reload the plugin when files change.
+The script run by `deploy:local` will create a `.hotreload` file in the root of the repository to assist.
 
 ## Maintaining the tests
 
@@ -99,30 +140,12 @@ Note in particular the
 for how to view the diffs in the event of snapshot test failures, and also how to update the saved snapshot
 of one or all snapshot failures.
 
-## Setting up build environment
+## Dependency Upgrades and Respository Maintenance
 
-This project uses Node 14.x, if you need to use a different version, look at using `nvm` to manage your Node versions. If you are using `nvm`, you can install the 14.x version of Node with `nvm install 14.19.1; nvm use 14.19.1`.
-
-To setup the local environment after cloning the repository, run the following commands:
-
-```shell
-yarn
-yarn build
-yarn test
-yarn lint
-```
-
-Make sure you build, test and lint before pushing to the repository. Left hook is used to cover these checks before commit and push. To run just the markdown lint you can use `yarn run lint:markdown`.
-
-## Local development
-
-When developing locally, you can use the `yarn dev` command to start a development build. This will cause a rebuild of the code base every time you make a change so you can see if there are any code errors.
-
-If you want to build and test in a local obsidian vault use `yarn run build:dev` this will generate the `main.js` in the root of the repository which has the sourcemap in it to make debugging using the development console (`Ctrl+Shift+i`) in Obsidian easier.
-
-To make it simpler to work on the files you can use `deploy:local` which will create a symbolic link to the plugins folder for this plugin (`obsidian-tasks-plugin`). When ever a build occurs using `yarn run dev` or `yarn run build:dev` the plugin will be updated in the obsidian vault you are targeting using the `OBSIDIAN_PLUGIN_ROOT` environment variable.
-
-It is recommended you use the [Hot-Reload](https://github.com/pjeby/hot-reload) plugin to automatically reload the plugin when files change. The script will create a `.hotreload` file in the root of the repository to assist.
+Keeping dependencies up to date ensures the best experience and security for Tasks plugin users.
+This project uses Dependabot to help automate dependency updates, but some dependencies require manual testing
+before they can be merged.
+See the [FAQ entry on smoke-testing](#How do I smoke-test the Tasks plugin?) for how to manually test.
 
 ## FAQs
 
@@ -180,4 +203,5 @@ Follow the steps in `resources/sample_vaults/Tasks-Demo/Manual Testing/Smoke Tes
 8. Optional: Post to
     - Obsidian Discord
     - r/ObsidianMD on Reddit
+    - Obsidian Forum
     - etc.
