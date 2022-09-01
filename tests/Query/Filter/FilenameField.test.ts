@@ -5,6 +5,14 @@ import {
     toMatchTaskWithPath,
 } from '../../CustomMatchers/CustomMatchersForFilters';
 
+expect.extend({
+    toMatchTaskWithPath,
+});
+
+expect.extend({
+    toBeValid,
+});
+
 describe('filename', () => {
     it('should provide access to the file name with extension', () => {
         const pathField = new FilenameField();
@@ -23,14 +31,6 @@ describe('filename', () => {
             ),
         ).toStrictEqual('file in sub-directory.md');
     });
-});
-
-expect.extend({
-    toMatchTaskWithPath,
-});
-
-expect.extend({
-    toBeValid,
 });
 
 describe('filename', () => {
