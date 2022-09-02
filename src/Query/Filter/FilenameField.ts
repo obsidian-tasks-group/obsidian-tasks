@@ -13,7 +13,7 @@ export class FilenameField extends TextField {
     }
 
     /**
-     * Returns the file name including file extension, or an empty string if the path was not supplied
+     * Returns the file name including file extension, or an empty string if the task does not have a filename
      * @param task
      * @public
      */
