@@ -24,6 +24,7 @@ describe('Query parsing', () => {
         'due before 2021-12-27',
         'due on 2021-12-27',
         'exclude sub-items',
+        'filename includes wibble',
         'happens after 2021-12-27',
         'happens before 2021-12-27',
         'happens on 2021-12-27',

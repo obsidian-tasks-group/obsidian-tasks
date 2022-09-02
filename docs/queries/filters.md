@@ -208,6 +208,8 @@ These filters allow searching for tasks in particular files and sections of file
 
 ### File Path
 
+Note that the path includes the `.md` extension.
+
 - `path (includes|does not include) <path>`
   - Matches case-insensitive (disregards capitalization).
 - `path (regex matches|regex does not match) /<JavaScript-style Regex>/`
@@ -215,6 +217,18 @@ These filters allow searching for tasks in particular files and sections of file
   - Essential reading: [Regular Expression Searches]({{ site.baseurl }}{% link queries/regular-expressions.md %}).
 
 > `regex matches` and `regex does not match` were introduced in Tasks 1.12.0.
+
+### File Name
+
+> Introduced in Tasks 1.13.0.
+
+Note that the file name includes the `.md` extension.
+
+- `filename (includes|does not include) <filename>`
+  - Matches case-insensitive (disregards capitalization).
+- `filename (regex matches|regex does not match) /<JavaScript-style Regex>/`
+  - Does regular expression match (case-sensitive by default).
+  - Essential reading: [Regular Expression Searches]({{ site.baseurl }}{% link queries/regular-expressions.md %}).
 
 ### Heading
 
