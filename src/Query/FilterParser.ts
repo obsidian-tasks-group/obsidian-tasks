@@ -12,6 +12,7 @@ import { RecurringField } from './Filter/RecurringField';
 import { StatusField } from './Filter/StatusField';
 import { TagsField } from './Filter/TagsField';
 import { BooleanField } from './Filter/BooleanField';
+import { FilenameField } from './Filter/FilenameField';
 
 import type { FilterOrErrorMessage } from './Filter/Filter';
 
@@ -30,6 +31,7 @@ const fieldCreators = [
     () => new HeadingField(),
     () => new ExcludeSubItemsField(),
     () => new BooleanField(),
+    () => new FilenameField(),
 ];
 
 export function parseFilter(filterString: string): FilterOrErrorMessage | null {

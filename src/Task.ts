@@ -674,6 +674,9 @@ export class Task {
         return this._urgency;
     }
 
+    /**
+     * Return the name of the file containing the task, with the .md extension removed.
+     */
     public get filename(): string | null {
         const fileNameMatch = this.path.match(/([^/]+)\.md$/);
         if (fileNameMatch !== null) {
