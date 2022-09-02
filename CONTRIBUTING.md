@@ -146,7 +146,7 @@ of one or all snapshot failures.
 Your IDE may also be able to show you the test coverage of a source file.
 Adding tests where possible - see [Location of code](#location-of-code) for constraints to code not currently covered by the automated tests is a great way to contribute!
 
-## Dependency Upgrades and Respository Maintenance
+## Dependency Upgrades and Repository Maintenance
 
 This section is most useful for maintainers of the repository and not necessary for typical documentation, code, or test contributions.
 
