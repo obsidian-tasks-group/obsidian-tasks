@@ -233,7 +233,7 @@ describe('tag/tags', () => {
         });
     });
 
-    it('tag/tags - regex matches', () => {
+    it('tag/tags - regex matches short tag', () => {
         // Arrange
         const filter = new TagsField().createFilterOrErrorMessage(
             String.raw`tag regex matches /#t$/i`, // case-INsensitive
@@ -245,6 +245,17 @@ describe('tag/tags', () => {
         expect(filter).not.toMatchTaskFromLine(
             '- [ ] should not match sub-tag #t/sub',
         );
+    });
+
+    it('tag/tags - regex searching for sub-tags', () => {
+        // Arrange
+        const filter = new TagsField().createFilterOrErrorMessage(
+            String.raw`tags regex matches /#tag\/subtag[0-9]\/subsubtag[0-9]/i`, // case-INsensitive
+        );
+
+        // Act, Assert
+        expect(filter).toMatchTaskFromLine('- [ ] a #tag/subtag3/subsubtag5');
+        expect(filter).toMatchTaskFromLine('- [ ] b #tag/subtag3/Subsubtag9');
     });
 
     it('tag/tags - regex does not match', () => {
