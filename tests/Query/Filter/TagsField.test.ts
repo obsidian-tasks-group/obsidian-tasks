@@ -236,12 +236,12 @@ describe('tag/tags', () => {
     it('tag/tags - regex matches', () => {
         // Arrange
         const filter = new TagsField().createFilterOrErrorMessage(
-            String.raw`tag regex matches /^#t$/i`,
+            String.raw`tag regex matches /^#t$/i`, // case-INsensitive
         );
 
         // Act, Assert
         expect(filter).toMatchTaskFromLine('- [ ] has exact tag #t');
-        expect(filter).toMatchTaskFromLine('- [ ] has exact tag #T');
+        expect(filter).toMatchTaskFromLine('- [ ] has exact tag #s #T'); // searches multiple tags
         expect(filter).not.toMatchTaskFromLine(
             '- [ ] should not match sub-tag #t/sub',
         );
@@ -250,12 +250,13 @@ describe('tag/tags', () => {
     it('tag/tags - regex does not match', () => {
         // Arrange
         const filter = new TagsField().createFilterOrErrorMessage(
-            String.raw`tags regex does not match /#HOME/`,
+            String.raw`tags regex does not match /#HOME/`, // case-sensitive
         );
 
         // Act, Assert
         expect(filter).toMatchTaskFromLine('- [ ] stuff #work');
         expect(filter).toMatchTaskFromLine('- [ ] stuff #home');
         expect(filter).not.toMatchTaskFromLine('- [ ] stuff #HOME');
+        expect(filter).not.toMatchTaskFromLine('- [ ] stuff #work #HOME'); // searches multiple tags
     });
 });
