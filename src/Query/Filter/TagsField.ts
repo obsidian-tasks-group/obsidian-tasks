@@ -1,5 +1,6 @@
 import type { Task } from '../../Task';
 import { SubstringMatcher } from '../Matchers/SubstringMatcher';
+import type { IStringMatcher } from '../Matchers/IStringMatcher';
 import { Field } from './Field';
 import { FilterOrErrorMessage } from './Filter';
 import { TextField } from './TextField';
@@ -23,20 +24,20 @@ export class TagsField extends Field {
         }
         const filterMethod = match[2];
         const search = match[3];
-
+        let matcher: IStringMatcher | null = null;
         if (filterMethod.includes('include')) {
-            const matcher = new SubstringMatcher(search);
-            return FilterOrErrorMessage.fromFilter((task: Task) => {
-                return TextField.maybeNegate(
-                    matcher.matchesAnyOf(task.tags),
-                    filterMethod,
-                );
-            });
+            matcher = new SubstringMatcher(search);
         } else {
             return FilterOrErrorMessage.fromError(
                 `do not understand query filter (${this.fieldName()})`,
             );
         }
+        return FilterOrErrorMessage.fromFilter((task: Task) => {
+            return TextField.maybeNegate(
+                matcher!.matchesAnyOf(task.tags),
+                filterMethod,
+            );
+        });
     }
 
     /**
