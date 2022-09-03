@@ -232,4 +232,45 @@ describe('tag/tags', () => {
             resetSettings();
         });
     });
+
+    it('tag/tags - regex matches short tag', () => {
+        // Arrange
+        const filter = new TagsField().createFilterOrErrorMessage(
+            String.raw`tag regex matches /#t$/i`, // case-INsensitive
+        );
+
+        // Act, Assert
+        expect(filter).toMatchTaskFromLine('- [ ] #t Do stuff');
+        expect(filter).toMatchTaskFromLine('- [ ] Do #t stuff');
+        expect(filter).toMatchTaskFromLine('- [ ] Do stuff #t');
+
+        // Confirm that tags with sub-tags are not found:
+        expect(filter).not.toMatchTaskFromLine('- [ ] #t/b Do stuff');
+        expect(filter).not.toMatchTaskFromLine('- [ ] Do #t/b stuff');
+        expect(filter).not.toMatchTaskFromLine('- [ ] Do stuff #t/b');
+    });
+
+    it('tag/tags - regex searching for sub-tags', () => {
+        // Arrange
+        const filter = new TagsField().createFilterOrErrorMessage(
+            String.raw`tags regex matches /#tag\/subtag[0-9]\/subsubtag[0-9]/i`, // case-INsensitive
+        );
+
+        // Act, Assert
+        expect(filter).toMatchTaskFromLine('- [ ] a #tag/subtag3/subsubtag5');
+        expect(filter).toMatchTaskFromLine('- [ ] b #tag/subtag3/Subsubtag9');
+    });
+
+    it('tag/tags - regex does not match', () => {
+        // Arrange
+        const filter = new TagsField().createFilterOrErrorMessage(
+            String.raw`tags regex does not match /#HOME/`, // case-sensitive
+        );
+
+        // Act, Assert
+        expect(filter).toMatchTaskFromLine('- [ ] stuff #work');
+        expect(filter).toMatchTaskFromLine('- [ ] stuff #home');
+        expect(filter).not.toMatchTaskFromLine('- [ ] stuff #HOME');
+        expect(filter).not.toMatchTaskFromLine('- [ ] stuff #work #HOME'); // searches multiple tags
+    });
 });
