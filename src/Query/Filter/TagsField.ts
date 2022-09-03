@@ -19,9 +19,7 @@ export class TagsField extends Field {
         const tagMatch = Field.getMatch(this.filterRegexp(), line);
         if (tagMatch !== null) {
             const filterMethod = tagMatch[2];
-
-            // Search is done sans the hash. If it is provided then strip it off.
-            const search = tagMatch[3].replace(/^#/, '');
+            const search = tagMatch[3];
 
             if (filterMethod.includes('include')) {
                 const matcher = new SubstringMatcher(search);
