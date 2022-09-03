@@ -240,11 +240,14 @@ describe('tag/tags', () => {
         );
 
         // Act, Assert
-        expect(filter).toMatchTaskFromLine('- [ ] has exact tag #t');
-        expect(filter).toMatchTaskFromLine('- [ ] has exact tag #s #T'); // searches multiple tags
-        expect(filter).not.toMatchTaskFromLine(
-            '- [ ] should not match sub-tag #t/sub',
-        );
+        expect(filter).toMatchTaskFromLine('- [ ] #t Do stuff');
+        expect(filter).toMatchTaskFromLine('- [ ] Do #t stuff');
+        expect(filter).toMatchTaskFromLine('- [ ] Do stuff #t');
+
+        // Confirm that tags with sub-tags are not found:
+        expect(filter).not.toMatchTaskFromLine('- [ ] #t/b Do stuff');
+        expect(filter).not.toMatchTaskFromLine('- [ ] Do #t/b stuff');
+        expect(filter).not.toMatchTaskFromLine('- [ ] Do stuff #t/b');
     });
 
     it('tag/tags - regex searching for sub-tags', () => {
