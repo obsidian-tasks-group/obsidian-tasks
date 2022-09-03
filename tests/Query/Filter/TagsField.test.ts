@@ -1,4 +1,4 @@
-import { getSettings, updateSettings } from '../../../src/config/Settings';
+import { resetSettings, updateSettings } from '../../../src/config/Settings';
 import type { FilteringCase } from '../../TestingTools/FilterTestHelpers';
 import { shouldSupportFiltering } from '../../TestingTools/FilterTestHelpers';
 
@@ -141,7 +141,6 @@ describe('tag/tags', () => {
             'should filter tag with globalFilter %s',
             (_, { tasks: allTaskLines, filters, expectedResult }) => {
                 // Arrange
-                const originalSettings = getSettings();
                 updateSettings({ globalFilter: '#task' });
 
                 // Run on the plural version of the filter first.
@@ -162,7 +161,7 @@ describe('tag/tags', () => {
                 shouldSupportFiltering(filters, allTaskLines, expectedResult);
 
                 // Cleanup
-                updateSettings(originalSettings);
+                resetSettings();
             },
         );
 
@@ -190,25 +189,17 @@ describe('tag/tags', () => {
             },
         );
 
-        it('should filter tags without globalFilter by tag presence when it is the global tag', () => {
-            // Arrange
-            const originalSettings = getSettings();
-            updateSettings({ globalFilter: '' });
-
+        it('should filter tags without globalFilter by tag presence when there is no global filter', () => {
             // Act, Assert
             shouldSupportFiltering(
                 ['tags include task'],
                 defaultTasksWithTags,
                 defaultTasksWithTags,
             );
-
-            // Cleanup
-            updateSettings(originalSettings);
         });
 
-        it('should filter tag with globalFilter by tag presence when it is the global tag', () => {
+        it('should ignore the tag which is the global filter', () => {
             // Arrange
-            const originalSettings = getSettings();
             updateSettings({ globalFilter: '#task' });
             const filters: Array<string> = ['tags include task'];
 
@@ -216,7 +207,7 @@ describe('tag/tags', () => {
             shouldSupportFiltering(filters, defaultTasksWithTags, []);
 
             // Cleanup
-            updateSettings(originalSettings);
+            resetSettings();
         });
     });
 });

@@ -3,7 +3,7 @@
  */
 import moment from 'moment';
 import { DescriptionField } from '../../../src/Query/Filter/DescriptionField';
-import { getSettings, updateSettings } from '../../../src/config/Settings';
+import { resetSettings, updateSettings } from '../../../src/config/Settings';
 import { testTaskFilter } from '../../TestingTools/FilterTestHelpers';
 import { fromLine } from '../../TestHelpers';
 import type { FilterOrErrorMessage } from '../../../src/Query/Filter/Filter';
@@ -47,7 +47,6 @@ describe('description should strip signifiers, some duplicate spaces and trailin
 
     it('with tag as global filter - all tags included', () => {
         // Arrange
-        const originalSettings = getSettings();
         updateSettings({ globalFilter: '#task' });
 
         const task = fromLine({
@@ -61,12 +60,11 @@ describe('description should strip signifiers, some duplicate spaces and trailin
         );
 
         // Cleanup
-        updateSettings(originalSettings);
+        resetSettings();
     });
 
     it('with non-tag as global filter - all tags included', () => {
         // Arrange
-        const originalSettings = getSettings();
         updateSettings({ globalFilter: 'global-filter' });
 
         const task = fromLine({
@@ -80,14 +78,13 @@ describe('description should strip signifiers, some duplicate spaces and trailin
         );
 
         // Cleanup
-        updateSettings(originalSettings);
+        resetSettings();
     });
 });
 
 describe('description', () => {
     it('ignores the global filter when filtering', () => {
         // Arrange
-        const originalSettings = getSettings();
         updateSettings({ globalFilter: '#task' });
         const filter = new DescriptionField().createFilterOrErrorMessage(
             'description includes task',
@@ -103,12 +100,11 @@ describe('description', () => {
         testDescriptionFilter(filter, '- [ ] #task this does: task', true);
 
         // Cleanup
-        updateSettings(originalSettings);
+        resetSettings();
     });
 
     it('works without a global filter', () => {
         // Arrange
-        const originalSettings = getSettings();
         updateSettings({ globalFilter: '' });
         const filter = new DescriptionField().createFilterOrErrorMessage(
             'description includes task',
@@ -130,7 +126,7 @@ describe('description', () => {
         testDescriptionFilter(filter, '- [ ] #task this does: task', true);
 
         // Cleanup
-        updateSettings(originalSettings);
+        resetSettings();
     });
 
     it('works with regex', () => {
