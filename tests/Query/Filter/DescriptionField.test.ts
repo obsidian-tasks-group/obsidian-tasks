@@ -187,7 +187,7 @@ describe('search description for time stamps', () => {
 });
 
 describe('search description for short tags, excluding sub-tags', () => {
-    // Note that the following were written before tag searches support regex
+    // Note that the following were written before tag searches supported regex.
     // They would now be written using:
     //  tag regex matches /#t$/i
     it('should search for a short tag anywhere in the line except the end', () => {
