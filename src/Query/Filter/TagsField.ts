@@ -15,14 +15,14 @@ export class TagsField extends Field {
         /^(tag|tags) (includes|does not include|include|do not include) (.*)/;
 
     public createFilterOrErrorMessage(line: string): FilterOrErrorMessage {
-        const tagMatch = Field.getMatch(this.filterRegexp(), line);
-        if (tagMatch === null) {
+        const match = Field.getMatch(this.filterRegexp(), line);
+        if (match === null) {
             return FilterOrErrorMessage.fromError(
                 'do not understand query filter (tag/tags)',
             );
         }
-        const filterMethod = tagMatch[2];
-        const search = tagMatch[3];
+        const filterMethod = match[2];
+        const search = match[3];
 
         if (filterMethod.includes('include')) {
             const matcher = new SubstringMatcher(search);
