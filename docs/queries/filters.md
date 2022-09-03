@@ -202,6 +202,8 @@ For example:
 - `tag (regex matches|regex does not match) /<JavaScript-style Regex>/`
   - Does regular expression match (case-sensitive by default).
   - Essential reading: [Regular Expression Searches]({{ site.baseurl }}{% link queries/regular-expressions.md %}).
+  - This enables tag searches that avoid sub-tags, by putting a `$` character at the end of the regular expression. See examples below.
+  - If searching for sub-tags, remember to escape the slashes in regular expressions: `\/`
 
 > `regex matches` and `regex does not match` were introduced in Tasks 1.13.0.
 
@@ -209,10 +211,11 @@ For example:
 
 - `tags include #todo`
 - `tags do not include #todo`
-- `tag regex matches /^#t$/`
-  - Searches for a single-character tag `#t`, with no sub-tags
-- `tag regex matches /^#t$/i`
-  - Searches for a single-character tag `#t` or `#T`, with no sub-tags
+- `tag regex matches /#t$/`
+  - Searches for a single-character tag `#t`, with no sub-tags, because `$` matches the end of the tag text.
+- `tag regex matches /#book$/i`
+  - The trailing `i` means case-insensitive.
+  - Searches for tags such as `#book`,  `#Book`, `#BOOK` and the `$` prevents matching of `#books`,  `#book/literature`, etc.
 
 ## Filters for File Properties
 
