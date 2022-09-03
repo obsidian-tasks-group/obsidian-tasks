@@ -232,4 +232,30 @@ describe('tag/tags', () => {
             resetSettings();
         });
     });
+
+    it('tag/tags - regex matches', () => {
+        // Arrange
+        const filter = new TagsField().createFilterOrErrorMessage(
+            String.raw`tag regex matches /^#t$/i`,
+        );
+
+        // Act, Assert
+        expect(filter).toMatchTaskFromLine('- [ ] has exact tag #t');
+        expect(filter).toMatchTaskFromLine('- [ ] has exact tag #T');
+        expect(filter).not.toMatchTaskFromLine(
+            '- [ ] should not match sub-tag #t/sub',
+        );
+    });
+
+    it('tag/tags - regex does not match', () => {
+        // Arrange
+        const filter = new TagsField().createFilterOrErrorMessage(
+            String.raw`tags regex does not match /#HOME/`,
+        );
+
+        // Act, Assert
+        expect(filter).toMatchTaskFromLine('- [ ] stuff #work');
+        expect(filter).toMatchTaskFromLine('- [ ] stuff #home');
+        expect(filter).not.toMatchTaskFromLine('- [ ] stuff #HOME');
+    });
 });

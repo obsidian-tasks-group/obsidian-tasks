@@ -1,5 +1,6 @@
 import type { Task } from '../../Task';
 import { SubstringMatcher } from '../Matchers/SubstringMatcher';
+import { RegexMatcher } from '../Matchers/RegexMatcher';
 import type { IStringMatcher } from '../Matchers/IStringMatcher';
 import { Field } from './Field';
 import { FilterOrErrorMessage } from './Filter';
@@ -13,7 +14,7 @@ import { TextField } from './TextField';
 export class TagsField extends Field {
     // Handles both ways of referencing the tags query.
     private static readonly tagRegexp =
-        /^(tag|tags) (includes|does not include|include|do not include) (.*)/;
+        /^(tag|tags) (includes|does not include|include|do not include|regex matches|regex does not match) (.*)/;
 
     public createFilterOrErrorMessage(line: string): FilterOrErrorMessage {
         const match = Field.getMatch(this.filterRegexp(), line);
@@ -27,11 +28,23 @@ export class TagsField extends Field {
         let matcher: IStringMatcher | null = null;
         if (filterMethod.includes('include')) {
             matcher = new SubstringMatcher(search);
-        } else {
+        } else if (filterMethod.includes('regex')) {
+            matcher = RegexMatcher.validateAndConstruct(search);
+            if (matcher === null) {
+                return FilterOrErrorMessage.fromError(
+                    `cannot parse regex (${this.fieldName()}); check your leading and trailing slashes for your query`,
+                );
+            }
+        }
+
+        if (matcher === null) {
+            // It's likely this can now never be reached.
+            // Retained for safety, for now.
             return FilterOrErrorMessage.fromError(
                 `do not understand query filter (${this.fieldName()})`,
             );
         }
+
         return FilterOrErrorMessage.fromFilter((task: Task) => {
             return TextField.maybeNegate(
                 matcher!.matchesAnyOf(task.tags),
