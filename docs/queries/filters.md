@@ -195,6 +195,7 @@ For example:
   - Matches case-insensitive (disregards capitalization).
   - Disregards the global filter when matching.
   - The `#` is optional on the tag so `#home` and `home` will work to match `#home`.
+  - If the `#` is given, it must be present, so searching for `#home` will match `#home` but not `#location/home`.
   - The match is partial so `tags include foo` will match `#foo/bar` and `#foo-bar`.
 
 #### Tag Query Examples

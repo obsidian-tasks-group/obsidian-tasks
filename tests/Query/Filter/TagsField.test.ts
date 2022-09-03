@@ -1,8 +1,30 @@
 import { resetSettings, updateSettings } from '../../../src/config/Settings';
 import type { FilteringCase } from '../../TestingTools/FilterTestHelpers';
 import { shouldSupportFiltering } from '../../TestingTools/FilterTestHelpers';
+import { toMatchTaskFromLine } from '../../CustomMatchers/CustomMatchersForFilters';
+import { TagsField } from '../../../src/Query/Filter/TagsField';
+
+expect.extend({
+    toMatchTaskFromLine,
+});
 
 describe('tag/tags', () => {
+    it('should honour any # in query', () => {
+        const filter = new TagsField().createFilterOrErrorMessage(
+            'tags include #home',
+        );
+        expect(filter).toMatchTaskFromLine('- [ ] stuff #home');
+        expect(filter).not.toMatchTaskFromLine('- [ ] stuff #location/home');
+    });
+
+    it('should match any position if no # in query', () => {
+        const filter = new TagsField().createFilterOrErrorMessage(
+            'tags include home',
+        );
+        expect(filter).toMatchTaskFromLine('- [ ] stuff #home');
+        expect(filter).toMatchTaskFromLine('- [ ] stuff #location/home');
+    });
+
     const defaultTasksWithTags = [
         '- [ ] #task something to do #later #work',
         '- [ ] #task something to do #later #work/meeting',
