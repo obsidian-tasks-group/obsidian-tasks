@@ -27,3 +27,7 @@ export const updateSettings = (newSettings: Partial<Settings>): Settings => {
 
     return getSettings();
 };
+
+export const resetSettings = (): Settings => {
+    return updateSettings(defaultSettings);
+};
