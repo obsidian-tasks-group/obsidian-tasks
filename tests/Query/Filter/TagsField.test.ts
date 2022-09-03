@@ -236,7 +236,7 @@ describe('tag/tags', () => {
     it('tag/tags - regex matches', () => {
         // Arrange
         const filter = new TagsField().createFilterOrErrorMessage(
-            String.raw`tag regex matches /^#t$/i`, // case-INsensitive
+            String.raw`tag regex matches /#t$/i`, // case-INsensitive
         );
 
         // Act, Assert
