@@ -3,6 +3,7 @@
   "compilerOptions": {
     "allowSyntheticDefaultImports": true,
     "baseUrl": "./src",
+    "resolveJsonModule": true,
     "esModuleInterop": true,
     "inlineSources": true,
     "sourceMap": true,
@@ -16,7 +17,10 @@
     "moduleResolution": "node",
     "importHelpers": true,
     "paths": {
-      "src": ["src/*", "tests/*"]
+      "src": [
+        "src/*",
+        "tests/*"
+      ]
     },
     "types": [
       "jest",
@@ -35,6 +39,6 @@
     "tests/**/*"
   ],
   "exclude": [
-      "node_modules/*"
+    "node_modules/*"
   ]
 }
