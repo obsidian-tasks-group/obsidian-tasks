@@ -51,7 +51,7 @@ export const toggleDone = (checking: boolean, editor: Editor, view: View) => {
     });
 };
 
-const toggleLine = (line: string, path: string) => {
+export const toggleLine = (line: string, path: string) => {
     let toggledLine = line;
 
     const task = Task.fromLine({
@@ -113,7 +113,7 @@ const toggleTask = (task: Task): string => {
 
 So cursor should be reset if 0, which includes being moved to new end if got shorter. Then might need to move right 2 or 3.
 */
-const calculateCursorOffset = (
+export const calculateCursorOffset = (
     origCursorCh: number,
     line: string,
     toggledLine: string,
