@@ -79,13 +79,15 @@ Make sure you build, test and lint before pushing to the repository. Lefthook is
 When developing locally, you can use the `yarn dev` command to start a development build.
 This will cause a rebuild of the code base every time you make a change so you can see if there are any code errors.
 
-Not all the functionality of Tasks can be tested via the automated tests. If you want to test your changes in a local obsidian vault use `yarn run build:dev`.
+Not all the functionality of Tasks can be tested via the automated tests.
+If you want to test your changes in a local obsidian vault use `yarn run build:dev`.
 This will generate the `main.js` in the root of the repository with a sourcemap in it to facilitate
 debugging using the development console (`Ctrl+Shift+i` on Windows or `Cmd+Shift+i` on Mac) in Obsidian.
-
-If your environment supports Powershell scripts (e.g. Windows), you can use `yarn deploy:local`
-which will create a symbolic link to the plugins folder for this plugin (`obsidian-tasks-plugin`).
-Whenever a build occurs using `yarn run dev` or `yarn run build:dev` the plugin will be updated
+Then either manually copy the `main.js` file to local test vault's `.obsidian/plugins/obsidian-tasks` folder, or use the Powershell script that is run via the `yarn deploy:local` command to
+create a symbolic link to the plugins folder for this plugin (`obsidian-tasks-plugin`).
+If you manually copy, you must remember to copy the new version over after every build.
+With the symbolic link, whenever a build occurs using `yarn run dev` or `yarn run build:dev`
+the plugin will be updated
 in the obsidian vault you are targeting using the `OBSIDIAN_PLUGIN_ROOT` environment variable.
 It is recommended you use the [Hot-Reload](https://github.com/pjeby/hot-reload) plugin in that vault also;
 it will automatically reload the plugin when files change.
@@ -106,19 +108,19 @@ The [Expect](https://jestjs.io/docs/expect) page is a good reference for the man
 - Try to think of the purpose of the code that has missing tests.
   - For example, in `taskFromLine()` in `src/Commands/CreateOrEdit.ts` the comments are quite useful in terms of showing the different scenarios being considered. Something like:
         _already a task line with a global filter, already a task line missing the global filter, already a task line and there is no global filter, already a bullet item, not in a bullet item_
-  - These then would be good tests to write, i.e. test that each of those scenarios does actually behave as expected.
+  - These then would be good tests to write: specifically, tests to check that each of those scenarios does actually behave as expected.
   - And if the implementation changed in future, those tests would be extremely useful to the maintainer at the time.
   - And if a new behaviour was added in future, it would be obvious how to add a new test for it.
 
 #### Location of code
 
-Often, untested code is in locations that you can't call in tests (e.g. because it uses some Obsidian code).
+Often, untested code is in locations that you can't call in tests (for example, because it uses some Obsidian code).
 All that needs to be done then is to refactor - via 'move method' or 'extract method') the code out to a different source file.
 For more about refactoring safely and easily, see the talk [Refactoring Superpowers: Make Your IDE Do Your Work, Faster and More Safely](https://www.youtube.com/watch?v=BX6gh2xNiuU).
 
 #### Then start writing tests
 
-If you struggle to name a Jest `it` test, think in terms of _should_: e.g. _should convert a line with no bullet to ..._
+If you struggle to name a Jest `it` test, think in terms of _should_: for example, _should convert a line with no bullet to ..._
 
 ### Snapshot Tests
 
@@ -163,7 +165,7 @@ Multiple depdendency upgrades can be smoke-tested together in a batch.
 - When in doubt, smoke-test. Smoke-testing of multiple dependency upgrades can be done in a batch, to reduce the time spent on this process.
 - **Definitely smoke test**: Anything that is involved in producing the built output to users. For example:
   - esbuild (the build system)
-  - anything mentioned in the esbuild config file (e.g. `builtin-modules`, `svelte-preprocess`)
+  - anything mentioned in the esbuild config file (for example, `builtin-modules`, `svelte-preprocess`)
   - obsidian
   - all @codemirror
   - moment
@@ -180,7 +182,7 @@ Multiple depdendency upgrades can be smoke-tested together in a batch.
 
 ### Dependency Groups
 
-Several dependencies come in groups (e.g. `@typescript/eslint*` or ones containing the word `jest`) that may need to be updated together.
+Several dependencies come in groups (for example, `@typescript/eslint*` or ones containing the word `jest`) that may need to be updated together.
 For example, `ts-jest` relies on having a matching major version with `jest` and its types (`@types/jest`).
 Every jest-related package that shares a major version number with `ts-jest`, `jest` etc must have an available upgrade to the new major version before any of them can be upgraded.
 Otherwise, automated testing may fail due to version mismatch.
@@ -190,7 +192,7 @@ Dependabot does not know how to handle groups like this, so the maintainer must 
 
 ### Dependency Notes and Special Cases
 
-Dependabot will not offer PRs for every package. For example, if a package is pinned to an exact version (e.g. `obsidian`) that is far behind the current,
+Dependabot will not offer PRs for every package. For example, if a package is pinned to an exact version (for example,`obsidian`) that is far behind the current,
 dependabot may not give any notification of an upgrade.
 Use `yarn outdated` every so often to see if there are any upgrades available.
 
@@ -246,20 +248,20 @@ Follow the steps in `resources/sample_vaults/Tasks-Demo/Manual Testing/Smoke Tes
 ### How do I make a release?
 
 1. Check out the `main` branch
-2. Check for the current version in `package.json` (e.g. `1.4.1`) and decide on a next version
+2. Check for the current version in `package.json` (for example, `1.4.1`) and decide on a next version
     - Backwards incompatible change: increase major version
     - New functionality: increase minor version
     - Only bug fixes: increase patch version
 3. Having decided on the new version, replace all `X.Y.Z` in the documentation with the new version number.
-4. Check the current version of the obsidian dependency in `package.json` (e.g. `0.13.21`)
+4. Check the current version of the obsidian dependency in `package.json` (for example, `0.13.21`)
 5. Run `./release.sh <new tasks version> <obsidian version>`
     - Make sure there are no uncommitted changes. Stash them if necessary.
 6. Wait for [GitHub Actions](https://github.com/obsidian-tasks-group/obsidian-tasks/actions/workflows/release.yml) to create the new release
 7. Update the release description with the changes of the release
     - On the release page, GitHub provides a button to auto-generate release notes which works nicely.
-    - Also update the attached zip file by adding the version number to the end of the name after the dash (e.g. `obsidian-tasks-1.4.1.zip`)
+    - Also update the attached zip file by adding the version number to the end of the name after the dash (for example, `obsidian-tasks-1.4.1.zip`)
 8. Optional: Post to
     - Obsidian Discord
     - r/ObsidianMD on Reddit
-    - Obsidian Forum
+    - Obsidian Forum Share & Showcase section
     - etc.
