@@ -178,7 +178,23 @@ export class Group {
         if (linkText === null) {
             return ['Unknown Location'];
         }
-        return [linkText];
+
+        // Markdown characters in the file name must be escaped.
+        // Markdown characters in the heading must NOT be escaped.
+        const filenameComponent = Group.groupByFileName(task)[0];
+        if (
+            task.precedingHeader === null ||
+            task.precedingHeader.length === 0
+        ) {
+            return [filenameComponent];
+        }
+        const headingComponent = Group.groupByHeading(task)[0];
+
+        if (filenameComponent === headingComponent) {
+            return [filenameComponent];
+        } else {
+            return [`${filenameComponent} > ${headingComponent}`];
+        }
     }
 
     private static groupByStatus(task: Task): string[] {

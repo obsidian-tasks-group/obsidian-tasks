@@ -254,6 +254,15 @@ describe('Group names', () => {
             path: 'a/b/c.md',
             precedingHeading: 'c',
         },
+        {
+            groupBy: 'backlink',
+            taskLine: '- [ ] xxx',
+            // underscores in file name component are escaped
+            // but underscores in the heading component are not
+            expectedGroupNames: ['\\_c\\_ > heading _italic text_'],
+            path: 'a/b/_c_.md',
+            precedingHeading: 'heading _italic text_',
+        },
 
         // -----------------------------------------------------------
         // group by done
