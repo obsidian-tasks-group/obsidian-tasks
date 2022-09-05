@@ -9,9 +9,18 @@ The documentation resides under the `./docs` directory.
 It consists of markdown files, which [Jekyll](https://jekyllrb.com/) will transform into web pages that you can view at <https://obsidian-tasks-group.github.io/obsidian-tasks/> .
 In the simplest case, you can update the existing markdown file and create a pull request (PR) with your changes.
 
+### Documentation and branches
+
+For documentation changes to show up at <https://obsidian-tasks-group.github.io/obsidian-tasks/> , they must be in the `gh-pages` branch.
+If you want to see your changes available immediately and not only after the next release, you should make your changes on the `gh-pages` branch.
+When you create a PR, it should merge into the `gh-pages` branch as well.
+If you document an unreleased feature, you should update the documentation on `main` instead. Ideally together with the related code changes.
+If this is confusing, don't worry.
+We will help you make this right once you opened the PR.
+
 ### Version numbers in documentation
 
-We have introduced version markers to the documentation, to show users in which version a specific feature was introduced.
+We have introduced version markers to the documentation, to show users in which Tasks version a specific feature was introduced.
 This means that newly written documentation should be tagged with a placeholder, which will be replaced with the actual
 version upon release.
 
@@ -31,24 +40,58 @@ You can read more about it at their [official documentation](https://docs.github
 To generate the documentation site on your machine,
 see [docs/README.md](docs/README.md).
 
-### Documentation and branches
-
-For documentation changes to show up at <https://obsidian-tasks-group.github.io/obsidian-tasks/> , they must be in the `gh-pages` branch.
-If you want to see your changes available immediately and not only after the next release, you should make your changes on the `gh-pages` branch.
-When you create a PR, it should merge into the `gh-pages` branch as well.
-If you document an unreleased feature, you should update the documentation on `main` instead. Ideally together with the related code changes.
-If this is confusing, don't worry.
-We will help you make this right once you opened the PR.
-
 ## Updating code
 
-Ideally, an [issue](https://github.com/obsidian-tasks-group/obsidian-tasks/issues) already exists and we discussed your implementation in that issue before you open the pull request (PR).
+Ideally, an [issue](https://github.com/obsidian-tasks-group/obsidian-tasks/issues) or
+[Discussion](https://github.com/obsidian-tasks-group/obsidian-tasks/discussions) already exists
+and we discussed your implementation in that issue before you open the pull request (PR).
 This is _not_ mandatory, but it helps improve the process and reduce unnecessary back-and-forth.
 
 Once you want to propose your changes, create a PR and we'll have a look when we have time.
 Discussion will take place inside the PR.
 
 If you can, please add/update tests and documentation where appropriate.
+
+## Local setup and workflow for changes to code and tests
+
+This project uses the Yarn package manager for Javascript, and several formatting and linting tools.
+Below are specific setup instructions for changing code and tests, as well as tips for local development workflow.
+
+### Setting up build environment
+
+This project uses Node 14.x, if you also use a different version, look at using `nvm` to manage your Node versions.
+If you are using `nvm`, you can install the 14.x version of Node with `nvm install 14; nvm use <full version number you installed such as 14.19.3>`.
+
+To setup the local environment after cloning the repository, run the following commands:
+
+```shell
+yarn
+yarn build
+yarn test
+yarn lint
+yarn lint:markdown
+```
+
+Make sure you build, test and lint before pushing to the repository. Lefthook is used to cover these checks before commit and push.
+
+### Local development
+
+When developing locally, you can use the `yarn dev` command to start a development build.
+This will cause a rebuild of the code base every time you make a change so you can see if there are any code errors.
+
+Not all the functionality of Tasks can be tested via the automated tests.
+If you want to test your changes in a local obsidian vault use `yarn run build:dev`.
+This will generate the `main.js` in the root of the repository with a sourcemap in it to facilitate
+debugging using the development console (`Ctrl+Shift+i` on Windows or `Cmd+Shift+i` on Mac) in Obsidian.
+Then either manually copy the `main.js` file to local test vault's `.obsidian/plugins/obsidian-tasks` folder, or use the Powershell script that is run via the `yarn deploy:local` command to
+create a symbolic link to the plugins folder for this plugin (`obsidian-tasks-plugin`).
+If you manually copy, you must remember to copy the new version over after every build.
+With the symbolic link, whenever a build occurs using `yarn run dev` or `yarn run build:dev`
+the plugin will be updated
+in the obsidian vault you are targeting using the `OBSIDIAN_PLUGIN_ROOT` environment variable.
+It is recommended you use the [Hot-Reload](https://github.com/pjeby/hot-reload) plugin in that vault also;
+it will automatically reload the plugin when files change.
+The script run by `deploy:local` will create a `.hotreload` file in the root of the repository to assist.
 
 ## Maintaining the tests
 
@@ -65,19 +108,19 @@ The [Expect](https://jestjs.io/docs/expect) page is a good reference for the man
 - Try to think of the purpose of the code that has missing tests.
   - For example, in `taskFromLine()` in `src/Commands/CreateOrEdit.ts` the comments are quite useful in terms of showing the different scenarios being considered. Something like:
         _already a task line with a global filter, already a task line missing the global filter, already a task line and there is no global filter, already a bullet item, not in a bullet item_
-  - These then would be good tests to write, i.e. test that each of those scenarios does actually behave as expected.
+  - These then would be good tests to write: specifically, tests to check that each of those scenarios does actually behave as expected.
   - And if the implementation changed in future, those tests would be extremely useful to the maintainer at the time.
   - And if a new behaviour was added in future, it would be obvious how to add a new test for it.
 
 #### Location of code
 
-Often, untested code is in locations that you can't call in tests (e.g. because it uses some Obsidian code).
+Often, untested code is in locations that you can't call in tests (for example, because it uses some Obsidian code).
 All that needs to be done then is to refactor - via 'move method' or 'extract method') the code out to a different source file.
 For more about refactoring safely and easily, see the talk [Refactoring Superpowers: Make Your IDE Do Your Work, Faster and More Safely](https://www.youtube.com/watch?v=BX6gh2xNiuU).
 
 #### Then start writing tests
 
-If you struggle to name a Jest `it` test, think in terms of _should_: e.g. _should convert a line with no bullet to ..._
+If you struggle to name a Jest `it` test, think in terms of _should_: for example, _should convert a line with no bullet to ..._
 
 ### Snapshot Tests
 
@@ -99,30 +142,104 @@ Note in particular the
 for how to view the diffs in the event of snapshot test failures, and also how to update the saved snapshot
 of one or all snapshot failures.
 
-## Setting up build environment
+### Test Coverage
 
-This project uses Node 14.x, if you need to use a different version, look at using `nvm` to manage your Node versions. If you are using `nvm`, you can install the 14.x version of Node with `nvm install 14.19.1; nvm use 14.19.1`.
+`yarn run jest --coverage` will generate a coverage report in the `coverage` directory, which is ignored by this project's `.gitignore`.
+Your IDE may also be able to show you the test coverage of a source file.
+Adding tests where possible - see [Location of code](#location-of-code) for constraints to code not currently covered by the automated tests is a great way to contribute!
 
-To setup the local environment after cloning the repository, run the following commands:
+## Dependency Upgrades and Repository Maintenance
 
-```shell
-yarn
-yarn build
-yarn test
-yarn lint
-```
+Dependencies for the plugin are set using the `package.json` (human-editable) and `yarn.lock` (machine-generated) files.
+After any change to dependencies in `package.json`, run `yarn` to update the `yarn.lock` file and commit the changes in both files.
+If you see a warning from `yarn` about a **missing peer dependency that mentions `obsidian` or `@codemirror`, you can safely ignore it**. Other yarn messages should likely be resolved before commit.
 
-Make sure you build, test and lint before pushing to the repository. Left hook is used to cover these checks before commit and push. To run just the markdown lint you can use `yarn run lint:markdown`.
+Code changes that also involve dependency changes may require additional testing and review.
+Please only change `package.json` if necessary for your contribution.
 
-## Local development
+Package management for the documentation site is handled separately; see the [documentation site README](./docs/README.md) for details on that.
 
-When developing locally, you can use the `yarn dev` command to start a development build. This will cause a rebuild of the code base every time you make a change so you can see if there are any code errors.
+The rest of this section is most useful for maintainers of the repository and not necessary for typical documentation, code, or test contributions.
 
-If you want to build and test in a local obsidian vault use `yarn run build:dev` this will generate the `main.js` in the root of the repository which has the sourcemap in it to make debugging using the development console (`Ctrl+Shift+i`) in Obsidian easier.
+<details><summary>Expand Details on Dependency Upgrades and Dependabot</summary>
 
-To make it simpler to work on the files you can use `deploy:local` which will create a symbolic link to the plugins folder for this plugin (`obsidian-tasks-plugin`). When ever a build occurs using `yarn run dev` or `yarn run build:dev` the plugin will be updated in the obsidian vault you are targeting using the `OBSIDIAN_PLUGIN_ROOT` environment variable.
+Keeping dependencies up to date ensures the best experience and security for Tasks plugin users.
+This project uses Dependabot to help automate dependency updates, but some dependencies require manual testing
+before they can be merged.
+See the [FAQ entry on smoke-testing](#how-do-i-smoke-test-the-tasks-plugin) for how to manually test.
 
-It is recommended you use the [Hot-Reload](https://github.com/pjeby/hot-reload) plugin to automatically reload the plugin when files change. The script will create a `.hotreload` file in the root of the repository to assist.
+Multiple depdendency upgrades can be smoke-tested together in a batch.
+An easy way to do this is to make a local branch that merges _only the changes to the `package.json`_ from each of the different upgrade PRs (either manually by examining the change to `package.json` in each PR and then editing your local version to match, or via git).
+Then run `yarn` to update the `yarn.lock` file, and this should avoid merge conflicts.
+After linting, testing, and smoke-testing (using `yarn build:dev` and manually copying the `main.js` to the local test vault), you can merge the individual upgrade PRs (leaving time for dependabot to rebase them between each individual merge) and delete the local branch.
+
+### Overview of dependencies and `package.json`
+
+The `package.json` file is the human-editable interface for dependency management.
+Acceptable dependency versions are specified using [semver](https://semver.org/) version ranges.
+This project pins certain dependencies to exact version numbers, and others to major version ranges.
+
+After any chance to the `package.json` file, either by manual edit or by a command such as `yarn add -D newDevDependency` and then saving the file, run `yarn` to update the `yarn.lock` file.
+The `yarn.lock` file is machine-generated - based on the version constraints in `package.json` - and should not be edited manually.
+It lists the specific versions of all installed dependencies (and their dependencies, recursively)
+currently used by the project.
+
+If there are ever git merge conflicts in `yarn.lock`, best practice is to rename the conflicted file, ensure `package.json` is correct, and then run `yarn` to regenerate the `yarn.lock` file.
+The newly-generated file can then be committed to resolve the merge conflict.
+
+`package.json` separates dependencies only used in the development, testing, and building process ("devDependencies") from those contained as part of the plugin's `main.js` file because they are used at runtime ("dependencies").
+However, Obsidian's plugin architecture handles linking in the Obsidian API and its dependencies (such as `@codemirror/*` packages), so those are not part of the runtime "dependencies" in `package.json` and must also be marked as "external" in the build system configuration (`esbuild.config.mjs`).
+Some subset of the packages marked "external" in `esbuild.config.mjs` will be listed as "devDependencies" because their APIs are used in the plugin or its tests.
+Therefore, "devDependency" vs. "dependency" separation is not a sufficient indicator of whether a package
+needs manual "smoke testing" of runtime behavior.
+
+### Thought-Process for Deciding Whether a Dependency Needs Manual Testing
+
+Look at the `package.json` entry for a package and search for which files import the package.
+
+- When in doubt, smoke-test. Smoke-testing of multiple dependency upgrades can be done in a batch, to reduce the time spent on this process.
+- **Definitely smoke test**: Anything that is involved in producing the built output to users. For example:
+  - everything in the "dependencies" (rather than "devDependencies") list in `package.json`
+  - `esbuild` (the build system)
+  - anything imported by the esbuild config file `esbuild.config.mjs` (for example, `builtin-modules`, `svelte-preprocess`)
+  - `obsidian` (also see [Special Cases section below](#notes-and-special-cases))
+  - all `@codemirror/*`
+  - `moment`
+- **Automated testing sufficient**: Our linting, formatting, and testing code does not affect the built output and is run automatically on each PR, so it does not need smoke tests. An automated test fail for an upgrade to one of these packages may be an indication of a newly found linter error in the code and should be investigated. However, if all the automatic checks pass, these packages can be merged right away:
+  - `markdownlint`
+  - anything with `eslint` in it (including `@typescript/eslint*`, which version bump weekly regardless of whether they have any changes)
+  - `svelte-check` (but not other svelte things, which are used in the build system)
+  - anything with `prettier`
+  - `lefthook`
+  - anything with `jest` in it (but see [the note below on Dependency Groups](dependency-groups) for details).
+- For anything else, where and how is it being used? If it's only in tests, or only used by developers, no need to smoke test.
+
+### Dependency Groups
+
+Several dependencies come in groups (for example, `@typescript/eslint*` or ones containing the word `jest`) that may need to be updated together.
+For example, `ts-jest` relies on having a matching major version with `jest` and its types (`@types/jest`).
+Every jest-related package that shares a major version number with `ts-jest`, `jest` etc must have an available upgrade to the new major version before any of them can be upgraded.
+Otherwise, automated testing may fail due to version mismatch.
+
+Dependabot does not know how to handle groups like this, so the maintainer must keep track of this.
+`yarn outdated` is a useful command-line tool for seeing whether there are upgrades available.
+
+### Notes and Special Cases
+
+Dependabot will not offer PRs for every package.
+For example, if a package is pinned to an exact version (for example,`obsidian`) that is far behind the current, dependabot may not give any notification of an upgrade.
+Use `yarn outdated` every so often to see if there are any upgrades available.
+
+Note that yarn's `upgrade` and `upgrade-interactive` commands will respect the project's `package.json` which pins either major versions or a specific number.
+`yarn outdated` gives a better indication of what upgrades are available.
+To upgrade major version numbers or a dependency where a fixed version is used, you must
+manually edit the `package.json` file. **Note**: Remember `yarn` after any edits to `package.json` to ensure the `yarn.lock` file is updated.
+
+Updates to the `obsidian` package may require additional changes to `manifest.json` and `versions.json` and should be handled with care so that Tasks users who are not on the latest version of Obsidian have time to update.
+
+</details>
+
+Click the "Expand Details" line above to expand or close the section.
 
 ## FAQs
 
@@ -165,19 +282,20 @@ Follow the steps in `resources/sample_vaults/Tasks-Demo/Manual Testing/Smoke Tes
 ### How do I make a release?
 
 1. Check out the `main` branch
-2. Check for the current version in `package.json` (e.g. `1.4.1`) and decide on a next version
+2. Check for the current version in `package.json` (for example, `1.4.1`) and decide on a next version
     - Backwards incompatible change: increase major version
     - New functionality: increase minor version
     - Only bug fixes: increase patch version
 3. Having decided on the new version, replace all `X.Y.Z` in the documentation with the new version number.
-4. Check the current version of the obsidian dependency in `package.json` (e.g. `0.13.21`)
+4. Check the current version of the obsidian dependency in `package.json` (for example, `0.13.21`)
 5. Run `./release.sh <new tasks version> <obsidian version>`
     - Make sure there are no uncommitted changes. Stash them if necessary.
 6. Wait for [GitHub Actions](https://github.com/obsidian-tasks-group/obsidian-tasks/actions/workflows/release.yml) to create the new release
 7. Update the release description with the changes of the release
     - On the release page, GitHub provides a button to auto-generate release notes which works nicely.
-    - Also update the attached zip file by adding the version number to the end of the name after the dash (e.g. `obsidian-tasks-1.4.1.zip`)
+    - Also update the attached zip file by adding the version number to the end of the name after the dash (for example, `obsidian-tasks-1.4.1.zip`)
 8. Optional: Post to
     - Obsidian Discord
     - r/ObsidianMD on Reddit
+    - Obsidian Forum Share & Showcase section
     - etc.
