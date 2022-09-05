@@ -79,3 +79,4 @@ export const toggleFeature = (
 ): FeatureFlag => {
     settings.features[internalName] = enabled;
     return settings.features;
+};
