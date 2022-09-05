@@ -200,22 +200,22 @@ describe('Grouping tasks', () => {
         // Assert
         expect(groups.toString()).toMatchInlineSnapshot(`
             "
-            Group names: [folder_a/folder_b/,file_c]
-            #### folder_a/folder_b/
-            ##### file_c
+            Group names: [folder\\\\_a/folder\\\\_b/,file\\\\_c]
+            #### folder\\\\_a/folder\\\\_b/
+            ##### file\\\\_c
             - [ ] Task 3 - but path is 1st, alphabetically
 
             ---
 
-            Group names: [folder_b/folder_c/,file_c]
-            #### folder_b/folder_c/
-            ##### file_c
+            Group names: [folder\\\\_b/folder\\\\_c/,file\\\\_c]
+            #### folder\\\\_b/folder\\\\_c/
+            ##### file\\\\_c
             - [ ] Task 1 - but path is 2nd, alphabetically
 
             ---
 
-            Group names: [folder_b/folder_c/,file_d]
-            ##### file_d
+            Group names: [folder\\\\_b/folder\\\\_c/,file\\\\_d]
+            ##### file\\\\_d
             - [ ] Task 2 - but path is 2nd, alphabetically
 
             ---
@@ -246,6 +246,13 @@ describe('Group names', () => {
             expectedGroupNames: ['c > heading'],
             path: 'a/b/c.md',
             precedingHeading: 'heading',
+        },
+        {
+            groupBy: 'backlink',
+            taskLine: '- [ ] xxx',
+            expectedGroupNames: ['c'], // If file name and heading are identical, avoid duplication ('c > c')
+            path: 'a/b/c.md',
+            precedingHeading: 'c',
         },
 
         // -----------------------------------------------------------
@@ -282,6 +289,12 @@ describe('Group names', () => {
             expectedGroupNames: ['c'],
             path: 'a/b/c.md',
         },
+        {
+            groupBy: 'filename',
+            taskLine: '- [ ] a',
+            expectedGroupNames: ['\\_c\\_'], // underscores in file names are escaped
+            path: 'a/b/_c_.md',
+        },
 
         // -----------------------------------------------------------
         // group by folder
@@ -290,6 +303,12 @@ describe('Group names', () => {
             taskLine: '- [ ] a',
             expectedGroupNames: ['a/b/'],
             path: 'a/b/c.md',
+        },
+        {
+            groupBy: 'folder',
+            taskLine: '- [ ] a',
+            expectedGroupNames: ['a/\\_b\\_/'], // underscores in folder names are escaped
+            path: 'a/_b_/c.md',
         },
         {
             // file in root of vault:
@@ -363,6 +382,12 @@ describe('Group names', () => {
             expectedGroupNames: ['heading'],
             precedingHeading: 'heading',
         },
+        {
+            groupBy: 'heading',
+            taskLine: '- [ ] xxx',
+            expectedGroupNames: ['heading _italic text_'], // underscores in headings are NOT escaped - will be rendered
+            precedingHeading: 'heading _italic text_',
+        },
 
         // -----------------------------------------------------------
         // group by path
@@ -370,7 +395,13 @@ describe('Group names', () => {
             groupBy: 'path',
             taskLine: '- [ ] a',
             path: 'a/b/c.md',
-            expectedGroupNames: ['a/b/c'],
+            expectedGroupNames: ['a/b/c'], // the file extension is removed
+        },
+        {
+            groupBy: 'path',
+            taskLine: '- [ ] a',
+            path: '_a_/b/_c_.md',
+            expectedGroupNames: ['\\_a\\_/b/\\_c\\_'], // underscores in paths are escaped
         },
 
         // -----------------------------------------------------------
@@ -443,8 +474,14 @@ describe('Group names', () => {
         {
             groupBy: 'root',
             taskLine: '- [ ] a',
+            expectedGroupNames: ['\\_g\\_/'], // underscores in root folder names are escaped
+            path: '_g_/h/i.md',
+        },
+        {
+            groupBy: 'root',
+            taskLine: '- [ ] a',
             expectedGroupNames: ['a/'],
-            path: 'a\\b\\c.md',
+            path: 'a\\b\\c.md', // Windows path
         },
         {
             // file in root of vault:
