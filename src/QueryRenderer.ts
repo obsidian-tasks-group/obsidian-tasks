@@ -1,4 +1,10 @@
-import { App, MarkdownRenderChild, Plugin, TFile } from 'obsidian';
+import {
+    App,
+    MarkdownRenderChild,
+    MarkdownRenderer,
+    Plugin,
+    TFile,
+} from 'obsidian';
 import type { EventRef, MarkdownPostProcessorContext } from 'obsidian';
 
 import type { IQuery } from './IQuery';
@@ -148,7 +154,7 @@ class QueryRenderChild extends MarkdownRenderChild {
             for (const group of tasksSortedLimitedGrouped.groups) {
                 // If there were no 'group by' instructions, group.groupHeadings
                 // will be empty, and no headings will be added.
-                QueryRenderChild.addGroupHeadings(content, group.groupHeadings);
+                this.addGroupHeadings(content, group.groupHeadings);
 
                 const { taskList } = await this.createTasksList({
                     tasks: group.tasks,
@@ -247,16 +253,16 @@ class QueryRenderChild extends MarkdownRenderChild {
      *                        in which case no headings will be added.
      * @private
      */
-    private static addGroupHeadings(
+    private addGroupHeadings(
         content: HTMLDivElement,
         groupHeadings: GroupHeading[],
     ) {
         for (const heading of groupHeadings) {
-            QueryRenderChild.addGroupHeading(content, heading);
+            this.addGroupHeading(content, heading);
         }
     }
 
-    private static addGroupHeading(
+    private async addGroupHeading(
         content: HTMLDivElement,
         group: GroupHeading,
     ) {
@@ -278,7 +284,12 @@ class QueryRenderChild extends MarkdownRenderChild {
                 cls: 'tasks-group-heading',
             });
         }
-        header.appendText(group.name);
+        await MarkdownRenderer.renderMarkdown(
+            group.name,
+            header,
+            this.filePath,
+            this,
+        );
     }
 
     private addBacklinks(

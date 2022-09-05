@@ -26,6 +26,9 @@ export class Group {
 
     /**
      * Return the properties of a single task for the passed grouping property
+     *
+     * The returned string will be rendered, so any special Markdown characters will be escaped
+     *
      * @param property
      * @param task
      */
@@ -55,6 +58,11 @@ export class Group {
         status: Group.groupByStatus,
         tags: Group.groupByTags,
     };
+
+    private static escapeMarkdownCharacters(filename: string) {
+        // https://wilsonmar.github.io/markdown-text-for-github-from-html/#special-characters
+        return filename.replace(/\\/g, '\\\\').replace(/_/g, '\\_');
+    }
 
     private static groupByPriority(task: Task): string[] {
         let priorityName = 'ERROR';
@@ -125,7 +133,7 @@ export class Group {
     private static groupByPath(task: Task): string[] {
         // Does this need to be made stricter?
         // Is there a better way of getting the file name?
-        return [task.path.replace('.md', '')];
+        return [Group.escapeMarkdownCharacters(task.path.replace('.md', ''))];
     }
 
     private static groupByFolder(task: Task): string[] {
@@ -138,7 +146,7 @@ export class Group {
         if (folder === '') {
             return ['/'];
         }
-        return [folder];
+        return [Group.escapeMarkdownCharacters(folder)];
     }
 
     private static groupByFileName(task: Task): string[] {
@@ -149,7 +157,7 @@ export class Group {
         if (filename === null) {
             return ['Unknown Location'];
         }
-        return [filename];
+        return [Group.escapeMarkdownCharacters(filename)];
     }
 
     private static groupByRoot(task: Task): string[] {
@@ -158,7 +166,11 @@ export class Group {
         if (separatorIndex == -1) {
             return ['/'];
         }
-        return [path.substring(0, separatorIndex + 1)];
+        return [
+            Group.escapeMarkdownCharacters(
+                path.substring(0, separatorIndex + 1),
+            ),
+        ];
     }
 
     private static groupByBacklink(task: Task): string[] {
@@ -166,7 +178,23 @@ export class Group {
         if (linkText === null) {
             return ['Unknown Location'];
         }
-        return [linkText];
+
+        // Markdown characters in the file name must be escaped.
+        // Markdown characters in the heading must NOT be escaped.
+        const filenameComponent = Group.groupByFileName(task)[0];
+        if (
+            task.precedingHeader === null ||
+            task.precedingHeader.length === 0
+        ) {
+            return [filenameComponent];
+        }
+        const headingComponent = Group.groupByHeading(task)[0];
+
+        if (filenameComponent === headingComponent) {
+            return [filenameComponent];
+        } else {
+            return [`${filenameComponent} > ${headingComponent}`];
+        }
     }
 
     private static groupByStatus(task: Task): string[] {
