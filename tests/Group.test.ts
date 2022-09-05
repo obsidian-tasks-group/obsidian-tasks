@@ -248,6 +248,12 @@ describe('Group names', () => {
         },
         {
             groupBy: 'backlink',
+            taskLine: '- [ ] xxx', // no heading supplied
+            expectedGroupNames: ['c'],
+            path: 'a/b/c.md',
+        },
+        {
+            groupBy: 'backlink',
             taskLine: '- [ ] xxx',
             expectedGroupNames: ['c > heading'],
             path: 'a/b/c.md',
