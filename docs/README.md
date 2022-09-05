@@ -49,7 +49,13 @@ If you can run docker, this is the easiest way.
 
 ### Seeing the docs via Docker
 
-Now every time you want to see the docs locally, run:
+> Note: If using Windows, there are some interoperability issues with Windows, Docker, and Jekyll.
+> Recommend running the command below from a Windows Subsystem for Linux (WSL) shell,
+> where you can likely get to your Windows user directory via `/mnt/c/Users/<your username>`,
+> and using a browser from inside WSL2 if possible. Otherwise, if running the browser from Windows,
+> at every page load you must change "0.0.0.0" to "localhost" in the browser's address bar.
+
+To see the docs locally, run:
 
 ```bash
 cd obsidian-tasks/docs
@@ -108,3 +114,15 @@ bundle exec jekyll serve
 
 In the output, look for the line containing `Server address:` and open that URL in your local browser.
 It will be something like <http://0.0.0.0:4000/obsidian-tasks/>.
+
+## Dependency Management and Updates for the Docs
+
+The dependencies for running the docs locally are stored in the `Gemfile` (short, equivalent to Javascript `package.json`) and `Gemfile.lock` (auto-generated, equivalent to `yarn.lock`) files.
+The package manager (equivalent to "yarn") is "bundle" [docs here](https://bundler.io/guides/using_bundler_in_applications.html#recommended-workflow). The "docker_start" script runs the initial
+`bundle install` when building the Docker image.
+If seeing issues with dependencies or with running the docs locally, check that the versions in the `Gemfile`, especially "github-pages" are up-to-date. If making edits to the `Gemfile`, you
+will need to run `bundle install` or `bundle update` manually. (You may also need to update `bundle` itself!) Before checking in any changes to `Gemfile.lock`, see the paragraph below.
+
+Some dependencies, such as "nokogiri", have platform-specific gems that **should not** be checked into the repo's `Gemfile.lock`.
+For example, Dependabot might add a Linux-specific version of a dependency to the `Gemfile.lock`, which must then be manually edited to remove the Linux-specific version.
+Otherwise, future contributors on non-Linux systems will be unable to build the Docker image or run Jekyll locally.

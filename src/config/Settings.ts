@@ -50,6 +50,10 @@ export const updateSettings = (newSettings: Partial<Settings>): Settings => {
     return getSettings();
 };
 
+export const resetSettings = (): Settings => {
+    return updateSettings(defaultSettings);
+};
+
 /**
  * Returns the enabled state of the feature from settings.
  *
@@ -75,4 +79,3 @@ export const toggleFeature = (
 ): FeatureFlag => {
     settings.features[internalName] = enabled;
     return settings.features;
-};

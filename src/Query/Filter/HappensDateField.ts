@@ -93,11 +93,11 @@ export class HappensDateField extends Field {
     /**
      * Return the task's start, scheduled and due dates, any or all of which may be null.
      */
-    protected dates(task: Task): (Moment | null)[] {
+    public dates(task: Task): (Moment | null)[] {
         return Array.of(task.startDate, task.scheduledDate, task.dueDate);
     }
 
-    protected fieldName(): string {
+    public fieldName(): string {
         return 'happens';
     }
 }
