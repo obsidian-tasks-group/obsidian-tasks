@@ -27,7 +27,7 @@ export default class TasksPlugin extends Plugin {
             vault: this.app.vault,
         });
 
-        const events = new Events({ obsidianEents: this.app.workspace });
+        const events = new Events({ obsidianEvents: this.app.workspace });
         this.cache = new Cache({
             metadataCache: this.app.metadataCache,
             vault: this.app.vault,

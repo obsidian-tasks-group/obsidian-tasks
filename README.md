@@ -16,7 +16,7 @@ For changes in each release, please check the releases page: <https://github.com
 
 ## Screenshots
 
-- _All screenshots assume the [global filter](#filtering-checklist-items) `#task` which is not set by default (see also [installation](#installation))._
+- _All screenshots assume the [global filter](https://obsidian-tasks-group.github.io/obsidian-tasks/getting-started/global-filter/) `#task` which is not set by default (see also [installation](https://obsidian-tasks-group.github.io/obsidian-tasks/installation/))._
 - _The theme is default Obsidian theme._
 
 ![ACME Tasks](https://github.com/obsidian-tasks-group/obsidian-tasks/raw/gh-pages/resources/screenshots/acme.png)
@@ -38,7 +38,7 @@ Follow the steps below to install Tasks.
 1. Search for "Tasks" in Obsidian's community plugins browser
 2. Enable the plugin in your Obsidian settings (find "Tasks" under "Community plugins").
 3. Check the settings. It makes sense to set the global filter early on (if you want one).
-4. Replace the "Toggle checklist status" hotkey with "Tasks: Toggle Done".
+4. Replace the "Toggle checkbox status" hotkey with "Tasks: Toggle Done".
     - I recommend you remove the original toggle hotkey and set the "Tasks" toggle to `Ctrl + Enter` (or `Cmd + Enter` on a mac).
 
 ## Documentation

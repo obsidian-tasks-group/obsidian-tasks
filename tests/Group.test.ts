@@ -9,13 +9,13 @@ import { fromLine } from './TestHelpers';
 
 window.moment = moment;
 
-function checkGroupNameOfTask(
+function checkGroupNamesOfTask(
     task: Task,
     property: GroupingProperty,
-    expectedGroupName: string,
+    expectedGroupNames: string[],
 ) {
-    const group = Group.getGroupNameForTask(property, task);
-    expect(group).toEqual(expectedGroupName);
+    const group = Group.getGroupNamesForTask(property, task);
+    expect(group).toEqual(expectedGroupNames);
 }
 
 describe('Grouping tasks', () => {
@@ -137,6 +137,42 @@ describe('Grouping tasks', () => {
         `);
     });
 
+    it('handles tasks matching multiple groups correctly', () => {
+        const a = fromLine({
+            line: '- [ ] Task 1 #group1',
+        });
+        const b = fromLine({
+            line: '- [ ] Task 2 #group2 #group1',
+        });
+        const c = fromLine({
+            line: '- [ ] Task 3 #group2',
+        });
+        const inputs = [a, b, c];
+
+        const group_by: GroupingProperty = 'tags';
+        const grouping = [{ property: group_by }];
+        const groups = Group.by(grouping, inputs);
+        expect(groups.toString()).toMatchInlineSnapshot(`
+            "
+            Group names: [#group1]
+            #### #group1
+            - [ ] Task 1 #group1
+            - [ ] Task 2 #group2 #group1
+
+            ---
+
+            Group names: [#group2]
+            #### #group2
+            - [ ] Task 2 #group2 #group1
+            - [ ] Task 3 #group2
+
+            ---
+
+            3 tasks
+            "
+        `);
+    });
+
     it('should create nested headings if multiple groups used', () => {
         // Arrange
         const t1 = fromLine({
@@ -194,7 +230,7 @@ describe('Group names', () => {
     type GroupNameCase = {
         groupBy: GroupingProperty;
         taskLine: string;
-        expectedGroupName: string;
+        expectedGroupNames: string[];
         path?: string;
         precedingHeading?: string | null;
     };
@@ -207,7 +243,7 @@ describe('Group names', () => {
         {
             groupBy: 'backlink',
             taskLine: '- [ ] xxx',
-            expectedGroupName: 'c > heading',
+            expectedGroupNames: ['c > heading'],
             path: 'a/b/c.md',
             precedingHeading: 'heading',
         },
@@ -217,12 +253,12 @@ describe('Group names', () => {
         {
             groupBy: 'done',
             taskLine: '- [ ] a ✅ 1970-01-01',
-            expectedGroupName: '1970-01-01 Thursday',
+            expectedGroupNames: ['1970-01-01 Thursday'],
         },
         {
             groupBy: 'done',
             taskLine: '- [ ] a',
-            expectedGroupName: 'No done date',
+            expectedGroupNames: ['No done date'],
         },
 
         // -----------------------------------------------------------
@@ -230,12 +266,12 @@ describe('Group names', () => {
         {
             groupBy: 'due',
             taskLine: '- [ ] a 📅 1970-01-01',
-            expectedGroupName: '1970-01-01 Thursday',
+            expectedGroupNames: ['1970-01-01 Thursday'],
         },
         {
             groupBy: 'due',
             taskLine: '- [ ] a',
-            expectedGroupName: 'No due date',
+            expectedGroupNames: ['No due date'],
         },
 
         // -----------------------------------------------------------
@@ -243,7 +279,7 @@ describe('Group names', () => {
         {
             groupBy: 'filename',
             taskLine: '- [ ] a',
-            expectedGroupName: 'c',
+            expectedGroupNames: ['c'],
             path: 'a/b/c.md',
         },
 
@@ -252,15 +288,59 @@ describe('Group names', () => {
         {
             groupBy: 'folder',
             taskLine: '- [ ] a',
-            expectedGroupName: 'a/b/',
+            expectedGroupNames: ['a/b/'],
             path: 'a/b/c.md',
         },
         {
             // file in root of vault:
             groupBy: 'folder',
             taskLine: '- [ ] a',
-            expectedGroupName: '/',
+            expectedGroupNames: ['/'],
             path: 'a.md',
+        },
+
+        // -----------------------------------------------------------
+        // group by happens
+        {
+            groupBy: 'happens',
+            taskLine: '- [ ] a',
+            expectedGroupNames: ['No happens date'],
+        },
+        {
+            groupBy: 'happens',
+            taskLine: '- [ ] due is only date 📅 1970-01-01',
+            expectedGroupNames: ['1970-01-01 Thursday'],
+        },
+        {
+            groupBy: 'happens',
+            taskLine: '- [ ] scheduled is only date ⏳ 1970-01-02',
+            expectedGroupNames: ['1970-01-02 Friday'],
+        },
+        {
+            groupBy: 'happens',
+            taskLine: '- [ ] start is only date 🛫 1970-01-03',
+            expectedGroupNames: ['1970-01-03 Saturday'],
+        },
+        {
+            // Check that earliest date is prioritised: due
+            groupBy: 'happens',
+            taskLine:
+                '- [ ] due is earliest date 🛫 1970-01-03 ⏳ 1970-01-02 📅 1970-01-01',
+            expectedGroupNames: ['1970-01-01 Thursday'],
+        },
+        {
+            // Check that earliest date is prioritised: scheduled
+            groupBy: 'happens',
+            taskLine:
+                '- [ ] scheduled is earliest date 🛫 1970-01-03 ⏳ 1970-01-01 📅 1970-01-02',
+            expectedGroupNames: ['1970-01-01 Thursday'],
+        },
+        {
+            // Check that earliest date is prioritised: start
+            groupBy: 'happens',
+            taskLine:
+                '- [ ] start is earliest date 🛫 1970-01-01 ⏳ 1970-01-02 📅 1970-01-03',
+            expectedGroupNames: ['1970-01-01 Thursday'],
         },
 
         // -----------------------------------------------------------
@@ -268,19 +348,19 @@ describe('Group names', () => {
         {
             groupBy: 'heading',
             taskLine: '- [ ] xxx',
-            expectedGroupName: '(No heading)',
+            expectedGroupNames: ['(No heading)'],
             precedingHeading: null,
         },
         {
             groupBy: 'heading',
             taskLine: '- [ ] xxx',
-            expectedGroupName: '(No heading)',
+            expectedGroupNames: ['(No heading)'],
             precedingHeading: '',
         },
         {
             groupBy: 'heading',
             taskLine: '- [ ] xxx',
-            expectedGroupName: 'heading',
+            expectedGroupNames: ['heading'],
             precedingHeading: 'heading',
         },
 
@@ -290,7 +370,88 @@ describe('Group names', () => {
             groupBy: 'path',
             taskLine: '- [ ] a',
             path: 'a/b/c.md',
-            expectedGroupName: 'a/b/c',
+            expectedGroupNames: ['a/b/c'],
+        },
+
+        // -----------------------------------------------------------
+        // group by priority
+        {
+            groupBy: 'priority',
+            taskLine: '- [ ] a ⏫',
+            expectedGroupNames: ['Priority 1: High'],
+        },
+        {
+            groupBy: 'priority',
+            taskLine: '- [ ] a 🔼',
+            expectedGroupNames: ['Priority 2: Medium'],
+        },
+        {
+            groupBy: 'priority',
+            taskLine: '- [ ] a',
+            expectedGroupNames: ['Priority 3: None'],
+        },
+        {
+            groupBy: 'priority',
+            taskLine: '- [ ] a 🔽',
+            expectedGroupNames: ['Priority 4: Low'],
+        },
+
+        // -----------------------------------------------------------
+        // group by recurrence
+        {
+            groupBy: 'recurrence',
+            taskLine: '- [ ] a',
+            expectedGroupNames: ['None'],
+        },
+        {
+            groupBy: 'recurrence',
+            taskLine: '- [ ] a 🔁 every Sunday',
+            expectedGroupNames: ['every week on Sunday'],
+        },
+        {
+            groupBy: 'recurrence',
+            taskLine: '- [ ] a 🔁 every Sunday when done',
+            expectedGroupNames: ['every week on Sunday when done'],
+        },
+        {
+            groupBy: 'recurrence',
+            taskLine: '- [ ] a 🔁 every 6 months on the 2nd Wednesday',
+            expectedGroupNames: ['every 6 months on the 2nd Wednesday'],
+        },
+
+        // -----------------------------------------------------------
+        // group by recurring
+        {
+            groupBy: 'recurring',
+            taskLine: '- [ ] a',
+            expectedGroupNames: ['Not Recurring'],
+        },
+        {
+            groupBy: 'recurring',
+            taskLine: '- [ ] a 🔁 every Sunday',
+            expectedGroupNames: ['Recurring'],
+        },
+
+        // -----------------------------------------------------------
+        // group by root
+        {
+            groupBy: 'root',
+            taskLine: '- [ ] a',
+            expectedGroupNames: ['a/'],
+            path: 'a/b/c.md',
+        },
+        {
+            groupBy: 'root',
+            taskLine: '- [ ] a',
+            expectedGroupNames: ['a/'],
+            path: 'a\\b\\c.md',
+        },
+        {
+            // file in root of vault:
+            groupBy: 'root',
+            taskLine: '- [ ] a',
+            expectedGroupNames: ['/'],
+            path: 'a.md',
         },
 
         // -----------------------------------------------------------
@@ -298,12 +459,12 @@ describe('Group names', () => {
         {
             groupBy: 'scheduled',
             taskLine: '- [ ] a ⏳ 1970-01-01',
-            expectedGroupName: '1970-01-01 Thursday',
+            expectedGroupNames: ['1970-01-01 Thursday'],
         },
         {
             groupBy: 'scheduled',
             taskLine: '- [ ] a',
-            expectedGroupName: 'No scheduled date',
+            expectedGroupNames: ['No scheduled date'],
         },
 
         // -----------------------------------------------------------
@@ -311,12 +472,12 @@ describe('Group names', () => {
         {
             groupBy: 'start',
             taskLine: '- [ ] a 🛫 1970-01-01',
-            expectedGroupName: '1970-01-01 Thursday',
+            expectedGroupNames: ['1970-01-01 Thursday'],
         },
         {
             groupBy: 'start',
             taskLine: '- [ ] a',
-            expectedGroupName: 'No start date',
+            expectedGroupNames: ['No start date'],
         },
 
         // -----------------------------------------------------------
@@ -324,12 +485,30 @@ describe('Group names', () => {
         {
             groupBy: 'status',
             taskLine: '- [ ] a',
-            expectedGroupName: 'Todo',
+            expectedGroupNames: ['Todo'],
         },
         {
             groupBy: 'status',
             taskLine: '- [x] a',
-            expectedGroupName: 'Done',
+            expectedGroupNames: ['Done'],
+        },
+
+        // -----------------------------------------------------------
+        // group by tags
+        {
+            groupBy: 'tags',
+            taskLine: '- [ ] a #tag1',
+            expectedGroupNames: ['#tag1'],
+        },
+        {
+            groupBy: 'tags',
+            taskLine: '- [ ] a #tag1 #tag2',
+            expectedGroupNames: ['#tag1', '#tag2'],
+        },
+        {
+            groupBy: 'tags',
+            taskLine: '- [x] a',
+            expectedGroupNames: ['(No tags)'],
         },
 
         // -----------------------------------------------------------
@@ -337,13 +516,13 @@ describe('Group names', () => {
 
     test.concurrent.each<GroupNameCase>(groupNameCases)(
         'assigns correct group name (%j)',
-        ({ groupBy, taskLine, path, expectedGroupName, precedingHeading }) => {
+        ({ groupBy, taskLine, path, expectedGroupNames, precedingHeading }) => {
             const task = fromLine({
                 line: taskLine,
                 path: path ? path : '',
                 precedingHeader: precedingHeading,
             });
-            checkGroupNameOfTask(task, groupBy, expectedGroupName);
+            checkGroupNamesOfTask(task, groupBy, expectedGroupNames);
         },
     );
 });

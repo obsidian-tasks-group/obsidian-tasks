@@ -1,6 +1,7 @@
 import type { Moment } from 'moment';
 import type { Task } from '../../Task';
 import { DateParser } from '../DateParser';
+import { Sort } from '../../Sort';
 import { Field } from './Field';
 import { FilterOrErrorMessage } from './Filter';
 
@@ -72,6 +73,19 @@ export class HappensDateField extends Field {
         return result;
     }
 
+    /**
+     * Return the earliest of the dates used by 'happens' in the given task, or null if none set.
+     *
+     * Generally speaking, the earliest date is considered to be the highest priority,
+     * as it is the first point at which the user might wish to act on the task.
+     * @param task
+     */
+    public earliestDate(task: Task): Moment | null {
+        const happensDates = new HappensDateField().dates(task);
+        const sortedHappensDates = happensDates.sort(Sort.compareByDate);
+        return sortedHappensDates[0];
+    }
+
     protected filterRegexp(): RegExp {
         return HappensDateField.happensRegexp;
     }
@@ -79,11 +93,11 @@ export class HappensDateField extends Field {
     /**
      * Return the task's start, scheduled and due dates, any or all of which may be null.
      */
-    protected dates(task: Task): (Moment | null)[] {
+    public dates(task: Task): (Moment | null)[] {
         return Array.of(task.startDate, task.scheduledDate, task.dueDate);
     }
 
-    protected fieldName(): string {
+    public fieldName(): string {
         return 'happens';
     }
 }

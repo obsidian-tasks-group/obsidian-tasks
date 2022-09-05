@@ -24,6 +24,7 @@ describe('Query parsing', () => {
         'due before 2021-12-27',
         'due on 2021-12-27',
         'exclude sub-items',
+        'filename includes wibble',
         'happens after 2021-12-27',
         'happens before 2021-12-27',
         'happens on 2021-12-27',
@@ -164,11 +165,17 @@ describe('Query parsing', () => {
             'group by due',
             'group by filename',
             'group by folder',
+            'group by happens',
             'group by heading',
             'group by path',
+            'group by priority',
+            'group by recurrence',
+            'group by recurrence',
+            'group by root',
             'group by scheduled',
             'group by start',
             'group by status',
+            'group by tags',
         ];
         test.concurrent.each<string>(filters)('recognises %j', (filter) => {
             // Arrange

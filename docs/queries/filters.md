@@ -134,6 +134,26 @@ As well as the date-related searches above, these filters search other propertie
 - `description (includes|does not include) <string>`
   - Matches case-insensitive (disregards capitalization).
   - Disregards the global filter when matching.
+- `description (regex matches|regex does not match) /<JavaScript-style Regex>/`
+  - Does regular expression match (case-sensitive by default).
+  - Essential reading: [Regular Expression Searches]({{ site.baseurl }}{% link queries/regular-expressions.md %}).
+
+> `regex matches` and `regex does not match` were introduced in Tasks 1.12.0.
+
+For precise searches, it may help to know that `description`:
+
+- first removes all each task's signifier emojis and their values,
+- then removes any global filter,
+- then removes an trailing spaces
+- and then searches the remaining text
+
+For example:
+
+| Global Filter    | Task line                                                                | Text searched by `description`   |
+| ---------------- | ------------------------------------------------------------------------ | -------------------------------- |
+| No global filter | `'- [ ] Do stuff  ⏫  #tag1 ✅ 2022-08-12 #tag2/sub-tag '`               | `'Do stuff #tag1 #tag2/sub-tag'` |
+| `#task`          | `'- [ ] #task Do stuff  ⏫  #tag1 ✅ 2022-08-12 #tag2/sub-tag '`         | `'Do stuff #tag1 #tag2/sub-tag'` |
+| `global-filter`  | `'- [ ] global-filter Do stuff  ⏫  #tag1 ✅ 2022-08-12 #tag2/sub-tag '` | `'Do stuff #tag1 #tag2/sub-tag'` |
 
 ### Priority
 
@@ -171,16 +191,31 @@ As well as the date-related searches above, these filters search other propertie
 
 > Introduced in Tasks 1.6.0.
 
-- `tags (include|do not include) <tag>` (Alternative grammar `tag (includes|does not include) <tag>` matching description syntax)
+- `tags (include|do not include) <tag>` _or_
+- `tag (includes|does not include) <tag>`
   - Matches case-insensitive (disregards capitalization).
   - Disregards the global filter when matching.
   - The `#` is optional on the tag so `#home` and `home` will work to match `#home`.
+  - If the `#` is given, it must be present, so searching for `#home` will match `#home` but not `#location/home`.
   - The match is partial so `tags include foo` will match `#foo/bar` and `#foo-bar`.
+- `tags (regex matches|regex does not match) /<JavaScript-style Regex>/` _or_
+- `tag (regex matches|regex does not match) /<JavaScript-style Regex>/`
+  - Does regular expression match (case-sensitive by default).
+  - Essential reading: [Regular Expression Searches]({{ site.baseurl }}{% link queries/regular-expressions.md %}).
+  - This enables tag searches that avoid sub-tags, by putting a `$` character at the end of the regular expression. See examples below.
+  - If searching for sub-tags, remember to escape the slashes in regular expressions: `\/`
+
+> `regex matches` and `regex does not match` were introduced in Tasks 1.13.0.
 
 #### Tag Query Examples
 
 - `tags include #todo`
 - `tags do not include #todo`
+- `tag regex matches /#t$/`
+  - Searches for a single-character tag `#t`, with no sub-tags, because `$` matches the end of the tag text.
+- `tag regex matches /#book$/i`
+  - The trailing `i` means case-insensitive.
+  - Searches for tags such as `#book`,  `#Book`, `#BOOK` and the `$` prevents matching of `#books`,  `#book/literature`, etc.
 
 ## Filters for File Properties
 
@@ -188,8 +223,27 @@ These filters allow searching for tasks in particular files and sections of file
 
 ### File Path
 
+Note that the path includes the `.md` extension.
+
 - `path (includes|does not include) <path>`
   - Matches case-insensitive (disregards capitalization).
+- `path (regex matches|regex does not match) /<JavaScript-style Regex>/`
+  - Does regular expression match (case-sensitive by default).
+  - Essential reading: [Regular Expression Searches]({{ site.baseurl }}{% link queries/regular-expressions.md %}).
+
+> `regex matches` and `regex does not match` were introduced in Tasks 1.12.0.
+
+### File Name
+
+> Introduced in Tasks 1.13.0.
+
+Note that the file name includes the `.md` extension.
+
+- `filename (includes|does not include) <filename>`
+  - Matches case-insensitive (disregards capitalization).
+- `filename (regex matches|regex does not match) /<JavaScript-style Regex>/`
+  - Does regular expression match (case-sensitive by default).
+  - Essential reading: [Regular Expression Searches]({{ site.baseurl }}{% link queries/regular-expressions.md %}).
 
 ### Heading
 
@@ -198,3 +252,10 @@ These filters allow searching for tasks in particular files and sections of file
   - Always tries to match the closest heading above the task, regardless of heading level.
   - `does not include` will match a task that does not have a preceding heading in its file.
   - Matches case-insensitive (disregards capitalization).
+- `heading (regex matches|regex does not match) /<JavaScript-style Regex>/`
+  - Whether or not the heading preceding the task includes the given regular expression (case-sensitive by default).
+  - Always tries to match the closest heading above the task, regardless of heading level.
+  - `regex does not match` will match a task that does not have a preceding heading in its file.
+  - Essential reading: [Regular Expression Searches]({{ site.baseurl }}{% link queries/regular-expressions.md %}).
+
+> `regex matches` and `regex does not match` were introduced in Tasks 1.12.0.

@@ -3,7 +3,7 @@
  */
 import moment from 'moment';
 import { Priority, Status, Task } from '../src/Task';
-import { getSettings, updateSettings } from '../src/config/Settings';
+import { resetSettings, updateSettings } from '../src/config/Settings';
 import { fromLine } from './TestHelpers';
 import { TaskBuilder } from './TestingTools/TaskBuilder';
 import { RecurrenceBuilder } from './TestingTools/RecurrenceBuilder';
@@ -37,7 +37,6 @@ describe('parsing', () => {
 
     it('returns null when task does not have global filter', () => {
         // Arrange
-        const originalSettings = getSettings();
         updateSettings({ globalFilter: '#task' });
         const line = '- [x] this is a done task 🗓 2021-09-12 ✅ 2021-06-20';
 
@@ -50,7 +49,7 @@ describe('parsing', () => {
         expect(task).toBeNull();
 
         // Cleanup
-        updateSettings(originalSettings);
+        resetSettings();
     });
 
     it('allows signifier emojis as part of the description', () => {
@@ -194,6 +193,35 @@ describe('parsing', () => {
             });
         }
     });
+
+    it('supports parsing of tasks inside blockquotes or callouts', () => {
+        // Arrange
+        const lines = [
+            '> - [ ] Task inside a blockquote or callout 📅2022-07-29',
+            '>>> - [ ] Task inside a blockquote or callout 📅2022-07-29',
+            '> > > * [ ] Task inside a blockquote or callout 📅2022-07-29',
+        ];
+
+        // Act
+        for (const line of lines) {
+            const task = fromLine({
+                line,
+            });
+
+            // Assert
+            expect({
+                _input: line, // Line is included, so it is shown in any failure output
+                description: task.description,
+                due: task.dueDate?.format('YYYY-MM-DD'),
+                indentation: task.indentation,
+            }).toMatchObject({
+                _input: line,
+                description: 'Task inside a blockquote or callout',
+                due: '2022-07-29',
+                indentation: line.split(/[-*]/)[0],
+            });
+        }
+    });
 });
 
 type TagParsingExpectations = {
@@ -295,7 +323,7 @@ describe('parsing tags', () => {
         },
         {
             markdownTask:
-                '- [ ] Export [Cloud Feedly feeds](https://cloud.feedly.com/#opml) #context/pc_clare 🔁 every 4 weeks on Sunday ⏳ 2022-05-15 #context/more_context',
+                '* [ ] Export [Cloud Feedly feeds](https://cloud.feedly.com/#opml) #context/pc_clare 🔁 every 4 weeks on Sunday ⏳ 2022-05-15 #context/more_context',
             expectedDescription:
                 'Export [Cloud Feedly feeds](https://cloud.feedly.com/#opml) #context/pc_clare #context/more_context',
             extractedTags: ['#context/pc_clare', '#context/more_context'],
@@ -317,8 +345,22 @@ describe('parsing tags', () => {
             extractedTags: ['#context/pc_clare'],
             globalFilter: '',
         },
+        {
+            markdownTask: '> - [ ] Task inside a blockquote or callout #tagone',
+            expectedDescription: 'Task inside a blockquote or callout #tagone',
+            extractedTags: ['#tagone'],
+            globalFilter: '',
+        },
+        {
+            markdownTask:
+                '>>> * [ ] Task inside a nested blockquote or callout #tagone',
+            expectedDescription:
+                'Task inside a nested blockquote or callout #tagone',
+            extractedTags: ['#tagone'],
+            globalFilter: '',
+        },
     ])(
-        'should parse $markdownTask and extract $extractedTags',
+        'should parse "$markdownTask" and extract "$extractedTags"',
         ({
             markdownTask,
             expectedDescription,
@@ -326,7 +368,6 @@ describe('parsing tags', () => {
             globalFilter,
         }) => {
             // Arrange
-            const originalSettings = getSettings();
             if (globalFilter != '') {
                 updateSettings({ globalFilter: globalFilter });
             }
@@ -341,13 +382,25 @@ describe('parsing tags', () => {
 
             // Cleanup
             if (globalFilter != '') {
-                updateSettings(originalSettings);
+                resetSettings();
             }
         },
     );
 });
 
 describe('to string', () => {
+    it('retains the indentation', () => {
+        const line = '> > > - [ ] Task inside a nested blockquote or callout';
+
+        // Act
+        const task: Task = fromLine({
+            line,
+        }) as Task;
+
+        // Assert
+        expect(task).not.toBeNull();
+        expect(task.toFileLineString()).toStrictEqual(line);
+    });
     it('retains the block link', () => {
         // Arrange
         const line = '- [ ] this is a task 📅 2021-09-12 ^my-precious';
@@ -394,7 +447,25 @@ describe('toggle done', () => {
         expect(toggled).not.toBeNull();
         expect(toggled!.status).toStrictEqual(Status.Done);
         expect(toggled!.doneDate).not.toBeNull();
+        expect(toggled!.originalStatusCharacter).toStrictEqual('x');
         expect(toggled!.blockLink).toEqual(' ^my-precious');
+    });
+
+    it('removes done date after untoggle', () => {
+        // Arrange
+        const line = '- [x] I thought I finished ✅ 2021-09-12';
+
+        // Act
+        const task: Task = fromLine({
+            line,
+        }) as Task;
+        const toggled: Task = task.toggle()[0];
+
+        // Assert
+        expect(toggled).not.toBeNull();
+        expect(toggled!.status).toStrictEqual(Status.Todo);
+        expect(toggled!.originalStatusCharacter).toStrictEqual(' ');
+        expect(toggled!.doneDate).toBeNull();
     });
 
     type RecurrenceCase = {
@@ -901,4 +972,216 @@ describe('checking if task lists are identical', () => {
         const list2: Task[] = [new TaskBuilder().description('2').build()];
         expect(Task.tasksListsIdentical(list1, list2)).toBe(false);
     });
+});
+
+describe('check removal of the global filter', () => {
+    type GlobalFilterRemovalExpectation = {
+        globalFilter: string;
+        markdownTask: string;
+        expectedDescription: string;
+    };
+
+    test.each<GlobalFilterRemovalExpectation>([
+        {
+            globalFilter: '#task',
+            markdownTask: '- [ ] #task this is a very simple task',
+            expectedDescription: 'this is a very simple task',
+        },
+        {
+            globalFilter: '',
+            markdownTask: '- [ ] #task this is a very simple task',
+            expectedDescription: '#task this is a very simple task',
+        },
+        {
+            globalFilter: '🞋',
+            markdownTask: '- [ ] task with emoji 🞋 global filter',
+            expectedDescription: 'task with emoji global filter',
+        },
+        {
+            globalFilter: '#t',
+            markdownTask: '- [ ] task with #t global filter in the middle',
+            expectedDescription: 'task with global filter in the middle',
+        },
+        {
+            globalFilter: '#t',
+            markdownTask: '- [ ] task with global filter in the end #t',
+            expectedDescription: 'task with global filter in the end',
+        },
+        {
+            globalFilter: '#t',
+            markdownTask:
+                '- [ ] task with global filter in the end and some spaces  #t  ',
+            expectedDescription:
+                'task with global filter in the end and some spaces',
+        },
+        {
+            globalFilter: '#complex/global/filter',
+            markdownTask:
+                '- [ ] task with #complex/global/filter in the middle',
+            expectedDescription: 'task with in the middle',
+        },
+        {
+            globalFilter: '#task',
+            markdownTask:
+                '- [ ] task with an extension of the global filter #task/with/extension',
+            expectedDescription:
+                'task with an extension of the global filter #task/with/extension',
+        },
+        {
+            globalFilter: '#t',
+            markdownTask: '- [ ] task with #t multiple global filters #t',
+            expectedDescription: 'task with multiple global filters',
+        },
+        {
+            globalFilter: '#t',
+            markdownTask: '- [ ] #t', // confirm behaviour when the description is empty
+            expectedDescription: '',
+        },
+    ])(
+        'should parse "$markdownTask" and extract "$expectedDescription"',
+        ({ globalFilter, markdownTask, expectedDescription }) => {
+            // Arrange
+            if (globalFilter != '') {
+                updateSettings({ globalFilter: globalFilter });
+            }
+
+            // Act
+            const task = constructTaskFromLine(markdownTask);
+
+            // Assert
+            expect(task).not.toBeNull();
+            expect(task!.getDescriptionWithoutGlobalFilter()).toEqual(
+                expectedDescription,
+            );
+
+            // Cleanup
+            if (globalFilter != '') {
+                resetSettings();
+            }
+        },
+    );
+});
+
+describe('check removal of the global filter exhaustively', () => {
+    type GlobalFilterRemoval = {
+        globalFilter: string;
+    };
+
+    function checkDescription(
+        markdownLine: string,
+        expectedDescription: string,
+    ) {
+        const task = constructTaskFromLine(markdownLine);
+
+        // Assert
+        expect(task).not.toBeNull();
+        expect(task!.getDescriptionWithoutGlobalFilter()).toEqual(
+            expectedDescription,
+        );
+    }
+
+    test.each<GlobalFilterRemoval>([
+        {
+            globalFilter: '#t',
+        },
+        // The characters listed below are the ones that are - or were - escaped by
+        // Task.escapeRegExp().
+        // See the developer.mozilla.org reference in that method.
+        // This test validates the escaping of each of those characters.
+        {
+            globalFilter: '.',
+        },
+        {
+            globalFilter: '*',
+        },
+        {
+            globalFilter: '+',
+        },
+        {
+            globalFilter: '?',
+        },
+        {
+            globalFilter: '^',
+        },
+        {
+            // Failed attempt at creating a failing test for when = was not escaped.
+            // When I make Task.escapeRegExp() escape =, I get:
+            // Invalid regular expression: /(^|\s)hello\=world($|\s)/: Invalid escape
+            globalFilter: 'hello=world',
+        },
+        {
+            // Failed attempt at creating a failing test for when ! was not escaped.
+            // When I make Task.escapeRegExp() escape !, I get:
+            // Invalid regular expression: /(^|\s)hello\!world($|\s)/: Invalid escape
+            globalFilter: 'hello!world',
+        },
+        {
+            // Failed attempt at creating a failing test for when : was not escaped.
+            // When I make Task.escapeRegExp() escape :, I get:
+            // Invalid regular expression: /(^|\s)hello\:world($|\s)/: Invalid escape
+            globalFilter: 'hello:world',
+        },
+        {
+            globalFilter: '$',
+        },
+        {
+            globalFilter: '{',
+        },
+        {
+            globalFilter: '}',
+        },
+        {
+            globalFilter: '(',
+        },
+        {
+            globalFilter: ')',
+        },
+        {
+            globalFilter: '|',
+        },
+        {
+            globalFilter: '[',
+        },
+        {
+            globalFilter: ']',
+        },
+        {
+            // Failed attempt at creating a failing test for when / was not escaped
+            globalFilter: '///',
+        },
+        {
+            globalFilter: '\\',
+        },
+    ])(
+        'should parse global filter "$globalFilter" edge cases correctly',
+        ({ globalFilter }) => {
+            // Arrange
+            if (globalFilter != '') {
+                updateSettings({ globalFilter: globalFilter });
+            }
+
+            // Act
+
+            // global filter removed at beginning, middle and end
+            let markdownLine = `- [ ] ${globalFilter} 1 ${globalFilter} 2 ${globalFilter}`;
+            let expectedDescription = '1 2';
+            checkDescription(markdownLine, expectedDescription);
+
+            // global filter not removed if non-empty non-tag characters before or after it
+            markdownLine = `- [ ] ${globalFilter}x 1 x${globalFilter} ${globalFilter}x 2 x${globalFilter}`;
+            expectedDescription = `${globalFilter}x 1 x${globalFilter} ${globalFilter}x 2 x${globalFilter}`;
+            checkDescription(markdownLine, expectedDescription);
+
+            // global filter not removed if non-empty sub-tag characters after it.
+            // Include at least one occurrence of global filter, so we don't pass by luck.
+            markdownLine = `- [ ] ${globalFilter}/x 1 x${globalFilter} ${globalFilter}/x 2 ${globalFilter} ${globalFilter}/x`;
+            expectedDescription = `${globalFilter}/x 1 x${globalFilter} ${globalFilter}/x 2 ${globalFilter}/x`;
+            checkDescription(markdownLine, expectedDescription);
+
+            // Cleanup
+            if (globalFilter != '') {
+                resetSettings();
+            }
+        },
+    );
 });

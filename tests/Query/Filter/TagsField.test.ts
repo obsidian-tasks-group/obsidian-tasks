@@ -1,8 +1,30 @@
-import { getSettings, updateSettings } from '../../../src/config/Settings';
+import { resetSettings, updateSettings } from '../../../src/config/Settings';
 import type { FilteringCase } from '../../TestingTools/FilterTestHelpers';
 import { shouldSupportFiltering } from '../../TestingTools/FilterTestHelpers';
+import { toMatchTaskFromLine } from '../../CustomMatchers/CustomMatchersForFilters';
+import { TagsField } from '../../../src/Query/Filter/TagsField';
+
+expect.extend({
+    toMatchTaskFromLine,
+});
 
 describe('tag/tags', () => {
+    it('should honour any # in query', () => {
+        const filter = new TagsField().createFilterOrErrorMessage(
+            'tags include #home',
+        );
+        expect(filter).toMatchTaskFromLine('- [ ] stuff #home');
+        expect(filter).not.toMatchTaskFromLine('- [ ] stuff #location/home');
+    });
+
+    it('should match any position if no # in query', () => {
+        const filter = new TagsField().createFilterOrErrorMessage(
+            'tags include home',
+        );
+        expect(filter).toMatchTaskFromLine('- [ ] stuff #home');
+        expect(filter).toMatchTaskFromLine('- [ ] stuff #location/home');
+    });
+
     const defaultTasksWithTags = [
         '- [ ] #task something to do #later #work',
         '- [ ] #task something to do #later #work/meeting',
@@ -141,7 +163,6 @@ describe('tag/tags', () => {
             'should filter tag with globalFilter %s',
             (_, { tasks: allTaskLines, filters, expectedResult }) => {
                 // Arrange
-                const originalSettings = getSettings();
                 updateSettings({ globalFilter: '#task' });
 
                 // Run on the plural version of the filter first.
@@ -162,7 +183,7 @@ describe('tag/tags', () => {
                 shouldSupportFiltering(filters, allTaskLines, expectedResult);
 
                 // Cleanup
-                updateSettings(originalSettings);
+                resetSettings();
             },
         );
 
@@ -190,25 +211,17 @@ describe('tag/tags', () => {
             },
         );
 
-        it('should filter tags without globalFilter by tag presence when it is the global tag', () => {
-            // Arrange
-            const originalSettings = getSettings();
-            updateSettings({ globalFilter: '' });
-
+        it('should filter tags without globalFilter by tag presence when there is no global filter', () => {
             // Act, Assert
             shouldSupportFiltering(
                 ['tags include task'],
                 defaultTasksWithTags,
                 defaultTasksWithTags,
             );
-
-            // Cleanup
-            updateSettings(originalSettings);
         });
 
-        it('should filter tag with globalFilter by tag presence when it is the global tag', () => {
+        it('should ignore the tag which is the global filter', () => {
             // Arrange
-            const originalSettings = getSettings();
             updateSettings({ globalFilter: '#task' });
             const filters: Array<string> = ['tags include task'];
 
@@ -216,7 +229,48 @@ describe('tag/tags', () => {
             shouldSupportFiltering(filters, defaultTasksWithTags, []);
 
             // Cleanup
-            updateSettings(originalSettings);
+            resetSettings();
         });
+    });
+
+    it('tag/tags - regex matches short tag', () => {
+        // Arrange
+        const filter = new TagsField().createFilterOrErrorMessage(
+            String.raw`tag regex matches /#t$/i`, // case-INsensitive
+        );
+
+        // Act, Assert
+        expect(filter).toMatchTaskFromLine('- [ ] #t Do stuff');
+        expect(filter).toMatchTaskFromLine('- [ ] Do #t stuff');
+        expect(filter).toMatchTaskFromLine('- [ ] Do stuff #t');
+
+        // Confirm that tags with sub-tags are not found:
+        expect(filter).not.toMatchTaskFromLine('- [ ] #t/b Do stuff');
+        expect(filter).not.toMatchTaskFromLine('- [ ] Do #t/b stuff');
+        expect(filter).not.toMatchTaskFromLine('- [ ] Do stuff #t/b');
+    });
+
+    it('tag/tags - regex searching for sub-tags', () => {
+        // Arrange
+        const filter = new TagsField().createFilterOrErrorMessage(
+            String.raw`tags regex matches /#tag\/subtag[0-9]\/subsubtag[0-9]/i`, // case-INsensitive
+        );
+
+        // Act, Assert
+        expect(filter).toMatchTaskFromLine('- [ ] a #tag/subtag3/subsubtag5');
+        expect(filter).toMatchTaskFromLine('- [ ] b #tag/subtag3/Subsubtag9');
+    });
+
+    it('tag/tags - regex does not match', () => {
+        // Arrange
+        const filter = new TagsField().createFilterOrErrorMessage(
+            String.raw`tags regex does not match /#HOME/`, // case-sensitive
+        );
+
+        // Act, Assert
+        expect(filter).toMatchTaskFromLine('- [ ] stuff #work');
+        expect(filter).toMatchTaskFromLine('- [ ] stuff #home');
+        expect(filter).not.toMatchTaskFromLine('- [ ] stuff #HOME');
+        expect(filter).not.toMatchTaskFromLine('- [ ] stuff #work #HOME'); // searches multiple tags
     });
 });

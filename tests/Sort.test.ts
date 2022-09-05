@@ -6,7 +6,7 @@ import moment from 'moment';
 window.moment = moment;
 
 import { Sort } from '../src/Sort';
-import { getSettings, updateSettings } from '../src/config/Settings';
+import { resetSettings, updateSettings } from '../src/config/Settings';
 import { fromLine } from './TestHelpers';
 
 describe('Sort', () => {
@@ -410,7 +410,6 @@ describe('Sort by tags', () => {
 
     it('should sort correctly by tag defaulting to first with global filter', () => {
         // Arrange
-        const originalSettings = getSettings();
         updateSettings({ globalFilter: '#task' });
 
         const t1 = fromLine({ line: '- [ ] #task a #aaa #jjj' });
@@ -460,12 +459,11 @@ describe('Sort by tags', () => {
         ).toEqual(expectedOrder);
 
         // Cleanup
-        updateSettings(originalSettings);
+        resetSettings();
     });
 
     it('should sort correctly reversed by tag defaulting to first with global filter', () => {
         // Arrange
-        const originalSettings = getSettings();
         updateSettings({ globalFilter: '#task' });
 
         const t1 = fromLine({ line: '- [ ] #task a #aaa #jjj' });
@@ -515,12 +513,11 @@ describe('Sort by tags', () => {
         ).toEqual(expectedOrder);
 
         // Cleanup
-        updateSettings(originalSettings);
+        resetSettings();
     });
 
     it('should sort correctly by second tag with global filter', () => {
         // Arrange
-        const originalSettings = getSettings();
         updateSettings({ globalFilter: '#task' });
 
         const t1 = fromLine({ line: '- [ ] #task a #fff #aaa' });
@@ -551,12 +548,11 @@ describe('Sort by tags', () => {
         expect(result).toEqual(expectedOrder);
 
         // Cleanup
-        updateSettings(originalSettings);
+        resetSettings();
     });
 
     it('should sort correctly reversed by second tag with global filter', () => {
         // Arrange
-        const originalSettings = getSettings();
         updateSettings({ globalFilter: '#task' });
 
         const t1 = fromLine({ line: '- [ ] #task a #fff #aaa' });
@@ -587,6 +583,6 @@ describe('Sort by tags', () => {
         expect(result).toEqual(expectedOrder);
 
         // Cleanup
-        updateSettings(originalSettings);
+        resetSettings();
     });
 });
