@@ -61,7 +61,7 @@ export class Group {
 
     private static escapeMarkdownCharacters(filename: string) {
         // https://wilsonmar.github.io/markdown-text-for-github-from-html/#special-characters
-        return filename.replace(/_/g, '\\_');
+        return filename.replace(/\\/g, '\\\\').replace(/_/g, '\\_');
     }
 
     private static groupByPriority(task: Task): string[] {

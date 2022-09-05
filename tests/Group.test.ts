@@ -424,6 +424,12 @@ describe('Group names', () => {
             path: '_a_/b/_c_.md',
             expectedGroupNames: ['\\_a\\_/b/\\_c\\_'], // underscores in paths are escaped
         },
+        {
+            groupBy: 'path',
+            taskLine: '- [ ] a',
+            path: 'a\\b\\c.md',
+            expectedGroupNames: ['a\\\\b\\\\c'], // backslashes are escaped. (this artificial example is to test escaping)
+        },
 
         // -----------------------------------------------------------
         // group by priority
