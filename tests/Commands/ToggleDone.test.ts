@@ -30,7 +30,7 @@ function testToggleLine(
     const input = inputWithCursorMark.replace(cursorMarkerRegex, '');
     const expected = expectedWithCursorMark.replace(cursorMarkerRegex, '');
 
-    // Check that the cursor marker appears exactly once in in each input string:
+    // Check that the cursor marker appears exactly once in each input string:
     expect(input.length).toEqual(inputWithCursorMark.length - 1);
     expect(expected.length).toEqual(expectedWithCursorMark.length - 1);
 
