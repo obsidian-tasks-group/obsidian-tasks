@@ -1,0 +1,10 @@
+[
+  {
+    "index": 9999,
+    "internalName": "INTERNAL_TESTING_ENABLED_BY_DEFAULT",
+    "displayName": "Test Item. Used to validate the Feature Framework.",
+    "description": "Description",
+    "enabledByDefault": true,
+    "stable": false
+  }
+]
