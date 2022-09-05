@@ -242,6 +242,12 @@ describe('Group names', () => {
         // group by backlink
         {
             groupBy: 'backlink',
+            taskLine: '- [ ] xxx', // no location supplied
+            expectedGroupNames: ['Unknown Location'],
+            precedingHeading: 'heading',
+        },
+        {
+            groupBy: 'backlink',
             taskLine: '- [ ] xxx',
             expectedGroupNames: ['c > heading'],
             path: 'a/b/c.md',
