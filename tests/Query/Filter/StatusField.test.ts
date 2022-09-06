@@ -15,8 +15,8 @@ describe('status', () => {
         const filter = new StatusField().createFilterOrErrorMessage('done');
 
         // Assert
-        testStatusFilter(filter, Status.Todo, false);
-        testStatusFilter(filter, Status.Done, true);
+        testStatusFilter(filter, Status.TODO, false);
+        testStatusFilter(filter, Status.DONE, true);
     });
 
     it('not done', () => {
@@ -24,7 +24,7 @@ describe('status', () => {
         const filter = new StatusField().createFilterOrErrorMessage('not done');
 
         // Assert
-        testStatusFilter(filter, Status.Todo, true);
-        testStatusFilter(filter, Status.Done, false);
+        testStatusFilter(filter, Status.TODO, true);
+        testStatusFilter(filter, Status.DONE, false);
     });
 });
