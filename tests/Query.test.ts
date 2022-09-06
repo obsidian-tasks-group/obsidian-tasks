@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 import moment from 'moment';
-import { Query } from '../src/Query';
+import { Query } from '../src/Query/Query';
 import { Priority, Status, Task } from '../src/Task';
 import { createTasksFromMarkdown, fromLine } from './TestHelpers';
 import { shouldSupportFiltering } from './TestingTools/FilterTestHelpers';

@@ -1,6 +1,6 @@
-import type { Grouping, GroupingProperty } from '../Query';
 import type { Task } from '../Task';
 import { Priority } from '../Task';
+import type { Grouping, GroupingProperty } from './Query';
 import { TaskGroups } from './TaskGroups';
 import { HappensDateField } from './Filter/HappensDateField';
 

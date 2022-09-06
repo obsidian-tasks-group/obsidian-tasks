@@ -5,7 +5,7 @@ import {
     getSettings,
     isFeatureEnabled,
     toggleFeature,
-} from '../../src/config/Settings';
+} from '../../src/Config/Settings';
 
 describe('settings-usage', () => {
     it('load default settings and validate features', () => {

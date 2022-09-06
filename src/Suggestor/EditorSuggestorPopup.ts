@@ -5,7 +5,7 @@ import type {
     EditorSuggestTriggerInfo,
 } from 'obsidian';
 
-import type { Settings } from '../config/Settings';
+import type { Settings } from '../Config/Settings';
 import * as task from '../Task';
 import { buildSuggestions } from './Suggestor';
 import type { SuggestInfo } from './Suggestor';

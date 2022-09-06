@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 import moment from 'moment';
-import { getSettings } from '../src/config/Settings';
+import { getSettings } from '../src/Config/Settings';
 import { buildSuggestions } from '../src/Suggestor/Suggestor';
 import type { SuggestInfo } from '../src/Suggestor/Suggestor';
 

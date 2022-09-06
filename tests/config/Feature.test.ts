@@ -1,7 +1,7 @@
 /**
  * @jest-environment jsdom
  */
-import { Feature } from '../../src/config/Feature';
+import { Feature } from '../../src/Config/Feature';
 
 describe('feature-usage', () => {
     it('load current features', () => {

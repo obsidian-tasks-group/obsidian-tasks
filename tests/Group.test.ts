@@ -3,7 +3,7 @@
  */
 import moment from 'moment';
 import { Group } from '../src/Query/Group';
-import type { Grouping, GroupingProperty } from '../src/Query';
+import type { Grouping, GroupingProperty } from '../src/Query/Query';
 import type { Task } from '../src/Task';
 import { fromLine } from './TestHelpers';
 

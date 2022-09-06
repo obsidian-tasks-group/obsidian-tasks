@@ -1,5 +1,5 @@
-import type { Grouping } from '../Query';
 import type { Task } from '../Task';
+import type { Grouping } from './Query';
 import { Group } from './Group';
 import { GroupingTreeNode } from './GroupingTreeNode';
 

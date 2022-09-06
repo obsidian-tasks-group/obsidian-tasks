@@ -2,7 +2,7 @@
     import * as chrono from 'chrono-node';
     import { onMount } from 'svelte';
     import { Recurrence } from '../Recurrence';
-    import { getSettings } from '../config/Settings';
+    import { getSettings } from '../Config/Settings';
     import { Priority, Status, Task } from '../Task';
     import {
         prioritySymbols,

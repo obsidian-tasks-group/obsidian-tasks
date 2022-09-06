@@ -1,4 +1,4 @@
-import type { Settings } from '../config/Settings';
+import type { Settings } from '../Config/Settings';
 import { DateParser } from '../Query/DateParser';
 import { doAutocomplete } from '../DateAbbreviations';
 import { Recurrence } from '../Recurrence';
