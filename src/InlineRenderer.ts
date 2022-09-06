@@ -1,4 +1,4 @@
-import { getSettings } from 'config/Settings';
+import { getSettings } from 'Config/Settings';
 
 import type { MarkdownPostProcessorContext, Plugin } from 'obsidian';
 import { Task } from './Task';

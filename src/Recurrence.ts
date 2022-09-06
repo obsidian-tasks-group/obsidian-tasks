@@ -1,6 +1,6 @@
 import type { Moment } from 'moment';
 import { RRule } from 'rrule';
-import { Sort } from './Sort';
+import { Sort } from './Query/Sort';
 
 export class Recurrence {
     private readonly rrule: RRule;

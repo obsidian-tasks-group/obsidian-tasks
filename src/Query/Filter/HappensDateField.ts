@@ -1,7 +1,7 @@
 import type { Moment } from 'moment';
 import type { Task } from '../../Task';
 import { DateParser } from '../DateParser';
-import { Sort } from '../../Sort';
+import { Sort } from '../Sort';
 import { Field } from './Field';
 import { FilterOrErrorMessage } from './Filter';
 

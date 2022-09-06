@@ -3,7 +3,7 @@
  */
 import moment from 'moment';
 import { DescriptionField } from '../../../src/Query/Filter/DescriptionField';
-import { resetSettings, updateSettings } from '../../../src/config/Settings';
+import { resetSettings, updateSettings } from '../../../src/Config/Settings';
 import { testTaskFilter } from '../../TestingTools/FilterTestHelpers';
 import { fromLine } from '../../TestHelpers';
 import type { FilterOrErrorMessage } from '../../../src/Query/Filter/Filter';
