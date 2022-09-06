@@ -16,9 +16,7 @@ export abstract class TextField extends Field {
         if (match === null) {
             // If Field.canCreateFilterForLine() has been checked, we should never get
             // in to this block.
-            return FilterOrErrorMessage.fromError(
-                `do not understand query filter (${this.fieldName()})`,
-            );
+            return FilterOrErrorMessage.fromError(`do not understand query filter (${this.fieldName()})`);
         }
 
         // Construct an IStringMatcher for this filter, or return
@@ -28,9 +26,7 @@ export abstract class TextField extends Field {
         let matcher: IStringMatcher | null = null;
         if (['includes', 'does not include'].includes(filterMethod)) {
             matcher = new SubstringMatcher(searchString);
-        } else if (
-            ['regex matches', 'regex does not match'].includes(filterMethod)
-        ) {
+        } else if (['regex matches', 'regex does not match'].includes(filterMethod)) {
             matcher = RegexMatcher.validateAndConstruct(searchString);
             if (matcher === null) {
                 return FilterOrErrorMessage.fromError(
@@ -42,33 +38,23 @@ export abstract class TextField extends Field {
         if (matcher === null) {
             // It's likely this can now never be reached.
             // Retained for safety, for now.
-            return FilterOrErrorMessage.fromError(
-                `do not understand query filter (${this.fieldName()})`,
-            );
+            return FilterOrErrorMessage.fromError(`do not understand query filter (${this.fieldName()})`);
         }
 
         // Finally, we can create the Filter, that takes a task
         // and tests if it matches the string filtering rule
         // represented by this object.
         return FilterOrErrorMessage.fromFilter((task: Task) => {
-            return TextField.maybeNegate(
-                matcher!.matches(this.value(task)),
-                filterMethod,
-            );
+            return TextField.maybeNegate(matcher!.matches(this.value(task)), filterMethod);
         });
     }
 
-    public static stringIncludesCaseInsensitive(
-        haystack: string,
-        needle: string,
-    ): boolean {
+    public static stringIncludesCaseInsensitive(haystack: string, needle: string): boolean {
         return SubstringMatcher.stringIncludesCaseInsensitive(haystack, needle);
     }
 
     protected filterRegexp(): RegExp {
-        return new RegExp(
-            `^${this.fieldName()} (includes|does not include|regex matches|regex does not match) (.*)`,
-        );
+        return new RegExp(`^${this.fieldName()} (includes|does not include|regex matches|regex does not match) (.*)`);
     }
 
     public abstract fieldName(): string;

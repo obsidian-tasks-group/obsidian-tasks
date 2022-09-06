@@ -70,9 +70,7 @@ const tryRepetitive = async ({
 }): Promise<void> => {
     const retry = () => {
         if (previousTries > 10) {
-            console.error(
-                'Tasks: Too many retries. File update not possible ...',
-            );
+            console.error('Tasks: Too many retries. File update not possible ...');
             return;
         }
 
@@ -90,32 +88,24 @@ const tryRepetitive = async ({
 
     const file = vault.getAbstractFileByPath(originalTask.path);
     if (!(file instanceof TFile)) {
-        console.warn(
-            `Tasks: No file found for task ${originalTask.description}. Retrying ...`,
-        );
+        console.warn(`Tasks: No file found for task ${originalTask.description}. Retrying ...`);
         return retry();
     }
 
     if (file.extension !== 'md') {
-        console.error(
-            'Tasks: Only supporting files with the .md file extension.',
-        );
+        console.error('Tasks: Only supporting files with the .md file extension.');
         return;
     }
 
     const fileCache = metadataCache.getFileCache(file);
     if (fileCache == undefined || fileCache === null) {
-        console.warn(
-            `Tasks: No file cache found for file ${file.path}. Retrying ...`,
-        );
+        console.warn(`Tasks: No file cache found for file ${file.path}. Retrying ...`);
         return retry();
     }
 
     const listItemsCache = fileCache.listItems;
     if (listItemsCache === undefined || listItemsCache.length === 0) {
-        console.warn(
-            `Tasks: No list items found in file cache of ${file.path}. Retrying ...`,
-        );
+        console.warn(`Tasks: No list items found in file cache of ${file.path}. Retrying ...`);
         return retry();
     }
 

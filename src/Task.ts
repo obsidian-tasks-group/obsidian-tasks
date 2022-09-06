@@ -145,9 +145,7 @@ export class Task {
     // description: '#dog #car http://www/ddd#ere #house'
     // matches: #dog, #car, #house
     public static readonly hashTags = /(^|\s)#[^ !@#$%^&*(),.?":{}|<>]*/g;
-    public static readonly hashTagsFromEnd = new RegExp(
-        this.hashTags.source + '$',
-    );
+    public static readonly hashTagsFromEnd = new RegExp(this.hashTags.source + '$');
 
     private _urgency: number | null = null;
 
@@ -308,18 +306,14 @@ export class Task {
                         break;
                 }
 
-                description = description
-                    .replace(Task.priorityRegex, '')
-                    .trim();
+                description = description.replace(Task.priorityRegex, '').trim();
                 matched = true;
             }
 
             const doneDateMatch = description.match(Task.doneDateRegex);
             if (doneDateMatch !== null) {
                 doneDate = window.moment(doneDateMatch[1], Task.dateFormat);
-                description = description
-                    .replace(Task.doneDateRegex, '')
-                    .trim();
+                description = description.replace(Task.doneDateRegex, '').trim();
                 matched = true;
             }
 
@@ -330,26 +324,17 @@ export class Task {
                 matched = true;
             }
 
-            const scheduledDateMatch = description.match(
-                Task.scheduledDateRegex,
-            );
+            const scheduledDateMatch = description.match(Task.scheduledDateRegex);
             if (scheduledDateMatch !== null) {
-                scheduledDate = window.moment(
-                    scheduledDateMatch[1],
-                    Task.dateFormat,
-                );
-                description = description
-                    .replace(Task.scheduledDateRegex, '')
-                    .trim();
+                scheduledDate = window.moment(scheduledDateMatch[1], Task.dateFormat);
+                description = description.replace(Task.scheduledDateRegex, '').trim();
                 matched = true;
             }
 
             const startDateMatch = description.match(Task.startDateRegex);
             if (startDateMatch !== null) {
                 startDate = window.moment(startDateMatch[1], Task.dateFormat);
-                description = description
-                    .replace(Task.startDateRegex, '')
-                    .trim();
+                description = description.replace(Task.startDateRegex, '').trim();
                 matched = true;
             }
 
@@ -359,9 +344,7 @@ export class Task {
                 // Creating the Recurrence object requires a reference date (e.g. a due date),
                 // and it might appear in the next (earlier in the line) tokens to parse
                 recurrenceRule = recurrenceMatch[1].trim();
-                description = description
-                    .replace(Task.recurrenceRegex, '')
-                    .trim();
+                description = description.replace(Task.recurrenceRegex, '').trim();
                 matched = true;
             }
 
@@ -369,16 +352,11 @@ export class Task {
             // tags. These tags will be added back to the description below
             const tagsMatch = description.match(Task.hashTagsFromEnd);
             if (tagsMatch != null) {
-                description = description
-                    .replace(Task.hashTagsFromEnd, '')
-                    .trim();
+                description = description.replace(Task.hashTagsFromEnd, '').trim();
                 matched = true;
                 const tagName = tagsMatch[0].trim();
                 // Adding to the left because the matching is done right-to-left
-                trailingTags =
-                    trailingTags.length > 0
-                        ? [tagName, trailingTags].join(' ')
-                        : tagName;
+                trailingTags = trailingTags.length > 0 ? [tagName, trailingTags].join(' ') : tagName;
             }
 
             runs++;
@@ -406,9 +384,7 @@ export class Task {
         // The global filter will be removed from the collection.
         const hashTagMatch = description.match(this.hashTags);
         if (hashTagMatch !== null) {
-            tags = hashTagMatch
-                .filter((tag) => tag !== globalFilter)
-                .map((tag) => tag.trim());
+            tags = hashTagMatch.filter((tag) => tag !== globalFilter).map((tag) => tag.trim());
         }
 
         return new Task({
@@ -455,12 +431,7 @@ export class Task {
         const textSpan = li.createSpan();
         textSpan.addClass('tasks-list-text');
 
-        await MarkdownRenderer.renderMarkdown(
-            taskAsString,
-            textSpan,
-            this.path,
-            null as unknown as Component,
-        );
+        await MarkdownRenderer.renderMarkdown(taskAsString, textSpan, this.path, null as unknown as Component);
 
         // If the task is a block quote, the block quote wraps the p-tag that contains the content.
         // In that case, we need to unwrap the p-tag *inside* the surrounding block quote.
@@ -560,18 +531,14 @@ export class Task {
         if (!layoutOptions.hideStartDate && this.startDate) {
             const startDate: string = layoutOptions.shortMode
                 ? ' ' + startDateSymbol
-                : ` ${startDateSymbol} ${this.startDate.format(
-                      Task.dateFormat,
-                  )}`;
+                : ` ${startDateSymbol} ${this.startDate.format(Task.dateFormat)}`;
             taskString += startDate;
         }
 
         if (!layoutOptions.hideScheduledDate && this.scheduledDate) {
             const scheduledDate: string = layoutOptions.shortMode
                 ? ' ' + scheduledDateSymbol
-                : ` ${scheduledDateSymbol} ${this.scheduledDate.format(
-                      Task.dateFormat,
-                  )}`;
+                : ` ${scheduledDateSymbol} ${this.scheduledDate.format(Task.dateFormat)}`;
             taskString += scheduledDate;
         }
 
@@ -602,9 +569,7 @@ export class Task {
      * @memberof Task
      */
     public toFileLineString(): string {
-        return `${this.indentation}- [${
-            this.originalStatusCharacter
-        }] ${this.toString()}`;
+        return `${this.indentation}- [${this.originalStatusCharacter}] ${this.toString()}`;
     }
 
     /**
@@ -616,8 +581,7 @@ export class Task {
      * task is not recurring, it will return `[toggled]`.
      */
     public toggle(): Task[] {
-        const newStatus: Status =
-            this.status === Status.Todo ? Status.Done : Status.Todo;
+        const newStatus: Status = this.status === Status.Todo ? Status.Done : Status.Todo;
 
         let newDoneDate = null;
 
@@ -693,11 +657,7 @@ export class Task {
      *                                        If it is undefined, the outcome will be the same as with a unique file name: the file name only.
      *                                        If set to `true`, the full path will be returned.
      */
-    public getLinkText({
-        isFilenameUnique,
-    }: {
-        isFilenameUnique: boolean | undefined;
-    }): string | null {
+    public getLinkText({ isFilenameUnique }: { isFilenameUnique: boolean | undefined }): string | null {
         let linkText: string | null;
         if (isFilenameUnique) {
             linkText = this.filename;
@@ -711,10 +671,7 @@ export class Task {
         }
 
         // Otherwise, this wouldn't provide additional information and only take up space.
-        if (
-            this.precedingHeader !== null &&
-            this.precedingHeader !== linkText
-        ) {
+        if (this.precedingHeader !== null && this.precedingHeader !== linkText) {
             linkText = linkText + ' > ' + this.precedingHeader;
         }
 
@@ -738,9 +695,7 @@ export class Task {
         if (oldTasks.length !== newTasks.length) {
             return false;
         }
-        return oldTasks.every((oldTask, index) =>
-            oldTask.identicalTo(newTasks[index]),
-        );
+        return oldTasks.every((oldTask, index) => oldTask.identicalTo(newTasks[index]));
     }
 
     /**
@@ -807,11 +762,7 @@ export class Task {
             return false;
         } else if (recurrence1 !== null && recurrence2 === null) {
             return false;
-        } else if (
-            recurrence1 &&
-            recurrence2 &&
-            !recurrence1.identicalTo(recurrence2)
-        ) {
+        } else if (recurrence1 && recurrence2 && !recurrence1.identicalTo(recurrence2)) {
             return false;
         }
 
@@ -831,9 +782,7 @@ export class Task {
 
             if (this.recurrence) {
                 const recurrenceDiv = tooltip.createDiv();
-                recurrenceDiv.setText(
-                    `${recurrenceSymbol} ${this.recurrence.toText()}`,
-                );
+                recurrenceDiv.setText(`${recurrenceSymbol} ${this.recurrence.toText()}`);
             }
 
             if (this.startDate) {
@@ -888,16 +837,8 @@ export class Task {
         });
     }
 
-    private static toTooltipDate({
-        signifier,
-        date,
-    }: {
-        signifier: string;
-        date: Moment;
-    }): string {
-        return `${signifier} ${date.format(Task.dateFormat)} (${date.from(
-            window.moment().startOf('day'),
-        )})`;
+    private static toTooltipDate({ signifier, date }: { signifier: string; date: Moment }): string {
+        return `${signifier} ${date.format(Task.dateFormat)} (${date.from(window.moment().startOf('day'))})`;
     }
 
     /**
@@ -932,15 +873,9 @@ export class Task {
         let description = this.description;
         if (globalFilter.length === 0) return description;
         // This matches the global filter (after escaping it) only when it's a complete word
-        const globalFilterRegex = RegExp(
-            '(^|\\s)' + this.escapeRegExp(globalFilter) + '($|\\s)',
-            'ug',
-        );
+        const globalFilterRegex = RegExp('(^|\\s)' + this.escapeRegExp(globalFilter) + '($|\\s)', 'ug');
         if (this.description.search(globalFilterRegex) > -1) {
-            description = description
-                .replace(globalFilterRegex, '$1$2')
-                .replace('  ', ' ')
-                .trim();
+            description = description.replace(globalFilterRegex, '$1$2').replace('  ', ' ').trim();
         }
         return description;
     }

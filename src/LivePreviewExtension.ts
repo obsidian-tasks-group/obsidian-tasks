@@ -26,11 +26,7 @@ class LivePreviewExtension implements PluginValue {
         const { target } = event;
 
         // Only handle checkbox clicks.
-        if (
-            !target ||
-            !(target instanceof HTMLInputElement) ||
-            target.type !== 'checkbox'
-        ) {
+        if (!target || !(target instanceof HTMLInputElement) || target.type !== 'checkbox') {
             return false;
         }
 
@@ -42,9 +38,7 @@ class LivePreviewExtension implements PluginValue {
          */
 
         // Tasks from "task" query codeblocks handle themselves thanks to `toLi`, so be specific about error messaging, but still return.
-        const ancestor = target.closest(
-            'ul.plugin-tasks-query-result, div.callout-content',
-        );
+        const ancestor = target.closest('ul.plugin-tasks-query-result, div.callout-content');
         if (ancestor) {
             if (ancestor.matches('div.callout-content')) {
                 // Error message for now.
@@ -71,9 +65,7 @@ class LivePreviewExtension implements PluginValue {
             precedingHeader: null,
         });
 
-        console.debug(
-            `Live Preview Extension: toggle called. Position: ${position} Line: ${line.text}`,
-        );
+        console.debug(`Live Preview Extension: toggle called. Position: ${position} Line: ${line.text}`);
 
         // Only handle checkboxes of tasks.
         if (task === null) {
@@ -85,9 +77,7 @@ class LivePreviewExtension implements PluginValue {
 
         // Clicked on a task's checkbox. Toggle the task and set it.
         const toggled = task.toggle();
-        const toggledString = toggled
-            .map((t) => t.toFileLineString())
-            .join(state.lineBreak);
+        const toggledString = toggled.map((t) => t.toFileLineString()).join(state.lineBreak);
 
         // Creates a CodeMirror transaction in order to update the document.
         const transaction = state.update({

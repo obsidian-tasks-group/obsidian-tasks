@@ -19,9 +19,7 @@ export class TagsField extends Field {
     public createFilterOrErrorMessage(line: string): FilterOrErrorMessage {
         const match = Field.getMatch(this.filterRegexp(), line);
         if (match === null) {
-            return FilterOrErrorMessage.fromError(
-                `do not understand query filter (${this.fieldName()})`,
-            );
+            return FilterOrErrorMessage.fromError(`do not understand query filter (${this.fieldName()})`);
         }
         const filterMethod = match[2];
         const search = match[3];
@@ -40,16 +38,11 @@ export class TagsField extends Field {
         if (matcher === null) {
             // It's likely this can now never be reached.
             // Retained for safety, for now.
-            return FilterOrErrorMessage.fromError(
-                `do not understand query filter (${this.fieldName()})`,
-            );
+            return FilterOrErrorMessage.fromError(`do not understand query filter (${this.fieldName()})`);
         }
 
         return FilterOrErrorMessage.fromFilter((task: Task) => {
-            return TextField.maybeNegate(
-                matcher!.matchesAnyOf(task.tags),
-                filterMethod,
-            );
+            return TextField.maybeNegate(matcher!.matchesAnyOf(task.tags), filterMethod);
         });
     }
 

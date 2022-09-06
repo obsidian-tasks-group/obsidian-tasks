@@ -25,28 +25,17 @@ export type SuggestInfo = {
 /*
  * Return a list of suggestions, either generic or more fine-grained to the words at the cursor.
  */
-export function buildSuggestions(
-    line: string,
-    cursorPos: number,
-    settings: Settings,
-): SuggestInfo[] {
+export function buildSuggestions(line: string, cursorPos: number, settings: Settings): SuggestInfo[] {
     let suggestions: SuggestInfo[] = [];
 
     // Step 1: add date suggestions if relevant
-    suggestions = suggestions.concat(
-        addDatesSuggestions(line, cursorPos, settings),
-    );
+    suggestions = suggestions.concat(addDatesSuggestions(line, cursorPos, settings));
 
     // Step 2: add recurrence suggestions if relevant
-    suggestions = suggestions.concat(
-        addRecurrenceSuggestions(line, cursorPos, settings),
-    );
+    suggestions = suggestions.concat(addRecurrenceSuggestions(line, cursorPos, settings));
 
     // Step 3: add more general suggestions ('due', 'recurrence' etc)
-    const morePossibleSuggestions = getPossibleComponentSuggestions(
-        line,
-        settings,
-    );
+    const morePossibleSuggestions = getPossibleComponentSuggestions(line, settings);
     // We now filter the general suggestions according to the word at the cursor. If there's
     // something to match, we filter the suggestions accordingly, so the user can get more specific
     // results according to what she's typing.
@@ -55,14 +44,9 @@ export function buildSuggestions(
     let addedSuggestions = false;
     if (wordMatch && wordMatch.length > 0) {
         const wordUnderCursor = wordMatch[0];
-        if (
-            wordUnderCursor.length >= Math.max(1, settings.autoSuggestMinMatch)
-        ) {
-            const filteredSuggestions = morePossibleSuggestions.filter(
-                (suggestInfo) =>
-                    suggestInfo.displayText
-                        .toLowerCase()
-                        .includes(wordUnderCursor.toLowerCase()),
+        if (wordUnderCursor.length >= Math.max(1, settings.autoSuggestMinMatch)) {
+            const filteredSuggestions = morePossibleSuggestions.filter((suggestInfo) =>
+                suggestInfo.displayText.toLowerCase().includes(wordUnderCursor.toLowerCase()),
             );
             for (const filtered of filteredSuggestions) {
                 suggestions.push({
@@ -84,10 +68,7 @@ export function buildSuggestions(
     // Unless we have a suggestion that is a match for something the user is currently typing, add
     // an 'Enter' entry in the beginning of the menu, so an Enter press will move to the next line
     // rather than insert a suggestion
-    if (
-        suggestions.length > 0 &&
-        !suggestions.some((value) => value.suggestionType === 'match')
-    ) {
+    if (suggestions.length > 0 && !suggestions.some((value) => value.suggestionType === 'match')) {
         // No actual match, only default ones
         suggestions.unshift({
             suggestionType: 'empty',
@@ -103,21 +84,13 @@ export function buildSuggestions(
 }
 
 function hasPriority(line: string) {
-    if (
-        Object.values(task.prioritySymbols).some(
-            (value) => value.length > 0 && line.includes(value),
-        )
-    )
-        return true;
+    if (Object.values(task.prioritySymbols).some((value) => value.length > 0 && line.includes(value))) return true;
 }
 
 /*
  * Get suggestions for generic task components, e.g. a priority or a 'due' symbol
  */
-function getPossibleComponentSuggestions(
-    line: string,
-    _settings: Settings,
-): SuggestInfo[] {
+function getPossibleComponentSuggestions(line: string, _settings: Settings): SuggestInfo[] {
     const suggestions: SuggestInfo[] = [];
 
     if (!line.includes(task.dueDateSymbol))
@@ -166,11 +139,7 @@ function getPossibleComponentSuggestions(
  * Generic predefined suggestions, in turn, also have two options: either filtered (if the user started typing
  * something where a date is expected) or unfiltered
  */
-function addDatesSuggestions(
-    line: string,
-    cursorPos: number,
-    settings: Settings,
-): SuggestInfo[] {
+function addDatesSuggestions(line: string, cursorPos: number, settings: Settings): SuggestInfo[] {
     const genericSuggestions = [
         'today',
         'tomorrow',
@@ -187,10 +156,7 @@ function addDatesSuggestions(
     ];
 
     const results: SuggestInfo[] = [];
-    const dateRegex = new RegExp(
-        `([${datePrefixCharacters}])\\s*([0-9a-zA-Z ]*)`,
-        'ug',
-    );
+    const dateRegex = new RegExp(`([${datePrefixCharacters}])\\s*([0-9a-zA-Z ]*)`, 'ug');
     const dateMatch = matchByPosition(line, dateRegex, cursorPos);
     if (dateMatch && dateMatch.length >= 2) {
         const datePrefix = dateMatch[1];
@@ -203,17 +169,13 @@ function addDatesSuggestions(
         // be in the future, i.e. if today is Sunday and the user typed "due <Enter> Saturday", she
         // most likely means Saturday *in the future* and not yesterday.
         const possibleDate =
-            dateString && dateString.length > 1
-                ? DateParser.parseDate(doAutocomplete(dateString), true)
-                : null;
+            dateString && dateString.length > 1 ? DateParser.parseDate(doAutocomplete(dateString), true) : null;
         if (possibleDate && possibleDate.isValid()) {
             // Seems like the text that the user typed can be parsed as a valid date.
             // Present its completed form as a 1st suggestion
             results.push({
                 displayText: `${possibleDate.format(task.Task.dateFormat)}`,
-                appendText: `${datePrefix} ${possibleDate.format(
-                    task.Task.dateFormat,
-                )} `,
+                appendText: `${datePrefix} ${possibleDate.format(task.Task.dateFormat)} `,
                 insertAt: dateMatch.index,
                 insertSkip: dateMatch[0].length,
             });
@@ -262,11 +224,7 @@ function addDatesSuggestions(
  * Generic predefined suggestions, in turn, also have two options: either filtered (if the user started typing
  * something where a recurrence is expected) or unfiltered
  */
-function addRecurrenceSuggestions(
-    line: string,
-    cursorPos: number,
-    settings: Settings,
-) {
+function addRecurrenceSuggestions(line: string, cursorPos: number, settings: Settings) {
     const genericSuggestions = [
         'every',
         'every day',
@@ -284,10 +242,7 @@ function addRecurrenceSuggestions(
     ];
 
     const results: SuggestInfo[] = [];
-    const recurrenceRegex = new RegExp(
-        `(${task.recurrenceSymbol})\\s*([0-9a-zA-Z ]*)`,
-        'ug',
-    );
+    const recurrenceRegex = new RegExp(`(${task.recurrenceSymbol})\\s*([0-9a-zA-Z ]*)`, 'ug');
     const recurrenceMatch = matchByPosition(line, recurrenceRegex, cursorPos);
     if (recurrenceMatch && recurrenceMatch.length >= 2) {
         const recurrencePrefix = recurrenceMatch[1];
@@ -333,21 +288,13 @@ function addRecurrenceSuggestions(
                 (value) =>
                     recurrenceString &&
                     recurrenceString.length >= minMatch &&
-                    value
-                        .toLowerCase()
-                        .includes(recurrenceString.toLowerCase()),
+                    value.toLowerCase().includes(recurrenceString.toLowerCase()),
             )
             .slice(0, maxGenericDateSuggestions);
-        if (
-            genericMatches.length === 0 &&
-            recurrenceString.trim().length === 0
-        ) {
+        if (genericMatches.length === 0 && recurrenceString.trim().length === 0) {
             // We have no actual match so do completely generic recurrence suggestions, but not if
             // there *was* a text to match (because it means the user is actually typing something else)
-            genericMatches = genericSuggestions.slice(
-                0,
-                maxGenericDateSuggestions,
-            );
+            genericMatches = genericSuggestions.slice(0, maxGenericDateSuggestions);
         }
         for (const match of genericMatches) {
             results.push({
@@ -367,19 +314,10 @@ function addRecurrenceSuggestions(
  * Matches a string with a regex according to a position (typically of a cursor).
  * Will return a result only if a match exists and the given position is part of it.
  */
-export function matchByPosition(
-    s: string,
-    r: RegExp,
-    position: number,
-): RegExpMatchArray {
+export function matchByPosition(s: string, r: RegExp, position: number): RegExpMatchArray {
     const matches = s.matchAll(r);
     for (const match of matches) {
-        if (
-            match?.index &&
-            match.index <= position &&
-            position <= match.index + match[0].length
-        )
-            return match;
+        if (match?.index && match.index <= position && position <= match.index + match[0].length) return match;
     }
     return [];
 }

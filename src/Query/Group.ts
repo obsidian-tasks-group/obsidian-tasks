@@ -32,10 +32,7 @@ export class Group {
      * @param property
      * @param task
      */
-    public static getGroupNamesForTask(
-        property: GroupingProperty,
-        task: Task,
-    ): string[] {
+    public static getGroupNamesForTask(property: GroupingProperty, task: Task): string[] {
         const grouper = Group.groupers[property];
         return grouper(task);
     }
@@ -120,10 +117,7 @@ export class Group {
         return [Group.stringFromDate(earliestDateIfAny, 'happens')];
     }
 
-    private static stringFromDate(
-        date: moment.Moment | null,
-        field: string,
-    ): string {
+    private static stringFromDate(date: moment.Moment | null, field: string): string {
         if (date === null) {
             return 'No ' + field + ' date';
         }
@@ -139,10 +133,7 @@ export class Group {
     private static groupByFolder(task: Task): string[] {
         const path = task.path;
         const fileNameWithExtension = task.filename + '.md';
-        const folder = path.substring(
-            0,
-            path.lastIndexOf(fileNameWithExtension),
-        );
+        const folder = path.substring(0, path.lastIndexOf(fileNameWithExtension));
         if (folder === '') {
             return ['/'];
         }
@@ -166,11 +157,7 @@ export class Group {
         if (separatorIndex == -1) {
             return ['/'];
         }
-        return [
-            Group.escapeMarkdownCharacters(
-                path.substring(0, separatorIndex + 1),
-            ),
-        ];
+        return [Group.escapeMarkdownCharacters(path.substring(0, separatorIndex + 1))];
     }
 
     private static groupByBacklink(task: Task): string[] {
@@ -182,10 +169,7 @@ export class Group {
         // Markdown characters in the file name must be escaped.
         // Markdown characters in the heading must NOT be escaped.
         const filenameComponent = Group.groupByFileName(task)[0];
-        if (
-            task.precedingHeader === null ||
-            task.precedingHeader.length === 0
-        ) {
+        if (task.precedingHeader === null || task.precedingHeader.length === 0) {
             return [filenameComponent];
         }
         const headingComponent = Group.groupByHeading(task)[0];
@@ -202,10 +186,7 @@ export class Group {
     }
 
     private static groupByHeading(task: Task): string[] {
-        if (
-            task.precedingHeader === null ||
-            task.precedingHeader.length === 0
-        ) {
+        if (task.precedingHeader === null || task.precedingHeader.length === 0) {
             return ['(No heading)'];
         }
         return [task.precedingHeader];

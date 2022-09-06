@@ -9,11 +9,7 @@ import { testFilter } from '../../TestingTools/FilterTestHelpers';
 
 window.moment = moment;
 
-function testTaskFilterForTaskWithDoneDate(
-    filter: FilterOrErrorMessage,
-    doneDate: string | null,
-    expected: boolean,
-) {
+function testTaskFilterForTaskWithDoneDate(filter: FilterOrErrorMessage, doneDate: string | null, expected: boolean) {
     const builder = new TaskBuilder();
     testFilter(filter, builder.doneDate(doneDate), expected);
 }
@@ -21,9 +17,7 @@ function testTaskFilterForTaskWithDoneDate(
 describe('done date', () => {
     it('by done date presence', () => {
         // Arrange
-        const filter = new DoneDateField().createFilterOrErrorMessage(
-            'has done date',
-        );
+        const filter = new DoneDateField().createFilterOrErrorMessage('has done date');
 
         // Act, Assert
         testTaskFilterForTaskWithDoneDate(filter, null, false);
@@ -32,9 +26,7 @@ describe('done date', () => {
 
     it('by done date absence', () => {
         // Arrange
-        const filter = new DoneDateField().createFilterOrErrorMessage(
-            'no done date',
-        );
+        const filter = new DoneDateField().createFilterOrErrorMessage('no done date');
 
         // Act, Assert
         testTaskFilterForTaskWithDoneDate(filter, null, true);

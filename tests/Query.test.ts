@@ -95,29 +95,25 @@ describe('Query parsing', () => {
     });
 
     describe('should not confuse a boolean query for any other single field', () => {
-        test.concurrent.each<string>(filters)(
-            'sub-query %j is recognized inside a boolean query',
-            (filter) => {
-                // Arrange
-                // For every sub-query from the filters list above, compose a boolean query that is always
-                // true, in the format (expression) OR NOT (expression)
-                const queryString = `(${filter}) OR NOT (${filter})`;
-                const query = new Query({ source: queryString });
+        test.concurrent.each<string>(filters)('sub-query %j is recognized inside a boolean query', (filter) => {
+            // Arrange
+            // For every sub-query from the filters list above, compose a boolean query that is always
+            // true, in the format (expression) OR NOT (expression)
+            const queryString = `(${filter}) OR NOT (${filter})`;
+            const query = new Query({ source: queryString });
 
-                const taskLine =
-                    '- [ ] this is a task due 📅 2021-09-12 #inside_tag ⏫ #some/tags_with_underscore';
-                const task = fromLine({
-                    line: taskLine,
-                });
+            const taskLine = '- [ ] this is a task due 📅 2021-09-12 #inside_tag ⏫ #some/tags_with_underscore';
+            const task = fromLine({
+                line: taskLine,
+            });
 
-                // Assert
-                expect(query.error).toBeUndefined();
-                expect(query.filters.length).toEqual(1);
-                expect(query.filters[0]).toBeDefined();
-                // If the boolean query and its sub-query are parsed correctly, the expression should always be true
-                expect(query.filters[0](task)).toBeTruthy();
-            },
-        );
+            // Assert
+            expect(query.error).toBeUndefined();
+            expect(query.filters.length).toEqual(1);
+            expect(query.filters[0]).toBeDefined();
+            // If the boolean query and its sub-query are parsed correctly, the expression should always be true
+            expect(query.filters[0](task)).toBeTruthy();
+        });
     });
 
     describe('should recognise every sort instruction', () => {
@@ -407,17 +403,12 @@ describe('Query', () => {
                         '- [ ] I am done before filter, and should pass ✅ 2022-12-01',
                         '- [ ] I have no done date, so should fail',
                     ],
-                    expectedResult: [
-                        '- [ ] I am done before filter, and should pass ✅ 2022-12-01',
-                    ],
+                    expectedResult: ['- [ ] I am done before filter, and should pass ✅ 2022-12-01'],
                 },
             ],
-        ])(
-            'should support filtering %s',
-            (_, { tasks: allTaskLines, filters, expectedResult }) => {
-                shouldSupportFiltering(filters, allTaskLines, expectedResult);
-            },
-        );
+        ])('should support filtering %s', (_, { tasks: allTaskLines, filters, expectedResult }) => {
+            shouldSupportFiltering(filters, allTaskLines, expectedResult);
+        });
     });
 
     describe('filtering with "happens"', () => {
@@ -476,22 +467,19 @@ describe('Query', () => {
             // ----------------------------------------------------------------
             // 'before'
             {
-                description:
-                    'before: should match if a date is before specified date',
+                description: 'before: should match if a date is before specified date',
                 happensFilter: 'happens before 2012-03-04',
                 start: '2012-03-02',
                 taskShouldMatch: true,
             },
             {
-                description:
-                    'before: should not match if a date is on specified date',
+                description: 'before: should not match if a date is on specified date',
                 happensFilter: 'happens before 2012-03-04',
                 start: '2012-03-04',
                 taskShouldMatch: false,
             },
             {
-                description:
-                    'before: should not match if a date is after specified date',
+                description: 'before: should not match if a date is after specified date',
                 happensFilter: 'happens before 2012-03-04',
                 start: '2012-03-05',
                 taskShouldMatch: false,
@@ -500,22 +488,19 @@ describe('Query', () => {
             // ----------------------------------------------------------------
             // 'after'
             {
-                description:
-                    'after: should match if a date is after specified date',
+                description: 'after: should match if a date is after specified date',
                 happensFilter: 'happens after 2012-03-04',
                 start: '2012-03-05',
                 taskShouldMatch: true,
             },
             {
-                description:
-                    'after: should not match if a date is on specified date',
+                description: 'after: should not match if a date is on specified date',
                 happensFilter: 'happens after 2012-03-04',
                 start: '2012-03-04',
                 taskShouldMatch: false,
             },
             {
-                description:
-                    'after: should not match if a date is before specified date',
+                description: 'after: should not match if a date is before specified date',
                 happensFilter: 'happens after 2012-03-04',
                 start: '2012-03-03',
                 taskShouldMatch: false,
@@ -524,8 +509,7 @@ describe('Query', () => {
             // ----------------------------------------------------------------
             // multiple date values
             {
-                description:
-                    'multiple dates in task: should match if any date matches',
+                description: 'multiple dates in task: should match if any date matches',
                 happensFilter: 'happens on 2012-03-04',
                 due: '2012-03-04',
                 scheduled: '2012-03-05',
@@ -536,14 +520,7 @@ describe('Query', () => {
 
         test.concurrent.each<HappensCase>(HappensCases)(
             'filters via "happens" correctly (%j)',
-            ({
-                happensFilter,
-                due,
-                scheduled,
-                start,
-                done,
-                taskShouldMatch,
-            }) => {
+            ({ happensFilter, due, scheduled, start, done, taskShouldMatch }) => {
                 // Arrange
                 const line = [
                     '- [ ] this is a task',
@@ -571,9 +548,7 @@ describe('Query', () => {
             [
                 'simple OR',
                 {
-                    filters: [
-                        '"has due date" OR (description includes special)',
-                    ],
+                    filters: ['"has due date" OR (description includes special)'],
                     tasks: [
                         '- [ ] task 1',
                         '- [ ] task 2 🛫 2022-04-20 ⏳ 2022-04-20 📅 2022-04-20',
@@ -590,26 +565,20 @@ describe('Query', () => {
             [
                 'simple AND',
                 {
-                    filters: [
-                        '(has start date) AND "description includes some"',
-                    ],
+                    filters: ['(has start date) AND "description includes some"'],
                     tasks: [
                         '- [ ] task 1',
                         '- [ ] some task 2 🛫 2022-04-20 ⏳ 2022-04-20 📅 2022-04-20',
                         '- [ ] any task 3 🛫 2022-04-20',
                         '- [ ] special task 4',
                     ],
-                    expectedResult: [
-                        '- [ ] some task 2 🛫 2022-04-20 ⏳ 2022-04-20 📅 2022-04-20',
-                    ],
+                    expectedResult: ['- [ ] some task 2 🛫 2022-04-20 ⏳ 2022-04-20 📅 2022-04-20'],
                 },
             ],
             [
                 'simple AND NOT',
                 {
-                    filters: [
-                        '(has start date) AND NOT (description includes some)',
-                    ],
+                    filters: ['(has start date) AND NOT (description includes some)'],
                     tasks: [
                         '- [ ] task 1',
                         '- [ ] some task 2 🛫 2022-04-20 ⏳ 2022-04-20 📅 2022-04-20',
@@ -622,9 +591,7 @@ describe('Query', () => {
             [
                 'simple OR NOT',
                 {
-                    filters: [
-                        '(has start date) OR NOT (description includes special)',
-                    ],
+                    filters: ['(has start date) OR NOT (description includes special)'],
                     tasks: [
                         '- [ ] task 1',
                         '- [ ] some task 2 🛫 2022-04-20 ⏳ 2022-04-20 📅 2022-04-20',
@@ -641,19 +608,14 @@ describe('Query', () => {
             [
                 'simple XOR',
                 {
-                    filters: [
-                        '(has start date) XOR (description includes special)',
-                    ],
+                    filters: ['(has start date) XOR (description includes special)'],
                     tasks: [
                         '- [ ] task 1',
                         '- [ ] special task 2 🛫 2022-04-20 ⏳ 2022-04-20 📅 2022-04-20',
                         '- [ ] any task 3 🛫 2022-04-20',
                         '- [ ] special task 4',
                     ],
-                    expectedResult: [
-                        '- [ ] any task 3 🛫 2022-04-20',
-                        '- [ ] special task 4',
-                    ],
+                    expectedResult: ['- [ ] any task 3 🛫 2022-04-20', '- [ ] special task 4'],
                 },
             ],
             [
@@ -672,9 +634,7 @@ describe('Query', () => {
             [
                 'AND-first composition',
                 {
-                    filters: [
-                        '(has start date) AND ((description includes some) OR (has due date))',
-                    ],
+                    filters: ['(has start date) AND ((description includes some) OR (has due date))'],
                     tasks: [
                         '- [ ] task 1',
                         '- [ ] some task 2 🛫 2022-04-20 ⏳ 2022-04-20 📅 2022-04-20',
@@ -691,9 +651,7 @@ describe('Query', () => {
             [
                 'OR-first composition',
                 {
-                    filters: [
-                        '(has start date) OR ((description includes special) AND (has due date))',
-                    ],
+                    filters: ['(has start date) OR ((description includes special) AND (has due date))'],
                     tasks: [
                         '- [ ] special task 1',
                         '- [ ] some task 2 🛫 2022-04-20 ⏳ 2022-04-20 📅 2022-04-20',
@@ -712,9 +670,7 @@ describe('Query', () => {
             [
                 'NOT-first composition',
                 {
-                    filters: [
-                        'NOT ((has start date) OR (description includes special))',
-                    ],
+                    filters: ['NOT ((has start date) OR (description includes special))'],
                     tasks: [
                         '- [ ] regular task 1',
                         '- [ ] some task 2 🛫 2022-04-20 ⏳ 2022-04-20 📅 2022-04-20',
@@ -725,12 +681,9 @@ describe('Query', () => {
                     expectedResult: ['- [ ] regular task 1'],
                 },
             ],
-        ])(
-            'should support boolean filtering %s',
-            (_, { tasks: allTaskLines, filters, expectedResult }) => {
-                shouldSupportFiltering(filters, allTaskLines, expectedResult);
-            },
-        );
+        ])('should support boolean filtering %s', (_, { tasks: allTaskLines, filters, expectedResult }) => {
+            shouldSupportFiltering(filters, allTaskLines, expectedResult);
+        });
     });
 
     describe('sorting instructions', () => {
@@ -765,15 +718,11 @@ describe('Query', () => {
             },
             {
                 input: 'sort by tag',
-                output: [
-                    { property: 'tag', reverse: false, propertyInstance: 1 },
-                ],
+                output: [{ property: 'tag', reverse: false, propertyInstance: 1 }],
             },
             {
                 input: 'sort by tag 2',
-                output: [
-                    { property: 'tag', reverse: false, propertyInstance: 2 },
-                ],
+                output: [{ property: 'tag', reverse: false, propertyInstance: 2 }],
             },
         ];
         it.concurrent.each(cases)('sorting as %j', ({ input, output }) => {
@@ -849,11 +798,7 @@ describe('Query', () => {
 - [ ] Task 6 - should not appear in output
             `;
 
-            const tasks = createTasksFromMarkdown(
-                tasksAsMarkdown,
-                'some_markdown_file',
-                'Some Heading',
-            );
+            const tasks = createTasksFromMarkdown(tasksAsMarkdown, 'some_markdown_file', 'Some Heading');
 
             // Act
             const groups = query.applyQueryToTasks(tasks);
@@ -865,9 +810,7 @@ describe('Query', () => {
 - [ ] Task 3 - will be sorted to 1st place, so should pass limit
 - [ ] Task 4 - will be sorted to 2nd place, so should pass limit
 `;
-            expect('\n' + soleTaskGroup.tasksAsStringOfLines()).toStrictEqual(
-                expectedTasks,
-            );
+            expect('\n' + soleTaskGroup.tasksAsStringOfLines()).toStrictEqual(expectedTasks);
         });
     });
 });

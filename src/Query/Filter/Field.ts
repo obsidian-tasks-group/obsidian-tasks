@@ -30,9 +30,7 @@ export abstract class Field {
      * which are both wrapped in a FilterOrErrorMessage object.
      * @param line - A line from a ```tasks``` block.
      */
-    public abstract createFilterOrErrorMessage(
-        line: string,
-    ): FilterOrErrorMessage;
+    public abstract createFilterOrErrorMessage(line: string): FilterOrErrorMessage;
 
     /**
      * Does the given line match the given filter?
@@ -41,10 +39,7 @@ export abstract class Field {
      * @param line - A line from a tasks code block query.
      * @protected
      */
-    protected static lineMatchesFilter(
-        filter: RegExp | null,
-        line: string,
-    ): boolean {
+    protected static lineMatchesFilter(filter: RegExp | null, line: string): boolean {
         if (filter) {
             return filter.test(line);
         } else {
@@ -59,10 +54,7 @@ export abstract class Field {
      * @param line - A line from a tasks code block query.
      * @protected
      */
-    protected static getMatch(
-        filterRegexp: RegExp | null,
-        line: string,
-    ): RegExpMatchArray | null {
+    protected static getMatch(filterRegexp: RegExp | null, line: string): RegExpMatchArray | null {
         if (filterRegexp) {
             return line.match(filterRegexp);
         } else {

@@ -2,12 +2,7 @@ import { App, Editor, MarkdownView, View } from 'obsidian';
 import { TaskModal } from '../TaskModal';
 import { Priority, Status, Task } from '../Task';
 
-export const createOrEdit = (
-    checking: boolean,
-    editor: Editor,
-    view: View,
-    app: App,
-) => {
+export const createOrEdit = (checking: boolean, editor: Editor, view: View, app: App) => {
     if (checking) {
         return view instanceof MarkdownView;
     }
@@ -28,9 +23,7 @@ export const createOrEdit = (
     const task = taskFromLine({ line, path });
 
     const onSubmit = (updatedTasks: Task[]): void => {
-        const serialized = updatedTasks
-            .map((task: Task) => task.toFileLineString())
-            .join('\n');
+        const serialized = updatedTasks.map((task: Task) => task.toFileLineString()).join('\n');
         editor.setLine(lineNumber, serialized);
     };
 

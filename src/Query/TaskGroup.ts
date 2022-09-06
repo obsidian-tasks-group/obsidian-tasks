@@ -47,11 +47,7 @@ export class TaskGroup {
      * @param {GroupHeading[]} groupHeadings - See this.groupHeadings for details
      * @param tasks {Task[]} - See this.tasks for details
      */
-    constructor(
-        groups: string[],
-        groupHeadings: GroupHeading[],
-        tasks: Task[],
-    ) {
+    constructor(groups: string[], groupHeadings: GroupHeading[], tasks: Task[]) {
         this.groups = groups;
         this.groupHeadings = groupHeadings;
         this.tasks = tasks;

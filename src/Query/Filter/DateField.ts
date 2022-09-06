@@ -40,37 +40,27 @@ export abstract class DateField extends Field {
         if (match !== null) {
             const filterDate = DateParser.parseDate(match[2]);
             if (!filterDate.isValid()) {
-                result.error =
-                    'do not understand ' + this.fieldName() + ' date';
+                result.error = 'do not understand ' + this.fieldName() + ' date';
             } else {
                 if (match[1] === 'before') {
                     result.filter = (task: Task) => {
                         const date = this.date(task);
-                        return date
-                            ? date.isBefore(filterDate)
-                            : this.filterResultIfFieldMissing();
+                        return date ? date.isBefore(filterDate) : this.filterResultIfFieldMissing();
                     };
                 } else if (match[1] === 'after') {
                     result.filter = (task: Task) => {
                         const date = this.date(task);
-                        return date
-                            ? date.isAfter(filterDate)
-                            : this.filterResultIfFieldMissing();
+                        return date ? date.isAfter(filterDate) : this.filterResultIfFieldMissing();
                     };
                 } else {
                     result.filter = (task: Task) => {
                         const date = this.date(task);
-                        return date
-                            ? date.isSame(filterDate)
-                            : this.filterResultIfFieldMissing();
+                        return date ? date.isSame(filterDate) : this.filterResultIfFieldMissing();
                     };
                 }
             }
         } else {
-            result.error =
-                'do not understand query filter (' +
-                this.fieldName() +
-                ' date)';
+            result.error = 'do not understand query filter (' + this.fieldName() + ' date)';
         }
         return result;
     }

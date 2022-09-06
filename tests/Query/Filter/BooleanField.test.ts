@@ -9,11 +9,7 @@ import { testFilter } from '../../TestingTools/FilterTestHelpers';
 
 window.moment = moment;
 
-function testWithDescription(
-    filter: FilterOrErrorMessage,
-    description: string,
-    expected: boolean,
-) {
+function testWithDescription(filter: FilterOrErrorMessage, description: string, expected: boolean) {
     const builder = new TaskBuilder();
     testFilter(filter, builder.description(description), expected);
 }
@@ -62,9 +58,7 @@ describe('boolean query', () => {
 
         it('NOT', () => {
             // Arrange
-            const filter = new BooleanField().createFilterOrErrorMessage(
-                'NOT (description includes d1)',
-            );
+            const filter = new BooleanField().createFilterOrErrorMessage('NOT (description includes d1)');
 
             // Act, Assert
             testWithDescription(filter, 'nothing', true);
@@ -117,36 +111,26 @@ describe('boolean query', () => {
         });
 
         it('Invalid AND', () => {
-            const filter = new BooleanField().createFilterOrErrorMessage(
-                'AND (description includes d1)',
-            );
+            const filter = new BooleanField().createFilterOrErrorMessage('AND (description includes d1)');
             expect(filter.error).toStrictEqual(
                 'malformed boolean query -- Invalid token (check the documentation for guidelines)',
             );
         });
 
         it('Invalid OR', () => {
-            const filter = new BooleanField().createFilterOrErrorMessage(
-                'OR (description includes d1)',
-            );
+            const filter = new BooleanField().createFilterOrErrorMessage('OR (description includes d1)');
             expect(filter.error).toStrictEqual(
                 'malformed boolean query -- Invalid token (check the documentation for guidelines)',
             );
         });
 
         it('Invalid sub-expression', () => {
-            const filter = new BooleanField().createFilterOrErrorMessage(
-                'NOT (description blahblah d1)',
-            );
-            expect(filter.error).toStrictEqual(
-                "couldn't parse sub-expression 'description blahblah d1'",
-            );
+            const filter = new BooleanField().createFilterOrErrorMessage('NOT (description blahblah d1)');
+            expect(filter.error).toStrictEqual("couldn't parse sub-expression 'description blahblah d1'");
         });
 
         it('Invalid sub-expression - gives error', () => {
-            const filter = new BooleanField().createFilterOrErrorMessage(
-                'NOT (happens before blahblahblah)',
-            );
+            const filter = new BooleanField().createFilterOrErrorMessage('NOT (happens before blahblahblah)');
             expect(filter.error).toStrictEqual(
                 "couldn't parse sub-expression 'happens before blahblahblah': do not understand happens date",
             );

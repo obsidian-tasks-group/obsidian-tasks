@@ -12,11 +12,7 @@ import { toMatchTaskFromLine } from '../../CustomMatchers/CustomMatchersForFilte
 
 window.moment = moment;
 
-function testDescriptionFilter(
-    filter: FilterOrErrorMessage,
-    line: string,
-    expected: boolean,
-) {
+function testDescriptionFilter(filter: FilterOrErrorMessage, line: string, expected: boolean) {
     const task = fromLine({
         line,
     });
@@ -40,9 +36,7 @@ describe('description should strip signifiers, some duplicate spaces and trailin
         // Multiple spaces in middle of tags and signifiers are removed.
         // Signifiers are removed (priority, due date etc)
         // Trailing spaces are removed.
-        expect(field.value(task)).toStrictEqual(
-            'Initial  description #tag1 #tag2/sub-tag',
-        );
+        expect(field.value(task)).toStrictEqual('Initial  description #tag1 #tag2/sub-tag');
     });
 
     it('with tag as global filter - all tags included', () => {
@@ -55,9 +49,7 @@ describe('description should strip signifiers, some duplicate spaces and trailin
 
         // Act, Assert
         // Global filter tag is removed:
-        expect(field.value(task)).toStrictEqual(
-            'Initial  description #tag1 #tag2/sub-tag',
-        );
+        expect(field.value(task)).toStrictEqual('Initial  description #tag1 #tag2/sub-tag');
 
         // Cleanup
         resetSettings();
@@ -73,9 +65,7 @@ describe('description should strip signifiers, some duplicate spaces and trailin
 
         // Act, Assert
         // Global filter tag is removed:
-        expect(field.value(task)).toStrictEqual(
-            'Initial  description #tag1 #tag2/sub-tag',
-        );
+        expect(field.value(task)).toStrictEqual('Initial  description #tag1 #tag2/sub-tag');
 
         // Cleanup
         resetSettings();
@@ -86,9 +76,7 @@ describe('description', () => {
     it('ignores the global filter when filtering', () => {
         // Arrange
         updateSettings({ globalFilter: '#task' });
-        const filter = new DescriptionField().createFilterOrErrorMessage(
-            'description includes task',
-        );
+        const filter = new DescriptionField().createFilterOrErrorMessage('description includes task');
 
         // Act, Assert
         testDescriptionFilter(
@@ -106,22 +94,12 @@ describe('description', () => {
     it('works without a global filter', () => {
         // Arrange
         updateSettings({ globalFilter: '' });
-        const filter = new DescriptionField().createFilterOrErrorMessage(
-            'description includes task',
-        );
+        const filter = new DescriptionField().createFilterOrErrorMessage('description includes task');
 
         // Act, Assert
-        testDescriptionFilter(
-            filter,
-            '- [ ] this does not include the word at all',
-            false,
-        );
+        testDescriptionFilter(filter, '- [ ] this does not include the word at all', false);
 
-        testDescriptionFilter(
-            filter,
-            '- [ ] #task this includes the word as a tag',
-            true,
-        );
+        testDescriptionFilter(filter, '- [ ] #task this includes the word as a tag', true);
 
         testDescriptionFilter(filter, '- [ ] #task this does: task', true);
 
@@ -131,32 +109,20 @@ describe('description', () => {
 
     it('works with regex', () => {
         // Arrange
-        const filter = new DescriptionField().createFilterOrErrorMessage(
-            'description regex matches /^task/',
-        );
+        const filter = new DescriptionField().createFilterOrErrorMessage('description regex matches /^task/');
 
         // Assert
-        expect(filter).not.toMatchTaskFromLine(
-            '- [ ] this does not start with the pattern',
-        );
-        expect(filter).toMatchTaskFromLine(
-            '- [ ] task does start with the pattern',
-        );
+        expect(filter).not.toMatchTaskFromLine('- [ ] this does not start with the pattern');
+        expect(filter).toMatchTaskFromLine('- [ ] task does start with the pattern');
     });
 
     it('works negating regexes', () => {
         // Arrange
-        const filter = new DescriptionField().createFilterOrErrorMessage(
-            'description regex does not match /^task/',
-        );
+        const filter = new DescriptionField().createFilterOrErrorMessage('description regex does not match /^task/');
 
         // Assert
-        expect(filter).toMatchTaskFromLine(
-            '- [ ] this does not start with the pattern',
-        );
-        expect(filter).not.toMatchTaskFromLine(
-            '- [ ] task does start with the pattern',
-        );
+        expect(filter).toMatchTaskFromLine('- [ ] this does not start with the pattern');
+        expect(filter).not.toMatchTaskFromLine('- [ ] task does start with the pattern');
     });
 });
 
@@ -197,9 +163,7 @@ describe('search description for short tags, excluding sub-tags', () => {
         // text at the end of lines.
         // However, task descriptions do not have end-of-line characters,
         // so it does not match a tag at the end of the line.
-        const filter = new DescriptionField().createFilterOrErrorMessage(
-            String.raw`description regex matches /#t\s/i`,
-        );
+        const filter = new DescriptionField().createFilterOrErrorMessage(String.raw`description regex matches /#t\s/i`);
 
         // Assert
         expect(filter).toMatchTaskFromLine('- [ ] #t Do stuff');
@@ -218,9 +182,7 @@ describe('search description for short tags, excluding sub-tags', () => {
         // Arrange
         // $ is an end-of-input character.
         // So this search will find the given tag at the end of any task description
-        const filter = new DescriptionField().createFilterOrErrorMessage(
-            'description regex matches /#t$/i',
-        );
+        const filter = new DescriptionField().createFilterOrErrorMessage('description regex matches /#t$/i');
 
         // Assert
         expect(filter).toMatchTaskFromLine('- [ ] Do stuff #t');
@@ -260,9 +222,7 @@ describe('search description for sub-tags', () => {
         );
 
         // Assert
-        expect(filter).toMatchTaskFromLine(
-            '- [ ] Do stuff #tag/subtag3/subsubtag5',
-        );
+        expect(filter).toMatchTaskFromLine('- [ ] Do stuff #tag/subtag3/subsubtag5');
         expect(filter).not.toMatchTaskFromLine('- [ ] Do stuff #tag');
     });
 });

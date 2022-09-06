@@ -34,15 +34,7 @@ export class Cache {
      */
     private loadedAfterFirstResolve: boolean;
 
-    constructor({
-        metadataCache,
-        vault,
-        events,
-    }: {
-        metadataCache: MetadataCache;
-        vault: Vault;
-        events: TasksEvents;
-    }) {
+    constructor({ metadataCache, vault, events }: { metadataCache: MetadataCache; vault: Vault; events: TasksEvents }) {
         this.metadataCache = metadataCache;
         this.metadataCacheEventReferences = [];
         this.vault = vault;
@@ -93,84 +85,69 @@ export class Cache {
     }
 
     private subscribeToCache(): void {
-        const resolvedEventeReference = this.metadataCache.on(
-            'resolved',
-            async () => {
-                // Resolved fires on every change.
-                // We only want to initialize if we haven't already.
-                if (!this.loadedAfterFirstResolve) {
-                    this.loadedAfterFirstResolve = true;
-                    this.loadVault();
-                }
-            },
-        );
+        const resolvedEventeReference = this.metadataCache.on('resolved', async () => {
+            // Resolved fires on every change.
+            // We only want to initialize if we haven't already.
+            if (!this.loadedAfterFirstResolve) {
+                this.loadedAfterFirstResolve = true;
+                this.loadVault();
+            }
+        });
         this.metadataCacheEventReferences.push(resolvedEventeReference);
 
         // Does not fire when starting up obsidian and only works for changes.
-        const changedEventReference = this.metadataCache.on(
-            'changed',
-            (file: TFile) => {
-                this.tasksMutex.runExclusive(() => {
-                    this.indexFile(file);
-                });
-            },
-        );
+        const changedEventReference = this.metadataCache.on('changed', (file: TFile) => {
+            this.tasksMutex.runExclusive(() => {
+                this.indexFile(file);
+            });
+        });
         this.metadataCacheEventReferences.push(changedEventReference);
     }
 
     private subscribeToVault(): void {
-        const createdEventReference = this.vault.on(
-            'create',
-            (file: TAbstractFile) => {
-                if (!(file instanceof TFile)) {
-                    return;
-                }
+        const createdEventReference = this.vault.on('create', (file: TAbstractFile) => {
+            if (!(file instanceof TFile)) {
+                return;
+            }
 
-                this.tasksMutex.runExclusive(() => {
-                    this.indexFile(file);
-                });
-            },
-        );
+            this.tasksMutex.runExclusive(() => {
+                this.indexFile(file);
+            });
+        });
         this.vaultEventReferences.push(createdEventReference);
 
-        const deletedEventReference = this.vault.on(
-            'delete',
-            (file: TAbstractFile) => {
-                if (!(file instanceof TFile)) {
-                    return;
-                }
+        const deletedEventReference = this.vault.on('delete', (file: TAbstractFile) => {
+            if (!(file instanceof TFile)) {
+                return;
+            }
 
-                this.tasksMutex.runExclusive(() => {
-                    this.tasks = this.tasks.filter((task: Task) => {
-                        return task.path !== file.path;
-                    });
-
-                    this.notifySubscribers();
+            this.tasksMutex.runExclusive(() => {
+                this.tasks = this.tasks.filter((task: Task) => {
+                    return task.path !== file.path;
                 });
-            },
-        );
+
+                this.notifySubscribers();
+            });
+        });
         this.vaultEventReferences.push(deletedEventReference);
 
-        const renamedEventReference = this.vault.on(
-            'rename',
-            (file: TAbstractFile, oldPath: string) => {
-                if (!(file instanceof TFile)) {
-                    return;
-                }
+        const renamedEventReference = this.vault.on('rename', (file: TAbstractFile, oldPath: string) => {
+            if (!(file instanceof TFile)) {
+                return;
+            }
 
-                this.tasksMutex.runExclusive(() => {
-                    this.tasks = this.tasks.map((task: Task): Task => {
-                        if (task.path === oldPath) {
-                            return new Task({ ...task, path: file.path });
-                        } else {
-                            return task;
-                        }
-                    });
-
-                    this.notifySubscribers();
+            this.tasksMutex.runExclusive(() => {
+                this.tasks = this.tasks.map((task: Task): Task => {
+                    if (task.path === oldPath) {
+                        return new Task({ ...task, path: file.path });
+                    } else {
+                        return task;
+                    }
                 });
-            },
-        );
+
+                this.notifySubscribers();
+            });
+        });
         this.vaultEventReferences.push(renamedEventReference);
     }
 
@@ -213,12 +190,7 @@ export class Cache {
         if (listItems !== undefined) {
             // Only read the file and process for tasks if there are list items.
             const fileContent = await this.vault.cachedRead(file);
-            newTasks = Cache.getTasksFromFileContent(
-                fileContent,
-                listItems,
-                fileCache,
-                file,
-            );
+            newTasks = Cache.getTasksFromFileContent(fileContent, listItems, fileCache, file);
         }
 
         // If there are no changes in any of the tasks, there's
@@ -266,17 +238,10 @@ export class Cache {
         let sectionIndex = 0;
         for (const listItem of listItems) {
             if (listItem.task !== undefined) {
-                if (
-                    currentSection === null ||
-                    currentSection.position.end.line <
-                        listItem.position.start.line
-                ) {
+                if (currentSection === null || currentSection.position.end.line < listItem.position.start.line) {
                     // We went past the current section (or this is the first task).
                     // Find the section that is relevant for this task and the following of the same section.
-                    currentSection = Cache.getSection(
-                        listItem.position.start.line,
-                        fileCache.sections,
-                    );
+                    currentSection = Cache.getSection(listItem.position.start.line, fileCache.sections);
                     sectionIndex = 0;
                 }
 
@@ -291,10 +256,7 @@ export class Cache {
                     path: file.path,
                     sectionStart: currentSection.position.start.line,
                     sectionIndex,
-                    precedingHeader: Cache.getPrecedingHeader(
-                        listItem.position.start.line,
-                        fileCache.headings,
-                    ),
+                    precedingHeader: Cache.getPrecedingHeader(listItem.position.start.line, fileCache.headings),
                 });
 
                 if (task !== null) {
@@ -307,19 +269,13 @@ export class Cache {
         return tasks;
     }
 
-    private static getSection(
-        lineNumberTask: number,
-        sections: SectionCache[] | undefined,
-    ): SectionCache | null {
+    private static getSection(lineNumberTask: number, sections: SectionCache[] | undefined): SectionCache | null {
         if (sections === undefined) {
             return null;
         }
 
         for (const section of sections) {
-            if (
-                section.position.start.line <= lineNumberTask &&
-                section.position.end.line >= lineNumberTask
-            ) {
+            if (section.position.start.line <= lineNumberTask && section.position.end.line >= lineNumberTask) {
                 return section;
             }
         }
@@ -327,10 +283,7 @@ export class Cache {
         return null;
     }
 
-    private static getPrecedingHeader(
-        lineNumberTask: number,
-        headings: HeadingCache[] | undefined,
-    ): string | null {
+    private static getPrecedingHeader(lineNumberTask: number, headings: HeadingCache[] | undefined): string | null {
         if (headings === undefined) {
             return null;
         }

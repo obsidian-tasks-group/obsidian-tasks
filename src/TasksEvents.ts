@@ -20,9 +20,7 @@ export class TasksEvents {
         this.obsidianEvents = obsidianEvents;
     }
 
-    public onCacheUpdate(
-        handler: (cacheData: CacheUpdateData) => void,
-    ): EventRef {
+    public onCacheUpdate(handler: (cacheData: CacheUpdateData) => void): EventRef {
         return this.obsidianEvents.on(Event.CacheUpdate, handler);
     }
 
@@ -30,15 +28,11 @@ export class TasksEvents {
         this.obsidianEvents.trigger(Event.CacheUpdate, cacheData);
     }
 
-    public onRequestCacheUpdate(
-        handler: (fn: (cacheData: CacheUpdateData) => void) => void,
-    ): EventRef {
+    public onRequestCacheUpdate(handler: (fn: (cacheData: CacheUpdateData) => void) => void): EventRef {
         return this.obsidianEvents.on(Event.RequestCacheUpdate, handler);
     }
 
-    public triggerRequestCacheUpdate(
-        fn: (cacheData: CacheUpdateData) => void,
-    ): void {
+    public triggerRequestCacheUpdate(fn: (cacheData: CacheUpdateData) => void): void {
         this.obsidianEvents.trigger(Event.RequestCacheUpdate, fn);
     }
 

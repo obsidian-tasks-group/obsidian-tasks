@@ -3,10 +3,7 @@
  */
 
 import moment from 'moment';
-import {
-    calculateCursorOffset,
-    toggleLine,
-} from '../../src/Commands/ToggleDone';
+import { calculateCursorOffset, toggleLine } from '../../src/Commands/ToggleDone';
 
 window.moment = moment;
 
@@ -20,10 +17,7 @@ window.moment = moment;
  * @param inputWithCursorMark
  * @param expectedWithCursorMark
  */
-function testToggleLine(
-    inputWithCursorMark: string,
-    expectedWithCursorMark: string,
-) {
+function testToggleLine(inputWithCursorMark: string, expectedWithCursorMark: string) {
     const cursorMarker = '|';
     const cursorMarkerRegex = /\|/g;
 
@@ -64,18 +58,12 @@ function testToggleLineForOutOfRangeCursorPositions(
 ) {
     const result = toggleLine(input, 'x.md');
     expect(result).toStrictEqual(expected);
-    const actualCursorOffset = calculateCursorOffset(
-        initialCursorOffset,
-        input,
-        result,
-    );
+    const actualCursorOffset = calculateCursorOffset(initialCursorOffset, input, result);
     expect(actualCursorOffset).toEqual(expectedCursorOffset);
 }
 
 describe('ToggleDone', () => {
-    const todaySpy = jest
-        .spyOn(Date, 'now')
-        .mockReturnValue(moment('2022-09-04').valueOf());
+    const todaySpy = jest.spyOn(Date, 'now').mockReturnValue(moment('2022-09-04').valueOf());
 
     // The | (pipe) indicates the calculated position where the cursor should be displayed.
     // Note that prior to the #1103 fix, this position was sometimes ignored.
@@ -94,10 +82,7 @@ describe('ToggleDone', () => {
         testToggleLine('- [ ] |', '- [x] | ✅ 2022-09-04');
 
         // Issue #449 - cursor jumped 13 characters to the right on completion
-        testToggleLine(
-            '- [ ] I have a |proper description',
-            '- [x] I have a |proper description ✅ 2022-09-04',
-        );
+        testToggleLine('- [ ] I have a |proper description', '- [x] I have a |proper description ✅ 2022-09-04');
     });
 
     it('should un-complete a completed task', () => {
@@ -105,10 +90,7 @@ describe('ToggleDone', () => {
         testToggleLine('- [x]  ✅ 2022-09-04|', '- [ ] |');
 
         // Issue #449 - cursor jumped 13 characters to the left on un-completion
-        testToggleLine(
-            '- [x] I have a proper description| ✅ 2022-09-04',
-            '- [ ] I have a proper description|',
-        );
+        testToggleLine('- [x] I have a proper description| ✅ 2022-09-04', '- [ ] I have a proper description|');
     });
 
     it('should complete a recurring task', () => {

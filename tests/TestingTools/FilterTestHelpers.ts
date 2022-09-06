@@ -11,11 +11,7 @@ import type { TaskBuilder } from './TaskBuilder';
  *                          new TaskBuilder().startDate('2022-04-15')
  * @param expected true if the task should match the filter, and false otherwise.
  */
-export function testFilter(
-    filter: FilterOrErrorMessage,
-    taskBuilder: TaskBuilder,
-    expected: boolean,
-) {
+export function testFilter(filter: FilterOrErrorMessage, taskBuilder: TaskBuilder, expected: boolean) {
     const task = taskBuilder.build();
     testTaskFilter(filter, task, expected);
 }
@@ -27,11 +23,7 @@ export function testFilter(
  * @param task - the Task to filter.
  * @param expected true if the task should match the filter, and false otherwise.
  */
-export function testTaskFilter(
-    filter: FilterOrErrorMessage,
-    task: Task,
-    expected: boolean,
-) {
+export function testTaskFilter(filter: FilterOrErrorMessage, task: Task, expected: boolean) {
     expect(filter.filter).toBeDefined();
     expect(filter.error).toBeUndefined();
     expect(filter.filter!(task)).toEqual(expected);
@@ -48,11 +40,7 @@ export function testTaskFilter(
  * @param task - the Task to filter
  * @param expected - true if the task should match the filter, and false otherwise.
  */
-export function testTaskFilterViaQuery(
-    filter: string,
-    task: Task,
-    expected: boolean,
-) {
+export function testTaskFilterViaQuery(filter: string, task: Task, expected: boolean) {
     // Arrange
     const query = new Query({ source: filter });
 
@@ -101,8 +89,6 @@ export function shouldSupportFiltering(
     });
 
     // Assert
-    const filteredTaskLines = filteredTasks.map(
-        (task) => `- [ ] ${task.toString()}`,
-    );
+    const filteredTaskLines = filteredTasks.map((task) => `- [ ] ${task.toString()}`);
     expect(filteredTaskLines).toMatchObject(expectedResult);
 }

@@ -105,9 +105,7 @@ export class TaskBuilder {
         return this;
     }
 
-    public originalStatusCharacter(
-        originalStatusCharacter: string,
-    ): TaskBuilder {
+    public originalStatusCharacter(originalStatusCharacter: string): TaskBuilder {
         this._originalStatusCharacter = originalStatusCharacter;
         return this;
     }

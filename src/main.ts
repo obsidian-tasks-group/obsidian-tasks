@@ -37,9 +37,7 @@ export default class TasksPlugin extends Plugin {
         this.queryRenderer = new QueryRenderer({ plugin: this, events });
 
         this.registerEditorExtension(newLivePreviewExtension());
-        this.registerEditorSuggest(
-            new EditorSuggestor(this.app, getSettings()),
-        );
+        this.registerEditorSuggest(new EditorSuggestor(this.app, getSettings()));
         new Commands({ plugin: this });
     }
 

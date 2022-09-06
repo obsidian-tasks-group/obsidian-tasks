@@ -65,10 +65,7 @@ export class IntermediateTaskGroups {
     /**
      * Returns a grouping tree that groups the passed @tasks by the passed @groupings.
      */
-    private buildGroupingTree(
-        groupings: Grouping[],
-        tasks: Task[],
-    ): TaskGroupingTreeNode {
+    private buildGroupingTree(groupings: Grouping[], tasks: Task[]): TaskGroupingTreeNode {
         // The tree is build layer by layer, starting from the root.
         // At every level, we iterate on the nodes of that level to generate
         // the next one using the next grouping.
@@ -81,10 +78,7 @@ export class IntermediateTaskGroups {
             const nextTreeLevel = [];
             for (const currentTreeNode of currentTreeLevel) {
                 for (const task of currentTreeNode.values) {
-                    const groupNames = Group.getGroupNamesForTask(
-                        grouping.property,
-                        task,
-                    );
+                    const groupNames = Group.getGroupNamesForTask(grouping.property, task);
                     for (const groupName of groupNames) {
                         let child = currentTreeNode.children.get(groupName);
                         if (child === undefined) {
@@ -106,8 +100,6 @@ export class IntermediateTaskGroups {
         // groups.keys() will initially be in the order the entries were added,
         // so effectively random.
         // Return a duplicate map, with the keys (that is, group names) sorted in alphabetical order:
-        return new IntermediateTaskGroupsStorage(
-            [...this.groups.entries()].sort(),
-        );
+        return new IntermediateTaskGroupsStorage([...this.groups.entries()].sort());
     }
 }

@@ -76,10 +76,7 @@ export const toggleLine = (line: string, path: string) => {
             // Toggle the status of the checklist item.
             const statusString = regexMatch[2].toLowerCase(); // Note for future: I do not think this toLowerCase is necessary and there is an issue about how it breaks some theme or snippet.
             const newStatusString = statusString === ' ' ? 'x' : ' ';
-            toggledLine = line.replace(
-                Task.taskRegex,
-                `$1- [${newStatusString}] $3`,
-            );
+            toggledLine = line.replace(Task.taskRegex, `$1- [${newStatusString}] $3`);
         } else if (Task.listItemRegex.test(line)) {
             // Convert the list item to a checklist item.
             toggledLine = line.replace(Task.listItemRegex, '$1$2 [ ]');
@@ -95,9 +92,7 @@ export const toggleLine = (line: string, path: string) => {
 const toggleTask = (task: Task): string => {
     // Toggling a recurring task will produce two Tasks
     const toggledTasks = task.toggle();
-    const serialized = toggledTasks
-        .map((task: Task) => task.toFileLineString())
-        .join('\n');
+    const serialized = toggledTasks.map((task: Task) => task.toFileLineString()).join('\n');
 
     return serialized;
 };
@@ -113,11 +108,7 @@ const toggleTask = (task: Task): string => {
 
 So cursor should be reset if 0, which includes being moved to new end if got shorter. Then might need to move right 2 or 3.
 */
-export const calculateCursorOffset = (
-    origCursorCh: number,
-    line: string,
-    toggledLine: string,
-) => {
+export const calculateCursorOffset = (origCursorCh: number, line: string, toggledLine: string) => {
     let newLineLen = toggledLine.length;
     if (newLineLen <= line.length) {
         // Line got shorter or stayed same length. Reset cursor to original position, capped at end of line.
@@ -126,10 +117,7 @@ export const calculateCursorOffset = (
 
     // Special-case for done-date append, fixes #449
     const doneDateLength = ' ✅ YYYY-MM-DD'.length;
-    if (
-        toggledLine.match(Task.doneDateRegex) &&
-        newLineLen - line.length >= doneDateLength
-    ) {
+    if (toggledLine.match(Task.doneDateRegex) && newLineLen - line.length >= doneDateLength) {
         newLineLen -= doneDateLength;
     }
 

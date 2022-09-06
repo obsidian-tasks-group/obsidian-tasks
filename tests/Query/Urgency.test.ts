@@ -21,15 +21,9 @@ function testUrgency(builder: TaskBuilder, expectedScore: number) {
  * @param builder
  * @param expectedScore
  */
-function testUrgencyOnDate(
-    today: string,
-    builder: TaskBuilder,
-    expectedScore: number,
-) {
+function testUrgencyOnDate(today: string, builder: TaskBuilder, expectedScore: number) {
     // TODO Remove this duplication from Task.test.ts
-    const todaySpy = jest
-        .spyOn(Date, 'now')
-        .mockReturnValue(moment(today).valueOf());
+    const todaySpy = jest.spyOn(Date, 'now').mockReturnValue(moment(today).valueOf());
 
     testUrgency(builder, expectedScore);
 
@@ -66,11 +60,7 @@ function testUrgencyForDueDate(daysToDate: number, expectedScore: number) {
     const today = '2022-10-31';
     const dueAsString = calculateRelativeDate(today, daysToDate);
 
-    testUrgencyOnDate(
-        today,
-        lowPriorityBuilder().dueDate(dueAsString),
-        expectedScore,
-    );
+    testUrgencyOnDate(today, lowPriorityBuilder().dueDate(dueAsString), expectedScore);
 }
 
 describe('urgency - due date component', () => {
@@ -103,18 +93,11 @@ describe('urgency - due date component', () => {
 // -----------------------------------------------------------------
 // Scheduled Date tests
 
-function testUrgencyForScheduledDate(
-    daysToDate: number,
-    expectedScore: number,
-) {
+function testUrgencyForScheduledDate(daysToDate: number, expectedScore: number) {
     const today = '2029-12-31';
     const scheduledAsString = calculateRelativeDate(today, daysToDate);
 
-    testUrgencyOnDate(
-        today,
-        lowPriorityBuilder().scheduledDate(scheduledAsString),
-        expectedScore,
-    );
+    testUrgencyOnDate(today, lowPriorityBuilder().scheduledDate(scheduledAsString), expectedScore);
 }
 
 describe('urgency - scheduled date component', () => {
@@ -142,11 +125,7 @@ function testUrgencyForStartDate(daysToDate: number, expectedScore: number) {
     const today = '1997-03-27';
     const startAsString = calculateRelativeDate(today, daysToDate);
 
-    testUrgencyOnDate(
-        today,
-        lowPriorityBuilder().startDate(startAsString),
-        expectedScore,
-    );
+    testUrgencyOnDate(today, lowPriorityBuilder().startDate(startAsString), expectedScore);
 }
 
 describe('urgency - start date component', () => {

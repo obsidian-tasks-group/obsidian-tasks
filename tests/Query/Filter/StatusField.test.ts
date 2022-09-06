@@ -4,11 +4,7 @@ import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { testFilter } from '../../TestingTools/FilterTestHelpers';
 import { Status } from '../../../src/Task';
 
-function testStatusFilter(
-    filter: FilterOrErrorMessage,
-    status: Status,
-    expected: boolean,
-) {
+function testStatusFilter(filter: FilterOrErrorMessage, status: Status, expected: boolean) {
     const builder = new TaskBuilder();
     testFilter(filter, builder.status(status), expected);
 }
