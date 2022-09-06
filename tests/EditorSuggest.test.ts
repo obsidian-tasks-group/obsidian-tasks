@@ -15,11 +15,7 @@ describe('auto-complete', () => {
         // Arrange
         const originalSettings = getSettings();
         const line = '- [ ] ';
-        const suggestions: SuggestInfo[] = buildSuggestions(
-            line,
-            5,
-            originalSettings,
-        );
+        const suggestions: SuggestInfo[] = buildSuggestions(line, 5, originalSettings);
         expect(suggestions).toEqual([
             { suggestionType: 'empty', displayText: '⏎', appendText: '\n' },
             { displayText: '📅 due date', appendText: '📅 ' },
@@ -34,11 +30,7 @@ describe('auto-complete', () => {
         // Arrange
         const originalSettings = getSettings();
         const line = '- [ ] some task 📅';
-        const suggestions: SuggestInfo[] = buildSuggestions(
-            line,
-            17,
-            originalSettings,
-        );
+        const suggestions: SuggestInfo[] = buildSuggestions(line, 17, originalSettings);
         expect(suggestions[0].displayText).toContain('today');
         expect(suggestions[1].displayText).toContain('tomorrow');
         expect(suggestions.length).toEqual(6);
@@ -48,11 +40,7 @@ describe('auto-complete', () => {
         // Arrange
         const originalSettings = getSettings();
         const line = '- [ ] some task 📅 to';
-        const suggestions: SuggestInfo[] = buildSuggestions(
-            line,
-            20,
-            originalSettings,
-        );
+        const suggestions: SuggestInfo[] = buildSuggestions(line, 20, originalSettings);
         expect(suggestions[0].displayText).toContain('today');
         expect(suggestions[1].displayText).toContain('tomorrow');
     });
@@ -61,11 +49,7 @@ describe('auto-complete', () => {
         // Arrange
         const originalSettings = getSettings();
         const line = '- [ ] some task 🔁';
-        const suggestions: SuggestInfo[] = buildSuggestions(
-            line,
-            17,
-            originalSettings,
-        );
+        const suggestions: SuggestInfo[] = buildSuggestions(line, 17, originalSettings);
         expect(suggestions[0].displayText).toEqual('every');
         expect(suggestions[1].displayText).toEqual('every day');
         expect(suggestions[2].displayText).toEqual('every week');
@@ -75,11 +59,7 @@ describe('auto-complete', () => {
         // Arrange
         const originalSettings = getSettings();
         const line = '- [ ] some task 🔁 every w';
-        const suggestions: SuggestInfo[] = buildSuggestions(
-            line,
-            25,
-            originalSettings,
-        );
+        const suggestions: SuggestInfo[] = buildSuggestions(line, 25, originalSettings);
         expect(suggestions[0].displayText).toEqual('every week');
         expect(suggestions[1].displayText).toEqual('every week on Sunday');
         expect(suggestions[2].displayText).toEqual('every week on Monday');
@@ -90,11 +70,7 @@ describe('auto-complete', () => {
         const originalSettings = getSettings();
         originalSettings.autoSuggestMinMatch = 2;
         let line = '- [ ] some task 🔁 e';
-        let suggestions: SuggestInfo[] = buildSuggestions(
-            line,
-            19,
-            originalSettings,
-        );
+        let suggestions: SuggestInfo[] = buildSuggestions(line, 19, originalSettings);
         expect(suggestions.length).toEqual(0);
         line = '- [ ] some task 🔁 ev';
         suggestions = buildSuggestions(line, 20, originalSettings);
@@ -127,11 +103,7 @@ describe('auto-complete', () => {
         const allSuggestions: string[] = [];
         for (const line of lines) {
             // allSuggestions.push(`| ${line} | |`);
-            const suggestions: SuggestInfo[] = buildSuggestions(
-                line,
-                line.length - 1,
-                originalSettings,
-            );
+            const suggestions: SuggestInfo[] = buildSuggestions(line, line.length - 1, originalSettings);
             for (const suggestion of suggestions) {
                 // The 'new line' replacement adds a trailing space at the end of a line,
                 // which causes auto-formatting to then make the test fail.

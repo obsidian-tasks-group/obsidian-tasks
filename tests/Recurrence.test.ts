@@ -39,21 +39,15 @@ describe('identicalTo', () => {
 
     it('differing only in "when done"', () => {
         const weekly = new RecurrenceBuilder().rule('every week').build();
-        const weeklyWhenDone = new RecurrenceBuilder()
-            .rule('every week when done')
-            .build();
+        const weeklyWhenDone = new RecurrenceBuilder().rule('every week when done').build();
         expect(weekly?.identicalTo(weeklyWhenDone)).toBe(false);
     });
 
     it('differing only in startDate', () => {
         // Two different dates
-        const date1Recurrence = new RecurrenceBuilder()
-            .startDate('2021-10-21')
-            .build();
+        const date1Recurrence = new RecurrenceBuilder().startDate('2021-10-21').build();
 
-        const date2Recurrence = new RecurrenceBuilder()
-            .startDate('1998-03-13')
-            .build();
+        const date2Recurrence = new RecurrenceBuilder().startDate('1998-03-13').build();
 
         const nullRecurrence = new RecurrenceBuilder().startDate(null).build();
 
@@ -66,13 +60,9 @@ describe('identicalTo', () => {
     it('differing only in scheduledDate', () => {
         // Two different dates
         // No need to replicate the null checks in startDate
-        const date1Recurrence = new RecurrenceBuilder()
-            .scheduledDate('2021-10-21')
-            .build();
+        const date1Recurrence = new RecurrenceBuilder().scheduledDate('2021-10-21').build();
 
-        const date2Recurrence = new RecurrenceBuilder()
-            .scheduledDate('1998-03-13')
-            .build();
+        const date2Recurrence = new RecurrenceBuilder().scheduledDate('1998-03-13').build();
 
         expect(date1Recurrence?.identicalTo(date1Recurrence)).toBe(true);
         expect(date1Recurrence?.identicalTo(date2Recurrence)).toBe(false);
@@ -81,13 +71,9 @@ describe('identicalTo', () => {
     it('differing only in dueDate', () => {
         // Two different dates
         // No need to replicate the null checks in startDate
-        const date1Recurrence = new RecurrenceBuilder()
-            .dueDate('2021-10-21')
-            .build();
+        const date1Recurrence = new RecurrenceBuilder().dueDate('2021-10-21').build();
 
-        const date2Recurrence = new RecurrenceBuilder()
-            .dueDate('1998-03-13')
-            .build();
+        const date2Recurrence = new RecurrenceBuilder().dueDate('1998-03-13').build();
 
         expect(date1Recurrence?.identicalTo(date1Recurrence)).toBe(true);
         expect(date1Recurrence?.identicalTo(date2Recurrence)).toBe(false);

@@ -20,18 +20,10 @@ export class SubstringMatcher extends IStringMatcher {
     }
 
     public matches(stringToSearch: string): boolean {
-        return SubstringMatcher.stringIncludesCaseInsensitive(
-            stringToSearch,
-            this.stringToFind,
-        );
+        return SubstringMatcher.stringIncludesCaseInsensitive(stringToSearch, this.stringToFind);
     }
 
-    public static stringIncludesCaseInsensitive(
-        haystack: string,
-        needle: string,
-    ): boolean {
-        return haystack
-            .toLocaleLowerCase()
-            .includes(needle.toLocaleLowerCase());
+    public static stringIncludesCaseInsensitive(haystack: string, needle: string): boolean {
+        return haystack.toLocaleLowerCase().includes(needle.toLocaleLowerCase());
     }
 }

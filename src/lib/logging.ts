@@ -135,9 +135,7 @@ export class LogManager extends EventEmitter2 {
         if (this.consoleLoggerRegistered) return this;
 
         this.onLogEntry((logEntry) => {
-            let msg = `[${moment().format('YYYYMMDDHHmmss')}][${
-                logEntry.level
-            }][${logEntry.module}]`;
+            let msg = `[${moment().format('YYYYMMDDHHmmss')}][${logEntry.level}][${logEntry.module}]`;
 
             if (logEntry.traceId) {
                 msg += `[${logEntry.traceId}]`;
@@ -214,8 +212,7 @@ export class Logger {
      * @param minLevel
      */
     private levelToInt(minLevel: string): number {
-        if (minLevel.toLowerCase() in this.levels)
-            return this.levels[minLevel.toLowerCase()];
+        if (minLevel.toLowerCase() in this.levels) return this.levels[minLevel.toLowerCase()];
         else return 99;
     }
 
@@ -273,12 +270,7 @@ export class Logger {
      * @param logLevel
      * @param message
      */
-    public logWithId(
-        logLevel: string,
-        traceId: string,
-        message: string,
-        objects?: any,
-    ): void {
+    public logWithId(logLevel: string, traceId: string, message: string, objects?: any): void {
         const level = this.levelToInt(logLevel);
         if (level < this.minLevel) return;
 
@@ -324,11 +316,7 @@ const timingMap: TimingMap = {};
  * @export
  * @return {*}
  */
-export const logCall = (
-    target: Object,
-    propertyKey: string,
-    descriptor: PropertyDescriptor,
-) => {
+export const logCall = (target: Object, propertyKey: string, descriptor: PropertyDescriptor) => {
     const originalMethod = descriptor.value;
     //const logger = logging.getLogger('taskssql.perf');
     descriptor.value = function (...args: any[]) {
@@ -363,11 +351,7 @@ export const logCall = (
 };
 
 export function logCallDetails() {
-    return function (
-        target: any,
-        propertyKey: string,
-        descriptor: PropertyDescriptor,
-    ) {
+    return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
         const originalMethod = descriptor.value;
         const logger = logging.getLogger('taskssql');
 

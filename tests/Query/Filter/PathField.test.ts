@@ -2,16 +2,9 @@ import { PathField } from '../../../src/Query/Filter/PathField';
 import type { FilterOrErrorMessage } from '../../../src/Query/Filter/Filter';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { testFilter } from '../../TestingTools/FilterTestHelpers';
-import {
-    toBeValid,
-    toMatchTaskWithPath,
-} from '../../CustomMatchers/CustomMatchersForFilters';
+import { toBeValid, toMatchTaskWithPath } from '../../CustomMatchers/CustomMatchersForFilters';
 
-function testTaskFilterForTaskWithPath(
-    filter: FilterOrErrorMessage,
-    path: string,
-    expected: boolean,
-) {
+function testTaskFilterForTaskWithPath(filter: FilterOrErrorMessage, path: string, expected: boolean) {
     const builder = new TaskBuilder();
     testFilter(filter, builder.path(path), expected);
 }
@@ -27,9 +20,7 @@ expect.extend({
 describe('path', () => {
     it('by path (includes)', () => {
         // Arrange
-        const filter = new PathField().createFilterOrErrorMessage(
-            'path includes some/path',
-        );
+        const filter = new PathField().createFilterOrErrorMessage('path includes some/path');
 
         // Assert
         testTaskFilterForTaskWithPath(filter, '', false);
@@ -40,9 +31,7 @@ describe('path', () => {
 
     it('by path (does not include)', () => {
         // Arrange
-        const filter = new PathField().createFilterOrErrorMessage(
-            'path does not include some/path',
-        );
+        const filter = new PathField().createFilterOrErrorMessage('path does not include some/path');
 
         // Assert
         testTaskFilterForTaskWithPath(filter, '', true);
@@ -52,9 +41,7 @@ describe('path', () => {
 
     it('by path (regex matches)', () => {
         // Arrange
-        const filter = new PathField().createFilterOrErrorMessage(
-            String.raw`path regex matches /w.bble/`,
-        );
+        const filter = new PathField().createFilterOrErrorMessage(String.raw`path regex matches /w.bble/`);
 
         // Assert
         expect(filter).toBeValid();
@@ -67,9 +54,7 @@ describe('path', () => {
 
     it('by path (regex matches) with flags', () => {
         // Arrange
-        const filter = new PathField().createFilterOrErrorMessage(
-            String.raw`path regex matches /w.bble/i`,
-        );
+        const filter = new PathField().createFilterOrErrorMessage(String.raw`path regex matches /w.bble/i`);
 
         // Assert
         expect(filter).toBeValid();
@@ -82,9 +67,7 @@ describe('path', () => {
 
     it('by path (regex does not match)', () => {
         // Arrange
-        const filter = new PathField().createFilterOrErrorMessage(
-            String.raw`path regex does not match /w.bble/`,
-        );
+        const filter = new PathField().createFilterOrErrorMessage(String.raw`path regex does not match /w.bble/`);
 
         // Assert
         expect(filter).toBeValid();
@@ -97,10 +80,9 @@ describe('path', () => {
 });
 
 describe('invalid unescaped slash should give helpful error text and not search', () => {
-    const filterWithUnescapedSlashes =
-        new PathField().createFilterOrErrorMessage(
-            String.raw`path regex matches /a/b/c/d/`,
-        );
+    const filterWithUnescapedSlashes = new PathField().createFilterOrErrorMessage(
+        String.raw`path regex matches /a/b/c/d/`,
+    );
 
     // This test demonstrates the issue logged in
     // https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1037

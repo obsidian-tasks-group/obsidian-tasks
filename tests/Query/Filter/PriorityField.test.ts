@@ -3,15 +3,9 @@ import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { testFilter } from '../../TestingTools/FilterTestHelpers';
 import { PriorityField } from '../../../src/Query/Filter/PriorityField';
 
-function testTaskFilterForTaskWithPriority(
-    filter: string,
-    priority: Priority,
-    expected: boolean,
-) {
+function testTaskFilterForTaskWithPriority(filter: string, priority: Priority, expected: boolean) {
     const builder = new TaskBuilder();
-    const filterOrError = new PriorityField().createFilterOrErrorMessage(
-        filter,
-    );
+    const filterOrError = new PriorityField().createFilterOrErrorMessage(filter);
     testFilter(filterOrError, builder.priority(priority), expected);
 }
 
@@ -70,9 +64,7 @@ describe('priority below', () => {
 describe('priority error cases', () => {
     it('priority is something', () => {
         const field = new PriorityField();
-        const filter = field.createFilterOrErrorMessage(
-            'priority is no-such-priority',
-        );
+        const filter = field.createFilterOrErrorMessage('priority is no-such-priority');
         expect(filter.filter).toBeUndefined();
         expect(filter.error).toBe('do not understand query filter (priority)');
     });

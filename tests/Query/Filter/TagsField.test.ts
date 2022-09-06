@@ -10,17 +10,13 @@ expect.extend({
 
 describe('tag/tags', () => {
     it('should honour any # in query', () => {
-        const filter = new TagsField().createFilterOrErrorMessage(
-            'tags include #home',
-        );
+        const filter = new TagsField().createFilterOrErrorMessage('tags include #home');
         expect(filter).toMatchTaskFromLine('- [ ] stuff #home');
         expect(filter).not.toMatchTaskFromLine('- [ ] stuff #location/home');
     });
 
     it('should match any position if no # in query', () => {
-        const filter = new TagsField().createFilterOrErrorMessage(
-            'tags include home',
-        );
+        const filter = new TagsField().createFilterOrErrorMessage('tags include home');
         expect(filter).toMatchTaskFromLine('- [ ] stuff #home');
         expect(filter).toMatchTaskFromLine('- [ ] stuff #location/home');
     });
@@ -138,9 +134,7 @@ describe('tag/tags', () => {
                 {
                     filters: ['tags include TopLevelItem'],
                     tasks: defaultTasksWithTags,
-                    expectedResult: [
-                        '- [ ] #task something to do #later #work #TopLevelItem/sub',
-                    ],
+                    expectedResult: ['- [ ] #task something to do #later #work #TopLevelItem/sub'],
                 },
             ],
             [
@@ -213,11 +207,7 @@ describe('tag/tags', () => {
 
         it('should filter tags without globalFilter by tag presence when there is no global filter', () => {
             // Act, Assert
-            shouldSupportFiltering(
-                ['tags include task'],
-                defaultTasksWithTags,
-                defaultTasksWithTags,
-            );
+            shouldSupportFiltering(['tags include task'], defaultTasksWithTags, defaultTasksWithTags);
         });
 
         it('should ignore the tag which is the global filter', () => {

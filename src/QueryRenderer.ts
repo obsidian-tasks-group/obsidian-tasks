@@ -1,10 +1,4 @@
-import {
-    App,
-    MarkdownRenderChild,
-    MarkdownRenderer,
-    Plugin,
-    TFile,
-} from 'obsidian';
+import { App, MarkdownRenderChild, MarkdownRenderer, Plugin, TFile } from 'obsidian';
 import type { EventRef, MarkdownPostProcessorContext } from 'obsidian';
 
 import type { IQuery } from './IQuery';
@@ -24,19 +18,12 @@ export class QueryRenderer {
         this.app = plugin.app;
         this.events = events;
 
-        plugin.registerMarkdownCodeBlockProcessor(
-            'tasks',
-            this._addQueryRenderChild.bind(this),
-        );
+        plugin.registerMarkdownCodeBlockProcessor('tasks', this._addQueryRenderChild.bind(this));
     }
 
     public addQueryRenderChild = this._addQueryRenderChild.bind(this);
 
-    private async _addQueryRenderChild(
-        source: string,
-        element: HTMLElement,
-        context: MarkdownPostProcessorContext,
-    ) {
+    private async _addQueryRenderChild(source: string, element: HTMLElement, context: MarkdownPostProcessorContext) {
         context.addChild(
             new QueryRenderChild({
                 app: this.app,
@@ -149,8 +136,7 @@ class QueryRenderChild extends MarkdownRenderChild {
                 `Render ${this.queryType} called for a block in active file "${this.filePath}", to select from ${tasks.length} tasks: plugin state: ${state}`,
             );
 
-            const tasksSortedLimitedGrouped =
-                this.query.applyQueryToTasks(tasks);
+            const tasksSortedLimitedGrouped = this.query.applyQueryToTasks(tasks);
             for (const group of tasksSortedLimitedGrouped.groups) {
                 // If there were no 'group by' instructions, group.groupHeadings
                 // will be empty, and no headings will be added.
@@ -163,9 +149,7 @@ class QueryRenderChild extends MarkdownRenderChild {
                 content.appendChild(taskList);
             }
             const totalTasksCount = tasksSortedLimitedGrouped.totalTasksCount();
-            console.debug(
-                `${totalTasksCount} of ${tasks.length} tasks displayed in a block in "${this.filePath}"`,
-            );
+            console.debug(`${totalTasksCount} of ${tasks.length} tasks displayed in a block in "${this.filePath}"`);
             this.addTaskCount(content, totalTasksCount);
         } else if (this.query.error !== undefined) {
             content.setText(`Tasks query: ${this.query.error}`);
@@ -186,10 +170,7 @@ class QueryRenderChild extends MarkdownRenderChild {
         const tasksCount = tasks.length;
 
         const taskList = content.createEl('ul');
-        taskList.addClasses([
-            'contains-task-list',
-            'plugin-tasks-query-result',
-        ]);
+        taskList.addClasses(['contains-task-list', 'plugin-tasks-query-result']);
         for (let i = 0; i < tasksCount; i++) {
             const task = tasks[i];
             const isFilenameUnique = this.isFilenameUnique({ task });
@@ -253,19 +234,13 @@ class QueryRenderChild extends MarkdownRenderChild {
      *                        in which case no headings will be added.
      * @private
      */
-    private addGroupHeadings(
-        content: HTMLDivElement,
-        groupHeadings: GroupHeading[],
-    ) {
+    private addGroupHeadings(content: HTMLDivElement, groupHeadings: GroupHeading[]) {
         for (const heading of groupHeadings) {
             this.addGroupHeading(content, heading);
         }
     }
 
-    private async addGroupHeading(
-        content: HTMLDivElement,
-        group: GroupHeading,
-    ) {
+    private async addGroupHeading(content: HTMLDivElement, group: GroupHeading) {
         let header: any;
         // Is it possible to remove the repetition here?
         // Ideally, by creating a variable that contains h4, h5 or h6
@@ -284,12 +259,7 @@ class QueryRenderChild extends MarkdownRenderChild {
                 cls: 'tasks-group-heading',
             });
         }
-        await MarkdownRenderer.renderMarkdown(
-            group.name,
-            header,
-            this.filePath,
-            this,
-        );
+        await MarkdownRenderer.renderMarkdown(group.name, header, this.filePath, this);
     }
 
     private addBacklinks(
@@ -316,10 +286,7 @@ class QueryRenderChild extends MarkdownRenderChild {
         if (task.precedingHeader !== null) {
             const sanitisedHeading = task.precedingHeader.replace(/#/g, '');
             link.href = link.href + '#' + sanitisedHeading;
-            link.setAttribute(
-                'data-href',
-                link.getAttribute('data-href') + '#' + sanitisedHeading,
-            );
+            link.setAttribute('data-href', link.getAttribute('data-href') + '#' + sanitisedHeading);
         }
 
         let linkText: string;
@@ -352,14 +319,12 @@ class QueryRenderChild extends MarkdownRenderChild {
         }
 
         const filename = filenameMatch[1];
-        const allFilesWithSameName = this.app.vault
-            .getMarkdownFiles()
-            .filter((file: TFile) => {
-                if (file.basename === filename) {
-                    // Found a file with the same name (it might actually be the same file, but we'll take that into account later.)
-                    return true;
-                }
-            });
+        const allFilesWithSameName = this.app.vault.getMarkdownFiles().filter((file: TFile) => {
+            if (file.basename === filename) {
+                // Found a file with the same name (it might actually be the same file, but we'll take that into account later.)
+                return true;
+            }
+        });
 
         return allFilesWithSameName.length < 2;
     }
