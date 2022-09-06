@@ -100,6 +100,16 @@ export class TaskRegularExpressions {
     public static readonly dueDateRegex = /[📅📆🗓] *(\d{4}-\d{2}-\d{2})$/u;
     public static readonly doneDateRegex = /✅ *(\d{4}-\d{2}-\d{2})$/u;
     public static readonly recurrenceRegex = /🔁 ?([a-zA-Z0-9, !]+)$/iu;
+
+    // Regex to match all hash tags, basically hash followed by anything but the characters in the negation.
+    // To ensure URLs are not caught it is looking of beginning of string tag and any
+    // tag that has a space in front of it. Any # that has a character in front
+    // of it will be ignored.
+    // EXAMPLE:
+    // description: '#dog #car http://www/ddd#ere #house'
+    // matches: #dog, #car, #house
+    public static readonly hashTags = /(^|\s)#[^ !@#$%^&*(),.?":{}|<>]*/g;
+    public static readonly hashTagsFromEnd = new RegExp(this.hashTags.source + '$');
 }
 
 /**
@@ -138,16 +148,6 @@ export class Task {
     public readonly recurrence: Recurrence | null;
     /** The blockLink is a "^" annotation after the dates/recurrence rules. */
     public readonly blockLink: string;
-
-    // Regex to match all hash tags, basically hash followed by anything but the characters in the negation.
-    // To ensure URLs are not caught it is looking of beginning of string tag and any
-    // tag that has a space in front of it. Any # that has a character in front
-    // of it will be ignored.
-    // EXAMPLE:
-    // description: '#dog #car http://www/ddd#ere #house'
-    // matches: #dog, #car, #house
-    public static readonly hashTags = /(^|\s)#[^ !@#$%^&*(),.?":{}|<>]*/g;
-    public static readonly hashTagsFromEnd = new RegExp(this.hashTags.source + '$');
 
     private _urgency: number | null = null;
 
@@ -352,9 +352,9 @@ export class Task {
 
             // Match tags from the end to allow users to mix the various task components with
             // tags. These tags will be added back to the description below
-            const tagsMatch = description.match(Task.hashTagsFromEnd);
+            const tagsMatch = description.match(TaskRegularExpressions.hashTagsFromEnd);
             if (tagsMatch != null) {
-                description = description.replace(Task.hashTagsFromEnd, '').trim();
+                description = description.replace(TaskRegularExpressions.hashTagsFromEnd, '').trim();
                 matched = true;
                 const tagName = tagsMatch[0].trim();
                 // Adding to the left because the matching is done right-to-left
@@ -384,7 +384,7 @@ export class Task {
         // so when returning the entire task it will match what the user
         // entered.
         // The global filter will be removed from the collection.
-        const hashTagMatch = description.match(this.hashTags);
+        const hashTagMatch = description.match(TaskRegularExpressions.hashTags);
         if (hashTagMatch !== null) {
             tags = hashTagMatch.filter((tag) => tag !== globalFilter).map((tag) => tag.trim());
         }
