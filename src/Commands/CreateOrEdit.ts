@@ -81,11 +81,11 @@ const taskFromLine = ({ line, path }: { line: string; path: string }): Task => {
     const status = statusString === ' ' ? Status.Todo : Status.Done;
     let description: string = nonTaskMatch[4];
 
-    const blockLinkMatch = line.match(Task.blockLinkRegex);
+    const blockLinkMatch = line.match(TaskRegularExpressions.blockLinkRegex);
     const blockLink = blockLinkMatch !== null ? blockLinkMatch[0] : '';
 
     if (blockLink !== '') {
-        description = description.replace(Task.blockLinkRegex, '');
+        description = description.replace(TaskRegularExpressions.blockLinkRegex, '');
     }
 
     return new Task({

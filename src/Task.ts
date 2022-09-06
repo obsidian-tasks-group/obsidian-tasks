@@ -88,6 +88,9 @@ export class TaskRegularExpressions {
     public static readonly listItemRegex = new RegExp(
         TaskRegularExpressions.indentationRegex.source + '(' + TaskRegularExpressions.listMarkerRegex.source + ')',
     );
+
+    // Match on block link at end.
+    public static readonly blockLinkRegex = / \^[a-zA-Z0-9-]+$/u;
 }
 
 /**
@@ -126,9 +129,6 @@ export class Task {
     public readonly recurrence: Recurrence | null;
     /** The blockLink is a "^" annotation after the dates/recurrence rules. */
     public readonly blockLink: string;
-
-    // Match on block link at end.
-    public static readonly blockLinkRegex = / \^[a-zA-Z0-9-]+$/u;
 
     // The following regex's end with `$` because they will be matched and
     // removed from the end until none are left.
@@ -265,11 +265,11 @@ export class Task {
 
         // Match for block link and remove if found. Always expected to be
         // at the end of the line.
-        const blockLinkMatch = description.match(this.blockLinkRegex);
+        const blockLinkMatch = description.match(TaskRegularExpressions.blockLinkRegex);
         const blockLink = blockLinkMatch !== null ? blockLinkMatch[0] : '';
 
         if (blockLink !== '') {
-            description = description.replace(this.blockLinkRegex, '').trim();
+            description = description.replace(TaskRegularExpressions.blockLinkRegex, '').trim();
         }
 
         // Keep matching and removing special strings from the end of the
