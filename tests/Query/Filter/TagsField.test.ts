@@ -1,4 +1,4 @@
-import { resetSettings, updateSettings } from '../../../src/config/Settings';
+import { resetSettings, updateSettings } from '../../../src/Config/Settings';
 import type { FilteringCase } from '../../TestingTools/FilterTestHelpers';
 import { shouldSupportFiltering } from '../../TestingTools/FilterTestHelpers';
 import { toMatchTaskFromLine } from '../../CustomMatchers/CustomMatchersForFilters';

@@ -3,7 +3,7 @@
  */
 import moment from 'moment';
 import { Priority, Status, Task } from '../src/Task';
-import { resetSettings, updateSettings } from '../src/config/Settings';
+import { resetSettings, updateSettings } from '../src/Config/Settings';
 import { fromLine } from './TestHelpers';
 import { TaskBuilder } from './TestingTools/TaskBuilder';
 import { RecurrenceBuilder } from './TestingTools/RecurrenceBuilder';
