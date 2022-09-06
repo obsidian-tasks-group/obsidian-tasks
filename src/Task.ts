@@ -83,6 +83,11 @@ export class TaskRegularExpressions {
             TaskRegularExpressions.afterCheckboxRegex.source,
         'u',
     );
+
+    // Used with "Toggle Done" command to detect a list item that can get a checkbox added to it.
+    public static readonly listItemRegex = new RegExp(
+        TaskRegularExpressions.indentationRegex.source + '(' + TaskRegularExpressions.listMarkerRegex.source + ')',
+    );
 }
 
 /**
@@ -121,11 +126,6 @@ export class Task {
     public readonly recurrence: Recurrence | null;
     /** The blockLink is a "^" annotation after the dates/recurrence rules. */
     public readonly blockLink: string;
-
-    // Used with "Toggle Done" command to detect a list item that can get a checkbox added to it.
-    public static readonly listItemRegex = new RegExp(
-        TaskRegularExpressions.indentationRegex.source + '(' + TaskRegularExpressions.listMarkerRegex.source + ')',
-    );
 
     // Match on block link at end.
     public static readonly blockLinkRegex = / \^[a-zA-Z0-9-]+$/u;

@@ -77,9 +77,9 @@ export const toggleLine = (line: string, path: string) => {
             const statusString = regexMatch[2].toLowerCase(); // Note for future: I do not think this toLowerCase is necessary and there is an issue about how it breaks some theme or snippet.
             const newStatusString = statusString === ' ' ? 'x' : ' ';
             toggledLine = line.replace(TaskRegularExpressions.taskRegex, `$1- [${newStatusString}] $3`);
-        } else if (Task.listItemRegex.test(line)) {
+        } else if (TaskRegularExpressions.listItemRegex.test(line)) {
             // Convert the list item to a checklist item.
-            toggledLine = line.replace(Task.listItemRegex, '$1$2 [ ]');
+            toggledLine = line.replace(TaskRegularExpressions.listItemRegex, '$1$2 [ ]');
         } else {
             // Convert the line to a list item.
             toggledLine = line.replace(TaskRegularExpressions.indentationRegex, '$1- ');
