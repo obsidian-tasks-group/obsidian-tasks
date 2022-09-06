@@ -45,6 +45,10 @@ export const scheduledDateSymbol = '⏳';
 export const dueDateSymbol = '📅';
 export const doneDateSymbol = '✅';
 
+export class TaskRegularExpressions {
+    public static readonly dateFormat = 'YYYY-MM-DD';
+}
+
 /**
  * Task encapsulates the properties of the MarkDown task along with
  * the extensions provided by this plugin. This is used to parse and
@@ -81,8 +85,6 @@ export class Task {
     public readonly recurrence: Recurrence | null;
     /** The blockLink is a "^" annotation after the dates/recurrence rules. */
     public readonly blockLink: string;
-
-    public static readonly dateFormat = 'YYYY-MM-DD';
 
     // Matches indentation before a list marker (including > for potentially nested blockquotes or Obsidian callouts)
     public static readonly indentationRegex = /^([\s\t>]*)/;
@@ -312,28 +314,28 @@ export class Task {
 
             const doneDateMatch = description.match(Task.doneDateRegex);
             if (doneDateMatch !== null) {
-                doneDate = window.moment(doneDateMatch[1], Task.dateFormat);
+                doneDate = window.moment(doneDateMatch[1], TaskRegularExpressions.dateFormat);
                 description = description.replace(Task.doneDateRegex, '').trim();
                 matched = true;
             }
 
             const dueDateMatch = description.match(Task.dueDateRegex);
             if (dueDateMatch !== null) {
-                dueDate = window.moment(dueDateMatch[1], Task.dateFormat);
+                dueDate = window.moment(dueDateMatch[1], TaskRegularExpressions.dateFormat);
                 description = description.replace(Task.dueDateRegex, '').trim();
                 matched = true;
             }
 
             const scheduledDateMatch = description.match(Task.scheduledDateRegex);
             if (scheduledDateMatch !== null) {
-                scheduledDate = window.moment(scheduledDateMatch[1], Task.dateFormat);
+                scheduledDate = window.moment(scheduledDateMatch[1], TaskRegularExpressions.dateFormat);
                 description = description.replace(Task.scheduledDateRegex, '').trim();
                 matched = true;
             }
 
             const startDateMatch = description.match(Task.startDateRegex);
             if (startDateMatch !== null) {
-                startDate = window.moment(startDateMatch[1], Task.dateFormat);
+                startDate = window.moment(startDateMatch[1], TaskRegularExpressions.dateFormat);
                 description = description.replace(Task.startDateRegex, '').trim();
                 matched = true;
             }
@@ -531,28 +533,28 @@ export class Task {
         if (!layoutOptions.hideStartDate && this.startDate) {
             const startDate: string = layoutOptions.shortMode
                 ? ' ' + startDateSymbol
-                : ` ${startDateSymbol} ${this.startDate.format(Task.dateFormat)}`;
+                : ` ${startDateSymbol} ${this.startDate.format(TaskRegularExpressions.dateFormat)}`;
             taskString += startDate;
         }
 
         if (!layoutOptions.hideScheduledDate && this.scheduledDate) {
             const scheduledDate: string = layoutOptions.shortMode
                 ? ' ' + scheduledDateSymbol
-                : ` ${scheduledDateSymbol} ${this.scheduledDate.format(Task.dateFormat)}`;
+                : ` ${scheduledDateSymbol} ${this.scheduledDate.format(TaskRegularExpressions.dateFormat)}`;
             taskString += scheduledDate;
         }
 
         if (!layoutOptions.hideDueDate && this.dueDate) {
             const dueDate: string = layoutOptions.shortMode
                 ? ' ' + dueDateSymbol
-                : ` ${dueDateSymbol} ${this.dueDate.format(Task.dateFormat)}`;
+                : ` ${dueDateSymbol} ${this.dueDate.format(TaskRegularExpressions.dateFormat)}`;
             taskString += dueDate;
         }
 
         if (!layoutOptions.hideDoneDate && this.doneDate) {
             const doneDate: string = layoutOptions.shortMode
                 ? ' ' + doneDateSymbol
-                : ` ${doneDateSymbol} ${this.doneDate.format(Task.dateFormat)}`;
+                : ` ${doneDateSymbol} ${this.doneDate.format(TaskRegularExpressions.dateFormat)}`;
             taskString += doneDate;
         }
 
@@ -838,7 +840,9 @@ export class Task {
     }
 
     private static toTooltipDate({ signifier, date }: { signifier: string; date: Moment }): string {
-        return `${signifier} ${date.format(Task.dateFormat)} (${date.from(window.moment().startOf('day'))})`;
+        return `${signifier} ${date.format(TaskRegularExpressions.dateFormat)} (${date.from(
+            window.moment().startOf('day'),
+        )})`;
     }
 
     /**
