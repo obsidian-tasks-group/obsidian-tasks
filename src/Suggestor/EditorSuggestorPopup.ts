@@ -21,7 +21,7 @@ export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
     onTrigger(cursor: EditorPosition, editor: Editor, _file: TFile): EditorSuggestTriggerInfo | null {
         if (!this.settings.autoSuggestInEditor) return null;
         const line = editor.getLine(cursor.line);
-        if (line.contains(this.settings.globalFilter) && line.match(task.Task.taskRegex)) {
+        if (line.contains(this.settings.globalFilter) && line.match(task.TaskRegularExpressions.taskRegex)) {
             return {
                 start: { line: cursor.line, ch: 0 },
                 end: {

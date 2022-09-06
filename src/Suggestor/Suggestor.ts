@@ -174,8 +174,8 @@ function addDatesSuggestions(line: string, cursorPos: number, settings: Settings
             // Seems like the text that the user typed can be parsed as a valid date.
             // Present its completed form as a 1st suggestion
             results.push({
-                displayText: `${possibleDate.format(task.Task.dateFormat)}`,
-                appendText: `${datePrefix} ${possibleDate.format(task.Task.dateFormat)} `,
+                displayText: `${possibleDate.format(task.TaskRegularExpressions.dateFormat)}`,
+                appendText: `${datePrefix} ${possibleDate.format(task.TaskRegularExpressions.dateFormat)} `,
                 insertAt: dateMatch.index,
                 insertSkip: dateMatch[0].length,
             });
@@ -203,7 +203,7 @@ function addDatesSuggestions(line: string, cursorPos: number, settings: Settings
         }
         for (const match of genericMatches) {
             const parsedDate = DateParser.parseDate(match, true);
-            const formattedDate = `${parsedDate.format(task.Task.dateFormat)}`;
+            const formattedDate = `${parsedDate.format(task.TaskRegularExpressions.dateFormat)}`;
             results.push({
                 suggestionType: 'match',
                 displayText: `${match} (${formattedDate})`,

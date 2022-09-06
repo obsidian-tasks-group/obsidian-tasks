@@ -1,6 +1,6 @@
 import { Editor, MarkdownView, View } from 'obsidian';
 
-import { Task } from '../Task';
+import { Task, TaskRegularExpressions } from '../Task';
 
 export const toggleDone = (checking: boolean, editor: Editor, view: View) => {
     if (checking) {
@@ -71,18 +71,18 @@ export const toggleLine = (line: string, path: string) => {
         // 3. a simple text line
 
         // The task regex will match checklist items.
-        const regexMatch = line.match(Task.taskRegex);
+        const regexMatch = line.match(TaskRegularExpressions.taskRegex);
         if (regexMatch !== null) {
             // Toggle the status of the checklist item.
             const statusString = regexMatch[2].toLowerCase(); // Note for future: I do not think this toLowerCase is necessary and there is an issue about how it breaks some theme or snippet.
             const newStatusString = statusString === ' ' ? 'x' : ' ';
-            toggledLine = line.replace(Task.taskRegex, `$1- [${newStatusString}] $3`);
-        } else if (Task.listItemRegex.test(line)) {
+            toggledLine = line.replace(TaskRegularExpressions.taskRegex, `$1- [${newStatusString}] $3`);
+        } else if (TaskRegularExpressions.listItemRegex.test(line)) {
             // Convert the list item to a checklist item.
-            toggledLine = line.replace(Task.listItemRegex, '$1$2 [ ]');
+            toggledLine = line.replace(TaskRegularExpressions.listItemRegex, '$1$2 [ ]');
         } else {
             // Convert the line to a list item.
-            toggledLine = line.replace(Task.indentationRegex, '$1- ');
+            toggledLine = line.replace(TaskRegularExpressions.indentationRegex, '$1- ');
         }
     }
 
@@ -117,7 +117,7 @@ export const calculateCursorOffset = (origCursorCh: number, line: string, toggle
 
     // Special-case for done-date append, fixes #449
     const doneDateLength = ' ✅ YYYY-MM-DD'.length;
-    if (toggledLine.match(Task.doneDateRegex) && newLineLen - line.length >= doneDateLength) {
+    if (toggledLine.match(TaskRegularExpressions.doneDateRegex) && newLineLen - line.length >= doneDateLength) {
         newLineLen -= doneDateLength;
     }
 

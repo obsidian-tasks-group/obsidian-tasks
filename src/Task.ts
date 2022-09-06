@@ -45,6 +45,73 @@ export const scheduledDateSymbol = '⏳';
 export const dueDateSymbol = '📅';
 export const doneDateSymbol = '✅';
 
+export class TaskRegularExpressions {
+    public static readonly dateFormat = 'YYYY-MM-DD';
+
+    // Matches indentation before a list marker (including > for potentially nested blockquotes or Obsidian callouts)
+    public static readonly indentationRegex = /^([\s\t>]*)/;
+
+    // Matches (but does not save) - or * list markers.
+    public static readonly listMarkerRegex = /[-*]/;
+
+    // Matches a checkbox and saves the status character inside
+    public static readonly checkboxRegex = /\[(.)\]/u;
+
+    // Matches the rest of the task after the checkbox.
+    public static readonly afterCheckboxRegex = / *(.*)/u;
+
+    // Main regex for parsing a line. It matches the following:
+    // - Indentation
+    // - Status character
+    // - Rest of task after checkbox markdown
+    public static readonly taskRegex = new RegExp(
+        TaskRegularExpressions.indentationRegex.source +
+            TaskRegularExpressions.listMarkerRegex.source +
+            ' +' +
+            TaskRegularExpressions.checkboxRegex.source +
+            TaskRegularExpressions.afterCheckboxRegex.source,
+        'u',
+    );
+
+    // Used with the "Create or Edit Task" command to parse indentation and status if present
+    public static readonly nonTaskRegex = new RegExp(
+        TaskRegularExpressions.indentationRegex.source +
+            TaskRegularExpressions.listMarkerRegex.source +
+            '? *(' +
+            TaskRegularExpressions.checkboxRegex.source +
+            ')?' +
+            TaskRegularExpressions.afterCheckboxRegex.source,
+        'u',
+    );
+
+    // Used with "Toggle Done" command to detect a list item that can get a checkbox added to it.
+    public static readonly listItemRegex = new RegExp(
+        TaskRegularExpressions.indentationRegex.source + '(' + TaskRegularExpressions.listMarkerRegex.source + ')',
+    );
+
+    // Match on block link at end.
+    public static readonly blockLinkRegex = / \^[a-zA-Z0-9-]+$/u;
+
+    // The following regex's end with `$` because they will be matched and
+    // removed from the end until none are left.
+    public static readonly priorityRegex = /([⏫🔼🔽])$/u;
+    public static readonly startDateRegex = /🛫 *(\d{4}-\d{2}-\d{2})$/u;
+    public static readonly scheduledDateRegex = /[⏳⌛] *(\d{4}-\d{2}-\d{2})$/u;
+    public static readonly dueDateRegex = /[📅📆🗓] *(\d{4}-\d{2}-\d{2})$/u;
+    public static readonly doneDateRegex = /✅ *(\d{4}-\d{2}-\d{2})$/u;
+    public static readonly recurrenceRegex = /🔁 ?([a-zA-Z0-9, !]+)$/iu;
+
+    // Regex to match all hash tags, basically hash followed by anything but the characters in the negation.
+    // To ensure URLs are not caught it is looking of beginning of string tag and any
+    // tag that has a space in front of it. Any # that has a character in front
+    // of it will be ignored.
+    // EXAMPLE:
+    // description: '#dog #car http://www/ddd#ere #house'
+    // matches: #dog, #car, #house
+    public static readonly hashTags = /(^|\s)#[^ !@#$%^&*(),.?":{}|<>]*/g;
+    public static readonly hashTagsFromEnd = new RegExp(this.hashTags.source + '$');
+}
+
 /**
  * Task encapsulates the properties of the MarkDown task along with
  * the extensions provided by this plugin. This is used to parse and
@@ -81,71 +148,6 @@ export class Task {
     public readonly recurrence: Recurrence | null;
     /** The blockLink is a "^" annotation after the dates/recurrence rules. */
     public readonly blockLink: string;
-
-    public static readonly dateFormat = 'YYYY-MM-DD';
-
-    // Matches indentation before a list marker (including > for potentially nested blockquotes or Obsidian callouts)
-    public static readonly indentationRegex = /^([\s\t>]*)/;
-
-    // Matches (but does not save) - or * list markers.
-    public static readonly listMarkerRegex = /[-*]/;
-
-    // Matches a checkbox and saves the status character inside
-    public static readonly checkboxRegex = /\[(.)\]/u;
-
-    // Matches the rest of the task after the checkbox.
-    public static readonly afterCheckboxRegex = / *(.*)/u;
-
-    // Main regex for parsing a line. It matches the following:
-    // - Indentation
-    // - Status character
-    // - Rest of task after checkbox markdown
-    public static readonly taskRegex = new RegExp(
-        this.indentationRegex.source +
-            this.listMarkerRegex.source +
-            ' +' +
-            this.checkboxRegex.source +
-            this.afterCheckboxRegex.source,
-        'u',
-    );
-
-    // Used with the "Create or Edit Task" command to parse indentation and status if present
-    public static readonly nonTaskRegex = new RegExp(
-        this.indentationRegex.source +
-            this.listMarkerRegex.source +
-            '? *(' +
-            this.checkboxRegex.source +
-            ')?' +
-            this.afterCheckboxRegex.source,
-        'u',
-    );
-
-    // Used with "Toggle Done" command to detect a list item that can get a checkbox added to it.
-    public static readonly listItemRegex = new RegExp(
-        this.indentationRegex.source + '(' + this.listMarkerRegex.source + ')',
-    );
-
-    // Match on block link at end.
-    public static readonly blockLinkRegex = / \^[a-zA-Z0-9-]+$/u;
-
-    // The following regex's end with `$` because they will be matched and
-    // removed from the end until none are left.
-    public static readonly priorityRegex = /([⏫🔼🔽])$/u;
-    public static readonly startDateRegex = /🛫 *(\d{4}-\d{2}-\d{2})$/u;
-    public static readonly scheduledDateRegex = /[⏳⌛] *(\d{4}-\d{2}-\d{2})$/u;
-    public static readonly dueDateRegex = /[📅📆🗓] *(\d{4}-\d{2}-\d{2})$/u;
-    public static readonly doneDateRegex = /✅ *(\d{4}-\d{2}-\d{2})$/u;
-    public static readonly recurrenceRegex = /🔁 ?([a-zA-Z0-9, !]+)$/iu;
-
-    // Regex to match all hash tags, basically hash followed by anything but the characters in the negation.
-    // To ensure URLs are not caught it is looking of beginning of string tag and any
-    // tag that has a space in front of it. Any # that has a character in front
-    // of it will be ignored.
-    // EXAMPLE:
-    // description: '#dog #car http://www/ddd#ere #house'
-    // matches: #dog, #car, #house
-    public static readonly hashTags = /(^|\s)#[^ !@#$%^&*(),.?":{}|<>]*/g;
-    public static readonly hashTagsFromEnd = new RegExp(this.hashTags.source + '$');
 
     private _urgency: number | null = null;
 
@@ -232,7 +234,7 @@ export class Task {
         precedingHeader: string | null;
     }): Task | null {
         // Check the line to see if it is a markdown task.
-        const regexMatch = line.match(Task.taskRegex);
+        const regexMatch = line.match(TaskRegularExpressions.taskRegex);
         if (regexMatch === null) {
             return null;
         }
@@ -263,11 +265,11 @@ export class Task {
 
         // Match for block link and remove if found. Always expected to be
         // at the end of the line.
-        const blockLinkMatch = description.match(this.blockLinkRegex);
+        const blockLinkMatch = description.match(TaskRegularExpressions.blockLinkRegex);
         const blockLink = blockLinkMatch !== null ? blockLinkMatch[0] : '';
 
         if (blockLink !== '') {
-            description = description.replace(this.blockLinkRegex, '').trim();
+            description = description.replace(TaskRegularExpressions.blockLinkRegex, '').trim();
         }
 
         // Keep matching and removing special strings from the end of the
@@ -292,7 +294,7 @@ export class Task {
         let runs = 0;
         do {
             matched = false;
-            const priorityMatch = description.match(Task.priorityRegex);
+            const priorityMatch = description.match(TaskRegularExpressions.priorityRegex);
             if (priorityMatch !== null) {
                 switch (priorityMatch[1]) {
                     case prioritySymbols.Low:
@@ -306,53 +308,53 @@ export class Task {
                         break;
                 }
 
-                description = description.replace(Task.priorityRegex, '').trim();
+                description = description.replace(TaskRegularExpressions.priorityRegex, '').trim();
                 matched = true;
             }
 
-            const doneDateMatch = description.match(Task.doneDateRegex);
+            const doneDateMatch = description.match(TaskRegularExpressions.doneDateRegex);
             if (doneDateMatch !== null) {
-                doneDate = window.moment(doneDateMatch[1], Task.dateFormat);
-                description = description.replace(Task.doneDateRegex, '').trim();
+                doneDate = window.moment(doneDateMatch[1], TaskRegularExpressions.dateFormat);
+                description = description.replace(TaskRegularExpressions.doneDateRegex, '').trim();
                 matched = true;
             }
 
-            const dueDateMatch = description.match(Task.dueDateRegex);
+            const dueDateMatch = description.match(TaskRegularExpressions.dueDateRegex);
             if (dueDateMatch !== null) {
-                dueDate = window.moment(dueDateMatch[1], Task.dateFormat);
-                description = description.replace(Task.dueDateRegex, '').trim();
+                dueDate = window.moment(dueDateMatch[1], TaskRegularExpressions.dateFormat);
+                description = description.replace(TaskRegularExpressions.dueDateRegex, '').trim();
                 matched = true;
             }
 
-            const scheduledDateMatch = description.match(Task.scheduledDateRegex);
+            const scheduledDateMatch = description.match(TaskRegularExpressions.scheduledDateRegex);
             if (scheduledDateMatch !== null) {
-                scheduledDate = window.moment(scheduledDateMatch[1], Task.dateFormat);
-                description = description.replace(Task.scheduledDateRegex, '').trim();
+                scheduledDate = window.moment(scheduledDateMatch[1], TaskRegularExpressions.dateFormat);
+                description = description.replace(TaskRegularExpressions.scheduledDateRegex, '').trim();
                 matched = true;
             }
 
-            const startDateMatch = description.match(Task.startDateRegex);
+            const startDateMatch = description.match(TaskRegularExpressions.startDateRegex);
             if (startDateMatch !== null) {
-                startDate = window.moment(startDateMatch[1], Task.dateFormat);
-                description = description.replace(Task.startDateRegex, '').trim();
+                startDate = window.moment(startDateMatch[1], TaskRegularExpressions.dateFormat);
+                description = description.replace(TaskRegularExpressions.startDateRegex, '').trim();
                 matched = true;
             }
 
-            const recurrenceMatch = description.match(Task.recurrenceRegex);
+            const recurrenceMatch = description.match(TaskRegularExpressions.recurrenceRegex);
             if (recurrenceMatch !== null) {
                 // Save the recurrence rule, but *do not parse it yet*.
                 // Creating the Recurrence object requires a reference date (e.g. a due date),
                 // and it might appear in the next (earlier in the line) tokens to parse
                 recurrenceRule = recurrenceMatch[1].trim();
-                description = description.replace(Task.recurrenceRegex, '').trim();
+                description = description.replace(TaskRegularExpressions.recurrenceRegex, '').trim();
                 matched = true;
             }
 
             // Match tags from the end to allow users to mix the various task components with
             // tags. These tags will be added back to the description below
-            const tagsMatch = description.match(Task.hashTagsFromEnd);
+            const tagsMatch = description.match(TaskRegularExpressions.hashTagsFromEnd);
             if (tagsMatch != null) {
-                description = description.replace(Task.hashTagsFromEnd, '').trim();
+                description = description.replace(TaskRegularExpressions.hashTagsFromEnd, '').trim();
                 matched = true;
                 const tagName = tagsMatch[0].trim();
                 // Adding to the left because the matching is done right-to-left
@@ -382,7 +384,7 @@ export class Task {
         // so when returning the entire task it will match what the user
         // entered.
         // The global filter will be removed from the collection.
-        const hashTagMatch = description.match(this.hashTags);
+        const hashTagMatch = description.match(TaskRegularExpressions.hashTags);
         if (hashTagMatch !== null) {
             tags = hashTagMatch.filter((tag) => tag !== globalFilter).map((tag) => tag.trim());
         }
@@ -531,28 +533,28 @@ export class Task {
         if (!layoutOptions.hideStartDate && this.startDate) {
             const startDate: string = layoutOptions.shortMode
                 ? ' ' + startDateSymbol
-                : ` ${startDateSymbol} ${this.startDate.format(Task.dateFormat)}`;
+                : ` ${startDateSymbol} ${this.startDate.format(TaskRegularExpressions.dateFormat)}`;
             taskString += startDate;
         }
 
         if (!layoutOptions.hideScheduledDate && this.scheduledDate) {
             const scheduledDate: string = layoutOptions.shortMode
                 ? ' ' + scheduledDateSymbol
-                : ` ${scheduledDateSymbol} ${this.scheduledDate.format(Task.dateFormat)}`;
+                : ` ${scheduledDateSymbol} ${this.scheduledDate.format(TaskRegularExpressions.dateFormat)}`;
             taskString += scheduledDate;
         }
 
         if (!layoutOptions.hideDueDate && this.dueDate) {
             const dueDate: string = layoutOptions.shortMode
                 ? ' ' + dueDateSymbol
-                : ` ${dueDateSymbol} ${this.dueDate.format(Task.dateFormat)}`;
+                : ` ${dueDateSymbol} ${this.dueDate.format(TaskRegularExpressions.dateFormat)}`;
             taskString += dueDate;
         }
 
         if (!layoutOptions.hideDoneDate && this.doneDate) {
             const doneDate: string = layoutOptions.shortMode
                 ? ' ' + doneDateSymbol
-                : ` ${doneDateSymbol} ${this.doneDate.format(Task.dateFormat)}`;
+                : ` ${doneDateSymbol} ${this.doneDate.format(TaskRegularExpressions.dateFormat)}`;
             taskString += doneDate;
         }
 
@@ -838,7 +840,9 @@ export class Task {
     }
 
     private static toTooltipDate({ signifier, date }: { signifier: string; date: Moment }): string {
-        return `${signifier} ${date.format(Task.dateFormat)} (${date.from(window.moment().startOf('day'))})`;
+        return `${signifier} ${date.format(TaskRegularExpressions.dateFormat)} (${date.from(
+            window.moment().startOf('day'),
+        )})`;
     }
 
     /**
