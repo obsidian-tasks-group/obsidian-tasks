@@ -53,6 +53,9 @@ export class TaskRegularExpressions {
 
     // Matches (but does not save) - or * list markers.
     public static readonly listMarkerRegex = /[-*]/;
+
+    // Matches a checkbox and saves the status character inside
+    public static readonly checkboxRegex = /\[(.)\]/u;
 }
 
 /**
@@ -92,9 +95,6 @@ export class Task {
     /** The blockLink is a "^" annotation after the dates/recurrence rules. */
     public readonly blockLink: string;
 
-    // Matches a checkbox and saves the status character inside
-    public static readonly checkboxRegex = /\[(.)\]/u;
-
     // Matches the rest of the task after the checkbox.
     public static readonly afterCheckboxRegex = / *(.*)/u;
 
@@ -106,7 +106,7 @@ export class Task {
         TaskRegularExpressions.indentationRegex.source +
             TaskRegularExpressions.listMarkerRegex.source +
             ' +' +
-            this.checkboxRegex.source +
+            TaskRegularExpressions.checkboxRegex.source +
             this.afterCheckboxRegex.source,
         'u',
     );
@@ -116,7 +116,7 @@ export class Task {
         TaskRegularExpressions.indentationRegex.source +
             TaskRegularExpressions.listMarkerRegex.source +
             '? *(' +
-            this.checkboxRegex.source +
+            TaskRegularExpressions.checkboxRegex.source +
             ')?' +
             this.afterCheckboxRegex.source,
         'u',
