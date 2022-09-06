@@ -84,16 +84,14 @@ declare global {
 export function toBeValid(filter: FilterOrErrorMessage) {
     if (filter.filter === undefined) {
         return {
-            message: () =>
-                'unexpected null filter: check your instruction matches your filter class',
+            message: () => 'unexpected null filter: check your instruction matches your filter class',
             pass: false,
         };
     }
 
     if (filter.error !== undefined) {
         return {
-            message: () =>
-                'unexpected error message in filter: check your instruction matches your filter class',
+            message: () => 'unexpected error message in filter: check your instruction matches your filter class',
             pass: false,
         };
     }
@@ -108,42 +106,31 @@ export function toMatchTask(filter: FilterOrErrorMessage, task: Task) {
     const matches = filter.filter!(task);
     if (!matches) {
         return {
-            message: () =>
-                `unexpected failure to match task: ${task.toFileLineString()}`,
+            message: () => `unexpected failure to match task: ${task.toFileLineString()}`,
             pass: false,
         };
     }
 
     return {
-        message: () =>
-            `filter should not have matched task: ${task.toFileLineString()}`,
+        message: () => `filter should not have matched task: ${task.toFileLineString()}`,
         pass: true,
     };
 }
 
-export function toMatchTaskFromLine(
-    filter: FilterOrErrorMessage,
-    line: string,
-) {
+export function toMatchTaskFromLine(filter: FilterOrErrorMessage, line: string) {
     const task = fromLine({
         line: line,
     });
     return toMatchTask(filter, task);
 }
 
-export function toMatchTaskWithHeading(
-    filter: FilterOrErrorMessage,
-    heading: string,
-) {
+export function toMatchTaskWithHeading(filter: FilterOrErrorMessage, heading: string) {
     const builder = new TaskBuilder();
     const task = builder.precedingHeader(heading).build();
     return toMatchTask(filter, task);
 }
 
-export function toMatchTaskWithPath(
-    filter: FilterOrErrorMessage,
-    path: string,
-) {
+export function toMatchTaskWithPath(filter: FilterOrErrorMessage, path: string) {
     const builder = new TaskBuilder();
     const task = builder.path(path).build();
     return toMatchTask(filter, task);

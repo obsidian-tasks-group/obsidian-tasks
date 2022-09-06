@@ -73,10 +73,7 @@ export const isFeatureEnabled = (internalName: string): boolean => {
  * @param enabled the expected state of the feature.
  * @returns the features with the specified feature toggled.
  */
-export const toggleFeature = (
-    internalName: string,
-    enabled: boolean,
-): FeatureFlag => {
+export const toggleFeature = (internalName: string, enabled: boolean): FeatureFlag => {
     settings.features[internalName] = enabled;
     return settings.features;
 };

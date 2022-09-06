@@ -9,11 +9,7 @@ import { testFilter } from '../../TestingTools/FilterTestHelpers';
 
 window.moment = moment;
 
-function testTaskFilterForTaskWithDueDate(
-    filter: FilterOrErrorMessage,
-    dueDate: string | null,
-    expected: boolean,
-) {
+function testTaskFilterForTaskWithDueDate(filter: FilterOrErrorMessage, dueDate: string | null, expected: boolean) {
     const builder = new TaskBuilder();
     testFilter(filter, builder.dueDate(dueDate), expected);
 }
@@ -21,9 +17,7 @@ function testTaskFilterForTaskWithDueDate(
 describe('due date', () => {
     it('by due date (before)', () => {
         // Arrange
-        const filter = new DueDateField().createFilterOrErrorMessage(
-            'due before 2022-04-20',
-        );
+        const filter = new DueDateField().createFilterOrErrorMessage('due before 2022-04-20');
 
         // Act, Assert
         testTaskFilterForTaskWithDueDate(filter, null, false);

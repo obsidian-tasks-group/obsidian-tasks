@@ -5,47 +5,40 @@ import { Task } from './Task';
 
 export class InlineRenderer {
     constructor({ plugin }: { plugin: Plugin }) {
-        plugin.registerMarkdownPostProcessor(
-            this._markdownPostProcessor.bind(this),
-        );
+        plugin.registerMarkdownPostProcessor(this._markdownPostProcessor.bind(this));
     }
 
     public markdownPostProcessor = this._markdownPostProcessor.bind(this);
 
-    private async _markdownPostProcessor(
-        element: HTMLElement,
-        context: MarkdownPostProcessorContext,
-    ): Promise<void> {
+    private async _markdownPostProcessor(element: HTMLElement, context: MarkdownPostProcessorContext): Promise<void> {
         const { globalFilter } = getSettings();
-        const renderedElements = element
-            .findAll('.task-list-item')
-            .filter((taskItem) => {
-                const linesText = taskItem.textContent?.split('\n');
-                if (linesText === undefined) {
-                    return false;
+        const renderedElements = element.findAll('.task-list-item').filter((taskItem) => {
+            const linesText = taskItem.textContent?.split('\n');
+            if (linesText === undefined) {
+                return false;
+            }
+
+            // Only the first line. Can be multiple lines if an LI element contains an UL.
+            // Want to match the top level LI independently from its children.
+            // There was a false positive, when the LI wasn't a task itself, but contained the
+            // global filter in child LIs.
+            let firstLineText: string | null = null;
+
+            // The first line is the first line that is not empty. Empty lines can exist when
+            // the checklist in markdown includes blank lines (see #313).
+            for (let i = 0; i < linesText.length; i = i + 1) {
+                if (linesText[i] !== '') {
+                    firstLineText = linesText[i];
+                    break;
                 }
+            }
 
-                // Only the first line. Can be multiple lines if an LI element contains an UL.
-                // Want to match the top level LI independently from its children.
-                // There was a false positive, when the LI wasn't a task itself, but contained the
-                // global filter in child LIs.
-                let firstLineText: string | null = null;
+            if (firstLineText === null) {
+                return false;
+            }
 
-                // The first line is the first line that is not empty. Empty lines can exist when
-                // the checklist in markdown includes blank lines (see #313).
-                for (let i = 0; i < linesText.length; i = i + 1) {
-                    if (linesText[i] !== '') {
-                        firstLineText = linesText[i];
-                        break;
-                    }
-                }
-
-                if (firstLineText === null) {
-                    return false;
-                }
-
-                return firstLineText.includes(globalFilter);
-            });
+            return firstLineText.includes(globalFilter);
+        });
         if (renderedElements.length === 0) {
             // No tasks means nothing to do.
             return;
@@ -63,11 +56,7 @@ export class InlineRenderer {
 
         let sectionIndex = 0;
         const fileTasks: Task[] = [];
-        for (
-            let lineNumber = section.lineStart;
-            lineNumber <= section.lineEnd;
-            lineNumber++
-        ) {
+        for (let lineNumber = section.lineStart; lineNumber <= section.lineEnd; lineNumber++) {
             const line = fileLines[lineNumber];
             if (line === undefined) {
                 // If we end up outside the range of the file,
@@ -89,11 +78,7 @@ export class InlineRenderer {
         }
 
         // The section index is the nth task within this section.
-        for (
-            let sectionIndex = 0;
-            sectionIndex < renderedElements.length;
-            sectionIndex++
-        ) {
+        for (let sectionIndex = 0; sectionIndex < renderedElements.length; sectionIndex++) {
             const task = fileTasks[sectionIndex];
             const renderedElement = renderedElements[sectionIndex];
 
@@ -104,8 +89,7 @@ export class InlineRenderer {
                 continue;
             }
 
-            const dataLine: string =
-                renderedElement.getAttr('data-line') ?? '0';
+            const dataLine: string = renderedElement.getAttr('data-line') ?? '0';
             const listIndex: number = Number.parseInt(dataLine, 10);
             const taskElement = await task.toLi({
                 parentUlElement: element,
@@ -127,10 +111,8 @@ export class InlineRenderer {
             // Re-set the original footnotes.
             // The newly rendered HTML won't have the correct indexes and links
             // from the original document.
-            const originalFootnotes =
-                renderedElement.querySelectorAll('[data-footnote-id]');
-            const newFootnotes =
-                taskElement.querySelectorAll('[data-footnote-id]');
+            const originalFootnotes = renderedElement.querySelectorAll('[data-footnote-id]');
+            const newFootnotes = taskElement.querySelectorAll('[data-footnote-id]');
             if (originalFootnotes.length === newFootnotes.length) {
                 for (let i = 0; i < originalFootnotes.length; i++) {
                     newFootnotes[i].replaceWith(originalFootnotes[i]);

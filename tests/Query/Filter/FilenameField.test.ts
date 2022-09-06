@@ -1,9 +1,6 @@
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { FilenameField } from '../../../src/Query/Filter/FilenameField';
-import {
-    toBeValid,
-    toMatchTaskWithPath,
-} from '../../CustomMatchers/CustomMatchersForFilters';
+import { toBeValid, toMatchTaskWithPath } from '../../CustomMatchers/CustomMatchersForFilters';
 
 expect.extend({
     toMatchTaskWithPath,
@@ -21,15 +18,11 @@ describe('filename', () => {
 
         expect(pathField.value(builder.path('').build())).toStrictEqual('');
 
-        expect(
-            pathField.value(builder.path('file in root.md').build()),
-        ).toStrictEqual('file in root.md');
+        expect(pathField.value(builder.path('file in root.md').build())).toStrictEqual('file in root.md');
 
-        expect(
-            pathField.value(
-                builder.path('directory name/file in sub-directory.md').build(),
-            ),
-        ).toStrictEqual('file in sub-directory.md');
+        expect(pathField.value(builder.path('directory name/file in sub-directory.md').build())).toStrictEqual(
+            'file in sub-directory.md',
+        );
     });
 });
 
@@ -40,9 +33,7 @@ describe('filename', () => {
 
     it('by filename (includes)', () => {
         // Arrange
-        const filter = new FilenameField().createFilterOrErrorMessage(
-            'filename includes search_text',
-        );
+        const filter = new FilenameField().createFilterOrErrorMessage('filename includes search_text');
 
         // Assert
         expect(filter).toBeValid();
@@ -53,9 +44,7 @@ describe('filename', () => {
 
     it('by filename (does not include)', () => {
         // Arrange
-        const filter = new FilenameField().createFilterOrErrorMessage(
-            'filename does not include search_text',
-        );
+        const filter = new FilenameField().createFilterOrErrorMessage('filename does not include search_text');
 
         // Assert
         expect(filter).toBeValid();
@@ -66,9 +55,7 @@ describe('filename', () => {
 
     it('by filename (regex matches)', () => {
         // Arrange
-        const filter = new FilenameField().createFilterOrErrorMessage(
-            String.raw`filename regex matches /w.bble/`,
-        );
+        const filter = new FilenameField().createFilterOrErrorMessage(String.raw`filename regex matches /w.bble/`);
 
         // Assert
         expect(filter).toBeValid();

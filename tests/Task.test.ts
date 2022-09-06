@@ -26,13 +26,9 @@ describe('parsing', () => {
         expect(task!.description).toEqual('this is a done task');
         expect(task!.status).toStrictEqual(Status.Done);
         expect(task!.dueDate).not.toBeNull();
-        expect(
-            task!.dueDate!.isSame(moment('2021-09-12', 'YYYY-MM-DD')),
-        ).toStrictEqual(true);
+        expect(task!.dueDate!.isSame(moment('2021-09-12', 'YYYY-MM-DD'))).toStrictEqual(true);
         expect(task!.doneDate).not.toBeNull();
-        expect(
-            task!.doneDate!.isSame(moment('2021-06-20', 'YYYY-MM-DD')),
-        ).toStrictEqual(true);
+        expect(task!.doneDate!.isSame(moment('2021-06-20', 'YYYY-MM-DD'))).toStrictEqual(true);
     });
 
     it('returns null when task does not have global filter', () => {
@@ -66,19 +62,14 @@ describe('parsing', () => {
         expect(task!.description).toEqual('this is a ✅ done task');
         expect(task!.status).toStrictEqual(Status.Done);
         expect(task!.dueDate).not.toBeNull();
-        expect(
-            task!.dueDate!.isSame(moment('2021-09-12', 'YYYY-MM-DD')),
-        ).toStrictEqual(true);
+        expect(task!.dueDate!.isSame(moment('2021-09-12', 'YYYY-MM-DD'))).toStrictEqual(true);
         expect(task!.doneDate).not.toBeNull();
-        expect(
-            task!.doneDate!.isSame(moment('2021-06-20', 'YYYY-MM-DD')),
-        ).toStrictEqual(true);
+        expect(task!.doneDate!.isSame(moment('2021-06-20', 'YYYY-MM-DD'))).toStrictEqual(true);
     });
 
     it('also works with block links and trailing spaces', () => {
         // Arrange
-        const line =
-            '- [x] this is a ✅ done task 🗓 2021-09-12 ✅ 2021-06-20 ^my-precious  ';
+        const line = '- [x] this is a ✅ done task 🗓 2021-09-12 ✅ 2021-06-20 ^my-precious  ';
 
         // Act
         const task = fromLine({
@@ -90,20 +81,15 @@ describe('parsing', () => {
         expect(task!.description).toEqual('this is a ✅ done task');
         expect(task!.status).toStrictEqual(Status.Done);
         expect(task!.dueDate).not.toBeNull();
-        expect(
-            task!.dueDate!.isSame(moment('2021-09-12', 'YYYY-MM-DD')),
-        ).toStrictEqual(true);
+        expect(task!.dueDate!.isSame(moment('2021-09-12', 'YYYY-MM-DD'))).toStrictEqual(true);
         expect(task!.doneDate).not.toBeNull();
-        expect(
-            task!.doneDate!.isSame(moment('2021-06-20', 'YYYY-MM-DD')),
-        ).toStrictEqual(true);
+        expect(task!.doneDate!.isSame(moment('2021-06-20', 'YYYY-MM-DD'))).toStrictEqual(true);
         expect(task!.blockLink).toEqual(' ^my-precious');
     });
 
     it('supports tag anywhere in the description and separates them correctly from signifier emojis', () => {
         // Arrange
-        const line =
-            '- [ ] this is a task due 📅 2021-09-12 #inside_tag ⏫ #some/tags_with_underscore';
+        const line = '- [ ] this is a task due 📅 2021-09-12 #inside_tag ⏫ #some/tags_with_underscore';
 
         // Act
         const task = fromLine({
@@ -112,13 +98,8 @@ describe('parsing', () => {
 
         // Assert
         expect(task).not.toBeNull();
-        expect(task!.description).toEqual(
-            'this is a task due #inside_tag #some/tags_with_underscore',
-        );
-        expect(task!.tags).toEqual([
-            '#inside_tag',
-            '#some/tags_with_underscore',
-        ]);
+        expect(task!.description).toEqual('this is a task due #inside_tag #some/tags_with_underscore');
+        expect(task!.tags).toEqual(['#inside_tag', '#some/tags_with_underscore']);
         expect(task!.dueDate).not.toBeNull();
         expect(task!.dueDate!.isSame(moment('2021-09-12', 'YYYY-MM-DD')));
         expect(task!.priority == Priority.High);
@@ -136,9 +117,7 @@ describe('parsing', () => {
 
         // Assert
         expect(task).not.toBeNull();
-        expect(task!.description).toEqual(
-            'Wobble #tag1 #tag2 #tag3 #tag4 #tag5 #tag6 #tag7 #tag8 #tag9 #tag10',
-        );
+        expect(task!.description).toEqual('Wobble #tag1 #tag2 #tag3 #tag4 #tag5 #tag6 #tag7 #tag8 #tag9 #tag10');
         expect(task!.dueDate!.isSame(moment('022-07-02', 'YYYY-MM-DD')));
         expect(task!.doneDate!.isSame(moment('022-07-02', 'YYYY-MM-DD')));
         expect(task!.startDate!.isSame(moment('022-07-02', 'YYYY-MM-DD')));
@@ -244,80 +223,65 @@ function constructTaskFromLine(line: string) {
 describe('parsing tags', () => {
     test.each<TagParsingExpectations>([
         {
-            markdownTask:
-                '- [x] this is a done task #tagone 🗓 2021-09-12 #another-tag ✅ 2021-06-20 #and_another',
-            expectedDescription:
-                'this is a done task #tagone #another-tag #and_another',
+            markdownTask: '- [x] this is a done task #tagone 🗓 2021-09-12 #another-tag ✅ 2021-06-20 #and_another',
+            expectedDescription: 'this is a done task #tagone #another-tag #and_another',
             extractedTags: ['#tagone', '#another-tag', '#and_another'],
             globalFilter: '',
         },
         {
-            markdownTask:
-                '- [x] this is a done task #tagone #tagtwo 🗓 2021-09-12 ✅ 2021-06-20',
+            markdownTask: '- [x] this is a done task #tagone #tagtwo 🗓 2021-09-12 ✅ 2021-06-20',
             expectedDescription: 'this is a done task #tagone #tagtwo',
             extractedTags: ['#tagone', '#tagtwo'],
             globalFilter: '',
         },
         {
-            markdownTask:
-                '- [ ] this is a normal task #tagone 🗓 2021-09-12 ✅ 2021-06-20',
+            markdownTask: '- [ ] this is a normal task #tagone 🗓 2021-09-12 ✅ 2021-06-20',
             expectedDescription: 'this is a normal task #tagone',
             extractedTags: ['#tagone'],
             globalFilter: '',
         },
         {
-            markdownTask:
-                '- [ ] this is a normal task #tagone #tagtwo 🗓 2021-09-12 ✅ 2021-06-20',
+            markdownTask: '- [ ] this is a normal task #tagone #tagtwo 🗓 2021-09-12 ✅ 2021-06-20',
             expectedDescription: 'this is a normal task #tagone #tagtwo',
             extractedTags: ['#tagone', '#tagtwo'],
             globalFilter: '',
         },
         {
-            markdownTask:
-                '- [ ] this is a normal task #tagone #tag/with/depth #tagtwo 🗓 2021-09-12 ✅ 2021-06-20',
-            expectedDescription:
-                'this is a normal task #tagone #tag/with/depth #tagtwo',
+            markdownTask: '- [ ] this is a normal task #tagone #tag/with/depth #tagtwo 🗓 2021-09-12 ✅ 2021-06-20',
+            expectedDescription: 'this is a normal task #tagone #tag/with/depth #tagtwo',
             extractedTags: ['#tagone', '#tag/with/depth', '#tagtwo'],
             globalFilter: '',
         },
 
         {
-            markdownTask:
-                '- [x] #someglobaltasktag this is a done task #tagone 🗓 2021-09-12 ✅ 2021-06-20',
-            expectedDescription:
-                '#someglobaltasktag this is a done task #tagone',
+            markdownTask: '- [x] #someglobaltasktag this is a done task #tagone 🗓 2021-09-12 ✅ 2021-06-20',
+            expectedDescription: '#someglobaltasktag this is a done task #tagone',
             extractedTags: ['#tagone'],
             globalFilter: '#someglobaltasktag',
         },
         {
-            markdownTask:
-                '- [x] #someglobaltasktag this is a done task #tagone #tagtwo 🗓 2021-09-12 ✅ 2021-06-20',
-            expectedDescription:
-                '#someglobaltasktag this is a done task #tagone #tagtwo',
+            markdownTask: '- [x] #someglobaltasktag this is a done task #tagone #tagtwo 🗓 2021-09-12 ✅ 2021-06-20',
+            expectedDescription: '#someglobaltasktag this is a done task #tagone #tagtwo',
             extractedTags: ['#tagone', '#tagtwo'],
             globalFilter: '#someglobaltasktag',
         },
         {
-            markdownTask:
-                '- [ ] #someglobaltasktag this is a normal task #tagone 🗓 2021-09-12 ✅ 2021-06-20',
-            expectedDescription:
-                '#someglobaltasktag this is a normal task #tagone',
+            markdownTask: '- [ ] #someglobaltasktag this is a normal task #tagone 🗓 2021-09-12 ✅ 2021-06-20',
+            expectedDescription: '#someglobaltasktag this is a normal task #tagone',
             extractedTags: ['#tagone'],
             globalFilter: '#someglobaltasktag',
         },
         {
             markdownTask:
                 '- [ ] #someglobaltasktag this is a normal task #tagone #tagtwo 🗓 2021-09-12 #tagthree ✅ 2021-06-20 #tagfour',
-            expectedDescription:
-                '#someglobaltasktag this is a normal task #tagone #tagtwo #tagthree #tagfour',
+            expectedDescription: '#someglobaltasktag this is a normal task #tagone #tagtwo #tagthree #tagfour',
             extractedTags: ['#tagone', '#tagtwo', '#tagthree', '#tagfour'],
             globalFilter: '#someglobaltasktag',
         },
         {
             markdownTask:
                 '- [ ] #someglobaltasktag this is a normal task #tagone #tag/with/depth #tagtwo 🗓 2021-09-12 ✅ 2021-06-20',
-            expectedDescription:
-                '#someglobaltasktag this is a normal task #tagone #tag/with/depth #tagtwo',
+            expectedDescription: '#someglobaltasktag this is a normal task #tagone #tag/with/depth #tagtwo',
             extractedTags: ['#tagone', '#tag/with/depth', '#tagtwo'],
             globalFilter: '#someglobaltasktag',
         },
@@ -352,21 +316,14 @@ describe('parsing tags', () => {
             globalFilter: '',
         },
         {
-            markdownTask:
-                '>>> * [ ] Task inside a nested blockquote or callout #tagone',
-            expectedDescription:
-                'Task inside a nested blockquote or callout #tagone',
+            markdownTask: '>>> * [ ] Task inside a nested blockquote or callout #tagone',
+            expectedDescription: 'Task inside a nested blockquote or callout #tagone',
             extractedTags: ['#tagone'],
             globalFilter: '',
         },
     ])(
         'should parse "$markdownTask" and extract "$extractedTags"',
-        ({
-            markdownTask,
-            expectedDescription,
-            extractedTags,
-            globalFilter,
-        }) => {
+        ({ markdownTask, expectedDescription, extractedTags, globalFilter }) => {
             // Arrange
             if (globalFilter != '') {
                 updateSettings({ globalFilter: globalFilter });
@@ -417,8 +374,7 @@ describe('to string', () => {
 
     it('retains the tags', () => {
         // Arrange
-        const line =
-            '- [x] this is a done task #tagone 📅 2021-09-12 ✅ 2021-06-20 #journal/daily';
+        const line = '- [x] this is a done task #tagone 📅 2021-09-12 ✅ 2021-06-20 #journal/daily';
 
         // Act
         const task: Task = fromLine({
@@ -426,8 +382,7 @@ describe('to string', () => {
         }) as Task;
 
         // Assert
-        const expectedLine =
-            '- [x] this is a done task #tagone #journal/daily 📅 2021-09-12 ✅ 2021-06-20';
+        const expectedLine = '- [x] this is a done task #tagone #journal/daily 📅 2021-09-12 ✅ 2021-06-20';
         expect(task.toFileLineString()).toStrictEqual(expectedLine);
     });
 });
@@ -688,19 +643,8 @@ describe('toggle done', () => {
 
     test.concurrent.each<RecurrenceCase>(recurrenceCases)(
         'recurs correctly (%j)',
-        ({
-            interval,
-            due,
-            scheduled,
-            start,
-            today,
-            nextDue,
-            nextScheduled,
-            nextStart,
-        }) => {
-            const todaySpy = jest
-                .spyOn(Date, 'now')
-                .mockReturnValue(moment(today).valueOf());
+        ({ interval, due, scheduled, start, today, nextDue, nextScheduled, nextStart }) => {
+            const todaySpy = jest.spyOn(Date, 'now').mockReturnValue(moment(today).valueOf());
 
             const line = [
                 '- [ ] I am task',
@@ -746,9 +690,7 @@ describe('toggle done', () => {
         // Assert
         expect(task).not.toBeNull();
         expect(task!.dueDate).not.toBeNull();
-        expect(
-            task!.dueDate!.isSame(moment('2021-09-12', 'YYYY-MM-DD')),
-        ).toStrictEqual(true);
+        expect(task!.dueDate!.isSame(moment('2021-09-12', 'YYYY-MM-DD'))).toStrictEqual(true);
 
         const nextTask: Task = task!.toggle()[0];
         expect({
@@ -786,8 +728,7 @@ export function toBeIdenticalTo(builder1: TaskBuilder, builder2: TaskBuilder) {
 
     if (pass) {
         return {
-            message: () =>
-                'Tasks treated as identical, but should be different',
+            message: () => 'Tasks treated as identical, but should be different',
             pass: true,
         };
     }
@@ -812,26 +753,16 @@ describe('identicalTo', () => {
 
     it('should check description', () => {
         const lhs = new TaskBuilder().description('same long initial text');
-        expect(lhs).toBeIdenticalTo(
-            new TaskBuilder().description('same long initial text'),
-        );
-        expect(lhs).not.toBeIdenticalTo(
-            new TaskBuilder().description('different text'),
-        );
+        expect(lhs).toBeIdenticalTo(new TaskBuilder().description('same long initial text'));
+        expect(lhs).not.toBeIdenticalTo(new TaskBuilder().description('different text'));
     });
 
     it('should check path', () => {
         const lhs = new TaskBuilder().path('same test file.md');
-        expect(lhs).toBeIdenticalTo(
-            new TaskBuilder().path('same test file.md'),
-        );
+        expect(lhs).toBeIdenticalTo(new TaskBuilder().path('same test file.md'));
         // Check it is case-sensitive
-        expect(lhs).not.toBeIdenticalTo(
-            new TaskBuilder().path('Same Test File.md'),
-        );
-        expect(lhs).not.toBeIdenticalTo(
-            new TaskBuilder().path('different text.md'),
-        );
+        expect(lhs).not.toBeIdenticalTo(new TaskBuilder().path('Same Test File.md'));
+        expect(lhs).not.toBeIdenticalTo(new TaskBuilder().path('different text.md'));
     });
 
     it('should check indentation', () => {
@@ -854,73 +785,49 @@ describe('identicalTo', () => {
 
     it('should check originalStatusCharacter', () => {
         const lhs = new TaskBuilder().originalStatusCharacter(' ');
-        expect(lhs).toBeIdenticalTo(
-            new TaskBuilder().originalStatusCharacter(' '),
-        );
-        expect(lhs).not.toBeIdenticalTo(
-            new TaskBuilder().originalStatusCharacter('x'),
-        );
+        expect(lhs).toBeIdenticalTo(new TaskBuilder().originalStatusCharacter(' '));
+        expect(lhs).not.toBeIdenticalTo(new TaskBuilder().originalStatusCharacter('x'));
     });
 
     it('should check precedingHeader', () => {
         const lhs = new TaskBuilder().precedingHeader('Heading 1');
-        expect(lhs).toBeIdenticalTo(
-            new TaskBuilder().precedingHeader('Heading 1'),
-        );
-        expect(lhs).not.toBeIdenticalTo(
-            new TaskBuilder().precedingHeader('Different Heading'),
-        );
-        expect(lhs).not.toBeIdenticalTo(
-            new TaskBuilder().precedingHeader(null),
-        );
+        expect(lhs).toBeIdenticalTo(new TaskBuilder().precedingHeader('Heading 1'));
+        expect(lhs).not.toBeIdenticalTo(new TaskBuilder().precedingHeader('Different Heading'));
+        expect(lhs).not.toBeIdenticalTo(new TaskBuilder().precedingHeader(null));
     });
 
     it('should check priority', () => {
         const lhs = new TaskBuilder().priority(Priority.Medium);
-        expect(lhs).toBeIdenticalTo(
-            new TaskBuilder().priority(Priority.Medium),
-        );
-        expect(lhs).not.toBeIdenticalTo(
-            new TaskBuilder().priority(Priority.None),
-        );
+        expect(lhs).toBeIdenticalTo(new TaskBuilder().priority(Priority.Medium));
+        expect(lhs).not.toBeIdenticalTo(new TaskBuilder().priority(Priority.None));
     });
 
     it('should check startDate', () => {
         const lhs = new TaskBuilder().startDate('2012-12-27');
         expect(lhs).toBeIdenticalTo(new TaskBuilder().startDate('2012-12-27'));
         expect(lhs).not.toBeIdenticalTo(new TaskBuilder().startDate(null));
-        expect(lhs).not.toBeIdenticalTo(
-            new TaskBuilder().startDate('2012-12-26'),
-        );
+        expect(lhs).not.toBeIdenticalTo(new TaskBuilder().startDate('2012-12-26'));
     });
 
     it('should check scheduledDate', () => {
         const lhs = new TaskBuilder().scheduledDate('2012-12-27');
-        expect(lhs).toBeIdenticalTo(
-            new TaskBuilder().scheduledDate('2012-12-27'),
-        );
+        expect(lhs).toBeIdenticalTo(new TaskBuilder().scheduledDate('2012-12-27'));
         expect(lhs).not.toBeIdenticalTo(new TaskBuilder().scheduledDate(null));
-        expect(lhs).not.toBeIdenticalTo(
-            new TaskBuilder().scheduledDate('2012-12-26'),
-        );
+        expect(lhs).not.toBeIdenticalTo(new TaskBuilder().scheduledDate('2012-12-26'));
     });
 
     it('should check dueDate', () => {
         const lhs = new TaskBuilder().dueDate('2012-12-27');
         expect(lhs).toBeIdenticalTo(new TaskBuilder().dueDate('2012-12-27'));
         expect(lhs).not.toBeIdenticalTo(new TaskBuilder().dueDate(null));
-        expect(lhs).not.toBeIdenticalTo(
-            new TaskBuilder().dueDate('2012-12-26'),
-        );
+        expect(lhs).not.toBeIdenticalTo(new TaskBuilder().dueDate('2012-12-26'));
     });
 
     it('should check doneDate', () => {
         const lhs = new TaskBuilder().doneDate('2012-12-27');
         expect(lhs).toBeIdenticalTo(new TaskBuilder().doneDate('2012-12-27'));
         expect(lhs).not.toBeIdenticalTo(new TaskBuilder().doneDate(null));
-        expect(lhs).not.toBeIdenticalTo(
-            new TaskBuilder().doneDate('2012-12-26'),
-        );
+        expect(lhs).not.toBeIdenticalTo(new TaskBuilder().doneDate('2012-12-26'));
     });
 
     describe('should check recurrence', () => {
@@ -929,9 +836,7 @@ describe('identicalTo', () => {
 
         const weekly = new RecurrenceBuilder().rule('every week').build();
         const daily = new RecurrenceBuilder().rule('every day').build();
-        expect(new TaskBuilder().recurrence(weekly)).not.toBeIdenticalTo(
-            new TaskBuilder().recurrence(daily),
-        );
+        expect(new TaskBuilder().recurrence(weekly)).not.toBeIdenticalTo(new TaskBuilder().recurrence(daily));
         // Note: There are more thorough tests of Recurrence.identicalTo() in Recurrence.test.ts.
     });
 
@@ -1009,23 +914,18 @@ describe('check removal of the global filter', () => {
         },
         {
             globalFilter: '#t',
-            markdownTask:
-                '- [ ] task with global filter in the end and some spaces  #t  ',
-            expectedDescription:
-                'task with global filter in the end and some spaces',
+            markdownTask: '- [ ] task with global filter in the end and some spaces  #t  ',
+            expectedDescription: 'task with global filter in the end and some spaces',
         },
         {
             globalFilter: '#complex/global/filter',
-            markdownTask:
-                '- [ ] task with #complex/global/filter in the middle',
+            markdownTask: '- [ ] task with #complex/global/filter in the middle',
             expectedDescription: 'task with in the middle',
         },
         {
             globalFilter: '#task',
-            markdownTask:
-                '- [ ] task with an extension of the global filter #task/with/extension',
-            expectedDescription:
-                'task with an extension of the global filter #task/with/extension',
+            markdownTask: '- [ ] task with an extension of the global filter #task/with/extension',
+            expectedDescription: 'task with an extension of the global filter #task/with/extension',
         },
         {
             globalFilter: '#t',
@@ -1050,9 +950,7 @@ describe('check removal of the global filter', () => {
 
             // Assert
             expect(task).not.toBeNull();
-            expect(task!.getDescriptionWithoutGlobalFilter()).toEqual(
-                expectedDescription,
-            );
+            expect(task!.getDescriptionWithoutGlobalFilter()).toEqual(expectedDescription);
 
             // Cleanup
             if (globalFilter != '') {
@@ -1067,17 +965,12 @@ describe('check removal of the global filter exhaustively', () => {
         globalFilter: string;
     };
 
-    function checkDescription(
-        markdownLine: string,
-        expectedDescription: string,
-    ) {
+    function checkDescription(markdownLine: string, expectedDescription: string) {
         const task = constructTaskFromLine(markdownLine);
 
         // Assert
         expect(task).not.toBeNull();
-        expect(task!.getDescriptionWithoutGlobalFilter()).toEqual(
-            expectedDescription,
-        );
+        expect(task!.getDescriptionWithoutGlobalFilter()).toEqual(expectedDescription);
     }
 
     test.each<GlobalFilterRemoval>([
@@ -1152,36 +1045,33 @@ describe('check removal of the global filter exhaustively', () => {
         {
             globalFilter: '\\',
         },
-    ])(
-        'should parse global filter "$globalFilter" edge cases correctly',
-        ({ globalFilter }) => {
-            // Arrange
-            if (globalFilter != '') {
-                updateSettings({ globalFilter: globalFilter });
-            }
+    ])('should parse global filter "$globalFilter" edge cases correctly', ({ globalFilter }) => {
+        // Arrange
+        if (globalFilter != '') {
+            updateSettings({ globalFilter: globalFilter });
+        }
 
-            // Act
+        // Act
 
-            // global filter removed at beginning, middle and end
-            let markdownLine = `- [ ] ${globalFilter} 1 ${globalFilter} 2 ${globalFilter}`;
-            let expectedDescription = '1 2';
-            checkDescription(markdownLine, expectedDescription);
+        // global filter removed at beginning, middle and end
+        let markdownLine = `- [ ] ${globalFilter} 1 ${globalFilter} 2 ${globalFilter}`;
+        let expectedDescription = '1 2';
+        checkDescription(markdownLine, expectedDescription);
 
-            // global filter not removed if non-empty non-tag characters before or after it
-            markdownLine = `- [ ] ${globalFilter}x 1 x${globalFilter} ${globalFilter}x 2 x${globalFilter}`;
-            expectedDescription = `${globalFilter}x 1 x${globalFilter} ${globalFilter}x 2 x${globalFilter}`;
-            checkDescription(markdownLine, expectedDescription);
+        // global filter not removed if non-empty non-tag characters before or after it
+        markdownLine = `- [ ] ${globalFilter}x 1 x${globalFilter} ${globalFilter}x 2 x${globalFilter}`;
+        expectedDescription = `${globalFilter}x 1 x${globalFilter} ${globalFilter}x 2 x${globalFilter}`;
+        checkDescription(markdownLine, expectedDescription);
 
-            // global filter not removed if non-empty sub-tag characters after it.
-            // Include at least one occurrence of global filter, so we don't pass by luck.
-            markdownLine = `- [ ] ${globalFilter}/x 1 x${globalFilter} ${globalFilter}/x 2 ${globalFilter} ${globalFilter}/x`;
-            expectedDescription = `${globalFilter}/x 1 x${globalFilter} ${globalFilter}/x 2 ${globalFilter}/x`;
-            checkDescription(markdownLine, expectedDescription);
+        // global filter not removed if non-empty sub-tag characters after it.
+        // Include at least one occurrence of global filter, so we don't pass by luck.
+        markdownLine = `- [ ] ${globalFilter}/x 1 x${globalFilter} ${globalFilter}/x 2 ${globalFilter} ${globalFilter}/x`;
+        expectedDescription = `${globalFilter}/x 1 x${globalFilter} ${globalFilter}/x 2 ${globalFilter}/x`;
+        checkDescription(markdownLine, expectedDescription);
 
-            // Cleanup
-            if (globalFilter != '') {
-                resetSettings();
-            }
-        },
-    );
+        // Cleanup
+        if (globalFilter != '') {
+            resetSettings();
+        }
+    });
 });

@@ -1,9 +1,5 @@
 import { App, Editor, EditorSuggest, TFile } from 'obsidian';
-import type {
-    EditorPosition,
-    EditorSuggestContext,
-    EditorSuggestTriggerInfo,
-} from 'obsidian';
+import type { EditorPosition, EditorSuggestContext, EditorSuggestTriggerInfo } from 'obsidian';
 
 import type { Settings } from '../Config/Settings';
 import * as task from '../Task';
@@ -22,17 +18,10 @@ export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
         this.settings = settings;
     }
 
-    onTrigger(
-        cursor: EditorPosition,
-        editor: Editor,
-        _file: TFile,
-    ): EditorSuggestTriggerInfo | null {
+    onTrigger(cursor: EditorPosition, editor: Editor, _file: TFile): EditorSuggestTriggerInfo | null {
         if (!this.settings.autoSuggestInEditor) return null;
         const line = editor.getLine(cursor.line);
-        if (
-            line.contains(this.settings.globalFilter) &&
-            line.match(task.Task.taskRegex)
-        ) {
+        if (line.contains(this.settings.globalFilter) && line.match(task.Task.taskRegex)) {
             return {
                 start: { line: cursor.line, ch: 0 },
                 end: {
@@ -49,16 +38,11 @@ export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
         const line = context.query;
         const currentCursor = context.editor.getCursor();
 
-        const suggestions: SuggestInfo[] = buildSuggestions(
-            line,
-            currentCursor.ch,
-            this.settings,
-        );
+        const suggestions: SuggestInfo[] = buildSuggestions(line, currentCursor.ch, this.settings);
 
         // Add the editor context to all the suggestions
         const suggestionsWithContext: SuggestInfoWithContext[] = [];
-        for (const suggestion of suggestions)
-            suggestionsWithContext.push({ ...suggestion, context: context });
+        for (const suggestion of suggestions) suggestionsWithContext.push({ ...suggestion, context: context });
 
         return suggestionsWithContext;
     }
@@ -67,10 +51,7 @@ export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
         el.setText(value.displayText);
     }
 
-    selectSuggestion(
-        value: SuggestInfoWithContext,
-        _evt: MouseEvent | KeyboardEvent,
-    ) {
+    selectSuggestion(value: SuggestInfoWithContext, _evt: MouseEvent | KeyboardEvent) {
         const editor = value.context.editor;
         if (value.suggestionType === 'empty') {
             // Close the suggestion dialog and simulate an Enter press to the editor
@@ -93,11 +74,7 @@ export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
                   ch: replaceFrom.ch + value.insertSkip,
               }
             : undefined;
-        value.context.editor.replaceRange(
-            value.appendText,
-            replaceFrom,
-            replaceTo,
-        );
+        value.context.editor.replaceRange(value.appendText, replaceFrom, replaceTo);
         value.context.editor.setCursor({
             line: currentCursor.line,
             ch: replaceFrom.ch + value.appendText.length,

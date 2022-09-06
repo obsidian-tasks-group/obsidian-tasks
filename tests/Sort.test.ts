@@ -18,9 +18,7 @@ describe('Sort', () => {
         const five = fromLine({ line: '- [x] b 📅 1970-01-02', path: '3' });
         const six = fromLine({ line: '- [x] d 📅 1970-01-03', path: '2' });
         const expectedOrder = [one, two, three, four, five, six];
-        expect(
-            Sort.by({ sorting: [] }, [six, five, one, four, two, three]),
-        ).toEqual(expectedOrder);
+        expect(Sort.by({ sorting: [] }, [six, five, one, four, two, three])).toEqual(expectedOrder);
     });
 
     it('sorts correctly by due', () => {
@@ -426,21 +424,7 @@ describe('Sort by tags', () => {
         const t12 = fromLine({ line: '- [ ] #task a #jjj #hhh' });
         const t13 = fromLine({ line: '- [ ] #task a' });
 
-        const expectedOrder = [
-            t1,
-            t2,
-            t3,
-            t4,
-            t5,
-            t6,
-            t7,
-            t8,
-            t9,
-            t10,
-            t11,
-            t12,
-            t13,
-        ];
+        const expectedOrder = [t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13];
 
         // Act
         expect(
@@ -480,21 +464,7 @@ describe('Sort by tags', () => {
         const t12 = fromLine({ line: '- [ ] #task a #jjj #hhh' });
         const t13 = fromLine({ line: '- [ ] #task a' });
 
-        const expectedOrder = [
-            t13,
-            t12,
-            t11,
-            t10,
-            t9,
-            t8,
-            t7,
-            t6,
-            t5,
-            t4,
-            t3,
-            t2,
-            t1,
-        ];
+        const expectedOrder = [t13, t12, t11, t10, t9, t8, t7, t6, t5, t4, t3, t2, t1];
 
         // Act
         expect(

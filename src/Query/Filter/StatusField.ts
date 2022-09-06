@@ -6,10 +6,7 @@ export class StatusField extends FilterInstructionsBasedField {
         super();
 
         this._filters.add('done', (task: Task) => task.status === Status.Done);
-        this._filters.add(
-            'not done',
-            (task: Task) => task.status !== Status.Done,
-        );
+        this._filters.add('not done', (task: Task) => task.status !== Status.Done);
     }
 
     public fieldName(): string {

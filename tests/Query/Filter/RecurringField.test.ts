@@ -9,11 +9,7 @@ import { fromLine } from '../../TestHelpers';
 
 window.moment = moment;
 
-function testRecurringFilter(
-    filter: FilterOrErrorMessage,
-    line: string,
-    expected: boolean,
-) {
+function testRecurringFilter(filter: FilterOrErrorMessage, line: string, expected: boolean) {
     const task = fromLine({ line });
     testTaskFilter(filter, task, expected);
 }
@@ -26,9 +22,7 @@ describe('recurring', () => {
 
     it('is recurring', () => {
         // Arrange
-        const filter = new RecurringField().createFilterOrErrorMessage(
-            'is recurring',
-        );
+        const filter = new RecurringField().createFilterOrErrorMessage('is recurring');
 
         // Assert
         testRecurringFilter(filter, non_recurring, false);
@@ -38,9 +32,7 @@ describe('recurring', () => {
 
     it('is not recurring', () => {
         // Arrange
-        const filter = new RecurringField().createFilterOrErrorMessage(
-            'is not recurring',
-        );
+        const filter = new RecurringField().createFilterOrErrorMessage('is not recurring');
 
         // Assert
         testRecurringFilter(filter, non_recurring, true);

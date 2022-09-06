@@ -96,8 +96,7 @@ export class BooleanField extends Field {
             };
             return result;
         } catch (error) {
-            const message =
-                error instanceof Error ? error.message : 'unknown error type';
+            const message = error instanceof Error ? error.message : 'unknown error type';
             result.error = `malformed boolean query -- ${message} (check the documentation for guidelines)`;
             return result;
         }
@@ -118,10 +117,7 @@ export class BooleanField extends Field {
      * See here how it works: http://www.btechsmartclass.com/data_structures/postfix-evaluation.html
      * Another reference: https://www.tutorialspoint.com/Evaluate-Postfix-Expression
      */
-    private filterTaskWithParsedQuery(
-        task: Task,
-        postfixExpression: PostfixExpression,
-    ): boolean {
+    private filterTaskWithParsedQuery(task: Task, postfixExpression: PostfixExpression): boolean {
         const toBool = (s: string | undefined) => {
             return s === 'true';
         };
@@ -155,9 +151,7 @@ export class BooleanField extends Field {
                 } else if (token.value === 'XOR') {
                     const arg1 = toBool(booleanStack.pop());
                     const arg2 = toBool(booleanStack.pop());
-                    booleanStack.push(
-                        toString((arg1 && !arg2) || (!arg1 && arg2)),
-                    );
+                    booleanStack.push(toString((arg1 && !arg2) || (!arg1 && arg2)));
                 } else {
                     throw Error('Unsupported operator: ' + token.value);
                 }

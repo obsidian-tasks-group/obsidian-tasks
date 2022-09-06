@@ -6,15 +6,7 @@ export class TaskModal extends Modal {
     public readonly task: Task;
     public readonly onSubmit: (updatedTasks: Task[]) => void;
 
-    constructor({
-        app,
-        task,
-        onSubmit,
-    }: {
-        app: App;
-        task: Task;
-        onSubmit: (updatedTasks: Task[]) => void;
-    }) {
+    constructor({ app, task, onSubmit }: { app: App; task: Task; onSubmit: (updatedTasks: Task[]) => void }) {
         super(app);
 
         this.task = task;
