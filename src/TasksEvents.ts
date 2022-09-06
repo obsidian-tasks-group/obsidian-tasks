@@ -13,7 +13,7 @@ interface CacheUpdateData {
     state: State;
 }
 
-export class Events {
+export class TasksEvents {
     private obsidianEvents: ObsidianEvents;
 
     constructor({ obsidianEvents }: { obsidianEvents: ObsidianEvents }) {
