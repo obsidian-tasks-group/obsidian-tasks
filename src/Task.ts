@@ -91,6 +91,15 @@ export class TaskRegularExpressions {
 
     // Match on block link at end.
     public static readonly blockLinkRegex = / \^[a-zA-Z0-9-]+$/u;
+
+    // The following regex's end with `$` because they will be matched and
+    // removed from the end until none are left.
+    public static readonly priorityRegex = /([⏫🔼🔽])$/u;
+    public static readonly startDateRegex = /🛫 *(\d{4}-\d{2}-\d{2})$/u;
+    public static readonly scheduledDateRegex = /[⏳⌛] *(\d{4}-\d{2}-\d{2})$/u;
+    public static readonly dueDateRegex = /[📅📆🗓] *(\d{4}-\d{2}-\d{2})$/u;
+    public static readonly doneDateRegex = /✅ *(\d{4}-\d{2}-\d{2})$/u;
+    public static readonly recurrenceRegex = /🔁 ?([a-zA-Z0-9, !]+)$/iu;
 }
 
 /**
@@ -129,15 +138,6 @@ export class Task {
     public readonly recurrence: Recurrence | null;
     /** The blockLink is a "^" annotation after the dates/recurrence rules. */
     public readonly blockLink: string;
-
-    // The following regex's end with `$` because they will be matched and
-    // removed from the end until none are left.
-    public static readonly priorityRegex = /([⏫🔼🔽])$/u;
-    public static readonly startDateRegex = /🛫 *(\d{4}-\d{2}-\d{2})$/u;
-    public static readonly scheduledDateRegex = /[⏳⌛] *(\d{4}-\d{2}-\d{2})$/u;
-    public static readonly dueDateRegex = /[📅📆🗓] *(\d{4}-\d{2}-\d{2})$/u;
-    public static readonly doneDateRegex = /✅ *(\d{4}-\d{2}-\d{2})$/u;
-    public static readonly recurrenceRegex = /🔁 ?([a-zA-Z0-9, !]+)$/iu;
 
     // Regex to match all hash tags, basically hash followed by anything but the characters in the negation.
     // To ensure URLs are not caught it is looking of beginning of string tag and any
@@ -294,7 +294,7 @@ export class Task {
         let runs = 0;
         do {
             matched = false;
-            const priorityMatch = description.match(Task.priorityRegex);
+            const priorityMatch = description.match(TaskRegularExpressions.priorityRegex);
             if (priorityMatch !== null) {
                 switch (priorityMatch[1]) {
                     case prioritySymbols.Low:
@@ -308,45 +308,45 @@ export class Task {
                         break;
                 }
 
-                description = description.replace(Task.priorityRegex, '').trim();
+                description = description.replace(TaskRegularExpressions.priorityRegex, '').trim();
                 matched = true;
             }
 
-            const doneDateMatch = description.match(Task.doneDateRegex);
+            const doneDateMatch = description.match(TaskRegularExpressions.doneDateRegex);
             if (doneDateMatch !== null) {
                 doneDate = window.moment(doneDateMatch[1], TaskRegularExpressions.dateFormat);
-                description = description.replace(Task.doneDateRegex, '').trim();
+                description = description.replace(TaskRegularExpressions.doneDateRegex, '').trim();
                 matched = true;
             }
 
-            const dueDateMatch = description.match(Task.dueDateRegex);
+            const dueDateMatch = description.match(TaskRegularExpressions.dueDateRegex);
             if (dueDateMatch !== null) {
                 dueDate = window.moment(dueDateMatch[1], TaskRegularExpressions.dateFormat);
-                description = description.replace(Task.dueDateRegex, '').trim();
+                description = description.replace(TaskRegularExpressions.dueDateRegex, '').trim();
                 matched = true;
             }
 
-            const scheduledDateMatch = description.match(Task.scheduledDateRegex);
+            const scheduledDateMatch = description.match(TaskRegularExpressions.scheduledDateRegex);
             if (scheduledDateMatch !== null) {
                 scheduledDate = window.moment(scheduledDateMatch[1], TaskRegularExpressions.dateFormat);
-                description = description.replace(Task.scheduledDateRegex, '').trim();
+                description = description.replace(TaskRegularExpressions.scheduledDateRegex, '').trim();
                 matched = true;
             }
 
-            const startDateMatch = description.match(Task.startDateRegex);
+            const startDateMatch = description.match(TaskRegularExpressions.startDateRegex);
             if (startDateMatch !== null) {
                 startDate = window.moment(startDateMatch[1], TaskRegularExpressions.dateFormat);
-                description = description.replace(Task.startDateRegex, '').trim();
+                description = description.replace(TaskRegularExpressions.startDateRegex, '').trim();
                 matched = true;
             }
 
-            const recurrenceMatch = description.match(Task.recurrenceRegex);
+            const recurrenceMatch = description.match(TaskRegularExpressions.recurrenceRegex);
             if (recurrenceMatch !== null) {
                 // Save the recurrence rule, but *do not parse it yet*.
                 // Creating the Recurrence object requires a reference date (e.g. a due date),
                 // and it might appear in the next (earlier in the line) tokens to parse
                 recurrenceRule = recurrenceMatch[1].trim();
-                description = description.replace(Task.recurrenceRegex, '').trim();
+                description = description.replace(TaskRegularExpressions.recurrenceRegex, '').trim();
                 matched = true;
             }
 

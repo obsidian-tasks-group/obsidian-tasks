@@ -117,7 +117,7 @@ export const calculateCursorOffset = (origCursorCh: number, line: string, toggle
 
     // Special-case for done-date append, fixes #449
     const doneDateLength = ' ✅ YYYY-MM-DD'.length;
-    if (toggledLine.match(Task.doneDateRegex) && newLineLen - line.length >= doneDateLength) {
+    if (toggledLine.match(TaskRegularExpressions.doneDateRegex) && newLineLen - line.length >= doneDateLength) {
         newLineLen -= doneDateLength;
     }
 
