@@ -1,8 +1,7 @@
 import type moment from 'moment';
-import type { Task } from './Task';
-import type { Query, SortingProperty } from './Query/Query';
-
-import { getSettings } from './config/Settings';
+import type { Task } from '../Task';
+import { getSettings } from '../config/Settings';
+import type { Query, SortingProperty } from './Query';
 
 type Comparator = (a: Task, b: Task) => number;
 

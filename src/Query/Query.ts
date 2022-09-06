@@ -1,7 +1,7 @@
 import { LayoutOptions } from '../LayoutOptions';
-import { Sort } from '../Sort';
 import type { Task } from '../Task';
 import type { IQuery } from '../IQuery';
+import { Sort } from './Sort';
 import type { TaskGroups } from './TaskGroups';
 import { parseFilter } from './FilterParser';
 import { Group } from './Group';

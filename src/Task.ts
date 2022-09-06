@@ -5,7 +5,7 @@ import { LayoutOptions } from './LayoutOptions';
 import { Recurrence } from './Recurrence';
 import { getSettings } from './config/Settings';
 import { Urgency } from './Urgency';
-import { Sort } from './Sort';
+import { Sort } from './Query/Sort';
 
 /**
  * Collection of status types supported by the plugin.
