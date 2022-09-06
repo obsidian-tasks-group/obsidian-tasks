@@ -1,6 +1,6 @@
 import type moment from 'moment';
 import type { Task } from './Task';
-import type { Query, SortingProperty } from './Query';
+import type { Query, SortingProperty } from './Query/Query';
 
 import { getSettings } from './config/Settings';
 

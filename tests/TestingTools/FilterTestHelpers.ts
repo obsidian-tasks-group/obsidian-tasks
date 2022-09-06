@@ -1,6 +1,6 @@
 import type { FilterOrErrorMessage } from '../../src/Query/Filter/Filter';
 import { Task } from '../../src/Task';
-import { Query } from '../../src/Query';
+import { Query } from '../../src/Query/Query';
 import type { TaskBuilder } from './TaskBuilder';
 
 /**

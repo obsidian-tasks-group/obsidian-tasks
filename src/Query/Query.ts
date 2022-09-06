@@ -1,11 +1,10 @@
-import { Group } from './Query/Group';
-import { parseFilter } from './Query/FilterParser';
-import type { TaskGroups } from './Query/TaskGroups';
-
-import { LayoutOptions } from './LayoutOptions';
-import { Sort } from './Sort';
-import type { Task } from './Task';
-import type { IQuery } from './IQuery';
+import { LayoutOptions } from '../LayoutOptions';
+import { Sort } from '../Sort';
+import type { Task } from '../Task';
+import type { IQuery } from '../IQuery';
+import type { TaskGroups } from './TaskGroups';
+import { parseFilter } from './FilterParser';
+import { Group } from './Group';
 
 export type SortingProperty =
     | 'urgency'
