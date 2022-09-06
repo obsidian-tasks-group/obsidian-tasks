@@ -59,6 +59,30 @@ export class TaskRegularExpressions {
 
     // Matches the rest of the task after the checkbox.
     public static readonly afterCheckboxRegex = / *(.*)/u;
+
+    // Main regex for parsing a line. It matches the following:
+    // - Indentation
+    // - Status character
+    // - Rest of task after checkbox markdown
+    public static readonly taskRegex = new RegExp(
+        TaskRegularExpressions.indentationRegex.source +
+            TaskRegularExpressions.listMarkerRegex.source +
+            ' +' +
+            TaskRegularExpressions.checkboxRegex.source +
+            TaskRegularExpressions.afterCheckboxRegex.source,
+        'u',
+    );
+
+    // Used with the "Create or Edit Task" command to parse indentation and status if present
+    public static readonly nonTaskRegex = new RegExp(
+        TaskRegularExpressions.indentationRegex.source +
+            TaskRegularExpressions.listMarkerRegex.source +
+            '? *(' +
+            TaskRegularExpressions.checkboxRegex.source +
+            ')?' +
+            TaskRegularExpressions.afterCheckboxRegex.source,
+        'u',
+    );
 }
 
 /**
@@ -97,30 +121,6 @@ export class Task {
     public readonly recurrence: Recurrence | null;
     /** The blockLink is a "^" annotation after the dates/recurrence rules. */
     public readonly blockLink: string;
-
-    // Main regex for parsing a line. It matches the following:
-    // - Indentation
-    // - Status character
-    // - Rest of task after checkbox markdown
-    public static readonly taskRegex = new RegExp(
-        TaskRegularExpressions.indentationRegex.source +
-            TaskRegularExpressions.listMarkerRegex.source +
-            ' +' +
-            TaskRegularExpressions.checkboxRegex.source +
-            TaskRegularExpressions.afterCheckboxRegex.source,
-        'u',
-    );
-
-    // Used with the "Create or Edit Task" command to parse indentation and status if present
-    public static readonly nonTaskRegex = new RegExp(
-        TaskRegularExpressions.indentationRegex.source +
-            TaskRegularExpressions.listMarkerRegex.source +
-            '? *(' +
-            TaskRegularExpressions.checkboxRegex.source +
-            ')?' +
-            TaskRegularExpressions.afterCheckboxRegex.source,
-        'u',
-    );
 
     // Used with "Toggle Done" command to detect a list item that can get a checkbox added to it.
     public static readonly listItemRegex = new RegExp(
@@ -234,7 +234,7 @@ export class Task {
         precedingHeader: string | null;
     }): Task | null {
         // Check the line to see if it is a markdown task.
-        const regexMatch = line.match(Task.taskRegex);
+        const regexMatch = line.match(TaskRegularExpressions.taskRegex);
         if (regexMatch === null) {
             return null;
         }

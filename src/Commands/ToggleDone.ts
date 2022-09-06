@@ -71,12 +71,12 @@ export const toggleLine = (line: string, path: string) => {
         // 3. a simple text line
 
         // The task regex will match checklist items.
-        const regexMatch = line.match(Task.taskRegex);
+        const regexMatch = line.match(TaskRegularExpressions.taskRegex);
         if (regexMatch !== null) {
             // Toggle the status of the checklist item.
             const statusString = regexMatch[2].toLowerCase(); // Note for future: I do not think this toLowerCase is necessary and there is an issue about how it breaks some theme or snippet.
             const newStatusString = statusString === ' ' ? 'x' : ' ';
-            toggledLine = line.replace(Task.taskRegex, `$1- [${newStatusString}] $3`);
+            toggledLine = line.replace(TaskRegularExpressions.taskRegex, `$1- [${newStatusString}] $3`);
         } else if (Task.listItemRegex.test(line)) {
             // Convert the list item to a checklist item.
             toggledLine = line.replace(Task.listItemRegex, '$1$2 [ ]');
