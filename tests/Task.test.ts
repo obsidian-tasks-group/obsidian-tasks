@@ -24,7 +24,7 @@ describe('parsing', () => {
         // Assert
         expect(task).not.toBeNull();
         expect(task!.description).toEqual('this is a done task');
-        expect(task!.status).toStrictEqual(Status.Done);
+        expect(task!.status).toStrictEqual(Status.DONE);
         expect(task!.dueDate).not.toBeNull();
         expect(task!.dueDate!.isSame(moment('2021-09-12', 'YYYY-MM-DD'))).toStrictEqual(true);
         expect(task!.doneDate).not.toBeNull();
@@ -60,7 +60,7 @@ describe('parsing', () => {
         // Assert
         expect(task).not.toBeNull();
         expect(task!.description).toEqual('this is a ✅ done task');
-        expect(task!.status).toStrictEqual(Status.Done);
+        expect(task!.status).toStrictEqual(Status.DONE);
         expect(task!.dueDate).not.toBeNull();
         expect(task!.dueDate!.isSame(moment('2021-09-12', 'YYYY-MM-DD'))).toStrictEqual(true);
         expect(task!.doneDate).not.toBeNull();
@@ -79,7 +79,7 @@ describe('parsing', () => {
         // Assert
         expect(task).not.toBeNull();
         expect(task!.description).toEqual('this is a ✅ done task');
-        expect(task!.status).toStrictEqual(Status.Done);
+        expect(task!.status).toStrictEqual(Status.DONE);
         expect(task!.dueDate).not.toBeNull();
         expect(task!.dueDate!.isSame(moment('2021-09-12', 'YYYY-MM-DD'))).toStrictEqual(true);
         expect(task!.doneDate).not.toBeNull();
@@ -400,7 +400,7 @@ describe('toggle done', () => {
 
         // Assert
         expect(toggled).not.toBeNull();
-        expect(toggled!.status).toStrictEqual(Status.Done);
+        expect(toggled!.status).toStrictEqual(Status.DONE);
         expect(toggled!.doneDate).not.toBeNull();
         expect(toggled!.originalStatusCharacter).toStrictEqual('x');
         expect(toggled!.blockLink).toEqual(' ^my-precious');
@@ -418,7 +418,7 @@ describe('toggle done', () => {
 
         // Assert
         expect(toggled).not.toBeNull();
-        expect(toggled!.status).toStrictEqual(Status.Todo);
+        expect(toggled!.status).toStrictEqual(Status.TODO);
         expect(toggled!.originalStatusCharacter).toStrictEqual(' ');
         expect(toggled!.doneDate).toBeNull();
     });
@@ -746,9 +746,9 @@ expect.extend({
 
 describe('identicalTo', () => {
     it('should check status', () => {
-        const lhs = new TaskBuilder().status(Status.Todo);
-        expect(lhs).toBeIdenticalTo(new TaskBuilder().status(Status.Todo));
-        expect(lhs).not.toBeIdenticalTo(new TaskBuilder().status(Status.Done));
+        const lhs = new TaskBuilder().status(Status.TODO);
+        expect(lhs).toBeIdenticalTo(new TaskBuilder().status(Status.TODO));
+        expect(lhs).not.toBeIdenticalTo(new TaskBuilder().status(Status.DONE));
     });
 
     it('should check description', () => {

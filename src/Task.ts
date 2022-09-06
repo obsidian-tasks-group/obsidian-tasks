@@ -14,8 +14,8 @@ import { Sort } from './Query/Sort';
  * @enum {number}
  */
 export enum Status {
-    Todo = 'Todo',
-    Done = 'Done',
+    TODO = 'Todo',
+    DONE = 'Done',
 }
 
 /**
@@ -257,10 +257,10 @@ export class Task {
         let status: Status;
         switch (statusString) {
             case ' ':
-                status = Status.Todo;
+                status = Status.TODO;
                 break;
             default:
-                status = Status.Done;
+                status = Status.DONE;
         }
 
         // Match for block link and remove if found. Always expected to be
@@ -465,7 +465,7 @@ export class Task {
         const checkbox = li.createEl('input');
         checkbox.addClass('task-list-item-checkbox');
         checkbox.type = 'checkbox';
-        if (this.status !== Status.Todo) {
+        if (this.status !== Status.TODO) {
             checkbox.checked = true;
             li.addClass('is-checked');
         }
@@ -583,7 +583,7 @@ export class Task {
      * task is not recurring, it will return `[toggled]`.
      */
     public toggle(): Task[] {
-        const newStatus: Status = this.status === Status.Todo ? Status.Done : Status.Todo;
+        const newStatus: Status = this.status === Status.TODO ? Status.DONE : Status.TODO;
 
         let newDoneDate = null;
 
@@ -593,7 +593,7 @@ export class Task {
             dueDate: Moment | null;
         } | null = null;
 
-        if (newStatus !== Status.Todo) {
+        if (newStatus !== Status.TODO) {
             // Set done date only if setting value is true
             const { setDoneDate } = getSettings();
             if (setDoneDate) {
@@ -610,7 +610,7 @@ export class Task {
             ...this,
             status: newStatus,
             doneDate: newDoneDate,
-            originalStatusCharacter: newStatus === Status.Done ? 'x' : ' ',
+            originalStatusCharacter: newStatus === Status.DONE ? 'x' : ' ',
         });
 
         const newTasks: Task[] = [];
