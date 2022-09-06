@@ -2,7 +2,7 @@ import { Plugin } from 'obsidian';
 
 import { Cache } from './Cache';
 import { Commands } from './Commands';
-import { Events } from './Events';
+import { TasksEvents } from './TasksEvents';
 import { initializeFile } from './File';
 import { InlineRenderer } from './InlineRenderer';
 import { newLivePreviewExtension } from './LivePreviewExtension';
@@ -27,7 +27,7 @@ export default class TasksPlugin extends Plugin {
             vault: this.app.vault,
         });
 
-        const events = new Events({ obsidianEvents: this.app.workspace });
+        const events = new TasksEvents({ obsidianEvents: this.app.workspace });
         this.cache = new Cache({
             metadataCache: this.app.metadataCache,
             vault: this.app.vault,
