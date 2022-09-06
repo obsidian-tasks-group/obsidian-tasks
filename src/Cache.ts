@@ -4,7 +4,7 @@ import type { HeadingCache, ListItemCache, SectionCache } from 'obsidian';
 import { Mutex } from 'async-mutex';
 
 import { Task } from './Task';
-import type { Events } from './Events';
+import type { TasksEvents } from './TasksEvents';
 
 export enum State {
     Cold = 'Cold',
@@ -17,7 +17,7 @@ export class Cache {
     private readonly metadataCacheEventReferences: EventRef[];
     private readonly vault: Vault;
     private readonly vaultEventReferences: EventRef[];
-    private readonly events: Events;
+    private readonly events: TasksEvents;
     private readonly eventsEventReferences: EventRef[];
 
     private readonly tasksMutex: Mutex;
@@ -41,7 +41,7 @@ export class Cache {
     }: {
         metadataCache: MetadataCache;
         vault: Vault;
-        events: Events;
+        events: TasksEvents;
     }) {
         this.metadataCache = metadataCache;
         this.metadataCacheEventReferences = [];

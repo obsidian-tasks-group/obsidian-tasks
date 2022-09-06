@@ -13,14 +13,14 @@ import { replaceTaskWithTasks } from './File';
 import { Query } from './Query/Query';
 import type { GroupHeading } from './Query/GroupHeading';
 import { TaskModal } from './TaskModal';
-import type { Events } from './Events';
+import type { TasksEvents } from './TasksEvents';
 import type { Task } from './Task';
 
 export class QueryRenderer {
     private readonly app: App;
-    private readonly events: Events;
+    private readonly events: TasksEvents;
 
-    constructor({ plugin, events }: { plugin: Plugin; events: Events }) {
+    constructor({ plugin, events }: { plugin: Plugin; events: TasksEvents }) {
         this.app = plugin.app;
         this.events = events;
 
@@ -51,7 +51,7 @@ export class QueryRenderer {
 
 class QueryRenderChild extends MarkdownRenderChild {
     private readonly app: App;
-    private readonly events: Events;
+    private readonly events: TasksEvents;
     private readonly source: string; // The complete text in the instruction block, such as 'not done\nshort mode'
     private readonly filePath: string; // The path of the file that contains the instruction block
     private query: IQuery;
@@ -68,7 +68,7 @@ class QueryRenderChild extends MarkdownRenderChild {
         filePath,
     }: {
         app: App;
-        events: Events;
+        events: TasksEvents;
         container: HTMLElement;
         source: string;
         filePath: string;
