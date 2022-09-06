@@ -1,6 +1,6 @@
 import { App, Editor, MarkdownView, View } from 'obsidian';
 import { TaskModal } from '../TaskModal';
-import { Priority, Status, Task } from '../Task';
+import { Priority, Status, Task, TaskRegularExpressions } from '../Task';
 
 export const createOrEdit = (checking: boolean, editor: Editor, view: View, app: App) => {
     if (checking) {
@@ -51,7 +51,7 @@ const taskFromLine = ({ line, path }: { line: string; path: string }): Task => {
 
     // If we are not on a line of a task, we take what we have.
     // The non-task line can still be a checklist, for example if it is lacking the global filter.
-    const nonTaskMatch = line.match(Task.nonTaskRegex);
+    const nonTaskMatch = line.match(TaskRegularExpressions.nonTaskRegex);
     if (nonTaskMatch === null) {
         // Should never happen; everything in the regex is optional.
         console.error('Tasks: Cannot create task on line:', line);
@@ -81,11 +81,11 @@ const taskFromLine = ({ line, path }: { line: string; path: string }): Task => {
     const status = statusString === ' ' ? Status.Todo : Status.Done;
     let description: string = nonTaskMatch[4];
 
-    const blockLinkMatch = line.match(Task.blockLinkRegex);
+    const blockLinkMatch = line.match(TaskRegularExpressions.blockLinkRegex);
     const blockLink = blockLinkMatch !== null ? blockLinkMatch[0] : '';
 
     if (blockLink !== '') {
-        description = description.replace(Task.blockLinkRegex, '');
+        description = description.replace(TaskRegularExpressions.blockLinkRegex, '');
     }
 
     return new Task({
