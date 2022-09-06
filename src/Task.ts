@@ -50,6 +50,9 @@ export class TaskRegularExpressions {
 
     // Matches indentation before a list marker (including > for potentially nested blockquotes or Obsidian callouts)
     public static readonly indentationRegex = /^([\s\t>]*)/;
+
+    // Matches (but does not save) - or * list markers.
+    public static readonly listMarkerRegex = /[-*]/;
 }
 
 /**
@@ -89,9 +92,6 @@ export class Task {
     /** The blockLink is a "^" annotation after the dates/recurrence rules. */
     public readonly blockLink: string;
 
-    // Matches (but does not save) - or * list markers.
-    public static readonly listMarkerRegex = /[-*]/;
-
     // Matches a checkbox and saves the status character inside
     public static readonly checkboxRegex = /\[(.)\]/u;
 
@@ -104,7 +104,7 @@ export class Task {
     // - Rest of task after checkbox markdown
     public static readonly taskRegex = new RegExp(
         TaskRegularExpressions.indentationRegex.source +
-            this.listMarkerRegex.source +
+            TaskRegularExpressions.listMarkerRegex.source +
             ' +' +
             this.checkboxRegex.source +
             this.afterCheckboxRegex.source,
@@ -114,7 +114,7 @@ export class Task {
     // Used with the "Create or Edit Task" command to parse indentation and status if present
     public static readonly nonTaskRegex = new RegExp(
         TaskRegularExpressions.indentationRegex.source +
-            this.listMarkerRegex.source +
+            TaskRegularExpressions.listMarkerRegex.source +
             '? *(' +
             this.checkboxRegex.source +
             ')?' +
@@ -124,7 +124,7 @@ export class Task {
 
     // Used with "Toggle Done" command to detect a list item that can get a checkbox added to it.
     public static readonly listItemRegex = new RegExp(
-        TaskRegularExpressions.indentationRegex.source + '(' + this.listMarkerRegex.source + ')',
+        TaskRegularExpressions.indentationRegex.source + '(' + TaskRegularExpressions.listMarkerRegex.source + ')',
     );
 
     // Match on block link at end.
