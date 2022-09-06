@@ -18,11 +18,7 @@ export function fromLine({
     })!;
 }
 
-export function createTasksFromMarkdown(
-    tasksAsMarkdown: string,
-    path: string,
-    precedingHeader: string,
-): Task[] {
+export function createTasksFromMarkdown(tasksAsMarkdown: string, path: string, precedingHeader: string): Task[] {
     const taskLines = tasksAsMarkdown.split('\n');
     const tasks: Task[] = [];
     for (const line of taskLines) {

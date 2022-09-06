@@ -30,9 +30,7 @@ describe('feature-usage', () => {
         expect(feature.internalName).toBe(name);
         expect(feature.index).toBe(9999);
         expect(feature.description).toBe('Description');
-        expect(feature.displayName).toBe(
-            'Test Item. Used to validate the Feature Framework.',
-        );
+        expect(feature.displayName).toBe('Test Item. Used to validate the Feature Framework.');
         expect(feature.enabledByDefault).toBe(true);
         expect(feature.stable).toBe(false);
     });

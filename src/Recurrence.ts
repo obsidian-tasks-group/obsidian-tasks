@@ -59,9 +59,7 @@ export class Recurrence {
         dueDate: Moment | null;
     }): Recurrence | null {
         try {
-            const match = recurrenceRuleText.match(
-                /^([a-zA-Z0-9, !]+?)( when done)?$/i,
-            );
+            const match = recurrenceRuleText.match(/^([a-zA-Z0-9, !]+?)( when done)?$/i);
             if (match == null) {
                 return null;
             }
@@ -84,17 +82,9 @@ export class Recurrence {
                 }
 
                 if (!baseOnToday && referenceDate !== null) {
-                    options.dtstart = window
-                        .moment(referenceDate)
-                        .startOf('day')
-                        .utc(true)
-                        .toDate();
+                    options.dtstart = window.moment(referenceDate).startOf('day').utc(true).toDate();
                 } else {
-                    options.dtstart = window
-                        .moment()
-                        .startOf('day')
-                        .utc(true)
-                        .toDate();
+                    options.dtstart = window.moment().startOf('day').utc(true).toDate();
                 }
 
                 const rrule = new RRule(options);
@@ -139,9 +129,7 @@ export class Recurrence {
                 ...this.rrule.origOptions,
                 dtstart: today.startOf('day').utc(true).toDate(),
             });
-            next = ruleBasedOnToday.after(
-                today.endOf('day').utc(true).toDate(),
-            );
+            next = ruleBasedOnToday.after(today.endOf('day').utc(true).toDate());
         } else {
             // The next occurrence should happen based on the original reference
             // date if possible. Otherwise, base it on today if we do not have a
@@ -171,43 +159,28 @@ export class Recurrence {
             // least one of the other dates is set.
             if (this.referenceDate) {
                 if (this.startDate) {
-                    const originalDifference = window.moment.duration(
-                        this.startDate.diff(this.referenceDate),
-                    );
+                    const originalDifference = window.moment.duration(this.startDate.diff(this.referenceDate));
 
                     // Cloning so that original won't be manipulated:
                     startDate = window.moment(nextOccurrence);
                     // Rounding days to handle cross daylight-savings-time recurrences.
-                    startDate.add(
-                        Math.round(originalDifference.asDays()),
-                        'days',
-                    );
+                    startDate.add(Math.round(originalDifference.asDays()), 'days');
                 }
                 if (this.scheduledDate) {
-                    const originalDifference = window.moment.duration(
-                        this.scheduledDate.diff(this.referenceDate),
-                    );
+                    const originalDifference = window.moment.duration(this.scheduledDate.diff(this.referenceDate));
 
                     // Cloning so that original won't be manipulated:
                     scheduledDate = window.moment(nextOccurrence);
                     // Rounding days to handle cross daylight-savings-time recurrences.
-                    scheduledDate.add(
-                        Math.round(originalDifference.asDays()),
-                        'days',
-                    );
+                    scheduledDate.add(Math.round(originalDifference.asDays()), 'days');
                 }
                 if (this.dueDate) {
-                    const originalDifference = window.moment.duration(
-                        this.dueDate.diff(this.referenceDate),
-                    );
+                    const originalDifference = window.moment.duration(this.dueDate.diff(this.referenceDate));
 
                     // Cloning so that original won't be manipulated:
                     dueDate = window.moment(nextOccurrence);
                     // Rounding days to handle cross daylight-savings-time recurrences.
-                    dueDate.add(
-                        Math.round(originalDifference.asDays()),
-                        'days',
-                    );
+                    dueDate.add(Math.round(originalDifference.asDays()), 'days');
                 }
             }
 

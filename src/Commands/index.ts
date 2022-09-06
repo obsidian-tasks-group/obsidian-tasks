@@ -17,11 +17,7 @@ export class Commands {
             id: 'edit-task',
             name: 'Create or edit task',
             icon: 'pencil',
-            editorCheckCallback: (
-                checking: boolean,
-                editor: Editor,
-                view: View,
-            ) => {
+            editorCheckCallback: (checking: boolean, editor: Editor, view: View) => {
                 return createOrEdit(checking, editor, view, this.app);
             },
         });

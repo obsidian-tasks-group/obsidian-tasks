@@ -9,11 +9,7 @@ import { fromLine } from './TestHelpers';
 
 window.moment = moment;
 
-function checkGroupNamesOfTask(
-    task: Task,
-    property: GroupingProperty,
-    expectedGroupNames: string[],
-) {
+function checkGroupNamesOfTask(task: Task, property: GroupingProperty, expectedGroupNames: string[]) {
     const group = Group.getGroupNamesForTask(property, task);
     expect(group).toEqual(expectedGroupNames);
 }
@@ -189,10 +185,7 @@ describe('Grouping tasks', () => {
         });
         const tasks = [t1, t2, t3];
 
-        const grouping: Grouping[] = [
-            { property: 'folder' },
-            { property: 'filename' },
-        ];
+        const grouping: Grouping[] = [{ property: 'folder' }, { property: 'filename' }];
 
         // Act
         const groups = Group.by(grouping, tasks);
@@ -364,22 +357,19 @@ describe('Group names', () => {
         {
             // Check that earliest date is prioritised: due
             groupBy: 'happens',
-            taskLine:
-                '- [ ] due is earliest date 🛫 1970-01-03 ⏳ 1970-01-02 📅 1970-01-01',
+            taskLine: '- [ ] due is earliest date 🛫 1970-01-03 ⏳ 1970-01-02 📅 1970-01-01',
             expectedGroupNames: ['1970-01-01 Thursday'],
         },
         {
             // Check that earliest date is prioritised: scheduled
             groupBy: 'happens',
-            taskLine:
-                '- [ ] scheduled is earliest date 🛫 1970-01-03 ⏳ 1970-01-01 📅 1970-01-02',
+            taskLine: '- [ ] scheduled is earliest date 🛫 1970-01-03 ⏳ 1970-01-01 📅 1970-01-02',
             expectedGroupNames: ['1970-01-01 Thursday'],
         },
         {
             // Check that earliest date is prioritised: start
             groupBy: 'happens',
-            taskLine:
-                '- [ ] start is earliest date 🛫 1970-01-01 ⏳ 1970-01-02 📅 1970-01-03',
+            taskLine: '- [ ] start is earliest date 🛫 1970-01-01 ⏳ 1970-01-02 📅 1970-01-03',
             expectedGroupNames: ['1970-01-01 Thursday'],
         },
 

@@ -23,9 +23,7 @@ export class SettingsTab extends PluginSettingTab {
 
         new Setting(containerEl)
             .setName('Global task filter')
-            .setDesc(
-                'The global filter will be applied to all checklist items.',
-            )
+            .setDesc('The global filter will be applied to all checklist items.')
             .addText((text) => {
                 const settings = getSettings();
 
@@ -55,43 +53,33 @@ export class SettingsTab extends PluginSettingTab {
             .addToggle((toggle) => {
                 const settings = getSettings();
 
-                toggle
-                    .setValue(settings.removeGlobalFilter)
-                    .onChange(async (value) => {
-                        updateSettings({ removeGlobalFilter: value });
+                toggle.setValue(settings.removeGlobalFilter).onChange(async (value) => {
+                    updateSettings({ removeGlobalFilter: value });
 
-                        await this.plugin.saveSettings();
-                    });
+                    await this.plugin.saveSettings();
+                });
             });
 
         new Setting(containerEl)
             .setName('Set done date on every completed task')
-            .setDesc(
-                'Enabling this will add a timestamp ✅ YYYY-MM-DD at the end when a task is toggled to done',
-            )
+            .setDesc('Enabling this will add a timestamp ✅ YYYY-MM-DD at the end when a task is toggled to done')
             .addToggle((toogle) => {
                 const settings = getSettings();
-                toogle
-                    .setValue(settings.setDoneDate)
-                    .onChange(async (value) => {
-                        updateSettings({ setDoneDate: value });
-                        await this.plugin.saveSettings();
-                    });
+                toogle.setValue(settings.setDoneDate).onChange(async (value) => {
+                    updateSettings({ setDoneDate: value });
+                    await this.plugin.saveSettings();
+                });
             });
 
         new Setting(containerEl)
             .setName('Auto-suggest task content')
-            .setDesc(
-                'Enabling this will open an intelligent suggest menu while typing inside a recognized task line.',
-            )
+            .setDesc('Enabling this will open an intelligent suggest menu while typing inside a recognized task line.')
             .addToggle((toggle) => {
                 const settings = getSettings();
-                toggle
-                    .setValue(settings.autoSuggestInEditor)
-                    .onChange(async (value) => {
-                        updateSettings({ autoSuggestInEditor: value });
-                        await this.plugin.saveSettings();
-                    });
+                toggle.setValue(settings.autoSuggestInEditor).onChange(async (value) => {
+                    updateSettings({ autoSuggestInEditor: value });
+                    await this.plugin.saveSettings();
+                });
             });
 
         new Setting(containerEl)
