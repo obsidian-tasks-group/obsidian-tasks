@@ -47,6 +47,9 @@ export const doneDateSymbol = '✅';
 
 export class TaskRegularExpressions {
     public static readonly dateFormat = 'YYYY-MM-DD';
+
+    // Matches indentation before a list marker (including > for potentially nested blockquotes or Obsidian callouts)
+    public static readonly indentationRegex = /^([\s\t>]*)/;
 }
 
 /**
@@ -86,9 +89,6 @@ export class Task {
     /** The blockLink is a "^" annotation after the dates/recurrence rules. */
     public readonly blockLink: string;
 
-    // Matches indentation before a list marker (including > for potentially nested blockquotes or Obsidian callouts)
-    public static readonly indentationRegex = /^([\s\t>]*)/;
-
     // Matches (but does not save) - or * list markers.
     public static readonly listMarkerRegex = /[-*]/;
 
@@ -103,7 +103,7 @@ export class Task {
     // - Status character
     // - Rest of task after checkbox markdown
     public static readonly taskRegex = new RegExp(
-        this.indentationRegex.source +
+        TaskRegularExpressions.indentationRegex.source +
             this.listMarkerRegex.source +
             ' +' +
             this.checkboxRegex.source +
@@ -113,7 +113,7 @@ export class Task {
 
     // Used with the "Create or Edit Task" command to parse indentation and status if present
     public static readonly nonTaskRegex = new RegExp(
-        this.indentationRegex.source +
+        TaskRegularExpressions.indentationRegex.source +
             this.listMarkerRegex.source +
             '? *(' +
             this.checkboxRegex.source +
@@ -124,7 +124,7 @@ export class Task {
 
     // Used with "Toggle Done" command to detect a list item that can get a checkbox added to it.
     public static readonly listItemRegex = new RegExp(
-        this.indentationRegex.source + '(' + this.listMarkerRegex.source + ')',
+        TaskRegularExpressions.indentationRegex.source + '(' + this.listMarkerRegex.source + ')',
     );
 
     // Match on block link at end.

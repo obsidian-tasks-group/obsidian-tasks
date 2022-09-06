@@ -1,6 +1,6 @@
 import { Editor, MarkdownView, View } from 'obsidian';
 
-import { Task } from '../Task';
+import { Task, TaskRegularExpressions } from '../Task';
 
 export const toggleDone = (checking: boolean, editor: Editor, view: View) => {
     if (checking) {
@@ -82,7 +82,7 @@ export const toggleLine = (line: string, path: string) => {
             toggledLine = line.replace(Task.listItemRegex, '$1$2 [ ]');
         } else {
             // Convert the line to a list item.
-            toggledLine = line.replace(Task.indentationRegex, '$1- ');
+            toggledLine = line.replace(TaskRegularExpressions.indentationRegex, '$1- ');
         }
     }
 
