@@ -234,7 +234,7 @@ describe('Query', () => {
             // Arrange
             const tasks = [
                 new Task({
-                    status: Status.Todo,
+                    status: Status.TODO,
                     description: 'description',
                     path: 'Ab/C D',
                     indentation: '',
@@ -252,7 +252,7 @@ describe('Query', () => {
                     tags: [],
                 }),
                 new Task({
-                    status: Status.Todo,
+                    status: Status.TODO,
                     description: 'description',
                     path: 'FF/C D',
                     indentation: '',

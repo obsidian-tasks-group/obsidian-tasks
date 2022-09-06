@@ -17,7 +17,7 @@ import { DateParser } from '../../src/Query/DateParser';
  *            Create a new TaskBuilder object to start from a clean state,
  */
 export class TaskBuilder {
-    private _status: Status = Status.Todo;
+    private _status: Status = Status.TODO;
     private _description: string = 'my description';
     private _path: string = '';
     private _indentation: string = '';
