@@ -1,7 +1,7 @@
 ---
 layout: default
 title: How to style backlinks
-nav_order: 2
+nav_order: 4
 parent: How Tos
 ---
 
