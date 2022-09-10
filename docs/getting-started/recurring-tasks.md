@@ -72,8 +72,8 @@ For example, given that today is the 13. February 2022 and you just completed th
 - [x] sweep the floors 🔁 every week ⏳ 2021-02-06 ✅ 2022-02-13
 ```
 
-Since you missed the original scheduled date,
-the newly created task is scheduled one week after the original scheduled date: the same day you completed the original task.
+Regardless of you having missed the original scheduled date by a week,
+the newly created task is still scheduled just one week after the original scheduled date: the same day you completed the original task.
 
 If you want to have tasks be scheduled relative to the "done" date rather than the original dates,
 then you will need to add `when done` to the end of the recurrence rule.
