@@ -49,3 +49,4 @@ Other layout options:
 - `hide edit button`
 - `hide task count`
 - `short mode`
+- `show urgency`

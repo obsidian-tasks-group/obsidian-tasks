@@ -186,15 +186,18 @@ class QueryRenderChild extends MarkdownRenderChild {
             const footnotes = listItem.querySelectorAll('[data-footnote-id]');
             footnotes.forEach((footnote) => footnote.remove());
 
-            const postInfo = listItem.createSpan();
             const shortMode = this.query.layoutOptions.shortMode;
 
             if (!this.query.layoutOptions.hideBacklinks) {
-                this.addBacklinks(postInfo, task, shortMode, isFilenameUnique);
+                this.addBacklinks(listItem, task, shortMode, isFilenameUnique);
             }
 
             if (!this.query.layoutOptions.hideEditButton) {
-                this.addEditButton(postInfo, task);
+                this.addEditButton(listItem, task);
+            }
+
+            if (this.query.layoutOptions.showUrgency) {
+                this.addUrgency(listItem, task);
             }
 
             taskList.appendChild(listItem);
@@ -203,8 +206,8 @@ class QueryRenderChild extends MarkdownRenderChild {
         return { taskList, tasksCount };
     }
 
-    private addEditButton(postInfo: HTMLSpanElement, task: Task) {
-        const editTaskPencil = postInfo.createEl('a', {
+    private addEditButton(listItem: HTMLLIElement, task: Task) {
+        const editTaskPencil = listItem.createEl('a', {
             cls: 'tasks-edit',
         });
         editTaskPencil.onClickEvent((event: MouseEvent) => {
@@ -225,6 +228,11 @@ class QueryRenderChild extends MarkdownRenderChild {
             });
             taskModal.open();
         });
+    }
+
+    private addUrgency(listItem: HTMLLIElement, task: Task) {
+        const text = new Intl.NumberFormat().format(task.urgency);
+        listItem.createSpan({ text, cls: 'tasks-score' });
     }
 
     /**
@@ -263,16 +271,18 @@ class QueryRenderChild extends MarkdownRenderChild {
     }
 
     private addBacklinks(
-        postInfo: HTMLSpanElement,
+        listItem: HTMLLIElement,
         task: Task,
         shortMode: boolean,
         isFilenameUnique: boolean | undefined,
     ) {
-        postInfo.addClass('tasks-backlink');
+        const backLink = listItem.createSpan({ cls: 'tasks-backlink' });
+
         if (!shortMode) {
-            postInfo.append(' (');
+            backLink.append(' (');
         }
-        const link = postInfo.createEl('a');
+
+        const link = backLink.createEl('a');
 
         link.href = task.path;
         link.setAttribute('data-href', task.path);
@@ -297,8 +307,9 @@ class QueryRenderChild extends MarkdownRenderChild {
         }
 
         link.setText(linkText);
+
         if (!shortMode) {
-            postInfo.append(')');
+            backLink.append(')');
         }
     }
 

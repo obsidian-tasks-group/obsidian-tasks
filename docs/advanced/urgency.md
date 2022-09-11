@@ -120,3 +120,7 @@ urgency = 0.0 + 6.0 + 5.0 + 0.0 = 11.0
 A task that has no due date, a "high" priority, is scheduled for tomorrow, and starts tomorrow:
 urgency = 0.0 + 6.0 + 0.0 - 3.0 = 3.0
 ```
+
+## How to Display the Urgency score
+
+You can display the calculated Urgency score in your task list, using the `show urgency` option.

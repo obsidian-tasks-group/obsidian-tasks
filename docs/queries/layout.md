@@ -44,6 +44,19 @@ Example:
     hide backlink
     ```
 
+You can also show additional information with the "show" option.
+
+Currently only the following option exists:
+
+- `urgency`
+
+Example:
+
+    ```tasks
+    not done
+    show urgency
+    ```
+
 ---
 
 ## Short Mode

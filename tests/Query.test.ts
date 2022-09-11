@@ -201,6 +201,7 @@ describe('Query parsing', () => {
             'limit to 42 tasks',
             'short mode',
             'short',
+            'show urgency',
         ];
         test.concurrent.each<string>(filters)('recognises %j', (filter) => {
             // Arrange

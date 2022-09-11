@@ -61,7 +61,7 @@ export class Query implements IQuery {
         /^group by (backlink|done|due|filename|folder|happens|heading|path|priority|recurrence|recurring|root|scheduled|start|status|tags)/;
 
     private readonly hideOptionsRegexp =
-        /^hide (task count|backlink|priority|start date|scheduled date|done date|due date|recurrence rule|edit button)/;
+        /^(hide|show) (task count|backlink|priority|start date|scheduled date|done date|due date|recurrence rule|edit button|urgency)/;
     private readonly shortModeRegexp = /^short/;
 
     private readonly limitRegexp = /^limit (to )?(\d+)( tasks?)?/;
@@ -139,38 +139,42 @@ export class Query implements IQuery {
     private parseHideOptions({ line }: { line: string }): void {
         const hideOptionsMatch = line.match(this.hideOptionsRegexp);
         if (hideOptionsMatch !== null) {
-            const option = hideOptionsMatch[1].trim().toLowerCase();
+            const hide = hideOptionsMatch[1] === 'hide';
+            const option = hideOptionsMatch[2];
 
             switch (option) {
                 case 'task count':
-                    this._layoutOptions.hideTaskCount = true;
+                    this._layoutOptions.hideTaskCount = hide;
                     break;
                 case 'backlink':
-                    this._layoutOptions.hideBacklinks = true;
+                    this._layoutOptions.hideBacklinks = hide;
                     break;
                 case 'priority':
-                    this._layoutOptions.hidePriority = true;
+                    this._layoutOptions.hidePriority = hide;
                     break;
                 case 'start date':
-                    this._layoutOptions.hideStartDate = true;
+                    this._layoutOptions.hideStartDate = hide;
                     break;
                 case 'scheduled date':
-                    this._layoutOptions.hideScheduledDate = true;
+                    this._layoutOptions.hideScheduledDate = hide;
                     break;
                 case 'due date':
-                    this._layoutOptions.hideDueDate = true;
+                    this._layoutOptions.hideDueDate = hide;
                     break;
                 case 'done date':
-                    this._layoutOptions.hideDoneDate = true;
+                    this._layoutOptions.hideDoneDate = hide;
                     break;
                 case 'recurrence rule':
-                    this._layoutOptions.hideRecurrenceRule = true;
+                    this._layoutOptions.hideRecurrenceRule = hide;
                     break;
                 case 'edit button':
-                    this._layoutOptions.hideEditButton = true;
+                    this._layoutOptions.hideEditButton = hide;
+                    break;
+                case 'urgency':
+                    this._layoutOptions.showUrgency = !hide;
                     break;
                 default:
-                    this._error = 'do not understand hide option';
+                    this._error = 'do not understand hide/show option';
             }
         }
     }

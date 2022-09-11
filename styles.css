@@ -17,7 +17,17 @@
     cursor: pointer;
 }
 
-.internal-link.internal-link-short-mode {
+/* Urgency score */
+.tasks-score {
+    background-color: var(--text-faint);
+    border-radius: 0.5em;
+    font-size: 0.7em;
+    padding: 0.2em 0.3em;
+    margin-left: 0.5em;
+    line-height: 1;
+}
+
+a.internal-link.internal-link-short-mode {
     text-decoration: none;
 }
 
