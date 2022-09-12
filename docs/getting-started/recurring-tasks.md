@@ -38,6 +38,12 @@ Take as an example the following task:
 - [ ] take out the trash 🔁 every Sunday 📅 2021-04-25
 ```
 
+Alternatively, `recur::` can be used instead of the recurrence signifier.
+
+```markdown
+- [ ] take out the trash recur::every Sunday due::2021-04-25
+```
+
 If you mark the above task "done", the file will now look like this:
 
 ```markdown

@@ -49,6 +49,12 @@ For example: `📅 2021-04-09` means the task is due on the 9th of April, 2021.
 - [ ] take out the trash 📅 2021-04-09
 ```
 
+Alternatively, `due::` can be used instead of the due date signifier.
+
+```markdown
+- [ ] take out the trash due::2021-04-09
+```
+
 ---
 
 ## ⏳ Scheduled
@@ -60,6 +66,12 @@ Scheduled dates use an hourglass emoji instead of a calendar emoji.
 
 ```markdown
 - [ ] take out the trash ⏳ 2021-04-09
+```
+
+Alternatively, `scheduled::` can be used instead of the scheduled date signifier.
+
+```markdown
+- [ ] take out the trash scheduled::2021-04-09
 ```
 
 ---
@@ -75,6 +87,13 @@ Start dates use a departing airplane emoji instead of a calendar emoji.
 ```markdown
 - [ ] take out the trash 🛫 2021-04-09
 ```
+
+Alternatively, `start::` can be used instead of the start date signifier.
+
+```markdown
+- [ ] take out the trash start::2021-04-09
+```
+
 
 When [filtering]({{ site.baseurl }}{% link queries/filters.md %}#start-date) queries by start date,
 the result will include tasks without a start date.

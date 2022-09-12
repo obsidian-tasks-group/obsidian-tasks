@@ -1074,4 +1074,35 @@ describe('check removal of the global filter exhaustively', () => {
             resetSettings();
         }
     });
+
+    it('parses dataview compatible dates', () => {
+        // Arrange
+        const line = '- [ ] test task start::2022-09-08 due::2022-09-12 scheduled::2022-09-10 completion::2022-09-13';
+
+        // Act
+        const task = fromLine({
+            line,
+        });
+
+        // Assert
+        expect(task).not.toBeNull();
+        expect(task!.startDate!.isSame(moment('2022-09-08', 'YYYY-MM-DD'))).toStrictEqual(true);
+        expect(task!.dueDate!.isSame(moment('2022-09-12', 'YYYY-MM-DD'))).toStrictEqual(true);
+        expect(task!.scheduledDate!.isSame(moment('2022-09-10', 'YYYY-MM-DD'))).toStrictEqual(true);
+        expect(task!.doneDate!.isSame(moment('2022-09-13', 'YYYY-MM-DD'))).toStrictEqual(true);
+    });
+
+    it('parses ascii-prefixed recurrence rule', () => {
+        // Arrange
+        const line = '- [ ] test task due::2022-09-12 recur::every week';
+
+        // Act
+        const task = fromLine({
+            line,
+        });
+
+        // Assert
+        expect(task!.recurrence?.toText()).toEqual('every week');
+        expect(task!.recurrence?.next()?.dueDate?.isSame(moment('2022-09-19', 'YYYY-MM-DD'))).toStrictEqual(true);
+    });
 });
