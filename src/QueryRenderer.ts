@@ -188,16 +188,16 @@ class QueryRenderChild extends MarkdownRenderChild {
 
             const shortMode = this.query.layoutOptions.shortMode;
 
+            if (this.query.layoutOptions.showUrgency) {
+                this.addUrgency(listItem, task);
+            }
+
             if (!this.query.layoutOptions.hideBacklinks) {
                 this.addBacklinks(listItem, task, shortMode, isFilenameUnique);
             }
 
             if (!this.query.layoutOptions.hideEditButton) {
                 this.addEditButton(listItem, task);
-            }
-
-            if (this.query.layoutOptions.showUrgency) {
-                this.addUrgency(listItem, task);
             }
 
             taskList.appendChild(listItem);
