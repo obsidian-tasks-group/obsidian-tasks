@@ -19,10 +19,12 @@
 
 /* Urgency score */
 .tasks-score {
-    background-color: var(--text-faint);
-    border-radius: 0.5em;
-    font-size: 0.7em;
-    padding: 0.2em 0.3em;
+    font-size: var(--font-ui-smaller);
+    font-family: var(--font-interface);
+    padding: 2px 6px;
+    border-radius: var(--radius-s);
+    color: var(--text-normal);
+    background-color: var(--background-secondary);
     margin-left: 0.5em;
     line-height: 1;
 }
