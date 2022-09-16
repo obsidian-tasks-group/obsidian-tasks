@@ -107,22 +107,26 @@ describe('description', () => {
         resetSettings();
     });
 
-    it('works with regex', () => {
+    test.concurrent.each([
+        'matches',
+        'regex matches',
+        'regexp matches',
+        'matches regex',
+        'matches regexp',
+        'does not match',
+        'regex does not match',
+        'regexp does not match',
+        'does not match regex',
+        'does not match regexp',
+    ])('description %s works', (op) => {
         // Arrange
-        const filter = new DescriptionField().createFilterOrErrorMessage('description regex matches /^task/');
+        const filter = new DescriptionField().createFilterOrErrorMessage(`description ${op} /^foo/`);
+        const tasks = ['- [ ] foo task matches our pattern', '- [ ] bar task does not start with foo'];
+        if (op.includes('not')) tasks.reverse();
 
         // Assert
-        expect(filter).not.toMatchTaskFromLine('- [ ] this does not start with the pattern');
-        expect(filter).toMatchTaskFromLine('- [ ] task does start with the pattern');
-    });
-
-    it('works negating regexes', () => {
-        // Arrange
-        const filter = new DescriptionField().createFilterOrErrorMessage('description regex does not match /^task/');
-
-        // Assert
-        expect(filter).toMatchTaskFromLine('- [ ] this does not start with the pattern');
-        expect(filter).not.toMatchTaskFromLine('- [ ] task does start with the pattern');
+        expect(filter).toMatchTaskFromLine(tasks[0]);
+        expect(filter).not.toMatchTaskFromLine(tasks[1]);
     });
 });
 

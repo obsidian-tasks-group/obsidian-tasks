@@ -12,41 +12,59 @@ import { FilterOrErrorMessage } from './Filter';
  */
 export abstract class TextField extends Field {
     public createFilterOrErrorMessage(line: string): FilterOrErrorMessage {
+        let fieldName = this.fieldName();
         const match = Field.getMatch(this.filterRegexp(), line);
-        if (match === null) {
-            // If Field.canCreateFilterForLine() has been checked, we should never get
-            // in to this block.
-            return FilterOrErrorMessage.fromError(`do not understand query filter (${this.fieldName()})`);
-        }
 
-        // Construct an IStringMatcher for this filter, or return
-        // if the inputs are invalid.
-        const filterMethod = match[1];
-        const searchString = match[2];
-        let matcher: IStringMatcher | null = null;
-        if (['includes', 'does not include'].includes(filterMethod)) {
-            matcher = new SubstringMatcher(searchString);
-        } else if (['regex matches', 'regex does not match'].includes(filterMethod)) {
-            matcher = RegexMatcher.validateAndConstruct(searchString);
-            if (matcher === null) {
-                return FilterOrErrorMessage.fromError(
-                    `cannot parse regex (${this.fieldName()}); check your leading and trailing slashes for your query`,
-                );
+        if (match !== null) {
+            // should always be the case if Field.canCreateFilterForLine() has been checked
+
+            // Get the filter method (operator) and the search string (value)
+            const [_, usedFieldName, filterMethod, searchString] = match;
+            if (usedFieldName) {
+                fieldName = usedFieldName;
+
+                if (line.includes('garbage')) {
+                    console.log('GARBAGE');
+                }
+
+                if (filterMethod && searchString) {
+                    // should always be the case if the filterRegexp is correct
+
+                    // Construct a matcher for this filter
+                    let matcher: IStringMatcher | null = null;
+
+                    if (filterMethod.includes('include')) {
+                        matcher = new SubstringMatcher(searchString);
+                    } else if (filterMethod.includes('match')) {
+                        matcher = RegexMatcher.validateAndConstruct(searchString);
+                        if (matcher === null) {
+                            let msg = `cannot parse regular expression for ${fieldName}`;
+                            if (!new RegExp('/(.*)/i?').test(searchString)) {
+                                msg += '; check that it has leading and trailing slashes';
+                            }
+                            return FilterOrErrorMessage.fromError(msg);
+                        }
+                    }
+
+                    if (matcher) {
+                        // should always be the case if the filterRegexp is correct
+
+                        // for fields with multiple values, use the appropriate filter
+                        const filter = fieldName.includes('/')
+                            ? (task: Task) => matcher!.matchesAnyOf(this.values(task))
+                            : (task: Task) => matcher!.matches(this.value(task));
+
+                        // Create the final Filter, that takes a task and tests
+                        // if it matches the string filtering rule represented by this object.
+                        return FilterOrErrorMessage.fromFilter((task: Task) =>
+                            TextField.maybeNegate(filter(task), filterMethod),
+                        );
+                    }
+                }
             }
         }
 
-        if (matcher === null) {
-            // It's likely this can now never be reached.
-            // Retained for safety, for now.
-            return FilterOrErrorMessage.fromError(`do not understand query filter (${this.fieldName()})`);
-        }
-
-        // Finally, we can create the Filter, that takes a task
-        // and tests if it matches the string filtering rule
-        // represented by this object.
-        return FilterOrErrorMessage.fromFilter((task: Task) => {
-            return TextField.maybeNegate(matcher!.matches(this.value(task)), filterMethod);
-        });
+        return FilterOrErrorMessage.fromError(`do not understand query filter (${fieldName})`);
     }
 
     public static stringIncludesCaseInsensitive(haystack: string, needle: string): boolean {
@@ -54,7 +72,15 @@ export abstract class TextField extends Field {
     }
 
     protected filterRegexp(): RegExp {
-        return new RegExp(`^${this.fieldName()} (includes|does not include|regex matches|regex does not match) (.*)`);
+        let fieldName = this.fieldName();
+        let ops = 'includes|does not include|(?:regexp? )?(?:matches|does not match)';
+        if (fieldName.includes('/')) {
+            fieldName = fieldName.replace('/', '|');
+            // add plural form of operators, but to be tolerant and backward compatible,
+            // also allow the singular form of the operators
+            ops += '|include|do not include|(?:regexp? )?(?:match|do not match)';
+        }
+        return new RegExp(`^(${fieldName}) (${ops}) (.+)`);
     }
 
     public abstract fieldName(): string;
@@ -65,6 +91,16 @@ export abstract class TextField extends Field {
      * @public
      */
     public abstract value(task: Task): string;
+
+    /**
+     * Returns all of the field's values if there are multiple
+     * @param task
+     * @public
+     */
+    public values(task: Task): string[] {
+        const value = this.value(task);
+        return value ? [value] : [];
+    }
 
     public static maybeNegate(match: boolean, filterMethod: String) {
         return filterMethod.match(/not/) ? !match : match;

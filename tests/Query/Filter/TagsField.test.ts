@@ -263,4 +263,66 @@ describe('tag/tags', () => {
         expect(filter).not.toMatchTaskFromLine('- [ ] stuff #HOME');
         expect(filter).not.toMatchTaskFromLine('- [ ] stuff #work #HOME'); // searches multiple tags
     });
+
+    describe('filtering with all positive variants', () => {
+        test.concurrent.each([
+            'tag matches',
+            'tag regex matches',
+            'tag regexp matches',
+            'tag matches regex',
+            'tag matches regexp',
+            'tags matches',
+            'tags regex matches',
+            'tags regexp matches',
+            'tags matches regex',
+            'tags matches regexp',
+            'tags match',
+            'tags regex match',
+            'tags regexp match',
+            'tags match regex',
+            'tags match regexp',
+        ])('%s short tag', (cmd) => {
+            // Arrange
+            const filter = new TagsField().createFilterOrErrorMessage(String.raw`${cmd} /#foo/`);
+
+            // Act, Assert
+            expect(filter).toMatchTaskFromLine('- [ ] Do #foo stuff');
+            expect(filter).not.toMatchTaskFromLine('- [ ] Do foo stuff');
+            expect(filter).not.toMatchTaskFromLine('- [ ] Do #bar stuff');
+            expect(filter).toMatchTaskFromLine('- [ ] Do #bar and some #foo stuff');
+            expect(filter).toMatchTaskFromLine('- [ ] Do #foobar stuff');
+            expect(filter).not.toMatchTaskFromLine('- [ ] Do #barfoo stuff');
+        });
+    });
+
+    describe('filtering with all negative variants', () => {
+        test.concurrent.each([
+            'tag does not match',
+            'tag regex does not match',
+            'tag regexp does not match',
+            'tag does not match regex',
+            'tag does not match match regexp',
+            'tags does not match',
+            'tags regex does not match',
+            'tags regexp does not match',
+            'tags does not match regex',
+            'tags does not match regexp',
+            'tags do not match',
+            'tags regex do not match',
+            'tags regexp do not match',
+            'tags do not match regex',
+            'tags do not match regexp',
+        ])('%s short tag', (cmd) => {
+            // Arrange
+            const filter = new TagsField().createFilterOrErrorMessage(String.raw`${cmd} /#foo/`);
+
+            // Act, Assert
+            expect(filter).toMatchTaskFromLine('- [ ] Do #bar stuff');
+            expect(filter).toMatchTaskFromLine('- [ ] Do foo stuff');
+            expect(filter).not.toMatchTaskFromLine('- [ ] Do #foo stuff');
+            expect(filter).not.toMatchTaskFromLine('- [ ] Do #bar and some #foo stuff');
+            expect(filter).not.toMatchTaskFromLine('- [ ] Do #foobar stuff');
+            expect(filter).toMatchTaskFromLine('- [ ] Do #barfoo stuff');
+        });
+    });
 });
