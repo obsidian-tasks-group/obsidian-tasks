@@ -23,10 +23,6 @@ export abstract class TextField extends Field {
             if (usedFieldName) {
                 fieldName = usedFieldName;
 
-                if (line.includes('garbage')) {
-                    console.log('GARBAGE');
-                }
-
                 if (filterMethod && searchString) {
                     // should always be the case if the filterRegexp is correct
 
