@@ -3,7 +3,6 @@ layout: default
 title: Urgency
 nav_order: 3
 parent: Advanced
-has_toc: false
 ---
 
 # Urgency
@@ -121,6 +120,6 @@ A task that has no due date, a "high" priority, is scheduled for tomorrow, and s
 urgency = 0.0 + 6.0 + 0.0 - 3.0 = 3.0
 ```
 
-## How to Display the Urgency score
+## How to Display the Urgency Score
 
-You can display the calculated Urgency score in your task list, using the `show urgency` option.
+You can display the calculated Urgency score in your task list using the `show urgency` option.
