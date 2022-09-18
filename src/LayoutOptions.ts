@@ -8,6 +8,6 @@ export class LayoutOptions {
     hideDueDate: boolean = false;
     hideRecurrenceRule: boolean = false;
     hideEditButton: boolean = false;
-    showUrgency: boolean = false;
+    hideUrgency: boolean = true;
     shortMode: boolean = false;
 }

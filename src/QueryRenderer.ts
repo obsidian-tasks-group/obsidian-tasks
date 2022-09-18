@@ -188,7 +188,7 @@ class QueryRenderChild extends MarkdownRenderChild {
 
             const shortMode = this.query.layoutOptions.shortMode;
 
-            if (this.query.layoutOptions.showUrgency) {
+            if (!this.query.layoutOptions.hideUrgency) {
                 this.addUrgency(listItem, task);
             }
 

@@ -171,7 +171,7 @@ export class Query implements IQuery {
                     this._layoutOptions.hideEditButton = hide;
                     break;
                 case 'urgency':
-                    this._layoutOptions.showUrgency = !hide;
+                    this._layoutOptions.hideUrgency = hide;
                     break;
                 default:
                     this._error = 'do not understand hide/show option';
