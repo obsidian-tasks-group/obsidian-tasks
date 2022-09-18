@@ -7,6 +7,19 @@ parent: Advanced
 
 # Urgency
 
+{: .no_toc }
+
+<details open markdown="block">
+  <summary>
+    Table of contents
+  </summary>
+  {: .text-delta }
+1. TOC
+{:toc}
+</details>
+
+## Introduction
+
 By default, Tasks [sorts]({{ site.baseurl }}{% link queries/sorting.md %}) query results by decreasing urgency.
 Tasks tries to calculate urgency based on what you should likely work on next.
 
