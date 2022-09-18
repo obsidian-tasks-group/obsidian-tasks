@@ -18,7 +18,7 @@ parent: Queries
 {:toc}
 </details>
 
-## Hiding Elements
+## Hiding/Showing Elements
 
 You can hide and show individual elements of the rendered list with the "hide" and "show" commands
 together with the name of the element.
