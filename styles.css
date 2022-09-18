@@ -18,7 +18,7 @@
 }
 
 /* Urgency score */
-.tasks-score {
+.tasks-urgency {
     font-size: var(--font-ui-smaller);
     font-family: var(--font-interface);
     padding: 2px 6px;

@@ -232,7 +232,7 @@ class QueryRenderChild extends MarkdownRenderChild {
 
     private addUrgency(listItem: HTMLLIElement, task: Task) {
         const text = new Intl.NumberFormat().format(task.urgency);
-        listItem.createSpan({ text, cls: 'tasks-score' });
+        listItem.createSpan({ text, cls: 'tasks-urgency' });
     }
 
     /**
