@@ -13,8 +13,20 @@
     width: 1em;
     height: 1em;
     vertical-align: middle;
-    margin-left: 0.3em;
+    margin-left: 0.5em;
     cursor: pointer;
+}
+
+/* Urgency score */
+.tasks-urgency {
+    font-size: var(--font-ui-smaller);
+    font-family: var(--font-interface);
+    padding: 2px 6px;
+    border-radius: var(--radius-s);
+    color: var(--text-normal);
+    background-color: var(--background-secondary);
+    margin-left: 0.5em;
+    line-height: 1;
 }
 
 .internal-link.internal-link-short-mode {
