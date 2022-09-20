@@ -3,10 +3,22 @@ layout: default
 title: Urgency
 nav_order: 3
 parent: Advanced
-has_toc: false
 ---
 
 # Urgency
+
+{: .no_toc }
+
+<details open markdown="block">
+  <summary>
+    Table of contents
+  </summary>
+  {: .text-delta }
+1. TOC
+{:toc}
+</details>
+
+## Introduction
 
 By default, Tasks [sorts]({{ site.baseurl }}{% link queries/sorting.md %}) query results by decreasing urgency.
 Tasks tries to calculate urgency based on what you should likely work on next.
@@ -120,3 +132,7 @@ urgency = 0.0 + 6.0 + 5.0 + 0.0 = 11.0
 A task that has no due date, a "high" priority, is scheduled for tomorrow, and starts tomorrow:
 urgency = 0.0 + 6.0 + 0.0 - 3.0 = 3.0
 ```
+
+## How to Display the Urgency Score
+
+You can display the calculated Urgency score in your task list using the `show urgency` option.
