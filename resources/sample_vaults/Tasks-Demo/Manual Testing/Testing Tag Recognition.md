@@ -53,23 +53,27 @@ So the Tasks code that identifies tags should ignore things that look like tags 
 
 Should give `0 tasks`.
 
-```tasks
-path includes Testing Tag Recognition
-description includes I do not have a valid tag
-tag regex matches /./
-short mode
-```
+> [!TODO]
+>
+> ```tasks
+> path includes Testing Tag Recognition
+> description includes I do not have a valid tag
+> tag regex matches /./
+> short mode
+> ```
 
 #### Search for tasks that do have tags, but Tasks thinks they do not
 
 Should give `0 tasks`.
 
-```tasks
-path includes Testing Tag Recognition
-description includes I have a valid tag
-tag regex does not match /./
-short mode
-```
+> [!TODO]
+>
+> ```tasks
+> path includes Testing Tag Recognition
+> description includes I have a valid tag
+> tag regex does not match /./
+> short mode
+> ```
 
 ### Group by tags
 
@@ -81,12 +85,14 @@ short mode
 - And clicking on each of them should do a tags search that links to the task in this file.
 - None of the groups titles should be empty text.
 
-```tasks
-path includes Testing Tag Recognition
-description includes I have a valid tag
-group by tags
-short mode
-```
+> [!TODO]
+>
+> ```tasks
+> path includes Testing Tag Recognition
+> description includes I have a valid tag
+> group by tags
+> short mode
+> ```
 
 #### Should not have any tags
 
@@ -94,12 +100,14 @@ All tasks should be in group `(No tags)`.
 
 Note: There are three tasks that appear at the top of the list, **seemingly with no heading, or an empty heading**.
 
-```tasks
-path includes Testing Tag Recognition
-description includes I do not have a valid tag
-group by tags
-short mode
-```
+> [!TODO]
+>
+> ```tasks
+> path includes Testing Tag Recognition
+> description includes I do not have a valid tag
+> group by tags
+> short mode
+> ```
 
 ### Tasks with incorrect descriptions
 
@@ -107,10 +115,12 @@ I should give `0 tasks`.
 
 If any Tasks match here, it means that they are missing a correctly-spelled description to specify whether or not they have a valid tag.
 
-```tasks
-path includes Testing Tag Recognition
-NOT (description includes I do not have a valid tag)
-NOT (description includes I have a valid tag)
-group by tags
-short mode
-```
+> [!TODO]
+>
+> ```tasks
+> path includes Testing Tag Recognition
+> NOT (description includes I do not have a valid tag)
+> NOT (description includes I have a valid tag)
+> group by tags
+> short mode
+> ```
