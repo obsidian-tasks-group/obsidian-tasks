@@ -14,12 +14,19 @@ function testWithDescription(filter: FilterOrErrorMessage, description: string, 
     testFilter(filter, builder.description(description), expected);
 }
 
+function createValidFilter(instruction: string) {
+    // First make sure that BooleanField recognises the instruction as valid
+    expect(new BooleanField().canCreateFilterForLine(instruction)).toEqual(true);
+
+    return new BooleanField().createFilterOrErrorMessage(instruction);
+}
+
 describe('boolean query', () => {
     // These tests are intended to be really simple, so it is easy to reason about the correct behaviour of the code.
     describe('basic operators', () => {
         it('AND', () => {
             // Arrange
-            const filter = new BooleanField().createFilterOrErrorMessage(
+            const filter = createValidFilter(
                 '"description includes d1" AND "description includes d2"', // Use "..." instead of (), for completeness
             );
 
@@ -32,9 +39,7 @@ describe('boolean query', () => {
 
         it('OR', () => {
             // Arrange
-            const filter = new BooleanField().createFilterOrErrorMessage(
-                '(description includes d1) OR (description includes d2)',
-            );
+            const filter = createValidFilter('(description includes d1) OR (description includes d2)');
 
             // Act, Assert
             testWithDescription(filter, 'neither', false);
@@ -45,9 +50,7 @@ describe('boolean query', () => {
 
         it('XOR', () => {
             // Arrange
-            const filter = new BooleanField().createFilterOrErrorMessage(
-                '(description includes d1) XOR (description includes d2)',
-            );
+            const filter = createValidFilter('(description includes d1) XOR (description includes d2)');
 
             // Act, Assert
             testWithDescription(filter, 'neither', false);
@@ -58,7 +61,7 @@ describe('boolean query', () => {
 
         it('NOT', () => {
             // Arrange
-            const filter = new BooleanField().createFilterOrErrorMessage('NOT (description includes d1)');
+            const filter = createValidFilter('NOT (description includes d1)');
 
             // Act, Assert
             testWithDescription(filter, 'nothing', true);
@@ -67,9 +70,7 @@ describe('boolean query', () => {
 
         it('AND NOT', () => {
             // Arrange
-            const filter = new BooleanField().createFilterOrErrorMessage(
-                '(description includes d1) AND NOT (description includes d2)',
-            );
+            const filter = createValidFilter('(description includes d1) AND NOT (description includes d2)');
 
             // Act, Assert
             testWithDescription(filter, 'neither', false);
@@ -80,9 +81,7 @@ describe('boolean query', () => {
 
         it('OR NOT', () => {
             // Arrange
-            const filter = new BooleanField().createFilterOrErrorMessage(
-                '(description includes d1) OR NOT (description includes d2)',
-            );
+            const filter = createValidFilter('(description includes d1) OR NOT (description includes d2)');
 
             // Act, Assert
             testWithDescription(filter, 'neither', true);
@@ -92,7 +91,7 @@ describe('boolean query', () => {
         });
 
         it('input components dirty with whitespaces', () => {
-            const filter = new BooleanField().createFilterOrErrorMessage(
+            const filter = createValidFilter(
                 ' (description includes #context/location1) OR (description includes #context/location2 ) OR (  description includes #context/location3 ) OR   (  description includes #context/location4 )',
             );
 
