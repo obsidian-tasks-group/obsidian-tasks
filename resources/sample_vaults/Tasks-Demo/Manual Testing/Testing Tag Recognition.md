@@ -28,6 +28,9 @@ So the Tasks code that identifies tags should ignore things that look like tags 
 - [ ] #task [I do not have a valid tag](https://cloud.feedly.com/#opml)<br>Case: text inside URL
 - [ ] #task I do not have a valid tag # xxx<br>Case: single # with no other characters
 - [ ] #task I do not have a valid tag #$letters-preceded-by-dollar
+- [ ] #task I do not have a valid tag - tag#inTheMiddleOfAWord
+- [ ] #task I do not have a valid tag - tag.#afterAFullStop
+- [ ] #task I do not have a valid tag - tag-#afterAHyphen
 
 ### Tasks with actual Obsidian tags - some with corner cases
 
