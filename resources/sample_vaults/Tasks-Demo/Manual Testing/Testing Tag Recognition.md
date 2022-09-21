@@ -44,7 +44,7 @@ So the Tasks code that identifies tags should ignore things that look like tags 
 
 ## Tasks Searches
 
-### search for tasks that do not have tags, but Tasks thinks they do
+### Search for tasks that do not have tags, but Tasks thinks they do
 
 Should give `0 tasks`.
 
@@ -55,7 +55,7 @@ tag regex matches /./
 short mode
 ```
 
-### search for tasks that do have tags, but Tasks thinks they do not
+### Search for tasks that do have tags, but Tasks thinks they do not
 
 Should give `0 tasks`.
 
@@ -66,7 +66,7 @@ tag regex does not match /./
 short mode
 ```
 
-### group by tags
+### Group by tags
 
 - There should be no group headings that are black - and unlinked.
 - All the tag group names should be hyperlinked in blue.
