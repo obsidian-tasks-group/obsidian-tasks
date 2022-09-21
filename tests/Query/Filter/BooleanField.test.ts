@@ -101,6 +101,16 @@ describe('boolean query', () => {
             testWithDescription(filter, 'xxx #context/location3', true);
             testWithDescription(filter, 'xxx #context/location4', true);
         });
+
+        it('should work with single filter in parentheses - via BooleanField', () => {
+            // This tests the fix for
+            //  https://github.com/obsidian-tasks-group/obsidian-tasks/discussions/975
+            //  Support single filters surround by parentheses
+            const filter = createValidFilter('(description includes #context/location1)');
+
+            testWithDescription(filter, 'xxx #context/location1', true);
+            testWithDescription(filter, 'xxx #context/location2', false);
+        });
     });
 
     describe('error cases - to show error messages', () => {
