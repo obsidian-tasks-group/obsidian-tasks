@@ -25,7 +25,7 @@ So the Tasks code that identifies tags should ignore things that look like tags 
 - [ ] #task [I do not have a valid tag 2 #678](https://github.com/obsidian-tasks-group/obsidian-tasks/pull/678)<br>Case: tag of all-digits is not a valid tag
 - [ ] #task [I do not have a valid tag 3 #920 · obsidian-tasks-group/obsidian-tasks](https://github.com/obsidian-tasks-group/obsidian-tasks/discussions/920)<br>Case: tag of all-digits is not a valid tag
 - [ ] #task I do not have a valid tag #1234<br>Case: tag of all-digits is not a valid tag
-- [ ] #task I [do not have a valid tag](https://cloud.feedly.com/#opml)<br>Case: text inside URL
+- [ ] #task [I do not have a valid tag](https://cloud.feedly.com/#opml)<br>Case: text inside URL
 - [ ] #task I do not have a valid tag # xxx<br>Case: single # with no other characters
 - [ ] #task I do not have a valid tag #$letters-preceded-by-dollar
 
@@ -44,7 +44,9 @@ So the Tasks code that identifies tags should ignore things that look like tags 
 
 ## Tasks Searches
 
-### Search for tasks that do not have tags, but Tasks thinks they do
+### Searching
+
+#### Search for tasks that do not have tags, but Tasks thinks they do
 
 Should give `0 tasks`.
 
@@ -55,7 +57,7 @@ tag regex matches /./
 short mode
 ```
 
-### Search for tasks that do have tags, but Tasks thinks they do not
+#### Search for tasks that do have tags, but Tasks thinks they do not
 
 Should give `0 tasks`.
 
@@ -68,6 +70,8 @@ short mode
 
 ### Group by tags
 
+#### Should have tags
+
 - There should be no group headings that are black - and unlinked.
 - All the tag group names should be hyperlinked in blue.
 - There should be no un-linked characters in any of the headings
@@ -76,5 +80,29 @@ short mode
 
 ```tasks
 path includes Testing Tag Recognition
+description includes I have a valid tag
+group by tags
+```
+
+#### Should not have any tags
+
+All tasks should be in group `(No tags)`.
+
+```tasks
+path includes Testing Tag Recognition
+description includes I do not have a valid tag
+group by tags
+```
+
+### Tasks with incorrect descriptions
+
+I should give `0 tasks`.
+
+If any Tasks match here, it means that they are missing a correctly-spelled description to specify whether or not they have a valid tag.
+
+```tasks
+path includes Testing Tag Recognition
+NOT (description includes I do not have a valid tag)
+NOT (description includes I have a valid tag)
 group by tags
 ```
