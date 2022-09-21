@@ -25,7 +25,7 @@ export class TaskBuilder {
     private _sectionStart: number = 0;
     private _sectionIndex: number = 0;
 
-    private _originalStatusCharacter: string = '';
+    private _originalStatusCharacter: string = ' ';
     private _precedingHeader: string | null = null;
     private _tags: string[] = [];
     private _priority: Priority = Priority.None;
@@ -51,9 +51,13 @@ export class TaskBuilder {
      *      .build();
      */
     public build(): Task {
+        let description = this._description;
+        if (this._tags.length > 0) {
+            description += ' ' + this._tags.join(' ');
+        }
         return new Task({
             status: this._status,
-            description: this._description,
+            description: description,
             path: this._path,
             indentation: this._indentation,
             sectionStart: this._sectionStart,
@@ -76,6 +80,12 @@ export class TaskBuilder {
         return this;
     }
 
+    /**
+     * Set the description.
+     *
+     * This is not parsed for tags. Tags should be added via the separate {@link tags} method.
+     * @param description - description for the task, without tags
+     */
     public description(description: string): TaskBuilder {
         this._description = description;
         return this;
