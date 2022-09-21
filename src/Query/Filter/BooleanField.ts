@@ -22,7 +22,9 @@ import type { Filter } from './Filter';
  * the expression into a single boolean entity.
  */
 export class BooleanField extends Field {
-    private readonly basicBooleanRegexp = /.*(AND|OR|XOR|NOT)\s*[("].*/g;
+    // First pattern in this matches conventional (filter1) OR (filter2) and similar
+    // Second pattern matches (filter1) - that is, ensures that a single filter is treated as valid
+    private readonly basicBooleanRegexp = /(.*(AND|OR|XOR|NOT)\s*[("].*|\(.+\))/g;
     private readonly supportedOperators = ['AND', 'OR', 'XOR', 'NOT'];
     private subFields: Record<string, Filter> = {};
 
