@@ -25,7 +25,7 @@ export class TaskBuilder {
     private _sectionStart: number = 0;
     private _sectionIndex: number = 0;
 
-    private _originalStatusCharacter: string = '';
+    private _originalStatusCharacter: string = ' ';
     private _precedingHeader: string | null = null;
     private _tags: string[] = [];
     private _priority: Priority = Priority.None;
