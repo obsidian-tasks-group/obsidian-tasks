@@ -85,16 +85,20 @@ short mode
 path includes Testing Tag Recognition
 description includes I have a valid tag
 group by tags
+short mode
 ```
 
 #### Should not have any tags
 
 All tasks should be in group `(No tags)`.
 
+Note: There are three tasks that appear at the top of the list, **seemingly with no heading, or an empty heading**.
+
 ```tasks
 path includes Testing Tag Recognition
 description includes I do not have a valid tag
 group by tags
+short mode
 ```
 
 ### Tasks with incorrect descriptions
@@ -108,4 +112,5 @@ path includes Testing Tag Recognition
 NOT (description includes I do not have a valid tag)
 NOT (description includes I have a valid tag)
 group by tags
+short mode
 ```
