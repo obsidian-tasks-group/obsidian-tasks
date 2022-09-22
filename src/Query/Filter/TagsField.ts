@@ -1,5 +1,5 @@
 import type { Task } from '../../Task';
-import { MultiTextField } from './TextField';
+import { MultiTextField } from './MultiTextField';
 
 /**
  * Support the 'tag' and 'tags' search instructions.
