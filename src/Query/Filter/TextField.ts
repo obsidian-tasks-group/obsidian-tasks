@@ -3,7 +3,7 @@ import { SubstringMatcher } from '../Matchers/SubstringMatcher';
 import { RegexMatcher } from '../Matchers/RegexMatcher';
 import type { IStringMatcher } from '../Matchers/IStringMatcher';
 import { Field } from './Field';
-import { FilterOrErrorMessage } from './Filter';
+import { type Filter, FilterOrErrorMessage } from './Filter';
 
 /**
  * TextField is an abstract base class to help implement
@@ -21,13 +21,12 @@ export abstract class TextField extends Field {
 
         // Construct an IStringMatcher for this filter, or return
         // if the inputs are invalid.
-        const filterMethod = match[1];
-        const searchString = match[2];
+        const [_, operator, value] = match;
         let matcher: IStringMatcher | null = null;
-        if (['includes', 'does not include'].includes(filterMethod)) {
-            matcher = new SubstringMatcher(searchString);
-        } else if (['regex matches', 'regex does not match'].includes(filterMethod)) {
-            matcher = RegexMatcher.validateAndConstruct(searchString);
+        if (operator.includes('include')) {
+            matcher = new SubstringMatcher(value);
+        } else if (operator.includes('regex')) {
+            matcher = RegexMatcher.validateAndConstruct(value);
             if (matcher === null) {
                 return FilterOrErrorMessage.fromError(
                     `cannot parse regex (${this.fieldName()}); check your leading and trailing slashes for your query`,
@@ -44,17 +43,24 @@ export abstract class TextField extends Field {
         // Finally, we can create the Filter, that takes a task
         // and tests if it matches the string filtering rule
         // represented by this object.
-        return FilterOrErrorMessage.fromFilter((task: Task) => {
-            return TextField.maybeNegate(matcher!.matches(this.value(task)), filterMethod);
-        });
+        const negate = operator.match(/not/) !== null;
+        return FilterOrErrorMessage.fromFilter(this.getFilter(matcher, negate));
     }
 
     public static stringIncludesCaseInsensitive(haystack: string, needle: string): boolean {
         return SubstringMatcher.stringIncludesCaseInsensitive(haystack, needle);
     }
 
+    protected fieldPattern(): string {
+        return this.fieldName();
+    }
+
+    protected operatorPattern(): string {
+        return 'includes|does not include|regex matches|regex does not match';
+    }
+
     protected filterRegexp(): RegExp {
-        return new RegExp(`^${this.fieldName()} (includes|does not include|regex matches|regex does not match) (.*)`);
+        return new RegExp(`^(?:${this.fieldPattern()}) (${this.operatorPattern()}) (.*)`);
     }
 
     public abstract fieldName(): string;
@@ -66,7 +72,59 @@ export abstract class TextField extends Field {
      */
     public abstract value(task: Task): string;
 
-    public static maybeNegate(match: boolean, filterMethod: String) {
-        return filterMethod.match(/not/) ? !match : match;
+    protected getFilter(matcher: IStringMatcher, negate: boolean): Filter {
+        return (task: Task) => {
+            const match = matcher!.matches(this.value(task));
+            return negate ? !match : match;
+        };
+    }
+}
+
+/**
+ * MultiTextField is an abstract base class to help implement
+ * all the filter instructions that act on multiple string values
+ * such as the tags.
+ */
+export abstract class MultiTextField extends TextField {
+    public abstract fieldNameSingular(): string;
+
+    public fieldNamePlural(): string {
+        return this.fieldNameSingular() + 's';
+    }
+
+    public fieldName(): string {
+        return `${this.fieldNameSingular()}/${this.fieldNamePlural()}`;
+    }
+
+    protected fieldPattern(): string {
+        return `${this.fieldNameSingular()}|${this.fieldNamePlural()}`;
+    }
+
+    protected operatorPattern(): string {
+        return `${super.operatorPattern()}|include|do not include`;
+    }
+
+    /**
+     * Returns the field's value, or an empty string if the value is null
+     * @param task
+     * @public
+     */
+    public value(task: Task): string {
+        return this.values(task).join(', ');
+    }
+
+    /**
+     * Returns the array of values of this field, or an empty array
+     * if the value is null
+     * @param task
+     * @public
+     */
+    public abstract values(task: Task): string[];
+
+    protected getFilter(matcher: IStringMatcher, negate: boolean): Filter {
+        return (task: Task) => {
+            const match = matcher!.matchesAnyOf(this.values(task));
+            return negate ? !match : match;
+        };
     }
 }
