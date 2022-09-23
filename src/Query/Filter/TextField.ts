@@ -59,7 +59,8 @@ export abstract class TextField extends Field {
     }
 
     /**
-     * Returns a regexp pattern matching all possible filter operands for this field
+     * Returns a regexp pattern matching all possible filter operators for this field,
+     * such as "includes" or "does not include".
      */
     protected operatorPattern(): string {
         return 'includes|does not include|regex matches|regex does not match';
