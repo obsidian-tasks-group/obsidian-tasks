@@ -9,9 +9,16 @@ import type { Filter } from './Filter';
  * such as the tags.
  */
 export abstract class MultiTextField extends TextField {
+    /**
+     * Returns the singular form of the field's name.
+     */
     public abstract fieldNameSingular(): string;
 
-    public fieldNamePlural(): string {
+    /**
+     * Returns the plural form of the field's name.
+     * If not overridden, returns the singular form appended with an "s".
+     */
+    protected fieldNamePlural(): string {
         return this.fieldNameSingular() + 's';
     }
 
@@ -28,7 +35,8 @@ export abstract class MultiTextField extends TextField {
     }
 
     /**
-     * Returns the field's value, or an empty string if the value is null
+     * If not overridden, returns a comma-separated concatenation of all
+     * the values of this field or an empty string if there are not values
      * @param task
      * @public
      */
@@ -38,7 +46,7 @@ export abstract class MultiTextField extends TextField {
 
     /**
      * Returns the array of values of this field, or an empty array
-     * if the value is null
+     * if the field has no values
      * @param task
      * @public
      */

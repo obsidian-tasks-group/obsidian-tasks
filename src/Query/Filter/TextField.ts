@@ -51,10 +51,16 @@ export abstract class TextField extends Field {
         return SubstringMatcher.stringIncludesCaseInsensitive(haystack, needle);
     }
 
+    /**
+     * Returns a regexp pattern matching the field's name and possible aliases
+     */
     protected fieldPattern(): string {
         return this.fieldName();
     }
 
+    /**
+     * Returns a regexp pattern matching all possible filter operands for this field
+     */
     protected operatorPattern(): string {
         return 'includes|does not include|regex matches|regex does not match';
     }
