@@ -25,3 +25,10 @@
 - [A] #task Answer
 - [r] #task Reward
 - [c] #task Choice
+
+## Rendered in Tasks results block
+
+```tasks
+path includes Custom Statuses
+group by filename
+```
