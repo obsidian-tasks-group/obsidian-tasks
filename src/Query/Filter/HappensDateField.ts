@@ -39,7 +39,7 @@ export class HappensDateField extends Field {
             return result;
         }
 
-        const happensMatch = Field.getMatch(this.filterRegexp(), line);
+        const happensMatch = Field.getMatch(this.filterRegExp(), line);
         if (happensMatch !== null) {
             const filterDate = DateParser.parseDate(happensMatch[2]);
             if (!filterDate.isValid()) {
@@ -78,7 +78,7 @@ export class HappensDateField extends Field {
         return sortedHappensDates[0];
     }
 
-    protected filterRegexp(): RegExp {
+    protected filterRegExp(): RegExp {
         return HappensDateField.happensRegexp;
     }
 

@@ -19,7 +19,7 @@ export abstract class FilterInstructionsBasedField extends Field {
         return this._filters.createFilterOrErrorMessage(line);
     }
 
-    protected filterRegexp(): RegExp | null {
+    protected filterRegExp(): RegExp | null {
         return null;
     }
 }

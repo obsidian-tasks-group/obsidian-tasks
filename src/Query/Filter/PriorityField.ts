@@ -7,7 +7,7 @@ export class PriorityField extends Field {
 
     createFilterOrErrorMessage(line: string): FilterOrErrorMessage {
         const result = new FilterOrErrorMessage();
-        const priorityMatch = Field.getMatch(this.filterRegexp(), line);
+        const priorityMatch = Field.getMatch(this.filterRegExp(), line);
         if (priorityMatch !== null) {
             const filterPriorityString = priorityMatch[3];
             let filterPriority: Priority | null = null;
@@ -52,7 +52,7 @@ export class PriorityField extends Field {
         return 'priority';
     }
 
-    protected filterRegexp(): RegExp {
+    protected filterRegExp(): RegExp {
         return PriorityField.priorityRegexp;
     }
 }

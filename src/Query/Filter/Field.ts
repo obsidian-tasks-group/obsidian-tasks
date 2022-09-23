@@ -18,11 +18,11 @@ export abstract class Field {
      * Returns true if the class can parse the given instruction line.
      *
      * Current implementation simply checks whether the line matches
-     * this.filterRegexp().
+     * this.filterRegExp().
      * @param line - A line from a ```tasks``` block.
      */
     public canCreateFilterForLine(line: string): boolean {
-        return Field.lineMatchesFilter(this.filterRegexp(), line);
+        return Field.lineMatchesFilter(this.filterRegExp(), line);
     }
 
     /**
@@ -49,14 +49,14 @@ export abstract class Field {
 
     /**
      * Return the match for the given filter, or null if it does not match
-     * @param filterRegexp - A RegExp regular expression, that specifies one query instruction.
+     * @param filterRegExp - A RegExp regular expression, that specifies one query instruction.
      *                       Or null, if the field does not support regexp-based filtering.
      * @param line - A line from a tasks code block query.
      * @protected
      */
-    protected static getMatch(filterRegexp: RegExp | null, line: string): RegExpMatchArray | null {
-        if (filterRegexp) {
-            return line.match(filterRegexp);
+    protected static getMatch(filterRegExp: RegExp | null, line: string): RegExpMatchArray | null {
+        if (filterRegExp) {
+            return line.match(filterRegExp);
         } else {
             return null;
         }
@@ -68,7 +68,7 @@ export abstract class Field {
      * Or null, if this field does not have a regex-based instruction.
      * @protected
      */
-    protected abstract filterRegexp(): RegExp | null;
+    protected abstract filterRegExp(): RegExp | null;
 
     /**
      * Return the name of this field, to be used in error messages.

@@ -8,7 +8,7 @@ import { DateField } from './DateField';
 export class StartDateField extends DateField {
     private static readonly startRegexp = /^starts (before|after|on)? ?(.*)/;
 
-    protected filterRegexp(): RegExp {
+    protected filterRegExp(): RegExp {
         return StartDateField.startRegexp;
     }
     public fieldName(): string {
