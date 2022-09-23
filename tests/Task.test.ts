@@ -48,6 +48,17 @@ describe('parsing', () => {
         resetSettings();
     });
 
+    it('supports capitalised status characters', () => {
+        // See https://github.com/obsidian-tasks-group/obsidian-tasks/issues/520
+        // "In combination with SlrVb's S-Checkbox CSS, Task Plugin breaks that style"
+
+        // Act
+        const task = fromLine({ line: '- [D] this is a deferred task' });
+
+        // Assert
+        expect(task!.originalStatusCharacter).toStrictEqual('D');
+    });
+
     it('allows signifier emojis as part of the description', () => {
         // Arrange
         const line = '- [x] this is a ✅ done task 🗓 2021-09-12 ✅ 2021-06-20';
