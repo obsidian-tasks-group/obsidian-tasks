@@ -8,7 +8,7 @@ import { DateField } from './DateField';
 export class DueDateField extends DateField {
     private static readonly dueRegexp = /^due (before|after|on)? ?(.*)/;
 
-    protected filterRegexp(): RegExp {
+    protected filterRegExp(): RegExp {
         return DueDateField.dueRegexp;
     }
     public fieldName(): string {

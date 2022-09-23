@@ -13,7 +13,7 @@ import { FilterOrErrorMessage } from './Filter';
  */
 export abstract class TextField extends Field {
     public createFilterOrErrorMessage(line: string): FilterOrErrorMessage {
-        const match = Field.getMatch(this.filterRegexp(), line);
+        const match = Field.getMatch(this.filterRegExp(), line);
         if (match === null) {
             // If Field.canCreateFilterForLine() has been checked, we should never get
             // in to this block.
@@ -67,7 +67,7 @@ export abstract class TextField extends Field {
         return 'includes|does not include|regex matches|regex does not match';
     }
 
-    protected filterRegexp(): RegExp {
+    protected filterRegExp(): RegExp {
         return new RegExp(`^(?:${this.fieldPattern()}) (${this.filterOperatorPattern()}) (.*)`);
     }
 

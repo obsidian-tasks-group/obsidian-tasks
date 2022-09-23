@@ -26,7 +26,7 @@ export class BooleanField extends Field {
     private readonly supportedOperators = ['AND', 'OR', 'XOR', 'NOT'];
     private subFields: Record<string, Filter> = {};
 
-    protected filterRegexp(): RegExp {
+    protected filterRegExp(): RegExp {
         return this.basicBooleanRegexp;
     }
 
