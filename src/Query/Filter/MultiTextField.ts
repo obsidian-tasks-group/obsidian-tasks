@@ -30,8 +30,8 @@ export abstract class MultiTextField extends TextField {
         return `${this.fieldNameSingular()}|${this.fieldNamePlural()}`;
     }
 
-    protected operatorPattern(): string {
-        return `${super.operatorPattern()}|include|do not include`;
+    protected filterOperatorPattern(): string {
+        return `${super.filterOperatorPattern()}|include|do not include`;
     }
 
     /**

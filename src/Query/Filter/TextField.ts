@@ -21,12 +21,12 @@ export abstract class TextField extends Field {
 
         // Construct an IStringMatcher for this filter, or return
         // if the inputs are invalid.
-        const [_, operator, value] = match;
+        const [_, filterOperator, filterValue] = match;
         let matcher: IStringMatcher | null = null;
-        if (operator.includes('include')) {
-            matcher = new SubstringMatcher(value);
-        } else if (operator.includes('regex')) {
-            matcher = RegexMatcher.validateAndConstruct(value);
+        if (filterOperator.includes('include')) {
+            matcher = new SubstringMatcher(filterValue);
+        } else if (filterOperator.includes('regex')) {
+            matcher = RegexMatcher.validateAndConstruct(filterValue);
             if (matcher === null) {
                 return FilterOrErrorMessage.fromError(
                     `cannot parse regex (${this.fieldName()}); check your leading and trailing slashes for your query`,
@@ -43,7 +43,7 @@ export abstract class TextField extends Field {
         // Finally, we can create the Filter, that takes a task
         // and tests if it matches the string filtering rule
         // represented by this object.
-        const negate = operator.match(/not/) !== null;
+        const negate = filterOperator.match(/not/) !== null;
         return FilterOrErrorMessage.fromFilter(this.getFilter(matcher, negate));
     }
 
@@ -62,12 +62,12 @@ export abstract class TextField extends Field {
      * Returns a regexp pattern matching all possible filter operators for this field,
      * such as "includes" or "does not include".
      */
-    protected operatorPattern(): string {
+    protected filterOperatorPattern(): string {
         return 'includes|does not include|regex matches|regex does not match';
     }
 
     protected filterRegexp(): RegExp {
-        return new RegExp(`^(?:${this.fieldPattern()}) (${this.operatorPattern()}) (.*)`);
+        return new RegExp(`^(?:${this.fieldPattern()}) (${this.filterOperatorPattern()}) (.*)`);
     }
 
     public abstract fieldName(): string;
