@@ -1,4 +1,4 @@
-# Custom Statuses
+# SlrVb's Alternative Checkboxes
 
 ## Background
 
