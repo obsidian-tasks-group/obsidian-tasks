@@ -3,7 +3,8 @@ import { SubstringMatcher } from '../Matchers/SubstringMatcher';
 import { RegexMatcher } from '../Matchers/RegexMatcher';
 import type { IStringMatcher } from '../Matchers/IStringMatcher';
 import { Field } from './Field';
-import { type Filter, FilterOrErrorMessage } from './Filter';
+import type { Filter } from './Filter';
+import { FilterOrErrorMessage } from './Filter';
 
 /**
  * TextField is an abstract base class to help implement
