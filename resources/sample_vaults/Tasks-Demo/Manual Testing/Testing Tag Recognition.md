@@ -159,3 +159,10 @@ If any Tasks match here, it means that they are missing a correctly-spelled desc
 > group by tags
 > short mode
 > ```
+
+### Dataview's opinion of tags
+
+```dataview
+LIST file.tags
+WHERE file.path = this.file.path
+```
