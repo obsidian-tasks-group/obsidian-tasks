@@ -47,7 +47,38 @@ So the Tasks code that identifies tags should ignore things that look like tags 
 > - [ ] #task I have a valid tag #FFF34567
 > - [ ] #task I have a valid tag #letters-followed-by-asterisk*
 > - [ ] #task I have a valid tag #letters-followed-by-dollar$
-> - [ ] I have a valid tag inside [some #HyperlinkedText](https://help.obsidian.md/Plugins/Tag+pane#Nested+tags)
+> - [ ] #task I have a valid tag inside [some #HyperlinkedText](https://help.obsidian.md/Plugins/Tag+pane#Nested+tags) but the closing square bracket should not be in the tag
+> - [ ] #task I have a valid tag #withEmptySub/
+> - [ ] #task I have a valid tag #withEmptySub/£sub
+> - [ ] #task I have a valid tag #withNonEmpty/Sub
+> - [ ] #task I have a valid tag #withNonEmpty/Sub£
+> - [ ] #task I have a valid tag #withSymbol!
+> - [ ] #task I have a valid tag #withSymbol@
+> - [ ] #task I have a valid tag with trailing symbol #withSymbol™
+> - [ ] #task I have a valid tag with trailing synbol #withSymbol£
+> - [ ] #task I have a valid tag #withSymbol#
+> - [ ] #task I have a valid tag #withSymbol$
+> - [ ] #task I have a valid tag #withSymbol%
+> - [ ] #task I have a valid tag #withSymbol^
+> - [ ] #task I have a valid tag #withSymbol&
+> - [ ] #task I have a valid tag #withSymbol*
+> - [ ] #task I have a valid tag #withSymbol(
+> - [ ] #task I have a valid tag #withSymbol)
+> - [ ] #task I have a valid tag #withSymbol{
+> - [ ] #task I have a valid tag #withSymbol}
+> - [ ] #task I have a valid tag #withSymbol:
+> - [ ] #task I have a valid tag #withSymbol;
+> - [ ] #task I have a valid tag #withSymbol"
+> - [ ] #task I have a valid tag #withSymbol'
+> - [ ] #task I have a valid tag #withSymbol`
+> - [ ] #task I have a valid tag #withSymbol+
+> - [ ] #task I have a valid tag #withSymbol=
+> - [ ] #task I have a valid tag #withSymbol<
+> - [ ] #task I have a valid tag #withSymbol>
+> - [ ] #task I have a valid tag #withSymbol~
+> - [ ] #task I have a valid tag #withSymbol`
+
+I think Obsidian docs say £ is not a valid character in a tag???
 
 ## Tasks Searches
 
