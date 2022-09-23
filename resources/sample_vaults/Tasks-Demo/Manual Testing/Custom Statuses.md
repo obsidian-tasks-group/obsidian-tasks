@@ -1,0 +1,27 @@
+# Custom Statuses
+
+- [ ] Unchecked
+- [x] Regular
+- [X] Checked
+- [-] Dropped
+- [>] Forward
+- [D] Defer
+- [?] Question
+- [/] Half Done
+- [+] Add
+- [R] Research
+- [!] Important
+- [i] Idea
+- [B] Brainstorm
+- [P] Pro
+- [C] Con
+- [Q] Quote
+- [N] Note
+- [b] Bookmark
+- [I] Information
+- [p] Paraphrase
+- [L] Location
+- [E] Example
+- [A] Answer
+- [r] Reward
+- [c] Choice
