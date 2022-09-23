@@ -8,7 +8,7 @@ import { DateField } from './DateField';
 export class ScheduledDateField extends DateField {
     private static readonly scheduledRegexp = /^scheduled (before|after|on)? ?(.*)/;
 
-    protected filterRegexp(): RegExp {
+    protected filterRegExp(): RegExp {
         return ScheduledDateField.scheduledRegexp;
     }
     public fieldName(): string {
