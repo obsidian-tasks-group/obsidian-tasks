@@ -2,7 +2,12 @@ import type { TagCache } from 'obsidian';
 import { getAllTagsInFileSorted, getTagsOnLine, getUniqueTagsInFileSorted } from '../src/CacheHelpers';
 
 describe('CacheHelpers', () => {
-    it('RENAME ME 2', () => {
+    it('works on file without tags', () => {
+        expect(getTagsOnLine(undefined, 27)).toStrictEqual([]);
+        expect(getAllTagsInFileSorted(undefined)).toStrictEqual([]);
+    });
+
+    it('works on file with tags', () => {
         // TODO Shorten this JSON block
         // Created by doing this, manually, in the Obsidian console:
         //  let tfile = app.vault.getAbstractFileByPath('Manual Testing/Testing Tag Recognition.md');
