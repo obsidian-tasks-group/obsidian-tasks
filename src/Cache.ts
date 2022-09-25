@@ -5,6 +5,7 @@ import { Mutex } from 'async-mutex';
 
 import { Task } from './Task';
 import type { TasksEvents } from './TasksEvents';
+import { getTagsOnLine } from './CacheHelpers';
 
 export enum State {
     Cold = 'Cold',
@@ -230,6 +231,7 @@ export class Cache {
     ): Task[] {
         const tasks: Task[] = [];
         const fileLines = fileContent.split('\n');
+        const tagsInFile = fileCache.tags;
 
         // We want to store section information with every task so
         // that we can use that when we post process the markdown
@@ -238,10 +240,11 @@ export class Cache {
         let sectionIndex = 0;
         for (const listItem of listItems) {
             if (listItem.task !== undefined) {
-                if (currentSection === null || currentSection.position.end.line < listItem.position.start.line) {
+                const listItemStartLine = listItem.position.start.line;
+                if (currentSection === null || currentSection.position.end.line < listItemStartLine) {
                     // We went past the current section (or this is the first task).
                     // Find the section that is relevant for this task and the following of the same section.
-                    currentSection = Cache.getSection(listItem.position.start.line, fileCache.sections);
+                    currentSection = Cache.getSection(listItemStartLine, fileCache.sections);
                     sectionIndex = 0;
                 }
 
@@ -250,14 +253,25 @@ export class Cache {
                     continue;
                 }
 
-                const line = fileLines[listItem.position.start.line];
+                const line = fileLines[listItemStartLine];
+                const tagsOnLine = getTagsOnLine(tagsInFile, listItemStartLine);
                 const task = Task.fromLine({
                     line,
                     path: file.path,
                     sectionStart: currentSection.position.start.line,
                     sectionIndex,
-                    precedingHeader: Cache.getPrecedingHeader(listItem.position.start.line, fileCache.headings),
+                    precedingHeader: Cache.getPrecedingHeader(listItemStartLine, fileCache.headings),
                 });
+
+                if (task !== null) {
+                    const newTags = JSON.stringify(tagsOnLine);
+                    const oldTags = JSON.stringify(task?.tags);
+                    if (newTags !== oldTags) {
+                        console.log(`INCONSISTENCY FOUND in ${file.path} on line ${listItemStartLine}!!!`);
+                        console.log('tags by steam: ', oldTags);
+                        console.log('tags by cache: ', newTags);
+                    }
+                }
 
                 if (task !== null) {
                     sectionIndex++;
