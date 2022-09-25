@@ -1,0 +1,36 @@
+name: Internal Issue
+description: Internal issues, for helping contributors keep track of things to do
+labels: ["type: internal"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## About this form
+        This form is only for tracking developer-focussed actions, like refactoring, dependency updates and similar.
+        Rarely, these might be visible to users, such as when updating a dependency might require notifying users of a change in behaviour.
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: Describe the change. Why is it necessary?
+    validations:
+      required: true
+
+  - type: textarea
+    id: required-steps
+    attributes:
+      label: Required Steps
+      description: |
+        If you know of particular files that needto be changed, or other particular actions, please record them here.
+    validations:
+      required: false
+
+  - type: textarea
+    id: how-to-test
+    attributes:
+      label: How to Test
+      description: |
+        If you know how this change will be tested, please record ideas here.
+    validations:
+      required: false
