@@ -52,3 +52,8 @@
 .tasks-modal-date {
     margin-bottom: 10px;
 }
+
+.tasks-modal label + input {
+    margin-left: .67em;
+}
+
