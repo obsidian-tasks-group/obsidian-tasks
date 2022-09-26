@@ -2,21 +2,31 @@ import { getAllTagsInFileSorted, getTagsOnLine, getUniqueTagsInFileSorted } from
 import { getSampleMetadataTagCacheData } from './SampleData/SampleMetadataTagCacheData';
 
 describe('CacheHelpers', () => {
-    it('works on file without tags', () => {
-        expect(getTagsOnLine(undefined, 27)).toStrictEqual([]);
-        expect(getAllTagsInFileSorted(undefined)).toStrictEqual([]);
-    });
+    describe('Finding Tags', () => {
+        it('works on file without tags', () => {
+            expect(getTagsOnLine(undefined, 27)).toStrictEqual([]);
+            expect(getAllTagsInFileSorted(undefined)).toStrictEqual([]);
+        });
 
-    it('works on file with tags', () => {
-        const tagCache = getSampleMetadataTagCacheData();
+        it('should find all tags on a line', () => {
+            const tagCache = getSampleMetadataTagCacheData();
 
-        const lineNumber = 74;
-        const tagsOnLine = getTagsOnLine(tagCache, lineNumber);
-        expect(tagsOnLine).toStrictEqual(['#task', '#withSymbol']);
+            const lineNumber = 74;
+            const tagsOnLine = getTagsOnLine(tagCache, lineNumber);
+            expect(tagsOnLine).toStrictEqual(['#task', '#withSymbol']);
+        });
 
-        const tagsInFile = getAllTagsInFileSorted(tagCache);
+        it('should find all tags in a file', () => {
+            const tagCache = getSampleMetadataTagCacheData();
 
-        const uniqueTagsInFile = getUniqueTagsInFileSorted(tagsInFile);
-        expect(uniqueTagsInFile).toStrictEqual(['#FFF23456', '#letters-followed-by-dollar', '#task', '#withSymbol']);
+            const tagsInFile = getAllTagsInFileSorted(tagCache);
+            const uniqueTagsInFile = getUniqueTagsInFileSorted(tagsInFile);
+            expect(uniqueTagsInFile).toStrictEqual([
+                '#FFF23456',
+                '#letters-followed-by-dollar',
+                '#task',
+                '#withSymbol',
+            ]);
+        });
     });
 });
