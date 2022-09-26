@@ -16,6 +16,20 @@ describe('CacheHelpers', () => {
             expect(tagsOnLine).toStrictEqual(['#task', '#withSymbol']);
         });
 
+        it('should return empty tag list for out-of-bounds line', () => {
+            const tagCache = getSampleMetadataTagCacheData();
+
+            const lineNumber = 999;
+            const tagsOnLine = getTagsOnLine(tagCache, lineNumber);
+            expect(tagsOnLine).toStrictEqual([]);
+        });
+
+        it('should return empty tag list for line if no tags in file', () => {
+            const lineNumber = 999;
+            const tagsOnLine = getTagsOnLine([], lineNumber);
+            expect(tagsOnLine).toStrictEqual([]);
+        });
+
         it('should find all tags in a file', () => {
             const tagCache = getSampleMetadataTagCacheData();
 
