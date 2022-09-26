@@ -1,19 +1,13 @@
 import type { TagCache } from 'obsidian';
 import { getAllTagsInFileSorted, getTagsOnLine, getUniqueTagsInFileSorted } from '../src/CacheHelpers';
 
-describe('CacheHelpers', () => {
-    it('works on file without tags', () => {
-        expect(getTagsOnLine(undefined, 27)).toStrictEqual([]);
-        expect(getAllTagsInFileSorted(undefined)).toStrictEqual([]);
-    });
-
-    it('works on file with tags', () => {
-        // This JSON block created by doing this, manually, in the Obsidian console:
-        //  let tfile = app.vault.getAbstractFileByPath('Manual Testing/Testing Tag Recognition.md');
-        //  let cache = app.metadataCache.getFileCache(tfile);
-        // Then console.log(cache.tags);
-        // Later, I reduced the volume of test data.
-        const jsonString = `
+function getSampleMetadataTagCacheData() {
+    // This JSON block created by doing this, manually, in the Obsidian console:
+    //  let tfile = app.vault.getAbstractFileByPath('Manual Testing/Testing Tag Recognition.md');
+    //  let cache = app.metadataCache.getFileCache(tfile);
+    // Then console.log(cache.tags);
+    // Later, I reduced the volume of test data.
+    const jsonString = `
         [
     {
         "tag": "#FFF23456",
@@ -77,7 +71,18 @@ describe('CacheHelpers', () => {
     }
 ]`;
 
-        const tagCache: TagCache[] = JSON.parse(jsonString);
+    const tagCache: TagCache[] = JSON.parse(jsonString);
+    return tagCache;
+}
+
+describe('CacheHelpers', () => {
+    it('works on file without tags', () => {
+        expect(getTagsOnLine(undefined, 27)).toStrictEqual([]);
+        expect(getAllTagsInFileSorted(undefined)).toStrictEqual([]);
+    });
+
+    it('works on file with tags', () => {
+        const tagCache = getSampleMetadataTagCacheData();
 
         const lineNumber = 74;
         const tagsOnLine = getTagsOnLine(tagCache, lineNumber);
