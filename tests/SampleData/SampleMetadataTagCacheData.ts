@@ -70,6 +70,5 @@ export function getSampleMetadataTagCacheData(): TagCache[] {
     }
 ]`;
 
-    const tagCache: TagCache[] = JSON.parse(jsonString);
-    return tagCache;
+    return JSON.parse(jsonString);
 }
