@@ -307,7 +307,7 @@
             </div>
             <div class="tasks-modal-date">
                 <div>
-                    <label for="forwardOnly">Force future dates:</label>
+                    <label for="forwardOnly">Only future dates:</label>
                     <input
                         bind:checked={editableTask.forwardOnly}
                         id="forwardOnly"
