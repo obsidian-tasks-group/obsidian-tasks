@@ -26,6 +26,7 @@
         scheduledDate: string;
         dueDate: string;
         doneDate: string;
+        forwardOnly: boolean;
     } = {
         description: '',
         status: Status.TODO,
@@ -35,6 +36,7 @@
         scheduledDate: '',
         dueDate: '',
         doneDate: '',
+        forwardOnly: true
     };
 
     let parsedStartDate: string = '';
@@ -70,7 +72,7 @@
         parsedStartDate = parseDate(
             'start',
             editableTask.startDate,
-            new Date(),
+            editableTask.forwardOnly ? new Date() : undefined,
         );
     }
 
@@ -79,13 +81,17 @@
         parsedScheduledDate = parseDate(
             'scheduled',
             editableTask.scheduledDate,
-            new Date(),
+            editableTask.forwardOnly ? new Date() : undefined,
         );
     }
 
     $: {
         editableTask.dueDate = doAutocomplete(editableTask.dueDate);
-        parsedDueDate = parseDate('due', editableTask.dueDate, new Date());
+        parsedDueDate = parseDate(
+            'due',
+            editableTask.dueDate,
+            editableTask.forwardOnly ? new Date() : undefined,
+        );
     }
 
     $: {
@@ -140,6 +146,7 @@
                 : '',
             dueDate: task.dueDate ? task.dueDate.format('YYYY-MM-DD') : '',
             doneDate: task.doneDate ? task.doneDate.format('YYYY-MM-DD') : '',
+            forwardOnly: true,
         };
         setTimeout(() => {
             descriptionInput.focus();
@@ -157,7 +164,7 @@
         const parsedStartDate = chrono.parseDate(
             editableTask.startDate,
             new Date(),
-            { forwardDate: true },
+            { forwardDate: editableTask.forwardOnly },
         );
         if (parsedStartDate !== null) {
             startDate = window.moment(parsedStartDate);
@@ -167,7 +174,7 @@
         const parsedScheduledDate = chrono.parseDate(
             editableTask.scheduledDate,
             new Date(),
-            { forwardDate: true },
+            { forwardDate: editableTask.forwardOnly },
         );
         if (parsedScheduledDate !== null) {
             scheduledDate = window.moment(parsedScheduledDate);
@@ -177,7 +184,7 @@
         const parsedDueDate = chrono.parseDate(
             editableTask.dueDate,
             new Date(),
-            { forwardDate: true },
+            { forwardDate: editableTask.forwardOnly },
         );
         if (parsedDueDate !== null) {
             dueDate = window.moment(parsedDueDate);
@@ -298,12 +305,24 @@
                 />
                 <code>{startDateSymbol} {@html parsedStartDate}</code>
             </div>
+            <div class="tasks-modal-date">
+                <div>
+                    <label for="forwardOnly">Only future dates:</label>
+                    <input
+                        bind:checked={editableTask.forwardOnly}
+                        id="forwardOnly"
+                        type="checkbox"
+                        class="task-list-item-checkbox tasks-modal-checkbox"
+                    />
+                </div>
+            </div>
         </div>
         <hr />
         <div class="tasks-modal-section">
             <div>
-                Status:
+                <label for="status">Status:</label>
                 <input
+                    id="status"
                     type="checkbox"
                     class="task-list-item-checkbox tasks-modal-checkbox"
                     checked={editableTask.status === Status.DONE}
