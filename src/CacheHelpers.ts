@@ -33,6 +33,10 @@ export function getAllTagsInFileSorted(tagCache: TagCache[] | undefined) {
     return tagCache.map((t) => t.tag).sort();
 }
 
+// Above may not be needed. See
+//  export function getAllTags(cache: CachedMetadata): string[] | null;
+// https://github.com/obsidianmd/obsidian-api/blob/1b4f6e2e5753c8ac2d538bc5d55c38f228450cb2/obsidian.d.ts#L1428-L1431
+
 /**
  * Return the unique tags recognised by Obsidian in a Markdown file, sorted alphabetically.
  * Duplicate tags are discarded.
