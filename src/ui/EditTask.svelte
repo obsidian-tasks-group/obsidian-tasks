@@ -285,6 +285,7 @@
                 />
                 <code>{dueDateSymbol} {@html parsedDueDate}</code>
             </div>
+            <hr />
             <div class="tasks-modal-date">
                 <label for="scheduled">Scheduled</label>
                 <input
@@ -295,6 +296,7 @@
                 />
                 <code>{scheduledDateSymbol} {@html parsedScheduledDate}</code>
             </div>
+            <hr />
             <div class="tasks-modal-date">
                 <label for="start">Start</label>
                 <input
@@ -305,6 +307,7 @@
                 />
                 <code>{startDateSymbol} {@html parsedStartDate}</code>
             </div>
+            <hr />
             <div class="tasks-modal-date">
                 <div>
                     <label for="forwardOnly">Only future dates:</label>
