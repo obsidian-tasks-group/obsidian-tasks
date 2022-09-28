@@ -35,6 +35,9 @@ jobs:
             manifest.json
             styles.css
 
+      - name: Copy new build to Tasks-Demo vault
+        run: ./copy-build-to-sample-vault.sh
+
       - name: Archive Tasks-Demo vault
         uses: actions/upload-artifact@v3
         with:
