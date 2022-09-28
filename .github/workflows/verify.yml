@@ -34,3 +34,13 @@ jobs:
             main.js
             manifest.json
             styles.css
+
+      - name: Copy new build to Tasks-Demo vault
+        run: ./scripts/Test-TasksInLocalObsidian.sh
+
+      - name: Archive Tasks-Demo vault
+        uses: actions/upload-artifact@v3
+        with:
+          name: Tasks-Demo-VerifyCommit-Build${{ github.run_number }}-Run${{ github.run_attempt }}
+          path: |
+            resources/sample_vaults/Tasks-Demo
