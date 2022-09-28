@@ -34,3 +34,10 @@ jobs:
             main.js
             manifest.json
             styles.css
+
+      - name: Archive Tasks-Demo vault
+        uses: actions/upload-artifact@v3
+        with:
+          name: Tasks-Demo
+          path: |
+            resources/sample_vaults/Tasks-Demo
