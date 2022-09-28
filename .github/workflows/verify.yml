@@ -41,6 +41,6 @@ jobs:
       - name: Archive Tasks-Demo vault
         uses: actions/upload-artifact@v3
         with:
-          name: Tasks-Demo
+          name: Tasks-Demo-${{ github.run_id }}-${{ github.run_number }}-${{ github.run_attempt }}
           path: |
             resources/sample_vaults/Tasks-Demo
