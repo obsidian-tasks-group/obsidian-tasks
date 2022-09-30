@@ -53,6 +53,20 @@ Important
 
 A recurring task should have a due date and the recurrence rule must appear before the due date on the line.
 
+<hr />
+Important
+{: .label .label-yellow }
+
+There are edge cases for tasks that recur monthly or yearly.
+For example, a task may be due `2022-01-31` and recur `every 3 months`.
+The next recurrence date of `2022-04-31` does not exist.
+
+In that case, Tasks moves the next occurrence backwards to the next valid date.
+In this case, that would be `2022-04-30`.
+
+From then on, the due date will be based on the 30th day of the month, unless changed manually.
+So the next occurrence would happen on `2022-07-30`, even though July has 31 days.
+
 </div>
 
 In the editor there is no direct feedback to whether your recurrence rule is valid.
