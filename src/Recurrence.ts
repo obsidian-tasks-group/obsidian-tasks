@@ -282,12 +282,13 @@ export class Recurrence {
      * isSkippingTooManyMonths returns true if `next` is more than `skippingMonths` months after `after`.
      */
     private static isSkippingTooManyMonths(after: Moment, next: Moment, skippingMonths: Number): boolean {
-        let diff = next.month() - after.month();
-        if (diff < 0) {
-            diff = diff + 12;
-        }
+        let diffMonths = next.month() - after.month();
 
-        return diff > skippingMonths;
+        // Maybe some years have passed?
+        const diffYears = next.year() - after.year();
+        diffMonths += diffYears * 12;
+
+        return diffMonths > skippingMonths;
     }
 
     /**

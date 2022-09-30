@@ -100,6 +100,42 @@ describe('Recurrence', () => {
         expect(next!.scheduledDate).toBeNull();
         expect(next!.dueDate!.isSame(moment('2026-02-28'))).toStrictEqual(true);
     });
+
+    it('creates a recurrence in 11 months, even on March 31', () => {
+        // Arrange
+        const recurrence = Recurrence.fromText({
+            recurrenceRuleText: 'every 11 months',
+            startDate: null,
+            scheduledDate: null,
+            dueDate: moment('2020-03-31').startOf('day'),
+        });
+
+        // Act
+        const next = recurrence!.next();
+
+        // Assert
+        expect(next!.startDate).toBeNull();
+        expect(next!.scheduledDate).toBeNull();
+        expect(next!.dueDate!.isSame(moment('2021-02-28'))).toStrictEqual(true);
+    });
+
+    it('creates a recurrence in 13 months, even on Jan 31', () => {
+        // Arrange
+        const recurrence = Recurrence.fromText({
+            recurrenceRuleText: 'every 13 months',
+            startDate: null,
+            scheduledDate: null,
+            dueDate: moment('2020-01-31').startOf('day'),
+        });
+
+        // Act
+        const next = recurrence!.next();
+
+        // Assert
+        expect(next!.startDate).toBeNull();
+        expect(next!.scheduledDate).toBeNull();
+        expect(next!.dueDate!.isSame(moment('2021-02-28'))).toStrictEqual(true);
+    });
 });
 
 describe('identicalTo', () => {
