@@ -650,6 +650,26 @@ describe('toggle done', () => {
             nextScheduled: '2021-10-18',
             nextDue: '2021-10-20',
         },
+        {
+            // every month - due 31 March, and so 31 April would not exist: it used to skip forward 2 months
+            interval: 'every month',
+            due: '2021-03-31',
+            nextDue: '2021-04-30',
+        },
+        {
+            // every month - due 29 January, and so 29 February would not exist: it used to skip forward 2 months
+            interval: 'every month',
+            due: '2021-01-29',
+            nextDue: '2021-02-28',
+        },
+
+        // Testing yearly repetition around leap days
+        {
+            // yearly, due on leap day 29th February: it used to skip forward 4 years
+            interval: 'every year',
+            due: '2020-02-29',
+            nextDue: '2021-02-28',
+        },
     ];
 
     test.concurrent.each<RecurrenceCase>(recurrenceCases)(
