@@ -129,7 +129,7 @@ export class Recurrence {
                 ...this.rrule.origOptions,
                 dtstart: today.startOf('day').utc(true).toDate(),
             });
-            next = ruleBasedOnToday.after(today.endOf('day').utc(true).toDate());
+            next = this.nextAfter(today.endOf('day'), ruleBasedOnToday);
         } else {
             // The next occurrence should happen based on the original reference
             // date if possible. Otherwise, base it on today if we do not have a
@@ -138,17 +138,12 @@ export class Recurrence {
                 // Reference date can be `null` to mean "today".
                 // Moment only accepts `undefined`, not `null`.
                 .moment(this.referenceDate ?? undefined)
-                .endOf('day')
-                .utc(true);
+                .endOf('day');
 
-            next = this.rrule.after(after.toDate());
+            next = this.nextAfter(after, this.rrule);
         }
 
         if (next !== null) {
-            // Re-add the timezone that RRule disregarded:
-            const localTimeZone = window.moment.utc(next).local(true);
-            const nextOccurrence = localTimeZone.startOf('day');
-
             // Keep the relative difference between the reference date and
             // start/scheduled/due.
             let startDate: Moment | null = null;
@@ -162,7 +157,7 @@ export class Recurrence {
                     const originalDifference = window.moment.duration(this.startDate.diff(this.referenceDate));
 
                     // Cloning so that original won't be manipulated:
-                    startDate = window.moment(nextOccurrence);
+                    startDate = window.moment(next);
                     // Rounding days to handle cross daylight-savings-time recurrences.
                     startDate.add(Math.round(originalDifference.asDays()), 'days');
                 }
@@ -170,7 +165,7 @@ export class Recurrence {
                     const originalDifference = window.moment.duration(this.scheduledDate.diff(this.referenceDate));
 
                     // Cloning so that original won't be manipulated:
-                    scheduledDate = window.moment(nextOccurrence);
+                    scheduledDate = window.moment(next);
                     // Rounding days to handle cross daylight-savings-time recurrences.
                     scheduledDate.add(Math.round(originalDifference.asDays()), 'days');
                 }
@@ -178,7 +173,7 @@ export class Recurrence {
                     const originalDifference = window.moment.duration(this.dueDate.diff(this.referenceDate));
 
                     // Cloning so that original won't be manipulated:
-                    dueDate = window.moment(nextOccurrence);
+                    dueDate = window.moment(next);
                     // Rounding days to handle cross daylight-savings-time recurrences.
                     dueDate.add(Math.round(originalDifference.asDays()), 'days');
                 }
@@ -211,5 +206,90 @@ export class Recurrence {
         }
 
         return this.toText() === other.toText(); // this also checks baseOnToday
+    }
+
+    private nextAfter(after: Moment, rrule: RRule): Date {
+        after.utc(true);
+        let next = window.moment(rrule.after(after.toDate()));
+
+        const monthMatch = this.toText().match(/every( \d+)? month(s)?(.*)?/);
+        if (monthMatch !== null) {
+            next = Recurrence.nextAfterMonths(after, next, rrule, monthMatch[1]);
+        }
+
+        const yearMatch = this.toText().match(/every( \d+)? year(s)?(.*)?/);
+        if (yearMatch !== null) {
+            next = Recurrence.nextAfterYears(after, next, rrule, yearMatch[1]);
+        }
+
+        return Recurrence.addTimezone(next).toDate();
+    }
+
+    private static nextAfterMonths(
+        after: Moment,
+        next: Moment,
+        rrule: RRule,
+        skippingMonths: string | undefined,
+    ): Moment {
+        let parsedSkippingMonths: Number = 1;
+        if (skippingMonths !== undefined) {
+            parsedSkippingMonths = Number.parseInt(skippingMonths.trim(), 10);
+        }
+
+        while (Recurrence.isSkippingTooManyMonths(after, next, parsedSkippingMonths)) {
+            next = Recurrence.fromOneDayEarlier(after, rrule);
+        }
+
+        return next;
+    }
+
+    private static isSkippingTooManyMonths(after: Moment, next: Moment, skippingMonths: Number): boolean {
+        let diff = next.month() - after.month();
+        if (diff < 0) {
+            diff = diff + 12;
+        }
+
+        return diff > skippingMonths;
+    }
+
+    private static nextAfterYears(
+        after: Moment,
+        next: Moment,
+        rrule: RRule,
+        skippingYears: string | undefined,
+    ): Moment {
+        let parsedSkippingYears: Number = 1;
+        if (skippingYears !== undefined) {
+            parsedSkippingYears = Number.parseInt(skippingYears.trim(), 10);
+        }
+        while (Recurrence.isSkippingTooManyYears(after, next, parsedSkippingYears)) {
+            next = Recurrence.fromOneDayEarlier(after, rrule);
+        }
+
+        return next;
+    }
+
+    private static isSkippingTooManyYears(after: Moment, next: Moment, skippingYears: Number): boolean {
+        const diff = next.year() - after.year();
+
+        return diff > skippingYears;
+    }
+
+    private static fromOneDayEarlier(after: Moment, rrule: RRule): Moment {
+        after.subtract(1, 'days').endOf('day');
+
+        const options = rrule.origOptions;
+        options.dtstart = after.startOf('day').toDate();
+        rrule = new RRule(options);
+
+        const next = window.moment(rrule.after(after.toDate()));
+
+        return next;
+    }
+
+    private static addTimezone(date: Moment): Moment {
+        const localTimeZone = window.moment.utc(date).local(true);
+
+        return localTimeZone.startOf('day');
     }
 }

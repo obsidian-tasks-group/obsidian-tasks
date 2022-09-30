@@ -28,6 +28,78 @@ describe('Recurrence', () => {
             dueDate: null,
         });
     });
+
+    it('creates a recurrence the next month, even on the 31st', () => {
+        // Arrange
+        const recurrence = Recurrence.fromText({
+            recurrenceRuleText: 'every month',
+            startDate: null,
+            scheduledDate: null,
+            dueDate: moment('2022-01-31').startOf('day'),
+        });
+
+        // Act
+        const next = recurrence!.next();
+
+        // Assert
+        expect(next!.startDate).toBeNull();
+        expect(next!.scheduledDate).toBeNull();
+        expect(next!.dueDate!.isSame(moment('2022-02-28'))).toStrictEqual(true);
+    });
+
+    it('creates a recurrence 3 months in', () => {
+        // Arrange
+        const recurrence = Recurrence.fromText({
+            recurrenceRuleText: 'every 3 months',
+            startDate: null,
+            scheduledDate: null,
+            dueDate: moment('2022-01-31').startOf('day'),
+        });
+
+        // Act
+        const next = recurrence!.next();
+
+        // Assert
+        expect(next!.startDate).toBeNull();
+        expect(next!.scheduledDate).toBeNull();
+        expect(next!.dueDate!.isSame(moment('2022-04-30'))).toStrictEqual(true);
+    });
+
+    it('creates a recurrence the next month, even across years', () => {
+        // Arrange
+        const recurrence = Recurrence.fromText({
+            recurrenceRuleText: 'every 2 months',
+            startDate: null,
+            scheduledDate: null,
+            dueDate: moment('2023-12-31').startOf('day'),
+        });
+
+        // Act
+        const next = recurrence!.next();
+
+        // Assert
+        expect(next!.startDate).toBeNull();
+        expect(next!.scheduledDate).toBeNull();
+        expect(next!.dueDate!.isSame(moment('2024-02-29'))).toStrictEqual(true);
+    });
+
+    it('creates a recurrence in 2 years, even on Feb 29th', () => {
+        // Arrange
+        const recurrence = Recurrence.fromText({
+            recurrenceRuleText: 'every 2 years',
+            startDate: null,
+            scheduledDate: null,
+            dueDate: moment('2024-02-29').startOf('day'),
+        });
+
+        // Act
+        const next = recurrence!.next();
+
+        // Assert
+        expect(next!.startDate).toBeNull();
+        expect(next!.scheduledDate).toBeNull();
+        expect(next!.dueDate!.isSame(moment('2026-02-28'))).toStrictEqual(true);
+    });
 });
 
 describe('identicalTo', () => {
