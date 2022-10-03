@@ -670,6 +670,20 @@ describe('toggle done', () => {
             due: '2020-02-29',
             nextDue: '2021-02-28',
         },
+
+        // Testing 'when done' does not skip when next occurence is an invalid date
+        {
+            interval: 'every month when done',
+            scheduled: '1999-01-23',
+            today: '2021-08-31',
+            nextScheduled: '2021-09-30',
+        },
+        {
+            interval: 'every 2 years when done',
+            start: '1999-01-23',
+            today: '2020-02-29', // is a leap year
+            nextStart: '2022-02-28',
+        },
     ];
 
     test.concurrent.each<RecurrenceCase>(recurrenceCases)(
