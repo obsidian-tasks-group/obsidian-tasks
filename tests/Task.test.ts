@@ -671,7 +671,7 @@ describe('toggle done', () => {
             nextDue: '2021-02-28',
         },
 
-        // Testing 'when done' does not skip when next occurence is an invalid date
+        // Testing 'when done' does not skip when next occurrence is a non-existent date
         {
             interval: 'every month when done',
             scheduled: '1999-01-23',
@@ -690,6 +690,12 @@ describe('toggle done', () => {
         'recurs correctly (%j)',
         ({ interval, due, scheduled, start, today, nextDue, nextScheduled, nextStart }) => {
             const todaySpy = jest.spyOn(Date, 'now').mockReturnValue(moment(today).valueOf());
+
+            // If this test fails, the RecurrenceCase had no expected new dates set, and so
+            // is accidentally not doing any testing.
+            const atLeaseOneExpectationSupplied =
+                nextStart !== undefined || nextDue !== undefined || nextScheduled !== undefined;
+            expect(atLeaseOneExpectationSupplied).toStrictEqual(true);
 
             const line = [
                 '- [ ] I am task',
