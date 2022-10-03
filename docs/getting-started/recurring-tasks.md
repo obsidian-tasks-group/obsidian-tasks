@@ -134,6 +134,7 @@ The new task will have the due date advanced by two weeks and a scheduled date t
 
 1. You can _not_ use rules where recurrence happens a certain number of times (`for x times`). Tasks doesn't link the tasks and doesn't know how often it occurred.
 2. You can _not_ use rules where recurrence ends on a specific date (`until "date"`). There is a bug in [`rrule`](https://github.com/jakubroztocil/rrule) where `until "date"` rules are not converted to the correct text. As a consequence, every subsequent task's "until" date will be one day earlier than the one before.
+3. If the highest priority date in a task does not exist (for example, due date is February 30th), when the task is completed the recurrence rule will disappear, and no new task will be created. This is detectable prior to completing the task by viewing the task in Live Preview: the recurrence rule will be hidden, and the date will be displayed as 'Invalid date'.
 
 ---
 
