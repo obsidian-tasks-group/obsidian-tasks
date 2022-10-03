@@ -29,10 +29,25 @@ Some next increments are invalid dates, in which case rrule skips forward to the
 
 ## With #1197
 
-### #1197: every month on the 25th
+There are two copies of each test here.
+
+- The first will remain unchanged, and is the initial starting point for a recurring task.
+- The second shows the most-recently tested behaviour, with a comment describing any issues with that behaviour.
+
+The intention is to make it easy to re-start testing  if testing on a newer version of the plugin,
+
+### #1197: every month on the 25th - starting point
 
 - [ ] #task due at end of month 🔁 every month on the 25th 📅 2021-11-25
 
-### #1197: every month on the 31st
+### #1197: every month on the 25th - current behaviour
+
+- [ ] #task due at end of month 🔁 every month on the 25th 📅 2021-11-25
+
+### #1197: every month on the 31st - starting point
+
+- [ ] #task due at end of month 🔁 every month on the 31st 📅 2021-11-30
+
+### #1197: every month on the 31st - current behaviour
 
 - [ ] #task due at end of month 🔁 every month on the 31st 📅 2021-11-30
