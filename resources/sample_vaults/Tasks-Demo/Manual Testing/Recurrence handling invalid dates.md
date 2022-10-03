@@ -27,6 +27,10 @@ Some next increments are invalid dates, in which case rrule skips forward to the
 - [x] #task do stuff 🔁 every month on the 31st 📅 2021-12-31 ✅ 2022-10-03
 - [x] #task do stuff 🔁 every month on the 31st 📅 2021-11-30 ✅ 2022-10-03
 
+### 1.14.0: every month on the last
+
+- [ ] #task do stuff 🔁 every month on the last 📅 2021-11-30
+
 ## With #1197
 
 There are two copies of each test here.
@@ -65,3 +69,11 @@ If the new recurrence lands on an invalid date, it gets stuck, with the next occ
 - [x] #task do stuff 🔁 every month on the 31st 📅 2022-01-31 ✅ 2022-10-03
 - [x] #task do stuff 🔁 every month on the 31st 📅 2021-12-31 ✅ 2022-10-03
 - [x] #task do stuff 🔁 every month on the 31st 📅 2021-11-30 ✅ 2022-10-03
+
+### #1197: every month on the last - starting point
+
+- [ ] #task do stuff 🔁 every month on the last 📅 2021-11-30
+
+### #1197: every month on the last - current behaviour
+
+- [ ] #task do stuff 🔁 every month on the last 📅 2021-11-30
