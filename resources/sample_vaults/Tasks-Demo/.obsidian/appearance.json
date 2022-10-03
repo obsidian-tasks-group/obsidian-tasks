@@ -1,4 +1,5 @@
 {
   "theme": "moonstone",
-  "enabledCssSnippets": []
+  "enabledCssSnippets": [],
+  "accentColor": ""
 }
