@@ -150,6 +150,8 @@ Examples of possible recurrence rules (mix and match as desired; these should be
 - `🔁 every 2 months`
 - `🔁 every month on the 1st`
 - `🔁 every month on the last`
+- `🔁 every month on the last Friday`
+- `🔁 every month on the 2nd last Friday`
 - `🔁 every 6 months on the 2nd Wednesday`
 - `🔁 every January on the 15th`
 - `🔁 every February on the last`
