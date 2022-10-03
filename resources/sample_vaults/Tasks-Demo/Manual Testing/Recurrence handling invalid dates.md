@@ -42,7 +42,14 @@ The intention is to make it easy to re-start testing  if testing on a newer vers
 
 ### #1197: every month on the 25th - current behaviour
 
-- [ ] #task due at end of month 🔁 every month on the 25th 📅 2021-11-25
+This works fine.
+
+- [ ] #task due at end of month 🔁 every month on the 25th 📅 2022-04-25
+- [x] #task due at end of month 🔁 every month on the 25th 📅 2022-03-25 ✅ 2022-10-03
+- [x] #task due at end of month 🔁 every month on the 25th 📅 2022-02-25 ✅ 2022-10-03
+- [x] #task due at end of month 🔁 every month on the 25th 📅 2022-01-25 ✅ 2022-10-03
+- [x] #task due at end of month 🔁 every month on the 25th 📅 2021-12-25 ✅ 2022-10-03
+- [x] #task due at end of month 🔁 every month on the 25th 📅 2021-11-25 ✅ 2022-10-03
 
 ### #1197: every month on the 31st - starting point
 
@@ -50,4 +57,11 @@ The intention is to make it easy to re-start testing  if testing on a newer vers
 
 ### #1197: every month on the 31st - current behaviour
 
-- [ ] #task due at end of month 🔁 every month on the 31st 📅 2021-11-30
+If the new recurrence lands on an invalid date, it gets stuck, with the next occurrence having the same date as the original.
+
+- [ ] #task due at end of month 🔁 every month on the 31st 📅 2022-01-31
+- [x] #task due at end of month 🔁 every month on the 31st 📅 2022-01-31 ✅ 2022-10-03
+- [x] #task due at end of month 🔁 every month on the 31st 📅 2022-01-31 ✅ 2022-10-03
+- [x] #task due at end of month 🔁 every month on the 31st 📅 2022-01-31 ✅ 2022-10-03
+- [x] #task due at end of month 🔁 every month on the 31st 📅 2021-12-31 ✅ 2022-10-03
+- [x] #task due at end of month 🔁 every month on the 31st 📅 2021-11-30 ✅ 2022-10-03
