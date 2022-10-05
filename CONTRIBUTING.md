@@ -1,5 +1,38 @@
 # Contribution Guidelines Obsidian Tasks
 
+<!-- toc -->
+## Contents
+
+* [Thank you](#thank-you)
+* [Updating documentation](#updating-documentation)
+  * [Documentation and branches](#documentation-and-branches)
+  * [Version numbers in documentation](#version-numbers-in-documentation)
+  * [How the documentation is generated](#how-the-documentation-is-generated)
+* [Updating code](#updating-code)
+* [Local setup and workflow for changes to code and tests](#local-setup-and-workflow-for-changes-to-code-and-tests)
+  * [Setting up build environment](#setting-up-build-environment)
+  * [Local development](#local-development)
+* [Maintaining the tests](#maintaining-the-tests)
+  * [Writing Tests for New or Refactored Code](#writing-tests-for-new-or-refactored-code)
+    * [Think of it as testing user-visible features](#think-of-it-as-testing-user-visible-features)
+    * [Location of code](#location-of-code)
+    * [Then start writing tests](#then-start-writing-tests)
+  * [Snapshot Tests](#snapshot-tests)
+  * [Jest and the WebStorm IDE](#jest-and-the-webstorm-ide)
+  * [Test Coverage](#test-coverage)
+* [Dependency Upgrades and Repository Maintenance](#dependency-upgrades-and-repository-maintenance)
+  * [Overview of dependencies and `package.json`](#overview-of-dependencies-and-packagejson)
+  * [Thought-Process for Deciding Whether a Dependency Needs Manual Testing](#thought-process-for-deciding-whether-a-dependency-needs-manual-testing)
+  * [Dependency Groups](#dependency-groups)
+  * [Notes and Special Cases](#notes-and-special-cases)
+* [FAQs](#faqs)
+  * [How does Tasks handle status changes?](#how-does-tasks-handle-status-changes)
+  * [How do I test a GitHub build of the Tasks plugin?](#how-do-i-test-a-github-build-of-the-tasks-plugin)
+  * [How do I smoke-test the Tasks plugin?](#how-do-i-smoke-test-the-tasks-plugin)
+  * [How do I make a release?](#how-do-i-make-a-release)<!-- endToc -->
+
+## Thank you
+
 Thank you for wanting to contribute to Obsidian Tasks!
 Every contribution is much appreciated!
 
@@ -27,10 +60,10 @@ version upon release.
 There are 2 styles of placeholders used through the documentation, Please pick the one that
 fits your text better. (If in doubt, take a look at the existing version tags for other features.)
 
-- `> Introduced in Tasks X.Y.Z`
-  - This placeholder is usually used after a section heading.
-- `> X (Y and Z) was introduced in Tasks X.Y.Z`
-  - This placeholder is used when you need to tag a sub-part of something, for example a list.
+* `> Introduced in Tasks X.Y.Z`
+  * This placeholder is usually used after a section heading.
+* `> X (Y and Z) was introduced in Tasks X.Y.Z`
+  * This placeholder is used when you need to tag a sub-part of something, for example a list.
 
 ### How the documentation is generated
 
@@ -104,13 +137,13 @@ The [Expect](https://jestjs.io/docs/expect) page is a good reference for the man
 
 #### Think of it as testing user-visible features
 
-- Tests that test low-level implementation details are hard to maintain over time. Instead, test user-visible features.
-- Try to think of the purpose of the code that has missing tests.
-  - For example, in `taskFromLine()` in `src/Commands/CreateOrEdit.ts` the comments are quite useful in terms of showing the different scenarios being considered. Something like:
+* Tests that test low-level implementation details are hard to maintain over time. Instead, test user-visible features.
+* Try to think of the purpose of the code that has missing tests.
+  * For example, in `taskFromLine()` in `src/Commands/CreateOrEdit.ts` the comments are quite useful in terms of showing the different scenarios being considered. Something like:
         _already a task line with a global filter, already a task line missing the global filter, already a task line and there is no global filter, already a bullet item, not in a bullet item_
-  - These then would be good tests to write: specifically, tests to check that each of those scenarios does actually behave as expected.
-  - And if the implementation changed in future, those tests would be extremely useful to the maintainer at the time.
-  - And if a new behaviour was added in future, it would be obvious how to add a new test for it.
+  * These then would be good tests to write: specifically, tests to check that each of those scenarios does actually behave as expected.
+  * And if the implementation changed in future, those tests would be extremely useful to the maintainer at the time.
+  * And if a new behaviour was added in future, it would be obvious how to add a new test for it.
 
 #### Location of code
 
@@ -197,22 +230,22 @@ needs manual "smoke testing" of runtime behavior.
 
 Look at the `package.json` entry for a package and search for which files import the package.
 
-- When in doubt, smoke-test. Smoke-testing of multiple dependency upgrades can be done in a batch, to reduce the time spent on this process.
-- **Definitely smoke test**: Anything that is involved in producing the built output to users. For example:
-  - everything in the "dependencies" (rather than "devDependencies") list in `package.json`
-  - `esbuild` (the build system)
-  - anything imported by the esbuild config file `esbuild.config.mjs` (for example, `builtin-modules`, `svelte-preprocess`)
-  - `obsidian` (also see [Special Cases section below](#notes-and-special-cases))
-  - all `@codemirror/*`
-  - `moment`
-- **Automated testing sufficient**: Our linting, formatting, and testing code does not affect the built output and is run automatically on each PR, so it does not need smoke tests. An automated test fail for an upgrade to one of these packages may be an indication of a newly found linter error in the code and should be investigated. However, if all the automatic checks pass, these packages can be merged right away:
-  - `markdownlint`
-  - anything with `eslint` in it (including `@typescript/eslint*`, which version bump weekly regardless of whether they have any changes)
-  - `svelte-check` (but not other svelte things, which are used in the build system)
-  - anything with `prettier`
-  - `lefthook`
-  - anything with `jest` in it (but see [the note below on Dependency Groups](dependency-groups) for details).
-- For anything else, where and how is it being used? If it's only in tests, or only used by developers, no need to smoke test.
+* When in doubt, smoke-test. Smoke-testing of multiple dependency upgrades can be done in a batch, to reduce the time spent on this process.
+* **Definitely smoke test**: Anything that is involved in producing the built output to users. For example:
+  * everything in the "dependencies" (rather than "devDependencies") list in `package.json`
+  * `esbuild` (the build system)
+  * anything imported by the esbuild config file `esbuild.config.mjs` (for example, `builtin-modules`, `svelte-preprocess`)
+  * `obsidian` (also see [Special Cases section below](#notes-and-special-cases))
+  * all `@codemirror/*`
+  * `moment`
+* **Automated testing sufficient**: Our linting, formatting, and testing code does not affect the built output and is run automatically on each PR, so it does not need smoke tests. An automated test fail for an upgrade to one of these packages may be an indication of a newly found linter error in the code and should be investigated. However, if all the automatic checks pass, these packages can be merged right away:
+  * `markdownlint`
+  * anything with `eslint` in it (including `@typescript/eslint*`, which version bump weekly regardless of whether they have any changes)
+  * `svelte-check` (but not other svelte things, which are used in the build system)
+  * anything with `prettier`
+  * `lefthook`
+  * anything with `jest` in it (but see [the note below on Dependency Groups](dependency-groups) for details).
+* For anything else, where and how is it being used? If it's only in tests, or only used by developers, no need to smoke test.
 
 ### Dependency Groups
 
@@ -254,15 +287,15 @@ You can toggle a task‘s status by:
 
 The code is located as follows:
 
-- For 1.: `./src/Commands/ToggleDone.ts`
-- Numbers 2. and 4. use a checkbox created by `Task.toLi()`. There, the checkbox gets a click event handler.
-- For 3.: `./src/LivePreviewExtension.ts`
+* For 1.: `./src/Commands/ToggleDone.ts`
+* Numbers 2. and 4. use a checkbox created by `Task.toLi()`. There, the checkbox gets a click event handler.
+* For 3.: `./src/LivePreviewExtension.ts`
 
 Toggle behavior:
 
-- Number 1. toggles the line directly where the cursor is in the file inside Obsidian's vault.
-- The click event listener of 2. and 4. uses `File::replaceTaskWithTasks()`. That, in turn, updates the file in Obsidian‘s Vault (like 1, but it needs to find the correct line).
-- Number 3. toggles the line directly where the checkbox is on the "document" of CodeMirror (the library that Obsidian uses to show text on screen). That, in turn, updates the file in Obsidian's Vault.
+* Number 1. toggles the line directly where the cursor is in the file inside Obsidian's vault.
+* The click event listener of 2. and 4. uses `File::replaceTaskWithTasks()`. That, in turn, updates the file in Obsidian‘s Vault (like 1, but it needs to find the correct line).
+* Number 3. toggles the line directly where the checkbox is on the "document" of CodeMirror (the library that Obsidian uses to show text on screen). That, in turn, updates the file in Obsidian's Vault.
 
 Obsidian writes the changes to disk at its own pace.
 
@@ -283,19 +316,19 @@ Follow the steps in `resources/sample_vaults/Tasks-Demo/Manual Testing/Smoke Tes
 
 1. Check out the `main` branch
 2. Check for the current version in `package.json` (for example, `1.4.1`) and decide on a next version
-    - Backwards incompatible change: increase major version
-    - New functionality: increase minor version
-    - Only bug fixes: increase patch version
+    * Backwards incompatible change: increase major version
+    * New functionality: increase minor version
+    * Only bug fixes: increase patch version
 3. Having decided on the new version, replace all `X.Y.Z` in the documentation with the new version number.
 4. Check the current version of the obsidian dependency in `package.json` (for example, `0.13.21`)
 5. Run `./release.sh <new tasks version> <obsidian version>`
-    - Make sure there are no uncommitted changes. Stash them if necessary.
+    * Make sure there are no uncommitted changes. Stash them if necessary.
 6. Wait for [GitHub Actions](https://github.com/obsidian-tasks-group/obsidian-tasks/actions/workflows/release.yml) to create the new release
 7. Update the release description with the changes of the release
-    - On the release page, GitHub provides a button to auto-generate release notes which works nicely.
-    - Also update the attached zip file by adding the version number to the end of the name after the dash (for example, `obsidian-tasks-1.4.1.zip`)
+    * On the release page, GitHub provides a button to auto-generate release notes which works nicely.
+    * Also update the attached zip file by adding the version number to the end of the name after the dash (for example, `obsidian-tasks-1.4.1.zip`)
 8. Optional: Post to
-    - Obsidian Discord
-    - r/ObsidianMD on Reddit
-    - Obsidian Forum Share & Showcase section
-    - etc.
+    * Obsidian Discord
+    * r/ObsidianMD on Reddit
+    * Obsidian Forum Share & Showcase section
+    * etc.

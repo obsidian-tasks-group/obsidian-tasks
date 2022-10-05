@@ -1,12 +1,27 @@
 # Documentation for Obsidian Tasks
 
+<!-- toc -->
+## Contents
+
+* [Overview](#overview)
+* [Test documentation locally with Jekyll](#test-documentation-locally-with-jekyll)
+  * [Setup](#setup)
+  * [Development cycle](#development-cycle)
+* [Option 1: Running inside a Docker container](#option-1-running-inside-a-docker-container)
+  * [Prerequisites for using Docker](#prerequisites-for-using-docker)
+  * [Seeing the docs via Docker](#seeing-the-docs-via-docker)
+* [Option 2: Running without Docker](#option-2-running-without-docker)
+  * [Prerequisites for using installed Jekyll](#prerequisites-for-using-installed-jekyll)
+  * [Seeing the docs via installed Jekyll](#seeing-the-docs-via-installed-jekyll)
+* [Dependency Management and Updates for the Docs](#dependency-management-and-updates-for-the-docs)<!-- endToc -->
+
 ## Overview
 
-- For background, including which branch to work on, see ["Updating documentation" in CONTRIBUTING](../CONTRIBUTING.md#updating-documentation)
-- The documentation is written in Markdown
-- It is converted to HTML via Ruby and Jekyll
-  - Important: Ruby 2 is required, for example, Ruby 2.7
-- The published documentation is at <https://obsidian-tasks-group.github.io/obsidian-tasks/>
+* For background, including which branch to work on, see ["Updating documentation" in CONTRIBUTING](../CONTRIBUTING.md#updating-documentation)
+* The documentation is written in Markdown
+* It is converted to HTML via Ruby and Jekyll
+  * Important: Ruby 2 is required, for example, Ruby 2.7
+* The published documentation is at <https://obsidian-tasks-group.github.io/obsidian-tasks/>
 
 ## Test documentation locally with Jekyll
 
@@ -90,7 +105,7 @@ You can stop the service by hitting `Ctrl+c`.
 ### Prerequisites for using installed Jekyll
 
 1. Install ruby 2.x.
-    - It is important that you use a version 2 of ruby, not version 3, for example 2.7.0.
+    * It is important that you use a version 2 of ruby, not version 3, for example 2.7.0.
 1. Run:
 
     ```bash
