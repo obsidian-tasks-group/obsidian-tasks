@@ -1,0 +1,6 @@
+{
+  "$schema": "https://raw.githubusercontent.com/SimonCropp/MarkdownSnippets/master/schema.json",
+  "ExcludeDirectories": [ "node_modules" ],
+  "Convention": "InPlaceOverwrite",
+  "TocLevel": 5
+}
