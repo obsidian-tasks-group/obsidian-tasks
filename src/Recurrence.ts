@@ -238,7 +238,10 @@ export class Recurrence {
         // If this is a monthly recurrence, treat it special.
         const monthMatch = this.toText().match(/every( \d+)? month(s)?(.*)?/);
         if (monthMatch !== null) {
-            next = Recurrence.nextAfterMonths(after, next, rrule, monthMatch[1]);
+            // ... unless the rule fixes the date, such as 'every month on the 31st'
+            if (!this.toText().includes(' on ')) {
+                next = Recurrence.nextAfterMonths(after, next, rrule, monthMatch[1]);
+            }
         }
 
         // If this is a yearly recurrence, treat it special.

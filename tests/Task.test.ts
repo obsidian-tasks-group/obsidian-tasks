@@ -662,6 +662,12 @@ describe('toggle done', () => {
             due: '2021-01-29',
             nextDue: '2021-02-28',
         },
+        {
+            // every month - skips invalid dates if the recurrence rule states exact date, like 31st
+            interval: 'every month on the 31st',
+            due: '2021-01-31',
+            nextDue: '2021-03-31', // skips '2021-02-31'
+        },
 
         // Testing yearly repetition around leap days
         {
