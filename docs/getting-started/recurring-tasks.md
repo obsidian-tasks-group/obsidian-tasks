@@ -102,6 +102,84 @@ Now the newly created task is scheduled 1 week after the task was completed rath
 
 ---
 
+## How the New Date is Calculated: Repeating Monthly
+
+Because calendar months differ in length, there are some pitfalls in monthly recurrence rules.
+
+Below are some representative examples to demonstrate the differences in behavior, to help you choose which approach to use.
+
+Note that there are several more month-based options in the [Examples](#examples) section below.
+
+### every month on the last: reliable and safe
+
+Suppose we want a sequence of tasks to be due on the last day of each month.
+
+The safest way to achieve that goal is to use `every month on the last`. This is specific about which day of the month to use, and so Tasks (or rather, the [rrule](https://github.com/jakubroztocil/rrule) library), calculates the new due date as intended.
+
+Consider this task:
+
+- [ ] do stuff 🔁 every month on the last 📅 2022-01-31
+
+When completing it several times, we would see that each new task is due on the last day of the next month:
+
+- [ ] do stuff 🔁 every month on the last 📅 2022-06-30
+- [x] do stuff 🔁 every month on the last 📅 2022-05-31 ✅ 2022-10-06
+- [x] do stuff 🔁 every month on the last 📅 2022-04-30 ✅ 2022-10-06
+- [x] do stuff 🔁 every month on the last 📅 2022-03-31 ✅ 2022-10-06
+- [x] do stuff 🔁 every month on the last 📅 2022-02-28 ✅ 2022-10-06
+- [x] do stuff 🔁 every month on the last 📅 2022-01-31 ✅ 2022-10-06
+
+### every month: if next calculated date does not exist, move new due date earlier
+
+Suppose we start with this task:
+
+- [ ] do stuff 🔁 every month 📅 2021-10-31
+
+Here, the recurrence rule `every month` has no opinion on the date, and so Tasks looks at the due date of the task being completed to calculate the next due date.
+
+When completing it several times, we would see this:
+
+- [ ] do stuff 🔁 every month 📅 2022-03-28
+- [x] do stuff 🔁 every month 📅 2022-02-28 ✅ 2022-10-06
+- [x] do stuff 🔁 every month 📅 2022-01-30 ✅ 2022-10-06
+- [x] do stuff 🔁 every month 📅 2021-12-30 ✅ 2022-10-06
+- [x] do stuff 🔁 every month 📅 2021-11-30 ✅ 2022-10-06
+- [x] do stuff 🔁 every month 📅 2021-10-31 ✅ 2022-10-06
+
+Note how because `2021-11-31` does not exist, the due date is moved earlier, to `2021-11-30`.
+From then on, the due date will be based on the 30th day of the month, unless changed manually.
+Once February is reached, from then on, the due date will be based on the 28th day of the month.
+
+This moving to earlier dates instead of skipping to the following month is especially important for recurrence patterns such as `every month when done`, which would otherwise sometimes skip occurrences when completing monthly tasks at the end of months with 31 days.
+
+### every month on the 31st: skips months with fewer than 31 days
+
+Suppose we start with this task:
+
+- [ ] do stuff 🔁 every month on the 31st 📅 2022-01-31
+
+Here, the user has specifically requested that the task happens on the 31st of the month.
+
+In this case, if the new due date falls on a month with fewer than 31 days,  [rrule](https://github.com/jakubroztocil/rrule)  skips forward to the next month until a valid date is found.
+
+So, when completing the above task several times, we would see this, which skips over February, April and June:
+
+- [ ] do stuff 🔁 every month on the 31st 📅 2022-08-31
+- [x] do stuff 🔁 every month on the 31st 📅 2022-07-31 ✅ 2022-10-06
+- [x] do stuff 🔁 every month on the 31st 📅 2022-05-31 ✅ 2022-10-06
+- [x] do stuff 🔁 every month on the 31st 📅 2022-03-31 ✅ 2022-10-06
+- [x] do stuff 🔁 every month on the 31st 📅 2022-01-31 ✅ 2022-10-06
+
+This is intentional. As well as matching what the user requested, it matches the [specification](https://datatracker.ietf.org/doc/html/rfc5545#section-3.3.10) of the [iCalendar RFC](https://tools.ietf.org/html/rfc5545) which the [rrule](https://github.com/jakubroztocil/rrule) library implements:
+
+> Recurrence rules may generate recurrence instances with an invalid
+ date (e.g., February 30) or nonexistent local time (e.g., 1:30 AM
+ on a day where the local time is moved forward by an hour at 1:00
+ AM).  Such recurrence instances MUST be ignored and MUST NOT be
+ counted as part of the recurrence set.
+
+---
+
 ## Priority of Dates
 
 A task can have [various dates]({{ site.baseurl }}{% link getting-started/dates.md %}).
