@@ -66,11 +66,11 @@ This works fine.
 
 ### #1197: every month on the 31st - current behaviour
 
-If the new recurrence lands on an invalid date, it gets stuck, with the next occurrence having the same date as the original.
+Because a specific date has been requested, if the new recurrence lands on an invalid date, it skips forward to the next increment, until a valid due date is reached.
 
-- [ ] #task do stuff 🔁 every month on the 31st 📅 2022-01-31
-- [x] #task do stuff 🔁 every month on the 31st 📅 2022-01-31 ✅ 2022-10-03
-- [x] #task do stuff 🔁 every month on the 31st 📅 2022-01-31 ✅ 2022-10-03
+- [ ] #task do stuff 🔁 every month on the 31st 📅 2022-07-31
+- [x] #task do stuff 🔁 every month on the 31st 📅 2022-05-31 ✅ 2022-10-03
+- [x] #task do stuff 🔁 every month on the 31st 📅 2022-03-31 ✅ 2022-10-03
 - [x] #task do stuff 🔁 every month on the 31st 📅 2022-01-31 ✅ 2022-10-03
 - [x] #task do stuff 🔁 every month on the 31st 📅 2021-12-31 ✅ 2022-10-03
 - [x] #task do stuff 🔁 every month on the 31st 📅 2021-11-30 ✅ 2022-10-03
