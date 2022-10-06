@@ -162,6 +162,8 @@ This moving to earlier dates instead of skipping to the following month is espec
 
 ### every month on the 31st: skips months with fewer than 31 days
 
+**Beware**: This is probably not the option you are looking for. If using it, be sure that you understand how it skips over months with fewer than 31 days.
+
 Suppose we start with this task:
 
 ```markdown
@@ -170,7 +172,7 @@ Suppose we start with this task:
 
 Here, the user has specifically requested that the task happens on the 31st of the month.
 
-In this case, if the new due date falls on a month with fewer than 31 days,  [rrule](https://github.com/jakubroztocil/rrule)  skips forward to the next month until a valid date is found.
+In this case, if the new due date falls on a month with fewer than 31 days,  [rrule](https://github.com/jakubroztocil/rrule) skips forward to the next month until a valid date is found.
 
 So, when completing the above task several times, we would see this, which skips over February, April and June:
 
