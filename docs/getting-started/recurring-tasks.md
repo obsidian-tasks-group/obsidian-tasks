@@ -126,11 +126,11 @@ When completing it several times, we would see that each new task is due on the 
 
 ```markdown
 - [ ] do stuff 🔁 every month on the last 📅 2022-06-30
-- [x] do stuff 🔁 every month on the last 📅 2022-05-31 ✅ 2022-10-06
-- [x] do stuff 🔁 every month on the last 📅 2022-04-30 ✅ 2022-10-06
-- [x] do stuff 🔁 every month on the last 📅 2022-03-31 ✅ 2022-10-06
-- [x] do stuff 🔁 every month on the last 📅 2022-02-28 ✅ 2022-10-06
-- [x] do stuff 🔁 every month on the last 📅 2022-01-31 ✅ 2022-10-06
+- [x] do stuff 🔁 every month on the last 📅 2022-05-31 ✅ 2022-05-31
+- [x] do stuff 🔁 every month on the last 📅 2022-04-30 ✅ 2022-04-30
+- [x] do stuff 🔁 every month on the last 📅 2022-03-31 ✅ 2022-03-31
+- [x] do stuff 🔁 every month on the last 📅 2022-02-28 ✅ 2022-02-28
+- [x] do stuff 🔁 every month on the last 📅 2022-01-31 ✅ 2022-01-31
 ```
 
 ### every month: if next calculated date does not exist, move new due date earlier
@@ -147,11 +147,11 @@ When completing it several times, we would see this:
 
 ```markdown
 - [ ] do stuff 🔁 every month 📅 2022-03-28
-- [x] do stuff 🔁 every month 📅 2022-02-28 ✅ 2022-10-06
-- [x] do stuff 🔁 every month 📅 2022-01-30 ✅ 2022-10-06
-- [x] do stuff 🔁 every month 📅 2021-12-30 ✅ 2022-10-06
-- [x] do stuff 🔁 every month 📅 2021-11-30 ✅ 2022-10-06
-- [x] do stuff 🔁 every month 📅 2021-10-31 ✅ 2022-10-06
+- [x] do stuff 🔁 every month 📅 2022-02-28 ✅ 2022-02-28
+- [x] do stuff 🔁 every month 📅 2022-01-30 ✅ 2022-01-30
+- [x] do stuff 🔁 every month 📅 2021-12-30 ✅ 2021-12-30
+- [x] do stuff 🔁 every month 📅 2021-11-30 ✅ 2021-11-30
+- [x] do stuff 🔁 every month 📅 2021-10-31 ✅ 2021-10-31
 ```
 
 Note how because `2021-11-31` does not exist, the due date is moved earlier, to `2021-11-30`.
@@ -176,10 +176,10 @@ So, when completing the above task several times, we would see this, which skips
 
 ```markdown
 - [ ] do stuff 🔁 every month on the 31st 📅 2022-08-31
-- [x] do stuff 🔁 every month on the 31st 📅 2022-07-31 ✅ 2022-10-06
-- [x] do stuff 🔁 every month on the 31st 📅 2022-05-31 ✅ 2022-10-06
-- [x] do stuff 🔁 every month on the 31st 📅 2022-03-31 ✅ 2022-10-06
-- [x] do stuff 🔁 every month on the 31st 📅 2022-01-31 ✅ 2022-10-06
+- [x] do stuff 🔁 every month on the 31st 📅 2022-07-31 ✅ 2022-07-31
+- [x] do stuff 🔁 every month on the 31st 📅 2022-05-31 ✅ 2022-05-31
+- [x] do stuff 🔁 every month on the 31st 📅 2022-03-31 ✅ 2022-03-31
+- [x] do stuff 🔁 every month on the 31st 📅 2022-01-31 ✅ 2022-01-31
 ```
 
 This is intentional. As well as matching what the user requested, it matches the [specification](https://datatracker.ietf.org/doc/html/rfc5545#section-3.3.10) of the [iCalendar RFC](https://tools.ietf.org/html/rfc5545) which the [rrule](https://github.com/jakubroztocil/rrule) library implements:
