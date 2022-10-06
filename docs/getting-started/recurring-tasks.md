@@ -236,3 +236,9 @@ Examples of possible recurrence rules (mix and match as desired; these should be
 - `🔁 every February on the last`
 - `🔁 every April and December on the 1st and 24th` (meaning every _April 1st_ and _December 24th_)
 - `🔁 every year`
+
+---
+
+## Technical Details
+
+Tasks uses the [rrule](https://github.com/jakubroztocil/rrule) library to calculate the next date when completing a recurring task.
