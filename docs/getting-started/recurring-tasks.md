@@ -51,7 +51,7 @@ The next Sunday after 25 April 2021 is on 2 May.
 Important
 {: .label .label-yellow }
 
-A recurring task should have a due date and the recurrence rule must appear before the due date on the line.
+A recurring task should have a due date. The due date and the recurrence rule must appear after the task's description.
 
 <hr />
 Important
