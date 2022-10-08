@@ -129,26 +129,21 @@ export class Recurrence {
                 ...this.rrule.origOptions,
                 dtstart: today.startOf('day').utc(true).toDate(),
             });
-            next = ruleBasedOnToday.after(today.endOf('day').utc(true).toDate());
+            next = this.nextAfter(today.endOf('day'), ruleBasedOnToday);
         } else {
             // The next occurrence should happen based on the original reference
             // date if possible. Otherwise, base it on today if we do not have a
             // reference date.
             const after = window
-                // Reference date can be `null` to mean "today".
+                // Reference date can be `undefined` to mean "today".
                 // Moment only accepts `undefined`, not `null`.
                 .moment(this.referenceDate ?? undefined)
-                .endOf('day')
-                .utc(true);
+                .endOf('day');
 
-            next = this.rrule.after(after.toDate());
+            next = this.nextAfter(after, this.rrule);
         }
 
         if (next !== null) {
-            // Re-add the timezone that RRule disregarded:
-            const localTimeZone = window.moment.utc(next).local(true);
-            const nextOccurrence = localTimeZone.startOf('day');
-
             // Keep the relative difference between the reference date and
             // start/scheduled/due.
             let startDate: Moment | null = null;
@@ -162,7 +157,7 @@ export class Recurrence {
                     const originalDifference = window.moment.duration(this.startDate.diff(this.referenceDate));
 
                     // Cloning so that original won't be manipulated:
-                    startDate = window.moment(nextOccurrence);
+                    startDate = window.moment(next);
                     // Rounding days to handle cross daylight-savings-time recurrences.
                     startDate.add(Math.round(originalDifference.asDays()), 'days');
                 }
@@ -170,7 +165,7 @@ export class Recurrence {
                     const originalDifference = window.moment.duration(this.scheduledDate.diff(this.referenceDate));
 
                     // Cloning so that original won't be manipulated:
-                    scheduledDate = window.moment(nextOccurrence);
+                    scheduledDate = window.moment(next);
                     // Rounding days to handle cross daylight-savings-time recurrences.
                     scheduledDate.add(Math.round(originalDifference.asDays()), 'days');
                 }
@@ -178,7 +173,7 @@ export class Recurrence {
                     const originalDifference = window.moment.duration(this.dueDate.diff(this.referenceDate));
 
                     // Cloning so that original won't be manipulated:
-                    dueDate = window.moment(nextOccurrence);
+                    dueDate = window.moment(next);
                     // Rounding days to handle cross daylight-savings-time recurrences.
                     dueDate.add(Math.round(originalDifference.asDays()), 'days');
                 }
@@ -211,5 +206,151 @@ export class Recurrence {
         }
 
         return this.toText() === other.toText(); // this also checks baseOnToday
+    }
+
+    /**
+     * nextAfter returns the next occurrence's date after `after`, based on the given rrule.
+     *
+     * The common case is that `rrule.after` calculates the next date and it
+     * can be used as is.
+     *
+     * In the special cases of monthly and yearly recurrences, there exists an
+     * edge case where an occurrence after the given number of months or years
+     * is not possible. For example: A task is due on 2022-01-31 and has a
+     * recurrence of `every month`. When marking the task as done, the next
+     * occurrence will happen on 2022-03-31. The reason being that February
+     * does not have 31 days, yet RRule sets `bymonthday` to `31` for lack of
+     * having a better alternative.
+     *
+     * In order to fix this, `after` will move into the past day by day. Each
+     * day, the next occurrence is checked to be after the given number of
+     * months or years. By moving `after` into the past day by day, it will
+     * eventually calculate the next occurrence based on `2022-01-28`, ending up
+     * in February as the user would expect.
+     */
+    private nextAfter(after: Moment, rrule: RRule): Date {
+        // We need to remove the timezone, as rrule does not regard timezones and always
+        // calculates in UTC.
+        // The timezone is added again before returning the next date.
+        after.utc(true);
+        let next = window.moment(rrule.after(after.toDate()));
+
+        // If this is a monthly recurrence, treat it special.
+        const asText = this.toText();
+        const monthMatch = asText.match(/every( \d+)? month(s)?(.*)?/);
+        if (monthMatch !== null) {
+            // ... unless the rule fixes the date, such as 'every month on the 31st'
+            if (!asText.includes(' on ')) {
+                next = Recurrence.nextAfterMonths(after, next, rrule, monthMatch[1]);
+            }
+        }
+
+        // If this is a yearly recurrence, treat it special.
+        const yearMatch = asText.match(/every( \d+)? year(s)?(.*)?/);
+        if (yearMatch !== null) {
+            next = Recurrence.nextAfterYears(after, next, rrule, yearMatch[1]);
+        }
+
+        // Here we add the timezone again that we removed in the beginning of this method.
+        return Recurrence.addTimezone(next).toDate();
+    }
+
+    /**
+     * nextAfterMonths calculates the next date after `skippingMonths` months.
+     *
+     * `skippingMonths` defaults to `1` if undefined.
+     */
+    private static nextAfterMonths(
+        after: Moment,
+        next: Moment,
+        rrule: RRule,
+        skippingMonths: string | undefined,
+    ): Moment {
+        // Parse `skippingMonths`, if it exists.
+        let parsedSkippingMonths: Number = 1;
+        if (skippingMonths !== undefined) {
+            parsedSkippingMonths = Number.parseInt(skippingMonths.trim(), 10);
+        }
+
+        // While we skip the wrong number of months, move `after` one day into the past.
+        while (Recurrence.isSkippingTooManyMonths(after, next, parsedSkippingMonths)) {
+            // The next line alters `after` to be one day earlier.
+            // Then returns `next` based on that.
+            next = Recurrence.fromOneDayEarlier(after, rrule);
+        }
+
+        return next;
+    }
+
+    /**
+     * isSkippingTooManyMonths returns true if `next` is more than `skippingMonths` months after `after`.
+     */
+    private static isSkippingTooManyMonths(after: Moment, next: Moment, skippingMonths: Number): boolean {
+        let diffMonths = next.month() - after.month();
+
+        // Maybe some years have passed?
+        const diffYears = next.year() - after.year();
+        diffMonths += diffYears * 12;
+
+        return diffMonths > skippingMonths;
+    }
+
+    /**
+     * nextAfterYears calculates the next date after `skippingYears` years.
+     *
+     * `skippingYears` defaults to `1` if undefined.
+     */
+    private static nextAfterYears(
+        after: Moment,
+        next: Moment,
+        rrule: RRule,
+        skippingYears: string | undefined,
+    ): Moment {
+        // Parse `skippingYears`, if it exists.
+        let parsedSkippingYears: Number = 1;
+        if (skippingYears !== undefined) {
+            parsedSkippingYears = Number.parseInt(skippingYears.trim(), 10);
+        }
+
+        // While we skip the wrong number of years, move `after` one day into the past.
+        while (Recurrence.isSkippingTooManyYears(after, next, parsedSkippingYears)) {
+            // The next line alters `after` to be one day earlier.
+            // Then returns `next` based on that.
+            next = Recurrence.fromOneDayEarlier(after, rrule);
+        }
+
+        return next;
+    }
+
+    /**
+     * isSkippingTooManyYears returns true if `next` is more than `skippingYears` years after `after`.
+     */
+    private static isSkippingTooManyYears(after: Moment, next: Moment, skippingYears: Number): boolean {
+        const diff = next.year() - after.year();
+
+        return diff > skippingYears;
+    }
+
+    /**
+     * fromOneDayEarlier returns the next occurrence after moving `after` one day into the past.
+     *
+     * WARNING: This method manipulates the given instance of `after`.
+     */
+    private static fromOneDayEarlier(after: Moment, rrule: RRule): Moment {
+        after.subtract(1, 'days').endOf('day');
+
+        const options = rrule.origOptions;
+        options.dtstart = after.startOf('day').toDate();
+        rrule = new RRule(options);
+
+        const next = window.moment(rrule.after(after.toDate()));
+
+        return next;
+    }
+
+    private static addTimezone(date: Moment): Moment {
+        const localTimeZone = window.moment.utc(date).local(true);
+
+        return localTimeZone.startOf('day');
     }
 }

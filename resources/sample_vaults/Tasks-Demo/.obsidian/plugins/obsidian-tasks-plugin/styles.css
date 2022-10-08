@@ -64,3 +64,8 @@
 .tasks-modal-date {
     margin-bottom: 10px;
 }
+
+.tasks-modal label + input[type=checkbox] {
+    margin-left: 0.67em;
+}
+
