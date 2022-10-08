@@ -236,16 +236,17 @@ export class Recurrence {
         let next = window.moment(rrule.after(after.toDate()));
 
         // If this is a monthly recurrence, treat it special.
-        const monthMatch = this.toText().match(/every( \d+)? month(s)?(.*)?/);
+        const asText = this.toText();
+        const monthMatch = asText.match(/every( \d+)? month(s)?(.*)?/);
         if (monthMatch !== null) {
             // ... unless the rule fixes the date, such as 'every month on the 31st'
-            if (!this.toText().includes(' on ')) {
+            if (!asText.includes(' on ')) {
                 next = Recurrence.nextAfterMonths(after, next, rrule, monthMatch[1]);
             }
         }
 
         // If this is a yearly recurrence, treat it special.
-        const yearMatch = this.toText().match(/every( \d+)? year(s)?(.*)?/);
+        const yearMatch = asText.match(/every( \d+)? year(s)?(.*)?/);
         if (yearMatch !== null) {
             next = Recurrence.nextAfterYears(after, next, rrule, yearMatch[1]);
         }
