@@ -443,6 +443,7 @@ describe('toggle done', () => {
         nextDue?: string;
         nextScheduled?: string;
         nextStart?: string;
+        nextInterval?: string; // for when rrule re-words the recurrence interval, to simplify it
     };
 
     const recurrenceCases: Array<RecurrenceCase> = [
@@ -668,6 +669,16 @@ describe('toggle done', () => {
             due: '2021-01-31',
             nextDue: '2021-03-31', // skips '2021-02-31'
         },
+        {
+            // every year - skips invalid dates if the recurrence rule states exact date, like 31st.
+            // We thought that 'every year' might need special-case code for when ' on ' is
+            // used. This test was intended to prove that we did need special case code
+            // for 'every year on', but instead it shows that it works OK.
+            interval: 'every year on February the 29th',
+            due: '2021-01-01',
+            nextDue: '2024-02-29', // skips all 28th February
+            nextInterval: 'every February on the 29th',
+        },
 
         // Testing yearly repetition around leap days
         {
@@ -694,7 +705,7 @@ describe('toggle done', () => {
 
     test.concurrent.each<RecurrenceCase>(recurrenceCases)(
         'recurs correctly (%j)',
-        ({ interval, due, scheduled, start, today, nextDue, nextScheduled, nextStart }) => {
+        ({ interval, due, scheduled, start, today, nextDue, nextScheduled, nextStart, nextInterval }) => {
             const todaySpy = jest.spyOn(Date, 'now').mockReturnValue(moment(today).valueOf());
 
             // If this test fails, the RecurrenceCase had no expected new dates set, and so
@@ -729,8 +740,11 @@ describe('toggle done', () => {
                 nextStart,
             });
 
-            expect(nextTask.recurrence?.toText()).toBe(interval);
-
+            if (nextInterval) {
+                expect(nextTask.recurrence?.toText()).toBe(nextInterval);
+            } else {
+                expect(nextTask.recurrence?.toText()).toBe(interval);
+            }
             todaySpy.mockClear();
         },
     );
