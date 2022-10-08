@@ -443,6 +443,7 @@ describe('toggle done', () => {
         nextDue?: string;
         nextScheduled?: string;
         nextStart?: string;
+        nextInterval?: string; // for when rrule re-words the recurrence interval, to simplify it
     };
 
     const recurrenceCases: Array<RecurrenceCase> = [
@@ -650,12 +651,68 @@ describe('toggle done', () => {
             nextScheduled: '2021-10-18',
             nextDue: '2021-10-20',
         },
+        {
+            // every month - due 31 March, and so 31 April would not exist: it used to skip forward 2 months
+            interval: 'every month',
+            due: '2021-03-31',
+            nextDue: '2021-04-30',
+        },
+        {
+            // every month - due 29 January, and so 29 February would not exist: it used to skip forward 2 months
+            interval: 'every month',
+            due: '2021-01-29',
+            nextDue: '2021-02-28',
+        },
+        {
+            // every month - skips invalid dates if the recurrence rule states exact date, like 31st
+            interval: 'every month on the 31st',
+            due: '2021-01-31',
+            nextDue: '2021-03-31', // skips '2021-02-31'
+        },
+        {
+            // every year - skips invalid dates if the recurrence rule states exact date, like 31st.
+            // We thought that 'every year' might need special-case code for when ' on ' is
+            // used. This test was intended to prove that we did need special case code
+            // for 'every year on', but instead it shows that it works OK.
+            interval: 'every year on February the 29th',
+            due: '2021-01-01',
+            nextDue: '2024-02-29', // skips all 28th February
+            nextInterval: 'every February on the 29th',
+        },
+
+        // Testing yearly repetition around leap days
+        {
+            // yearly, due on leap day 29th February: it used to skip forward 4 years
+            interval: 'every year',
+            due: '2020-02-29',
+            nextDue: '2021-02-28',
+        },
+
+        // Testing 'when done' does not skip when next occurrence is a non-existent date
+        {
+            interval: 'every month when done',
+            scheduled: '1999-01-23',
+            today: '2021-08-31',
+            nextScheduled: '2021-09-30',
+        },
+        {
+            interval: 'every 2 years when done',
+            start: '1999-01-23',
+            today: '2020-02-29', // is a leap year
+            nextStart: '2022-02-28',
+        },
     ];
 
     test.concurrent.each<RecurrenceCase>(recurrenceCases)(
         'recurs correctly (%j)',
-        ({ interval, due, scheduled, start, today, nextDue, nextScheduled, nextStart }) => {
+        ({ interval, due, scheduled, start, today, nextDue, nextScheduled, nextStart, nextInterval }) => {
             const todaySpy = jest.spyOn(Date, 'now').mockReturnValue(moment(today).valueOf());
+
+            // If this test fails, the RecurrenceCase had no expected new dates set, and so
+            // is accidentally not doing any testing.
+            const atLeaseOneExpectationSupplied =
+                nextStart !== undefined || nextDue !== undefined || nextScheduled !== undefined;
+            expect(atLeaseOneExpectationSupplied).toStrictEqual(true);
 
             const line = [
                 '- [ ] I am task',
@@ -683,8 +740,11 @@ describe('toggle done', () => {
                 nextStart,
             });
 
-            expect(nextTask.recurrence?.toText()).toBe(interval);
-
+            if (nextInterval) {
+                expect(nextTask.recurrence?.toText()).toBe(nextInterval);
+            } else {
+                expect(nextTask.recurrence?.toText()).toBe(interval);
+            }
             todaySpy.mockClear();
         },
     );
