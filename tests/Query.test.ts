@@ -261,6 +261,7 @@ describe('Query', () => {
                     recurrence: null,
                     blockLink: '',
                     tags: [],
+                    originalMarkdown: '',
                 }),
                 new Task({
                     status: Status.TODO,
@@ -279,6 +280,7 @@ describe('Query', () => {
                     recurrence: null,
                     blockLink: '',
                     tags: [],
+                    originalMarkdown: '',
                 }),
             ];
             const input = 'path includes ab/c d';

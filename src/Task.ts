@@ -149,6 +149,12 @@ export class Task {
     /** The blockLink is a "^" annotation after the dates/recurrence rules. */
     public readonly blockLink: string;
 
+    /** The original line read from file.
+     *
+     * Will be empty if Task was created programmatically
+     * (for example, by Create or Edit Task, or in tests, including via {@link TaskBuilder}). */
+    public readonly originalMarkdown: string;
+
     private _urgency: number | null = null;
 
     constructor({
@@ -168,6 +174,7 @@ export class Task {
         recurrence,
         blockLink,
         tags,
+        originalMarkdown,
     }: {
         status: Status;
         description: string;
@@ -185,6 +192,7 @@ export class Task {
         recurrence: Recurrence | null;
         blockLink: string;
         tags: string[] | [];
+        originalMarkdown: string;
     }) {
         this.status = status;
         this.description = description;
@@ -206,6 +214,7 @@ export class Task {
 
         this.recurrence = recurrence;
         this.blockLink = blockLink;
+        this.originalMarkdown = originalMarkdown;
     }
 
     /**
@@ -407,6 +416,7 @@ export class Task {
             recurrence,
             blockLink,
             tags,
+            originalMarkdown: line,
         });
     }
 
