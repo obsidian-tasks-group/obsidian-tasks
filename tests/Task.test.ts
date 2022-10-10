@@ -29,6 +29,7 @@ describe('parsing', () => {
         expect(task!.dueDate!.isSame(moment('2021-09-12', 'YYYY-MM-DD'))).toStrictEqual(true);
         expect(task!.doneDate).not.toBeNull();
         expect(task!.doneDate!.isSame(moment('2021-06-20', 'YYYY-MM-DD'))).toStrictEqual(true);
+        expect(task!.originalMarkdown).toStrictEqual(line);
     });
 
     it('returns null when task does not have global filter', () => {
