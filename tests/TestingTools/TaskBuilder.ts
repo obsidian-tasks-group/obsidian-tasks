@@ -72,6 +72,7 @@ export class TaskBuilder {
             recurrence: this._recurrence,
             blockLink: this._blockLink,
             tags: this._tags,
+            originalMarkdown: '',
         });
     }
 

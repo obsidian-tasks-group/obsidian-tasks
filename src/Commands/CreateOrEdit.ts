@@ -73,6 +73,7 @@ const taskFromLine = ({ line, path }: { line: string; path: string }): Task => {
             precedingHeader: null,
             blockLink: '',
             tags: [],
+            originalMarkdown: '',
         });
     }
 
@@ -106,5 +107,6 @@ const taskFromLine = ({ line, path }: { line: string; path: string }): Task => {
         sectionIndex: 0,
         precedingHeader: null,
         tags: [],
+        originalMarkdown: '',
     });
 };
