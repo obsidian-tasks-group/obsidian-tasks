@@ -24,16 +24,19 @@ describe('FilterOrErrorMessage', () => {
         expect(filterOrErrorMessage.filter).toBeUndefined();
         expect(filterOrErrorMessage.newFilter).toBeUndefined();
         expect(filterOrErrorMessage.error).toBeUndefined();
+        expect(filterOrErrorMessage.instruction).toEqual(line);
     });
 
     it('should create FilterOrErrorMessage object for filter', () => {
         const filterFunction: Filter = (task: Task) => {
             return task.description.length > 20;
         };
-        const filterOrErrorMessage = FilterOrErrorMessage.fromFilter(filterFunction);
+        const line = 'some sample instruction';
+        const filterOrErrorMessage = FilterOrErrorMessage.fromFilter(line, filterFunction);
         expect(filterOrErrorMessage.filter).not.toBeUndefined();
         expect(filterOrErrorMessage.newFilter).not.toBeUndefined();
         expect(filterOrErrorMessage.error).toBeUndefined();
+        expect(filterOrErrorMessage.instruction).toEqual(line);
 
         expect(filterOrErrorMessage).toMatchTaskFromLine('- [ ] long task name .....................');
         expect(filterOrErrorMessage).not.toMatchTaskFromLine('- [ ] short name');

@@ -68,11 +68,12 @@ export class FilterOrErrorMessage {
 
     /**
      * Construct a FilterOrErrorMessage with the filter.
+     * @param instruction
      * @param filter
      */
-    public static fromFilter(filter: Filter): FilterOrErrorMessage {
+    public static fromFilter(instruction: string, filter: Filter): FilterOrErrorMessage {
         // TODO Add line parameter
-        const result = new FilterOrErrorMessage('UNKNOWN INSTRUCTION');
+        const result = new FilterOrErrorMessage(instruction);
         result.filter = filter;
         return result;
     }
