@@ -7,7 +7,7 @@ expect.extend({
     toMatchTaskFromLine,
 });
 
-describe('Filter', () => {
+describe('NewFilter', () => {
     it('should create an undefined Filter object', () => {
         const filter = new NewFilter();
         expect(filter.filterFunction).toBeUndefined();
