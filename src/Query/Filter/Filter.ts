@@ -72,7 +72,6 @@ export class FilterOrErrorMessage {
      * @param filter
      */
     public static fromFilter(instruction: string, filter: Filter): FilterOrErrorMessage {
-        // TODO Add line parameter
         const result = new FilterOrErrorMessage(instruction);
         result.filter = filter;
         return result;
@@ -80,11 +79,11 @@ export class FilterOrErrorMessage {
 
     /**
      * Construct a FilterOrErrorMessage with the given error message.
+     * @param instruction
      * @param errorMessage
      */
-    public static fromError(errorMessage: string): FilterOrErrorMessage {
-        // TODO Add line parameter
-        const result = new FilterOrErrorMessage('UNKNOWN INSTRUCTION');
+    public static fromError(instruction: string, errorMessage: string): FilterOrErrorMessage {
+        const result = new FilterOrErrorMessage(instruction);
         result.error = errorMessage;
         return result;
     }

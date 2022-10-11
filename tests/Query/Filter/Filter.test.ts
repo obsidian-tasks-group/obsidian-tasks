@@ -43,9 +43,11 @@ describe('FilterOrErrorMessage', () => {
     });
 
     it('should create FilterOrErrorMessage object for error', () => {
-        const filterOrErrorMessage = FilterOrErrorMessage.fromError('error happened');
+        const line = 'some sample instruction';
+        const filterOrErrorMessage = FilterOrErrorMessage.fromError(line, 'error happened');
         expect(filterOrErrorMessage.filter).toBeUndefined();
         expect(filterOrErrorMessage.newFilter).toBeUndefined();
         expect(filterOrErrorMessage.error).toEqual('error happened');
+        expect(filterOrErrorMessage.instruction).toEqual(line);
     });
 });

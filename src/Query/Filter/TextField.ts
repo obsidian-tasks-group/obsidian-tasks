@@ -17,7 +17,7 @@ export abstract class TextField extends Field {
         if (match === null) {
             // If Field.canCreateFilterForLine() has been checked, we should never get
             // in to this block.
-            return FilterOrErrorMessage.fromError(`do not understand query filter (${this.fieldName()})`);
+            return FilterOrErrorMessage.fromError(line, `do not understand query filter (${this.fieldName()})`);
         }
 
         // Construct an IStringMatcher for this filter, or return
@@ -30,6 +30,7 @@ export abstract class TextField extends Field {
             matcher = RegexMatcher.validateAndConstruct(filterValue);
             if (matcher === null) {
                 return FilterOrErrorMessage.fromError(
+                    line,
                     `cannot parse regex (${this.fieldName()}); check your leading and trailing slashes for your query`,
                 );
             }
@@ -38,7 +39,7 @@ export abstract class TextField extends Field {
         if (matcher === null) {
             // It's likely this can now never be reached.
             // Retained for safety, for now.
-            return FilterOrErrorMessage.fromError(`do not understand query filter (${this.fieldName()})`);
+            return FilterOrErrorMessage.fromError(line, `do not understand query filter (${this.fieldName()})`);
         }
 
         // Finally, we can create the Filter, that takes a task
