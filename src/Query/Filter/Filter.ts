@@ -6,7 +6,16 @@ import type { Task } from '../../Task';
  */
 export type FilterFunction = (task: Task) => boolean;
 
-// TODO Add docs
+/**
+ * A class that represents a parsed filtering instruction from a tasks code block.
+ *
+ * Currently it provides access to:
+ *
+ * - The original {@link instruction}
+ * - The {@link filterFunction} - a {@link FilterFunction} which tests whether a task matches the filter
+ *
+ * Later, the plan is to add a human-readable explanation of the filter.
+ */
 export class Filter {
     instruction: string;
     private readonly _filterFunction: FilterFunction;
@@ -23,11 +32,16 @@ export class Filter {
 
 /**
  * A class which stores one of:
- * - A Filter
- * - An error message
+ * - The original instruction string - a line from a tasks code block
+ * - An optional {@link Filter}
+ * - An optional error message
  *
- * This is really currently a convenience for returning date from
- * Field.createFilterOrErrorMessage() and derived classes.
+ * This is really currently a convenience for returning data from
+ * {@link Field.createFilterOrErrorMessage()} and derived classes.
+ *
+ * By the time the code has finished with parsing the line, typically the
+ * contained {@link Filter} will be saved, for later use in searching for Tasks
+ * that match the user's filter instruction.
  *
  * Later, it may gain helper functions for constructing parser error messages,
  * as currently these are created by some rather repetitious code, and also
