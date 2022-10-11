@@ -26,6 +26,7 @@ export class BooleanField extends Field {
     // Second pattern matches (filter1) - that is, ensures that a single filter is treated as valid
     private readonly basicBooleanRegexp = /(.*(AND|OR|XOR|NOT)\s*[("].*|\(.+\))/g;
     private readonly supportedOperators = ['AND', 'OR', 'XOR', 'NOT'];
+    // TODO Change this to storing Filter
     private subFields: Record<string, FilterFunction> = {};
 
     protected filterRegExp(): RegExp {
