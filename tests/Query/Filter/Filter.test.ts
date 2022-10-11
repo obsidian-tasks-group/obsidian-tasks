@@ -12,7 +12,9 @@ describe('NewFilter', () => {
         const filterFunction: Filter = (task: Task) => {
             return task.description.length > 20;
         };
-        const filter = new NewFilter(filterFunction);
+        const line = 'some sample instruction';
+        const filter = new NewFilter(line, filterFunction);
+        expect(filter.instruction).toEqual(line);
         expect(filter.filterFunction).not.toBeUndefined();
     });
 });
@@ -23,6 +25,22 @@ describe('FilterOrErrorMessage', () => {
         const filterOrErrorMessage = new FilterOrErrorMessage(line);
         expect(filterOrErrorMessage.filter).toBeUndefined();
         expect(filterOrErrorMessage.newFilter).toBeUndefined();
+        expect(filterOrErrorMessage.error).toBeUndefined();
+        expect(filterOrErrorMessage.instruction).toEqual(line);
+    });
+
+    it('should retain instruction when updating filter', () => {
+        const line = 'some sample instruction';
+        const filterFunction: Filter = (task: Task) => {
+            return task.description.length > 20;
+        };
+
+        const filterOrErrorMessage = new FilterOrErrorMessage(line);
+        filterOrErrorMessage.filter = filterFunction;
+
+        expect(filterOrErrorMessage.filter).not.toBeUndefined();
+        expect(filterOrErrorMessage.newFilter?.filterFunction).not.toBeUndefined();
+        expect(filterOrErrorMessage.newFilter?.instruction).toEqual(line);
         expect(filterOrErrorMessage.error).toBeUndefined();
         expect(filterOrErrorMessage.instruction).toEqual(line);
     });

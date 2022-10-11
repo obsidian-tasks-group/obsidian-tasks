@@ -7,11 +7,11 @@ import type { Task } from '../../Task';
 export type Filter = (task: Task) => boolean;
 
 export class NewFilter {
-    // TODO Add storage of instruction line
+    instruction: string;
     private _filterFunction: Filter;
 
-    // TODO Take the instruction line.
-    public constructor(filterFunction: Filter) {
+    public constructor(instruction: string, filterFunction: Filter) {
+        this.instruction = instruction;
         this._filterFunction = filterFunction;
     }
 
@@ -60,7 +60,7 @@ export class FilterOrErrorMessage {
 
     public set filter(value: Filter | undefined) {
         if (value) {
-            this._filter = new NewFilter(value);
+            this._filter = new NewFilter(this.instruction, value);
         } else {
             this._filter = undefined;
         }
