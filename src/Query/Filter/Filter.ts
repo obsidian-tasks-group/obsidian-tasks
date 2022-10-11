@@ -6,6 +6,18 @@ import type { Task } from '../../Task';
  */
 export type FilterFunction = (task: Task) => boolean;
 
+export class Filter {
+    private readonly _filterFunction: FilterFunction | undefined;
+
+    public constructor(filterFunction: FilterFunction | undefined) {
+        this._filterFunction = filterFunction;
+    }
+
+    public get filterFunction(): FilterFunction | undefined {
+        return this._filterFunction;
+    }
+}
+
 /**
  * A class which stores one of:
  * - A Filter
