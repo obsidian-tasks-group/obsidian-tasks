@@ -1,4 +1,4 @@
-import { Filter, FilterOrErrorMessage } from '../../../src/Query/Filter/Filter';
+import { FilterOrErrorMessage, NewFilter } from '../../../src/Query/Filter/Filter';
 import type { FilterFunction } from '../../../src/Query/Filter/Filter';
 import type { Task } from '../../../src/Task';
 import { toMatchTaskFromLine } from '../../CustomMatchers/CustomMatchersForFilters';
@@ -9,7 +9,7 @@ expect.extend({
 
 describe('Filter', () => {
     it('should create an undefined Filter object', () => {
-        const filter = new Filter();
+        const filter = new NewFilter();
         expect(filter.filterFunction).toBeUndefined();
     });
 });

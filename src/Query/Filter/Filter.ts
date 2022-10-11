@@ -6,7 +6,7 @@ import type { Task } from '../../Task';
  */
 export type FilterFunction = (task: Task) => boolean;
 
-export class Filter {
+export class NewFilter {
     // TODO Remove the use of undefined here. Move it to FilterOrErrorMessage.
     // TODO Add storage of instruction line
     private _filterFunction: FilterFunction | undefined;
@@ -47,12 +47,12 @@ export class FilterOrErrorMessage {
         this._filter.filterFunction = value;
     }
 
-    private _filter: Filter;
+    private _filter: NewFilter;
     error: string | undefined;
 
     // TODO Add a constructor that takes a line
     constructor() {
-        this._filter = new Filter();
+        this._filter = new NewFilter();
     }
 
     /**
