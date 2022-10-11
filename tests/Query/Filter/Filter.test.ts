@@ -21,6 +21,7 @@ describe('FilterOrErrorMessage', () => {
     it('should create an empty FilterOrErrorMessage object', () => {
         const filterOrErrorMessage = new FilterOrErrorMessage();
         expect(filterOrErrorMessage.filter).toBeUndefined();
+        expect(filterOrErrorMessage.newFilter).toBeUndefined();
         expect(filterOrErrorMessage.error).toBeUndefined();
     });
 
@@ -30,6 +31,7 @@ describe('FilterOrErrorMessage', () => {
         };
         const filterOrErrorMessage = FilterOrErrorMessage.fromFilter(filterFunction);
         expect(filterOrErrorMessage.filter).not.toBeUndefined();
+        expect(filterOrErrorMessage.newFilter).not.toBeUndefined();
         expect(filterOrErrorMessage.error).toBeUndefined();
 
         expect(filterOrErrorMessage).toMatchTaskFromLine('- [ ] long task name .....................');
@@ -39,6 +41,7 @@ describe('FilterOrErrorMessage', () => {
     it('should create FilterOrErrorMessage object for error', () => {
         const filterOrErrorMessage = FilterOrErrorMessage.fromError('error happened');
         expect(filterOrErrorMessage.filter).toBeUndefined();
+        expect(filterOrErrorMessage.newFilter).toBeUndefined();
         expect(filterOrErrorMessage.error).toEqual('error happened');
     });
 });

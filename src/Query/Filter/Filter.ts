@@ -38,6 +38,10 @@ export class NewFilter {
  * problem line, and perhaps listing allowed options).
  */
 export class FilterOrErrorMessage {
+    public get newFilter(): NewFilter | undefined {
+        return this._filter;
+    }
+
     public get filter(): Filter | undefined {
         if (this._filter) {
             return this._filter.filterFunction;
