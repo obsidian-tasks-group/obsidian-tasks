@@ -10,9 +10,9 @@ export class Filter {
     // TODO Add storage of instruction line
     private _filterFunction: FilterFunction | undefined;
 
-    // TODO Remove need to pass an undefined filter function in. Just take the instruction line.
-    public constructor(filterFunction: FilterFunction | undefined) {
-        this._filterFunction = filterFunction;
+    // TODO Take the instruction line.
+    public constructor() {
+        this._filterFunction = undefined;
     }
 
     public get filterFunction(): FilterFunction | undefined {
@@ -51,7 +51,7 @@ export class FilterOrErrorMessage {
 
     // TODO Add a constructor that takes a line
     constructor() {
-        this._filter = new Filter(undefined);
+        this._filter = new Filter();
     }
 
     /**

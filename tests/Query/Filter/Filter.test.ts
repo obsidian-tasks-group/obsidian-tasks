@@ -9,7 +9,7 @@ expect.extend({
 
 describe('Filter', () => {
     it('should create an undefined Filter object', () => {
-        const filter = new Filter(undefined);
+        const filter = new Filter();
         expect(filter.filterFunction).toBeUndefined();
     });
 });
