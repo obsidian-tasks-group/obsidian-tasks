@@ -2,6 +2,7 @@ import { Filter, FilterOrErrorMessage } from '../../../src/Query/Filter/Filter';
 import type { FilterFunction } from '../../../src/Query/Filter/Filter';
 import type { Task } from '../../../src/Task';
 import { toMatchTaskFromLine } from '../../CustomMatchers/CustomMatchersForFilters';
+import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 
 expect.extend({
     toMatchTaskFromLine,
@@ -16,6 +17,12 @@ describe('NewFilter', () => {
         const filter = new Filter(line, filterFunction);
         expect(filter.instruction).toEqual(line);
         expect(filter.filterFunction).not.toBeUndefined();
+
+        let task = new TaskBuilder().description('long task name .....................').build();
+        expect(filter.matches(task)).toBe(true);
+
+        task = new TaskBuilder().description('short name').build();
+        expect(filter.matches(task)).toBe(false);
     });
 });
 

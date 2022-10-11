@@ -16,7 +16,9 @@ export class Filter {
         this._filterFunction = filterFunction;
     }
 
-    // TODO Add operator that tests a Task matches - to remove need to call newFilter.filterFunction
+    public matches(task: Task): boolean {
+        return this._filterFunction(task);
+    }
 
     // TODO Can I remove getter?
     public get filterFunction(): FilterFunction {
