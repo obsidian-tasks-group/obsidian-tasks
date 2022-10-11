@@ -49,7 +49,7 @@ export class Filter {
  * problem line, and perhaps listing allowed options).
  */
 export class FilterOrErrorMessage {
-    instruction: string;
+    readonly instruction: string;
     private _filter: Filter | undefined;
     error: string | undefined;
 
