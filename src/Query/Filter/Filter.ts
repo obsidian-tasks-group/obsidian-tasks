@@ -7,20 +7,19 @@ import type { Task } from '../../Task';
 export type Filter = (task: Task) => boolean;
 
 export class NewFilter {
-    // TODO Remove the use of undefined here. Move it to FilterOrErrorMessage.
     // TODO Add storage of instruction line
-    private _filterFunction: Filter | undefined;
+    private _filterFunction: Filter;
 
     // TODO Take the instruction line.
-    public constructor() {
-        this._filterFunction = undefined;
+    public constructor(filterFunction: Filter) {
+        this._filterFunction = filterFunction;
     }
 
-    public get filterFunction(): Filter | undefined {
+    public get filterFunction(): Filter {
         return this._filterFunction;
     }
 
-    public set filterFunction(value: Filter | undefined) {
+    public set filterFunction(value: Filter) {
         this._filterFunction = value;
     }
 }
@@ -40,20 +39,26 @@ export class NewFilter {
  */
 export class FilterOrErrorMessage {
     public get filter(): Filter | undefined {
-        return this._filter.filterFunction;
+        if (this._filter) {
+            return this._filter.filterFunction;
+        } else {
+            return undefined;
+        }
     }
 
     public set filter(value: Filter | undefined) {
-        this._filter.filterFunction = value;
+        if (value) {
+            this._filter = new NewFilter(value);
+        } else {
+            this._filter = undefined;
+        }
     }
 
-    private _filter: NewFilter;
+    private _filter: NewFilter | undefined;
     error: string | undefined;
 
     // TODO Add a constructor that takes a line
-    constructor() {
-        this._filter = new NewFilter();
-    }
+    constructor() {}
 
     /**
      * Construct a FilterOrErrorMessage with the filter.

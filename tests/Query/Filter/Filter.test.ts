@@ -8,9 +8,12 @@ expect.extend({
 });
 
 describe('NewFilter', () => {
-    it('should create an undefined Filter object', () => {
-        const filter = new NewFilter();
-        expect(filter.filterFunction).toBeUndefined();
+    it('should create a NewFilter object', () => {
+        const filterFunction: Filter = (task: Task) => {
+            return task.description.length > 20;
+        };
+        const filter = new NewFilter(filterFunction);
+        expect(filter.filterFunction).not.toBeUndefined();
     });
 });
 
