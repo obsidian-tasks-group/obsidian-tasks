@@ -1,6 +1,6 @@
 import { FilterInstruction } from './FilterInstruction';
 import { FilterOrErrorMessage } from './Filter';
-import type { FilterFunction } from './Filter';
+import type { Filter } from './Filter';
 
 /**
  * Implementation of a collection of instructions for filtering tasks.
@@ -14,7 +14,7 @@ import type { FilterFunction } from './Filter';
 export class FilterInstructions {
     private readonly _filters: FilterInstruction[] = [];
 
-    public add(instruction: string, filter: FilterFunction) {
+    public add(instruction: string, filter: Filter) {
         this._filters.push(new FilterInstruction(instruction, filter));
     }
 

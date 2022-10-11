@@ -5,7 +5,7 @@ import { parseFilter } from '../FilterParser';
 import type { Task } from '../../Task';
 import { Field } from './Field';
 import { FilterOrErrorMessage } from './Filter';
-import type { FilterFunction } from './Filter';
+import type { Filter } from './Filter';
 
 /**
  * BooleanField is a 'container' field type that parses a high-level filtering query of
@@ -27,7 +27,7 @@ export class BooleanField extends Field {
     private readonly basicBooleanRegexp = /(.*(AND|OR|XOR|NOT)\s*[("].*|\(.+\))/g;
     private readonly supportedOperators = ['AND', 'OR', 'XOR', 'NOT'];
     // TODO Change this to storing Filter
-    private subFields: Record<string, FilterFunction> = {};
+    private subFields: Record<string, Filter> = {};
 
     protected filterRegExp(): RegExp {
         return this.basicBooleanRegexp;

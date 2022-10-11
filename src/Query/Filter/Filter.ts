@@ -4,23 +4,23 @@ import type { Task } from '../../Task';
  * A filtering function, that takes a Task object and returns
  * whether it matches a particular filtering instruction.
  */
-export type FilterFunction = (task: Task) => boolean;
+export type Filter = (task: Task) => boolean;
 
 export class NewFilter {
     // TODO Remove the use of undefined here. Move it to FilterOrErrorMessage.
     // TODO Add storage of instruction line
-    private _filterFunction: FilterFunction | undefined;
+    private _filterFunction: Filter | undefined;
 
     // TODO Take the instruction line.
     public constructor() {
         this._filterFunction = undefined;
     }
 
-    public get filterFunction(): FilterFunction | undefined {
+    public get filterFunction(): Filter | undefined {
         return this._filterFunction;
     }
 
-    public set filterFunction(value: FilterFunction | undefined) {
+    public set filterFunction(value: Filter | undefined) {
         this._filterFunction = value;
     }
 }
@@ -39,11 +39,11 @@ export class NewFilter {
  * problem line, and perhaps listing allowed options).
  */
 export class FilterOrErrorMessage {
-    public get filterFunction(): FilterFunction | undefined {
+    public get filterFunction(): Filter | undefined {
         return this._filter.filterFunction;
     }
 
-    public set filterFunction(value: FilterFunction | undefined) {
+    public set filterFunction(value: Filter | undefined) {
         this._filter.filterFunction = value;
     }
 
@@ -59,7 +59,7 @@ export class FilterOrErrorMessage {
      * Construct a FilterOrErrorMessage with the filter.
      * @param filter
      */
-    public static fromFilter(filter: FilterFunction): FilterOrErrorMessage {
+    public static fromFilter(filter: Filter): FilterOrErrorMessage {
         // TODO Add line parameter
         const result = new FilterOrErrorMessage();
         result.filterFunction = filter;

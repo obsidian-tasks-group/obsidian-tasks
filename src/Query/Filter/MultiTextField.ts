@@ -1,7 +1,7 @@
 import type { Task } from '../../Task';
 import type { IStringMatcher } from '../Matchers/IStringMatcher';
 import { TextField } from './TextField';
-import type { FilterFunction } from './Filter';
+import type { Filter } from './Filter';
 
 /**
  * MultiTextField is an abstract base class to help implement
@@ -52,7 +52,7 @@ export abstract class MultiTextField extends TextField {
      */
     public abstract values(task: Task): string[];
 
-    protected getFilter(matcher: IStringMatcher, negate: boolean): FilterFunction {
+    protected getFilter(matcher: IStringMatcher, negate: boolean): Filter {
         return (task: Task) => {
             const match = matcher!.matchesAnyOf(this.values(task));
             return negate ? !match : match;

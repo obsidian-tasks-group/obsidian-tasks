@@ -1,5 +1,5 @@
 import { FilterOrErrorMessage, NewFilter } from '../../../src/Query/Filter/Filter';
-import type { FilterFunction } from '../../../src/Query/Filter/Filter';
+import type { Filter } from '../../../src/Query/Filter/Filter';
 import type { Task } from '../../../src/Task';
 import { toMatchTaskFromLine } from '../../CustomMatchers/CustomMatchersForFilters';
 
@@ -22,7 +22,7 @@ describe('FilterOrErrorMessage', () => {
     });
 
     it('should create FilterOrErrorMessage object for filter', () => {
-        const filterFunction: FilterFunction = (task: Task) => {
+        const filterFunction: Filter = (task: Task) => {
             return task.description.length > 20;
         };
         const filterOrErrorMessage = FilterOrErrorMessage.fromFilter(filterFunction);
