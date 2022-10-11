@@ -7,8 +7,10 @@ import type { Task } from '../../Task';
 export type FilterFunction = (task: Task) => boolean;
 
 export class Filter {
+    // TODO Add storage of instruction line
     private _filterFunction: FilterFunction | undefined;
 
+    // TODO Remove need to pass an undefined filter function in. Just take the instruction line.
     public constructor(filterFunction: FilterFunction | undefined) {
         this._filterFunction = filterFunction;
     }
