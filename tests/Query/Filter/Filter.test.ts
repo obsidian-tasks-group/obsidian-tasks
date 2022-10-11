@@ -14,6 +14,7 @@ describe('NewFilter', () => {
         };
         const line = 'some sample instruction';
         const filter = new Filter(line, filterFunction);
+
         expect(filter.instruction).toEqual(line);
         expect(filter.filterFunction).not.toBeUndefined();
     });
@@ -23,10 +24,12 @@ describe('FilterOrErrorMessage', () => {
     it('should create an empty FilterOrErrorMessage object', () => {
         const line = 'some sample instruction';
         const filterOrErrorMessage = new FilterOrErrorMessage(line);
-        expect(filterOrErrorMessage.filterFunction).toBeUndefined();
-        expect(filterOrErrorMessage.filter).toBeUndefined();
-        expect(filterOrErrorMessage.error).toBeUndefined();
+
         expect(filterOrErrorMessage.instruction).toEqual(line);
+        // Everything else should be undefined
+        expect(filterOrErrorMessage.filter).toBeUndefined();
+        expect(filterOrErrorMessage.filterFunction).toBeUndefined();
+        expect(filterOrErrorMessage.error).toBeUndefined();
     });
 
     it('should retain instruction when updating filter', () => {
@@ -38,10 +41,6 @@ describe('FilterOrErrorMessage', () => {
         const filterOrErrorMessage = new FilterOrErrorMessage(line);
         filterOrErrorMessage.filterFunction = filterFunction;
 
-        expect(filterOrErrorMessage.filterFunction).not.toBeUndefined();
-        expect(filterOrErrorMessage.filter?.filterFunction).not.toBeUndefined();
-        expect(filterOrErrorMessage.filter?.instruction).toEqual(line);
-        expect(filterOrErrorMessage.error).toBeUndefined();
         expect(filterOrErrorMessage.instruction).toEqual(line);
     });
 
@@ -51,10 +50,11 @@ describe('FilterOrErrorMessage', () => {
         };
         const line = 'some sample instruction';
         const filterOrErrorMessage = FilterOrErrorMessage.fromFilter(line, filterFunction);
-        expect(filterOrErrorMessage.filterFunction).not.toBeUndefined();
-        expect(filterOrErrorMessage.filter).not.toBeUndefined();
-        expect(filterOrErrorMessage.error).toBeUndefined();
+
         expect(filterOrErrorMessage.instruction).toEqual(line);
+        expect(filterOrErrorMessage.filter).not.toBeUndefined();
+        expect(filterOrErrorMessage.filterFunction).not.toBeUndefined();
+        expect(filterOrErrorMessage.error).toBeUndefined();
 
         expect(filterOrErrorMessage).toMatchTaskFromLine('- [ ] long task name .....................');
         expect(filterOrErrorMessage).not.toMatchTaskFromLine('- [ ] short name');
@@ -63,9 +63,11 @@ describe('FilterOrErrorMessage', () => {
     it('should create FilterOrErrorMessage object for error', () => {
         const line = 'some sample instruction';
         const filterOrErrorMessage = FilterOrErrorMessage.fromError(line, 'error happened');
-        expect(filterOrErrorMessage.filterFunction).toBeUndefined();
-        expect(filterOrErrorMessage.filter).toBeUndefined();
-        expect(filterOrErrorMessage.error).toEqual('error happened');
+
         expect(filterOrErrorMessage.instruction).toEqual(line);
+        expect(filterOrErrorMessage.error).toEqual('error happened');
+        // Everything else should be undefined
+        expect(filterOrErrorMessage.filter).toBeUndefined();
+        expect(filterOrErrorMessage.filterFunction).toBeUndefined();
     });
 });
