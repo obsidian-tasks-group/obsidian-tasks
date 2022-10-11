@@ -16,11 +16,6 @@ export class Filter {
         this._filterFunction = filterFunction;
     }
 
-    public matches(task: Task): boolean {
-        return this._filterFunction(task);
-    }
-
-    // TODO Can I remove getter?
     public get filterFunction(): FilterFunction {
         return this._filterFunction;
     }
