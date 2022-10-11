@@ -7,7 +7,7 @@ import type { Task } from '../../Task';
 export type FilterFunction = (task: Task) => boolean;
 
 export class Filter {
-    private readonly _filterFunction: FilterFunction | undefined;
+    private _filterFunction: FilterFunction | undefined;
 
     public constructor(filterFunction: FilterFunction | undefined) {
         this._filterFunction = filterFunction;
@@ -15,6 +15,10 @@ export class Filter {
 
     public get filterFunction(): FilterFunction | undefined {
         return this._filterFunction;
+    }
+
+    public set filterFunction(value: FilterFunction | undefined) {
+        this._filterFunction = value;
     }
 }
 
@@ -33,18 +37,20 @@ export class Filter {
  */
 export class FilterOrErrorMessage {
     public get filterFunction(): FilterFunction | undefined {
-        return this._filterFunction;
+        return this._filter.filterFunction;
     }
 
     public set filterFunction(value: FilterFunction | undefined) {
-        this._filterFunction = value;
+        this._filter.filterFunction = value;
     }
 
-    // TODO Change storage from FilterFunction to Filter
-    private _filterFunction: FilterFunction | undefined;
+    private _filter: Filter;
     error: string | undefined;
 
     // TODO Add a constructor that takes a line
+    constructor() {
+        this._filter = new Filter(undefined);
+    }
 
     /**
      * Construct a FilterOrErrorMessage with the filter.
@@ -53,7 +59,7 @@ export class FilterOrErrorMessage {
     public static fromFilter(filter: FilterFunction): FilterOrErrorMessage {
         // TODO Add line parameter
         const result = new FilterOrErrorMessage();
-        result._filterFunction = filter;
+        result.filterFunction = filter;
         return result;
     }
 
