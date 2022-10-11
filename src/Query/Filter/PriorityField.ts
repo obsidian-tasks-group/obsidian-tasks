@@ -41,7 +41,7 @@ export class PriorityField extends Field {
                 filter = (task: Task) => (task.priority ? task.priority === filterPriority : false);
             }
 
-            result.filter = filter;
+            result.filterFunction = filter;
         } else {
             result.error = 'do not understand query filter (priority)';
         }

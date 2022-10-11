@@ -93,7 +93,7 @@ export class BooleanField extends Field {
                 }
             }
             // Return the filter function that can run the complete query
-            result.filter = (task: Task) => {
+            result.filterFunction = (task: Task) => {
                 return this.filterTaskWithParsedQuery(task, postfixExpression);
             };
             return result;

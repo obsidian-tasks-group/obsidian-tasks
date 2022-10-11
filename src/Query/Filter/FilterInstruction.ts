@@ -33,7 +33,7 @@ export class FilterInstruction {
         const result = new FilterOrErrorMessage(line);
 
         if (line === this._instruction) {
-            result.filter = this._filter;
+            result.filterFunction = this._filter;
             return result;
         }
 

@@ -23,7 +23,7 @@ describe('FilterOrErrorMessage', () => {
     it('should create an empty FilterOrErrorMessage object', () => {
         const line = 'some sample instruction';
         const filterOrErrorMessage = new FilterOrErrorMessage(line);
-        expect(filterOrErrorMessage.filter).toBeUndefined();
+        expect(filterOrErrorMessage.filterFunction).toBeUndefined();
         expect(filterOrErrorMessage.newFilter).toBeUndefined();
         expect(filterOrErrorMessage.error).toBeUndefined();
         expect(filterOrErrorMessage.instruction).toEqual(line);
@@ -36,9 +36,9 @@ describe('FilterOrErrorMessage', () => {
         };
 
         const filterOrErrorMessage = new FilterOrErrorMessage(line);
-        filterOrErrorMessage.filter = filterFunction;
+        filterOrErrorMessage.filterFunction = filterFunction;
 
-        expect(filterOrErrorMessage.filter).not.toBeUndefined();
+        expect(filterOrErrorMessage.filterFunction).not.toBeUndefined();
         expect(filterOrErrorMessage.newFilter?.filterFunction).not.toBeUndefined();
         expect(filterOrErrorMessage.newFilter?.instruction).toEqual(line);
         expect(filterOrErrorMessage.error).toBeUndefined();
@@ -51,7 +51,7 @@ describe('FilterOrErrorMessage', () => {
         };
         const line = 'some sample instruction';
         const filterOrErrorMessage = FilterOrErrorMessage.fromFilter(line, filterFunction);
-        expect(filterOrErrorMessage.filter).not.toBeUndefined();
+        expect(filterOrErrorMessage.filterFunction).not.toBeUndefined();
         expect(filterOrErrorMessage.newFilter).not.toBeUndefined();
         expect(filterOrErrorMessage.error).toBeUndefined();
         expect(filterOrErrorMessage.instruction).toEqual(line);
@@ -63,7 +63,7 @@ describe('FilterOrErrorMessage', () => {
     it('should create FilterOrErrorMessage object for error', () => {
         const line = 'some sample instruction';
         const filterOrErrorMessage = FilterOrErrorMessage.fromError(line, 'error happened');
-        expect(filterOrErrorMessage.filter).toBeUndefined();
+        expect(filterOrErrorMessage.filterFunction).toBeUndefined();
         expect(filterOrErrorMessage.newFilter).toBeUndefined();
         expect(filterOrErrorMessage.error).toEqual('error happened');
         expect(filterOrErrorMessage.instruction).toEqual(line);

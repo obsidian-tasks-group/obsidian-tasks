@@ -58,7 +58,7 @@ export class FilterOrErrorMessage {
     }
 
     // TODO Can I remove this?
-    public get filter(): FilterFunction | undefined {
+    public get filterFunction(): FilterFunction | undefined {
         if (this._filter) {
             return this._filter.filterFunction;
         } else {
@@ -67,7 +67,7 @@ export class FilterOrErrorMessage {
     }
 
     // TODO Can I remove this?
-    public set filter(value: FilterFunction | undefined) {
+    public set filterFunction(value: FilterFunction | undefined) {
         if (value) {
             this._filter = new NewFilter(this.instruction, value);
         } else {
@@ -82,7 +82,7 @@ export class FilterOrErrorMessage {
      */
     public static fromFilter(instruction: string, filter: FilterFunction): FilterOrErrorMessage {
         const result = new FilterOrErrorMessage(instruction);
-        result.filter = filter;
+        result.filterFunction = filter;
         return result;
     }
 
