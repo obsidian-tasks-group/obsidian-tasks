@@ -40,14 +40,18 @@ export class FilterOrErrorMessage {
         this._filterFunction = value;
     }
 
+    // TODO Change storage from FilterFunction to Filter
     private _filterFunction: FilterFunction | undefined;
     error: string | undefined;
+
+    // TODO Add a constructor that takes a line
 
     /**
      * Construct a FilterOrErrorMessage with the filter.
      * @param filter
      */
     public static fromFilter(filter: FilterFunction): FilterOrErrorMessage {
+        // TODO Add line parameter
         const result = new FilterOrErrorMessage();
         result._filterFunction = filter;
         return result;
@@ -58,6 +62,7 @@ export class FilterOrErrorMessage {
      * @param errorMessage
      */
     public static fromError(errorMessage: string): FilterOrErrorMessage {
+        // TODO Add line parameter
         const result = new FilterOrErrorMessage();
         result.error = errorMessage;
         return result;
