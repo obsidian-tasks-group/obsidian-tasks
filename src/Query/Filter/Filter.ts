@@ -20,7 +20,15 @@ export type Filter = (task: Task) => boolean;
  * problem line, and perhaps listing allowed options).
  */
 export class FilterOrErrorMessage {
-    filter: Filter | undefined;
+    public get filter(): Filter | undefined {
+        return this._filter;
+    }
+
+    public set filter(value: Filter | undefined) {
+        this._filter = value;
+    }
+
+    private _filter: Filter | undefined;
     error: string | undefined;
 
     /**
@@ -29,7 +37,7 @@ export class FilterOrErrorMessage {
      */
     public static fromFilter(filter: Filter): FilterOrErrorMessage {
         const result = new FilterOrErrorMessage();
-        result.filter = filter;
+        result._filter = filter;
         return result;
     }
 
