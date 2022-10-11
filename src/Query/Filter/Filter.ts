@@ -7,6 +7,7 @@ import type { Task } from '../../Task';
 export type FilterFunction = (task: Task) => boolean;
 
 export class Filter {
+    // TODO Remove the use of undefined here. Move it to FilterOrErrorMessage.
     // TODO Add storage of instruction line
     private _filterFunction: FilterFunction | undefined;
 
