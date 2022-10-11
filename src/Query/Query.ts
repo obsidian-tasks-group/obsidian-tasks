@@ -48,7 +48,7 @@ export class Query implements IQuery {
 
     private _limit: number | undefined = undefined;
     private _layoutOptions: LayoutOptions = new LayoutOptions();
-    // TODO Change type of _filters to Filter[]
+    // TODO Change type of _filters to NewFilter[]
     private _filters: Filter[] = [];
     private _error: string | undefined = undefined;
     private _sorting: Sorting[] = [];
