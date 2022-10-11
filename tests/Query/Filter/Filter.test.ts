@@ -1,5 +1,5 @@
 import { FilterOrErrorMessage, NewFilter } from '../../../src/Query/Filter/Filter';
-import type { Filter } from '../../../src/Query/Filter/Filter';
+import type { FilterFunction } from '../../../src/Query/Filter/Filter';
 import type { Task } from '../../../src/Task';
 import { toMatchTaskFromLine } from '../../CustomMatchers/CustomMatchersForFilters';
 
@@ -9,7 +9,7 @@ expect.extend({
 
 describe('NewFilter', () => {
     it('should create a NewFilter object', () => {
-        const filterFunction: Filter = (task: Task) => {
+        const filterFunction: FilterFunction = (task: Task) => {
             return task.description.length > 20;
         };
         const line = 'some sample instruction';
@@ -31,7 +31,7 @@ describe('FilterOrErrorMessage', () => {
 
     it('should retain instruction when updating filter', () => {
         const line = 'some sample instruction';
-        const filterFunction: Filter = (task: Task) => {
+        const filterFunction: FilterFunction = (task: Task) => {
             return task.description.length > 20;
         };
 
@@ -46,7 +46,7 @@ describe('FilterOrErrorMessage', () => {
     });
 
     it('should create FilterOrErrorMessage object for filter', () => {
-        const filterFunction: Filter = (task: Task) => {
+        const filterFunction: FilterFunction = (task: Task) => {
             return task.description.length > 20;
         };
         const line = 'some sample instruction';

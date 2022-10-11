@@ -4,16 +4,15 @@ import type { Task } from '../../Task';
  * A filtering function, that takes a Task object and returns
  * whether it matches a particular filtering instruction.
  */
-// TODO Rename to FilterFunction
-export type Filter = (task: Task) => boolean;
+export type FilterFunction = (task: Task) => boolean;
 
 // TODO Rename to Filter
 // TODO Add docs
 export class NewFilter {
     instruction: string;
-    private _filterFunction: Filter;
+    private _filterFunction: FilterFunction;
 
-    public constructor(instruction: string, filterFunction: Filter) {
+    public constructor(instruction: string, filterFunction: FilterFunction) {
         this.instruction = instruction;
         this._filterFunction = filterFunction;
     }
@@ -21,12 +20,12 @@ export class NewFilter {
     // TODO Add operator that tests a Task matches - to remove need to call newFilter.filterFunction
 
     // TODO Can I remove getter?
-    public get filterFunction(): Filter {
+    public get filterFunction(): FilterFunction {
         return this._filterFunction;
     }
 
     // TODO Can I remove setter?
-    public set filterFunction(value: Filter) {
+    public set filterFunction(value: FilterFunction) {
         this._filterFunction = value;
     }
 }
@@ -59,7 +58,7 @@ export class FilterOrErrorMessage {
     }
 
     // TODO Can I remove this?
-    public get filter(): Filter | undefined {
+    public get filter(): FilterFunction | undefined {
         if (this._filter) {
             return this._filter.filterFunction;
         } else {
@@ -68,7 +67,7 @@ export class FilterOrErrorMessage {
     }
 
     // TODO Can I remove this?
-    public set filter(value: Filter | undefined) {
+    public set filter(value: FilterFunction | undefined) {
         if (value) {
             this._filter = new NewFilter(this.instruction, value);
         } else {
@@ -81,7 +80,7 @@ export class FilterOrErrorMessage {
      * @param instruction
      * @param filter
      */
-    public static fromFilter(instruction: string, filter: Filter): FilterOrErrorMessage {
+    public static fromFilter(instruction: string, filter: FilterFunction): FilterOrErrorMessage {
         const result = new FilterOrErrorMessage(instruction);
         result.filter = filter;
         return result;
