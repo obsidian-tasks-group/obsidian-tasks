@@ -73,8 +73,8 @@ export class BooleanField extends Field {
                         if (parsedField.error) {
                             result.error = `couldn't parse sub-expression '${identifier}': ${parsedField.error}`;
                             return result;
-                        } else if (parsedField.newFilter) {
-                            this.subFields[identifier] = parsedField.newFilter;
+                        } else if (parsedField.filter) {
+                            this.subFields[identifier] = parsedField.filter;
                         }
                     }
                 } else if (token.name === 'OPERATOR') {

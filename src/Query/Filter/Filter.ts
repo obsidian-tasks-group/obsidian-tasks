@@ -51,8 +51,7 @@ export class FilterOrErrorMessage {
         this.instruction = instruction;
     }
 
-    // TODO Rename this to filter()
-    public get newFilter(): Filter | undefined {
+    public get filter(): Filter | undefined {
         return this._filter;
     }
 
