@@ -38,6 +38,12 @@ export class NewFilter {
  * problem line, and perhaps listing allowed options).
  */
 export class FilterOrErrorMessage {
+    private _filter: NewFilter | undefined;
+    error: string | undefined;
+
+    // TODO Add a constructor that takes a line
+    constructor() {}
+
     public get newFilter(): NewFilter | undefined {
         return this._filter;
     }
@@ -57,12 +63,6 @@ export class FilterOrErrorMessage {
             this._filter = undefined;
         }
     }
-
-    private _filter: NewFilter | undefined;
-    error: string | undefined;
-
-    // TODO Add a constructor that takes a line
-    constructor() {}
 
     /**
      * Construct a FilterOrErrorMessage with the filter.
