@@ -184,7 +184,7 @@ export class Query implements IQuery {
     private parseFilter(line: string) {
         const filterOrError = parseFilter(line);
         if (filterOrError != null) {
-            if (filterOrError.filterFunction) this._filters.push(filterOrError.filterFunction);
+            if (filterOrError.filter) this._filters.push(filterOrError.filter);
             else this._error = filterOrError.error;
             return true;
         }

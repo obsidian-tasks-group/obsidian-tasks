@@ -29,13 +29,13 @@ export class HappensDateField extends Field {
 
         if (line === HappensDateField.instructionForFieldPresence) {
             const result = new FilterOrErrorMessage();
-            result.filterFunction = (task: Task) => this.dates(task).some((date) => date !== null);
+            result.filter = (task: Task) => this.dates(task).some((date) => date !== null);
             return result;
         }
 
         if (line === HappensDateField.instructionForFieldAbsence) {
             const result = new FilterOrErrorMessage();
-            result.filterFunction = (task: Task) => !this.dates(task).some((date) => date !== null);
+            result.filter = (task: Task) => !this.dates(task).some((date) => date !== null);
             return result;
         }
 
@@ -46,15 +46,15 @@ export class HappensDateField extends Field {
                 result.error = 'do not understand happens date';
             } else {
                 if (happensMatch[1] === 'before') {
-                    result.filterFunction = (task: Task) => {
+                    result.filter = (task: Task) => {
                         return this.dates(task).some((date) => date && date.isBefore(filterDate));
                     };
                 } else if (happensMatch[1] === 'after') {
-                    result.filterFunction = (task: Task) => {
+                    result.filter = (task: Task) => {
                         return this.dates(task).some((date) => date && date.isAfter(filterDate));
                     };
                 } else {
-                    result.filterFunction = (task: Task) => {
+                    result.filter = (task: Task) => {
                         return this.dates(task).some((date) => date && date.isSame(filterDate));
                     };
                 }

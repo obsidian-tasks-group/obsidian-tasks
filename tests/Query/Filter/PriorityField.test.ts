@@ -65,7 +65,7 @@ describe('priority error cases', () => {
     it('priority is something', () => {
         const field = new PriorityField();
         const filter = field.createFilterOrErrorMessage('priority is no-such-priority');
-        expect(filter.filterFunction).toBeUndefined();
+        expect(filter.filter).toBeUndefined();
         expect(filter.error).toBe('do not understand query filter (priority)');
     });
 });

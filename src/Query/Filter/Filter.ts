@@ -39,11 +39,11 @@ export class NewFilter {
  * problem line, and perhaps listing allowed options).
  */
 export class FilterOrErrorMessage {
-    public get filterFunction(): Filter | undefined {
+    public get filter(): Filter | undefined {
         return this._filter.filterFunction;
     }
 
-    public set filterFunction(value: Filter | undefined) {
+    public set filter(value: Filter | undefined) {
         this._filter.filterFunction = value;
     }
 
@@ -62,7 +62,7 @@ export class FilterOrErrorMessage {
     public static fromFilter(filter: Filter): FilterOrErrorMessage {
         // TODO Add line parameter
         const result = new FilterOrErrorMessage();
-        result.filterFunction = filter;
+        result.filter = filter;
         return result;
     }
 

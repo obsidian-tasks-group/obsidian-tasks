@@ -27,12 +27,12 @@ export abstract class DateField extends Field {
         const result = new FilterOrErrorMessage();
 
         if (line === this.instructionForFieldPresence) {
-            result.filterFunction = (task: Task) => this.date(task) !== null;
+            result.filter = (task: Task) => this.date(task) !== null;
             return result;
         }
 
         if (line === this.instructionForFieldAbsence) {
-            result.filterFunction = (task: Task) => this.date(task) === null;
+            result.filter = (task: Task) => this.date(task) === null;
             return result;
         }
 
@@ -43,17 +43,17 @@ export abstract class DateField extends Field {
                 result.error = 'do not understand ' + this.fieldName() + ' date';
             } else {
                 if (match[1] === 'before') {
-                    result.filterFunction = (task: Task) => {
+                    result.filter = (task: Task) => {
                         const date = this.date(task);
                         return date ? date.isBefore(filterDate) : this.filterResultIfFieldMissing();
                     };
                 } else if (match[1] === 'after') {
-                    result.filterFunction = (task: Task) => {
+                    result.filter = (task: Task) => {
                         const date = this.date(task);
                         return date ? date.isAfter(filterDate) : this.filterResultIfFieldMissing();
                     };
                 } else {
-                    result.filterFunction = (task: Task) => {
+                    result.filter = (task: Task) => {
                         const date = this.date(task);
                         return date ? date.isSame(filterDate) : this.filterResultIfFieldMissing();
                     };
