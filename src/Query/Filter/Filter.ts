@@ -17,7 +17,7 @@ export type FilterFunction = (task: Task) => boolean;
  * Later, the plan is to add a human-readable explanation of the filter.
  */
 export class Filter {
-    instruction: string;
+    readonly instruction: string;
     private readonly _filterFunction: FilterFunction;
 
     public constructor(instruction: string, filterFunction: FilterFunction) {
