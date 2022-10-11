@@ -25,16 +25,16 @@ export class HappensDateField extends Field {
     }
 
     public createFilterOrErrorMessage(line: string): FilterOrErrorMessage {
-        const result = new FilterOrErrorMessage();
+        const result = new FilterOrErrorMessage(line);
 
         if (line === HappensDateField.instructionForFieldPresence) {
-            const result = new FilterOrErrorMessage();
+            const result = new FilterOrErrorMessage(line);
             result.filter = (task: Task) => this.dates(task).some((date) => date !== null);
             return result;
         }
 
         if (line === HappensDateField.instructionForFieldAbsence) {
-            const result = new FilterOrErrorMessage();
+            const result = new FilterOrErrorMessage(line);
             result.filter = (task: Task) => !this.dates(task).some((date) => date !== null);
             return result;
         }

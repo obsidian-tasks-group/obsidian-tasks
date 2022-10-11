@@ -19,7 +19,8 @@ describe('NewFilter', () => {
 
 describe('FilterOrErrorMessage', () => {
     it('should create an empty FilterOrErrorMessage object', () => {
-        const filterOrErrorMessage = new FilterOrErrorMessage();
+        const line = 'some sample instruction';
+        const filterOrErrorMessage = new FilterOrErrorMessage(line);
         expect(filterOrErrorMessage.filter).toBeUndefined();
         expect(filterOrErrorMessage.newFilter).toBeUndefined();
         expect(filterOrErrorMessage.error).toBeUndefined();

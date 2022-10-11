@@ -30,7 +30,7 @@ export class FilterInstruction {
     }
 
     public createFilterOrErrorMessage(line: string): FilterOrErrorMessage {
-        const result = new FilterOrErrorMessage();
+        const result = new FilterOrErrorMessage(line);
 
         if (line === this._instruction) {
             result.filter = this._filter;

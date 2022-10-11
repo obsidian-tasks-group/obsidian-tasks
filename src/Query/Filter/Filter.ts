@@ -38,11 +38,13 @@ export class NewFilter {
  * problem line, and perhaps listing allowed options).
  */
 export class FilterOrErrorMessage {
+    instruction: string;
     private _filter: NewFilter | undefined;
     error: string | undefined;
 
-    // TODO Add a constructor that takes a line
-    constructor() {}
+    constructor(instruction: string) {
+        this.instruction = instruction;
+    }
 
     public get newFilter(): NewFilter | undefined {
         return this._filter;
@@ -70,7 +72,7 @@ export class FilterOrErrorMessage {
      */
     public static fromFilter(filter: Filter): FilterOrErrorMessage {
         // TODO Add line parameter
-        const result = new FilterOrErrorMessage();
+        const result = new FilterOrErrorMessage('UNKNOWN INSTRUCTION');
         result.filter = filter;
         return result;
     }
@@ -81,7 +83,7 @@ export class FilterOrErrorMessage {
      */
     public static fromError(errorMessage: string): FilterOrErrorMessage {
         // TODO Add line parameter
-        const result = new FilterOrErrorMessage();
+        const result = new FilterOrErrorMessage('UNKNOWN INSTRUCTION');
         result.error = errorMessage;
         return result;
     }

@@ -51,7 +51,7 @@ export class BooleanField extends Field {
      * 4. Returning a final function filter, which for each Task can run the complete query.
      */
     private parseLine(line: string): FilterOrErrorMessage {
-        const result = new FilterOrErrorMessage();
+        const result = new FilterOrErrorMessage(line);
         if (line.length === 0) {
             result.error = 'empty line';
             return result;
