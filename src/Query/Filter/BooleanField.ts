@@ -5,7 +5,7 @@ import { parseFilter } from '../FilterParser';
 import type { Task } from '../../Task';
 import { Field } from './Field';
 import { FilterOrErrorMessage } from './Filter';
-import type { Filter } from './Filter';
+import type { NewFilter } from './Filter';
 
 /**
  * BooleanField is a 'container' field type that parses a high-level filtering query of
@@ -26,8 +26,7 @@ export class BooleanField extends Field {
     // Second pattern matches (filter1) - that is, ensures that a single filter is treated as valid
     private readonly basicBooleanRegexp = /(.*(AND|OR|XOR|NOT)\s*[("].*|\(.+\))/g;
     private readonly supportedOperators = ['AND', 'OR', 'XOR', 'NOT'];
-    // TODO Change this to storing NewFilter
-    private subFields: Record<string, Filter> = {};
+    private subFields: Record<string, NewFilter> = {};
 
     protected filterRegExp(): RegExp {
         return this.basicBooleanRegexp;
@@ -74,8 +73,8 @@ export class BooleanField extends Field {
                         if (parsedField.error) {
                             result.error = `couldn't parse sub-expression '${identifier}': ${parsedField.error}`;
                             return result;
-                        } else if (parsedField.filter) {
-                            this.subFields[identifier] = parsedField.filter;
+                        } else if (parsedField.newFilter) {
+                            this.subFields[identifier] = parsedField.newFilter;
                         }
                     }
                 } else if (token.name === 'OPERATOR') {
@@ -135,7 +134,7 @@ export class BooleanField extends Field {
                 // task for each identifier that we find in the postfix expression.
                 if (token.value == null) throw Error('null token value'); // This should not happen
                 const filter = this.subFields[token.value.trim()];
-                const result = filter(task);
+                const result = filter.filterFunction(task);
                 booleanStack.push(toString(result));
             } else if (token.name === 'OPERATOR') {
                 // To evaluate an operator we need to pop the required number of items from the boolean stack,
