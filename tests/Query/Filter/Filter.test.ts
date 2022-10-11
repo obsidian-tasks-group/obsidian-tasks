@@ -1,4 +1,4 @@
-import { FilterOrErrorMessage, NewFilter } from '../../../src/Query/Filter/Filter';
+import { Filter, FilterOrErrorMessage } from '../../../src/Query/Filter/Filter';
 import type { FilterFunction } from '../../../src/Query/Filter/Filter';
 import type { Task } from '../../../src/Task';
 import { toMatchTaskFromLine } from '../../CustomMatchers/CustomMatchersForFilters';
@@ -13,7 +13,7 @@ describe('NewFilter', () => {
             return task.description.length > 20;
         };
         const line = 'some sample instruction';
-        const filter = new NewFilter(line, filterFunction);
+        const filter = new Filter(line, filterFunction);
         expect(filter.instruction).toEqual(line);
         expect(filter.filterFunction).not.toBeUndefined();
     });

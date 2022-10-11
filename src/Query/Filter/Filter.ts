@@ -6,9 +6,8 @@ import type { Task } from '../../Task';
  */
 export type FilterFunction = (task: Task) => boolean;
 
-// TODO Rename to Filter
 // TODO Add docs
-export class NewFilter {
+export class Filter {
     instruction: string;
     private _filterFunction: FilterFunction;
 
@@ -45,7 +44,7 @@ export class NewFilter {
  */
 export class FilterOrErrorMessage {
     instruction: string;
-    private _filter: NewFilter | undefined;
+    private _filter: Filter | undefined;
     error: string | undefined;
 
     constructor(instruction: string) {
@@ -53,7 +52,7 @@ export class FilterOrErrorMessage {
     }
 
     // TODO Rename this to filter()
-    public get newFilter(): NewFilter | undefined {
+    public get newFilter(): Filter | undefined {
         return this._filter;
     }
 
@@ -69,7 +68,7 @@ export class FilterOrErrorMessage {
     // TODO Can I remove this?
     public set filterFunction(value: FilterFunction | undefined) {
         if (value) {
-            this._filter = new NewFilter(this.instruction, value);
+            this._filter = new Filter(this.instruction, value);
         } else {
             this._filter = undefined;
         }
