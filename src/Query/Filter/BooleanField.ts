@@ -73,8 +73,8 @@ export class BooleanField extends Field {
                         if (parsedField.error) {
                             result.error = `couldn't parse sub-expression '${identifier}': ${parsedField.error}`;
                             return result;
-                        } else if (parsedField.filter) {
-                            this.subFields[identifier] = parsedField.filter;
+                        } else if (parsedField.filterFunction) {
+                            this.subFields[identifier] = parsedField.filterFunction;
                         }
                     }
                 } else if (token.name === 'OPERATOR') {
@@ -93,7 +93,7 @@ export class BooleanField extends Field {
                 }
             }
             // Return the filter function that can run the complete query
-            result.filter = (task: Task) => {
+            result.filterFunction = (task: Task) => {
                 return this.filterTaskWithParsedQuery(task, postfixExpression);
             };
             return result;

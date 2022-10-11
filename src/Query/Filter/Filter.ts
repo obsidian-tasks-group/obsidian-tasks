@@ -32,15 +32,15 @@ export class Filter {
  * problem line, and perhaps listing allowed options).
  */
 export class FilterOrErrorMessage {
-    public get filter(): FilterFunction | undefined {
-        return this._filter;
+    public get filterFunction(): FilterFunction | undefined {
+        return this._filterFunction;
     }
 
-    public set filter(value: FilterFunction | undefined) {
-        this._filter = value;
+    public set filterFunction(value: FilterFunction | undefined) {
+        this._filterFunction = value;
     }
 
-    private _filter: FilterFunction | undefined;
+    private _filterFunction: FilterFunction | undefined;
     error: string | undefined;
 
     /**
@@ -49,7 +49,7 @@ export class FilterOrErrorMessage {
      */
     public static fromFilter(filter: FilterFunction): FilterOrErrorMessage {
         const result = new FilterOrErrorMessage();
-        result._filter = filter;
+        result._filterFunction = filter;
         return result;
     }
 
