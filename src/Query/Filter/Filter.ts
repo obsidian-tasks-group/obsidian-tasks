@@ -9,7 +9,7 @@ export type FilterFunction = (task: Task) => boolean;
 // TODO Add docs
 export class Filter {
     instruction: string;
-    private _filterFunction: FilterFunction;
+    private readonly _filterFunction: FilterFunction;
 
     public constructor(instruction: string, filterFunction: FilterFunction) {
         this.instruction = instruction;
@@ -23,11 +23,6 @@ export class Filter {
     // TODO Can I remove getter?
     public get filterFunction(): FilterFunction {
         return this._filterFunction;
-    }
-
-    // TODO Can I remove setter?
-    public set filterFunction(value: FilterFunction) {
-        this._filterFunction = value;
     }
 }
 
