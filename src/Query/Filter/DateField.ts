@@ -24,7 +24,7 @@ export abstract class DateField extends Field {
     }
 
     public createFilterOrErrorMessage(line: string): FilterOrErrorMessage {
-        const result = new FilterOrErrorMessage();
+        const result = new FilterOrErrorMessage(line);
 
         if (line === this.instructionForFieldPresence) {
             result.filterFunction = (task: Task) => this.date(task) !== null;
