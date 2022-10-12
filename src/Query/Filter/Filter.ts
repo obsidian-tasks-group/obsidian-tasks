@@ -40,6 +40,10 @@ export class FilterOrErrorMessage {
     private _filter: Filter | undefined;
     error: string | undefined;
 
+    public get filter(): Filter | undefined {
+        return this._filter;
+    }
+
     get filterFunction(): FilterFunction | undefined {
         if (this._filter) {
             return this._filter.filterFunction;
