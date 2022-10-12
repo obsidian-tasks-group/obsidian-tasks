@@ -39,6 +39,18 @@ Use `next tuesday` instead if you mean "next tuesday".
 
 When the day changes, relative dates like `due today` are re-evaluated so that the list stays up-to-date.
 
+### Validating dates
+
+It is possible to accidentally use a non-existent date on a task signifier, such as `📅 2022-02-30`. February has at most 29 days.
+
+Such tasks look like they have a date, but that date will never be found. When viewed in Reading mode, they will be shown as:
+
+Any such mistakes can be found systematically with:
+
+    ```tasks
+    (done date is invalid) OR (due date is invalid) OR (scheduled date is invalid) OR (start date is invalid)
+    ```
+
 ---
 
 ## Matching multiple filters
@@ -72,32 +84,40 @@ For full details of combining filters with boolean operators, see [Combining Fil
 - `no done date`
 - `has done date`
 - `done (before|after|on) <date>`
+- `done date is invalid`
 
-> `no done date` and `has done date` were introduced in Tasks 1.7.0.
+> `no done date` and `has done date` were introduced in Tasks 1.7.0.<br>
+> `done date is invalid` was introduced in Tasks 1.16.0.
 
 ### Due Date
 
 - `no due date`
 - `has due date`
 - `due (before|after|on) <date>`
+- `due date is invalid`
 
-> `has due date` was introduced in Tasks 1.6.0.
+> `has due date` was introduced in Tasks 1.6.0.<br>
+> `due date is invalid` was introduced in Tasks 1.16.0.
 
 ### Scheduled Date
 
 - `no scheduled date`
 - `has scheduled date`
 - `scheduled (before|after|on) <date>`
+- `scheduled date is invalid`
 
-> `has scheduled date` was introduced in Tasks 1.6.0.
+> `has scheduled date` was introduced in Tasks 1.6.0.<br>
+> `scheduled date is invalid` was introduced in Tasks 1.16.0.
 
 ### Start Date
 
 - `no start date`
 - `has start date`
 - `starts (before|after|on) <date>`
+- `start date is invalid`
 
-> `has start date` was Introduced in Tasks 1.6.0.
+> `has start date` was Introduced in Tasks 1.6.0.<br>
+> `start date is invalid` was introduced in Tasks 1.16.0.
 
 When filtering queries by [start date]({{ site.baseurl }}{% link getting-started/dates.md %}#-start),
 the result will include tasks without a start date.

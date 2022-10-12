@@ -18,6 +18,10 @@ export abstract class DateField extends Field {
         this.filterInstructions = new FilterInstructions();
         this.filterInstructions.add(`has ${this.fieldName()} date`, (task: Task) => this.date(task) !== null);
         this.filterInstructions.add(`no ${this.fieldName()} date`, (task: Task) => this.date(task) === null);
+        this.filterInstructions.add(`${this.fieldName()} date is invalid`, (task: Task) => {
+            const date = this.date(task);
+            return date !== null && !date.isValid();
+        });
     }
 
     public canCreateFilterForLine(line: string): boolean {
