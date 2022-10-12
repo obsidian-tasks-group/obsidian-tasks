@@ -5,6 +5,7 @@ import { Sort } from './Sort';
 import type { TaskGroups } from './TaskGroups';
 import { parseFilter } from './FilterParser';
 import { Group } from './Group';
+import type { Filter } from './Filter/Filter';
 
 export type SortingProperty =
     | 'urgency'
@@ -47,7 +48,7 @@ export class Query implements IQuery {
 
     private _limit: number | undefined = undefined;
     private _layoutOptions: LayoutOptions = new LayoutOptions();
-    private _filters: ((task: Task) => boolean)[] = [];
+    private _filters: Filter[] = [];
     private _error: string | undefined = undefined;
     private _sorting: Sorting[] = [];
     private _grouping: Grouping[] = [];
@@ -111,7 +112,7 @@ export class Query implements IQuery {
         return this._layoutOptions;
     }
 
-    public get filters(): ((task: Task) => boolean)[] {
+    public get filters(): Filter[] {
         return this._filters;
     }
 
@@ -129,7 +130,7 @@ export class Query implements IQuery {
 
     public applyQueryToTasks(tasks: Task[]): TaskGroups {
         this.filters.forEach((filter) => {
-            tasks = tasks.filter(filter);
+            tasks = tasks.filter(filter.filterFunction);
         });
 
         const tasksSortedLimited = Sort.by(this, tasks).slice(0, this.limit);
@@ -182,7 +183,7 @@ export class Query implements IQuery {
     private parseFilter(line: string) {
         const filterOrError = parseFilter(line);
         if (filterOrError != null) {
-            if (filterOrError.filterFunction) this._filters.push(filterOrError.filterFunction);
+            if (filterOrError.filter) this._filters.push(filterOrError.filter);
             else this._error = filterOrError.error;
             return true;
         }
