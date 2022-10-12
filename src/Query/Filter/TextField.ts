@@ -3,7 +3,7 @@ import { SubstringMatcher } from '../Matchers/SubstringMatcher';
 import { RegexMatcher } from '../Matchers/RegexMatcher';
 import type { IStringMatcher } from '../Matchers/IStringMatcher';
 import { Field } from './Field';
-import type { Filter } from './Filter';
+import type { FilterFunction } from './Filter';
 import { FilterOrErrorMessage } from './Filter';
 
 /**
@@ -80,7 +80,7 @@ export abstract class TextField extends Field {
      */
     public abstract value(task: Task): string;
 
-    protected getFilter(matcher: IStringMatcher, negate: boolean): Filter {
+    protected getFilter(matcher: IStringMatcher, negate: boolean): FilterFunction {
         return (task: Task) => {
             const match = matcher!.matches(this.value(task));
             return negate ? !match : match;

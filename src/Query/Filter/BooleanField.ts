@@ -5,7 +5,7 @@ import { parseFilter } from '../FilterParser';
 import type { Task } from '../../Task';
 import { Field } from './Field';
 import { FilterOrErrorMessage } from './Filter';
-import type { Filter } from './Filter';
+import type { FilterFunction } from './Filter';
 
 /**
  * BooleanField is a 'container' field type that parses a high-level filtering query of
@@ -26,7 +26,7 @@ export class BooleanField extends Field {
     // Second pattern matches (filter1) - that is, ensures that a single filter is treated as valid
     private readonly basicBooleanRegexp = /(.*(AND|OR|XOR|NOT)\s*[("].*|\(.+\))/g;
     private readonly supportedOperators = ['AND', 'OR', 'XOR', 'NOT'];
-    private subFields: Record<string, Filter> = {};
+    private subFields: Record<string, FilterFunction> = {};
 
     protected filterRegExp(): RegExp {
         return this.basicBooleanRegexp;
@@ -73,8 +73,8 @@ export class BooleanField extends Field {
                         if (parsedField.error) {
                             result.error = `couldn't parse sub-expression '${identifier}': ${parsedField.error}`;
                             return result;
-                        } else if (parsedField.filter) {
-                            this.subFields[identifier] = parsedField.filter;
+                        } else if (parsedField.filterFunction) {
+                            this.subFields[identifier] = parsedField.filterFunction;
                         }
                     }
                 } else if (token.name === 'OPERATOR') {
@@ -93,7 +93,7 @@ export class BooleanField extends Field {
                 }
             }
             // Return the filter function that can run the complete query
-            result.filter = (task: Task) => {
+            result.filterFunction = (task: Task) => {
                 return this.filterTaskWithParsedQuery(task, postfixExpression);
             };
             return result;
