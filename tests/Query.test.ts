@@ -112,7 +112,7 @@ describe('Query parsing', () => {
             expect(query.filters.length).toEqual(1);
             expect(query.filters[0]).toBeDefined();
             // If the boolean query and its sub-query are parsed correctly, the expression should always be true
-            expect(query.filters[0](task)).toBeTruthy();
+            expect(query.filters[0].filterFunction(task)).toBeTruthy();
         });
     });
 
@@ -289,7 +289,7 @@ describe('Query', () => {
             // Act
             let filteredTasks = [...tasks];
             query.filters.forEach((filter) => {
-                filteredTasks = filteredTasks.filter(filter);
+                filteredTasks = filteredTasks.filter(filter.filterFunction);
             });
 
             // Assert
