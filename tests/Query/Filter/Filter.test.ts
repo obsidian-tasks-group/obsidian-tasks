@@ -12,7 +12,10 @@ describe('Filter', () => {
         const filterFunction: FilterFunction = (task: Task) => {
             return task.description.length > 20;
         };
-        const filter = new Filter(filterFunction);
+        const line = 'some sample instruction';
+        const filter = new Filter(line, filterFunction);
+
+        expect(filter.instruction).toEqual(line);
         expect(filter.filterFunction).not.toBeUndefined();
     });
 });

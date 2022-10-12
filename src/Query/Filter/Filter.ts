@@ -11,25 +11,33 @@ export type FilterFunction = (task: Task) => boolean;
  *
  * Currently it provides access to:
  *
+ * - The original {@link instruction}
  * - The {@link filterFunction} - a {@link FilterFunction} which tests whether a task matches the filter
  *
- * Later, the plan is to add storage of the user's instruction, and a human-readable explanation of the filter.
+ * Later, the plan is to add a human-readable explanation of the filter.
  */
 export class Filter {
+    readonly instruction: string;
     public filterFunction: FilterFunction;
 
-    public constructor(filterFunction: FilterFunction) {
+    public constructor(instruction: string, filterFunction: FilterFunction) {
+        this.instruction = instruction;
         this.filterFunction = filterFunction;
     }
 }
 
 /**
  * A class which stores one of:
- * - A Filter
- * - An error message
+ * - The original instruction string - a line from a tasks code block
+ * - An optional {@link Filter}
+ * - An optional error message
  *
- * This is really currently a convenience for returning date from
- * Field.createFilterOrErrorMessage() and derived classes.
+ * This is really currently a convenience for returning data from
+ * {@link Field.createFilterOrErrorMessage()} and derived classes.
+ *
+ * By the time the code has finished with parsing the line, typically the
+ * contained {@link Filter} will be saved, for later use in searching for Tasks
+ * that match the user's filter instruction.
  *
  * Later, it may gain helper functions for constructing parser error messages,
  * as currently these are created by some rather repetitious code, and also
@@ -37,8 +45,13 @@ export class Filter {
  * problem line, and perhaps listing allowed options).
  */
 export class FilterOrErrorMessage {
+    readonly instruction: string;
     private _filter: Filter | undefined;
     error: string | undefined;
+
+    constructor(instruction: string) {
+        this.instruction = instruction;
+    }
 
     public get filter(): Filter | undefined {
         return this._filter;
@@ -54,7 +67,7 @@ export class FilterOrErrorMessage {
 
     set filterFunction(value: FilterFunction | undefined) {
         if (value) {
-            this._filter = new Filter(value);
+            this._filter = new Filter(this.instruction, value);
         } else {
             this._filter = undefined;
         }
@@ -62,20 +75,22 @@ export class FilterOrErrorMessage {
 
     /**
      * Construct a FilterOrErrorMessage with the filter.
+     * @param instruction
      * @param filter
      */
-    public static fromFilter(filter: FilterFunction): FilterOrErrorMessage {
-        const result = new FilterOrErrorMessage();
+    public static fromFilter(instruction: string, filter: FilterFunction): FilterOrErrorMessage {
+        const result = new FilterOrErrorMessage(instruction);
         result.filterFunction = filter;
         return result;
     }
 
     /**
      * Construct a FilterOrErrorMessage with the given error message.
+     * @param instruction
      * @param errorMessage
      */
-    public static fromError(errorMessage: string): FilterOrErrorMessage {
-        const result = new FilterOrErrorMessage();
+    public static fromError(instruction: string, errorMessage: string): FilterOrErrorMessage {
+        const result = new FilterOrErrorMessage(instruction);
         result.error = errorMessage;
         return result;
     }

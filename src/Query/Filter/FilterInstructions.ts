@@ -35,7 +35,7 @@ export class FilterInstructions {
             }
         }
 
-        const result = new FilterOrErrorMessage();
+        const result = new FilterOrErrorMessage(line);
         result.error = `do not understand filter: ${line}`;
         return result;
     }
