@@ -50,6 +50,28 @@
     let datePlaceholder =
         "Try 'Monday' or 'tomorrow', or [td|tm|yd|tw|nw|we] then space.";
 
+    const priorityOptions: {
+            value: typeof editableTask.priority,
+            label: string,
+            symbol: string }[] =
+        [{
+            value: 'low',
+            label: 'Low',
+            symbol: prioritySymbols.Low
+        }, {
+            value: 'none',
+            label: 'Normal',
+            symbol: prioritySymbols.None
+        }, {
+            value: 'medium',
+            label: 'Medium',
+            symbol: prioritySymbols.Medium
+        }, {
+            value: 'high',
+            label: 'High',
+            symbol: prioritySymbols.High
+        }]
+
     function parseDate(
         type: 'start' | 'scheduled' | 'due' | 'done',
         date: string,
@@ -124,7 +146,7 @@
         // (it returns 0), and thus we *don't* set addGlobalFilterOnSave.
         if (description != task.description || description.indexOf(globalFilter) == -1)
             addGlobalFilterOnSave = true;
-        let priority: 'none' | 'low' | 'medium' | 'high' = 'none';
+        let priority: typeof editableTask.priority = 'none';
         if (task.priority === Priority.Low) {
             priority = 'low';
         } else if (task.priority === Priority.Medium) {
@@ -152,6 +174,16 @@
             descriptionInput.focus();
         }, 10);
     });
+
+    const _onKeyup = (event: KeyboardEvent) => {
+        if (event.altKey && event.key) {
+            const priorityOption = priorityOptions.find(
+                option => option.label.charAt(0).toLowerCase() == event.key);
+            if (priorityOption) {
+                editableTask.priority = priorityOption.value;
+            }
+        }
+    }
 
     const _onSubmit = () => {
         const { globalFilter } = getSettings();
@@ -235,7 +267,7 @@
     };
 </script>
 
-<div class="tasks-modal">
+<div class="tasks-modal" on:keyup={_onKeyup}>
     <form on:submit|preventDefault={_onSubmit}>
         <div class="tasks-modal-section">
             <label for="description">Description</label>
@@ -250,17 +282,19 @@
         </div>
         <hr />
         <div class="tasks-modal-section">
-            <label for="priority">Priority</label>
-            <select
-                bind:value={editableTask.priority}
-                id="priority"
-                class="dropdown"
-            >
-                <option value="none">None</option>
-                <option value="high">{prioritySymbols.High} High</option>
-                <option value="medium">{prioritySymbols.Medium} Medium</option>
-                <option value="low">{prioritySymbols.Low} Low</option>
-            </select>
+            <label for="priority_{editableTask.priority}">Priority</label>
+            {#each priorityOptions as {value, label, symbol}}
+                <input
+                    type="radio"
+                    id="priority_{value}"
+                    {value}
+                    bind:group={editableTask.priority}
+                />
+                <label for="priority_{value}">
+                    <span>{symbol}</span>
+                    <span>{label}</span>
+                </label>
+            {/each}
         </div>
         <hr />
         <div class="tasks-modal-section">
