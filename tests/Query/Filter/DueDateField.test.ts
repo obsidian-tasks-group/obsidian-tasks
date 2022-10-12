@@ -25,4 +25,14 @@ describe('due date', () => {
         testTaskFilterForTaskWithDueDate(filter, '2022-04-20', false);
         testTaskFilterForTaskWithDueDate(filter, '2022-04-25', false);
     });
+
+    it('due date is invalid', () => {
+        // Arrange
+        const filter = new DueDateField().createFilterOrErrorMessage('due date is invalid');
+
+        // Act, Assert
+        testTaskFilterForTaskWithDueDate(filter, null, false);
+        testTaskFilterForTaskWithDueDate(filter, '2022-04-15', false);
+        testTaskFilterForTaskWithDueDate(filter, '2022-02-30', true); // 30 February is not valid
+    });
 });
