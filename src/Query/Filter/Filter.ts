@@ -7,6 +7,23 @@ import type { Task } from '../../Task';
 export type FilterFunction = (task: Task) => boolean;
 
 /**
+ * A class that represents a parsed filtering instruction from a tasks code block.
+ *
+ * Currently it provides access to:
+ *
+ * - The {@link filterFunction} - a {@link FilterFunction} which tests whether a task matches the filter
+ *
+ * Later, the plan is to add storage of the user's instruction, and a human-readable explanation of the filter.
+ */
+export class Filter {
+    public filterFunction: FilterFunction;
+
+    public constructor(filterFunction: FilterFunction) {
+        this.filterFunction = filterFunction;
+    }
+}
+
+/**
  * A class which stores one of:
  * - A Filter
  * - An error message
@@ -20,8 +37,24 @@ export type FilterFunction = (task: Task) => boolean;
  * problem line, and perhaps listing allowed options).
  */
 export class FilterOrErrorMessage {
-    filterFunction: FilterFunction | undefined;
+    private _filter: Filter | undefined;
     error: string | undefined;
+
+    get filterFunction(): FilterFunction | undefined {
+        if (this._filter) {
+            return this._filter.filterFunction;
+        } else {
+            return undefined;
+        }
+    }
+
+    set filterFunction(value: FilterFunction | undefined) {
+        if (value) {
+            this._filter = new Filter(value);
+        } else {
+            this._filter = undefined;
+        }
+    }
 
     /**
      * Construct a FilterOrErrorMessage with the filter.
