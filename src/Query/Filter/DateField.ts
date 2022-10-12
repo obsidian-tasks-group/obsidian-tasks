@@ -12,12 +12,12 @@ import { FilterInstructions } from './FilterInstructions';
  */
 export abstract class DateField extends Field {
     private readonly filterInstructions: FilterInstructions;
-    private readonly instructionForFieldAbsence = `no ${this.fieldName()} date`;
 
     constructor() {
         super();
         this.filterInstructions = new FilterInstructions();
         this.filterInstructions.add(`has ${this.fieldName()} date`, (task: Task) => this.date(task) !== null);
+        this.filterInstructions.add(`no ${this.fieldName()} date`, (task: Task) => this.date(task) === null);
     }
 
     public canCreateFilterForLine(line: string): boolean {
@@ -25,9 +25,6 @@ export abstract class DateField extends Field {
             return true;
         }
 
-        if (line === this.instructionForFieldAbsence) {
-            return true;
-        }
         return super.canCreateFilterForLine(line);
     }
 
@@ -38,11 +35,6 @@ export abstract class DateField extends Field {
         }
 
         const result = new FilterOrErrorMessage(line);
-
-        if (line === this.instructionForFieldAbsence) {
-            result.filterFunction = (task: Task) => this.date(task) === null;
-            return result;
-        }
 
         const match = Field.getMatch(this.filterRegExp(), line);
         if (match !== null) {
