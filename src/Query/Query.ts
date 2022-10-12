@@ -5,6 +5,7 @@ import { Sort } from './Sort';
 import type { TaskGroups } from './TaskGroups';
 import { parseFilter } from './FilterParser';
 import { Group } from './Group';
+import type { FilterFunction } from './Filter/Filter';
 
 export type SortingProperty =
     | 'urgency'
@@ -47,7 +48,7 @@ export class Query implements IQuery {
 
     private _limit: number | undefined = undefined;
     private _layoutOptions: LayoutOptions = new LayoutOptions();
-    private _filters: ((task: Task) => boolean)[] = [];
+    private _filters: FilterFunction[] = [];
     private _error: string | undefined = undefined;
     private _sorting: Sorting[] = [];
     private _grouping: Grouping[] = [];
@@ -111,7 +112,7 @@ export class Query implements IQuery {
         return this._layoutOptions;
     }
 
-    public get filters(): ((task: Task) => boolean)[] {
+    public get filters(): FilterFunction[] {
         return this._filters;
     }
 
