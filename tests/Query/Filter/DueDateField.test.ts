@@ -34,5 +34,7 @@ describe('due date', () => {
         testTaskFilterForTaskWithDueDate(filter, null, false);
         testTaskFilterForTaskWithDueDate(filter, '2022-04-15', false);
         testTaskFilterForTaskWithDueDate(filter, '2022-02-30', true); // 30 February is not valid
+        testTaskFilterForTaskWithDueDate(filter, '2022-00-01', true); // month 0 not valid
+        testTaskFilterForTaskWithDueDate(filter, '2022-13-01', true); // month 13 not valid
     });
 });
