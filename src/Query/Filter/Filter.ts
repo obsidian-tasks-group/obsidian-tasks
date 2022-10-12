@@ -67,10 +67,11 @@ export class FilterOrErrorMessage {
 
     /**
      * Construct a FilterOrErrorMessage with the filter.
+     * @param instruction
      * @param filter
      */
-    public static fromFilter(filter: FilterFunction): FilterOrErrorMessage {
-        const result = new FilterOrErrorMessage();
+    public static fromFilter(instruction: string, filter: FilterFunction): FilterOrErrorMessage {
+        const result = new FilterOrErrorMessage(instruction);
         result.filterFunction = filter;
         return result;
     }
