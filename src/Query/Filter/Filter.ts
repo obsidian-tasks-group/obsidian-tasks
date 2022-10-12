@@ -20,7 +20,7 @@ export type FilterFunction = (task: Task) => boolean;
  * problem line, and perhaps listing allowed options).
  */
 export class FilterOrErrorMessage {
-    filter: FilterFunction | undefined;
+    filterFunction: FilterFunction | undefined;
     error: string | undefined;
 
     /**
@@ -29,7 +29,7 @@ export class FilterOrErrorMessage {
      */
     public static fromFilter(filter: FilterFunction): FilterOrErrorMessage {
         const result = new FilterOrErrorMessage();
-        result.filter = filter;
+        result.filterFunction = filter;
         return result;
     }
 
