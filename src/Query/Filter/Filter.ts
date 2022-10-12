@@ -37,15 +37,23 @@ export class Filter {
  * problem line, and perhaps listing allowed options).
  */
 export class FilterOrErrorMessage {
-    private _filterFunction: FilterFunction | undefined;
+    private _filter: Filter | undefined;
     error: string | undefined;
 
     get filterFunction(): FilterFunction | undefined {
-        return this._filterFunction;
+        if (this._filter) {
+            return this._filter.filterFunction;
+        } else {
+            return undefined;
+        }
     }
 
     set filterFunction(value: FilterFunction | undefined) {
-        this._filterFunction = value;
+        if (value) {
+            this._filter = new Filter(value);
+        } else {
+            this._filter = undefined;
+        }
     }
 
     /**
@@ -54,7 +62,7 @@ export class FilterOrErrorMessage {
      */
     public static fromFilter(filter: FilterFunction): FilterOrErrorMessage {
         const result = new FilterOrErrorMessage();
-        result._filterFunction = filter;
+        result.filterFunction = filter;
         return result;
     }
 
