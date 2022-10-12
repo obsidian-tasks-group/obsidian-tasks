@@ -176,7 +176,8 @@
     });
 
     const _onKeyup = (event: KeyboardEvent) => {
-        if (event.altKey && event.key) {
+        if (event.key && (event.altKey ||
+                document.activeElement?.id.startsWith('priority-'))) {
             const priorityOption = priorityOptions.find(
                 option => option.label.charAt(0).toLowerCase() == event.key);
             if (priorityOption) {
@@ -282,15 +283,15 @@
         </div>
         <hr />
         <div class="tasks-modal-section">
-            <label for="priority_{editableTask.priority}">Priority</label>
+            <label for="priority-{editableTask.priority}">Priority</label>
             {#each priorityOptions as {value, label, symbol}}
                 <input
                     type="radio"
-                    id="priority_{value}"
+                    id="priority-{value}"
                     {value}
                     bind:group={editableTask.priority}
                 />
-                <label for="priority_{value}">
+                <label for="priority-{value}">
                     <span>{symbol}</span>
                     <span>{label}</span>
                 </label>
