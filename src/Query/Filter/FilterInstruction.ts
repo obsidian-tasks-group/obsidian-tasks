@@ -1,5 +1,5 @@
 import { FilterOrErrorMessage } from './Filter';
-import type { Filter } from './Filter';
+import type { FilterFunction } from './Filter';
 
 /**
  * Implementation of a single instruction for filtering tasks, and its corresponding predicate.
@@ -13,14 +13,14 @@ import type { Filter } from './Filter';
  */
 export class FilterInstruction {
     private readonly _instruction: string;
-    private readonly _filter: Filter;
+    private readonly _filter: FilterFunction;
 
     /**
      * Constructor:
      * @param instruction - Full text of the instruction for the filter: must be matched exactly
      * @param filter
      */
-    constructor(instruction: string, filter: Filter) {
+    constructor(instruction: string, filter: FilterFunction) {
         this._instruction = instruction;
         this._filter = filter;
     }
