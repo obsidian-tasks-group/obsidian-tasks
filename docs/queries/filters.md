@@ -72,32 +72,40 @@ For full details of combining filters with boolean operators, see [Combining Fil
 - `no done date`
 - `has done date`
 - `done (before|after|on) <date>`
+- `done date is invalid`
 
-> `no done date` and `has done date` were introduced in Tasks 1.7.0.
+> `no done date` and `has done date` were introduced in Tasks 1.7.0.<br>
+> `done date is invalid` was introduced in Tasks 1.16.0.
 
 ### Due Date
 
 - `no due date`
 - `has due date`
 - `due (before|after|on) <date>`
+- `due date is invalid`
 
-> `has due date` was introduced in Tasks 1.6.0.
+> `has due date` was introduced in Tasks 1.6.0.<br>
+> `due date is invalid` was introduced in Tasks 1.16.0.
 
 ### Scheduled Date
 
 - `no scheduled date`
 - `has scheduled date`
 - `scheduled (before|after|on) <date>`
+- `scheduled date is invalid`
 
-> `has scheduled date` was introduced in Tasks 1.6.0.
+> `has scheduled date` was introduced in Tasks 1.6.0.<br>
+> `scheduled date is invalid` was introduced in Tasks 1.16.0.
 
 ### Start Date
 
 - `no start date`
 - `has start date`
 - `starts (before|after|on) <date>`
+- `start date is invalid`
 
-> `has start date` was Introduced in Tasks 1.6.0.
+> `has start date` was Introduced in Tasks 1.6.0.<br>
+> `start date is invalid` was introduced in Tasks 1.16.0.
 
 When filtering queries by [start date]({{ site.baseurl }}{% link getting-started/dates.md %}#-start),
 the result will include tasks without a start date.
