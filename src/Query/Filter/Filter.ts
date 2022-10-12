@@ -78,10 +78,11 @@ export class FilterOrErrorMessage {
 
     /**
      * Construct a FilterOrErrorMessage with the given error message.
+     * @param instruction
      * @param errorMessage
      */
-    public static fromError(errorMessage: string): FilterOrErrorMessage {
-        const result = new FilterOrErrorMessage();
+    public static fromError(instruction: string, errorMessage: string): FilterOrErrorMessage {
+        const result = new FilterOrErrorMessage(instruction);
         result.error = errorMessage;
         return result;
     }
