@@ -4,7 +4,7 @@ import type { Task } from '../../Task';
  * A filtering function, that takes a Task object and returns
  * whether it matches a particular filtering instruction.
  */
-export type Filter = (task: Task) => boolean;
+export type FilterFunction = (task: Task) => boolean;
 
 /**
  * A class which stores one of:
@@ -20,16 +20,16 @@ export type Filter = (task: Task) => boolean;
  * problem line, and perhaps listing allowed options).
  */
 export class FilterOrErrorMessage {
-    filter: Filter | undefined;
+    filterFunction: FilterFunction | undefined;
     error: string | undefined;
 
     /**
      * Construct a FilterOrErrorMessage with the filter.
      * @param filter
      */
-    public static fromFilter(filter: Filter): FilterOrErrorMessage {
+    public static fromFilter(filter: FilterFunction): FilterOrErrorMessage {
         const result = new FilterOrErrorMessage();
-        result.filter = filter;
+        result.filterFunction = filter;
         return result;
     }
 

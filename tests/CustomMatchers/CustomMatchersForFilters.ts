@@ -82,7 +82,7 @@ declare global {
 }
 
 export function toBeValid(filter: FilterOrErrorMessage) {
-    if (filter.filter === undefined) {
+    if (filter.filterFunction === undefined) {
         return {
             message: () => 'unexpected null filter: check your instruction matches your filter class',
             pass: false,
@@ -103,7 +103,7 @@ export function toBeValid(filter: FilterOrErrorMessage) {
 }
 
 export function toMatchTask(filter: FilterOrErrorMessage, task: Task) {
-    const matches = filter.filter!(task);
+    const matches = filter.filterFunction!(task);
     if (!matches) {
         return {
             message: () => `unexpected failure to match task: ${task.toFileLineString()}`,
