@@ -11,14 +11,17 @@ export type FilterFunction = (task: Task) => boolean;
  *
  * Currently it provides access to:
  *
+ * - The original {@link instruction}
  * - The {@link filterFunction} - a {@link FilterFunction} which tests whether a task matches the filter
  *
- * Later, the plan is to add storage of the user's instruction, and a human-readable explanation of the filter.
+ * Later, the plan is to add a human-readable explanation of the filter.
  */
 export class Filter {
+    readonly instruction: string;
     public filterFunction: FilterFunction;
 
-    public constructor(filterFunction: FilterFunction) {
+    public constructor(instruction: string, filterFunction: FilterFunction) {
+        this.instruction = instruction;
         this.filterFunction = filterFunction;
     }
 }
@@ -59,7 +62,7 @@ export class FilterOrErrorMessage {
 
     set filterFunction(value: FilterFunction | undefined) {
         if (value) {
-            this._filter = new Filter(value);
+            this._filter = new Filter(this.instruction, value);
         } else {
             this._filter = undefined;
         }
