@@ -4,17 +4,17 @@
 
 ### Tasks with valid dates
 
+- [x] #task Valid done date ✅ 2022-02-28
 - [ ] #task Valid due date 📅 2022-02-28
 - [ ] #task Valid scheduled date ⏳ 2022-02-28
 - [ ] #task Valid start date 🛫 2022-02-28
-- [x] #task Valid done date ✅ 2022-02-28
 
 ### Tasks with invalid dates
 
+- [x] #task Invalid done date ✅ 2022-02-29
 - [ ] #task Invalid due date 📅 2022-02-29
 - [ ] #task Invalid scheduled date ⏳ 2022-02-29
 - [ ] #task Invalid start date 🛫 2022-02-29
-- [x] #task Invalid done date ✅ 2022-02-29
 
 ## Sample Searches
 
