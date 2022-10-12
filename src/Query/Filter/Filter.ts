@@ -37,8 +37,16 @@ export class Filter {
  * problem line, and perhaps listing allowed options).
  */
 export class FilterOrErrorMessage {
-    filterFunction: FilterFunction | undefined;
+    private _filterFunction: FilterFunction | undefined;
     error: string | undefined;
+
+    get filterFunction(): FilterFunction | undefined {
+        return this._filterFunction;
+    }
+
+    set filterFunction(value: FilterFunction | undefined) {
+        this._filterFunction = value;
+    }
 
     /**
      * Construct a FilterOrErrorMessage with the filter.
@@ -46,7 +54,7 @@ export class FilterOrErrorMessage {
      */
     public static fromFilter(filter: FilterFunction): FilterOrErrorMessage {
         const result = new FilterOrErrorMessage();
-        result.filterFunction = filter;
+        result._filterFunction = filter;
         return result;
     }
 
