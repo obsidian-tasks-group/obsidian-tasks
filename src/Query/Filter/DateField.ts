@@ -3,6 +3,7 @@ import type { Task } from '../../Task';
 import { DateParser } from '../DateParser';
 import { Field } from './Field';
 import { FilterOrErrorMessage } from './Filter';
+import { FilterInstructions } from './FilterInstructions';
 
 /**
  * DateField is an abstract base class to help implement
@@ -10,31 +11,30 @@ import { FilterOrErrorMessage } from './Filter';
  * value, such as the done date.
  */
 export abstract class DateField extends Field {
-    private readonly instructionForFieldPresence = `has ${this.fieldName()} date`;
-    private readonly instructionForFieldAbsence = `no ${this.fieldName()} date`;
+    private readonly filterInstructions: FilterInstructions;
+
+    constructor() {
+        super();
+        this.filterInstructions = new FilterInstructions();
+        this.filterInstructions.add(`has ${this.fieldName()} date`, (task: Task) => this.date(task) !== null);
+        this.filterInstructions.add(`no ${this.fieldName()} date`, (task: Task) => this.date(task) === null);
+    }
 
     public canCreateFilterForLine(line: string): boolean {
-        if (line === this.instructionForFieldPresence) {
+        if (this.filterInstructions.canCreateFilterForLine(line)) {
             return true;
         }
-        if (line === this.instructionForFieldAbsence) {
-            return true;
-        }
+
         return super.canCreateFilterForLine(line);
     }
 
     public createFilterOrErrorMessage(line: string): FilterOrErrorMessage {
+        const filterResult = this.filterInstructions.createFilterOrErrorMessage(line);
+        if (filterResult.filter !== undefined) {
+            return filterResult;
+        }
+
         const result = new FilterOrErrorMessage(line);
-
-        if (line === this.instructionForFieldPresence) {
-            result.filterFunction = (task: Task) => this.date(task) !== null;
-            return result;
-        }
-
-        if (line === this.instructionForFieldAbsence) {
-            result.filterFunction = (task: Task) => this.date(task) === null;
-            return result;
-        }
 
         const match = Field.getMatch(this.filterRegExp(), line);
         if (match !== null) {
