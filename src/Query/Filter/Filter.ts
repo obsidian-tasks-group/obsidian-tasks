@@ -41,7 +41,7 @@ export class FilterOrErrorMessage {
     private _filter: Filter | undefined;
     error: string | undefined;
 
-    constructor(instruction: string = 'UNKNOWN') {
+    constructor(instruction: string) {
         this.instruction = instruction;
     }
 
