@@ -37,8 +37,13 @@ export class Filter {
  * problem line, and perhaps listing allowed options).
  */
 export class FilterOrErrorMessage {
+    readonly instruction: string;
     private _filter: Filter | undefined;
     error: string | undefined;
+
+    constructor(instruction: string = 'UNKNOWN') {
+        this.instruction = instruction;
+    }
 
     public get filter(): Filter | undefined {
         return this._filter;
