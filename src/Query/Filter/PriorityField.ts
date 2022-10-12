@@ -6,7 +6,7 @@ export class PriorityField extends Field {
     private static readonly priorityRegexp = /^priority (is )?(above|below)? ?(low|none|medium|high)/;
 
     createFilterOrErrorMessage(line: string): FilterOrErrorMessage {
-        const result = new FilterOrErrorMessage();
+        const result = new FilterOrErrorMessage(line);
         const priorityMatch = Field.getMatch(this.filterRegExp(), line);
         if (priorityMatch !== null) {
             const filterPriorityString = priorityMatch[3];
