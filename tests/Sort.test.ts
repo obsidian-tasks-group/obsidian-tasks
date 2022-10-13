@@ -294,23 +294,23 @@ describe('Sort', () => {
 describe('compareBy', () => {
     it('compares correctly by date', () => {
         const equal = 0;
-        const greaterThan = 1;
-        const lessThan = -1;
+        const after = 1;
+        const before = -1;
 
         const earlierDate = '2022-01-01';
         const latererDate = '2022-02-01'; // intentional type - laterer - so all variable names align in code
         const invalidDate = '2022-02-30';
 
-        testCompareByDateBothWays(earlierDate, latererDate, lessThan);
+        testCompareByDateBothWays(earlierDate, latererDate, before);
         testCompareByDateBothWays(earlierDate, earlierDate, equal);
-        testCompareByDateBothWays(latererDate, earlierDate, greaterThan);
+        testCompareByDateBothWays(latererDate, earlierDate, after);
 
-        testCompareByDateBothWays(null, earlierDate, greaterThan); // no date sorts after valid dates
+        testCompareByDateBothWays(null, earlierDate, after); // no date sorts after valid dates
         testCompareByDateBothWays(null, null, equal);
 
-        testCompareByDateBothWays(invalidDate, null, lessThan); // invalid dates sort before no date
+        testCompareByDateBothWays(invalidDate, null, before); // invalid dates sort before no date
         testCompareByDateBothWays(invalidDate, invalidDate, equal);
-        testCompareByDateBothWays(invalidDate, earlierDate, greaterThan); // invalid dates sort after valid ones
+        testCompareByDateBothWays(invalidDate, earlierDate, after); // invalid dates sort after valid ones
 
         function testCompareByDateBothWays(dateA: string | null, dateB: string | null, expected: -1 | 0 | 1) {
             let a: moment.Moment | null = null;
