@@ -291,7 +291,7 @@ describe('Sort', () => {
 });
 
 expect.extend({
-    toGiveCompareToResult(dates, expected) {
+    toGiveCompareToResult(dates: (string | null)[], expected: -1 | 0 | 1) {
         expect(dates.length).toEqual(2);
 
         const dateA = dates[0];
