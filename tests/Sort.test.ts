@@ -320,7 +320,7 @@ declare global {
     }
 }
 
-// These low-level tests
+// These are lower-level tests that the Task-based ones above, for ease of test coverage.
 describe('compareBy', () => {
     it('compares correctly by date', () => {
         const equal = 0;
