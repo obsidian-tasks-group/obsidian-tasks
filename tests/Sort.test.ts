@@ -290,6 +290,37 @@ describe('Sort', () => {
     });
 });
 
+expect.extend({
+    toGiveCompareToResult(dates, expected) {
+        expect(dates.length).toEqual(2);
+
+        const dateA = dates[0];
+        const dateB = dates[1];
+
+        let a: moment.Moment | null = null;
+        if (dateA !== null) a = DateParser.parseDate(dateA);
+
+        let b: moment.Moment | null = null;
+        if (dateB !== null) b = DateParser.parseDate(dateB);
+
+        const actual = Sort.compareByDate(a, b);
+
+        const pass = actual === expected;
+        const message = () => `${dateA} < ${dateB}: expected=${expected} actual=${actual}`;
+        console.log(message());
+
+        return { pass, message };
+    },
+});
+
+declare global {
+    namespace jest {
+        interface Matchers<R> {
+            toGiveCompareToResult(expected: number): R;
+        }
+    }
+}
+
 // These low-level tests
 describe('compareBy', () => {
     it('compares correctly by date', () => {
@@ -313,17 +344,10 @@ describe('compareBy', () => {
         testCompareByDateBothWays(invalidDate, earlierDate, after); // invalid dates sort after valid ones
 
         function testCompareByDateBothWays(dateA: string | null, dateB: string | null, expected: -1 | 0 | 1) {
-            let a: moment.Moment | null = null;
-            if (dateA !== null) a = DateParser.parseDate(dateA);
-
-            let b: moment.Moment | null = null;
-            if (dateB !== null) b = DateParser.parseDate(dateB);
-
-            // TODO Try to make these tests write out meaningful information if they value
-            expect(Sort.compareByDate(a, b)).toEqual(expected);
+            expect([dateA, dateB]).toGiveCompareToResult(expected);
 
             const reverseExpected = expected === equal ? equal : -expected;
-            expect(Sort.compareByDate(b, a)).toEqual(reverseExpected);
+            expect([dateB, dateA]).toGiveCompareToResult(reverseExpected);
         }
     });
 });
