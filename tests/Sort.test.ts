@@ -310,9 +310,9 @@ describe('compareBy', () => {
 
         testCompareByDateBothWays(invalidDate, null, lessThan); // invalid dates sort before no date
         testCompareByDateBothWays(invalidDate, invalidDate, equal);
-        testCompareByDateBothWays(invalidDate, earlierDate, equal); // TODO See #1227 - should be greaterThan
+        testCompareByDateBothWays(invalidDate, earlierDate, greaterThan); // invalid dates sort after valid ones
 
-        function testCompareByDateBothWays(dateA: string | null, dateB: string | null, expected: number) {
+        function testCompareByDateBothWays(dateA: string | null, dateB: string | null, expected: -1 | 0 | 1) {
             let a: moment.Moment | null = null;
             if (dateA !== null) a = DateParser.parseDate(dateA);
 
