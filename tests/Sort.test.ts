@@ -7,6 +7,7 @@ window.moment = moment;
 
 import { Sort } from '../src/Query/Sort';
 import { resetSettings, updateSettings } from '../src/Config/Settings';
+import { DateParser } from '../src/Query/DateParser';
 import { fromLine } from './TestHelpers';
 
 describe('Sort', () => {
@@ -286,6 +287,44 @@ describe('Sort', () => {
                 [two, one, five, four, three],
             ),
         ).toEqual(expectedOrder);
+    });
+});
+
+// These low-level tests
+describe('compareBy', () => {
+    it('compares correctly by date', () => {
+        const equal = 0;
+        const greaterThan = 1;
+        const lessThan = -1;
+
+        const earlierDate = '2022-01-01';
+        const latererDate = '2022-02-01'; // intentional type - laterer - so all variable names align in code
+        const invalidDate = '2022-02-30';
+
+        testCompareByDateBothWays(earlierDate, latererDate, lessThan);
+        testCompareByDateBothWays(earlierDate, earlierDate, equal);
+        testCompareByDateBothWays(latererDate, earlierDate, greaterThan);
+
+        testCompareByDateBothWays(null, earlierDate, greaterThan); // no date sorts after valid dates
+        testCompareByDateBothWays(null, null, equal);
+
+        testCompareByDateBothWays(invalidDate, null, lessThan); // invalid dates sort before no date
+        testCompareByDateBothWays(invalidDate, invalidDate, equal);
+        testCompareByDateBothWays(invalidDate, earlierDate, equal); // TODO See #1227 - should be greaterThan
+
+        function testCompareByDateBothWays(dateA: string | null, dateB: string | null, expected: number) {
+            let a: moment.Moment | null = null;
+            if (dateA !== null) a = DateParser.parseDate(dateA);
+
+            let b: moment.Moment | null = null;
+            if (dateB !== null) b = DateParser.parseDate(dateB);
+
+            // TODO Try to make these tests write out meaningful information if they value
+            expect(Sort.compareByDate(a, b)).toEqual(expected);
+
+            const reverseExpected = expected === equal ? equal : -expected;
+            expect(Sort.compareByDate(b, a)).toEqual(reverseExpected);
+        }
     });
 });
 
