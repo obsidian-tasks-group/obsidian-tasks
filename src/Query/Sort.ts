@@ -132,6 +132,12 @@ export class Sort {
         } else if (a === null && b !== null) {
             return 1;
         } else if (a !== null && b !== null) {
+            if (a.isValid() && !b.isValid()) {
+                return -1;
+            } else if (!a.isValid() && b.isValid()) {
+                return 1;
+            }
+
             if (a.isAfter(b)) {
                 return 1;
             } else if (a.isBefore(b)) {

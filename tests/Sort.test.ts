@@ -7,6 +7,7 @@ window.moment = moment;
 
 import { Sort } from '../src/Query/Sort';
 import { resetSettings, updateSettings } from '../src/Config/Settings';
+import { DateParser } from '../src/Query/DateParser';
 import { fromLine } from './TestHelpers';
 
 describe('Sort', () => {
@@ -286,6 +287,67 @@ describe('Sort', () => {
                 [two, one, five, four, three],
             ),
         ).toEqual(expectedOrder);
+    });
+});
+
+expect.extend({
+    toGiveCompareToResult(dates: (string | null)[], expected: -1 | 0 | 1) {
+        expect(dates.length).toEqual(2);
+
+        const dateA = dates[0];
+        const dateB = dates[1];
+
+        let a: moment.Moment | null = null;
+        if (dateA !== null) a = DateParser.parseDate(dateA);
+
+        let b: moment.Moment | null = null;
+        if (dateB !== null) b = DateParser.parseDate(dateB);
+
+        const actual = Sort.compareByDate(a, b);
+
+        const pass = actual === expected;
+        const message = () => `${dateA} < ${dateB}: expected=${expected} actual=${actual}`;
+
+        return { pass, message };
+    },
+});
+
+declare global {
+    namespace jest {
+        interface Matchers<R> {
+            toGiveCompareToResult(expected: number): R;
+        }
+    }
+}
+
+// These are lower-level tests that the Task-based ones above, for ease of test coverage.
+describe('compareBy', () => {
+    it('compares correctly by date', () => {
+        const equal = 0;
+        const after = 1;
+        const before = -1;
+
+        const earlierDate = '2022-01-01';
+        const latererDate = '2022-02-01'; // intentional type - laterer - so all variable names align in code
+        const invalidDate = '2022-02-30';
+
+        testCompareByDateBothWays(earlierDate, latererDate, before);
+        testCompareByDateBothWays(earlierDate, earlierDate, equal);
+        testCompareByDateBothWays(latererDate, earlierDate, after);
+
+        testCompareByDateBothWays(null, earlierDate, after); // no date sorts after valid dates
+        testCompareByDateBothWays(null, null, equal);
+
+        testCompareByDateBothWays(invalidDate, null, before); // invalid dates sort before no date
+        testCompareByDateBothWays(invalidDate, invalidDate, equal);
+        testCompareByDateBothWays(invalidDate, earlierDate, after); // invalid dates sort after valid ones
+
+        function testCompareByDateBothWays(dateA: string | null, dateB: string | null, expected: -1 | 0 | 1) {
+            expect([dateA, dateB]).toGiveCompareToResult(expected);
+
+            const reverseExpected = expected === equal ? equal : -expected;
+            expect([dateB, dateA]).toGiveCompareToResult(reverseExpected);
+        }
     });
 });
 
