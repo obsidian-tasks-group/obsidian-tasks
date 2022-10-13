@@ -307,7 +307,6 @@ expect.extend({
 
         const pass = actual === expected;
         const message = () => `${dateA} < ${dateB}: expected=${expected} actual=${actual}`;
-        console.log(message());
 
         return { pass, message };
     },
