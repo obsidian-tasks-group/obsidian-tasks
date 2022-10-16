@@ -104,6 +104,15 @@ export class Query implements IQuery {
             });
     }
 
+    public explanation(): string[] {
+        const result: string[] = [];
+        for (let i = 0; i < this.filters.length; i++) {
+            const explanation = this.filters[i].instruction;
+            result.push(explanation);
+        }
+        return result;
+    }
+
     public get limit(): number | undefined {
         return this._limit;
     }

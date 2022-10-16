@@ -136,6 +136,26 @@ class QueryRenderChild extends MarkdownRenderChild {
                 `Render ${this.queryType} called for a block in active file "${this.filePath}", to select from ${tasks.length} tasks: plugin state: ${state}`,
             );
 
+            const bunk = content.createEl('p');
+            bunk.setText('Explanation of query:');
+            content.appendChild(bunk);
+
+            const explanationsList = content.createEl('ul');
+            const explanations = this.query.explanation();
+            console.log(explanations);
+            for (let i = 0; i < explanations.length; i++) {
+                // Iterate over numeric indexes from 0 to 5, as everyone expects.
+                const explanation = explanations[i];
+                console.log(explanation);
+                const list1Item = explanationsList.createEl('li');
+                list1Item.setText(explanation);
+                explanationsList.appendChild(list1Item);
+            }
+            content.appendChild(explanationsList);
+
+            const hr = content.createEl('hr');
+            content.appendChild(hr);
+
             const tasksSortedLimitedGrouped = this.query.applyQueryToTasks(tasks);
             for (const group of tasksSortedLimitedGrouped.groups) {
                 // If there were no 'group by' instructions, group.groupHeadings

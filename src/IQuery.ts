@@ -60,4 +60,6 @@ export interface IQuery {
      * @memberof Query
      */
     applyQueryToTasks: (tasks: Task[]) => TaskGroups;
+
+    explanation: () => string[];
 }
