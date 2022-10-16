@@ -105,8 +105,11 @@ export class Query implements IQuery {
     }
 
     public explanation(): string[] {
+        // TODO Include limit, if any
+        // TODO Include global filter, if any
         const result: string[] = [];
         for (let i = 0; i < this.filters.length; i++) {
+            // TODO Get the explanation from the filter
             const explanation = this.filters[i].instruction;
             result.push(explanation);
         }

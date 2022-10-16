@@ -163,6 +163,9 @@ class QueryRenderChild extends MarkdownRenderChild {
     }
 
     private createExplanation(content: HTMLDivElement) {
+        // TODO Add 'show/hide explanation' to make this optional
+        // TODO Add styling
+        // TODO Support nesting of queries (AND, OR, NOT etc)
         const bunk = content.createEl('p');
         bunk.setText('Explanation of query:');
         content.appendChild(bunk);
