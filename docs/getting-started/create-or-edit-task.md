@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Create or edit Task
-nav_order: 6
+nav_order: 7
 parent: Getting Started
 has_toc: false
 ---

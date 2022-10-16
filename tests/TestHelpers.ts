@@ -15,6 +15,7 @@ export function fromLine({
         precedingHeader,
         sectionIndex: 0,
         sectionStart: 0,
+        fallbackDate: null,
     })!;
 }
 
@@ -28,6 +29,7 @@ export function createTasksFromMarkdown(tasksAsMarkdown: string, path: string, p
             precedingHeader: precedingHeader,
             sectionIndex: 0,
             sectionStart: 0,
+            fallbackDate: null,
         });
         if (task) {
             tasks.push(task);

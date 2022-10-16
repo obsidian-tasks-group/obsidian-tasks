@@ -8,6 +8,8 @@ export interface Settings {
     autoSuggestInEditor: boolean;
     autoSuggestMinMatch: number;
     autoSuggestMaxItems: number;
+    enableDateFallback: boolean;
+    dateFallbackFolders: string[];
 
     // Collection of feature flag IDs and their state.
     features: FeatureFlag;
@@ -20,6 +22,8 @@ const defaultSettings: Settings = {
     autoSuggestInEditor: true,
     autoSuggestMinMatch: 0,
     autoSuggestMaxItems: 6,
+    enableDateFallback: false,
+    dateFallbackFolders: [],
     features: Feature.settingsFlags,
 };
 

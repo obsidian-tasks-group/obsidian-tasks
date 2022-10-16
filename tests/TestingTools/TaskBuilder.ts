@@ -38,6 +38,8 @@ export class TaskBuilder {
     private _recurrence: Recurrence | null = null;
     private _blockLink: string = '';
 
+    private _scheduledDateIsInferred: boolean = false;
+
     /**
      * Build a Task
      *
@@ -73,6 +75,7 @@ export class TaskBuilder {
             blockLink: this._blockLink,
             tags: this._tags,
             originalMarkdown: '',
+            scheduledDateIsInferred: this._scheduledDateIsInferred,
         });
     }
 
@@ -163,6 +166,11 @@ export class TaskBuilder {
 
     public blockLink(blockLink: string): TaskBuilder {
         this._blockLink = blockLink;
+        return this;
+    }
+
+    public scheduledDateIsInferred(isInferred: boolean) {
+        this._scheduledDateIsInferred = isInferred;
         return this;
     }
 

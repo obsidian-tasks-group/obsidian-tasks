@@ -1,6 +1,7 @@
 import { App, Editor, MarkdownView, View } from 'obsidian';
 import { TaskModal } from '../TaskModal';
 import { Priority, Status, Task, TaskRegularExpressions } from '../Task';
+import { DateFallback } from '../DateFallback';
 
 export const createOrEdit = (checking: boolean, editor: Editor, view: View, app: App) => {
     if (checking) {
@@ -21,9 +22,17 @@ export const createOrEdit = (checking: boolean, editor: Editor, view: View, app:
     const lineNumber = cursorPosition.line;
     const line = editor.getLine(lineNumber);
     const task = taskFromLine({ line, path });
+    const inferredScheduledDate = task.scheduledDateIsInferred ? task.scheduledDate : null;
 
     const onSubmit = (updatedTasks: Task[]): void => {
-        const serialized = updatedTasks.map((task: Task) => task.toFileLineString()).join('\n');
+        const serialized = updatedTasks
+            .map((task: Task) => {
+                return inferredScheduledDate !== null && !inferredScheduledDate.isSame(task.scheduledDate, 'day')
+                    ? new Task({ ...task, scheduledDateIsInferred: false })
+                    : task;
+            })
+            .map((task: Task) => task.toFileLineString())
+            .join('\n');
         editor.setLine(lineNumber, serialized);
     };
 
@@ -37,12 +46,15 @@ export const createOrEdit = (checking: boolean, editor: Editor, view: View, app:
 };
 
 const taskFromLine = ({ line, path }: { line: string; path: string }): Task => {
+    const fallbackDate = DateFallback.fromPath(path);
+
     const task = Task.fromLine({
         line,
         path,
         sectionStart: 0, // We don't need this to toggle it here in the editor.
         sectionIndex: 0, // We don't need this to toggle it here in the editor.
         precedingHeader: null, // We don't need this to toggle it here in the editor.
+        fallbackDate, // We want to show the user whether the scheduled date has been inferred
     });
 
     if (task !== null) {
@@ -74,6 +86,7 @@ const taskFromLine = ({ line, path }: { line: string; path: string }): Task => {
             blockLink: '',
             tags: [],
             originalMarkdown: '',
+            scheduledDateIsInferred: false,
         });
     }
 
@@ -108,5 +121,6 @@ const taskFromLine = ({ line, path }: { line: string; path: string }): Task => {
         precedingHeader: null,
         tags: [],
         originalMarkdown: '',
+        scheduledDateIsInferred: false,
     });
 };

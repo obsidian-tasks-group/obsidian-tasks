@@ -63,9 +63,9 @@ export class SettingsTab extends PluginSettingTab {
         new Setting(containerEl)
             .setName('Set done date on every completed task')
             .setDesc('Enabling this will add a timestamp ✅ YYYY-MM-DD at the end when a task is toggled to done')
-            .addToggle((toogle) => {
+            .addToggle((toggle) => {
                 const settings = getSettings();
-                toogle.setValue(settings.setDoneDate).onChange(async (value) => {
+                toggle.setValue(settings.setDoneDate).onChange(async (value) => {
                     updateSettings({ setDoneDate: value });
                     await this.plugin.saveSettings();
                 });
@@ -115,5 +115,49 @@ export class SettingsTab extends PluginSettingTab {
                         await this.plugin.saveSettings();
                     });
             });
+
+        const enabledInferredDatesSettings = new Setting(containerEl)
+            .setName('Use filename as date fallback')
+            .setDesc('Automatically schedule tasks at the date contained in the filename if no other date is set.');
+
+        const inferredDateFoldersSettings = new Setting(containerEl)
+            .setName('Folders with date fallback')
+            .setDesc('Leave empty if you want to use fallback everywhere, or enter a comma-separated list of folders.')
+            .addText(async (input) => {
+                const settings = getSettings();
+                await this.plugin.saveSettings();
+                input.setValue(SettingsTab.renderFolderArray(settings.dateFallbackFolders)).onChange(async (value) => {
+                    const folders = SettingsTab.parseCommaSeparatedFolders(value);
+                    updateSettings({ dateFallbackFolders: folders });
+                    await this.plugin.saveSettings();
+                });
+            });
+
+        enabledInferredDatesSettings.addToggle((toggle) => {
+            const settings = getSettings();
+            inferredDateFoldersSettings.settingEl.toggle(settings.enableDateFallback);
+
+            toggle.setValue(settings.enableDateFallback).onChange(async (value) => {
+                updateSettings({ enableDateFallback: value });
+                inferredDateFoldersSettings.settingEl.toggle(value);
+                await this.plugin.saveSettings();
+            });
+        });
+    }
+
+    private static parseCommaSeparatedFolders(input: string): string[] {
+        return (
+            input
+                // a limitation is that folder names may not contain commas
+                .split(',')
+                .map((folder) => folder.trim())
+                // remove leading and trailing slashes
+                .map((folder) => folder.replace(/^\/|\/$/g, ''))
+                .filter((folder) => folder !== '')
+        );
+    }
+
+    private static renderFolderArray(folders: string[]): string {
+        return folders.join(',');
     }
 }
