@@ -174,12 +174,11 @@ class QueryRenderChild extends MarkdownRenderChild {
         const explanations = this.query.explanation();
         console.log(explanations);
         for (let i = 0; i < explanations.length; i++) {
-            // Iterate over numeric indexes from 0 to 5, as everyone expects.
             const explanation = explanations[i];
             console.log(explanation);
-            const list1Item = explanationsList.createEl('li');
-            list1Item.setText(explanation);
-            explanationsList.appendChild(list1Item);
+            const listItem = explanationsList.createEl('li');
+            listItem.setText(explanation);
+            explanationsList.appendChild(listItem);
         }
         content.appendChild(explanationsList);
     }
