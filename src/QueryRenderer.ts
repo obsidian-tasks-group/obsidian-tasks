@@ -182,9 +182,6 @@ class QueryRenderChild extends MarkdownRenderChild {
             explanationsList.appendChild(list1Item);
         }
         content.appendChild(explanationsList);
-
-        const hr = content.createEl('hr');
-        content.appendChild(hr);
     }
 
     private async createTasksList({
