@@ -174,10 +174,8 @@ class QueryRenderChild extends MarkdownRenderChild {
         const explanations = this.query.explanation();
         console.log(explanations);
         for (let i = 0; i < explanations.length; i++) {
-            const explanation = explanations[i];
-            console.log(explanation);
             const listItem = explanationsList.createEl('li');
-            listItem.setText(explanation);
+            listItem.setText(explanations[i]);
             explanationsList.appendChild(listItem);
         }
         content.appendChild(explanationsList);
