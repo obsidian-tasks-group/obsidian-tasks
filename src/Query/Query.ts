@@ -107,6 +107,7 @@ export class Query implements IQuery {
     public explanation(): string[] {
         // TODO Include limit, if any
         // TODO Include global filter, if any
+        // TODO State today's date (and maybe weekday)
         const result: string[] = [];
         for (let i = 0; i < this.filters.length; i++) {
             // TODO Get the explanation from the filter
