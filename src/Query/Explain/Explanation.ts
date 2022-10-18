@@ -1,3 +1,11 @@
+/**
+ * An Explanation object stores a text description of a Query instruction, or a component of one.
+ *
+ * It supports Boolean combinations via the {@link children} field.
+ *
+ * Initially, the {@link description} will simply restate the instruction filter.
+ * Later, more human-readable descriptions will begenerated.
+ */
 export class Explanation {
     public description: string;
     public children: Explanation[];
