@@ -1,8 +1,8 @@
 export class Explanation {
     public description: string;
-    public children: Explanation[] | null;
+    public children: Explanation[];
 
-    constructor(description: string, children: Explanation[] | null = null) {
+    constructor(description: string, children: Explanation[] = []) {
         this.description = description;
         this.children = children;
     }
