@@ -13,4 +13,11 @@ describe('Explain', () => {
         expect(explanation.description).toEqual('All Of');
         expect(explanation.children).toEqual(children);
     });
+
+    it('Explains an OR boolean combination - At least one of', () => {
+        const children: Explanation[] = [new Explanation('x includes A'), new Explanation('x includes B')];
+        const explanation = Explanation.booleanOr(children);
+        expect(explanation.description).toEqual('At least one of');
+        expect(explanation.children).toEqual(children);
+    });
 });

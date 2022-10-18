@@ -14,4 +14,12 @@ export class Explanation {
     public static allOf(children: Explanation[]) {
         return new Explanation('All Of', children);
     }
+
+    /**
+     * Create an Explanation object representing Boolean OR
+     * @param children
+     */
+    public static booleanOr(children: Explanation[]) {
+        return new Explanation('At least one of', children);
+    }
 }
