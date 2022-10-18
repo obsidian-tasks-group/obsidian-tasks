@@ -22,4 +22,12 @@ export class Explanation {
     public static booleanOr(children: Explanation[]) {
         return new Explanation('At least one of', children);
     }
+
+    /**
+     * Create an Explanation object representing Boolean NOT
+     * @param children
+     */
+    public static booleanNot(children: Explanation[]) {
+        return new Explanation('None of', children);
+    }
 }

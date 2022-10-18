@@ -20,4 +20,11 @@ describe('Explain', () => {
         expect(explanation.description).toEqual('At least one of');
         expect(explanation.children).toEqual(children);
     });
+
+    it('Explains a NOT boolean combination - None of', () => {
+        const children: Explanation[] = [new Explanation('x includes A'), new Explanation('x includes B')];
+        const explanation = Explanation.booleanNot(children);
+        expect(explanation.description).toEqual('None of');
+        expect(explanation.children).toEqual(children);
+    });
 });
