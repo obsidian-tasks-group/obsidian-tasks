@@ -5,6 +5,7 @@ describe('Explain', () => {
         const description = 'due date is before 2022-10-28';
         const explanation = new Explanation(description);
         expect(explanation.description).toEqual(description);
+        expect(explanation.asString()).toEqual(description);
     });
 
     it('Explains an AND boolean combination', () => {

@@ -30,4 +30,8 @@ export class Explanation {
     public static booleanNot(children: Explanation[]) {
         return new Explanation('None of', children);
     }
+
+    public asString() {
+        return this.description;
+    }
 }
