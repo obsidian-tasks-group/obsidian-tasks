@@ -32,6 +32,17 @@ export class Explanation {
     }
 
     public asString() {
-        return this.description;
+        let result = this.description;
+        if (this.children.length == 0) {
+            // No children, so just return
+            return result;
+        }
+
+        // We have children, so concatenate them together
+        result += ':\n';
+        for (let i = 0; i < this.children.length; i++) {
+            result += `  ${this.children[i].description}\n`;
+        }
+        return result;
     }
 }

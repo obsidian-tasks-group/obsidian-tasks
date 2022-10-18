@@ -14,6 +14,11 @@ describe('Explain', () => {
         const explanation = Explanation.booleanAnd(children);
         expect(explanation.description).toEqual('All of');
         expect(explanation.children).toEqual(children);
+        const expected = `All of:
+  x includes A
+  x includes B
+`;
+        expect(explanation.asString()).toEqual(expected);
     });
 
     it('Explains an OR boolean combination', () => {
