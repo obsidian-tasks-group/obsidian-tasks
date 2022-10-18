@@ -16,8 +16,7 @@ describe('Explain', () => {
         expect(explanation.children).toEqual(children);
         const expected = `All of:
   x includes A
-  x includes B
-`;
+  x includes B`;
         expect(explanation.asString()).toEqual(expected);
     });
 
@@ -43,12 +42,9 @@ describe('Explain', () => {
   At least one of:
     x1 includes A
     x1 includes B
-
   At least one of:
     x2 includes C
-    x2 includes D
-
-`;
+    x2 includes D`;
         expect(and.asString()).toEqual(expected);
     });
 });

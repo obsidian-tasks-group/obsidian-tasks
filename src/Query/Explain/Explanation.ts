@@ -31,6 +31,13 @@ export class Explanation {
         return new Explanation('None of', children);
     }
 
+    /**
+     * Create a string representation of the Explanation.
+     *
+     * Note that it will not have a final end-of-line character at the end.
+     *
+     * @param currentIndentation - This is an implementation detail. Users can ignore it.
+     */
     public asString(currentIndentation: string = '') {
         let result = currentIndentation + this.description;
         if (this.children.length == 0) {
@@ -39,10 +46,10 @@ export class Explanation {
         }
 
         // We have children, so concatenate them together
-        result += ':\n';
+        result += ':';
         const newIndentation = currentIndentation + '  ';
         for (let i = 0; i < this.children.length; i++) {
-            result += `${this.children[i].asString(newIndentation)}\n`;
+            result += `\n${this.children[i].asString(newIndentation)}`;
         }
         return result;
     }
