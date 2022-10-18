@@ -7,10 +7,10 @@ describe('Explain', () => {
         expect(explanation.description).toEqual(description);
     });
 
-    it('Explains an AND boolean combination - All Of', () => {
+    it('Explains an AND boolean combination - All of', () => {
         const children: Explanation[] = [new Explanation('x includes A'), new Explanation('x includes B')];
         const explanation = Explanation.booleanAnd(children);
-        expect(explanation.description).toEqual('All Of');
+        expect(explanation.description).toEqual('All of');
         expect(explanation.children).toEqual(children);
     });
 

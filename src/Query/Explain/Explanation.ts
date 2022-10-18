@@ -12,7 +12,7 @@ export class Explanation {
      * @param children
      */
     public static booleanAnd(children: Explanation[]) {
-        return new Explanation('All Of', children);
+        return new Explanation('All of', children);
     }
 
     /**
