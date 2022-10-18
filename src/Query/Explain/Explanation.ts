@@ -11,7 +11,7 @@ export class Explanation {
      * Create an Explanation object representing Boolean AND
      * @param children
      */
-    public static allOf(children: Explanation[]) {
+    public static booleanAnd(children: Explanation[]) {
         return new Explanation('All Of', children);
     }
 
