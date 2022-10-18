@@ -6,4 +6,12 @@ export class Explanation {
         this.description = description;
         this.children = children;
     }
+
+    /**
+     * Create an Explanation object representing Boolean AND
+     * @param children
+     */
+    public static allOf(children: Explanation[]) {
+        return new Explanation('All Of', children);
+    }
 }
