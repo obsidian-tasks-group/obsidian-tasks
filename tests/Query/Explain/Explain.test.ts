@@ -34,4 +34,21 @@ describe('Explain', () => {
         expect(explanation.description).toEqual('None of');
         expect(explanation.children).toEqual(children);
     });
+
+    it('Explains a nested boolean combination', () => {
+        const not = Explanation.booleanOr([new Explanation('x1 includes A'), new Explanation('x1 includes B')]);
+        const or = Explanation.booleanOr([new Explanation('x2 includes C'), new Explanation('x2 includes D')]);
+        const and = Explanation.booleanAnd([not, or]);
+        const expected = `All of:
+  At least one of:
+    x1 includes A
+    x1 includes B
+
+  At least one of:
+    x2 includes C
+    x2 includes D
+
+`;
+        expect(and.asString()).toEqual(expected);
+    });
 });

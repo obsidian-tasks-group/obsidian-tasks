@@ -31,8 +31,8 @@ export class Explanation {
         return new Explanation('None of', children);
     }
 
-    public asString() {
-        let result = this.description;
+    public asString(currentIndentation: string = '') {
+        let result = currentIndentation + this.description;
         if (this.children.length == 0) {
             // No children, so just return
             return result;
@@ -40,8 +40,9 @@ export class Explanation {
 
         // We have children, so concatenate them together
         result += ':\n';
+        const newIndentation = currentIndentation + '  ';
         for (let i = 0; i < this.children.length; i++) {
-            result += `  ${this.children[i].description}\n`;
+            result += `${this.children[i].asString(newIndentation)}\n`;
         }
         return result;
     }
