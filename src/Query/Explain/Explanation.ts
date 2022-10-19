@@ -4,7 +4,7 @@
  * It supports Boolean combinations via the {@link children} field.
  *
  * Initially, the {@link description} will simply restate the instruction filter.
- * Later, more human-readable descriptions will begenerated.
+ * Later, more human-readable descriptions will be generated.
  */
 export class Explanation {
     public description: string;
