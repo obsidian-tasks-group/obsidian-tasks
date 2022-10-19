@@ -82,7 +82,7 @@ export class FilterOrErrorMessage {
      * @param instruction
      * @param filter
      */
-    public static fromFilter(instruction: string, filter: FilterFunction): FilterOrErrorMessage {
+    public static fromFilterFunction(instruction: string, filter: FilterFunction): FilterOrErrorMessage {
         const result = new FilterOrErrorMessage(instruction);
         result.filterFunction = filter;
         return result;

@@ -46,7 +46,7 @@ export abstract class TextField extends Field {
         // and tests if it matches the string filtering rule
         // represented by this object.
         const negate = filterOperator.match(/not/) !== null;
-        return FilterOrErrorMessage.fromFilter(line, this.getFilter(matcher, negate));
+        return FilterOrErrorMessage.fromFilterFunction(line, this.getFilter(matcher, negate));
     }
 
     public static stringIncludesCaseInsensitive(haystack: string, needle: string): boolean {

@@ -28,7 +28,7 @@ describe('FilterOrErrorMessage', () => {
         };
 
         const instruction = 'description longer than 20 chars';
-        const filterOrErrorMessage = FilterOrErrorMessage.fromFilter(instruction, filterFunction);
+        const filterOrErrorMessage = FilterOrErrorMessage.fromFilterFunction(instruction, filterFunction);
         expect(filterOrErrorMessage.filter?.explanation.asString()).toEqual(instruction);
     });
 });
