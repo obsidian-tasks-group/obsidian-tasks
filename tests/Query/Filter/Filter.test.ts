@@ -1,4 +1,4 @@
-import { Filter } from '../../../src/Query/Filter/Filter';
+import { Filter, FilterOrErrorMessage } from '../../../src/Query/Filter/Filter';
 import type { FilterFunction } from '../../../src/Query/Filter/Filter';
 import type { Task } from '../../../src/Task';
 import { toMatchTaskFromLine } from '../../CustomMatchers/CustomMatchersForFilters';
@@ -18,5 +18,17 @@ describe('Filter', () => {
         expect(filter.instruction).toEqual(line);
         expect(filter.explanation.asString()).toEqual(line);
         expect(filter.filterFunction).not.toBeUndefined();
+    });
+});
+
+describe('FilterOrErrorMessage', () => {
+    it('should construct from FilterFunction', () => {
+        const filterFunction: FilterFunction = (task: Task) => {
+            return task.description.length > 20;
+        };
+
+        const instruction = 'description longer than 20 chars';
+        const filterOrErrorMessage = FilterOrErrorMessage.fromFilter(instruction, filterFunction);
+        expect(filterOrErrorMessage.filter?.explanation.asString()).toEqual(instruction);
     });
 });
