@@ -77,10 +77,11 @@ describe('priority error cases', () => {
 });
 
 describe('explain priority', () => {
-    it('implicit "is" gets added to description', () => {
+    it('simple case just repeats the-supplied line', () => {
         const field = new PriorityField();
-        const filterOrMessage = field.createFilterOrErrorMessage('priority above none');
-        expect(filterOrMessage).toHaveExplanation('priority above none');
+        const instruction = 'priority above none';
+        const filterOrMessage = field.createFilterOrErrorMessage(instruction);
+        expect(filterOrMessage).toHaveExplanation(instruction);
     });
 
     it('implicit "is" gets added to description', () => {
