@@ -19,13 +19,17 @@ export type FilterFunction = (task: Task) => boolean;
  */
 export class Filter {
     readonly instruction: string;
-    explanation: Explanation; // TODO Add an Explanation arg to constructor, and then make this readonly again
+    readonly explanation: Explanation;
     public filterFunction: FilterFunction;
 
-    public constructor(instruction: string, filterFunction: FilterFunction) {
+    // TODO Incrementally obtain the explanation from the Field classes, and then remove the default value for explanation
+    public constructor(
+        instruction: string,
+        filterFunction: FilterFunction,
+        explanation: Explanation = new Explanation(instruction),
+    ) {
         this.instruction = instruction;
-        // TODO Incrementally obtain this from the Field classes, to get meaningful explanations
-        this.explanation = new Explanation(instruction);
+        this.explanation = explanation;
         this.filterFunction = filterFunction;
     }
 }

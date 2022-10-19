@@ -43,10 +43,7 @@ export class PriorityField extends Field {
                 filter = (task: Task) => (task.priority ? task.priority === filterPriority : false);
                 explanation = `${this.fieldName()} is ${filterPriorityString}`;
             }
-            const filterObject = new Filter(line, filter);
-            filterObject.explanation = new Explanation(explanation);
-
-            result.filter = filterObject;
+            result.filter = new Filter(line, filter, new Explanation(explanation));
         } else {
             result.error = 'do not understand query filter (priority)';
         }

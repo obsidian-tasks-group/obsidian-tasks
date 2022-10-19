@@ -40,8 +40,7 @@ describe('FilterOrErrorMessage', () => {
 
         const instruction = 'description > 20';
         const explanation = 'description longer than 20 chars';
-        const filter = new Filter(instruction, filterFunction);
-        filter.explanation = new Explanation(explanation);
+        const filter = new Filter(instruction, filterFunction, new Explanation(explanation));
 
         const filterOrErrorMessage = FilterOrErrorMessage.fromFilter(filter);
         expect(filterOrErrorMessage.filter?.instruction).toEqual(instruction);
