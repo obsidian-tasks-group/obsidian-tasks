@@ -168,14 +168,17 @@ export class BooleanField extends Field {
         return toBool(booleanStack[0]);
     }
 
+    /**
+     * Construct an {@link Explanation} representing the complete Boolean instruction currently being analysed.
+     *
+     * @param postfixExpression
+     */
     private constructExplanation(postfixExpression: PostfixExpression): Explanation {
+        // For an explanation of the code, see the JSdoc and comments of filterTaskWithParsedQuery()
         const booleanStack: Explanation[] = [];
         // TODO Review comments
         for (const token of postfixExpression) {
             if (token.name === 'IDENTIFIER') {
-                // Identifiers are the sub-fields of the expression, the actual filters, e.g. 'description includes foo'.
-                // For each identifier we created earlier the corresponding Filter, so now we can just evaluate the given
-                // task for each identifier that we find in the postfix expression.
                 if (token.value == null) throw Error('null token value'); // This should not happen
                 const filter = this.subFields[token.value.trim()];
                 booleanStack.push(filter.explanation);
@@ -204,7 +207,7 @@ export class BooleanField extends Field {
                 throw Error('Unsupported token type: ' + token);
             }
         }
-        // Eventually the result of the expression for this Task is the only item left in the boolean stack
+        // Eventually the Explanation is the only item left in the boolean stack
         return booleanStack[0];
     }
 }
