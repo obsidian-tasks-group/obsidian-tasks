@@ -176,6 +176,12 @@ describe('explain boolean queries', () => {
         expect(filterOrMessage).toHaveExplanation(expected);
     });
 
+    it('should explain Boolean NOT', () => {
+        const instruction = 'NOT (description includes d1)';
+        const filterOrMessage = new BooleanField().createFilterOrErrorMessage(instruction);
+        expect(filterOrMessage).toHaveExplanation('None of:\n  description includes d1');
+    });
+
     it('should explain two Boolean ORs', () => {
         const instruction = '(description includes d1) OR (description includes d2) OR (priority medium)';
         const filterOrMessage = new BooleanField().createFilterOrErrorMessage(instruction);
