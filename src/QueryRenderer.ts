@@ -170,17 +170,12 @@ class QueryRenderChild extends MarkdownRenderChild {
         bunk.setText('Explanation of query:');
         content.appendChild(bunk);
 
-        const explanationsList = content.createEl('ul');
         const explanation = this.query.explanation();
-        const explanationsSplit = explanation.asString().split('\n');
-        console.log(explanationsSplit);
+        const explanationAsString = explanation.asString();
 
-        for (let i = 0; i < explanationsSplit.length; i++) {
-            const listItem = explanationsList.createEl('li');
-            listItem.setText(explanationsSplit[i]);
-            explanationsList.appendChild(listItem);
-        }
-        content.appendChild(explanationsList);
+        const explanationsBlock = content.createEl('pre');
+        explanationsBlock.setText(explanationAsString);
+        content.appendChild(explanationsBlock);
     }
 
     private async createTasksList({
