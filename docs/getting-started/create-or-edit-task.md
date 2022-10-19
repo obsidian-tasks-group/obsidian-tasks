@@ -104,3 +104,16 @@ To close the modal and cancel your edits, do one of:
 - click or tap outside the modal,
 - click the close button at the corner of the modal (if one exists on your operating system),
 - hit the `Esc` key.
+
+## Known limitations
+
+### Need to scroll on phone screens
+
+On phone screens the 'Create or edit Task' Modal may be too tall to fit on the screen.
+It does support scrolling, and on Android, the scrollbar is visible.
+
+Unfortunately iPhones don't display the scrollbar until you actually start scrolling.
+Tap on the screen and drag down, and you will see a scrollbar appear temporarily.
+More importantly, the scrolling does then work fine.
+
+We are tracking the iPhone scrollbar issue in [issue #1238](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1238).
