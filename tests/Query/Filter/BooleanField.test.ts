@@ -182,6 +182,15 @@ describe('explain boolean queries', () => {
         expect(filterOrMessage).toHaveExplanation('None of:\n  description includes d1');
     });
 
+    it('should explain Boolean XOR', () => {
+        const instruction = '(description includes d1) XOR (priority medium)';
+        const filterOrMessage = new BooleanField().createFilterOrErrorMessage(instruction);
+        const expected = `Exactly one of:
+  description includes d1
+  priority is medium`;
+        expect(filterOrMessage).toHaveExplanation(expected);
+    });
+
     it('should explain two Boolean ORs', () => {
         const instruction = '(description includes d1) OR (description includes d2) OR (priority medium)';
         const filterOrMessage = new BooleanField().createFilterOrErrorMessage(instruction);

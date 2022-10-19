@@ -196,7 +196,7 @@ export class BooleanField extends Field {
                 } else if (token.value === 'XOR') {
                     const arg1 = booleanStack.pop();
                     const arg2 = booleanStack.pop();
-                    booleanStack.push(Explanation.booleanXor([arg1!, arg2!]));
+                    booleanStack.push(Explanation.booleanXor([arg2!, arg1!]));
                 } else {
                     throw Error('Unsupported operator: ' + token.value);
                 }
