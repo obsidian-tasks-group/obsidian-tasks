@@ -6,6 +6,7 @@ import type { TaskGroups } from './TaskGroups';
 import { parseFilter } from './FilterParser';
 import { Group } from './Group';
 import type { Filter } from './Filter/Filter';
+import { Explanation } from './Explain/Explanation';
 
 export type SortingProperty =
     | 'urgency'
@@ -104,17 +105,17 @@ export class Query implements IQuery {
             });
     }
 
-    public explanation(): string[] {
+    public explanation(): Explanation {
         // TODO Include limit, if any
         // TODO Include global filter, if any
         // TODO State today's date (and maybe weekday)
-        const result: string[] = [];
+        const result: Explanation[] = [];
         for (let i = 0; i < this.filters.length; i++) {
             // TODO Get the explanation from the filter
-            const explanation = this.filters[i].instruction;
+            const explanation = new Explanation(this.filters[i].instruction);
             result.push(explanation);
         }
-        return result;
+        return Explanation.booleanAnd(result);
     }
 
     public get limit(): number | undefined {

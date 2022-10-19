@@ -759,6 +759,22 @@ describe('Query', () => {
         });
     });
 
+    describe('explanations', () => {
+        // TODO Test with no filters
+
+        // TODO Test with 1 filter
+
+        it('should explain 2 filters', () => {
+            const input = 'description includes hello\ndue today';
+            const query = new Query({ source: input });
+            const explanation = query.explanation();
+            const expected = `All of:
+  description includes hello
+  due today`;
+            expect(explanation.asString()).toEqual(expected);
+        });
+    });
+
     // This tests the parsing of 'group by' instructions.
     // Group.test.ts tests the actual grouping code.
     describe('grouping instructions', () => {

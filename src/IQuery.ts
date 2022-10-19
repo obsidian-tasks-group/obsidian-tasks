@@ -2,6 +2,7 @@ import type { LayoutOptions } from './LayoutOptions';
 import type { Task } from './Task';
 import type { TaskGroups } from './Query/TaskGroups';
 import type { Grouping } from './Query/Query';
+import type { Explanation } from './Query/Explain/Explanation';
 
 /**
  * Standard interface for the query engine used by Tasks, multiple
@@ -64,5 +65,5 @@ export interface IQuery {
     // TODO Add storage allowing nesting of fitlers
     // TODO Maybe rename to explainQuery
     // TODO Add types for storing explanation
-    explanation: () => string[];
+    explanation: () => Explanation;
 }
