@@ -191,7 +191,7 @@ describe('explain boolean queries', () => {
         expect(filterOrMessage).toHaveExplanation(expected);
     });
 
-    it('should explain two Boolean ORs', () => {
+    it('should explain 2 Boolean ORs', () => {
         const instruction = '(description includes d1) OR (description includes d2) OR (priority medium)';
         const filterOrMessage = new BooleanField().createFilterOrErrorMessage(instruction);
         // TODO This creates a nested 'At least one of' inside the first one.
@@ -203,5 +203,30 @@ describe('explain boolean queries', () => {
     description includes d2
   priority is medium`;
         expect(filterOrMessage).toHaveExplanation(expected);
+    });
+
+    it('should explain 9 Boolean ANDs', () => {
+        const instruction =
+            '(description includes 1) AND (description includes 2) AND (description includes 3) AND (description includes 4) AND (description includes 5) AND (description includes 6) AND (description includes 7) AND (description includes 8) AND (description includes 9)';
+        const filterOrMessage = new BooleanField().createFilterOrErrorMessage(instruction);
+        expect(filterOrMessage.filter?.explanation.asString()).toMatchInlineSnapshot(`
+            "All of:
+              All of:
+                All of:
+                  All of:
+                    All of:
+                      All of:
+                        All of:
+                          All of:
+                            description includes 1
+                            description includes 2
+                          description includes 3
+                        description includes 4
+                      description includes 5
+                    description includes 6
+                  description includes 7
+                description includes 8
+              description includes 9"
+        `);
     });
 });
