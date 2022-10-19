@@ -40,6 +40,14 @@ export class Explanation {
     }
 
     /**
+     * Create an Explanation object representing Boolean XOR
+     * @param children
+     */
+    public static booleanXor(children: Explanation[]) {
+        return new Explanation('Exactly one of', children);
+    }
+
+    /**
      * Create a string representation of the Explanation.
      *
      * Note that it will not have a final end-of-line character at the end.

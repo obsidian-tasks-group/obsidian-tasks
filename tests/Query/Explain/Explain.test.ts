@@ -34,6 +34,13 @@ describe('Explain', () => {
         expect(explanation.children).toEqual(children);
     });
 
+    it('Explains an XOR boolean combination', () => {
+        const children: Explanation[] = [new Explanation('x includes A'), new Explanation('x includes B')];
+        const explanation = Explanation.booleanXor(children);
+        expect(explanation.description).toEqual('Exactly one of');
+        expect(explanation.children).toEqual(children);
+    });
+
     it('Explains a nested boolean combination', () => {
         const not = Explanation.booleanOr([new Explanation('x1 includes A'), new Explanation('x1 includes B')]);
         const or = Explanation.booleanOr([new Explanation('x2 includes C'), new Explanation('x2 includes D')]);
