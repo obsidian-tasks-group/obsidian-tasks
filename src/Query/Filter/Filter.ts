@@ -19,7 +19,7 @@ export type FilterFunction = (task: Task) => boolean;
  */
 export class Filter {
     readonly instruction: string;
-    readonly explanation: Explanation;
+    explanation: Explanation; // TODO Add an Explanation arg to constructor, and then make this readonly again
     public filterFunction: FilterFunction;
 
     public constructor(instruction: string, filterFunction: FilterFunction) {
@@ -82,9 +82,12 @@ export class FilterOrErrorMessage {
     }
 
     /**
-     * Construct a FilterOrErrorMessage with the filter.
+     * Construct a FilterOrErrorMessage with the filter function.
+     *
+     * Prefer {@link fromFilter} instead.
+     *
      * @param instruction
-     * @param filter
+     * @param filter - a {@link FilterFunction}
      */
     public static fromFilterFunction(instruction: string, filter: FilterFunction): FilterOrErrorMessage {
         const result = new FilterOrErrorMessage(instruction);
@@ -103,7 +106,14 @@ export class FilterOrErrorMessage {
         return result;
     }
 
-    static fromFilter(filter: Filter): FilterOrErrorMessage {
+    /**
+     * Construct a FilterOrErrorMessage with the filter.
+     *
+     * This function allows a meaningful {@link Explanation} to be supplied.
+     *
+     * @param filter - a {@link Filter}
+     */
+    public static fromFilter(filter: Filter): FilterOrErrorMessage {
         const result = new FilterOrErrorMessage(filter.instruction);
         result.filter = filter;
         return result;

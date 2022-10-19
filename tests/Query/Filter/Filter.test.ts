@@ -2,6 +2,7 @@ import { Filter, FilterOrErrorMessage } from '../../../src/Query/Filter/Filter';
 import type { FilterFunction } from '../../../src/Query/Filter/Filter';
 import type { Task } from '../../../src/Task';
 import { toMatchTaskFromLine } from '../../CustomMatchers/CustomMatchersForFilters';
+import { Explanation } from '../../../src/Query/Explain/Explanation';
 
 expect.extend({
     toMatchTaskFromLine,
@@ -37,9 +38,13 @@ describe('FilterOrErrorMessage', () => {
             return task.description.length > 20;
         };
 
-        const instruction = 'description longer than 20 chars';
+        const instruction = 'description > 20';
+        const explanation = 'description longer than 20 chars';
         const filter = new Filter(instruction, filterFunction);
+        filter.explanation = new Explanation(explanation);
+
         const filterOrErrorMessage = FilterOrErrorMessage.fromFilter(filter);
-        expect(filterOrErrorMessage.filter?.explanation.asString()).toEqual(instruction);
+        expect(filterOrErrorMessage.filter?.instruction).toEqual(instruction);
+        expect(filterOrErrorMessage.filter?.explanation.asString()).toEqual(explanation);
     });
 });
