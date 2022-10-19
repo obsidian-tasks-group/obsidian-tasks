@@ -7,7 +7,13 @@ import type { FilterOrErrorMessage } from '../../../src/Query/Filter/Filter';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { testFilter } from '../../TestingTools/FilterTestHelpers';
 
+import { toHaveExplanation } from '../../CustomMatchers/CustomMatchersForFilters';
+
 window.moment = moment;
+
+expect.extend({
+    toHaveExplanation,
+});
 
 function testWithDescription(filter: FilterOrErrorMessage, description: string, expected: boolean) {
     const builder = new TaskBuilder();
@@ -148,5 +154,25 @@ describe('boolean query', () => {
         // Have not managed to create instructions that trigger these errors:
         //      result.error = 'empty operator in boolean query';
         //      result.error = `unknown boolean operator '${token.value}'`;
+    });
+});
+
+describe('explain boolean queries', () => {
+    it('should explain Boolean AND', () => {
+        const instruction = '(description includes d1) AND (priority medium)';
+        const filterOrMessage = new BooleanField().createFilterOrErrorMessage(instruction);
+        const expected = `All of:
+  description includes d1
+  priority is medium`;
+        expect(filterOrMessage).toHaveExplanation(expected);
+    });
+
+    it('should explain Boolean OR', () => {
+        const instruction = '(description includes d1) OR (priority medium)';
+        const filterOrMessage = new BooleanField().createFilterOrErrorMessage(instruction);
+        const expected = `At least one of:
+  description includes d1
+  priority is medium`;
+        expect(filterOrMessage).toHaveExplanation(expected);
     });
 });
