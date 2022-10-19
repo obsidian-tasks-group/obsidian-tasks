@@ -175,4 +175,18 @@ describe('explain boolean queries', () => {
   priority is medium`;
         expect(filterOrMessage).toHaveExplanation(expected);
     });
+
+    it('should explain two Boolean ORs', () => {
+        const instruction = '(description includes d1) OR (description includes d2) OR (priority medium)';
+        const filterOrMessage = new BooleanField().createFilterOrErrorMessage(instruction);
+        // TODO This creates a nested 'At least one of' inside the first one.
+        //      It's technically correct, but hard for users to read.
+        //      I would like to try and somehow collate, or run together, runs of AND and OR operations
+        const expected = `At least one of:
+  At least one of:
+    description includes d1
+    description includes d2
+  priority is medium`;
+        expect(filterOrMessage).toHaveExplanation(expected);
+    });
 });
