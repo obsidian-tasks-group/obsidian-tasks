@@ -69,3 +69,19 @@ describe('priority error cases', () => {
         expect(filter.error).toBe('do not understand query filter (priority)');
     });
 });
+
+describe('explain priority', () => {
+    it('implicit "is" gets added to description', () => {
+        const field = new PriorityField();
+        const filterOrMessage = field.createFilterOrErrorMessage('priority above none');
+        const filter = filterOrMessage.filter;
+        expect(filter?.explanation.asString()).toEqual('priority above none');
+    });
+
+    it('implicit "is" gets added to description', () => {
+        const field = new PriorityField();
+        const filterOrMessage = field.createFilterOrErrorMessage('priority high');
+        const filter = filterOrMessage.filter;
+        expect(filter?.explanation.asString()).toEqual('priority is high');
+    });
+});
