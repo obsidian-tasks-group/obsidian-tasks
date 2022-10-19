@@ -31,4 +31,15 @@ describe('FilterOrErrorMessage', () => {
         const filterOrErrorMessage = FilterOrErrorMessage.fromFilterFunction(instruction, filterFunction);
         expect(filterOrErrorMessage.filter?.explanation.asString()).toEqual(instruction);
     });
+
+    it('should construct from Filter', () => {
+        const filterFunction: FilterFunction = (task: Task) => {
+            return task.description.length > 20;
+        };
+
+        const instruction = 'description longer than 20 chars';
+        const filter = new Filter(instruction, filterFunction);
+        const filterOrErrorMessage = FilterOrErrorMessage.fromFilter(filter);
+        expect(filterOrErrorMessage.filter?.explanation.asString()).toEqual(instruction);
+    });
 });

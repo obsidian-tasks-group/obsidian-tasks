@@ -61,6 +61,10 @@ export class FilterOrErrorMessage {
         return this._filter;
     }
 
+    set filter(value: Filter | undefined) {
+        this._filter = value;
+    }
+
     get filterFunction(): FilterFunction | undefined {
         if (this._filter) {
             return this._filter.filterFunction;
@@ -96,6 +100,12 @@ export class FilterOrErrorMessage {
     public static fromError(instruction: string, errorMessage: string): FilterOrErrorMessage {
         const result = new FilterOrErrorMessage(instruction);
         result.error = errorMessage;
+        return result;
+    }
+
+    static fromFilter(filter: Filter): FilterOrErrorMessage {
+        const result = new FilterOrErrorMessage(filter.instruction);
+        result.filter = filter;
         return result;
     }
 }
