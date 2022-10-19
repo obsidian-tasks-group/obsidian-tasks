@@ -189,17 +189,17 @@ export class BooleanField extends Field {
                     const arg1 = booleanStack.pop();
                     booleanStack.push(Explanation.booleanNot([arg1!]));
                 } else if (token.value === 'OR') {
-                    const arg1 = booleanStack.pop();
                     const arg2 = booleanStack.pop();
-                    booleanStack.push(Explanation.booleanOr([arg2!, arg1!]));
+                    const arg1 = booleanStack.pop();
+                    booleanStack.push(Explanation.booleanOr([arg1!, arg2!]));
                 } else if (token.value === 'AND') {
-                    const arg1 = booleanStack.pop();
                     const arg2 = booleanStack.pop();
-                    booleanStack.push(Explanation.booleanAnd([arg2!, arg1!]));
+                    const arg1 = booleanStack.pop();
+                    booleanStack.push(Explanation.booleanAnd([arg1!, arg2!]));
                 } else if (token.value === 'XOR') {
-                    const arg1 = booleanStack.pop();
                     const arg2 = booleanStack.pop();
-                    booleanStack.push(Explanation.booleanXor([arg2!, arg1!]));
+                    const arg1 = booleanStack.pop();
+                    booleanStack.push(Explanation.booleanXor([arg1!, arg2!]));
                 } else {
                     throw Error('Unsupported operator: ' + token.value);
                 }
