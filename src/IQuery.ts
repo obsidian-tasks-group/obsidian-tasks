@@ -62,8 +62,6 @@ export interface IQuery {
      */
     applyQueryToTasks: (tasks: Task[]) => TaskGroups;
 
-    // TODO Add storage allowing nesting of fitlers
     // TODO Maybe rename to explainQuery
-    // TODO Add types for storing explanation
     explanation: () => Explanation;
 }
