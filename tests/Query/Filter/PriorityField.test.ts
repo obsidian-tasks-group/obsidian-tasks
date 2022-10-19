@@ -3,6 +3,12 @@ import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { testFilter } from '../../TestingTools/FilterTestHelpers';
 import { PriorityField } from '../../../src/Query/Filter/PriorityField';
 
+import { toHaveExplanation } from '../../CustomMatchers/CustomMatchersForFilters';
+
+expect.extend({
+    toHaveExplanation,
+});
+
 function testTaskFilterForTaskWithPriority(filter: string, priority: Priority, expected: boolean) {
     const builder = new TaskBuilder();
     const filterOrError = new PriorityField().createFilterOrErrorMessage(filter);
@@ -74,14 +80,12 @@ describe('explain priority', () => {
     it('implicit "is" gets added to description', () => {
         const field = new PriorityField();
         const filterOrMessage = field.createFilterOrErrorMessage('priority above none');
-        const filter = filterOrMessage.filter;
-        expect(filter?.explanation.asString()).toEqual('priority above none');
+        expect(filterOrMessage).toHaveExplanation('priority above none');
     });
 
     it('implicit "is" gets added to description', () => {
         const field = new PriorityField();
         const filterOrMessage = field.createFilterOrErrorMessage('priority high');
-        const filter = filterOrMessage.filter;
-        expect(filter?.explanation.asString()).toEqual('priority is high');
+        expect(filterOrMessage).toHaveExplanation('priority is high');
     });
 });
