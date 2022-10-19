@@ -82,6 +82,19 @@ export class FilterOrErrorMessage {
     }
 
     /**
+     * Construct a FilterOrErrorMessage with the filter.
+     *
+     * This function allows a meaningful {@link Explanation} to be supplied.
+     *
+     * @param filter - a {@link Filter}
+     */
+    public static fromFilter(filter: Filter): FilterOrErrorMessage {
+        const result = new FilterOrErrorMessage(filter.instruction);
+        result.filter = filter;
+        return result;
+    }
+
+    /**
      * Construct a FilterOrErrorMessage with the filter function.
      *
      * Prefer {@link fromFilter} instead.
@@ -103,19 +116,6 @@ export class FilterOrErrorMessage {
     public static fromError(instruction: string, errorMessage: string): FilterOrErrorMessage {
         const result = new FilterOrErrorMessage(instruction);
         result.error = errorMessage;
-        return result;
-    }
-
-    /**
-     * Construct a FilterOrErrorMessage with the filter.
-     *
-     * This function allows a meaningful {@link Explanation} to be supplied.
-     *
-     * @param filter - a {@link Filter}
-     */
-    public static fromFilter(filter: Filter): FilterOrErrorMessage {
-        const result = new FilterOrErrorMessage(filter.instruction);
-        result.filter = filter;
         return result;
     }
 }
