@@ -16,6 +16,7 @@ describe('Filter', () => {
         const filter = new Filter(line, filterFunction);
 
         expect(filter.instruction).toEqual(line);
+        expect(filter.explanation.asString()).toEqual(line);
         expect(filter.filterFunction).not.toBeUndefined();
     });
 });

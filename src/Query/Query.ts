@@ -111,9 +111,7 @@ export class Query implements IQuery {
         // TODO State today's date (and maybe weekday)
         const result: Explanation[] = [];
         for (let i = 0; i < this.filters.length; i++) {
-            // TODO Get the explanation from the filter
-            const explanation = new Explanation(this.filters[i].instruction);
-            result.push(explanation);
+            result.push(this.filters[i].explanation);
         }
         return Explanation.booleanAnd(result);
     }

@@ -1,4 +1,5 @@
 import type { Task } from '../../Task';
+import { Explanation } from '../Explain/Explanation';
 
 /**
  * A filtering function, that takes a Task object and returns
@@ -18,10 +19,13 @@ export type FilterFunction = (task: Task) => boolean;
  */
 export class Filter {
     readonly instruction: string;
+    readonly explanation: Explanation;
     public filterFunction: FilterFunction;
 
     public constructor(instruction: string, filterFunction: FilterFunction) {
         this.instruction = instruction;
+        // TODO Incrementally obtain this from the Field classes, to get meaningful explanations
+        this.explanation = new Explanation(instruction);
         this.filterFunction = filterFunction;
     }
 }
