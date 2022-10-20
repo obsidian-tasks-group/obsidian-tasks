@@ -136,7 +136,9 @@ class QueryRenderChild extends MarkdownRenderChild {
                 `Render ${this.queryType} called for a block in active file "${this.filePath}", to select from ${tasks.length} tasks: plugin state: ${state}`,
             );
 
-            this.createExplanation(content);
+            if (this.query.layoutOptions.explainQuery) {
+                this.createExplanation(content);
+            }
 
             const tasksSortedLimitedGrouped = this.query.applyQueryToTasks(tasks);
             for (const group of tasksSortedLimitedGrouped.groups) {

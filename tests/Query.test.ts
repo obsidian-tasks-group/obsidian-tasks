@@ -192,6 +192,7 @@ describe('Query parsing', () => {
         // In alphabetical order, please
         const filters = [
             '# Comment lines are ignored',
+            'explain',
             'hide backlink',
             'hide done date',
             'hide due date',

@@ -65,6 +65,7 @@ export class Query implements IQuery {
     private readonly hideOptionsRegexp =
         /^(hide|show) (task count|backlink|priority|start date|scheduled date|done date|due date|recurrence rule|edit button|urgency)/;
     private readonly shortModeRegexp = /^short/;
+    private readonly explainQueryRegexp = /^explain/;
 
     private readonly limitRegexp = /^limit (to )?(\d+)( tasks?)?/;
 
@@ -81,6 +82,9 @@ export class Query implements IQuery {
                         break;
                     case this.shortModeRegexp.test(line):
                         this._layoutOptions.shortMode = true;
+                        break;
+                    case this.explainQueryRegexp.test(line):
+                        this._layoutOptions.explainQuery = true;
                         break;
                     case this.limitRegexp.test(line):
                         this.parseLimit({ line });
