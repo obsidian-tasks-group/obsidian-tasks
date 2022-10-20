@@ -6,6 +6,7 @@ import { Explanation } from '../Explain/Explanation';
 import { Field } from './Field';
 import { Filter, FilterOrErrorMessage } from './Filter';
 import { FilterInstructions } from './FilterInstructions';
+import { DateField } from './DateField';
 
 /**
  * Support the 'happens' search instruction, which searches all of
@@ -51,20 +52,25 @@ export class HappensDateField extends Field {
                 result.error = 'do not understand happens date';
             } else {
                 let filterFunction;
+                let relative;
                 if (happensMatch[1] === 'before') {
                     filterFunction = (task: Task) => {
                         return this.dates(task).some((date) => date && date.isBefore(filterDate));
                     };
+                    relative = ' ' + happensMatch[1];
                 } else if (happensMatch[1] === 'after') {
                     filterFunction = (task: Task) => {
                         return this.dates(task).some((date) => date && date.isAfter(filterDate));
                     };
+                    relative = ' ' + happensMatch[1];
                 } else {
                     filterFunction = (task: Task) => {
                         return this.dates(task).some((date) => date && date.isSame(filterDate));
                     };
+                    relative = '';
                 }
-                result.filter = new Filter(line, filterFunction, new Explanation(line));
+                const explanation = DateField.getExplanationString(this.fieldName(), relative, filterDate);
+                result.filter = new Filter(line, filterFunction, new Explanation(explanation));
             }
         } else {
             result.error = 'do not understand query filter (happens date)';
