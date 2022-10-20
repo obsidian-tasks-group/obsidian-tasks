@@ -54,4 +54,10 @@ describe('explain done date queries', () => {
         const filterOrMessage = new DoneDateField().createFilterOrErrorMessage('done 2024-01-02');
         expect(filterOrMessage).toHaveExplanation('done date is 2024-01-02');
     });
+
+    it('should show value of relative dates', () => {
+        const filterOrMessage = new DoneDateField().createFilterOrErrorMessage('done after today');
+        // TODO Mock the date
+        expect(filterOrMessage).toHaveExplanation('done date is after 2022-10-20');
+    });
 });
