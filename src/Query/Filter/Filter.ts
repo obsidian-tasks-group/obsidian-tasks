@@ -22,12 +22,7 @@ export class Filter {
     readonly explanation: Explanation;
     public filterFunction: FilterFunction;
 
-    // TODO Incrementally obtain the explanation from the Field classes, and then remove the default value for explanation
-    public constructor(
-        instruction: string,
-        filterFunction: FilterFunction,
-        explanation: Explanation = new Explanation(instruction),
-    ) {
+    public constructor(instruction: string, filterFunction: FilterFunction, explanation: Explanation) {
         this.instruction = instruction;
         this.explanation = explanation;
         this.filterFunction = filterFunction;
@@ -79,7 +74,7 @@ export class FilterOrErrorMessage {
 
     set filterFunction(value: FilterFunction | undefined) {
         if (value) {
-            this._filter = new Filter(this.instruction, value);
+            this._filter = new Filter(this.instruction, value, new Explanation(this.instruction));
         } else {
             this._filter = undefined;
         }

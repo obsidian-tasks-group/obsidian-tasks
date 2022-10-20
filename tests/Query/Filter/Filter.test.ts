@@ -14,7 +14,7 @@ describe('Filter', () => {
             return task.description.length > 20;
         };
         const line = 'some sample instruction';
-        const filter = new Filter(line, filterFunction);
+        const filter = new Filter(line, filterFunction, new Explanation(line));
 
         expect(filter.instruction).toEqual(line);
         expect(filter.explanation.asString()).toEqual(line);
