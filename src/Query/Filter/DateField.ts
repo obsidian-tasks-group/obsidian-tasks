@@ -68,8 +68,7 @@ export abstract class DateField extends Field {
                     };
                     relative = '';
                 }
-                const actualDate = filterDate.format('YYYY-MM-DD (dddd)');
-                const explanation = `${this.fieldName()} date is${relative} ${actualDate}`;
+                const explanation = DateField.getExplanationString(this.fieldName(), relative, filterDate);
                 result.filter = new Filter(line, filterFunction, new Explanation(explanation));
             }
         } else {
@@ -84,6 +83,21 @@ export abstract class DateField extends Field {
      * @public
      */
     public abstract date(task: Task): Moment | null;
+
+    /**
+     * Construct a string used to explain a date-based filter
+     * @param fieldName - for example, 'due'
+     * @param relationshipPrefixedWithSpace - for example ' before' or ''
+     * @param filterDate - the date used in the filter
+     */
+    public static getExplanationString(
+        fieldName: string,
+        relationshipPrefixedWithSpace: string,
+        filterDate: moment.Moment,
+    ) {
+        const actualDate = filterDate.format('YYYY-MM-DD (dddd)');
+        return `${fieldName} date is${relationshipPrefixedWithSpace} ${actualDate}`;
+    }
 
     /**
      * Determine whether a task that does not have the particular date value
