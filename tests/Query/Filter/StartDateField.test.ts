@@ -13,15 +13,12 @@ expect.extend({
 
 describe('explain start date queries', () => {
     it('should explain explicit date', () => {
-        const instruction = 'starts before 2023-01-02';
-        const filterOrMessage = new StartDateField().createFilterOrErrorMessage(instruction);
-        const expected = 'start date is before 2023-01-02';
-        expect(filterOrMessage).toHaveExplanation(expected);
+        const filterOrMessage = new StartDateField().createFilterOrErrorMessage('starts before 2023-01-02');
+        expect(filterOrMessage).toHaveExplanation('start date is before 2023-01-02');
     });
 
     it('implicit "on" gets added to explanation', () => {
-        const field = new StartDateField();
-        const filterOrMessage = field.createFilterOrErrorMessage('starts 2023-01-02');
+        const filterOrMessage = new StartDateField().createFilterOrErrorMessage('starts 2023-01-02');
         expect(filterOrMessage).toHaveExplanation('start date is 2023-01-02');
     });
 });
