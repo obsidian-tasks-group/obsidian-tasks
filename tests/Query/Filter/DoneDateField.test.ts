@@ -40,6 +40,15 @@ describe('done date', () => {
 });
 
 describe('explain done date queries', () => {
+    beforeAll(() => {
+        jest.useFakeTimers();
+        jest.setSystemTime(new Date(2022, 0, 15)); // 2022-01-15
+    });
+
+    afterAll(() => {
+        jest.useRealTimers();
+    });
+
     it('should explain date before', () => {
         const filterOrMessage = new DoneDateField().createFilterOrErrorMessage('done before 2023-01-02');
         expect(filterOrMessage).toHaveExplanation('done date is before 2023-01-02');
@@ -57,7 +66,6 @@ describe('explain done date queries', () => {
 
     it('should show value of relative dates', () => {
         const filterOrMessage = new DoneDateField().createFilterOrErrorMessage('done after today');
-        // TODO Mock the date
-        expect(filterOrMessage).toHaveExplanation('done date is after 2022-10-20');
+        expect(filterOrMessage).toHaveExplanation('done date is after 2022-01-15');
     });
 });
