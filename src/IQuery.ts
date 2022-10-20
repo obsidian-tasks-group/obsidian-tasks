@@ -2,7 +2,6 @@ import type { LayoutOptions } from './LayoutOptions';
 import type { Task } from './Task';
 import type { TaskGroups } from './Query/TaskGroups';
 import type { Grouping } from './Query/Query';
-import type { Explanation } from './Query/Explain/Explanation';
 
 /**
  * Standard interface for the query engine used by Tasks, multiple
@@ -62,9 +61,10 @@ export interface IQuery {
      */
     applyQueryToTasks: (tasks: Task[]) => TaskGroups;
 
-    // TODO Maybe rename to explainQuery
-    explanation: () => Explanation;
-
-    // TODO Document
+    /**
+     * Return a text representation of the query.
+     *
+     * This is currently displayed as a <pre> block, retaining indentation.
+     */
     explainQuery: () => string;
 }
