@@ -11,7 +11,7 @@ expect.extend({
     toHaveExplanation,
 });
 
-describe('explain start date queries', () => {
+describe('explain scheduled date queries', () => {
     it('should explain explicit date', () => {
         const filterOrMessage = new ScheduledDateField().createFilterOrErrorMessage('scheduled before 2023-01-02');
         expect(filterOrMessage).toHaveExplanation('scheduled date is before 2023-01-02 (Monday)');
