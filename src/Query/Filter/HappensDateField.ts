@@ -69,7 +69,12 @@ export class HappensDateField extends Field {
                     };
                     relative = '';
                 }
-                const explanation = DateField.getExplanationString('due, start or scheduled', relative, filterDate);
+                const explanation = DateField.getExplanationString(
+                    'due, start or scheduled',
+                    relative,
+                    false,
+                    filterDate,
+                );
                 result.filter = new Filter(line, filterFunction, new Explanation(explanation));
             }
         } else {

@@ -68,7 +68,12 @@ export abstract class DateField extends Field {
                     };
                     relative = '';
                 }
-                const explanation = DateField.getExplanationString(this.fieldName(), relative, filterDate);
+                const explanation = DateField.getExplanationString(
+                    this.fieldName(),
+                    relative,
+                    this.filterResultIfFieldMissing(),
+                    filterDate,
+                );
                 result.filter = new Filter(line, filterFunction, new Explanation(explanation));
             }
         } else {
@@ -88,15 +93,21 @@ export abstract class DateField extends Field {
      * Construct a string used to explain a date-based filter
      * @param fieldName - for example, 'due'
      * @param relationshipPrefixedWithSpace - for example ' before' or ''
+     * @param filterResultIfFieldMissing - whether the search matches tasks without the requested date value
      * @param filterDate - the date used in the filter
      */
     public static getExplanationString(
         fieldName: string,
         relationshipPrefixedWithSpace: string,
+        filterResultIfFieldMissing: boolean,
         filterDate: moment.Moment,
     ) {
         const actualDate = filterDate.format('YYYY-MM-DD (dddd)');
-        return `${fieldName} date is${relationshipPrefixedWithSpace} ${actualDate}`;
+        let result = `${fieldName} date is${relationshipPrefixedWithSpace} ${actualDate}`;
+        if (filterResultIfFieldMissing) {
+            result += ' OR no start date';
+        }
+        return result;
     }
 
     /**
