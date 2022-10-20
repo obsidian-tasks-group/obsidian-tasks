@@ -1,5 +1,5 @@
 import type { Task } from '../../Task';
-import { Explanation } from '../Explain/Explanation';
+import type { Explanation } from '../Explain/Explanation';
 
 /**
  * A filtering function, that takes a Task object and returns
@@ -69,14 +69,6 @@ export class FilterOrErrorMessage {
             return this._filter.filterFunction;
         } else {
             return undefined;
-        }
-    }
-
-    set filterFunction(value: FilterFunction | undefined) {
-        if (value) {
-            this._filter = new Filter(this.instruction, value, new Explanation(this.instruction));
-        } else {
-            this._filter = undefined;
         }
     }
 
