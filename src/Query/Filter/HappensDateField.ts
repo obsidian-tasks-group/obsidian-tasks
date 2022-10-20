@@ -4,6 +4,7 @@ import { DateParser } from '../DateParser';
 import { Sort } from '../Sort';
 import { Field } from './Field';
 import { FilterOrErrorMessage } from './Filter';
+import { FilterInstructions } from './FilterInstructions';
 
 /**
  * Support the 'happens' search instruction, which searches all of
@@ -13,31 +14,34 @@ export class HappensDateField extends Field {
     private static readonly happensRegexp = /^happens (before|after|on)? ?(.*)/;
     private static readonly instructionForFieldPresence = 'has happens date';
     private static readonly instructionForFieldAbsence = 'no happens date';
+    private readonly filterInstructions: FilterInstructions;
+
+    constructor() {
+        super();
+        this.filterInstructions = new FilterInstructions();
+        this.filterInstructions.add(HappensDateField.instructionForFieldPresence, (task: Task) =>
+            this.dates(task).some((date) => date !== null),
+        );
+        this.filterInstructions.add(
+            HappensDateField.instructionForFieldAbsence,
+            (task: Task) => !this.dates(task).some((date) => date !== null),
+        );
+    }
 
     public canCreateFilterForLine(line: string): boolean {
-        if (line === HappensDateField.instructionForFieldPresence) {
-            return true;
-        }
-        if (line === HappensDateField.instructionForFieldAbsence) {
+        if (this.filterInstructions.canCreateFilterForLine(line)) {
             return true;
         }
         return super.canCreateFilterForLine(line);
     }
 
     public createFilterOrErrorMessage(line: string): FilterOrErrorMessage {
+        const filterResult = this.filterInstructions.createFilterOrErrorMessage(line);
+        if (filterResult.filter !== undefined) {
+            return filterResult;
+        }
+
         const result = new FilterOrErrorMessage(line);
-
-        if (line === HappensDateField.instructionForFieldPresence) {
-            const result = new FilterOrErrorMessage(line);
-            result.filterFunction = (task: Task) => this.dates(task).some((date) => date !== null);
-            return result;
-        }
-
-        if (line === HappensDateField.instructionForFieldAbsence) {
-            const result = new FilterOrErrorMessage(line);
-            result.filterFunction = (task: Task) => !this.dates(task).some((date) => date !== null);
-            return result;
-        }
 
         const happensMatch = Field.getMatch(this.filterRegExp(), line);
         if (happensMatch !== null) {
