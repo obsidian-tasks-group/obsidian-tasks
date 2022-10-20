@@ -776,6 +776,7 @@ describe('Query', () => {
 
             const expectedDisplayText = `All of:
   description includes hello
+
   due 2012-01-23 =>
     due date is 2012-01-23 (Monday)
 `;

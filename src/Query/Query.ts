@@ -119,6 +119,7 @@ export class Query implements IQuery {
     public explainQuery(): string {
         let result = 'All of:\n'; // TODO Remove duplication of text
         for (let i = 0; i < this.filters.length; i++) {
+            if (i > 0) result += '\n';
             const filter = this.filters[i];
             const explanation = filter.explanation;
             const unindentedExplanation = explanation.asString();
