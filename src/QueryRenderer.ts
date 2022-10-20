@@ -164,14 +164,12 @@ class QueryRenderChild extends MarkdownRenderChild {
         this.containerEl.firstChild?.replaceWith(content);
     }
 
+    // Use the 'explain' instruction to enable this
     private createExplanation(content: HTMLDivElement) {
-        // TODO Add 'show/hide explanation' to make this optional
-        // TODO Add styling
-        // TODO Support nicer display of nested queries (AND, OR, NOT etc) - perhaps bullet list?
-
         const explanationAsString = this.query.explainQuery();
 
         const explanationsBlock = content.createEl('pre');
+        explanationsBlock.addClasses(['plugin-tasks-query-explanation']);
         explanationsBlock.setText('Explanation of query:\n\n' + explanationAsString);
         content.appendChild(explanationsBlock);
     }
