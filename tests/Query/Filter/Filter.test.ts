@@ -23,16 +23,6 @@ describe('Filter', () => {
 });
 
 describe('FilterOrErrorMessage', () => {
-    it('should construct from FilterFunction', () => {
-        const filterFunction: FilterFunction = (task: Task) => {
-            return task.description.length > 20;
-        };
-
-        const instruction = 'description longer than 20 chars';
-        const filterOrErrorMessage = FilterOrErrorMessage.fromFilterFunction(instruction, filterFunction);
-        expect(filterOrErrorMessage.filter?.explanation.asString()).toEqual(instruction);
-    });
-
     it('should construct from Filter', () => {
         const filterFunction: FilterFunction = (task: Task) => {
             return task.description.length > 20;

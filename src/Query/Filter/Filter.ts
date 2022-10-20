@@ -99,20 +99,6 @@ export class FilterOrErrorMessage {
     }
 
     /**
-     * Construct a FilterOrErrorMessage with the filter function.
-     *
-     * Prefer {@link fromFilter} instead.
-     *
-     * @param instruction
-     * @param filter - a {@link FilterFunction}
-     */
-    public static fromFilterFunction(instruction: string, filter: FilterFunction): FilterOrErrorMessage {
-        const result = new FilterOrErrorMessage(instruction);
-        result.filterFunction = filter;
-        return result;
-    }
-
-    /**
      * Construct a FilterOrErrorMessage with the given error message.
      * @param instruction
      * @param errorMessage
