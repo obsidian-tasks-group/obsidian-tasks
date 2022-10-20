@@ -113,7 +113,7 @@ export function toHaveExplanation(filter: FilterOrErrorMessage, expectedExplanat
     if (!matches) {
         return {
             message: () =>
-                `unexpected incorrect explanation for "${filter.instruction}":\n` + diff(received, expectedExplanation),
+                `unexpected incorrect explanation for "${filter.instruction}":\n` + diff(expectedExplanation, received),
             pass: false,
         };
     }
