@@ -51,21 +51,21 @@ describe('explain done date queries', () => {
 
     it('should explain date before', () => {
         const filterOrMessage = new DoneDateField().createFilterOrErrorMessage('done before 2023-01-02');
-        expect(filterOrMessage).toHaveExplanation('done date is before 2023-01-02');
+        expect(filterOrMessage).toHaveExplanation('done date is before 2023-01-02 (Monday)');
     });
 
     it('should explain date with explicit on', () => {
         const filterOrMessage = new DoneDateField().createFilterOrErrorMessage('done on 2024-01-02');
-        expect(filterOrMessage).toHaveExplanation('done date is 2024-01-02');
+        expect(filterOrMessage).toHaveExplanation('done date is 2024-01-02 (Tuesday)');
     });
 
     it('should explain date with implicit on', () => {
         const filterOrMessage = new DoneDateField().createFilterOrErrorMessage('done 2024-01-02');
-        expect(filterOrMessage).toHaveExplanation('done date is 2024-01-02');
+        expect(filterOrMessage).toHaveExplanation('done date is 2024-01-02 (Tuesday)');
     });
 
     it('should show value of relative dates', () => {
         const filterOrMessage = new DoneDateField().createFilterOrErrorMessage('done after today');
-        expect(filterOrMessage).toHaveExplanation('done date is after 2022-01-15');
+        expect(filterOrMessage).toHaveExplanation('done date is after 2022-01-15 (Saturday)');
     });
 });

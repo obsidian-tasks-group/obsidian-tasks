@@ -68,7 +68,7 @@ export abstract class DateField extends Field {
                     };
                     relative = '';
                 }
-                const actualDate = filterDate.format('YYYY-MM-DD');
+                const actualDate = filterDate.format('YYYY-MM-DD (dddd)');
                 const explanation = `${this.fieldName()} date is${relative} ${actualDate}`;
                 result.filter = new Filter(line, filterFunction, new Explanation(explanation));
             }
