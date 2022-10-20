@@ -770,7 +770,7 @@ describe('Query', () => {
             const explanation = query.explanation();
             const expected = `All of:
   description includes hello
-  due today`;
+  due date is today`;
             expect(explanation.asString()).toEqual(expected);
         });
     });

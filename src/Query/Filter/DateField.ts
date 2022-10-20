@@ -48,23 +48,28 @@ export abstract class DateField extends Field {
             if (!filterDate.isValid()) {
                 result.error = 'do not understand ' + this.fieldName() + ' date';
             } else {
+                let relative;
                 if (match[1] === 'before') {
                     filterFunction = (task: Task) => {
                         const date = this.date(task);
                         return date ? date.isBefore(filterDate) : this.filterResultIfFieldMissing();
                     };
+                    relative = ' ' + match[1];
                 } else if (match[1] === 'after') {
                     filterFunction = (task: Task) => {
                         const date = this.date(task);
                         return date ? date.isAfter(filterDate) : this.filterResultIfFieldMissing();
                     };
+                    relative = ' ' + match[1];
                 } else {
                     filterFunction = (task: Task) => {
                         const date = this.date(task);
                         return date ? date.isSame(filterDate) : this.filterResultIfFieldMissing();
                     };
+                    relative = '';
                 }
-                result.filter = new Filter(line, filterFunction, new Explanation(line));
+                const explanation = `${this.fieldName()} date is${relative} ${match[2]}`;
+                result.filter = new Filter(line, filterFunction, new Explanation(explanation));
             }
         } else {
             result.error = 'do not understand query filter (' + this.fieldName() + ' date)';
