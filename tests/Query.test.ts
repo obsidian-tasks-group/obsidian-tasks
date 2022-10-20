@@ -767,11 +767,19 @@ describe('Query', () => {
         it('should explain 2 filters', () => {
             const input = 'description includes hello\ndue 2012-01-23';
             const query = new Query({ source: input });
+
             const explanation = query.explanation();
             const expected = `All of:
   description includes hello
   due date is 2012-01-23 (Monday)`;
             expect(explanation.asString()).toEqual(expected);
+
+            const expectedDisplayText = `All of:
+  description includes hello
+  due 2012-01-23 =>
+    due date is 2012-01-23 (Monday)
+`;
+            expect(query.explainQuery()).toEqual(expectedDisplayText);
         });
     });
 

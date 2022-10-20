@@ -167,8 +167,7 @@ class QueryRenderChild extends MarkdownRenderChild {
         // TODO Add styling
         // TODO Support nicer display of nested queries (AND, OR, NOT etc) - perhaps bullet list?
 
-        const explanation = this.query.explanation();
-        const explanationAsString = explanation.asString();
+        const explanationAsString = this.query.explainQuery();
 
         const explanationsBlock = content.createEl('pre');
         explanationsBlock.setText('Explanation of query:\n\n' + explanationAsString);

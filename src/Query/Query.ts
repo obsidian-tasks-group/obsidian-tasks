@@ -116,6 +116,21 @@ export class Query implements IQuery {
         return Explanation.booleanAnd(result);
     }
 
+    public explainQuery(): string {
+        let result = 'All of:\n'; // TODO Remove duplication of text
+        for (let i = 0; i < this.filters.length; i++) {
+            const filter = this.filters[i];
+            const explanation = filter.explanation;
+            const unindentedExplanation = explanation.asString();
+            if (unindentedExplanation === filter.instruction) {
+                result += `  ${filter.instruction}\n`;
+            } else {
+                result += `  ${filter.instruction} =>\n${explanation.asString('    ')}\n`;
+            }
+        }
+        return result;
+    }
+
     public get limit(): number | undefined {
         return this._limit;
     }

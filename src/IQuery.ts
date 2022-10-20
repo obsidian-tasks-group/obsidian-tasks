@@ -64,4 +64,7 @@ export interface IQuery {
 
     // TODO Maybe rename to explainQuery
     explanation: () => Explanation;
+
+    // TODO Document
+    explainQuery: () => string;
 }
