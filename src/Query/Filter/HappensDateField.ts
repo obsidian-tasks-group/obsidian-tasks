@@ -2,8 +2,9 @@ import type { Moment } from 'moment';
 import type { Task } from '../../Task';
 import { DateParser } from '../DateParser';
 import { Sort } from '../Sort';
+import { Explanation } from '../Explain/Explanation';
 import { Field } from './Field';
-import { FilterOrErrorMessage } from './Filter';
+import { Filter, FilterOrErrorMessage } from './Filter';
 import { FilterInstructions } from './FilterInstructions';
 
 /**
@@ -49,19 +50,21 @@ export class HappensDateField extends Field {
             if (!filterDate.isValid()) {
                 result.error = 'do not understand happens date';
             } else {
+                let filterFunction;
                 if (happensMatch[1] === 'before') {
-                    result.filterFunction = (task: Task) => {
+                    filterFunction = (task: Task) => {
                         return this.dates(task).some((date) => date && date.isBefore(filterDate));
                     };
                 } else if (happensMatch[1] === 'after') {
-                    result.filterFunction = (task: Task) => {
+                    filterFunction = (task: Task) => {
                         return this.dates(task).some((date) => date && date.isAfter(filterDate));
                     };
                 } else {
-                    result.filterFunction = (task: Task) => {
+                    filterFunction = (task: Task) => {
                         return this.dates(task).some((date) => date && date.isSame(filterDate));
                     };
                 }
+                result.filter = new Filter(line, filterFunction, new Explanation(line));
             }
         } else {
             result.error = 'do not understand query filter (happens date)';
