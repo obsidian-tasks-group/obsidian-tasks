@@ -38,7 +38,7 @@ File locations:
 1. `root` (the top-level folder of the file that contains the task, that is, the first directory in the path, which will be `/` for files in root of the vault)
 1. `folder` (the folder to the file that contains the task, which will be `/` for files in root of the vault)
 1. `filename` (the filename of the file that contains the task, without the `.md` extension)
-    * Note that tasks from different notes with the same file name will be grouped together in the same group.
+    - Note that tasks from different notes with the same file name will be grouped together in the same group.
 
 > `root` grouping option was introduced in Tasks 1.11.0.
 
@@ -50,36 +50,36 @@ File contents:
 Task date properties:
 
 1. `start`
-   * The start date of the task, including the week-day, or `No start date`.
+   - The start date of the task, including the week-day, or `No start date`.
 1. `scheduled`
-    * The scheduled date of the task, including the week-day, or `No scheduled date`.
+    - The scheduled date of the task, including the week-day, or `No scheduled date`.
 1. `due`
-    * The due date of the task, including the week-day, or `No due date`.
+    - The due date of the task, including the week-day, or `No due date`.
 1. `done`
-    * The done date of the task, including the week-day, or `No done date`.
+    - The done date of the task, including the week-day, or `No done date`.
 1. `happens`
-    * The earliest of start date, scheduled date, and due date, including the week-day, or `No happens date` if none of those are set.
+    - The earliest of start date, scheduled date, and due date, including the week-day, or `No happens date` if none of those are set.
 
 > `happens` grouping option was introduced in Tasks 1.11.0.
 
 Task properties - other:
 
 1. `status` (Done or Todo, which is capitalized for visibility in the headings)
-    * Note that the Done group is displayed before the Todo group,
+    - Note that the Done group is displayed before the Todo group,
       which differs from the Sorting ordering of this property.
 1. `priority`
-    * The priority of the task, namely one of:
-        * `Priority 1: High`
-        * `Priority 2: Medium`
-        * `Priority 3: None`
-        * `Priority 4: Low`
+    - The priority of the task, namely one of:
+        - `Priority 1: High`
+        - `Priority 2: Medium`
+        - `Priority 3: None`
+        - `Priority 4: Low`
 1. `recurring`
-    * Whether the task is recurring: either `Recurring` or `Not Recurring`.
+    - Whether the task is recurring: either `Recurring` or `Not Recurring`.
 1. `recurrence`
-    * The recurrence rule of the task, for example `every week on Sunday`, or `None` for non-recurring tasks.
-    * Note that the text displayed is generated programmatically and standardised, and so may not exactly match the text in any manually typed tasks. For example, a task with `🔁 every Sunday` is grouped in `every week on Sunday`.
+    - The recurrence rule of the task, for example `every week on Sunday`, or `None` for non-recurring tasks.
+    - Note that the text displayed is generated programmatically and standardised, and so may not exactly match the text in any manually typed tasks. For example, a task with `🔁 every Sunday` is grouped in `every week on Sunday`.
 1. `tags`
-    * The tags of the tasks or `(No tags)`. If the task has multiple tags, it will show up under every tag.
+    - The tags of the tasks or `(No tags)`. If the task has multiple tags, it will show up under every tag.
 
 > `start`, `scheduled`, `due` and `done` grouping options were introduced in Tasks 1.7.0.
 >
@@ -95,9 +95,9 @@ The first group has the highest priority.
 
 Each subsequent `group by` will generate a new heading-level within the existing grouping:
 
-* First `group by` is displayed as `h4` headings
-* Second `group by` is displayed as `h5` headings
-* Third and subsequent `group by` are displayed as `h6` headings
+- First `group by` is displayed as `h4` headings
+- Second `group by` is displayed as `h5` headings
+- Third and subsequent `group by` are displayed as `h6` headings
 
 See the [screenshots below](#screenshots) for how this looks in practice.
 
