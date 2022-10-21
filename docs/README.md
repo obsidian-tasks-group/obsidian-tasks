@@ -1,5 +1,20 @@
 # Documentation for Obsidian Tasks
 
+<!-- toc -->
+## Contents
+
+- [Overview](#overview)
+- [Test documentation locally with Jekyll](#test-documentation-locally-with-jekyll)
+  - [Setup](#setup)
+  - [Development cycle](#development-cycle)
+- [Option 1: Running inside a Docker container](#option-1-running-inside-a-docker-container)
+  - [Prerequisites for using Docker](#prerequisites-for-using-docker)
+  - [Seeing the docs via Docker](#seeing-the-docs-via-docker)
+- [Option 2: Running without Docker](#option-2-running-without-docker)
+  - [Prerequisites for using installed Jekyll](#prerequisites-for-using-installed-jekyll)
+  - [Seeing the docs via installed Jekyll](#seeing-the-docs-via-installed-jekyll)
+- [Dependency Management and Updates for the Docs](#dependency-management-and-updates-for-the-docs)<!-- endToc -->
+
 ## Overview
 
 - For background, including which branch to work on, see ["Updating documentation" in CONTRIBUTING](../CONTRIBUTING.md#updating-documentation)
