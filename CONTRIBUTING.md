@@ -1,5 +1,38 @@
 # Contribution Guidelines Obsidian Tasks
 
+<!-- toc -->
+## Contents
+
+- [Thank you](#thank-you)
+- [Updating documentation](#updating-documentation)
+  - [Documentation and branches](#documentation-and-branches)
+  - [Version numbers in documentation](#version-numbers-in-documentation)
+  - [How the documentation is generated](#how-the-documentation-is-generated)
+- [Updating code](#updating-code)
+- [Local setup and workflow for changes to code and tests](#local-setup-and-workflow-for-changes-to-code-and-tests)
+  - [Setting up build environment](#setting-up-build-environment)
+  - [Local development](#local-development)
+- [Maintaining the tests](#maintaining-the-tests)
+  - [Writing Tests for New or Refactored Code](#writing-tests-for-new-or-refactored-code)
+    - [Think of it as testing user-visible features](#think-of-it-as-testing-user-visible-features)
+    - [Location of code](#location-of-code)
+    - [Then start writing tests](#then-start-writing-tests)
+  - [Snapshot Tests](#snapshot-tests)
+  - [Jest and the WebStorm IDE](#jest-and-the-webstorm-ide)
+  - [Test Coverage](#test-coverage)
+- [Dependency Upgrades and Repository Maintenance](#dependency-upgrades-and-repository-maintenance)
+  - [Overview of dependencies and `package.json`](#overview-of-dependencies-and-packagejson)
+  - [Thought-Process for Deciding Whether a Dependency Needs Manual Testing](#thought-process-for-deciding-whether-a-dependency-needs-manual-testing)
+  - [Dependency Groups](#dependency-groups)
+  - [Notes and Special Cases](#notes-and-special-cases)
+- [FAQs](#faqs)
+  - [How does Tasks handle status changes?](#how-does-tasks-handle-status-changes)
+  - [How do I test a GitHub build of the Tasks plugin?](#how-do-i-test-a-github-build-of-the-tasks-plugin)
+  - [How do I smoke-test the Tasks plugin?](#how-do-i-smoke-test-the-tasks-plugin)
+  - [How do I make a release?](#how-do-i-make-a-release)<!-- endToc -->
+
+## Thank you
+
 Thank you for wanting to contribute to Obsidian Tasks!
 Every contribution is much appreciated!
 
