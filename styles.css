@@ -78,7 +78,7 @@
 }
 
 .tasks-modal-section input[type=radio]:not(:checked) + label > span:first-child {
-    filter: grayscale(100%) brightness(2);
+    filter: grayscale(100%) opacity(60%);
 }
 
 .tasks-modal-section input[type=radio] + label > span:nth-child(2)::first-letter {
