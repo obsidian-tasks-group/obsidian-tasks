@@ -73,6 +73,16 @@
     margin-left: 1.5em;
 }
 
+.tasks-modal-section input[type=radio] + label {
+    border-radius: var(--input-radius);
+    padding: 2px 3px;
+}
+
+.tasks-modal-section input[type=radio]:focus + label {
+    box-shadow: 0 0 0 2px var(--background-modifier-border-focus);
+    border-color: var(--background-modifier-border-focus);
+}
+
 .tasks-modal-section input[type=radio] + label > span:nth-child(2) {
     display:inline-block;
 }
