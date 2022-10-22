@@ -135,7 +135,6 @@
         parsedDone = parseDate('done', editableTask.doneDate);
     }
 
-
     onMount(() => {
         const { globalFilter } = getSettings();
         const description = task.getDescriptionWithoutGlobalFilter();
@@ -174,17 +173,6 @@
             descriptionInput.focus();
         }, 10);
     });
-
-    const _onKeyup = (event: KeyboardEvent) => {
-        if (event.key && (event.altKey ||
-                document.activeElement?.id.startsWith('priority-'))) {
-            const priorityOption = priorityOptions.find(
-                option => option.label.charAt(0).toLowerCase() == event.key);
-            if (priorityOption) {
-                editableTask.priority = priorityOption.value;
-            }
-        }
-    }
 
     const _onSubmit = () => {
         const { globalFilter } = getSettings();
@@ -268,7 +256,7 @@
     };
 </script>
 
-<div class="tasks-modal" on:keyup={_onKeyup}>
+<div class="tasks-modal">
     <form on:submit|preventDefault={_onSubmit}>
         <div class="tasks-modal-section">
             <label for="description">Description</label>
@@ -287,11 +275,13 @@
             {#each priorityOptions as {value, label, symbol}}
                 <span></span> <!-- possible line break -->
                 <span class="tasks-modal-priority">
+                    <!-- svelte-ignore a11y-accesskey -->
                     <input
                         type="radio"
                         id="priority-{value}"
                         {value}
                         bind:group={editableTask.priority}
+                        accesskey={label.charAt(0).toLowerCase()}
                     />
                     <label for="priority-{value}">
                         <span>{symbol}</span>
