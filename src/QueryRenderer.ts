@@ -7,6 +7,7 @@ import { replaceTaskWithTasks } from './File';
 import { Query } from './Query/Query';
 import type { GroupHeading } from './Query/GroupHeading';
 import { TaskModal } from './TaskModal';
+import { Task as TaskModel } from './Task';
 import type { TasksEvents } from './TasksEvents';
 import type { Task } from './Task';
 
@@ -36,6 +37,9 @@ export class QueryRenderer {
     }
 }
 
+export type ExtendTaskHook = (listItem: HTMLLIElement, task: Task, api: object) => void
+export type ExtendParserHook = (line: string, layoutOptions: object) => boolean
+
 class QueryRenderChild extends MarkdownRenderChild {
     private readonly app: App;
     private readonly events: TasksEvents;
@@ -46,6 +50,9 @@ class QueryRenderChild extends MarkdownRenderChild {
 
     private renderEventRef: EventRef | undefined;
     private queryReloadTimeout: NodeJS.Timeout | undefined;
+
+    private extendTask: ExtendTaskHook[];
+    private extendParser: ExtendParserHook[];
 
     constructor({
         app,
@@ -66,18 +73,34 @@ class QueryRenderChild extends MarkdownRenderChild {
         this.events = events;
         this.source = source;
         this.filePath = filePath;
+        this.extendTask = [];
+        this.extendParser = [];
+
+        // Cache which plugins implement our extension hooks
+        // @ts-ignore
+        Object.keys(this.app.plugins.plugins).forEach((name) => {
+            // @ts-ignore
+            const plugin = this.app.plugins.plugins[name];
+            if (plugin.extendTask) {
+                this.extendTask.push(plugin.extendTask)
+            }
+
+            if (plugin.extendParser) {
+                this.extendParser.push(plugin.extendParser)
+            }
+        })
 
         // The engine is chosen on the basis of the code block language. Currently
         // there is only the main engine for the plugin, this allows others to be
         // added later.
         switch (this.containerEl.className) {
             case 'block-language-tasks':
-                this.query = new Query({ source });
+                this.query = new Query({ source, extensions: this.extendParser });
                 this.queryType = 'tasks';
                 break;
 
             default:
-                this.query = new Query({ source });
+                this.query = new Query({ source, extensions: this.extendParser });
                 this.queryType = 'tasks';
                 break;
         }
@@ -118,7 +141,7 @@ class QueryRenderChild extends MarkdownRenderChild {
         const millisecondsToMidnight = midnight.getTime() - now.getTime();
 
         this.queryReloadTimeout = setTimeout(() => {
-            this.query = new Query({ source: this.source });
+            this.query = new Query({ source: this.source, extensions: this.extendParser });
             // Process the current cache state:
             this.events.triggerRequestCacheUpdate(this.render.bind(this));
             this.reloadQueryAtMidnight();
@@ -199,6 +222,14 @@ class QueryRenderChild extends MarkdownRenderChild {
             if (!this.query.layoutOptions.hideEditButton) {
                 this.addEditButton(listItem, task);
             }
+
+            // Let plugins that implement the "extendTask" hook extend the
+            // current task
+            this.extendTask.forEach((extendTask: ExtendTaskHook) => extendTask(listItem, task, {
+                layoutOptions: this.query.layoutOptions,
+                Task: TaskModel,
+                replaceTaskWithTasks
+            }))
 
             taskList.appendChild(listItem);
         }

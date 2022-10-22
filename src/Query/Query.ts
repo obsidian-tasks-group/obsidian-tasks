@@ -6,6 +6,7 @@ import type { TaskGroups } from './TaskGroups';
 import { parseFilter } from './FilterParser';
 import { Group } from './Group';
 import type { Filter } from './Filter/Filter';
+import type { ExtendParserHook } from 'QueryRenderer';
 
 export type SortingProperty =
     | 'urgency'
@@ -69,7 +70,7 @@ export class Query implements IQuery {
 
     private readonly commentRegexp = /^#.*/;
 
-    constructor({ source }: { source: string }) {
+    constructor({ source, extensions }: { source: string, extensions: ExtendParserHook[] }) {
         this.source = source;
         source
             .split('\n')
@@ -97,6 +98,8 @@ export class Query implements IQuery {
                         // Comment lines are ignored
                         break;
                     case this.parseFilter(line):
+                        break;
+                    case this.parseExtensions(extensions, line):
                         break;
                     default:
                         this._error = `do not understand query: ${line}`;
@@ -222,5 +225,17 @@ export class Query implements IQuery {
         } else {
             this._error = 'do not understand query grouping';
         }
+    }
+    
+    private parseExtensions( extensions: ExtendParserHook[], line: string ): boolean {
+        let found = false;
+        // Let plugins that implement the "extendParse" hook parse the given
+        // line
+        extensions.forEach((extendParser: ExtendParserHook) => {
+            if (extendParser(line, this.layoutOptions)) {
+                found = true;
+            }
+        });
+        return found;
     }
 }
