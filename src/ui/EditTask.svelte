@@ -282,19 +282,22 @@
             />
         </div>
         <hr />
-        <div class="tasks-modal-section">
+        <div class="tasks-modal-section tasks-modal-priorities">
             <label for="priority-{editableTask.priority}">Priority</label>
             {#each priorityOptions as {value, label, symbol}}
-                <input
-                    type="radio"
-                    id="priority-{value}"
-                    {value}
-                    bind:group={editableTask.priority}
-                />
-                <label for="priority-{value}">
-                    <span>{symbol}</span>
-                    <span>{label}</span>
-                </label>
+                <span></span> <!-- possible line break -->
+                <span class="tasks-modal-priority">
+                    <input
+                        type="radio"
+                        id="priority-{value}"
+                        {value}
+                        bind:group={editableTask.priority}
+                    />
+                    <label for="priority-{value}">
+                        <span>{symbol}</span>
+                        <span>{label}</span>
+                    </label>
+                </span>
             {/each}
         </div>
         <hr />
