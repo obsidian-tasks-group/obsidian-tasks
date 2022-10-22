@@ -87,5 +87,5 @@
 }
 
 .tasks-modal-section input[type=radio]:checked + label > span:nth-child(2) {
-    text-shadow:0px 0px 1px #555;
+    text-shadow:0px 0px 1px var(--text-normal);
 }
