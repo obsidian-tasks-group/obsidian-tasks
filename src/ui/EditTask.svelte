@@ -174,6 +174,16 @@
         }, 10);
     });
 
+    const _onPriorityKeyup = (event: KeyboardEvent) => {
+        if (event.key && !event.altKey && !event.ctrlKey) {
+            const priorityOption = priorityOptions.find(
+                option => option.label.charAt(0).toLowerCase() == event.key);
+            if (priorityOption) {
+                editableTask.priority = priorityOption.value;
+            }
+        }
+    }
+
     const _onSubmit = () => {
         const { globalFilter } = getSettings();
         let description = editableTask.description.trim();
@@ -270,7 +280,7 @@
             />
         </div>
         <hr />
-        <div class="tasks-modal-section tasks-modal-priorities">
+        <div class="tasks-modal-section" on:keyup={_onPriorityKeyup}>
             <label for="priority-{editableTask.priority}">Priority</label>
             {#each priorityOptions as {value, label, symbol}}
                 <span></span> <!-- possible line break -->
