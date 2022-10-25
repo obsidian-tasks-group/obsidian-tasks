@@ -6,6 +6,7 @@
 - [Thank you](#thank-you)
 - [Updating documentation](#updating-documentation)
   - [Documentation and branches](#documentation-and-branches)
+  - [Screenshots in documentation](#screenshots-in-documentation)
   - [Version numbers in documentation](#version-numbers-in-documentation)
   - [How the documentation is generated](#how-the-documentation-is-generated)
 - [Updating code](#updating-code)
@@ -29,7 +30,8 @@
   - [How does Tasks handle status changes?](#how-does-tasks-handle-status-changes)
   - [How do I test a GitHub build of the Tasks plugin?](#how-do-i-test-a-github-build-of-the-tasks-plugin)
   - [How do I smoke-test the Tasks plugin?](#how-do-i-smoke-test-the-tasks-plugin)
-  - [How do I make a release?](#how-do-i-make-a-release)<!-- endToc -->
+  - [How do I make a release?](#how-do-i-make-a-release)
+  - [How do I update the Tables of Contents in CONTRIBUTING and similar?](#how-do-i-update-the-tables-of-contents-in-contributing-and-similar)<!-- endToc -->
 
 ## Thank you
 
@@ -50,6 +52,30 @@ When you create a PR, it should merge into the `gh-pages` branch as well.
 If you document an unreleased feature, you should update the documentation on `main` instead. Ideally together with the related code changes.
 If this is confusing, don't worry.
 We will help you make this right once you opened the PR.
+
+### Screenshots in documentation
+
+For readability and accessibility, images should be created:
+
+- Set the Obsidian window size to be around 1500 pixels wide about between 700 and 1100 pixels high.
+- Using the Default Obsidian theme.
+- In the Light colour scheme.
+- With a large font size.
+- With as little blank or dead space as possible around the area of focus.
+
+Saving images:
+
+- Save them in .PNG format.
+- Save them in [resources/screenshots/](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/resources/screenshots/).
+
+When embedding an image inside a documentation page, please link to the file on the `gh-pages` branch, so that the documentation and README refer to the most recent release, and include a brief summary underneath.
+
+For example, to embed the `acme.png` file in the documentation:
+
+```text
+![ACME Tasks](https://github.com/obsidian-tasks-group/obsidian-tasks/raw/gh-pages/resources/screenshots/acme.png)
+The `ACME` note has some tasks.
+```
 
 ### Version numbers in documentation
 
@@ -332,3 +358,19 @@ Follow the steps in `resources/sample_vaults/Tasks-Demo/Manual Testing/Smoke Tes
     - r/ObsidianMD on Reddit
     - Obsidian Forum Share & Showcase section
     - etc.
+
+### How do I update the Tables of Contents in CONTRIBUTING and similar?
+
+These are markdown files written for contributors, and intended to be viewed on GitHub.
+To make it easy to see their structure, they have a machine-generated Table of Contents ("ToC").
+
+The ToCs will eventually be automated automatically via GitHub Actions, but for now, the following needs to be done in order to update them:
+
+1. Install [MarkdownSnippets](https://github.com/SimonCropp/MarkdownSnippets), also known as `mdsnippets`
+2. Run:
+
+```bash
+mdsnippets && git add --renormalize . && yarn run lint:markdown
+```
+
+The background to this is in [PR #1248](https://github.com/obsidian-tasks-group/obsidian-tasks/pull/1248).
