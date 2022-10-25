@@ -1,3 +1,4 @@
+import type { ExtendParserHook } from 'QueryRenderer';
 import { LayoutOptions } from '../LayoutOptions';
 import type { Task } from '../Task';
 import type { IQuery } from '../IQuery';
@@ -6,7 +7,6 @@ import type { TaskGroups } from './TaskGroups';
 import { parseFilter } from './FilterParser';
 import { Group } from './Group';
 import type { Filter } from './Filter/Filter';
-import type { ExtendParserHook } from 'QueryRenderer';
 
 export type SortingProperty =
     | 'urgency'
@@ -70,7 +70,7 @@ export class Query implements IQuery {
 
     private readonly commentRegexp = /^#.*/;
 
-    constructor({ source, extensions }: { source: string, extensions: ExtendParserHook[] }) {
+    constructor({ source, extensions = [] }: { source: string; extensions?: ExtendParserHook[] }) {
         this.source = source;
         source
             .split('\n')
@@ -226,8 +226,8 @@ export class Query implements IQuery {
             this._error = 'do not understand query grouping';
         }
     }
-    
-    private parseExtensions( extensions: ExtendParserHook[], line: string ): boolean {
+
+    private parseExtensions(extensions: ExtendParserHook[], line: string): boolean {
         let found = false;
         // Let plugins that implement the "extendParse" hook parse the given
         // line
