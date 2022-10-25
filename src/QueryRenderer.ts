@@ -37,8 +37,8 @@ export class QueryRenderer {
     }
 }
 
-export type ExtendTaskHook = (listItem: HTMLLIElement, task: Task, api: object) => void
-export type ExtendParserHook = (line: string, layoutOptions: object) => boolean
+export type ExtendTaskHook = (listItem: HTMLLIElement, task: Task, api: object) => void;
+export type ExtendParserHook = (line: string, layoutOptions: object) => boolean;
 
 class QueryRenderChild extends MarkdownRenderChild {
     private readonly app: App;
@@ -82,13 +82,13 @@ class QueryRenderChild extends MarkdownRenderChild {
             // @ts-ignore
             const plugin = this.app.plugins.plugins[name];
             if (plugin.extendTask) {
-                this.extendTask.push(plugin.extendTask)
+                this.extendTask.push(plugin.extendTask);
             }
 
             if (plugin.extendParser) {
-                this.extendParser.push(plugin.extendParser)
+                this.extendParser.push(plugin.extendParser);
             }
-        })
+        });
 
         // The engine is chosen on the basis of the code block language. Currently
         // there is only the main engine for the plugin, this allows others to be
@@ -225,11 +225,13 @@ class QueryRenderChild extends MarkdownRenderChild {
 
             // Let plugins that implement the "extendTask" hook extend the
             // current task
-            this.extendTask.forEach((extendTask: ExtendTaskHook) => extendTask(listItem, task, {
-                layoutOptions: this.query.layoutOptions,
-                Task: TaskModel,
-                replaceTaskWithTasks
-            }))
+            this.extendTask.forEach((extendTask: ExtendTaskHook) =>
+                extendTask(listItem, task, {
+                    layoutOptions: this.query.layoutOptions,
+                    Task: TaskModel,
+                    replaceTaskWithTasks,
+                }),
+            );
 
             taskList.appendChild(listItem);
         }
