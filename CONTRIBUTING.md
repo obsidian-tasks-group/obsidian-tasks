@@ -5,6 +5,7 @@
 
 - [Thank you](#thank-you)
 - [Updating documentation](#updating-documentation)
+  - [Linking to other pages in the docs](#linking-to-other-pages-in-the-docs)
   - [Documentation and branches](#documentation-and-branches)
   - [Screenshots in documentation](#screenshots-in-documentation)
   - [Version numbers in documentation](#version-numbers-in-documentation)
@@ -43,6 +44,31 @@ Every contribution is much appreciated!
 The documentation resides under the `./docs` directory.
 It consists of markdown files, which [Jekyll](https://jekyllrb.com/) will transform into web pages that you can view at <https://obsidian-tasks-group.github.io/obsidian-tasks/> .
 In the simplest case, you can update the existing markdown file and create a pull request (PR) with your changes.
+
+### Linking to other pages in the docs
+
+Linking to other pages in the documentation is non-obvious and a bit tedious.
+
+Here are some examples to copy-and-paste:
+
+To pages:
+
+```text
+[‘Create or edit Task’ Modal]({{ site.baseurl }}{% link getting-started/create-or-edit-task.md %})
+[Dates]({{ site.baseurl }}{% link getting-started/dates.md %})
+[Filters]({{ site.baseurl }}{% link queries/filters.md %})
+[Global Filter]({{ site.baseurl }}{% link getting-started/global-filter.md %})
+[Priorities]({{ site.baseurl }}{% link getting-started/priority.md %})
+[Recurring Tasks]({{ site.baseurl }}{% link getting-started/recurring-tasks.md %})
+```
+
+To sections:
+
+```text
+[due]({{ site.baseurl }}{% link getting-started/dates.md %}#-due)
+[scheduled]({{ site.baseurl }}{% link getting-started/dates.md %}#-scheduled)
+[start]({{ site.baseurl }}{% link getting-started/dates.md %}#-start)
+```
 
 ### Documentation and branches
 
@@ -270,7 +296,7 @@ Look at the `package.json` entry for a package and search for which files import
   - `svelte-check` (but not other svelte things, which are used in the build system)
   - anything with `prettier`
   - `lefthook`
-  - anything with `jest` in it (but see [the note below on Dependency Groups](dependency-groups) for details).
+  - anything with `jest` in it (but see [the note below on Dependency Groups](#dependency-groups) for details).
 - For anything else, where and how is it being used? If it's only in tests, or only used by developers, no need to smoke test.
 
 ### Dependency Groups
