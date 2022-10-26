@@ -135,7 +135,7 @@ This is _not_ mandatory, but it helps improve the process and reduce unnecessary
 Once you want to propose your changes, create a PR and we'll have a look when we have time.
 Discussion will take place inside the PR.
 
-If you can, please add/update tests and documentation where appropriate.
+If you can, please add/update [tests](#maintaining-the-tests) and [documentation](#updating-documentation) where appropriate.
 
 ## Local setup and workflow for changes to code and tests
 
