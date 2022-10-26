@@ -39,17 +39,29 @@ Use `next tuesday` instead if you mean "next tuesday".
 
 When the day changes, relative dates like `due today` are re-evaluated so that the list stays up-to-date.
 
-### Validating dates
+### Finding Tasks with Invalid Dates
+
+> Validation of dates was introduced in Tasks 1.16.0.
 
 It is possible to accidentally use a non-existent date on a task signifier, such as `📅 2022-02-30`. February has at most 29 days.
 
-Such tasks look like they have a date, but that date will never be found. When viewed in Reading mode, they will be shown as:
+Such tasks look like they have a date, but that date will never be found. When viewed in Reading mode, the date will be shown as `Invalid date`.
 
-Any such mistakes can be found systematically with:
+Any such mistakes can be found systematically with this search:
 
     ```tasks
     (done date is invalid) OR (due date is invalid) OR (scheduled date is invalid) OR (start date is invalid)
     ```
+
+<div class="code-example" markdown="1">
+Warning
+{: .label .label-yellow }
+If the above search finds any tasks with invalid dates, they are best fixed by clicking on the backlink to navigate
+to the incorrect line, and fixing it by directly typing in the new date.
+
+If you use the 'Create or edit Task' Modal, it will discard the broken date, and there will be no information about
+the original, incorrect value.
+</div>
 
 ---
 
