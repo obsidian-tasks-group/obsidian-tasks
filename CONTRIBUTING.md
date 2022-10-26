@@ -5,8 +5,8 @@
 
 - [Thank you](#thank-you)
 - [Updating documentation](#updating-documentation)
-  - [Linking to other pages in the docs](#linking-to-other-pages-in-the-docs)
   - [Documentation and branches](#documentation-and-branches)
+  - [Linking to other pages in the docs](#linking-to-other-pages-in-the-docs)
   - [Screenshots in documentation](#screenshots-in-documentation)
   - [Version numbers in documentation](#version-numbers-in-documentation)
   - [How the documentation is generated](#how-the-documentation-is-generated)
@@ -45,6 +45,15 @@ The documentation resides under the `./docs` directory.
 It consists of markdown files, which [Jekyll](https://jekyllrb.com/) will transform into web pages that you can view at <https://obsidian-tasks-group.github.io/obsidian-tasks/> .
 In the simplest case, you can update the existing markdown file and create a pull request (PR) with your changes.
 
+### Documentation and branches
+
+For documentation changes to show up at <https://obsidian-tasks-group.github.io/obsidian-tasks/> , they must be in the `gh-pages` branch.
+If you want to see your changes available immediately and not only after the next release, you should make your changes on the `gh-pages` branch.
+When you create a PR, it should merge into the `gh-pages` branch as well.
+If you document an unreleased feature, you should update the documentation on `main` instead. Ideally together with the related code changes.
+If this is confusing, don't worry.
+We will help you make this right once you opened the PR.
+
 ### Linking to other pages in the docs
 
 Linking to other pages in the documentation is non-obvious and a bit tedious.
@@ -69,15 +78,6 @@ To sections:
 [scheduled]({{ site.baseurl }}{% link getting-started/dates.md %}#-scheduled)
 [start]({{ site.baseurl }}{% link getting-started/dates.md %}#-start)
 ```
-
-### Documentation and branches
-
-For documentation changes to show up at <https://obsidian-tasks-group.github.io/obsidian-tasks/> , they must be in the `gh-pages` branch.
-If you want to see your changes available immediately and not only after the next release, you should make your changes on the `gh-pages` branch.
-When you create a PR, it should merge into the `gh-pages` branch as well.
-If you document an unreleased feature, you should update the documentation on `main` instead. Ideally together with the related code changes.
-If this is confusing, don't worry.
-We will help you make this right once you opened the PR.
 
 ### Screenshots in documentation
 
