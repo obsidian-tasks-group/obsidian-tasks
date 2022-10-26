@@ -396,7 +396,7 @@ The ToCs will eventually be automated automatically via GitHub Actions, but for 
 2. Run:
 
 ```bash
-mdsnippets && git add --renormalize . && yarn run lint:markdown
+mdsnippets && yarn run lint:markdown && git add --renormalize .
 ```
 
 The background to this is in [PR #1248](https://github.com/obsidian-tasks-group/obsidian-tasks/pull/1248).
