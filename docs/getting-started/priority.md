@@ -24,5 +24,9 @@ The idea is that you can easily filter out unimportant tasks without needing to 
 - [ ] take out the trash 🔼
 ```
 
-Instead of adding the emoji manually, you can use the `Tasks: Create or edit` command when creating or editing a task.
-You will be able to select the priority from the options.
+Instead of adding the emoji manually, you can:
+
+- Use the `Tasks: Create or edit` command when creating or editing a task.
+  You will be able to select the priority from the options in the [‘Create or edit Task’ Modal]({{ site.baseurl }}{% link getting-started/create-or-edit-task.md %}).
+- Using [Intelligent Auto-Suggest]({{ site.baseurl }}{% link getting-started/auto-suggest.md %}),
+  start typing the first few characters of `high`, `medium` or `low`, and press <return> to accept the suggested signifier.
