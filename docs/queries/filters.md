@@ -191,6 +191,15 @@ For example:
 
 - `priority is (above|below)? (low|none|medium|high)`
 
+The available priorities are (from high to low):
+
+1. ⏫ for high priority
+2. 🔼 for medium priority
+3. use no signifier to indicate no priority
+4. 🔽 for low priority
+
+For more information, see [Priorities]({{ site.baseurl }}{% link getting-started/priority.md %}) .
+
 #### Examples
 
 {: .no_toc }
