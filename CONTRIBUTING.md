@@ -6,6 +6,7 @@
 - [Thank you](#thank-you)
 - [Updating documentation](#updating-documentation)
   - [Documentation and branches](#documentation-and-branches)
+  - [Adding Tables of Contents to rendered docs](#adding-tables-of-contents-to-rendered-docs)
   - [Linking to other pages in the docs](#linking-to-other-pages-in-the-docs)
   - [Screenshots in documentation](#screenshots-in-documentation)
   - [Version numbers in documentation](#version-numbers-in-documentation)
@@ -53,6 +54,25 @@ When you create a PR, it should merge into the `gh-pages` branch as well.
 If you document an unreleased feature, you should update the documentation on `main` instead. Ideally together with the related code changes.
 If this is confusing, don't worry.
 We will help you make this right once you opened the PR.
+
+### Adding Tables of Contents to rendered docs
+
+Add the following between the H1 and the first H2, to show a table of contents in a page on the published documentation.
+
+```text
+{: .no_toc }
+
+<details open markdown="block">
+  <summary>
+    Table of contents
+  </summary>
+  {: .text-delta }
+1. TOC
+{:toc}
+</details>
+
+---
+```
 
 ### Linking to other pages in the docs
 
