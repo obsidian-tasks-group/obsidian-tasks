@@ -87,3 +87,10 @@ Such filter could be:
 starts before tomorrow
 ```
 ````
+
+## Finding mistakes in dates
+
+Tasks does not automatically report any problem tasks that have invalid dates, such as on the 32nd day of a month. These task will silently not be found by date-based searches.
+
+However, it is possible to search for any tasks with invalid dates in your vault: see
+[Finding Tasks with Invalid Dates]({{ site.baseurl }}{% link queries/filters.md %}#finding-tasks-with-invalid-dates).
