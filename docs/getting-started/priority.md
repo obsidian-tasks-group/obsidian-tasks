@@ -24,4 +24,4 @@ The idea is that you can easily filter out unimportant tasks without needing to 
 ```
 
 Instead of adding the emoji manually, you can use the `Tasks: Create or edit` command when creating or editing a task.
-You will be able to select the priority from a dropdown.
+You will be able to select the priority from the options.
