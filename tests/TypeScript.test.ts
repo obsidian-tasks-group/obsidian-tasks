@@ -30,4 +30,9 @@ describe('TaskDate', () => {
         const date = TaskDate.fromMoment(dateAsMoment);
         expect(date.date!.isSame(dateAsMoment)).toStrictEqual(true);
     });
+
+    it('should construct a date from a null with TaskDate.fromMoment()', () => {
+        const date = TaskDate.fromMoment(null);
+        expect(date.date).toBeNull();
+    });
 });

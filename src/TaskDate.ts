@@ -13,9 +13,11 @@ export class TaskDate {
         }
     }
 
-    public static fromMoment(dateAsMoment: moment.Moment): TaskDate {
+    public static fromMoment(dateAsMoment: moment.Moment | null): TaskDate {
         const date = new TaskDate();
-        date.date = dateAsMoment;
+        if (dateAsMoment !== null) {
+            date.date = dateAsMoment;
+        }
         return date;
     }
 }
