@@ -20,4 +20,12 @@ export class TaskDate {
         }
         return date;
     }
+
+    public toString() {
+        if (this.date) {
+            return this.date.format(TaskRegularExpressions.dateFormat);
+        } else {
+            return '';
+        }
+    }
 }

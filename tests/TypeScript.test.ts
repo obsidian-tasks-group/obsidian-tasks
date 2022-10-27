@@ -35,4 +35,9 @@ describe('TaskDate', () => {
         const date = TaskDate.fromMoment(null);
         expect(date.date).toBeNull();
     });
+
+    it('should convert to string', () => {
+        expect(new TaskDate('1983-10-13').toString()).toStrictEqual('1983-10-13');
+        expect(new TaskDate(null).toString()).toStrictEqual('');
+    });
 });
