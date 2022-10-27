@@ -285,11 +285,10 @@
                 accesskey="t"
             />
         </div>
-        <div class="tasks-modal-section" on:keyup={_onPriorityKeyup}>
+        <div class="tasks-modal-section tasks-modal-priorities" on:keyup={_onPriorityKeyup}>
             <label for="priority-{editableTask.priority}">Priority</label>
             {#each priorityOptions as {value, label, symbol}}
-                <span></span> <!-- possible line break -->
-                <span class="tasks-modal-priority">
+                <span>
                     <!-- svelte-ignore a11y-accesskey -->
                     <input
                         type="radio"

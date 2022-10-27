@@ -59,8 +59,9 @@
     margin-bottom: 4px;
 }
 
-.tasks-modal input[type="text"] {
-    width: 100%;
+.tasks-modal .accesskey-first::first-letter, .tasks-modal .accesskey {
+    text-decoration: underline;
+    text-underline-offset: 1pt;
 }
 
 .tasks-modal-buttons {
@@ -73,46 +74,43 @@
     margin-left: 0.67em;
 }
 
-.tasks-modal-priority {
+.tasks-modal input[type="text"] {
+    width: 100%;
+}
+
+.tasks-modal-priorities {
+    display: grid;
+    grid-template-columns: 4em 5em 5em 7em 5em;
+    grid-column-gap: 1.33em;
+}
+
+.tasks-modal-priorities span {
     line-height: 1.41;
     white-space: nowrap;
 }
 
-.tasks-modal-priority input {
-    margin-left: 1.5em;
-}
-
-.tasks-modal-priority label {
+.tasks-modal-priorities label {
     border-radius: var(--input-radius);
     padding: 2px 3px;
 }
 
-.tasks-modal-priority input:focus + label {
+.tasks-modal-priorities input:focus + label {
     box-shadow: 0 0 0 2px var(--background-modifier-border-focus);
     border-color: var(--background-modifier-border-focus);
 }
 
-.tasks-modal-priority label > span:nth-child(2) {
-    display: inline-block;
+.tasks-modal-priorities input:checked + label > span:nth-child(2) {
+    font-weight: bold;
 }
 
-.tasks-modal-priority input:not(:checked) + label > span:first-child {
+.tasks-modal-priorities input:not(:checked) + label > span:first-child {
     filter: grayscale(100%) opacity(60%);
-}
-
-.tasks-modal .accesskey-first::first-letter, .tasks-modal .accesskey {
-    text-decoration: underline;
-    text-underline-offset: 1pt;
-}
-
-.tasks-modal-priority input:checked + label > span:nth-child(2) {
-    text-shadow: 0px 0px 1px var(--text-normal);
 }
 
 .tasks-modal-dates {
     display: grid;
     grid-template-columns: min-content auto;
-    column-gap: .67em;
+    column-gap: 1em;
     row-gap: 5px;
 }
 
@@ -141,6 +139,13 @@
 }
 
 @media (max-width: 649px) {
+    .tasks-modal-priorities {
+        grid-template-columns: 4em 7.5em 5em;
+        margin-bottom: -10px;
+    }
+    .tasks-modal-priorities > label {
+        grid-row: 1 / span 2;
+    }
     .tasks-modal-dates {
         grid-template-columns: 1fr;
     }
@@ -153,10 +158,26 @@
     .tasks-modal-dates > div {
         grid-column-end: 1;
     }
-    .tasks-modal-dates > label {
-        margin-bottom: 0;
-    }
     .tasks-modal-status {
         display: block;
+    }
+}
+
+@media (max-width: 399px) {
+    .tasks-modal-priorities {
+        grid-template-columns: 3em 7em;
+    }
+    .tasks-modal-priorities > label {
+        grid-row: 1 / span 4;
+    }
+}
+
+@media (max-width: 249px) {
+    .tasks-modal-priorities {
+        grid-template-columns: 5em;
+        margin-bottom: 0;
+    }
+    .tasks-modal-priorities > label {
+        grid-row: 1;
     }
 }
