@@ -130,11 +130,11 @@ describe('parsing', () => {
         // Assert
         expect(task).not.toBeNull();
         expect(task!.description).toEqual('Wobble #tag1 #tag2 #tag3 #tag4 #tag5 #tag6 #tag7 #tag8 #tag9 #tag10');
-        expect(task!.dueDate!.isSame(moment('022-07-02', 'YYYY-MM-DD')));
-        expect(task!.doneDate!.isSame(moment('022-07-02', 'YYYY-MM-DD')));
-        expect(task!.startDate!.isSame(moment('022-07-02', 'YYYY-MM-DD')));
+        expect(task!.dueDate!.isSame(moment('2022-07-02', 'YYYY-MM-DD')));
+        expect(task!.doneDate!.isSame(moment('2022-07-02', 'YYYY-MM-DD')));
+        expect(task!.startDate!.isSame(moment('2022-07-02', 'YYYY-MM-DD')));
         expect(task.startDateAsTaskDate.toString()).toStrictEqual('2022-07-02');
-        expect(task!.scheduledDate!.isSame(moment('022-07-02', 'YYYY-MM-DD')));
+        expect(task!.scheduledDate!.isSame(moment('2022-07-02', 'YYYY-MM-DD')));
         expect(task!.priority == Priority.High);
         expect(task!.tags).toStrictEqual([
             '#tag1',
