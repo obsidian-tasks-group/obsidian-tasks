@@ -12,4 +12,10 @@ export class TaskDate {
             this.date = window.moment(date, TaskRegularExpressions.dateFormat);
         }
     }
+
+    public static fromMoment(dateAsMoment: moment.Moment): TaskDate {
+        const date = new TaskDate();
+        date.date = dateAsMoment;
+        return date;
+    }
 }
