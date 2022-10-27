@@ -27,7 +27,7 @@ export class SettingsTab extends PluginSettingTab {
             .addText((text) => {
                 const settings = getSettings();
 
-                text.setPlaceholder('#task')
+                text.setPlaceholder('e.g. #task or TODO')
                     .setValue(settings.globalFilter)
                     .onChange(async (value) => {
                         updateSettings({ globalFilter: value });
