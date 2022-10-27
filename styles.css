@@ -170,16 +170,16 @@
 
 @media (max-width: 399px) {
     .tasks-modal-priorities {
-        grid-template-columns: 3em 7em;
+        grid-template-columns: 4em auto;
     }
     .tasks-modal-priorities > label {
         grid-row: 1 / span 4;
     }
 }
 
-@media (max-width: 249px) {
+@media (max-width: 259px) {
     .tasks-modal-priorities {
-        grid-template-columns: 5em;
+        grid-template-columns: 1fr;
         margin-bottom: 0;
     }
     .tasks-modal-priorities > label {
