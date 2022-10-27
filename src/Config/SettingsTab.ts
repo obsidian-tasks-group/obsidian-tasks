@@ -39,6 +39,9 @@ export class SettingsTab extends PluginSettingTab {
             .addText((text) => {
                 const settings = getSettings();
 
+                // I wanted to make this say 'for example, #task or TODO'
+                // but wasn't able to figure out how to make the text box
+                // wide enough for the whole string to be visible.
                 text.setPlaceholder('e.g. #task or TODO')
                     .setValue(settings.globalFilter)
                     .onChange(async (value) => {
