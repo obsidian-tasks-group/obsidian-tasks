@@ -76,6 +76,7 @@
 
 .tasks-modal label + input[type="checkbox"] {
     margin-left: 0.67em;
+    top: 2px;
 }
 
 .tasks-modal input[type="text"] {
