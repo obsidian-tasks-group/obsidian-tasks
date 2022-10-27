@@ -298,7 +298,7 @@
                         accesskey={label.charAt(0).toLowerCase()}
                     />
                     <label for="priority-{value}">
-                        <span>{symbol}</span>
+                        {#if symbol && symbol.charCodeAt(0) >= 0x100}<span>{symbol}</span>{/if}
                         <span class="accesskey-first">{label}</span>
                     </label>
                 </span>
