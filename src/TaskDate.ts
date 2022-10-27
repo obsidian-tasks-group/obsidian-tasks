@@ -9,11 +9,13 @@ export class TaskDate {
 
     /**
      * Construct a TaskDate from a string.
-     * @param date - a date, which must be in the format {@link TaskRegularExpressions.dateFormat}
+     * @param date - a null, or a date, which must be in the format {@link TaskRegularExpressions.dateFormat}
      */
-    public static fromString(date: string): TaskDate {
+    public static fromString(date: string | null): TaskDate {
         const result = new TaskDate();
-        result.date = window.moment(date, TaskRegularExpressions.dateFormat);
+        if (date !== null) {
+            result.date = window.moment(date, TaskRegularExpressions.dateFormat);
+        }
         return result;
     }
 }

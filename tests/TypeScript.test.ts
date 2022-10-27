@@ -18,4 +18,9 @@ describe('TaskDate', () => {
         // TODO Write out meaningful information if test fails:
         expect(date.date!.isSame(moment('2022-01-23', 'YYYY-MM-DD'))).toStrictEqual(true);
     });
+
+    it('should construct a date from a null', () => {
+        const date = TaskDate.fromString(null);
+        expect(date.date).toBeNull();
+    });
 });
