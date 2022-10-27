@@ -6,6 +6,7 @@ import { Recurrence } from './Recurrence';
 import { getSettings } from './Config/Settings';
 import { Urgency } from './Urgency';
 import { Sort } from './Query/Sort';
+import { TaskDate } from './TaskDate';
 
 /**
  * Collection of status types supported by the plugin.
@@ -141,6 +142,16 @@ export class Task {
     public readonly priority: Priority;
 
     public readonly startDate: Moment | null;
+    /* startDateAsTaskDate is a Temporary copy of startDate, as a StartDate.
+
+       This is to allow incremental migration of code using of the Moment-based start date
+       to use the new TaskDate-based start date instead.
+
+       This is a use of the Parallel Change refactoring pattern:
+        https://martinfowler.com/bliki/ParallelChange.html
+     */
+    public readonly startDateAsTaskDate: TaskDate;
+
     public readonly scheduledDate: Moment | null;
     public readonly dueDate: Moment | null;
     public readonly doneDate: Moment | null;
@@ -208,6 +219,7 @@ export class Task {
         this.priority = priority;
 
         this.startDate = startDate;
+        this.startDateAsTaskDate = TaskDate.fromMoment(startDate);
         this.scheduledDate = scheduledDate;
         this.dueDate = dueDate;
         this.doneDate = doneDate;

@@ -133,6 +133,7 @@ describe('parsing', () => {
         expect(task!.dueDate!.isSame(moment('022-07-02', 'YYYY-MM-DD')));
         expect(task!.doneDate!.isSame(moment('022-07-02', 'YYYY-MM-DD')));
         expect(task!.startDate!.isSame(moment('022-07-02', 'YYYY-MM-DD')));
+        expect(task.startDateAsTaskDate.toString()).toStrictEqual('2022-07-02');
         expect(task!.scheduledDate!.isSame(moment('022-07-02', 'YYYY-MM-DD')));
         expect(task!.priority == Priority.High);
         expect(task!.tags).toStrictEqual([
