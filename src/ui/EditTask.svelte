@@ -346,7 +346,7 @@
             />
             <code>{startDateSymbol} {@html parsedStartDate}</code>
             <div>
-                <label for="forwardOnly">Only <span class="accesskey">f</span>uture dates:</label>
+                <label for="forwardOnly">Only <span class="accesskey-first">future</span> dates:</label>
                 <!-- svelte-ignore a11y-accesskey -->
                 <input
                     bind:checked={editableTask.forwardOnly}

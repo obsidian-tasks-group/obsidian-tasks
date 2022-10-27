@@ -59,6 +59,10 @@
     margin-bottom: 4px;
 }
 
+.tasks-modal-section label > span {
+    display: inline-block;
+}
+
 .tasks-modal .accesskey-first::first-letter, .tasks-modal .accesskey {
     text-decoration: underline;
     text-underline-offset: 1pt;
