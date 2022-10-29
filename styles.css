@@ -114,14 +114,14 @@
 
 .tasks-modal-dates {
     display: grid;
-    grid-template-columns: min-content auto;
-    column-gap: 1em;
+    grid-template-columns: 5.5em auto;
+    column-gap: .5em;
     row-gap: 5px;
 }
 
 .tasks-modal-dates > label {
     grid-column: 1;
-    margin-top: 4px;
+    margin-top: 6px;
 }
 
 .tasks-modal-dates > input, .tasks-modal-dates > code {
