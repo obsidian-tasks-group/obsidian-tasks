@@ -3,21 +3,17 @@ import type { CachedMetadata, EventRef } from 'obsidian';
 import type { HeadingCache, ListItemCache, SectionCache } from 'obsidian';
 import { Mutex } from 'async-mutex';
 
-import type { Moment } from 'moment';
 import { Task } from './Task';
 import type { TasksEvents } from './TasksEvents';
 import { DateFallback } from './DateFallback';
 import { getSettings } from './Config/Settings';
+import { Lazy } from './lib/Lazy';
 
 export enum State {
     Cold = 'Cold',
     Initializing = 'Initializing',
     Warm = 'Warm',
 }
-
-type DateWrapper = {
-    date: Moment | null | undefined;
-};
 
 export class Cache {
     private readonly metadataCache: MetadataCache;
@@ -112,6 +108,8 @@ export class Cache {
     }
 
     private subscribeToVault(): void {
+        const { enableDateFallback } = getSettings();
+
         const createdEventReference = this.vault.on('create', (file: TAbstractFile) => {
             if (!(file instanceof TFile)) {
                 return;
@@ -144,15 +142,15 @@ export class Cache {
             }
 
             this.tasksMutex.runExclusive(() => {
-                // Wrapper so we can parse the filename on demand. Store the parsed date for the new path.
-                // Is set to a valid date or null at the first call.
-                const dateFallbackCache: DateWrapper = {
-                    date: undefined,
-                };
+                const fallbackDate = new Lazy(() => DateFallback.fromPath(file.path));
 
                 this.tasks = this.tasks.map((task: Task): Task => {
                     if (task.path === oldPath) {
-                        return this.updateTaskPath(task, file.path, dateFallbackCache);
+                        if (!enableDateFallback) {
+                            return new Task({ ...task, path: file.path });
+                        } else {
+                            return DateFallback.updateTaskPath(task, file.path, fallbackDate.value);
+                        }
                     } else {
                         return task;
                     }
@@ -162,48 +160,6 @@ export class Cache {
             });
         });
         this.vaultEventReferences.push(renamedEventReference);
-    }
-
-    private updateTaskPath(task: Task, newPath: string, dateWrapper: DateWrapper): Task {
-        const { enableDateFallback } = getSettings();
-
-        if (!enableDateFallback) {
-            // return quickly
-            return new Task({ ...task, path: newPath });
-        }
-
-        if (dateWrapper.date === undefined) {
-            dateWrapper.date = DateFallback.fromPath(newPath);
-        }
-
-        let scheduledDate = task.scheduledDate;
-        let scheduledDateIsInferred = task.scheduledDateIsInferred;
-
-        if (dateWrapper.date === null) {
-            if (scheduledDateIsInferred) {
-                // new file name doesn't contain a date
-                scheduledDateIsInferred = false;
-                scheduledDate = null;
-            } else {
-                // don't touch an explicitly set scheduled date
-            }
-        } else {
-            if (scheduledDateIsInferred) {
-                // update with date from new path
-                scheduledDate = dateWrapper.date;
-            } else if (scheduledDate === null && task.startDate === null && task.dueDate === null) {
-                // apply fallback
-                scheduledDate = dateWrapper.date;
-                scheduledDateIsInferred = true;
-            }
-        }
-
-        return new Task({
-            ...task,
-            path: newPath,
-            scheduledDate,
-            scheduledDateIsInferred,
-        });
     }
 
     private subscribeToEvents(): void {
@@ -286,8 +242,8 @@ export class Cache {
         const tasks: Task[] = [];
         const fileLines = fileContent.split('\n');
 
-        // lazily store date extracted from filename. The value is undefined until the filename has been parsed.
-        let dateFromFileName: Moment | null | undefined = undefined;
+        // Lazily store date extracted from filename to avoid parsing more than needed
+        const dateFromFileName = new Lazy(() => DateFallback.fromPath(file.path));
 
         // We want to store section information with every task so
         // that we can use that when we post process the markdown
@@ -308,11 +264,6 @@ export class Cache {
                     continue;
                 }
 
-                // only parse filename if needed
-                if (dateFromFileName === undefined) {
-                    dateFromFileName = DateFallback.fromPath(file.path);
-                }
-
                 const line = fileLines[listItem.position.start.line];
                 const task = Task.fromLine({
                     line,
@@ -320,7 +271,7 @@ export class Cache {
                     sectionStart: currentSection.position.start.line,
                     sectionIndex,
                     precedingHeader: Cache.getPrecedingHeader(listItem.position.start.line, fileCache.headings),
-                    fallbackDate: dateFromFileName,
+                    fallbackDate: dateFromFileName.value,
                 });
 
                 if (task !== null) {

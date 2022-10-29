@@ -6,6 +6,7 @@ import moment from 'moment';
 import { Task } from '../src/Task';
 import { resetSettings, updateSettings } from '../src/Config/Settings';
 import { DateFallback } from '../src/DateFallback';
+import { TaskBuilder } from './TestingTools/TaskBuilder';
 
 jest.mock('obsidian');
 window.moment = moment;
@@ -277,5 +278,97 @@ describe('parse task with date fallback', () => {
         expect(toggled.scheduledDate).not.toBeNull();
         expect(toggled.scheduledDate!.isSame(date('2022-10-22'))).toStrictEqual(true);
         expect(toggled.toFileLineString()).toBe('- [ ] this is a task');
+    });
+});
+
+describe('update fallback date when path is changed', () => {
+    beforeEach(() => {
+        updateSettings({ enableDateFallback: true });
+    });
+
+    afterEach(() => {
+        resetSettings();
+    });
+
+    type TestCase = {
+        description: string;
+        task: Task;
+        newPath: string;
+        expectedScheduledDate: Moment | null;
+        expectedIsInferred: boolean;
+    };
+
+    test.each<TestCase>([
+        {
+            description: 'it should update fallback date',
+            task: new TaskBuilder().scheduledDate('2022-10-28').scheduledDateIsInferred(true).build(),
+            newPath: '2022-10-29.md',
+            expectedScheduledDate: date('2022-10-29'),
+            expectedIsInferred: true,
+        },
+        {
+            description: 'it should use fallback if none before',
+            task: new TaskBuilder().build(),
+            newPath: '2022-10-29.md',
+            expectedScheduledDate: date('2022-10-29'),
+            expectedIsInferred: true,
+        },
+        {
+            description: 'it should not override explicit scheduled date',
+            task: new TaskBuilder().scheduledDate('2022-10-28').build(),
+            newPath: '2022-10-29.md',
+            expectedScheduledDate: date('2022-10-28'),
+            expectedIsInferred: false,
+        },
+        {
+            description: 'it should not use fallback if due date set',
+            task: new TaskBuilder().dueDate('2022-10-28').build(),
+            newPath: '2022-10-29.md',
+            expectedScheduledDate: null,
+            expectedIsInferred: false,
+        },
+        {
+            description: 'it should not use fallback if start date set',
+            task: new TaskBuilder().startDate('2022-10-28').build(),
+            newPath: '2022-10-29.md',
+            expectedScheduledDate: null,
+            expectedIsInferred: false,
+        },
+        {
+            description: 'it should remove existing fallback if none in new path',
+            task: new TaskBuilder().scheduledDate('2022-10-28').scheduledDateIsInferred(true).build(),
+            newPath: 'no-date.md',
+            expectedScheduledDate: null,
+            expectedIsInferred: false,
+        },
+        {
+            description: 'it should not infer dates if none present',
+            task: new TaskBuilder().build(),
+            newPath: 'no-date.md',
+            expectedScheduledDate: null,
+            expectedIsInferred: false,
+        },
+        {
+            description: 'it should keep explicit scheduled date',
+            task: new TaskBuilder().scheduledDate('2022-10-28').build(),
+            newPath: 'no-date.md',
+            expectedScheduledDate: date('2022-10-28'),
+            expectedIsInferred: false,
+        },
+    ])('update path: $description', ({ task, newPath, expectedScheduledDate, expectedIsInferred }: TestCase) => {
+        // Arrange
+        const fallbackDate = DateFallback.fromPath(newPath);
+
+        // Act
+        const updatedTask = DateFallback.updateTaskPath(task, newPath, fallbackDate);
+
+        // Assert
+        if (expectedScheduledDate === null) {
+            expect(updatedTask.scheduledDate).toBeNull();
+        } else {
+            expect(updatedTask.scheduledDate!.isSame(expectedScheduledDate)).toStrictEqual(true);
+        }
+
+        expect(updatedTask.scheduledDateIsInferred).toBe(expectedIsInferred);
     });
 });

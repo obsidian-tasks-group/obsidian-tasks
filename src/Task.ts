@@ -6,6 +6,7 @@ import { Recurrence } from './Recurrence';
 import { getSettings } from './Config/Settings';
 import { Urgency } from './Urgency';
 import { Sort } from './Query/Sort';
+import { DateFallback } from './DateFallback';
 
 /**
  * Collection of status types supported by the plugin.
@@ -395,7 +396,7 @@ export class Task {
         }
 
         // Infer the scheduled date from the file name if not set explicitly
-        if (scheduledDate === null && dueDate === null && startDate === null && fallbackDate !== null) {
+        if (DateFallback.canApplyFallback({ startDate, scheduledDate, dueDate }) && fallbackDate !== null) {
             scheduledDate = fallbackDate;
             scheduledDateIsInferred = true;
         }
