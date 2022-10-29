@@ -105,6 +105,18 @@ describe('extract date from filename', () => {
             expectedDate: '2022-10-22',
         },
         {
+            path: '2022-10-22 2022-10-29.md',
+            expectedDate: '2022-10-22',
+        },
+        {
+            path: '2022-10-22/2022-10-29.md',
+            expectedDate: '2022-10-29',
+        },
+        {
+            path: '2022/10-29.md',
+            expectedDate: null,
+        },
+        {
             path: 'folder/2022-10-22.md',
             dateFallbackFolders: ['folder'],
             expectedDate: '2022-10-22',
