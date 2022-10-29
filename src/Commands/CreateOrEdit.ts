@@ -22,14 +22,20 @@ export const createOrEdit = (checking: boolean, editor: Editor, view: View, app:
     const lineNumber = cursorPosition.line;
     const line = editor.getLine(lineNumber);
     const task = taskFromLine({ line, path });
+
+    // save the inferred scheduled to compare it later
     const inferredScheduledDate = task.scheduledDateIsInferred ? task.scheduledDate : null;
 
     const onSubmit = (updatedTasks: Task[]): void => {
         const serialized = updatedTasks
             .map((task: Task) => {
-                return inferredScheduledDate !== null && !inferredScheduledDate.isSame(task.scheduledDate, 'day')
-                    ? new Task({ ...task, scheduledDateIsInferred: false })
-                    : task;
+                if (inferredScheduledDate !== null && !inferredScheduledDate.isSame(task.scheduledDate, 'day')) {
+                    // if a fallback date was used before modification, and the scheduled date was modified, we have to mark
+                    // the scheduled date as not inferred anymore.
+                    task = new Task({ ...task, scheduledDateIsInferred: false });
+                }
+
+                return task;
             })
             .map((task: Task) => task.toFileLineString())
             .join('\n');
@@ -54,7 +60,7 @@ const taskFromLine = ({ line, path }: { line: string; path: string }): Task => {
         sectionStart: 0, // We don't need this to toggle it here in the editor.
         sectionIndex: 0, // We don't need this to toggle it here in the editor.
         precedingHeader: null, // We don't need this to toggle it here in the editor.
-        fallbackDate, // We want to show the user whether the scheduled date has been inferred
+        fallbackDate, // set the scheduled date from the filename, so it can be displayed in the dialog
     });
 
     if (task !== null) {
@@ -121,6 +127,7 @@ const taskFromLine = ({ line, path }: { line: string; path: string }): Task => {
         precedingHeader: null,
         tags: [],
         originalMarkdown: '',
+        // Not needed since the inferred status is always re-computed after submitting.
         scheduledDateIsInferred: false,
     });
 };

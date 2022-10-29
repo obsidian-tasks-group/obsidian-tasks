@@ -116,11 +116,18 @@ export class SettingsTab extends PluginSettingTab {
                     });
             });
 
-        const enabledInferredDatesSettings = new Setting(containerEl)
+        new Setting(containerEl)
             .setName('Use filename as date fallback')
-            .setDesc('Automatically schedule tasks at the date contained in the filename if no other date is set.');
+            .setDesc('Automatically schedule tasks at the date contained in the filename if no other date is set.')
+            .addToggle((toggle) => {
+                const settings = getSettings();
+                toggle.setValue(settings.enableDateFallback).onChange(async (value) => {
+                    updateSettings({ enableDateFallback: value });
+                    await this.plugin.saveSettings();
+                });
+            });
 
-        const inferredDateFoldersSettings = new Setting(containerEl)
+        new Setting(containerEl)
             .setName('Folders with date fallback')
             .setDesc('Leave empty if you want to use fallback everywhere, or enter a comma-separated list of folders.')
             .addText(async (input) => {
@@ -132,17 +139,6 @@ export class SettingsTab extends PluginSettingTab {
                     await this.plugin.saveSettings();
                 });
             });
-
-        enabledInferredDatesSettings.addToggle((toggle) => {
-            const settings = getSettings();
-            inferredDateFoldersSettings.settingEl.toggle(settings.enableDateFallback);
-
-            toggle.setValue(settings.enableDateFallback).onChange(async (value) => {
-                updateSettings({ enableDateFallback: value });
-                inferredDateFoldersSettings.settingEl.toggle(value);
-                await this.plugin.saveSettings();
-            });
-        });
     }
 
     private static parseCommaSeparatedFolders(input: string): string[] {
