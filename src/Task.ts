@@ -1,11 +1,12 @@
 import type { Moment } from 'moment';
-import { Component, MarkdownRenderer } from 'obsidian';
-import { replaceTaskWithTasks } from './File';
-import { LayoutOptions } from './LayoutOptions';
+import { LayoutOptions, TaskLayout } from './TaskLayout';
+import type { LayoutComponent } from './TaskLayout';
 import { Recurrence } from './Recurrence';
 import { getSettings } from './Config/Settings';
 import { Urgency } from './Urgency';
 import { Sort } from './Query/Sort';
+import { renderTaskLine } from './TaskLineRenderer';
+import type { TaskLineRenderDetails } from './TaskLineRenderer';
 
 /**
  * Collection of status types supported by the plugin.
@@ -420,93 +421,9 @@ export class Task {
         });
     }
 
-    public async toLi({
-        parentUlElement,
-        listIndex,
-        layoutOptions,
-        isFilenameUnique,
-    }: {
-        parentUlElement: HTMLElement;
-        /** The nth item in this list (including non-tasks). */
-        listIndex: number;
-        layoutOptions?: LayoutOptions;
-        isFilenameUnique?: boolean;
-    }): Promise<HTMLLIElement> {
-        const li: HTMLLIElement = parentUlElement.createEl('li');
-        li.addClasses(['task-list-item', 'plugin-tasks-list-item']);
-
-        let taskAsString = this.toString(layoutOptions);
-        const { globalFilter, removeGlobalFilter } = getSettings();
-        if (removeGlobalFilter) {
-            taskAsString = taskAsString.replace(globalFilter, '').trim();
-        }
-
-        const textSpan = li.createSpan();
-        textSpan.addClass('tasks-list-text');
-
-        await MarkdownRenderer.renderMarkdown(taskAsString, textSpan, this.path, null as unknown as Component);
-
-        // If the task is a block quote, the block quote wraps the p-tag that contains the content.
-        // In that case, we need to unwrap the p-tag *inside* the surrounding block quote.
-        // Otherwise, we unwrap the p-tag as a direct descendant of the textSpan.
-        const blockQuote = textSpan.querySelector('blockquote');
-        const directParentOfPTag = blockQuote ?? textSpan;
-
-        // Unwrap the p-tag that was created by the MarkdownRenderer:
-        const pElement = directParentOfPTag.querySelector('p');
-        if (pElement !== null) {
-            while (pElement.firstChild) {
-                directParentOfPTag.insertBefore(pElement.firstChild, pElement);
-            }
-            pElement.remove();
-        }
-
-        // Remove an empty trailing p-tag that the MarkdownRenderer appends when there is a block link:
-        textSpan.findAll('p').forEach((pElement) => {
-            if (!pElement.hasChildNodes()) {
-                pElement.remove();
-            }
-        });
-
-        // Remove the footnote that the MarkdownRenderer appends when there is a footnote in the task:
-        textSpan.findAll('.footnotes').forEach((footnoteElement) => {
-            footnoteElement.remove();
-        });
-
-        const checkbox = li.createEl('input');
-        checkbox.addClass('task-list-item-checkbox');
-        checkbox.type = 'checkbox';
-        if (this.status !== Status.TODO) {
-            checkbox.checked = true;
-            li.addClass('is-checked');
-        }
-        checkbox.onClickEvent((event: MouseEvent) => {
-            event.preventDefault();
-            // It is required to stop propagation so that obsidian won't write the file with the
-            // checkbox (un)checked. Obsidian would write after us and overwrite our change.
-            event.stopPropagation();
-
-            // Should be re-rendered as enabled after update in file.
-            checkbox.disabled = true;
-            const toggledTasks = this.toggle();
-            replaceTaskWithTasks({
-                originalTask: this,
-                newTasks: toggledTasks,
-            });
-        });
-
-        li.prepend(checkbox);
-
-        // Set these to be compatible with stock obsidian lists:
-        li.setAttr('data-task', this.originalStatusCharacter.trim()); // Trim to ensure empty attribute for space. Same way as obsidian.
-        li.setAttr('data-line', listIndex);
-        checkbox.setAttr('data-line', listIndex);
-
-        if (layoutOptions?.shortMode) {
-            this.addTooltip({ element: textSpan, isFilenameUnique });
-        }
-
-        return li;
+    // TODO: Possibly remove this and call TaskLineRenderer directly
+    public async toLi(renderDetails: TaskLineRenderDetails): Promise<HTMLLIElement> {
+        return renderTaskLine(this, renderDetails);
     }
 
     /**
@@ -517,62 +434,60 @@ export class Task {
      * @memberof Task
      */
     public toString(layoutOptions?: LayoutOptions): string {
-        layoutOptions = layoutOptions ?? new LayoutOptions();
-        let taskString = this.description;
-
-        if (!layoutOptions.hidePriority) {
-            let priority: string = '';
-
-            if (this.priority === Priority.High) {
-                priority = ' ' + prioritySymbols.High;
-            } else if (this.priority === Priority.Medium) {
-                priority = ' ' + prioritySymbols.Medium;
-            } else if (this.priority === Priority.Low) {
-                priority = ' ' + prioritySymbols.Low;
-            }
-
-            taskString += priority;
+        const taskLayout = new TaskLayout(layoutOptions);
+        let taskString = '';
+        for (const component of taskLayout.layoutComponents) {
+            taskString += this.componentToString(taskLayout, component);
         }
-
-        if (!layoutOptions.hideRecurrenceRule && this.recurrence) {
-            const recurrenceRule: string = layoutOptions.shortMode
-                ? ' ' + recurrenceSymbol
-                : ` ${recurrenceSymbol} ${this.recurrence.toText()}`;
-            taskString += recurrenceRule;
-        }
-
-        if (!layoutOptions.hideStartDate && this.startDate) {
-            const startDate: string = layoutOptions.shortMode
-                ? ' ' + startDateSymbol
-                : ` ${startDateSymbol} ${this.startDate.format(TaskRegularExpressions.dateFormat)}`;
-            taskString += startDate;
-        }
-
-        if (!layoutOptions.hideScheduledDate && this.scheduledDate) {
-            const scheduledDate: string = layoutOptions.shortMode
-                ? ' ' + scheduledDateSymbol
-                : ` ${scheduledDateSymbol} ${this.scheduledDate.format(TaskRegularExpressions.dateFormat)}`;
-            taskString += scheduledDate;
-        }
-
-        if (!layoutOptions.hideDueDate && this.dueDate) {
-            const dueDate: string = layoutOptions.shortMode
-                ? ' ' + dueDateSymbol
-                : ` ${dueDateSymbol} ${this.dueDate.format(TaskRegularExpressions.dateFormat)}`;
-            taskString += dueDate;
-        }
-
-        if (!layoutOptions.hideDoneDate && this.doneDate) {
-            const doneDate: string = layoutOptions.shortMode
-                ? ' ' + doneDateSymbol
-                : ` ${doneDateSymbol} ${this.doneDate.format(TaskRegularExpressions.dateFormat)}`;
-            taskString += doneDate;
-        }
-
-        const blockLink: string = this.blockLink ?? '';
-        taskString += blockLink;
-
         return taskString;
+    }
+
+    componentToString(layout: TaskLayout, component: LayoutComponent) {
+        switch (component) {
+            case 'description':
+                return this.description;
+            case 'priority': {
+                let priority: string = '';
+
+                if (this.priority === Priority.High) {
+                    priority = ' ' + prioritySymbols.High;
+                } else if (this.priority === Priority.Medium) {
+                    priority = ' ' + prioritySymbols.Medium;
+                } else if (this.priority === Priority.Low) {
+                    priority = ' ' + prioritySymbols.Low;
+                }
+                return priority;
+            }
+            case 'startDate':
+                if (!this.startDate) return '';
+                return layout.options.shortMode
+                    ? ' ' + startDateSymbol
+                    : ` ${startDateSymbol} ${this.startDate.format(TaskRegularExpressions.dateFormat)}`;
+            case 'scheduledDate':
+                if (!this.scheduledDate) return '';
+                return layout.options.shortMode
+                    ? ' ' + scheduledDateSymbol
+                    : ` ${scheduledDateSymbol} ${this.scheduledDate.format(TaskRegularExpressions.dateFormat)}`;
+            case 'doneDate':
+                if (!this.doneDate) return '';
+                return layout.options.shortMode
+                    ? ' ' + doneDateSymbol
+                    : ` ${doneDateSymbol} ${this.doneDate.format(TaskRegularExpressions.dateFormat)}`;
+            case 'dueDate':
+                if (!this.dueDate) return '';
+                return layout.options.shortMode
+                    ? ' ' + dueDateSymbol
+                    : ` ${dueDateSymbol} ${this.dueDate.format(TaskRegularExpressions.dateFormat)}`;
+            case 'recurrenceRule':
+                if (!this.recurrence) return '';
+                return layout.options.shortMode
+                    ? ' ' + recurrenceSymbol
+                    : ` ${recurrenceSymbol} ${this.recurrence.toText()}`;
+            case 'blockLink':
+                return this.blockLink ?? '';
+            default:
+                throw new Error(`Don't know how to render task component of type '${component}'`);
+        }
     }
 
     /**
@@ -780,80 +695,6 @@ export class Task {
         }
 
         return true;
-    }
-
-    private addTooltip({
-        element,
-        isFilenameUnique,
-    }: {
-        element: HTMLElement;
-        isFilenameUnique: boolean | undefined;
-    }): void {
-        element.addEventListener('mouseenter', () => {
-            const tooltip = element.createDiv();
-            tooltip.addClasses(['tooltip', 'mod-right']);
-
-            if (this.recurrence) {
-                const recurrenceDiv = tooltip.createDiv();
-                recurrenceDiv.setText(`${recurrenceSymbol} ${this.recurrence.toText()}`);
-            }
-
-            if (this.startDate) {
-                const startDateDiv = tooltip.createDiv();
-                startDateDiv.setText(
-                    Task.toTooltipDate({
-                        signifier: startDateSymbol,
-                        date: this.startDate,
-                    }),
-                );
-            }
-
-            if (this.scheduledDate) {
-                const scheduledDateDiv = tooltip.createDiv();
-                scheduledDateDiv.setText(
-                    Task.toTooltipDate({
-                        signifier: scheduledDateSymbol,
-                        date: this.scheduledDate,
-                    }),
-                );
-            }
-
-            if (this.dueDate) {
-                const dueDateDiv = tooltip.createDiv();
-                dueDateDiv.setText(
-                    Task.toTooltipDate({
-                        signifier: dueDateSymbol,
-                        date: this.dueDate,
-                    }),
-                );
-            }
-
-            if (this.doneDate) {
-                const doneDateDiv = tooltip.createDiv();
-                doneDateDiv.setText(
-                    Task.toTooltipDate({
-                        signifier: doneDateSymbol,
-                        date: this.doneDate,
-                    }),
-                );
-            }
-
-            const linkText = this.getLinkText({ isFilenameUnique });
-            if (linkText) {
-                const backlinkDiv = tooltip.createDiv();
-                backlinkDiv.setText(`🔗 ${linkText}`);
-            }
-
-            element.addEventListener('mouseleave', () => {
-                tooltip.remove();
-            });
-        });
-    }
-
-    private static toTooltipDate({ signifier, date }: { signifier: string; date: Moment }): string {
-        return `${signifier} ${date.format(TaskRegularExpressions.dateFormat)} (${date.from(
-            window.moment().startOf('day'),
-        )})`;
     }
 
     /**
