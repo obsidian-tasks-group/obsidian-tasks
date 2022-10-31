@@ -118,7 +118,12 @@ export class SettingsTab extends PluginSettingTab {
 
         new Setting(containerEl)
             .setName('Provide access keys in dialogs')
-            .setDesc('Whether Obsidian Tasks should provide keyboard shortcuts for form controls in dialog boxes.')
+            .setDesc(
+                'If the access keys (keyboard shortcuts) for various controls' +
+                    ' in dialog boxes conflict with system keyboard shortcuts' +
+                    ' or assistive technology functionality that is important for you,' +
+                    ' you may want to deactivate them here.',
+            )
             .addToggle((toggle) => {
                 const settings = getSettings();
                 toggle.setValue(settings.provideAccessKeys).onChange(async (value) => {
