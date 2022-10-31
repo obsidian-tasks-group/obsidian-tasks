@@ -105,7 +105,7 @@ export abstract class DateField extends Field {
         const actualDate = filterDate.format('YYYY-MM-DD (dddd)');
         let result = `${fieldName} date is${relationshipPrefixedWithSpace} ${actualDate}`;
         if (filterResultIfFieldMissing) {
-            result += ' OR no start date';
+            result += ` OR no ${fieldName} date`;
         }
         return result;
     }
