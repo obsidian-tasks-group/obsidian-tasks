@@ -6,7 +6,6 @@ import type { TaskGroups } from './TaskGroups';
 import { parseFilter } from './FilterParser';
 import { Group } from './Group';
 import type { Filter } from './Filter/Filter';
-import { Explanation } from './Explain/Explanation';
 
 export type SortingProperty =
     | 'urgency'
@@ -109,18 +108,11 @@ export class Query implements IQuery {
             });
     }
 
-    public explanation(): Explanation {
+    public explainQuery(): string {
         // TODO Include limit, if any
         // TODO Include global filter, if any
         // TODO State today's date (and maybe weekday)
-        const result: Explanation[] = [];
-        for (let i = 0; i < this.filters.length; i++) {
-            result.push(this.filters[i].explanation);
-        }
-        return Explanation.booleanAnd(result);
-    }
 
-    public explainQuery(): string {
         let result = 'All of:\n'; // TODO Remove duplication of text
         for (let i = 0; i < this.filters.length; i++) {
             if (i > 0) result += '\n';

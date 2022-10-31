@@ -767,11 +767,6 @@ describe('Query', () => {
             const input = 'description includes hello';
             const query = new Query({ source: input });
 
-            const explanation = query.explanation();
-            const expected = `All of:
-  description includes hello`;
-            expect(explanation.asString()).toEqual(expected);
-
             const expectedDisplayText = `All of:
   description includes hello
 `;
@@ -781,12 +776,6 @@ describe('Query', () => {
         it('should explain 2 filters', () => {
             const input = 'description includes hello\ndue 2012-01-23';
             const query = new Query({ source: input });
-
-            const explanation = query.explanation();
-            const expected = `All of:
-  description includes hello
-  due date is 2012-01-23 (Monday)`;
-            expect(explanation.asString()).toEqual(expected);
 
             const expectedDisplayText = `All of:
   description includes hello
