@@ -90,6 +90,8 @@
         return `<i>invalid ${type} date</i>`;
     }
 
+    $: accesskey = (key: string) => withAccessKeys ? key : null;
+
     $: {
         editableTask.startDate = doAutocomplete(editableTask.startDate);
         parsedStartDate = parseDate(
@@ -273,9 +275,9 @@
 </script>
 
 <div class="tasks-modal">
-    <form on:submit|preventDefault={_onSubmit}>
+    <form on:submit|preventDefault={_onSubmit} class:with-accesskeys="{withAccessKeys}">
         <div class="tasks-modal-section">
-            <label for="description">Descrip<span class:accesskey="{withAccessKeys}">t</span>ion</label>
+            <label for="description">Descrip<span class="accesskey">t</span>ion</label>
             <!-- svelte-ignore a11y-accesskey -->
             <input
                 bind:value={editableTask.description}
@@ -284,7 +286,7 @@
                 type="text"
                 class="tasks-modal-description"
                 placeholder="Take out the trash"
-                accesskey={withAccessKeys ? "t" : null}
+                accesskey={accesskey("t")}
             />
         </div>
         <div class="tasks-modal-section tasks-modal-priorities" on:keyup={_onPriorityKeyup}>
@@ -297,65 +299,68 @@
                         id="priority-{value}"
                         {value}
                         bind:group={editableTask.priority}
-                        accesskey={withAccessKeys ? label.charAt(0).toLowerCase() : null}
+                        accesskey={accesskey(label.charAt(0).toLowerCase())}
                     />
                     <label for="priority-{value}">
-                        {#if symbol && symbol.charCodeAt(0) >= 0x100}<span>{symbol}</span>{/if}
-                        <span class:accesskey-first="{withAccessKeys}">{label}</span>
+                        <span class="accesskey-first">{label}</span>
+                        {#if symbol && symbol.charCodeAt(0) >= 0x100}
+                            <span>{symbol}</span>
+                        {/if}
                     </label>
                 </span>
             {/each}
         </div>
         <div class="tasks-modal-section tasks-modal-dates">
-            <label for="recurrence" class:accesskey-first="{withAccessKeys}">Recurs</label>
+            <label for="recurrence" class="accesskey-first">Recurs</label>
             <!-- svelte-ignore a11y-accesskey -->
             <input
                 bind:value={editableTask.recurrenceRule}
                 id="description"
                 type="text"
                 placeholder="Try 'every 2 weeks on Thursday'."
-                accesskey={withAccessKeys ? "r" : null}
+                accesskey={accesskey("r")}
             />
             <code>{recurrenceSymbol} {@html parsedRecurrence}</code>
-            <label for="due" class:accesskey-first="{withAccessKeys}">Due</label>
+            <label for="due" class="accesskey-first">Due</label>
             <!-- svelte-ignore a11y-accesskey -->
             <input
                 bind:value={editableTask.dueDate}
                 id="due"
                 type="text"
                 placeholder={datePlaceholder}
-                accesskey={withAccessKeys ? "d" : null}
+                accesskey={accesskey("d")}
             />
             <code>{dueDateSymbol} {@html parsedDueDate}</code>
-            <label for="scheduled" class:accesskey-first="{withAccessKeys}">Scheduled</label>
+            <label for="scheduled" class="accesskey-first">Scheduled</label>
             <!-- svelte-ignore a11y-accesskey -->
             <input
                 bind:value={editableTask.scheduledDate}
                 id="scheduled"
                 type="text"
                 placeholder={datePlaceholder}
-                accesskey={withAccessKeys ? "s" : null}
+                accesskey={accesskey("s")}
             />
             <code>{scheduledDateSymbol} {@html parsedScheduledDate}</code>
-            <label for="start">St<span class:accesskey="{withAccessKeys}">a</span>rt</label>
+            <label for="start">St<span class="accesskey">a</span>rt</label>
             <!-- svelte-ignore a11y-accesskey -->
             <input
                 bind:value={editableTask.startDate}
                 id="start"
                 type="text"
                 placeholder={datePlaceholder}
-                accesskey={withAccessKeys ? "a" : null}
+                accesskey={accesskey("a")}
             />
             <code>{startDateSymbol} {@html parsedStartDate}</code>
             <div>
-                <label for="forwardOnly">Only <span class:accesskey-first="{withAccessKeys}">future</span> dates:</label>
+                <label for="forwardOnly">Only
+                    <span class="accesskey-first">future</span> dates:</label>
                 <!-- svelte-ignore a11y-accesskey -->
                 <input
                     bind:checked={editableTask.forwardOnly}
                     id="forwardOnly"
                     type="checkbox"
                     class="task-list-item-checkbox tasks-modal-checkbox"
-                    accesskey={withAccessKeys ? "f" : null}
+                    accesskey={accesskey("f")}
                 />
             </div>
         </div>
