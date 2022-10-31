@@ -93,21 +93,29 @@ describe('explain happens date queries', () => {
 
     it('should explain date before', () => {
         const filterOrMessage = new HappensDateField().createFilterOrErrorMessage('happens before 2023-01-02');
-        expect(filterOrMessage).toHaveExplanation('due, start or scheduled date is before 2023-01-02 (Monday)');
+        expect(filterOrMessage).toHaveExplanation(
+            'due, start or scheduled date is before 2023-01-02 (Monday 2nd January 2023)',
+        );
     });
 
     it('should explain date with explicit on', () => {
         const filterOrMessage = new HappensDateField().createFilterOrErrorMessage('happens on 2024-01-02');
-        expect(filterOrMessage).toHaveExplanation('due, start or scheduled date is 2024-01-02 (Tuesday)');
+        expect(filterOrMessage).toHaveExplanation(
+            'due, start or scheduled date is 2024-01-02 (Tuesday 2nd January 2024)',
+        );
     });
 
     it('should explain date with implicit on', () => {
         const filterOrMessage = new HappensDateField().createFilterOrErrorMessage('happens 2024-01-02');
-        expect(filterOrMessage).toHaveExplanation('due, start or scheduled date is 2024-01-02 (Tuesday)');
+        expect(filterOrMessage).toHaveExplanation(
+            'due, start or scheduled date is 2024-01-02 (Tuesday 2nd January 2024)',
+        );
     });
 
     it('should show value of relative dates', () => {
         const filterOrMessage = new HappensDateField().createFilterOrErrorMessage('happens after today');
-        expect(filterOrMessage).toHaveExplanation('due, start or scheduled date is after 2022-01-15 (Saturday)');
+        expect(filterOrMessage).toHaveExplanation(
+            'due, start or scheduled date is after 2022-01-15 (Saturday 15th January 2022)',
+        );
     });
 });

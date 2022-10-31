@@ -47,11 +47,11 @@ describe('due date', () => {
 describe('explain due date queries', () => {
     it('should explain explicit date', () => {
         const filterOrMessage = new DueDateField().createFilterOrErrorMessage('due before 2023-01-02');
-        expect(filterOrMessage).toHaveExplanation('due date is before 2023-01-02 (Monday)');
+        expect(filterOrMessage).toHaveExplanation('due date is before 2023-01-02 (Monday 2nd January 2023)');
     });
 
     it('implicit "on" gets added to explanation', () => {
         const filterOrMessage = new DueDateField().createFilterOrErrorMessage('due 2023-01-02');
-        expect(filterOrMessage).toHaveExplanation('due date is 2023-01-02 (Monday)');
+        expect(filterOrMessage).toHaveExplanation('due date is 2023-01-02 (Monday 2nd January 2023)');
     });
 });
