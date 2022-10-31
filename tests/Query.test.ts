@@ -761,7 +761,13 @@ describe('Query', () => {
     });
 
     describe('explanations', () => {
-        // TODO Test with no filters
+        it('should explain 0 filters', () => {
+            const input = '';
+            const query = new Query({ source: input });
+
+            const expectedDisplayText = 'No filters supplied. All tasks will match the query.';
+            expect(query.explainQuery()).toEqual(expectedDisplayText);
+        });
 
         it('should explain 1 filter', () => {
             const input = 'description includes hello';

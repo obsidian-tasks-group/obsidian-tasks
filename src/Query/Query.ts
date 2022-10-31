@@ -113,8 +113,13 @@ export class Query implements IQuery {
         // TODO Include global filter, if any
         // TODO State today's date (and maybe weekday)
 
-        let result = 'All of:\n'; // TODO Remove duplication of text
-        for (let i = 0; i < this.filters.length; i++) {
+        const numberOfFilters = this.filters.length;
+        if (numberOfFilters === 0) {
+            return 'No filters supplied. All tasks will match the query.';
+        }
+
+        let result = 'All of:\n';
+        for (let i = 0; i < numberOfFilters; i++) {
             if (i > 0) result += '\n';
             const filter = this.filters[i];
             const explanation = filter.explanation;
