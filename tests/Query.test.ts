@@ -763,7 +763,20 @@ describe('Query', () => {
     describe('explanations', () => {
         // TODO Test with no filters
 
-        // TODO Test with 1 filter
+        it('should explain 1 filter', () => {
+            const input = 'description includes hello';
+            const query = new Query({ source: input });
+
+            const explanation = query.explanation();
+            const expected = `All of:
+  description includes hello`;
+            expect(explanation.asString()).toEqual(expected);
+
+            const expectedDisplayText = `All of:
+  description includes hello
+`;
+            expect(query.explainQuery()).toEqual(expectedDisplayText);
+        });
 
         it('should explain 2 filters', () => {
             const input = 'description includes hello\ndue 2012-01-23';
