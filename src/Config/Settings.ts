@@ -8,6 +8,7 @@ export interface Settings {
     autoSuggestInEditor: boolean;
     autoSuggestMinMatch: number;
     autoSuggestMaxItems: number;
+    provideAccessKeys: boolean;
 
     // Collection of feature flag IDs and their state.
     features: FeatureFlag;
@@ -20,6 +21,7 @@ const defaultSettings: Settings = {
     autoSuggestInEditor: true,
     autoSuggestMinMatch: 0,
     autoSuggestMaxItems: 6,
+    provideAccessKeys: true,
     features: Feature.settingsFlags,
 };
 

@@ -63,7 +63,8 @@
     display: inline-block;
 }
 
-.tasks-modal .accesskey-first::first-letter, .tasks-modal .accesskey {
+.tasks-modal .with-accesskeys .accesskey-first::first-letter,
+.tasks-modal .with-accesskeys .accesskey {
     text-decoration: underline;
     text-underline-offset: 1pt;
 }
@@ -104,11 +105,11 @@
     border-color: var(--background-modifier-border-focus);
 }
 
-.tasks-modal-priorities input:checked + label > span:nth-child(2) {
+.tasks-modal-priorities input:checked + label > span:first-child {
     font-weight: bold;
 }
 
-.tasks-modal-priorities input:not(:checked) + label > span:first-child {
+.tasks-modal-priorities input:not(:checked) + label > span:nth-child(2) {
     filter: grayscale(100%) opacity(60%);
 }
 
