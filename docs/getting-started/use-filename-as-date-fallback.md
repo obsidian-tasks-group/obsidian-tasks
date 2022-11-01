@@ -82,7 +82,7 @@ Examples:
 | Folders setting   | Matching files                                                                          | Not matching                               |
 | ----------------- | --------------------------------------------------------------------------------------- | ------------------------------------------ |
 | (empty)           | `20221022.md`<br/>`daily/20221012.md`                                                   |                                            |
-| `daily`           | `daily/2022-10-12.md`<br/>`daily/notes/2022-10-12.md`                                  | `20221022.md`<br/>`meetings/2022-10-12.md` |
+| `daily`           | `daily/2022-10-12.md`<br/>`daily/notes/2022-10-12.md`                                   | `20221022.md`<br/>`meetings/2022-10-12.md` |
 | `daily,prj/daily` | `daily/2022-10-12.md`<br/>`prj/daily/2022-10-12.md`<br/>`prj/daily/notes/2022-06-12.md` | `20221022.md`<br/>`meetings/2022-10-12.md` |
 
 <div class="code-example" markdown="1">
