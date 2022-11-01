@@ -70,7 +70,7 @@ meetings/rd. 2022-09-07.md
 
 The following image shows the two settings relating to this feature:
 
-![Date fallback settings](https://github.com/obsidian-tasks-group/obsidian-tasks/raw/date-fallback-docs/resources/screenshots/settings-use-filename-for-date.png)
+![Date fallback settings](https://github.com/obsidian-tasks-group/obsidian-tasks/raw/gh-pages/resources/screenshots/settings-use-filename-for-date.png)
 
 ### Folders setting
 
