@@ -8,6 +8,7 @@ export interface Settings {
     autoSuggestInEditor: boolean;
     autoSuggestMinMatch: number;
     autoSuggestMaxItems: number;
+    provideAccessKeys: boolean;
     enableDateFallback: boolean;
     dateFallbackFolders: string[];
 
@@ -22,6 +23,7 @@ const defaultSettings: Settings = {
     autoSuggestInEditor: true,
     autoSuggestMinMatch: 0,
     autoSuggestMaxItems: 6,
+    provideAccessKeys: true,
     enableDateFallback: false,
     dateFallbackFolders: [],
     features: Feature.settingsFlags,

@@ -117,6 +117,22 @@ export class SettingsTab extends PluginSettingTab {
             });
 
         new Setting(containerEl)
+            .setName('Provide access keys in dialogs')
+            .setDesc(
+                'If the access keys (keyboard shortcuts) for various controls' +
+                    ' in dialog boxes conflict with system keyboard shortcuts' +
+                    ' or assistive technology functionality that is important for you,' +
+                    ' you may want to deactivate them here.',
+            )
+            .addToggle((toggle) => {
+                const settings = getSettings();
+                toggle.setValue(settings.provideAccessKeys).onChange(async (value) => {
+                    updateSettings({ provideAccessKeys: value });
+                    await this.plugin.saveSettings();
+                });
+            });
+
+        new Setting(containerEl)
             .setName('Use filename as date fallback')
             .setDesc('Automatically schedule tasks at the date contained in the filename if no other date is set.')
             .addToggle((toggle) => {

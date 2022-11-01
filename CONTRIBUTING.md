@@ -6,6 +6,8 @@
 - [Thank you](#thank-you)
 - [Updating documentation](#updating-documentation)
   - [Documentation and branches](#documentation-and-branches)
+  - [Adding Tables of Contents to rendered docs](#adding-tables-of-contents-to-rendered-docs)
+  - [Linking to other pages in the docs](#linking-to-other-pages-in-the-docs)
   - [Screenshots in documentation](#screenshots-in-documentation)
   - [Version numbers in documentation](#version-numbers-in-documentation)
   - [How the documentation is generated](#how-the-documentation-is-generated)
@@ -52,6 +54,50 @@ When you create a PR, it should merge into the `gh-pages` branch as well.
 If you document an unreleased feature, you should update the documentation on `main` instead. Ideally together with the related code changes.
 If this is confusing, don't worry.
 We will help you make this right once you opened the PR.
+
+### Adding Tables of Contents to rendered docs
+
+Add the following between the H1 and the first H2, to show a table of contents in a page on the published documentation.
+
+```text
+{: .no_toc }
+
+<details open markdown="block">
+  <summary>
+    Table of contents
+  </summary>
+  {: .text-delta }
+1. TOC
+{:toc}
+</details>
+
+---
+```
+
+### Linking to other pages in the docs
+
+Linking to other pages in the documentation is non-obvious and a bit tedious.
+
+Here are some examples to copy-and-paste:
+
+To pages:
+
+```text
+[‘Create or edit Task’ Modal]({{ site.baseurl }}{% link getting-started/create-or-edit-task.md %})
+[Dates]({{ site.baseurl }}{% link getting-started/dates.md %})
+[Filters]({{ site.baseurl }}{% link queries/filters.md %})
+[Global Filter]({{ site.baseurl }}{% link getting-started/global-filter.md %})
+[Priorities]({{ site.baseurl }}{% link getting-started/priority.md %})
+[Recurring Tasks]({{ site.baseurl }}{% link getting-started/recurring-tasks.md %})
+```
+
+To sections:
+
+```text
+[due]({{ site.baseurl }}{% link getting-started/dates.md %}#-due)
+[scheduled]({{ site.baseurl }}{% link getting-started/dates.md %}#-scheduled)
+[start]({{ site.baseurl }}{% link getting-started/dates.md %}#-start)
+```
 
 ### Screenshots in documentation
 
@@ -109,7 +155,7 @@ This is _not_ mandatory, but it helps improve the process and reduce unnecessary
 Once you want to propose your changes, create a PR and we'll have a look when we have time.
 Discussion will take place inside the PR.
 
-If you can, please add/update tests and documentation where appropriate.
+If you can, please add/update [tests](#maintaining-the-tests) and [documentation](#updating-documentation) where appropriate.
 
 ## Local setup and workflow for changes to code and tests
 
@@ -270,7 +316,7 @@ Look at the `package.json` entry for a package and search for which files import
   - `svelte-check` (but not other svelte things, which are used in the build system)
   - anything with `prettier`
   - `lefthook`
-  - anything with `jest` in it (but see [the note below on Dependency Groups](dependency-groups) for details).
+  - anything with `jest` in it (but see [the note below on Dependency Groups](#dependency-groups) for details).
 - For anything else, where and how is it being used? If it's only in tests, or only used by developers, no need to smoke test.
 
 ### Dependency Groups
@@ -370,7 +416,7 @@ The ToCs will eventually be automated automatically via GitHub Actions, but for 
 2. Run:
 
 ```bash
-mdsnippets && git add --renormalize . && yarn run lint:markdown
+mdsnippets && yarn run lint:markdown && git add --renormalize .
 ```
 
 The background to this is in [PR #1248](https://github.com/obsidian-tasks-group/obsidian-tasks/pull/1248).
