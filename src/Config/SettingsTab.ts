@@ -63,9 +63,9 @@ export class SettingsTab extends PluginSettingTab {
         new Setting(containerEl)
             .setName('Set done date on every completed task')
             .setDesc('Enabling this will add a timestamp ✅ YYYY-MM-DD at the end when a task is toggled to done')
-            .addToggle((toogle) => {
+            .addToggle((toggle) => {
                 const settings = getSettings();
-                toogle.setValue(settings.setDoneDate).onChange(async (value) => {
+                toggle.setValue(settings.setDoneDate).onChange(async (value) => {
                     updateSettings({ setDoneDate: value });
                     await this.plugin.saveSettings();
                 });
@@ -114,6 +114,22 @@ export class SettingsTab extends PluginSettingTab {
                         updateSettings({ autoSuggestMaxItems: value });
                         await this.plugin.saveSettings();
                     });
+            });
+
+        new Setting(containerEl)
+            .setName('Provide access keys in dialogs')
+            .setDesc(
+                'If the access keys (keyboard shortcuts) for various controls' +
+                    ' in dialog boxes conflict with system keyboard shortcuts' +
+                    ' or assistive technology functionality that is important for you,' +
+                    ' you may want to deactivate them here.',
+            )
+            .addToggle((toggle) => {
+                const settings = getSettings();
+                toggle.setValue(settings.provideAccessKeys).onChange(async (value) => {
+                    updateSettings({ provideAccessKeys: value });
+                    await this.plugin.saveSettings();
+                });
             });
     }
 }

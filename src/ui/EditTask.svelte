@@ -45,6 +45,7 @@
     let parsedRecurrence: string = '';
     let parsedDone: string = '';
     let addGlobalFilterOnSave: boolean = false;
+    let withAccessKeys: boolean = true;
 
     // 'weekend' abbreviation ommitted due to lack of space.
     let datePlaceholder =
@@ -88,6 +89,8 @@
         }
         return `<i>invalid ${type} date</i>`;
     }
+
+    $: accesskey = (key: string) => withAccessKeys ? key : null;
 
     $: {
         editableTask.startDate = doAutocomplete(editableTask.startDate);
@@ -136,7 +139,8 @@
     }
 
     onMount(() => {
-        const { globalFilter } = getSettings();
+        const { globalFilter, provideAccessKeys } = getSettings();
+        withAccessKeys = provideAccessKeys;
         const description = task.getDescriptionWithoutGlobalFilter();
         // If we're displaying to the user the description without the global filter (i.e. it was removed in the method
         // above), or if the description did not include a global filter in the first place, we'll add the global filter
@@ -271,7 +275,7 @@
 </script>
 
 <div class="tasks-modal">
-    <form on:submit|preventDefault={_onSubmit}>
+    <form on:submit|preventDefault={_onSubmit} class:with-accesskeys="{withAccessKeys}">
         <div class="tasks-modal-section">
             <label for="description">Descrip<span class="accesskey">t</span>ion</label>
             <!-- svelte-ignore a11y-accesskey -->
@@ -282,7 +286,7 @@
                 type="text"
                 class="tasks-modal-description"
                 placeholder="Take out the trash"
-                accesskey="t"
+                accesskey={accesskey("t")}
             />
         </div>
         <div class="tasks-modal-section tasks-modal-priorities" on:keyup={_onPriorityKeyup}>
@@ -295,11 +299,13 @@
                         id="priority-{value}"
                         {value}
                         bind:group={editableTask.priority}
-                        accesskey={label.charAt(0).toLowerCase()}
+                        accesskey={accesskey(label.charAt(0).toLowerCase())}
                     />
                     <label for="priority-{value}">
-                        {#if symbol && symbol.charCodeAt(0) >= 0x100}<span>{symbol}</span>{/if}
                         <span class="accesskey-first">{label}</span>
+                        {#if symbol && symbol.charCodeAt(0) >= 0x100}
+                            <span>{symbol}</span>
+                        {/if}
                     </label>
                 </span>
             {/each}
@@ -312,7 +318,7 @@
                 id="description"
                 type="text"
                 placeholder="Try 'every 2 weeks on Thursday'."
-                accesskey="r"
+                accesskey={accesskey("r")}
             />
             <code>{recurrenceSymbol} {@html parsedRecurrence}</code>
             <label for="due" class="accesskey-first">Due</label>
@@ -322,7 +328,7 @@
                 id="due"
                 type="text"
                 placeholder={datePlaceholder}
-                accesskey="d"
+                accesskey={accesskey("d")}
             />
             <code>{dueDateSymbol} {@html parsedDueDate}</code>
             <label for="scheduled" class="accesskey-first">Scheduled</label>
@@ -332,7 +338,7 @@
                 id="scheduled"
                 type="text"
                 placeholder={datePlaceholder}
-                accesskey="s"
+                accesskey={accesskey("s")}
             />
             <code>{scheduledDateSymbol} {@html parsedScheduledDate}</code>
             <label for="start">St<span class="accesskey">a</span>rt</label>
@@ -342,18 +348,19 @@
                 id="start"
                 type="text"
                 placeholder={datePlaceholder}
-                accesskey="a"
+                accesskey={accesskey("a")}
             />
             <code>{startDateSymbol} {@html parsedStartDate}</code>
             <div>
-                <label for="forwardOnly">Only <span class="accesskey-first">future</span> dates:</label>
+                <label for="forwardOnly">Only
+                    <span class="accesskey-first">future</span> dates:</label>
                 <!-- svelte-ignore a11y-accesskey -->
                 <input
                     bind:checked={editableTask.forwardOnly}
                     id="forwardOnly"
                     type="checkbox"
                     class="task-list-item-checkbox tasks-modal-checkbox"
-                    accesskey="f"
+                    accesskey={accesskey("f")}
                 />
             </div>
         </div>
