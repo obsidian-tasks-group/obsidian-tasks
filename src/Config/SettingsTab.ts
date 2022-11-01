@@ -15,11 +15,18 @@ export class SettingsTab extends PluginSettingTab {
         const { containerEl } = this;
 
         containerEl.empty();
-        containerEl.createEl('h2', { text: 'Tasks Settings' });
+
+        // For reasons I don't understand, 'h2' is tiny in Settings,
+        // so I have used 'h3' as the largest heading.
+        containerEl.createEl('h3', { text: 'Tasks Settings' });
         containerEl.createEl('p', {
             cls: 'tasks-setting-important',
             text: 'Changing any settings requires a restart of obsidian.',
         });
+
+        // ---------------------------------------------------------------------------
+        containerEl.createEl('h4', { text: 'Global filter Settings' });
+        // ---------------------------------------------------------------------------
 
         new Setting(containerEl)
             .setName('Global task filter')
@@ -60,6 +67,10 @@ export class SettingsTab extends PluginSettingTab {
                 });
             });
 
+        // ---------------------------------------------------------------------------
+        containerEl.createEl('h4', { text: 'Date Settings' });
+        // ---------------------------------------------------------------------------
+
         new Setting(containerEl)
             .setName('Set done date on every completed task')
             .setDesc('Enabling this will add a timestamp ✅ YYYY-MM-DD at the end when a task is toggled to done')
@@ -70,6 +81,10 @@ export class SettingsTab extends PluginSettingTab {
                     await this.plugin.saveSettings();
                 });
             });
+
+        // ---------------------------------------------------------------------------
+        containerEl.createEl('h4', { text: 'Auto-suggest Settings' });
+        // ---------------------------------------------------------------------------
 
         new Setting(containerEl)
             .setName('Auto-suggest task content')
@@ -116,6 +131,10 @@ export class SettingsTab extends PluginSettingTab {
                     });
             });
 
+        // ---------------------------------------------------------------------------
+        containerEl.createEl('h4', { text: 'Dialog Settings' });
+        // ---------------------------------------------------------------------------
+
         new Setting(containerEl)
             .setName('Provide access keys in dialogs')
             .setDesc(
@@ -131,6 +150,10 @@ export class SettingsTab extends PluginSettingTab {
                     await this.plugin.saveSettings();
                 });
             });
+
+        // ---------------------------------------------------------------------------
+        containerEl.createEl('h4', { text: 'More Date Settings' });
+        // ---------------------------------------------------------------------------
 
         new Setting(containerEl)
             .setName('Use filename as date fallback')
