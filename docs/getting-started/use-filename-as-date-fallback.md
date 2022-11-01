@@ -65,12 +65,16 @@ meetings/rd. 2022-09-07.md
 
 ## Settings
 
+The following image shows the two settings relating to this feature:
+
 ![Date fallback settings](https://github.com/obsidian-tasks-group/obsidian-tasks/raw/date-fallback-docs/resources/screenshots/settings-use-filename-for-date.png)
 
 ### Folders setting
 
 If the `Folders with date fallback` field is left empty in the settings dialog, date fallback is applied to all the
-files in the vault. A comma-separated list of folders can be entered to limit the scope. Date fallback will only be done
+files in the vault.
+
+A comma-separated list of folders can be entered to limit the scope. Date fallback will only be done
 is the specified folders and their subfolders.
 
 Examples:
