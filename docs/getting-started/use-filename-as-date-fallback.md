@@ -50,8 +50,9 @@ The task not visually modified in the file : the scheduled date is only implied.
 
 For the scheduled date to be automatically set from the file name, the following rules apply :
 
-- the task has no existing scheduled date, due date or start date.
-- the file name contains a date in the format `YYYY-MM-DD` or `YYYYMMDD`.
+- the setting 'Use filename as date fallback' must be enabled, and Obsidian restarted,
+- the task has no existing scheduled date, due date or start date,
+- the file name contains a date in the format `YYYY-MM-DD` or `YYYYMMDD`,
 - the file is in one of the configured folders or its sub-folders if that setting is enabled.
 
 Examples of file names :
@@ -61,6 +62,10 @@ daily/2022-10-12 Wednesday.md
 meetings/rd. 2022-09-07.md
 20220612 - random thoughts.md
 ```
+
+## Settings
+
+![Date fallback settings](https://github.com/obsidian-tasks-group/obsidian-tasks/raw/date-fallback-docs/resources/screenshots/settings-use-filename-for-date.png)
 
 ### Folders setting
 
