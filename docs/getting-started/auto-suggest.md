@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Auto-Suggest
-nav_order: 5
+nav_order: 6
 parent: Getting Started
 has_toc: false
 ---

@@ -2,6 +2,7 @@
  * @jest-environment jsdom
  */
 import moment from 'moment';
+import type { Moment } from 'moment';
 import { Priority, Status, Task } from '../src/Task';
 import { resetSettings, updateSettings } from '../src/Config/Settings';
 import { fromLine } from './TestHelpers';
@@ -222,13 +223,14 @@ type TagParsingExpectations = {
     globalFilter: string;
 };
 
-function constructTaskFromLine(line: string) {
+function constructTaskFromLine(line: string, path: string = 'file.md', fallbackDate: Moment | null = null) {
     return Task.fromLine({
         line,
-        path: 'file.md',
+        path: path,
         sectionStart: 0,
         sectionIndex: 0,
         precedingHeader: '',
+        fallbackDate,
     });
 }
 
@@ -893,6 +895,12 @@ describe('identicalTo', () => {
         expect(lhs).toBeIdenticalTo(new TaskBuilder().dueDate('2012-12-27'));
         expect(lhs).not.toBeIdenticalTo(new TaskBuilder().dueDate(null));
         expect(lhs).not.toBeIdenticalTo(new TaskBuilder().dueDate('2012-12-26'));
+    });
+
+    it('should check isScheduledDateInferred', () => {
+        const lhs = new TaskBuilder().scheduledDateIsInferred(false);
+        expect(lhs).toBeIdenticalTo(new TaskBuilder().scheduledDateIsInferred(false));
+        expect(lhs).not.toBeIdenticalTo(new TaskBuilder().scheduledDateIsInferred(true));
     });
 
     it('should check doneDate', () => {
