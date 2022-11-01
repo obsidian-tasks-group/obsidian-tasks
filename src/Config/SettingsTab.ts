@@ -15,11 +15,18 @@ export class SettingsTab extends PluginSettingTab {
         const { containerEl } = this;
 
         containerEl.empty();
-        containerEl.createEl('h2', { text: 'Tasks Settings' });
+
+        // For reasons I don't understand, 'h2' is tiny in Settings,
+        // so I have used 'h3' as the largest heading.
+        containerEl.createEl('h3', { text: 'Tasks Settings' });
         containerEl.createEl('p', {
             cls: 'tasks-setting-important',
             text: 'Changing any settings requires a restart of obsidian.',
         });
+
+        // ---------------------------------------------------------------------------
+        containerEl.createEl('h4', { text: 'Global filter Settings' });
+        // ---------------------------------------------------------------------------
 
         new Setting(containerEl)
             .setName('Global task filter')
@@ -60,6 +67,10 @@ export class SettingsTab extends PluginSettingTab {
                 });
             });
 
+        // ---------------------------------------------------------------------------
+        containerEl.createEl('h4', { text: 'Date Settings' });
+        // ---------------------------------------------------------------------------
+
         new Setting(containerEl)
             .setName('Set done date on every completed task')
             .setDesc('Enabling this will add a timestamp ✅ YYYY-MM-DD at the end when a task is toggled to done')
@@ -70,6 +81,34 @@ export class SettingsTab extends PluginSettingTab {
                     await this.plugin.saveSettings();
                 });
             });
+
+        new Setting(containerEl)
+            .setName('Use filename as date fallback')
+            .setDesc('Automatically schedule tasks at the date contained in the filename if no other date is set.')
+            .addToggle((toggle) => {
+                const settings = getSettings();
+                toggle.setValue(settings.enableDateFallback).onChange(async (value) => {
+                    updateSettings({ enableDateFallback: value });
+                    await this.plugin.saveSettings();
+                });
+            });
+
+        new Setting(containerEl)
+            .setName('Folders with date fallback')
+            .setDesc('Leave empty if you want to use fallback everywhere, or enter a comma-separated list of folders.')
+            .addText(async (input) => {
+                const settings = getSettings();
+                await this.plugin.saveSettings();
+                input.setValue(SettingsTab.renderFolderArray(settings.dateFallbackFolders)).onChange(async (value) => {
+                    const folders = SettingsTab.parseCommaSeparatedFolders(value);
+                    updateSettings({ dateFallbackFolders: folders });
+                    await this.plugin.saveSettings();
+                });
+            });
+
+        // ---------------------------------------------------------------------------
+        containerEl.createEl('h4', { text: 'Auto-suggest Settings' });
+        // ---------------------------------------------------------------------------
 
         new Setting(containerEl)
             .setName('Auto-suggest task content')
@@ -116,6 +155,10 @@ export class SettingsTab extends PluginSettingTab {
                     });
             });
 
+        // ---------------------------------------------------------------------------
+        containerEl.createEl('h4', { text: 'Dialog Settings' });
+        // ---------------------------------------------------------------------------
+
         new Setting(containerEl)
             .setName('Provide access keys in dialogs')
             .setDesc(
@@ -128,30 +171,6 @@ export class SettingsTab extends PluginSettingTab {
                 const settings = getSettings();
                 toggle.setValue(settings.provideAccessKeys).onChange(async (value) => {
                     updateSettings({ provideAccessKeys: value });
-                    await this.plugin.saveSettings();
-                });
-            });
-
-        new Setting(containerEl)
-            .setName('Use filename as date fallback')
-            .setDesc('Automatically schedule tasks at the date contained in the filename if no other date is set.')
-            .addToggle((toggle) => {
-                const settings = getSettings();
-                toggle.setValue(settings.enableDateFallback).onChange(async (value) => {
-                    updateSettings({ enableDateFallback: value });
-                    await this.plugin.saveSettings();
-                });
-            });
-
-        new Setting(containerEl)
-            .setName('Folders with date fallback')
-            .setDesc('Leave empty if you want to use fallback everywhere, or enter a comma-separated list of folders.')
-            .addText(async (input) => {
-                const settings = getSettings();
-                await this.plugin.saveSettings();
-                input.setValue(SettingsTab.renderFolderArray(settings.dateFallbackFolders)).onChange(async (value) => {
-                    const folders = SettingsTab.parseCommaSeparatedFolders(value);
-                    updateSettings({ dateFallbackFolders: folders });
                     await this.plugin.saveSettings();
                 });
             });
