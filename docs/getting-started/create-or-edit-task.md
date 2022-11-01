@@ -44,6 +44,8 @@ All the fields of the form have "access keys", that is, keyboard shortcuts. The 
 
 ### Turning off keyboard shortcuts
 
+> Introduced in Tasks 1.17.0.
+
 If the access keys (keyboard shortcuts) for any field conflicts with system keyboard shortcuts or interferes with assistive technology functionality that is important for you, you may want to turn them off in the Tasks plugin's settings:
 
 ![Create or Edit Modal](https://github.com/obsidian-tasks-group/obsidian-tasks/raw/doc-new-edit-task-layout/resources/screenshots/settings-provide-access-keys-in-dialogs.png)
