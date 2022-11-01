@@ -6,6 +6,7 @@ import { Recurrence } from './Recurrence';
 import { getSettings } from './Config/Settings';
 import { Urgency } from './Urgency';
 import { Sort } from './Query/Sort';
+import { DateFallback } from './DateFallback';
 
 /**
  * Collection of status types supported by the plugin.
@@ -155,6 +156,8 @@ export class Task {
      * (for example, by Create or Edit Task, or in tests, including via {@link TaskBuilder}). */
     public readonly originalMarkdown: string;
 
+    public readonly scheduledDateIsInferred: boolean;
+
     private _urgency: number | null = null;
 
     constructor({
@@ -175,6 +178,7 @@ export class Task {
         blockLink,
         tags,
         originalMarkdown,
+        scheduledDateIsInferred,
     }: {
         status: Status;
         description: string;
@@ -193,6 +197,7 @@ export class Task {
         blockLink: string;
         tags: string[] | [];
         originalMarkdown: string;
+        scheduledDateIsInferred: boolean;
     }) {
         this.status = status;
         this.description = description;
@@ -215,6 +220,8 @@ export class Task {
         this.recurrence = recurrence;
         this.blockLink = blockLink;
         this.originalMarkdown = originalMarkdown;
+
+        this.scheduledDateIsInferred = scheduledDateIsInferred;
     }
 
     /**
@@ -226,6 +233,7 @@ export class Task {
      * @param {number} sectionStart - Line number where the section starts that contains this task.
      * @param {number} sectionIndex - The index of the nth task in its section.
      * @param {(string | null)} precedingHeader - The header before this task.
+     * @param {(Moment | null)} fallbackDate - The date to use as the scheduled date if no other date is set
      * @return {*}  {(Task | null)}
      * @memberof Task
      */
@@ -235,12 +243,14 @@ export class Task {
         sectionStart,
         sectionIndex,
         precedingHeader,
+        fallbackDate,
     }: {
         line: string;
         path: string;
         sectionStart: number;
         sectionIndex: number;
         precedingHeader: string | null;
+        fallbackDate: Moment | null;
     }): Task | null {
         // Check the line to see if it is a markdown task.
         const regexMatch = line.match(TaskRegularExpressions.taskRegex);
@@ -289,6 +299,7 @@ export class Task {
         let priority: Priority = Priority.None;
         let startDate: Moment | null = null;
         let scheduledDate: Moment | null = null;
+        let scheduledDateIsInferred = false;
         let dueDate: Moment | null = null;
         let doneDate: Moment | null = null;
         let recurrenceRule: string = '';
@@ -384,6 +395,12 @@ export class Task {
             });
         }
 
+        // Infer the scheduled date from the file name if not set explicitly
+        if (DateFallback.canApplyFallback({ startDate, scheduledDate, dueDate }) && fallbackDate !== null) {
+            scheduledDate = fallbackDate;
+            scheduledDateIsInferred = true;
+        }
+
         // Add back any trailing tags to the description. We removed them so we can parse the rest of the
         // components but now we want them back.
         // The goal is for a task of them form 'Do something #tag1 (due) tomorrow #tag2 (start) today'
@@ -417,6 +434,7 @@ export class Task {
             blockLink,
             tags,
             originalMarkdown: line,
+            scheduledDateIsInferred,
         });
     }
 
@@ -548,7 +566,7 @@ export class Task {
             taskString += startDate;
         }
 
-        if (!layoutOptions.hideScheduledDate && this.scheduledDate) {
+        if (!layoutOptions.hideScheduledDate && this.scheduledDate && !this.scheduledDateIsInferred) {
             const scheduledDate: string = layoutOptions.shortMode
                 ? ' ' + scheduledDateSymbol
                 : ` ${scheduledDateSymbol} ${this.scheduledDate.format(TaskRegularExpressions.dateFormat)}`;
@@ -741,6 +759,7 @@ export class Task {
             'precedingHeader',
             'priority',
             'blockLink',
+            'scheduledDateIsInferred',
         ];
         for (const el of args) {
             if (this[el] !== other[el]) return false;

@@ -1,6 +1,7 @@
 import { App, Editor, MarkdownView, View } from 'obsidian';
 import { TaskModal } from '../TaskModal';
 import { Priority, Status, Task, TaskRegularExpressions } from '../Task';
+import { DateFallback } from '../DateFallback';
 
 export const createOrEdit = (checking: boolean, editor: Editor, view: View, app: App) => {
     if (checking) {
@@ -22,8 +23,22 @@ export const createOrEdit = (checking: boolean, editor: Editor, view: View, app:
     const line = editor.getLine(lineNumber);
     const task = taskFromLine({ line, path });
 
+    // save the inferred scheduled to compare it later
+    const inferredScheduledDate = task.scheduledDateIsInferred ? task.scheduledDate : null;
+
     const onSubmit = (updatedTasks: Task[]): void => {
-        const serialized = updatedTasks.map((task: Task) => task.toFileLineString()).join('\n');
+        const serialized = updatedTasks
+            .map((task: Task) => {
+                if (inferredScheduledDate !== null && !inferredScheduledDate.isSame(task.scheduledDate, 'day')) {
+                    // if a fallback date was used before modification, and the scheduled date was modified, we have to mark
+                    // the scheduled date as not inferred anymore.
+                    task = new Task({ ...task, scheduledDateIsInferred: false });
+                }
+
+                return task;
+            })
+            .map((task: Task) => task.toFileLineString())
+            .join('\n');
         editor.setLine(lineNumber, serialized);
     };
 
@@ -37,12 +52,15 @@ export const createOrEdit = (checking: boolean, editor: Editor, view: View, app:
 };
 
 const taskFromLine = ({ line, path }: { line: string; path: string }): Task => {
+    const fallbackDate = DateFallback.fromPath(path);
+
     const task = Task.fromLine({
         line,
         path,
         sectionStart: 0, // We don't need this to toggle it here in the editor.
         sectionIndex: 0, // We don't need this to toggle it here in the editor.
         precedingHeader: null, // We don't need this to toggle it here in the editor.
+        fallbackDate, // set the scheduled date from the filename, so it can be displayed in the dialog
     });
 
     if (task !== null) {
@@ -74,6 +92,7 @@ const taskFromLine = ({ line, path }: { line: string; path: string }): Task => {
             blockLink: '',
             tags: [],
             originalMarkdown: '',
+            scheduledDateIsInferred: false,
         });
     }
 
@@ -108,5 +127,7 @@ const taskFromLine = ({ line, path }: { line: string; path: string }): Task => {
         precedingHeader: null,
         tags: [],
         originalMarkdown: '',
+        // Not needed since the inferred status is always re-computed after submitting.
+        scheduledDateIsInferred: false,
     });
 };

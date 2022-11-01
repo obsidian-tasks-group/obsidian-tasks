@@ -131,5 +131,45 @@ export class SettingsTab extends PluginSettingTab {
                     await this.plugin.saveSettings();
                 });
             });
+
+        new Setting(containerEl)
+            .setName('Use filename as date fallback')
+            .setDesc('Automatically schedule tasks at the date contained in the filename if no other date is set.')
+            .addToggle((toggle) => {
+                const settings = getSettings();
+                toggle.setValue(settings.enableDateFallback).onChange(async (value) => {
+                    updateSettings({ enableDateFallback: value });
+                    await this.plugin.saveSettings();
+                });
+            });
+
+        new Setting(containerEl)
+            .setName('Folders with date fallback')
+            .setDesc('Leave empty if you want to use fallback everywhere, or enter a comma-separated list of folders.')
+            .addText(async (input) => {
+                const settings = getSettings();
+                await this.plugin.saveSettings();
+                input.setValue(SettingsTab.renderFolderArray(settings.dateFallbackFolders)).onChange(async (value) => {
+                    const folders = SettingsTab.parseCommaSeparatedFolders(value);
+                    updateSettings({ dateFallbackFolders: folders });
+                    await this.plugin.saveSettings();
+                });
+            });
+    }
+
+    private static parseCommaSeparatedFolders(input: string): string[] {
+        return (
+            input
+                // a limitation is that folder names may not contain commas
+                .split(',')
+                .map((folder) => folder.trim())
+                // remove leading and trailing slashes
+                .map((folder) => folder.replace(/^\/|\/$/g, ''))
+                .filter((folder) => folder !== '')
+        );
+    }
+
+    private static renderFolderArray(folders: string[]): string {
+        return folders.join(',');
     }
 }
