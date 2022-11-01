@@ -8,6 +8,21 @@ has_toc: false
 
 # Use Filename as Date Fallback
 
+{: .no_toc }
+
+<details open markdown="block">
+  <summary>
+    Table of contents
+  </summary>
+  {: .text-delta }
+1. TOC
+{:toc}
+</details>
+
+---
+
+## Automatic scheduled date
+
 You can automatically set a scheduled date for tasks based on the name of its file. This feature can be enabled in the
 settings : `Use filename as date fallback` (requires a restart of Obsidian).
 
