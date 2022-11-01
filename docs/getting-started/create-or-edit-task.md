@@ -24,7 +24,7 @@ has_toc: false
 ## Introduction
 
 ![Create or Edit Modal](https://github.com/obsidian-tasks-group/obsidian-tasks/raw/gh-pages/resources/screenshots/modal.png)
-The `Tasks: Create or edit` command helps you when adding or editing a task.
+<br>The `Tasks: Create or edit` command helps you when adding or editing a task.
 
 ## Opening the 'Create or edit Task' Modal
 
@@ -32,6 +32,25 @@ Use the command 'Tasks: Create or edit task' to launch the modal.
 
 - If the cursor was on an existing task, the modal will modify that task's properties.
 - If the cursor was on a blank line, the modal will create a brand new task on that line.
+
+## Keyboard shortcuts
+
+> Introduced in Tasks 1.17.0.
+
+All the fields of the form have "access keys", that is, keyboard shortcuts. The access keys are displayed as the underlined letters in the labels.
+
+- On Windows, press the `Alt`-key and the underlined letter at the same time.
+- On Mac, press `Ctrl`-key and the `Option`-key and the underlined letter at the same time.
+
+### Turning off keyboard shortcuts
+
+> Introduced in Tasks 1.17.0.
+
+If the access keys (keyboard shortcuts) for any field conflicts with system keyboard shortcuts or interferes with assistive technology functionality that is important for you, you may want to turn them off in the Tasks plugin's settings:
+
+![Create or Edit Modal](https://github.com/obsidian-tasks-group/obsidian-tasks/raw/gh-pages/resources/screenshots/settings-provide-access-keys-in-dialogs.png)
+
+This setting takes immediate effect, and does not require restarting of Obsidian.
 
 ## Entering values
 
@@ -101,6 +120,7 @@ To close the modal and save your edits, do one of:
 
 To close the modal and cancel your edits, do one of:
 
+- click `Cancel`,
 - click or tap outside the modal,
 - click the close button at the corner of the modal (if one exists on your operating system),
 - hit the `Esc` key.
