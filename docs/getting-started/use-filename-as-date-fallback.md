@@ -42,8 +42,11 @@ not done
 <div class="code-example" markdown="1">
 Info
 {: .label .label-blue }
-The task not visually modified in the file : the scheduled date is only implied. It will however appear in the
+The task is not visually modified in the file: the scheduled date is only implied.
+
+It will however appear in the
 [edit dialog]({{ site.baseurl }}{% link getting-started/create-or-edit-task.md %}).
+It can also be examined by using the `group by scheduled` instruction in a tasks block.
 </div>
 
 ## Rules
