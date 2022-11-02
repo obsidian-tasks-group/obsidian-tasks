@@ -5,6 +5,9 @@ import { Mutex } from 'async-mutex';
 
 import { Task } from './Task';
 import type { TasksEvents } from './TasksEvents';
+import { DateFallback } from './DateFallback';
+import { getSettings } from './Config/Settings';
+import { Lazy } from './lib/Lazy';
 
 export enum State {
     Cold = 'Cold',
@@ -105,6 +108,8 @@ export class Cache {
     }
 
     private subscribeToVault(): void {
+        const { enableDateFallback } = getSettings();
+
         const createdEventReference = this.vault.on('create', (file: TAbstractFile) => {
             if (!(file instanceof TFile)) {
                 return;
@@ -137,9 +142,15 @@ export class Cache {
             }
 
             this.tasksMutex.runExclusive(() => {
+                const fallbackDate = new Lazy(() => DateFallback.fromPath(file.path));
+
                 this.tasks = this.tasks.map((task: Task): Task => {
                     if (task.path === oldPath) {
-                        return new Task({ ...task, path: file.path });
+                        if (!enableDateFallback) {
+                            return new Task({ ...task, path: file.path });
+                        } else {
+                            return DateFallback.updateTaskPath(task, file.path, fallbackDate.value);
+                        }
                     } else {
                         return task;
                     }
@@ -231,6 +242,9 @@ export class Cache {
         const tasks: Task[] = [];
         const fileLines = fileContent.split('\n');
 
+        // Lazily store date extracted from filename to avoid parsing more than needed
+        const dateFromFileName = new Lazy(() => DateFallback.fromPath(file.path));
+
         // We want to store section information with every task so
         // that we can use that when we post process the markdown
         // rendered lists.
@@ -257,6 +271,7 @@ export class Cache {
                     sectionStart: currentSection.position.start.line,
                     sectionIndex,
                     precedingHeader: Cache.getPrecedingHeader(listItem.position.start.line, fileCache.headings),
+                    fallbackDate: dateFromFileName.value,
                 });
 
                 if (task !== null) {

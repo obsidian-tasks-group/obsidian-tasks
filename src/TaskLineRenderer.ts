@@ -5,6 +5,7 @@ import * as taskModule from './Task';
 import type { LayoutComponent, LayoutOptions } from './TaskLayout';
 import { TaskLayout } from './TaskLayout';
 import { replaceTaskWithTasks } from './File';
+import { getSettings } from './Config/Settings';
 
 export type TaskLineRenderDetails = {
     parentUlElement: HTMLElement;
@@ -82,8 +83,9 @@ async function taskToHtml(task: Task, renderDetails: TaskLineRenderDetails, pare
     const allSpecificClasses: string[] = [];
     const taskLayout = new TaskLayout(renderDetails.layoutOptions);
     for (const component of taskLayout.layoutComponents) {
-        const componentString = task.componentToString(taskLayout, component);
+        let componentString = task.componentToString(taskLayout, component);
         if (componentString) {
+            if (component === 'description') componentString = removeGlobalFilterIfNeeded(componentString);
             const span = parentElement.createSpan();
             if (span) {
                 parentElement.appendChild(span);
@@ -266,4 +268,12 @@ function toTooltipDate({ signifier, date }: { signifier: string; date: Moment })
     return `${signifier} ${date.format(taskModule.TaskRegularExpressions.dateFormat)} (${date.from(
         window.moment().startOf('day'),
     )})`;
+}
+
+function removeGlobalFilterIfNeeded(description: string) {
+    const { globalFilter, removeGlobalFilter } = getSettings();
+    if (removeGlobalFilter) {
+        return description.replace(globalFilter, '').trim();
+    }
+    return description;
 }
