@@ -444,8 +444,14 @@ export class Task {
 
     componentToString(layout: TaskLayout, component: LayoutComponent) {
         switch (component) {
-            case 'description':
-                return this.description;
+            case 'description': {
+                const { globalFilter, removeGlobalFilter } = getSettings();
+                let description = this.description;
+                if (removeGlobalFilter) {
+                    description = description.replace(globalFilter, '').trim();
+                }
+                return description;
+            }
             case 'priority': {
                 let priority: string = '';
 

@@ -188,16 +188,18 @@ class QueryRenderChild extends MarkdownRenderChild {
 
             const shortMode = this.query.layoutOptions.shortMode;
 
+            const extrasSpan = listItem.createSpan('task-extras');
+
             if (!this.query.layoutOptions.hideUrgency) {
-                this.addUrgency(listItem, task);
+                this.addUrgency(extrasSpan, task);
             }
 
             if (!this.query.layoutOptions.hideBacklinks) {
-                this.addBacklinks(listItem, task, shortMode, isFilenameUnique);
+                this.addBacklinks(extrasSpan, task, shortMode, isFilenameUnique);
             }
 
             if (!this.query.layoutOptions.hideEditButton) {
-                this.addEditButton(listItem, task);
+                this.addEditButton(extrasSpan, task);
             }
 
             taskList.appendChild(listItem);
@@ -206,7 +208,7 @@ class QueryRenderChild extends MarkdownRenderChild {
         return { taskList, tasksCount };
     }
 
-    private addEditButton(listItem: HTMLLIElement, task: Task) {
+    private addEditButton(listItem: HTMLElement, task: Task) {
         const editTaskPencil = listItem.createEl('a', {
             cls: 'tasks-edit',
         });
@@ -230,7 +232,7 @@ class QueryRenderChild extends MarkdownRenderChild {
         });
     }
 
-    private addUrgency(listItem: HTMLLIElement, task: Task) {
+    private addUrgency(listItem: HTMLElement, task: Task) {
         const text = new Intl.NumberFormat().format(task.urgency);
         listItem.createSpan({ text, cls: 'tasks-urgency' });
     }
@@ -270,12 +272,7 @@ class QueryRenderChild extends MarkdownRenderChild {
         await MarkdownRenderer.renderMarkdown(group.name, header, this.filePath, this);
     }
 
-    private addBacklinks(
-        listItem: HTMLLIElement,
-        task: Task,
-        shortMode: boolean,
-        isFilenameUnique: boolean | undefined,
-    ) {
+    private addBacklinks(listItem: HTMLElement, task: Task, shortMode: boolean, isFilenameUnique: boolean | undefined) {
         const backLink = listItem.createSpan({ cls: 'tasks-backlink' });
 
         if (!shortMode) {

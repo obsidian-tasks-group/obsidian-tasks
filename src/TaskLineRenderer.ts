@@ -2,8 +2,8 @@ import { Component, MarkdownRenderer } from 'obsidian';
 import type { Moment } from 'moment';
 import type { Task } from './Task';
 import * as taskModule from './Task';
-import type { LayoutOptions } from './TaskLayout';
-import { getSettings } from './Config/Settings';
+import type { LayoutComponent, LayoutOptions } from './TaskLayout';
+import { TaskLayout } from './TaskLayout';
 import { replaceTaskWithTasks } from './File';
 
 export type TaskLineRenderDetails = {
@@ -18,38 +18,24 @@ export async function renderTaskLine(task: Task, renderDetails: TaskLineRenderDe
     const li: HTMLLIElement = renderDetails.parentUlElement.createEl('li');
     li.addClasses(['task-list-item', 'plugin-tasks-list-item']);
 
-    let taskAsString = task.toString(renderDetails.layoutOptions);
-    const { globalFilter, removeGlobalFilter } = getSettings();
-    if (removeGlobalFilter) {
-        taskAsString = taskAsString.replace(globalFilter, '').trim();
-    }
-
     const textSpan = li.createSpan();
     textSpan.addClass('tasks-list-text');
+    const classes = await taskToHtml(task, renderDetails, textSpan);
+    li.addClasses(classes);
 
-    await MarkdownRenderer.renderMarkdown(taskAsString, textSpan, task.path, null as unknown as Component);
-
+    // TODO understand and fix this
     // If the task is a block quote, the block quote wraps the p-tag that contains the content.
     // In that case, we need to unwrap the p-tag *inside* the surrounding block quote.
     // Otherwise, we unwrap the p-tag as a direct descendant of the textSpan.
-    const blockQuote = textSpan.querySelector('blockquote');
-    const directParentOfPTag = blockQuote ?? textSpan;
+    // const blockQuote = textSpan.querySelector('blockquote');
+    // const directParentOfPTag = blockQuote ?? textSpan;
 
-    // Unwrap the p-tag that was created by the MarkdownRenderer:
-    const pElement = directParentOfPTag.querySelector('p');
-    if (pElement !== null) {
-        while (pElement.firstChild) {
-            directParentOfPTag.insertBefore(pElement.firstChild, pElement);
-        }
-        pElement.remove();
-    }
-
-    // Remove an empty trailing p-tag that the MarkdownRenderer appends when there is a block link:
-    textSpan.findAll('p').forEach((pElement) => {
-        if (!pElement.hasChildNodes()) {
-            pElement.remove();
-        }
-    });
+    // // Remove an empty trailing p-tag that the MarkdownRenderer appends when there is a block link:
+    // textSpan.findAll('p').forEach((pElement) => {
+    //     if (!pElement.hasChildNodes()) {
+    //         pElement.remove();
+    //     }
+    // });
 
     // Remove the footnote that the MarkdownRenderer appends when there is a footnote in the task:
     textSpan.findAll('.footnotes').forEach((footnoteElement) => {
@@ -90,6 +76,120 @@ export async function renderTaskLine(task: Task, renderDetails: TaskLineRenderDe
     }
 
     return li;
+}
+
+async function taskToHtml(task: Task, renderDetails: TaskLineRenderDetails, parentElement: HTMLElement) {
+    const allSpecificClasses: string[] = [];
+    const taskLayout = new TaskLayout(renderDetails.layoutOptions);
+    for (const component of taskLayout.layoutComponents) {
+        const componentString = task.componentToString(taskLayout, component);
+        if (componentString) {
+            const span = parentElement.createSpan();
+            if (span) {
+                parentElement.appendChild(span);
+                // TODO explain the purpose of this (to enable different formatting to layout like table cells and the text itself)
+                const internalSpan = span.createSpan();
+                await renderComponentText(internalSpan, componentString, component, task);
+                const [genericClasses, specificClasses] = getComponentClasses(component, task);
+                span.addClasses(genericClasses);
+                span.addClasses(specificClasses);
+                allSpecificClasses.push(...specificClasses);
+            }
+        }
+    }
+    return allSpecificClasses;
+}
+
+async function renderComponentText(
+    span: HTMLSpanElement,
+    componentString: string,
+    component: LayoutComponent,
+    task: Task,
+) {
+    if (component === 'description') {
+        await MarkdownRenderer.renderMarkdown(componentString, span, task.path, null as unknown as Component);
+        // Unwrap the p-tag that was created by the MarkdownRenderer:
+        // TODO understand the block quote thing
+        const pElement = span.querySelector('p');
+        if (pElement !== null) {
+            while (pElement.firstChild) {
+                span.insertBefore(pElement.firstChild, pElement);
+            }
+            pElement.remove();
+        }
+    } else {
+        span.innerHTML = componentString;
+    }
+}
+
+function getComponentClasses(component: LayoutComponent, task: Task) {
+    // TODO explain the difference
+    const genericClasses: string[] = [];
+    const specificClasses: string[] = [];
+    switch (component) {
+        case 'description':
+            genericClasses.push('task-description');
+            break;
+        case 'priority': {
+            let priorityClass = null;
+            if (task.priority === taskModule.Priority.High) priorityClass = 'task-priority-high';
+            else if (task.priority === taskModule.Priority.Medium) priorityClass = 'task-priority-medium';
+            else if (task.priority === taskModule.Priority.Low) priorityClass = 'task-priority-low';
+            else priorityClass = 'task-priority-none';
+            genericClasses.push('task-priority');
+            specificClasses.push(priorityClass);
+            break;
+        }
+        case 'dueDate': {
+            const date = task.dueDate;
+            if (date) {
+                genericClasses.push('task-due');
+                specificClasses.push('task-due-' + dateToClassName(date));
+            }
+            break;
+        }
+        case 'startDate': {
+            const date = task.startDate;
+            if (date) {
+                genericClasses.push('task-start');
+                specificClasses.push('task-start-' + dateToClassName(date));
+            }
+            break;
+        }
+        case 'scheduledDate': {
+            const date = task.scheduledDate;
+            if (date) {
+                genericClasses.push('task-scheduled');
+                specificClasses.push('task-scheduled-' + dateToClassName(date));
+            }
+            break;
+        }
+        case 'doneDate': {
+            const date = task.doneDate;
+            if (date) {
+                genericClasses.push('task-done');
+                specificClasses.push('task-done-' + dateToClassName(date));
+            }
+            break;
+        }
+        case 'recurrenceRule': {
+            genericClasses.push('task-recurring');
+            break;
+        }
+    }
+    return [genericClasses, specificClasses];
+}
+
+// TODO document
+function dateToClassName(date: Moment) {
+    const today = window.moment().startOf('day');
+    let result = '';
+    const diffDays = today.diff(date, 'days');
+    if (diffDays === 0) return 'today';
+    else if (diffDays > 0) result += 'past-';
+    else if (diffDays < 0) result += 'future-';
+    result += diffDays.toString() + 'd';
+    return result;
 }
 
 function addTooltip({
