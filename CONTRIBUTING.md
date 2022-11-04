@@ -9,6 +9,9 @@
   - [Adding Tables of Contents to rendered docs](#adding-tables-of-contents-to-rendered-docs)
   - [Linking to other pages in the docs](#linking-to-other-pages-in-the-docs)
   - [Screenshots in documentation](#screenshots-in-documentation)
+    - [Creating screenshots](#creating-screenshots)
+    - [Saving screenshots](#saving-screenshots)
+    - [Adding screenshots to the documentation](#adding-screenshots-to-the-documentation)
   - [Version numbers in documentation](#version-numbers-in-documentation)
   - [How the documentation is generated](#how-the-documentation-is-generated)
 - [Updating code](#updating-code)
@@ -101,6 +104,8 @@ To sections:
 
 ### Screenshots in documentation
 
+#### Creating screenshots
+
 For readability and accessibility, images should be created:
 
 - Set the Obsidian window size to be around 1500 pixels wide about between 700 and 1100 pixels high.
@@ -109,19 +114,32 @@ For readability and accessibility, images should be created:
 - With a large font size.
 - With as little blank or dead space as possible around the area of focus.
 
+#### Saving screenshots
+
 Saving images:
 
 - Save them in .PNG format.
-- Save them in [resources/screenshots/](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/resources/screenshots/).
+- Save them in [resources/screenshots/](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/docs/images/).
 
-When embedding an image inside a documentation page, please link to the file on the `gh-pages` branch, so that the documentation and README refer to the most recent release, and include a brief summary underneath.
+#### Adding screenshots to the documentation
+
+When embedding an image inside a documentation page, please link to the local file and include a brief summary underneath.
 
 For example, to embed the `acme.png` file in the documentation:
 
 ```text
-![ACME Tasks](https://github.com/obsidian-tasks-group/obsidian-tasks/raw/gh-pages/resources/screenshots/acme.png)
-The `ACME` note has some tasks.
+![ACME Tasks](images/acme.png)
+The `ACME` note has some tasks - as linked to from `docs/index.md`.
 ```
+
+or
+
+```text
+![ACME Tasks](../images/acme.png)
+The `ACME` note has some tasks - as linked to from any file in a sub-directory of `docs/`.
+```
+
+With this mechanism, you can preview the embedded images in any decent Markdown editor, including by opening the `obsidian-tasks` directory in Obsidian.
 
 ### Version numbers in documentation
 
