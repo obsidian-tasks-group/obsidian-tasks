@@ -23,7 +23,7 @@ has_toc: false
 
 ## Introduction
 
-![Create or Edit Modal](https://github.com/obsidian-tasks-group/obsidian-tasks/raw/gh-pages/resources/screenshots/modal.png)
+![Create or Edit Modal](../images/modal.png)
 <br>The `Tasks: Create or edit` command helps you when adding or editing a task.
 
 ## Opening the 'Create or edit Task' Modal
@@ -48,7 +48,7 @@ All the fields of the form have "access keys", that is, keyboard shortcuts. The 
 
 If the access keys (keyboard shortcuts) for any field conflicts with system keyboard shortcuts or interferes with assistive technology functionality that is important for you, you may want to turn them off in the Tasks plugin's settings:
 
-![Create or Edit Modal](https://github.com/obsidian-tasks-group/obsidian-tasks/raw/gh-pages/resources/screenshots/settings-provide-access-keys-in-dialogs.png)
+![Create or Edit Modal](../images/settings-provide-access-keys-in-dialogs.png)
 
 This setting takes immediate effect, and does not require restarting of Obsidian.
 
