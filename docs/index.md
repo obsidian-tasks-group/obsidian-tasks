@@ -42,14 +42,14 @@ For changes in each release, please check the [releases page](https://github.com
 - *All screenshots assume the global filter `#task` which is not set by default (see also "Getting Started").*
 - *The theme is default Obsidian theme.*
 
-![ACME Tasks](https://github.com/obsidian-tasks-group/obsidian-tasks/raw/gh-pages/resources/screenshots/acme.png)
+![ACME Tasks](images/acme.png)
 The `ACME` note has some tasks.
 
-![Important Project Tasks](https://github.com/obsidian-tasks-group/obsidian-tasks/raw/gh-pages/resources/screenshots/important_project.png)
+![Important Project Tasks](images/important_project.png)
 The `Important Project` note also has some tasks.
 
-![Tasks Queries](https://github.com/obsidian-tasks-group/obsidian-tasks/raw/gh-pages/resources/screenshots/tasks_queries.png)
+![Tasks Queries](images/tasks_queries.png)
 The `Tasks` note gathers all tasks from the vault and displays them using queries.
 
-![Create or Edit Modal](https://github.com/obsidian-tasks-group/obsidian-tasks/raw/gh-pages/resources/screenshots/modal.png)
+![Create or Edit Modal](images/modal.png)
 The `Tasks: Create or edit` command helps you when editing a task.

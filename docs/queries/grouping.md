@@ -127,14 +127,14 @@ The order of operations ensures that grouping does not modify which tasks are di
 
 Here is an example Tasks result, without any `group by` commands:
 
-![Tasks Ungrouped](https://github.com/obsidian-tasks-group/obsidian-tasks/raw/gh-pages/resources/screenshots/tasks_ungrouped.png)
+![Tasks Ungrouped](../images/tasks_ungrouped.png)
 Tasks not grouped.
 
 ### After
 
 And here is what this might look like, when grouped by folder, filename and heading:
 
-![Tasks Grouped](https://github.com/obsidian-tasks-group/obsidian-tasks/raw/gh-pages/resources/screenshots/tasks_grouped.png)
+![Tasks Grouped](../images/tasks_grouped.png)
 Tasks grouped.
 
 ---

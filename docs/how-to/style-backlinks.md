@@ -41,7 +41,7 @@ Here is an example task block that does not hide any components of the output: s
 
 This screenshot shows what this might look like, with some sample data:
 
-![Tasks with vanilla backlink styles](https://github.com/obsidian-tasks-group/obsidian-tasks/raw/gh-pages/resources/screenshots/backlinks-default-style.png)
+![Tasks with vanilla backlink styles](../images/backlinks-default-style.png)
 
 Notice that the backlinks (the blue file and heading names) can quite dominate the results, visually.
 
@@ -68,7 +68,7 @@ We can de-emphasize the text in the backlinks, with [this CSS snippet](https://g
 
 Which gives us this result:
 
-![Tasks with small grey backlinks](https://github.com/obsidian-tasks-group/obsidian-tasks/raw/gh-pages/resources/screenshots/backlinks-snippet-tasks-plugin-backlinks-small-grey.png)
+![Tasks with small grey backlinks](../images/backlinks-snippet-tasks-plugin-backlinks-small-grey.png)
 
 ## Using CSS to replace the backlinks with icons
 
@@ -93,4 +93,4 @@ li.plugin-tasks-list-item > span.tasks-backlink > a {
 
 Which gives us this result:
 
-![Tasks with icons for backlink](https://github.com/obsidian-tasks-group/obsidian-tasks/raw/gh-pages/resources/screenshots/backlinks-snippet-tasks-plugin-backlinks-icon.png)
+![Tasks with icons for backlink](../images/backlinks-snippet-tasks-plugin-backlinks-icon.png)
