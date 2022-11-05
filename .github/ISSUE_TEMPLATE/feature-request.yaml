@@ -1,0 +1,48 @@
+name: Feature Request
+description: Request a new feature
+labels: ["type: enhancement"]
+body:
+  - type: checkboxes
+    id: no-duplicate-issues
+    attributes:
+      label: "⚠️ Please check that this feature request has NOT been suggested before."
+      description: "Search previous requests in [Ideas](https://github.com/obsidian-tasks-group/obsidian-tasks/discussions/categories/ideas?discussions_q=category%3AIdeas+-label%3A%22status%3A+released%22+-label%3Aduplicate) AND [Issues](https://github.com/obsidian-tasks-group/obsidian-tasks/issues?q=is%3Aopen+is%3Aissue+label%3A%22type%3A+enhancement%22)"
+      options:
+        - label: "I checked and didn't find any similar feature requests."
+          required: true
+
+  - type: textarea
+    id: feature-description
+    validations:
+      required: true
+    attributes:
+      label: "🔖 Feature description"
+      description: "A clear and concise description of what the feature request is."
+      placeholder: "You should add ..."
+
+  - type: textarea
+    id: solution
+    validations:
+      required: true
+    attributes:
+      label: "✔️ Solution"
+      description: "A clear and concise description of what you want to happen, and why."
+      placeholder: "In my use-case, ..."
+
+  - type: textarea
+    id: alternatives
+    validations:
+      required: false
+    attributes:
+      label: "❓ Alternatives"
+      description: "A clear and concise description of any alternative solutions or features you've considered."
+      placeholder: "I have considered ..."
+
+  - type: textarea
+    id: additional-context
+    validations:
+      required: false
+    attributes:
+      label: "📝 Additional Context"
+      description: "Add any other context or screenshots about the feature request here."
+      placeholder: "..."
