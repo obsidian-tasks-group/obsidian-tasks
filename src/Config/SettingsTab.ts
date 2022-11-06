@@ -89,27 +89,39 @@ export class SettingsTab extends PluginSettingTab {
             });
 
         new Setting(containerEl)
-            .setName('Use filename as date fallback')
-            .setDesc('Automatically schedule tasks at the date contained in the filename if no other date is set.')
+            .setName('Use filename as Scheduled date for undated tasks')
+            .setDesc(
+                SettingsTab.createFragmentWithHTML(
+                    'Save time entering Scheduled (⏳) dates.</br>' +
+                        'If this option is enabled, any undated tasks will be given a default Scheduled date extracted from their file name.</br>' +
+                        'The date in the file name must be in one of <code>YYYY-MM-DD</code> or <code>YYYYMMDD</code> formats.</br>' +
+                        'Undated tasks have none of Due (📅 ), Scheduled (⏳) and Start (🛫) dates.</br>' +
+                        '<p>See the <a href="https://obsidian-tasks-group.github.io/obsidian-tasks/getting-started/use-filename-as-default-date/">documentation</a>.</p>',
+                ),
+            )
             .addToggle((toggle) => {
                 const settings = getSettings();
-                toggle.setValue(settings.enableDateFallback).onChange(async (value) => {
-                    updateSettings({ enableDateFallback: value });
+                toggle.setValue(settings.useFilenameAsScheduledDate).onChange(async (value) => {
+                    updateSettings({ useFilenameAsScheduledDate: value });
                     await this.plugin.saveSettings();
                 });
             });
 
         new Setting(containerEl)
-            .setName('Folders with date fallback')
-            .setDesc('Leave empty if you want to use fallback everywhere, or enter a comma-separated list of folders.')
+            .setName('Folders with default Scheduled dates')
+            .setDesc(
+                'Leave empty if you want to use default Scheduled dates everywhere, or enter a comma-separated list of folders.',
+            )
             .addText(async (input) => {
                 const settings = getSettings();
                 await this.plugin.saveSettings();
-                input.setValue(SettingsTab.renderFolderArray(settings.dateFallbackFolders)).onChange(async (value) => {
-                    const folders = SettingsTab.parseCommaSeparatedFolders(value);
-                    updateSettings({ dateFallbackFolders: folders });
-                    await this.plugin.saveSettings();
-                });
+                input
+                    .setValue(SettingsTab.renderFolderArray(settings.filenameAsDateFolders))
+                    .onChange(async (value) => {
+                        const folders = SettingsTab.parseCommaSeparatedFolders(value);
+                        updateSettings({ filenameAsDateFolders: folders });
+                        await this.plugin.saveSettings();
+                    });
             });
 
         // ---------------------------------------------------------------------------

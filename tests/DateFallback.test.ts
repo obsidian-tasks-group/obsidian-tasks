@@ -21,19 +21,19 @@ describe('extract date from filename', () => {
     type TestCase = {
         path: string;
         expectedDate: string | null;
-        enableDateFallback?: boolean;
-        dateFallbackFolders?: string[];
+        useFilenameAsScheduledDate?: boolean;
+        filenameAsDateFolders?: string[];
     };
 
     const testDefaults: Partial<TestCase> = {
-        enableDateFallback: true,
-        dateFallbackFolders: ANY_FOLDER,
+        useFilenameAsScheduledDate: true,
+        filenameAsDateFolders: ANY_FOLDER,
     };
 
     test.each<TestCase>([
         {
             path: '2022-10-22.md',
-            enableDateFallback: false,
+            useFilenameAsScheduledDate: false,
             expectedDate: null,
         },
         {
@@ -118,42 +118,42 @@ describe('extract date from filename', () => {
         },
         {
             path: 'folder/2022-10-22.md',
-            dateFallbackFolders: ['folder'],
+            filenameAsDateFolders: ['folder'],
             expectedDate: '2022-10-22',
         },
         {
             path: 'folder/subfolder/2022-10-22.md',
-            dateFallbackFolders: ['folder'],
+            filenameAsDateFolders: ['folder'],
             expectedDate: '2022-10-22',
         },
         {
             path: '2022-10-22.md',
-            dateFallbackFolders: ['folder'],
+            filenameAsDateFolders: ['folder'],
             expectedDate: null,
         },
         {
             path: 'outside/2022-10-22.md',
-            dateFallbackFolders: ['folder'],
+            filenameAsDateFolders: ['folder'],
             expectedDate: null,
         },
         {
             path: 'folder2/2022-10-22.md',
-            dateFallbackFolders: ['folder1', 'folder2'],
+            filenameAsDateFolders: ['folder1', 'folder2'],
             expectedDate: '2022-10-22',
         },
         {
             path: 'folder/2022-10-22.md',
-            dateFallbackFolders: ['folder', 'folder/subfolder'],
+            filenameAsDateFolders: ['folder', 'folder/subfolder'],
             expectedDate: '2022-10-22',
         },
         {
             path: 'folder/subfolder/2022-10-22.md',
-            dateFallbackFolders: ['folder', 'folder/subfolder'],
+            filenameAsDateFolders: ['folder', 'folder/subfolder'],
             expectedDate: '2022-10-22',
         },
         {
             path: 'folder/other-folder/2022-10-22.md',
-            dateFallbackFolders: ['folder', 'folder/subfolder'],
+            filenameAsDateFolders: ['folder', 'folder/subfolder'],
             expectedDate: '2022-10-22',
         },
     ])('%s', (testCase: TestCase) => {
@@ -161,8 +161,8 @@ describe('extract date from filename', () => {
         const options = { ...testDefaults, ...testCase };
 
         updateSettings({
-            enableDateFallback: options.enableDateFallback,
-            dateFallbackFolders: options.dateFallbackFolders,
+            useFilenameAsScheduledDate: options.useFilenameAsScheduledDate,
+            filenameAsDateFolders: options.filenameAsDateFolders,
         });
 
         try {
@@ -195,7 +195,7 @@ function constructTaskFromLine(line: string, fallbackDate: string | null) {
 
 describe('parse task with date fallback', () => {
     beforeEach(() => {
-        updateSettings({ enableDateFallback: true });
+        updateSettings({ useFilenameAsScheduledDate: true });
     });
 
     afterEach(() => {
@@ -295,7 +295,7 @@ describe('parse task with date fallback', () => {
 
 describe('update fallback date when path is changed', () => {
     beforeEach(() => {
-        updateSettings({ enableDateFallback: true });
+        updateSettings({ useFilenameAsScheduledDate: true });
     });
 
     afterEach(() => {
