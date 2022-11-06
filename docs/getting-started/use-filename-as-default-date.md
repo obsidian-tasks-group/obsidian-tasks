@@ -23,6 +23,8 @@ has_toc: false
 
 ## Automatic scheduled date
 
+> Introduced in Tasks 1.18.0.
+
 You can automatically set a scheduled date for tasks based on the name of their files. This feature can be enabled in the
 settings, via the option `Use filename as Scheduled date for undated tasks`. Changing this requires a restart of Obsidian.
 
