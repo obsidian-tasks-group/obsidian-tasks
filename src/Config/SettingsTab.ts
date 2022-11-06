@@ -28,12 +28,12 @@ export class SettingsTab extends PluginSettingTab {
             .setName('Global task filter')
             .setDesc(
                 SettingsTab.createFragmentWithHTML(
-                    '<b>Leave empty if you want all checklist items in your vault to be tasks managed by this plugin.</b><br>' +
-                        'Use a global filter if you want Tasks to only act on a subset of your <code> - [ ]</code> checklist items.<br>' +
-                        'A checklist item must include the specified string in its description in order to be considered a task.<br><br>' +
-                        'For example, if you set the global filter to <code>#task</code>, the Tasks plugin will only handle checklist items tagged with <code>#task</code>.<br>' +
-                        'Other checklist items will remain normal checklist items and not appear in queries or get a done date set.<br>' +
-                        'See the <a href="https://obsidian-tasks-group.github.io/obsidian-tasks/getting-started/global-filter/">documentation</a>.',
+                    '<p><b>Recommended: Leave empty if you want all checklist items in your vault to be tasks managed by this plugin.</b></p>' +
+                        '<p>Use a global filter if you want Tasks to only act on a subset of your "<code>- [ ]</code>" checklist items, so that ' +
+                        'a checklist item must include the specified string in its description in order to be considered a task.<p>' +
+                        '<p>For example, if you set the global filter to <code>#task</code>, the Tasks plugin will only handle checklist items tagged with <code>#task</code>.</br>' +
+                        'Other checklist items will remain normal checklist items and not appear in queries or get a done date set.</p>' +
+                        '<p>See the <a href="https://obsidian-tasks-group.github.io/obsidian-tasks/getting-started/global-filter/">documentation</a>.</p>',
                 ),
             )
             .addText((text) => {
