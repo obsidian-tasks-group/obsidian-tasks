@@ -1,5 +1,5 @@
 name: Bug Report
-description: File a bug report - new, improved form!
+description: File a bug report
 labels: ["type: bug"]
 body:
   - type: markdown
@@ -8,6 +8,15 @@ body:
         ## Before you start
         Please **make sure you are on the latest version of Tasks.**
         If you encountered the issue after you installed, updated, or reloaded the Tasks plugin, **please try restarting obsidian before reporting the bug**.
+
+  - type: checkboxes
+    id: no-duplicate-issues
+    attributes:
+      label: "Please check that this issue has NOT been reported before."
+      description: "The **Label filters** may help make your search more focussed."
+      options:
+        - label: "I searched previous [Bug Reports](https://github.com/obsidian-tasks-group/obsidian-tasks/issues?q=is%3Aopen+is%3Aissue+label%3A%22type%3A+bug%22+sort%3Acomments-desc) didn't find any similar reports."
+          required: true
 
   - type: textarea
     id: expected
