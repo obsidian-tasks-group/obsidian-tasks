@@ -52,4 +52,4 @@ Note you must restart Tasks after changing any settings here.
 
 ![settings-global-filter](../images/settings-global-filter.png)
 
-Image of the settings options for the global filter.
+Image of the settings options for the global filter, showing the default settings.
