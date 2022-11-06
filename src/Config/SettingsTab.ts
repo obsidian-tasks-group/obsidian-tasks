@@ -93,7 +93,7 @@ export class SettingsTab extends PluginSettingTab {
             .setDesc(
                 SettingsTab.createFragmentWithHTML(
                     'Save time entering Scheduled (⏳) dates.</br>' +
-                        'If this option is enabled, any undated tasks will be given a Scheduled date extracted from their file name.</br>' +
+                        'If this option is enabled, any undated tasks will be given a default Scheduled date extracted from their file name.</br>' +
                         'The date in the file name must be in one of <code>YYYY-MM-DD</code> or <code>YYYYMMDD</code> formats.</br>' +
                         'Undated tasks have none of Due (📅 ), Scheduled (⏳) and Start (🛫) dates.</br>' +
                         '<p>See the <a href="https://obsidian-tasks-group.github.io/obsidian-tasks/getting-started/use-filename-as-default-date/">documentation</a>.</p>',
@@ -108,8 +108,10 @@ export class SettingsTab extends PluginSettingTab {
             });
 
         new Setting(containerEl)
-            .setName('Folders with date fallback')
-            .setDesc('Leave empty if you want to use fallback everywhere, or enter a comma-separated list of folders.')
+            .setName('Folders with default Scheduled dates')
+            .setDesc(
+                'Leave empty if you want to use default Scheduled dates everywhere, or enter a comma-separated list of folders.',
+            )
             .addText(async (input) => {
                 const settings = getSettings();
                 await this.plugin.saveSettings();
