@@ -2,7 +2,7 @@
 
 ## Task(s)
 
-- [ ] #task No date scheduled - should use date in filename as scheduled date
+- [ ] #task No date scheduled - should use date in filename as scheduled date - as shown by group title
 
 ## Query
 
