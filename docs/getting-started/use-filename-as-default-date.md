@@ -1,12 +1,12 @@
 ---
 layout: default
-title: Use Filename as Date Fallback
+title: Use Filename as Default Date
 nav_order: 5
 parent: Getting Started
 has_toc: false
 ---
 
-# Use Filename as Date Fallback
+# Use Filename as Default Date
 
 {: .no_toc }
 
