@@ -89,8 +89,16 @@ export class SettingsTab extends PluginSettingTab {
             });
 
         new Setting(containerEl)
-            .setName('Use filename as date fallback')
-            .setDesc('Automatically schedule tasks at the date contained in the filename if no other date is set.')
+            .setName('Use filename as Scheduled date for undated tasks')
+            .setDesc(
+                SettingsTab.createFragmentWithHTML(
+                    'Save time entering Scheduled (⏳) dates.</br>' +
+                        'If this option is enabled, any undated tasks will be given a Scheduled date extracted from their file name.</br>' +
+                        'The date in the file name must be in one of <code>YYYY-MM-DD</code> or <code>YYYYMMDD</code> formats.</br>' +
+                        'Undated tasks have none of Due (📅 ), Scheduled (⏳) and Start (🛫) dates.</br>' +
+                        '<p>See the <a href="https://obsidian-tasks-group.github.io/obsidian-tasks/getting-started/use-filename-as-default-date/">documentation</a>.</p>',
+                ),
+            )
             .addToggle((toggle) => {
                 const settings = getSettings();
                 toggle.setValue(settings.enableDateFallback).onChange(async (value) => {
