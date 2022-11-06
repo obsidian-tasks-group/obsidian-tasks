@@ -101,8 +101,8 @@ export class SettingsTab extends PluginSettingTab {
             )
             .addToggle((toggle) => {
                 const settings = getSettings();
-                toggle.setValue(settings.enableDateFallback).onChange(async (value) => {
-                    updateSettings({ enableDateFallback: value });
+                toggle.setValue(settings.useFilenameAsScheduledDate).onChange(async (value) => {
+                    updateSettings({ useFilenameAsScheduledDate: value });
                     await this.plugin.saveSettings();
                 });
             });
@@ -115,11 +115,13 @@ export class SettingsTab extends PluginSettingTab {
             .addText(async (input) => {
                 const settings = getSettings();
                 await this.plugin.saveSettings();
-                input.setValue(SettingsTab.renderFolderArray(settings.dateFallbackFolders)).onChange(async (value) => {
-                    const folders = SettingsTab.parseCommaSeparatedFolders(value);
-                    updateSettings({ dateFallbackFolders: folders });
-                    await this.plugin.saveSettings();
-                });
+                input
+                    .setValue(SettingsTab.renderFolderArray(settings.filenameAsDateFolders))
+                    .onChange(async (value) => {
+                        const folders = SettingsTab.parseCommaSeparatedFolders(value);
+                        updateSettings({ filenameAsDateFolders: folders });
+                        await this.plugin.saveSettings();
+                    });
             });
 
         // ---------------------------------------------------------------------------

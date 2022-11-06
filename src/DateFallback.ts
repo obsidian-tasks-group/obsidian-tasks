@@ -13,14 +13,14 @@ export class DateFallback {
      * @return a Moment or null if no date was found.
      */
     public static fromPath(path: string): Moment | null {
-        const { enableDateFallback, dateFallbackFolders } = getSettings();
+        const { useFilenameAsScheduledDate, filenameAsDateFolders } = getSettings();
 
-        if (!enableDateFallback) {
+        if (!useFilenameAsScheduledDate) {
             // feature is disabled
             return null;
         }
 
-        if (!this.matchesAnyFolder(dateFallbackFolders, path)) {
+        if (!this.matchesAnyFolder(filenameAsDateFolders, path)) {
             // file is not in any folder or subfolder that was selected for date inference
             return null;
         }
