@@ -119,4 +119,22 @@ export class DateFallback {
             scheduledDateIsInferred,
         });
     }
+
+    /**
+     * Update an array of updated tasks to remove the inferred scheduled date status if the scheduled date has been
+     * modified as compared to the original date
+     */
+    public static removeInferredStatusIfNeeded(originalTask: Task, updatedTasks: Task[]): Task[] {
+        const inferredScheduledDate = originalTask.scheduledDateIsInferred ? originalTask.scheduledDate : null;
+
+        return updatedTasks.map((task: Task) => {
+            if (inferredScheduledDate !== null && !inferredScheduledDate.isSame(task.scheduledDate, 'day')) {
+                // if a fallback date was used before modification, and the scheduled date was modified, we have to mark
+                // the scheduled date as not inferred anymore.
+                task = new Task({ ...task, scheduledDateIsInferred: false });
+            }
+
+            return task;
+        });
+    }
 }
