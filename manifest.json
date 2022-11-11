@@ -1,7 +1,7 @@
 {
   "id": "obsidian-tasks-plugin",
   "name": "Tasks",
-  "version": "1.18.0",
+  "version": "1.18.1",
   "minAppVersion": "0.14.6",
   "description": "Task management for Obsidian",
   "author": "Martin Schenck and Clare Macrae",
