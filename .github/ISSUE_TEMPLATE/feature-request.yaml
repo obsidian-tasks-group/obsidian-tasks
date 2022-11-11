@@ -5,7 +5,7 @@ body:
   - type: checkboxes
     id: no-duplicate-issues
     attributes:
-      label: "⚠️ Please check that this feature request has NOT been suggested before."
+      label: "⚠️ Please check that this feature request hasn't been suggested before."
       description: "There are two locations for previous feature requests. Please search in both. Thank you. The **Label filters** may help make your search more focussed."
       options:
         - label: "I searched previous [Ideas in Discussions](https://github.com/obsidian-tasks-group/obsidian-tasks/discussions/categories/ideas?discussions_q=category%3AIdeas+-label%3A%22status%3A+released%22+-label%3Aduplicate+sort%3Atop) didn't find any similar feature requests."
