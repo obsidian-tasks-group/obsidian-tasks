@@ -75,8 +75,6 @@ description regex matches /pc_abigail|pc_edwina|at_work/i
 - Regex searches are **case-sensitive**, unlike the simpler  `includes` and  `does not include`
 - A regex search can be made **insensitive** by appending a `i` flag after the closing `/`, for example: `/I aM cAsE INsensitive because of the LiTle i after the closing slash/i`
 - Tasks does not support multi-line regex searches, as each task is a single line.
-- Note that `tags` searches do not yet support regex searches.
-  - As a workaround, search `description` instead.
 
 ## Escaping special characters
 
