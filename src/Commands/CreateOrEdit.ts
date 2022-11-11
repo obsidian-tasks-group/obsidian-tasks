@@ -23,20 +23,8 @@ export const createOrEdit = (checking: boolean, editor: Editor, view: View, app:
     const line = editor.getLine(lineNumber);
     const task = taskFromLine({ line, path });
 
-    // save the inferred scheduled to compare it later
-    const inferredScheduledDate = task.scheduledDateIsInferred ? task.scheduledDate : null;
-
     const onSubmit = (updatedTasks: Task[]): void => {
-        const serialized = updatedTasks
-            .map((task: Task) => {
-                if (inferredScheduledDate !== null && !inferredScheduledDate.isSame(task.scheduledDate, 'day')) {
-                    // if a fallback date was used before modification, and the scheduled date was modified, we have to mark
-                    // the scheduled date as not inferred anymore.
-                    task = new Task({ ...task, scheduledDateIsInferred: false });
-                }
-
-                return task;
-            })
+        const serialized = DateFallback.removeInferredStatusIfNeeded(task, updatedTasks)
             .map((task: Task) => task.toFileLineString())
             .join('\n');
         editor.setLine(lineNumber, serialized);

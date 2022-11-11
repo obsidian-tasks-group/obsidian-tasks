@@ -384,3 +384,44 @@ describe('update fallback date when path is changed', () => {
         expect(updatedTask.scheduledDateIsInferred).toBe(expectedIsInferred);
     });
 });
+
+describe('remove inferred status if scheduled date changed', () => {
+    it('should keep scheduled-date-is-inferred if the date is the same', () => {
+        // arrange
+        const task = new TaskBuilder().scheduledDate('2022-11-11').scheduledDateIsInferred(true).build();
+
+        const updatedTask = new TaskBuilder().scheduledDate('2022-11-11').scheduledDateIsInferred(true).build();
+
+        // act
+        const [processedTask] = DateFallback.removeInferredStatusIfNeeded(task, [updatedTask]);
+
+        // assert
+        expect(processedTask.scheduledDateIsInferred).toBe(true);
+    });
+
+    it('should remove scheduled-date-is-inferred if the date was changed', () => {
+        // arrange
+        const task = new TaskBuilder().scheduledDate('2022-11-11').scheduledDateIsInferred(true).build();
+
+        const updatedTask = new TaskBuilder().scheduledDate('2022-11-15').scheduledDateIsInferred(false).build();
+
+        // act
+        const [processedTask] = DateFallback.removeInferredStatusIfNeeded(task, [updatedTask]);
+
+        // assert
+        expect(processedTask.scheduledDateIsInferred).toBe(false);
+    });
+
+    it('should not set scheduled-date-is-inferred if a scheduled date was added', () => {
+        // arrange
+        const task = new TaskBuilder().scheduledDateIsInferred(false).build();
+
+        const updatedTask = new TaskBuilder().scheduledDate('2022-11-11').scheduledDateIsInferred(false).build();
+
+        // act
+        const [processedTask] = DateFallback.removeInferredStatusIfNeeded(task, [updatedTask]);
+
+        // assert
+        expect(processedTask.scheduledDateIsInferred).toBe(false);
+    });
+});
