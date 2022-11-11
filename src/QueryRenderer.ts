@@ -9,6 +9,7 @@ import type { GroupHeading } from './Query/GroupHeading';
 import { TaskModal } from './TaskModal';
 import type { TasksEvents } from './TasksEvents';
 import type { Task } from './Task';
+import { DateFallback } from './DateFallback';
 
 export class QueryRenderer {
     private readonly app: App;
@@ -216,7 +217,7 @@ class QueryRenderChild extends MarkdownRenderChild {
             const onSubmit = (updatedTasks: Task[]): void => {
                 replaceTaskWithTasks({
                     originalTask: task,
-                    newTasks: updatedTasks,
+                    newTasks: DateFallback.removeInferredStatusIfNeeded(task, updatedTasks),
                 });
             };
 
