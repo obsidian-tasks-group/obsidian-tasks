@@ -119,7 +119,7 @@ For readability and accessibility, images should be created:
 Saving images:
 
 - Save them in .PNG format.
-- Save them in [resources/screenshots/](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/docs/images/).
+- Save them in [docs/images/](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/docs/images/).
 
 #### Adding screenshots to the documentation
 
