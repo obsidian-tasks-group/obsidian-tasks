@@ -386,7 +386,7 @@ describe('update fallback date when path is changed', () => {
 });
 
 describe('remove inferred status if scheduled date changed', () => {
-    it('should keep the status if the date is the same', () => {
+    it('should keep scheduled-date-is-inferred if the date is the same', () => {
         // arrange
         const task = new TaskBuilder().scheduledDate('2022-11-11').scheduledDateIsInferred(true).build();
 
@@ -399,7 +399,7 @@ describe('remove inferred status if scheduled date changed', () => {
         expect(processedTask.scheduledDateIsInferred).toBe(true);
     });
 
-    it('should remove the status if the date was changed', () => {
+    it('should remove scheduled-date-is-inferred if the date was changed', () => {
         // arrange
         const task = new TaskBuilder().scheduledDate('2022-11-11').scheduledDateIsInferred(true).build();
 
@@ -412,7 +412,7 @@ describe('remove inferred status if scheduled date changed', () => {
         expect(processedTask.scheduledDateIsInferred).toBe(false);
     });
 
-    it('should not set the status if a scheduled date was added', () => {
+    it('should not set scheduled-date-is-inferred if a scheduled date was added', () => {
         // arrange
         const task = new TaskBuilder().scheduledDateIsInferred(false).build();
 
