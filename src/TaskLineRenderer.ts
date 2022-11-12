@@ -15,42 +15,37 @@ export type TaskLineRenderDetails = {
     isFilenameUnique?: boolean;
 };
 
-export async function renderTaskLine(task: Task, renderDetails: TaskLineRenderDetails): Promise<HTMLLIElement> {
-    const li: HTMLLIElement = renderDetails.parentUlElement.createEl('li');
-    li.addClasses(['task-list-item', 'plugin-tasks-list-item']);
+export type TextRenderer = (text: string, element: HTMLSpanElement, path: string) => Promise<void>;
 
-    const textSpan = li.createSpan();
-    textSpan.addClass('tasks-list-text');
-    const classes = await taskToHtml(task, renderDetails, textSpan);
-    li.addClasses(classes);
+async function obsidianMarkdownRenderer(text: string, element: HTMLSpanElement, path: string) {
+    await MarkdownRenderer.renderMarkdown(text, element, path, null as unknown as Component);
+}
 
-    // TODO understand and fix this
-    // If the task is a block quote, the block quote wraps the p-tag that contains the content.
-    // In that case, we need to unwrap the p-tag *inside* the surrounding block quote.
-    // Otherwise, we unwrap the p-tag as a direct descendant of the textSpan.
-    // const blockQuote = textSpan.querySelector('blockquote');
-    // const directParentOfPTag = blockQuote ?? textSpan;
+export async function renderTaskLine(
+    task: Task,
+    renderDetails: TaskLineRenderDetails,
+    textRenderer: TextRenderer | null = null,
+): Promise<HTMLLIElement> {
+    if (!textRenderer) textRenderer = obsidianMarkdownRenderer;
+    const li: HTMLLIElement = document.createElement('li');
+    renderDetails.parentUlElement.appendChild(li);
+    li.classList.add('task-list-item', 'plugin-tasks-list-item');
 
-    // // Remove an empty trailing p-tag that the MarkdownRenderer appends when there is a block link:
-    // textSpan.findAll('p').forEach((pElement) => {
-    //     if (!pElement.hasChildNodes()) {
-    //         pElement.remove();
-    //     }
-    // });
+    const textSpan = document.createElement('span');
+    li.appendChild(textSpan);
+    textSpan.classList.add('tasks-list-text');
+    const classes = await taskToHtml(task, renderDetails, textSpan, textRenderer);
+    li.classList.add(...classes);
 
-    // Remove the footnote that the MarkdownRenderer appends when there is a footnote in the task:
-    textSpan.findAll('.footnotes').forEach((footnoteElement) => {
-        footnoteElement.remove();
-    });
-
-    const checkbox = li.createEl('input');
-    checkbox.addClass('task-list-item-checkbox');
+    const checkbox = document.createElement('input');
+    li.appendChild(checkbox);
+    checkbox.classList.add('task-list-item-checkbox');
     checkbox.type = 'checkbox';
     if (task.status !== taskModule.Status.TODO) {
         checkbox.checked = true;
-        li.addClass('is-checked');
+        li.classList.add('is-checked');
     }
-    checkbox.onClickEvent((event: MouseEvent) => {
+    checkbox.addEventListener('click', (event: MouseEvent) => {
         event.preventDefault();
         // It is required to stop propagation so that obsidian won't write the file with the
         // checkbox (un)checked. Obsidian would write after us and overwrite our change.
@@ -68,9 +63,9 @@ export async function renderTaskLine(task: Task, renderDetails: TaskLineRenderDe
     li.prepend(checkbox);
 
     // Set these to be compatible with stock obsidian lists:
-    li.setAttr('data-task', task.originalStatusCharacter.trim()); // Trim to ensure empty attribute for space. Same way as obsidian.
-    li.setAttr('data-line', renderDetails.listIndex);
-    checkbox.setAttr('data-line', renderDetails.listIndex);
+    li.setAttribute('data-task', task.originalStatusCharacter.trim()); // Trim to ensure empty attribute for space. Same way as obsidian.
+    li.setAttribute('data-line', renderDetails.listIndex.toString());
+    checkbox.setAttribute('data-line', renderDetails.listIndex.toString());
 
     if (renderDetails.layoutOptions?.shortMode) {
         addTooltip({ task, element: textSpan, isFilenameUnique: renderDetails.isFilenameUnique });
@@ -79,22 +74,28 @@ export async function renderTaskLine(task: Task, renderDetails: TaskLineRenderDe
     return li;
 }
 
-async function taskToHtml(task: Task, renderDetails: TaskLineRenderDetails, parentElement: HTMLElement) {
+async function taskToHtml(
+    task: Task,
+    renderDetails: TaskLineRenderDetails,
+    parentElement: HTMLElement,
+    textRenderer: TextRenderer,
+) {
     const allSpecificClasses: string[] = [];
     const taskLayout = new TaskLayout(renderDetails.layoutOptions);
     for (const component of taskLayout.layoutComponents) {
         let componentString = task.componentToString(taskLayout, component);
         if (componentString) {
             if (component === 'description') componentString = removeGlobalFilterIfNeeded(componentString);
-            const span = parentElement.createSpan();
+            const span = document.createElement('span');
+            parentElement.appendChild(span);
             if (span) {
-                parentElement.appendChild(span);
                 // TODO explain the purpose of this (to enable different formatting to layout like table cells and the text itself)
-                const internalSpan = span.createSpan();
-                await renderComponentText(internalSpan, componentString, component, task);
+                const internalSpan = document.createElement('span');
+                span.appendChild(internalSpan);
+                await renderComponentText(internalSpan, componentString, component, task, textRenderer);
                 const [genericClasses, specificClasses] = getComponentClasses(component, task);
-                span.addClasses(genericClasses);
-                span.addClasses(specificClasses);
+                span.classList.add(...genericClasses);
+                span.classList.add(...specificClasses);
                 allSpecificClasses.push(...specificClasses);
             }
         }
@@ -107,18 +108,37 @@ async function renderComponentText(
     componentString: string,
     component: LayoutComponent,
     task: Task,
+    textRenderer: TextRenderer,
 ) {
     if (component === 'description') {
-        await MarkdownRenderer.renderMarkdown(componentString, span, task.path, null as unknown as Component);
+        await textRenderer(componentString, span, task.path);
+
+        // If the task is a block quote, the block quote wraps the p-tag that contains the content.
+        // In that case, we need to unwrap the p-tag *inside* the surrounding block quote.
+        // Otherwise, we unwrap the p-tag as a direct descendant of the span.
+        const blockQuote = span.querySelector('blockquote');
+        const directParentOfPTag = blockQuote ?? span;
+
         // Unwrap the p-tag that was created by the MarkdownRenderer:
-        // TODO understand the block quote thing
-        const pElement = span.querySelector('p');
+        const pElement = directParentOfPTag.querySelector('p');
         if (pElement !== null) {
             while (pElement.firstChild) {
-                span.insertBefore(pElement.firstChild, pElement);
+                directParentOfPTag.insertBefore(pElement.firstChild, pElement);
             }
             pElement.remove();
         }
+
+        // Remove an empty trailing p-tag that the MarkdownRenderer appends when there is a block link:
+        span.querySelectorAll('p').forEach((pElement) => {
+            if (!pElement.hasChildNodes()) {
+                pElement.remove();
+            }
+        });
+
+        // Remove the footnote that the MarkdownRenderer appends when there is a footnote in the task:
+        span.querySelectorAll('.footnotes').forEach((footnoteElement) => {
+            footnoteElement.remove();
+        });
     } else {
         span.innerHTML = componentString;
     }
