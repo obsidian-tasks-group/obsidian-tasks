@@ -1,11 +1,3 @@
 .plugin-tasks-query-explanation{
     color: var(--color-blue);
-
-    /* Prevent long lines wrapping, so they are more readable,
-       especially on small screens.
-
-       A horizontal scroll bar will be displayed, if the explanation
-       is too wide to fit.
-     */
-    --code-white-space: pre;
 }
