@@ -22,7 +22,7 @@ describe('explain start date queries', () => {
     it('implicit "on" gets added to explanation', () => {
         const filterOrMessage = new StartDateField().createFilterOrErrorMessage('starts 2023-01-02');
         expect(filterOrMessage).toHaveExplanation(
-            'start date is 2023-01-02 (Monday 2nd January 2023) OR no start date',
+            'start date is on 2023-01-02 (Monday 2nd January 2023) OR no start date',
         );
     });
 });

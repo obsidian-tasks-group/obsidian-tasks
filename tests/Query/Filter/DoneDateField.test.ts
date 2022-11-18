@@ -56,12 +56,12 @@ describe('explain done date queries', () => {
 
     it('should explain date with explicit on', () => {
         const filterOrMessage = new DoneDateField().createFilterOrErrorMessage('done on 2024-01-02');
-        expect(filterOrMessage).toHaveExplanation('done date is 2024-01-02 (Tuesday 2nd January 2024)');
+        expect(filterOrMessage).toHaveExplanation('done date is on 2024-01-02 (Tuesday 2nd January 2024)');
     });
 
     it('should explain date with implicit on', () => {
         const filterOrMessage = new DoneDateField().createFilterOrErrorMessage('done 2024-01-02');
-        expect(filterOrMessage).toHaveExplanation('done date is 2024-01-02 (Tuesday 2nd January 2024)');
+        expect(filterOrMessage).toHaveExplanation('done date is on 2024-01-02 (Tuesday 2nd January 2024)');
     });
 
     it('should show value of relative dates', () => {

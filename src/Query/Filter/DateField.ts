@@ -66,7 +66,7 @@ export abstract class DateField extends Field {
                         const date = this.date(task);
                         return date ? date.isSame(filterDate) : this.filterResultIfFieldMissing();
                     };
-                    relative = '';
+                    relative = ' on';
                 }
                 const explanation = DateField.getExplanationString(
                     this.fieldName(),

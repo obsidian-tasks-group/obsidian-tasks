@@ -787,7 +787,7 @@ describe('Query', () => {
   description includes hello
 
   due 2012-01-23 =>
-    due date is 2012-01-23 (Monday 23rd January 2012)
+    due date is on 2012-01-23 (Monday 23rd January 2012)
 `;
             expect(query.explainQuery()).toEqual(expectedDisplayText);
         });

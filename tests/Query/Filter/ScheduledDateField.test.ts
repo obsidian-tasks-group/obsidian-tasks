@@ -19,6 +19,6 @@ describe('explain scheduled date queries', () => {
 
     it('implicit "on" gets added to explanation', () => {
         const filterOrMessage = new ScheduledDateField().createFilterOrErrorMessage('scheduled 2023-01-02');
-        expect(filterOrMessage).toHaveExplanation('scheduled date is 2023-01-02 (Monday 2nd January 2023)');
+        expect(filterOrMessage).toHaveExplanation('scheduled date is on 2023-01-02 (Monday 2nd January 2023)');
     });
 });
