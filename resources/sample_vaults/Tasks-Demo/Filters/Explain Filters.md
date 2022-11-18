@@ -24,6 +24,6 @@ limit 1
 
 ```tasks
 explain
-(description includes 1) AND (description includes 2) AND (description includes 3) AND (description includes 4) AND (description includes 5) AND (description includes 6)
+(description includes 1) AND (description includes 2) AND (description includes 3) AND (description includes 4)
 limit 1
 ```
