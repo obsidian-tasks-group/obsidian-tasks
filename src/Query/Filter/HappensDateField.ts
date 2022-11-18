@@ -67,7 +67,7 @@ export class HappensDateField extends Field {
                     filterFunction = (task: Task) => {
                         return this.dates(task).some((date) => date && date.isSame(filterDate));
                     };
-                    relative = '';
+                    relative = ' on';
                 }
                 const explanation = DateField.getExplanationString(
                     'due, start or scheduled',

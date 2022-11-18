@@ -101,14 +101,14 @@ describe('explain happens date queries', () => {
     it('should explain date with explicit on', () => {
         const filterOrMessage = new HappensDateField().createFilterOrErrorMessage('happens on 2024-01-02');
         expect(filterOrMessage).toHaveExplanation(
-            'due, start or scheduled date is 2024-01-02 (Tuesday 2nd January 2024)',
+            'due, start or scheduled date is on 2024-01-02 (Tuesday 2nd January 2024)',
         );
     });
 
     it('should explain date with implicit on', () => {
         const filterOrMessage = new HappensDateField().createFilterOrErrorMessage('happens 2024-01-02');
         expect(filterOrMessage).toHaveExplanation(
-            'due, start or scheduled date is 2024-01-02 (Tuesday 2nd January 2024)',
+            'due, start or scheduled date is on 2024-01-02 (Tuesday 2nd January 2024)',
         );
     });
 
