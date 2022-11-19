@@ -291,7 +291,7 @@ test('SimpleVerify', () => {
 });
 ```
 
-<sup><a href='/tests/TestingTools/ApprovalTestsDemo.test.ts#L4-L8' title='Snippet source file'>snippet source</a> | <a href='#snippet-approval-test-as-text' title='Start of snippet'>anchor</a></sup>
+<sup><a href='https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/TestingTools/ApprovalTestsDemo.test.ts#L4-L8' title='Snippet source file'>snippet source</a> | <a href='#snippet-approval-test-as-text' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
 The corresponding `approved` file, named `ApprovalTestsDemo.test.ApprovalTests_SimpleVerify.approved.txt`:
@@ -303,7 +303,7 @@ The corresponding `approved` file, named `ApprovalTestsDemo.test.ApprovalTests_S
 Hello From Approvals
 ```
 
-<sup><a href='/tests/TestingTools/ApprovalTestsDemo.test.ApprovalTests_SimpleVerify.approved.txt#L1-L1' title='Snippet source file'>snippet source</a> | <a href='#snippet-ApprovalTestsDemo.test.ApprovalTests_SimpleVerify.approved.txt' title='Start of snippet'>anchor</a></sup>
+<sup><a href='https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/TestingTools/ApprovalTestsDemo.test.ApprovalTests_SimpleVerify.approved.txt#L1-L1' title='Snippet source file'>snippet source</a> | <a href='#snippet-ApprovalTestsDemo.test.ApprovalTests_SimpleVerify.approved.txt' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
 <!-- snippet: approval-test-as-json -->
@@ -316,7 +316,7 @@ test('JsonVerify', () => {
 });
 ```
 
-<sup><a href='/tests/TestingTools/ApprovalTestsDemo.test.ts#L10-L15' title='Snippet source file'>snippet source</a> | <a href='#snippet-approval-test-as-json' title='Start of snippet'>anchor</a></sup>
+<sup><a href='https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/TestingTools/ApprovalTestsDemo.test.ts#L10-L15' title='Snippet source file'>snippet source</a> | <a href='#snippet-approval-test-as-json' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
 The corresponding `approved` file, named `ApprovalTestsDemo.test.ApprovalTests_JsonVerify.approved.json`:
@@ -331,7 +331,7 @@ The corresponding `approved` file, named `ApprovalTestsDemo.test.ApprovalTests_J
 }
 ```
 
-<sup><a href='/tests/TestingTools/ApprovalTestsDemo.test.ApprovalTests_JsonVerify.approved.json#L1-L4' title='Snippet source file'>snippet source</a> | <a href='#snippet-ApprovalTestsDemo.test.ApprovalTests_JsonVerify.approved.json' title='Start of snippet'>anchor</a></sup>
+<sup><a href='https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/TestingTools/ApprovalTestsDemo.test.ApprovalTests_JsonVerify.approved.json#L1-L4' title='Snippet source file'>snippet source</a> | <a href='#snippet-ApprovalTestsDemo.test.ApprovalTests_JsonVerify.approved.json' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
 </details>
