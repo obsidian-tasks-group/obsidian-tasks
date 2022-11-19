@@ -24,6 +24,7 @@
     - [Location of code](#location-of-code)
     - [Then start writing tests](#then-start-writing-tests)
   - [Snapshot Tests](#snapshot-tests)
+  - [Approval Tests](#approval-tests)
   - [Jest and the WebStorm IDE](#jest-and-the-webstorm-ide)
   - [Test Coverage](#test-coverage)
 - [Dependency Upgrades and Repository Maintenance](#dependency-upgrades-and-repository-maintenance)
@@ -260,6 +261,16 @@ For testing more complex objects, some of the tests here use Jest's
 For readability of snapshots, we favour [Inline Snapshots](https://jestjs.io/docs/snapshot-testing#inline-snapshots),
 which are saved in the source code. See that documentation for how to easily update the inline
 snapshot, if the output is intended to be changed.
+
+### Approval Tests
+
+There is a brief overview of Approval tests at [approvaltests.com](https://approvaltests.com).
+
+For including complex text in the documentation, some of the tests here will
+soon start using the [Approval Tests implementation in NodeJS](https://github.com/approvals/Approvals.NodeJS).
+
+If these tests fail, they will currently try and launch [diffmerge](https://sourcegear.com/diffmerge/) to show
+the differences between received and approved files.
 
 ### Jest and the WebStorm IDE
 
