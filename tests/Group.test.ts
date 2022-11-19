@@ -193,22 +193,22 @@ describe('Grouping tasks', () => {
         // Assert
         expect(groups.toString()).toMatchInlineSnapshot(`
             "
-            Group names: [folder\\\\_a/folder\\\\_b/,file\\\\_c]
-            #### folder\\\\_a/folder\\\\_b/
-            ##### file\\\\_c
+            Group names: [folder\\_a/folder\\_b/,file\\_c]
+            #### folder\\_a/folder\\_b/
+            ##### file\\_c
             - [ ] Task 3 - but path is 1st, alphabetically
 
             ---
 
-            Group names: [folder\\\\_b/folder\\\\_c/,file\\\\_c]
-            #### folder\\\\_b/folder\\\\_c/
-            ##### file\\\\_c
+            Group names: [folder\\_b/folder\\_c/,file\\_c]
+            #### folder\\_b/folder\\_c/
+            ##### file\\_c
             - [ ] Task 1 - but path is 2nd, alphabetically
 
             ---
 
-            Group names: [folder\\\\_b/folder\\\\_c/,file\\\\_d]
-            ##### file\\\\_d
+            Group names: [folder\\_b/folder\\_c/,file\\_d]
+            ##### file\\_d
             - [ ] Task 2 - but path is 2nd, alphabetically
 
             ---
