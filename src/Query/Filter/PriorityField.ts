@@ -1,6 +1,7 @@
 import { Priority, Task } from '../../Task';
+import { Explanation } from '../Explain/Explanation';
 import { Field } from './Field';
-import { FilterOrErrorMessage } from './Filter';
+import { Filter, FilterOrErrorMessage } from './Filter';
 
 export class PriorityField extends Field {
     private static readonly priorityRegexp = /^priority (is )?(above|below)? ?(low|none|medium|high)/;
@@ -32,6 +33,7 @@ export class PriorityField extends Field {
                 return result;
             }
 
+            let explanation = line;
             let filter;
             if (priorityMatch[2] === 'above') {
                 filter = (task: Task) => (task.priority ? task.priority.localeCompare(filterPriority!) < 0 : false);
@@ -39,9 +41,10 @@ export class PriorityField extends Field {
                 filter = (task: Task) => (task.priority ? task.priority.localeCompare(filterPriority!) > 0 : false);
             } else {
                 filter = (task: Task) => (task.priority ? task.priority === filterPriority : false);
+                explanation = `${this.fieldName()} is ${filterPriorityString}`;
             }
 
-            result.filterFunction = filter;
+            result.filter = new Filter(line, filter, new Explanation(explanation));
         } else {
             result.error = 'do not understand query filter (priority)';
         }

@@ -60,4 +60,11 @@ export interface IQuery {
      * @memberof Query
      */
     applyQueryToTasks: (tasks: Task[]) => TaskGroups;
+
+    /**
+     * Return a text representation of the query.
+     *
+     * This is currently displayed as a <pre> block, retaining indentation.
+     */
+    explainQuery: () => string;
 }

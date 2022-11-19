@@ -64,6 +64,7 @@ export class Query implements IQuery {
     private readonly hideOptionsRegexp =
         /^(hide|show) (task count|backlink|priority|start date|scheduled date|done date|due date|recurrence rule|edit button|urgency)/;
     private readonly shortModeRegexp = /^short/;
+    private readonly explainQueryRegexp = /^explain/;
 
     private readonly limitRegexp = /^limit (to )?(\d+)( tasks?)?/;
 
@@ -80,6 +81,9 @@ export class Query implements IQuery {
                         break;
                     case this.shortModeRegexp.test(line):
                         this._layoutOptions.shortMode = true;
+                        break;
+                    case this.explainQueryRegexp.test(line):
+                        this._layoutOptions.explainQuery = true;
                         break;
                     case this.limitRegexp.test(line):
                         this.parseLimit({ line });
@@ -102,6 +106,31 @@ export class Query implements IQuery {
                         this._error = `do not understand query: ${line}`;
                 }
             });
+    }
+
+    public explainQuery(): string {
+        // TODO Include limit, if any
+        // TODO Include global filter, if any
+        // TODO State today's date (and maybe weekday)
+
+        const numberOfFilters = this.filters.length;
+        if (numberOfFilters === 0) {
+            return 'No filters supplied. All tasks will match the query.';
+        }
+
+        let result = 'All of:\n';
+        for (let i = 0; i < numberOfFilters; i++) {
+            if (i > 0) result += '\n';
+            const filter = this.filters[i];
+            const explanation = filter.explanation;
+            const unindentedExplanation = explanation.asString();
+            if (unindentedExplanation === filter.instruction) {
+                result += `  ${filter.instruction}\n`;
+            } else {
+                result += `  ${filter.instruction} =>\n${explanation.asString('    ')}\n`;
+            }
+        }
+        return result;
     }
 
     public get limit(): number | undefined {

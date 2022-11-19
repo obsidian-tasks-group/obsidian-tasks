@@ -1,8 +1,9 @@
 import type { Moment } from 'moment';
 import type { Task } from '../../Task';
 import { DateParser } from '../DateParser';
+import { Explanation } from '../Explain/Explanation';
 import { Field } from './Field';
-import { FilterOrErrorMessage } from './Filter';
+import { Filter, FilterOrErrorMessage } from './Filter';
 import { FilterInstructions } from './FilterInstructions';
 
 /**
@@ -41,27 +42,39 @@ export abstract class DateField extends Field {
         const result = new FilterOrErrorMessage(line);
 
         const match = Field.getMatch(this.filterRegExp(), line);
+        let filterFunction;
         if (match !== null) {
             const filterDate = DateParser.parseDate(match[2]);
             if (!filterDate.isValid()) {
                 result.error = 'do not understand ' + this.fieldName() + ' date';
             } else {
+                let relative;
                 if (match[1] === 'before') {
-                    result.filterFunction = (task: Task) => {
+                    filterFunction = (task: Task) => {
                         const date = this.date(task);
                         return date ? date.isBefore(filterDate) : this.filterResultIfFieldMissing();
                     };
+                    relative = ' ' + match[1];
                 } else if (match[1] === 'after') {
-                    result.filterFunction = (task: Task) => {
+                    filterFunction = (task: Task) => {
                         const date = this.date(task);
                         return date ? date.isAfter(filterDate) : this.filterResultIfFieldMissing();
                     };
+                    relative = ' ' + match[1];
                 } else {
-                    result.filterFunction = (task: Task) => {
+                    filterFunction = (task: Task) => {
                         const date = this.date(task);
                         return date ? date.isSame(filterDate) : this.filterResultIfFieldMissing();
                     };
+                    relative = ' on';
                 }
+                const explanation = DateField.getExplanationString(
+                    this.fieldName(),
+                    relative,
+                    this.filterResultIfFieldMissing(),
+                    filterDate,
+                );
+                result.filter = new Filter(line, filterFunction, new Explanation(explanation));
             }
         } else {
             result.error = 'do not understand query filter (' + this.fieldName() + ' date)';
@@ -75,6 +88,28 @@ export abstract class DateField extends Field {
      * @public
      */
     public abstract date(task: Task): Moment | null;
+
+    /**
+     * Construct a string used to explain a date-based filter
+     * @param fieldName - for example, 'due'
+     * @param relationshipPrefixedWithSpace - for example ' before' or ''
+     * @param filterResultIfFieldMissing - whether the search matches tasks without the requested date value
+     * @param filterDate - the date used in the filter
+     */
+    public static getExplanationString(
+        fieldName: string,
+        relationshipPrefixedWithSpace: string,
+        filterResultIfFieldMissing: boolean,
+        filterDate: moment.Moment,
+    ) {
+        // Example of formatted date: '2024-01-02 (Tuesday 2nd January 2024)'
+        const actualDate = filterDate.format('YYYY-MM-DD (dddd Do MMMM YYYY)');
+        let result = `${fieldName} date is${relationshipPrefixedWithSpace} ${actualDate}`;
+        if (filterResultIfFieldMissing) {
+            result += ` OR no ${fieldName} date`;
+        }
+        return result;
+    }
 
     /**
      * Determine whether a task that does not have the particular date value

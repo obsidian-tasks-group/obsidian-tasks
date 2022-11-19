@@ -1,3 +1,4 @@
+import { diff } from 'jest-diff';
 import type { Task } from '../../src/Task';
 import type { FilterOrErrorMessage } from '../../src/Query/Filter/Filter';
 import { fromLine } from '../TestHelpers';
@@ -57,6 +58,7 @@ declare global {
     namespace jest {
         interface Matchers<R> {
             toBeValid(): R;
+            toHaveExplanation(expectedExplanation: string): R;
             toMatchTask(task: Task): R;
             toMatchTaskFromLine(line: string): R;
             toMatchTaskWithHeading(heading: string | null): R;
@@ -65,6 +67,7 @@ declare global {
 
         interface Expect {
             toBeValid(): any;
+            toHaveExplanation(expectedExplanation: string): any;
             toMatchTask(task: Task): any;
             toMatchTaskFromLine(line: string): any;
             toMatchTaskWithHeading(heading: string | null): any;
@@ -73,6 +76,7 @@ declare global {
 
         interface InverseAsymmetricMatchers {
             toBeValid(): any;
+            toHaveExplanation(expectedExplanation: string): any;
             toMatchTask(task: Task): any;
             toMatchTaskFromLine(line: string): any;
             toMatchTaskWithHeading(heading: string | null): any;
@@ -98,6 +102,24 @@ export function toBeValid(filter: FilterOrErrorMessage) {
 
     return {
         message: () => 'filter is unexpectedly valid',
+        pass: true,
+    };
+}
+
+export function toHaveExplanation(filter: FilterOrErrorMessage, expectedExplanation: string) {
+    expect(filter.filter).toBeDefined();
+    const received = filter.filter?.explanation.asString();
+    const matches = received === expectedExplanation;
+    if (!matches) {
+        return {
+            message: () =>
+                `unexpected incorrect explanation for "${filter.instruction}":\n` + diff(expectedExplanation, received),
+            pass: false,
+        };
+    }
+
+    return {
+        message: () => `explanation for "${filter.instruction}" should not be: "${received}"`,
         pass: true,
     };
 }

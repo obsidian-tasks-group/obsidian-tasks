@@ -3,6 +3,12 @@ import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { testFilter } from '../../TestingTools/FilterTestHelpers';
 import { PriorityField } from '../../../src/Query/Filter/PriorityField';
 
+import { toHaveExplanation } from '../../CustomMatchers/CustomMatchersForFilters';
+
+expect.extend({
+    toHaveExplanation,
+});
+
 function testTaskFilterForTaskWithPriority(filter: string, priority: Priority, expected: boolean) {
     const builder = new TaskBuilder();
     const filterOrError = new PriorityField().createFilterOrErrorMessage(filter);
@@ -67,5 +73,20 @@ describe('priority error cases', () => {
         const filter = field.createFilterOrErrorMessage('priority is no-such-priority');
         expect(filter.filterFunction).toBeUndefined();
         expect(filter.error).toBe('do not understand query filter (priority)');
+    });
+});
+
+describe('explain priority', () => {
+    it('simple case just repeats the-supplied line', () => {
+        const field = new PriorityField();
+        const instruction = 'priority above none';
+        const filterOrMessage = field.createFilterOrErrorMessage(instruction);
+        expect(filterOrMessage).toHaveExplanation(instruction);
+    });
+
+    it('implicit "is" gets added to description', () => {
+        const field = new PriorityField();
+        const filterOrMessage = field.createFilterOrErrorMessage('priority high');
+        expect(filterOrMessage).toHaveExplanation('priority is high');
     });
 });
