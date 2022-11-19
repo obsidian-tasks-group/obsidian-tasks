@@ -1,5 +1,53 @@
 # Contribution Guidelines Obsidian Tasks
 
+<!-- toc -->
+## Contents
+
+- [Thank you](#thank-you)
+- [Updating documentation](#updating-documentation)
+  - [Documentation and branches](#documentation-and-branches)
+  - [Adding Tables of Contents to rendered docs](#adding-tables-of-contents-to-rendered-docs)
+  - [Linking to other pages in the docs](#linking-to-other-pages-in-the-docs)
+  - [Screenshots in documentation](#screenshots-in-documentation)
+    - [Creating screenshots](#creating-screenshots)
+    - [Saving screenshots](#saving-screenshots)
+    - [Adding screenshots to the documentation](#adding-screenshots-to-the-documentation)
+  - [Version numbers in documentation](#version-numbers-in-documentation)
+  - [How the documentation is generated](#how-the-documentation-is-generated)
+- [Updating code](#updating-code)
+- [Local setup and workflow for changes to code and tests](#local-setup-and-workflow-for-changes-to-code-and-tests)
+  - [Setting up build environment](#setting-up-build-environment)
+  - [Local development](#local-development)
+- [Maintaining the tests](#maintaining-the-tests)
+  - [Writing Tests for New or Refactored Code](#writing-tests-for-new-or-refactored-code)
+    - [Think of it as testing user-visible features](#think-of-it-as-testing-user-visible-features)
+    - [Location of code](#location-of-code)
+    - [Then start writing tests](#then-start-writing-tests)
+  - [Snapshot Tests](#snapshot-tests)
+  - [Approval Tests](#approval-tests)
+    - [Example Approval tests](#example-approval-tests)
+  - [Jest and the WebStorm IDE](#jest-and-the-webstorm-ide)
+  - [Test Coverage](#test-coverage)
+- [Dependency Upgrades and Repository Maintenance](#dependency-upgrades-and-repository-maintenance)
+  - [Overview of dependencies and `package.json`](#overview-of-dependencies-and-packagejson)
+  - [Thought-Process for Deciding Whether a Dependency Needs Manual Testing](#thought-process-for-deciding-whether-a-dependency-needs-manual-testing)
+  - [Dependency Groups](#dependency-groups)
+  - [Notes and Special Cases](#notes-and-special-cases)
+- [FAQs](#faqs)
+  - [How does Tasks handle status changes?](#how-does-tasks-handle-status-changes)
+  - [How do I add a new field to the Task class?](#how-do-i-add-a-new-field-to-the-task-class)
+  - [How do I add a new task filter?](#how-do-i-add-a-new-task-filter)
+    - [Update src/](#update-src)
+    - [Update tests/](#update-tests)
+    - [Update doc/](#update-doc)
+    - [Examples Pull Requests](#examples-pull-requests)
+  - [How do I test a GitHub build of the Tasks plugin?](#how-do-i-test-a-github-build-of-the-tasks-plugin)
+  - [How do I smoke-test the Tasks plugin?](#how-do-i-smoke-test-the-tasks-plugin)
+  - [How do I make a release?](#how-do-i-make-a-release)
+  - [How do I update the Tables of Contents in CONTRIBUTING and similar?](#how-do-i-update-the-tables-of-contents-in-contributing-and-similar)<!-- endToc -->
+
+## Thank you
+
 Thank you for wanting to contribute to Obsidian Tasks!
 Every contribution is much appreciated!
 
@@ -17,6 +65,89 @@ When you create a PR, it should merge into the `gh-pages` branch as well.
 If you document an unreleased feature, you should update the documentation on `main` instead. Ideally together with the related code changes.
 If this is confusing, don't worry.
 We will help you make this right once you opened the PR.
+
+### Adding Tables of Contents to rendered docs
+
+Add the following between the H1 and the first H2, to show a table of contents in a page on the published documentation.
+
+```text
+{: .no_toc }
+
+<details open markdown="block">
+  <summary>
+    Table of contents
+  </summary>
+  {: .text-delta }
+1. TOC
+{:toc}
+</details>
+
+---
+```
+
+### Linking to other pages in the docs
+
+Linking to other pages in the documentation is non-obvious and a bit tedious.
+
+Here are some examples to copy-and-paste:
+
+To pages:
+
+```text
+[‘Create or edit Task’ Modal]({{ site.baseurl }}{% link getting-started/create-or-edit-task.md %})
+[Dates]({{ site.baseurl }}{% link getting-started/dates.md %})
+[Filters]({{ site.baseurl }}{% link queries/filters.md %})
+[Global Filter]({{ site.baseurl }}{% link getting-started/global-filter.md %})
+[Priorities]({{ site.baseurl }}{% link getting-started/priority.md %})
+[Recurring Tasks]({{ site.baseurl }}{% link getting-started/recurring-tasks.md %})
+```
+
+To sections:
+
+```text
+[due]({{ site.baseurl }}{% link getting-started/dates.md %}#-due)
+[scheduled]({{ site.baseurl }}{% link getting-started/dates.md %}#-scheduled)
+[start]({{ site.baseurl }}{% link getting-started/dates.md %}#-start)
+```
+
+### Screenshots in documentation
+
+#### Creating screenshots
+
+For readability and accessibility, images should be created:
+
+- Set the Obsidian window size to be around 1500 pixels wide about between 700 and 1100 pixels high.
+- Using the Default Obsidian theme.
+- In the Light colour scheme.
+- With a large font size.
+- With as little blank or dead space as possible around the area of focus.
+
+#### Saving screenshots
+
+Saving images:
+
+- Save them in .PNG format.
+- Save them in [docs/images/](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/docs/images/).
+
+#### Adding screenshots to the documentation
+
+When embedding an image inside a documentation page, please link to the local file and include a brief summary underneath.
+
+For example, to embed the `acme.png` file in the documentation:
+
+```text
+![ACME Tasks](images/acme.png)
+The `ACME` note has some tasks - as linked to from `docs/index.md`.
+```
+
+or
+
+```text
+![ACME Tasks](../images/acme.png)
+The `ACME` note has some tasks - as linked to from any file in a sub-directory of `docs/`.
+```
+
+With this mechanism, you can preview the embedded images in any decent Markdown editor, including by opening the `obsidian-tasks` directory in Obsidian.
 
 ### Version numbers in documentation
 
@@ -50,7 +181,7 @@ This is _not_ mandatory, but it helps improve the process and reduce unnecessary
 Once you want to propose your changes, create a PR and we'll have a look when we have time.
 Discussion will take place inside the PR.
 
-If you can, please add/update tests and documentation where appropriate.
+If you can, please add/update [tests](#maintaining-the-tests) and [documentation](#updating-documentation) where appropriate.
 
 ## Local setup and workflow for changes to code and tests
 
@@ -132,6 +263,79 @@ For readability of snapshots, we favour [Inline Snapshots](https://jestjs.io/doc
 which are saved in the source code. See that documentation for how to easily update the inline
 snapshot, if the output is intended to be changed.
 
+### Approval Tests
+
+There is a brief overview of Approval tests at [approvaltests.com](https://approvaltests.com).
+
+For including complex text in the documentation, some tests here will
+soon start using the [Approval Tests implementation in NodeJS](https://github.com/approvals/Approvals.NodeJS).
+
+If these tests fail, they will currently try and launch [diffmerge](https://sourcegear.com/diffmerge/) to show
+the differences between received and approved files.
+
+<details><summary>Expand Details on Approval Tests</summary>
+
+Approval tests typically call a function beginning `verify`, and pass
+in some text or an object to be tested.
+
+#### Example Approval tests
+
+Example test in `ApprovalTestsDemo.test`, that saves its input in a text file:
+
+<!-- snippet: approval-test-as-text -->
+<a id='snippet-approval-test-as-text'></a>
+
+```ts
+test('SimpleVerify', () => {
+    verify('Hello From Approvals');
+});
+```
+
+<sup><a href='https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/TestingTools/ApprovalTestsDemo.test.ts#L4-L8' title='Snippet source file'>snippet source</a> | <a href='#snippet-approval-test-as-text' title='Start of snippet'>anchor</a></sup>
+<!-- endSnippet -->
+
+The corresponding `approved` file, named `ApprovalTestsDemo.test.ApprovalTests_SimpleVerify.approved.txt`:
+
+<!-- snippet: ApprovalTestsDemo.test.ApprovalTests_SimpleVerify.approved.txt -->
+<a id='snippet-ApprovalTestsDemo.test.ApprovalTests_SimpleVerify.approved.txt'></a>
+
+```txt
+Hello From Approvals
+```
+
+<sup><a href='https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/TestingTools/ApprovalTestsDemo.test.ApprovalTests_SimpleVerify.approved.txt#L1-L1' title='Snippet source file'>snippet source</a> | <a href='#snippet-ApprovalTestsDemo.test.ApprovalTests_SimpleVerify.approved.txt' title='Start of snippet'>anchor</a></sup>
+<!-- endSnippet -->
+
+<!-- snippet: approval-test-as-json -->
+<a id='snippet-approval-test-as-json'></a>
+
+```ts
+test('JsonVerify', () => {
+    const data = { name: 'fred', age: 30 };
+    verifyAsJson(data);
+});
+```
+
+<sup><a href='https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/TestingTools/ApprovalTestsDemo.test.ts#L10-L15' title='Snippet source file'>snippet source</a> | <a href='#snippet-approval-test-as-json' title='Start of snippet'>anchor</a></sup>
+<!-- endSnippet -->
+
+The corresponding `approved` file, named `ApprovalTestsDemo.test.ApprovalTests_JsonVerify.approved.json`:
+
+<!-- snippet: ApprovalTestsDemo.test.ApprovalTests_JsonVerify.approved.json -->
+<a id='snippet-ApprovalTestsDemo.test.ApprovalTests_JsonVerify.approved.json'></a>
+
+```json
+{
+  "name": "fred",
+  "age": 30
+}
+```
+
+<sup><a href='https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/TestingTools/ApprovalTestsDemo.test.ApprovalTests_JsonVerify.approved.json#L1-L4' title='Snippet source file'>snippet source</a> | <a href='#snippet-ApprovalTestsDemo.test.ApprovalTests_JsonVerify.approved.json' title='Start of snippet'>anchor</a></sup>
+<!-- endSnippet -->
+
+</details>
+
 ### Jest and the WebStorm IDE
 
 The WebStorm IDE has a [helpful page](https://www.jetbrains.com/help/webstorm/running-unit-tests-on-jest.html)
@@ -211,7 +415,7 @@ Look at the `package.json` entry for a package and search for which files import
   - `svelte-check` (but not other svelte things, which are used in the build system)
   - anything with `prettier`
   - `lefthook`
-  - anything with `jest` in it (but see [the note below on Dependency Groups](dependency-groups) for details).
+  - anything with `jest` in it (but see [the note below on Dependency Groups](#dependency-groups) for details).
 - For anything else, where and how is it being used? If it's only in tests, or only used by developers, no need to smoke test.
 
 ### Dependency Groups
@@ -266,6 +470,71 @@ Toggle behavior:
 
 Obsidian writes the changes to disk at its own pace.
 
+### How do I add a new field to the Task class?
+
+- In [tests/Task.test.ts](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/Task.test.ts):
+  - Add a new failing block to the `'identicalTo'` section.
+  - Here is an existing example: ['should check path'](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/5b0831c36a80c4cde2d64a6cd281bb4b51e9a142/tests/Task.test.ts#L834-L840).
+- In [src/Task.ts](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/src/Task.ts), update `Task.identicalTo()`:
+  - Once you have a failing test in `Task.test.ts`, implement the check for changed value of your new field in `Task.identicalTo()`.
+  - This important method is used to detect whether any edits of any kind have been made to a task, to detect whether task block results need to be updated.
+  - Here is the code for the method as of 2022-11-12:
+    - [Task.identicalTo() in 5b0831c36a80c4cde2d64a6cd281bb4b51e9a142](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/5b0831c36a80c4cde2d64a6cd281bb4b51e9a142/src/Task.ts#L732-L802)
+- In [tests/TestingTools/TaskBuilder.ts](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/TestingTools/TaskBuilder.ts):
+  - Add the new field and a corresponding method.
+  - Keep the same field order as in the `Task` class.
+  - Update the `build()` method.
+- In [tests/TestingTools/TaskBuilder.test.ts](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/TestingTools/TaskBuilder.test.ts):
+  - If the code in TaskBuild will be non-trivial, first add a failing test for it.
+
+### How do I add a new task filter?
+
+All the following steps would be done in the same branch, for inclusion in the same pull request.
+
+#### Update src/
+
+- Implement the search filter:
+  - Add to  [src/Query/Filter](https://github.com/obsidian-tasks-group/obsidian-tasks/tree/main/src/Query/Filter) a  new class that inherits [Field](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/src/Query/Filter/DateField.ts)
+  - Typically, this can be done by inheriting one of the partial implementations:
+    - [DateField.ts](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/src/Query/Filter/DateField.ts)
+    - [TextField.ts](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/src/Query/Filter/TextField.ts)
+    - [MultiTextField.ts](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/src/Query/Filter/MultiTextField.ts)
+    - [FilterInstructionsBasedField.ts](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/src/Query/Filter/FilterInstructionsBasedField.ts)
+- Add the new class to [src/Query/FilterParser.ts](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/src/Query/FilterParser.ts)
+
+#### Update tests/
+
+Write tests as you go.
+
+Ideally, write a failing test first, and then implement the minimum code for the failing test to pass.
+
+For help on writing and running the tests, see [Maintaining the tests](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/CONTRIBUTING.md#maintaining-the-tests)
+
+- Add to [tests/Query/Filter](https://github.com/obsidian-tasks-group/obsidian-tasks/tree/main/tests/Query/Filter) a new test file.
+  - This should focus on testing whether or not individual Task objects, with carefully selected sample date, match the filter.
+  - Think about edge cases.
+- Add the new instruction(s) to  'Query parsing' test in  [tests/Query.test.ts](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/Query.test.ts)
+  - This verifies that the new filter instruction has been correctly wired in to the Query class.
+
+#### Update doc/
+
+It can be worth writing the documentation first, to ensure that you can explain the new feature clearly before implementing it.
+
+For help on editing the documentation, see [Updating documentation](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/CONTRIBUTING.md#updating-documentation)
+
+- Document the new instruction(s) in [docs/queries/filters.md](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/docs/queries/filters.md)
+  - Add the placeholder to indicate which version the feature will be released in: see [Version numbers in documentation](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/CONTRIBUTING.md#version-numbers-in-documentation)
+- Add the new instruction(s) to [docs/quick-reference/index.md](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/docs/quick-reference/index.md)
+
+#### Examples Pull Requests
+
+- [#1098](https://github.com/obsidian-tasks-group/obsidian-tasks/pull/1098) feat: Add filename filter
+  - This shows adding a brand new Field class, so shows all the steps above.
+- [#1228](https://github.com/obsidian-tasks-group/obsidian-tasks/pull/1228) feat: Add 4 instructions: '(done|due|date|start) date is invalid'
+  - This adds several new instructions via the DateField class, which implements most of the date-based filters.
+  - It was sufficient to add tests of the new feature in just one of the instructions implemented via DateField.
+  - It also shows adding a file to the sample vault, to demonstrate and test the new feature.
+
 ### How do I test a GitHub build of the Tasks plugin?
 
 1. Go to the [Verify Commit actions page](https://github.com/obsidian-tasks-group/obsidian-tasks/actions/workflows/verify.yml).
@@ -299,3 +568,19 @@ Follow the steps in `resources/sample_vaults/Tasks-Demo/Manual Testing/Smoke Tes
     - r/ObsidianMD on Reddit
     - Obsidian Forum Share & Showcase section
     - etc.
+
+### How do I update the Tables of Contents in CONTRIBUTING and similar?
+
+These are markdown files written for contributors, and intended to be viewed on GitHub.
+To make it easy to see their structure, they have a machine-generated Table of Contents ("ToC").
+
+The ToCs will eventually be automated automatically via GitHub Actions, but for now, the following needs to be done in order to update them:
+
+1. Install [MarkdownSnippets](https://github.com/SimonCropp/MarkdownSnippets), also known as `mdsnippets`
+2. Run:
+
+```bash
+mdsnippets && yarn run lint:markdown && git add --renormalize .
+```
+
+The background to this is in [PR #1248](https://github.com/obsidian-tasks-group/obsidian-tasks/pull/1248).

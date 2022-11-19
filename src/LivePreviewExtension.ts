@@ -63,6 +63,7 @@ class LivePreviewExtension implements PluginValue {
             sectionStart: 0,
             sectionIndex: 0,
             precedingHeader: null,
+            fallbackDate: null,
         });
 
         console.debug(`Live Preview Extension: toggle called. Position: ${position} Line: ${line.text}`);

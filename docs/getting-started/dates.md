@@ -62,6 +62,10 @@ Scheduled dates use an hourglass emoji instead of a calendar emoji.
 - [ ] take out the trash ⏳ 2021-04-09
 ```
 
+See [Use Filename as Default Date]({{ site.baseurl }}{% link getting-started/use-filename-as-default-date.md %}) for how to optionally make Tasks use any dates in file names as the scheduled date for all undated tasks in that file.
+
+> 'Use Filename as Default Date' was introduced in Tasks 1.18.0.
+
 ---
 
 ## 🛫 Start
@@ -87,3 +91,10 @@ Such filter could be:
 starts before tomorrow
 ```
 ````
+
+## Finding mistakes in dates
+
+Tasks does not automatically report any problem tasks that have invalid dates, such as on the 32nd day of a month. These task will silently not be found by date-based searches.
+
+However, it is possible to search for any tasks with invalid dates in your vault: see
+[Finding Tasks with Invalid Dates]({{ site.baseurl }}{% link queries/filters.md %}#finding-tasks-with-invalid-dates).

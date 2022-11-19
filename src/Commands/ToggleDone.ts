@@ -61,6 +61,7 @@ export const toggleLine = (line: string, path: string) => {
         sectionStart: 0, // We don't need this to toggle it here in the editor.
         sectionIndex: 0, // We don't need this to toggle it here in the editor.
         precedingHeader: null, // We don't need this to toggle it here in the editor.
+        fallbackDate: null, // We don't need this to toggle it here in the editor.
     });
     if (task !== null) {
         toggledLine = toggleTask(task);

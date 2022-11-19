@@ -79,6 +79,7 @@ export function shouldSupportFiltering(
                 sectionIndex: 0,
                 path: '',
                 precedingHeader: '',
+                fallbackDate: null, // For tests scheduled date needs to be set explicitly
             }) as Task,
     );
 

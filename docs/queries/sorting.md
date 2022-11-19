@@ -30,7 +30,7 @@ You can sort tasks by the following properties:
 
 1. `urgency` ([urgency]({{ site.baseurl }}{% link advanced/urgency.md %}))
 2. `status` (done or todo)
-3. `priority` (priority of the task; "low" is below "none")
+3. `priority` (priority of the task; "low" is below "none": [priorities]({{ site.baseurl }}{% link getting-started/priority.md %}))
 4. `start` (the date when the task starts)
 5. `scheduled` (the date when the task is scheduled)
 6. `due` (the date when the task is due)
