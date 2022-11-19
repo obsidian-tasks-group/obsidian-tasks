@@ -25,6 +25,7 @@
     - [Then start writing tests](#then-start-writing-tests)
   - [Snapshot Tests](#snapshot-tests)
   - [Approval Tests](#approval-tests)
+    - [Example Approval tests](#example-approval-tests)
   - [Jest and the WebStorm IDE](#jest-and-the-webstorm-ide)
   - [Test Coverage](#test-coverage)
 - [Dependency Upgrades and Repository Maintenance](#dependency-upgrades-and-repository-maintenance)
@@ -266,11 +267,74 @@ snapshot, if the output is intended to be changed.
 
 There is a brief overview of Approval tests at [approvaltests.com](https://approvaltests.com).
 
-For including complex text in the documentation, some of the tests here will
+For including complex text in the documentation, some tests here will
 soon start using the [Approval Tests implementation in NodeJS](https://github.com/approvals/Approvals.NodeJS).
 
 If these tests fail, they will currently try and launch [diffmerge](https://sourcegear.com/diffmerge/) to show
 the differences between received and approved files.
+
+<details><summary>Expand Details on Approval Tests</summary>
+
+Approval tests typically call a function beginning `verify`, and pass
+in some text or an object to be tested.
+
+#### Example Approval tests
+
+Example test in `ApprovalTestsDemo.test`, that saves its input in a text file:
+
+<!-- snippet: approval-test-as-text -->
+<a id='snippet-approval-test-as-text'></a>
+
+```ts
+test('SimpleVerify', () => {
+    verify('Hello From Approvals');
+});
+```
+
+<sup><a href='/tests/TestingTools/ApprovalTestsDemo.test.ts#L4-L8' title='Snippet source file'>snippet source</a> | <a href='#snippet-approval-test-as-text' title='Start of snippet'>anchor</a></sup>
+<!-- endSnippet -->
+
+The corresponding `approved` file, named `ApprovalTestsDemo.test.ApprovalTests_SimpleVerify.approved.txt`:
+
+<!-- snippet: ApprovalTestsDemo.test.ApprovalTests_SimpleVerify.approved.txt -->
+<a id='snippet-ApprovalTestsDemo.test.ApprovalTests_SimpleVerify.approved.txt'></a>
+
+```txt
+Hello From Approvals
+```
+
+<sup><a href='/tests/TestingTools/ApprovalTestsDemo.test.ApprovalTests_SimpleVerify.approved.txt#L1-L1' title='Snippet source file'>snippet source</a> | <a href='#snippet-ApprovalTestsDemo.test.ApprovalTests_SimpleVerify.approved.txt' title='Start of snippet'>anchor</a></sup>
+<!-- endSnippet -->
+
+<!-- snippet: approval-test-as-json -->
+<a id='snippet-approval-test-as-json'></a>
+
+```ts
+test('JsonVerify', () => {
+    const data = { name: 'fred', age: 30 };
+    verifyAsJson(data);
+});
+```
+
+<sup><a href='/tests/TestingTools/ApprovalTestsDemo.test.ts#L10-L15' title='Snippet source file'>snippet source</a> | <a href='#snippet-approval-test-as-json' title='Start of snippet'>anchor</a></sup>
+<!-- endSnippet -->
+
+The corresponding `approved` file, named `ApprovalTestsDemo.test.ApprovalTests_JsonVerify.approved.json`:
+
+<!-- snippet: ApprovalTestsDemo.test.ApprovalTests_JsonVerify.approved.json -->
+<a id='snippet-ApprovalTestsDemo.test.ApprovalTests_JsonVerify.approved.json'></a>
+
+```json
+{
+  "name": "fred",
+  "age": 30
+}
+```
+
+<sup><a href='/tests/TestingTools/ApprovalTestsDemo.test.ApprovalTests_JsonVerify.approved.json#L1-L4' title='Snippet source file'>snippet source</a> | <a href='#snippet-ApprovalTestsDemo.test.ApprovalTests_JsonVerify.approved.json' title='Start of snippet'>anchor</a></sup>
+<!-- endSnippet -->
+
+</details>
 
 ### Jest and the WebStorm IDE
 
