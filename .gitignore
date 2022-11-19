@@ -18,6 +18,9 @@ yarn-error.log
 # jest coverage files
 /coverage
 
+# approval test files
+*.received.*
+
 # osx
 .DS_Store
 
