@@ -1,4 +1,5 @@
 import type { Task } from '../../Task';
+import type { Explanation } from '../Explain/Explanation';
 
 /**
  * A filtering function, that takes a Task object and returns
@@ -18,10 +19,12 @@ export type FilterFunction = (task: Task) => boolean;
  */
 export class Filter {
     readonly instruction: string;
+    readonly explanation: Explanation;
     public filterFunction: FilterFunction;
 
-    public constructor(instruction: string, filterFunction: FilterFunction) {
+    public constructor(instruction: string, filterFunction: FilterFunction, explanation: Explanation) {
         this.instruction = instruction;
+        this.explanation = explanation;
         this.filterFunction = filterFunction;
     }
 }
@@ -57,6 +60,10 @@ export class FilterOrErrorMessage {
         return this._filter;
     }
 
+    set filter(value: Filter | undefined) {
+        this._filter = value;
+    }
+
     get filterFunction(): FilterFunction | undefined {
         if (this._filter) {
             return this._filter.filterFunction;
@@ -65,22 +72,16 @@ export class FilterOrErrorMessage {
         }
     }
 
-    set filterFunction(value: FilterFunction | undefined) {
-        if (value) {
-            this._filter = new Filter(this.instruction, value);
-        } else {
-            this._filter = undefined;
-        }
-    }
-
     /**
      * Construct a FilterOrErrorMessage with the filter.
-     * @param instruction
-     * @param filter
+     *
+     * This function allows a meaningful {@link Explanation} to be supplied.
+     *
+     * @param filter - a {@link Filter}
      */
-    public static fromFilter(instruction: string, filter: FilterFunction): FilterOrErrorMessage {
-        const result = new FilterOrErrorMessage(instruction);
-        result.filterFunction = filter;
+    public static fromFilter(filter: Filter): FilterOrErrorMessage {
+        const result = new FilterOrErrorMessage(filter.instruction);
+        result.filter = filter;
         return result;
     }
 

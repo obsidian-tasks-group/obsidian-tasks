@@ -1,3 +1,13 @@
+.plugin-tasks-query-explanation{
+    /* Prevent long explanation lines wrapping, so they are more readable,
+       especially on small screens.
+
+       A horizontal scroll bar will be displayed, if the explanation
+       is too wide to fit.
+     */
+    --code-white-space: pre;
+}
+
 .tasks-count {
     color: var(--text-faint);
     padding-left: 20px;
@@ -127,7 +137,7 @@
 
 .tasks-modal-dates > input, .tasks-modal-dates > code {
     grid-column: 2;
-    align-items: stretch; 
+    align-items: stretch;
 }
 
 .tasks-modal-dates > code {

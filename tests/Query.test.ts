@@ -192,6 +192,7 @@ describe('Query parsing', () => {
         // In alphabetical order, please
         const filters = [
             '# Comment lines are ignored',
+            'explain',
             'hide backlink',
             'hide done date',
             'hide due date',
@@ -758,6 +759,39 @@ describe('Query', () => {
 
             // Assert
             expect(query.error).toBeUndefined();
+        });
+    });
+
+    describe('explanations', () => {
+        it('should explain 0 filters', () => {
+            const input = '';
+            const query = new Query({ source: input });
+
+            const expectedDisplayText = 'No filters supplied. All tasks will match the query.';
+            expect(query.explainQuery()).toEqual(expectedDisplayText);
+        });
+
+        it('should explain 1 filter', () => {
+            const input = 'description includes hello';
+            const query = new Query({ source: input });
+
+            const expectedDisplayText = `All of:
+  description includes hello
+`;
+            expect(query.explainQuery()).toEqual(expectedDisplayText);
+        });
+
+        it('should explain 2 filters', () => {
+            const input = 'description includes hello\ndue 2012-01-23';
+            const query = new Query({ source: input });
+
+            const expectedDisplayText = `All of:
+  description includes hello
+
+  due 2012-01-23 =>
+    due date is on 2012-01-23 (Monday 23rd January 2012)
+`;
+            expect(query.explainQuery()).toEqual(expectedDisplayText);
         });
     });
 

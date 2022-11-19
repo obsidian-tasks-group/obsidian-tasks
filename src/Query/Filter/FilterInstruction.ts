@@ -1,4 +1,5 @@
-import { FilterOrErrorMessage } from './Filter';
+import { Explanation } from '../Explain/Explanation';
+import { Filter, FilterOrErrorMessage } from './Filter';
 import type { FilterFunction } from './Filter';
 
 /**
@@ -33,7 +34,7 @@ export class FilterInstruction {
         const result = new FilterOrErrorMessage(line);
 
         if (line === this._instruction) {
-            result.filterFunction = this._filter;
+            result.filter = new Filter(line, this._filter, new Explanation(line));
             return result;
         }
 

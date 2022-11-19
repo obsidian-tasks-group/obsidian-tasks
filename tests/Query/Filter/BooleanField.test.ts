@@ -7,7 +7,13 @@ import type { FilterOrErrorMessage } from '../../../src/Query/Filter/Filter';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { testFilter } from '../../TestingTools/FilterTestHelpers';
 
+import { toHaveExplanation } from '../../CustomMatchers/CustomMatchersForFilters';
+
 window.moment = moment;
+
+expect.extend({
+    toHaveExplanation,
+});
 
 function testWithDescription(filter: FilterOrErrorMessage, description: string, expected: boolean) {
     const builder = new TaskBuilder();
@@ -148,5 +154,79 @@ describe('boolean query', () => {
         // Have not managed to create instructions that trigger these errors:
         //      result.error = 'empty operator in boolean query';
         //      result.error = `unknown boolean operator '${token.value}'`;
+    });
+});
+
+describe('explain boolean queries', () => {
+    it('should explain Boolean AND', () => {
+        const instruction = '(description includes d1) AND (priority medium)';
+        const filterOrMessage = new BooleanField().createFilterOrErrorMessage(instruction);
+        const expected = `All of:
+  description includes d1
+  priority is medium`;
+        expect(filterOrMessage).toHaveExplanation(expected);
+    });
+
+    it('should explain Boolean OR', () => {
+        const instruction = '(description includes d1) OR (priority medium)';
+        const filterOrMessage = new BooleanField().createFilterOrErrorMessage(instruction);
+        const expected = `At least one of:
+  description includes d1
+  priority is medium`;
+        expect(filterOrMessage).toHaveExplanation(expected);
+    });
+
+    it('should explain Boolean NOT', () => {
+        const instruction = 'NOT (description includes d1)';
+        const filterOrMessage = new BooleanField().createFilterOrErrorMessage(instruction);
+        expect(filterOrMessage).toHaveExplanation('None of:\n  description includes d1');
+    });
+
+    it('should explain Boolean XOR', () => {
+        const instruction = '(description includes d1) XOR (priority medium)';
+        const filterOrMessage = new BooleanField().createFilterOrErrorMessage(instruction);
+        const expected = `Exactly one of:
+  description includes d1
+  priority is medium`;
+        expect(filterOrMessage).toHaveExplanation(expected);
+    });
+
+    it('should explain 2 Boolean ORs', () => {
+        const instruction = '(description includes d1) OR (description includes d2) OR (priority medium)';
+        const filterOrMessage = new BooleanField().createFilterOrErrorMessage(instruction);
+        // TODO This creates a nested 'At least one of' inside the first one.
+        //      It's technically correct, but hard for users to read.
+        //      I would like to try and somehow collate, or run together, runs of AND and OR operations
+        const expected = `At least one of:
+  At least one of:
+    description includes d1
+    description includes d2
+  priority is medium`;
+        expect(filterOrMessage).toHaveExplanation(expected);
+    });
+
+    it('should explain 9 Boolean ANDs', () => {
+        const instruction =
+            '(description includes 1) AND (description includes 2) AND (description includes 3) AND (description includes 4) AND (description includes 5) AND (description includes 6) AND (description includes 7) AND (description includes 8) AND (description includes 9)';
+        const filterOrMessage = new BooleanField().createFilterOrErrorMessage(instruction);
+        expect(filterOrMessage.filter?.explanation.asString()).toMatchInlineSnapshot(`
+            "All of:
+              All of:
+                All of:
+                  All of:
+                    All of:
+                      All of:
+                        All of:
+                          All of:
+                            description includes 1
+                            description includes 2
+                          description includes 3
+                        description includes 4
+                      description includes 5
+                    description includes 6
+                  description includes 7
+                description includes 8
+              description includes 9"
+        `);
     });
 });
