@@ -560,6 +560,8 @@ Then do one of the following options...
 
 #### Option 2: Download the built plugin to add to your vault
 
+You can use these steps to install the built plugin either in to the Tasks-Demo vault inside a clone of the [obsidian-tasks repo](https://github.com/obsidian-tasks-group/obsidian-tasks) or in to one of your own vaults.
+
 1. In the Artifacts section at the bottom, click on **dist-verified** to download a build of the plugin.
 2. Optionally, rename the zip file to give it a meaningful name. For example, you could append 'testing PR 1234 - nicer styling'.
 3. Expand the downloaded zip file
