@@ -46,9 +46,7 @@ This table summarizes the filters and other options available inside a `tasks` b
 | **Other Filter Options**                                                                                                                                                                            |                                             |                       |                        |
 | `exclude sub-items`                                                                                                                                                                                 |                                             |                       |                        |
 | `limit to <number> tasks`<br>`limit <number>`                                                                                                                                                       |                                             |                       |                        |
-
-Other layout options:
-
-- `hide edit button`
-- `hide task count`
-- `short mode`
+| **Other Layout options**                                                                                                                                                                            |                                             |                       |                        |
+| `hide edit button`                                                                                                                                                                                  |                                             |                       |                        |
+| `hide task count`                                                                                                                                                                                   |                                             |                       |                        |
+| `short mode`                                                                                                                                                                                        |                                             |                       |                        |
