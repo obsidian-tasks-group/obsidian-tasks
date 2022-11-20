@@ -589,11 +589,14 @@ Follow the steps in `resources/sample_vaults/Tasks-Demo/Manual Testing/Smoke Tes
 5. Run `./release.sh <new tasks version> <obsidian version>`
     - Make sure there are no uncommitted changes. Stash them if necessary.
 6. Wait for [GitHub Actions](https://github.com/obsidian-tasks-group/obsidian-tasks/actions/workflows/release.yml) to create the new release
-7. Update the release description with the changes of the release
-    - On the release page, GitHub provides a button to auto-generate release notes which works nicely.
-    - Also update the attached zip file by adding the version number to the end of the name after the dash (for example, `obsidian-tasks-1.4.1.zip`)
-8. Optional: Post to
+7. Update the release description with the changes of the release, which will be a Draft.
+    - On the release page, GitHub provides a button to auto-generate release notes which works nicely as a good starting point.
+8. When you are happy with the release notes, hit the Publish button.
+    - At this point, GitHub will send an email automatically to everyone who is subscribed to Tasks releases.
+9. Optional: Post to
     - Obsidian Discord
+        - Add a post in the `#updates` channel, with detail about the release
+        - Add a one-liner in the `#task-management` channel, linking to the first post
     - r/ObsidianMD on Reddit
     - Obsidian Forum Share & Showcase section
     - etc.
