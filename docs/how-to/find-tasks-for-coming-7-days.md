@@ -82,7 +82,7 @@ The way to select dates before a specific future date is `before in ...`. So for
     due before in 7 days
     ```
 
-With the above date, that search give the desired result:
+With the above date, that search gives the desired result:
 
 ```text
 0 days 📅 2022-09-08
