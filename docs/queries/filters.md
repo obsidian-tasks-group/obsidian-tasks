@@ -65,6 +65,30 @@ the original, incorrect value.
 
 ---
 
+## Text filters
+
+Filters that search for text strings have two flavours.
+
+In the following examples, we describe the `heading` filter, but these comments apply to all the text filters.
+
+1. `heading (includes|does not include) <search text>`
+    - It matches all tasks in a section whose heading contains the string `<search text>`  at least once.
+        - That is, it is a sub-string search.
+        - So `heading includes Day Planner` will match tasks in sections `## Monday Day Planner` and `## Day Planner for typical day`.
+    - It ignores capitalization. Searches are case-insensitive.
+        - So `heading includes Day Planner` will match tasks in sections `## Day Planner` and `## DAY PLANNER`.
+    - Any quote characters (`'` and `"`) are included in the search text.
+        - So `heading includes "Day Planner"` will match a section`## "Day Planner"`.
+        - But will not match tasks with headings like `## Day Planner`.
+1. `heading (regex matches|regex does not match) /<JavaScript-style Regex>/`
+    - Does regular expression match (case-sensitive by default).
+    - Regular expression (or ‘regex’) searching is a powerful but advanced feature.
+    - It requires thorough knowledge in order to use successfully, and not miss intended search results.
+    - It is easy to write a regular expression that looks correct, but which has a special character with a non-obvious meaning.
+    - Essential reading: [Regular Expression Searches]({{ site.baseurl }}{% link queries/regular-expressions.md %}).
+
+---
+
 ## Matching multiple filters
 
 > Boolean combinations were introduced in Tasks 1.9.0
