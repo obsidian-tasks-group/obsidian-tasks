@@ -82,6 +82,9 @@ In the following examples, we describe the `heading` filter, but these comments 
         - But will not match tasks with headings like `## Day Planner`.
 1. `heading (regex matches|regex does not match) /<JavaScript-style Regex>/`
     - Does regular expression match (case-sensitive by default).
+    - Regular expression (or ‘regex’) searching is a powerful but advanced feature.
+    - It requires thorough knowledge in order to use successfully, and not miss intended search results.
+    - It is easy to write a regular expression that looks correct, but which has a special character with a non-obvious meaning.
     - Essential reading: [Regular Expression Searches]({{ site.baseurl }}{% link queries/regular-expressions.md %}).
 
 ---
