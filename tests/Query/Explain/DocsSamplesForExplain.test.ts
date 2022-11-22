@@ -70,4 +70,15 @@ not done
         verifyQuery(instructions);
         verifyExplanation(instructions);
     });
+
+    it('nested boolean combinations', () => {
+        // Arrange
+        const instructions: string = `
+explain
+(description includes 1) AND (description includes 2) AND (description includes 3) AND (description includes 4)`;
+
+        // Act, Assert
+        verifyQuery(instructions);
+        verifyExplanation(instructions);
+    });
 });

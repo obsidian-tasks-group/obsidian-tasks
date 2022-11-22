@@ -106,3 +106,41 @@ All of:
 
 <sup><a href='https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/Query/Explain/DocsSamplesForExplain.test.explain_boolean combinations.approved.explanation.text#L1-L7' title='Snippet source file'>snippet source</a> | <a href='#snippet-DocsSamplesForExplain.test.explain_boolean combinations.approved.explanation.text' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
+
+### More complex combinations are displayed
+
+For example, when the following text is placed in a tasks query block and viewed in Reading or Live Preview modes:
+
+<!-- snippet: DocsSamplesForExplain.test.explain_nested boolean combinations.approved.query.text -->
+<a id='snippet-DocsSamplesForExplain.test.explain_nested boolean combinations.approved.query.text'></a>
+
+```text
+explain
+(description includes 1) AND (description includes 2) AND (description includes 3) AND (description includes 4)
+```
+
+<sup><a href='https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/Query/Explain/DocsSamplesForExplain.test.explain_nested boolean combinations.approved.query.text#L1-L3' title='Snippet source file'>snippet source</a> | <a href='#snippet-DocsSamplesForExplain.test.explain_nested boolean combinations.approved.query.text' title='Start of snippet'>anchor</a></sup>
+<!-- endSnippet -->
+
+the results begin with the following, on `2022-10-21`:
+
+<!-- snippet: DocsSamplesForExplain.test.explain_nested boolean combinations.approved.explanation.text -->
+<a id='snippet-DocsSamplesForExplain.test.explain_nested boolean combinations.approved.explanation.text'></a>
+
+```text
+All of:
+  (description includes 1) AND (description includes 2) AND (description includes 3) AND (description includes 4) =>
+    All of:
+      All of:
+        All of:
+          description includes 1
+          description includes 2
+        description includes 3
+      description includes 4
+```
+
+<sup><a href='https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/Query/Explain/DocsSamplesForExplain.test.explain_nested boolean combinations.approved.explanation.text#L1-L9' title='Snippet source file'>snippet source</a> | <a href='#snippet-DocsSamplesForExplain.test.explain_nested boolean combinations.approved.explanation.text' title='Start of snippet'>anchor</a></sup>
+<!-- endSnippet -->
+
+The increasing indentation in the explanation above is an artifact of the [boon-js](https://github.com/jakec-github/boon-js) library which does all the work for Boolean combinations in Tasks.
+That library parses the filters as a tree of values, with either 1 or 2 filters at each level.
