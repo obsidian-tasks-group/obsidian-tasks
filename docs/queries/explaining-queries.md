@@ -44,12 +44,13 @@ For example, when viewed in Reading or Live Preview modes:
 <a id='snippet-DocsSamplesForExplain.test.explain_expands dates.approved.query.text'></a>
 
 ```text
-scheduled after 2 years ago
+starts after 2 years ago
+scheduled after 1 week ago
 due before tomorrow
 explain
 ```
 
-<sup><a href='https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/Query/Explain/DocsSamplesForExplain.test.explain_expands dates.approved.query.text#L1-L4' title='Snippet source file'>snippet source</a> | <a href='#snippet-DocsSamplesForExplain.test.explain_expands dates.approved.query.text' title='Start of snippet'>anchor</a></sup>
+<sup><a href='https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/Query/Explain/DocsSamplesForExplain.test.explain_expands dates.approved.query.text#L1-L5' title='Snippet source file'>snippet source</a> | <a href='#snippet-DocsSamplesForExplain.test.explain_expands dates.approved.query.text' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
 the results begin with the following, on `2022-10-21`:
@@ -59,14 +60,17 @@ the results begin with the following, on `2022-10-21`:
 
 ```text
 All of:
-  scheduled after 2 years ago =>
-    scheduled date is after 2020-10-21 (Wednesday 21st October 2020)
+  starts after 2 years ago =>
+    start date is after 2020-10-21 (Wednesday 21st October 2020) OR no start date
+
+  scheduled after 1 week ago =>
+    scheduled date is after 2022-10-14 (Friday 14th October 2022)
 
   due before tomorrow =>
     due date is before 2022-10-22 (Saturday 22nd October 2022)
 ```
 
-<sup><a href='https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/Query/Explain/DocsSamplesForExplain.test.explain_expands dates.approved.explanation.text#L1-L6' title='Snippet source file'>snippet source</a> | <a href='#snippet-DocsSamplesForExplain.test.explain_expands dates.approved.explanation.text' title='Start of snippet'>anchor</a></sup>
+<sup><a href='https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/Query/Explain/DocsSamplesForExplain.test.explain_expands dates.approved.explanation.text#L1-L9' title='Snippet source file'>snippet source</a> | <a href='#snippet-DocsSamplesForExplain.test.explain_expands dates.approved.explanation.text' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
 ### Boolean combinations are displayed

@@ -49,7 +49,8 @@ describe('explain', () => {
     it('expands dates', () => {
         // Arrange
         const instructions: string = `
-scheduled after 2 years ago
+starts after 2 years ago
+scheduled after 1 week ago
 due before tomorrow
 explain`;
 
