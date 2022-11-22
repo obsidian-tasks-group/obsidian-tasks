@@ -1,0 +1,6 @@
+All of:
+  scheduled after 2 years ago =>
+    scheduled date is after 2020-10-21 (Wednesday 21st October 2020)
+
+  due before tomorrow =>
+    due date is before 2022-10-22 (Saturday 22nd October 2022)
