@@ -38,7 +38,7 @@ This has a number of benefits:
 
 ### Dates in filters are expanded
 
-For example, when viewed in Reading or Live Preview modes:
+For example, when the following text is placed in a tasks query block and viewed in Reading or Live Preview modes:
 
 <!-- snippet: DocsSamplesForExplain.test.explain_expands dates.approved.query.text -->
 <a id='snippet-DocsSamplesForExplain.test.explain_expands dates.approved.query.text'></a>
@@ -75,7 +75,7 @@ All of:
 
 ### Boolean combinations are displayed
 
-For example, when viewed in Reading or Live Preview modes:
+For example, when the following text is placed in a tasks query block and viewed in Reading or Live Preview modes:
 
 <!-- snippet: DocsSamplesForExplain.test.explain_boolean combinations.approved.query.text -->
 <a id='snippet-DocsSamplesForExplain.test.explain_boolean combinations.approved.query.text'></a>
