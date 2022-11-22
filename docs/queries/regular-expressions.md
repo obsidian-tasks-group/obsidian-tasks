@@ -167,13 +167,13 @@ description regex matches /^Log/i
 
 ### Finding empty fields
 
-I want to find tasks that have no description, perhaps because they were created from a template.
+I want to find tasks that have no description, perhaps because they were created from a template:
 
 ```text
 description regex matches /^$/
 ```
 
-I want to filter out tasks that have no description, perhaps because they were created from a template.
+I want to exclude tasks with no description:
 
 ```text
 description regex does not match /^$/
