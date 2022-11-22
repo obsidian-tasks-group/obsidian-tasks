@@ -141,8 +141,6 @@ Please be aware of the following limitations in Tasks' implementation of regular
   - Logged in [#1037](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1037)
 - Illegal flags are ignored.
   - For example, the query `description regex matches /CASE/&` should give an error that `&` (and similar) are unrecognised flags.
-- The `tag` or `tags` instruction does not yet support regular expression searches.
-  - Logged in [#1040](https://github.com/obsidian-tasks-group/obsidian-tasks/discussions/1040)
 - [Lookahead and Lookbehind](https://www.regular-expressions.info/lookaround.html) searches are untested, and are presumed not to work on Apple mobile devices, or to cause serious performance problems with slow searches.
 
 ## Regular expression examples
@@ -166,6 +164,22 @@ Find tasks whose description begins with Log, ignoring capitalisation
 ```text
 description regex matches /^Log/i
 ```
+
+### Finding empty fields
+
+I want to find tasks that have no description, perhaps because they were created from a template:
+
+```text
+description regex matches /^$/
+```
+
+I want to exclude tasks with no description:
+
+```text
+description regex does not match /^$/
+```
+
+How this works: in regular expressions, `/^$/` matches text where there is nothing between the start and the end.
 
 ### Finding tasks that are waiting
 
