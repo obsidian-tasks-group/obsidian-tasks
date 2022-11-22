@@ -58,4 +58,16 @@ explain`;
         verifyQuery(instructions);
         verifyExplanation(instructions);
     });
+
+    it('boolean combinations', () => {
+        // Arrange
+        const instructions: string = `
+explain
+not done
+(due before tomorrow) AND (is recurring)`;
+
+        // Act, Assert
+        verifyQuery(instructions);
+        verifyExplanation(instructions);
+    });
 });

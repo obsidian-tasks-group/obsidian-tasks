@@ -1,0 +1,7 @@
+All of:
+  not done
+
+  (due before tomorrow) AND (is recurring) =>
+    All of:
+      due date is before 2022-10-22 (Saturday 22nd October 2022)
+      is recurring

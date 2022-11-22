@@ -77,24 +77,32 @@ All of:
 
 For example, when viewed in Reading or Live Preview modes:
 
-````text
-```tasks
+<!-- snippet: DocsSamplesForExplain.test.explain_boolean combinations.approved.query.text -->
+<a id='snippet-DocsSamplesForExplain.test.explain_boolean combinations.approved.query.text'></a>
+
+```text
 explain
 not done
 (due before tomorrow) AND (is recurring)
 ```
-````
+
+<sup><a href='https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/Query/Explain/DocsSamplesForExplain.test.explain_boolean combinations.approved.query.text#L1-L4' title='Snippet source file'>snippet source</a> | <a href='#snippet-DocsSamplesForExplain.test.explain_boolean combinations.approved.query.text' title='Start of snippet'>anchor</a></sup>
+<!-- endSnippet -->
 
 the results begin with the following, on `2022-10-21`:
 
-```text
-Explanation of query:
+<!-- snippet: DocsSamplesForExplain.test.explain_boolean combinations.approved.explanation.text -->
+<a id='snippet-DocsSamplesForExplain.test.explain_boolean combinations.approved.explanation.text'></a>
 
+```text
 All of:
   not done
 
   (due before tomorrow) AND (is recurring) =>
     All of:
-      due date is before 2022-10-21 (Friday)
+      due date is before 2022-10-22 (Saturday 22nd October 2022)
       is recurring
 ```
+
+<sup><a href='https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/Query/Explain/DocsSamplesForExplain.test.explain_boolean combinations.approved.explanation.text#L1-L7' title='Snippet source file'>snippet source</a> | <a href='#snippet-DocsSamplesForExplain.test.explain_boolean combinations.approved.explanation.text' title='Start of snippet'>anchor</a></sup>
+<!-- endSnippet -->
