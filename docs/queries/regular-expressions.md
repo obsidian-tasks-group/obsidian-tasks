@@ -165,7 +165,7 @@ Find tasks whose description begins with Log, ignoring capitalisation
 description regex matches /^Log/i
 ```
 
-### Empty fields
+### Finding empty fields
 
 I want to find tasks that have no description, perhaps because they were created from a template.
 
