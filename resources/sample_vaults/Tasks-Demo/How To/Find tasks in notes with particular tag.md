@@ -24,3 +24,5 @@ if ( matching_files.length > 0 ) {
     dv.paragraph(message)
 }
 ```
+
+Credit: jonlemon in [this Obsidian Forum thread](https://forum.obsidian.md/t/how-can-i-list-tasks-from-all-notes-with-a-certain-tag-using-the-tasks-plugin/44634).
