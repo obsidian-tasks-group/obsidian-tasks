@@ -1,13 +1,13 @@
 import type { Task } from '../Task';
 import { Priority } from '../Task';
-import type { Grouping, GroupingProperty } from './Query';
+import type { Grouping, GroupingArg, GroupingProperty } from './Query';
 import { TaskGroups } from './TaskGroups';
 import { HappensDateField } from './Filter/HappensDateField';
 
 /**
  * A naming function, that takes a Task object and returns the corresponding group property name
  */
-type Grouper = (task: Task) => string[];
+type Grouper = (task: Task, arg?: GroupingArg) => string[];
 
 /**
  * Implementation of the 'group by' instruction.
@@ -32,9 +32,9 @@ export class Group {
      * @param property
      * @param task
      */
-    public static getGroupNamesForTask(property: GroupingProperty, task: Task): string[] {
-        const grouper = Group.groupers[property];
-        return grouper(task);
+    public static getGroupNamesForTask(grouping: Grouping, task: Task): string[] {
+        const grouper = Group.groupers[grouping.property];
+        return grouper(task, grouping.arg);
     }
 
     private static groupers: Record<GroupingProperty, Grouper> = {
@@ -45,6 +45,7 @@ export class Group {
         folder: Group.groupByFolder,
         happens: Group.groupByHappensDate,
         heading: Group.groupByHeading,
+        fn: Group.groupByFn,
         path: Group.groupByPath,
         priority: Group.groupByPriority,
         recurrence: Group.groupByRecurrence,
@@ -55,6 +56,16 @@ export class Group {
         status: Group.groupByStatus,
         tags: Group.groupByTags,
     };
+
+    private static root(task: Task) {
+        const path = task.path.replace(/\\/g, '/');
+        const separatorIndex = path.indexOf('/');
+        if (separatorIndex == -1) {
+            return '/';
+        } else {
+            return path.substring(0, separatorIndex + 1);
+        }
+    }
 
     private static escapeMarkdownCharacters(filename: string) {
         // https://wilsonmar.github.io/markdown-text-for-github-from-html/#special-characters
@@ -151,13 +162,44 @@ export class Group {
         return [Group.escapeMarkdownCharacters(filename)];
     }
 
-    private static groupByRoot(task: Task): string[] {
-        const path = task.path.replace(/\\/g, '/');
-        const separatorIndex = path.indexOf('/');
-        if (separatorIndex == -1) {
-            return ['/'];
+    private static groupByFn(task: Task, arg?: GroupingArg): string[] {
+        const paramsArgs: [string, any][] = [
+            ['description', task.description],
+            ['done', task.doneDate],
+            ['due', task.dueDate],
+            ['filename', task.filename],
+            ['happens', new HappensDateField().earliestDate(task)],
+            ['header', task.precedingHeader],
+            ['markdown', task.originalMarkdown],
+            ['path', task.path.replace('.md', '')],
+            ['priority', task.priority],
+            ['recurrence', task.recurrence],
+            ['root', Group.root(task)],
+            ['scheduled', task.scheduledDate],
+            ['start', task.startDate],
+            ['status', task.status],
+            ['t', task],
+            ['tags', task.tags],
+            ['task', task],
+            ['urgency', task.urgency],
+        ];
+
+        const params = paramsArgs.map(([p]) => p);
+        const groupBy = arg && new Function(...params, `return ${arg}`);
+
+        if (groupBy instanceof Function) {
+            const args = paramsArgs.map(([_, a]) => a);
+            const result = groupBy(...args);
+            const group = typeof result === 'string' ? result : 'Error with group result';
+
+            return [Group.escapeMarkdownCharacters(group)];
+        } else {
+            return ['Error parsing group function'];
         }
-        return [Group.escapeMarkdownCharacters(path.substring(0, separatorIndex + 1))];
+    }
+
+    private static groupByRoot(task: Task): string[] {
+        return [Group.escapeMarkdownCharacters(Group.root(task))];
     }
 
     private static groupByBacklink(task: Task): string[] {

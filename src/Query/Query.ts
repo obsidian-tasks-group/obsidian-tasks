@@ -17,6 +17,7 @@ export type GroupingProperty =
     | 'folder'
     | 'happens'
     | 'heading'
+    | 'fn'
     | 'path'
     | 'priority'
     | 'recurrence'
@@ -26,7 +27,13 @@ export type GroupingProperty =
     | 'start'
     | 'status'
     | 'tags';
-export type Grouping = { property: GroupingProperty };
+
+export type GroupingArg = string | null;
+
+export type Grouping = {
+    property: GroupingProperty;
+    arg?: GroupingArg;
+};
 
 export class Query implements IQuery {
     public source: string;
@@ -39,7 +46,7 @@ export class Query implements IQuery {
     private _grouping: Grouping[] = [];
 
     private readonly groupByRegexp =
-        /^group by (backlink|done|due|filename|folder|happens|heading|path|priority|recurrence|recurring|root|scheduled|start|status|tags)/;
+        /^group by (backlink|done|due|filename|fn|folder|happens|heading|path|priority|recurrence|recurring|root|scheduled|start|status|tags)[\s]*(.*)/;
 
     private readonly hideOptionsRegexp =
         /^(hide|show) (task count|backlink|priority|start date|scheduled date|done date|due date|recurrence rule|edit button|urgency)/;
@@ -227,10 +234,22 @@ export class Query implements IQuery {
 
     private parseGroupBy({ line }: { line: string }): void {
         const fieldMatch = line.match(this.groupByRegexp);
+
         if (fieldMatch !== null) {
-            this._grouping.push({
-                property: fieldMatch[1] as GroupingProperty,
-            });
+            const property = fieldMatch[1] as GroupingProperty;
+
+            if (property !== 'fn') {
+                this._grouping.push({
+                    property: property,
+                });
+            } else if (fieldMatch[2] !== null) {
+                this._grouping.push({
+                    property: property,
+                    arg: fieldMatch[2] as GroupingArg,
+                });
+            } else {
+                this._error = 'do not understand fn query grouping';
+            }
         } else {
             this._error = 'do not understand query grouping';
         }
