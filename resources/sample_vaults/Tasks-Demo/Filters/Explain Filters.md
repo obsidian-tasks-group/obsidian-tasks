@@ -1,3 +1,8 @@
+---
+tags:
+ - examples
+---
+
 # Explain Filters
 
 The `explain` instruction tells a Tasks block to display details of its filters.

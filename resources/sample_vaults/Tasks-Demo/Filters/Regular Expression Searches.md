@@ -1,3 +1,8 @@
+---
+tags:
+ - examples
+---
+
 # Regular Expression Searches
 
 This file contains a few examples that were useful when testing

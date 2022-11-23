@@ -1,3 +1,8 @@
+---
+tags:
+ - examples
+---
+
 # Boolean Combinations
 
 This file contains a few examples that were useful when testing
