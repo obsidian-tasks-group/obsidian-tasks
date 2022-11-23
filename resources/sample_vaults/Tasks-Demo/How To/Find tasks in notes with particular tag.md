@@ -6,10 +6,11 @@ This is not currently possible in Tasks directly, but we could get dataview to d
 
 ```dataviewjs
 const tag = '#examples'
+const matching_files = dv.pagePaths(tag)
 
 const query = `
 not done
-(path includes ${dv.pagePaths(tag).join(') OR (path includes ')})
+(path includes ${matching_files.join(') OR (path includes ')})
 
 # you can add any number of extra Tasks instructions, for example:
 group by path
