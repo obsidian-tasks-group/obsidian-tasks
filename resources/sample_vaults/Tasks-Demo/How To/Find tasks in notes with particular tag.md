@@ -4,6 +4,8 @@ Suppose we wanted to find all tasks in notes that had a particular tag in the fr
 
 This is not currently possible in Tasks directly, but we could get dataview to do the search for us and create a Tasks query.
 
+Note that the following finds all tasks where the tag is present anywhere in the file, not just in the frontmatter.
+
 ```dataviewjs
 const tag = '#examples'
 const matching_files = dv.pagePaths(tag)
