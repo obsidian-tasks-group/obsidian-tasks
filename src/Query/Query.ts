@@ -127,19 +127,19 @@ export class Query implements IQuery {
 
         const numberOfFilters = this.filters.length;
         if (numberOfFilters === 0) {
-            return result + 'No filters supplied. All tasks will match the query.';
-        }
-
-        result += 'All of:\n';
-        for (let i = 0; i < numberOfFilters; i++) {
-            if (i > 0) result += '\n';
-            const filter = this.filters[i];
-            const explanation = filter.explanation;
-            const unindentedExplanation = explanation.asString();
-            if (unindentedExplanation === filter.instruction) {
-                result += `  ${filter.instruction}\n`;
-            } else {
-                result += `  ${filter.instruction} =>\n${explanation.asString('    ')}\n`;
+            result += 'No filters supplied. All tasks will match the query.';
+        } else {
+            result += 'All of:\n';
+            for (let i = 0; i < numberOfFilters; i++) {
+                if (i > 0) result += '\n';
+                const filter = this.filters[i];
+                const explanation = filter.explanation;
+                const unindentedExplanation = explanation.asString();
+                if (unindentedExplanation === filter.instruction) {
+                    result += `  ${filter.instruction}\n`;
+                } else {
+                    result += `  ${filter.instruction} =>\n${explanation.asString('    ')}\n`;
+                }
             }
         }
         return result;
