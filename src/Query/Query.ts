@@ -121,8 +121,6 @@ export class Query implements IQuery {
             result += `Only tasks containing the global filter '${globalFilter}'.\n\n`;
         }
 
-        // TODO State today's date (and maybe weekday)
-
         const numberOfFilters = this.filters.length;
         if (numberOfFilters === 0) {
             result += 'No filters supplied. All tasks will match the query.';
