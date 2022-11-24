@@ -113,16 +113,18 @@ export class Query implements IQuery {
     }
 
     public explainQueryWithoutIntroduction(): string {
+        let result = '';
+
         // TODO Include limit, if any
         // TODO Include global filter, if any
         // TODO State today's date (and maybe weekday)
 
         const numberOfFilters = this.filters.length;
         if (numberOfFilters === 0) {
-            return 'No filters supplied. All tasks will match the query.';
+            return result + 'No filters supplied. All tasks will match the query.';
         }
 
-        let result = 'All of:\n';
+        result += 'All of:\n';
         for (let i = 0; i < numberOfFilters; i++) {
             if (i > 0) result += '\n';
             const filter = this.filters[i];
