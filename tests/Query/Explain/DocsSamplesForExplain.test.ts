@@ -29,7 +29,7 @@ function verifyQuery(instructions: string, options?: Options): void {
  */
 function verifyExplanation(instructions: string, options?: Options): void {
     const query = new Query({ source: instructions });
-    const explanation = query.explainQueryWithoutIntroduction();
+    const explanation = query.explainQuery();
 
     options = options || new Options();
     options = options.forFile().withFileExtention('explanation.text');
