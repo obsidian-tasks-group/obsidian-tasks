@@ -4,6 +4,7 @@
 import moment from 'moment';
 import { Query } from '../src/Query/Query';
 import { Priority, Status, Task } from '../src/Task';
+import { resetSettings, updateSettings } from '../src/Config/Settings';
 import { createTasksFromMarkdown, fromLine } from './TestHelpers';
 import { shouldSupportFiltering } from './TestingTools/FilterTestHelpers';
 import type { FilteringCase } from './TestingTools/FilterTestHelpers';
@@ -763,6 +764,10 @@ describe('Query', () => {
     });
 
     describe('explanations', () => {
+        afterEach(() => {
+            resetSettings();
+        });
+
         it('should explain 0 filters', () => {
             const input = '';
             const query = new Query({ source: input });
@@ -771,11 +776,37 @@ describe('Query', () => {
             expect(query.explainQueryWithoutIntroduction()).toEqual(expectedDisplayText);
         });
 
+        it('should explain 0 filters with global filter', () => {
+            updateSettings({ globalFilter: '#task' });
+
+            const input = '';
+            const query = new Query({ source: input });
+
+            const expectedDisplayText = `Only tasks containing the global filter '#task'.
+
+No filters supplied. All tasks will match the query.`;
+            expect(query.explainQueryWithoutIntroduction()).toEqual(expectedDisplayText);
+        });
+
         it('should explain 1 filter', () => {
             const input = 'description includes hello';
             const query = new Query({ source: input });
 
             const expectedDisplayText = `All of:
+  description includes hello
+`;
+            expect(query.explainQueryWithoutIntroduction()).toEqual(expectedDisplayText);
+        });
+
+        it('should explain 1 filter', () => {
+            updateSettings({ globalFilter: '#task' });
+
+            const input = 'description includes hello';
+            const query = new Query({ source: input });
+
+            const expectedDisplayText = `Only tasks containing the global filter '#task'.
+
+All of:
   description includes hello
 `;
             expect(query.explainQueryWithoutIntroduction()).toEqual(expectedDisplayText);

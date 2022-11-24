@@ -1,6 +1,7 @@
 import { LayoutOptions } from '../LayoutOptions';
 import type { Task } from '../Task';
 import type { IQuery } from '../IQuery';
+import { getSettings } from '../Config/Settings';
 import { Sort } from './Sort';
 import type { TaskGroups } from './TaskGroups';
 import { parseFilter } from './FilterParser';
@@ -116,7 +117,12 @@ export class Query implements IQuery {
         let result = '';
 
         // TODO Include limit, if any
-        // TODO Include global filter, if any
+
+        const { globalFilter } = getSettings();
+        if (globalFilter.length !== 0) {
+            result += `Only tasks containing the global filter '${globalFilter}'.\n\n`;
+        }
+
         // TODO State today's date (and maybe weekday)
 
         const numberOfFilters = this.filters.length;
