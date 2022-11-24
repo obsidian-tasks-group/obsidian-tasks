@@ -116,8 +116,6 @@ export class Query implements IQuery {
     public explainQueryWithoutIntroduction(): string {
         let result = '';
 
-        // TODO Include limit, if any
-
         const { globalFilter } = getSettings();
         if (globalFilter.length !== 0) {
             result += `Only tasks containing the global filter '${globalFilter}'.\n\n`;
@@ -142,6 +140,11 @@ export class Query implements IQuery {
                 }
             }
         }
+
+        if (this._limit) {
+            result += `\n\nAt most ${this._limit} tasks.\n`;
+        }
+
         return result;
     }
 

@@ -824,6 +824,17 @@ All of:
 `;
             expect(query.explainQueryWithoutIntroduction()).toEqual(expectedDisplayText);
         });
+
+        it('should explain limit', () => {
+            const input = 'limit 5';
+            const query = new Query({ source: input });
+
+            const expectedDisplayText = `No filters supplied. All tasks will match the query.
+
+At most 5 tasks.
+`;
+            expect(query.explainQueryWithoutIntroduction()).toEqual(expectedDisplayText);
+        });
     });
 
     // This tests the parsing of 'group by' instructions.
