@@ -141,7 +141,7 @@ export class Query implements IQuery {
             }
         }
 
-        if (this._limit) {
+        if (this._limit !== undefined) {
             result += `\n\nAt most ${this._limit} tasks.\n`;
         }
 

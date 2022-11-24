@@ -825,13 +825,24 @@ All of:
             expect(query.explainQueryWithoutIntroduction()).toEqual(expectedDisplayText);
         });
 
-        it('should explain limit', () => {
+        it('should explain limit 5', () => {
             const input = 'limit 5';
             const query = new Query({ source: input });
 
             const expectedDisplayText = `No filters supplied. All tasks will match the query.
 
 At most 5 tasks.
+`;
+            expect(query.explainQueryWithoutIntroduction()).toEqual(expectedDisplayText);
+        });
+
+        it('should explain limit 0', () => {
+            const input = 'limit 0';
+            const query = new Query({ source: input });
+
+            const expectedDisplayText = `No filters supplied. All tasks will match the query.
+
+At most 0 tasks.
 `;
             expect(query.explainQueryWithoutIntroduction()).toEqual(expectedDisplayText);
         });
