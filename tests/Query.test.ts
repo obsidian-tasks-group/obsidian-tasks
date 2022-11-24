@@ -768,7 +768,7 @@ describe('Query', () => {
             const query = new Query({ source: input });
 
             const expectedDisplayText = 'No filters supplied. All tasks will match the query.';
-            expect(query.explainQuery()).toEqual(expectedDisplayText);
+            expect(query.explainQueryWithoutIntroduction()).toEqual(expectedDisplayText);
         });
 
         it('should explain 1 filter', () => {
@@ -778,7 +778,7 @@ describe('Query', () => {
             const expectedDisplayText = `All of:
   description includes hello
 `;
-            expect(query.explainQuery()).toEqual(expectedDisplayText);
+            expect(query.explainQueryWithoutIntroduction()).toEqual(expectedDisplayText);
         });
 
         it('should explain 2 filters', () => {
@@ -791,7 +791,7 @@ describe('Query', () => {
   due 2012-01-23 =>
     due date is on 2012-01-23 (Monday 23rd January 2012)
 `;
-            expect(query.explainQuery()).toEqual(expectedDisplayText);
+            expect(query.explainQueryWithoutIntroduction()).toEqual(expectedDisplayText);
         });
     });
 

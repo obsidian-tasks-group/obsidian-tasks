@@ -109,6 +109,10 @@ export class Query implements IQuery {
     }
 
     public explainQuery(): string {
+        return 'Explanation of this Tasks code block query:\n\n' + this.explainQueryWithoutIntroduction();
+    }
+
+    public explainQueryWithoutIntroduction(): string {
         // TODO Include limit, if any
         // TODO Include global filter, if any
         // TODO State today's date (and maybe weekday)
