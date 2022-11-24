@@ -11,7 +11,8 @@ window.moment = moment;
 /**
  * Save an instructions block to disc, so that it can be embedded in
  * to documentation, using a 'snippet' line.
- * @todo Figure out how to include the '```tasks' and '```' lines
+ * @todo Figure out how to include the '```tasks' and '```' lines:
+ *       see discussion in https://github.com/SimonCropp/MarkdownSnippets/issues/537
  * @param instructions
  * @param options
  */
