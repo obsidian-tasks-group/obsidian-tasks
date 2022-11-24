@@ -41,23 +41,17 @@ This has a number of benefits:
 For example, when the following text is placed in a tasks query block and viewed in Reading or Live Preview modes:
 
 <!-- snippet: DocsSamplesForExplain.test.explain_expands dates.approved.query.text -->
-<a id='snippet-DocsSamplesForExplain.test.explain_expands dates.approved.query.text'></a>
-
 ```text
 starts after 2 years ago
 scheduled after 1 week ago
 due before tomorrow
 explain
 ```
-
-<sup><a href='https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/Query/Explain/DocsSamplesForExplain.test.explain_expands dates.approved.query.text#L1-L5' title='Snippet source file'>snippet source</a> | <a href='#snippet-DocsSamplesForExplain.test.explain_expands dates.approved.query.text' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
 the results begin with the following, on `2022-10-21`:
 
 <!-- snippet: DocsSamplesForExplain.test.explain_expands dates.approved.explanation.text -->
-<a id='snippet-DocsSamplesForExplain.test.explain_expands dates.approved.explanation.text'></a>
-
 ```text
 Explanation of this Tasks code block query:
 
@@ -71,8 +65,6 @@ All of:
   due before tomorrow =>
     due date is before 2022-10-22 (Saturday 22nd October 2022)
 ```
-
-<sup><a href='https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/Query/Explain/DocsSamplesForExplain.test.explain_expands dates.approved.explanation.text#L1-L11' title='Snippet source file'>snippet source</a> | <a href='#snippet-DocsSamplesForExplain.test.explain_expands dates.approved.explanation.text' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
 ### Boolean combinations are displayed
@@ -80,22 +72,16 @@ All of:
 For example, when the following text is placed in a tasks query block and viewed in Reading or Live Preview modes:
 
 <!-- snippet: DocsSamplesForExplain.test.explain_boolean combinations.approved.query.text -->
-<a id='snippet-DocsSamplesForExplain.test.explain_boolean combinations.approved.query.text'></a>
-
 ```text
 explain
 not done
 (due before tomorrow) AND (is recurring)
 ```
-
-<sup><a href='https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/Query/Explain/DocsSamplesForExplain.test.explain_boolean combinations.approved.query.text#L1-L4' title='Snippet source file'>snippet source</a> | <a href='#snippet-DocsSamplesForExplain.test.explain_boolean combinations.approved.query.text' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
 the results begin with the following, on `2022-10-21`:
 
 <!-- snippet: DocsSamplesForExplain.test.explain_boolean combinations.approved.explanation.text -->
-<a id='snippet-DocsSamplesForExplain.test.explain_boolean combinations.approved.explanation.text'></a>
-
 ```text
 Explanation of this Tasks code block query:
 
@@ -107,8 +93,6 @@ All of:
       due date is before 2022-10-22 (Saturday 22nd October 2022)
       is recurring
 ```
-
-<sup><a href='https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/Query/Explain/DocsSamplesForExplain.test.explain_boolean combinations.approved.explanation.text#L1-L9' title='Snippet source file'>snippet source</a> | <a href='#snippet-DocsSamplesForExplain.test.explain_boolean combinations.approved.explanation.text' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
 ### More complex combinations are displayed
@@ -116,21 +100,15 @@ All of:
 For example, when the following text is placed in a tasks query block and viewed in Reading or Live Preview modes:
 
 <!-- snippet: DocsSamplesForExplain.test.explain_nested boolean combinations.approved.query.text -->
-<a id='snippet-DocsSamplesForExplain.test.explain_nested boolean combinations.approved.query.text'></a>
-
 ```text
 explain
 (description includes 1) AND (description includes 2) AND (description includes 3) AND (description includes 4)
 ```
-
-<sup><a href='https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/Query/Explain/DocsSamplesForExplain.test.explain_nested boolean combinations.approved.query.text#L1-L3' title='Snippet source file'>snippet source</a> | <a href='#snippet-DocsSamplesForExplain.test.explain_nested boolean combinations.approved.query.text' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
 the results begin with the following, on `2022-10-21`:
 
 <!-- snippet: DocsSamplesForExplain.test.explain_nested boolean combinations.approved.explanation.text -->
-<a id='snippet-DocsSamplesForExplain.test.explain_nested boolean combinations.approved.explanation.text'></a>
-
 ```text
 Explanation of this Tasks code block query:
 
@@ -144,8 +122,6 @@ All of:
         description includes 3
       description includes 4
 ```
-
-<sup><a href='https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/Query/Explain/DocsSamplesForExplain.test.explain_nested boolean combinations.approved.explanation.text#L1-L11' title='Snippet source file'>snippet source</a> | <a href='#snippet-DocsSamplesForExplain.test.explain_nested boolean combinations.approved.explanation.text' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
 The increasing indentation in the explanation above is an artifact of the [boon-js](https://github.com/jakec-github/boon-js) library which does all the work for Boolean combinations in Tasks.

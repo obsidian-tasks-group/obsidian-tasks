@@ -3,5 +3,6 @@
   "ExcludeDirectories": [ "node_modules", "resources" ],
   "Convention": "InPlaceOverwrite",
   "TocLevel": 5,
+  "OmitSnippetLinks": true,
   "UrlPrefix": "https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main"
 }
