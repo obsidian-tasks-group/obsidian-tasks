@@ -22,11 +22,12 @@ export class Explanation {
      * @param children
      */
     public static booleanAnd(children: Explanation[]) {
-        // TODO Simplify/clarify this code
         if (children.length === 2) {
-            if (children[0].symbol === 'AND' && children[1].symbol === '') {
-                children[0].children.push(children[1]);
-                return children[0];
+            const child0 = children[0];
+            const child1 = children[1];
+            if (child0.symbol === 'AND' && child1.symbol === '') {
+                child0.children.push(child1);
+                return child0;
             }
         }
         return new Explanation('All of', children, 'AND');
