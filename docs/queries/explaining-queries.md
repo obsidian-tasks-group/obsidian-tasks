@@ -55,7 +55,7 @@ the results begin with the following, on `2022-10-21`:
 ```text
 Explanation of this Tasks code block query:
 
-All of:
+AND (All of):
   starts after 2 years ago =>
     start date is after 2020-10-21 (Wednesday 21st October 2020) OR no start date
 
@@ -85,11 +85,11 @@ the results begin with the following, on `2022-10-21`:
 ```text
 Explanation of this Tasks code block query:
 
-All of:
+AND (All of):
   not done
 
   (due before tomorrow) AND (is recurring) =>
-    All of:
+    AND (All of):
       due date is before 2022-10-22 (Saturday 22nd October 2022)
       is recurring
 ```
@@ -112,17 +112,12 @@ the results begin with the following, on `2022-10-21`:
 ```text
 Explanation of this Tasks code block query:
 
-All of:
+AND (All of):
   (description includes 1) AND (description includes 2) AND (description includes 3) AND (description includes 4) =>
-    All of:
-      All of:
-        All of:
-          description includes 1
-          description includes 2
-        description includes 3
+    AND (All of):
+      description includes 1
+      description includes 2
+      description includes 3
       description includes 4
 ```
 <!-- endSnippet -->
-
-The increasing indentation in the explanation above is an artifact of the [boon-js](https://github.com/jakec-github/boon-js) library which does all the work for Boolean combinations in Tasks.
-That library parses the filters as a tree of values, with either 1 or 2 filters at each level.
