@@ -24,10 +24,10 @@ export class Explanation {
     public static booleanAnd(children: Explanation[]) {
         const description = 'All of';
         const symbol = 'AND';
-        return this.combineOrCreateExplanation(children, symbol, description);
+        return this.combineOrCreateExplanation(description, children, symbol);
     }
 
-    private static combineOrCreateExplanation(children: Explanation[], symbol: string, description: string) {
+    private static combineOrCreateExplanation(description: string, children: Explanation[], symbol: string) {
         if (children.length === 2) {
             const child0 = children[0];
             const child1 = children[1];
