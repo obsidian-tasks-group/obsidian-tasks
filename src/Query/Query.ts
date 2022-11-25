@@ -131,11 +131,13 @@ export class Query implements IQuery {
                 const filter = this.filters[i];
                 const explanation = filter.explanation;
                 const unindentedExplanation = explanation.asString();
+                let text;
                 if (unindentedExplanation === filter.instruction) {
-                    result += `  ${filter.instruction}\n`;
+                    text = `  ${filter.instruction}\n`;
                 } else {
-                    result += `  ${filter.instruction} =>\n${explanation.asString('    ')}\n`;
+                    text = `  ${filter.instruction} =>\n${explanation.asString('    ')}\n`;
                 }
+                result += text;
             }
         }
 
