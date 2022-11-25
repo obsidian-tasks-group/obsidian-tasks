@@ -23,9 +23,11 @@ export class Explanation {
      */
     public static booleanAnd(children: Explanation[]) {
         // TODO Simplify/clarify this code
-        if (children.length === 2 && children[0].symbol === 'AND' && children[1].symbol === '') {
-            children[0].children.push(children[1]);
-            return children[0];
+        if (children.length === 2) {
+            if (children[0].symbol === 'AND' && children[1].symbol === '') {
+                children[0].children.push(children[1]);
+                return children[0];
+            }
         }
         return new Explanation('All of', children, 'AND');
     }
