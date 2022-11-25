@@ -22,9 +22,7 @@ export class Explanation {
      * @param children
      */
     public static booleanAnd(children: Explanation[]) {
-        const description = 'All of';
-        const symbol = 'AND';
-        return this.combineOrCreateExplanation(description, children, symbol);
+        return this.combineOrCreateExplanation('All of', children, 'AND');
     }
 
     /**
