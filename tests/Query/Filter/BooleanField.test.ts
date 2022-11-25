@@ -179,7 +179,7 @@ describe('explain boolean queries', () => {
     it('should explain Boolean NOT', () => {
         const instruction = 'NOT (description includes d1)';
         const filterOrMessage = new BooleanField().createFilterOrErrorMessage(instruction);
-        expect(filterOrMessage).toHaveExplanation('NOT (None of):\n  description includes d1');
+        expect(filterOrMessage).toHaveExplanation('NOT:\n  description includes d1');
     });
 
     it('should explain Boolean XOR', () => {

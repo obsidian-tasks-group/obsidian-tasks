@@ -62,7 +62,13 @@ export class Explanation {
         }
 
         // We have children, so concatenate them together
-        let result = currentIndentation + `${this.symbol} (${this.description}):`;
+        let result = currentIndentation + `${this.symbol}`;
+        if (this.children.length > 1) {
+            // The descriptions like 'All of', 'None of' are one really meaningful
+            // if there is more than one filter. Otherwise, they are just confusing.
+            result += ` (${this.description})`;
+        }
+        result += ':';
         const newIndentation = currentIndentation + '  ';
         for (let i = 0; i < this.children.length; i++) {
             result += `\n${this.children[i].asString(newIndentation)}`;
