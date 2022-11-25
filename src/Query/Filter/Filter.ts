@@ -28,13 +28,13 @@ export class Filter {
         this.filterFunction = filterFunction;
     }
 
-    public explainFilterIndented() {
+    public explainFilterIndented(indent: string) {
         const explanation = this.explanation;
         const unindentedExplanation = explanation.asString();
         if (unindentedExplanation === this.instruction) {
-            return `  ${this.instruction}\n`;
+            return `${indent}${this.instruction}\n`;
         } else {
-            return `  ${this.instruction} =>\n${explanation.asString('    ')}\n`;
+            return `${indent}${this.instruction} =>\n${explanation.asString('    ')}\n`;
         }
     }
 }
