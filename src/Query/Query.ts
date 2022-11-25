@@ -128,9 +128,7 @@ export class Query implements IQuery {
             result += 'AND (All of):\n';
             for (let i = 0; i < numberOfFilters; i++) {
                 if (i > 0) result += '\n';
-                const filter = this.filters[i];
-                const text = filter.explainFilterIndented();
-                result += text;
+                result += this.filters[i].explainFilterIndented();
             }
         }
 
