@@ -7,11 +7,11 @@
  * Later, more human-readable descriptions will be generated.
  */
 export class Explanation {
-    public description: string;
-    public symbol: string; // AND, OR, NOT, XOR
-    public children: Explanation[];
+    public readonly description: string;
+    public readonly symbol: string; // AND, OR, NOT, XOR
+    public readonly children: Explanation[];
 
-    constructor(description: string, children: Explanation[] = [], symbol: string = 'XXXXXX') {
+    constructor(description: string, children: Explanation[] = [], symbol: string = '') {
         this.description = description;
         this.symbol = symbol;
         this.children = children;
