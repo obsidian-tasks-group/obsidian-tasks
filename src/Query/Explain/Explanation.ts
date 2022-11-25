@@ -26,9 +26,8 @@ export class Explanation {
         if (children.length === 2 && children[0].symbol === 'AND' && children[1].symbol === '') {
             children[0].children.push(children[1]);
             return children[0];
-        } else {
-            return new Explanation('All of', children, 'AND');
         }
+        return new Explanation('All of', children, 'AND');
     }
 
     /**
