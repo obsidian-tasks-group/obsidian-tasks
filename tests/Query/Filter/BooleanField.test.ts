@@ -205,6 +205,18 @@ describe('explain boolean queries', () => {
         expect(filterOrMessage).toHaveExplanation(expected);
     });
 
+    it('should explain 3 Boolean ANDs', () => {
+        const instruction = '(description includes 1) AND (description includes 2) AND (description includes 3)';
+        const filterOrMessage = new BooleanField().createFilterOrErrorMessage(instruction);
+        expect(filterOrMessage.filter?.explanation.asString()).toMatchInlineSnapshot(`
+            "All of:
+              All of:
+                description includes 1
+                description includes 2
+              description includes 3"
+        `);
+    });
+
     it('should explain 9 Boolean ANDs', () => {
         const instruction =
             '(description includes 1) AND (description includes 2) AND (description includes 3) AND (description includes 4) AND (description includes 5) AND (description includes 6) AND (description includes 7) AND (description includes 8) AND (description includes 9)';
