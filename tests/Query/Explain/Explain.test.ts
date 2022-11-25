@@ -5,6 +5,7 @@ describe('Explain', () => {
         const description = 'due date is before 2022-10-28';
         const explanation = new Explanation(description);
         expect(explanation.description).toEqual(description);
+        expect(explanation.symbol).toEqual('');
         expect(explanation.children).toEqual([]);
         expect(explanation.asString()).toEqual(description);
     });
@@ -13,6 +14,7 @@ describe('Explain', () => {
         const children: Explanation[] = [new Explanation('x includes A'), new Explanation('x includes B')];
         const explanation = Explanation.booleanAnd(children);
         expect(explanation.description).toEqual('All of');
+        expect(explanation.symbol).toEqual('AND');
         expect(explanation.children).toEqual(children);
         const expected = `AND (All of):
   x includes A
@@ -24,6 +26,7 @@ describe('Explain', () => {
         const children: Explanation[] = [new Explanation('x includes A'), new Explanation('x includes B')];
         const explanation = Explanation.booleanOr(children);
         expect(explanation.description).toEqual('At least one of');
+        expect(explanation.symbol).toEqual('OR');
         expect(explanation.children).toEqual(children);
     });
 
@@ -31,6 +34,7 @@ describe('Explain', () => {
         const children: Explanation[] = [new Explanation('x includes A'), new Explanation('x includes B')];
         const explanation = Explanation.booleanNot(children);
         expect(explanation.description).toEqual('None of');
+        expect(explanation.symbol).toEqual('NOT');
         expect(explanation.children).toEqual(children);
     });
 
@@ -38,6 +42,7 @@ describe('Explain', () => {
         const children: Explanation[] = [new Explanation('x includes A'), new Explanation('x includes B')];
         const explanation = Explanation.booleanXor(children);
         expect(explanation.description).toEqual('Exactly one of');
+        expect(explanation.symbol).toEqual('XOR');
         expect(explanation.children).toEqual(children);
     });
 
