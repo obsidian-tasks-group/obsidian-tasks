@@ -241,4 +241,42 @@ describe('explain boolean queries', () => {
               description includes 9"
         `);
     });
+
+    it('( a && b && c ) || ( d && e && f )', () => {
+        const instruction =
+            '( (description includes a) AND (description includes b) AND (description includes c) ) OR ( (description includes d) AND (description includes e) AND (description includes f) )';
+        const filterOrMessage = new BooleanField().createFilterOrErrorMessage(instruction);
+        expect(filterOrMessage.filter?.explanation.asString()).toMatchInlineSnapshot(`
+            "OR (At least one of):
+              AND (All of):
+                AND (All of):
+                  description includes a
+                  description includes b
+                description includes c
+              AND (All of):
+                AND (All of):
+                  description includes d
+                  description includes e
+                description includes f"
+        `);
+    });
+
+    it('( a || b || c ) && ( d || e || f )', () => {
+        const instruction =
+            '( (description includes a) OR (description includes b) OR (description includes c) ) AND ( (description includes d) OR (description includes e) OR (description includes f) )';
+        const filterOrMessage = new BooleanField().createFilterOrErrorMessage(instruction);
+        expect(filterOrMessage.filter?.explanation.asString()).toMatchInlineSnapshot(`
+            "AND (All of):
+              OR (At least one of):
+                OR (At least one of):
+                  description includes a
+                  description includes b
+                description includes c
+              OR (At least one of):
+                OR (At least one of):
+                  description includes d
+                  description includes e
+                description includes f"
+        `);
+    });
 });
