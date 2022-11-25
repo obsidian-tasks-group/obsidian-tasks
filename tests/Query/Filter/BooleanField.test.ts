@@ -198,9 +198,8 @@ describe('explain boolean queries', () => {
         //      It's technically correct, but hard for users to read.
         //      I would like to try and somehow collate, or run together, runs of AND and OR operations
         const expected = `OR (At least one of):
-  OR (At least one of):
-    description includes d1
-    description includes d2
+  description includes d1
+  description includes d2
   priority is medium`;
         expect(filterOrMessage).toHaveExplanation(expected);
     });
@@ -262,9 +261,8 @@ describe('explain boolean queries', () => {
         const filterOrMessage = new BooleanField().createFilterOrErrorMessage(instruction);
         expect(filterOrMessage.filter?.explanation.asString()).toMatchInlineSnapshot(`
             "OR (At least one of):
-              OR (At least one of):
-                description includes a
-                description includes b
+              description includes a
+              description includes b
               description includes c"
         `);
     });
@@ -305,14 +303,12 @@ describe('explain boolean queries', () => {
         expect(filterOrMessage.filter?.explanation.asString()).toMatchInlineSnapshot(`
             "AND (All of):
               OR (At least one of):
-                OR (At least one of):
-                  description includes a
-                  description includes b
+                description includes a
+                description includes b
                 description includes c
               OR (At least one of):
-                OR (At least one of):
-                  description includes d
-                  description includes e
+                description includes d
+                description includes e
                 description includes f"
         `);
     });

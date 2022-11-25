@@ -30,7 +30,7 @@ export class Explanation {
      * @param children
      */
     public static booleanOr(children: Explanation[]) {
-        return new Explanation('At least one of', children, 'OR');
+        return this.combineOrCreateExplanation('At least one of', children, 'OR');
     }
 
     /**
