@@ -27,18 +27,6 @@ export class Explanation {
         return this.combineOrCreateExplanation(description, children, symbol);
     }
 
-    private static combineOrCreateExplanation(description: string, children: Explanation[], symbol: string) {
-        if (children.length === 2) {
-            const child0 = children[0];
-            const child1 = children[1];
-            if (child0.symbol === symbol && child1.symbol === '') {
-                child0.children.push(child1);
-                return child0;
-            }
-        }
-        return new Explanation(description, children, symbol);
-    }
-
     /**
      * Create an Explanation object representing Boolean OR
      * @param children
@@ -82,5 +70,17 @@ export class Explanation {
             result += `\n${this.children[i].asString(newIndentation)}`;
         }
         return result;
+    }
+
+    private static combineOrCreateExplanation(description: string, children: Explanation[], symbol: string) {
+        if (children.length === 2) {
+            const child0 = children[0];
+            const child1 = children[1];
+            if (child0.symbol === symbol && child1.symbol === '') {
+                child0.children.push(child1);
+                return child0;
+            }
+        }
+        return new Explanation(description, children, symbol);
     }
 }
