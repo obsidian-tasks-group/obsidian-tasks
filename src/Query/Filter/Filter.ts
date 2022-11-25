@@ -34,7 +34,7 @@ export class Filter {
         if (unindentedExplanation === this.instruction) {
             return `${indent}${this.instruction}\n`;
         } else {
-            return `${indent}${this.instruction} =>\n${explanation.asString('    ')}\n`;
+            return `${indent}${this.instruction} =>\n${explanation.asString('  ')}\n`;
         }
     }
 }

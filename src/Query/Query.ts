@@ -125,10 +125,9 @@ export class Query implements IQuery {
         if (numberOfFilters === 0) {
             result += 'No filters supplied. All tasks will match the query.';
         } else {
-            result += 'AND (All of):\n';
             for (let i = 0; i < numberOfFilters; i++) {
                 if (i > 0) result += '\n';
-                result += this.filters[i].explainFilterIndented('  ');
+                result += this.filters[i].explainFilterIndented('');
             }
         }
 

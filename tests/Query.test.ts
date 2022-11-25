@@ -792,8 +792,7 @@ No filters supplied. All tasks will match the query.`;
             const input = 'description includes hello';
             const query = new Query({ source: input });
 
-            const expectedDisplayText = `AND (All of):
-  description includes hello
+            const expectedDisplayText = `description includes hello
 `;
             expect(query.explainQueryWithoutIntroduction()).toEqual(expectedDisplayText);
         });
@@ -806,8 +805,7 @@ No filters supplied. All tasks will match the query.`;
 
             const expectedDisplayText = `Only tasks containing the global filter '#task'.
 
-AND (All of):
-  description includes hello
+description includes hello
 `;
             expect(query.explainQueryWithoutIntroduction()).toEqual(expectedDisplayText);
         });
@@ -816,11 +814,10 @@ AND (All of):
             const input = 'description includes hello\ndue 2012-01-23';
             const query = new Query({ source: input });
 
-            const expectedDisplayText = `AND (All of):
-  description includes hello
+            const expectedDisplayText = `description includes hello
 
-  due 2012-01-23 =>
-    due date is on 2012-01-23 (Monday 23rd January 2012)
+due 2012-01-23 =>
+  due date is on 2012-01-23 (Monday 23rd January 2012)
 `;
             expect(query.explainQueryWithoutIntroduction()).toEqual(expectedDisplayText);
         });
