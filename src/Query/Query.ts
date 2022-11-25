@@ -44,6 +44,16 @@ export type GroupingProperty =
     | 'tags';
 export type Grouping = { property: GroupingProperty };
 
+function explainFilterIndented(filter: Filter) {
+    const explanation = filter.explanation;
+    const unindentedExplanation = explanation.asString();
+    if (unindentedExplanation === filter.instruction) {
+        return `  ${filter.instruction}\n`;
+    } else {
+        return `  ${filter.instruction} =>\n${explanation.asString('    ')}\n`;
+    }
+}
+
 export class Query implements IQuery {
     public source: string;
 
@@ -129,14 +139,7 @@ export class Query implements IQuery {
             for (let i = 0; i < numberOfFilters; i++) {
                 if (i > 0) result += '\n';
                 const filter = this.filters[i];
-                const explanation = filter.explanation;
-                const unindentedExplanation = explanation.asString();
-                let text;
-                if (unindentedExplanation === filter.instruction) {
-                    text = `  ${filter.instruction}\n`;
-                } else {
-                    text = `  ${filter.instruction} =>\n${explanation.asString('    ')}\n`;
-                }
+                const text = explainFilterIndented(filter);
                 result += text;
             }
         }
