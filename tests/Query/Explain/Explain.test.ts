@@ -14,7 +14,7 @@ describe('Explain', () => {
         const explanation = Explanation.booleanAnd(children);
         expect(explanation.description).toEqual('All of');
         expect(explanation.children).toEqual(children);
-        const expected = `All of:
+        const expected = `AND (All of):
   x includes A
   x includes B`;
         expect(explanation.asString()).toEqual(expected);
@@ -45,11 +45,11 @@ describe('Explain', () => {
         const not = Explanation.booleanOr([new Explanation('x1 includes A'), new Explanation('x1 includes B')]);
         const or = Explanation.booleanOr([new Explanation('x2 includes C'), new Explanation('x2 includes D')]);
         const and = Explanation.booleanAnd([not, or]);
-        const expected = `All of:
-  At least one of:
+        const expected = `AND (All of):
+  OR (At least one of):
     x1 includes A
     x1 includes B
-  At least one of:
+  OR (At least one of):
     x2 includes C
     x2 includes D`;
         expect(and.asString()).toEqual(expected);

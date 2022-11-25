@@ -792,7 +792,7 @@ No filters supplied. All tasks will match the query.`;
             const input = 'description includes hello';
             const query = new Query({ source: input });
 
-            const expectedDisplayText = `All of:
+            const expectedDisplayText = `AND (All of):
   description includes hello
 `;
             expect(query.explainQueryWithoutIntroduction()).toEqual(expectedDisplayText);
@@ -806,7 +806,7 @@ No filters supplied. All tasks will match the query.`;
 
             const expectedDisplayText = `Only tasks containing the global filter '#task'.
 
-All of:
+AND (All of):
   description includes hello
 `;
             expect(query.explainQueryWithoutIntroduction()).toEqual(expectedDisplayText);
@@ -816,7 +816,7 @@ All of:
             const input = 'description includes hello\ndue 2012-01-23';
             const query = new Query({ source: input });
 
-            const expectedDisplayText = `All of:
+            const expectedDisplayText = `AND (All of):
   description includes hello
 
   due 2012-01-23 =>

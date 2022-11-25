@@ -1,6 +1,6 @@
 Explanation of this Tasks code block query:
 
-All of:
+AND (All of):
   starts after 2 years ago =>
     start date is after 2020-10-21 (Wednesday 21st October 2020) OR no start date
 

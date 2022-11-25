@@ -161,7 +161,7 @@ describe('explain boolean queries', () => {
     it('should explain Boolean AND', () => {
         const instruction = '(description includes d1) AND (priority medium)';
         const filterOrMessage = new BooleanField().createFilterOrErrorMessage(instruction);
-        const expected = `All of:
+        const expected = `AND (All of):
   description includes d1
   priority is medium`;
         expect(filterOrMessage).toHaveExplanation(expected);
@@ -170,7 +170,7 @@ describe('explain boolean queries', () => {
     it('should explain Boolean OR', () => {
         const instruction = '(description includes d1) OR (priority medium)';
         const filterOrMessage = new BooleanField().createFilterOrErrorMessage(instruction);
-        const expected = `At least one of:
+        const expected = `OR (At least one of):
   description includes d1
   priority is medium`;
         expect(filterOrMessage).toHaveExplanation(expected);
@@ -179,13 +179,13 @@ describe('explain boolean queries', () => {
     it('should explain Boolean NOT', () => {
         const instruction = 'NOT (description includes d1)';
         const filterOrMessage = new BooleanField().createFilterOrErrorMessage(instruction);
-        expect(filterOrMessage).toHaveExplanation('None of:\n  description includes d1');
+        expect(filterOrMessage).toHaveExplanation('NOT (None of):\n  description includes d1');
     });
 
     it('should explain Boolean XOR', () => {
         const instruction = '(description includes d1) XOR (priority medium)';
         const filterOrMessage = new BooleanField().createFilterOrErrorMessage(instruction);
-        const expected = `Exactly one of:
+        const expected = `XOR (Exactly one of):
   description includes d1
   priority is medium`;
         expect(filterOrMessage).toHaveExplanation(expected);
@@ -197,8 +197,8 @@ describe('explain boolean queries', () => {
         // TODO This creates a nested 'At least one of' inside the first one.
         //      It's technically correct, but hard for users to read.
         //      I would like to try and somehow collate, or run together, runs of AND and OR operations
-        const expected = `At least one of:
-  At least one of:
+        const expected = `OR (At least one of):
+  OR (At least one of):
     description includes d1
     description includes d2
   priority is medium`;
@@ -209,8 +209,8 @@ describe('explain boolean queries', () => {
         const instruction = '(description includes 1) AND (description includes 2) AND (description includes 3)';
         const filterOrMessage = new BooleanField().createFilterOrErrorMessage(instruction);
         expect(filterOrMessage.filter?.explanation.asString()).toMatchInlineSnapshot(`
-            "All of:
-              All of:
+            "AND (All of):
+              AND (All of):
                 description includes 1
                 description includes 2
               description includes 3"
@@ -222,14 +222,14 @@ describe('explain boolean queries', () => {
             '(description includes 1) AND (description includes 2) AND (description includes 3) AND (description includes 4) AND (description includes 5) AND (description includes 6) AND (description includes 7) AND (description includes 8) AND (description includes 9)';
         const filterOrMessage = new BooleanField().createFilterOrErrorMessage(instruction);
         expect(filterOrMessage.filter?.explanation.asString()).toMatchInlineSnapshot(`
-            "All of:
-              All of:
-                All of:
-                  All of:
-                    All of:
-                      All of:
-                        All of:
-                          All of:
+            "AND (All of):
+              AND (All of):
+                AND (All of):
+                  AND (All of):
+                    AND (All of):
+                      AND (All of):
+                        AND (All of):
+                          AND (All of):
                             description includes 1
                             description includes 2
                           description includes 3
