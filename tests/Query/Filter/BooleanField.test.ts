@@ -242,6 +242,54 @@ describe('explain boolean queries', () => {
         `);
     });
 
+    it('( a && b ) && c', () => {
+        const instruction = '( (description includes a) AND (description includes b) ) AND (description includes c)';
+        const filterOrMessage = new BooleanField().createFilterOrErrorMessage(instruction);
+        expect(filterOrMessage.filter?.explanation.asString()).toMatchInlineSnapshot(`
+            "AND (All of):
+              AND (All of):
+                description includes a
+                description includes b
+              description includes c"
+        `);
+    });
+
+    it('a && ( b && c )', () => {
+        const instruction = '( description includes a ) AND ( (description includes b) AND (description includes c) )';
+        const filterOrMessage = new BooleanField().createFilterOrErrorMessage(instruction);
+        expect(filterOrMessage.filter?.explanation.asString()).toMatchInlineSnapshot(`
+            "AND (All of):
+              description includes a
+              AND (All of):
+                description includes b
+                description includes c"
+        `);
+    });
+
+    it('( a || b ) || c', () => {
+        const instruction = '( (description includes a) OR (description includes b) ) OR (description includes c)';
+        const filterOrMessage = new BooleanField().createFilterOrErrorMessage(instruction);
+        expect(filterOrMessage.filter?.explanation.asString()).toMatchInlineSnapshot(`
+            "OR (At least one of):
+              OR (At least one of):
+                description includes a
+                description includes b
+              description includes c"
+        `);
+    });
+
+    it('a || ( b || c )', () => {
+        const instruction = '( description includes a ) OR ( (description includes b) OR (description includes c) )';
+        const filterOrMessage = new BooleanField().createFilterOrErrorMessage(instruction);
+        expect(filterOrMessage.filter?.explanation.asString()).toMatchInlineSnapshot(`
+            "OR (At least one of):
+              description includes a
+              OR (At least one of):
+                description includes b
+                description includes c"
+        `);
+    });
+
     it('( a && b && c ) || ( d && e && f )', () => {
         const instruction =
             '( (description includes a) AND (description includes b) AND (description includes c) ) OR ( (description includes d) AND (description includes e) AND (description includes f) )';
