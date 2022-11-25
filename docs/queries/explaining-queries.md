@@ -55,15 +55,14 @@ the results begin with the following, on `2022-10-21`:
 ```text
 Explanation of this Tasks code block query:
 
-AND (All of):
-  starts after 2 years ago =>
-    start date is after 2020-10-21 (Wednesday 21st October 2020) OR no start date
+starts after 2 years ago =>
+  start date is after 2020-10-21 (Wednesday 21st October 2020) OR no start date
 
-  scheduled after 1 week ago =>
-    scheduled date is after 2022-10-14 (Friday 14th October 2022)
+scheduled after 1 week ago =>
+  scheduled date is after 2022-10-14 (Friday 14th October 2022)
 
-  due before tomorrow =>
-    due date is before 2022-10-22 (Saturday 22nd October 2022)
+due before tomorrow =>
+  due date is before 2022-10-22 (Saturday 22nd October 2022)
 ```
 <!-- endSnippet -->
 
@@ -85,13 +84,12 @@ the results begin with the following, on `2022-10-21`:
 ```text
 Explanation of this Tasks code block query:
 
-AND (All of):
-  not done
+not done
 
-  (due before tomorrow) AND (is recurring) =>
-    AND (All of):
-      due date is before 2022-10-22 (Saturday 22nd October 2022)
-      is recurring
+(due before tomorrow) AND (is recurring) =>
+  AND (All of):
+    due date is before 2022-10-22 (Saturday 22nd October 2022)
+    is recurring
 ```
 <!-- endSnippet -->
 
@@ -112,12 +110,11 @@ the results begin with the following, on `2022-10-21`:
 ```text
 Explanation of this Tasks code block query:
 
-AND (All of):
-  (description includes 1) AND (description includes 2) AND (description includes 3) AND (description includes 4) =>
-    AND (All of):
-      description includes 1
-      description includes 2
-      description includes 3
-      description includes 4
+(description includes 1) AND (description includes 2) AND (description includes 3) AND (description includes 4) =>
+  AND (All of):
+    description includes 1
+    description includes 2
+    description includes 3
+    description includes 4
 ```
 <!-- endSnippet -->
