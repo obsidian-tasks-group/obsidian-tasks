@@ -28,6 +28,14 @@ explain
 limit 1
 ```
 
+## One filter
+
+```tasks
+explain
+starts before today
+limit 1
+```
+
 ## No filters
 
 ```tasks
