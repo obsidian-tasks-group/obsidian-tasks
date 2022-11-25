@@ -210,9 +210,8 @@ describe('explain boolean queries', () => {
         const filterOrMessage = new BooleanField().createFilterOrErrorMessage(instruction);
         expect(filterOrMessage.filter?.explanation.asString()).toMatchInlineSnapshot(`
             "AND (All of):
-              AND (All of):
-                description includes 1
-                description includes 2
+              description includes 1
+              description includes 2
               description includes 3"
         `);
     });
@@ -223,21 +222,14 @@ describe('explain boolean queries', () => {
         const filterOrMessage = new BooleanField().createFilterOrErrorMessage(instruction);
         expect(filterOrMessage.filter?.explanation.asString()).toMatchInlineSnapshot(`
             "AND (All of):
-              AND (All of):
-                AND (All of):
-                  AND (All of):
-                    AND (All of):
-                      AND (All of):
-                        AND (All of):
-                          AND (All of):
-                            description includes 1
-                            description includes 2
-                          description includes 3
-                        description includes 4
-                      description includes 5
-                    description includes 6
-                  description includes 7
-                description includes 8
+              description includes 1
+              description includes 2
+              description includes 3
+              description includes 4
+              description includes 5
+              description includes 6
+              description includes 7
+              description includes 8
               description includes 9"
         `);
     });
@@ -247,9 +239,8 @@ describe('explain boolean queries', () => {
         const filterOrMessage = new BooleanField().createFilterOrErrorMessage(instruction);
         expect(filterOrMessage.filter?.explanation.asString()).toMatchInlineSnapshot(`
             "AND (All of):
-              AND (All of):
-                description includes a
-                description includes b
+              description includes a
+              description includes b
               description includes c"
         `);
     });
@@ -297,14 +288,12 @@ describe('explain boolean queries', () => {
         expect(filterOrMessage.filter?.explanation.asString()).toMatchInlineSnapshot(`
             "OR (At least one of):
               AND (All of):
-                AND (All of):
-                  description includes a
-                  description includes b
+                description includes a
+                description includes b
                 description includes c
               AND (All of):
-                AND (All of):
-                  description includes d
-                  description includes e
+                description includes d
+                description includes e
                 description includes f"
         `);
     });

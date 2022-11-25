@@ -3,9 +3,7 @@ Explanation of this Tasks code block query:
 AND (All of):
   (description includes 1) AND (description includes 2) AND (description includes 3) AND (description includes 4) =>
     AND (All of):
-      AND (All of):
-        AND (All of):
-          description includes 1
-          description includes 2
-        description includes 3
+      description includes 1
+      description includes 2
+      description includes 3
       description includes 4
