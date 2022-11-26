@@ -4,6 +4,7 @@
 import moment from 'moment';
 import { Query } from '../src/Query/Query';
 import { Priority, Status, Task } from '../src/Task';
+import { resetSettings, updateSettings } from '../src/Config/Settings';
 import { createTasksFromMarkdown, fromLine } from './TestHelpers';
 import { shouldSupportFiltering } from './TestingTools/FilterTestHelpers';
 import type { FilteringCase } from './TestingTools/FilterTestHelpers';
@@ -763,35 +764,95 @@ describe('Query', () => {
     });
 
     describe('explanations', () => {
+        afterEach(() => {
+            resetSettings();
+        });
+
         it('should explain 0 filters', () => {
             const input = '';
             const query = new Query({ source: input });
 
             const expectedDisplayText = 'No filters supplied. All tasks will match the query.';
-            expect(query.explainQuery()).toEqual(expectedDisplayText);
+            expect(query.explainQueryWithoutIntroduction()).toEqual(expectedDisplayText);
+        });
+
+        it('should explain 0 filters with global filter', () => {
+            updateSettings({ globalFilter: '#task' });
+
+            const input = '';
+            const query = new Query({ source: input });
+
+            const expectedDisplayText = `Only tasks containing the global filter '#task'.
+
+No filters supplied. All tasks will match the query.`;
+            expect(query.explainQueryWithoutIntroduction()).toEqual(expectedDisplayText);
         });
 
         it('should explain 1 filter', () => {
             const input = 'description includes hello';
             const query = new Query({ source: input });
 
-            const expectedDisplayText = `All of:
-  description includes hello
+            const expectedDisplayText = `description includes hello
 `;
-            expect(query.explainQuery()).toEqual(expectedDisplayText);
+            expect(query.explainQueryWithoutIntroduction()).toEqual(expectedDisplayText);
+        });
+
+        it('should explain 1 filter', () => {
+            updateSettings({ globalFilter: '#task' });
+
+            const input = 'description includes hello';
+            const query = new Query({ source: input });
+
+            const expectedDisplayText = `Only tasks containing the global filter '#task'.
+
+description includes hello
+`;
+            expect(query.explainQueryWithoutIntroduction()).toEqual(expectedDisplayText);
         });
 
         it('should explain 2 filters', () => {
             const input = 'description includes hello\ndue 2012-01-23';
             const query = new Query({ source: input });
 
-            const expectedDisplayText = `All of:
-  description includes hello
+            const expectedDisplayText = `description includes hello
 
-  due 2012-01-23 =>
-    due date is on 2012-01-23 (Monday 23rd January 2012)
+due 2012-01-23 =>
+  due date is on 2012-01-23 (Monday 23rd January 2012)
 `;
-            expect(query.explainQuery()).toEqual(expectedDisplayText);
+            expect(query.explainQueryWithoutIntroduction()).toEqual(expectedDisplayText);
+        });
+
+        it('should explain limit 5', () => {
+            const input = 'limit 5';
+            const query = new Query({ source: input });
+
+            const expectedDisplayText = `No filters supplied. All tasks will match the query.
+
+At most 5 tasks.
+`;
+            expect(query.explainQueryWithoutIntroduction()).toEqual(expectedDisplayText);
+        });
+
+        it('should explain limit 1', () => {
+            const input = 'limit 1';
+            const query = new Query({ source: input });
+
+            const expectedDisplayText = `No filters supplied. All tasks will match the query.
+
+At most 1 task.
+`;
+            expect(query.explainQueryWithoutIntroduction()).toEqual(expectedDisplayText);
+        });
+
+        it('should explain limit 0', () => {
+            const input = 'limit 0';
+            const query = new Query({ source: input });
+
+            const expectedDisplayText = `No filters supplied. All tasks will match the query.
+
+At most 0 tasks.
+`;
+            expect(query.explainQueryWithoutIntroduction()).toEqual(expectedDisplayText);
         });
     });
 

@@ -27,6 +27,16 @@ export class Filter {
         this.explanation = explanation;
         this.filterFunction = filterFunction;
     }
+
+    public explainFilterIndented(indent: string) {
+        const explanation = this.explanation;
+        const unindentedExplanation = explanation.asString();
+        if (unindentedExplanation === this.instruction) {
+            return `${indent}${this.instruction}\n`;
+        } else {
+            return `${indent}${this.instruction} =>\n${explanation.asString('  ')}\n`;
+        }
+    }
 }
 
 /**

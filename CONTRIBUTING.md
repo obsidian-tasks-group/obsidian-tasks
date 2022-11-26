@@ -285,55 +285,39 @@ in some text or an object to be tested.
 Example test in `ApprovalTestsDemo.test`, that saves its input in a text file:
 
 <!-- snippet: approval-test-as-text -->
-<a id='snippet-approval-test-as-text'></a>
-
 ```ts
 test('SimpleVerify', () => {
     verify('Hello From Approvals');
 });
 ```
-
-<sup><a href='https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/TestingTools/ApprovalTestsDemo.test.ts#L4-L8' title='Snippet source file'>snippet source</a> | <a href='#snippet-approval-test-as-text' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
 The corresponding `approved` file, named `ApprovalTestsDemo.test.ApprovalTests_SimpleVerify.approved.txt`:
 
 <!-- snippet: ApprovalTestsDemo.test.ApprovalTests_SimpleVerify.approved.txt -->
-<a id='snippet-ApprovalTestsDemo.test.ApprovalTests_SimpleVerify.approved.txt'></a>
-
 ```txt
 Hello From Approvals
 ```
-
-<sup><a href='https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/TestingTools/ApprovalTestsDemo.test.ApprovalTests_SimpleVerify.approved.txt#L1-L1' title='Snippet source file'>snippet source</a> | <a href='#snippet-ApprovalTestsDemo.test.ApprovalTests_SimpleVerify.approved.txt' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
 <!-- snippet: approval-test-as-json -->
-<a id='snippet-approval-test-as-json'></a>
-
 ```ts
 test('JsonVerify', () => {
     const data = { name: 'fred', age: 30 };
     verifyAsJson(data);
 });
 ```
-
-<sup><a href='https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/TestingTools/ApprovalTestsDemo.test.ts#L10-L15' title='Snippet source file'>snippet source</a> | <a href='#snippet-approval-test-as-json' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
 The corresponding `approved` file, named `ApprovalTestsDemo.test.ApprovalTests_JsonVerify.approved.json`:
 
 <!-- snippet: ApprovalTestsDemo.test.ApprovalTests_JsonVerify.approved.json -->
-<a id='snippet-ApprovalTestsDemo.test.ApprovalTests_JsonVerify.approved.json'></a>
-
 ```json
 {
   "name": "fred",
   "age": 30
 }
 ```
-
-<sup><a href='https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/TestingTools/ApprovalTestsDemo.test.ApprovalTests_JsonVerify.approved.json#L1-L4' title='Snippet source file'>snippet source</a> | <a href='#snippet-ApprovalTestsDemo.test.ApprovalTests_JsonVerify.approved.json' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
 </details>

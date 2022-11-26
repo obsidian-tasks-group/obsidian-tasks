@@ -175,31 +175,30 @@ export class BooleanField extends Field {
      */
     private constructExplanation(postfixExpression: PostfixExpression): Explanation {
         // For an explanation of the code, see the JSdoc and comments of filterTaskWithParsedQuery()
-        const booleanStack: Explanation[] = [];
-        // TODO Review comments
+        const explanationStack: Explanation[] = [];
         for (const token of postfixExpression) {
             if (token.name === 'IDENTIFIER') {
                 if (token.value == null) throw Error('null token value'); // This should not happen
                 const filter = this.subFields[token.value.trim()];
-                booleanStack.push(filter.explanation);
+                explanationStack.push(filter.explanation);
             } else if (token.name === 'OPERATOR') {
                 // To evaluate an operator we need to pop the required number of items from the boolean stack,
                 // do the logical evaluation and push back the result
                 if (token.value === 'NOT') {
-                    const arg1 = booleanStack.pop();
-                    booleanStack.push(Explanation.booleanNot([arg1!]));
+                    const arg1 = explanationStack.pop();
+                    explanationStack.push(Explanation.booleanNot([arg1!]));
                 } else if (token.value === 'OR') {
-                    const arg2 = booleanStack.pop();
-                    const arg1 = booleanStack.pop();
-                    booleanStack.push(Explanation.booleanOr([arg1!, arg2!]));
+                    const arg2 = explanationStack.pop();
+                    const arg1 = explanationStack.pop();
+                    explanationStack.push(Explanation.booleanOr([arg1!, arg2!]));
                 } else if (token.value === 'AND') {
-                    const arg2 = booleanStack.pop();
-                    const arg1 = booleanStack.pop();
-                    booleanStack.push(Explanation.booleanAnd([arg1!, arg2!]));
+                    const arg2 = explanationStack.pop();
+                    const arg1 = explanationStack.pop();
+                    explanationStack.push(Explanation.booleanAnd([arg1!, arg2!]));
                 } else if (token.value === 'XOR') {
-                    const arg2 = booleanStack.pop();
-                    const arg1 = booleanStack.pop();
-                    booleanStack.push(Explanation.booleanXor([arg1!, arg2!]));
+                    const arg2 = explanationStack.pop();
+                    const arg1 = explanationStack.pop();
+                    explanationStack.push(Explanation.booleanXor([arg1!, arg2!]));
                 } else {
                     throw Error('Unsupported operator: ' + token.value);
                 }
@@ -208,6 +207,6 @@ export class BooleanField extends Field {
             }
         }
         // Eventually the Explanation is the only item left in the boolean stack
-        return booleanStack[0];
+        return explanationStack[0];
     }
 }
