@@ -48,7 +48,7 @@ The tasks below should look like one of the images in the [Alternate Checkboxes 
 ## Rendered in Tasks results block
 
 ```tasks
-path includes Custom Statuses
+path includes SlrVb's Alternative Checkboxes
 group by filename
 short mode
 ```
