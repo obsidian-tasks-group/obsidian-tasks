@@ -29,7 +29,7 @@ The `explain` instruction adds some extra output at the start of the search resu
 
 This has a number of benefits:
 
-- It is easy to understand data-based-filters:
+- It is easy to understand date-based-filters:
   - Any dates in filters are expanded, to show the actual dates used in the search.
 - Boolean query logic is clearer.
   - Combinations of queries (via `AND`, `OR`, `NOT` etc)  can be seen more clearly.
