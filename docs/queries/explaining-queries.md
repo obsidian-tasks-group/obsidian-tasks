@@ -38,7 +38,7 @@ This has a number of benefits:
 
 ### Dates in filters are expanded
 
-For example, when the following text is placed in a tasks query block and viewed in Reading or Live Preview modes:
+For example, when the following text is placed in a tasks query block:
 
 <!-- snippet: DocsSamplesForExplain.test.explain_expands dates.approved.query.text -->
 ```text
@@ -66,9 +66,13 @@ due before tomorrow =>
 ```
 <!-- endSnippet -->
 
+Note how it shows the dates being searched for very clearly, including the day of the week.
+
+It also shows that `starts` searches also match tasks with not start date.
+
 ### Boolean combinations are displayed
 
-For example, when the following text is placed in a tasks query block and viewed in Reading or Live Preview modes:
+For example, when the following text is placed in a tasks query block:
 
 <!-- snippet: DocsSamplesForExplain.test.explain_boolean combinations.approved.query.text -->
 ```text
@@ -95,7 +99,7 @@ not done
 
 ### More complex combinations are displayed
 
-For example, when the following text is placed in a tasks query block and viewed in Reading or Live Preview modes:
+For example, when the following text is placed in a tasks query block:
 
 <!-- snippet: DocsSamplesForExplain.test.explain_nested boolean combinations.approved.query.text -->
 ```text
