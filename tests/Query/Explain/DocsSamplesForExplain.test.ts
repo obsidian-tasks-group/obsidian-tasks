@@ -32,6 +32,8 @@ function verifyExplanation(instructions: string, options?: Options): void {
     const query = new Query({ source: instructions });
     const explanation = query.explainQuery();
 
+    expect(query.error).toBeUndefined();
+
     options = options || new Options();
     options = options.forFile().withFileExtention('explanation.text');
     verify(explanation, options);
@@ -76,10 +78,10 @@ not done
         // Arrange
         const instructions: string = `
 explain
-(description includes 1) AND (description includes 2) AND (description includes 3) AND (description includes 4)`;
+( (description includes 1) AND (description includes 2) AND (description includes 3) ) OR ( (description includes 5) AND (description includes 6) AND (description includes 7) ) AND NOT (description includes 7)`;
 
         // Act, Assert
-        verifyQuery(instructions);
         verifyExplanation(instructions);
+        verifyQuery(instructions);
     });
 });
