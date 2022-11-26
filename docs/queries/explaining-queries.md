@@ -118,3 +118,24 @@ Explanation of this Tasks code block query:
     description includes 4
 ```
 <!-- endSnippet -->
+
+## Styling explain results
+
+### Default style
+
+For readability, explanations are shown in a fixed-width font (a `PRE` block), and if the test is too wide for the screen a horizontal scrollbar is shown. Otherwise, testing showed that the explanations would be unusable on small-screen devices.
+
+### Customizing the results
+
+Using a [CSS snippet in Obsidian](https://help.obsidian.md/How+to/Add+custom+styles#Use+Themes+and+or+CSS+snippets), we can change the appearance of the explanation block.
+
+For example, [this CSS snippet](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/gh-pages/resources/sample_vaults/Tasks-Demo/.obsidian/snippets/tasks-plugin-explain-text-blue.css) `tasks-plugin-explain-text-blue.css` makes the explanation block text blue:
+
+<!-- snippet: resources/sample_vaults/Tasks-Demo/.obsidian/snippets/tasks-plugin-explain-text-blue.css -->
+```css
+/* Make the Tasks plugin's 'explain' output stand out in blue */
+.plugin-tasks-query-explanation {
+    color: var(--color-blue);
+}
+```
+<!-- endSnippet -->
