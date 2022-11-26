@@ -33,6 +33,8 @@ This has a number of benefits:
   - Any dates in filters are expanded, to show the actual dates used in the search.
 - Boolean query logic is clearer.
   - Combinations of queries (via `AND`, `OR`, `NOT` etc)  can be seen more clearly.
+- If there is a [global filter]({{ site.baseurl }}{% link getting-started/global-filter.md %}) enabled, it is included in the explanation.
+  - This often explains why tasks are missing from results.
 
 ## Examples
 
