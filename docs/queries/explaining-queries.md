@@ -136,7 +136,7 @@ Explanation of this Tasks code block query:
 
 ### Default style
 
-For readability, explanations are shown in a fixed-width font (a `PRE` block), and if the test is too wide for the screen a horizontal scrollbar is shown. Otherwise, testing showed that the explanations would be unusable on small-screen devices.
+For readability, explanations are shown in a fixed-width font (a `PRE` block), and if the text is too wide for the screen a horizontal scrollbar is shown. Otherwise, testing showed that the explanations would be unusable on small-screen devices.
 
 ### Customizing the results
 
