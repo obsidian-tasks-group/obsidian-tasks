@@ -22,5 +22,5 @@ following styles are available.
 | task-list-item-checkbox        | This is applied to the INPUT element for the task.                                                              |
 | tasks-group-heading            | This is applied to H4, H5 and H6 group headings                                                                 |
 
-> `tasks-group-heading` was introduced in Tasks 1.6.0.
+> `tasks-group-heading` was introduced in Tasks 1.6.0.<br>
 > `plugin-tasks-query-explanation` was introduced in Tasks 1.19.0.
