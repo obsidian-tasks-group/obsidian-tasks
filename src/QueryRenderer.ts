@@ -171,7 +171,7 @@ class QueryRenderChild extends MarkdownRenderChild {
 
         const explanationsBlock = content.createEl('pre');
         explanationsBlock.addClasses(['plugin-tasks-query-explanation']);
-        explanationsBlock.setText('Explanation of query:\n\n' + explanationAsString);
+        explanationsBlock.setText(explanationAsString);
         content.appendChild(explanationsBlock);
     }
 

@@ -1,3 +1,4 @@
-.plugin-tasks-query-explanation{
+/* Make the Tasks plugin's 'explain' output stand out in blue */
+.plugin-tasks-query-explanation {
     color: var(--color-blue);
 }

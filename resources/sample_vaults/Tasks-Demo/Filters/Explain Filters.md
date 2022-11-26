@@ -32,3 +32,26 @@ explain
 (description includes 1) AND (description includes 2) AND (description includes 3) AND (description includes 4)
 limit 1
 ```
+
+## Nested Boolean logic with NOT
+
+```tasks
+explain
+NOT ( (description includes 1) AND (description includes 2) AND (description includes 3) AND (description includes 4) )
+limit 1
+```
+
+## One filter
+
+```tasks
+explain
+starts before today
+limit 1
+```
+
+## No filters
+
+```tasks
+explain
+limit 1
+```

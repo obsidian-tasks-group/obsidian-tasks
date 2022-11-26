@@ -1,6 +1,7 @@
 import { LayoutOptions } from '../LayoutOptions';
 import type { Task } from '../Task';
 import type { IQuery } from '../IQuery';
+import { getSettings } from '../Config/Settings';
 import { Sort } from './Sort';
 import type { TaskGroups } from './TaskGroups';
 import { parseFilter } from './FilterParser';
@@ -109,27 +110,35 @@ export class Query implements IQuery {
     }
 
     public explainQuery(): string {
-        // TODO Include limit, if any
-        // TODO Include global filter, if any
-        // TODO State today's date (and maybe weekday)
+        return 'Explanation of this Tasks code block query:\n\n' + this.explainQueryWithoutIntroduction();
+    }
+
+    public explainQueryWithoutIntroduction(): string {
+        let result = '';
+
+        const { globalFilter } = getSettings();
+        if (globalFilter.length !== 0) {
+            result += `Only tasks containing the global filter '${globalFilter}'.\n\n`;
+        }
 
         const numberOfFilters = this.filters.length;
         if (numberOfFilters === 0) {
-            return 'No filters supplied. All tasks will match the query.';
-        }
-
-        let result = 'All of:\n';
-        for (let i = 0; i < numberOfFilters; i++) {
-            if (i > 0) result += '\n';
-            const filter = this.filters[i];
-            const explanation = filter.explanation;
-            const unindentedExplanation = explanation.asString();
-            if (unindentedExplanation === filter.instruction) {
-                result += `  ${filter.instruction}\n`;
-            } else {
-                result += `  ${filter.instruction} =>\n${explanation.asString('    ')}\n`;
+            result += 'No filters supplied. All tasks will match the query.';
+        } else {
+            for (let i = 0; i < numberOfFilters; i++) {
+                if (i > 0) result += '\n';
+                result += this.filters[i].explainFilterIndented('');
             }
         }
+
+        if (this._limit !== undefined) {
+            result += `\n\nAt most ${this._limit} task`;
+            if (this._limit !== 1) {
+                result += 's';
+            }
+            result += '.\n';
+        }
+
         return result;
     }
 

@@ -7,11 +7,13 @@
  * Later, more human-readable descriptions will be generated.
  */
 export class Explanation {
-    public description: string;
-    public children: Explanation[];
+    public readonly description: string;
+    public readonly symbol: string; // AND, OR, NOT, XOR
+    public readonly children: Explanation[];
 
-    constructor(description: string, children: Explanation[] = []) {
+    constructor(description: string, children: Explanation[] = [], symbol: string = '') {
         this.description = description;
+        this.symbol = symbol;
         this.children = children;
     }
 
@@ -20,7 +22,7 @@ export class Explanation {
      * @param children
      */
     public static booleanAnd(children: Explanation[]) {
-        return new Explanation('All of', children);
+        return this.combineOrCreateExplanation('All of', children, 'AND');
     }
 
     /**
@@ -28,7 +30,7 @@ export class Explanation {
      * @param children
      */
     public static booleanOr(children: Explanation[]) {
-        return new Explanation('At least one of', children);
+        return this.combineOrCreateExplanation('At least one of', children, 'OR');
     }
 
     /**
@@ -36,7 +38,7 @@ export class Explanation {
      * @param children
      */
     public static booleanNot(children: Explanation[]) {
-        return new Explanation('None of', children);
+        return new Explanation('None of', children, 'NOT');
     }
 
     /**
@@ -44,7 +46,7 @@ export class Explanation {
      * @param children
      */
     public static booleanXor(children: Explanation[]) {
-        return new Explanation('Exactly one of', children);
+        return new Explanation('Exactly one of', children, 'XOR');
     }
 
     /**
@@ -55,18 +57,34 @@ export class Explanation {
      * @param currentIndentation - This is an implementation detail. Users can ignore it.
      */
     public asString(currentIndentation: string = '') {
-        let result = currentIndentation + this.description;
         if (this.children.length == 0) {
-            // No children, so just return
-            return result;
+            return currentIndentation + this.description;
         }
 
         // We have children, so concatenate them together
+        let result = currentIndentation + `${this.symbol}`;
+        if (this.children.length > 1) {
+            // The descriptions like 'All of', 'None of' are one really meaningful
+            // if there is more than one filter. Otherwise, they are just confusing.
+            result += ` (${this.description})`;
+        }
         result += ':';
         const newIndentation = currentIndentation + '  ';
         for (let i = 0; i < this.children.length; i++) {
             result += `\n${this.children[i].asString(newIndentation)}`;
         }
         return result;
+    }
+
+    private static combineOrCreateExplanation(description: string, children: Explanation[], symbol: string) {
+        if (children.length === 2) {
+            const child0 = children[0];
+            const child1 = children[1];
+            if (child0.symbol === symbol && child1.symbol === '') {
+                child0.children.push(child1);
+                return child0;
+            }
+        }
+        return new Explanation(description, children, symbol);
     }
 }
