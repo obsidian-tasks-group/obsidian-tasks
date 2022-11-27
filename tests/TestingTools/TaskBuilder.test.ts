@@ -1,4 +1,4 @@
-import { Status } from '../../src/Task';
+import { Status, Task } from '../../src/Task';
 import { TaskBuilder } from './TaskBuilder';
 
 export {};
@@ -11,36 +11,34 @@ describe('TaskBuilder', () => {
     });
 
     describe('status and originalStatusCharacter', () => {
+        function checkStatuses(task: Task, status: Status, originalStatusCharacter: string, description: string) {
+            expect(task.status).toStrictEqual(status);
+            expect(task.originalStatusCharacter).toStrictEqual(originalStatusCharacter);
+            expect(task.toFileLineString()).toStrictEqual(description);
+        }
+
         it('should set custom status character when setting status TODO', () => {
             const builder = new TaskBuilder().status(Status.TODO);
             const task = builder.build();
-            expect(task.status).toStrictEqual(Status.TODO);
-            expect(task.originalStatusCharacter).toStrictEqual(' ');
-            expect(task.toFileLineString()).toStrictEqual('- [ ] my description');
+            checkStatuses(task, Status.TODO, ' ', '- [ ] my description');
         });
 
         it('should set custom status character when setting status DONE', () => {
             const builder = new TaskBuilder().status(Status.DONE);
             const task = builder.build();
-            expect(task.status).toStrictEqual(Status.DONE);
-            expect(task.originalStatusCharacter).toStrictEqual('x');
-            expect(task.toFileLineString()).toStrictEqual('- [x] my description');
+            checkStatuses(task, Status.DONE, 'x', '- [x] my description');
         });
 
         it('should not change status when changing originalStatusCharacter to TODO', () => {
             const builder = new TaskBuilder().status(Status.DONE).originalStatusCharacter(' ');
             const task = builder.build();
-            expect(task.status).toStrictEqual(Status.DONE);
-            expect(task.originalStatusCharacter).toStrictEqual(' ');
-            expect(task.toFileLineString()).toStrictEqual('- [ ] my description');
+            checkStatuses(task, Status.DONE, ' ', '- [ ] my description');
         });
 
         it('should not change status when changing originalStatusCharacter to Half Done', () => {
             const builder = new TaskBuilder().status(Status.DONE).originalStatusCharacter('/');
             const task = builder.build();
-            expect(task.status).toStrictEqual(Status.DONE);
-            expect(task.originalStatusCharacter).toStrictEqual('/');
-            expect(task.toFileLineString()).toStrictEqual('- [/] my description');
+            checkStatuses(task, Status.DONE, '/', '- [/] my description');
         });
     });
 });
