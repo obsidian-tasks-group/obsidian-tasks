@@ -17,13 +17,13 @@ describe('TaskBuilder', () => {
             expect(task.toFileLineString()).toStrictEqual(description);
         }
 
-        it('should set custom status character when setting status TODO', () => {
+        it('should set originalStatusCharacter when setting status TODO', () => {
             const builder = new TaskBuilder().status(Status.TODO);
             const task = builder.build();
             checkStatuses(task, Status.TODO, ' ', '- [ ] my description');
         });
 
-        it('should set custom status character when setting status DONE', () => {
+        it('should set originalStatusCharacter when setting status DONE', () => {
             const builder = new TaskBuilder().status(Status.DONE);
             const task = builder.build();
             checkStatuses(task, Status.DONE, 'x', '- [x] my description');
