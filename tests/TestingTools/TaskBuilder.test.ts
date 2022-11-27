@@ -18,13 +18,13 @@ describe('TaskBuilder', () => {
         }
 
         it('should set originalStatusCharacter when setting status TODO', () => {
-            const builder = new TaskBuilder().status(Status.TODO);
+            const builder = new TaskBuilder().originalStatusCharacter('?').status(Status.TODO);
             const task = builder.build();
             checkStatuses(task, Status.TODO, ' ', '- [ ] my description');
         });
 
         it('should set originalStatusCharacter when setting status DONE', () => {
-            const builder = new TaskBuilder().status(Status.DONE);
+            const builder = new TaskBuilder().originalStatusCharacter('?').status(Status.DONE);
             const task = builder.build();
             checkStatuses(task, Status.DONE, 'x', '- [x] my description');
         });
