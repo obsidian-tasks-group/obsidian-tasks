@@ -79,8 +79,15 @@ export class TaskBuilder {
         });
     }
 
+    /**
+     * Set the status.
+     *
+     * This also sets {@link originalStatusCharacter}
+     * @param status
+     */
     public status(status: Status): TaskBuilder {
         this._status = status;
+        this._originalStatusCharacter = status === Status.TODO ? ' ' : 'x';
         return this;
     }
 
@@ -119,6 +126,13 @@ export class TaskBuilder {
         return this;
     }
 
+    /**
+     * Set the originalStatusCharacter.
+     *
+     * This does NOT set {@link status}, so call that method before calling this one,
+     * if you want to use a character other than ' ' or 'x'.
+     * @param originalStatusCharacter
+     */
     public originalStatusCharacter(originalStatusCharacter: string): TaskBuilder {
         this._originalStatusCharacter = originalStatusCharacter;
         return this;
