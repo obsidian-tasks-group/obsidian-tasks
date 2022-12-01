@@ -35,7 +35,7 @@ describe('parsing', () => {
 
     it('parses a task from a line (numbered)', () => {
         // Arrange
-        const line = '1. [x] this is a done task 🗓 2021-09-12 ✅ 2021-06-20';
+        const line = '1. [x] this is a done task';
 
         // Act
         const task = fromLine({
@@ -46,16 +46,12 @@ describe('parsing', () => {
         expect(task).not.toBeNull();
         expect(task!.description).toEqual('this is a done task');
         expect(task!.status).toStrictEqual(Status.DONE);
-        expect(task!.dueDate).not.toBeNull();
-        expect(task!.dueDate!.isSame(moment('2021-09-12', 'YYYY-MM-DD'))).toStrictEqual(true);
-        expect(task!.doneDate).not.toBeNull();
-        expect(task!.doneDate!.isSame(moment('2021-06-20', 'YYYY-MM-DD'))).toStrictEqual(true);
         expect(task!.originalMarkdown).toStrictEqual(line);
     });
 
     it('parses a task from a line (big number)', () => {
         // Arrange
-        const line = '909999. [x] this is a done task 🗓 2021-09-12 ✅ 2021-06-20';
+        const line = '909999. [ ] this is a todo task';
 
         // Act
         const task = fromLine({
@@ -64,12 +60,8 @@ describe('parsing', () => {
 
         // Assert
         expect(task).not.toBeNull();
-        expect(task!.description).toEqual('this is a done task');
-        expect(task!.status).toStrictEqual(Status.DONE);
-        expect(task!.dueDate).not.toBeNull();
-        expect(task!.dueDate!.isSame(moment('2021-09-12', 'YYYY-MM-DD'))).toStrictEqual(true);
-        expect(task!.doneDate).not.toBeNull();
-        expect(task!.doneDate!.isSame(moment('2021-06-20', 'YYYY-MM-DD'))).toStrictEqual(true);
+        expect(task!.description).toEqual('this is a todo task');
+        expect(task!.status).toStrictEqual(Status.TODO);
         expect(task!.originalMarkdown).toStrictEqual(line);
     });
 
