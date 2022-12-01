@@ -67,6 +67,24 @@ describe('priority below', () => {
     });
 });
 
+describe('priority is not', () => {
+    it('priority is not none', () => {
+        const filter = 'priority is not none';
+        testTaskFilterForTaskWithPriority(filter, Priority.Low, true);
+        testTaskFilterForTaskWithPriority(filter, Priority.None, false);
+        testTaskFilterForTaskWithPriority(filter, Priority.Medium, true);
+        testTaskFilterForTaskWithPriority(filter, Priority.High, true);
+    });
+
+    it('priority is not high', () => {
+        const filter = 'priority is not high';
+        testTaskFilterForTaskWithPriority(filter, Priority.Low, true);
+        testTaskFilterForTaskWithPriority(filter, Priority.None, true);
+        testTaskFilterForTaskWithPriority(filter, Priority.Medium, true);
+        testTaskFilterForTaskWithPriority(filter, Priority.High, false);
+    });
+});
+
 describe('priority error cases', () => {
     it('priority is something', () => {
         const field = new PriorityField();

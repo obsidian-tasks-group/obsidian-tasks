@@ -4,7 +4,7 @@ import { Field } from './Field';
 import { Filter, FilterOrErrorMessage } from './Filter';
 
 export class PriorityField extends Field {
-    private static readonly priorityRegexp = /^priority (is )?(above|below)? ?(low|none|medium|high)/;
+    private static readonly priorityRegexp = /^priority (is )?(above|below|not)? ?(low|none|medium|high)/;
 
     createFilterOrErrorMessage(line: string): FilterOrErrorMessage {
         const result = new FilterOrErrorMessage(line);
@@ -39,6 +39,8 @@ export class PriorityField extends Field {
                 filter = (task: Task) => (task.priority ? task.priority.localeCompare(filterPriority!) < 0 : false);
             } else if (priorityMatch[2] === 'below') {
                 filter = (task: Task) => (task.priority ? task.priority.localeCompare(filterPriority!) > 0 : false);
+            } else if (priorityMatch[2] === 'not') {
+                filter = (task: Task) => (task.priority ? task.priority !== filterPriority : false);
             } else {
                 filter = (task: Task) => (task.priority ? task.priority === filterPriority : false);
                 explanation = `${this.fieldName()} is ${filterPriorityString}`;
