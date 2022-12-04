@@ -33,6 +33,38 @@ describe('parsing', () => {
         expect(task!.originalMarkdown).toStrictEqual(line);
     });
 
+    it('parses a task from a line (numbered)', () => {
+        // Arrange
+        const line = '1. [x] this is a done task';
+
+        // Act
+        const task = fromLine({
+            line,
+        });
+
+        // Assert
+        expect(task).not.toBeNull();
+        expect(task!.description).toEqual('this is a done task');
+        expect(task!.status).toStrictEqual(Status.DONE);
+        expect(task!.originalMarkdown).toStrictEqual(line);
+    });
+
+    it('parses a task from a line (big number)', () => {
+        // Arrange
+        const line = '909999. [ ] this is a todo task';
+
+        // Act
+        const task = fromLine({
+            line,
+        });
+
+        // Assert
+        expect(task).not.toBeNull();
+        expect(task!.description).toEqual('this is a todo task');
+        expect(task!.status).toStrictEqual(Status.TODO);
+        expect(task!.originalMarkdown).toStrictEqual(line);
+    });
+
     it('returns null when task does not have global filter', () => {
         // Arrange
         updateSettings({ globalFilter: '#task' });
