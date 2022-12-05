@@ -68,20 +68,17 @@ describe('priority below', () => {
 });
 
 describe('priority is not', () => {
-    it('priority is not none', () => {
-        const filter = 'priority is not none';
-        testTaskFilterForTaskWithPriority(filter, Priority.Low, true);
-        testTaskFilterForTaskWithPriority(filter, Priority.None, false);
-        testTaskFilterForTaskWithPriority(filter, Priority.Medium, true);
-        testTaskFilterForTaskWithPriority(filter, Priority.High, true);
-    });
-
-    it('priority is not high', () => {
-        const filter = 'priority is not high';
-        testTaskFilterForTaskWithPriority(filter, Priority.Low, true);
-        testTaskFilterForTaskWithPriority(filter, Priority.None, true);
-        testTaskFilterForTaskWithPriority(filter, Priority.Medium, true);
-        testTaskFilterForTaskWithPriority(filter, Priority.High, false);
+    it.each([
+        ['low', Priority.Low, false],
+        ['low', Priority.None, true],
+        ['none', Priority.None, false],
+        ['none', Priority.Medium, true],
+        ['medium', Priority.None, true],
+        ['medium', Priority.Medium, false],
+        ['high', Priority.Medium, true],
+        ['high', Priority.High, false],
+    ])('priority is not %s (with %s)', (filter: string, input: Priority, expected: boolean) => {
+        testTaskFilterForTaskWithPriority(`priority is not ${filter}`, input, expected);
     });
 });
 
