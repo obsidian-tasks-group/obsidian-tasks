@@ -35,15 +35,19 @@ export class PriorityField extends Field {
 
             let explanation = line;
             let filter;
-            if (priorityMatch[2] === 'above') {
-                filter = (task: Task) => task.priority.localeCompare(filterPriority!) < 0;
-            } else if (priorityMatch[2] === 'below') {
-                filter = (task: Task) => task.priority.localeCompare(filterPriority!) > 0;
-            } else if (priorityMatch[2] === 'not') {
-                filter = (task: Task) => task.priority !== filterPriority;
-            } else {
-                filter = (task: Task) => task.priority === filterPriority;
-                explanation = `${this.fieldName()} is ${filterPriorityString}`;
+            switch (priorityMatch[2]) {
+                case 'above':
+                    filter = (task: Task) => task.priority.localeCompare(filterPriority!) < 0;
+                    break;
+                case 'below':
+                    filter = (task: Task) => task.priority.localeCompare(filterPriority!) > 0;
+                    break;
+                case 'not':
+                    filter = (task: Task) => task.priority !== filterPriority;
+                    break;
+                default:
+                    filter = (task: Task) => task.priority === filterPriority;
+                    explanation = `${this.fieldName()} is ${filterPriorityString}`;
             }
 
             result.filter = new Filter(line, filter, new Explanation(explanation));
