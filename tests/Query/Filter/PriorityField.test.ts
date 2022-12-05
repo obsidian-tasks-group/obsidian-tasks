@@ -78,6 +78,7 @@ describe('priority is not', () => {
         ['high', Priority.Medium, true],
         ['high', Priority.High, false],
     ])('priority is not %s (with %s)', (filter: string, input: Priority, expected: boolean) => {
+        // TODO Use name of input priority instead of
         testTaskFilterForTaskWithPriority(`priority is not ${filter}`, input, expected);
     });
 });
