@@ -87,10 +87,13 @@ describe('priority is not', () => {
 describe('priority parses various whitespace combinations', () => {
     // Not tested here: Query strips off trailing whitespace, so spaces at start
     // and end of the instruction do not need testing
-    it.each(['priority  is low', 'priority is  low'])('white space variation: "%s"', (filter: string) => {
-        const filterOrError = new PriorityField().createFilterOrErrorMessage(filter);
-        expect(filterOrError).toBeValid();
-    });
+    it.each(['priority  is low', 'priority is  low', 'priority is  above low'])(
+        'white space variation: "%s"',
+        (filter: string) => {
+            const filterOrError = new PriorityField().createFilterOrErrorMessage(filter);
+            expect(filterOrError).toBeValid();
+        },
+    );
 });
 
 describe('priority error cases', () => {
