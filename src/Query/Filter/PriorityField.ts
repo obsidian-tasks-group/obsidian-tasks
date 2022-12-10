@@ -5,8 +5,8 @@ import { Filter, FilterOrErrorMessage } from './Filter';
 
 export class PriorityField extends Field {
     // The trick in the following to manage whitespace with optional values
-    // is to capture them in Nested Capture Groups:
-    // '(leading-white-space-in-outer-capture-group(values-to-capture-are-in-inner-capture-group))
+    // is to capture them in Nested Capture Groups, like this:
+    //  (leading-white-space-in-outer-capture-group(values-to-use-are-in-inner-capture-group))
     // The capture groups are numbered in the order of their opening brackets, from left to right.
     private static readonly priorityRegexp = /^priority(\s+is)?(\s+(above|below|not))?(\s+(low|none|medium|high))$/;
 
