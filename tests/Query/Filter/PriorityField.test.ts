@@ -67,6 +67,22 @@ describe('priority below', () => {
     });
 });
 
+describe('priority is not', () => {
+    it.each([
+        ['low', Priority.Low, false],
+        ['low', Priority.None, true],
+        ['none', Priority.None, false],
+        ['none', Priority.Medium, true],
+        ['medium', Priority.None, true],
+        ['medium', Priority.Medium, false],
+        ['high', Priority.Medium, true],
+        ['high', Priority.High, false],
+    ])('priority is not %s (with %s)', (filter: string, input: Priority, expected: boolean) => {
+        // TODO Use name of input priority instead of
+        testTaskFilterForTaskWithPriority(`priority is not ${filter}`, input, expected);
+    });
+});
+
 describe('priority error cases', () => {
     it('priority is something', () => {
         const field = new PriorityField();
