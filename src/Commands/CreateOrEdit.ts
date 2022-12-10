@@ -66,6 +66,7 @@ const taskFromLine = ({ line, path }: { line: string; path: string }): Task => {
             description: '',
             path,
             indentation: '',
+            listMarker: '-',
             originalStatusCharacter: ' ',
             priority: Priority.None,
             startDate: null,
@@ -85,6 +86,7 @@ const taskFromLine = ({ line, path }: { line: string; path: string }): Task => {
     }
 
     const indentation: string = nonTaskMatch[1];
+    const listMarker = '-';
     const statusString: string = nonTaskMatch[3] ?? ' ';
     const status = statusString === ' ' ? Status.TODO : Status.DONE;
     let description: string = nonTaskMatch[4];
@@ -101,6 +103,7 @@ const taskFromLine = ({ line, path }: { line: string; path: string }): Task => {
         description,
         path,
         indentation,
+        listMarker,
         originalStatusCharacter: statusString,
         blockLink,
         priority: Priority.None,
