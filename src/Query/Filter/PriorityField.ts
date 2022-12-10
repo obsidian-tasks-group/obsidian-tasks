@@ -4,13 +4,17 @@ import { Field } from './Field';
 import { Filter, FilterOrErrorMessage } from './Filter';
 
 export class PriorityField extends Field {
-    private static readonly priorityRegexp = /^priority (is )?(above|below|not)? ?(low|none|medium|high)/;
+    // The trick in the following to manage whitespace with optional values
+    // is to capture them in Nested Capture Groups:
+    // '(leading-white-space-in-outer-capture-group(values-to-capture-are-in-inner-capture-group))
+    // The capture groups are numbered in the order of their opening brackets, from left to right.
+    private static readonly priorityRegexp = /^priority( is)?( (above|below|not))?( (low|none|medium|high))/;
 
     createFilterOrErrorMessage(line: string): FilterOrErrorMessage {
         const result = new FilterOrErrorMessage(line);
         const priorityMatch = Field.getMatch(this.filterRegExp(), line);
         if (priorityMatch !== null) {
-            const filterPriorityString = priorityMatch[3];
+            const filterPriorityString = priorityMatch[5];
             let filterPriority: Priority | null = null;
 
             switch (filterPriorityString) {
@@ -35,7 +39,7 @@ export class PriorityField extends Field {
 
             let explanation = line;
             let filter;
-            switch (priorityMatch[2]) {
+            switch (priorityMatch[3]) {
                 case 'above':
                     filter = (task: Task) => task.priority.localeCompare(filterPriority!) < 0;
                     break;
