@@ -97,7 +97,11 @@ describe('priority parses various whitespace combinations', () => {
 });
 
 describe('priority error cases', () => {
-    it.each(['priority is no-such-priority', 'priority is abovemedium'])('filter: "%s"', (input: string) => {
+    it.each([
+        'priority is no-such-priority',
+        'priority is abovemedium',
+        'priority is above medium-with-nonsense-at-end',
+    ])('filter: "%s"', (input: string) => {
         const field = new PriorityField();
         const filter = field.createFilterOrErrorMessage(input);
         expect(filter.filterFunction).toBeUndefined();

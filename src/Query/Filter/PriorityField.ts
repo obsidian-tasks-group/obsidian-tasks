@@ -8,7 +8,7 @@ export class PriorityField extends Field {
     // is to capture them in Nested Capture Groups:
     // '(leading-white-space-in-outer-capture-group(values-to-capture-are-in-inner-capture-group))
     // The capture groups are numbered in the order of their opening brackets, from left to right.
-    private static readonly priorityRegexp = /^priority(\s+is)?(\s+(above|below|not))?(\s+(low|none|medium|high))/;
+    private static readonly priorityRegexp = /^priority(\s+is)?(\s+(above|below|not))?(\s+(low|none|medium|high))$/;
 
     createFilterOrErrorMessage(line: string): FilterOrErrorMessage {
         const result = new FilterOrErrorMessage(line);
