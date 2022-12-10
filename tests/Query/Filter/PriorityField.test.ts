@@ -104,7 +104,7 @@ describe('priority error cases', () => {
         expect(filter.error).toBe('do not understand query filter (priority)');
     });
 
-    it('priority is notnone', () => {
+    it('priority is abovemedium', () => {
         const field = new PriorityField();
         const filter = field.createFilterOrErrorMessage('priority is abovemedium');
         expect(filter.filterFunction).toBeUndefined();
