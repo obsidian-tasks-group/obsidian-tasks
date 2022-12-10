@@ -3,9 +3,10 @@ import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { testFilter } from '../../TestingTools/FilterTestHelpers';
 import { PriorityField } from '../../../src/Query/Filter/PriorityField';
 
-import { toHaveExplanation } from '../../CustomMatchers/CustomMatchersForFilters';
+import { toBeValid, toHaveExplanation } from '../../CustomMatchers/CustomMatchersForFilters';
 
 expect.extend({
+    toBeValid,
     toHaveExplanation,
 });
 
@@ -80,6 +81,15 @@ describe('priority is not', () => {
     ])('priority is not %s (with %s)', (filter: string, input: Priority, expected: boolean) => {
         // TODO Use name of input priority instead of
         testTaskFilterForTaskWithPriority(`priority is not ${filter}`, input, expected);
+    });
+});
+
+describe('priority parses various whitespace combinations', () => {
+    // Not tested here: Query strips off trailing whitespace, so spaces at start
+    // and end of the instruction do not need testing
+    it.each([['priority  is low']])('white space variation: "%s"', (filter: string) => {
+        const filterOrError = new PriorityField().createFilterOrErrorMessage(filter);
+        expect(filterOrError).toBeValid();
     });
 });
 
