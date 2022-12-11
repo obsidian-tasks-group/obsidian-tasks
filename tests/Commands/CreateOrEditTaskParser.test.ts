@@ -1,27 +1,23 @@
 import { taskFromLine } from '../../src/Commands/CreateOrEditTaskParser';
 
-describe('CreateOrEditTaskParser', () => {
-    it('should process a valid Tasks task', () => {
-        const line = '- [ ] Hello World';
+describe('CreateOrEditTaskParser - testing edited task if line is saved unchanged', () => {
+    it.each([
+        [
+            '- [ ] Hello World', // Simple case, where a line is recognised as a task
+            '- [ ] Hello World',
+        ],
+        [
+            '    - [ ] Hello World', // Simple case, but indented
+            '    - [ ] Hello World',
+        ],
+        [
+            '', // Blank line, not yet a task
+            '- [ ] ', // Loads an empty task in to Edit modal
+        ],
+    ])('lined loaded into "Create or edit task" command: "%s"', (line: string, expectedResult) => {
         const path = 'a/b/c.md';
         const task = taskFromLine({ line, path });
-        expect(task.toFileLineString()).toStrictEqual(line);
-        expect(task.path).toStrictEqual(path);
-    });
-
-    it('should process a valid indented Tasks task', () => {
-        const line = '    - [ ] Hello World';
-        const path = 'a/b/c.md';
-        const task = taskFromLine({ line, path });
-        expect(task.toFileLineString()).toStrictEqual(line);
-        expect(task.path).toStrictEqual(path);
-    });
-
-    it('should support running command on blank line', () => {
-        const line = '';
-        const path = 'a/b/c.md';
-        const task = taskFromLine({ line, path });
-        expect(task.toFileLineString()).toStrictEqual('- [ ] ');
+        expect(task.toFileLineString()).toStrictEqual(expectedResult);
         expect(task.path).toStrictEqual(path);
     });
 });
