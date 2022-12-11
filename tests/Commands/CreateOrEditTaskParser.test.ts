@@ -14,6 +14,10 @@ describe('CreateOrEditTaskParser - testing edited task if line is saved unchange
             '', // Blank line, not yet a task
             '- [ ] ', // Loads an empty task in to Edit modal
         ],
+        [
+            'Some existing test with ^block-link', // Ensure block link is retained
+            '- [ ] Some existing test with ^block-link',
+        ],
     ])('lined loaded into "Create or edit task" command: "%s"', (line: string, expectedResult) => {
         const path = 'a/b/c.md';
         const task = taskFromLine({ line, path });
