@@ -107,6 +107,28 @@ The following _does not work:_
 
 Warning
 {: .label .label-yellow}
+Tasks reads task lines in **numbered lists**.
+
+> Reading tasks inside numbered lists was introduced in Tasks 1.20.0.
+
+For example:
+
+```markdown
+1. [ ] Do first step
+2. [ ] Do next step
+3. [ ] Do following step
+```
+
+Editing and toggling tasks in numbered lists works fine: the original number is preserved.
+
+However, when these tasks are displayed in tasks blocks they are displayed as ordinary bullet list items.
+
+This is because they will usually be displayed in a completely different order than in the original list, often mixed in with tasks from bullet lists. The original numbers in this case just don't make sense.
+
+---
+
+Warning
+{: .label .label-yellow}
 Tasks can read tasks that are inside **blockquotes** or [Obsidian's built-in callouts](https://help.obsidian.md/How+to/Use+callouts).
 
 > Reading tasks inside callouts and blockquotes was introduced in Tasks 1.11.1
