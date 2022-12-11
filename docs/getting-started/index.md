@@ -132,6 +132,18 @@ Tasks cannot read tasks that are inside code blocks, such as the ones used by th
 
 Warning
 {: .label .label-yellow}
+
+Obsidian supports two styles of comments:
+
+- `<!-- I am text in a comment -->`
+- `%% I am text in a comment %%`
+
+Tasks does read any tasks that are inside these comments, because Obsidian does not read them.
+
+---
+
+Warning
+{: .label .label-yellow}
 Tasks can only render inline footnotes. Regular footnotes are not supported.
 
 ```markdown
