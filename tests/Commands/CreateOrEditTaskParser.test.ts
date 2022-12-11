@@ -15,6 +15,10 @@ describe('CreateOrEditTaskParser - testing edited task if line is saved unchange
             '- [ ] ', // Loads an empty task in to Edit modal
         ],
         [
+            'Non-blank line, not a task', // Blank line, not yet a task
+            '- [ ] Non-blank line, not a task',
+        ],
+        [
             'Some existing test with ^block-link', // Ensure block link is retained
             '- [ ] Some existing test with ^block-link',
         ],
