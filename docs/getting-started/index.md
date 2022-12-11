@@ -5,7 +5,22 @@ nav_order: 3
 has_children: true
 ---
 
+{: .no_toc }
+
+<details open markdown="block">
+  <summary>
+    Table of contents
+  </summary>
+  {: .text-delta }
+1. TOC
+{:toc}
+</details>
+
+---
+
 # Getting Started
+
+## Finding tasks in your vault
 
 Tasks tracks your checklist items from your vault.
 The simplest way to create a new task is to create a new checklist item.
@@ -20,17 +35,27 @@ To list all open tasks in a markdown file, simply add a [query]({{ site.baseurl 
     ```
 ````
 
+## Adding data to your tasks (optionally)
+
 Now you have a list of all open tasks! This is enough to get started with tasks.
 You can _optionally_ start using one or more of the other features that Tasks offers.
-Like, for example, [priorities]({{ site.baseurl }}{% link getting-started/priority.md %}) or [dates]({{ site.baseurl }}{% link getting-started/dates.md %}#start-date)
+Like, for example, [priorities]({{ site.baseurl }}{% link getting-started/priority.md %}) or [dates]({{ site.baseurl }}{% link getting-started/dates.md %}#start-date).
+
+## Easy editing of tasks
 
 A more convenient way to create a task is by using the `Tasks: Create or edit` command from the command palette.
 You can also bind a hotkey to the command.
 The command will parse what's on the current line in your editor and pre-populate a modal.
 In the modal, you can change the task's description, its due date, and a recurrence rule to have a repeating task.
-See below for more details on due dates and recurrence.
+
+You can find out more in [‘Create or edit Task’ Modal]({{ site.baseurl }}{% link getting-started/create-or-edit-task.md %}).
+
+See other pages in 'Getting Started' for more details on due dates and recurrence, and many other features.
+
 You cannot toggle a task (un)done in the modal.
 For that, do one of the following.
+
+## Completing tasks
 
 There are two ways to mark a task done:
 
@@ -42,6 +67,8 @@ There are two ways to mark a task done:
 
 A "done" task will have the date it was done appended to the end of its line.
 For example: `✅ 2021-04-09` means the task was done on the 9th of April, 2021.
+
+## Limitations and warnings
 
 <div class="code-example" markdown="1">
 Warning
