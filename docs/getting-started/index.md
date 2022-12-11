@@ -173,7 +173,10 @@ Tasks won't render **spaces around list items** if you have a list with empty li
 
 Warning
 {: .label .label-yellow }
-You can only put **block links** (`^link-name`) and **tags** after metadata such as dates, priorities, recurrence rules. Anything else will break the parsing of dates, priorities and recurrence rules.
+
+Tasks reads task lines **backwards from the end of the line**, looking for metadata emojis with values, tags and block links. As soon as it finds a value that it does not recognise, it stops reading.
+
+This means that you can only put **block links** (`^link-name`) and **tags** after metadata such as dates, priorities, recurrence rules. Anything else will break the parsing of dates, priorities and recurrence rules.
 
 ```markdown
 -   [ ] Task with priority placed before tag _priority will be recognized_ 🔼 #tag
@@ -181,6 +184,13 @@ You can only put **block links** (`^link-name`) and **tags** after metadata such
 -   [ ] Task with date placed before other text _date will be not recognized_ 📅 2021-04-09 other text
 -   [ ] Task with block link _works_ 📅 2021-04-09 ^e5bebf
 ```
+
+If you are concerned that some values in a task are not being parsed as you intended, perhaps because a task is not being found by Tasks searches, you can view the task in the [‘Create or edit Task’ Modal]({{ site.baseurl }}{% link getting-started/create-or-edit-task.md %}).
+
+If there are any **Tasks emojis visible in the Description field**, close the modal and delete or move to the left any unrecognised text.
+
+![Create or Edit Modal](../images/modal-showing-unparsed-emoji.png)
+<br>The `Tasks: Create or edit` modal showing a due date that was not parsed, due to trailing `other text`.
 
 ---
 
