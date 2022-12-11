@@ -13,7 +13,7 @@ jest.mock('obsidian');
 window.moment = moment;
 
 describe('parsing', () => {
-    it('parses a task from a line', () => {
+    it('parses a task from a line starting with hyphen', () => {
         // Arrange
         const line = '- [x] this is a done task 🗓 2021-09-12 ✅ 2021-06-20';
 
@@ -24,12 +24,28 @@ describe('parsing', () => {
 
         // Assert
         expect(task).not.toBeNull();
+        expect(task!.listMarker).toEqual('-');
         expect(task!.description).toEqual('this is a done task');
         expect(task!.status).toStrictEqual(Status.DONE);
         expect(task!.dueDate).not.toBeNull();
         expect(task!.dueDate!.isSame(moment('2021-09-12', 'YYYY-MM-DD'))).toStrictEqual(true);
         expect(task!.doneDate).not.toBeNull();
         expect(task!.doneDate!.isSame(moment('2021-06-20', 'YYYY-MM-DD'))).toStrictEqual(true);
+        expect(task!.originalMarkdown).toStrictEqual(line);
+    });
+
+    it('parses a task from a line starting with asterisk', () => {
+        // Arrange
+        const line = '* [ ] this is a task in asterisk list';
+
+        // Act
+        const task = fromLine({
+            line,
+        });
+
+        // Assert
+        expect(task).not.toBeNull();
+        expect(task!.listMarker).toEqual('*');
         expect(task!.originalMarkdown).toStrictEqual(line);
     });
 
@@ -44,6 +60,7 @@ describe('parsing', () => {
 
         // Assert
         expect(task).not.toBeNull();
+        expect(task!.listMarker).toEqual('1.');
         expect(task!.description).toEqual('this is a done task');
         expect(task!.status).toStrictEqual(Status.DONE);
         expect(task!.originalMarkdown).toStrictEqual(line);
@@ -60,6 +77,7 @@ describe('parsing', () => {
 
         // Assert
         expect(task).not.toBeNull();
+        expect(task!.listMarker).toEqual('909999.');
         expect(task!.description).toEqual('this is a todo task');
         expect(task!.status).toStrictEqual(Status.TODO);
         expect(task!.originalMarkdown).toStrictEqual(line);
