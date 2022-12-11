@@ -1,6 +1,19 @@
 import { Priority, Status, Task, TaskRegularExpressions } from '../Task';
 import { DateFallback } from '../DateFallback';
 
+/**
+ * Read any markdown line and treat it as a task, for the purposes of
+ * the 'Create or edit task' modal.
+ *
+ * Unlike {@link Task.fromLine}, which only processes tasks
+ * already recognised by the Tasks plugin, this function processes any line.
+ *
+ * This is an implementation detail of that command, which has been separated
+ * out to a different source file in order to allow its logic to be tested.
+ *
+ * @param line - The line the user had clicked on when running 'Create or edit task' command
+ * @param path - The path of the file containing the line
+ */
 export const taskFromLine = ({ line, path }: { line: string; path: string }): Task => {
     const fallbackDate = DateFallback.fromPath(path);
 
