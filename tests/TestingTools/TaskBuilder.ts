@@ -21,6 +21,7 @@ export class TaskBuilder {
     private _description: string = 'my description';
     private _path: string = '';
     private _indentation: string = '';
+    private _listMarker: string = '-';
 
     private _sectionStart: number = 0;
     private _sectionIndex: number = 0;
@@ -62,6 +63,7 @@ export class TaskBuilder {
             description: description,
             path: this._path,
             indentation: this._indentation,
+            listMarker: this._listMarker,
             sectionStart: this._sectionStart,
             sectionIndex: this._sectionIndex,
             originalStatusCharacter: this._originalStatusCharacter,
@@ -113,6 +115,11 @@ export class TaskBuilder {
 
     public indentation(indentation: string): TaskBuilder {
         this._indentation = indentation;
+        return this;
+    }
+
+    public listMarker(listMarker: string): TaskBuilder {
+        this._listMarker = listMarker;
         return this;
     }
 

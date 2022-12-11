@@ -404,6 +404,12 @@ describe('to string', () => {
         expect(task).not.toBeNull();
         expect(task.toFileLineString()).toStrictEqual(line);
     });
+
+    it('retains the asterisk', () => {
+        const task = new TaskBuilder().listMarker('*').build();
+        expect(task.toFileLineString()).toStrictEqual('* [ ] my description');
+    });
+
     it('retains the block link', () => {
         // Arrange
         const line = '- [ ] this is a task 📅 2021-09-12 ^my-precious';
@@ -875,6 +881,12 @@ describe('identicalTo', () => {
         const lhs = new TaskBuilder().indentation('');
         expect(lhs).toBeIdenticalTo(new TaskBuilder().indentation(''));
         expect(lhs).not.toBeIdenticalTo(new TaskBuilder().indentation('    '));
+    });
+
+    it('should check listMarker', () => {
+        const lhs = new TaskBuilder().listMarker('*');
+        expect(lhs).toBeIdenticalTo(new TaskBuilder().listMarker('*'));
+        expect(lhs).not.toBeIdenticalTo(new TaskBuilder().listMarker('-'));
     });
 
     it('should check sectionStart', () => {
