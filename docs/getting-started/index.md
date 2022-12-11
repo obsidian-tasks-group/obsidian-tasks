@@ -107,7 +107,7 @@ The following _does not work:_
 
 Warning
 {: .label .label-yellow}
-Tasks reads task lines in **numbered lists**.
+Tasks can read tasks that are in **numbered lists**.
 
 > Reading tasks inside numbered lists was introduced in Tasks 1.20.0.
 
