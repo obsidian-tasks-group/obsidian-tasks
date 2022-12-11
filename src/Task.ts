@@ -126,6 +126,7 @@ export class Task {
     public readonly description: string;
     public readonly path: string;
     public readonly indentation: string;
+    public readonly listMarker: string;
     /** Line number where the section starts that contains this task. */
     public readonly sectionStart: number;
     /** The index of the nth task in its section. */
@@ -165,6 +166,7 @@ export class Task {
         description,
         path,
         indentation,
+        listMarker,
         sectionStart,
         sectionIndex,
         originalStatusCharacter,
@@ -184,6 +186,7 @@ export class Task {
         description: string;
         path: string;
         indentation: string;
+        listMarker: string;
         sectionStart: number;
         sectionIndex: number;
         originalStatusCharacter: string;
@@ -203,6 +206,7 @@ export class Task {
         this.description = description;
         this.path = path;
         this.indentation = indentation;
+        this.listMarker = listMarker;
         this.sectionStart = sectionStart;
         this.sectionIndex = sectionIndex;
         this.originalStatusCharacter = originalStatusCharacter;
@@ -270,6 +274,7 @@ export class Task {
 
         let description = body;
         const indentation = regexMatch[1];
+        const listMarker = '-';
 
         // Get the status of the task, only todo and done supported.
         // But custom ones are retained and displayed as-is.
@@ -421,6 +426,7 @@ export class Task {
             description,
             path,
             indentation,
+            listMarker,
             sectionStart,
             sectionIndex,
             originalStatusCharacter: statusString,
@@ -600,7 +606,7 @@ export class Task {
      * @memberof Task
      */
     public toFileLineString(): string {
-        return `${this.indentation}- [${this.originalStatusCharacter}] ${this.toString()}`;
+        return `${this.indentation}${this.listMarker} [${this.originalStatusCharacter}] ${this.toString()}`;
     }
 
     /**
@@ -753,6 +759,7 @@ export class Task {
             'description',
             'path',
             'indentation',
+            'listMarker',
             'sectionStart',
             'sectionIndex',
             'originalStatusCharacter',
