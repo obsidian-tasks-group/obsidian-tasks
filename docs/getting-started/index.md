@@ -73,13 +73,13 @@ For example: `✅ 2021-04-09` means the task was done on the 9th of April, 2021.
 <div class="code-example" markdown="1">
 Warning
 {: .label .label-yellow}
-Whenever Tasks behaves in an unexpected way, please try restarting Obsidian.
+Whenever Tasks behaves in an unexpected way, **please try restarting Obsidian**.
 
 ---
 
 Warning
 {: .label .label-yellow}
-Tasks only supports single-line checklist items.
+Tasks only supports **single-line checklist items**.
 
 The task list rendered through this plugin **and** the checklist items
 from which the task list is built render only the first line of the item.
@@ -107,7 +107,7 @@ The following _does not work:_
 
 Warning
 {: .label .label-yellow}
-Tasks can read tasks that are inside blockquotes or [Obsidian's built-in callouts](https://help.obsidian.md/How+to/Use+callouts).
+Tasks can read tasks that are inside **blockquotes** or [Obsidian's built-in callouts](https://help.obsidian.md/How+to/Use+callouts).
 
 > Reading tasks inside callouts and blockquotes was introduced in Tasks 1.11.1
 
@@ -126,14 +126,14 @@ Completing a task by clicking its checkbox from a `tasks` query block _will_ wor
 Warning
 {: .label .label-yellow}
 
-Tasks cannot read tasks that are inside code blocks, such as the ones used by the Admonitions plugin. Use Obsidian's built-in callouts instead.
+Tasks cannot read tasks that are **inside code blocks**, such as the ones used by the **Admonitions plugin**. Use Obsidian's built-in callouts instead.
 
 ---
 
 Warning
 {: .label .label-yellow}
 
-Obsidian supports two styles of comments:
+Obsidian supports two styles of **comments**:
 
 - `<!-- I am text in a comment -->`
 - `%% I am text in a comment %%`
@@ -144,7 +144,7 @@ Tasks does read any tasks that are inside these comments, because Obsidian does 
 
 Warning
 {: .label .label-yellow}
-Tasks can only render inline footnotes. Regular footnotes are not supported.
+Tasks can only render **inline footnotes**. Regular footnotes are not supported.
 
 ```markdown
 -   [ ] This is a task^[with a working inline footnote]
@@ -155,13 +155,13 @@ Tasks can only render inline footnotes. Regular footnotes are not supported.
 
 Warning
 {: .label .label-yellow}
-Tasks' support for block quotes inside tasks is limited. It renders correctly, but since Tasks only supports a single line, the meta-data of the task will be inside the block quote.
+Tasks' support for **block quotes inside tasks** is limited. It renders correctly, but since Tasks only supports a single line, the meta-data of the task will be inside the block quote.
 
 ---
 
 Warning
 {: .label .label-yellow}
-Tasks won't render spaces around list items if you have a list with empty lines.
+Tasks won't render **spaces around list items** if you have a list with empty lines.
 
 ```markdown
 -   [ ] First task before the empty line
@@ -173,7 +173,7 @@ Tasks won't render spaces around list items if you have a list with empty lines.
 
 Warning
 {: .label .label-yellow }
-You can only put block links (`^link-name`) after metadata such as dates. Anything else will break the parsing of dates, priorities and recurrence rules.
+You can only put **block links** (`^link-name`) and **tags** after metadata such as dates. Anything else will break the parsing of dates, priorities and recurrence rules.
 
 ```markdown
 -   [ ] Task with priority placed before tag _priority will not be recognized_ 🔼 #tag
