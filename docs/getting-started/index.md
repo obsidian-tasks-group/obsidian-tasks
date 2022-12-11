@@ -173,13 +173,13 @@ Tasks won't render **spaces around list items** if you have a list with empty li
 
 Warning
 {: .label .label-yellow }
-You can only put **block links** (`^link-name`) and **tags** after metadata such as dates. Anything else will break the parsing of dates, priorities and recurrence rules.
+You can only put **block links** (`^link-name`) and **tags** after metadata such as dates, priorities, recurrence rules. Anything else will break the parsing of dates, priorities and recurrence rules.
 
 ```markdown
--   [ ] Task with priority placed before tag _priority will not be recognized_ 🔼 #tag
--   [ ] Task with date placed before tag _date will not be recognized_ 📅 2021-04-09 #tag
+-   [ ] Task with priority placed before tag _priority will be recognized_ 🔼 #tag
+-   [ ] Task with date placed before tag _date will be recognized_ 📅 2021-04-09 #tag
+-   [ ] Task with date placed before other text _date will be not recognized_ 📅 2021-04-09 other text
 -   [ ] Task with block link _works_ 📅 2021-04-09 ^e5bebf
--   [ ] Task with tag before priority _works_ #tag 🔼
 ```
 
 ---
