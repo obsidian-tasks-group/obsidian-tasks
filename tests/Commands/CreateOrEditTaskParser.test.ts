@@ -43,7 +43,7 @@ describe('CreateOrEditTaskParser - testing edited task if line is saved unchange
             '',
         ],
     ])(
-        'lined loaded into "Create or edit task" command: "%s"',
+        'line loaded into "Create or edit task" command: "%s"',
         (line: string, expectedResult: string, globalFilter: string) => {
             updateSettings({ globalFilter: globalFilter });
             const path = 'a/b/c.md';
