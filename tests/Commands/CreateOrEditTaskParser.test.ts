@@ -18,8 +18,8 @@ describe('CreateOrEditTaskParser - testing edited task if line is saved unchange
             '#task',
         ],
         [
-            '    - [ ] Hello World', // Simple case, but indented
-            '    - [ ] Hello World',
+            '    - [x] Hello World', // Completed task, indented
+            '    - [x] Hello World',
             '',
         ],
         [
