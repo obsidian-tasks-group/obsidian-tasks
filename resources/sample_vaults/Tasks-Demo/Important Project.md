@@ -6,4 +6,4 @@
 ## Trash is important
 
 - [ ] #task Also: take out the trash!
-  - [ ] #task Throw the trash away
+  - [ ] #task Throw the trash away again
