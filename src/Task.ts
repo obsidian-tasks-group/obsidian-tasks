@@ -53,7 +53,7 @@ export class TaskRegularExpressions {
     public static readonly indentationRegex = /^([\s\t>]*)/;
 
     // Matches - or * list markers, or numbered list markers (eg 1.)
-    public static readonly listMarkerCapturingRegex = /([-*]|[0-9]+\.)/;
+    public static readonly listMarkerRegex = /([-*]|[0-9]+\.)/;
 
     // Matches a checkbox and saves the status character inside
     public static readonly checkboxRegex = /\[(.)\]/u;
@@ -68,7 +68,7 @@ export class TaskRegularExpressions {
     // - Rest of task after checkbox markdown
     public static readonly taskRegex = new RegExp(
         TaskRegularExpressions.indentationRegex.source +
-            TaskRegularExpressions.listMarkerCapturingRegex.source +
+            TaskRegularExpressions.listMarkerRegex.source +
             ' +' +
             TaskRegularExpressions.checkboxRegex.source +
             TaskRegularExpressions.afterCheckboxRegex.source,
@@ -78,7 +78,7 @@ export class TaskRegularExpressions {
     // Used with the "Create or Edit Task" command to parse indentation and status if present
     public static readonly nonTaskRegex = new RegExp(
         TaskRegularExpressions.indentationRegex.source +
-            TaskRegularExpressions.listMarkerCapturingRegex.source +
+            TaskRegularExpressions.listMarkerRegex.source +
             '? *(' +
             TaskRegularExpressions.checkboxRegex.source +
             ')?' +
@@ -88,7 +88,7 @@ export class TaskRegularExpressions {
 
     // Used with "Toggle Done" command to detect a list item that can get a checkbox added to it.
     public static readonly listItemRegex = new RegExp(
-        TaskRegularExpressions.indentationRegex.source + TaskRegularExpressions.listMarkerCapturingRegex.source,
+        TaskRegularExpressions.indentationRegex.source + TaskRegularExpressions.listMarkerRegex.source,
     );
 
     // Match on block link at end.
