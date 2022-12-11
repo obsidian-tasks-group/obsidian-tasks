@@ -4,6 +4,7 @@
 
 import moment from 'moment';
 import { calculateCursorOffset, toggleLine } from '../../src/Commands/ToggleDone';
+import { resetSettings, updateSettings } from '../../src/Config/Settings';
 
 window.moment = moment;
 
@@ -63,6 +64,10 @@ function testToggleLineForOutOfRangeCursorPositions(
 }
 
 describe('ToggleDone', () => {
+    afterEach(() => {
+        resetSettings();
+    });
+
     const todaySpy = jest.spyOn(Date, 'now').mockReturnValue(moment('2022-09-04').valueOf());
 
     // The | (pipe) indicates the calculated position where the cursor should be displayed.
@@ -83,6 +88,14 @@ describe('ToggleDone', () => {
 
         // Issue #449 - cursor jumped 13 characters to the right on completion
         testToggleLine('- [ ] I have a |proper description', '- [x] I have a |proper description ✅ 2022-09-04');
+    });
+
+    it('should complete a task that does not have the global filter', () => {
+        updateSettings({ globalFilter: '#task' });
+
+        testToggleLine('|- [ ] ', '|- [x] ');
+        testToggleLine('- [ ] |', '- [x] |');
+        testToggleLine('- [ ] with a description|', '- [x] with a description|');
     });
 
     it('should un-complete a completed task', () => {
