@@ -61,10 +61,10 @@ export const taskFromLine = ({ line, path }: { line: string; path: string }): Ta
     }
 
     const indentation: string = nonTaskMatch[1];
-    const listMarker = '-';
-    const statusString: string = nonTaskMatch[3] ?? ' ';
+    const listMarker = nonTaskMatch[2] ?? '-';
+    const statusString: string = nonTaskMatch[4] ?? ' ';
     const status = statusString === ' ' ? Status.TODO : Status.DONE;
-    let description: string = nonTaskMatch[4];
+    let description: string = nonTaskMatch[5];
 
     const blockLinkMatch = line.match(TaskRegularExpressions.blockLinkRegex);
     const blockLink = blockLinkMatch !== null ? blockLinkMatch[0] : '';

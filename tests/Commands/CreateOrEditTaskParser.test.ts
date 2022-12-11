@@ -13,8 +13,8 @@ describe('CreateOrEditTaskParser - testing edited task if line is saved unchange
             '',
         ],
         [
-            '- [ ] #task Hello World', // Simple case, with global filter
-            '- [ ] #task Hello World',
+            '* [ ] #task Hello World - with asterisk list marker', // Simple case, with global filter - using * as list marker
+            '* [ ] #task Hello World - with asterisk list marker',
             '#task',
         ],
         [
@@ -30,6 +30,11 @@ describe('CreateOrEditTaskParser - testing edited task if line is saved unchange
         [
             'Non-blank line, not a task', // Blank line, not yet a task
             '- [ ] Non-blank line, not a task',
+            '',
+        ],
+        [
+            '* Non-blank line, not a task - with asterisk list marker',
+            '* [ ] Non-blank line, not a task - with asterisk list marker',
             '',
         ],
         [

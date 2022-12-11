@@ -81,7 +81,7 @@ export class TaskRegularExpressions {
     // Used with the "Create or Edit Task" command to parse indentation and status if present
     public static readonly nonTaskRegex = new RegExp(
         TaskRegularExpressions.indentationRegex.source +
-            TaskRegularExpressions.listMarkerRegex.source +
+            TaskRegularExpressions.listMarkerCapturingRegex.source +
             '? *(' +
             TaskRegularExpressions.checkboxRegex.source +
             ')?' +
