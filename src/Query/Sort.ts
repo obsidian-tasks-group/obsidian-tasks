@@ -7,6 +7,7 @@ type Comparator = (a: Task, b: Task) => number;
 
 export class Sorting {
     property: SortingProperty;
+    comparator: Comparator;
     reverse: boolean;
     propertyInstance: number;
 
@@ -14,6 +15,12 @@ export class Sorting {
         this.property = property;
         this.reverse = reverse;
         this.propertyInstance = propertyInstance;
+        this.comparator = this.makeComparator();
+    }
+
+    public makeComparator() {
+        const comparator = Sort.comparators[this.property];
+        return this.reverse ? Sort.makeReversedComparator(comparator) : comparator;
     }
 }
 
@@ -33,10 +40,8 @@ export class Sort {
 
         for (const sorting of query.sorting) {
             const property = sorting.property;
-            const reverse = sorting.reverse;
             const propertyInstance = sorting.propertyInstance;
-            const comparator = Sort.comparators[property];
-            userComparators.push(reverse ? Sort.makeReversedComparator(comparator) : comparator);
+            userComparators.push(sorting.comparator);
             if (property === 'tag') {
                 Sort.tagPropertyInstance = propertyInstance;
             }
@@ -45,7 +50,7 @@ export class Sort {
         return tasks.sort(Sort.makeCompositeComparator([...userComparators, ...defaultComparators]));
     }
 
-    private static comparators: Record<SortingProperty, Comparator> = {
+    public static comparators: Record<SortingProperty, Comparator> = {
         urgency: Sort.compareByUrgency,
         description: Sort.compareByDescription,
         priority: Sort.compareByPriority,
@@ -58,7 +63,7 @@ export class Sort {
         tag: Sort.compareByTag,
     };
 
-    private static makeReversedComparator(comparator: Comparator): Comparator {
+    public static makeReversedComparator(comparator: Comparator): Comparator {
         return (a, b) => (comparator(a, b) * -1) as -1 | 0 | 1;
     }
 
