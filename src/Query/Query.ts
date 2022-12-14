@@ -2,7 +2,7 @@ import { LayoutOptions } from '../LayoutOptions';
 import type { Task } from '../Task';
 import type { IQuery } from '../IQuery';
 import { getSettings } from '../Config/Settings';
-import { Sort } from './Sort';
+import { Sort, Sorting } from './Sort';
 import type { TaskGroups } from './TaskGroups';
 import { parseFilter } from './FilterParser';
 import { Group } from './Group';
@@ -19,18 +19,6 @@ export type SortingProperty =
     | 'path'
     | 'description'
     | 'tag';
-
-class Sorting {
-    property: SortingProperty;
-    reverse: boolean;
-    propertyInstance: number;
-
-    constructor(property: SortingProperty, reverse: boolean, propertyInstance: number) {
-        this.property = property;
-        this.reverse = reverse;
-        this.propertyInstance = propertyInstance;
-    }
-}
 
 export type GroupingProperty =
     | 'backlink'

@@ -5,6 +5,18 @@ import type { Query, SortingProperty } from './Query';
 
 type Comparator = (a: Task, b: Task) => number;
 
+export class Sorting {
+    property: SortingProperty;
+    reverse: boolean;
+    propertyInstance: number;
+
+    constructor(property: SortingProperty, reverse: boolean, propertyInstance: number) {
+        this.property = property;
+        this.reverse = reverse;
+        this.propertyInstance = propertyInstance;
+    }
+}
+
 export class Sort {
     static tagPropertyInstance: number = 1;
 
