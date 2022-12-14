@@ -19,11 +19,18 @@ export type SortingProperty =
     | 'path'
     | 'description'
     | 'tag';
-type Sorting = {
+
+class Sorting {
     property: SortingProperty;
     reverse: boolean;
     propertyInstance: number;
-};
+
+    constructor(property: SortingProperty, reverse: boolean, propertyInstance: number) {
+        this.property = property;
+        this.reverse = reverse;
+        this.propertyInstance = propertyInstance;
+    }
+}
 
 export type GroupingProperty =
     | 'backlink'
