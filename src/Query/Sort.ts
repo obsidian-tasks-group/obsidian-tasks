@@ -39,11 +39,9 @@ export class Sort {
         const userComparators: Comparator[] = [];
 
         for (const sorting of query.sorting) {
-            const property = sorting.property;
-            const propertyInstance = sorting.propertyInstance;
             userComparators.push(sorting.comparator);
-            if (property === 'tag') {
-                Sort.tagPropertyInstance = propertyInstance;
+            if (sorting.property === 'tag') {
+                Sort.tagPropertyInstance = sorting.propertyInstance;
             }
         }
 
