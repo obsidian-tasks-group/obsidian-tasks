@@ -19,7 +19,10 @@ export class Sort {
 
         const userComparators: Comparator[] = [];
 
-        for (const { property, reverse, propertyInstance } of query.sorting) {
+        for (const sorting of query.sorting) {
+            const property = sorting.property;
+            const reverse = sorting.reverse;
+            const propertyInstance = sorting.propertyInstance;
             const comparator = Sort.comparators[property];
             userComparators.push(reverse ? Sort.makeReversedComparator(comparator) : comparator);
             if (property === 'tag') {
