@@ -6,10 +6,10 @@ import type { Query, SortingProperty } from './Query';
 type Comparator = (a: Task, b: Task) => number;
 
 export class Sorting {
-    property: SortingProperty;
-    comparator: Comparator;
-    reverse: boolean;
-    propertyInstance: number;
+    public readonly property: SortingProperty;
+    public readonly comparator: Comparator;
+    public readonly reverse: boolean;
+    public readonly propertyInstance: number;
 
     constructor(property: SortingProperty, reverse: boolean, propertyInstance: number) {
         this.property = property;
