@@ -40,13 +40,13 @@ export class StatusField extends FilterInstructionsBasedField {
      * @param reverse - false for normal sort order, true for reverse sort order.
      */
     protected createSorter(reverse: boolean): Sorting {
-        return new Sorting(reverse, 1, 'status', StatusField.comparator());
+        return new Sorting(reverse, 1, 'status', this.comparator());
     }
 
     /**
      * Return a function to compare two Task objects, for use in sorting by status.
      */
-    public static comparator(): Comparator {
+    public comparator(): Comparator {
         return (a: Task, b: Task) => {
             if (a.status < b.status) {
                 return 1;

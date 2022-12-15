@@ -48,13 +48,13 @@ export class DueDateField extends DateField {
      * @param reverse - false for normal sort order, true for reverse sort order.
      */
     protected createSorter(reverse: boolean): Sorting {
-        return new Sorting(reverse, 1, 'due', DueDateField.comparator());
+        return new Sorting(reverse, 1, 'due', this.comparator());
     }
 
     /**
      * Return a function to compare two Task objects, for use in sorting by due.
      */
-    public static comparator(): Comparator {
+    public comparator(): Comparator {
         // TODO Refactor to make non-static and use this.date(a), this.date(b)
         return (a: Task, b: Task) => {
             return Sort.compareByDate(a.dueDate, b.dueDate);

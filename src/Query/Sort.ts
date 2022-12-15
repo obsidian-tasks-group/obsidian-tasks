@@ -74,8 +74,8 @@ export class Sort {
     public static by(query: Pick<Query, 'sorting'>, tasks: Task[]): Task[] {
         const defaultComparators: Comparator[] = [
             Sort.compareByUrgency,
-            StatusField.comparator(),
-            DueDateField.comparator(),
+            new StatusField().comparator(),
+            new DueDateField().comparator(),
             Sort.compareByPriority,
             Sort.compareByPath,
         ];
