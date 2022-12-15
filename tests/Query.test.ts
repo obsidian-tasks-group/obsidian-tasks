@@ -5,7 +5,6 @@ import moment from 'moment';
 import { Query } from '../src/Query/Query';
 import { Priority, Status, Task } from '../src/Task';
 import { resetSettings, updateSettings } from '../src/Config/Settings';
-import { Sorting } from '../src/Query/Sort';
 import { createTasksFromMarkdown, fromLine } from './TestHelpers';
 import { shouldSupportFiltering } from './TestingTools/FilterTestHelpers';
 import type { FilteringCase } from './TestingTools/FilterTestHelpers';
@@ -711,32 +710,6 @@ describe('Query', () => {
         });
     });
 
-    describe('sorting instructions', () => {
-        const cases: { input: string; output: Sorting[] }[] = [
-            {
-                input: 'sort by status',
-                output: [new Sorting(false, 1, 'status')],
-            },
-            {
-                input: 'sort by status\nsort by due',
-                output: [new Sorting(false, 1, 'status'), new Sorting(false, 1, 'due')],
-            },
-            {
-                input: 'sort by tag',
-                output: [new Sorting(false, 1, 'tag')],
-            },
-            {
-                input: 'sort by tag 2',
-                output: [new Sorting(false, 2, 'tag')],
-            },
-        ];
-        it.concurrent.each(cases)('sorting as %j', ({ input, output }) => {
-            const query = new Query({ source: input });
-
-            expect(query.sorting).toEqual(output);
-        });
-    });
-
     describe('sorting', () => {
         const doneTask = new TaskBuilder().status(Status.DONE).build();
         const todoTask = new TaskBuilder().status(Status.TODO).build();
@@ -746,7 +719,7 @@ describe('Query', () => {
             const sorter = query.sorting[0];
 
             expect(sorter!.comparator(todoTask, doneTask)).toEqual(1);
-            expect(sorter!.comparator(doneTask, doneTask)).toEqual(-0); // Note the minus sign. It's a consquence of
+            expect(sorter!.comparator(doneTask, doneTask)).toEqual(-0); // Note the minus sign. It's a consequence of
             expect(sorter!.comparator(doneTask, todoTask)).toEqual(-1);
         });
     });
