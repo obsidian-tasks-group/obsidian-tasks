@@ -714,7 +714,13 @@ describe('Query', () => {
         const doneTask = new TaskBuilder().status(Status.DONE).build();
         const todoTask = new TaskBuilder().status(Status.TODO).build();
 
-        it('sort by status reverse', () => {
+        it('sort reverse returns -0 for equal tasks', () => {
+            // This test was added when I discovered that reverse sort returns
+            // -0 for equivalent tasks.
+            // This is a test to demonstrate that current behevaiour,
+            // rather than a test of the **required** behaviour.
+            // If the behaviour changes and '0' is returned instead of '-0',
+            // that is absolutely fine.
             const query = new Query({ source: 'sort by status reverse' });
             const sorter = query.sorting[0];
 

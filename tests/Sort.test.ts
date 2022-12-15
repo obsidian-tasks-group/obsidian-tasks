@@ -15,7 +15,7 @@ import { fromLine } from './TestHelpers';
 import { TaskBuilder } from './TestingTools/TaskBuilder';
 
 describe('Sort', () => {
-    it('constructs Sorting from Comparator function', () => {
+    it('constructs Sorting both ways from Comparator function', () => {
         const comparator: Comparator = (a: Task, b: Task) => {
             if (a.description.length < b.description.length) {
                 return 1;
@@ -56,6 +56,11 @@ describe('Sort', () => {
         expect(Sort.by({ sorting: [] }, [six, five, one, four, two, three])).toEqual(expectedOrder);
     });
 
+    // TODO Most of these will become redundant once each of the sort implementations
+    //      is in a Field class, and the Field's tests exercise the particular sorting.
+    //      Then the only testing needed here will probably be the testing of composite sorting.
+
+    // TODO Replace this with something simpler but equivalent in DueDateField.test.ts.
     it('sorts correctly by due', () => {
         const one = fromLine({
             line: '- [x] bring out the trash 📅 2021-09-12',
@@ -87,6 +92,7 @@ describe('Sort', () => {
         ).toEqual([one, two, three]);
     });
 
+    // TODO Replace this with something simpler but equivalent in DoneDateField.test.ts.
     it('sorts correctly by done', () => {
         const one = fromLine({
             line: '- [x] pet the cat 📅 2021-09-15 ✅ 2021-09-15',
@@ -135,7 +141,7 @@ describe('Sort', () => {
                     sorting: [
                         new Sorting(false, 1, 'due'),
                         new Sorting(false, 1, 'path'),
-                        new StatusField().createSorter('sort by status')!,
+                        new StatusField().createSorter('sort by status')!, // TODO Remove the need to invent a line to write this test
                     ],
                 },
                 [one, four, two, three],
@@ -143,6 +149,7 @@ describe('Sort', () => {
         ).toEqual(expectedOrder);
     });
 
+    // TODO Replace this with something simpler but equivalent in DescriptionField.test.ts.
     it('sorts correctly by description, done', () => {
         const one = fromLine({
             line: '- [ ] a 📅 1970-01-02 ✅ 1971-01-01',
@@ -171,6 +178,7 @@ describe('Sort', () => {
         ).toEqual(expectedOrder);
     });
 
+    // TODO Replace this with something simpler but equivalent in DescriptionField.test.ts.
     it('sorts correctly by description reverse, done', () => {
         const one = fromLine({
             line: '- [ ] b 📅 1970-01-01 ✅ 1971-01-01',
@@ -213,7 +221,7 @@ describe('Sort', () => {
             Sort.by(
                 {
                     sorting: [
-                        new StatusField().createSorter('sort by status reverse')!,
+                        new StatusField().createSorter('sort by status reverse')!, // TODO Remove the need to invent a line to write this test
                         new Sorting(true, 1, 'due'),
                         new Sorting(false, 1, 'path'),
                     ],
@@ -223,6 +231,7 @@ describe('Sort', () => {
         ).toEqual(expectedOrder);
     });
 
+    // TODO Replace this with something simpler but equivalent in DescriptionField.test.ts.
     it('sorts correctly by the link name and not the markdown', () => {
         const one = fromLine({
             line: '- [ ] *ZZZ An early task that starts with an A; actually not italic since only one asterisk',
@@ -283,6 +292,7 @@ declare global {
 }
 
 // These are lower-level tests that the Task-based ones above, for ease of test coverage.
+// TODO Replace this with something simpler but equivalent in the tests for DateField.test.ts.
 describe('compareBy', () => {
     it('compares correctly by date', () => {
         const equal = 0;
@@ -321,6 +331,7 @@ describe('compareBy', () => {
  * There is also a task with additional characters in the name to ensure it is seen
  * as bigger that one with the same initial characters.
  */
+// TODO Replace this with something simpler but equivalent in TagsField.test.ts.
 describe('Sort by tags', () => {
     it('should sort correctly by tag defaulting to first with no global filter', () => {
         // Arrange

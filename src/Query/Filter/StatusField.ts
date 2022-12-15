@@ -15,6 +15,12 @@ export class StatusField extends FilterInstructionsBasedField {
         return 'status';
     }
 
+    /**
+     * Parse a sort instruction line, creating either a {@link Sorting} object or undefined,
+     * if the line is unrecognised.
+     * TODO Separate the parsing of the line and construction of the {@link Sorting} in to two separate methods.
+     * @param line - One of 'sort by status' or 'sort by status reverse'
+     */
     public createSorter(line: string): Sorting | undefined {
         const sortByRegexp = /^sort by (status)( reverse)?/;
         const fieldMatch = line.match(sortByRegexp);
@@ -25,6 +31,9 @@ export class StatusField extends FilterInstructionsBasedField {
         }
     }
 
+    /**
+     * Return a function to compare two Task objects, for use in sorting by status.
+     */
     public static comparator(): Comparator {
         return (a: Task, b: Task) => {
             if (a.status < b.status) {

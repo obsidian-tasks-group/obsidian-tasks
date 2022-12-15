@@ -9,6 +9,9 @@ import { Group } from './Group';
 import type { Filter } from './Filter/Filter';
 import { StatusField } from './Filter/StatusField';
 
+// TODO Work through the values in SortingProperty, moving their comparison
+//      functions to the corresponding Field implementations.
+//      Then remove SortingProperty.
 export type SortingProperty =
     | 'urgency'
     | 'priority'
@@ -234,12 +237,20 @@ export class Query implements IQuery {
     }
 
     private parseSortBy({ line }: { line: string }): void {
+        // New style parsing, which is done by the Field classes.
+        // Initially this is only implemented for status.
+        // TODO Once a few more Field classes have comparator implementations,
+        //      convert this to look like Query.parseFilter(),
+        //      which will call a new function in FilterParser - parseSorter() or parseSortBy()
         const statusSorter = new StatusField().createSorter(line);
         if (statusSorter) {
             this._sorting.push(statusSorter);
             return;
         }
 
+        // Old-style parsing, based on all the values in SortingProperty above.
+        // TODO Migrate all the compare functions in Sort over to the
+        //      corresponding fields, so that the block below can be removed.
         const fieldMatch = line.match(this.sortByRegexp);
         if (fieldMatch !== null) {
             this._sorting.push(
