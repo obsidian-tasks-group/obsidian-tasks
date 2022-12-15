@@ -45,10 +45,6 @@ export function parseFilter(filterString: string): FilterOrErrorMessage | null {
 
 export function parseSorter(sorterString: string): Sorting | null {
     // New style parsing, which is done by the Field classes.
-    // Initially this is only implemented for a few fields.
-    // TODO Once a few more Field classes have comparator implementations,
-    //      convert this to look like parseFilter(), looping over all field types.
-
     const sortByRegexp = /^sort by (\S+)( reverse)?/;
     const fieldMatch = sorterString.match(sortByRegexp);
     if (fieldMatch === null) {
@@ -57,29 +53,15 @@ export function parseSorter(sorterString: string): Sorting | null {
     const propertyName = fieldMatch[1];
     const reverse = !!fieldMatch[2];
 
-    let field;
-    switch (propertyName) {
-        case 'status':
-            field = new StatusField();
-            break;
-        case 'due':
-            field = new DueDateField();
-            break;
+    for (const creator of fieldCreators) {
+        const field = creator();
+        if (field.fieldName() === propertyName) {
+            if (field.supportsSorting()) {
+                return field.createSorter(reverse);
+            } else {
+                return null;
+            }
+        }
     }
-
-    if (!field) {
-        return null;
-    }
-
-    let sorter;
-    if (reverse) {
-        sorter = field.createReverseSorter();
-    } else {
-        sorter = field.createNormalSorter();
-    }
-
-    if (!sorter) {
-        return null;
-    }
-    return sorter;
+    return null;
 }
