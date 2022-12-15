@@ -35,9 +35,8 @@ export class DueDateField extends DateField {
      * Return a function to compare two Task objects, for use in sorting by due.
      */
     public comparator(): Comparator {
-        // TODO Refactor to make non-static and use this.date(a), this.date(b)
         return (a: Task, b: Task) => {
-            return Sort.compareByDate(a.dueDate, b.dueDate);
+            return Sort.compareByDate(this.date(a), this.date(b));
         };
     }
 }
