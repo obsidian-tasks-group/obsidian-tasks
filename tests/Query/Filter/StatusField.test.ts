@@ -35,19 +35,17 @@ describe('sorting by status', () => {
 
     it('sort by status', () => {
         // Arrange
-        const sorter = new StatusField().createSorter('sort by status');
+        const sorter = new StatusField().createNormalSorter();
 
         // Assert
-        expect(sorter).toBeDefined();
-        expect(sorter!.comparator(doneTask, todoTask)).toEqual(1);
+        expect(sorter.comparator(doneTask, todoTask)).toEqual(1);
     });
 
     it('sort by status reverse', () => {
         // Arrange
-        const sorter = new StatusField().createSorter('sort by status reverse');
+        const sorter = new StatusField().createReverseSorter();
 
         // Assert
-        expect(sorter).toBeDefined();
-        expect(sorter!.comparator(doneTask, todoTask)).toEqual(-1);
+        expect(sorter.comparator(doneTask, todoTask)).toEqual(-1);
     });
 });

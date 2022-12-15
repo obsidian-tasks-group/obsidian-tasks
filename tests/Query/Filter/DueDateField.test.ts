@@ -55,3 +55,28 @@ describe('explain due date queries', () => {
         expect(filterOrMessage).toHaveExplanation('due date is on 2023-01-02 (Monday 2nd January 2023)');
     });
 });
+
+describe('sorting by status', () => {
+    const date1 = new TaskBuilder().dueDate('2021-01-12').build();
+    const date2 = new TaskBuilder().dueDate('2022-12-23').build();
+
+    it('sort by due', () => {
+        // Arrange
+        const sorter = new DueDateField().createNormalSorter();
+
+        // Assert
+        expect(sorter.comparator(date1, date2)).toEqual(-1);
+        expect(sorter.comparator(date2, date1)).toEqual(1);
+        expect(sorter.comparator(date2, date2)).toEqual(0);
+    });
+
+    it('sort by due reverse', () => {
+        // Arrange
+        const sorter = new DueDateField().createReverseSorter();
+
+        // Assert
+        expect(sorter.comparator(date1, date2)).toEqual(1);
+        expect(sorter.comparator(date2, date1)).toEqual(-1);
+        expect(sorter.comparator(date2, date2)).toEqual(-0);
+    });
+});
