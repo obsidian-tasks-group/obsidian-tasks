@@ -5,7 +5,7 @@ import moment from 'moment';
 
 window.moment = moment;
 
-import { Sort } from '../src/Query/Sort';
+import { Sort, Sorting } from '../src/Query/Sort';
 import { resetSettings, updateSettings } from '../src/Config/Settings';
 import { DateParser } from '../src/Query/DateParser';
 import { fromLine } from './TestHelpers';
@@ -38,13 +38,7 @@ describe('Sort', () => {
         expect(
             Sort.by(
                 {
-                    sorting: [
-                        {
-                            property: 'due',
-                            reverse: false,
-                            propertyInstance: 1,
-                        },
-                    ],
+                    sorting: [new Sorting('due', false, 1)],
                 },
                 [one, two, three],
             ),
@@ -52,13 +46,7 @@ describe('Sort', () => {
         expect(
             Sort.by(
                 {
-                    sorting: [
-                        {
-                            property: 'due',
-                            reverse: false,
-                            propertyInstance: 1,
-                        },
-                    ],
+                    sorting: [new Sorting('due', false, 1)],
                 },
                 [two, three, one],
             ),
@@ -81,13 +69,7 @@ describe('Sort', () => {
         expect(
             Sort.by(
                 {
-                    sorting: [
-                        {
-                            property: 'done',
-                            reverse: false,
-                            propertyInstance: 1,
-                        },
-                    ],
+                    sorting: [new Sorting('done', false, 1)],
                 },
                 [three, two, one],
             ),
@@ -95,13 +77,7 @@ describe('Sort', () => {
         expect(
             Sort.by(
                 {
-                    sorting: [
-                        {
-                            property: 'done',
-                            reverse: false,
-                            propertyInstance: 1,
-                        },
-                    ],
+                    sorting: [new Sorting('done', false, 1)],
                 },
                 [two, one, three],
             ),
@@ -123,21 +99,9 @@ describe('Sort', () => {
             Sort.by(
                 {
                     sorting: [
-                        {
-                            property: 'due',
-                            reverse: false,
-                            propertyInstance: 1,
-                        },
-                        {
-                            property: 'path',
-                            reverse: false,
-                            propertyInstance: 1,
-                        },
-                        {
-                            property: 'status',
-                            reverse: false,
-                            propertyInstance: 1,
-                        },
+                        new Sorting('due', false, 1),
+                        new Sorting('path', false, 1),
+                        new Sorting('status', false, 1),
                     ],
                 },
                 [one, four, two, three],
@@ -166,18 +130,7 @@ describe('Sort', () => {
         expect(
             Sort.by(
                 {
-                    sorting: [
-                        {
-                            property: 'description',
-                            reverse: false,
-                            propertyInstance: 1,
-                        },
-                        {
-                            property: 'done',
-                            reverse: false,
-                            propertyInstance: 1,
-                        },
-                    ],
+                    sorting: [new Sorting('description', false, 1), new Sorting('done', false, 1)],
                 },
                 [three, one, two, four],
             ),
@@ -205,18 +158,7 @@ describe('Sort', () => {
         expect(
             Sort.by(
                 {
-                    sorting: [
-                        {
-                            property: 'description',
-                            reverse: true,
-                            propertyInstance: 1,
-                        },
-                        {
-                            property: 'done',
-                            reverse: false,
-                            propertyInstance: 1,
-                        },
-                    ],
+                    sorting: [new Sorting('description', true, 1), new Sorting('done', false, 1)],
                 },
                 [two, four, three, one],
             ),
@@ -237,17 +179,9 @@ describe('Sort', () => {
             Sort.by(
                 {
                     sorting: [
-                        {
-                            property: 'status',
-                            reverse: true,
-                            propertyInstance: 1,
-                        },
-                        { property: 'due', reverse: true, propertyInstance: 1 },
-                        {
-                            property: 'path',
-                            reverse: false,
-                            propertyInstance: 1,
-                        },
+                        new Sorting('status', true, 1),
+                        new Sorting('due', true, 1),
+                        new Sorting('path', false, 1),
                     ],
                 },
                 [six, five, one, four, three, two],
@@ -276,13 +210,7 @@ describe('Sort', () => {
         expect(
             Sort.by(
                 {
-                    sorting: [
-                        {
-                            property: 'description',
-                            reverse: false,
-                            propertyInstance: 1,
-                        },
-                    ],
+                    sorting: [new Sorting('description', false, 1)],
                 },
                 [two, one, five, four, three],
             ),
@@ -378,13 +306,7 @@ describe('Sort by tags', () => {
         expect(
             Sort.by(
                 {
-                    sorting: [
-                        {
-                            property: 'tag',
-                            reverse: false,
-                            propertyInstance: 1,
-                        },
-                    ],
+                    sorting: [new Sorting('tag', false, 1)],
                 },
                 [t1, t3, t5, t7, t6, t4, t2, t8, t9, t10],
             ),
@@ -409,13 +331,7 @@ describe('Sort by tags', () => {
         expect(
             Sort.by(
                 {
-                    sorting: [
-                        {
-                            property: 'tag',
-                            reverse: true,
-                            propertyInstance: 1,
-                        },
-                    ],
+                    sorting: [new Sorting('tag', true, 1)],
                 },
                 [t1, t3, t5, t7, t6, t4, t2, t8, t9, t10],
             ),
@@ -432,13 +348,7 @@ describe('Sort by tags', () => {
         expect(
             Sort.by(
                 {
-                    sorting: [
-                        {
-                            property: 'tag',
-                            reverse: false,
-                            propertyInstance: 2,
-                        },
-                    ],
+                    sorting: [new Sorting('tag', false, 2)],
                 },
                 [t4, t3, t2, t1, t5],
             ),
@@ -455,13 +365,7 @@ describe('Sort by tags', () => {
         expect(
             Sort.by(
                 {
-                    sorting: [
-                        {
-                            property: 'tag',
-                            reverse: true,
-                            propertyInstance: 2,
-                        },
-                    ],
+                    sorting: [new Sorting('tag', true, 2)],
                 },
                 [t4, t3, t2, t1, t5],
             ),
@@ -492,13 +396,7 @@ describe('Sort by tags', () => {
         expect(
             Sort.by(
                 {
-                    sorting: [
-                        {
-                            property: 'tag',
-                            reverse: false,
-                            propertyInstance: 1,
-                        },
-                    ],
+                    sorting: [new Sorting('tag', false, 1)],
                 },
                 [t1, t12, t3, t13, t5, t7, t6, t4, t2, t8, t9, t10, t11],
             ),
@@ -532,13 +430,7 @@ describe('Sort by tags', () => {
         expect(
             Sort.by(
                 {
-                    sorting: [
-                        {
-                            property: 'tag',
-                            reverse: true,
-                            propertyInstance: 1,
-                        },
-                    ],
+                    sorting: [new Sorting('tag', true, 1)],
                 },
                 [t1, t12, t3, t13, t5, t7, t6, t4, t2, t8, t9, t10, t11],
             ),
@@ -565,13 +457,7 @@ describe('Sort by tags', () => {
         // Act
         const result = Sort.by(
             {
-                sorting: [
-                    {
-                        property: 'tag',
-                        reverse: false,
-                        propertyInstance: 2,
-                    },
-                ],
+                sorting: [new Sorting('tag', false, 2)],
             },
             [t4, t7, t5, t2, t3, t1, t8, t6],
         );
@@ -600,13 +486,7 @@ describe('Sort by tags', () => {
         // Act
         const result = Sort.by(
             {
-                sorting: [
-                    {
-                        property: 'tag',
-                        reverse: true,
-                        propertyInstance: 2,
-                    },
-                ],
+                sorting: [new Sorting('tag', true, 2)],
             },
             [t4, t7, t5, t2, t3, t1, t8, t6],
         );

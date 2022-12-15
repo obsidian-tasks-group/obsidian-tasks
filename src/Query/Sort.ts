@@ -5,6 +5,25 @@ import type { Query, SortingProperty } from './Query';
 
 type Comparator = (a: Task, b: Task) => number;
 
+export class Sorting {
+    public readonly property: SortingProperty;
+    public readonly comparator: Comparator;
+    public readonly reverse: boolean;
+    public readonly propertyInstance: number;
+
+    constructor(property: SortingProperty, reverse: boolean, propertyInstance: number) {
+        this.property = property;
+        this.reverse = reverse;
+        this.propertyInstance = propertyInstance;
+        this.comparator = this.makeComparator();
+    }
+
+    public makeComparator() {
+        const comparator = Sort.comparators[this.property];
+        return this.reverse ? Sort.makeReversedComparator(comparator) : comparator;
+    }
+}
+
 export class Sort {
     static tagPropertyInstance: number = 1;
 
@@ -19,18 +38,17 @@ export class Sort {
 
         const userComparators: Comparator[] = [];
 
-        for (const { property, reverse, propertyInstance } of query.sorting) {
-            const comparator = Sort.comparators[property];
-            userComparators.push(reverse ? Sort.makeReversedComparator(comparator) : comparator);
-            if (property === 'tag') {
-                Sort.tagPropertyInstance = propertyInstance;
+        for (const sorting of query.sorting) {
+            userComparators.push(sorting.comparator);
+            if (sorting.property === 'tag') {
+                Sort.tagPropertyInstance = sorting.propertyInstance;
             }
         }
 
         return tasks.sort(Sort.makeCompositeComparator([...userComparators, ...defaultComparators]));
     }
 
-    private static comparators: Record<SortingProperty, Comparator> = {
+    public static comparators: Record<SortingProperty, Comparator> = {
         urgency: Sort.compareByUrgency,
         description: Sort.compareByDescription,
         priority: Sort.compareByPriority,
@@ -43,7 +61,7 @@ export class Sort {
         tag: Sort.compareByTag,
     };
 
-    private static makeReversedComparator(comparator: Comparator): Comparator {
+    public static makeReversedComparator(comparator: Comparator): Comparator {
         return (a, b) => (comparator(a, b) * -1) as -1 | 0 | 1;
     }
 

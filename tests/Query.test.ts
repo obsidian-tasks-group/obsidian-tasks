@@ -5,6 +5,7 @@ import moment from 'moment';
 import { Query } from '../src/Query/Query';
 import { Priority, Status, Task } from '../src/Task';
 import { resetSettings, updateSettings } from '../src/Config/Settings';
+import { Sorting } from '../src/Query/Sort';
 import { createTasksFromMarkdown, fromLine } from './TestHelpers';
 import { shouldSupportFiltering } from './TestingTools/FilterTestHelpers';
 import type { FilteringCase } from './TestingTools/FilterTestHelpers';
@@ -710,42 +711,22 @@ describe('Query', () => {
     });
 
     describe('sorting instructions', () => {
-        const cases: {
-            input: string;
-            output: {
-                property: string;
-                reverse: boolean;
-                propertyInstance: number;
-            }[];
-        }[] = [
+        const cases: { input: string; output: Sorting[] }[] = [
             {
                 input: 'sort by status',
-                output: [
-                    {
-                        property: 'status',
-                        reverse: false,
-                        propertyInstance: 1,
-                    },
-                ],
+                output: [new Sorting('status', false, 1)],
             },
             {
                 input: 'sort by status\nsort by due',
-                output: [
-                    {
-                        property: 'status',
-                        reverse: false,
-                        propertyInstance: 1,
-                    },
-                    { property: 'due', reverse: false, propertyInstance: 1 },
-                ],
+                output: [new Sorting('status', false, 1), new Sorting('due', false, 1)],
             },
             {
                 input: 'sort by tag',
-                output: [{ property: 'tag', reverse: false, propertyInstance: 1 }],
+                output: [new Sorting('tag', false, 1)],
             },
             {
                 input: 'sort by tag 2',
-                output: [{ property: 'tag', reverse: false, propertyInstance: 2 }],
+                output: [new Sorting('tag', false, 2)],
             },
         ];
         it.concurrent.each(cases)('sorting as %j', ({ input, output }) => {
