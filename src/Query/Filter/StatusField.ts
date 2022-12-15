@@ -23,13 +23,12 @@ export class StatusField extends FilterInstructionsBasedField {
     public parseInstructionAndCreateSorter(line: string): Sorting | undefined {
         const sortByRegexp = /^sort by (status)( reverse)?/;
         const fieldMatch = line.match(sortByRegexp);
-        if (fieldMatch !== null) {
-            // const propertyName = fieldMatch[1];
-            const reverse = !!fieldMatch[2];
-            return this.createSorter(reverse);
-        } else {
+        if (fieldMatch === null) {
             return undefined;
         }
+        // const propertyName = fieldMatch[1];
+        const reverse = !!fieldMatch[2];
+        return this.createSorter(reverse);
     }
 
     /**
