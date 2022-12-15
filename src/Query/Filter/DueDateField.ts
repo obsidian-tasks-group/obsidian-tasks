@@ -28,7 +28,7 @@ export class DueDateField extends DateField {
     }
 
     public createSorter(reverse: boolean): Sorting {
-        return new Sorting(reverse, 1, 'due', this.comparator());
+        return new Sorting(reverse, 1, this.fieldName(), this.comparator());
     }
 
     /**

@@ -20,7 +20,7 @@ export class StatusField extends FilterInstructionsBasedField {
     }
 
     public createSorter(reverse: boolean): Sorting {
-        return new Sorting(reverse, 1, 'status', this.comparator());
+        return new Sorting(reverse, 1, this.fieldName(), this.comparator());
     }
 
     /**
