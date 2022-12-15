@@ -236,21 +236,42 @@ export class Query implements IQuery {
         // TODO Once a few more Field classes have comparator implementations,
         //      convert this to look like Query.parseFilter(),
         //      which will call a new function in FilterParser - parseSorter() or parseSortBy()
-        {
-            const sorter = new StatusField().parseInstructionAndCreateSorter(line);
-            if (sorter) {
-                this._sorting.push(sorter);
-                return true;
-            }
+
+        const sortByRegexp = /^sort by (\S+)( reverse)?/;
+        const fieldMatch = line.match(sortByRegexp);
+        if (fieldMatch === null) {
+            return false;
         }
-        {
-            const sorter = new DueDateField().parseInstructionAndCreateSorter(line);
-            if (sorter) {
-                this._sorting.push(sorter);
-                return true;
-            }
+        const propertyName = fieldMatch[1];
+        const reverse = !!fieldMatch[2];
+
+        let field;
+        switch (propertyName) {
+            case 'status':
+                field = new StatusField();
+                break;
+            case 'due':
+                field = new DueDateField();
+                break;
         }
-        return false;
+
+        if (!field) {
+            return false;
+        }
+
+        let sorter;
+        if (reverse) {
+            sorter = field.createReverseSorter();
+        } else {
+            sorter = field.createNormalSorter();
+        }
+
+        if (!sorter) {
+            return false;
+        }
+
+        this._sorting.push(sorter);
+        return true;
     }
 
     private parseSortBy({ line }: { line: string }): void {

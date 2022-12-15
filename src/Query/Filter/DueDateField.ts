@@ -24,22 +24,6 @@ export class DueDateField extends DateField {
     }
 
     /**
-     * Parse a sort instruction line, creating either a {@link Sorting} object or undefined,
-     * if the line is unrecognised.
-     * @param line - One of 'sort by due' or 'sort by due reverse'
-     */
-    public parseInstructionAndCreateSorter(line: string): Sorting | undefined {
-        const sortByRegexp = /^sort by (due)( reverse)?/;
-        const fieldMatch = line.match(sortByRegexp);
-        if (fieldMatch === null) {
-            return undefined;
-        }
-        // const propertyName = fieldMatch[1];
-        const reverse = !!fieldMatch[2];
-        return this.createSorter(reverse);
-    }
-
-    /**
      * Create a {@link Sorting} object for sorting tasks by their Status,
      * in the standard/normal sort order for this field.
      *
