@@ -8,20 +8,12 @@ import { parseFilter } from './FilterParser';
 import { Group } from './Group';
 import type { Filter } from './Filter/Filter';
 import { StatusField } from './Filter/StatusField';
+import { DueDateField } from './Filter/DueDateField';
 
 // TODO Work through the values in SortingProperty, moving their comparison
 //      functions to the corresponding Field implementations.
 //      Then remove SortingProperty.
-export type SortingProperty =
-    | 'urgency'
-    | 'priority'
-    | 'start'
-    | 'scheduled'
-    | 'due'
-    | 'done'
-    | 'path'
-    | 'description'
-    | 'tag';
+export type SortingProperty = 'urgency' | 'priority' | 'start' | 'scheduled' | 'done' | 'path' | 'description' | 'tag';
 
 export type GroupingProperty =
     | 'backlink'
@@ -55,7 +47,7 @@ export class Query implements IQuery {
     // If a tag is specified the user can also add a number to specify
     // which one to sort by if there is more than one.
     private readonly sortByRegexp =
-        /^sort by (urgency|priority|start|scheduled|due|done|path|description|tag)( reverse)?[\s]*(\d+)?/;
+        /^sort by (urgency|priority|start|scheduled|done|path|description|tag)( reverse)?[\s]*(\d+)?/;
 
     private readonly groupByRegexp =
         /^group by (backlink|done|due|filename|folder|happens|heading|path|priority|recurrence|recurring|root|scheduled|start|status|tags)/;
@@ -240,14 +232,23 @@ export class Query implements IQuery {
 
     private parseSortBy2({ line }: { line: string }): boolean {
         // New style parsing, which is done by the Field classes.
-        // Initially this is only implemented for status.
+        // Initially this is only implemented for a few fields.
         // TODO Once a few more Field classes have comparator implementations,
         //      convert this to look like Query.parseFilter(),
         //      which will call a new function in FilterParser - parseSorter() or parseSortBy()
-        const statusSorter = new StatusField().parseInstructionAndCreateSorter(line);
-        if (statusSorter) {
-            this._sorting.push(statusSorter);
-            return true;
+        {
+            const sorter = new StatusField().parseInstructionAndCreateSorter(line);
+            if (sorter) {
+                this._sorting.push(sorter);
+                return true;
+            }
+        }
+        {
+            const sorter = new DueDateField().parseInstructionAndCreateSorter(line);
+            if (sorter) {
+                this._sorting.push(sorter);
+                return true;
+            }
         }
         return false;
     }
