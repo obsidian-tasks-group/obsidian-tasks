@@ -28,3 +28,26 @@ describe('status', () => {
         testStatusFilter(filter, Status.DONE, false);
     });
 });
+
+describe('sorting by status', () => {
+    const doneTask = new TaskBuilder().status(Status.DONE).build();
+    const todoTask = new TaskBuilder().status(Status.TODO).build();
+
+    it('sort by status', () => {
+        // Arrange
+        const sorter = new StatusField().createSorter('sort by status');
+
+        // Assert
+        expect(sorter).toBeDefined();
+        expect(sorter!.comparator(doneTask, todoTask)).toEqual(1);
+    });
+
+    it('sort by status reverse', () => {
+        // Arrange
+        const sorter = new StatusField().createSorter('sort by status reverse');
+
+        // Assert
+        expect(sorter).toBeDefined();
+        expect(sorter!.comparator(doneTask, todoTask)).toEqual(-1);
+    });
+});
