@@ -238,9 +238,9 @@ export class Query implements IQuery {
         if (fieldMatch !== null) {
             this._sorting.push(
                 new Sorting(
-                    fieldMatch[1] as SortingProperty,
                     !!fieldMatch[2],
                     isNaN(+fieldMatch[3]) ? 1 : +fieldMatch[3],
+                    fieldMatch[1] as SortingProperty,
                 ),
             );
         } else {

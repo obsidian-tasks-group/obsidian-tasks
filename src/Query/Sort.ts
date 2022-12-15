@@ -12,7 +12,7 @@ export class Sorting {
     public readonly reverse: boolean;
     public readonly propertyInstance: number;
 
-    constructor(property: string, reverse: boolean, propertyInstance: number) {
+    constructor(reverse: boolean, propertyInstance: number, property: string) {
         this.property = property;
         this.reverse = reverse;
         this.propertyInstance = propertyInstance;

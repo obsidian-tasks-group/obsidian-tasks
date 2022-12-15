@@ -714,19 +714,19 @@ describe('Query', () => {
         const cases: { input: string; output: Sorting[] }[] = [
             {
                 input: 'sort by status',
-                output: [new Sorting('status', false, 1)],
+                output: [new Sorting(false, 1, 'status')],
             },
             {
                 input: 'sort by status\nsort by due',
-                output: [new Sorting('status', false, 1), new Sorting('due', false, 1)],
+                output: [new Sorting(false, 1, 'status'), new Sorting(false, 1, 'due')],
             },
             {
                 input: 'sort by tag',
-                output: [new Sorting('tag', false, 1)],
+                output: [new Sorting(false, 1, 'tag')],
             },
             {
                 input: 'sort by tag 2',
-                output: [new Sorting('tag', false, 2)],
+                output: [new Sorting(false, 2, 'tag')],
             },
         ];
         it.concurrent.each(cases)('sorting as %j', ({ input, output }) => {
