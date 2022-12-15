@@ -9,23 +9,21 @@ export type Comparator = (a: Task, b: Task) => number;
 export class Sorting {
     public readonly property: string;
     public readonly comparator: Comparator;
-    public readonly reverse: boolean;
     public readonly propertyInstance: number;
 
     constructor(reverse: boolean, propertyInstance: number, property: string, comparator?: Comparator) {
         this.property = property;
-        this.reverse = reverse;
         this.propertyInstance = propertyInstance;
         if (comparator) {
             this.comparator = Sorting.maybeReverse(reverse, comparator);
         } else {
-            this.comparator = this.makeComparator();
+            this.comparator = this.makeComparator(reverse);
         }
     }
 
-    public makeComparator() {
+    public makeComparator(reverse: boolean) {
         const comparator = Sort.comparators[this.property as SortingProperty];
-        return Sorting.maybeReverse(this.reverse, comparator);
+        return Sorting.maybeReverse(reverse, comparator);
     }
 
     private static maybeReverse(reverse: boolean, comparator: (a: Task, b: Task) => number) {
