@@ -39,7 +39,7 @@ export class Sort {
     public static by(query: Pick<Query, 'sorting'>, tasks: Task[]): Task[] {
         const defaultComparators: Comparator[] = [
             Sort.compareByUrgency,
-            Sort.compareByStatus,
+            StatusField.comparator(),
             Sort.compareByDueDate,
             Sort.compareByPriority,
             Sort.compareByPath,

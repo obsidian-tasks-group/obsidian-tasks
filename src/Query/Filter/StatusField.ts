@@ -34,6 +34,19 @@ export class StatusField extends FilterInstructionsBasedField {
         }
     }
 
+    // TODO Eliminate all this duplication!
+    public static comparator(): Comparator {
+        return (a: Task, b: Task) => {
+            if (a.status < b.status) {
+                return 1;
+            } else if (a.status > b.status) {
+                return -1;
+            } else {
+                return 0;
+            }
+        };
+    }
+
     public static compare(a: Task, b: Task): -1 | 0 | 1 {
         if (a.status < b.status) {
             return 1;
