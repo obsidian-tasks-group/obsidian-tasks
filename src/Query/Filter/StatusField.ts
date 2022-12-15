@@ -33,10 +33,30 @@ export class StatusField extends FilterInstructionsBasedField {
     }
 
     /**
+     * Create a {@link Sorting} object for sorting tasks by their Status,
+     * in the standard/normal sort order for this field.
+     *
+     * @see {@link createReverseSorter}
+     */
+    public createNormalSorter(): Sorting {
+        return this.createSorter(false);
+    }
+
+    /**
+     * Create a {@link Sorting} object for sorting tasks by their Status,
+     * in the reverse of the standard/normal sort order for this field.
+     *
+     * @see {@link createNormalSorter}
+     */
+    public createReverseSorter(): Sorting {
+        return this.createSorter(true);
+    }
+
+    /**
      * Create a {@link Sorting} object for sorting tasks by their Status.
      * @param reverse - false for normal sort order, true for reverse sort order.
      */
-    public createSorter(reverse: boolean): Sorting {
+    protected createSorter(reverse: boolean): Sorting {
         return new Sorting(reverse, 1, 'status', StatusField.comparator());
     }
 

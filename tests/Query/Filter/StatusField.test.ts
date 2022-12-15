@@ -35,7 +35,7 @@ describe('sorting by status', () => {
 
     it('sort by status', () => {
         // Arrange
-        const sorter = new StatusField().createSorter(false);
+        const sorter = new StatusField().createNormalSorter();
 
         // Assert
         expect(sorter.comparator(doneTask, todoTask)).toEqual(1);
@@ -43,7 +43,7 @@ describe('sorting by status', () => {
 
     it('sort by status reverse', () => {
         // Arrange
-        const sorter = new StatusField().createSorter(true);
+        const sorter = new StatusField().createReverseSorter();
 
         // Assert
         expect(sorter.comparator(doneTask, todoTask)).toEqual(-1);

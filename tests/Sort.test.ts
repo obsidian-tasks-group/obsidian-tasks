@@ -141,7 +141,7 @@ describe('Sort', () => {
                     sorting: [
                         new Sorting(false, 1, 'due'),
                         new Sorting(false, 1, 'path'),
-                        new StatusField().createSorter(false),
+                        new StatusField().createNormalSorter(),
                     ],
                 },
                 [one, four, two, three],
@@ -221,7 +221,7 @@ describe('Sort', () => {
             Sort.by(
                 {
                     sorting: [
-                        new StatusField().createSorter(true),
+                        new StatusField().createReverseSorter(),
                         new Sorting(true, 1, 'due'),
                         new Sorting(false, 1, 'path'),
                     ],
