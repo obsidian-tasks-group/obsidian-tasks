@@ -18,17 +18,27 @@ export class StatusField extends FilterInstructionsBasedField {
     /**
      * Parse a sort instruction line, creating either a {@link Sorting} object or undefined,
      * if the line is unrecognised.
-     * TODO Separate the parsing of the line and construction of the {@link Sorting} in to two separate methods.
      * @param line - One of 'sort by status' or 'sort by status reverse'
      */
-    public createSorter(line: string): Sorting | undefined {
+    public parseInstructionAndCreateSorter(line: string): Sorting | undefined {
         const sortByRegexp = /^sort by (status)( reverse)?/;
         const fieldMatch = line.match(sortByRegexp);
         if (fieldMatch !== null) {
-            return new Sorting(!!fieldMatch[2], 1, fieldMatch[1], StatusField.comparator());
+            const propertyName = fieldMatch[1];
+            const reverse = !!fieldMatch[2];
+            return this.createSorter(reverse, propertyName);
         } else {
             return undefined;
         }
+    }
+
+    /**
+     * Create a {@link Sorting} object for sorting tasks by their Status.
+     * @param reverse - false for normal sort order, true for reverse sort order.
+     * @param propertyName
+     */
+    public createSorter(reverse: boolean, propertyName: string): Sorting {
+        return new Sorting(reverse, 1, propertyName, StatusField.comparator());
     }
 
     /**

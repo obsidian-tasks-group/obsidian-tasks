@@ -35,7 +35,7 @@ describe('sorting by status', () => {
 
     it('sort by status', () => {
         // Arrange
-        const sorter = new StatusField().createSorter('sort by status');
+        const sorter = new StatusField().parseInstructionAndCreateSorter('sort by status');
 
         // Assert
         expect(sorter).toBeDefined();
@@ -44,7 +44,7 @@ describe('sorting by status', () => {
 
     it('sort by status reverse', () => {
         // Arrange
-        const sorter = new StatusField().createSorter('sort by status reverse');
+        const sorter = new StatusField().parseInstructionAndCreateSorter('sort by status reverse');
 
         // Assert
         expect(sorter).toBeDefined();

@@ -242,7 +242,7 @@ export class Query implements IQuery {
         // TODO Once a few more Field classes have comparator implementations,
         //      convert this to look like Query.parseFilter(),
         //      which will call a new function in FilterParser - parseSorter() or parseSortBy()
-        const statusSorter = new StatusField().createSorter(line);
+        const statusSorter = new StatusField().parseInstructionAndCreateSorter(line);
         if (statusSorter) {
             this._sorting.push(statusSorter);
             return;
