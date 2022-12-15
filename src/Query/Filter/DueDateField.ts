@@ -27,26 +27,6 @@ export class DueDateField extends DateField {
         return true;
     }
 
-    /**
-     * Create a {@link Sorting} object for sorting tasks by their Status,
-     * in the standard/normal sort order for this field.
-     *
-     * @see {@link createReverseSorter}
-     */
-    public createNormalSorter(): Sorting {
-        return this.createSorter(false);
-    }
-
-    /**
-     * Create a {@link Sorting} object for sorting tasks by their Status,
-     * in the reverse of the standard/normal sort order for this field.
-     *
-     * @see {@link createNormalSorter}
-     */
-    public createReverseSorter(): Sorting {
-        return this.createSorter(true);
-    }
-
     public createSorter(reverse: boolean): Sorting {
         return new Sorting(reverse, 1, 'due', this.comparator());
     }
