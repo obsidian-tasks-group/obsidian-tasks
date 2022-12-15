@@ -141,7 +141,7 @@ describe('Sort', () => {
                     sorting: [
                         new Sorting(false, 1, 'due'),
                         new Sorting(false, 1, 'path'),
-                        new StatusField().parseInstructionAndCreateSorter('sort by status')!, // TODO Remove the need to invent a line to write this test
+                        new StatusField().createSorter(false),
                     ],
                 },
                 [one, four, two, three],
@@ -221,7 +221,7 @@ describe('Sort', () => {
             Sort.by(
                 {
                     sorting: [
-                        new StatusField().parseInstructionAndCreateSorter('sort by status reverse')!, // TODO Remove the need to invent a line to write this test
+                        new StatusField().createSorter(true),
                         new Sorting(true, 1, 'due'),
                         new Sorting(false, 1, 'path'),
                     ],
