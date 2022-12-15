@@ -2,7 +2,7 @@ import { LayoutOptions } from '../LayoutOptions';
 import type { Task } from '../Task';
 import type { IQuery } from '../IQuery';
 import { getSettings } from '../Config/Settings';
-import { Sort } from './Sort';
+import { Sort, Sorting } from './Sort';
 import type { TaskGroups } from './TaskGroups';
 import { parseFilter } from './FilterParser';
 import { Group } from './Group';
@@ -19,11 +19,6 @@ export type SortingProperty =
     | 'path'
     | 'description'
     | 'tag';
-type Sorting = {
-    property: SortingProperty;
-    reverse: boolean;
-    propertyInstance: number;
-};
 
 export type GroupingProperty =
     | 'backlink'
@@ -241,11 +236,13 @@ export class Query implements IQuery {
     private parseSortBy({ line }: { line: string }): void {
         const fieldMatch = line.match(this.sortByRegexp);
         if (fieldMatch !== null) {
-            this._sorting.push({
-                property: fieldMatch[1] as SortingProperty,
-                reverse: !!fieldMatch[2],
-                propertyInstance: isNaN(+fieldMatch[3]) ? 1 : +fieldMatch[3],
-            });
+            this._sorting.push(
+                new Sorting(
+                    fieldMatch[1] as SortingProperty,
+                    !!fieldMatch[2],
+                    isNaN(+fieldMatch[3]) ? 1 : +fieldMatch[3],
+                ),
+            );
         } else {
             this._error = 'do not understand query sorting';
         }
