@@ -17,7 +17,7 @@ export class Sorting {
         this.reverse = reverse;
         this.propertyInstance = propertyInstance;
         if (comparator) {
-            this.comparator = comparator;
+            this.comparator = Sorting.maybeReverse(reverse, comparator);
         } else {
             this.comparator = this.makeComparator();
         }
@@ -25,7 +25,11 @@ export class Sorting {
 
     public makeComparator() {
         const comparator = Sort.comparators[this.property as SortingProperty];
-        return this.reverse ? Sort.makeReversedComparator(comparator) : comparator;
+        return Sorting.maybeReverse(this.reverse, comparator);
+    }
+
+    private static maybeReverse(reverse: boolean, comparator: (a: Task, b: Task) => number) {
+        return reverse ? Sort.makeReversedComparator(comparator) : comparator;
     }
 }
 

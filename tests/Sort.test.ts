@@ -24,12 +24,24 @@ describe('Sort', () => {
                 return 0;
             }
         };
-        const sortByDescriptionLength = new Sorting(false, 1, 'junk', comparator);
         const short = new TaskBuilder().description('short').build();
         const long = new TaskBuilder().description('longer description').build();
-        expect(sortByDescriptionLength.comparator(short, short)).toEqual(0);
-        expect(sortByDescriptionLength.comparator(short, long)).toEqual(1);
-        expect(sortByDescriptionLength.comparator(long, short)).toEqual(-1);
+
+        // Normal way round
+        {
+            const sortByDescriptionLength = new Sorting(false, 1, 'junk', comparator);
+            expect(sortByDescriptionLength.comparator(short, long)).toEqual(1);
+            expect(sortByDescriptionLength.comparator(short, short)).toEqual(0);
+            expect(sortByDescriptionLength.comparator(long, short)).toEqual(-1);
+        }
+
+        // Reversed
+        {
+            const sortByDescriptionLength = new Sorting(true, 1, 'junk', comparator);
+            expect(sortByDescriptionLength.comparator(short, long)).toEqual(-1);
+            expect(sortByDescriptionLength.comparator(short, short)).toEqual(-0);
+            expect(sortByDescriptionLength.comparator(long, short)).toEqual(1);
+        }
     });
 
     it('sorts correctly by default order', () => {
