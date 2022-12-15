@@ -66,7 +66,6 @@ export class Sort {
         due: Sort.compareByDueDate,
         done: Sort.compareByDoneDate,
         path: Sort.compareByPath,
-        status: Sort.compareByStatus,
         tag: Sort.compareByTag,
     };
 
@@ -90,10 +89,6 @@ export class Sort {
     private static compareByUrgency(a: Task, b: Task): number {
         // Higher urgency should be sorted earlier.
         return b.urgency - a.urgency;
-    }
-
-    private static compareByStatus(a: Task, b: Task): number {
-        return StatusField.comparator()(a, b);
     }
 
     private static compareByPriority(a: Task, b: Task): number {

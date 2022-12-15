@@ -10,6 +10,7 @@ import { Sort, Sorting } from '../src/Query/Sort';
 import { resetSettings, updateSettings } from '../src/Config/Settings';
 import { DateParser } from '../src/Query/DateParser';
 import type { Task } from '../src/Task';
+import { StatusField } from '../src/Query/Filter/StatusField';
 import { fromLine } from './TestHelpers';
 import { TaskBuilder } from './TestingTools/TaskBuilder';
 
@@ -134,7 +135,7 @@ describe('Sort', () => {
                     sorting: [
                         new Sorting(false, 1, 'due'),
                         new Sorting(false, 1, 'path'),
-                        new Sorting(false, 1, 'status'),
+                        new StatusField().createSorter('sort by status')!,
                     ],
                 },
                 [one, four, two, three],
@@ -212,7 +213,7 @@ describe('Sort', () => {
             Sort.by(
                 {
                     sorting: [
-                        new Sorting(true, 1, 'status'),
+                        new StatusField().createSorter('sort by status reverse')!,
                         new Sorting(true, 1, 'due'),
                         new Sorting(false, 1, 'path'),
                     ],

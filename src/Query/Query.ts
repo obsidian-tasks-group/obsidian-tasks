@@ -7,10 +7,10 @@ import type { TaskGroups } from './TaskGroups';
 import { parseFilter } from './FilterParser';
 import { Group } from './Group';
 import type { Filter } from './Filter/Filter';
+import { StatusField } from './Filter/StatusField';
 
 export type SortingProperty =
     | 'urgency'
-    | 'status'
     | 'priority'
     | 'start'
     | 'scheduled'
@@ -234,6 +234,12 @@ export class Query implements IQuery {
     }
 
     private parseSortBy({ line }: { line: string }): void {
+        const statusSorter = new StatusField().createSorter(line);
+        if (statusSorter) {
+            this._sorting.push(statusSorter);
+            return;
+        }
+
         const fieldMatch = line.match(this.sortByRegexp);
         if (fieldMatch !== null) {
             this._sorting.push(
