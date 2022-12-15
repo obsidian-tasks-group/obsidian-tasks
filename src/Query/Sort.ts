@@ -7,12 +7,12 @@ import { StatusField } from './Filter/StatusField';
 type Comparator = (a: Task, b: Task) => number;
 
 export class Sorting {
-    public readonly property: SortingProperty;
+    public readonly property: string;
     public readonly comparator: Comparator;
     public readonly reverse: boolean;
     public readonly propertyInstance: number;
 
-    constructor(property: SortingProperty, reverse: boolean, propertyInstance: number) {
+    constructor(property: string, reverse: boolean, propertyInstance: number) {
         this.property = property;
         this.reverse = reverse;
         this.propertyInstance = propertyInstance;
@@ -20,7 +20,7 @@ export class Sorting {
     }
 
     public makeComparator() {
-        const comparator = Sort.comparators[this.property];
+        const comparator = Sort.comparators[this.property as SortingProperty];
         return this.reverse ? Sort.makeReversedComparator(comparator) : comparator;
     }
 }
