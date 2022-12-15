@@ -15,6 +15,10 @@ export class StatusField extends FilterInstructionsBasedField {
         return 'status';
     }
 
+    public supportsSorting(): boolean {
+        return true;
+    }
+
     /**
      * Create a {@link Sorting} object for sorting tasks by their Status,
      * in the standard/normal sort order for this field.
@@ -35,11 +39,7 @@ export class StatusField extends FilterInstructionsBasedField {
         return this.createSorter(true);
     }
 
-    /**
-     * Create a {@link Sorting} object for sorting tasks by their Status.
-     * @param reverse - false for normal sort order, true for reverse sort order.
-     */
-    protected createSorter(reverse: boolean): Sorting {
+    public createSorter(reverse: boolean): Sorting {
         return new Sorting(reverse, 1, 'status', this.comparator());
     }
 

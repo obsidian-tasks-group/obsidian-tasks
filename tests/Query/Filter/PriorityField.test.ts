@@ -123,3 +123,11 @@ describe('explain priority', () => {
         expect(filterOrMessage).toHaveExplanation('priority is high');
     });
 });
+
+describe('sorting by priority', () => {
+    it('supports Field sorting methods correctly', () => {
+        const field = new PriorityField();
+        // Not yet supported
+        expect(field.supportsSorting()).toEqual(false);
+    });
+});

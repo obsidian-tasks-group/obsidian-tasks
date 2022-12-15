@@ -60,6 +60,11 @@ describe('sorting by status', () => {
     const date1 = new TaskBuilder().dueDate('2021-01-12').build();
     const date2 = new TaskBuilder().dueDate('2022-12-23').build();
 
+    it('supports Field sorting methods correctly', () => {
+        const field = new DueDateField();
+        expect(field.supportsSorting()).toEqual(true);
+    });
+
     it('sort by due', () => {
         // Arrange
         const sorter = new DueDateField().createNormalSorter();
