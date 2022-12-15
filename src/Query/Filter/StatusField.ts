@@ -24,9 +24,9 @@ export class StatusField extends FilterInstructionsBasedField {
         const sortByRegexp = /^sort by (status)( reverse)?/;
         const fieldMatch = line.match(sortByRegexp);
         if (fieldMatch !== null) {
-            const propertyName = fieldMatch[1];
+            // const propertyName = fieldMatch[1];
             const reverse = !!fieldMatch[2];
-            return this.createSorter(reverse, propertyName);
+            return this.createSorter(reverse);
         } else {
             return undefined;
         }
@@ -35,10 +35,9 @@ export class StatusField extends FilterInstructionsBasedField {
     /**
      * Create a {@link Sorting} object for sorting tasks by their Status.
      * @param reverse - false for normal sort order, true for reverse sort order.
-     * @param propertyName
      */
-    public createSorter(reverse: boolean, propertyName: string): Sorting {
-        return new Sorting(reverse, 1, propertyName, StatusField.comparator());
+    public createSorter(reverse: boolean): Sorting {
+        return new Sorting(reverse, 1, 'status', StatusField.comparator());
     }
 
     /**
