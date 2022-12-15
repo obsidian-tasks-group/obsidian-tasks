@@ -4,7 +4,7 @@ import { getSettings } from '../Config/Settings';
 import type { Query, SortingProperty } from './Query';
 import { StatusField } from './Filter/StatusField';
 
-type Comparator = (a: Task, b: Task) => number;
+export type Comparator = (a: Task, b: Task) => number;
 
 export class Sorting {
     public readonly property: string;
@@ -12,11 +12,15 @@ export class Sorting {
     public readonly reverse: boolean;
     public readonly propertyInstance: number;
 
-    constructor(reverse: boolean, propertyInstance: number, property: string) {
+    constructor(reverse: boolean, propertyInstance: number, property: string, comparator?: Comparator) {
         this.property = property;
         this.reverse = reverse;
         this.propertyInstance = propertyInstance;
-        this.comparator = this.makeComparator();
+        if (comparator) {
+            this.comparator = comparator;
+        } else {
+            this.comparator = this.makeComparator();
+        }
     }
 
     public makeComparator() {

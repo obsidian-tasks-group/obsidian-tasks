@@ -5,12 +5,33 @@ import moment from 'moment';
 
 window.moment = moment;
 
+import type { Comparator } from '../src/Query/Sort';
 import { Sort, Sorting } from '../src/Query/Sort';
 import { resetSettings, updateSettings } from '../src/Config/Settings';
 import { DateParser } from '../src/Query/DateParser';
+import type { Task } from '../src/Task';
 import { fromLine } from './TestHelpers';
+import { TaskBuilder } from './TestingTools/TaskBuilder';
 
 describe('Sort', () => {
+    it('constructs Sorting from Comparator function', () => {
+        const comparator: Comparator = (a: Task, b: Task) => {
+            if (a.description.length < b.description.length) {
+                return 1;
+            } else if (a.description.length > b.description.length) {
+                return -1;
+            } else {
+                return 0;
+            }
+        };
+        const sortByDescriptionLength = new Sorting(false, 1, 'junk', comparator);
+        const short = new TaskBuilder().description('short').build();
+        const long = new TaskBuilder().description('longer description').build();
+        expect(sortByDescriptionLength.comparator(short, short)).toEqual(0);
+        expect(sortByDescriptionLength.comparator(short, long)).toEqual(1);
+        expect(sortByDescriptionLength.comparator(long, short)).toEqual(-1);
+    });
+
     it('sorts correctly by default order', () => {
         const one = fromLine({ line: '- [ ] a 📅 1970-01-01', path: '3' });
         const two = fromLine({ line: '- [ ] c 📅 1970-01-02', path: '3' });
