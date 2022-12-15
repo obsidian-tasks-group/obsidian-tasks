@@ -11,6 +11,7 @@ import { resetSettings, updateSettings } from '../src/Config/Settings';
 import { DateParser } from '../src/Query/DateParser';
 import type { Task } from '../src/Task';
 import { StatusField } from '../src/Query/Filter/StatusField';
+import { DueDateField } from '../src/Query/Filter/DueDateField';
 import { fromLine } from './TestHelpers';
 import { TaskBuilder } from './TestingTools/TaskBuilder';
 
@@ -60,38 +61,6 @@ describe('Sort', () => {
     //      is in a Field class, and the Field's tests exercise the particular sorting.
     //      Then the only testing needed here will probably be the testing of composite sorting.
 
-    // TODO Replace this with something simpler but equivalent in DueDateField.test.ts.
-    it('sorts correctly by due', () => {
-        const one = fromLine({
-            line: '- [x] bring out the trash 📅 2021-09-12',
-            path: '',
-        });
-        const two = fromLine({
-            line: '- [ ] pet the cat 📅 2021-09-15',
-            path: '',
-        });
-        const three = fromLine({
-            line: '- [ ] pet the cat 📅 2021-09-18',
-            path: '',
-        });
-        expect(
-            Sort.by(
-                {
-                    sorting: [new Sorting(false, 1, 'due')],
-                },
-                [one, two, three],
-            ),
-        ).toEqual([one, two, three]);
-        expect(
-            Sort.by(
-                {
-                    sorting: [new Sorting(false, 1, 'due')],
-                },
-                [two, three, one],
-            ),
-        ).toEqual([one, two, three]);
-    });
-
     // TODO Replace this with something simpler but equivalent in DoneDateField.test.ts.
     it('sorts correctly by done', () => {
         const one = fromLine({
@@ -139,9 +108,9 @@ describe('Sort', () => {
             Sort.by(
                 {
                     sorting: [
-                        new Sorting(false, 1, 'due'),
+                        new DueDateField().createNormalSorter(),
                         new Sorting(false, 1, 'path'),
-                        new StatusField().createSorter('sort by status')!, // TODO Remove the need to invent a line to write this test
+                        new StatusField().createNormalSorter(),
                     ],
                 },
                 [one, four, two, three],
@@ -221,8 +190,8 @@ describe('Sort', () => {
             Sort.by(
                 {
                     sorting: [
-                        new StatusField().createSorter('sort by status reverse')!, // TODO Remove the need to invent a line to write this test
-                        new Sorting(true, 1, 'due'),
+                        new StatusField().createReverseSorter(),
+                        new DueDateField().createReverseSorter(),
                         new Sorting(false, 1, 'path'),
                     ],
                 },

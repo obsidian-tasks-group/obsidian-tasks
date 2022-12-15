@@ -2,7 +2,9 @@ import type moment from 'moment';
 import type { Task } from '../Task';
 import { getSettings } from '../Config/Settings';
 import type { Query, SortingProperty } from './Query';
-import { StatusField } from './Filter/StatusField'; // TODO Remove the cylcing dependency between StatusField and Sort.
+// TODO Remove the cyclic dependency between StatusField and Sort.
+import { StatusField } from './Filter/StatusField';
+import { DueDateField } from './Filter/DueDateField';
 
 /**
  * A sorting function, that takes two Task objects and returns
@@ -55,6 +57,9 @@ export class Sorting {
      */
     public makeComparator(reverse: boolean) {
         const comparator = Sort.comparators[this.property as SortingProperty];
+        if (!comparator) {
+            throw Error('Unrecognised legacy sort keyword: ' + this.property);
+        }
         return Sorting.maybeReverse(reverse, comparator);
     }
 
@@ -70,7 +75,7 @@ export class Sort {
         const defaultComparators: Comparator[] = [
             Sort.compareByUrgency,
             StatusField.comparator(),
-            Sort.compareByDueDate,
+            DueDateField.comparator(),
             Sort.compareByPriority,
             Sort.compareByPath,
         ];
@@ -93,7 +98,6 @@ export class Sort {
         priority: Sort.compareByPriority,
         start: Sort.compareByStartDate,
         scheduled: Sort.compareByScheduledDate,
-        due: Sort.compareByDueDate,
         done: Sort.compareByDoneDate,
         path: Sort.compareByPath,
         tag: Sort.compareByTag,
@@ -131,10 +135,6 @@ export class Sort {
 
     private static compareByScheduledDate(a: Task, b: Task): -1 | 0 | 1 {
         return Sort.compareByDate(a.scheduledDate, b.scheduledDate);
-    }
-
-    private static compareByDueDate(a: Task, b: Task): -1 | 0 | 1 {
-        return Sort.compareByDate(a.dueDate, b.dueDate);
     }
 
     private static compareByDoneDate(a: Task, b: Task): -1 | 0 | 1 {
