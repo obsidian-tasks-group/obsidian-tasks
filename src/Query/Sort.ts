@@ -2,25 +2,64 @@ import type moment from 'moment';
 import type { Task } from '../Task';
 import { getSettings } from '../Config/Settings';
 import type { Query, SortingProperty } from './Query';
+import { StatusField } from './Filter/StatusField'; // TODO Remove the cylcing dependency between StatusField and Sort.
 
-type Comparator = (a: Task, b: Task) => number;
+/**
+ * A sorting function, that takes two Task objects and returns
+ * and returns one of:
+ * - `-1` or some other negative number, if a is less than b by some ordering criterion.
+ * - `+1` or some other positive number, if a is greater than b by the ordering criterion.
+ * - `0` or sometimes `-0`, if a equals b by the ordering criterion.
+ *
+ * Typically Comparator functions are stored in a {@link Sorting} object.
+ */
+export type Comparator = (a: Task, b: Task) => number;
 
+/**
+ * Sorting represents a single 'sort by' instruction.
+ * It stores the comparison function as a {@link Comparator}.
+ */
 export class Sorting {
-    public readonly property: SortingProperty;
+    public readonly property: string;
     public readonly comparator: Comparator;
-    public readonly reverse: boolean;
     public readonly propertyInstance: number;
 
-    constructor(property: SortingProperty, reverse: boolean, propertyInstance: number) {
+    /**
+     * Constructor.
+     *
+     * TODO Once SortingProperty has been removed, re-order the parameters so the comparator comes first.
+     *
+     * @param reverse - whether the sort order should be reversed.
+     * @param propertyInstance - for tag sorting, this is a 1-based index for the tag number in the task to sort by.
+     *                           TODO eventually, move this number to the comparator used for sorting by tag.
+     * @param property - the name of the property. If {@link comparator} is not supplied, this string must match
+     *                   one of the values in ${@link SortingProperty}.
+     * @param comparator - optional {@link Comparator} function. This will eventually become required, and will then be moved to
+     *                     the first parameter.
+     */
+    constructor(reverse: boolean, propertyInstance: number, property: string, comparator?: Comparator) {
         this.property = property;
-        this.reverse = reverse;
         this.propertyInstance = propertyInstance;
-        this.comparator = this.makeComparator();
+        if (comparator) {
+            this.comparator = Sorting.maybeReverse(reverse, comparator);
+        } else {
+            this.comparator = this.makeComparator(reverse);
+        }
     }
 
-    public makeComparator() {
-        const comparator = Sort.comparators[this.property];
-        return this.reverse ? Sort.makeReversedComparator(comparator) : comparator;
+    /**
+     * Legacy function, for creating a Comparator for a SortingProperty value.
+     *
+     * TODO Once SortingProperty in Query.ts has been removed, remove this method.
+     * @param reverse
+     */
+    public makeComparator(reverse: boolean) {
+        const comparator = Sort.comparators[this.property as SortingProperty];
+        return Sorting.maybeReverse(reverse, comparator);
+    }
+
+    private static maybeReverse(reverse: boolean, comparator: Comparator) {
+        return reverse ? Sort.makeReversedComparator(comparator) : comparator;
     }
 }
 
@@ -30,7 +69,7 @@ export class Sort {
     public static by(query: Pick<Query, 'sorting'>, tasks: Task[]): Task[] {
         const defaultComparators: Comparator[] = [
             Sort.compareByUrgency,
-            Sort.compareByStatus,
+            StatusField.comparator(),
             Sort.compareByDueDate,
             Sort.compareByPriority,
             Sort.compareByPath,
@@ -57,11 +96,11 @@ export class Sort {
         due: Sort.compareByDueDate,
         done: Sort.compareByDoneDate,
         path: Sort.compareByPath,
-        status: Sort.compareByStatus,
         tag: Sort.compareByTag,
     };
 
     public static makeReversedComparator(comparator: Comparator): Comparator {
+        // Note: This can return -0.
         return (a, b) => (comparator(a, b) * -1) as -1 | 0 | 1;
     }
 
@@ -80,16 +119,6 @@ export class Sort {
     private static compareByUrgency(a: Task, b: Task): number {
         // Higher urgency should be sorted earlier.
         return b.urgency - a.urgency;
-    }
-
-    private static compareByStatus(a: Task, b: Task): -1 | 0 | 1 {
-        if (a.status < b.status) {
-            return 1;
-        } else if (a.status > b.status) {
-            return -1;
-        } else {
-            return 0;
-        }
     }
 
     private static compareByPriority(a: Task, b: Task): number {

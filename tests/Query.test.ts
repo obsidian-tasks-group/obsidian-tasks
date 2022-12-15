@@ -5,10 +5,10 @@ import moment from 'moment';
 import { Query } from '../src/Query/Query';
 import { Priority, Status, Task } from '../src/Task';
 import { resetSettings, updateSettings } from '../src/Config/Settings';
-import { Sorting } from '../src/Query/Sort';
 import { createTasksFromMarkdown, fromLine } from './TestHelpers';
 import { shouldSupportFiltering } from './TestingTools/FilterTestHelpers';
 import type { FilteringCase } from './TestingTools/FilterTestHelpers';
+import { TaskBuilder } from './TestingTools/TaskBuilder';
 
 window.moment = moment;
 
@@ -710,31 +710,26 @@ describe('Query', () => {
         });
     });
 
-    describe('sorting instructions', () => {
-        const cases: { input: string; output: Sorting[] }[] = [
-            {
-                input: 'sort by status',
-                output: [new Sorting('status', false, 1)],
-            },
-            {
-                input: 'sort by status\nsort by due',
-                output: [new Sorting('status', false, 1), new Sorting('due', false, 1)],
-            },
-            {
-                input: 'sort by tag',
-                output: [new Sorting('tag', false, 1)],
-            },
-            {
-                input: 'sort by tag 2',
-                output: [new Sorting('tag', false, 2)],
-            },
-        ];
-        it.concurrent.each(cases)('sorting as %j', ({ input, output }) => {
-            const query = new Query({ source: input });
+    describe('sorting', () => {
+        const doneTask = new TaskBuilder().status(Status.DONE).build();
+        const todoTask = new TaskBuilder().status(Status.TODO).build();
 
-            expect(query.sorting).toEqual(output);
+        it('sort reverse returns -0 for equal tasks', () => {
+            // This test was added when I discovered that reverse sort returns
+            // -0 for equivalent tasks.
+            // This is a test to demonstrate that current behevaiour,
+            // rather than a test of the **required** behaviour.
+            // If the behaviour changes and '0' is returned instead of '-0',
+            // that is absolutely fine.
+            const query = new Query({ source: 'sort by status reverse' });
+            const sorter = query.sorting[0];
+
+            expect(sorter!.comparator(todoTask, doneTask)).toEqual(1);
+            expect(sorter!.comparator(doneTask, doneTask)).toEqual(-0); // Note the minus sign. It's a consequence of
+            expect(sorter!.comparator(doneTask, todoTask)).toEqual(-1);
         });
     });
+
     describe('comments', () => {
         it('ignores comments', () => {
             // Arrange

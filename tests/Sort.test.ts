@@ -5,12 +5,46 @@ import moment from 'moment';
 
 window.moment = moment;
 
+import type { Comparator } from '../src/Query/Sort';
 import { Sort, Sorting } from '../src/Query/Sort';
 import { resetSettings, updateSettings } from '../src/Config/Settings';
 import { DateParser } from '../src/Query/DateParser';
+import type { Task } from '../src/Task';
+import { StatusField } from '../src/Query/Filter/StatusField';
 import { fromLine } from './TestHelpers';
+import { TaskBuilder } from './TestingTools/TaskBuilder';
 
 describe('Sort', () => {
+    it('constructs Sorting both ways from Comparator function', () => {
+        const comparator: Comparator = (a: Task, b: Task) => {
+            if (a.description.length < b.description.length) {
+                return 1;
+            } else if (a.description.length > b.description.length) {
+                return -1;
+            } else {
+                return 0;
+            }
+        };
+        const short = new TaskBuilder().description('short').build();
+        const long = new TaskBuilder().description('longer description').build();
+
+        // Normal way round
+        {
+            const sortByDescriptionLength = new Sorting(false, 1, 'junk', comparator);
+            expect(sortByDescriptionLength.comparator(short, long)).toEqual(1);
+            expect(sortByDescriptionLength.comparator(short, short)).toEqual(0);
+            expect(sortByDescriptionLength.comparator(long, short)).toEqual(-1);
+        }
+
+        // Reversed
+        {
+            const sortByDescriptionLength = new Sorting(true, 1, 'junk', comparator);
+            expect(sortByDescriptionLength.comparator(short, long)).toEqual(-1);
+            expect(sortByDescriptionLength.comparator(short, short)).toEqual(-0);
+            expect(sortByDescriptionLength.comparator(long, short)).toEqual(1);
+        }
+    });
+
     it('sorts correctly by default order', () => {
         const one = fromLine({ line: '- [ ] a 📅 1970-01-01', path: '3' });
         const two = fromLine({ line: '- [ ] c 📅 1970-01-02', path: '3' });
@@ -22,6 +56,11 @@ describe('Sort', () => {
         expect(Sort.by({ sorting: [] }, [six, five, one, four, two, three])).toEqual(expectedOrder);
     });
 
+    // TODO Most of these will become redundant once each of the sort implementations
+    //      is in a Field class, and the Field's tests exercise the particular sorting.
+    //      Then the only testing needed here will probably be the testing of composite sorting.
+
+    // TODO Replace this with something simpler but equivalent in DueDateField.test.ts.
     it('sorts correctly by due', () => {
         const one = fromLine({
             line: '- [x] bring out the trash 📅 2021-09-12',
@@ -38,7 +77,7 @@ describe('Sort', () => {
         expect(
             Sort.by(
                 {
-                    sorting: [new Sorting('due', false, 1)],
+                    sorting: [new Sorting(false, 1, 'due')],
                 },
                 [one, two, three],
             ),
@@ -46,13 +85,14 @@ describe('Sort', () => {
         expect(
             Sort.by(
                 {
-                    sorting: [new Sorting('due', false, 1)],
+                    sorting: [new Sorting(false, 1, 'due')],
                 },
                 [two, three, one],
             ),
         ).toEqual([one, two, three]);
     });
 
+    // TODO Replace this with something simpler but equivalent in DoneDateField.test.ts.
     it('sorts correctly by done', () => {
         const one = fromLine({
             line: '- [x] pet the cat 📅 2021-09-15 ✅ 2021-09-15',
@@ -69,7 +109,7 @@ describe('Sort', () => {
         expect(
             Sort.by(
                 {
-                    sorting: [new Sorting('done', false, 1)],
+                    sorting: [new Sorting(false, 1, 'done')],
                 },
                 [three, two, one],
             ),
@@ -77,7 +117,7 @@ describe('Sort', () => {
         expect(
             Sort.by(
                 {
-                    sorting: [new Sorting('done', false, 1)],
+                    sorting: [new Sorting(false, 1, 'done')],
                 },
                 [two, one, three],
             ),
@@ -99,9 +139,9 @@ describe('Sort', () => {
             Sort.by(
                 {
                     sorting: [
-                        new Sorting('due', false, 1),
-                        new Sorting('path', false, 1),
-                        new Sorting('status', false, 1),
+                        new Sorting(false, 1, 'due'),
+                        new Sorting(false, 1, 'path'),
+                        new StatusField().createSorter('sort by status')!, // TODO Remove the need to invent a line to write this test
                     ],
                 },
                 [one, four, two, three],
@@ -109,6 +149,7 @@ describe('Sort', () => {
         ).toEqual(expectedOrder);
     });
 
+    // TODO Replace this with something simpler but equivalent in DescriptionField.test.ts.
     it('sorts correctly by description, done', () => {
         const one = fromLine({
             line: '- [ ] a 📅 1970-01-02 ✅ 1971-01-01',
@@ -130,13 +171,14 @@ describe('Sort', () => {
         expect(
             Sort.by(
                 {
-                    sorting: [new Sorting('description', false, 1), new Sorting('done', false, 1)],
+                    sorting: [new Sorting(false, 1, 'description'), new Sorting(false, 1, 'done')],
                 },
                 [three, one, two, four],
             ),
         ).toEqual(expectedOrder);
     });
 
+    // TODO Replace this with something simpler but equivalent in DescriptionField.test.ts.
     it('sorts correctly by description reverse, done', () => {
         const one = fromLine({
             line: '- [ ] b 📅 1970-01-01 ✅ 1971-01-01',
@@ -158,7 +200,7 @@ describe('Sort', () => {
         expect(
             Sort.by(
                 {
-                    sorting: [new Sorting('description', true, 1), new Sorting('done', false, 1)],
+                    sorting: [new Sorting(true, 1, 'description'), new Sorting(false, 1, 'done')],
                 },
                 [two, four, three, one],
             ),
@@ -179,9 +221,9 @@ describe('Sort', () => {
             Sort.by(
                 {
                     sorting: [
-                        new Sorting('status', true, 1),
-                        new Sorting('due', true, 1),
-                        new Sorting('path', false, 1),
+                        new StatusField().createSorter('sort by status reverse')!, // TODO Remove the need to invent a line to write this test
+                        new Sorting(true, 1, 'due'),
+                        new Sorting(false, 1, 'path'),
                     ],
                 },
                 [six, five, one, four, three, two],
@@ -189,6 +231,7 @@ describe('Sort', () => {
         ).toEqual(expectedOrder);
     });
 
+    // TODO Replace this with something simpler but equivalent in DescriptionField.test.ts.
     it('sorts correctly by the link name and not the markdown', () => {
         const one = fromLine({
             line: '- [ ] *ZZZ An early task that starts with an A; actually not italic since only one asterisk',
@@ -210,7 +253,7 @@ describe('Sort', () => {
         expect(
             Sort.by(
                 {
-                    sorting: [new Sorting('description', false, 1)],
+                    sorting: [new Sorting(false, 1, 'description')],
                 },
                 [two, one, five, four, three],
             ),
@@ -249,6 +292,7 @@ declare global {
 }
 
 // These are lower-level tests that the Task-based ones above, for ease of test coverage.
+// TODO Replace this with something simpler but equivalent in the tests for DateField.test.ts.
 describe('compareBy', () => {
     it('compares correctly by date', () => {
         const equal = 0;
@@ -287,6 +331,7 @@ describe('compareBy', () => {
  * There is also a task with additional characters in the name to ensure it is seen
  * as bigger that one with the same initial characters.
  */
+// TODO Replace this with something simpler but equivalent in TagsField.test.ts.
 describe('Sort by tags', () => {
     it('should sort correctly by tag defaulting to first with no global filter', () => {
         // Arrange
@@ -306,7 +351,7 @@ describe('Sort by tags', () => {
         expect(
             Sort.by(
                 {
-                    sorting: [new Sorting('tag', false, 1)],
+                    sorting: [new Sorting(false, 1, 'tag')],
                 },
                 [t1, t3, t5, t7, t6, t4, t2, t8, t9, t10],
             ),
@@ -331,7 +376,7 @@ describe('Sort by tags', () => {
         expect(
             Sort.by(
                 {
-                    sorting: [new Sorting('tag', true, 1)],
+                    sorting: [new Sorting(true, 1, 'tag')],
                 },
                 [t1, t3, t5, t7, t6, t4, t2, t8, t9, t10],
             ),
@@ -348,7 +393,7 @@ describe('Sort by tags', () => {
         expect(
             Sort.by(
                 {
-                    sorting: [new Sorting('tag', false, 2)],
+                    sorting: [new Sorting(false, 2, 'tag')],
                 },
                 [t4, t3, t2, t1, t5],
             ),
@@ -365,7 +410,7 @@ describe('Sort by tags', () => {
         expect(
             Sort.by(
                 {
-                    sorting: [new Sorting('tag', true, 2)],
+                    sorting: [new Sorting(true, 2, 'tag')],
                 },
                 [t4, t3, t2, t1, t5],
             ),
@@ -396,7 +441,7 @@ describe('Sort by tags', () => {
         expect(
             Sort.by(
                 {
-                    sorting: [new Sorting('tag', false, 1)],
+                    sorting: [new Sorting(false, 1, 'tag')],
                 },
                 [t1, t12, t3, t13, t5, t7, t6, t4, t2, t8, t9, t10, t11],
             ),
@@ -430,7 +475,7 @@ describe('Sort by tags', () => {
         expect(
             Sort.by(
                 {
-                    sorting: [new Sorting('tag', true, 1)],
+                    sorting: [new Sorting(true, 1, 'tag')],
                 },
                 [t1, t12, t3, t13, t5, t7, t6, t4, t2, t8, t9, t10, t11],
             ),
@@ -457,7 +502,7 @@ describe('Sort by tags', () => {
         // Act
         const result = Sort.by(
             {
-                sorting: [new Sorting('tag', false, 2)],
+                sorting: [new Sorting(false, 2, 'tag')],
             },
             [t4, t7, t5, t2, t3, t1, t8, t6],
         );
@@ -486,7 +531,7 @@ describe('Sort by tags', () => {
         // Act
         const result = Sort.by(
             {
-                sorting: [new Sorting('tag', true, 2)],
+                sorting: [new Sorting(true, 2, 'tag')],
             },
             [t4, t7, t5, t2, t3, t1, t8, t6],
         );
