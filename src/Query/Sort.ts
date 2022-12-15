@@ -92,8 +92,8 @@ export class Sort {
         return b.urgency - a.urgency;
     }
 
-    private static compareByStatus(a: Task, b: Task): -1 | 0 | 1 {
-        return StatusField.compare(a, b);
+    private static compareByStatus(a: Task, b: Task): number {
+        return StatusField.comparator()(a, b);
     }
 
     private static compareByPriority(a: Task, b: Task): number {
