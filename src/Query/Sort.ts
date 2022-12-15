@@ -26,7 +26,7 @@ export class Sorting {
         return Sorting.maybeReverse(reverse, comparator);
     }
 
-    private static maybeReverse(reverse: boolean, comparator: (a: Task, b: Task) => number) {
+    private static maybeReverse(reverse: boolean, comparator: Comparator) {
         return reverse ? Sort.makeReversedComparator(comparator) : comparator;
     }
 }
