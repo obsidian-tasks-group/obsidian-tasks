@@ -67,6 +67,7 @@ export class Sort {
     };
 
     public static makeReversedComparator(comparator: Comparator): Comparator {
+        // Note: This can return -0.
         return (a, b) => (comparator(a, b) * -1) as -1 | 0 | 1;
     }
 

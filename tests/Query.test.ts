@@ -9,6 +9,7 @@ import { Sorting } from '../src/Query/Sort';
 import { createTasksFromMarkdown, fromLine } from './TestHelpers';
 import { shouldSupportFiltering } from './TestingTools/FilterTestHelpers';
 import type { FilteringCase } from './TestingTools/FilterTestHelpers';
+import { TaskBuilder } from './TestingTools/TaskBuilder';
 
 window.moment = moment;
 
@@ -735,6 +736,21 @@ describe('Query', () => {
             expect(query.sorting).toEqual(output);
         });
     });
+
+    describe('sorting', () => {
+        const doneTask = new TaskBuilder().status(Status.DONE).build();
+        const todoTask = new TaskBuilder().status(Status.TODO).build();
+
+        it('sort by status reverse', () => {
+            const query = new Query({ source: 'sort by status reverse' });
+            const sorter = query.sorting[0];
+
+            expect(sorter!.comparator(todoTask, doneTask)).toEqual(1);
+            expect(sorter!.comparator(doneTask, doneTask)).toEqual(-0); // Note the minus sign. It's a consquence of
+            expect(sorter!.comparator(doneTask, todoTask)).toEqual(-1);
+        });
+    });
+
     describe('comments', () => {
         it('ignores comments', () => {
             // Arrange
