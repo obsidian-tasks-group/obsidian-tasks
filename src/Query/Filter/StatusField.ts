@@ -12,4 +12,14 @@ export class StatusField extends FilterInstructionsBasedField {
     public fieldName(): string {
         return 'status';
     }
+
+    public static compare(a: Task, b: Task): -1 | 0 | 1 {
+        if (a.status < b.status) {
+            return 1;
+        } else if (a.status > b.status) {
+            return -1;
+        } else {
+            return 0;
+        }
+    }
 }

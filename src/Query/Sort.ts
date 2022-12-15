@@ -2,6 +2,7 @@ import type moment from 'moment';
 import type { Task } from '../Task';
 import { getSettings } from '../Config/Settings';
 import type { Query, SortingProperty } from './Query';
+import { StatusField } from './Filter/StatusField';
 
 type Comparator = (a: Task, b: Task) => number;
 
@@ -83,13 +84,7 @@ export class Sort {
     }
 
     private static compareByStatus(a: Task, b: Task): -1 | 0 | 1 {
-        if (a.status < b.status) {
-            return 1;
-        } else if (a.status > b.status) {
-            return -1;
-        } else {
-            return 0;
-        }
+        return StatusField.compare(a, b);
     }
 
     private static compareByPriority(a: Task, b: Task): number {
