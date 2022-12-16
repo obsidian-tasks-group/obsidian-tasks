@@ -3,6 +3,11 @@ import type { FilterOrErrorMessage } from '../../../src/Query/Filter/Filter';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { testFilter } from '../../TestingTools/FilterTestHelpers';
 import { Status } from '../../../src/Task';
+import {
+    expectTaskComparesAfter,
+    expectTaskComparesBefore,
+    expectTaskComparesEqual,
+} from '../../CustomMatchers/CustomMatchersForSorting';
 
 function testStatusFilter(filter: FilterOrErrorMessage, status: Status, expected: boolean) {
     const builder = new TaskBuilder();
@@ -43,7 +48,9 @@ describe('sorting by status', () => {
         const sorter = new StatusField().createNormalSorter();
 
         // Assert
-        expect(sorter.comparator(doneTask, todoTask)).toEqual(1);
+        expectTaskComparesAfter(sorter, doneTask, todoTask);
+        expectTaskComparesBefore(sorter, todoTask, doneTask);
+        expectTaskComparesEqual(sorter, doneTask, doneTask);
     });
 
     it('sort by status reverse', () => {
@@ -51,6 +58,8 @@ describe('sorting by status', () => {
         const sorter = new StatusField().createReverseSorter();
 
         // Assert
-        expect(sorter.comparator(doneTask, todoTask)).toEqual(-1);
+        expectTaskComparesBefore(sorter, doneTask, todoTask);
+        expectTaskComparesAfter(sorter, todoTask, doneTask);
+        expectTaskComparesEqual(sorter, doneTask, doneTask);
     });
 });

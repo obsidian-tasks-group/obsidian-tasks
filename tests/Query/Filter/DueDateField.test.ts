@@ -7,6 +7,11 @@ import type { FilterOrErrorMessage } from '../../../src/Query/Filter/Filter';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { testFilter } from '../../TestingTools/FilterTestHelpers';
 import { toHaveExplanation } from '../../CustomMatchers/CustomMatchersForFilters';
+import {
+    expectTaskComparesAfter,
+    expectTaskComparesBefore,
+    expectTaskComparesEqual,
+} from '../../CustomMatchers/CustomMatchersForSorting';
 
 window.moment = moment;
 
@@ -56,7 +61,7 @@ describe('explain due date queries', () => {
     });
 });
 
-describe('sorting by status', () => {
+describe('sorting by due', () => {
     const date1 = new TaskBuilder().dueDate('2021-01-12').build();
     const date2 = new TaskBuilder().dueDate('2022-12-23').build();
 
@@ -70,10 +75,9 @@ describe('sorting by status', () => {
         const sorter = new DueDateField().createNormalSorter();
 
         // Assert
-        // TODO Create expressive Jest custom matchers for sorting tasks
-        expect(sorter.comparator(date1, date2)).toEqual(-1);
-        expect(sorter.comparator(date2, date1)).toEqual(1);
-        expect(sorter.comparator(date2, date2)).toEqual(0);
+        expectTaskComparesBefore(sorter, date1, date2);
+        expectTaskComparesAfter(sorter, date2, date1);
+        expectTaskComparesEqual(sorter, date2, date2);
     });
 
     it('sort by due reverse', () => {
@@ -81,8 +85,8 @@ describe('sorting by status', () => {
         const sorter = new DueDateField().createReverseSorter();
 
         // Assert
-        expect(sorter.comparator(date1, date2)).toEqual(1);
-        expect(sorter.comparator(date2, date1)).toEqual(-1);
-        expect(sorter.comparator(date2, date2)).toEqual(-0);
+        expectTaskComparesAfter(sorter, date1, date2);
+        expectTaskComparesBefore(sorter, date2, date1);
+        expectTaskComparesEqual(sorter, date2, date2);
     });
 });
