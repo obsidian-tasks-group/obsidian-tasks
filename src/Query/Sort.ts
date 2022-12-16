@@ -47,7 +47,12 @@ export class Sorting {
     }
 
     private static maybeReverse(reverse: boolean, comparator: Comparator) {
-        return reverse ? Sort.makeReversedComparator(comparator) : comparator;
+        return reverse ? Sorting.makeReversedComparator(comparator) : comparator;
+    }
+
+    private static makeReversedComparator(comparator: Comparator): Comparator {
+        // Note: This can return -0.
+        return (a, b) => (comparator(a, b) * -1) as -1 | 0 | 1;
     }
 }
 
@@ -113,11 +118,6 @@ export class Sort {
             throw Error('Unrecognised legacy sort keyword: ' + property);
         }
         return comparator;
-    }
-
-    public static makeReversedComparator(comparator: Comparator): Comparator {
-        // Note: This can return -0.
-        return (a, b) => (comparator(a, b) * -1) as -1 | 0 | 1;
     }
 
     private static makeCompositeComparator(comparators: Comparator[]): Comparator {
