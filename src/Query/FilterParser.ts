@@ -15,7 +15,7 @@ import { BooleanField } from './Filter/BooleanField';
 import { FilenameField } from './Filter/FilenameField';
 
 import type { FilterOrErrorMessage } from './Filter/Filter';
-import type { Sorting } from './Sort';
+import type { Sorting } from './Sorting';
 
 const fieldCreators = [
     () => new StatusField(),

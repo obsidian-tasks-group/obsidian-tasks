@@ -1,6 +1,5 @@
 import { Status, Task } from '../../Task';
-import type { Comparator } from '../Sort';
-import { Sorting } from '../Sort';
+import type { Comparator } from '../Sorting';
 import { FilterInstructionsBasedField } from './FilterInstructionsBasedField';
 
 export class StatusField extends FilterInstructionsBasedField {
@@ -17,11 +16,6 @@ export class StatusField extends FilterInstructionsBasedField {
 
     public supportsSorting(): boolean {
         return true;
-    }
-
-    // TODO Move createSorter() to Field
-    public createSorter(reverse: boolean): Sorting {
-        return new Sorting(reverse, 1, this.fieldName(), this.comparator());
     }
 
     /**

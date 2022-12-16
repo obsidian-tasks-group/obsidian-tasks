@@ -5,8 +5,10 @@ import moment from 'moment';
 
 window.moment = moment;
 
-import type { Comparator } from '../src/Query/Sort';
-import { Sort, Sorting } from '../src/Query/Sort';
+import type { Comparator } from '../src/Query/Sorting';
+import { Sort } from '../src/Query/Sort';
+import { DateField } from '../src/Query/Filter/DateField';
+import { Sorting } from '../src/Query/Sorting';
 import { resetSettings, updateSettings } from '../src/Config/Settings';
 import { DateParser } from '../src/Query/DateParser';
 import type { Task } from '../src/Task';
@@ -78,7 +80,7 @@ describe('Sort', () => {
         expect(
             Sort.by(
                 {
-                    sorting: [new Sorting(false, 1, 'done')],
+                    sorting: [Sort.makeLegacySorting(false, 1, 'done')],
                 },
                 [three, two, one],
             ),
@@ -86,7 +88,7 @@ describe('Sort', () => {
         expect(
             Sort.by(
                 {
-                    sorting: [new Sorting(false, 1, 'done')],
+                    sorting: [Sort.makeLegacySorting(false, 1, 'done')],
                 },
                 [two, one, three],
             ),
@@ -109,7 +111,7 @@ describe('Sort', () => {
                 {
                     sorting: [
                         new DueDateField().createNormalSorter(),
-                        new Sorting(false, 1, 'path'),
+                        Sort.makeLegacySorting(false, 1, 'path'),
                         new StatusField().createNormalSorter(),
                     ],
                 },
@@ -140,7 +142,10 @@ describe('Sort', () => {
         expect(
             Sort.by(
                 {
-                    sorting: [new Sorting(false, 1, 'description'), new Sorting(false, 1, 'done')],
+                    sorting: [
+                        Sort.makeLegacySorting(false, 1, 'description'),
+                        Sort.makeLegacySorting(false, 1, 'done'),
+                    ],
                 },
                 [three, one, two, four],
             ),
@@ -169,7 +174,7 @@ describe('Sort', () => {
         expect(
             Sort.by(
                 {
-                    sorting: [new Sorting(true, 1, 'description'), new Sorting(false, 1, 'done')],
+                    sorting: [Sort.makeLegacySorting(true, 1, 'description'), Sort.makeLegacySorting(false, 1, 'done')],
                 },
                 [two, four, three, one],
             ),
@@ -192,7 +197,7 @@ describe('Sort', () => {
                     sorting: [
                         new StatusField().createReverseSorter(),
                         new DueDateField().createReverseSorter(),
-                        new Sorting(false, 1, 'path'),
+                        Sort.makeLegacySorting(false, 1, 'path'),
                     ],
                 },
                 [six, five, one, four, three, two],
@@ -222,7 +227,7 @@ describe('Sort', () => {
         expect(
             Sort.by(
                 {
-                    sorting: [new Sorting(false, 1, 'description')],
+                    sorting: [Sort.makeLegacySorting(false, 1, 'description')],
                 },
                 [two, one, five, four, three],
             ),
@@ -243,7 +248,7 @@ expect.extend({
         let b: moment.Moment | null = null;
         if (dateB !== null) b = DateParser.parseDate(dateB);
 
-        const actual = Sort.compareByDate(a, b);
+        const actual = DateField.compareByDate(a, b);
 
         const pass = actual === expected;
         const message = () => `${dateA} < ${dateB}: expected=${expected} actual=${actual}`;
@@ -320,7 +325,7 @@ describe('Sort by tags', () => {
         expect(
             Sort.by(
                 {
-                    sorting: [new Sorting(false, 1, 'tag')],
+                    sorting: [Sort.makeLegacySorting(false, 1, 'tag')],
                 },
                 [t1, t3, t5, t7, t6, t4, t2, t8, t9, t10],
             ),
@@ -345,7 +350,7 @@ describe('Sort by tags', () => {
         expect(
             Sort.by(
                 {
-                    sorting: [new Sorting(true, 1, 'tag')],
+                    sorting: [Sort.makeLegacySorting(true, 1, 'tag')],
                 },
                 [t1, t3, t5, t7, t6, t4, t2, t8, t9, t10],
             ),
@@ -362,7 +367,7 @@ describe('Sort by tags', () => {
         expect(
             Sort.by(
                 {
-                    sorting: [new Sorting(false, 2, 'tag')],
+                    sorting: [Sort.makeLegacySorting(false, 2, 'tag')],
                 },
                 [t4, t3, t2, t1, t5],
             ),
@@ -379,7 +384,7 @@ describe('Sort by tags', () => {
         expect(
             Sort.by(
                 {
-                    sorting: [new Sorting(true, 2, 'tag')],
+                    sorting: [Sort.makeLegacySorting(true, 2, 'tag')],
                 },
                 [t4, t3, t2, t1, t5],
             ),
@@ -410,7 +415,7 @@ describe('Sort by tags', () => {
         expect(
             Sort.by(
                 {
-                    sorting: [new Sorting(false, 1, 'tag')],
+                    sorting: [Sort.makeLegacySorting(false, 1, 'tag')],
                 },
                 [t1, t12, t3, t13, t5, t7, t6, t4, t2, t8, t9, t10, t11],
             ),
@@ -444,7 +449,7 @@ describe('Sort by tags', () => {
         expect(
             Sort.by(
                 {
-                    sorting: [new Sorting(true, 1, 'tag')],
+                    sorting: [Sort.makeLegacySorting(true, 1, 'tag')],
                 },
                 [t1, t12, t3, t13, t5, t7, t6, t4, t2, t8, t9, t10, t11],
             ),
@@ -471,7 +476,7 @@ describe('Sort by tags', () => {
         // Act
         const result = Sort.by(
             {
-                sorting: [new Sorting(false, 2, 'tag')],
+                sorting: [Sort.makeLegacySorting(false, 2, 'tag')],
             },
             [t4, t7, t5, t2, t3, t1, t8, t6],
         );
@@ -500,7 +505,7 @@ describe('Sort by tags', () => {
         // Act
         const result = Sort.by(
             {
-                sorting: [new Sorting(true, 2, 'tag')],
+                sorting: [Sort.makeLegacySorting(true, 2, 'tag')],
             },
             [t4, t7, t5, t2, t3, t1, t8, t6],
         );

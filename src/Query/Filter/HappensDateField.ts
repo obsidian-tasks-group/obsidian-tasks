@@ -1,7 +1,6 @@
 import type { Moment } from 'moment';
 import type { Task } from '../../Task';
 import { DateParser } from '../DateParser';
-import { Sort } from '../Sort';
 import { Explanation } from '../Explain/Explanation';
 import { Field } from './Field';
 import { Filter, FilterOrErrorMessage } from './Filter';
@@ -92,7 +91,7 @@ export class HappensDateField extends Field {
      */
     public earliestDate(task: Task): Moment | null {
         const happensDates = new HappensDateField().dates(task);
-        const sortedHappensDates = happensDates.sort(Sort.compareByDate);
+        const sortedHappensDates = happensDates.sort(DateField.compareByDate);
         return sortedHappensDates[0];
     }
 

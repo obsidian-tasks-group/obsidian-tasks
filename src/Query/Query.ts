@@ -2,7 +2,8 @@ import { LayoutOptions } from '../LayoutOptions';
 import type { Task } from '../Task';
 import type { IQuery } from '../IQuery';
 import { getSettings } from '../Config/Settings';
-import { Sort, Sorting } from './Sort';
+import { Sort } from './Sort';
+import type { Sorting } from './Sorting';
 import type { TaskGroups } from './TaskGroups';
 import { parseFilter, parseSorter } from './FilterParser';
 import { Group } from './Group';
@@ -244,7 +245,7 @@ export class Query implements IQuery {
         const fieldMatch = line.match(this.sortByRegexp);
         if (fieldMatch !== null) {
             this._sorting.push(
-                new Sorting(
+                Sort.makeLegacySorting(
                     !!fieldMatch[2],
                     isNaN(+fieldMatch[3]) ? 1 : +fieldMatch[3],
                     fieldMatch[1] as SortingProperty,

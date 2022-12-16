@@ -5,7 +5,7 @@ import { LayoutOptions } from './LayoutOptions';
 import { Recurrence } from './Recurrence';
 import { getSettings } from './Config/Settings';
 import { Urgency } from './Urgency';
-import { Sort } from './Query/Sort';
+import { DateField } from './Query/Filter/DateField';
 import { DateFallback } from './DateFallback';
 
 /**
@@ -791,7 +791,7 @@ export class Task {
         for (const el of args) {
             const date1 = this[el] as Moment | null;
             const date2 = other[el] as Moment | null;
-            if (Sort.compareByDate(date1, date2) !== 0) {
+            if (DateField.compareByDate(date1, date2) !== 0) {
                 return false;
             }
         }
