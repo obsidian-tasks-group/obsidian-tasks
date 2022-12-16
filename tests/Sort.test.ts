@@ -5,8 +5,9 @@ import moment from 'moment';
 
 window.moment = moment;
 
-import type { Comparator } from '../src/Query/Sort';
-import { Sort, Sorting } from '../src/Query/Sort';
+import type { Comparator } from '../src/Query/Sorting';
+import { Sort } from '../src/Query/Sort';
+import { Sorting } from '../src/Query/Sorting';
 import { resetSettings, updateSettings } from '../src/Config/Settings';
 import { DateParser } from '../src/Query/DateParser';
 import type { Task } from '../src/Task';

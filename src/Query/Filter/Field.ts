@@ -1,4 +1,4 @@
-import type { Sorting } from '../Sort';
+import type { Sorting } from '../Sorting';
 import type { FilterOrErrorMessage } from './Filter';
 
 /**

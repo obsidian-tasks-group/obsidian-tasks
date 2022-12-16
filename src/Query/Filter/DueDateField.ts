@@ -1,7 +1,8 @@
 import type { Moment } from 'moment';
 import type { Task } from '../../Task';
-import type { Comparator } from '../Sort';
-import { Sort, Sorting } from '../Sort';
+import { Sort } from '../Sort';
+import { Sorting } from '../Sorting';
+import type { Comparator } from '../Sorting';
 import { DateField } from './DateField';
 
 /**
