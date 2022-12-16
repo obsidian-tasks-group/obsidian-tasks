@@ -45,7 +45,7 @@ export class Sort {
     };
 
     /**
-     * Legacy function, for creating a Comparator for a Sorting value.
+     * Legacy function, for creating a Sorting object for a SortingProperty type.
      *
      * TODO Once SortingProperty in Query.ts has been removed, remove this method.
      * @param reverse - whether the sort order should be reversed.
@@ -60,7 +60,7 @@ export class Sort {
     }
 
     /**
-     * Legacy function, for creating a Comparator for a SortingProperty value.
+     * Legacy function, for creating a Comparator function for a SortingProperty type.
      *
      * TODO Once SortingProperty in Query.ts has been removed, remove this method.
      * @param property - the name of the property. This string must match
