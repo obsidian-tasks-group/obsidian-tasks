@@ -48,7 +48,7 @@ export class Sorting {
             this.comparator = Sorting.maybeReverse(reverse, comparator);
         } else {
             // TODO Move comparator mandatory so can remove reference to this.makeComparator
-            this.comparator = this.makeComparator(reverse);
+            this.comparator = Sorting.makeComparator(reverse, property);
         }
     }
 
@@ -57,12 +57,14 @@ export class Sorting {
      *
      * TODO Once SortingProperty in Query.ts has been removed, remove this method.
      * @param reverse
+     * @param property - the name of the property. This string must match
+     *                   one of the values in ${@link SortingProperty}.
      */
-    public makeComparator(reverse: boolean) {
+    public static makeComparator(reverse: boolean, property: string) {
         // TODO Move this to Sort class
-        const comparator = Sort.comparators[this.property as SortingProperty];
+        const comparator = Sort.comparators[property as SortingProperty];
         if (!comparator) {
-            throw Error('Unrecognised legacy sort keyword: ' + this.property);
+            throw Error('Unrecognised legacy sort keyword: ' + property);
         }
         return Sorting.maybeReverse(reverse, comparator);
     }
