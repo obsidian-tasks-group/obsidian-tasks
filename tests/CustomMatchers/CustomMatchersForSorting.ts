@@ -40,7 +40,9 @@ expect.extend({
         const taskB = tasks[1];
         const actual = sorting.comparator(taskA, taskB);
         const pass = actual === expected;
-        const message = () => `${taskA} < ${taskB}: expected=${expected} actual=${actual}`;
+        // TODO Try to make meaning of 1, -1 or 0 clearer - somehow saying "less", "greater", "equal"
+        const message = () =>
+            `\n"${taskA.toFileLineString()}" < \n"${taskB.toFileLineString()}"\n:expected=${expected} actual=${actual}`;
 
         return { pass, message };
     },
