@@ -38,34 +38,12 @@ export class Sorting {
      *                           TODO eventually, move this number to the comparator used for sorting by tag.
      * @param property - the name of the property. If {@link comparator} is not supplied, this string must match
      *                   one of the values in ${@link SortingProperty}.
-     * @param comparator - optional {@link Comparator} function. This will eventually become required, and will then be moved to
-     *                     the first parameter.
+     * @param comparator - {@link Comparator} function.
      */
-    constructor(reverse: boolean, propertyInstance: number, property: string, comparator?: Comparator) {
+    constructor(reverse: boolean, propertyInstance: number, property: string, comparator: Comparator) {
         this.property = property;
         this.propertyInstance = propertyInstance;
-        if (comparator) {
-            this.comparator = Sorting.maybeReverse(reverse, comparator);
-        } else {
-            // TODO Move comparator mandatory so can remove reference to this.makeComparator
-            this.comparator = Sorting.maybeReverse(reverse, Sorting.makeLegacyComparator(property));
-        }
-    }
-
-    /**
-     * Legacy function, for creating a Comparator for a SortingProperty value.
-     *
-     * TODO Once SortingProperty in Query.ts has been removed, remove this method.
-     * @param property - the name of the property. This string must match
-     *                   one of the values in ${@link SortingProperty}.
-     */
-    public static makeLegacyComparator(property: string) {
-        // TODO Move this to Sort class
-        const comparator = Sort.comparators[property as SortingProperty];
-        if (!comparator) {
-            throw Error('Unrecognised legacy sort keyword: ' + property);
-        }
-        return comparator;
+        this.comparator = Sorting.maybeReverse(reverse, comparator);
     }
 
     private static maybeReverse(reverse: boolean, comparator: Comparator) {
@@ -108,6 +86,34 @@ export class Sort {
         path: Sort.compareByPath,
         tag: Sort.compareByTag,
     };
+
+    /**
+     * Legacy function, for creating a Comparator for a Sorting value.
+     *
+     * TODO Once SortingProperty in Query.ts has been removed, remove this method.
+     * @param property - the name of the property. This string must match
+     *                   one of the values in ${@link SortingProperty}.
+     */
+    public static makeLegacySorting(reverse: boolean, propertyInstance: number, property: string): Sorting {
+        const comparator = Sort.makeLegacyComparator(property);
+        return new Sorting(reverse, propertyInstance, property, comparator);
+    }
+
+    /**
+     * Legacy function, for creating a Comparator for a SortingProperty value.
+     *
+     * TODO Once SortingProperty in Query.ts has been removed, remove this method.
+     * @param property - the name of the property. This string must match
+     *                   one of the values in ${@link SortingProperty}.
+     *                   Throws if property not recognised.
+     */
+    public static makeLegacyComparator(property: string): Comparator {
+        const comparator = Sort.comparators[property as SortingProperty];
+        if (!comparator) {
+            throw Error('Unrecognised legacy sort keyword: ' + property);
+        }
+        return comparator;
+    }
 
     public static makeReversedComparator(comparator: Comparator): Comparator {
         // Note: This can return -0.

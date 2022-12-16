@@ -78,7 +78,7 @@ describe('Sort', () => {
         expect(
             Sort.by(
                 {
-                    sorting: [new Sorting(false, 1, 'done')],
+                    sorting: [Sort.makeLegacySorting(false, 1, 'done')],
                 },
                 [three, two, one],
             ),
@@ -86,7 +86,7 @@ describe('Sort', () => {
         expect(
             Sort.by(
                 {
-                    sorting: [new Sorting(false, 1, 'done')],
+                    sorting: [Sort.makeLegacySorting(false, 1, 'done')],
                 },
                 [two, one, three],
             ),
@@ -109,7 +109,7 @@ describe('Sort', () => {
                 {
                     sorting: [
                         new DueDateField().createNormalSorter(),
-                        new Sorting(false, 1, 'path'),
+                        Sort.makeLegacySorting(false, 1, 'path'),
                         new StatusField().createNormalSorter(),
                     ],
                 },
@@ -140,7 +140,10 @@ describe('Sort', () => {
         expect(
             Sort.by(
                 {
-                    sorting: [new Sorting(false, 1, 'description'), new Sorting(false, 1, 'done')],
+                    sorting: [
+                        Sort.makeLegacySorting(false, 1, 'description'),
+                        Sort.makeLegacySorting(false, 1, 'done'),
+                    ],
                 },
                 [three, one, two, four],
             ),
@@ -169,7 +172,7 @@ describe('Sort', () => {
         expect(
             Sort.by(
                 {
-                    sorting: [new Sorting(true, 1, 'description'), new Sorting(false, 1, 'done')],
+                    sorting: [Sort.makeLegacySorting(true, 1, 'description'), Sort.makeLegacySorting(false, 1, 'done')],
                 },
                 [two, four, three, one],
             ),
@@ -192,7 +195,7 @@ describe('Sort', () => {
                     sorting: [
                         new StatusField().createReverseSorter(),
                         new DueDateField().createReverseSorter(),
-                        new Sorting(false, 1, 'path'),
+                        Sort.makeLegacySorting(false, 1, 'path'),
                     ],
                 },
                 [six, five, one, four, three, two],
@@ -222,7 +225,7 @@ describe('Sort', () => {
         expect(
             Sort.by(
                 {
-                    sorting: [new Sorting(false, 1, 'description')],
+                    sorting: [Sort.makeLegacySorting(false, 1, 'description')],
                 },
                 [two, one, five, four, three],
             ),
@@ -320,7 +323,7 @@ describe('Sort by tags', () => {
         expect(
             Sort.by(
                 {
-                    sorting: [new Sorting(false, 1, 'tag')],
+                    sorting: [Sort.makeLegacySorting(false, 1, 'tag')],
                 },
                 [t1, t3, t5, t7, t6, t4, t2, t8, t9, t10],
             ),
@@ -345,7 +348,7 @@ describe('Sort by tags', () => {
         expect(
             Sort.by(
                 {
-                    sorting: [new Sorting(true, 1, 'tag')],
+                    sorting: [Sort.makeLegacySorting(true, 1, 'tag')],
                 },
                 [t1, t3, t5, t7, t6, t4, t2, t8, t9, t10],
             ),
@@ -362,7 +365,7 @@ describe('Sort by tags', () => {
         expect(
             Sort.by(
                 {
-                    sorting: [new Sorting(false, 2, 'tag')],
+                    sorting: [Sort.makeLegacySorting(false, 2, 'tag')],
                 },
                 [t4, t3, t2, t1, t5],
             ),
@@ -379,7 +382,7 @@ describe('Sort by tags', () => {
         expect(
             Sort.by(
                 {
-                    sorting: [new Sorting(true, 2, 'tag')],
+                    sorting: [Sort.makeLegacySorting(true, 2, 'tag')],
                 },
                 [t4, t3, t2, t1, t5],
             ),
@@ -410,7 +413,7 @@ describe('Sort by tags', () => {
         expect(
             Sort.by(
                 {
-                    sorting: [new Sorting(false, 1, 'tag')],
+                    sorting: [Sort.makeLegacySorting(false, 1, 'tag')],
                 },
                 [t1, t12, t3, t13, t5, t7, t6, t4, t2, t8, t9, t10, t11],
             ),
@@ -444,7 +447,7 @@ describe('Sort by tags', () => {
         expect(
             Sort.by(
                 {
-                    sorting: [new Sorting(true, 1, 'tag')],
+                    sorting: [Sort.makeLegacySorting(true, 1, 'tag')],
                 },
                 [t1, t12, t3, t13, t5, t7, t6, t4, t2, t8, t9, t10, t11],
             ),
@@ -471,7 +474,7 @@ describe('Sort by tags', () => {
         // Act
         const result = Sort.by(
             {
-                sorting: [new Sorting(false, 2, 'tag')],
+                sorting: [Sort.makeLegacySorting(false, 2, 'tag')],
             },
             [t4, t7, t5, t2, t3, t1, t8, t6],
         );
@@ -500,7 +503,7 @@ describe('Sort by tags', () => {
         // Act
         const result = Sort.by(
             {
-                sorting: [new Sorting(true, 2, 'tag')],
+                sorting: [Sort.makeLegacySorting(true, 2, 'tag')],
             },
             [t4, t7, t5, t2, t3, t1, t8, t6],
         );

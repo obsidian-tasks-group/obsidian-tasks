@@ -244,7 +244,7 @@ export class Query implements IQuery {
         const fieldMatch = line.match(this.sortByRegexp);
         if (fieldMatch !== null) {
             this._sorting.push(
-                new Sorting(
+                Sort.makeLegacySorting(
                     !!fieldMatch[2],
                     isNaN(+fieldMatch[3]) ? 1 : +fieldMatch[3],
                     fieldMatch[1] as SortingProperty,
