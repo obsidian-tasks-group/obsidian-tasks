@@ -61,7 +61,7 @@ describe('explain due date queries', () => {
     });
 });
 
-describe('sorting by status', () => {
+describe('sorting by due', () => {
     const date1 = new TaskBuilder().dueDate('2021-01-12').build();
     const date2 = new TaskBuilder().dueDate('2022-12-23').build();
 
