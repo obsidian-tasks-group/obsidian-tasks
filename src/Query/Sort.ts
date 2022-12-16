@@ -96,6 +96,7 @@ export class Sort {
      * Legacy function, for creating a Comparator for a Sorting value.
      *
      * TODO Once SortingProperty in Query.ts has been removed, remove this method.
+     * @param reverse - whether the sort order should be reversed.
      * @param property - the name of the property. This string must match
      *                   one of the values in ${@link SortingProperty}.
      */
