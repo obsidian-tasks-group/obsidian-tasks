@@ -1,4 +1,5 @@
-import type { Sorting } from '../Sorting';
+import { Sorting } from '../Sorting';
+import type { Comparator } from '../Sorting';
 import type { FilterOrErrorMessage } from './Filter';
 
 /**
@@ -88,12 +89,19 @@ export abstract class Field {
     }
 
     /**
+     * Return a function to compare two Task objects, for use in sorting by due.
+     */
+    public comparator(): Comparator {
+        // TODO Make abstract
+        throw Error(`comparator() unimplemented for ${this.fieldName()}`);
+    }
+
+    /**
      * Create a {@link Sorting} object for sorting tasks by this field's value.
      * @param reverse - false for normal sort order, true for reverse sort order.
      */
     public createSorter(reverse: boolean): Sorting {
-        // TODO Make abstract
-        throw Error(`createSorter() unimplemented for ${this.fieldName()} - reverse = ${reverse}`);
+        return new Sorting(reverse, 1, this.fieldName(), this.comparator());
     }
 
     /**

@@ -1,6 +1,5 @@
 import type { Moment } from 'moment';
 import type { Task } from '../../Task';
-import { Sorting } from '../Sorting';
 import type { Comparator } from '../Sorting';
 import { DateField } from './DateField';
 
@@ -25,10 +24,6 @@ export class DueDateField extends DateField {
 
     public supportsSorting(): boolean {
         return true;
-    }
-
-    public createSorter(reverse: boolean): Sorting {
-        return new Sorting(reverse, 1, this.fieldName(), this.comparator());
     }
 
     /**
