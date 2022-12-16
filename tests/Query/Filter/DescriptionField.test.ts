@@ -10,6 +10,8 @@ import type { FilterOrErrorMessage } from '../../../src/Query/Filter/Filter';
 import { BooleanField } from '../../../src/Query/Filter/BooleanField';
 import { toMatchTaskFromLine } from '../../CustomMatchers/CustomMatchersForFilters';
 import { Sort } from '../../../src/Query/Sort';
+import { expectTaskComparesBefore, expectTaskComparesEqual } from '../../CustomMatchers/CustomMatchersForSorting';
+import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 
 window.moment = moment;
 
@@ -247,6 +249,75 @@ describe('search description for Alternation (OR)', () => {
 });
 
 describe('sorting by description', () => {
+    it('show how markdown in descriptions gets cleaned', () => {
+        const sorter = Sort.makeLegacySorting(false, 1, 'description');
+
+        // expectTaskComparesBefore() shows that the initial * is not removed removed
+        expectTaskComparesBefore(
+            sorter,
+            new TaskBuilder()
+                .description('*ZZZ Initial lone asterisk is not stripped, so these two tasks sort unequal')
+                .build(),
+            new TaskBuilder()
+                .description('ZZZ Initial lone asterisk is not stripped, so these two tasks sort unequal')
+                .build(),
+        );
+
+        // Remaining tests use expectTaskComparesEqual(), meaning that the second string shows what happens
+        // to the initial description when it is 'cleaned' to try to remove markdown characters.
+        expectTaskComparesEqual(
+            sorter,
+            new TaskBuilder().description('[[Better be second]] most [] removed so these sort equal').build(),
+            new TaskBuilder().description('Better be second] most [] removed so these sort equal').build(),
+        );
+
+        expectTaskComparesEqual(
+            sorter,
+            new TaskBuilder()
+                .description('[[Another|Third it should be]] alias is used from 1st link but not 2nd [last|ZZZ]')
+                .build(),
+            new TaskBuilder()
+                .description('Third it should be] alias is used from 1st link but not 2nd [last|ZZZ]')
+                .build(),
+        );
+
+        expectTaskComparesEqual(
+            sorter,
+            new TaskBuilder().description('*Very italic text* - this looks completely wrong').build(),
+            new TaskBuilder().description('Very italic text*Very italic text* - this looks completely wrong').build(),
+        );
+
+        expectTaskComparesEqual(
+            sorter,
+            new TaskBuilder().description('[@Zebra|Zebra] alias is used single []*').build(),
+            new TaskBuilder().description('Zebra alias is used single []*').build(),
+        );
+
+        expectTaskComparesEqual(
+            sorter,
+            new TaskBuilder().description('==highlighted== then ordinary text').build(),
+            new TaskBuilder().description('highlighted then ordinary text').build(),
+        );
+
+        expectTaskComparesEqual(
+            sorter,
+            new TaskBuilder().description('=non-highlighted= then ordinary text').build(),
+            new TaskBuilder().description('=non-highlighted= then ordinary text').build(),
+        );
+
+        expectTaskComparesEqual(
+            sorter,
+            new TaskBuilder().description('**bold** then ordinary text').build(),
+            new TaskBuilder().description('bold**bold** then ordinary text').build(),
+        );
+
+        expectTaskComparesEqual(
+            sorter,
+            new TaskBuilder().description('*italic* then ordinary text').build(),
+            new TaskBuilder().description('italic*italic* then ordinary text').build(),
+        );
+    });
+
     it('sorts correctly by the link name and not the markdown', () => {
         const one = fromLine({
             line: '- [ ] *ZZZ An early task that starts with an A; actually not italic since only one asterisk',
