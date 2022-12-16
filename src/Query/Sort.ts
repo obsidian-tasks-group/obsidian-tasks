@@ -48,7 +48,7 @@ export class Sorting {
             this.comparator = Sorting.maybeReverse(reverse, comparator);
         } else {
             // TODO Move comparator mandatory so can remove reference to this.makeComparator
-            this.comparator = Sorting.makeComparator(reverse, property);
+            this.comparator = Sorting.makeLegacyComparator(reverse, property);
         }
     }
 
@@ -60,7 +60,7 @@ export class Sorting {
      * @param property - the name of the property. This string must match
      *                   one of the values in ${@link SortingProperty}.
      */
-    public static makeComparator(reverse: boolean, property: string) {
+    public static makeLegacyComparator(reverse: boolean, property: string) {
         // TODO Move this to Sort class
         const comparator = Sort.comparators[property as SortingProperty];
         if (!comparator) {
