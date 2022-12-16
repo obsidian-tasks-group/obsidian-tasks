@@ -1,76 +1,12 @@
-import type moment from 'moment';
 import type { Task } from '../Task';
 import { getSettings } from '../Config/Settings';
+import { Sorting } from './Sorting';
+import type { Comparator } from './Sorting';
 import type { Query, SortingProperty } from './Query';
 // TODO Remove the cyclic dependency between StatusField and Sort.
 import { StatusField } from './Filter/StatusField';
 import { DueDateField } from './Filter/DueDateField';
-
-/**
- * A sorting function, that takes two Task objects and returns
- * and returns one of:
- * - `-1` or some other negative number, if a is less than b by some ordering criterion.
- * - `+1` or some other positive number, if a is greater than b by the ordering criterion.
- * - `0` or sometimes `-0`, if a equals b by the ordering criterion.
- *
- * Typically Comparator functions are stored in a {@link Sorting} object.
- */
-// TODO Move to Sorting.ts
-export type Comparator = (a: Task, b: Task) => number;
-
-/**
- * Sorting represents a single 'sort by' instruction.
- * It stores the comparison function as a {@link Comparator}.
- */
-// TODO Move to Sorting.ts
-export class Sorting {
-    public readonly property: string;
-    public readonly comparator: Comparator;
-    public readonly propertyInstance: number;
-
-    /**
-     * Constructor.
-     *
-     * TODO Once SortingProperty has been removed, re-order the parameters so the comparator comes first.
-     *
-     * @param reverse - whether the sort order should be reversed.
-     * @param propertyInstance - for tag sorting, this is a 1-based index for the tag number in the task to sort by.
-     *                           TODO eventually, move this number to the comparator used for sorting by tag.
-     * @param property - the name of the property. If {@link comparator} is not supplied, this string must match
-     *                   one of the values in ${@link SortingProperty}.
-     * @param comparator - optional {@link Comparator} function. This will eventually become required, and will then be moved to
-     *                     the first parameter.
-     */
-    constructor(reverse: boolean, propertyInstance: number, property: string, comparator?: Comparator) {
-        this.property = property;
-        this.propertyInstance = propertyInstance;
-        if (comparator) {
-            this.comparator = Sorting.maybeReverse(reverse, comparator);
-        } else {
-            // TODO Move comparator mandatory so can remove reference to this.makeComparator
-            this.comparator = this.makeComparator(reverse);
-        }
-    }
-
-    /**
-     * Legacy function, for creating a Comparator for a SortingProperty value.
-     *
-     * TODO Once SortingProperty in Query.ts has been removed, remove this method.
-     * @param reverse
-     */
-    public makeComparator(reverse: boolean) {
-        // TODO Move this to Sort class
-        const comparator = Sort.comparators[this.property as SortingProperty];
-        if (!comparator) {
-            throw Error('Unrecognised legacy sort keyword: ' + this.property);
-        }
-        return Sorting.maybeReverse(reverse, comparator);
-    }
-
-    private static maybeReverse(reverse: boolean, comparator: Comparator) {
-        return reverse ? Sort.makeReversedComparator(comparator) : comparator;
-    }
-}
+import { DateField } from './Filter/DateField';
 
 export class Sort {
     static tagPropertyInstance: number = 1;
@@ -108,9 +44,35 @@ export class Sort {
         tag: Sort.compareByTag,
     };
 
-    public static makeReversedComparator(comparator: Comparator): Comparator {
-        // Note: This can return -0.
-        return (a, b) => (comparator(a, b) * -1) as -1 | 0 | 1;
+    /**
+     * Legacy function, for creating a Sorting object for a SortingProperty type.
+     *
+     * TODO Once SortingProperty in Query.ts has been removed, remove this method.
+     * @param reverse - whether the sort order should be reversed.
+     * @param propertyInstance - for tag sorting, this is a 1-based index for the tag number in the task to sort by.
+     *                           TODO eventually, move this number to the comparator used for sorting by tag.
+     * @param property - the name of the property. This string must match
+     *                   one of the values in ${@link SortingProperty}.
+     */
+    public static makeLegacySorting(reverse: boolean, propertyInstance: number, property: string): Sorting {
+        const comparator = Sort.makeLegacyComparator(property);
+        return new Sorting(reverse, propertyInstance, property, comparator);
+    }
+
+    /**
+     * Legacy function, for creating a Comparator function for a SortingProperty type.
+     *
+     * TODO Once SortingProperty in Query.ts has been removed, remove this method.
+     * @param property - the name of the property. This string must match
+     *                   one of the values in ${@link SortingProperty}.
+     *                   Throws if property not recognised.
+     */
+    public static makeLegacyComparator(property: string): Comparator {
+        const comparator = Sort.comparators[property as SortingProperty];
+        if (!comparator) {
+            throw Error('Unrecognised legacy sort keyword: ' + property);
+        }
+        return comparator;
     }
 
     private static makeCompositeComparator(comparators: Comparator[]): Comparator {
@@ -135,15 +97,15 @@ export class Sort {
     }
 
     private static compareByStartDate(a: Task, b: Task): -1 | 0 | 1 {
-        return Sort.compareByDate(a.startDate, b.startDate);
+        return DateField.compareByDate(a.startDate, b.startDate);
     }
 
     private static compareByScheduledDate(a: Task, b: Task): -1 | 0 | 1 {
-        return Sort.compareByDate(a.scheduledDate, b.scheduledDate);
+        return DateField.compareByDate(a.scheduledDate, b.scheduledDate);
     }
 
     private static compareByDoneDate(a: Task, b: Task): -1 | 0 | 1 {
-        return Sort.compareByDate(a.doneDate, b.doneDate);
+        return DateField.compareByDate(a.doneDate, b.doneDate);
     }
 
     private static compareByTag(a: Task, b: Task): -1 | 0 | 1 {
@@ -177,31 +139,6 @@ export class Sort {
             return 0;
         }
     }
-
-    public static compareByDate(a: moment.Moment | null, b: moment.Moment | null): -1 | 0 | 1 {
-        if (a !== null && b === null) {
-            return -1;
-        } else if (a === null && b !== null) {
-            return 1;
-        } else if (a !== null && b !== null) {
-            if (a.isValid() && !b.isValid()) {
-                return -1;
-            } else if (!a.isValid() && b.isValid()) {
-                return 1;
-            }
-
-            if (a.isAfter(b)) {
-                return 1;
-            } else if (a.isBefore(b)) {
-                return -1;
-            } else {
-                return 0;
-            }
-        } else {
-            return 0;
-        }
-    }
-
     private static compareByPath(a: Task, b: Task): -1 | 0 | 1 {
         if (a.path < b.path) {
             return -1;
