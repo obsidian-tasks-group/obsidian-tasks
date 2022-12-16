@@ -66,38 +66,6 @@ describe('Sort', () => {
     //      is in a Field class, and the Field's tests exercise the particular sorting.
     //      Then the only testing needed here will probably be the testing of composite sorting.
 
-    // TODO Replace this with something simpler but equivalent in DoneDateField.test.ts.
-    it('sorts correctly by done', () => {
-        const one = fromLine({
-            line: '- [x] pet the cat 📅 2021-09-15 ✅ 2021-09-15',
-            path: '',
-        });
-        const two = fromLine({
-            line: '- [x] pet the cat 📅 2021-09-16 ✅ 2021-09-16',
-            path: '',
-        });
-        const three = fromLine({
-            line: '- [ ] bring out the trash 📅 2021-09-12',
-            path: '',
-        });
-        expect(
-            Sort.by(
-                {
-                    sorting: [Sort.makeLegacySorting(false, 1, 'done')],
-                },
-                [three, two, one],
-            ),
-        ).toEqual([one, two, three]);
-        expect(
-            Sort.by(
-                {
-                    sorting: [Sort.makeLegacySorting(false, 1, 'done')],
-                },
-                [two, one, three],
-            ),
-        ).toEqual([one, two, three]);
-    });
-
     it('sorts correctly by due, path, status', () => {
         const one = fromLine({ line: '- [ ] a 📅 1970-01-01', path: '1' });
         const two = fromLine({ line: '- [ ] c 📅 1970-01-02', path: '1' });
