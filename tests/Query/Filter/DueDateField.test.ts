@@ -70,6 +70,7 @@ describe('sorting by status', () => {
         const sorter = new DueDateField().createNormalSorter();
 
         // Assert
+        // TODO Create expressive Jest custom matchers for sorting tasks
         expect(sorter.comparator(date1, date2)).toEqual(-1);
         expect(sorter.comparator(date2, date1)).toEqual(1);
         expect(sorter.comparator(date2, date2)).toEqual(0);

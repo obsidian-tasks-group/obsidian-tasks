@@ -44,7 +44,7 @@ export function parseFilter(filterString: string): FilterOrErrorMessage | null {
 }
 
 export function parseSorter(sorterString: string): Sorting | null {
-    // New style parsing, which is done by the Field classes.
+    // New style parsing, using sorting which is done by the Field classes.
     const sortByRegexp = /^sort by (\S+)( reverse)?/;
     const fieldMatch = sorterString.match(sortByRegexp);
     if (fieldMatch === null) {

@@ -125,9 +125,9 @@ describe('explain priority', () => {
 });
 
 describe('sorting by priority', () => {
-    it('supports Field sorting methods correctly', () => {
+    it('does not yet support Field sorting methods', () => {
         const field = new PriorityField();
-        // Not yet supported
+        // Not yet supported - TODO - rename this test when implementing Priority sorting
         expect(field.supportsSorting()).toEqual(false);
     });
 });

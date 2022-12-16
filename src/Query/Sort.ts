@@ -15,12 +15,14 @@ import { DueDateField } from './Filter/DueDateField';
  *
  * Typically Comparator functions are stored in a {@link Sorting} object.
  */
+// TODO Move to Sorting.ts
 export type Comparator = (a: Task, b: Task) => number;
 
 /**
  * Sorting represents a single 'sort by' instruction.
  * It stores the comparison function as a {@link Comparator}.
  */
+// TODO Move to Sorting.ts
 export class Sorting {
     public readonly property: string;
     public readonly comparator: Comparator;
@@ -45,6 +47,7 @@ export class Sorting {
         if (comparator) {
             this.comparator = Sorting.maybeReverse(reverse, comparator);
         } else {
+            // TODO Move comparator mandatory so can remove reference to this.makeComparator
             this.comparator = this.makeComparator(reverse);
         }
     }
@@ -56,6 +59,7 @@ export class Sorting {
      * @param reverse
      */
     public makeComparator(reverse: boolean) {
+        // TODO Move this to Sort class
         const comparator = Sort.comparators[this.property as SortingProperty];
         if (!comparator) {
             throw Error('Unrecognised legacy sort keyword: ' + this.property);
@@ -72,6 +76,7 @@ export class Sort {
     static tagPropertyInstance: number = 1;
 
     public static by(query: Pick<Query, 'sorting'>, tasks: Task[]): Task[] {
+        // TODO Move code for creating default comparators to separate file
         const defaultComparators: Comparator[] = [
             Sort.compareByUrgency,
             new StatusField().comparator(),
