@@ -243,12 +243,12 @@ describe('Sort', () => {
 describe('compareBy', () => {
     it('compares correctly by date', () => {
         const earlierDate = '2022-01-01';
-        const latererDate = '2022-02-01'; // intentional typo - laterer - so all variable names align in code
+        const laterDate = '2022-02-01';
         const invalidDate = '2022-02-30';
 
-        testDateComparesBefore(earlierDate, latererDate);
+        testDateComparesBefore(earlierDate, laterDate);
         testDateComparesEqual(earlierDate, earlierDate);
-        testDateComparesAfter(latererDate, earlierDate);
+        testDateComparesAfter(laterDate, earlierDate);
 
         testDateComparesAfter(null, earlierDate); // no date sorts after valid dates
         testDateComparesEqual(null, null);
