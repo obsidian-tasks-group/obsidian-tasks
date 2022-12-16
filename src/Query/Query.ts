@@ -4,11 +4,9 @@ import type { IQuery } from '../IQuery';
 import { getSettings } from '../Config/Settings';
 import { Sort, Sorting } from './Sort';
 import type { TaskGroups } from './TaskGroups';
-import { parseFilter } from './FilterParser';
+import { parseFilter, parseSorter } from './FilterParser';
 import { Group } from './Group';
 import type { Filter } from './Filter/Filter';
-import { StatusField } from './Filter/StatusField';
-import { DueDateField } from './Filter/DueDateField';
 
 // TODO Work through the values in SortingProperty, moving their comparison
 //      functions to the corresponding Field implementations.
@@ -231,24 +229,10 @@ export class Query implements IQuery {
     }
 
     private parseSortBy2({ line }: { line: string }): boolean {
-        // New style parsing, which is done by the Field classes.
-        // Initially this is only implemented for a few fields.
-        // TODO Once a few more Field classes have comparator implementations,
-        //      convert this to look like Query.parseFilter(),
-        //      which will call a new function in FilterParser - parseSorter() or parseSortBy()
-        {
-            const sorter = new StatusField().parseInstructionAndCreateSorter(line);
-            if (sorter) {
-                this._sorting.push(sorter);
-                return true;
-            }
-        }
-        {
-            const sorter = new DueDateField().parseInstructionAndCreateSorter(line);
-            if (sorter) {
-                this._sorting.push(sorter);
-                return true;
-            }
+        const sortingMaybe = parseSorter(line);
+        if (sortingMaybe) {
+            this._sorting.push(sortingMaybe);
+            return true;
         }
         return false;
     }

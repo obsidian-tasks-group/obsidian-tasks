@@ -33,6 +33,11 @@ describe('sorting by status', () => {
     const doneTask = new TaskBuilder().status(Status.DONE).build();
     const todoTask = new TaskBuilder().status(Status.TODO).build();
 
+    it('supports Field sorting methods correctly', () => {
+        const field = new StatusField();
+        expect(field.supportsSorting()).toEqual(true);
+    });
+
     it('sort by status', () => {
         // Arrange
         const sorter = new StatusField().createNormalSorter();

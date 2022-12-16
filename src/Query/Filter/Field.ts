@@ -1,3 +1,4 @@
+import type { Sorting } from '../Sort';
 import type { FilterOrErrorMessage } from './Filter';
 
 /**
@@ -77,4 +78,41 @@ export abstract class Field {
      * @public
      */
     public abstract fieldName(): string;
+
+    /**
+     * Return whether the code for this field implements sorting of tasks
+     */
+    public supportsSorting(): boolean {
+        // TODO Make abstract
+        return false;
+    }
+
+    /**
+     * Create a {@link Sorting} object for sorting tasks by this field's value.
+     * @param reverse - false for normal sort order, true for reverse sort order.
+     */
+    public createSorter(reverse: boolean): Sorting {
+        // TODO Make abstract
+        throw Error(`createSorter() unimplemented for ${this.fieldName()} - reverse = ${reverse}`);
+    }
+
+    /**
+     * Create a {@link Sorting} object for sorting tasks by this field's value,
+     * in the standard/normal sort order for this field.
+     *
+     * @see {@link createReverseSorter}
+     */
+    public createNormalSorter(): Sorting {
+        return this.createSorter(false);
+    }
+
+    /**
+     * Create a {@link Sorting} object for sorting tasks by this field's value,
+     * in the reverse of the standard/normal sort order for this field.
+     *
+     * @see {@link createNormalSorter}
+     */
+    public createReverseSorter(): Sorting {
+        return this.createSorter(true);
+    }
 }
