@@ -174,35 +174,6 @@ describe('Sort', () => {
             ),
         ).toEqual(expectedOrder);
     });
-
-    // TODO Replace this with something simpler but equivalent in DescriptionField.test.ts.
-    it('sorts correctly by the link name and not the markdown', () => {
-        const one = fromLine({
-            line: '- [ ] *ZZZ An early task that starts with an A; actually not italic since only one asterisk',
-        });
-        const two = fromLine({
-            line: '- [ ] [[Better be second]] with bla bla behind it',
-        });
-        const three = fromLine({
-            line: '- [ ] [[Another|Third it should be]] and not [last|ZZZ]',
-        });
-        const four = fromLine({
-            line: '- [ ] *Very italic text*',
-        });
-        const five = fromLine({
-            line: '- [ ] [@Zebra|Zebra] should be last for Zebra',
-        });
-
-        const expectedOrder = [one, two, three, four, five];
-        expect(
-            Sort.by(
-                {
-                    sorting: [Sort.makeLegacySorting(false, 1, 'description')],
-                },
-                [two, one, five, four, three],
-            ),
-        ).toEqual(expectedOrder);
-    });
 });
 
 // These are lower-level tests that the Task-based ones above, for ease of test coverage.
