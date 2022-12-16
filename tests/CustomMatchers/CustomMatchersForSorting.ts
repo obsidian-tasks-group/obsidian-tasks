@@ -36,15 +36,15 @@ const equal = 0;
 const after = 1;
 const before = -1;
 
-export function testDateComparesBefore(dateA: string | null, dateB: string | null) {
+export function expectDateComparesBefore(dateA: string | null, dateB: string | null) {
     testCompareByDateBothWays(dateA, dateB, before);
 }
 
-export function testDateComparesEqual(dateA: string | null, dateB: string | null) {
+export function expectDateComparesEqual(dateA: string | null, dateB: string | null) {
     testCompareByDateBothWays(dateA, dateB, equal);
 }
 
-export function testDateComparesAfter(dateA: string | null, dateB: string | null) {
+export function expectDateComparesAfter(dateA: string | null, dateB: string | null) {
     testCompareByDateBothWays(dateA, dateB, after);
 }
 

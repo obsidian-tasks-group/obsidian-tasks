@@ -15,9 +15,9 @@ import { DueDateField } from '../src/Query/Filter/DueDateField';
 import { fromLine } from './TestHelpers';
 import { TaskBuilder } from './TestingTools/TaskBuilder';
 import {
-    testDateComparesAfter,
-    testDateComparesBefore,
-    testDateComparesEqual,
+    expectDateComparesAfter,
+    expectDateComparesBefore,
+    expectDateComparesEqual,
 } from './CustomMatchers/CustomMatchersForSorting';
 
 describe('Sort', () => {
@@ -246,16 +246,16 @@ describe('compareBy', () => {
         const laterDate = '2022-02-01';
         const invalidDate = '2022-02-30';
 
-        testDateComparesBefore(earlierDate, laterDate);
-        testDateComparesEqual(earlierDate, earlierDate);
-        testDateComparesAfter(laterDate, earlierDate);
+        expectDateComparesBefore(earlierDate, laterDate);
+        expectDateComparesEqual(earlierDate, earlierDate);
+        expectDateComparesAfter(laterDate, earlierDate);
 
-        testDateComparesAfter(null, earlierDate); // no date sorts after valid dates
-        testDateComparesEqual(null, null);
+        expectDateComparesAfter(null, earlierDate); // no date sorts after valid dates
+        expectDateComparesEqual(null, null);
 
-        testDateComparesBefore(invalidDate, null); // invalid dates sort before no date
-        testDateComparesEqual(invalidDate, invalidDate);
-        testDateComparesAfter(invalidDate, earlierDate); // invalid dates sort after valid ones
+        expectDateComparesBefore(invalidDate, null); // invalid dates sort before no date
+        expectDateComparesEqual(invalidDate, invalidDate);
+        expectDateComparesAfter(invalidDate, earlierDate); // invalid dates sort after valid ones
     });
 });
 
