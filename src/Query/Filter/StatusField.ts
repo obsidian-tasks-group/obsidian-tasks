@@ -15,55 +15,20 @@ export class StatusField extends FilterInstructionsBasedField {
         return 'status';
     }
 
-    /**
-     * Parse a sort instruction line, creating either a {@link Sorting} object or undefined,
-     * if the line is unrecognised.
-     * @param line - One of 'sort by status' or 'sort by status reverse'
-     */
-    public parseInstructionAndCreateSorter(line: string): Sorting | undefined {
-        const sortByRegexp = /^sort by (status)( reverse)?/;
-        const fieldMatch = line.match(sortByRegexp);
-        if (fieldMatch !== null) {
-            // const propertyName = fieldMatch[1];
-            const reverse = !!fieldMatch[2];
-            return this.createSorter(reverse);
-        } else {
-            return undefined;
-        }
+    public supportsSorting(): boolean {
+        return true;
     }
 
-    /**
-     * Create a {@link Sorting} object for sorting tasks by their Status,
-     * in the standard/normal sort order for this field.
-     *
-     * @see {@link createReverseSorter}
-     */
-    public createNormalSorter(): Sorting {
-        return this.createSorter(false);
-    }
-
-    /**
-     * Create a {@link Sorting} object for sorting tasks by their Status,
-     * in the reverse of the standard/normal sort order for this field.
-     *
-     * @see {@link createNormalSorter}
-     */
-    public createReverseSorter(): Sorting {
-        return this.createSorter(true);
-    }
-
-    /**
-     * Create a {@link Sorting} object for sorting tasks by their Status.
-     * @param reverse - false for normal sort order, true for reverse sort order.
-     */
-    protected createSorter(reverse: boolean): Sorting {
-        return new Sorting(reverse, 1, 'status', StatusField.comparator());
+    // TODO Move createSorter() to Field
+    public createSorter(reverse: boolean): Sorting {
+        return new Sorting(reverse, 1, this.fieldName(), this.comparator());
     }
 
     /**
      * Return a function to compare two Task objects, for use in sorting by status.
      */
-    public static comparator(): Comparator {
+    // TODO Make comparator() in Field through if unimplemented
+    public comparator(): Comparator {
         return (a: Task, b: Task) => {
             if (a.status < b.status) {
                 return 1;

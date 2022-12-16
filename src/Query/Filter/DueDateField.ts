@@ -23,58 +23,20 @@ export class DueDateField extends DateField {
         return false;
     }
 
-    /**
-     * Parse a sort instruction line, creating either a {@link Sorting} object or undefined,
-     * if the line is unrecognised.
-     * @param line - One of 'sort by due' or 'sort by due reverse'
-     */
-    public parseInstructionAndCreateSorter(line: string): Sorting | undefined {
-        const sortByRegexp = /^sort by (due)( reverse)?/;
-        const fieldMatch = line.match(sortByRegexp);
-        if (fieldMatch !== null) {
-            // const propertyName = fieldMatch[1];
-            const reverse = !!fieldMatch[2];
-            return this.createSorter(reverse);
-        } else {
-            return undefined;
-        }
+    public supportsSorting(): boolean {
+        return true;
     }
 
-    /**
-     * Create a {@link Sorting} object for sorting tasks by their Status,
-     * in the standard/normal sort order for this field.
-     *
-     * @see {@link createReverseSorter}
-     */
-    public createNormalSorter(): Sorting {
-        return this.createSorter(false);
-    }
-
-    /**
-     * Create a {@link Sorting} object for sorting tasks by their Status,
-     * in the reverse of the standard/normal sort order for this field.
-     *
-     * @see {@link createNormalSorter}
-     */
-    public createReverseSorter(): Sorting {
-        return this.createSorter(true);
-    }
-
-    /**
-     * Create a {@link Sorting} object for sorting tasks by their Status.
-     * @param reverse - false for normal sort order, true for reverse sort order.
-     */
-    protected createSorter(reverse: boolean): Sorting {
-        return new Sorting(reverse, 1, 'due', DueDateField.comparator());
+    public createSorter(reverse: boolean): Sorting {
+        return new Sorting(reverse, 1, this.fieldName(), this.comparator());
     }
 
     /**
      * Return a function to compare two Task objects, for use in sorting by due.
      */
-    public static comparator(): Comparator {
-        // TODO Refactor to make non-static and use this.date(a), this.date(b)
+    public comparator(): Comparator {
         return (a: Task, b: Task) => {
-            return Sort.compareByDate(a.dueDate, b.dueDate);
+            return Sort.compareByDate(this.date(a), this.date(b));
         };
     }
 }
