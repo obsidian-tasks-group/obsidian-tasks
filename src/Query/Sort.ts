@@ -97,6 +97,8 @@ export class Sort {
      *
      * TODO Once SortingProperty in Query.ts has been removed, remove this method.
      * @param reverse - whether the sort order should be reversed.
+     * @param propertyInstance - for tag sorting, this is a 1-based index for the tag number in the task to sort by.
+     *                           TODO eventually, move this number to the comparator used for sorting by tag.
      * @param property - the name of the property. This string must match
      *                   one of the values in ${@link SortingProperty}.
      */
