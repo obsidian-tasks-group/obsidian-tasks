@@ -1,6 +1,5 @@
 import type { Moment } from 'moment';
 import type { Task } from '../../Task';
-import { Sort } from '../Sort';
 import { Sorting } from '../Sorting';
 import type { Comparator } from '../Sorting';
 import { DateField } from './DateField';
@@ -37,7 +36,7 @@ export class DueDateField extends DateField {
      */
     public comparator(): Comparator {
         return (a: Task, b: Task) => {
-            return Sort.compareByDate(this.date(a), this.date(b));
+            return DateField.compareByDate(this.date(a), this.date(b));
         };
     }
 }

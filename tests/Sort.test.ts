@@ -7,6 +7,7 @@ window.moment = moment;
 
 import type { Comparator } from '../src/Query/Sorting';
 import { Sort } from '../src/Query/Sort';
+import { DateField } from '../src/Query/Filter/DateField';
 import { Sorting } from '../src/Query/Sorting';
 import { resetSettings, updateSettings } from '../src/Config/Settings';
 import { DateParser } from '../src/Query/DateParser';
@@ -247,7 +248,7 @@ expect.extend({
         let b: moment.Moment | null = null;
         if (dateB !== null) b = DateParser.parseDate(dateB);
 
-        const actual = Sort.compareByDate(a, b);
+        const actual = DateField.compareByDate(a, b);
 
         const pass = actual === expected;
         const message = () => `${dateA} < ${dateB}: expected=${expected} actual=${actual}`;

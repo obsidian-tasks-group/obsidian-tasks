@@ -1,4 +1,3 @@
-import type moment from 'moment';
 import type { Task } from '../Task';
 import { getSettings } from '../Config/Settings';
 import { Sorting } from './Sorting';
@@ -98,15 +97,15 @@ export class Sort {
     }
 
     private static compareByStartDate(a: Task, b: Task): -1 | 0 | 1 {
-        return Sort.compareByDate(a.startDate, b.startDate);
+        return DateField.compareByDate(a.startDate, b.startDate);
     }
 
     private static compareByScheduledDate(a: Task, b: Task): -1 | 0 | 1 {
-        return Sort.compareByDate(a.scheduledDate, b.scheduledDate);
+        return DateField.compareByDate(a.scheduledDate, b.scheduledDate);
     }
 
     private static compareByDoneDate(a: Task, b: Task): -1 | 0 | 1 {
-        return Sort.compareByDate(a.doneDate, b.doneDate);
+        return DateField.compareByDate(a.doneDate, b.doneDate);
     }
 
     private static compareByTag(a: Task, b: Task): -1 | 0 | 1 {
@@ -140,12 +139,6 @@ export class Sort {
             return 0;
         }
     }
-
-    // TODO Move this to DateField
-    public static compareByDate(a: moment.Moment | null, b: moment.Moment | null): -1 | 0 | 1 {
-        return DateField.compareByDate(a, b);
-    }
-
     private static compareByPath(a: Task, b: Task): -1 | 0 | 1 {
         if (a.path < b.path) {
             return -1;
