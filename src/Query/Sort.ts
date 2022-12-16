@@ -7,6 +7,7 @@ import type { Query, SortingProperty } from './Query';
 // TODO Remove the cyclic dependency between StatusField and Sort.
 import { StatusField } from './Filter/StatusField';
 import { DueDateField } from './Filter/DueDateField';
+import { DateField } from './Filter/DateField';
 
 export class Sort {
     static tagPropertyInstance: number = 1;
@@ -142,27 +143,7 @@ export class Sort {
 
     // TODO Move this to DateField
     public static compareByDate(a: moment.Moment | null, b: moment.Moment | null): -1 | 0 | 1 {
-        if (a !== null && b === null) {
-            return -1;
-        } else if (a === null && b !== null) {
-            return 1;
-        } else if (a !== null && b !== null) {
-            if (a.isValid() && !b.isValid()) {
-                return -1;
-            } else if (!a.isValid() && b.isValid()) {
-                return 1;
-            }
-
-            if (a.isAfter(b)) {
-                return 1;
-            } else if (a.isBefore(b)) {
-                return -1;
-            } else {
-                return 0;
-            }
-        } else {
-            return 0;
-        }
+        return DateField.compareByDate(a, b);
     }
 
     private static compareByPath(a: Task, b: Task): -1 | 0 | 1 {
