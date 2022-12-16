@@ -89,7 +89,7 @@ export abstract class Field {
     }
 
     /**
-     * Return a function to compare two Task objects, for use in sorting by due.
+     * Return a function to compare two Task objects, for use in sorting by this field's value.
      */
     public comparator(): Comparator {
         // TODO Make abstract
