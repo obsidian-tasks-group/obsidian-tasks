@@ -2,6 +2,7 @@ import type { Moment } from 'moment';
 import type { Task } from '../../Task';
 import { DateParser } from '../DateParser';
 import { Explanation } from '../Explain/Explanation';
+import type { Comparator } from '../Sorting';
 import { Field } from './Field';
 import { Filter, FilterOrErrorMessage } from './Filter';
 import { FilterInstructions } from './FilterInstructions';
@@ -119,6 +120,19 @@ export abstract class DateField extends Field {
      * @protected
      */
     protected abstract filterResultIfFieldMissing(): boolean;
+
+    public supportsSorting(): boolean {
+        return true;
+    }
+
+    /**
+     * Return a function to compare two Task objects, for use in sorting by due.
+     */
+    public comparator(): Comparator {
+        return (a: Task, b: Task) => {
+            return DateField.compareByDate(this.date(a), this.date(b));
+        };
+    }
 
     public static compareByDate(a: moment.Moment | null, b: moment.Moment | null): -1 | 0 | 1 {
         if (a !== null && b === null) {

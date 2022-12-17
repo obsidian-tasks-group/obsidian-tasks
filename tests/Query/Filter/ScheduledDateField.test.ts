@@ -29,7 +29,7 @@ describe('explain scheduled date queries', () => {
 describe('sorting by scheduled', () => {
     it('supports Field sorting methods correctly', () => {
         const field = new ScheduledDateField();
-        expect(field.supportsSorting()).toEqual(false);
+        expect(field.supportsSorting()).toEqual(true);
     });
 
     // These are minimal tests just to confirm basic behaviour is set up for this field.

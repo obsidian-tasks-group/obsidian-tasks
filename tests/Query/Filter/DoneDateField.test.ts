@@ -75,7 +75,7 @@ describe('explain done date queries', () => {
 describe('sorting by done', () => {
     it('supports Field sorting methods correctly', () => {
         const field = new DoneDateField();
-        expect(field.supportsSorting()).toEqual(false);
+        expect(field.supportsSorting()).toEqual(true);
     });
 
     // These are minimal tests just to confirm basic behaviour is set up for this field.

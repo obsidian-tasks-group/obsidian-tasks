@@ -33,7 +33,7 @@ describe('explain start date queries', () => {
 describe('sorting by start', () => {
     it('supports Field sorting methods correctly', () => {
         const field = new StartDateField();
-        expect(field.supportsSorting()).toEqual(false);
+        expect(field.supportsSorting()).toEqual(true);
     });
 
     // These are minimal tests just to confirm basic behaviour is set up for this field.
