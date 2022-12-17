@@ -74,9 +74,6 @@ export class PriorityField extends Field {
         return true;
     }
 
-    /**
-     * Return a function to compare two Task objects, for use in sorting by due.
-     */
     public comparator(): Comparator {
         return (a: Task, b: Task) => {
             return a.priority.localeCompare(b.priority);

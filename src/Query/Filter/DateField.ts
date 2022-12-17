@@ -125,9 +125,6 @@ export abstract class DateField extends Field {
         return true;
     }
 
-    /**
-     * Return a function to compare two Task objects, for use in sorting by due.
-     */
     public comparator(): Comparator {
         return (a: Task, b: Task) => {
             return DateField.compareByDate(this.date(a), this.date(b));

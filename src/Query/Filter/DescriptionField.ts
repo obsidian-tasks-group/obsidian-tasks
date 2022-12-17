@@ -38,7 +38,8 @@ export class DescriptionField extends TextField {
      *
      * Does not use the MarkdownRenderer, but tries to match regexes instead
      * in order to be simpler, faster, and not async.
-
+     *
+     * Only searches at the start of the description. Markdown later in the tak is unchanged.
      */
     public comparator(): Comparator {
         return (a: Task, b: Task) => {

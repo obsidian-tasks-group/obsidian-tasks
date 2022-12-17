@@ -26,9 +26,6 @@ export class PathField extends TextField {
         return true;
     }
 
-    /**
-     * Return a function to compare two Task objects, for use in sorting by description.
-     */
     public comparator(): Comparator {
         return (a: Task, b: Task) => {
             if (a.path < b.path) {
