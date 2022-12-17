@@ -10,7 +10,6 @@ import {
     expectTaskComparesBefore,
     expectTaskComparesEqual,
 } from '../../CustomMatchers/CustomMatchersForSorting';
-import { Sort } from '../../../src/Query/Sort';
 
 expect.extend({
     toBeValid,
@@ -132,10 +131,9 @@ describe('explain priority', () => {
 });
 
 describe('sorting by priority', () => {
-    it('does not yet support Field sorting methods', () => {
+    it('supports Field sorting methods correctly', () => {
         const field = new PriorityField();
-        // Not yet supported - TODO - rename this test when implementing Priority sorting
-        expect(field.supportsSorting()).toEqual(false);
+        expect(field.supportsSorting()).toEqual(true);
     });
 
     // Helper function to create a task with a given priority
@@ -145,7 +143,7 @@ describe('sorting by priority', () => {
 
     it('sort by priority', () => {
         // Arrange
-        const sorter = Sort.makeLegacySorting(false, 1, 'priority');
+        const sorter = new PriorityField().createNormalSorter();
 
         // Assert
         // This tests each adjacent pair of priority values, in descending order,
@@ -160,7 +158,7 @@ describe('sorting by priority', () => {
     it('sort by priority reverse', () => {
         // Single example just to prove reverse works.
         // (There's no need to repeat all the examples above)
-        const sorter = Sort.makeLegacySorting(true, 1, 'priority');
+        const sorter = new PriorityField().createReverseSorter();
         expectTaskComparesAfter(sorter, with_priority(Priority.High), with_priority(Priority.Medium));
     });
 });

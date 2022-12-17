@@ -1,5 +1,6 @@
 import { Priority, Task } from '../../Task';
 import { Explanation } from '../Explain/Explanation';
+import type { Comparator } from '../Sorting';
 import { Field } from './Field';
 import { Filter, FilterOrErrorMessage } from './Filter';
 
@@ -67,5 +68,15 @@ export class PriorityField extends Field {
 
     protected filterRegExp(): RegExp {
         return PriorityField.priorityRegexp;
+    }
+
+    public supportsSorting(): boolean {
+        return true;
+    }
+
+    public comparator(): Comparator {
+        return (a: Task, b: Task) => {
+            return a.priority.localeCompare(b.priority);
+        };
     }
 }

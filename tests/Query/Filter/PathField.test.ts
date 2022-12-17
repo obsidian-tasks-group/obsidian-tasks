@@ -8,7 +8,6 @@ import {
     expectTaskComparesBefore,
     expectTaskComparesEqual,
 } from '../../CustomMatchers/CustomMatchersForSorting';
-import { Sort } from '../../../src/Query/Sort';
 import { fromLine } from '../../TestHelpers';
 
 function testTaskFilterForTaskWithPath(filter: FilterOrErrorMessage, path: string, expected: boolean) {
@@ -120,7 +119,7 @@ describe('invalid unescaped slash should give helpful error text and not search'
 describe('sorting by path', () => {
     it('supports Field sorting methods correctly', () => {
         const field = new PathField();
-        expect(field.supportsSorting()).toEqual(false);
+        expect(field.supportsSorting()).toEqual(true);
     });
 
     // Helper function to create a task with a given path
@@ -130,7 +129,7 @@ describe('sorting by path', () => {
 
     it('sort by path', () => {
         // Arrange
-        const sorter = Sort.makeLegacySorting(false, 1, 'path');
+        const sorter = new PathField().createNormalSorter();
 
         // Assert
         expectTaskComparesEqual(sorter, with_path('a/b.md'), with_path('a/b.md'));
@@ -145,7 +144,7 @@ describe('sorting by path', () => {
     it('sort by path reverse', () => {
         // Single example just to prove reverse works.
         // (There's no need to repeat all the examples above)
-        const sorter = Sort.makeLegacySorting(true, 1, 'path');
+        const sorter = new PathField().createReverseSorter();
         expectTaskComparesAfter(sorter, with_path('a/b.md'), with_path('c/d.md'));
     });
 });
