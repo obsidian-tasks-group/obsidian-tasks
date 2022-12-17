@@ -61,6 +61,10 @@ describe('Sort', () => {
         expect(Sort.by({ sorting: [] }, [six, five, one, four, two, three])).toEqual(expectedOrder);
     });
 
+    // TODO Add some tests based on easy-to-reason-about custom comparators, then delete the remaining old-style tests
+    //  - Basic sorting with a single comparator
+    //  - Nested sorting with 2 more more comparators
+
     // TODO Most of these will become redundant once each of the sort implementations
     //      is in a Field class, and the Field's tests exercise the particular sorting.
     //      Then the only testing needed here will probably be the testing of composite sorting.
