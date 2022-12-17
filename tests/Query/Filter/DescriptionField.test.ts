@@ -10,7 +10,11 @@ import type { FilterOrErrorMessage } from '../../../src/Query/Filter/Filter';
 import { BooleanField } from '../../../src/Query/Filter/BooleanField';
 import { toMatchTaskFromLine } from '../../CustomMatchers/CustomMatchersForFilters';
 import { Sort } from '../../../src/Query/Sort';
-import { expectTaskComparesBefore, expectTaskComparesEqual } from '../../CustomMatchers/CustomMatchersForSorting';
+import {
+    expectTaskComparesAfter,
+    expectTaskComparesBefore,
+    expectTaskComparesEqual,
+} from '../../CustomMatchers/CustomMatchersForSorting';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 
 window.moment = moment;
@@ -249,6 +253,33 @@ describe('search description for Alternation (OR)', () => {
 });
 
 describe('sorting by description', () => {
+    it('supports Field sorting methods correctly', () => {
+        const field = new DescriptionField();
+        expect(field.supportsSorting()).toEqual(false);
+    });
+
+    // Helper function to create a task with a given path
+    function with_description(description: string) {
+        return new TaskBuilder().description(description).build();
+    }
+
+    it('sort by path', () => {
+        // Arrange
+        const sorter = Sort.makeLegacySorting(false, 1, 'description');
+
+        // Assert
+        expectTaskComparesEqual(sorter, with_description('Aaa'), with_description('Aaa'));
+        expectTaskComparesBefore(sorter, with_description('AAA'), with_description('ZZZ'));
+        expectTaskComparesAfter(sorter, with_description('AAA'), with_description('aaa')); // case-sensitive - capitals come last - TODO WHY? In description searches, capitals appear to come first.
+    });
+
+    it('sort by path reverse', () => {
+        // Single example just to prove reverse works.
+        // (There's no need to repeat all the examples above)
+        const sorter = Sort.makeLegacySorting(true, 1, 'description');
+        expectTaskComparesAfter(sorter, with_description('AAA'), with_description('ZZZ'));
+    });
+
     describe('show how markdown in descriptions gets cleaned', () => {
         const sorter = Sort.makeLegacySorting(false, 1, 'description');
 
