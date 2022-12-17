@@ -43,13 +43,19 @@ describe('sorting by urgency', () => {
         const sorter = Sort.makeLegacySorting(false, 1, 'urgency');
 
         // Assert
-        // This tests each adjacent pair of urgency values, in descending order,
-        // to prove that sorting of all combinations will be correct.
-        expectTaskComparesBefore(sorter, with_priority(Priority.High), with_priority(Priority.Medium));
-        expectTaskComparesBefore(sorter, with_priority(Priority.Medium), with_priority(Priority.None));
-        expectTaskComparesBefore(sorter, with_priority(Priority.None), with_priority(Priority.Low));
+        // Just some minimal tests to confirm that the urgency value is respected.
+        // No need to replicate a large number of tests already in tests of Urgency.
+        expectTaskComparesBefore(
+            sorter,
+            with_priority(Priority.High), // Higher priority comes first
+            with_priority(Priority.Medium),
+        );
 
-        expectTaskComparesEqual(sorter, with_priority(Priority.None), with_priority(Priority.None));
+        expectTaskComparesEqual(
+            sorter,
+            with_priority(Priority.None), // Same priority compares equal
+            with_priority(Priority.None),
+        );
 
         expectTaskComparesBefore(
             sorter,
@@ -60,8 +66,11 @@ describe('sorting by urgency', () => {
 
     it('sort by urgency reverse', () => {
         // Single example just to prove reverse works.
-        // (There's no need to repeat all the examples above)
         const sorter = Sort.makeLegacySorting(true, 1, 'urgency');
-        expectTaskComparesAfter(sorter, with_priority(Priority.High), with_priority(Priority.Medium));
+        expectTaskComparesAfter(
+            sorter,
+            with_priority(Priority.High), // Higher priority comes last
+            with_priority(Priority.Medium),
+        );
     });
 });
