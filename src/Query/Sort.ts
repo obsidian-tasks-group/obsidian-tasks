@@ -1,12 +1,13 @@
 import type { Task } from '../Task';
-import { getSettings } from '../Config/Settings';
 import { Sorting } from './Sorting';
 import type { Comparator } from './Sorting';
 import type { Query, SortingProperty } from './Query';
 // TODO Remove the cyclic dependency between StatusField and Sort.
 import { StatusField } from './Filter/StatusField';
 import { DueDateField } from './Filter/DueDateField';
-import { DateField } from './Filter/DateField';
+import { PriorityField } from './Filter/PriorityField';
+import { PathField } from './Filter/PathField';
+import { UrgencyField } from './Filter/UrgencyField';
 
 export class Sort {
     static tagPropertyInstance: number = 1;
@@ -14,11 +15,11 @@ export class Sort {
     public static by(query: Pick<Query, 'sorting'>, tasks: Task[]): Task[] {
         // TODO Move code for creating default comparators to separate file
         const defaultComparators: Comparator[] = [
-            Sort.compareByUrgency,
+            new UrgencyField().comparator(),
             new StatusField().comparator(),
             new DueDateField().comparator(),
-            Sort.compareByPriority,
-            Sort.compareByPath,
+            new PriorityField().comparator(),
+            new PathField().comparator(),
         ];
 
         const userComparators: Comparator[] = [];
@@ -34,13 +35,6 @@ export class Sort {
     }
 
     public static comparators: Record<SortingProperty, Comparator> = {
-        urgency: Sort.compareByUrgency,
-        description: Sort.compareByDescription,
-        priority: Sort.compareByPriority,
-        start: Sort.compareByStartDate,
-        scheduled: Sort.compareByScheduledDate,
-        done: Sort.compareByDoneDate,
-        path: Sort.compareByPath,
         tag: Sort.compareByTag,
     };
 
@@ -87,27 +81,6 @@ export class Sort {
         };
     }
 
-    private static compareByUrgency(a: Task, b: Task): number {
-        // Higher urgency should be sorted earlier.
-        return b.urgency - a.urgency;
-    }
-
-    private static compareByPriority(a: Task, b: Task): number {
-        return a.priority.localeCompare(b.priority);
-    }
-
-    private static compareByStartDate(a: Task, b: Task): -1 | 0 | 1 {
-        return DateField.compareByDate(a.startDate, b.startDate);
-    }
-
-    private static compareByScheduledDate(a: Task, b: Task): -1 | 0 | 1 {
-        return DateField.compareByDate(a.scheduledDate, b.scheduledDate);
-    }
-
-    private static compareByDoneDate(a: Task, b: Task): -1 | 0 | 1 {
-        return DateField.compareByDate(a.doneDate, b.doneDate);
-    }
-
     private static compareByTag(a: Task, b: Task): -1 | 0 | 1 {
         // If no tags then assume they are equal.
         if (a.tags.length === 0 && b.tags.length === 0) {
@@ -138,61 +111,5 @@ export class Sort {
         } else {
             return 0;
         }
-    }
-    private static compareByPath(a: Task, b: Task): -1 | 0 | 1 {
-        if (a.path < b.path) {
-            return -1;
-        } else if (a.path > b.path) {
-            return 1;
-        } else {
-            return 0;
-        }
-    }
-
-    /**
-     * Compare the description by how it is rendered in markdown.
-     *
-     * Does not use the MarkdownRenderer, but tries to match regexes instead
-     * in order to be simpler, faster, and not async.
-     */
-    private static compareByDescription(a: Task, b: Task) {
-        return Sort.cleanDescription(a.description).localeCompare(Sort.cleanDescription(b.description));
-    }
-
-    /**
-     * Removes `*`, `=`, and `[` from the beginning of the description.
-     *
-     * Will remove them only if they are closing.
-     * Properly reads links [[like this|one]] (note pipe).
-     */
-    private static cleanDescription(description: string): string {
-        const globalFilter = getSettings().globalFilter;
-        description = description.replace(globalFilter, '').trim();
-
-        const startsWithLinkRegex = /^\[\[?([^\]]*)\]/;
-        const linkRegexMatch = description.match(startsWithLinkRegex);
-        if (linkRegexMatch !== null) {
-            const innerLinkText = linkRegexMatch[1];
-            // For a link, we have to check whether it has another visible name set.
-            // For example `[[this is the link|but this is actually shown]]`.
-            description =
-                innerLinkText.substring(innerLinkText.indexOf('|') + 1) + description.replace(startsWithLinkRegex, '');
-        }
-
-        const startsWithItalicOrBoldRegex = /^\*\*?([^*]*)\*/;
-        const italicBoldRegexMatch = description.match(startsWithItalicOrBoldRegex);
-        if (italicBoldRegexMatch !== null) {
-            const innerItalicBoldText = italicBoldRegexMatch[1];
-            description = innerItalicBoldText + description.replace(startsWithLinkRegex, '');
-        }
-
-        const startsWithHighlightRegex = /^==?([^=]*)==/;
-        const highlightRegexMatch = description.match(startsWithHighlightRegex);
-        if (highlightRegexMatch !== null) {
-            const innerHighlightsText = highlightRegexMatch[1];
-            description = innerHighlightsText + description.replace(startsWithHighlightRegex, '');
-        }
-
-        return description;
     }
 }

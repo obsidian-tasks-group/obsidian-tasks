@@ -6,7 +6,6 @@ import { toHaveExplanation } from '../../CustomMatchers/CustomMatchersForFilters
 import { StartDateField } from '../../../src/Query/Filter/StartDateField';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { expectTaskComparesAfter, expectTaskComparesBefore } from '../../CustomMatchers/CustomMatchersForSorting';
-import { Sort } from '../../../src/Query/Sort';
 
 window.moment = moment;
 
@@ -33,7 +32,7 @@ describe('explain start date queries', () => {
 describe('sorting by start', () => {
     it('supports Field sorting methods correctly', () => {
         const field = new StartDateField();
-        expect(field.supportsSorting()).toEqual(false);
+        expect(field.supportsSorting()).toEqual(true);
     });
 
     // These are minimal tests just to confirm basic behaviour is set up for this field.
@@ -43,10 +42,10 @@ describe('sorting by start', () => {
     const date2 = new TaskBuilder().startDate('2022-12-23').build();
 
     it('sort by start', () => {
-        expectTaskComparesBefore(Sort.makeLegacySorting(false, 1, 'start'), date1, date2);
+        expectTaskComparesBefore(new StartDateField().createNormalSorter(), date1, date2);
     });
 
     it('sort by start reverse', () => {
-        expectTaskComparesAfter(Sort.makeLegacySorting(true, 1, 'start'), date1, date2);
+        expectTaskComparesAfter(new StartDateField().createReverseSorter(), date1, date2);
     });
 });

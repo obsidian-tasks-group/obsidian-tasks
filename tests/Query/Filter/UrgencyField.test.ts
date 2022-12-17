@@ -4,6 +4,7 @@
 import moment from 'moment';
 import { Priority } from '../../../src/Task';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
+import { UrgencyField } from '../../../src/Query/Filter/UrgencyField';
 
 import { toBeValid, toHaveExplanation } from '../../CustomMatchers/CustomMatchersForFilters';
 
@@ -12,7 +13,6 @@ import {
     expectTaskComparesBefore,
     expectTaskComparesEqual,
 } from '../../CustomMatchers/CustomMatchersForSorting';
-import { Sort } from '../../../src/Query/Sort';
 
 window.moment = moment;
 
@@ -21,13 +21,21 @@ expect.extend({
     toHaveExplanation,
 });
 
+describe('urgency', () => {
+    it('should not yet be implemented', () => {
+        // Arrange
+        const filter = new UrgencyField().createFilterOrErrorMessage('any old nonsense');
+
+        // Act, Assert
+        expect(filter).not.toBeValid();
+    });
+});
+
 describe('sorting by urgency', () => {
-    // TODO Activate this when creating UrgencyField
-    // it('does not yet support Field sorting methods', () => {
-    //     const field = new UrgencyField();
-    //     // Not yet supported - TODO - rename this test when implementing urgency sorting
-    //     expect(field.supportsSorting()).toEqual(false);
-    // });
+    it('supports Field sorting methods correctly', () => {
+        const field = new UrgencyField();
+        expect(field.supportsSorting()).toEqual(true);
+    });
 
     // Helper function to create a task with a given priority
     function with_priority(priority: Priority) {
@@ -40,7 +48,7 @@ describe('sorting by urgency', () => {
 
     it('sort by urgency', () => {
         // Arrange
-        const sorter = Sort.makeLegacySorting(false, 1, 'urgency');
+        const sorter = new UrgencyField().createNormalSorter();
 
         // Assert
         // Just some minimal tests to confirm that the urgency value is respected.
@@ -66,7 +74,7 @@ describe('sorting by urgency', () => {
 
     it('sort by urgency reverse', () => {
         // Single example just to prove reverse works.
-        const sorter = Sort.makeLegacySorting(true, 1, 'urgency');
+        const sorter = new UrgencyField().createReverseSorter();
         expectTaskComparesAfter(
             sorter,
             with_priority(Priority.High), // Higher priority comes last

@@ -10,7 +10,10 @@ import { Sort } from '../src/Query/Sort';
 import { Sorting } from '../src/Query/Sorting';
 import type { Task } from '../src/Task';
 import { StatusField } from '../src/Query/Filter/StatusField';
+import { DoneDateField } from '../src/Query/Filter/DoneDateField';
 import { DueDateField } from '../src/Query/Filter/DueDateField';
+import { PathField } from '../src/Query/Filter/PathField';
+import { DescriptionField } from '../src/Query/Filter/DescriptionField';
 import { fromLine } from './TestHelpers';
 import { TaskBuilder } from './TestingTools/TaskBuilder';
 import {
@@ -85,7 +88,7 @@ describe('Sort', () => {
                 {
                     sorting: [
                         new DueDateField().createNormalSorter(),
-                        Sort.makeLegacySorting(false, 1, 'path'),
+                        new PathField().createNormalSorter(),
                         new StatusField().createNormalSorter(),
                     ],
                 },
@@ -116,10 +119,7 @@ describe('Sort', () => {
         expect(
             Sort.by(
                 {
-                    sorting: [
-                        Sort.makeLegacySorting(false, 1, 'description'),
-                        Sort.makeLegacySorting(false, 1, 'done'),
-                    ],
+                    sorting: [new DescriptionField().createNormalSorter(), new DoneDateField().createNormalSorter()],
                 },
                 [three, one, two, four],
             ),
@@ -148,7 +148,7 @@ describe('Sort', () => {
         expect(
             Sort.by(
                 {
-                    sorting: [Sort.makeLegacySorting(true, 1, 'description'), Sort.makeLegacySorting(false, 1, 'done')],
+                    sorting: [new DescriptionField().createReverseSorter(), new DoneDateField().createNormalSorter()],
                 },
                 [two, four, three, one],
             ),
@@ -171,7 +171,7 @@ describe('Sort', () => {
                     sorting: [
                         new StatusField().createReverseSorter(),
                         new DueDateField().createReverseSorter(),
-                        Sort.makeLegacySorting(false, 1, 'path'),
+                        new PathField().createNormalSorter(),
                     ],
                 },
                 [six, five, one, four, three, two],
