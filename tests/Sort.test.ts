@@ -10,6 +10,7 @@ import { Sort } from '../src/Query/Sort';
 import { Sorting } from '../src/Query/Sorting';
 import type { Task } from '../src/Task';
 import { StatusField } from '../src/Query/Filter/StatusField';
+import { DoneDateField } from '../src/Query/Filter/DoneDateField';
 import { DueDateField } from '../src/Query/Filter/DueDateField';
 import { fromLine } from './TestHelpers';
 import { TaskBuilder } from './TestingTools/TaskBuilder';
@@ -118,7 +119,7 @@ describe('Sort', () => {
                 {
                     sorting: [
                         Sort.makeLegacySorting(false, 1, 'description'),
-                        Sort.makeLegacySorting(false, 1, 'done'),
+                        new DoneDateField().createNormalSorter(),
                     ],
                 },
                 [three, one, two, four],
@@ -148,7 +149,7 @@ describe('Sort', () => {
         expect(
             Sort.by(
                 {
-                    sorting: [Sort.makeLegacySorting(true, 1, 'description'), Sort.makeLegacySorting(false, 1, 'done')],
+                    sorting: [Sort.makeLegacySorting(true, 1, 'description'), new DoneDateField().createNormalSorter()],
                 },
                 [two, four, three, one],
             ),

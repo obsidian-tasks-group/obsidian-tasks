@@ -6,7 +6,6 @@ import type { Query, SortingProperty } from './Query';
 // TODO Remove the cyclic dependency between StatusField and Sort.
 import { StatusField } from './Filter/StatusField';
 import { DueDateField } from './Filter/DueDateField';
-import { DateField } from './Filter/DateField';
 
 export class Sort {
     static tagPropertyInstance: number = 1;
@@ -37,7 +36,6 @@ export class Sort {
         urgency: Sort.compareByUrgency,
         description: Sort.compareByDescription,
         priority: Sort.compareByPriority,
-        done: Sort.compareByDoneDate,
         path: Sort.compareByPath,
         tag: Sort.compareByTag,
     };
@@ -92,10 +90,6 @@ export class Sort {
 
     private static compareByPriority(a: Task, b: Task): number {
         return a.priority.localeCompare(b.priority);
-    }
-
-    private static compareByDoneDate(a: Task, b: Task): -1 | 0 | 1 {
-        return DateField.compareByDate(a.doneDate, b.doneDate);
     }
 
     private static compareByTag(a: Task, b: Task): -1 | 0 | 1 {
