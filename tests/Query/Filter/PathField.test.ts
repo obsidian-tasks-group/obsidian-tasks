@@ -123,7 +123,7 @@ describe('sorting by path', () => {
         expect(field.supportsSorting()).toEqual(false);
     });
 
-    // Helper function to create a task with a gven path
+    // Helper function to create a task with a given path
     function with_path(path: string) {
         return fromLine({ line: '- [ ] x', path: path });
     }

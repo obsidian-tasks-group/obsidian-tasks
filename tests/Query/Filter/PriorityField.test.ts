@@ -138,7 +138,7 @@ describe('sorting by priority', () => {
         expect(field.supportsSorting()).toEqual(false);
     });
 
-    // Helper function to create a task with a gven priority
+    // Helper function to create a task with a given priority
     function with_priority(priority: Priority) {
         return new TaskBuilder().priority(priority).build();
     }
