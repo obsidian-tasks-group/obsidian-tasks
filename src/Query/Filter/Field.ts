@@ -101,7 +101,7 @@ export abstract class Field {
      * @param reverse - false for normal sort order, true for reverse sort order.
      */
     public createSorter(reverse: boolean): Sorting {
-        return new Sorting(reverse, 1, this.fieldName(), this.comparator());
+        return new Sorting(reverse, this.fieldName(), this.comparator());
     }
 
     /**

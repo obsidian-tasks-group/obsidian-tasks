@@ -3,6 +3,7 @@ import type { FilteringCase } from '../../TestingTools/FilterTestHelpers';
 import { shouldSupportFiltering } from '../../TestingTools/FilterTestHelpers';
 import { toMatchTaskFromLine } from '../../CustomMatchers/CustomMatchersForFilters';
 import { TagsField } from '../../../src/Query/Filter/TagsField';
+import { DescriptionField } from '../../../src/Query/Filter/DescriptionField';
 import { fromLine } from '../../TestHelpers';
 import { Sort } from '../../../src/Query/Sort';
 
@@ -485,5 +486,43 @@ describe('Sort by tags', () => {
 
         // Cleanup
         resetSettings();
+    });
+
+    // Issue #1407 - Multiple 'sort by tag' lines ignored all but last one
+    it('should sort correctly with two sort by tag lines', () => {
+        const input = [
+            fromLine({ line: '- [ ] random 2 #a #a 0' }),
+            fromLine({ line: '- [ ] random 9 #a #b 1' }),
+            fromLine({ line: '- [ ] random 4 #a #c 2' }),
+            fromLine({ line: '- [ ] random 7 #b #a 3' }),
+            fromLine({ line: '- [ ] random 1 #b #b 4' }),
+            fromLine({ line: '- [ ] random 5 #b #c 5' }),
+            fromLine({ line: '- [ ] random 3 #c #a 6' }),
+            fromLine({ line: '- [ ] random 8 #c #b 7' }),
+            fromLine({ line: '- [ ] random 6 #c #c 8' }),
+        ];
+        const correctExpectedOrder = [
+            input[0], // 3 values with tag 2 = '#a' - then sorted by tag 1
+            input[3],
+            input[6],
+            input[1], // 3 values with tag 2 = '#b' - then sorted by tag 1
+            input[4],
+            input[7],
+            input[2], // 3 values with tag 2 = '#c' - then sorted by tag 1
+            input[5],
+            input[8],
+        ];
+        expect(
+            Sort.by(
+                {
+                    sorting: [
+                        Sort.makeLegacySorting(false, 2, 'tag'), // tag 2 - ascending
+                        Sort.makeLegacySorting(false, 1, 'tag'), // tag 1 - ascending
+                        new DescriptionField().createNormalSorter(), // then description - ascending
+                    ],
+                },
+                input,
+            ),
+        ).toEqual(correctExpectedOrder);
     });
 });
