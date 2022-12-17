@@ -12,7 +12,7 @@ import type { Filter } from './Filter/Filter';
 // TODO Work through the values in SortingProperty, moving their comparison
 //      functions to the corresponding Field implementations.
 //      Then remove SortingProperty.
-export type SortingProperty = 'urgency' | 'path' | 'description' | 'tag';
+export type SortingProperty = 'urgency' | 'description' | 'tag';
 
 export type GroupingProperty =
     | 'backlink'
@@ -45,7 +45,7 @@ export class Query implements IQuery {
 
     // If a tag is specified the user can also add a number to specify
     // which one to sort by if there is more than one.
-    private readonly sortByRegexp = /^sort by (urgency|path|description|tag)( reverse)?[\s]*(\d+)?/;
+    private readonly sortByRegexp = /^sort by (urgency|description|tag)( reverse)?[\s]*(\d+)?/;
 
     private readonly groupByRegexp =
         /^group by (backlink|done|due|filename|folder|happens|heading|path|priority|recurrence|recurring|root|scheduled|start|status|tags)/;

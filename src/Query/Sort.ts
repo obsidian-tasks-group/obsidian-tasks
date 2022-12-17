@@ -7,6 +7,7 @@ import type { Query, SortingProperty } from './Query';
 import { StatusField } from './Filter/StatusField';
 import { DueDateField } from './Filter/DueDateField';
 import { PriorityField } from './Filter/PriorityField';
+import { PathField } from './Filter/PathField';
 
 export class Sort {
     static tagPropertyInstance: number = 1;
@@ -18,7 +19,7 @@ export class Sort {
             new StatusField().comparator(),
             new DueDateField().comparator(),
             new PriorityField().comparator(),
-            Sort.compareByPath,
+            new PathField().comparator(),
         ];
 
         const userComparators: Comparator[] = [];
@@ -36,7 +37,6 @@ export class Sort {
     public static comparators: Record<SortingProperty, Comparator> = {
         urgency: Sort.compareByUrgency,
         description: Sort.compareByDescription,
-        path: Sort.compareByPath,
         tag: Sort.compareByTag,
     };
 
@@ -114,15 +114,6 @@ export class Sort {
         if (a.tags[tagInstanceToSortBy] < b.tags[tagInstanceToSortBy]) {
             return -1;
         } else if (a.tags[tagInstanceToSortBy] > b.tags[tagInstanceToSortBy]) {
-            return 1;
-        } else {
-            return 0;
-        }
-    }
-    private static compareByPath(a: Task, b: Task): -1 | 0 | 1 {
-        if (a.path < b.path) {
-            return -1;
-        } else if (a.path > b.path) {
             return 1;
         } else {
             return 0;
