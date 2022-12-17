@@ -41,7 +41,7 @@ export class Sort {
      */
     public static makeLegacySorting(reverse: boolean, propertyInstance: number, property: SortingProperty): Sorting {
         const comparator = Sort.makeLegacyComparator(property, propertyInstance);
-        return new Sorting(reverse, propertyInstance, property, comparator);
+        return new Sorting(reverse, property, comparator);
     }
 
     /**

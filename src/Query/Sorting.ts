@@ -18,7 +18,6 @@ export type Comparator = (a: Task, b: Task) => number;
 export class Sorting {
     public readonly property: string;
     public readonly comparator: Comparator;
-    public readonly propertyInstance: number;
 
     /**
      * Constructor.
@@ -26,15 +25,12 @@ export class Sorting {
      * TODO Once SortingProperty has been removed, re-order the parameters so the comparator comes first.
      *
      * @param reverse - whether the sort order should be reversed.
-     * @param propertyInstance - for tag sorting, this is a 1-based index for the tag number in the task to sort by.
-     *                           TODO eventually, move this number to the comparator used for sorting by tag.
      * @param property - the name of the property. If {@link comparator} is not supplied, this string must match
      *                   one of the values in ${@link SortingProperty}.
      * @param comparator - {@link Comparator} function.
      */
-    constructor(reverse: boolean, propertyInstance: number, property: string, comparator: Comparator) {
+    constructor(reverse: boolean, property: string, comparator: Comparator) {
         this.property = property;
-        this.propertyInstance = propertyInstance;
         this.comparator = Sorting.maybeReverse(reverse, comparator);
     }
 
