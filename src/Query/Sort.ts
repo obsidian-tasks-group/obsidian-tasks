@@ -7,6 +7,7 @@ import { StatusField } from './Filter/StatusField';
 import { DueDateField } from './Filter/DueDateField';
 import { PriorityField } from './Filter/PriorityField';
 import { PathField } from './Filter/PathField';
+import { UrgencyField } from './Filter/UrgencyField';
 
 export class Sort {
     static tagPropertyInstance: number = 1;
@@ -14,7 +15,7 @@ export class Sort {
     public static by(query: Pick<Query, 'sorting'>, tasks: Task[]): Task[] {
         // TODO Move code for creating default comparators to separate file
         const defaultComparators: Comparator[] = [
-            Sort.compareByUrgency,
+            new UrgencyField().comparator(),
             new StatusField().comparator(),
             new DueDateField().comparator(),
             new PriorityField().comparator(),
@@ -34,7 +35,6 @@ export class Sort {
     }
 
     public static comparators: Record<SortingProperty, Comparator> = {
-        urgency: Sort.compareByUrgency,
         tag: Sort.compareByTag,
     };
 
@@ -79,11 +79,6 @@ export class Sort {
             }
             return 0;
         };
-    }
-
-    private static compareByUrgency(a: Task, b: Task): number {
-        // Higher urgency should be sorted earlier.
-        return b.urgency - a.urgency;
     }
 
     private static compareByTag(a: Task, b: Task): -1 | 0 | 1 {
