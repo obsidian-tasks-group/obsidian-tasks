@@ -488,7 +488,7 @@ describe('Sort by tags', () => {
         resetSettings();
     });
 
-    // Issue #1407 - Multiple 'sort by tag' lines ignore all but last one
+    // Issue #1407 - Multiple 'sort by tag' lines ignored all but last one
     it('should sort correctly with two sort by tag lines', () => {
         const input = [
             fromLine({ line: '- [ ] random 2 #a #a 0' }),
@@ -501,28 +501,16 @@ describe('Sort by tags', () => {
             fromLine({ line: '- [ ] random 8 #c #b 7' }),
             fromLine({ line: '- [ ] random 6 #c #c 8' }),
         ];
-        // This is the correct order
-        // const correctExpectedOrder = [
-        //     input[0], // 3 values with tag 2 = '#a' - then sorted by tag 1
-        //     input[3],
-        //     input[6],
-        //     input[1], // 3 values with tag 2 = '#b' - then sorted by tag 1
-        //     input[4],
-        //     input[7],
-        //     input[2], // 3 values with tag 2 = '#c' - then sorted by tag 1
-        //     input[5],
-        //     input[8],
-        // ];
-        const buggyExpectedOrder = [
-            input[0], // 3 values with tag 1 = '#a' - then sorted by description
-            input[2],
-            input[1],
-            input[4], // 3 values with tag 1 = '#b' - then sorted by description
-            input[5],
+        const correctExpectedOrder = [
+            input[0], // 3 values with tag 2 = '#a' - then sorted by tag 1
             input[3],
-            input[6], // 3 values with tag 1 = '#c' - then sorted by description
-            input[8],
+            input[6],
+            input[1], // 3 values with tag 2 = '#b' - then sorted by tag 1
+            input[4],
             input[7],
+            input[2], // 3 values with tag 2 = '#c' - then sorted by tag 1
+            input[5],
+            input[8],
         ];
         expect(
             Sort.by(
@@ -535,6 +523,6 @@ describe('Sort by tags', () => {
                 },
                 input,
             ),
-        ).toEqual(buggyExpectedOrder);
+        ).toEqual(correctExpectedOrder);
     });
 });
