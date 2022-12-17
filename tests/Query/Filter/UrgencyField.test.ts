@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+import moment from 'moment';
 import { Priority } from '../../../src/Task';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 
@@ -9,6 +13,8 @@ import {
     expectTaskComparesEqual,
 } from '../../CustomMatchers/CustomMatchersForSorting';
 import { Sort } from '../../../src/Query/Sort';
+
+window.moment = moment;
 
 expect.extend({
     toBeValid,
@@ -28,6 +34,10 @@ describe('sorting by urgency', () => {
         return new TaskBuilder().priority(priority).build();
     }
 
+    function with_priority_and_scheduled(priority: Priority, scheduled: string | null) {
+        return new TaskBuilder().priority(priority).scheduledDate(scheduled).build();
+    }
+
     it('sort by urgency', () => {
         // Arrange
         const sorter = Sort.makeLegacySorting(false, 1, 'urgency');
@@ -40,6 +50,12 @@ describe('sorting by urgency', () => {
         expectTaskComparesBefore(sorter, with_priority(Priority.None), with_priority(Priority.Low));
 
         expectTaskComparesEqual(sorter, with_priority(Priority.None), with_priority(Priority.None));
+
+        expectTaskComparesBefore(
+            sorter,
+            with_priority_and_scheduled(Priority.Medium, '1999-01-12'), // If scheduled date has passed, urgency increases
+            with_priority(Priority.Medium),
+        );
     });
 
     it('sort by urgency reverse', () => {
