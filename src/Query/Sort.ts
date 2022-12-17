@@ -1,5 +1,4 @@
 import type { Task } from '../Task';
-import { getSettings } from '../Config/Settings';
 import { Sorting } from './Sorting';
 import type { Comparator } from './Sorting';
 import type { Query, SortingProperty } from './Query';
@@ -36,7 +35,6 @@ export class Sort {
 
     public static comparators: Record<SortingProperty, Comparator> = {
         urgency: Sort.compareByUrgency,
-        description: Sort.compareByDescription,
         tag: Sort.compareByTag,
     };
 
@@ -118,52 +116,5 @@ export class Sort {
         } else {
             return 0;
         }
-    }
-
-    /**
-     * Compare the description by how it is rendered in markdown.
-     *
-     * Does not use the MarkdownRenderer, but tries to match regexes instead
-     * in order to be simpler, faster, and not async.
-     */
-    private static compareByDescription(a: Task, b: Task) {
-        return Sort.cleanDescription(a.description).localeCompare(Sort.cleanDescription(b.description));
-    }
-
-    /**
-     * Removes `*`, `=`, and `[` from the beginning of the description.
-     *
-     * Will remove them only if they are closing.
-     * Properly reads links [[like this|one]] (note pipe).
-     */
-    private static cleanDescription(description: string): string {
-        const globalFilter = getSettings().globalFilter;
-        description = description.replace(globalFilter, '').trim();
-
-        const startsWithLinkRegex = /^\[\[?([^\]]*)\]/;
-        const linkRegexMatch = description.match(startsWithLinkRegex);
-        if (linkRegexMatch !== null) {
-            const innerLinkText = linkRegexMatch[1];
-            // For a link, we have to check whether it has another visible name set.
-            // For example `[[this is the link|but this is actually shown]]`.
-            description =
-                innerLinkText.substring(innerLinkText.indexOf('|') + 1) + description.replace(startsWithLinkRegex, '');
-        }
-
-        const startsWithItalicOrBoldRegex = /^\*\*?([^*]*)\*/;
-        const italicBoldRegexMatch = description.match(startsWithItalicOrBoldRegex);
-        if (italicBoldRegexMatch !== null) {
-            const innerItalicBoldText = italicBoldRegexMatch[1];
-            description = innerItalicBoldText + description.replace(startsWithLinkRegex, '');
-        }
-
-        const startsWithHighlightRegex = /^==?([^=]*)==/;
-        const highlightRegexMatch = description.match(startsWithHighlightRegex);
-        if (highlightRegexMatch !== null) {
-            const innerHighlightsText = highlightRegexMatch[1];
-            description = innerHighlightsText + description.replace(startsWithHighlightRegex, '');
-        }
-
-        return description;
     }
 }

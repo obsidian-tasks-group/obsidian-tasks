@@ -255,7 +255,7 @@ describe('search description for Alternation (OR)', () => {
 describe('sorting by description', () => {
     it('supports Field sorting methods correctly', () => {
         const field = new DescriptionField();
-        expect(field.supportsSorting()).toEqual(false);
+        expect(field.supportsSorting()).toEqual(true);
     });
 
     // Helper function to create a task with a given path
@@ -265,7 +265,7 @@ describe('sorting by description', () => {
 
     it('sort by path', () => {
         // Arrange
-        const sorter = Sort.makeLegacySorting(false, 1, 'description');
+        const sorter = new DescriptionField().createNormalSorter();
 
         // Assert
         expectTaskComparesEqual(sorter, with_description('Aaa'), with_description('Aaa'));
@@ -276,12 +276,12 @@ describe('sorting by description', () => {
     it('sort by path reverse', () => {
         // Single example just to prove reverse works.
         // (There's no need to repeat all the examples above)
-        const sorter = Sort.makeLegacySorting(true, 1, 'description');
+        const sorter = new DescriptionField().createReverseSorter();
         expectTaskComparesAfter(sorter, with_description('AAA'), with_description('ZZZ'));
     });
 
     describe('show how markdown in descriptions gets cleaned', () => {
-        const sorter = Sort.makeLegacySorting(false, 1, 'description');
+        const sorter = new DescriptionField().createNormalSorter();
 
         it('characters that are not stripped out', () => {
             // expectTaskComparesBefore() shows that the initial * is not removed removed
@@ -363,7 +363,7 @@ describe('sorting by description', () => {
         expect(
             Sort.by(
                 {
-                    sorting: [Sort.makeLegacySorting(false, 1, 'description')],
+                    sorting: [new DescriptionField().createNormalSorter()],
                 },
                 [two, one, five, four, three],
             ),
