@@ -6,7 +6,6 @@ import { toHaveExplanation } from '../../CustomMatchers/CustomMatchersForFilters
 import { StartDateField } from '../../../src/Query/Filter/StartDateField';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { expectTaskComparesAfter, expectTaskComparesBefore } from '../../CustomMatchers/CustomMatchersForSorting';
-import { Sort } from '../../../src/Query/Sort';
 
 window.moment = moment;
 
@@ -43,10 +42,10 @@ describe('sorting by start', () => {
     const date2 = new TaskBuilder().startDate('2022-12-23').build();
 
     it('sort by start', () => {
-        expectTaskComparesBefore(Sort.makeLegacySorting(false, 1, 'start'), date1, date2);
+        expectTaskComparesBefore(new StartDateField().createNormalSorter(), date1, date2);
     });
 
     it('sort by start reverse', () => {
-        expectTaskComparesAfter(Sort.makeLegacySorting(true, 1, 'start'), date1, date2);
+        expectTaskComparesAfter(new StartDateField().createReverseSorter(), date1, date2);
     });
 });
