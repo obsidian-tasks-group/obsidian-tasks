@@ -5,6 +5,13 @@ import { PriorityField } from '../../../src/Query/Filter/PriorityField';
 
 import { toBeValid, toHaveExplanation } from '../../CustomMatchers/CustomMatchersForFilters';
 
+import {
+    expectTaskComparesAfter,
+    expectTaskComparesBefore,
+    expectTaskComparesEqual,
+} from '../../CustomMatchers/CustomMatchersForSorting';
+import { Sort } from '../../../src/Query/Sort';
+
 expect.extend({
     toBeValid,
     toHaveExplanation,
@@ -129,5 +136,31 @@ describe('sorting by priority', () => {
         const field = new PriorityField();
         // Not yet supported - TODO - rename this test when implementing Priority sorting
         expect(field.supportsSorting()).toEqual(false);
+    });
+
+    // Helper function to create a task with a given priority
+    function with_priority(priority: Priority) {
+        return new TaskBuilder().priority(priority).build();
+    }
+
+    it('sort by priority', () => {
+        // Arrange
+        const sorter = Sort.makeLegacySorting(false, 1, 'priority');
+
+        // Assert
+        // This tests each adjacent pair of priority values, in descending order,
+        // to prove that sorting of all combinations will be correct.
+        expectTaskComparesBefore(sorter, with_priority(Priority.High), with_priority(Priority.Medium));
+        expectTaskComparesBefore(sorter, with_priority(Priority.Medium), with_priority(Priority.None));
+        expectTaskComparesBefore(sorter, with_priority(Priority.None), with_priority(Priority.Low));
+
+        expectTaskComparesEqual(sorter, with_priority(Priority.None), with_priority(Priority.None));
+    });
+
+    it('sort by priority reverse', () => {
+        // Single example just to prove reverse works.
+        // (There's no need to repeat all the examples above)
+        const sorter = Sort.makeLegacySorting(true, 1, 'priority');
+        expectTaskComparesAfter(sorter, with_priority(Priority.High), with_priority(Priority.Medium));
     });
 });

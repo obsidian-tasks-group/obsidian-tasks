@@ -7,6 +7,8 @@ import type { FilterOrErrorMessage } from '../../../src/Query/Filter/Filter';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { testFilter } from '../../TestingTools/FilterTestHelpers';
 import { toHaveExplanation } from '../../CustomMatchers/CustomMatchersForFilters';
+import { expectTaskComparesAfter, expectTaskComparesBefore } from '../../CustomMatchers/CustomMatchersForSorting';
+import { Sort } from '../../../src/Query/Sort';
 
 window.moment = moment;
 
@@ -67,5 +69,26 @@ describe('explain done date queries', () => {
     it('should show value of relative dates', () => {
         const filterOrMessage = new DoneDateField().createFilterOrErrorMessage('done after today');
         expect(filterOrMessage).toHaveExplanation('done date is after 2022-01-15 (Saturday 15th January 2022)');
+    });
+});
+
+describe('sorting by done', () => {
+    it('supports Field sorting methods correctly', () => {
+        const field = new DoneDateField();
+        expect(field.supportsSorting()).toEqual(false);
+    });
+
+    // These are minimal tests just to confirm basic behaviour is set up for this field.
+    // Thorough testing is done in DueDateField.test.ts.
+
+    const date1 = new TaskBuilder().doneDate('2021-01-12').build();
+    const date2 = new TaskBuilder().doneDate('2022-12-23').build();
+
+    it('sort by done', () => {
+        expectTaskComparesBefore(Sort.makeLegacySorting(false, 1, 'done'), date1, date2);
+    });
+
+    it('sort by done reverse', () => {
+        expectTaskComparesAfter(Sort.makeLegacySorting(true, 1, 'done'), date1, date2);
     });
 });
