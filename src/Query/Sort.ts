@@ -54,7 +54,7 @@ export class Sort {
      * @param property - the name of the property. This string must match
      *                   one of the values in ${@link SortingProperty}.
      */
-    public static makeLegacySorting(reverse: boolean, propertyInstance: number, property: string): Sorting {
+    public static makeLegacySorting(reverse: boolean, propertyInstance: number, property: SortingProperty): Sorting {
         const comparator = Sort.makeLegacyComparator(property);
         return new Sorting(reverse, propertyInstance, property, comparator);
     }
@@ -67,8 +67,8 @@ export class Sort {
      *                   one of the values in ${@link SortingProperty}.
      *                   Throws if property not recognised.
      */
-    public static makeLegacyComparator(property: string): Comparator {
-        const comparator = Sort.comparators[property as SortingProperty];
+    public static makeLegacyComparator(property: SortingProperty): Comparator {
+        const comparator = Sort.comparators[property];
         if (!comparator) {
             throw Error('Unrecognised legacy sort keyword: ' + property);
         }

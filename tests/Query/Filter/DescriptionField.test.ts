@@ -9,6 +9,9 @@ import { fromLine } from '../../TestHelpers';
 import type { FilterOrErrorMessage } from '../../../src/Query/Filter/Filter';
 import { BooleanField } from '../../../src/Query/Filter/BooleanField';
 import { toMatchTaskFromLine } from '../../CustomMatchers/CustomMatchersForFilters';
+import { Sort } from '../../../src/Query/Sort';
+import { expectTaskComparesBefore, expectTaskComparesEqual } from '../../CustomMatchers/CustomMatchersForSorting';
+import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 
 window.moment = moment;
 
@@ -242,5 +245,97 @@ describe('search description for Alternation (OR)', () => {
         expect(filter).toMatchTaskFromLine('- [ ] Do stuff waiting');
         expect(filter).toMatchTaskFromLine('- [ ] Do stuff waits');
         expect(filter).toMatchTaskFromLine('- [ ] Do stuff wartet');
+    });
+});
+
+describe('sorting by description', () => {
+    describe('show how markdown in descriptions gets cleaned', () => {
+        const sorter = Sort.makeLegacySorting(false, 1, 'description');
+
+        it('characters that are not stripped out', () => {
+            // expectTaskComparesBefore() shows that the initial * is not removed removed
+            expectTaskComparesBefore(
+                sorter,
+                new TaskBuilder()
+                    .description('*ZZZ Initial lone asterisk is not stripped, so these two tasks sort unequal')
+                    .build(),
+                new TaskBuilder()
+                    .description('ZZZ Initial lone asterisk is not stripped, so these two tasks sort unequal')
+                    .build(),
+            );
+        });
+
+        // Each of these pairs of strings is:
+        // 1. A task description
+        // 2. The result of running that description through the description-cleaning code.
+        it.each([
+            [
+                '[[Better be second]] most [] removed so these sort equal',
+                'Better be second] most [] removed so these sort equal',
+            ],
+            [
+                '[[Another|Third it should be]] alias is used from 1st link but not 2nd [last|ZZZ]',
+                'Third it should be] alias is used from 1st link but not 2nd [last|ZZZ]',
+            ],
+            [
+                '*Very italic text* - this looks completely wrong',
+                'Very italic text*Very italic text* - this looks completely wrong',
+            ],
+            [
+                '[@Zebra|Zebra] alias is used single []*', // (comment to override formatting)
+                'Zebra alias is used single []*',
+            ],
+            [
+                '==highlighted== then ordinary text', // (comment to override formatting)
+                'highlighted then ordinary text',
+            ],
+
+            [
+                '=non-highlighted= then ordinary text', // (comment to override formatting)
+                '=non-highlighted= then ordinary text',
+            ],
+            [
+                '**bold** then ordinary text', // (comment to override formatting)
+                'bold**bold** then ordinary text',
+            ],
+            [
+                '*italic* then ordinary text', // (comment to override formatting)
+                'italic*italic* then ordinary text',
+            ],
+        ])('description "%s" is cleaned to "%s"', (originalDescription: string, cleanedDescription: string) => {
+            expectTaskComparesEqual(
+                sorter,
+                new TaskBuilder().description(originalDescription).build(),
+                new TaskBuilder().description(cleanedDescription).build(),
+            );
+        });
+    });
+
+    it('sorts correctly by the link name and not the markdown', () => {
+        const one = fromLine({
+            line: '- [ ] *ZZZ An early task that starts with an A; actually not italic since only one asterisk',
+        });
+        const two = fromLine({
+            line: '- [ ] [[Better be second]] with bla bla behind it',
+        });
+        const three = fromLine({
+            line: '- [ ] [[Another|Third it should be]] and not [last|ZZZ]',
+        });
+        const four = fromLine({
+            line: '- [ ] *Very italic text*',
+        });
+        const five = fromLine({
+            line: '- [ ] [@Zebra|Zebra] should be last for Zebra',
+        });
+
+        const expectedOrder = [one, two, three, four, five];
+        expect(
+            Sort.by(
+                {
+                    sorting: [Sort.makeLegacySorting(false, 1, 'description')],
+                },
+                [two, one, five, four, three],
+            ),
+        ).toEqual(expectedOrder);
     });
 });

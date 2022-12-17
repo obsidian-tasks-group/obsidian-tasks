@@ -39,18 +39,37 @@ expect.extend({
         const taskA = tasks[0];
         const taskB = tasks[1];
         const actual = sorting.comparator(taskA, taskB);
-        const pass = actual === expected;
-        // TODO Try to make meaning of 1, -1 or 0 clearer - somehow saying "less", "greater", "equal"
-        const message = () =>
-            `\n"${taskA.toFileLineString()}" < \n"${taskB.toFileLineString()}"\n:expected=${expected} actual=${actual}`;
+
+        let pass;
+        let expectedDesription: string;
+        switch (expected) {
+            case -1:
+                pass = actual < 0;
+                expectedDesription = 'should be less than 0';
+                break;
+            case 0:
+                pass = actual === 0;
+                expectedDesription = 'should equal 0';
+                break;
+            case +1:
+                pass = actual > 0;
+                expectedDesription = 'should be more than 0';
+                break;
+        }
+
+        const message = () => `
+"${taskA.toFileLineString()}" <
+"${taskB.toFileLineString()}"
+  expect comparator result: "${expectedDesription}";
+  actual comparator result: ${actual}`;
 
         return { pass, message };
     },
 });
 
 const equal = 0;
-const after = 1;
-const before = -1;
+const after = 1; // This will actually pass if the comparator returns any value ABOVE 0;
+const before = -1; // This will actually pass if the comparator returns any value BELOW 0;
 
 // ---------------------------------------------------------------------
 // Sorting Dates
