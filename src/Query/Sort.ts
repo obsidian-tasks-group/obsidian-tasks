@@ -52,7 +52,6 @@ export class Sort {
      *                   one of the values in ${@link SortingProperty}.
      *                   Throws if property not recognised.
      * @param propertyInstance - for tag sorting, this is a 1-based index for the tag number in the task to sort by.
-     *                           TODO eventually, move this number to the comparator used for sorting by tag.
      */
     public static makeLegacyComparator(property: SortingProperty, propertyInstance: number): Comparator {
         if (property !== 'tag') {
