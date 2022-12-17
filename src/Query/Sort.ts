@@ -6,6 +6,7 @@ import type { Query, SortingProperty } from './Query';
 // TODO Remove the cyclic dependency between StatusField and Sort.
 import { StatusField } from './Filter/StatusField';
 import { DueDateField } from './Filter/DueDateField';
+import { PriorityField } from './Filter/PriorityField';
 
 export class Sort {
     static tagPropertyInstance: number = 1;
@@ -16,7 +17,7 @@ export class Sort {
             Sort.compareByUrgency,
             new StatusField().comparator(),
             new DueDateField().comparator(),
-            Sort.compareByPriority,
+            new PriorityField().comparator(),
             Sort.compareByPath,
         ];
 
@@ -35,7 +36,6 @@ export class Sort {
     public static comparators: Record<SortingProperty, Comparator> = {
         urgency: Sort.compareByUrgency,
         description: Sort.compareByDescription,
-        priority: Sort.compareByPriority,
         path: Sort.compareByPath,
         tag: Sort.compareByTag,
     };
@@ -86,10 +86,6 @@ export class Sort {
     private static compareByUrgency(a: Task, b: Task): number {
         // Higher urgency should be sorted earlier.
         return b.urgency - a.urgency;
-    }
-
-    private static compareByPriority(a: Task, b: Task): number {
-        return a.priority.localeCompare(b.priority);
     }
 
     private static compareByTag(a: Task, b: Task): -1 | 0 | 1 {
