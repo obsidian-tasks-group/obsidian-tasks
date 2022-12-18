@@ -80,9 +80,24 @@ export abstract class Field {
      * Return the name of this field, to be used in error messages.
      * This usually matches the instruction name, but does not always
      * (see start and starts).
+     *
+     * Also, some fields have more than one name, separated by '/'.
+     * See {@link TagsField}, for example.
      * @public
+     *
+     * @see fieldNameSingular
      */
     public abstract fieldName(): string;
+
+    /**
+     * Returns the singular form of the field's name.
+     * @public
+     *
+     * @see fieldName
+     */
+    public fieldNameSingular(): string {
+        return this.fieldName();
+    }
 
     // -----------------------------------------------------------------------------------------------------------------
     // Sorting
@@ -175,10 +190,10 @@ export abstract class Field {
      */
     protected sorterRegExp(): RegExp {
         if (!this.supportsSorting()) {
-            throw Error(`sorterRegExp() unimplemented for ${this.fieldName()}`);
+            throw Error(`sorterRegExp() unimplemented for ${this.fieldNameSingular()}`);
         }
 
-        return new RegExp(`^sort by ${this.fieldName()}( reverse)?`);
+        return new RegExp(`^sort by ${this.fieldNameSingular()}( reverse)?`);
     }
 
     /**
@@ -186,7 +201,7 @@ export abstract class Field {
      */
     public comparator(): Comparator {
         // TODO Make abstract
-        throw Error(`comparator() unimplemented for ${this.fieldName()}`);
+        throw Error(`comparator() unimplemented for ${this.fieldNameSingular()}`);
     }
 
     /**
@@ -194,7 +209,7 @@ export abstract class Field {
      * @param reverse - false for normal sort order, true for reverse sort order.
      */
     public createSorter(reverse: boolean): Sorting {
-        return new Sorting(reverse, this.fieldName(), this.comparator());
+        return new Sorting(reverse, this.fieldNameSingular(), this.comparator());
     }
 
     /**

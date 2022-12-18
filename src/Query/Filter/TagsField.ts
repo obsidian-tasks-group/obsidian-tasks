@@ -29,7 +29,7 @@ export class TagsField extends MultiTextField {
         return true;
     }
 
-    /** Overridden to add support for tag number - and overide this.fieldName()
+    /** Overridden to add support for tag number.
      *
      * @param line
      */
@@ -50,7 +50,7 @@ export class TagsField extends MultiTextField {
      * instruction line for sorting Tasks by tag.
      *
      * `match[1]` will be either `reverse` or undefined.
-     * `match[1]` will be either the tag number or undefined.
+     * `match[2]` will be either the tag number or undefined.
      */
     protected sorterRegExp(): RegExp {
         return /^sort by tag( reverse)?[\s]*(\d+)?/;
@@ -61,14 +61,6 @@ export class TagsField extends MultiTextField {
      */
     public comparator(): Comparator {
         return TagsField.makeCompareByTagComparator(1);
-    }
-
-    /** Needed to override this.fieldName
-     *
-     * @param reverse
-     */
-    public createSorter(reverse: boolean): Sorting {
-        return new Sorting(reverse, this.fieldNameSingular(), this.comparator());
     }
 
     private static makeCompareByTagComparator(propertyInstance: number): Comparator {
