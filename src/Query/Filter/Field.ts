@@ -96,6 +96,12 @@ export abstract class Field {
         return false;
     }
 
+    /**
+     * Parse a 'sort by' line and return a Sorting object.
+     *
+     * Returns null line does not match this field or is invalid,
+     * or this field does not support sorting.
+     */
     public parseSortLine(line: string): Sorting | null {
         if (!this.supportsSorting()) {
             return null;
@@ -118,6 +124,8 @@ export abstract class Field {
      * Current implementation simply checks whether the class does support sorting,
      * and whether the line matches this.sorterRegExp().
      * @param line - A line from a ```tasks``` block.
+     *
+     * @see {@link createSorterFromLine}
      */
     public canCreateSorterForLine(line: string): boolean {
         if (!this.supportsSorting()) {
@@ -137,6 +145,8 @@ export abstract class Field {
      * this method.
      *
      * @param line - A 'sort by' line from a ```tasks``` block.
+     *
+     * @see {@link canCreateSorterForLine}
      */
     public createSorterFromLine(line: string): Sorting | null {
         if (!this.supportsSorting()) {

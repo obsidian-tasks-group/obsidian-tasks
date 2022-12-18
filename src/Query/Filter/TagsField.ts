@@ -45,16 +45,19 @@ export class TagsField extends MultiTextField {
         return new Sorting(reverse, this.fieldNameSingular(), comparator);
     }
 
-    /** Overridden to add support for tag number - and overide this.fieldName()
+    /**
+     * Return a regular expression that will match a correctly-formed
+     * instruction line for sorting Tasks by tag.
      *
-     * @protected
+     * `match[1]` will be either `reverse` or undefined.
+     * `match[1]` will be either the tag number or undefined.
      */
     protected sorterRegExp(): RegExp {
         return /^sort by tag( reverse)?[\s]*(\d+)?/;
     }
 
     /**
-     * Create a comparator that sorts by the first tag.
+     * Create a ${@link Comparator} that sorts by the first tag.
      */
     public comparator(): Comparator {
         return TagsField.makeCompareByTagComparator(1);
