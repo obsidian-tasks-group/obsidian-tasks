@@ -96,6 +96,22 @@ export abstract class Field {
         return false;
     }
 
+    public parseSortLine(line: string): Sorting | null {
+        if (!this.supportsSorting()) {
+            return null;
+        }
+
+        if (!this.canCreateSorterForLine(line)) {
+            return null;
+        }
+
+        const sorting = this.createSorterFromLine(line);
+        if (sorting) {
+            return sorting;
+        }
+        return null;
+    }
+
     /**
      * Returns true if the class can parse the given 'sort by' instruction line.
      *

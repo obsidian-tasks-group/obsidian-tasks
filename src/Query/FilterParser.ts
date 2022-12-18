@@ -13,7 +13,6 @@ import { StatusField } from './Filter/StatusField';
 import { TagsField } from './Filter/TagsField';
 import { BooleanField } from './Filter/BooleanField';
 import { FilenameField } from './Filter/FilenameField';
-import type { Field } from './Filter/Field';
 
 import { UrgencyField } from './Filter/UrgencyField';
 import type { FilterOrErrorMessage } from './Filter/Filter';
@@ -46,21 +45,6 @@ export function parseFilter(filterString: string): FilterOrErrorMessage | null {
     return null;
 }
 
-function parseSortLine(field: Field, sorterString: string): Sorting | null {
-    if (!field.supportsSorting()) {
-        return null;
-    }
-    if (!field.canCreateSorterForLine(sorterString)) {
-        return null;
-    }
-
-    const sorting = field.createSorterFromLine(sorterString);
-    if (sorting) {
-        return sorting;
-    }
-    return null;
-}
-
 export function parseSorter(sorterString: string): Sorting | null {
     // New style parsing, using sorting which is done by the Field classes.
 
@@ -73,7 +57,7 @@ export function parseSorter(sorterString: string): Sorting | null {
     // See if any of the fields can parse the line.
     for (const creator of fieldCreators) {
         const field = creator();
-        const sorter = parseSortLine(field, sorterString);
+        const sorter = field.parseSortLine(sorterString);
         if (sorter) {
             return sorter;
         }
