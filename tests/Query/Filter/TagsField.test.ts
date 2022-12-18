@@ -6,6 +6,8 @@ import { TagsField } from '../../../src/Query/Filter/TagsField';
 import { DescriptionField } from '../../../src/Query/Filter/DescriptionField';
 import { fromLine } from '../../TestHelpers';
 import { Sort } from '../../../src/Query/Sort';
+import { TaskBuilder } from '../../TestingTools/TaskBuilder';
+import { expectTaskComparesAfter, expectTaskComparesBefore } from '../../CustomMatchers/CustomMatchersForSorting';
 
 expect.extend({
     toMatchTaskFromLine,
@@ -276,8 +278,66 @@ describe('tag/tags', () => {
  * There is also a task with additional characters in the name to ensure it is seen
  * as bigger that one with the same initial characters.
  */
-// TODO Replace this with something simpler but equivalent.
 describe('Sort by tags', () => {
+    describe('field supports sorting', () => {
+        const tagsField = new TagsField();
+
+        it('should support sorting', () => {
+            expect(tagsField.supportsSorting()).toEqual(true);
+        });
+
+        it('should report whether it can parse lines', () => {
+            // Valid sort by tag lines:
+            expect(tagsField.canCreateSorterForLine('sort by tag')).toBe(true);
+            expect(tagsField.canCreateSorterForLine('sort by tag 2')).toBe(true);
+            expect(tagsField.canCreateSorterForLine('sort by tag reverse')).toBe(true);
+            expect(tagsField.canCreateSorterForLine('sort by tag reverse 3')).toBe(true);
+
+            // Invalid lines:
+            expect(tagsField.canCreateSorterForLine('sort by description')).toBe(false);
+        });
+
+        it('should create a default comparator, sorting by first tag', () => {
+            const comparator = tagsField.comparator();
+            const a = new TaskBuilder().tags(['#a', '#d']).build();
+            const b = new TaskBuilder().tags(['#b', '#c']).build();
+            expect(comparator(a, b)).toBeLessThan(0);
+        });
+
+        it('should parse a valid line with default tag number', () => {
+            const sorter = tagsField.parseSortLine('sort by tag');
+            expect(sorter?.property).toEqual('tag');
+            const a = new TaskBuilder().tags(['#a']).build();
+            const b = new TaskBuilder().tags(['#b']).build();
+            expect(sorter?.comparator(a, b)).toBeLessThan(0);
+            expectTaskComparesBefore(sorter!, a, b);
+        });
+
+        it('should parse a valid line with a non-default tag number', () => {
+            const sorter = tagsField.parseSortLine('sort by tag 2');
+            expect(sorter?.property).toEqual('tag');
+            const a = new TaskBuilder().tags(['#a', '#b']).build();
+            const b = new TaskBuilder().tags(['#a', '#c']).build();
+            expectTaskComparesBefore(sorter!, a, b);
+        });
+
+        it('should parse a valid line with reverse and a non-default tag number', () => {
+            const sorter = tagsField.parseSortLine('sort by tag reverse 2');
+            expect(sorter?.property).toEqual('tag');
+            const a = new TaskBuilder().tags(['#a', '#b']).build();
+            const b = new TaskBuilder().tags(['#a', '#c']).build();
+            expectTaskComparesAfter(sorter!, a, b);
+        });
+
+        it('should fail to parse a invalid line', () => {
+            const line = 'sort by jsdajhasdfa';
+            expect(tagsField.canCreateSorterForLine(line)).toBe(false);
+            expect(tagsField.createSorterFromLine(line)).toBeNull();
+            const sorting = tagsField.parseSortLine(line);
+            expect(sorting).toBeNull();
+        });
+    });
+
     it('should sort correctly by tag defaulting to first with no global filter', () => {
         // Arrange
         const t1 = fromLine({ line: '- [ ] a #aaa #jjj' });

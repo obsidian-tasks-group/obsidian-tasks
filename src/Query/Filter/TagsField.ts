@@ -1,4 +1,6 @@
 import type { Task } from '../../Task';
+import type { Comparator } from '../Sorting';
+import { Sorting } from '../Sorting';
 import { MultiTextField } from './MultiTextField';
 
 /**
@@ -7,11 +9,96 @@ import { MultiTextField } from './MultiTextField';
  * Tags can be searched for with and without the hash tag at the start.
  */
 export class TagsField extends MultiTextField {
+    // -----------------------------------------------------------------------------------------------------------------
+    // Filtering
+    // -----------------------------------------------------------------------------------------------------------------
+
     public fieldNameSingular(): string {
         return 'tag';
     }
 
     public values(task: Task): string[] {
         return task.tags;
+    }
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // Sorting
+    // -----------------------------------------------------------------------------------------------------------------
+
+    public supportsSorting(): boolean {
+        return true;
+    }
+
+    /** Overridden to add support for tag number - and overide this.fieldName()
+     *
+     * @param line
+     */
+    public createSorterFromLine(line: string): Sorting | null {
+        const match = line.match(this.sorterRegExp());
+        if (match === null) {
+            return null;
+        }
+
+        const reverse = !!match[1];
+        const propertyInstance = isNaN(+match[2]) ? 1 : +match[2];
+        const comparator = TagsField.makeCompareByTagComparator(propertyInstance);
+        return new Sorting(reverse, this.fieldNameSingular(), comparator);
+    }
+
+    /** Overridden to add support for tag number - and overide this.fieldName()
+     *
+     * @protected
+     */
+    protected sorterRegExp(): RegExp {
+        return /^sort by tag( reverse)?[\s]*(\d+)?/;
+    }
+
+    /**
+     * Create a comparator that sorts by the first tag.
+     */
+    public comparator(): Comparator {
+        return TagsField.makeCompareByTagComparator(1);
+    }
+
+    /** Needed to override this.fieldName
+     *
+     * @param reverse
+     */
+    public createSorter(reverse: boolean): Sorting {
+        return new Sorting(reverse, this.fieldNameSingular(), this.comparator());
+    }
+
+    private static makeCompareByTagComparator(propertyInstance: number): Comparator {
+        return (a: Task, b: Task) => {
+            // If no tags then assume they are equal.
+            if (a.tags.length === 0 && b.tags.length === 0) {
+                return 0;
+            } else if (a.tags.length === 0) {
+                // a is less than b
+                return 1;
+            } else if (b.tags.length === 0) {
+                // b is less than a
+                return -1;
+            }
+
+            // Arrays start at 0 but the users specify a tag starting at 1.
+            const tagInstanceToSortBy = propertyInstance - 1;
+
+            if (a.tags.length < propertyInstance && b.tags.length >= propertyInstance) {
+                return 1;
+            } else if (b.tags.length < propertyInstance && a.tags.length >= propertyInstance) {
+                return -1;
+            } else if (a.tags.length < propertyInstance && b.tags.length < propertyInstance) {
+                return 0;
+            }
+
+            if (a.tags[tagInstanceToSortBy] < b.tags[tagInstanceToSortBy]) {
+                return -1;
+            } else if (a.tags[tagInstanceToSortBy] > b.tags[tagInstanceToSortBy]) {
+                return 1;
+            } else {
+                return 0;
+            }
+        };
     }
 }
