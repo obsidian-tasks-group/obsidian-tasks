@@ -4,6 +4,7 @@
 import moment from 'moment';
 import { renderTaskLine } from '../src/TaskLineRenderer';
 import { resetSettings, updateSettings } from '../src/Config/Settings';
+import { LayoutOptions } from '../src/TaskLayout';
 import type { Task } from '../src/Task';
 import { fromLine } from './TestHelpers';
 
@@ -14,7 +15,7 @@ window.moment = moment;
  * Creates a dummy 'parent element' to host a task render, renders a task inside it,
  * and returns it for inspection.
  */
-async function createMockParentAndRender(task: Task) {
+async function createMockParentAndRender(task: Task, layoutOptions?: LayoutOptions) {
     const parentElement = document.createElement('div');
     const mockTextRenderer = async (text: string, element: HTMLSpanElement, _path: string) => {
         element.innerText = text;
@@ -24,6 +25,7 @@ async function createMockParentAndRender(task: Task) {
         {
             parentUlElement: parentElement,
             listIndex: 0,
+            layoutOptions: layoutOptions,
         },
         mockTextRenderer,
     );
@@ -82,5 +84,73 @@ describe('task line rendering', () => {
         const descriptionWithoutFilter = await getDescriptionTest();
         expect(descriptionWithoutFilter).toEqual('This is a simple task with a  filter');
         resetSettings();
+    });
+
+    it('renders task components according to the given layout', async () => {
+        const testLayoutOptions = async (
+            taskLine: string,
+            layoutOptions: Partial<LayoutOptions>,
+            expectedRender: string,
+        ) => {
+            const task = fromLine({
+                line: taskLine,
+            });
+            const fullLayoutOptions = { ...new LayoutOptions(), ...layoutOptions };
+            const parentRender = await createMockParentAndRender(task, fullLayoutOptions);
+            const renderedDescription = getDescriptionText(parentRender);
+            expect(renderedDescription).toEqual(expectedRender);
+        };
+
+        const taskLine = '- [ ] Wobble ⏫ 📅 2022-07-02 ⏳ 2022-07-02 🛫 2022-07-02 🔁 every day';
+
+        // Test the default layout
+        await testLayoutOptions(taskLine, {}, 'Wobble ⏫ 🔁 every day 🛫 2022-07-02 ⏳ 2022-07-02 📅 2022-07-02');
+
+        // Without priority
+        await testLayoutOptions(
+            taskLine,
+            { hidePriority: true },
+            'Wobble 🔁 every day 🛫 2022-07-02 ⏳ 2022-07-02 📅 2022-07-02',
+        );
+
+        // Without start date
+        await testLayoutOptions(
+            taskLine,
+            { hideStartDate: true },
+            'Wobble ⏫ 🔁 every day ⏳ 2022-07-02 📅 2022-07-02',
+        );
+
+        // Without scheduled date
+        await testLayoutOptions(
+            taskLine,
+            { hideScheduledDate: true },
+            'Wobble ⏫ 🔁 every day 🛫 2022-07-02 📅 2022-07-02',
+        );
+
+        // Without due date
+        await testLayoutOptions(taskLine, { hideDueDate: true }, 'Wobble ⏫ 🔁 every day 🛫 2022-07-02 ⏳ 2022-07-02');
+
+        // Without recurrence rule
+        await testLayoutOptions(
+            taskLine,
+            { hideRecurrenceRule: true },
+            'Wobble ⏫ 🛫 2022-07-02 ⏳ 2022-07-02 📅 2022-07-02',
+        );
+
+        const doneTask = '- [x] Wobble ✅ 2022-07-02 ⏫ 📅 2022-07-02 ⏳ 2022-07-02 🛫 2022-07-02 🔁 every day';
+
+        // Done task - default layout
+        await testLayoutOptions(
+            doneTask,
+            {},
+            'Wobble ⏫ 🔁 every day 🛫 2022-07-02 ⏳ 2022-07-02 📅 2022-07-02 ✅ 2022-07-02',
+        );
+
+        // Done task - without done date
+        await testLayoutOptions(
+            doneTask,
+            { hideDoneDate: true },
+            'Wobble ⏫ 🔁 every day 🛫 2022-07-02 ⏳ 2022-07-02 📅 2022-07-02',
+        );
     });
 });

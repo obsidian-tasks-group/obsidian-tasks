@@ -439,14 +439,16 @@ export class Task {
         });
     }
 
-    // TODO: Possibly remove this and call TaskLineRenderer directly
+    /**
+     * Create an HTML rendered List Item element (LI) for the current task.
+     * @param {renderTails}
+     */
     public async toLi(renderDetails: TaskLineRenderDetails): Promise<HTMLLIElement> {
         return renderTaskLine(this, renderDetails);
     }
 
     /**
-     *
-     *
+     * Flatten the task as a string that includes all its components.
      * @param {LayoutOptions} [layoutOptions]
      * @return {*}  {string}
      * @memberof Task
@@ -460,6 +462,9 @@ export class Task {
         return taskString;
     }
 
+    /**
+     * Renders a specific LayoutComponent of the task (its description, priority, etc) as a string.
+     */
     componentToString(layout: TaskLayout, component: LayoutComponent) {
         switch (component) {
             case 'description':

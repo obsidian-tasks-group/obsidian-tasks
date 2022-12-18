@@ -15,12 +15,22 @@ export type TaskLineRenderDetails = {
     isFilenameUnique?: boolean;
 };
 
+/**
+ * The function used to render a Markdown task line into an existing HTML element.
+ */
 export type TextRenderer = (text: string, element: HTMLSpanElement, path: string) => Promise<void>;
 
 async function obsidianMarkdownRenderer(text: string, element: HTMLSpanElement, path: string) {
     await MarkdownRenderer.renderMarkdown(text, element, path, null as unknown as Component);
 }
 
+/**
+ * Renders a given Task object into an HTML List Item (LI) element, using the given renderDetails
+ * configuration and a supplied TextRenderer (typically the Obsidian Markdown renderer, but for testing
+ * purposes it can be a simpler one).
+ * The element includes the task and its various components (description, priority, block link etc), the
+ * checkbox on the left with its event handling of completing the task, and the button for editing the task.
+ */
 export async function renderTaskLine(
     task: Task,
     renderDetails: TaskLineRenderDetails,

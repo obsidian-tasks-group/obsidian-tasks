@@ -1,4 +1,4 @@
-import type { LayoutOptions } from './LayoutOptions';
+import type { LayoutOptions } from './TaskLayout';
 import type { Task } from './Task';
 import type { TaskGroups } from './Query/TaskGroups';
 import type { Grouping } from './Query/Query';
