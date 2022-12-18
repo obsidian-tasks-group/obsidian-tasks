@@ -47,7 +47,14 @@ export function parseFilter(filterString: string): FilterOrErrorMessage | null {
 
 export function parseSorter(sorterString: string): Sorting | null {
     // New style parsing, using sorting which is done by the Field classes.
-    // TODO Optimisation: Check whether line begins with 'sort by'
+
+    // Optimisation: Check whether line begins with 'sort by'
+    const sortByRegexp = /^sort by /;
+    if (sorterString.match(sortByRegexp) === null) {
+        return null;
+    }
+
+    // See if any of the fields can parse the line.
     for (const creator of fieldCreators) {
         const field = creator();
         if (!field.supportsSorting()) {
