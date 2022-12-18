@@ -299,34 +299,34 @@ describe('Sort by tags', () => {
 
         it('should create a default comparator, sorting by first tag', () => {
             const comparator = tagsField.comparator();
-            const a = new TaskBuilder().tags(['#a', '#d']).build();
-            const b = new TaskBuilder().tags(['#b', '#c']).build();
-            expect(comparator(a, b)).toBeLessThan(0);
+            const tags_a_d = new TaskBuilder().tags(['#a', '#d']).build();
+            const tags_a_c = new TaskBuilder().tags(['#b', '#c']).build();
+            expect(comparator(tags_a_d, tags_a_c)).toBeLessThan(0);
         });
 
         it('should parse a valid line with default tag number', () => {
             const sorter = tagsField.parseSortLine('sort by tag');
             expect(sorter?.property).toEqual('tag');
-            const a = new TaskBuilder().tags(['#a']).build();
-            const b = new TaskBuilder().tags(['#b']).build();
-            expect(sorter?.comparator(a, b)).toBeLessThan(0);
-            expectTaskComparesBefore(sorter!, a, b);
+            const tag_a = new TaskBuilder().tags(['#a']).build();
+            const tag_b = new TaskBuilder().tags(['#b']).build();
+            expect(sorter?.comparator(tag_a, tag_b)).toBeLessThan(0);
+            expectTaskComparesBefore(sorter!, tag_a, tag_b);
         });
 
         it('should parse a valid line with a non-default tag number', () => {
             const sorter = tagsField.parseSortLine('sort by tag 2');
             expect(sorter?.property).toEqual('tag');
-            const a = new TaskBuilder().tags(['#a', '#b']).build();
-            const b = new TaskBuilder().tags(['#a', '#c']).build();
-            expectTaskComparesBefore(sorter!, a, b);
+            const tags_a_b = new TaskBuilder().tags(['#a', '#b']).build();
+            const tags_a_c = new TaskBuilder().tags(['#a', '#c']).build();
+            expectTaskComparesBefore(sorter!, tags_a_b, tags_a_c);
         });
 
         it('should parse a valid line with reverse and a non-default tag number', () => {
             const sorter = tagsField.parseSortLine('sort by tag reverse 2');
             expect(sorter?.property).toEqual('tag');
-            const a = new TaskBuilder().tags(['#a', '#b']).build();
-            const b = new TaskBuilder().tags(['#a', '#c']).build();
-            expectTaskComparesAfter(sorter!, a, b);
+            const tags_a_b = new TaskBuilder().tags(['#a', '#b']).build();
+            const tags_a_c = new TaskBuilder().tags(['#a', '#c']).build();
+            expectTaskComparesAfter(sorter!, tags_a_b, tags_a_c);
         });
 
         it('should fail to parse a invalid line', () => {
