@@ -354,7 +354,7 @@ describe('Sort by tags', () => {
         expect(
             Sort.by(
                 {
-                    sorting: [Sort.makeLegacySorting(false, 1, 'tag')],
+                    sorting: [new TagsField().parseSortLine('sort by tag 1')!],
                 },
                 [t1, t3, t5, t7, t6, t4, t2, t8, t9, t10],
             ),
@@ -379,7 +379,7 @@ describe('Sort by tags', () => {
         expect(
             Sort.by(
                 {
-                    sorting: [Sort.makeLegacySorting(true, 1, 'tag')],
+                    sorting: [new TagsField().parseSortLine('sort by tag reverse 1')!],
                 },
                 [t1, t3, t5, t7, t6, t4, t2, t8, t9, t10],
             ),
@@ -396,7 +396,7 @@ describe('Sort by tags', () => {
         expect(
             Sort.by(
                 {
-                    sorting: [Sort.makeLegacySorting(false, 2, 'tag')],
+                    sorting: [new TagsField().parseSortLine('sort by tag 2')!],
                 },
                 [t4, t3, t2, t1, t5],
             ),
@@ -413,7 +413,7 @@ describe('Sort by tags', () => {
         expect(
             Sort.by(
                 {
-                    sorting: [Sort.makeLegacySorting(true, 2, 'tag')],
+                    sorting: [new TagsField().parseSortLine('sort by tag reverse 2')!],
                 },
                 [t4, t3, t2, t1, t5],
             ),
@@ -444,7 +444,7 @@ describe('Sort by tags', () => {
         expect(
             Sort.by(
                 {
-                    sorting: [Sort.makeLegacySorting(false, 1, 'tag')],
+                    sorting: [new TagsField().parseSortLine('sort by tag 1')!],
                 },
                 [t1, t12, t3, t13, t5, t7, t6, t4, t2, t8, t9, t10, t11],
             ),
@@ -478,7 +478,7 @@ describe('Sort by tags', () => {
         expect(
             Sort.by(
                 {
-                    sorting: [Sort.makeLegacySorting(true, 1, 'tag')],
+                    sorting: [new TagsField().parseSortLine('sort by tag reverse 1')!],
                 },
                 [t1, t12, t3, t13, t5, t7, t6, t4, t2, t8, t9, t10, t11],
             ),
@@ -505,7 +505,7 @@ describe('Sort by tags', () => {
         // Act
         const result = Sort.by(
             {
-                sorting: [Sort.makeLegacySorting(false, 2, 'tag')],
+                sorting: [new TagsField().parseSortLine('sort by tag 2')!],
             },
             [t4, t7, t5, t2, t3, t1, t8, t6],
         );
@@ -534,7 +534,7 @@ describe('Sort by tags', () => {
         // Act
         const result = Sort.by(
             {
-                sorting: [Sort.makeLegacySorting(true, 2, 'tag')],
+                sorting: [new TagsField().parseSortLine('sort by tag reverse 2')!],
             },
             [t4, t7, t5, t2, t3, t1, t8, t6],
         );
@@ -574,8 +574,8 @@ describe('Sort by tags', () => {
             Sort.by(
                 {
                     sorting: [
-                        Sort.makeLegacySorting(false, 2, 'tag'), // tag 2 - ascending
-                        Sort.makeLegacySorting(false, 1, 'tag'), // tag 1 - ascending
+                        new TagsField().parseSortLine('sort by tag 2')!, // tag 2 - ascending
+                        new TagsField().parseSortLine('sort by tag 1')!, // tag 1 - ascending
                         new DescriptionField().createNormalSorter(), // then description - ascending
                     ],
                 },
