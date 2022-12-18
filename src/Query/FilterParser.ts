@@ -13,8 +13,8 @@ import { StatusField } from './Filter/StatusField';
 import { TagsField } from './Filter/TagsField';
 import { BooleanField } from './Filter/BooleanField';
 import { FilenameField } from './Filter/FilenameField';
-
 import { UrgencyField } from './Filter/UrgencyField';
+
 import type { FilterOrErrorMessage } from './Filter/Filter';
 import type { Sorting } from './Sorting';
 
