@@ -54,8 +54,10 @@ describe('task line rendering', () => {
         // Check what we have one child, which is the rendered child
         expect(parentRender.children.length).toEqual(1);
         const li = parentRender.children[0];
+
         // Check that it's an element of type LI
         expect(li.nodeName).toEqual('LI');
+
         // Check that it has two children: a checkbox and a text span
         expect(li.children.length).toEqual(2);
         const checkbox = li.children[0];
@@ -87,6 +89,9 @@ describe('task line rendering', () => {
     });
 
     it('renders task components according to the given layout', async () => {
+        // Suggest moving testLayoutOptions outside this test, to just before  it('renders task components a...
+        // That way, things like the [example below with invalid data] can be done.
+        // Gives an
         const testLayoutOptions = async (
             taskLine: string,
             layoutOptions: Partial<LayoutOptions>,
@@ -99,8 +104,19 @@ describe('task line rendering', () => {
             const parentRender = await createMockParentAndRender(task, fullLayoutOptions);
             const renderedDescription = getDescriptionText(parentRender);
             expect(renderedDescription).toEqual(expectedRender);
+            // When this fails, there is no information about the location of the failure
+            /*
+                at /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/tests/TaskLineRenderer.test.ts:103:41
+                at Generator.next (<anonymous>)
+                at fulfilled (/Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/node_modules/tslib/tslib.js:115:62)
+                at processTicksAndRejections (node:internal/process/task_queues:96:5)
+             */
         };
 
+        // Tests can be made more robust by removing duplication in the date.
+        // For example, if someone broke the rendering of due date and made it write
+        // scheduled date instead, these tests would still pass.
+        // Suggest using different values for each of the dates in the initial task.
         const taskLine = '- [ ] Wobble ⏫ 📅 2022-07-02 ⏳ 2022-07-02 🛫 2022-07-02 🔁 every day';
 
         // Test the default layout
@@ -153,4 +169,16 @@ describe('task line rendering', () => {
             'Wobble ⏫ 🔁 every day 🛫 2022-07-02 ⏳ 2022-07-02 📅 2022-07-02',
         );
     });
+
+    /*
+    it('should write placeholder message if a date is invalid', async () => {
+        const taskLine = '- [ ] Task with invalid due date 📅 2023-13-02';
+        await testLayoutOptions(taskLine, {}, 'Task with invalid due date 📅 Invalid date');
+    });
+
+    it('should standardise the recurrence rule, even if the rule is invalid', async () => {
+        const taskLine = '- [ ] Task with invalid recurrence rule 🔁 every month on the 32nd';
+        await testLayoutOptions(taskLine, {}, 'Task with invalid recurrence rule 🔁 every month on the 32th');
+    });
+    */
 });
