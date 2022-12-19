@@ -9,11 +9,6 @@ import { parseFilter, parseSorter } from './FilterParser';
 import { Group } from './Group';
 import type { Filter } from './Filter/Filter';
 
-// TODO Work through the values in SortingProperty, moving their comparison
-//      functions to the corresponding Field implementations.
-//      Then remove SortingProperty.
-export type SortingProperty = 'tag';
-
 export type GroupingProperty =
     | 'backlink'
     | 'done'
@@ -42,10 +37,6 @@ export class Query implements IQuery {
     private _error: string | undefined = undefined;
     private _sorting: Sorting[] = [];
     private _grouping: Grouping[] = [];
-
-    // If a tag is specified the user can also add a number to specify
-    // which one to sort by if there is more than one.
-    private readonly sortByRegexp = /^sort by (tag)( reverse)?[\s]*(\d+)?/;
 
     private readonly groupByRegexp =
         /^group by (backlink|done|due|filename|folder|happens|heading|path|priority|recurrence|recurring|root|scheduled|start|status|tags)/;
@@ -76,9 +67,6 @@ export class Query implements IQuery {
                         break;
                     case this.limitRegexp.test(line):
                         this.parseLimit({ line });
-                        break;
-                    case this.sortByRegexp.test(line):
-                        this.parseSortBy({ line });
                         break;
                     case this.parseSortBy2({ line }):
                         break;
@@ -235,24 +223,6 @@ export class Query implements IQuery {
             return true;
         }
         return false;
-    }
-
-    private parseSortBy({ line }: { line: string }): void {
-        // Old-style parsing, based on all the values in SortingProperty above.
-        // TODO Migrate all the compare functions in Sort over to the
-        //      corresponding fields, so that the block below can be removed.
-        const fieldMatch = line.match(this.sortByRegexp);
-        if (fieldMatch !== null) {
-            this._sorting.push(
-                Sort.makeLegacySorting(
-                    !!fieldMatch[2],
-                    isNaN(+fieldMatch[3]) ? 1 : +fieldMatch[3],
-                    fieldMatch[1] as SortingProperty,
-                ),
-            );
-        } else {
-            this._error = 'do not understand query sorting';
-        }
     }
 
     private parseGroupBy({ line }: { line: string }): void {
