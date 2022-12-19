@@ -465,7 +465,7 @@ export class Task {
     /**
      * Renders a specific LayoutComponent of the task (its description, priority, etc) as a string.
      */
-    componentToString(layout: TaskLayout, component: LayoutComponent) {
+    public componentToString(layout: TaskLayout, component: LayoutComponent) {
         switch (component) {
             case 'description':
                 return this.description;
