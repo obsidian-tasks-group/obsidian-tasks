@@ -14,43 +14,13 @@
         li.addClasses(['task-list-item', 'plugin-tasks-list-item']);
 
         let taskAsString = this.toString(layoutOptions);
-        const { globalFilter, removeGlobalFilter } = getSettings();
-        if (removeGlobalFilter) {
-            taskAsString = taskAsString.replace(globalFilter, '').trim();
-        }
 
+<placeholder %03>
         const textSpan = li.createSpan();
         textSpan.addClass('tasks-list-text');
 
         await MarkdownRenderer.renderMarkdown(taskAsString, textSpan, this.path, null as unknown as Component);
-
-        // If the task is a block quote, the block quote wraps the p-tag that contains the content.
-        // In that case, we need to unwrap the p-tag *inside* the surrounding block quote.
-        // Otherwise, we unwrap the p-tag as a direct descendant of the textSpan.
-        const blockQuote = textSpan.querySelector('blockquote');
-        const directParentOfPTag = blockQuote ?? textSpan;
-
-        // Unwrap the p-tag that was created by the MarkdownRenderer:
-        const pElement = directParentOfPTag.querySelector('p');
-        if (pElement !== null) {
-            while (pElement.firstChild) {
-                directParentOfPTag.insertBefore(pElement.firstChild, pElement);
-            }
-            pElement.remove();
-        }
-
-        // Remove an empty trailing p-tag that the MarkdownRenderer appends when there is a block link:
-        textSpan.findAll('p').forEach((pElement) => {
-            if (!pElement.hasChildNodes()) {
-                pElement.remove();
-            }
-        });
-
-        // Remove the footnote that the MarkdownRenderer appends when there is a footnote in the task:
-        textSpan.findAll('.footnotes').forEach((footnoteElement) => {
-            footnoteElement.remove();
-        });
-
+<placeholder %01>
         const checkbox = li.createEl('input');
         checkbox.addClass('task-list-item-checkbox');
         checkbox.type = 'checkbox';
@@ -87,71 +57,38 @@
         return li;
     }
 
-    /**
-     *
-     *
-     * @param {LayoutOptions} [layoutOptions]
-     * @return {*}  {string}
-     * @memberof Task
-     */
-    public toString(layoutOptions?: LayoutOptions): string {
-        layoutOptions = layoutOptions ?? new LayoutOptions();
-        let taskString = this.description;
+<placeholder %02>
 
-        if (!layoutOptions.hidePriority) {
-            let priority: string = '';
 
-            if (this.priority === Priority.High) {
-                priority = ' ' + prioritySymbols.High;
-            } else if (this.priority === Priority.Medium) {
-                priority = ' ' + prioritySymbols.Medium;
-            } else if (this.priority === Priority.Low) {
-                priority = ' ' + prioritySymbols.Low;
+<placeholder %01>
+        // If the task is a block quote, the block quote wraps the p-tag that contains the content.
+        // In that case, we need to unwrap the p-tag *inside* the surrounding block quote.
+        // Otherwise, we unwrap the p-tag as a direct descendant of the textSpan.
+        const blockQuote = textSpan.querySelector('blockquote');
+        const directParentOfPTag = blockQuote ?? textSpan;
+
+        // Unwrap the p-tag that was created by the MarkdownRenderer:
+        const pElement = directParentOfPTag.querySelector('p');
+        if (pElement !== null) {
+            while (pElement.firstChild) {
+                directParentOfPTag.insertBefore(pElement.firstChild, pElement);
             }
-
-            taskString += priority;
+            pElement.remove();
         }
 
-        if (!layoutOptions.hideRecurrenceRule && this.recurrence) {
-            const recurrenceRule: string = layoutOptions.shortMode
-                ? ' ' + recurrenceSymbol
-                : ` ${recurrenceSymbol} ${this.recurrence.toText()}`;
-            taskString += recurrenceRule;
-        }
+        // Remove an empty trailing p-tag that the MarkdownRenderer appends when there is a block link:
+        textSpan.findAll('p').forEach((pElement) => {
+            if (!pElement.hasChildNodes()) {
+                pElement.remove();
+            }
+        });
 
-        if (!layoutOptions.hideStartDate && this.startDate) {
-            const startDate: string = layoutOptions.shortMode
-                ? ' ' + startDateSymbol
-                : ` ${startDateSymbol} ${this.startDate.format(TaskRegularExpressions.dateFormat)}`;
-            taskString += startDate;
-        }
+        // Remove the footnote that the MarkdownRenderer appends when there is a footnote in the task:
+        textSpan.findAll('.footnotes').forEach((footnoteElement) => {
+            footnoteElement.remove();
+        });
+</placeholder %01>
 
-        if (!layoutOptions.hideScheduledDate && this.scheduledDate && !this.scheduledDateIsInferred) {
-            const scheduledDate: string = layoutOptions.shortMode
-                ? ' ' + scheduledDateSymbol
-                : ` ${scheduledDateSymbol} ${this.scheduledDate.format(TaskRegularExpressions.dateFormat)}`;
-            taskString += scheduledDate;
-        }
-
-        if (!layoutOptions.hideDueDate && this.dueDate) {
-            const dueDate: string = layoutOptions.shortMode
-                ? ' ' + dueDateSymbol
-                : ` ${dueDateSymbol} ${this.dueDate.format(TaskRegularExpressions.dateFormat)}`;
-            taskString += dueDate;
-        }
-
-        if (!layoutOptions.hideDoneDate && this.doneDate) {
-            const doneDate: string = layoutOptions.shortMode
-                ? ' ' + doneDateSymbol
-                : ` ${doneDateSymbol} ${this.doneDate.format(TaskRegularExpressions.dateFormat)}`;
-            taskString += doneDate;
-        }
-
-        const blockLink: string = this.blockLink ?? '';
-        taskString += blockLink;
-
-        return taskString;
-    }
 
     private addTooltip({
         element,
@@ -227,4 +164,77 @@
         )})`;
     }
 
+<placeholder %03>
+        const { globalFilter, removeGlobalFilter } = getSettings();
+        if (removeGlobalFilter) {
+            taskAsString = taskAsString.replace(globalFilter, '').trim();
+        }
+</placeholder %03>
 
+<placeholder %02>
+    /**
+     *
+     *
+     * @param {LayoutOptions} [layoutOptions]
+     * @return {*}  {string}
+     * @memberof Task
+     */
+    public toString(layoutOptions?: LayoutOptions): string {
+        layoutOptions = layoutOptions ?? new LayoutOptions();
+        let taskString = this.description;
+
+        if (!layoutOptions.hidePriority) {
+            let priority: string = '';
+
+            if (this.priority === Priority.High) {
+                priority = ' ' + prioritySymbols.High;
+            } else if (this.priority === Priority.Medium) {
+                priority = ' ' + prioritySymbols.Medium;
+            } else if (this.priority === Priority.Low) {
+                priority = ' ' + prioritySymbols.Low;
+            }
+
+            taskString += priority;
+        }
+
+        if (!layoutOptions.hideRecurrenceRule && this.recurrence) {
+            const recurrenceRule: string = layoutOptions.shortMode
+                ? ' ' + recurrenceSymbol
+                : ` ${recurrenceSymbol} ${this.recurrence.toText()}`;
+            taskString += recurrenceRule;
+        }
+
+        if (!layoutOptions.hideStartDate && this.startDate) {
+            const startDate: string = layoutOptions.shortMode
+                ? ' ' + startDateSymbol
+                : ` ${startDateSymbol} ${this.startDate.format(TaskRegularExpressions.dateFormat)}`;
+            taskString += startDate;
+        }
+
+        if (!layoutOptions.hideScheduledDate && this.scheduledDate && !this.scheduledDateIsInferred) {
+            const scheduledDate: string = layoutOptions.shortMode
+                ? ' ' + scheduledDateSymbol
+                : ` ${scheduledDateSymbol} ${this.scheduledDate.format(TaskRegularExpressions.dateFormat)}`;
+            taskString += scheduledDate;
+        }
+
+        if (!layoutOptions.hideDueDate && this.dueDate) {
+            const dueDate: string = layoutOptions.shortMode
+                ? ' ' + dueDateSymbol
+                : ` ${dueDateSymbol} ${this.dueDate.format(TaskRegularExpressions.dateFormat)}`;
+            taskString += dueDate;
+        }
+
+        if (!layoutOptions.hideDoneDate && this.doneDate) {
+            const doneDate: string = layoutOptions.shortMode
+                ? ' ' + doneDateSymbol
+                : ` ${doneDateSymbol} ${this.doneDate.format(TaskRegularExpressions.dateFormat)}`;
+            taskString += doneDate;
+        }
+
+        const blockLink: string = this.blockLink ?? '';
+        taskString += blockLink;
+
+        return taskString;
+    }
+</placeholder %02>
