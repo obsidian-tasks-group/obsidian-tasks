@@ -13,8 +13,10 @@ import { StatusField } from './Filter/StatusField';
 import { TagsField } from './Filter/TagsField';
 import { BooleanField } from './Filter/BooleanField';
 import { FilenameField } from './Filter/FilenameField';
+import { UrgencyField } from './Filter/UrgencyField';
 
 import type { FilterOrErrorMessage } from './Filter/Filter';
+import type { Sorting } from './Sorting';
 
 const fieldCreators = [
     () => new StatusField(),
@@ -32,12 +34,33 @@ const fieldCreators = [
     () => new ExcludeSubItemsField(),
     () => new BooleanField(),
     () => new FilenameField(),
+    () => new UrgencyField(),
 ];
 
 export function parseFilter(filterString: string): FilterOrErrorMessage | null {
     for (const creator of fieldCreators) {
         const field = creator();
         if (field.canCreateFilterForLine(filterString)) return field.createFilterOrErrorMessage(filterString);
+    }
+    return null;
+}
+
+export function parseSorter(sorterString: string): Sorting | null {
+    // New style parsing, using sorting which is done by the Field classes.
+
+    // Optimisation: Check whether line begins with 'sort by'
+    const sortByRegexp = /^sort by /;
+    if (sorterString.match(sortByRegexp) === null) {
+        return null;
+    }
+
+    // See if any of the fields can parse the line.
+    for (const creator of fieldCreators) {
+        const field = creator();
+        const sorter = field.parseSortLine(sorterString);
+        if (sorter) {
+            return sorter;
+        }
     }
     return null;
 }

@@ -9,8 +9,8 @@ export interface Settings {
     autoSuggestMinMatch: number;
     autoSuggestMaxItems: number;
     provideAccessKeys: boolean;
-    enableDateFallback: boolean;
-    dateFallbackFolders: string[];
+    useFilenameAsScheduledDate: boolean;
+    filenameAsDateFolders: string[];
 
     // Collection of feature flag IDs and their state.
     features: FeatureFlag;
@@ -24,8 +24,8 @@ const defaultSettings: Settings = {
     autoSuggestMinMatch: 0,
     autoSuggestMaxItems: 6,
     provideAccessKeys: true,
-    enableDateFallback: false,
-    dateFallbackFolders: [],
+    useFilenameAsScheduledDate: false,
+    filenameAsDateFolders: [],
     features: Feature.settingsFlags,
 };
 

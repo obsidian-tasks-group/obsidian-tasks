@@ -4,9 +4,11 @@
 import moment from 'moment';
 import { Query } from '../src/Query/Query';
 import { Priority, Status, Task } from '../src/Task';
+import { resetSettings, updateSettings } from '../src/Config/Settings';
 import { createTasksFromMarkdown, fromLine } from './TestHelpers';
 import { shouldSupportFiltering } from './TestingTools/FilterTestHelpers';
 import type { FilteringCase } from './TestingTools/FilterTestHelpers';
+import { TaskBuilder } from './TestingTools/TaskBuilder';
 
 window.moment = moment;
 
@@ -192,6 +194,7 @@ describe('Query parsing', () => {
         // In alphabetical order, please
         const filters = [
             '# Comment lines are ignored',
+            'explain',
             'hide backlink',
             'hide done date',
             'hide due date',
@@ -253,6 +256,7 @@ describe('Query', () => {
                     description: 'description',
                     path: 'Ab/C D',
                     indentation: '',
+                    listMarker: '-',
                     sectionStart: 0,
                     sectionIndex: 0,
                     originalStatusCharacter: ' ',
@@ -273,6 +277,7 @@ describe('Query', () => {
                     description: 'description',
                     path: 'FF/C D',
                     indentation: '',
+                    listMarker: '-',
                     sectionStart: 0,
                     sectionIndex: 0,
                     originalStatusCharacter: ' ',
@@ -705,51 +710,26 @@ describe('Query', () => {
         });
     });
 
-    describe('sorting instructions', () => {
-        const cases: {
-            input: string;
-            output: {
-                property: string;
-                reverse: boolean;
-                propertyInstance: number;
-            }[];
-        }[] = [
-            {
-                input: 'sort by status',
-                output: [
-                    {
-                        property: 'status',
-                        reverse: false,
-                        propertyInstance: 1,
-                    },
-                ],
-            },
-            {
-                input: 'sort by status\nsort by due',
-                output: [
-                    {
-                        property: 'status',
-                        reverse: false,
-                        propertyInstance: 1,
-                    },
-                    { property: 'due', reverse: false, propertyInstance: 1 },
-                ],
-            },
-            {
-                input: 'sort by tag',
-                output: [{ property: 'tag', reverse: false, propertyInstance: 1 }],
-            },
-            {
-                input: 'sort by tag 2',
-                output: [{ property: 'tag', reverse: false, propertyInstance: 2 }],
-            },
-        ];
-        it.concurrent.each(cases)('sorting as %j', ({ input, output }) => {
-            const query = new Query({ source: input });
+    describe('sorting', () => {
+        const doneTask = new TaskBuilder().status(Status.DONE).build();
+        const todoTask = new TaskBuilder().status(Status.TODO).build();
 
-            expect(query.sorting).toEqual(output);
+        it('sort reverse returns -0 for equal tasks', () => {
+            // This test was added when I discovered that reverse sort returns
+            // -0 for equivalent tasks.
+            // This is a test to demonstrate that current behevaiour,
+            // rather than a test of the **required** behaviour.
+            // If the behaviour changes and '0' is returned instead of '-0',
+            // that is absolutely fine.
+            const query = new Query({ source: 'sort by status reverse' });
+            const sorter = query.sorting[0];
+
+            expect(sorter!.comparator(todoTask, doneTask)).toEqual(1);
+            expect(sorter!.comparator(doneTask, doneTask)).toEqual(-0); // Note the minus sign. It's a consequence of
+            expect(sorter!.comparator(doneTask, todoTask)).toEqual(-1);
         });
     });
+
     describe('comments', () => {
         it('ignores comments', () => {
             // Arrange
@@ -758,6 +738,99 @@ describe('Query', () => {
 
             // Assert
             expect(query.error).toBeUndefined();
+        });
+    });
+
+    describe('explanations', () => {
+        afterEach(() => {
+            resetSettings();
+        });
+
+        it('should explain 0 filters', () => {
+            const input = '';
+            const query = new Query({ source: input });
+
+            const expectedDisplayText = 'No filters supplied. All tasks will match the query.';
+            expect(query.explainQueryWithoutIntroduction()).toEqual(expectedDisplayText);
+        });
+
+        it('should explain 0 filters with global filter', () => {
+            updateSettings({ globalFilter: '#task' });
+
+            const input = '';
+            const query = new Query({ source: input });
+
+            const expectedDisplayText = `Only tasks containing the global filter '#task'.
+
+No filters supplied. All tasks will match the query.`;
+            expect(query.explainQueryWithoutIntroduction()).toEqual(expectedDisplayText);
+        });
+
+        it('should explain 1 filter', () => {
+            const input = 'description includes hello';
+            const query = new Query({ source: input });
+
+            const expectedDisplayText = `description includes hello
+`;
+            expect(query.explainQueryWithoutIntroduction()).toEqual(expectedDisplayText);
+        });
+
+        it('should explain 1 filter', () => {
+            updateSettings({ globalFilter: '#task' });
+
+            const input = 'description includes hello';
+            const query = new Query({ source: input });
+
+            const expectedDisplayText = `Only tasks containing the global filter '#task'.
+
+description includes hello
+`;
+            expect(query.explainQueryWithoutIntroduction()).toEqual(expectedDisplayText);
+        });
+
+        it('should explain 2 filters', () => {
+            const input = 'description includes hello\ndue 2012-01-23';
+            const query = new Query({ source: input });
+
+            const expectedDisplayText = `description includes hello
+
+due 2012-01-23 =>
+  due date is on 2012-01-23 (Monday 23rd January 2012)
+`;
+            expect(query.explainQueryWithoutIntroduction()).toEqual(expectedDisplayText);
+        });
+
+        it('should explain limit 5', () => {
+            const input = 'limit 5';
+            const query = new Query({ source: input });
+
+            const expectedDisplayText = `No filters supplied. All tasks will match the query.
+
+At most 5 tasks.
+`;
+            expect(query.explainQueryWithoutIntroduction()).toEqual(expectedDisplayText);
+        });
+
+        it('should explain limit 1', () => {
+            const input = 'limit 1';
+            const query = new Query({ source: input });
+
+            const expectedDisplayText = `No filters supplied. All tasks will match the query.
+
+At most 1 task.
+`;
+            expect(query.explainQueryWithoutIntroduction()).toEqual(expectedDisplayText);
+        });
+
+        it('should explain limit 0', () => {
+            const input = 'limit 0';
+            const query = new Query({ source: input });
+
+            const expectedDisplayText = `No filters supplied. All tasks will match the query.
+
+At most 0 tasks.
+`;
+            expect(query.explainQueryWithoutIntroduction()).toEqual(expectedDisplayText);
         });
     });
 

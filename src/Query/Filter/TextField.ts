@@ -2,9 +2,10 @@ import type { Task } from '../../Task';
 import { SubstringMatcher } from '../Matchers/SubstringMatcher';
 import { RegexMatcher } from '../Matchers/RegexMatcher';
 import type { IStringMatcher } from '../Matchers/IStringMatcher';
+import { Explanation } from '../Explain/Explanation';
 import { Field } from './Field';
 import type { FilterFunction } from './Filter';
-import { FilterOrErrorMessage } from './Filter';
+import { Filter, FilterOrErrorMessage } from './Filter';
 
 /**
  * TextField is an abstract base class to help implement
@@ -46,7 +47,8 @@ export abstract class TextField extends Field {
         // and tests if it matches the string filtering rule
         // represented by this object.
         const negate = filterOperator.match(/not/) !== null;
-        return FilterOrErrorMessage.fromFilter(line, this.getFilter(matcher, negate));
+        const filter = new Filter(line, this.getFilter(matcher, negate), new Explanation(line));
+        return FilterOrErrorMessage.fromFilter(filter);
     }
 
     public static stringIncludesCaseInsensitive(haystack: string, needle: string): boolean {

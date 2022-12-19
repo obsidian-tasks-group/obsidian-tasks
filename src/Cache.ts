@@ -108,7 +108,7 @@ export class Cache {
     }
 
     private subscribeToVault(): void {
-        const { enableDateFallback } = getSettings();
+        const { useFilenameAsScheduledDate } = getSettings();
 
         const createdEventReference = this.vault.on('create', (file: TAbstractFile) => {
             if (!(file instanceof TFile)) {
@@ -146,7 +146,7 @@ export class Cache {
 
                 this.tasks = this.tasks.map((task: Task): Task => {
                     if (task.path === oldPath) {
-                        if (!enableDateFallback) {
+                        if (!useFilenameAsScheduledDate) {
                             return new Task({ ...task, path: file.path });
                         } else {
                             return DateFallback.updateTaskPath(task, file.path, fallbackDate.value);

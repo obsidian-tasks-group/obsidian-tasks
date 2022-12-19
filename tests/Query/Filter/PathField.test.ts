@@ -3,6 +3,12 @@ import type { FilterOrErrorMessage } from '../../../src/Query/Filter/Filter';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { testFilter } from '../../TestingTools/FilterTestHelpers';
 import { toBeValid, toMatchTaskWithPath } from '../../CustomMatchers/CustomMatchersForFilters';
+import {
+    expectTaskComparesAfter,
+    expectTaskComparesBefore,
+    expectTaskComparesEqual,
+} from '../../CustomMatchers/CustomMatchersForSorting';
+import { fromLine } from '../../TestHelpers';
 
 function testTaskFilterForTaskWithPath(filter: FilterOrErrorMessage, path: string, expected: boolean) {
     const builder = new TaskBuilder();
@@ -107,5 +113,38 @@ describe('invalid unescaped slash should give helpful error text and not search'
         // Once the issue is fixed, and filterWithUnescapedSlashes is not valid,
         // this test should be deleted.
         expect(filterWithUnescapedSlashes).not.toMatchTaskWithPath('/a/b.md');
+    });
+});
+
+describe('sorting by path', () => {
+    it('supports Field sorting methods correctly', () => {
+        const field = new PathField();
+        expect(field.supportsSorting()).toEqual(true);
+    });
+
+    // Helper function to create a task with a given path
+    function with_path(path: string) {
+        return fromLine({ line: '- [ ] x', path: path });
+    }
+
+    it('sort by path', () => {
+        // Arrange
+        const sorter = new PathField().createNormalSorter();
+
+        // Assert
+        expectTaskComparesEqual(sorter, with_path('a/b.md'), with_path('a/b.md'));
+        expectTaskComparesBefore(sorter, with_path('a/b.md'), with_path('c/d.md'));
+        expectTaskComparesBefore(sorter, with_path('c/D.md'), with_path('c/d.md')); // case-sensitive - capitals come first
+
+        // Beginning with numbers
+        expectTaskComparesBefore(sorter, with_path('c/1.md'), with_path('c/9.md'));
+        expectTaskComparesBefore(sorter, with_path('c/11.md'), with_path('c/9.md')); // TODO want 11 to compare after 9
+    });
+
+    it('sort by path reverse', () => {
+        // Single example just to prove reverse works.
+        // (There's no need to repeat all the examples above)
+        const sorter = new PathField().createReverseSorter();
+        expectTaskComparesAfter(sorter, with_path('a/b.md'), with_path('c/d.md'));
     });
 });

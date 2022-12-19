@@ -9,6 +9,7 @@ import type { GroupHeading } from './Query/GroupHeading';
 import { TaskModal } from './TaskModal';
 import type { TasksEvents } from './TasksEvents';
 import type { Task } from './Task';
+import { DateFallback } from './DateFallback';
 
 export class QueryRenderer {
     private readonly app: App;
@@ -136,6 +137,10 @@ class QueryRenderChild extends MarkdownRenderChild {
                 `Render ${this.queryType} called for a block in active file "${this.filePath}", to select from ${tasks.length} tasks: plugin state: ${state}`,
             );
 
+            if (this.query.layoutOptions.explainQuery) {
+                this.createExplanation(content);
+            }
+
             const tasksSortedLimitedGrouped = this.query.applyQueryToTasks(tasks);
             for (const group of tasksSortedLimitedGrouped.groups) {
                 // If there were no 'group by' instructions, group.groupHeadings
@@ -158,6 +163,16 @@ class QueryRenderChild extends MarkdownRenderChild {
         }
 
         this.containerEl.firstChild?.replaceWith(content);
+    }
+
+    // Use the 'explain' instruction to enable this
+    private createExplanation(content: HTMLDivElement) {
+        const explanationAsString = this.query.explainQuery();
+
+        const explanationsBlock = content.createEl('pre');
+        explanationsBlock.addClasses(['plugin-tasks-query-explanation']);
+        explanationsBlock.setText(explanationAsString);
+        content.appendChild(explanationsBlock);
     }
 
     private async createTasksList({
@@ -216,7 +231,7 @@ class QueryRenderChild extends MarkdownRenderChild {
             const onSubmit = (updatedTasks: Task[]): void => {
                 replaceTaskWithTasks({
                     originalTask: task,
-                    newTasks: updatedTasks,
+                    newTasks: DateFallback.removeInferredStatusIfNeeded(task, updatedTasks),
                 });
             };
 

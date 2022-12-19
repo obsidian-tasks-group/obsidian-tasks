@@ -9,6 +9,9 @@
   - [Adding Tables of Contents to rendered docs](#adding-tables-of-contents-to-rendered-docs)
   - [Linking to other pages in the docs](#linking-to-other-pages-in-the-docs)
   - [Screenshots in documentation](#screenshots-in-documentation)
+    - [Creating screenshots](#creating-screenshots)
+    - [Saving screenshots](#saving-screenshots)
+    - [Adding screenshots to the documentation](#adding-screenshots-to-the-documentation)
   - [Version numbers in documentation](#version-numbers-in-documentation)
   - [How the documentation is generated](#how-the-documentation-is-generated)
 - [Updating code](#updating-code)
@@ -21,6 +24,8 @@
     - [Location of code](#location-of-code)
     - [Then start writing tests](#then-start-writing-tests)
   - [Snapshot Tests](#snapshot-tests)
+  - [Approval Tests](#approval-tests)
+    - [Example Approval tests](#example-approval-tests)
   - [Jest and the WebStorm IDE](#jest-and-the-webstorm-ide)
   - [Test Coverage](#test-coverage)
 - [Dependency Upgrades and Repository Maintenance](#dependency-upgrades-and-repository-maintenance)
@@ -30,7 +35,15 @@
   - [Notes and Special Cases](#notes-and-special-cases)
 - [FAQs](#faqs)
   - [How does Tasks handle status changes?](#how-does-tasks-handle-status-changes)
+  - [How do I add a new field to the Task class?](#how-do-i-add-a-new-field-to-the-task-class)
+  - [How do I add a new task filter?](#how-do-i-add-a-new-task-filter)
+    - [Update src/](#update-src)
+    - [Update tests/](#update-tests)
+    - [Update doc/](#update-doc)
+    - [Examples Pull Requests](#examples-pull-requests)
   - [How do I test a GitHub build of the Tasks plugin?](#how-do-i-test-a-github-build-of-the-tasks-plugin)
+    - [Option 1: Download Tasks-Demo test vault with the build's Tasks plugin installed](#option-1-download-tasks-demo-test-vault-with-the-builds-tasks-plugin-installed)
+    - [Option 2: Download the built plugin to add to your vault](#option-2-download-the-built-plugin-to-add-to-your-vault)
   - [How do I smoke-test the Tasks plugin?](#how-do-i-smoke-test-the-tasks-plugin)
   - [How do I make a release?](#how-do-i-make-a-release)
   - [How do I update the Tables of Contents in CONTRIBUTING and similar?](#how-do-i-update-the-tables-of-contents-in-contributing-and-similar)<!-- endToc -->
@@ -101,6 +114,8 @@ To sections:
 
 ### Screenshots in documentation
 
+#### Creating screenshots
+
 For readability and accessibility, images should be created:
 
 - Set the Obsidian window size to be around 1500 pixels wide about between 700 and 1100 pixels high.
@@ -109,19 +124,32 @@ For readability and accessibility, images should be created:
 - With a large font size.
 - With as little blank or dead space as possible around the area of focus.
 
+#### Saving screenshots
+
 Saving images:
 
 - Save them in .PNG format.
-- Save them in [resources/screenshots/](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/resources/screenshots/).
+- Save them in [docs/images/](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/docs/images/).
 
-When embedding an image inside a documentation page, please link to the file on the `gh-pages` branch, so that the documentation and README refer to the most recent release, and include a brief summary underneath.
+#### Adding screenshots to the documentation
+
+When embedding an image inside a documentation page, please link to the local file and include a brief summary underneath.
 
 For example, to embed the `acme.png` file in the documentation:
 
 ```text
-![ACME Tasks](https://github.com/obsidian-tasks-group/obsidian-tasks/raw/gh-pages/resources/screenshots/acme.png)
-The `ACME` note has some tasks.
+![ACME Tasks](images/acme.png)
+The `ACME` note has some tasks - as linked to from `docs/index.md`.
 ```
+
+or
+
+```text
+![ACME Tasks](../images/acme.png)
+The `ACME` note has some tasks - as linked to from any file in a sub-directory of `docs/`.
+```
+
+With this mechanism, you can preview the embedded images in any decent Markdown editor, including by opening the `obsidian-tasks` directory in Obsidian.
 
 ### Version numbers in documentation
 
@@ -236,6 +264,63 @@ For testing more complex objects, some of the tests here use Jest's
 For readability of snapshots, we favour [Inline Snapshots](https://jestjs.io/docs/snapshot-testing#inline-snapshots),
 which are saved in the source code. See that documentation for how to easily update the inline
 snapshot, if the output is intended to be changed.
+
+### Approval Tests
+
+There is a brief overview of Approval tests at [approvaltests.com](https://approvaltests.com).
+
+For including complex text in the documentation, some tests here will
+soon start using the [Approval Tests implementation in NodeJS](https://github.com/approvals/Approvals.NodeJS).
+
+If these tests fail, they will currently try and launch [diffmerge](https://sourcegear.com/diffmerge/) to show
+the differences between received and approved files.
+
+<details><summary>Expand Details on Approval Tests</summary>
+
+Approval tests typically call a function beginning `verify`, and pass
+in some text or an object to be tested.
+
+#### Example Approval tests
+
+Example test in `ApprovalTestsDemo.test`, that saves its input in a text file:
+
+<!-- snippet: approval-test-as-text -->
+```ts
+test('SimpleVerify', () => {
+    verify('Hello From Approvals');
+});
+```
+<!-- endSnippet -->
+
+The corresponding `approved` file, named `ApprovalTestsDemo.test.ApprovalTests_SimpleVerify.approved.txt`:
+
+<!-- snippet: ApprovalTestsDemo.test.ApprovalTests_SimpleVerify.approved.txt -->
+```txt
+Hello From Approvals
+```
+<!-- endSnippet -->
+
+<!-- snippet: approval-test-as-json -->
+```ts
+test('JsonVerify', () => {
+    const data = { name: 'fred', age: 30 };
+    verifyAsJson(data);
+});
+```
+<!-- endSnippet -->
+
+The corresponding `approved` file, named `ApprovalTestsDemo.test.ApprovalTests_JsonVerify.approved.json`:
+
+<!-- snippet: ApprovalTestsDemo.test.ApprovalTests_JsonVerify.approved.json -->
+```json
+{
+  "name": "fred",
+  "age": 30
+}
+```
+<!-- endSnippet -->
+
+</details>
 
 ### Jest and the WebStorm IDE
 
@@ -371,14 +456,106 @@ Toggle behavior:
 
 Obsidian writes the changes to disk at its own pace.
 
+### How do I add a new field to the Task class?
+
+- In [tests/Task.test.ts](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/Task.test.ts):
+  - Add a new failing block to the `'identicalTo'` section.
+  - Here is an existing example: ['should check path'](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/5b0831c36a80c4cde2d64a6cd281bb4b51e9a142/tests/Task.test.ts#L834-L840).
+- In [src/Task.ts](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/src/Task.ts), update `Task.identicalTo()`:
+  - Once you have a failing test in `Task.test.ts`, implement the check for changed value of your new field in `Task.identicalTo()`.
+  - This important method is used to detect whether any edits of any kind have been made to a task, to detect whether task block results need to be updated.
+  - Here is the code for the method as of 2022-11-12:
+    - [Task.identicalTo() in 5b0831c36a80c4cde2d64a6cd281bb4b51e9a142](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/5b0831c36a80c4cde2d64a6cd281bb4b51e9a142/src/Task.ts#L732-L802)
+- In [tests/TestingTools/TaskBuilder.ts](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/TestingTools/TaskBuilder.ts):
+  - Add the new field and a corresponding method.
+  - Keep the same field order as in the `Task` class.
+  - Update the `build()` method.
+- In [tests/TestingTools/TaskBuilder.test.ts](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/TestingTools/TaskBuilder.test.ts):
+  - If the code in TaskBuild will be non-trivial, first add a failing test for it.
+
+### How do I add a new task filter?
+
+All the following steps would be done in the same branch, for inclusion in the same pull request.
+
+#### Update src/
+
+- Implement the search filter:
+  - Add to  [src/Query/Filter](https://github.com/obsidian-tasks-group/obsidian-tasks/tree/main/src/Query/Filter) a  new class that inherits [Field](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/src/Query/Filter/DateField.ts)
+  - Typically, this can be done by inheriting one of the partial implementations:
+    - [DateField.ts](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/src/Query/Filter/DateField.ts)
+    - [TextField.ts](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/src/Query/Filter/TextField.ts)
+    - [MultiTextField.ts](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/src/Query/Filter/MultiTextField.ts)
+    - [FilterInstructionsBasedField.ts](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/src/Query/Filter/FilterInstructionsBasedField.ts)
+- Add the new class to [src/Query/FilterParser.ts](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/src/Query/FilterParser.ts)
+
+#### Update tests/
+
+Write tests as you go.
+
+Ideally, write a failing test first, and then implement the minimum code for the failing test to pass.
+
+For help on writing and running the tests, see [Maintaining the tests](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/CONTRIBUTING.md#maintaining-the-tests)
+
+- Add to [tests/Query/Filter](https://github.com/obsidian-tasks-group/obsidian-tasks/tree/main/tests/Query/Filter) a new test file.
+  - This should focus on testing whether or not individual Task objects, with carefully selected sample date, match the filter.
+  - Think about edge cases.
+- Add the new instruction(s) to  'Query parsing' test in  [tests/Query.test.ts](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/Query.test.ts)
+  - This verifies that the new filter instruction has been correctly wired in to the Query class.
+
+#### Update doc/
+
+It can be worth writing the documentation first, to ensure that you can explain the new feature clearly before implementing it.
+
+For help on editing the documentation, see [Updating documentation](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/CONTRIBUTING.md#updating-documentation)
+
+- Document the new instruction(s) in [docs/queries/filters.md](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/docs/queries/filters.md)
+  - Add the placeholder to indicate which version the feature will be released in: see [Version numbers in documentation](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/CONTRIBUTING.md#version-numbers-in-documentation)
+- Add the new instruction(s) to [docs/quick-reference/index.md](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/docs/quick-reference/index.md)
+
+#### Examples Pull Requests
+
+- [#1098](https://github.com/obsidian-tasks-group/obsidian-tasks/pull/1098) feat: Add filename filter
+  - This shows adding a brand new Field class, so shows all the steps above.
+- [#1228](https://github.com/obsidian-tasks-group/obsidian-tasks/pull/1228) feat: Add 4 instructions: '(done|due|date|start) date is invalid'
+  - This adds several new instructions via the DateField class, which implements most of the date-based filters.
+  - It was sufficient to add tests of the new feature in just one of the instructions implemented via DateField.
+  - It also shows adding a file to the sample vault, to demonstrate and test the new feature.
+
 ### How do I test a GitHub build of the Tasks plugin?
+
+First...
 
 1. Go to the [Verify Commit actions page](https://github.com/obsidian-tasks-group/obsidian-tasks/actions/workflows/verify.yml).
 2. Click on the build of the code version you want to test. For example, you might click on the build for a particular pull request, or the most recent build on `main`.
-3. In the Artifacts section at the bottom, click on **dist-verified** to download a build of the plugin.
-4. Expand the downloaded `dist-verified.zip` file
-5. Copy the files in the expanded folder to the `.obsidian/plugins/obsidian-tasks-plugin/` folder in your vault, over-writing the previous files.
-6. Restart Obsidian.
+
+Then do one of the following options...
+
+#### Option 1: Download Tasks-Demo test vault with the build's Tasks plugin installed
+
+1. In the Artifacts section at the bottom, click on the link whose name starts with **Tasks-Demo-...**, for example  **Tasks-Demo-VerifyCommit-Build1367-Run1**.
+    - This will download a zip file containing a copy of the Tasks-Demo sample vault, including the build of the plugin.
+    - The numbers in the file name will vary.
+2. Optionally, rename the zip file to give it a meaningful name.
+    - For example, you could append 'testing PR 1234 - nicer styling'.
+3. Expand the zip file.
+    - It will create a folder of the same name.
+4. Open the expanded folder in Obsidian:
+    - Open Obsidian
+    - Click 'Open another vault' button
+    - Click 'Open folder as vault' button
+    - Navigate to the downloaded folder
+    - Click 'Open'
+
+#### Option 2: Download the built plugin to add to your vault
+
+You can use these steps to install the built plugin either in to the Tasks-Demo vault inside a clone of the [obsidian-tasks repo](https://github.com/obsidian-tasks-group/obsidian-tasks) or in to one of your own vaults.
+
+1. In the Artifacts section at the bottom, click on **dist-verified** to download a build of the plugin.
+2. Optionally, rename the zip file to give it a meaningful name.
+    - For example, you could append 'testing PR 1234 - nicer styling'.
+3. Expand the downloaded zip file
+4. Copy the files in the expanded folder to the `.obsidian/plugins/obsidian-tasks-plugin/` folder in your vault, over-writing the previous files.
+5. Restart Obsidian.
 
 ### How do I smoke-test the Tasks plugin?
 
@@ -396,11 +573,14 @@ Follow the steps in `resources/sample_vaults/Tasks-Demo/Manual Testing/Smoke Tes
 5. Run `./release.sh <new tasks version> <obsidian version>`
     - Make sure there are no uncommitted changes. Stash them if necessary.
 6. Wait for [GitHub Actions](https://github.com/obsidian-tasks-group/obsidian-tasks/actions/workflows/release.yml) to create the new release
-7. Update the release description with the changes of the release
-    - On the release page, GitHub provides a button to auto-generate release notes which works nicely.
-    - Also update the attached zip file by adding the version number to the end of the name after the dash (for example, `obsidian-tasks-1.4.1.zip`)
-8. Optional: Post to
+7. Update the release description with the changes of the release, which will be a Draft.
+    - On the release page, GitHub provides a button to auto-generate release notes which works nicely as a good starting point.
+8. When you are happy with the release notes, hit the Publish button.
+    - At this point, GitHub will send an email automatically to everyone who is subscribed to Tasks releases.
+9. Optional: Post to
     - Obsidian Discord
+        - Add a post in the `#updates` channel, with detail about the release
+        - Add a one-liner in the `#task-management` channel, linking to the first post
     - r/ObsidianMD on Reddit
     - Obsidian Forum Share & Showcase section
     - etc.

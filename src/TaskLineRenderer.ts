@@ -41,7 +41,7 @@ export async function renderTaskLine(
     if (!textRenderer) textRenderer = obsidianMarkdownRenderer;
     const li: HTMLLIElement = document.createElement('li');
     renderDetails.parentUlElement.appendChild(li);
-    
+
     // Interesting. The following suggests that classList.add() is faster than addClasses()
     // https://www.measurethat.net/Benchmarks/Show/1720/0/jquery-addclass-vs-classlistadd
     li.classList.add('task-list-item', 'plugin-tasks-list-item');

@@ -21,19 +21,19 @@ describe('extract date from filename', () => {
     type TestCase = {
         path: string;
         expectedDate: string | null;
-        enableDateFallback?: boolean;
-        dateFallbackFolders?: string[];
+        useFilenameAsScheduledDate?: boolean;
+        filenameAsDateFolders?: string[];
     };
 
     const testDefaults: Partial<TestCase> = {
-        enableDateFallback: true,
-        dateFallbackFolders: ANY_FOLDER,
+        useFilenameAsScheduledDate: true,
+        filenameAsDateFolders: ANY_FOLDER,
     };
 
     test.each<TestCase>([
         {
             path: '2022-10-22.md',
-            enableDateFallback: false,
+            useFilenameAsScheduledDate: false,
             expectedDate: null,
         },
         {
@@ -118,42 +118,42 @@ describe('extract date from filename', () => {
         },
         {
             path: 'folder/2022-10-22.md',
-            dateFallbackFolders: ['folder'],
+            filenameAsDateFolders: ['folder'],
             expectedDate: '2022-10-22',
         },
         {
             path: 'folder/subfolder/2022-10-22.md',
-            dateFallbackFolders: ['folder'],
+            filenameAsDateFolders: ['folder'],
             expectedDate: '2022-10-22',
         },
         {
             path: '2022-10-22.md',
-            dateFallbackFolders: ['folder'],
+            filenameAsDateFolders: ['folder'],
             expectedDate: null,
         },
         {
             path: 'outside/2022-10-22.md',
-            dateFallbackFolders: ['folder'],
+            filenameAsDateFolders: ['folder'],
             expectedDate: null,
         },
         {
             path: 'folder2/2022-10-22.md',
-            dateFallbackFolders: ['folder1', 'folder2'],
+            filenameAsDateFolders: ['folder1', 'folder2'],
             expectedDate: '2022-10-22',
         },
         {
             path: 'folder/2022-10-22.md',
-            dateFallbackFolders: ['folder', 'folder/subfolder'],
+            filenameAsDateFolders: ['folder', 'folder/subfolder'],
             expectedDate: '2022-10-22',
         },
         {
             path: 'folder/subfolder/2022-10-22.md',
-            dateFallbackFolders: ['folder', 'folder/subfolder'],
+            filenameAsDateFolders: ['folder', 'folder/subfolder'],
             expectedDate: '2022-10-22',
         },
         {
             path: 'folder/other-folder/2022-10-22.md',
-            dateFallbackFolders: ['folder', 'folder/subfolder'],
+            filenameAsDateFolders: ['folder', 'folder/subfolder'],
             expectedDate: '2022-10-22',
         },
     ])('%s', (testCase: TestCase) => {
@@ -161,8 +161,8 @@ describe('extract date from filename', () => {
         const options = { ...testDefaults, ...testCase };
 
         updateSettings({
-            enableDateFallback: options.enableDateFallback,
-            dateFallbackFolders: options.dateFallbackFolders,
+            useFilenameAsScheduledDate: options.useFilenameAsScheduledDate,
+            filenameAsDateFolders: options.filenameAsDateFolders,
         });
 
         try {
@@ -195,7 +195,7 @@ function constructTaskFromLine(line: string, fallbackDate: string | null) {
 
 describe('parse task with date fallback', () => {
     beforeEach(() => {
-        updateSettings({ enableDateFallback: true });
+        updateSettings({ useFilenameAsScheduledDate: true });
     });
 
     afterEach(() => {
@@ -295,7 +295,7 @@ describe('parse task with date fallback', () => {
 
 describe('update fallback date when path is changed', () => {
     beforeEach(() => {
-        updateSettings({ enableDateFallback: true });
+        updateSettings({ useFilenameAsScheduledDate: true });
     });
 
     afterEach(() => {
@@ -382,5 +382,46 @@ describe('update fallback date when path is changed', () => {
         }
 
         expect(updatedTask.scheduledDateIsInferred).toBe(expectedIsInferred);
+    });
+});
+
+describe('remove inferred status if scheduled date changed', () => {
+    it('should keep scheduled-date-is-inferred if the date is the same', () => {
+        // arrange
+        const task = new TaskBuilder().scheduledDate('2022-11-11').scheduledDateIsInferred(true).build();
+
+        const updatedTask = new TaskBuilder().scheduledDate('2022-11-11').scheduledDateIsInferred(true).build();
+
+        // act
+        const [processedTask] = DateFallback.removeInferredStatusIfNeeded(task, [updatedTask]);
+
+        // assert
+        expect(processedTask.scheduledDateIsInferred).toBe(true);
+    });
+
+    it('should remove scheduled-date-is-inferred if the date was changed', () => {
+        // arrange
+        const task = new TaskBuilder().scheduledDate('2022-11-11').scheduledDateIsInferred(true).build();
+
+        const updatedTask = new TaskBuilder().scheduledDate('2022-11-15').scheduledDateIsInferred(false).build();
+
+        // act
+        const [processedTask] = DateFallback.removeInferredStatusIfNeeded(task, [updatedTask]);
+
+        // assert
+        expect(processedTask.scheduledDateIsInferred).toBe(false);
+    });
+
+    it('should not set scheduled-date-is-inferred if a scheduled date was added', () => {
+        // arrange
+        const task = new TaskBuilder().scheduledDateIsInferred(false).build();
+
+        const updatedTask = new TaskBuilder().scheduledDate('2022-11-11').scheduledDateIsInferred(false).build();
+
+        // act
+        const [processedTask] = DateFallback.removeInferredStatusIfNeeded(task, [updatedTask]);
+
+        // assert
+        expect(processedTask.scheduledDateIsInferred).toBe(false);
     });
 });

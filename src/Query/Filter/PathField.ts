@@ -1,4 +1,5 @@
 import type { Task } from '../../Task';
+import type { Comparator } from '../Sorting';
 import { TextField } from './TextField';
 
 /** Support the 'path' search instruction.
@@ -19,5 +20,21 @@ export class PathField extends TextField {
      */
     public value(task: Task): string {
         return task.path;
+    }
+
+    public supportsSorting(): boolean {
+        return true;
+    }
+
+    public comparator(): Comparator {
+        return (a: Task, b: Task) => {
+            if (a.path < b.path) {
+                return -1;
+            } else if (a.path > b.path) {
+                return 1;
+            } else {
+                return 0;
+            }
+        };
     }
 }

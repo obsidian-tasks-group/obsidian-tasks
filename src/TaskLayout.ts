@@ -13,6 +13,7 @@ export class LayoutOptions {
     hideEditButton: boolean = false;
     hideUrgency: boolean = true;
     shortMode: boolean = false;
+    explainQuery: boolean = false;
 }
 
 // I was confused as to why this does not include all the values in LayoutOptions.

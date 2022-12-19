@@ -4,6 +4,7 @@
 
 import moment from 'moment';
 import { calculateCursorOffset, toggleLine } from '../../src/Commands/ToggleDone';
+import { resetSettings, updateSettings } from '../../src/Config/Settings';
 
 window.moment = moment;
 
@@ -63,16 +64,32 @@ function testToggleLineForOutOfRangeCursorPositions(
 }
 
 describe('ToggleDone', () => {
+    afterEach(() => {
+        resetSettings();
+    });
+
     const todaySpy = jest.spyOn(Date, 'now').mockReturnValue(moment('2022-09-04').valueOf());
 
     // The | (pipe) indicates the calculated position where the cursor should be displayed.
     // Note that prior to the #1103 fix, this position was sometimes ignored.
 
+    // Most of the tests are run twice. The second time, they are tested with tasks that
+    // do not match the global filter.
+
     it('should add hyphen and space to empty line', () => {
+        testToggleLine('|', '- |');
+
+        updateSettings({ globalFilter: '#task' });
+
         testToggleLine('|', '- |');
     });
 
     it('should add checkbox to hyphen and space', () => {
+        testToggleLine('|- ', '- [ |] ');
+        testToggleLine('- |', '- [ ] |');
+
+        updateSettings({ globalFilter: '#task' });
+
         testToggleLine('|- ', '- [ |] ');
         testToggleLine('- |', '- [ ] |');
     });
@@ -83,6 +100,14 @@ describe('ToggleDone', () => {
 
         // Issue #449 - cursor jumped 13 characters to the right on completion
         testToggleLine('- [ ] I have a |proper description', '- [x] I have a |proper description ✅ 2022-09-04');
+
+        updateSettings({ globalFilter: '#task' });
+
+        testToggleLine('|- [ ] ', '|- [x] ');
+        testToggleLine('- [ ] |', '- [x] |');
+
+        // Issue #449 - cursor jumped 13 characters to the right on completion
+        testToggleLine('- [ ] I have a |proper description', '- [x] I have a |proper description');
     });
 
     it('should un-complete a completed task', () => {
@@ -91,6 +116,18 @@ describe('ToggleDone', () => {
 
         // Issue #449 - cursor jumped 13 characters to the left on un-completion
         testToggleLine('- [x] I have a proper description| ✅ 2022-09-04', '- [ ] I have a proper description|');
+
+        updateSettings({ globalFilter: '#task' });
+
+        // Done date is not removed if task does not match global filter
+        testToggleLine('|- [x]  ✅ 2022-09-04', '|- [ ] ✅ 2022-09-04');
+        testToggleLine('- [x]  ✅ 2022-09-04|', '- [ ] ✅ 2022-09-04|');
+
+        // Issue #449 - cursor jumped 13 characters to the left on un-completion
+        testToggleLine(
+            '- [x] I have a proper description| ✅ 2022-09-04',
+            '- [ ] I have a proper description| ✅ 2022-09-04',
+        );
     });
 
     it('should complete a recurring task', () => {
@@ -106,6 +143,21 @@ describe('ToggleDone', () => {
             '- [ ] I am a recurring task| 🔁 every day 📅 2022-09-04 ',
             `- [ ] I am a recurring task 🔁 every day 📅 2022-09-05
 - [x] I am a recurring tas|k 🔁 every day 📅 2022-09-04 ✅ 2022-09-04`,
+        );
+
+        updateSettings({ globalFilter: '#task' });
+
+        // Tasks do not recur, and no done-date added, if not matching global filter
+        testToggleLine(
+            '- [ ] I am a recurring task| 🔁 every day 📅 2022-09-04',
+            '- [x] I am a recurring task| 🔁 every day 📅 2022-09-04',
+        );
+
+        // With a trailing space at the end of the initial line, which is deleted
+        // when the task lines are regenerated, the cursor moves one character to the left:
+        testToggleLine(
+            '- [ ] I am a recurring task| 🔁 every day 📅 2022-09-04 ',
+            '- [x] I am a recurring task| 🔁 every day 📅 2022-09-04 ',
         );
     });
 

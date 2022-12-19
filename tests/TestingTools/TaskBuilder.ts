@@ -21,6 +21,7 @@ export class TaskBuilder {
     private _description: string = 'my description';
     private _path: string = '';
     private _indentation: string = '';
+    private _listMarker: string = '-';
 
     private _sectionStart: number = 0;
     private _sectionIndex: number = 0;
@@ -62,6 +63,7 @@ export class TaskBuilder {
             description: description,
             path: this._path,
             indentation: this._indentation,
+            listMarker: this._listMarker,
             sectionStart: this._sectionStart,
             sectionIndex: this._sectionIndex,
             originalStatusCharacter: this._originalStatusCharacter,
@@ -79,8 +81,15 @@ export class TaskBuilder {
         });
     }
 
+    /**
+     * Set the status.
+     *
+     * This also sets {@link originalStatusCharacter}
+     * @param status
+     */
     public status(status: Status): TaskBuilder {
         this._status = status;
+        this._originalStatusCharacter = status === Status.TODO ? ' ' : 'x';
         return this;
     }
 
@@ -109,6 +118,11 @@ export class TaskBuilder {
         return this;
     }
 
+    public listMarker(listMarker: string): TaskBuilder {
+        this._listMarker = listMarker;
+        return this;
+    }
+
     public sectionStart(sectionStart: number): TaskBuilder {
         this._sectionStart = sectionStart;
         return this;
@@ -119,6 +133,13 @@ export class TaskBuilder {
         return this;
     }
 
+    /**
+     * Set the originalStatusCharacter.
+     *
+     * This does NOT set {@link status}, so call that method before calling this one,
+     * if you want to use a character other than ' ' or 'x'.
+     * @param originalStatusCharacter
+     */
     public originalStatusCharacter(originalStatusCharacter: string): TaskBuilder {
         this._originalStatusCharacter = originalStatusCharacter;
         return this;
