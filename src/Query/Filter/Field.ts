@@ -168,7 +168,7 @@ export abstract class Field {
             return null;
         }
 
-        const match = line.match(this.sorterRegExp());
+        const match = Field.getMatch(this.sorterRegExp(), line);
         if (match === null) {
             return null;
         }
