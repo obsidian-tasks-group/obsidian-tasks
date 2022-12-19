@@ -47,22 +47,19 @@ export function parseFilter(filterString: string): FilterOrErrorMessage | null {
 
 export function parseSorter(sorterString: string): Sorting | null {
     // New style parsing, using sorting which is done by the Field classes.
-    const sortByRegexp = /^sort by (\S+)( reverse)?/;
-    const fieldMatch = sorterString.match(sortByRegexp);
-    if (fieldMatch === null) {
+
+    // Optimisation: Check whether line begins with 'sort by'
+    const sortByRegexp = /^sort by /;
+    if (sorterString.match(sortByRegexp) === null) {
         return null;
     }
-    const propertyName = fieldMatch[1];
-    const reverse = !!fieldMatch[2];
 
+    // See if any of the fields can parse the line.
     for (const creator of fieldCreators) {
         const field = creator();
-        if (field.fieldName() === propertyName) {
-            if (field.supportsSorting()) {
-                return field.createSorter(reverse);
-            } else {
-                return null;
-            }
+        const sorter = field.parseSortLine(sorterString);
+        if (sorter) {
+            return sorter;
         }
     }
     return null;

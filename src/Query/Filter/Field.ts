@@ -16,6 +16,10 @@ import type { FilterOrErrorMessage } from './Filter';
  * (such 'no start date' and 'has start date').
  */
 export abstract class Field {
+    // -----------------------------------------------------------------------------------------------------------------
+    // Filtering
+    // -----------------------------------------------------------------------------------------------------------------
+
     /**
      * Returns true if the class can parse the given instruction line.
      *
@@ -76,9 +80,28 @@ export abstract class Field {
      * Return the name of this field, to be used in error messages.
      * This usually matches the instruction name, but does not always
      * (see start and starts).
+     *
+     * Also, some fields have more than one name, separated by '/'.
+     * See {@link TagsField}, for example.
      * @public
+     *
+     * @see fieldNameSingular
      */
     public abstract fieldName(): string;
+
+    /**
+     * Returns the singular form of the field's name.
+     * @public
+     *
+     * @see fieldName
+     */
+    public fieldNameSingular(): string {
+        return this.fieldName();
+    }
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // Sorting
+    // -----------------------------------------------------------------------------------------------------------------
 
     /**
      * Return whether the code for this field implements sorting of tasks
@@ -89,11 +112,96 @@ export abstract class Field {
     }
 
     /**
+     * Parse a 'sort by' line and return a Sorting object.
+     *
+     * Returns null line does not match this field or is invalid,
+     * or this field does not support sorting.
+     */
+    public parseSortLine(line: string): Sorting | null {
+        if (!this.supportsSorting()) {
+            return null;
+        }
+
+        if (!this.canCreateSorterForLine(line)) {
+            return null;
+        }
+
+        const sorting = this.createSorterFromLine(line);
+        if (sorting) {
+            return sorting;
+        }
+        return null;
+    }
+
+    /**
+     * Returns true if the class can parse the given 'sort by' instruction line.
+     *
+     * Current implementation simply checks whether the class does support sorting,
+     * and whether the line matches this.sorterRegExp().
+     * @param line - A line from a ```tasks``` block.
+     *
+     * @see {@link createSorterFromLine}
+     */
+    public canCreateSorterForLine(line: string): boolean {
+        if (!this.supportsSorting()) {
+            return false;
+        }
+
+        return Field.lineMatchesFilter(this.sorterRegExp(), line);
+    }
+
+    /**
+     * Parse the line, and return either a {@link Sorting} object or null.
+     *
+     * This default implementation works for all fields that support
+     * the default sorting pattern of `sort by <fieldName> (reverse)?`.
+     *
+     * Fields that offer more complicated 'sort by' options can override
+     * this method.
+     *
+     * @param line - A 'sort by' line from a ```tasks``` block.
+     *
+     * @see {@link canCreateSorterForLine}
+     */
+    public createSorterFromLine(line: string): Sorting | null {
+        if (!this.supportsSorting()) {
+            return null;
+        }
+
+        const match = Field.getMatch(this.sorterRegExp(), line);
+        if (match === null) {
+            return null;
+        }
+
+        const reverse = !!match[1];
+        return this.createSorter(reverse);
+    }
+
+    /**
+     * Return a regular expression that will match a correctly-formed
+     * instruction line for sorting Tasks by this field.
+     *
+     * Throws if this field does not support sorting.
+     *
+     * `match[1]` will be either `reverse` or undefined.
+     *
+     * Fields that offer more complicated 'sort by' options can override
+     * this method.
+     */
+    protected sorterRegExp(): RegExp {
+        if (!this.supportsSorting()) {
+            throw Error(`sorterRegExp() unimplemented for ${this.fieldNameSingular()}`);
+        }
+
+        return new RegExp(`^sort by ${this.fieldNameSingular()}( reverse)?`);
+    }
+
+    /**
      * Return a function to compare two Task objects, for use in sorting by this field's value.
      */
     public comparator(): Comparator {
         // TODO Make abstract
-        throw Error(`comparator() unimplemented for ${this.fieldName()}`);
+        throw Error(`comparator() unimplemented for ${this.fieldNameSingular()}`);
     }
 
     /**
@@ -101,7 +209,7 @@ export abstract class Field {
      * @param reverse - false for normal sort order, true for reverse sort order.
      */
     public createSorter(reverse: boolean): Sorting {
-        return new Sorting(reverse, this.fieldName(), this.comparator());
+        return new Sorting(reverse, this.fieldNameSingular(), this.comparator());
     }
 
     /**
