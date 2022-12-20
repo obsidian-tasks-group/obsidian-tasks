@@ -17,6 +17,7 @@ import { DateFallback } from './DateFallback';
 export enum Status {
     TODO = 'Todo',
     DONE = 'Done',
+    DOING = 'Doing',
 }
 
 /**
@@ -284,6 +285,9 @@ export class Task {
         switch (statusString) {
             case ' ':
                 status = Status.TODO;
+                break;
+            case '/':
+                status = Status.DOING;
                 break;
             default:
                 status = Status.DONE;
