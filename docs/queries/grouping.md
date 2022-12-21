@@ -37,7 +37,7 @@ File locations:
 1. `path` (the path to the file that contains the task, that is, the folder and the filename)
 1. `root` (the top-level folder of the file that contains the task, that is, the first directory in the path, which will be `/` for files in root of the vault)
 1. `folder` (the folder to the file that contains the task, which will be `/` for files in root of the vault)
-1. `filename` (the filename of the file that contains the task, without the `.md` extension)
+1. `filelink` or `filename` (the filelink or filename of the file that contains the task, without the `.md` extension)
     - Note that tasks from different notes with the same file name will be grouped together in the same group.
 
 > `root` grouping option was introduced in Tasks 1.11.0.

@@ -41,6 +41,7 @@ export class Group {
         backlink: Group.groupByBacklink,
         done: Group.groupByDoneDate,
         due: Group.groupByDueDate,
+        filelink: Group.groupByFileLink,
         filename: Group.groupByFileName,
         folder: Group.groupByFolder,
         happens: Group.groupByHappensDate,
@@ -149,6 +150,14 @@ export class Group {
             return ['Unknown Location'];
         }
         return [Group.escapeMarkdownCharacters(filename)];
+    }
+
+    private static groupByFileLink(task: Task): string[] {
+        const filename = task.filename;
+        if (filename === null) {
+            return ['Unknown Location'];
+        }
+        return ['[[' + Group.escapeMarkdownCharacters(filename) + ']]'];
     }
 
     private static groupByRoot(task: Task): string[] {

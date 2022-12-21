@@ -13,6 +13,7 @@ export type GroupingProperty =
     | 'backlink'
     | 'done'
     | 'due'
+    | 'filelink'
     | 'filename'
     | 'folder'
     | 'happens'
@@ -39,7 +40,7 @@ export class Query implements IQuery {
     private _grouping: Grouping[] = [];
 
     private readonly groupByRegexp =
-        /^group by (backlink|done|due|filename|folder|happens|heading|path|priority|recurrence|recurring|root|scheduled|start|status|tags)/;
+        /^group by (backlink|done|due|filelink|filename|folder|happens|heading|path|priority|recurrence|recurring|root|scheduled|start|status|tags)/;
 
     private readonly hideOptionsRegexp =
         /^(hide|show) (task count|backlink|priority|start date|scheduled date|done date|due date|recurrence rule|edit button|urgency)/;
