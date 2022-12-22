@@ -35,13 +35,16 @@ You can sort tasks by the following properties:
 5. `scheduled` (the date when the task is scheduled)
 6. `due` (the date when the task is due)
 7. `done` (the date when the task was done)
-8. `path` (the path to the file that contains the task)
-9. `description` (the description of the task)
-10. `tag` (the description of the task)
+8. `happens` (the earliest of start date, scheduled date, and due date)
+9. `path` (the path to the file that contains the task)
+10. `description` (the description of the task)
+11. `tag` (the description of the task)
 
 You can add multiple `sort by` query options, each on an extra line.
 The first sort has the highest priority.
 Each subsequent `sort` will sort within the existing sorting.
+
+> `sort by happens` was introduced in Tasks 1.21.0.
 
 <div class="code-example" markdown="1">
 Info

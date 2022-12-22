@@ -6,6 +6,7 @@ import { HappensDateField } from '../../../src/Query/Filter/HappensDateField';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { testFilter } from '../../TestingTools/FilterTestHelpers';
 import { toHaveExplanation } from '../../CustomMatchers/CustomMatchersForFilters';
+import * as CustomMatchersForSorting from '../../CustomMatchers/CustomMatchersForSorting';
 
 window.moment = moment;
 
@@ -117,5 +118,23 @@ describe('explain happens date queries', () => {
         expect(filterOrMessage).toHaveExplanation(
             'due, start or scheduled date is after 2022-01-15 (Saturday 15th January 2022)',
         );
+    });
+});
+
+describe('sorting by happens', () => {
+    it('supports Field sorting methods correctly', () => {
+        const field = new HappensDateField();
+        expect(field.supportsSorting()).toEqual(true);
+    });
+
+    const date1 = new TaskBuilder().startDate('2021-01-12').build();
+    const date2 = new TaskBuilder().scheduledDate('2022-12-23').build();
+
+    it('sort by happens', () => {
+        CustomMatchersForSorting.expectTaskComparesBefore(new HappensDateField().createNormalSorter(), date1, date2);
+    });
+
+    it('sort by happens reverse', () => {
+        CustomMatchersForSorting.expectTaskComparesAfter(new HappensDateField().createReverseSorter(), date1, date2);
     });
 });

@@ -2,6 +2,7 @@ import type { Moment } from 'moment';
 import type { Task } from '../../Task';
 import { DateParser } from '../DateParser';
 import { Explanation } from '../Explain/Explanation';
+import type { Comparator } from '../Sorting';
 import { Field } from './Field';
 import { Filter, FilterOrErrorMessage } from './Filter';
 import { FilterInstructions } from './FilterInstructions';
@@ -108,5 +109,18 @@ export class HappensDateField extends Field {
 
     public fieldName(): string {
         return 'happens';
+    }
+
+    public supportsSorting(): boolean {
+        return true;
+    }
+
+    /**
+     * This sorts on the earliest of start, scheduled and due dates.
+     */
+    public comparator(): Comparator {
+        return (a: Task, b: Task) => {
+            return DateField.compareByDate(this.earliestDate(a), this.earliestDate(b));
+        };
     }
 }

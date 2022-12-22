@@ -131,6 +131,7 @@ describe('Query parsing', () => {
             'sort by done',
             'sort by due reverse',
             'sort by due',
+            'sort by happens',
             'sort by path reverse',
             'sort by path',
             'sort by priority reverse',
