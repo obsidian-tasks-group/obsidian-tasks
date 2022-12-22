@@ -21,4 +21,8 @@ export class HeadingField extends TextField {
             return '';
         }
     }
+
+    supportsSorting(): boolean {
+        return true;
+    }
 }

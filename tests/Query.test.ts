@@ -133,6 +133,7 @@ describe('Query parsing', () => {
             'sort by due',
             'sort by filename',
             'sort by happens',
+            'sort by heading',
             'sort by path reverse',
             'sort by path',
             'sort by priority reverse',
