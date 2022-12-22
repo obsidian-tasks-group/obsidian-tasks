@@ -33,6 +33,10 @@ You can sort tasks by the following properties:
 File locations:
 
 1. `path` (the path to the file that contains the task)
+1. `filename` (the filename of the file that contains the task, with its extension)
+    - Note that tasks from different notes with the same file name will be sorter.
+
+> `sort by filename` was introduced in Tasks 1.21.0.
 
 File contents:
 
