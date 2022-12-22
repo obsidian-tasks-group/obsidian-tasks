@@ -3,6 +3,7 @@ import { SubstringMatcher } from '../Matchers/SubstringMatcher';
 import { RegexMatcher } from '../Matchers/RegexMatcher';
 import type { IStringMatcher } from '../Matchers/IStringMatcher';
 import { Explanation } from '../Explain/Explanation';
+import type { Comparator } from '../Sorting';
 import { Field } from './Field';
 import type { FilterFunction } from './Filter';
 import { Filter, FilterOrErrorMessage } from './Filter';
@@ -87,6 +88,19 @@ export abstract class TextField extends Field {
         return (task: Task) => {
             const match = matcher!.matches(this.value(task));
             return negate ? !match : match;
+        };
+    }
+
+    /**
+     * A default implementation of sorting, for text fields where simple locale-aware sorting is the
+     * desired behaviour.
+     *
+     * Each class that wants to use this will need to override supportsSorting() to return true,
+     * to turn on sorting.
+     */
+    comparator(): Comparator {
+        return (a: Task, b: Task) => {
+            return this.value(a).localeCompare(this.value(b));
         };
     }
 }
