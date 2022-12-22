@@ -25,9 +25,9 @@ export class Sorting {
      * TODO Once SortingProperty has been removed, re-order the parameters so the comparator comes first.
      *
      * @param reverse - whether the sort order should be reversed.
-     * @param property - the name of the property. If {@link comparator} is not supplied, this string must match
-     *                   one of the values in ${@link SortingProperty}.
-     * @param comparator - {@link Comparator} function.
+     * @param property - the name of the property.
+     * @param comparator - {@link Comparator} function, for sorting in the standard direction.
+     *                     If `reverse` is true, it will automatically be converted to reverse the sort direction.
      */
     constructor(reverse: boolean, property: string, comparator: Comparator) {
         this.property = property;
