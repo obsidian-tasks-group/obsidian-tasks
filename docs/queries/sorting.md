@@ -40,7 +40,9 @@ File locations:
 
 File contents:
 
-None yet.
+1. `sort by heading` (the heading preceding the task; files with empty headings sort before other tasks)
+
+> `sort by heading` was introduced in Tasks 1.21.0.
 
 Task date properties:
 

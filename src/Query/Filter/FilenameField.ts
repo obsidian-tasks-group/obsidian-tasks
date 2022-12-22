@@ -1,5 +1,4 @@
 import type { Task } from '../../Task';
-import type { Comparator } from '../Sorting';
 import { TextField } from './TextField';
 
 /** Support the 'filename' search instruction.
@@ -28,11 +27,5 @@ export class FilenameField extends TextField {
 
     supportsSorting(): boolean {
         return true;
-    }
-
-    comparator(): Comparator {
-        return (a: Task, b: Task) => {
-            return this.value(a).localeCompare(this.value(b));
-        };
     }
 }
