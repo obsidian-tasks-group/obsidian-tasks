@@ -166,17 +166,18 @@ export class Group {
             return ['Unknown Location'];
         }
 
-        // Markdown characters in the file name must be escaped.
-        // Markdown characters in the heading must NOT be escaped.
         let filenameComponent = 'Unknown Location';
 
         if (task.filename !== null) {
+            // Markdown characters in the file name must be escaped.
             filenameComponent = Group.escapeMarkdownCharacters(task.filename);
         }
 
         if (task.precedingHeader === null || task.precedingHeader.length === 0) {
             return [filenameComponent];
         }
+
+        // Markdown characters in the heading must NOT be escaped.
         const headingComponent = Group.groupByHeading(task)[0];
 
         if (filenameComponent === headingComponent) {
