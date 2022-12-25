@@ -148,7 +148,7 @@ export class Group {
         if (filename === null) {
             return ['Unknown Location'];
         }
-        return [Group.escapeMarkdownCharacters(filename)];
+        return ['[[' + Group.escapeMarkdownCharacters(filename) + ']]'];
     }
 
     private static groupByRoot(task: Task): string[] {
@@ -166,12 +166,18 @@ export class Group {
             return ['Unknown Location'];
         }
 
-        // Markdown characters in the file name must be escaped.
-        // Markdown characters in the heading must NOT be escaped.
-        const filenameComponent = Group.groupByFileName(task)[0];
+        let filenameComponent = 'Unknown Location';
+
+        if (task.filename !== null) {
+            // Markdown characters in the file name must be escaped.
+            filenameComponent = Group.escapeMarkdownCharacters(task.filename);
+        }
+
         if (task.precedingHeader === null || task.precedingHeader.length === 0) {
             return [filenameComponent];
         }
+
+        // Markdown characters in the heading must NOT be escaped.
         const headingComponent = Group.groupByHeading(task)[0];
 
         if (filenameComponent === headingComponent) {
