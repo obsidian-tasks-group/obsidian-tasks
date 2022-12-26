@@ -16,7 +16,7 @@ import { FilenameField } from './Filter/FilenameField';
 import { UrgencyField } from './Filter/UrgencyField';
 
 import type { FilterOrErrorMessage } from './Filter/Filter';
-import type { Sorting } from './Sorting';
+import type { Sorter } from './Sorter';
 
 const fieldCreators = [
     () => new StatusField(),
@@ -45,7 +45,7 @@ export function parseFilter(filterString: string): FilterOrErrorMessage | null {
     return null;
 }
 
-export function parseSorter(sorterString: string): Sorting | null {
+export function parseSorter(sorterString: string): Sorter | null {
     // New style parsing, using sorting which is done by the Field classes.
 
     // Optimisation: Check whether line begins with 'sort by'

@@ -1,4 +1,4 @@
-import type { Comparator } from '../Sorting';
+import type { Comparator } from '../Sorter';
 import type { Task } from '../../Task';
 import { Field } from './Field';
 import { FilterOrErrorMessage } from './Filter';

@@ -5,9 +5,9 @@ import moment from 'moment';
 
 window.moment = moment;
 
-import type { Comparator } from '../src/Query/Sorting';
+import type { Comparator } from '../src/Query/Sorter';
 import { Sort } from '../src/Query/Sort';
-import { Sorting } from '../src/Query/Sorting';
+import { Sorter } from '../src/Query/Sorter';
 import type { Task } from '../src/Task';
 import { StatusField } from '../src/Query/Filter/StatusField';
 import { DoneDateField } from '../src/Query/Filter/DoneDateField';
@@ -38,7 +38,7 @@ describe('Sort', () => {
 
         // Normal way round
         {
-            const sortByDescriptionLength = new Sorting(false, 'junk', comparator);
+            const sortByDescriptionLength = new Sorter('junk', comparator, false);
             expect(sortByDescriptionLength.comparator(short, long)).toEqual(1);
             expect(sortByDescriptionLength.comparator(short, short)).toEqual(0);
             expect(sortByDescriptionLength.comparator(long, short)).toEqual(-1);
@@ -46,7 +46,7 @@ describe('Sort', () => {
 
         // Reversed
         {
-            const sortByDescriptionLength = new Sorting(true, 'junk', comparator);
+            const sortByDescriptionLength = new Sorter('junk', comparator, true);
             expect(sortByDescriptionLength.comparator(short, long)).toEqual(-1);
             expect(sortByDescriptionLength.comparator(short, short)).toEqual(-0);
             expect(sortByDescriptionLength.comparator(long, short)).toEqual(1);

@@ -1,5 +1,5 @@
 import type { Task } from '../../Task';
-import type { Comparator } from '../Sorting';
+import type { Comparator } from '../Sorter';
 import { TextField } from './TextField';
 
 /** Support the 'path' search instruction.
