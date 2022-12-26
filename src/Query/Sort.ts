@@ -1,5 +1,5 @@
 import type { Task } from '../Task';
-import type { Comparator } from './Sorting';
+import type { Comparator } from './Sorter';
 import type { Query } from './Query';
 // TODO Remove the cyclic dependency between StatusField and Sort.
 import { StatusField } from './Filter/StatusField';

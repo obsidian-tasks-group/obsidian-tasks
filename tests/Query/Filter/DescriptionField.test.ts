@@ -263,7 +263,7 @@ describe('sorting by description', () => {
         return new TaskBuilder().description(description).build();
     }
 
-    it('sort by path', () => {
+    it('sort by description', () => {
         // Arrange
         const sorter = new DescriptionField().createNormalSorter();
 
@@ -273,7 +273,7 @@ describe('sorting by description', () => {
         expectTaskComparesAfter(sorter, with_description('AAA'), with_description('aaa')); // case-sensitive - capitals come last - TODO WHY? In description searches, capitals appear to come first.
     });
 
-    it('sort by path reverse', () => {
+    it('sort by description reverse', () => {
         // Single example just to prove reverse works.
         // (There's no need to repeat all the examples above)
         const sorter = new DescriptionField().createReverseSorter();

@@ -1,7 +1,7 @@
 import type moment from 'moment';
 import { DateParser } from '../../src/Query/DateParser';
 import { DateField } from '../../src/Query/Filter/DateField';
-import type { Sorting } from '../../src/Query/Sorting';
+import type { Sorter } from '../../src/Query/Sorter';
 import type { Task } from '../../src/Task';
 
 declare global {
@@ -97,21 +97,21 @@ function testCompareByDateBothWays(dateA: string | null, dateB: string | null, e
 // Sorting Tasks
 // ---------------------------------------------------------------------
 
-export function expectTaskComparesBefore(sorting: Sorting, taskA: Task, taskB: Task) {
-    testCompareTasksBothWays(sorting, taskA, taskB, before);
+export function expectTaskComparesBefore(sorter: Sorter, taskA: Task, taskB: Task) {
+    testCompareTasksBothWays(sorter, taskA, taskB, before);
 }
 
-export function expectTaskComparesEqual(sorting: Sorting, taskA: Task, taskB: Task) {
-    testCompareTasksBothWays(sorting, taskA, taskB, equal);
+export function expectTaskComparesEqual(sorter: Sorter, taskA: Task, taskB: Task) {
+    testCompareTasksBothWays(sorter, taskA, taskB, equal);
 }
 
-export function expectTaskComparesAfter(sorting: Sorting, taskA: Task, taskB: Task) {
-    testCompareTasksBothWays(sorting, taskA, taskB, after);
+export function expectTaskComparesAfter(sorter: Sorter, taskA: Task, taskB: Task) {
+    testCompareTasksBothWays(sorter, taskA, taskB, after);
 }
 
-function testCompareTasksBothWays(sorting: Sorting, taskA: Task, taskB: Task, expected: -1 | 0 | 1) {
-    expect({ sorting, tasks: [taskA, taskB] }).toCompareTasksWithResult(expected);
+function testCompareTasksBothWays(sorter: Sorter, taskA: Task, taskB: Task, expected: -1 | 0 | 1) {
+    expect({ sorting: sorter, tasks: [taskA, taskB] }).toCompareTasksWithResult(expected);
 
     const reverseExpected = expected === equal ? equal : -expected;
-    expect({ sorting, tasks: [taskB, taskA] }).toCompareTasksWithResult(reverseExpected);
+    expect({ sorting: sorter, tasks: [taskB, taskA] }).toCompareTasksWithResult(reverseExpected);
 }

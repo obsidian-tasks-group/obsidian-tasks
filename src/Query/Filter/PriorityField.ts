@@ -1,6 +1,6 @@
 import { Priority, Task } from '../../Task';
 import { Explanation } from '../Explain/Explanation';
-import type { Comparator } from '../Sorting';
+import type { Comparator } from '../Sorter';
 import { Field } from './Field';
 import { Filter, FilterOrErrorMessage } from './Filter';
 

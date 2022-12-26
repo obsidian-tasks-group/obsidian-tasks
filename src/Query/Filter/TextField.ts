@@ -3,7 +3,7 @@ import { SubstringMatcher } from '../Matchers/SubstringMatcher';
 import { RegexMatcher } from '../Matchers/RegexMatcher';
 import type { IStringMatcher } from '../Matchers/IStringMatcher';
 import { Explanation } from '../Explain/Explanation';
-import type { Comparator } from '../Sorting';
+import type { Comparator } from '../Sorter';
 import { Field } from './Field';
 import type { FilterFunction } from './Filter';
 import { Filter, FilterOrErrorMessage } from './Filter';
