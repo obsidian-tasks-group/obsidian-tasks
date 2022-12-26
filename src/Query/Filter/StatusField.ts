@@ -21,7 +21,6 @@ export class StatusField extends FilterInstructionsBasedField {
     /**
      * Return a function to compare two Task objects, for use in sorting by status.
      */
-    // TODO Make comparator() in Field through if unimplemented
     public comparator(): Comparator {
         return (a: Task, b: Task) => {
             if (a.status < b.status) {

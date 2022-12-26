@@ -104,10 +104,12 @@ export abstract class Field {
     // -----------------------------------------------------------------------------------------------------------------
 
     /**
-     * Return whether the code for this field implements sorting of tasks
+     * Return whether the code for this field implements sorting of tasks.
+     *
+     * If overriding this to return true, in order to enable sorting,
+     * the method ${link comparator} must also be overridden.
      */
     public supportsSorting(): boolean {
-        // TODO Make abstract
         return false;
     }
 
@@ -194,9 +196,11 @@ export abstract class Field {
 
     /**
      * Return a function to compare two Task objects, for use in sorting by this field's value.
+     *
+     * See ${@link supportsSorting} for what to do, to enable support of sorting in a
+     * particular ${@link Field} implementation.
      */
     public comparator(): Comparator {
-        // TODO Make abstract
         throw Error(`comparator() unimplemented for ${this.fieldNameSingular()}`);
     }
 
