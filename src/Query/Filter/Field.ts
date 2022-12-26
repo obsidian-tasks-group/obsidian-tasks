@@ -1,5 +1,5 @@
-import { Sorting } from '../Sorting';
-import type { Comparator } from '../Sorting';
+import { Sorter } from '../Sorter';
+import type { Comparator } from '../Sorter';
 import type { FilterOrErrorMessage } from './Filter';
 
 /**
@@ -117,7 +117,7 @@ export abstract class Field {
      * Returns null line does not match this field or is invalid,
      * or this field does not support sorting.
      */
-    public parseSortLine(line: string): Sorting | null {
+    public parseSortLine(line: string): Sorter | null {
         if (!this.supportsSorting()) {
             return null;
         }
@@ -151,7 +151,7 @@ export abstract class Field {
     }
 
     /**
-     * Parse the line, and return either a {@link Sorting} object or null.
+     * Parse the line, and return either a {@link Sorter} object or null.
      *
      * This default implementation works for all fields that support
      * the default sorting pattern of `sort by <fieldName> (reverse)?`.
@@ -163,7 +163,7 @@ export abstract class Field {
      *
      * @see {@link canCreateSorterForLine}
      */
-    public createSorterFromLine(line: string): Sorting | null {
+    public createSorterFromLine(line: string): Sorter | null {
         if (!this.supportsSorting()) {
             return null;
         }
@@ -205,30 +205,30 @@ export abstract class Field {
     }
 
     /**
-     * Create a {@link Sorting} object for sorting tasks by this field's value.
+     * Create a {@link Sorter} object for sorting tasks by this field's value.
      * @param reverse - false for normal sort order, true for reverse sort order.
      */
-    public createSorter(reverse: boolean): Sorting {
-        return new Sorting(reverse, this.fieldNameSingular(), this.comparator());
+    public createSorter(reverse: boolean): Sorter {
+        return new Sorter(reverse, this.fieldNameSingular(), this.comparator());
     }
 
     /**
-     * Create a {@link Sorting} object for sorting tasks by this field's value,
+     * Create a {@link Sorter} object for sorting tasks by this field's value,
      * in the standard/normal sort order for this field.
      *
      * @see {@link createReverseSorter}
      */
-    public createNormalSorter(): Sorting {
+    public createNormalSorter(): Sorter {
         return this.createSorter(false);
     }
 
     /**
-     * Create a {@link Sorting} object for sorting tasks by this field's value,
+     * Create a {@link Sorter} object for sorting tasks by this field's value,
      * in the reverse of the standard/normal sort order for this field.
      *
      * @see {@link createNormalSorter}
      */
-    public createReverseSorter(): Sorting {
+    public createReverseSorter(): Sorter {
         return this.createSorter(true);
     }
 }

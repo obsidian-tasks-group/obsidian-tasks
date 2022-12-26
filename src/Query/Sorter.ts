@@ -7,7 +7,7 @@ import type { Task } from '../Task';
  * - `+1` or some other positive number, if a is greater than b by the ordering criterion.
  * - `0` or sometimes `-0`, if a equals b by the ordering criterion.
  *
- * Typically Comparator functions are stored in a {@link Sorting} object.
+ * Typically Comparator functions are stored in a {@link Sorter} object.
  */
 export type Comparator = (a: Task, b: Task) => number;
 
@@ -15,7 +15,7 @@ export type Comparator = (a: Task, b: Task) => number;
  * Sorting represents a single 'sort by' instruction.
  * It stores the comparison function as a {@link Comparator}.
  */
-export class Sorting {
+export class Sorter {
     public readonly property: string;
     public readonly comparator: Comparator;
 
@@ -31,11 +31,11 @@ export class Sorting {
      */
     constructor(reverse: boolean, property: string, comparator: Comparator) {
         this.property = property;
-        this.comparator = Sorting.maybeReverse(reverse, comparator);
+        this.comparator = Sorter.maybeReverse(reverse, comparator);
     }
 
     private static maybeReverse(reverse: boolean, comparator: Comparator) {
-        return reverse ? Sorting.makeReversedComparator(comparator) : comparator;
+        return reverse ? Sorter.makeReversedComparator(comparator) : comparator;
     }
 
     private static makeReversedComparator(comparator: Comparator): Comparator {

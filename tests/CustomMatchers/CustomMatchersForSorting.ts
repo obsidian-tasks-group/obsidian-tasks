@@ -1,7 +1,7 @@
 import type moment from 'moment';
 import { DateParser } from '../../src/Query/DateParser';
 import { DateField } from '../../src/Query/Filter/DateField';
-import type { Sorting } from '../../src/Query/Sorting';
+import type { Sorter } from '../../src/Query/Sorter';
 import type { Task } from '../../src/Task';
 
 declare global {
@@ -97,19 +97,19 @@ function testCompareByDateBothWays(dateA: string | null, dateB: string | null, e
 // Sorting Tasks
 // ---------------------------------------------------------------------
 
-export function expectTaskComparesBefore(sorting: Sorting, taskA: Task, taskB: Task) {
+export function expectTaskComparesBefore(sorting: Sorter, taskA: Task, taskB: Task) {
     testCompareTasksBothWays(sorting, taskA, taskB, before);
 }
 
-export function expectTaskComparesEqual(sorting: Sorting, taskA: Task, taskB: Task) {
+export function expectTaskComparesEqual(sorting: Sorter, taskA: Task, taskB: Task) {
     testCompareTasksBothWays(sorting, taskA, taskB, equal);
 }
 
-export function expectTaskComparesAfter(sorting: Sorting, taskA: Task, taskB: Task) {
+export function expectTaskComparesAfter(sorting: Sorter, taskA: Task, taskB: Task) {
     testCompareTasksBothWays(sorting, taskA, taskB, after);
 }
 
-function testCompareTasksBothWays(sorting: Sorting, taskA: Task, taskB: Task, expected: -1 | 0 | 1) {
+function testCompareTasksBothWays(sorting: Sorter, taskA: Task, taskB: Task, expected: -1 | 0 | 1) {
     expect({ sorting, tasks: [taskA, taskB] }).toCompareTasksWithResult(expected);
 
     const reverseExpected = expected === equal ? equal : -expected;

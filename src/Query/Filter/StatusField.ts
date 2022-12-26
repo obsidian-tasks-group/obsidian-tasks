@@ -1,5 +1,5 @@
 import { Status, Task } from '../../Task';
-import type { Comparator } from '../Sorting';
+import type { Comparator } from '../Sorter';
 import { FilterInstructionsBasedField } from './FilterInstructionsBasedField';
 
 export class StatusField extends FilterInstructionsBasedField {

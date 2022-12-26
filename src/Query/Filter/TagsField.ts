@@ -1,6 +1,6 @@
 import type { Task } from '../../Task';
-import type { Comparator } from '../Sorting';
-import { Sorting } from '../Sorting';
+import type { Comparator } from '../Sorter';
+import { Sorter } from '../Sorter';
 import { MultiTextField } from './MultiTextField';
 
 /**
@@ -33,7 +33,7 @@ export class TagsField extends MultiTextField {
      *
      * @param line
      */
-    public createSorterFromLine(line: string): Sorting | null {
+    public createSorterFromLine(line: string): Sorter | null {
         const match = line.match(this.sorterRegExp());
         if (match === null) {
             return null;
@@ -42,7 +42,7 @@ export class TagsField extends MultiTextField {
         const reverse = !!match[1];
         const propertyInstance = isNaN(+match[2]) ? 1 : +match[2];
         const comparator = TagsField.makeCompareByTagComparator(propertyInstance);
-        return new Sorting(reverse, this.fieldNameSingular(), comparator);
+        return new Sorter(reverse, this.fieldNameSingular(), comparator);
     }
 
     /**

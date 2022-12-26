@@ -3,7 +3,7 @@ import type { Task } from '../Task';
 import type { IQuery } from '../IQuery';
 import { getSettings } from '../Config/Settings';
 import { Sort } from './Sort';
-import type { Sorting } from './Sorting';
+import type { Sorter } from './Sorter';
 import type { TaskGroups } from './TaskGroups';
 import { parseFilter, parseSorter } from './FilterParser';
 import { Group } from './Group';
@@ -35,7 +35,7 @@ export class Query implements IQuery {
     private _layoutOptions: LayoutOptions = new LayoutOptions();
     private _filters: Filter[] = [];
     private _error: string | undefined = undefined;
-    private _sorting: Sorting[] = [];
+    private _sorting: Sorter[] = [];
     private _grouping: Grouping[] = [];
 
     private readonly groupByRegexp =

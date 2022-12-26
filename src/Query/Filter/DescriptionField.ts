@@ -1,6 +1,6 @@
 import { getSettings } from '../../Config/Settings';
 import type { Task } from '../../Task';
-import type { Comparator } from '../Sorting';
+import type { Comparator } from '../Sorter';
 import { TextField } from './TextField';
 
 /**
