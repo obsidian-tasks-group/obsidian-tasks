@@ -1,6 +1,6 @@
 import type { Task } from '../Task';
 import type { Comparator } from './Sorter';
-import type { Query } from './Query';
+import type { Sorter } from './Sorter';
 // TODO Remove the cyclic dependency between StatusField and Sort.
 import { StatusField } from './Filter/StatusField';
 import { DueDateField } from './Filter/DueDateField';
@@ -9,7 +9,7 @@ import { PathField } from './Filter/PathField';
 import { UrgencyField } from './Filter/UrgencyField';
 
 export class Sort {
-    public static by(query: Pick<Query, 'sorting'>, tasks: Task[]): Task[] {
+    public static by(sorters: Sorter[], tasks: Task[]) {
         // TODO Move code for creating default comparators to separate file
         const defaultComparators: Comparator[] = [
             new UrgencyField().comparator(),
@@ -21,7 +21,7 @@ export class Sort {
 
         const userComparators: Comparator[] = [];
 
-        for (const sorting of query.sorting) {
+        for (const sorting of sorters) {
             userComparators.push(sorting.comparator);
         }
 
