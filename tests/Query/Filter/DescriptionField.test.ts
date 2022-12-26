@@ -360,13 +360,8 @@ describe('sorting by description', () => {
         });
 
         const expectedOrder = [one, two, three, four, five];
-        expect(
-            Sort.by(
-                {
-                    sorting: [new DescriptionField().createNormalSorter()],
-                },
-                [two, one, five, four, three],
-            ),
-        ).toEqual(expectedOrder);
+        expect(Sort.by([new DescriptionField().createNormalSorter()], [two, one, five, four, three])).toEqual(
+            expectedOrder,
+        );
     });
 });
