@@ -21,8 +21,8 @@ export class Sort {
 
         const userComparators: Comparator[] = [];
 
-        for (const sorting of sorters) {
-            userComparators.push(sorting.comparator);
+        for (const sorter of sorters) {
+            userComparators.push(sorter.comparator);
         }
 
         return tasks.sort(Sort.makeCompositeComparator([...userComparators, ...defaultComparators]));
