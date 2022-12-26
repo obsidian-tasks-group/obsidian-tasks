@@ -149,7 +149,7 @@ export class Query implements IQuery {
             tasks = tasks.filter(filter.filterFunction);
         });
 
-        const tasksSortedLimited = Sort.by(this, tasks).slice(0, this.limit);
+        const tasksSortedLimited = Sort.by(this.sorting, tasks).slice(0, this.limit);
         return Group.by(this.grouping, tasksSortedLimited);
     }
 

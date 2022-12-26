@@ -61,7 +61,7 @@ describe('Sort', () => {
         const five = fromLine({ line: '- [x] b 📅 1970-01-02', path: '3' });
         const six = fromLine({ line: '- [x] d 📅 1970-01-03', path: '2' });
         const expectedOrder = [one, two, three, four, five, six];
-        expect(Sort.by({ sorting: [] }, [six, five, one, four, two, three])).toEqual(expectedOrder);
+        expect(Sort.by([], [six, five, one, four, two, three])).toEqual(expectedOrder);
     });
 
     // TODO Add some tests based on easy-to-reason-about custom comparators, then delete the remaining old-style tests
@@ -85,13 +85,11 @@ describe('Sort', () => {
         ];
         expect(
             Sort.by(
-                {
-                    sorting: [
-                        new DueDateField().createNormalSorter(),
-                        new PathField().createNormalSorter(),
-                        new StatusField().createNormalSorter(),
-                    ],
-                },
+                [
+                    new DueDateField().createNormalSorter(),
+                    new PathField().createNormalSorter(),
+                    new StatusField().createNormalSorter(),
+                ],
                 [one, four, two, three],
             ),
         ).toEqual(expectedOrder);
@@ -118,9 +116,7 @@ describe('Sort', () => {
         const expectedOrder = [one, two, three, four];
         expect(
             Sort.by(
-                {
-                    sorting: [new DescriptionField().createNormalSorter(), new DoneDateField().createNormalSorter()],
-                },
+                [new DescriptionField().createNormalSorter(), new DoneDateField().createNormalSorter()],
                 [three, one, two, four],
             ),
         ).toEqual(expectedOrder);
@@ -147,9 +143,7 @@ describe('Sort', () => {
         const expectedOrder = [one, two, three, four];
         expect(
             Sort.by(
-                {
-                    sorting: [new DescriptionField().createReverseSorter(), new DoneDateField().createNormalSorter()],
-                },
+                [new DescriptionField().createReverseSorter(), new DoneDateField().createNormalSorter()],
                 [two, four, three, one],
             ),
         ).toEqual(expectedOrder);
@@ -167,13 +161,11 @@ describe('Sort', () => {
 
         expect(
             Sort.by(
-                {
-                    sorting: [
-                        new StatusField().createReverseSorter(),
-                        new DueDateField().createReverseSorter(),
-                        new PathField().createNormalSorter(),
-                    ],
-                },
+                [
+                    new StatusField().createReverseSorter(),
+                    new DueDateField().createReverseSorter(),
+                    new PathField().createNormalSorter(),
+                ],
                 [six, five, one, four, three, two],
             ),
         ).toEqual(expectedOrder);
