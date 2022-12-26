@@ -42,7 +42,7 @@ export class TagsField extends MultiTextField {
         const reverse = !!match[1];
         const propertyInstance = isNaN(+match[2]) ? 1 : +match[2];
         const comparator = TagsField.makeCompareByTagComparator(propertyInstance);
-        return new Sorter(reverse, this.fieldNameSingular(), comparator);
+        return new Sorter(this.fieldNameSingular(), comparator, reverse);
     }
 
     /**

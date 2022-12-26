@@ -22,14 +22,12 @@ export class Sorter {
     /**
      * Constructor.
      *
-     * TODO Once SortingProperty has been removed, re-order the parameters so the comparator comes first.
-     *
-     * @param reverse - whether the sort order should be reversed.
      * @param property - the name of the property.
      * @param comparator - {@link Comparator} function, for sorting in the standard direction.
      *                     If `reverse` is true, it will automatically be converted to reverse the sort direction.
+     * @param reverse - whether the sort order should be reversed.
      */
-    constructor(reverse: boolean, property: string, comparator: Comparator) {
+    constructor(property: string, comparator: Comparator, reverse: boolean) {
         this.property = property;
         this.comparator = Sorter.maybeReverse(reverse, comparator);
     }

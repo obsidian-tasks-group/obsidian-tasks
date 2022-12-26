@@ -38,7 +38,7 @@ describe('Sort', () => {
 
         // Normal way round
         {
-            const sortByDescriptionLength = new Sorter(false, 'junk', comparator);
+            const sortByDescriptionLength = new Sorter('junk', comparator, false);
             expect(sortByDescriptionLength.comparator(short, long)).toEqual(1);
             expect(sortByDescriptionLength.comparator(short, short)).toEqual(0);
             expect(sortByDescriptionLength.comparator(long, short)).toEqual(-1);
@@ -46,7 +46,7 @@ describe('Sort', () => {
 
         // Reversed
         {
-            const sortByDescriptionLength = new Sorter(true, 'junk', comparator);
+            const sortByDescriptionLength = new Sorter('junk', comparator, true);
             expect(sortByDescriptionLength.comparator(short, long)).toEqual(-1);
             expect(sortByDescriptionLength.comparator(short, short)).toEqual(-0);
             expect(sortByDescriptionLength.comparator(long, short)).toEqual(1);
