@@ -126,11 +126,7 @@ export abstract class Field {
             return null;
         }
 
-        const sorting = this.createSorterFromLine(line);
-        if (sorting) {
-            return sorting;
-        }
-        return null;
+        return this.createSorterFromLine(line);
     }
 
     /**
