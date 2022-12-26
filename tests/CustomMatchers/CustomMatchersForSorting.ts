@@ -97,21 +97,21 @@ function testCompareByDateBothWays(dateA: string | null, dateB: string | null, e
 // Sorting Tasks
 // ---------------------------------------------------------------------
 
-export function expectTaskComparesBefore(sorting: Sorter, taskA: Task, taskB: Task) {
-    testCompareTasksBothWays(sorting, taskA, taskB, before);
+export function expectTaskComparesBefore(sorter: Sorter, taskA: Task, taskB: Task) {
+    testCompareTasksBothWays(sorter, taskA, taskB, before);
 }
 
-export function expectTaskComparesEqual(sorting: Sorter, taskA: Task, taskB: Task) {
-    testCompareTasksBothWays(sorting, taskA, taskB, equal);
+export function expectTaskComparesEqual(sorter: Sorter, taskA: Task, taskB: Task) {
+    testCompareTasksBothWays(sorter, taskA, taskB, equal);
 }
 
-export function expectTaskComparesAfter(sorting: Sorter, taskA: Task, taskB: Task) {
-    testCompareTasksBothWays(sorting, taskA, taskB, after);
+export function expectTaskComparesAfter(sorter: Sorter, taskA: Task, taskB: Task) {
+    testCompareTasksBothWays(sorter, taskA, taskB, after);
 }
 
-function testCompareTasksBothWays(sorting: Sorter, taskA: Task, taskB: Task, expected: -1 | 0 | 1) {
-    expect({ sorting, tasks: [taskA, taskB] }).toCompareTasksWithResult(expected);
+function testCompareTasksBothWays(sorter: Sorter, taskA: Task, taskB: Task, expected: -1 | 0 | 1) {
+    expect({ sorting: sorter, tasks: [taskA, taskB] }).toCompareTasksWithResult(expected);
 
     const reverseExpected = expected === equal ? equal : -expected;
-    expect({ sorting, tasks: [taskB, taskA] }).toCompareTasksWithResult(reverseExpected);
+    expect({ sorting: sorter, tasks: [taskB, taskA] }).toCompareTasksWithResult(reverseExpected);
 }
