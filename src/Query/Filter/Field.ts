@@ -107,7 +107,7 @@ export abstract class Field {
      * Return whether the code for this field implements sorting of tasks.
      *
      * If overriding this to return true, in order to enable sorting,
-     * the method ${link comparator} must also be overridden.
+     * the method ${@link comparator} must also be overridden.
      */
     public supportsSorting(): boolean {
         return false;
