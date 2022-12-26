@@ -12,7 +12,7 @@ import type { Task } from '../Task';
 export type Comparator = (a: Task, b: Task) => number;
 
 /**
- * Sorting represents a single 'sort by' instruction.
+ * Sorter represents a single 'sort by' instruction.
  * It stores the comparison function as a {@link Comparator}.
  */
 export class Sorter {

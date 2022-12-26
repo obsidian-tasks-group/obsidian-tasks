@@ -112,7 +112,7 @@ export abstract class Field {
     }
 
     /**
-     * Parse a 'sort by' line and return a Sorting object.
+     * Parse a 'sort by' line and return a {@link Sorter} object.
      *
      * Returns null line does not match this field or is invalid,
      * or this field does not support sorting.
