@@ -1,7 +1,6 @@
 import type { Task } from '../Task';
 import type { Comparator } from './Sorter';
 import type { Sorter } from './Sorter';
-// TODO Remove the cyclic dependency between StatusField and Sort.
 import { StatusField } from './Filter/StatusField';
 import { DueDateField } from './Filter/DueDateField';
 import { PriorityField } from './Filter/PriorityField';
@@ -10,7 +9,6 @@ import { UrgencyField } from './Filter/UrgencyField';
 
 export class Sort {
     public static by(sorters: Sorter[], tasks: Task[]) {
-        // TODO Move code for creating default comparators to separate file
         const defaultComparators: Comparator[] = [
             new UrgencyField().comparator(),
             new StatusField().comparator(),
