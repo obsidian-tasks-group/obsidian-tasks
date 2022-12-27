@@ -82,11 +82,16 @@ export class DescriptionField extends TextField {
         return description;
     }
 
-    private static replaceFormatting(description: string, startsWithItalicOrBoldRegex: RegExp) {
-        const italicBoldRegexMatch = description.match(startsWithItalicOrBoldRegex);
+    /**
+     * Remove some formatting from text
+     * @param description
+     * @param regExp A regular expression - all matching text is discarded except the first group
+     */
+    private static replaceFormatting(description: string, regExp: RegExp) {
+        const italicBoldRegexMatch = description.match(regExp);
         if (italicBoldRegexMatch !== null) {
             const innerItalicBoldText = italicBoldRegexMatch[1];
-            description = innerItalicBoldText + description.replace(startsWithItalicOrBoldRegex, '');
+            description = innerItalicBoldText + description.replace(regExp, '');
         }
         return description;
     }
