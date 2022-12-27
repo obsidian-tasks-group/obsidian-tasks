@@ -309,7 +309,6 @@ describe('sorting by description', () => {
             '[[un-format]]',
             '[[some-other-file-name|un-format]]',
             '[un-format]',
-            // '=un-format=',
             '==un-format==',
         ])('simple description "%s" is cleaned to "un-format"', (originalDescription: string) => {
             expect(DescriptionField.cleanDescription(originalDescription)).toStrictEqual('un-format');
