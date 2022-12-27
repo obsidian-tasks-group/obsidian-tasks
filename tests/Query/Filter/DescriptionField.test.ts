@@ -304,8 +304,8 @@ describe('sorting by description', () => {
         it.each([
             '*un-format*',
             '**un-format**',
-            // '_un-format_',
-            // '__un-format__',
+            '_un-format_',
+            '__un-format__',
             '[[un-format]]',
             '[[some-other-file-name|un-format]]',
             '[un-format]',

@@ -72,6 +72,8 @@ export class DescriptionField extends TextField {
         description = this.replaceFormatting(description, /^\*\*([^*]*)\*\*/);
         description = this.replaceFormatting(description, /^\*([^*]*)\*/);
         description = this.replaceFormatting(description, /^==([^=]*)==/);
+        description = this.replaceFormatting(description, /^__([^_]*)__/);
+        description = this.replaceFormatting(description, /^_([^_]*)_/);
 
         return description;
     }
