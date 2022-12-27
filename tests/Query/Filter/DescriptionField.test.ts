@@ -313,8 +313,8 @@ describe('sorting by description', () => {
                 'Third it should be] alias is used from 1st link but not 2nd [last|ZZZ]',
             ],
             [
-                '*Very italic text* - this looks completely wrong',
-                'Very italic text*Very italic text* - this looks completely wrong',
+                '*Very italic text*', // (comment to override formatting)
+                'Very italic text',
             ],
             [
                 '[@Zebra|Zebra] alias is used single []*', // (comment to override formatting)
@@ -331,11 +331,11 @@ describe('sorting by description', () => {
             ],
             [
                 '**bold** then ordinary text', // (comment to override formatting)
-                'bold**bold** then ordinary text',
+                'bold* then ordinary text',
             ],
             [
                 '*italic* then ordinary text', // (comment to override formatting)
-                'italic*italic* then ordinary text',
+                'italic then ordinary text',
             ],
         ])('description "%s" is cleaned to "%s"', (originalDescription: string, cleanedDescription: string) => {
             expect(DescriptionField.cleanDescription(originalDescription)).toStrictEqual(cleanedDescription);

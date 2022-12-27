@@ -73,7 +73,7 @@ export class DescriptionField extends TextField {
         const italicBoldRegexMatch = description.match(startsWithItalicOrBoldRegex);
         if (italicBoldRegexMatch !== null) {
             const innerItalicBoldText = italicBoldRegexMatch[1];
-            description = innerItalicBoldText + description.replace(startsWithLinkRegex, '');
+            description = innerItalicBoldText + description.replace(startsWithItalicOrBoldRegex, '');
         }
 
         const startsWithHighlightRegex = /^==?([^=]*)==/;
