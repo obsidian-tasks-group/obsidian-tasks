@@ -306,8 +306,8 @@ describe('sorting by description', () => {
             '**un-format**',
             // '_un-format_',
             // '__un-format__',
-            // '[[un-format]]',
-            // '[[some-other-file-name|un-format]]',
+            '[[un-format]]',
+            '[[some-other-file-name|un-format]]',
             '[un-format]',
             // '=un-format=',
             '==un-format==',
@@ -321,11 +321,11 @@ describe('sorting by description', () => {
         it.each([
             [
                 '[[Better be second]] most [] removed so these sort equal',
-                'Better be second] most [] removed so these sort equal',
+                'Better be second most [] removed so these sort equal',
             ],
             [
                 '[[Another|Third it should be]] alias is used from 1st link but not 2nd [last|ZZZ]',
-                'Third it should be] alias is used from 1st link but not 2nd [last|ZZZ]',
+                'Third it should be alias is used from 1st link but not 2nd [last|ZZZ]',
             ],
             [
                 '*Very italic text*', // (comment to override formatting)

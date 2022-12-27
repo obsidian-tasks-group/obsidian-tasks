@@ -59,7 +59,7 @@ export class DescriptionField extends TextField {
         const globalFilter = getSettings().globalFilter;
         description = description.replace(globalFilter, '').trim();
 
-        const startsWithLinkRegex = /^\[\[?([^\]]*)\]/;
+        const startsWithLinkRegex = /^\[\[?([^\]]*)\]\]?/;
         const linkRegexMatch = description.match(startsWithLinkRegex);
         if (linkRegexMatch !== null) {
             const innerLinkText = linkRegexMatch[1];
