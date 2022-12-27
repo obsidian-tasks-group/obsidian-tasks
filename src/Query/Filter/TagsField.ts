@@ -87,7 +87,9 @@ export class TagsField extends MultiTextField {
                 return 0;
             }
 
-            return a.tags[tagInstanceToSortBy].localeCompare(b.tags[tagInstanceToSortBy]);
+            const tagA = a.tags[tagInstanceToSortBy];
+            const tagB = b.tags[tagInstanceToSortBy];
+            return tagA.localeCompare(tagB, undefined, { numeric: true });
         };
     }
 }

@@ -142,7 +142,7 @@ describe('sorting by path', () => {
 
         // Beginning with numbers
         expectTaskComparesBefore(sorter, with_path('c/1.md'), with_path('c/9.md'));
-        expectTaskComparesBefore(sorter, with_path('c/11.md'), with_path('c/9.md')); // TODO want 11 to compare after 9
+        expectTaskComparesBefore(sorter, with_path('c/9.md'), with_path('c/11.md'));
     });
 
     it('sort by path reverse', () => {

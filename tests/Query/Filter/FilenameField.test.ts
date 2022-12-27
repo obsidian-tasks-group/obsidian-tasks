@@ -100,7 +100,7 @@ describe('sorting by filename', () => {
         );
         // Beginning with numbers
         CustomMatchersForSorting.expectTaskComparesBefore(sorter, with_path('c/1.md'), with_path('c/9.md'));
-        CustomMatchersForSorting.expectTaskComparesBefore(sorter, with_path('c/11.md'), with_path('c/9.md')); // TODO want 11 to compare after 9
+        CustomMatchersForSorting.expectTaskComparesBefore(sorter, with_path('c/9.md'), with_path('c/11.md'));
     });
 
     it('sort by filename reverse', () => {

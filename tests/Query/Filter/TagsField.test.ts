@@ -334,9 +334,15 @@ describe('Sort by tags', () => {
 
         it('should sort by tags case-insensitively', () => {
             const sorter = tagsField.createNormalSorter();
-            expectTaskComparesBefore(sorter, with_tags(['AAAA']), with_tags(['bbbb']));
-            expectTaskComparesBefore(sorter, with_tags(['aaaa']), with_tags(['BBBB']));
-            expectTaskComparesBefore(sorter, with_tags(['aaaa']), with_tags(['AAAA']));
+            expectTaskComparesBefore(sorter, with_tags(['#AAAA']), with_tags(['#bbbb']));
+            expectTaskComparesBefore(sorter, with_tags(['#aaaa']), with_tags(['#BBBB']));
+            expectTaskComparesBefore(sorter, with_tags(['#aaaa']), with_tags(['#AAAA']));
+        });
+
+        it('should sort by tags with numbers correctly', () => {
+            const sorter = tagsField.createNormalSorter();
+            expectTaskComparesBefore(sorter, with_tags(['#a-0']), with_tags(['#a-9']));
+            expectTaskComparesBefore(sorter, with_tags(['#a-9']), with_tags(['#a-11']));
         });
 
         it('should fail to parse a invalid line', () => {
