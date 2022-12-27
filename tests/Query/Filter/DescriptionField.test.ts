@@ -300,21 +300,35 @@ describe('sorting by description', () => {
             );
         });
 
+        // All the strings should be treated as though they contain 'un-format'
+        it.each([
+            '*un-format*',
+            '**un-format**',
+            '_un-format_',
+            '__un-format__',
+            '[[un-format]]',
+            '[[some-other-file-name|un-format]]',
+            '[un-format]',
+            '==un-format==',
+        ])('simple description "%s" is cleaned to "un-format"', (originalDescription: string) => {
+            expect(DescriptionField.cleanDescription(originalDescription)).toStrictEqual('un-format');
+        });
+
         // Each of these pairs of strings is:
         // 1. A task description
         // 2. The result of running that description through the description-cleaning code.
         it.each([
             [
                 '[[Better be second]] most [] removed so these sort equal',
-                'Better be second] most [] removed so these sort equal',
+                'Better be second most [] removed so these sort equal',
             ],
             [
                 '[[Another|Third it should be]] alias is used from 1st link but not 2nd [last|ZZZ]',
-                'Third it should be] alias is used from 1st link but not 2nd [last|ZZZ]',
+                'Third it should be alias is used from 1st link but not 2nd [last|ZZZ]',
             ],
             [
-                '*Very italic text* - this looks completely wrong',
-                'Very italic text*Very italic text* - this looks completely wrong',
+                '*Very italic text*', // (comment to override formatting)
+                'Very italic text',
             ],
             [
                 '[@Zebra|Zebra] alias is used single []*', // (comment to override formatting)
@@ -331,19 +345,32 @@ describe('sorting by description', () => {
             ],
             [
                 '**bold** then ordinary text', // (comment to override formatting)
-                'bold**bold** then ordinary text',
+                'bold then ordinary text',
             ],
             [
                 '*italic* then ordinary text', // (comment to override formatting)
-                'italic*italic* then ordinary text',
+                'italic then ordinary text',
             ],
         ])('description "%s" is cleaned to "%s"', (originalDescription: string, cleanedDescription: string) => {
+            expect(DescriptionField.cleanDescription(originalDescription)).toStrictEqual(cleanedDescription);
             expectTaskComparesEqual(
                 sorter,
                 new TaskBuilder().description(originalDescription).build(),
                 new TaskBuilder().description(cleanedDescription).build(),
             );
         });
+    });
+
+    // All the strings are expected to be treated as unchanged.
+    // They typically have unbalanced numbers of formatting characters,
+    // or other behaviours not yet supported by Description.
+    it.each([
+        '**originalDescription* following text',
+        '__originalDescription_ following text',
+        '**hello * world** - formatting character inside formatting', // it would be nice for this to become 'hello * world'
+        '=un-format= single hyphen is not a valid formatting, so do not remove it',
+    ])('description "%s" is unchanged when cleaned"', (originalDescription: string) => {
+        expect(DescriptionField.cleanDescription(originalDescription)).toStrictEqual(originalDescription);
     });
 
     it('sorts correctly by the link name and not the markdown', () => {
