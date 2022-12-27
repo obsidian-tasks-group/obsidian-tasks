@@ -303,6 +303,11 @@ describe('Sort by tags', () => {
         const tags_a_c = new TaskBuilder().tags(['#b', '#c']).build();
         const tags_a_d = new TaskBuilder().tags(['#a', '#d']).build();
 
+        // Helper function to create a task with a given path
+        function with_tags(tags: string[]) {
+            return new TaskBuilder().tags(tags).build();
+        }
+
         it('should create a default comparator, sorting by first tag', () => {
             const comparator = tagsField.comparator();
             expect(comparator(tags_a_d, tags_a_c)).toBeLessThan(0);
@@ -325,6 +330,13 @@ describe('Sort by tags', () => {
             const sorter = tagsField.parseSortLine('sort by tag reverse 2');
             expect(sorter?.property).toEqual('tag');
             expectTaskComparesAfter(sorter!, tags_a_b, tags_a_c);
+        });
+
+        it('should sort by tags case-insensitively', () => {
+            const sorter = tagsField.createNormalSorter();
+            expectTaskComparesBefore(sorter, with_tags(['AAAA']), with_tags(['bbbb']));
+            expectTaskComparesBefore(sorter, with_tags(['aaaa']), with_tags(['BBBB']));
+            expectTaskComparesBefore(sorter, with_tags(['aaaa']), with_tags(['AAAA']));
         });
 
         it('should fail to parse a invalid line', () => {

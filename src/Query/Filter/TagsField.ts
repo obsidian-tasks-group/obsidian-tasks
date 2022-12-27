@@ -87,13 +87,7 @@ export class TagsField extends MultiTextField {
                 return 0;
             }
 
-            if (a.tags[tagInstanceToSortBy] < b.tags[tagInstanceToSortBy]) {
-                return -1;
-            } else if (a.tags[tagInstanceToSortBy] > b.tags[tagInstanceToSortBy]) {
-                return 1;
-            } else {
-                return 0;
-            }
+            return a.tags[tagInstanceToSortBy].localeCompare(b.tags[tagInstanceToSortBy]);
         };
     }
 }
