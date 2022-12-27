@@ -55,7 +55,7 @@ export class DescriptionField extends TextField {
      * Will remove them only if they are closing.
      * Properly reads links [[like this|one]] (note pipe).
      */
-    private static cleanDescription(description: string): string {
+    public static cleanDescription(description: string): string {
         const globalFilter = getSettings().globalFilter;
         description = description.replace(globalFilter, '').trim();
 

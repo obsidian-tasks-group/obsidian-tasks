@@ -338,6 +338,7 @@ describe('sorting by description', () => {
                 'italic*italic* then ordinary text',
             ],
         ])('description "%s" is cleaned to "%s"', (originalDescription: string, cleanedDescription: string) => {
+            expect(DescriptionField.cleanDescription(originalDescription)).toStrictEqual(cleanedDescription);
             expectTaskComparesEqual(
                 sorter,
                 new TaskBuilder().description(originalDescription).build(),
