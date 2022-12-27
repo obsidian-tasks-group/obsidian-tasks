@@ -366,6 +366,17 @@ describe('sorting by description', () => {
         });
     });
 
+    // All the strings are expected to be treated as unchanged.
+    // They typically have unbalanced numbers of formatting characters,
+    // or other behaviours not yet supported by Description.
+    it.each([
+        '**originalDescription* following text',
+        '__originalDescription_ following text',
+        '**hello * world** - formatting character inside formatting', // it would be nice for this to become 'hello * world'
+    ])('description "%s" is unchanged when cleaned"', (originalDescription: string) => {
+        expect(DescriptionField.cleanDescription(originalDescription)).toStrictEqual(originalDescription);
+    });
+
     it('sorts correctly by the link name and not the markdown', () => {
         const one = fromLine({
             line: '- [ ] *ZZZ An early task that starts with an A; actually not italic since only one asterisk',
