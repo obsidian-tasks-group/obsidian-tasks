@@ -270,7 +270,11 @@ describe('sorting by description', () => {
         // Assert
         expectTaskComparesEqual(sorter, with_description('Aaa'), with_description('Aaa'));
         expectTaskComparesBefore(sorter, with_description('AAA'), with_description('ZZZ'));
-        expectTaskComparesAfter(sorter, with_description('AAA'), with_description('aaa')); // case-sensitive - capitals come last - TODO WHY? In description searches, capitals appear to come first.
+
+        // Ignores case if strings differ
+        expectTaskComparesBefore(sorter, with_description('AAA'), with_description('bbb'));
+        expectTaskComparesBefore(sorter, with_description('aaa'), with_description('BBB'));
+        expectTaskComparesBefore(sorter, with_description('aaa'), with_description('AAA'));
     });
 
     it('sort by description reverse', () => {
