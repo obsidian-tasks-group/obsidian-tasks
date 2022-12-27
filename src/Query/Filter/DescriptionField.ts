@@ -55,11 +55,11 @@ export class DescriptionField extends TextField {
      * Will remove them only if they are closing.
      * Properly reads links [[like this|one]] (note pipe).
      */
-    private static cleanDescription(description: string): string {
+    public static cleanDescription(description: string): string {
         const globalFilter = getSettings().globalFilter;
         description = description.replace(globalFilter, '').trim();
 
-        const startsWithLinkRegex = /^\[\[?([^\]]*)\]/;
+        const startsWithLinkRegex = /^\[\[?([^\]]*)]]?/;
         const linkRegexMatch = description.match(startsWithLinkRegex);
         if (linkRegexMatch !== null) {
             const innerLinkText = linkRegexMatch[1];
@@ -69,20 +69,26 @@ export class DescriptionField extends TextField {
                 innerLinkText.substring(innerLinkText.indexOf('|') + 1) + description.replace(startsWithLinkRegex, '');
         }
 
-        const startsWithItalicOrBoldRegex = /^\*\*?([^*]*)\*/;
-        const italicBoldRegexMatch = description.match(startsWithItalicOrBoldRegex);
+        description = this.replaceFormatting(description, /^\*\*([^*]+)\*\*/);
+        description = this.replaceFormatting(description, /^\*([^*]+)\*/);
+        description = this.replaceFormatting(description, /^==([^=]+)==/);
+        description = this.replaceFormatting(description, /^__([^_]+)__/);
+        description = this.replaceFormatting(description, /^_([^_]+)_/);
+
+        return description;
+    }
+
+    /**
+     * Remove some formatting from text
+     * @param description
+     * @param regExp A regular expression - all matching text is discarded except the first group
+     */
+    private static replaceFormatting(description: string, regExp: RegExp) {
+        const italicBoldRegexMatch = description.match(regExp);
         if (italicBoldRegexMatch !== null) {
             const innerItalicBoldText = italicBoldRegexMatch[1];
-            description = innerItalicBoldText + description.replace(startsWithLinkRegex, '');
+            description = innerItalicBoldText + description.replace(regExp, '');
         }
-
-        const startsWithHighlightRegex = /^==?([^=]*)==/;
-        const highlightRegexMatch = description.match(startsWithHighlightRegex);
-        if (highlightRegexMatch !== null) {
-            const innerHighlightsText = highlightRegexMatch[1];
-            description = innerHighlightsText + description.replace(startsWithHighlightRegex, '');
-        }
-
         return description;
     }
 }
