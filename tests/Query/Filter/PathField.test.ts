@@ -134,7 +134,11 @@ describe('sorting by path', () => {
         // Assert
         expectTaskComparesEqual(sorter, with_path('a/b.md'), with_path('a/b.md'));
         expectTaskComparesBefore(sorter, with_path('a/b.md'), with_path('c/d.md'));
-        expectTaskComparesBefore(sorter, with_path('c/D.md'), with_path('c/d.md')); // case-sensitive - capitals come first
+
+        // Ignores case if strings differ
+        expectTaskComparesBefore(sorter, with_path('aaaa/bbbb.md'), with_path('CCCC/DDDD.md'));
+        expectTaskComparesBefore(sorter, with_path('AAAA/BBBB.md'), with_path('cccc/dddd.md'));
+        expectTaskComparesBefore(sorter, with_path('aaaa/bbbb.md'), with_path('AAAA/BBBB.md'));
 
         // Beginning with numbers
         expectTaskComparesBefore(sorter, with_path('c/1.md'), with_path('c/9.md'));
