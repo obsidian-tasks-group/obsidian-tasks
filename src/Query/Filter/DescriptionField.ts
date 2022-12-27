@@ -71,13 +71,7 @@ export class DescriptionField extends TextField {
 
         description = this.replaceFormatting(description, /^\*\*([^*]*)\*\*/);
         description = this.replaceFormatting(description, /^\*([^*]*)\*/);
-
-        const startsWithHighlightRegex = /^==?([^=]*)==/;
-        const highlightRegexMatch = description.match(startsWithHighlightRegex);
-        if (highlightRegexMatch !== null) {
-            const innerHighlightsText = highlightRegexMatch[1];
-            description = innerHighlightsText + description.replace(startsWithHighlightRegex, '');
-        }
+        description = this.replaceFormatting(description, /^==([^=]*)==/);
 
         return description;
     }
