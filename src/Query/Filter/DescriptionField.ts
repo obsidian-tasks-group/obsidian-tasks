@@ -69,12 +69,8 @@ export class DescriptionField extends TextField {
                 innerLinkText.substring(innerLinkText.indexOf('|') + 1) + description.replace(startsWithLinkRegex, '');
         }
 
-        const startsWithItalicOrBoldRegex = /^\*\*?([^*]*)\*/;
-        const italicBoldRegexMatch = description.match(startsWithItalicOrBoldRegex);
-        if (italicBoldRegexMatch !== null) {
-            const innerItalicBoldText = italicBoldRegexMatch[1];
-            description = innerItalicBoldText + description.replace(startsWithItalicOrBoldRegex, '');
-        }
+        description = this.replaceFormatting(description, /^\*\*([^*]*)\*\*/);
+        description = this.replaceFormatting(description, /^\*([^*]*)\*/);
 
         const startsWithHighlightRegex = /^==?([^=]*)==/;
         const highlightRegexMatch = description.match(startsWithHighlightRegex);
@@ -83,6 +79,15 @@ export class DescriptionField extends TextField {
             description = innerHighlightsText + description.replace(startsWithHighlightRegex, '');
         }
 
+        return description;
+    }
+
+    private static replaceFormatting(description: string, startsWithItalicOrBoldRegex: RegExp) {
+        const italicBoldRegexMatch = description.match(startsWithItalicOrBoldRegex);
+        if (italicBoldRegexMatch !== null) {
+            const innerItalicBoldText = italicBoldRegexMatch[1];
+            description = innerItalicBoldText + description.replace(startsWithItalicOrBoldRegex, '');
+        }
         return description;
     }
 }

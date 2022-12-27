@@ -300,6 +300,21 @@ describe('sorting by description', () => {
             );
         });
 
+        // All the strings should be treated as though they contain 'un-format'
+        it.each([
+            '*un-format*',
+            '**un-format**',
+            // '_un-format_',
+            // '__un-format__',
+            // '[[un-format]]',
+            // '[[some-other-file-name|un-format]]',
+            '[un-format]',
+            // '=un-format=',
+            '==un-format==',
+        ])('simple description "%s" is cleaned to "un-format"', (originalDescription: string) => {
+            expect(DescriptionField.cleanDescription(originalDescription)).toStrictEqual('un-format');
+        });
+
         // Each of these pairs of strings is:
         // 1. A task description
         // 2. The result of running that description through the description-cleaning code.
@@ -331,7 +346,7 @@ describe('sorting by description', () => {
             ],
             [
                 '**bold** then ordinary text', // (comment to override formatting)
-                'bold* then ordinary text',
+                'bold then ordinary text',
             ],
             [
                 '*italic* then ordinary text', // (comment to override formatting)
