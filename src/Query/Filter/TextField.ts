@@ -100,7 +100,7 @@ export abstract class TextField extends Field {
      */
     comparator(): Comparator {
         return (a: Task, b: Task) => {
-            return this.value(a).localeCompare(this.value(b));
+            return this.value(a).localeCompare(this.value(b), undefined, { numeric: true });
         };
     }
 }

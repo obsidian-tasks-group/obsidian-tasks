@@ -275,6 +275,10 @@ describe('sorting by description', () => {
         expectTaskComparesBefore(sorter, with_description('AAA'), with_description('bbb'));
         expectTaskComparesBefore(sorter, with_description('aaa'), with_description('BBB'));
         expectTaskComparesBefore(sorter, with_description('aaa'), with_description('AAA'));
+
+        // Sorts text with numbers in correctly
+        expectTaskComparesBefore(sorter, with_description('9 x'), with_description('11 x'));
+        expectTaskComparesBefore(sorter, with_description('x 9'), with_description('x 11'));
     });
 
     it('sort by description reverse', () => {

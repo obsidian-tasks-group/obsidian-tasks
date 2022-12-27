@@ -86,7 +86,7 @@ describe('sorting by heading', () => {
         CustomMatchersForSorting.expectTaskComparesBefore(sorter, with_heading(''), with_heading('Non-empty heading')); // Empty heading comes first
         // Beginning with numbers
         CustomMatchersForSorting.expectTaskComparesBefore(sorter, with_heading('1 Stuff'), with_heading('2 Stuff'));
-        CustomMatchersForSorting.expectTaskComparesBefore(sorter, with_heading('11 Stuff'), with_heading('9 Stuff')); // TODO want 11 to compare after 9
+        CustomMatchersForSorting.expectTaskComparesBefore(sorter, with_heading('9 Stuff'), with_heading('11 Stuff'));
     });
 
     it('sort by heading reverse', () => {

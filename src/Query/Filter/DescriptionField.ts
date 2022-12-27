@@ -43,9 +43,9 @@ export class DescriptionField extends TextField {
      */
     public comparator(): Comparator {
         return (a: Task, b: Task) => {
-            return DescriptionField.cleanDescription(a.description).localeCompare(
-                DescriptionField.cleanDescription(b.description),
-            );
+            const descriptionA = DescriptionField.cleanDescription(a.description);
+            const descriptionB = DescriptionField.cleanDescription(b.description);
+            return descriptionA.localeCompare(descriptionB, undefined, { numeric: true });
         };
     }
 
