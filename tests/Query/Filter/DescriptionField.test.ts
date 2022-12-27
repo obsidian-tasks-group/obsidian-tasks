@@ -352,6 +352,10 @@ describe('sorting by description', () => {
                 '*italic* then ordinary text', // (comment to override formatting)
                 'italic then ordinary text',
             ],
+            [
+                '=un-format= single hyphen is not a valid formatting, so do not remove it', // (comment to override formatting)
+                '=un-format= single hyphen is not a valid formatting, so do not remove it',
+            ],
         ])('description "%s" is cleaned to "%s"', (originalDescription: string, cleanedDescription: string) => {
             expect(DescriptionField.cleanDescription(originalDescription)).toStrictEqual(cleanedDescription);
             expectTaskComparesEqual(
