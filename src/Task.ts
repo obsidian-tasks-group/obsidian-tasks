@@ -1,6 +1,6 @@
 import type { Moment } from 'moment';
 import { LayoutOptions, TaskLayout } from './TaskLayout';
-import type { LayoutComponent } from './TaskLayout';
+import type { TaskLayoutComponent } from './TaskLayout';
 import { Recurrence } from './Recurrence';
 import { getSettings } from './Config/Settings';
 import { Urgency } from './Urgency';
@@ -470,9 +470,9 @@ export class Task {
     }
 
     /**
-     * Renders a specific LayoutComponent of the task (its description, priority, etc) as a string.
+     * Renders a specific TaskLayoutComponent of the task (its description, priority, etc) as a string.
      */
-    public componentToString(layout: TaskLayout, component: LayoutComponent) {
+    public componentToString(layout: TaskLayout, component: TaskLayoutComponent) {
         switch (component) {
             case 'description':
                 return this.description;

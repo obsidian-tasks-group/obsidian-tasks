@@ -16,12 +16,7 @@ export class LayoutOptions {
     explainQuery: boolean = false;
 }
 
-// I was confused as to why this does not include all the values in LayoutOptions.
-// From reading the code, I think the answer is that that it only contains
-// the options that reflect the contents of a rendered Task.
-// If that is correct, I think things would be clearer if this was named something
-// like TaskLayoutComponent
-export type LayoutComponent =
+export type TaskLayoutComponent =
     | 'description'
     | 'priority'
     | 'recurrenceRule'
@@ -37,7 +32,7 @@ export type LayoutComponent =
  * modified by applying {@link LayoutOptions} objects.
  */
 export class TaskLayout {
-    public defaultLayout: LayoutComponent[] = [
+    public defaultLayout: TaskLayoutComponent[] = [
         'description',
         'priority',
         'recurrenceRule',
@@ -47,12 +42,10 @@ export class TaskLayout {
         'doneDate',
         'blockLink',
     ];
-    public layoutComponents: LayoutComponent[];
+    public layoutComponents: TaskLayoutComponent[];
     public options: LayoutOptions;
 
-    constructor(options?: LayoutOptions, components?: LayoutComponent[]) {
-        // Please use {} so the pattern in the code is clear.
-        // Or convert to ternary operator
+    constructor(options?: LayoutOptions, components?: TaskLayoutComponent[]) {
         if (options) {
             this.options = options;
         } else {
@@ -70,32 +63,28 @@ export class TaskLayout {
     /**
      * Return a new list of components with the given options applied.
      */
-    applyOptions(layoutOptions: LayoutOptions): LayoutComponent[] {
-        const arrayRemove = (array: any[], value: any) => {
-            return array.filter((element) => element != value);
+    applyOptions(layoutOptions: LayoutOptions): TaskLayoutComponent[] {
+        // Remove a component from the taskComponents array if the given layoutOption criteria is met
+        const removeIf = (
+            taskComponents: TaskLayoutComponent[],
+            shouldRemove: boolean,
+            componentToRemove: TaskLayoutComponent,
+        ) => {
+            if (shouldRemove) {
+                return taskComponents.filter((element) => element != componentToRemove);
+            } else {
+                return taskComponents;
+            }
         };
-        // The pattern in names here is hard to see, for example to glance and check that
-        // the names are consistent on each line.
+        // Remove components from the layout according to the task options. These represent the existing task options,
+        // so some components (e.g. the description) are not here because there are no layout options to remove them.
         let newComponents = this.layoutComponents;
-        if (layoutOptions.hidePriority) {
-            newComponents = arrayRemove(newComponents, 'priority');
-        }
-        if (layoutOptions.hideRecurrenceRule) {
-            newComponents = arrayRemove(newComponents, 'recurrenceRule');
-        }
-        if (layoutOptions.hideStartDate) {
-            newComponents = arrayRemove(newComponents, 'startDate');
-        }
-        if (layoutOptions.hideScheduledDate) {
-            newComponents = arrayRemove(newComponents, 'scheduledDate');
-        }
-        if (layoutOptions.hideDueDate) {
-            newComponents = arrayRemove(newComponents, 'dueDate');
-        }
-        if (layoutOptions.hideDoneDate) {
-            newComponents = arrayRemove(newComponents, 'doneDate');
-        }
-        // Suggest adding a comment saying why description and blocklink are not in this list
+        newComponents = removeIf(newComponents, layoutOptions.hidePriority, 'priority');
+        newComponents = removeIf(newComponents, layoutOptions.hideRecurrenceRule, 'recurrenceRule');
+        newComponents = removeIf(newComponents, layoutOptions.hideStartDate, 'startDate');
+        newComponents = removeIf(newComponents, layoutOptions.hideScheduledDate, 'scheduledDate');
+        newComponents = removeIf(newComponents, layoutOptions.hideDueDate, 'dueDate');
+        newComponents = removeIf(newComponents, layoutOptions.hideDoneDate, 'doneDate');
         return newComponents;
     }
 }

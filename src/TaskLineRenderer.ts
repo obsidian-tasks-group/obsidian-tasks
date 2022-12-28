@@ -2,7 +2,7 @@ import { Component, MarkdownRenderer } from 'obsidian';
 import type { Moment } from 'moment';
 import type { Task } from './Task';
 import * as taskModule from './Task'; // For my own education: Why import like this? Why taskModule begin with lower case?
-import type { LayoutComponent, LayoutOptions } from './TaskLayout';
+import type { LayoutOptions, TaskLayoutComponent } from './TaskLayout';
 import { TaskLayout } from './TaskLayout';
 import { replaceTaskWithTasks } from './File';
 import { getSettings } from './Config/Settings';
@@ -14,8 +14,6 @@ export type TaskLineRenderDetails = {
     layoutOptions?: LayoutOptions;
     isFilenameUnique?: boolean;
 };
-
-// Does any text in CONTRIBUTING.md need to be updated - it refers to Task.toLi() IIRC
 
 /**
  * The function used to render a Markdown task line into an existing HTML element.
@@ -42,22 +40,15 @@ export async function renderTaskLine(
     const li: HTMLLIElement = document.createElement('li');
     renderDetails.parentUlElement.appendChild(li);
 
-    // Interesting. The following suggests that classList.add() is faster than addClasses()
-    // https://www.measurethat.net/Benchmarks/Show/1720/0/jquery-addclass-vs-classlistadd
     li.classList.add('task-list-item', 'plugin-tasks-list-item');
-
-    // I don't know enough about rendering to know if this a change or not, but
-    // I am looking for things that might be changes in behaviour.
-    // I cannot find any reference to 'span' in the original code when I search for
-    // 6ad76001c2e0e9361219196c6809cf9094800081.
-    // Bit worried that this might break user CSS filters???
 
     const textSpan = document.createElement('span');
     li.appendChild(textSpan);
     textSpan.classList.add('tasks-list-text');
     await taskToHtml(task, renderDetails, textSpan, textRenderer);
 
-    // Am curious the benefits of these two lines over the previous 'const checkbox = li.createEl('input');'
+    // NOTE: this area is mentioned in `CONTRIBUTING.md` under "How does Tasks handle status changes". When
+    // moving the code, remember to update that reference too.
     const checkbox = document.createElement('input');
     li.appendChild(checkbox);
     checkbox.classList.add('task-list-item-checkbox');
@@ -67,8 +58,7 @@ export async function renderTaskLine(
         checkbox.checked = true;
         li.classList.add('is-checked');
     }
-    // Is this a change in implementation?
-    // The previous code said 'checkbox.onClickEvent((event: MouseEvent) => {'
+
     checkbox.addEventListener('click', (event: MouseEvent) => {
         event.preventDefault();
         // It is required to stop propagation so that obsidian won't write the file with the
@@ -120,7 +110,7 @@ async function taskToHtml(
 async function renderComponentText(
     span: HTMLSpanElement,
     componentString: string,
-    component: LayoutComponent,
+    component: TaskLayoutComponent,
     task: Task,
     textRenderer: TextRenderer,
 ) {

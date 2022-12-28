@@ -88,97 +88,97 @@ describe('task line rendering', () => {
         resetSettings();
     });
 
-    it('renders task components according to the given layout', async () => {
-        // Suggest moving testLayoutOptions outside this test, to just before  it('renders task components a...
-        // That way, things like the [example below with invalid data] can be done.
-        // Gives an
-        const testLayoutOptions = async (
-            taskLine: string,
-            layoutOptions: Partial<LayoutOptions>,
-            expectedRender: string,
-        ) => {
-            const task = fromLine({
-                line: taskLine,
-            });
-            const fullLayoutOptions = { ...new LayoutOptions(), ...layoutOptions };
-            const parentRender = await createMockParentAndRender(task, fullLayoutOptions);
-            const renderedDescription = getDescriptionText(parentRender);
-            expect(renderedDescription).toEqual(expectedRender);
-            // When this fails, there is no information about the location of the failure
-            /*
-                at /Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/tests/TaskLineRenderer.test.ts:103:41
-                at Generator.next (<anonymous>)
-                at fulfilled (/Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/node_modules/tslib/tslib.js:115:62)
-                at processTicksAndRejections (node:internal/process/task_queues:96:5)
-             */
-        };
+    const testLayoutOptions = async (
+        taskLine: string,
+        layoutOptions: Partial<LayoutOptions>,
+        expectedRender: string,
+    ) => {
+        const task = fromLine({
+            line: taskLine,
+        });
+        const fullLayoutOptions = { ...new LayoutOptions(), ...layoutOptions };
+        const parentRender = await createMockParentAndRender(task, fullLayoutOptions);
+        const renderedDescription = getDescriptionText(parentRender);
+        expect(renderedDescription).toEqual(expectedRender);
+    };
 
-        // Tests can be made more robust by removing duplication in the date.
-        // For example, if someone broke the rendering of due date and made it write
-        // scheduled date instead, these tests would still pass.
-        // Suggest using different values for each of the dates in the initial task.
-        const taskLine = '- [ ] Wobble ⏫ 📅 2022-07-02 ⏳ 2022-07-02 🛫 2022-07-02 🔁 every day';
-
-        // Test the default layout
-        await testLayoutOptions(taskLine, {}, 'Wobble ⏫ 🔁 every day 🛫 2022-07-02 ⏳ 2022-07-02 📅 2022-07-02');
-
-        // Without priority
+    it('renders correctly with the default layout options', async () => {
         await testLayoutOptions(
-            taskLine,
-            { hidePriority: true },
-            'Wobble 🔁 every day 🛫 2022-07-02 ⏳ 2022-07-02 📅 2022-07-02',
-        );
-
-        // Without start date
-        await testLayoutOptions(
-            taskLine,
-            { hideStartDate: true },
-            'Wobble ⏫ 🔁 every day ⏳ 2022-07-02 📅 2022-07-02',
-        );
-
-        // Without scheduled date
-        await testLayoutOptions(
-            taskLine,
-            { hideScheduledDate: true },
-            'Wobble ⏫ 🔁 every day 🛫 2022-07-02 📅 2022-07-02',
-        );
-
-        // Without due date
-        await testLayoutOptions(taskLine, { hideDueDate: true }, 'Wobble ⏫ 🔁 every day 🛫 2022-07-02 ⏳ 2022-07-02');
-
-        // Without recurrence rule
-        await testLayoutOptions(
-            taskLine,
-            { hideRecurrenceRule: true },
-            'Wobble ⏫ 🛫 2022-07-02 ⏳ 2022-07-02 📅 2022-07-02',
-        );
-
-        const doneTask = '- [x] Wobble ✅ 2022-07-02 ⏫ 📅 2022-07-02 ⏳ 2022-07-02 🛫 2022-07-02 🔁 every day';
-
-        // Done task - default layout
-        await testLayoutOptions(
-            doneTask,
+            '- [ ] Full task ⏫ 📅 2022-07-02 ⏳ 2022-07-03 🛫 2022-07-04 🔁 every day',
             {},
-            'Wobble ⏫ 🔁 every day 🛫 2022-07-02 ⏳ 2022-07-02 📅 2022-07-02 ✅ 2022-07-02',
+            'Full task ⏫ 🔁 every day 🛫 2022-07-04 ⏳ 2022-07-03 📅 2022-07-02',
         );
+    });
 
-        // Done task - without done date
+    it('renders without priority', async () => {
         await testLayoutOptions(
-            doneTask,
-            { hideDoneDate: true },
-            'Wobble ⏫ 🔁 every day 🛫 2022-07-02 ⏳ 2022-07-02 📅 2022-07-02',
+            '- [ ] Full task ⏫ 📅 2022-07-02 ⏳ 2022-07-03 🛫 2022-07-04 🔁 every day',
+            { hidePriority: true },
+            'Full task 🔁 every day 🛫 2022-07-04 ⏳ 2022-07-03 📅 2022-07-02',
         );
     });
 
-    /*
-    it('should write placeholder message if a date is invalid', async () => {
-        const taskLine = '- [ ] Task with invalid due date 📅 2023-13-02';
-        await testLayoutOptions(taskLine, {}, 'Task with invalid due date 📅 Invalid date');
+    it('renders without start date', async () => {
+        await testLayoutOptions(
+            '- [ ] Full task ⏫ 📅 2022-07-02 ⏳ 2022-07-03 🛫 2022-07-04 🔁 every day',
+            { hideStartDate: true },
+            'Full task ⏫ 🔁 every day ⏳ 2022-07-03 📅 2022-07-02',
+        );
     });
 
-    it('should standardise the recurrence rule, even if the rule is invalid', async () => {
-        const taskLine = '- [ ] Task with invalid recurrence rule 🔁 every month on the 32nd';
-        await testLayoutOptions(taskLine, {}, 'Task with invalid recurrence rule 🔁 every month on the 32th');
+    it('renders without scheduled date', async () => {
+        await testLayoutOptions(
+            '- [ ] Full task ⏫ 📅 2022-07-02 ⏳ 2022-07-03 🛫 2022-07-04 🔁 every day',
+            { hideScheduledDate: true },
+            'Full task ⏫ 🔁 every day 🛫 2022-07-04 📅 2022-07-02',
+        );
     });
-    */
+
+    it('renders without due date', async () => {
+        await testLayoutOptions(
+            '- [ ] Full task ⏫ 📅 2022-07-02 ⏳ 2022-07-03 🛫 2022-07-04 🔁 every day',
+            { hideDueDate: true },
+            'Full task ⏫ 🔁 every day 🛫 2022-07-04 ⏳ 2022-07-03',
+        );
+    });
+
+    it('renders without recurrence rule', async () => {
+        await testLayoutOptions(
+            '- [ ] Full task ⏫ 📅 2022-07-02 ⏳ 2022-07-03 🛫 2022-07-04 🔁 every day',
+            { hideRecurrenceRule: true },
+            'Full task ⏫ 🛫 2022-07-04 ⏳ 2022-07-03 📅 2022-07-02',
+        );
+    });
+
+    it('renders a done task correctly with the default layout', async () => {
+        await testLayoutOptions(
+            '- [x] Full task ✅ 2022-07-05 ⏫ 📅 2022-07-02 ⏳ 2022-07-03 🛫 2022-07-04 🔁 every day',
+            {},
+            'Full task ⏫ 🔁 every day 🛫 2022-07-04 ⏳ 2022-07-03 📅 2022-07-02 ✅ 2022-07-05',
+        );
+    });
+
+    it('renders a done task without the done date', async () => {
+        await testLayoutOptions(
+            '- [x] Full task ✅ 2022-07-05 ⏫ 📅 2022-07-02 ⏳ 2022-07-03 🛫 2022-07-04 🔁 every day',
+            { hideDoneDate: true },
+            'Full task ⏫ 🔁 every day 🛫 2022-07-04 ⏳ 2022-07-03 📅 2022-07-02',
+        );
+    });
+
+    it('writes a placeholder message if a date is invalid', async () => {
+        await testLayoutOptions(
+            '- [ ] Task with invalid due date 📅 2023-13-02',
+            {},
+            'Task with invalid due date 📅 Invalid date',
+        );
+    });
+
+    it('standardise the recurrence rule, even if the rule is invalid', async () => {
+        await testLayoutOptions(
+            '- [ ] Task with invalid recurrence rule 🔁 every month on the 32nd',
+            {},
+            'Task with invalid recurrence rule 🔁 every month on the 32th',
+        );
+    });
 });
