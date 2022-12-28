@@ -1,7 +1,7 @@
 import { Component, MarkdownRenderer } from 'obsidian';
 import type { Moment } from 'moment';
 import type { Task } from './Task';
-import * as taskModule from './Task'; // For my own education: Why import like this? Why taskModule begin with lower case?
+import * as taskModule from './Task';
 import type { LayoutOptions, TaskLayoutComponent } from './TaskLayout';
 import { TaskLayout } from './TaskLayout';
 import { replaceTaskWithTasks } from './File';
@@ -42,6 +42,12 @@ export async function renderTaskLine(
 
     li.classList.add('task-list-item', 'plugin-tasks-list-item');
 
+    // Maintenance note:
+    //  We don't use the Obsidian convenience function li.createEl() here, because we don't have it available
+    //  when running tests, and we want the tests to be able to create the full div and span structure,
+    //  so had to convert all of these to the equivalent but more elaborate document.createElement() and
+    //  appendChild() calls.
+
     const textSpan = document.createElement('span');
     li.appendChild(textSpan);
     textSpan.classList.add('tasks-list-text');
@@ -53,7 +59,6 @@ export async function renderTaskLine(
     li.appendChild(checkbox);
     checkbox.classList.add('task-list-item-checkbox');
     checkbox.type = 'checkbox';
-    // What is taskModule?
     if (task.status !== taskModule.Status.TODO) {
         checkbox.checked = true;
         li.classList.add('is-checked');
