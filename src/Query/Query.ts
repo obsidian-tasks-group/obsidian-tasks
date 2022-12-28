@@ -1,4 +1,4 @@
-import { LayoutOptions } from '../LayoutOptions';
+import { LayoutOptions } from '../TaskLayout';
 import type { Task } from '../Task';
 import type { IQuery } from '../IQuery';
 import { getSettings } from '../Config/Settings';

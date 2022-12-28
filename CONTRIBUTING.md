@@ -445,7 +445,7 @@ You can toggle a task‘s status by:
 The code is located as follows:
 
 - For 1.: `./src/Commands/ToggleDone.ts`
-- Numbers 2. and 4. use a checkbox created by `Task.toLi()`. There, the checkbox gets a click event handler.
+- Numbers 2. and 4. use a checkbox created by `TaskLineRenderer.renderTaskLine`. There, the checkbox gets a click event handler.
 - For 3.: `./src/LivePreviewExtension.ts`
 
 Toggle behavior:
