@@ -221,7 +221,7 @@ class QueryRenderChild extends MarkdownRenderChild {
         return { taskList, tasksCount };
     }
 
-    private addEditButton(listItem: HTMLLIElement, task: Task) {
+    private addEditButton(listItem: HTMLElement, task: Task) {
         const editTaskPencil = listItem.createEl('a', {
             cls: 'tasks-edit',
         });
@@ -245,7 +245,7 @@ class QueryRenderChild extends MarkdownRenderChild {
         });
     }
 
-    private addUrgency(listItem: HTMLLIElement, task: Task) {
+    private addUrgency(listItem: HTMLElement, task: Task) {
         const text = new Intl.NumberFormat().format(task.urgency);
         listItem.createSpan({ text, cls: 'tasks-urgency' });
     }
@@ -285,12 +285,7 @@ class QueryRenderChild extends MarkdownRenderChild {
         await MarkdownRenderer.renderMarkdown(group.name, header, this.filePath, this);
     }
 
-    private addBacklinks(
-        listItem: HTMLLIElement,
-        task: Task,
-        shortMode: boolean,
-        isFilenameUnique: boolean | undefined,
-    ) {
+    private addBacklinks(listItem: HTMLElement, task: Task, shortMode: boolean, isFilenameUnique: boolean | undefined) {
         const backLink = listItem.createSpan({ cls: 'tasks-backlink' });
 
         if (!shortMode) {
