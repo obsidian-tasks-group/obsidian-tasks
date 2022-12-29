@@ -104,7 +104,7 @@ export class TaskRegularExpressions {
     public static readonly doneDateRegex = /✅ *(\d{4}-\d{2}-\d{2})$/u;
     public static readonly recurrenceRegex = /🔁 ?([a-zA-Z0-9, !]+)$/iu;
 
-    // Regex to match all hash tags, basically hash followed by anything but the characters in the negation.
+    // Create a regex to match all hash tags, basically hash followed by anything but the characters in the negation.
     // To ensure URLs are not caught it is looking of beginning of string tag and any
     // tag that has a space in front of it. Any # that has a character in front
     // of it will be ignored.
@@ -117,12 +117,9 @@ export class TaskRegularExpressions {
     );
     public static readonly hashTags = new RegExp(
         '(^|\\s)#' +
-            TaskRegularExpressions.hashTagsValidChars.source +
-            '*' +
-            TaskRegularExpressions.hashTagsValidCharsExceptDigits.source +
-            '+' +
-            TaskRegularExpressions.hashTagsValidChars.source +
-            '*',
+            (TaskRegularExpressions.hashTagsValidChars.source + '*') + //               Any number of valid tag characters
+            (TaskRegularExpressions.hashTagsValidCharsExceptDigits.source + '+') + //   At least 1 valid non-digit character - to prevent all-digit and empty tags
+            (TaskRegularExpressions.hashTagsValidChars.source + '*'), //                Any number of valid tag characters
         'g',
     );
     public static readonly hashTagsFromEnd = new RegExp(this.hashTags.source + '$');
