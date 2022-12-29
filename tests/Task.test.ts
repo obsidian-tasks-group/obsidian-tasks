@@ -376,7 +376,7 @@ describe('parsing tags', () => {
         {
             markdownTask: '- [ ] digit-only tag values are ignored by Obsidian so should be ignored by Tasks #1234',
             expectedDescription: 'digit-only tag values are ignored by Obsidian so should be ignored by Tasks #1234',
-            extractedTags: ['#1234'], // This is wrong: it should be empty as number-only tags are not valid
+            extractedTags: [],
             globalFilter: '',
         },
         {
