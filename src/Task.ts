@@ -115,10 +115,11 @@ export class TaskRegularExpressions {
     public static readonly hashTagsInvalidChars = /[^ !@#$%^&*()[\],.?":;{}|<>]/;
     public static readonly hashTags = new RegExp(
         '(^|\\s)#' +
-            '[^ !@#$%^&*()[\\],.?":;{}|<>]' +
+            TaskRegularExpressions.hashTagsInvalidChars.source +
             '*' +
             '[^ !@#$%^&*()[\\],.?":;{}|<>0-9]+' +
-            '[^ !@#$%^&*()[\\],.?":;{}|<>]*',
+            TaskRegularExpressions.hashTagsInvalidChars.source +
+            '*',
         'g',
     );
     public static readonly hashTagsFromEnd = new RegExp(this.hashTags.source + '$');
