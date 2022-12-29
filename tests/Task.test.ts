@@ -374,6 +374,36 @@ describe('parsing tags', () => {
             globalFilter: '',
         },
         {
+            markdownTask: '- [ ] digit-only tag values are ignored by Obsidian so should be ignored by Tasks #1234',
+            expectedDescription: 'digit-only tag values are ignored by Obsidian so should be ignored by Tasks #1234',
+            extractedTags: ['#1234'], // This is wrong: it should be empty as number-only tags are not valid
+            globalFilter: '',
+        },
+        {
+            markdownTask: '- [ ] <mark style="background: #FFF3A3A6;">Make phone call 10:50 today</mark>',
+            expectedDescription: '<mark style="background: #FFF3A3A6;">Make phone call 10:50 today</mark>',
+            extractedTags: ['#FFF3A3A6;'], // This is wrong: a) semi-colon not in tag, b)should be empty as "tag" is in markdown formatting
+            globalFilter: '',
+        },
+        {
+            markdownTask: '- [ ] Should realise that section links are not tags [[Article#Section]]',
+            expectedDescription: 'Should realise that section links are not tags [[Article#Section]]',
+            extractedTags: [],
+            globalFilter: '',
+        },
+        {
+            markdownTask: '- [ ] Extracted tag should not include `]` [some hyperlink #abcdef](https://google.co.uk)',
+            expectedDescription: 'Extracted tag should not include `]` [some hyperlink #abcdef](https://google.co.uk)',
+            extractedTags: ['#abcdef]'], // Tag should not include ]
+            globalFilter: '',
+        },
+        {
+            markdownTask: '- [ ] Should not find zero-length tags #.',
+            expectedDescription: 'Should not find zero-length tags #.',
+            extractedTags: ['#'], // No tag should be found, as there is no valid character after the hash symbol.
+            globalFilter: '',
+        },
+        {
             markdownTask: '> - [ ] Task inside a blockquote or callout #tagone',
             expectedDescription: 'Task inside a blockquote or callout #tagone',
             extractedTags: ['#tagone'],
