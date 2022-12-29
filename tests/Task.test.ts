@@ -382,7 +382,7 @@ describe('parsing tags', () => {
         {
             markdownTask: '- [ ] <mark style="background: #FFF3A3A6;">Make phone call 10:50 today</mark>',
             expectedDescription: '<mark style="background: #FFF3A3A6;">Make phone call 10:50 today</mark>',
-            extractedTags: ['#FFF3A3A6;'], // This is wrong: a) semi-colon not in tag, b)should be empty as "tag" is in markdown formatting
+            extractedTags: ['#FFF3A3A6'], // This is wrong: should be empty as "tag" is in markdown formatting
             globalFilter: '',
         },
         {
