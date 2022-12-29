@@ -3,7 +3,7 @@
  */
 import moment from 'moment';
 import type { Moment } from 'moment';
-import { Priority, Status, Task } from '../src/Task';
+import { Priority, Status, Task, TaskRegularExpressions } from '../src/Task';
 import { resetSettings, updateSettings } from '../src/Config/Settings';
 import { fromLine } from './TestHelpers';
 import { TaskBuilder } from './TestingTools/TaskBuilder';
@@ -797,6 +797,13 @@ describe('toggle done', () => {
             nextStart: '2022-02-28',
         },
     ];
+
+    it('Temporary test of hashTags source', () => {
+        expect(TaskRegularExpressions.hashTags.source).toMatchInlineSnapshot(
+            '"(^|\\s)#[^ !@#$%^&*()[\\],.?":;{}|<>]*[^ !@#$%^&*()[\\],.?":;{}|<>0-9]+[^ !@#$%^&*()[\\],.?":;{}|<>]*"',
+        );
+        expect(TaskRegularExpressions.hashTags.flags).toMatchInlineSnapshot('"g"');
+    });
 
     test.concurrent.each<RecurrenceCase>(recurrenceCases)(
         'recurs correctly (%j)',
