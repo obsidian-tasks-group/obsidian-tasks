@@ -111,15 +111,17 @@ export class TaskRegularExpressions {
     // EXAMPLE:
     // description: '#dog #car http://www/ddd#ere #house'
     // matches: #dog, #car, #house
-    public static readonly hashTagsInvalidChars = /[^ !@#$%^&*()[\],.?":;{}|<>]/;
+    public static readonly hashTagsValidChars = /[^ !@#$%^&*()[\],.?":;{}|<>]/;
+    public static readonly hashTagsValidCharsExceptDigits = new RegExp(
+        TaskRegularExpressions.hashTagsValidChars.source.slice(0, -1) + '0-9]',
+    );
     public static readonly hashTags = new RegExp(
         '(^|\\s)#' +
-            TaskRegularExpressions.hashTagsInvalidChars.source +
+            TaskRegularExpressions.hashTagsValidChars.source +
             '*' +
-            TaskRegularExpressions.hashTagsInvalidChars.source.slice(0, -1) +
-            '0-9]' +
+            TaskRegularExpressions.hashTagsValidCharsExceptDigits.source +
             '+' +
-            TaskRegularExpressions.hashTagsInvalidChars.source +
+            TaskRegularExpressions.hashTagsValidChars.source +
             '*',
         'g',
     );
