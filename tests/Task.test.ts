@@ -392,9 +392,15 @@ describe('parsing tags', () => {
             globalFilter: '',
         },
         {
+            markdownTask: '- [ ] Extracted tag should not include `[` #abcdef[',
+            expectedDescription: 'Extracted tag should not include `[` #abcdef[',
+            extractedTags: ['#abcdef'],
+            globalFilter: '',
+        },
+        {
             markdownTask: '- [ ] Extracted tag should not include `]` [some hyperlink #abcdef](https://google.co.uk)',
             expectedDescription: 'Extracted tag should not include `]` [some hyperlink #abcdef](https://google.co.uk)',
-            extractedTags: ['#abcdef]'], // Tag should not include ]
+            extractedTags: ['#abcdef'],
             globalFilter: '',
         },
         {
