@@ -111,13 +111,14 @@ export class TaskRegularExpressions {
     // EXAMPLE:
     // description: '#dog #car http://www/ddd#ere #house'
     // matches: #dog, #car, #house
-    // TODO Remove the repetition in this expression:
     public static readonly hashTagsInvalidChars = /[^ !@#$%^&*()[\],.?":;{}|<>]/;
     public static readonly hashTags = new RegExp(
         '(^|\\s)#' +
             TaskRegularExpressions.hashTagsInvalidChars.source +
             '*' +
-            '[^ !@#$%^&*()[\\],.?":;{}|<>0-9]+' +
+            TaskRegularExpressions.hashTagsInvalidChars.source.slice(0, -1) +
+            '0-9]' +
+            '+' +
             TaskRegularExpressions.hashTagsInvalidChars.source +
             '*',
         'g',
