@@ -112,8 +112,10 @@ export class TaskRegularExpressions {
     // description: '#dog #car http://www/ddd#ere #house'
     // matches: #dog, #car, #house
     // TODO Remove the repetition in this expression:
-    public static readonly hashTags =
-        /(^|\s)#[^ !@#$%^&*()[\],.?":;{}|<>]*[^ !@#$%^&*()[\],.?":;{}|<>0-9]+[^ !@#$%^&*()[\],.?":;{}|<>]*/g;
+    public static readonly hashTags = new RegExp(
+        '(^|\\s)#[^ !@#$%^&*()[\\],.?":;{}|<>]*[^ !@#$%^&*()[\\],.?":;{}|<>0-9]+[^ !@#$%^&*()[\\],.?":;{}|<>]*',
+        'g',
+    );
     public static readonly hashTagsFromEnd = new RegExp(this.hashTags.source + '$');
 }
 
