@@ -406,7 +406,7 @@ describe('parsing tags', () => {
         {
             markdownTask: '- [ ] Should not find zero-length tags #.',
             expectedDescription: 'Should not find zero-length tags #.',
-            extractedTags: ['#'], // No tag should be found, as there is no valid character after the hash symbol.
+            extractedTags: [],
             globalFilter: '',
         },
         {

@@ -111,7 +111,7 @@ export class TaskRegularExpressions {
     // EXAMPLE:
     // description: '#dog #car http://www/ddd#ere #house'
     // matches: #dog, #car, #house
-    public static readonly hashTags = /(^|\s)#[^ !@#$%^&*()[\],.?":;{}|<>]*/g;
+    public static readonly hashTags = /(^|\s)#[^ !@#$%^&*()[\],.?":;{}|<>]+/g;
     public static readonly hashTagsFromEnd = new RegExp(this.hashTags.source + '$');
 }
 
