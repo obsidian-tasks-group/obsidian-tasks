@@ -1,4 +1,5 @@
-import { Status, Task } from '../../src/Task';
+import type { Task } from '../../src/Task';
+import { Status } from '../../src/Status';
 import { TaskBuilder } from './TaskBuilder';
 
 export {};

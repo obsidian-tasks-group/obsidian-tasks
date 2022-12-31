@@ -1,4 +1,5 @@
-import { Priority, Status, Task, TaskRegularExpressions } from '../Task';
+import { Status } from '../Status';
+import { Priority, Task, TaskRegularExpressions } from '../Task';
 import { DateFallback } from '../DateFallback';
 
 /**
