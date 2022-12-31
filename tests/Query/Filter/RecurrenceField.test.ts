@@ -7,7 +7,6 @@ import { RecurrenceField } from '../../../src/Query/Filter/RecurrenceField';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { toMatchTask } from '../../CustomMatchers/CustomMatchersForFilters';
 import { RecurrenceBuilder } from '../../TestingTools/RecurrenceBuilder';
-import { fromLine } from '../../TestHelpers';
 
 window.moment = moment;
 
@@ -24,7 +23,7 @@ describe('recurrence', () => {
 
     it('value', () => {
         const field = new RecurrenceField();
-        expect(field.value(fromLine({ line: '- [ ] I do not have a recurrence rule' }))).toStrictEqual('');
+        expect(field.value(new TaskBuilder().build())).toStrictEqual('');
         expect(field.value(with_recurrence('every Sunday when done'))).toStrictEqual('every week on Sunday when done');
     });
 
