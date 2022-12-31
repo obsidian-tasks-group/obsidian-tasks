@@ -16,6 +16,10 @@ expect.extend({
 });
 
 describe('recurrence', () => {
+    // Note: We don't need to check all behaviours that are implemented in the base class.
+    // These are minimal tests to confirm that the filters are correctly wired up,
+    // to guard against possible future coding errors.
+
     // Easy construction of Tasks with given rule text
     function with_recurrence(ruleText: string) {
         const recurrence = new RecurrenceBuilder().rule(ruleText).startDate('2022-07-14').build();
@@ -50,5 +54,29 @@ describe('recurrence', () => {
         expect(filter).toMatchTask(new TaskBuilder().build());
         expect(filter).toMatchTask(with_recurrence('every week on Sunday'));
         expect(filter).not.toMatchTask(with_recurrence('every 10 days when done'));
+    });
+
+    it('by recurrence (regex matches)', () => {
+        // Arrange
+        const filter = new RecurrenceField().createFilterOrErrorMessage(String.raw`recurrence regex matches /\d/`); // any digit present
+
+        // Assert
+        expect(filter).toBeValid();
+        expect(filter).toMatchTask(with_recurrence('every month on the 31st'));
+        expect(filter).not.toMatchTask(new TaskBuilder().build());
+        expect(filter).not.toMatchTask(with_recurrence('every month on the last'));
+    });
+
+    it('by recurrence (regex does not match)', () => {
+        // Arrange
+        const filter = new RecurrenceField().createFilterOrErrorMessage(
+            String.raw`recurrence regex does not match /\d/`, // no digit present
+        );
+
+        // Assert
+        expect(filter).toBeValid();
+        expect(filter).not.toMatchTask(with_recurrence('every month on the 31st'));
+        expect(filter).toMatchTask(new TaskBuilder().build());
+        expect(filter).toMatchTask(with_recurrence('every month on the last'));
     });
 });
