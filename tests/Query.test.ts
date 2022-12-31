@@ -57,6 +57,8 @@ describe('Query parsing', () => {
         'priority is low',
         'priority is medium',
         'priority is none',
+        'recurrence does not include wednesday',
+        'recurrence includes wednesday',
         'scheduled after 2021-12-27',
         'scheduled before 2021-12-27',
         'scheduled date is invalid',
