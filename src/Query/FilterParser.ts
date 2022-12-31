@@ -14,6 +14,7 @@ import { TagsField } from './Filter/TagsField';
 import { BooleanField } from './Filter/BooleanField';
 import { FilenameField } from './Filter/FilenameField';
 import { UrgencyField } from './Filter/UrgencyField';
+import { RecurrenceField } from './Filter/RecurrenceField';
 
 import type { FilterOrErrorMessage } from './Filter/Filter';
 import type { Sorter } from './Sorter';
@@ -35,6 +36,7 @@ const fieldCreators = [
     () => new BooleanField(),
     () => new FilenameField(),
     () => new UrgencyField(),
+    () => new RecurrenceField(),
 ];
 
 export function parseFilter(filterString: string): FilterOrErrorMessage | null {

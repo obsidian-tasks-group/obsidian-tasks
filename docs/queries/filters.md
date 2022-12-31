@@ -246,6 +246,15 @@ For more information, see [Priorities]({{ site.baseurl }}{% link getting-started
 
 - `is recurring`
 - `is not recurring`
+- `recurrence (includes|does not include) <part of recurrence rule>`
+  - Matches case-insensitive (disregards capitalization).
+  - Note that the text searched is generated programmatically and standardised, and so may not exactly match the text in any manually typed tasks. For example, a task with `🔁 every Sunday` will be searched as `every week on Sunday`.
+  - The easiest way to see the standardised recurrence rule of your tasks is to use `group by recurrence`, and review the resulting group headings.
+- `recurrence (regex matches|regex does not match) /<JavaScript-style Regex>/`
+  - Does regular expression match (case-sensitive by default).
+  - Essential reading: [Regular Expression Searches]({{ site.baseurl }}{% link queries/regular-expressions.md %}).
+
+> `recurrence` text searching was introduced in Tasks 1.22.0.
 
 ### Status
 
