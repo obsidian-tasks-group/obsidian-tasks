@@ -16,12 +16,16 @@ expect.extend({
 });
 
 describe('recurrence', () => {
+    // Easy construction of Tasks with given rule text
+    function with_recurrence(ruleText: string) {
+        const recurrence = new RecurrenceBuilder().rule(ruleText).startDate('2022-07-14').build();
+        return new TaskBuilder().recurrence(recurrence).build();
+    }
+
     it('value', () => {
         const field = new RecurrenceField();
         expect(field.value(fromLine({ line: '- [ ] I do not have a recurrence rule' }))).toStrictEqual('');
-        expect(field.value(fromLine({ line: '- [ ] a 🔁 every Sunday when done' }))).toStrictEqual(
-            'every week on Sunday when done',
-        );
+        expect(field.value(with_recurrence('every Sunday when done'))).toStrictEqual('every week on Sunday when done');
     });
 
     it('by recurrence (includes)', () => {
@@ -29,8 +33,6 @@ describe('recurrence', () => {
         const filter = new RecurrenceField().createFilterOrErrorMessage('recurrence includes wednesday');
 
         // Assert
-        const recurrence = new RecurrenceBuilder().rule('every Wednesday').startDate('2022-07-14').build();
-        const task = new TaskBuilder().recurrence(recurrence).build();
-        expect(filter).toMatchTask(task);
+        expect(filter).toMatchTask(with_recurrence('every Wednesday'));
     });
 });
