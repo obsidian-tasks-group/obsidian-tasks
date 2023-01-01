@@ -269,8 +269,7 @@ export class Task {
         const indentation = regexMatch[1];
         const listMarker = regexMatch[2];
 
-        // Get the status of the task, only todo and done supported.
-        // But custom ones are retained and displayed as-is.
+        // Get the status of the task.
         const statusString = regexMatch[3];
         let status = StatusRegistry.getInstance().byIndicator(statusString);
         if (status === Status.EMPTY) {
