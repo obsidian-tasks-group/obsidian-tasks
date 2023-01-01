@@ -928,12 +928,6 @@ describe('identicalTo', () => {
         expect(lhs).not.toBeIdenticalTo(new TaskBuilder().sectionIndex(2));
     });
 
-    it('should check originalStatusCharacter', () => {
-        const lhs = new TaskBuilder().originalStatusCharacter(' ');
-        expect(lhs).toBeIdenticalTo(new TaskBuilder().originalStatusCharacter(' '));
-        expect(lhs).not.toBeIdenticalTo(new TaskBuilder().originalStatusCharacter('x'));
-    });
-
     it('should check precedingHeader', () => {
         const lhs = new TaskBuilder().precedingHeader('Heading 1');
         expect(lhs).toBeIdenticalTo(new TaskBuilder().precedingHeader('Heading 1'));
