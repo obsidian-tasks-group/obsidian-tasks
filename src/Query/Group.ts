@@ -188,7 +188,7 @@ export class Group {
     }
 
     private static groupByStatus(task: Task): string[] {
-        return [task.status];
+        return [task.status.name];
     }
 
     private static groupByHeading(task: Task): string[] {
