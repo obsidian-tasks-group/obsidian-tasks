@@ -467,7 +467,9 @@ describe('toggle done', () => {
         const task: Task = fromLine({
             line,
         }) as Task;
-        const toggled: Task = task.toggle()[0];
+        const tasks = task.toggle();
+        expect(tasks.length).toEqual(1);
+        const toggled: Task = tasks[0];
 
         // Assert
         expect(toggled).not.toBeNull();
@@ -485,7 +487,9 @@ describe('toggle done', () => {
         const task: Task = fromLine({
             line,
         }) as Task;
-        const toggled: Task = task.toggle()[0];
+        const tasks = task.toggle();
+        expect(tasks.length).toEqual(1);
+        const toggled: Task = tasks[0];
 
         // Assert
         expect(toggled).not.toBeNull();
@@ -788,7 +792,9 @@ describe('toggle done', () => {
                 line,
             });
 
-            const nextTask: Task = task!.toggle()[0];
+            const tasks = task!.toggle();
+            expect(tasks.length).toEqual(2);
+            const nextTask: Task = tasks[0];
 
             expect({
                 nextDue: nextTask.dueDate?.format('YYYY-MM-DD'),
@@ -823,7 +829,9 @@ describe('toggle done', () => {
         expect(task!.dueDate).not.toBeNull();
         expect(task!.dueDate!.isSame(moment('2021-09-12', 'YYYY-MM-DD'))).toStrictEqual(true);
 
-        const nextTask: Task = task!.toggle()[0];
+        const tasks = task!.toggle();
+        expect(tasks.length).toEqual(2);
+        const nextTask: Task = tasks[0];
         expect({
             nextDue: nextTask.dueDate?.format('YYYY-MM-DD'),
             nextScheduled: nextTask.scheduledDate?.format('YYYY-MM-DD'),
