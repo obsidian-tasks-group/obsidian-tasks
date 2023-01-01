@@ -124,11 +124,6 @@ export class Task {
     public readonly sectionStart: number;
     /** The index of the nth task in its section. */
     public readonly sectionIndex: number;
-    /**
-     * The original character from within `[]` in the document.
-     * Required to be added to the LI the same way obsidian does as a `data-task` attribute.
-     */
-    public readonly originalStatusCharacter: string;
     public readonly precedingHeader: string | null;
 
     public readonly tags: string[];
@@ -162,7 +157,6 @@ export class Task {
         listMarker,
         sectionStart,
         sectionIndex,
-        originalStatusCharacter,
         precedingHeader,
         priority,
         startDate,
@@ -182,7 +176,6 @@ export class Task {
         listMarker: string;
         sectionStart: number;
         sectionIndex: number;
-        originalStatusCharacter: string;
         precedingHeader: string | null;
         priority: Priority;
         startDate: moment.Moment | null;
@@ -202,7 +195,6 @@ export class Task {
         this.listMarker = listMarker;
         this.sectionStart = sectionStart;
         this.sectionIndex = sectionIndex;
-        this.originalStatusCharacter = originalStatusCharacter;
         this.precedingHeader = precedingHeader;
 
         this.tags = tags;
@@ -417,7 +409,6 @@ export class Task {
             listMarker,
             sectionStart,
             sectionIndex,
-            originalStatusCharacter: statusString,
             precedingHeader,
             priority,
             startDate,
@@ -513,7 +504,7 @@ export class Task {
      * @memberof Task
      */
     public toFileLineString(): string {
-        return `${this.indentation}${this.listMarker} [${this.originalStatusCharacter}] ${this.toString()}`;
+        return `${this.indentation}${this.listMarker} [${this.status.indicator}] ${this.toString()}`;
     }
 
     /**
@@ -552,7 +543,6 @@ export class Task {
             ...this,
             status: newStatus,
             doneDate: newDoneDate,
-            originalStatusCharacter: newStatus.indicator,
         });
 
         const newTasks: Task[] = [];
@@ -669,7 +659,6 @@ export class Task {
             'listMarker',
             'sectionStart',
             'sectionIndex',
-            'originalStatusCharacter',
             'precedingHeader',
             'priority',
             'blockLink',
