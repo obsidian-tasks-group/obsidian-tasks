@@ -164,6 +164,10 @@ describe('ToggleDone', () => {
     });
 
     describe('should honour next status character', () => {
+        afterEach(() => {
+            resetSettings();
+        });
+
         // Arrange
         const statusRegistry = StatusRegistry.getInstance();
         statusRegistry.clearStatuses();
@@ -179,6 +183,19 @@ describe('ToggleDone', () => {
 
             const line3 = toggleLine(line2, 'x.md');
             expect(line3).toStrictEqual('- [P] this is a task starting at Pro');
+        });
+
+        it('when there is a global filter and task with global filter is toggled', () => {
+            updateSettings({ globalFilter: '#task' });
+
+            const line1 = '- [P] #task this is a task starting at Pro';
+
+            // Assert
+            const line2 = toggleLine(line1, 'x.md');
+            expect(line2).toStrictEqual('- [C] #task this is a task starting at Pro');
+
+            const line3 = toggleLine(line2, 'x.md');
+            expect(line3).toStrictEqual('- [P] #task this is a task starting at Pro');
         });
     });
 
