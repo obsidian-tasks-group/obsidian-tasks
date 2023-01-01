@@ -27,7 +27,7 @@ describe('parsing', () => {
         expect(task).not.toBeNull();
         expect(task!.listMarker).toEqual('-');
         expect(task!.description).toEqual('this is a done task');
-        expect(task!.status).toStrictEqual(Status.DONE);
+        expect(task!.status.indicator).toStrictEqual(Status.DONE.indicator);
         expect(task!.dueDate).not.toBeNull();
         expect(task!.dueDate!.isSame(moment('2021-09-12', 'YYYY-MM-DD'))).toStrictEqual(true);
         expect(task!.doneDate).not.toBeNull();
@@ -63,7 +63,7 @@ describe('parsing', () => {
         expect(task).not.toBeNull();
         expect(task!.listMarker).toEqual('1.');
         expect(task!.description).toEqual('this is a done task');
-        expect(task!.status).toStrictEqual(Status.DONE);
+        expect(task!.status.indicator).toStrictEqual(Status.DONE.indicator);
         expect(task!.originalMarkdown).toStrictEqual(line);
     });
 
@@ -80,7 +80,7 @@ describe('parsing', () => {
         expect(task).not.toBeNull();
         expect(task!.listMarker).toEqual('909999.');
         expect(task!.description).toEqual('this is a todo task');
-        expect(task!.status).toStrictEqual(Status.TODO);
+        expect(task!.status.indicator).toStrictEqual(Status.TODO.indicator);
         expect(task!.originalMarkdown).toStrictEqual(line);
     });
 
@@ -109,7 +109,7 @@ describe('parsing', () => {
         const task = fromLine({ line: '- [D] this is a deferred task' });
 
         // Assert
-        expect(task!.originalStatusCharacter).toStrictEqual('D');
+        expect(task!.status.indicator).toStrictEqual('D');
     });
 
     it('allows signifier emojis as part of the description', () => {
@@ -124,7 +124,7 @@ describe('parsing', () => {
         // Assert
         expect(task).not.toBeNull();
         expect(task!.description).toEqual('this is a ✅ done task');
-        expect(task!.status).toStrictEqual(Status.DONE);
+        expect(task!.status.indicator).toStrictEqual(Status.DONE.indicator);
         expect(task!.dueDate).not.toBeNull();
         expect(task!.dueDate!.isSame(moment('2021-09-12', 'YYYY-MM-DD'))).toStrictEqual(true);
         expect(task!.doneDate).not.toBeNull();
@@ -143,7 +143,7 @@ describe('parsing', () => {
         // Assert
         expect(task).not.toBeNull();
         expect(task!.description).toEqual('this is a ✅ done task');
-        expect(task!.status).toStrictEqual(Status.DONE);
+        expect(task!.status.indicator).toStrictEqual(Status.DONE.indicator);
         expect(task!.dueDate).not.toBeNull();
         expect(task!.dueDate!.isSame(moment('2021-09-12', 'YYYY-MM-DD'))).toStrictEqual(true);
         expect(task!.doneDate).not.toBeNull();
@@ -467,13 +467,15 @@ describe('toggle done', () => {
         const task: Task = fromLine({
             line,
         }) as Task;
-        const toggled: Task = task.toggle()[0];
+        const tasks = task.toggle();
+        expect(tasks.length).toEqual(1);
+        const toggled: Task = tasks[0];
 
         // Assert
         expect(toggled).not.toBeNull();
-        expect(toggled!.status).toStrictEqual(Status.DONE);
+        expect(toggled!.status.indicator).toStrictEqual(Status.DONE.indicator);
         expect(toggled!.doneDate).not.toBeNull();
-        expect(toggled!.originalStatusCharacter).toStrictEqual('x');
+        expect(toggled!.status.indicator).toStrictEqual('x');
         expect(toggled!.blockLink).toEqual(' ^my-precious');
     });
 
@@ -485,12 +487,14 @@ describe('toggle done', () => {
         const task: Task = fromLine({
             line,
         }) as Task;
-        const toggled: Task = task.toggle()[0];
+        const tasks = task.toggle();
+        expect(tasks.length).toEqual(1);
+        const toggled: Task = tasks[0];
 
         // Assert
         expect(toggled).not.toBeNull();
-        expect(toggled!.status).toStrictEqual(Status.TODO);
-        expect(toggled!.originalStatusCharacter).toStrictEqual(' ');
+        expect(toggled!.status.indicator).toStrictEqual(Status.TODO.indicator);
+        expect(toggled!.status.indicator).toStrictEqual(' ');
         expect(toggled!.doneDate).toBeNull();
     });
 
@@ -788,7 +792,9 @@ describe('toggle done', () => {
                 line,
             });
 
-            const nextTask: Task = task!.toggle()[0];
+            const tasks = task!.toggle();
+            expect(tasks.length).toEqual(2);
+            const nextTask: Task = tasks[0];
 
             expect({
                 nextDue: nextTask.dueDate?.format('YYYY-MM-DD'),
@@ -823,7 +829,9 @@ describe('toggle done', () => {
         expect(task!.dueDate).not.toBeNull();
         expect(task!.dueDate!.isSame(moment('2021-09-12', 'YYYY-MM-DD'))).toStrictEqual(true);
 
-        const nextTask: Task = task!.toggle()[0];
+        const tasks = task!.toggle();
+        expect(tasks.length).toEqual(2);
+        const nextTask: Task = tasks[0];
         expect({
             nextDue: nextTask.dueDate?.format('YYYY-MM-DD'),
             nextScheduled: nextTask.scheduledDate?.format('YYYY-MM-DD'),
