@@ -73,6 +73,14 @@ export class Status {
     public static DONE: Status = new Status(new StatusConfiguration('x', 'Done', ' ', true));
 
     /**
+     * A default status of empty, used when things go wrong.
+     *
+     * @static
+     * @memberof Status
+     */
+    public static EMPTY: Status = new Status(new StatusConfiguration('', 'EMPTY', '', true));
+
+    /**
      * The default Todo status. Goes to In Progress when toggled.
      *
      * @static
