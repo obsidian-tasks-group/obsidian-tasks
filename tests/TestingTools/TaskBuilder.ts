@@ -66,7 +66,6 @@ export class TaskBuilder {
             listMarker: this._listMarker,
             sectionStart: this._sectionStart,
             sectionIndex: this._sectionIndex,
-            originalStatusCharacter: this._status.indicator,
             precedingHeader: this._precedingHeader,
             priority: this._priority,
             startDate: this._startDate,
@@ -84,7 +83,6 @@ export class TaskBuilder {
     /**
      * Set the status.
      *
-     * This also sets {@link originalStatusCharacter}
      * @param status
      */
     public status(status: Status): TaskBuilder {
