@@ -5,6 +5,8 @@
 import moment from 'moment';
 import { calculateCursorOffset, toggleLine } from '../../src/Commands/ToggleDone';
 import { resetSettings, updateSettings } from '../../src/Config/Settings';
+import { StatusRegistry } from '../../src/StatusRegistry';
+import { Status, StatusConfiguration } from '../../src/Status';
 
 window.moment = moment;
 
@@ -159,6 +161,25 @@ describe('ToggleDone', () => {
             '- [ ] I am a recurring task| 🔁 every day 📅 2022-09-04 ',
             '- [x] I am a recurring task| 🔁 every day 📅 2022-09-04 ',
         );
+    });
+
+    describe('should honour next status character', () => {
+        // Arrange
+        const statusRegistry = StatusRegistry.getInstance();
+        statusRegistry.clearStatuses();
+        statusRegistry.add(new Status(new StatusConfiguration('P', 'Pro', 'C', false)));
+        statusRegistry.add(new Status(new StatusConfiguration('C', 'Con', 'P', false)));
+
+        it('when there is no global filter', () => {
+            const line1 = '- [P] this is a task starting at Pro';
+
+            // Assert
+            const line2 = toggleLine(line1, 'x.md');
+            expect(line2).toStrictEqual('- [C] this is a task starting at Pro');
+
+            const line3 = toggleLine(line2, 'x.md');
+            expect(line3).toStrictEqual('- [P] this is a task starting at Pro');
+        });
     });
 
     todaySpy.mockClear();
