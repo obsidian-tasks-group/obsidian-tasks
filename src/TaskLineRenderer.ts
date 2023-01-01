@@ -1,5 +1,6 @@
 import { Component, MarkdownRenderer } from 'obsidian';
 import type { Moment } from 'moment';
+import { Status } from './Status';
 import type { Task } from './Task';
 import * as taskModule from './Task';
 import type { LayoutOptions, TaskLayoutComponent } from './TaskLayout';
@@ -59,7 +60,7 @@ export async function renderTaskLine(
     li.appendChild(checkbox);
     checkbox.classList.add('task-list-item-checkbox');
     checkbox.type = 'checkbox';
-    if (task.status !== taskModule.Status.TODO) {
+    if (task.status !== Status.TODO) {
         checkbox.checked = true;
         li.classList.add('is-checked');
     }
