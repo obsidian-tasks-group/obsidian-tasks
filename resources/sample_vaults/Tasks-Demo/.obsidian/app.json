@@ -5,5 +5,6 @@
   "readableLineLength": false,
   "newFileLocation": "current",
   "attachmentFolderPath": "./",
-  "spellcheck": true
+  "spellcheck": true,
+  "showInlineTitle": false
 }
