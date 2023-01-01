@@ -44,7 +44,11 @@ export class StatusRegistry {
      */
     public add(status: StatusConfiguration | Status): void {
         if (!this.hasIndicator(status.indicator)) {
-            this._registeredStatuses.push(new Status(status));
+            if (status instanceof Status) {
+                this._registeredStatuses.push(status);
+            } else {
+                this._registeredStatuses.push(new Status(status));
+            }
         }
     }
 
