@@ -552,7 +552,7 @@ export class Task {
             ...this,
             status: newStatus,
             doneDate: newDoneDate,
-            originalStatusCharacter: newStatus.isCompleted() ? 'x' : ' ',
+            originalStatusCharacter: newStatus.indicator,
         });
 
         const newTasks: Task[] = [];
