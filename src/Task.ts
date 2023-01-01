@@ -3,22 +3,12 @@ import { LayoutOptions, TaskLayout } from './TaskLayout';
 import type { TaskLayoutComponent } from './TaskLayout';
 import { Recurrence } from './Recurrence';
 import { getSettings } from './Config/Settings';
+import { Status } from './Status';
 import { Urgency } from './Urgency';
 import { DateField } from './Query/Filter/DateField';
 import { renderTaskLine } from './TaskLineRenderer';
 import type { TaskLineRenderDetails } from './TaskLineRenderer';
 import { DateFallback } from './DateFallback';
-
-/**
- * Collection of status types supported by the plugin.
- * TODO: Make this a class so it can support other types and easier mapping to status character.
- * @export
- * @enum {number}
- */
-export enum Status {
-    TODO = 'Todo',
-    DONE = 'Done',
-}
 
 /**
  * When sorting, make sure low always comes after none. This way any tasks with low will be below any exiting

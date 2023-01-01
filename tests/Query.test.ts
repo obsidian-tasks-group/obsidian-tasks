@@ -3,7 +3,8 @@
  */
 import moment from 'moment';
 import { Query } from '../src/Query/Query';
-import { Priority, Status, Task } from '../src/Task';
+import { Status } from '../src/Status';
+import { Priority, Task } from '../src/Task';
 import { resetSettings, updateSettings } from '../src/Config/Settings';
 import { createTasksFromMarkdown, fromLine } from './TestHelpers';
 import { shouldSupportFiltering } from './TestingTools/FilterTestHelpers';

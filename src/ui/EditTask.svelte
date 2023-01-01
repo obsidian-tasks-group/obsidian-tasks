@@ -3,7 +3,8 @@
     import { onMount } from 'svelte';
     import { Recurrence } from '../Recurrence';
     import { getSettings } from '../Config/Settings';
-    import { Priority, Status, Task } from '../Task';
+    import { Status } from '../Status';
+    import { Priority, Task } from '../Task';
     import {
         prioritySymbols,
         recurrenceSymbol,
