@@ -65,6 +65,16 @@ export class StatusRegistry {
     }
 
     /**
+     * Resets the array os Status types to be empty.
+     *
+     * @memberof StatusRegistry
+     */
+    public clearStatuses(): void {
+        this._registeredStatuses = [];
+        this.addDefaultStatusTypes();
+    }
+
+    /**
      * To allow custom progression of task status each status knows
      * which status can come after it as a state transition.
      *
