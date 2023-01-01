@@ -24,5 +24,8 @@ describe('StatusRegistry', () => {
         expect(statusRegistry.byIndicator('x').indicator).toEqual(Status.DONE.indicator);
         expect(statusRegistry.byIndicator('').indicator).toEqual(Status.EMPTY.indicator);
         expect(statusRegistry.byIndicator(' ').indicator).toEqual(Status.TODO.indicator);
+
+        // Detect unrecognised indicator:
+        expect(statusRegistry.byIndicator('?').indicator).toEqual(Status.EMPTY.indicator);
     });
 });

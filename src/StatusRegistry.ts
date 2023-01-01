@@ -65,6 +65,23 @@ export class StatusRegistry {
     }
 
     /**
+     * To allow custom progression of task status each status knows
+     * which status can come after it as a state transition.
+     *
+     * @return {*}  {Status}
+     * @memberof StatusRegistry
+     */
+    public getNextStatus(status: Status): Status {
+        if (status.nextStatusIndicator !== '') {
+            const nextStatus = this.byIndicator(status.nextStatusIndicator);
+            if (nextStatus !== null) {
+                return nextStatus;
+            }
+        }
+        return Status.EMPTY;
+    }
+
+    /**
      * Filters the Status types by the indicator and returns the first one found.
      *
      * @private
