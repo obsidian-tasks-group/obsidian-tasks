@@ -3,7 +3,7 @@ import { LayoutOptions, TaskLayout } from './TaskLayout';
 import type { TaskLayoutComponent } from './TaskLayout';
 import { Recurrence } from './Recurrence';
 import { getSettings } from './Config/Settings';
-import { Status } from './Status';
+import { Status, StatusConfiguration } from './Status';
 import { Urgency } from './Urgency';
 import { DateField } from './Query/Filter/DateField';
 import { renderTaskLine } from './TaskLineRenderer';
@@ -276,8 +276,11 @@ export class Task {
             case ' ':
                 status = Status.TODO;
                 break;
-            default:
+            case 'x':
                 status = Status.DONE;
+                break;
+            default:
+                status = new Status(new StatusConfiguration(statusString, 'Unknown', 'x', false));
         }
 
         // Match for block link and remove if found. Always expected to be

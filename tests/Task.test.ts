@@ -109,7 +109,7 @@ describe('parsing', () => {
         const task = fromLine({ line: '- [D] this is a deferred task' });
 
         // Assert
-        expect(task!.originalStatusCharacter).toStrictEqual('D');
+        expect(task!.status.indicator).toStrictEqual('D');
     });
 
     it('allows signifier emojis as part of the description', () => {
@@ -473,7 +473,7 @@ describe('toggle done', () => {
         expect(toggled).not.toBeNull();
         expect(toggled!.status).toStrictEqual(Status.DONE);
         expect(toggled!.doneDate).not.toBeNull();
-        expect(toggled!.originalStatusCharacter).toStrictEqual('x');
+        expect(toggled!.status.indicator).toStrictEqual('x');
         expect(toggled!.blockLink).toEqual(' ^my-precious');
     });
 
@@ -490,7 +490,7 @@ describe('toggle done', () => {
         // Assert
         expect(toggled).not.toBeNull();
         expect(toggled!.status).toStrictEqual(Status.TODO);
-        expect(toggled!.originalStatusCharacter).toStrictEqual(' ');
+        expect(toggled!.status.indicator).toStrictEqual(' ');
         expect(toggled!.doneDate).toBeNull();
     });
 
