@@ -3,6 +3,7 @@ import { LayoutOptions, TaskLayout } from './TaskLayout';
 import type { TaskLayoutComponent } from './TaskLayout';
 import { Recurrence } from './Recurrence';
 import { getSettings } from './Config/Settings';
+import { StatusRegistry } from './StatusRegistry';
 import { Status, StatusConfiguration } from './Status';
 import { Urgency } from './Urgency';
 import { DateField } from './Query/Filter/DateField';
@@ -271,16 +272,9 @@ export class Task {
         // Get the status of the task, only todo and done supported.
         // But custom ones are retained and displayed as-is.
         const statusString = regexMatch[3];
-        let status: Status;
-        switch (statusString) {
-            case ' ':
-                status = Status.TODO;
-                break;
-            case 'x':
-                status = Status.DONE;
-                break;
-            default:
-                status = new Status(new StatusConfiguration(statusString, 'Unknown', 'x', false));
+        let status = StatusRegistry.getInstance().byIndicator(statusString);
+        if (status === Status.EMPTY) {
+            status = new Status(new StatusConfiguration(statusString, 'Unknown', 'x', false));
         }
 
         // Match for block link and remove if found. Always expected to be
@@ -531,8 +525,11 @@ export class Task {
      * together with the next occurrence in the order `[next, toggled]`. If the
      * task is not recurring, it will return `[toggled]`.
      */
-    public toggle(): Task[] {
-        const newStatus: Status = this.status === Status.TODO ? Status.DONE : Status.TODO;
+    public toggle(status?: Status): Task[] {
+        let newStatus = StatusRegistry.getInstance().getNextStatus(this.status);
+        if (status !== undefined) {
+            newStatus = status;
+        }
 
         let newDoneDate = null;
 
@@ -542,7 +539,7 @@ export class Task {
             dueDate: Moment | null;
         } | null = null;
 
-        if (newStatus !== Status.TODO) {
+        if (newStatus.isCompleted()) {
             // Set done date only if setting value is true
             const { setDoneDate } = getSettings();
             if (setDoneDate) {
@@ -559,7 +556,7 @@ export class Task {
             ...this,
             status: newStatus,
             doneDate: newDoneDate,
-            originalStatusCharacter: newStatus === Status.DONE ? 'x' : ' ',
+            originalStatusCharacter: newStatus.isCompleted() ? 'x' : ' ',
         });
 
         const newTasks: Task[] = [];

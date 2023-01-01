@@ -81,13 +81,14 @@ export class Status {
     public static EMPTY: Status = new Status(new StatusConfiguration('', 'EMPTY', '', true));
 
     /**
-     * The default Todo status. Goes to In Progress when toggled.
+     * The default Todo status. Goes to Done when toggled.
+     * User may later be able to override this to go to In Progress instead.
      *
      * @static
      * @type {Status}
      * @memberof Status
      */
-    public static TODO: Status = new Status(new StatusConfiguration(' ', 'Todo', '/', true));
+    public static TODO: Status = new Status(new StatusConfiguration(' ', 'Todo', 'x', true));
 
     /**
      * The configuration stored in the data.json file.
