@@ -10,6 +10,14 @@ jest.mock('obsidian');
 window.moment = moment;
 
 describe('StatusRegistry', () => {
+    beforeEach(() => {
+        StatusRegistry.getInstance().clearStatuses();
+    });
+
+    afterEach(() => {
+        StatusRegistry.getInstance().clearStatuses();
+    });
+
     it('should create a new instance and populate default status indicators', () => {
         // Arrange
 
