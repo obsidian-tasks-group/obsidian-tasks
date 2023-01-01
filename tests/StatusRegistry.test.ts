@@ -10,6 +10,14 @@ jest.mock('obsidian');
 window.moment = moment;
 
 describe('StatusRegistry', () => {
+    beforeEach(() => {
+        StatusRegistry.getInstance().clearStatuses();
+    });
+
+    afterEach(() => {
+        StatusRegistry.getInstance().clearStatuses();
+    });
+
     it('should create a new instance and populate default status indicators', () => {
         // Arrange
 
@@ -50,6 +58,28 @@ describe('StatusRegistry', () => {
         expect(statusRegistry.getNextStatus(statusB).indicator).toEqual('c');
         expect(statusRegistry.getNextStatus(statusC).indicator).toEqual('d');
         expect(statusRegistry.getNextStatus(statusD).indicator).toEqual('a');
+    });
+
+    it('should handle adding custom StatusConfiguration', () => {
+        // Arrange
+        const statusRegistry = StatusRegistry.getInstance();
+        const statusConfiguration = new StatusConfiguration('a', 'A', 'b', false);
+        statusRegistry.add(statusConfiguration);
+
+        // Assert
+        const status2 = statusRegistry.byIndicator('a');
+        expect(status2).toStrictEqual(new Status(statusConfiguration));
+    });
+
+    it('should not modify an added custom Status', () => {
+        // Arrange
+        const statusRegistry = StatusRegistry.getInstance();
+        const status = new Status(new StatusConfiguration('a', 'A', 'b', false));
+        statusRegistry.add(status);
+
+        // Assert
+        const status2 = statusRegistry.byIndicator('a');
+        expect(status2).toStrictEqual(status);
     });
 
     it('should allow task to toggle through custom transitions', () => {
