@@ -197,6 +197,19 @@ describe('ToggleDone', () => {
             const line3 = toggleLine(line2, 'x.md');
             expect(line3).toStrictEqual('- [P] #task this is a task starting at Pro');
         });
+
+        it('when there is a global filter and task without global filter is toggled', () => {
+            updateSettings({ globalFilter: '#task' });
+
+            const line1 = '- [P] this is a task starting at Pro';
+
+            // Assert
+            const line2 = toggleLine(line1, 'x.md');
+            expect(line2).toStrictEqual('- [C] this is a task starting at Pro');
+
+            const line3 = toggleLine(line2, 'x.md');
+            expect(line3).toStrictEqual('- [P] this is a task starting at Pro');
+        });
     });
 
     todaySpy.mockClear();
