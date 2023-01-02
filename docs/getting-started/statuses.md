@@ -23,6 +23,8 @@ has_toc: false
 
 ## Introduction
 
+### Standard Markdown task statuses
+
 Tasks have a status.
 
 The convention in markdown is:
@@ -31,3 +33,11 @@ The convention in markdown is:
 - [ ] I am a task that is not yet done
 - [x] I am a task that has been done
 ```
+
+### Custom Markdown task statuses
+
+## Credit: Sytone and the 'Tasks SQL Powered' plugin
+
+This plugin's implementation of reading, searching and editing custom statuses was entirely made possible by the work of [Sytone](https://github.com/sytone) and his fork of Tasks called ['Tasks SQL Powered'](https://github.com/sytone/obsidian-tasks-x).
+
+When code in Tasks has been copied from 'Tasks SQL Powered', Sytone has been specifically credited as a co-author, that is, joint author, and these commits can be seen on the GitHub site: [Commits "Co-Authored-By: Sytone"](https://github.com/search?q=repo%3Aobsidian-tasks-group%2Fobsidian-tasks+%22Co-Authored-By%3A+Sytone%22&type=commits).
