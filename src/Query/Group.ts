@@ -189,7 +189,7 @@ export class Group {
 
     private static groupByStatus(task: Task): string[] {
         // Backwards-compatibility note: In Tasks 1.22.0 and earlier, the only
-        // names used for 'group by status' were 'Todo' and 'Done' - and
+        // names used by 'group by status' were 'Todo' and 'Done' - and
         // any character other than a space was considered to be 'Done'.
         if (task.status.indicator === ' ') {
             return ['Todo'];
