@@ -10,6 +10,8 @@ function getPrintableIndicator(indicator: string) {
 
 describe('DefaultStatuses', () => {
     it('markdown-table', () => {
+        // This "test" writes out a markdown representation of the default task statuses,
+        // for embedding in the user docs.
         const instance = StatusRegistry.getInstance();
         let commandsTable = '';
         commandsTable += '| Status Character    | Status Name | Next Status Character |\n';
