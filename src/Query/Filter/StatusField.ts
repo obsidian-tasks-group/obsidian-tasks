@@ -7,8 +7,8 @@ export class StatusField extends FilterInstructionsBasedField {
         super();
 
         // Backwards-compatibility note: In Tasks 1.22.0 and earlier, all tasks
-        // with any status character except space were considered to be done
-        // by the status filter instructions.
+        // with any status character except space were considered by the status filter
+        // instructions to be done.
         this._filters.add('done', (task: Task) => task.status.indicator !== ' ');
         this._filters.add('not done', (task: Task) => task.status.indicator === ' ');
     }
@@ -27,7 +27,7 @@ export class StatusField extends FilterInstructionsBasedField {
     public comparator(): Comparator {
         // Backwards-compatibility note: In Tasks 1.22.0 and earlier, the
         // only available status names were 'Todo' and 'Done'.
-        // And 'Todo' sorted before 'Done.
+        // And 'Todo' sorted before 'Done'.
         return (a: Task, b: Task) => {
             const oldStatusNameA = StatusField.oldStatusName(a);
             const oldStatusNameB = StatusField.oldStatusName(b);
