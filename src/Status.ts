@@ -91,6 +91,24 @@ export class Status {
     public static TODO: Status = new Status(new StatusConfiguration(' ', 'Todo', 'x', true));
 
     /**
+     * The default Cancelled status. Goes to Todo when toggled.
+     *
+     * @static
+     * @type {Status}
+     * @memberof Status
+     */
+    public static CANCELLED: Status = new Status(new StatusConfiguration('-', 'Cancelled', ' ', true));
+
+    /**
+     * The default In Progress status. Goes to Done when toggled.
+     *
+     * @static
+     * @type {Status}
+     * @memberof Status
+     */
+    public static IN_PROGRESS: Status = new Status(new StatusConfiguration('/', 'In Progress', 'x', true));
+
+    /**
      * The configuration stored in the data.json file.
      *
      * @type {StatusConfiguration}
