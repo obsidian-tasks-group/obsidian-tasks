@@ -130,7 +130,7 @@ export class StatusRegistry {
      * @memberof StatusRegistry
      */
     private addDefaultStatusTypes(): void {
-        const defaultStatuses = [Status.TODO, Status.DONE, Status.EMPTY];
+        const defaultStatuses = [Status.TODO, Status.IN_PROGRESS, Status.DONE, Status.CANCELLED, Status.EMPTY];
 
         defaultStatuses.forEach((status) => {
             this.add(status);
