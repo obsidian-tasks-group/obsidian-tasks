@@ -1,7 +1,6 @@
 import { StatusField } from '../../../src/Query/Filter/StatusField';
-import type { FilterOrErrorMessage } from '../../../src/Query/Filter/Filter';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
-import { testFilter } from '../../TestingTools/FilterTestHelpers';
+import { toMatchTaskFromLine } from '../../CustomMatchers/CustomMatchersForFilters';
 import { Status } from '../../../src/Status';
 import {
     expectTaskComparesAfter,
@@ -9,10 +8,9 @@ import {
     expectTaskComparesEqual,
 } from '../../CustomMatchers/CustomMatchersForSorting';
 
-function testStatusFilter(filter: FilterOrErrorMessage, status: Status, expected: boolean) {
-    const builder = new TaskBuilder();
-    testFilter(filter, builder.status(status), expected);
-}
+expect.extend({
+    toMatchTaskFromLine,
+});
 
 describe('status', () => {
     it('done', () => {
@@ -20,8 +18,8 @@ describe('status', () => {
         const filter = new StatusField().createFilterOrErrorMessage('done');
 
         // Assert
-        testStatusFilter(filter, Status.TODO, false);
-        testStatusFilter(filter, Status.DONE, true);
+        expect(filter).not.toMatchTaskFromLine('- [ ] X');
+        expect(filter).toMatchTaskFromLine('- [x] X');
     });
 
     it('not done', () => {
@@ -29,8 +27,8 @@ describe('status', () => {
         const filter = new StatusField().createFilterOrErrorMessage('not done');
 
         // Assert
-        testStatusFilter(filter, Status.TODO, true);
-        testStatusFilter(filter, Status.DONE, false);
+        expect(filter).toMatchTaskFromLine('- [ ] X');
+        expect(filter).not.toMatchTaskFromLine('- [x] X');
     });
 });
 
