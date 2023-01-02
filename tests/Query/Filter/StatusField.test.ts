@@ -2,6 +2,7 @@ import { StatusField } from '../../../src/Query/Filter/StatusField';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { toMatchTaskFromLine } from '../../CustomMatchers/CustomMatchersForFilters';
 import { Status } from '../../../src/Status';
+import * as TestHelpers from '../../TestHelpers';
 import {
     expectTaskComparesAfter,
     expectTaskComparesBefore,
@@ -55,8 +56,18 @@ describe('sorting by status', () => {
 
         // Assert
         expectTaskComparesAfter(sorter, doneTask, todoTask);
+
         expectTaskComparesBefore(sorter, todoTask, doneTask);
+        expectTaskComparesBefore(sorter, todoTask, TestHelpers.fromLine({ line: '- [-] Z' }));
+        expectTaskComparesBefore(sorter, todoTask, TestHelpers.fromLine({ line: '- [x] Z' }));
+        expectTaskComparesBefore(sorter, todoTask, TestHelpers.fromLine({ line: '- [X] Z' }));
+        expectTaskComparesBefore(sorter, todoTask, TestHelpers.fromLine({ line: '- [!] Z' }));
+
         expectTaskComparesEqual(sorter, doneTask, doneTask);
+        expectTaskComparesEqual(sorter, doneTask, TestHelpers.fromLine({ line: '- [-] Z' }));
+        expectTaskComparesEqual(sorter, doneTask, TestHelpers.fromLine({ line: '- [x] Z' }));
+        expectTaskComparesEqual(sorter, doneTask, TestHelpers.fromLine({ line: '- [X] Z' }));
+        expectTaskComparesEqual(sorter, doneTask, TestHelpers.fromLine({ line: '- [!] Z' }));
     });
 
     it('sort by status reverse', () => {

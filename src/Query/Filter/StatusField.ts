@@ -25,14 +25,27 @@ export class StatusField extends FilterInstructionsBasedField {
      * Return a function to compare two Task objects, for use in sorting by status.
      */
     public comparator(): Comparator {
+        // Backwards-compatibility note: In Tasks 1.22.0 and earlier, the
+        // only available status names were 'Todo' and 'Done'.
+        // And 'Todo' sorted before 'Done.
         return (a: Task, b: Task) => {
-            if (a.status.name < b.status.name) {
+            const oldStatusNameA = StatusField.oldStatusName(a);
+            const oldStatusNameB = StatusField.oldStatusName(b);
+            if (oldStatusNameA < oldStatusNameB) {
                 return 1;
-            } else if (a.status.name > b.status.name) {
+            } else if (oldStatusNameA > oldStatusNameB) {
                 return -1;
             } else {
                 return 0;
             }
         };
+    }
+
+    private static oldStatusName(a: Task): string {
+        if (a.status.indicator === ' ') {
+            return 'Todo';
+        } else {
+            return 'Done';
+        }
     }
 }
