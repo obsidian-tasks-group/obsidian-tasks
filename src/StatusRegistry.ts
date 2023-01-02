@@ -22,6 +22,17 @@ export class StatusRegistry {
     }
 
     /**
+     * Returns all the registered statuses minus the empty status.
+     *
+     * @readonly
+     * @type {Status[]}
+     * @memberof StatusRegistry
+     */
+    public get registeredStatuses(): Status[] {
+        return this._registeredStatuses.filter(({ indicator }) => indicator !== Status.EMPTY.indicator);
+    }
+
+    /**
      * The static method that controls the access to the StatusRegistry instance.
      *
      * @static
@@ -63,6 +74,21 @@ export class StatusRegistry {
     public byIndicator(indicator: string): Status {
         if (this.hasIndicator(indicator)) {
             return this.getIndicator(indicator);
+        }
+
+        return Status.EMPTY;
+    }
+
+    /**
+     * Returns the registered status by the name assigned by the user.
+     *
+     * @param {string} nameToFind
+     * @return {*}  {Status}
+     * @memberof StatusRegistry
+     */
+    public byName(nameToFind: string): Status {
+        if (this._registeredStatuses.filter(({ name }) => name === nameToFind).length > 0) {
+            return this._registeredStatuses.filter(({ name }) => name === nameToFind)[0];
         }
 
         return Status.EMPTY;
