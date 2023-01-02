@@ -546,6 +546,26 @@ describe('Group names', () => {
             taskLine: '- [x] a',
             expectedGroupNames: ['Done'],
         },
+        {
+            groupBy: 'status',
+            taskLine: '- [X] a',
+            expectedGroupNames: ['Done'],
+        },
+        {
+            groupBy: 'status',
+            taskLine: '- [/] a',
+            expectedGroupNames: ['Done'],
+        },
+        {
+            groupBy: 'status',
+            taskLine: '- [-] a',
+            expectedGroupNames: ['Done'],
+        },
+        {
+            groupBy: 'status',
+            taskLine: '- [!] a',
+            expectedGroupNames: ['Done'],
+        },
 
         // -----------------------------------------------------------
         // group by tags
