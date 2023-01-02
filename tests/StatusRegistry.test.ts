@@ -33,9 +33,74 @@ describe('StatusRegistry', () => {
         expect(statusRegistry.byIndicator('x').indicator).toEqual(Status.DONE.indicator);
         expect(statusRegistry.byIndicator('').indicator).toEqual(Status.EMPTY.indicator);
         expect(statusRegistry.byIndicator(' ').indicator).toEqual(Status.TODO.indicator);
+        expect(statusRegistry.byIndicator('-').indicator).toEqual(Status.CANCELLED.indicator);
+        expect(statusRegistry.byIndicator('/').indicator).toEqual(Status.IN_PROGRESS.indicator);
 
         // Detect unrecognised indicator:
         expect(statusRegistry.byIndicator('?').indicator).toEqual(Status.EMPTY.indicator);
+    });
+
+    it('should allow task to toggle through standard transitions', () => {
+        // Arrange
+        const statusRegistry = StatusRegistry.getInstance();
+        statusRegistry.clearStatuses();
+        const line = '- [ ] this is a task starting at A';
+        const path = 'file.md';
+        const sectionStart = 1337;
+        const sectionIndex = 1209;
+        const precedingHeader = 'Eloquent Section';
+        const task = Task.fromLine({
+            line,
+            path,
+            sectionStart,
+            sectionIndex,
+            precedingHeader,
+            fallbackDate: null,
+        });
+
+        // Act
+
+        // Assert
+        expect(task).not.toBeNull();
+        expect(task!.status.indicator).toEqual(Status.TODO.indicator);
+
+        // In Tasks, TODO toggles to DONE, for consistency with earlier releases.
+        // const toggledInProgress = task?.toggle()[0];
+        // expect(toggledInProgress?.status.indicator).toEqual(Status.IN_PROGRESS.indicator);
+
+        const toggledDone = task?.toggle()[0];
+        expect(toggledDone?.status.indicator).toEqual(Status.DONE.indicator);
+
+        const toggledTodo = toggledDone?.toggle()[0];
+        expect(toggledTodo?.status.indicator).toEqual(Status.TODO.indicator);
+    });
+
+    it('should allow task to toggle from cancelled to todo', () => {
+        // Arrange
+        const statusRegistry = StatusRegistry.getInstance();
+        statusRegistry.clearStatuses();
+        const line = '- [-] This is a cancelled task';
+        const path = 'file.md';
+        const sectionStart = 1337;
+        const sectionIndex = 1209;
+        const precedingHeader = 'Eloquent Section';
+        const task = Task.fromLine({
+            line,
+            path,
+            sectionStart,
+            sectionIndex,
+            precedingHeader,
+            fallbackDate: null,
+        });
+
+        // Act
+
+        // Assert
+        expect(task).not.toBeNull();
+        expect(task!.status.indicator).toEqual(Status.CANCELLED.indicator);
+
+        const toggledTodo = task?.toggle()[0];
+        expect(toggledTodo?.status.indicator).toEqual(Status.TODO.indicator);
     });
 
     it('should allow lookup of next status for a status', () => {
