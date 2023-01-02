@@ -1,18 +1,17 @@
 import { StatusField } from '../../../src/Query/Filter/StatusField';
-import type { FilterOrErrorMessage } from '../../../src/Query/Filter/Filter';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
-import { testFilter } from '../../TestingTools/FilterTestHelpers';
+import { toMatchTaskFromLine } from '../../CustomMatchers/CustomMatchersForFilters';
 import { Status } from '../../../src/Status';
+import * as TestHelpers from '../../TestHelpers';
 import {
     expectTaskComparesAfter,
     expectTaskComparesBefore,
     expectTaskComparesEqual,
 } from '../../CustomMatchers/CustomMatchersForSorting';
 
-function testStatusFilter(filter: FilterOrErrorMessage, status: Status, expected: boolean) {
-    const builder = new TaskBuilder();
-    testFilter(filter, builder.status(status), expected);
-}
+expect.extend({
+    toMatchTaskFromLine,
+});
 
 describe('status', () => {
     it('done', () => {
@@ -20,8 +19,12 @@ describe('status', () => {
         const filter = new StatusField().createFilterOrErrorMessage('done');
 
         // Assert
-        testStatusFilter(filter, Status.TODO, false);
-        testStatusFilter(filter, Status.DONE, true);
+        expect(filter).not.toMatchTaskFromLine('- [ ] X');
+        expect(filter).toMatchTaskFromLine('- [x] X');
+        expect(filter).toMatchTaskFromLine('- [X] X');
+        expect(filter).toMatchTaskFromLine('- [/] X');
+        expect(filter).toMatchTaskFromLine('- [-] X');
+        expect(filter).toMatchTaskFromLine('- [!] X');
     });
 
     it('not done', () => {
@@ -29,8 +32,12 @@ describe('status', () => {
         const filter = new StatusField().createFilterOrErrorMessage('not done');
 
         // Assert
-        testStatusFilter(filter, Status.TODO, true);
-        testStatusFilter(filter, Status.DONE, false);
+        expect(filter).toMatchTaskFromLine('- [ ] X');
+        expect(filter).not.toMatchTaskFromLine('- [x] X');
+        expect(filter).not.toMatchTaskFromLine('- [X] X');
+        expect(filter).not.toMatchTaskFromLine('- [/] X');
+        expect(filter).not.toMatchTaskFromLine('- [-] X');
+        expect(filter).not.toMatchTaskFromLine('- [!] X');
     });
 });
 
@@ -49,8 +56,18 @@ describe('sorting by status', () => {
 
         // Assert
         expectTaskComparesAfter(sorter, doneTask, todoTask);
+
         expectTaskComparesBefore(sorter, todoTask, doneTask);
+        expectTaskComparesBefore(sorter, todoTask, TestHelpers.fromLine({ line: '- [-] Z' }));
+        expectTaskComparesBefore(sorter, todoTask, TestHelpers.fromLine({ line: '- [x] Z' }));
+        expectTaskComparesBefore(sorter, todoTask, TestHelpers.fromLine({ line: '- [X] Z' }));
+        expectTaskComparesBefore(sorter, todoTask, TestHelpers.fromLine({ line: '- [!] Z' }));
+
         expectTaskComparesEqual(sorter, doneTask, doneTask);
+        expectTaskComparesEqual(sorter, doneTask, TestHelpers.fromLine({ line: '- [-] Z' }));
+        expectTaskComparesEqual(sorter, doneTask, TestHelpers.fromLine({ line: '- [x] Z' }));
+        expectTaskComparesEqual(sorter, doneTask, TestHelpers.fromLine({ line: '- [X] Z' }));
+        expectTaskComparesEqual(sorter, doneTask, TestHelpers.fromLine({ line: '- [!] Z' }));
     });
 
     it('sort by status reverse', () => {

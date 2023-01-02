@@ -1,12 +1,48 @@
 # Custom Task Statuses
 
-- [ ] #task Task 1
-- [-] #task Task 2
-- [x] #task Task 3
+- [ ] #task Unchecked `space`
+- [-] #task Dropped `-`
+- [x] #task Regular `x`
+- [X] #task Checked `X`
+- [/] #task Half Done `/`
+- [!] #task Important `!`
+
+---
 
 ## group by status
 
 ```tasks
-filename includes Custom Task Statuses
+path includes Custom Task Statuses
 group by status
+sort by description
+```
+
+---
+
+## sort by status
+
+```tasks
+path includes Custom Task Statuses
+sort by status
+sort by description
+```
+
+---
+
+## Done
+
+```tasks
+path includes Custom Task Statuses
+done
+sort by description
+```
+
+---
+
+## Not Done
+
+```tasks
+path includes Custom Task Statuses
+not done
+sort by description
 ```
