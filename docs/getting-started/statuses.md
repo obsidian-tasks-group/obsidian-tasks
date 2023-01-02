@@ -36,6 +36,25 @@ The convention in markdown is:
 
 ### Custom Markdown task statuses
 
+- `> Introduced in Tasks X.Y.Z`
+
+Tasks supports custom task statuses.
+
+This table shows the statues provided by default:
+
+<!-- include: DocsSamplesForStatuses.test.DefaultStatuses_markdown-table.approved.md -->
+| Status Character    | Status Name | Next Status Character |
+| ------------------- | ----------- | --------------------- |
+| `space` | Todo | `x` |
+| `/` | In Progress | `x` |
+| `x` | Done | `space` |
+| `-` | Cancelled | `space` |
+<!-- endInclude -->
+
+Note that `Todo` is followed by `Done`, in order to preserve compatibility with earlier Tasks releases.
+
+It will soon be possible to edit these custom statues, and enable `Todo` -> `In Progress` -> `Done`.
+
 ## Credit: Sytone and the 'Tasks SQL Powered' plugin
 
 This plugin's implementation of reading, searching and editing custom statuses was entirely made possible by the work of [Sytone](https://github.com/sytone) and his fork of Tasks called ['Tasks SQL Powered'](https://github.com/sytone/obsidian-tasks-x).
