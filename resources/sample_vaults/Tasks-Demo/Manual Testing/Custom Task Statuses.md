@@ -19,6 +19,16 @@ sort by description
 
 ---
 
+## sort by status
+
+```tasks
+path includes Custom Task Statuses
+sort by status
+sort by description
+```
+
+---
+
 ## Done
 
 ```tasks
