@@ -1,4 +1,3 @@
-import { Status } from '../../Status';
 import type { Task } from '../../Task';
 import type { Comparator } from '../Sorter';
 import { FilterInstructionsBasedField } from './FilterInstructionsBasedField';
@@ -7,8 +6,11 @@ export class StatusField extends FilterInstructionsBasedField {
     constructor() {
         super();
 
-        this._filters.add('done', (task: Task) => task.status === Status.DONE);
-        this._filters.add('not done', (task: Task) => task.status !== Status.DONE);
+        // Backwards-compatibility note: In Tasks 1.22.0 and earlier, all tasks
+        // with any status character except space were considered to be done
+        // by the status filter instructions.
+        this._filters.add('done', (task: Task) => task.status.indicator !== ' ');
+        this._filters.add('not done', (task: Task) => task.status.indicator === ' ');
     }
 
     public fieldName(): string {

@@ -20,6 +20,10 @@ describe('status', () => {
         // Assert
         expect(filter).not.toMatchTaskFromLine('- [ ] X');
         expect(filter).toMatchTaskFromLine('- [x] X');
+        expect(filter).toMatchTaskFromLine('- [X] X');
+        expect(filter).toMatchTaskFromLine('- [/] X');
+        expect(filter).toMatchTaskFromLine('- [-] X');
+        expect(filter).toMatchTaskFromLine('- [!] X');
     });
 
     it('not done', () => {
@@ -29,6 +33,10 @@ describe('status', () => {
         // Assert
         expect(filter).toMatchTaskFromLine('- [ ] X');
         expect(filter).not.toMatchTaskFromLine('- [x] X');
+        expect(filter).not.toMatchTaskFromLine('- [X] X');
+        expect(filter).not.toMatchTaskFromLine('- [/] X');
+        expect(filter).not.toMatchTaskFromLine('- [-] X');
+        expect(filter).not.toMatchTaskFromLine('- [!] X');
     });
 });
 
