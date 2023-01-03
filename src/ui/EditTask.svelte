@@ -382,7 +382,7 @@
                     id="status"
                     type="checkbox"
                     class="task-list-item-checkbox tasks-modal-checkbox"
-                    checked={editableTask.status === Status.DONE}
+                    checked={editableTask.status.isCompleted()}
                     disabled
                 />
             </div>
