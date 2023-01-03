@@ -375,7 +375,6 @@
                     checked={editableTask.status === Status.DONE}
                     disabled
                 />
-                <code>{editableTask.status}</code>
             </div>
             <div>
                 <span>Done on:</span>
