@@ -4,6 +4,7 @@
     import { Recurrence } from '../Recurrence';
     import { getSettings } from '../Config/Settings';
     import { Status } from '../Status';
+    import { StatusRegistry } from '../StatusRegistry';
     import { Priority, Task } from '../Task';
     import {
         prioritySymbols,
@@ -47,6 +48,7 @@
     let parsedDone: string = '';
     let addGlobalFilterOnSave: boolean = false;
     let withAccessKeys: boolean = true;
+    let statusOptions = StatusRegistry.getInstance().registeredStatuses;
 
     // 'weekend' abbreviation ommitted due to lack of space.
     let datePlaceholder =
@@ -365,9 +367,17 @@
                 />
             </div>
         </div>
+        <div class="tasks-modal-section">
+            <label for="status">Status </label>
+            <select bind:value={editableTask.status} id="status-type" class="dropdown">
+                {#each statusOptions as status}
+                    <option value={status}>{status.name}</option>
+                {/each}
+            </select>
+        </div>
         <div class="tasks-modal-section tasks-modal-status">
             <div>
-                <label for="status">Status:</label>
+                <label for="status">Completed:</label>
                 <input
                     id="status"
                     type="checkbox"
@@ -375,7 +385,6 @@
                     checked={editableTask.status === Status.DONE}
                     disabled
                 />
-                <code>{editableTask.status}</code>
             </div>
             <div>
                 <span>Done on:</span>
