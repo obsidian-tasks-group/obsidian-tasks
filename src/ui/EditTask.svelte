@@ -369,7 +369,7 @@
         </div>
         <div class="tasks-modal-section">
             <label for="status">Status </label>
-            <select bind:value={editableTask.status} id="status" class="dropdown">
+            <select bind:value={editableTask.status} id="status-type" class="dropdown">
                 {#each statusOptions as status}
                     <option value={status}>{status.name}</option>
                 {/each}
