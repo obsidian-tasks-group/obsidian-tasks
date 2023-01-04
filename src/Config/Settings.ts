@@ -1,6 +1,14 @@
 import { Feature } from './Feature';
 import type { FeatureFlag } from './Feature';
 
+interface SettingsMap {
+    [key: string]: string | boolean;
+}
+
+export type HeadingState = {
+    [id: string]: boolean;
+};
+
 export interface Settings {
     globalFilter: string;
     removeGlobalFilter: boolean;
@@ -14,6 +22,13 @@ export interface Settings {
 
     // Collection of feature flag IDs and their state.
     features: FeatureFlag;
+
+    // Settings are moved to a more general map to allow the settings UI to be
+    // dynamically generated.
+    generalSettings: SettingsMap;
+
+    // Tracks the stage of the headings in the settings UI.
+    headingOpened: HeadingState;
 }
 
 const defaultSettings: Settings = {
@@ -27,6 +42,16 @@ const defaultSettings: Settings = {
     useFilenameAsScheduledDate: false,
     filenameAsDateFolders: [],
     features: Feature.settingsFlags,
+    generalSettings: {
+        /* Prevent duplicate values in user settings for now,
+           at least until I start porting the pre-1.23.0 settings
+           code to be generated from settingsConfiguration.json.
+         */
+        // globalFilter: '',
+        // removeGlobalFilter: false,
+        // setDoneDate: true,
+    },
+    headingOpened: {},
 };
 
 let settings: Settings = { ...defaultSettings };
@@ -58,6 +83,23 @@ export const updateSettings = (newSettings: Partial<Settings>): Settings => {
 
 export const resetSettings = (): Settings => {
     return updateSettings(defaultSettings);
+};
+
+export const updateGeneralSetting = (name: string, value: string | boolean): Settings => {
+    settings.generalSettings[name] = value;
+
+    /* Prevent duplicate values in user settings for now,
+       at least until I start porting the pre-1.23.0 settings
+       code to be generated from settingsConfiguration.json.
+     */
+    // sync the old settings for the moment so a larger change is not needed.
+    // updateSettings({
+    //     globalFilter: <string>settings.generalSettings['globalFilter'],
+    //     removeGlobalFilter: <boolean>settings.generalSettings['removeGlobalFilter'],
+    //     setDoneDate: <boolean>settings.generalSettings['setDoneDate'],
+    // });
+
+    return getSettings();
 };
 
 /**

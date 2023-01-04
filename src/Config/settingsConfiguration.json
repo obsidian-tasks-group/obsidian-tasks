@@ -1,0 +1,14 @@
+[
+  {
+    "text": "Placeholder for Tasks Status Types",
+    "level": "h1",
+    "class": "",
+    "open": true,
+    "notice": {
+      "class": "setting-item-description",
+      "text": "This will end up allowing customisation of task statuses.",
+      "html": ""
+    },
+    "settings": []
+  }
+]
