@@ -5,7 +5,7 @@
     "class": "",
     "open": true,
     "notice": {
-      "class": "",
+      "class": "setting-item-description",
       "text": "This will end up allowing customisation of task statuses.",
       "html": ""
     },
