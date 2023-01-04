@@ -4,7 +4,6 @@
     import { Recurrence } from '../Recurrence';
     import { getSettings } from '../Config/Settings';
     import { Status } from '../Status';
-    import { StatusRegistry } from '../StatusRegistry';
     import { Priority, Task } from '../Task';
     import {
         prioritySymbols,
@@ -15,8 +14,10 @@
     } from '../Task';
     import { doAutocomplete } from '../DateAbbreviations';
 
+    // These exported variables are passed in as props by TaskModal.onOpen():
     export let task: Task;
     export let onSubmit: (updatedTasks: Task[]) => void | Promise<void>;
+    export let statusOptions: Status[];
 
     let descriptionInput: HTMLInputElement;
     let editableTask: {
@@ -48,7 +49,6 @@
     let parsedDone: string = '';
     let addGlobalFilterOnSave: boolean = false;
     let withAccessKeys: boolean = true;
-    let statusOptions = StatusRegistry.getInstance().registeredStatuses;
 
     // 'weekend' abbreviation ommitted due to lack of space.
     let datePlaceholder =
