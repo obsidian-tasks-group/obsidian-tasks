@@ -9,6 +9,7 @@ import { newLivePreviewExtension } from './LivePreviewExtension';
 import { QueryRenderer } from './QueryRenderer';
 import { getSettings, updateSettings } from './Config/Settings';
 import { SettingsTab } from './Config/SettingsTab';
+import { StatusRegistry } from './StatusRegistry';
 import { EditorSuggestor } from './Suggestor/EditorSuggestorPopup';
 
 export default class TasksPlugin extends Plugin {
@@ -27,6 +28,9 @@ export default class TasksPlugin extends Plugin {
             vault: this.app.vault,
         });
 
+        // Load configured status types.
+        await this.loadTaskStatuses();
+
         const events = new TasksEvents({ obsidianEvents: this.app.workspace });
         this.cache = new Cache({
             metadataCache: this.app.metadataCache,
@@ -41,6 +45,16 @@ export default class TasksPlugin extends Plugin {
         new Commands({ plugin: this });
     }
 
+    async loadTaskStatuses() {
+        const { statusTypes } = getSettings();
+
+        // Reset the registry as this may also come from a settings add/delete.
+        StatusRegistry.getInstance().clearStatuses();
+        statusTypes.forEach((statusType) => {
+            StatusRegistry.getInstance().add(statusType);
+        });
+    }
+
     onunload() {
         console.log('unloading plugin "tasks"');
         this.cache?.unload();
@@ -49,6 +63,7 @@ export default class TasksPlugin extends Plugin {
     async loadSettings() {
         const newSettings = await this.loadData();
         updateSettings(newSettings);
+        await this.loadTaskStatuses();
     }
 
     async saveSettings() {
