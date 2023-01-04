@@ -4,7 +4,6 @@
     import { Recurrence } from '../Recurrence';
     import { getSettings } from '../Config/Settings';
     import { Status } from '../Status';
-    import { StatusRegistry } from '../StatusRegistry';
     import { Priority, Task } from '../Task';
     import {
         prioritySymbols,
@@ -15,8 +14,10 @@
     } from '../Task';
     import { doAutocomplete } from '../DateAbbreviations';
 
+    // These exported variables are passed in as props by TaskModal.onOpen():
     export let task: Task;
     export let onSubmit: (updatedTasks: Task[]) => void | Promise<void>;
+    export let statusOptions: Status[];
 
     let descriptionInput: HTMLInputElement;
     let editableTask: {
@@ -48,7 +49,6 @@
     let parsedDone: string = '';
     let addGlobalFilterOnSave: boolean = false;
     let withAccessKeys: boolean = true;
-    let statusOptions = StatusRegistry.getInstance().registeredStatuses;
 
     // 'weekend' abbreviation ommitted due to lack of space.
     let datePlaceholder =
@@ -371,7 +371,7 @@
             <label for="status">Status </label>
             <select bind:value={editableTask.status} id="status-type" class="dropdown">
                 {#each statusOptions as status}
-                    <option value={status}>{status.name}</option>
+                    <option value={status}>{status.name} [{status.indicator}]</option>
                 {/each}
             </select>
         </div>
@@ -382,7 +382,7 @@
                     id="status"
                     type="checkbox"
                     class="task-list-item-checkbox tasks-modal-checkbox"
-                    checked={editableTask.status === Status.DONE}
+                    checked={editableTask.status.isCompleted()}
                     disabled
                 />
             </div>
