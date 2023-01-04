@@ -7,7 +7,7 @@
     "notice": {
       "class": "",
       "text": "If you want to have the tasks support additional statuses outside of the default ones add them here with the status indicator. ",
-      "html": "By default the following statuses are supported:<ul><li><strong>- [ ] Todo</strong> - This has a {space} between the brackets. Will toggle to In Progress.</li><li><strong>- [/] In Progress</strong> - This has a {/} between the brackets. Will toggle to Done.</li><li><strong>- [x] Done</strong> - This has a {x} between the brackets. Will toggle to Todo.</li><li><strong>- [-] Cancelled</strong> - This has a {-} between the brackets. Will toggle to Todo.</li></ul>"
+      "html": "By default the following statuses are supported:<ul><li><strong>- [ ] Todo</strong> - This has a {space} between the brackets. Will toggle to Done.</li><li><strong>- [/] In Progress</strong> - This has a {/} between the brackets. Will toggle to Done.</li><li><strong>- [x] Done</strong> - This has a {x} between the brackets. Will toggle to Todo.</li><li><strong>- [-] Cancelled</strong> - This has a {-} between the brackets. Will toggle to Todo.</li></ul>"
     },
     "settings": [
       {
