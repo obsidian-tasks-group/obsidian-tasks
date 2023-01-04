@@ -41,6 +41,55 @@ Follow the steps below to install Tasks.
 4. Replace the "Toggle checkbox status" hotkey with "Tasks: Toggle Done".
     - I recommend you remove the original toggle hotkey and set the "Tasks" toggle to `Ctrl + Enter` (or `Cmd + Enter` on a mac).
 
+## Getting Started
+
+### Write some tasks
+
+Create a few tasks in a Markdown note in your vault. For example:
+
+```text
+- [ ] Something non-important, with no date
+- [ ] Remember to do that important thing - with a due date 📅 2022-12-17
+- [ ] Send Kate a birthday card - with a scheduled date 🔁 every January on the 4th ⏳ 2023-01-04
+```
+
+Find out more in [Getting Started](https://obsidian-tasks-group.github.io/obsidian-tasks/getting-started/), and its sub-sections.
+
+### Create your first Tasks search
+
+And then write a Tasks search block somewhere in your Obsidian vault, to find the tasks that are interesting.
+
+Here is an example that shows a few different features. View it in Reading or Live Preview modes to see the results.
+
+````text
+```tasks
+# Only tasks that are not done, that is, which begin like this (but without the quotes):
+#   '- [ ] ' or
+#   '* [ ] ' or
+#   '1. [ ] '
+# Indented tasks are supported, but only single-line tasks.
+not done
+
+# Tasks due today or earlier:
+due before tomorrow
+
+# Restrict to at most 100 tasks.
+# If you ask Tasks to display many hundreds or thousands of tasks,
+# Obsidian's editing performance really slows down.
+limit 100
+
+# Group and sort the output:
+group by filename
+sort by due reverse
+sort by description
+
+# Optionally, ask Tasks to explain how it interpreted this query:
+explain
+```
+````
+
+Find out more in [Queries](https://obsidian-tasks-group.github.io/obsidian-tasks/queries/), and its sub-sections.
+
 ## Documentation
 
 For user documentation, please check [https://obsidian-tasks-group.github.io/obsidian-tasks/](https://obsidian-tasks-group.github.io/obsidian-tasks/).
@@ -48,6 +97,8 @@ For user documentation, please check [https://obsidian-tasks-group.github.io/obs
 ## Development
 
 Clone the repository, run `yarn` to install the dependencies, and run `yarn dev` to compile the plugin and watch file changes.
+
+Then see [CONTRIBUTING.md](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/CONTRIBUTING.md).
 
 ## Donations
 
