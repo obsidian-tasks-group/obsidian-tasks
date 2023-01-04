@@ -43,14 +43,13 @@ const defaultSettings: Settings = {
     filenameAsDateFolders: [],
     features: Feature.settingsFlags,
     generalSettings: {
-        globalFilter: '',
-        removeGlobalFilter: false,
-        setDoneDate: true,
-
-        // Allows the filter to be pushed to the end of the tag. Available if APPEND_GLOBAL_FILTER feature enabled.
-        appendGlobalFilter: false,
-
-        defaultRenderTemplate: '',
+        /* Prevent duplicate values in user settings for now,
+           at least until I start porting the pre-1.23.0 settings
+           code to be generated from settingsConfiguration.json.
+         */
+        // globalFilter: '',
+        // removeGlobalFilter: false,
+        // setDoneDate: true,
     },
     headingOpened: {},
 };
