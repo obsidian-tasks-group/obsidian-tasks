@@ -88,12 +88,16 @@ export const resetSettings = (): Settings => {
 export const updateGeneralSetting = (name: string, value: string | boolean): Settings => {
     settings.generalSettings[name] = value;
 
+    /* Prevent duplicate values in user settings for now,
+       at least until I start porting the pre-1.23.0 settings
+       code to be generated from settingsConfiguration.json.
+     */
     // sync the old settings for the moment so a larger change is not needed.
-    updateSettings({
-        globalFilter: <string>settings.generalSettings['globalFilter'],
-        removeGlobalFilter: <boolean>settings.generalSettings['removeGlobalFilter'],
-        setDoneDate: <boolean>settings.generalSettings['setDoneDate'],
-    });
+    // updateSettings({
+    //     globalFilter: <string>settings.generalSettings['globalFilter'],
+    //     removeGlobalFilter: <boolean>settings.generalSettings['removeGlobalFilter'],
+    //     setDoneDate: <boolean>settings.generalSettings['setDoneDate'],
+    // });
 
     return getSettings();
 };
