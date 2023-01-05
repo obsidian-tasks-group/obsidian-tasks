@@ -385,11 +385,7 @@ export class SettingsTab extends PluginSettingTab {
                             const index = statusTypes.indexOf(status_type);
                             if (index > -1) {
                                 statusTypes.splice(index, 1);
-                                updateSettings({
-                                    statusTypes: statusTypes,
-                                });
-
-                                await settings.saveSettings(true);
+                                await updateAndSaveStatusSettings(statusTypes, settings);
                             }
                         });
                 })
@@ -406,11 +402,7 @@ export class SettingsTab extends PluginSettingTab {
                                     const index = statusTypes.indexOf(status_type);
                                     if (index > -1) {
                                         statusTypes.splice(index, 1, modal.statusConfiguration());
-                                        updateSettings({
-                                            statusTypes: statusTypes,
-                                        });
-
-                                        await settings.saveSettings(true);
+                                        await updateAndSaveStatusSettings(statusTypes, settings);
                                     }
                                 }
                             };
@@ -430,11 +422,7 @@ export class SettingsTab extends PluginSettingTab {
                 .setCta()
                 .onClick(async () => {
                     statusTypes.push(new StatusConfiguration('', '', '', false));
-                    updateSettings({
-                        statusTypes: statusTypes,
-                    });
-
-                    await settings.saveSettings(true);
+                    await updateAndSaveStatusSettings(statusTypes, settings);
                 });
         });
         setting.infoEl.remove();
@@ -482,6 +470,10 @@ async function addCustomStatesToSettings(
         new Notice(notice);
     });
 
+    await updateAndSaveStatusSettings(statusTypes, settings);
+}
+
+async function updateAndSaveStatusSettings(statusTypes: StatusConfiguration[], settings: SettingsTab) {
     updateSettings({
         statusTypes: statusTypes,
     });
