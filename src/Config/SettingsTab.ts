@@ -454,30 +454,11 @@ export class SettingsTab extends PluginSettingTab {
                 .setButtonText('Add all Status types supported by Minimal Theme')
                 .setCta()
                 .onClick(async () => {
-                    const minimalSupportedStatuses: Array<[string, string, string]> = [
-                        ['>', 'Forwarded', 'x'],
-                        ['<', 'Schedule', 'x'],
-                        ['?', 'Question', 'x'],
-                        // ['/', 'Incomplete', 'x'], This is used for In Progress
-                        ['!', 'Important', 'x'],
-                        ['"', 'Quote', 'x'],
-                        ['-', 'Canceled', 'x'],
-                        ['*', 'Star', 'x'],
-                        ['l', 'Location', 'x'],
-                        ['i', 'Info', 'x'],
-                        ['S', 'Amount/savings/money', 'x'],
-                        ['I', 'Idea/lightbulb', 'x'],
-                        ['f', 'Fire', 'x'],
-                        ['k', 'Key', 'x'],
-                        ['u', 'Up', 'x'],
-                        ['d', 'Down', 'x'],
-                        ['w', 'Win', 'x'],
-                        ['p', 'Pros', 'x'],
-                        ['c', 'Cons', 'x'],
-                        ['b', 'Bookmark', 'x'],
-                    ];
-
-                    await addCustomStatesToSettings(minimalSupportedStatuses, statusTypes, settings);
+                    await addCustomStatesToSettings(
+                        StatusSettingsHelpers.minimalSupportedStatuses(),
+                        statusTypes,
+                        settings,
+                    );
                 });
         });
         addStatusesSupportedByMinimalTheme.infoEl.remove();
