@@ -405,16 +405,7 @@ export class SettingsTab extends PluginSettingTab {
                                 if (modal.saved) {
                                     const index = statusTypes.indexOf(status_type);
                                     if (index > -1) {
-                                        statusTypes.splice(
-                                            index,
-                                            1,
-                                            new StatusConfiguration(
-                                                modal.statusSymbol,
-                                                modal.statusName,
-                                                modal.statusNextSymbol,
-                                                modal.statusAvailableAsCommand,
-                                            ),
-                                        );
+                                        statusTypes.splice(index, 1, modal.statusConfiguration());
                                         updateSettings({
                                             statusTypes: statusTypes,
                                         });
