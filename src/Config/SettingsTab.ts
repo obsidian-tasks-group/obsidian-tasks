@@ -525,6 +525,7 @@ async function addCustomStatesToSettings(
     statusTypes: StatusConfiguration[],
     settings: SettingsTab,
 ) {
+    const notices: string[] = [];
     supportedStatuses.forEach((importedStatus) => {
         const hasStatus = statusTypes.find((element) => {
             return (
@@ -536,8 +537,12 @@ async function addCustomStatesToSettings(
         if (!hasStatus) {
             statusTypes.push(new StatusConfiguration(importedStatus[0], importedStatus[1], importedStatus[2], false));
         } else {
-            new Notice(`The status ${importedStatus[1]} (${importedStatus[0]}) is already added.`);
+            notices.push(`The status ${importedStatus[1]} (${importedStatus[0]}) is already added.`);
         }
+    });
+
+    notices.forEach((notice) => {
+        new Notice(notice);
     });
 
     updateSettings({
