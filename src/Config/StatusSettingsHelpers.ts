@@ -36,3 +36,29 @@ export function addCustomStatusesCollection(
     });
     return notices;
 }
+
+export function minimalSupportedStatuses() {
+    const zzz: Array<[string, string, string]> = [
+        ['>', 'Forwarded', 'x'],
+        ['<', 'Schedule', 'x'],
+        ['?', 'Question', 'x'],
+        // ['/', 'Incomplete', 'x'], This is used for In Progress
+        ['!', 'Important', 'x'],
+        ['"', 'Quote', 'x'],
+        ['-', 'Canceled', 'x'],
+        ['*', 'Star', 'x'],
+        ['l', 'Location', 'x'],
+        ['i', 'Info', 'x'],
+        ['S', 'Amount/savings/money', 'x'],
+        ['I', 'Idea/lightbulb', 'x'],
+        ['f', 'Fire', 'x'],
+        ['k', 'Key', 'x'],
+        ['u', 'Up', 'x'],
+        ['d', 'Down', 'x'],
+        ['w', 'Win', 'x'],
+        ['p', 'Pros', 'x'],
+        ['c', 'Cons', 'x'],
+        ['b', 'Bookmark', 'x'],
+    ];
+    return zzz;
+}
