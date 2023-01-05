@@ -520,11 +520,20 @@ export class SettingsTab extends PluginSettingTab {
     }
 }
 
-async function addCustomStatesToSettings(
+/**
+ * Add a collection of of supported statuses to an existing collection of StatusConfiguration objects.
+ * This can be used to quickly populate the user's settings.
+ * If there are any exact duplicates already present, they are skipped, and noted in the returned value.
+ *
+ * @param supportedStatuses - an array of status specifications, for example `['b', 'Bookmark', 'x']`
+ * @param statusTypes {@link StatusConfiguration} - an array of existing known statuses
+ * @return An array of warning messages to show the user, one for each rejected exact duplicate status.
+ *
+ */
+function addCustomStatusesCollection(
     supportedStatuses: Array<[string, string, string]>,
     statusTypes: StatusConfiguration[],
-    settings: SettingsTab,
-) {
+): string[] {
     const notices: string[] = [];
     supportedStatuses.forEach((importedStatus) => {
         const hasStatus = statusTypes.find((element) => {
@@ -540,6 +549,15 @@ async function addCustomStatesToSettings(
             notices.push(`The status ${importedStatus[1]} (${importedStatus[0]}) is already added.`);
         }
     });
+    return notices;
+}
+
+async function addCustomStatesToSettings(
+    supportedStatuses: Array<[string, string, string]>,
+    statusTypes: StatusConfiguration[],
+    settings: SettingsTab,
+) {
+    const notices = addCustomStatusesCollection(supportedStatuses, statusTypes);
 
     notices.forEach((notice) => {
         new Notice(notice);
