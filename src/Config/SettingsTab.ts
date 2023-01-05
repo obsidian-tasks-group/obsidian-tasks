@@ -8,35 +8,6 @@ import settingsJson from './settingsConfiguration.json';
 import { CustomStatusModal } from './CustomStatusModal';
 import * as StatusSettingsHelpers from './StatusSettingsHelpers';
 
-function itsSupportedStatuses() {
-    const zzz: Array<[string, string, string]> = [
-        //['X', 'Checked', 'x'],
-        ['>', 'Forward', 'x'],
-        ['D', 'Deferred/Scheduled', 'x'],
-        //['-', 'Cancelled/Non-Task', 'x'],
-        ['?', 'Question', 'x'],
-        ['!', 'Important', 'x'],
-        ['+', 'Add', 'x'],
-        //['/', 'Half Done', 'x'],
-        ['R', 'Research', 'x'],
-        ['i', 'Idea', 'x'],
-        ['B', 'Brainstorm', 'x'],
-        ['P', 'Pro', 'x'],
-        ['C', 'Con', 'x'],
-        ['I', 'Info', 'x'],
-        ['Q', 'Quote', 'x'],
-        ['N', 'Note', 'x'],
-        ['b', 'Bookmark', 'x'],
-        ['p', 'Paraphrase', 'x'],
-        ['E', 'Example', 'x'],
-        ['L', 'Location', 'x'],
-        ['A', 'Answer', 'x'],
-        ['r', 'Reward', 'x'],
-        ['c', 'Choice', 'x'],
-    ];
-    return zzz;
-}
-
 export class SettingsTab extends PluginSettingTab {
     // If the UI needs a more complex setting you can create a
     // custom function and specify it from the json file. It will
@@ -498,9 +469,11 @@ export class SettingsTab extends PluginSettingTab {
                 .setButtonText('Add all Status types supported by ITS Theme')
                 .setCta()
                 .onClick(async () => {
-                    const zzz = itsSupportedStatuses();
-
-                    await addCustomStatesToSettings(zzz, statusTypes, settings);
+                    await addCustomStatesToSettings(
+                        StatusSettingsHelpers.itsSupportedStatuses(),
+                        statusTypes,
+                        settings,
+                    );
                 });
         });
         addStatusesSupportedByITSTheme.infoEl.remove();
