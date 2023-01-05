@@ -1,5 +1,5 @@
 import { Modal, Setting, TextComponent } from 'obsidian';
-import type { StatusConfiguration } from '../Status';
+import { StatusConfiguration } from '../Status';
 import type TasksPlugin from '../main';
 
 export class CustomStatusModal extends Modal {
@@ -15,6 +15,18 @@ export class CustomStatusModal extends Modal {
         this.statusName = statusType.name;
         this.statusNextSymbol = statusType.nextStatusIndicator;
         this.statusAvailableAsCommand = statusType.availableAsCommand;
+    }
+
+    /**
+     * Return a {@link StatusConfiguration} from the modal's contents
+     */
+    public statusConfiguration() {
+        return new StatusConfiguration(
+            this.statusSymbol,
+            this.statusName,
+            this.statusNextSymbol,
+            this.statusAvailableAsCommand,
+        );
     }
 
     async display() {
