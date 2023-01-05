@@ -6,7 +6,7 @@
 import { StatusConfiguration } from '../Status';
 
 /**
- * Add a collection of of supported statuses to an existing collection of StatusConfiguration objects.
+ * Add a collection of supported statuses to an existing collection of StatusConfiguration objects.
  * This can be used to quickly populate the user's settings.
  * If there are any exact duplicates already present, they are skipped, and noted in the returned value.
  *
@@ -14,6 +14,7 @@ import { StatusConfiguration } from '../Status';
  * @param statusTypes {@link StatusConfiguration} - an array of existing known statuses
  * @return An array of warning messages to show the user, one for each rejected exact duplicate status.
  *
+ * @see {@link minimalSupportedStatuses}, {@link itsSupportedStatuses}
  */
 export function addCustomStatusesCollection(
     supportedStatuses: Array<[string, string, string]>,
@@ -37,6 +38,12 @@ export function addCustomStatusesCollection(
     return notices;
 }
 
+/**
+ * Status supported by the Minimal theme. {@link https://github.com/kepano/obsidian-minimal}
+ * Values recognised by Tasks are excluded.
+ * @todo Check if this is up-to-date.
+ * @see {@link addCustomStatusesCollection}
+ */
 export function minimalSupportedStatuses() {
     const zzz: Array<[string, string, string]> = [
         ['>', 'Forwarded', 'x'],
@@ -63,6 +70,12 @@ export function minimalSupportedStatuses() {
     return zzz;
 }
 
+/**
+ * Status supported by the ITS theme. {@link https://github.com/SlRvb/Obsidian--ITS-Theme}
+ * Values recognised by Tasks are excluded.
+ * @todo  Check if this is up-to-date.
+ * @see {@link addCustomStatusesCollection}
+ */
 export function itsSupportedStatuses() {
     const zzz: Array<[string, string, string]> = [
         //['X', 'Checked', 'x'],
