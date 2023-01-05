@@ -1,11 +1,12 @@
 import { Notice, PluginSettingTab, Setting, debounce } from 'obsidian';
 import { StatusConfiguration } from 'Status';
 import type TasksPlugin from '../main';
-import { getSettings, isFeatureEnabled, updateGeneralSetting, updateSettings } from './Settings';
 import type { HeadingState } from './Settings';
+import { getSettings, isFeatureEnabled, updateGeneralSetting, updateSettings } from './Settings';
 import settingsJson from './settingsConfiguration.json';
 
 import { CustomStatusModal } from './CustomStatusModal';
+import * as StatusSettingsHelpers from './StatusSettingsHelpers';
 
 export class SettingsTab extends PluginSettingTab {
     // If the UI needs a more complex setting you can create a
@@ -520,44 +521,12 @@ export class SettingsTab extends PluginSettingTab {
     }
 }
 
-/**
- * Add a collection of of supported statuses to an existing collection of StatusConfiguration objects.
- * This can be used to quickly populate the user's settings.
- * If there are any exact duplicates already present, they are skipped, and noted in the returned value.
- *
- * @param supportedStatuses - an array of status specifications, for example `['b', 'Bookmark', 'x']`
- * @param statusTypes {@link StatusConfiguration} - an array of existing known statuses
- * @return An array of warning messages to show the user, one for each rejected exact duplicate status.
- *
- */
-function addCustomStatusesCollection(
-    supportedStatuses: Array<[string, string, string]>,
-    statusTypes: StatusConfiguration[],
-): string[] {
-    const notices: string[] = [];
-    supportedStatuses.forEach((importedStatus) => {
-        const hasStatus = statusTypes.find((element) => {
-            return (
-                element.indicator == importedStatus[0] &&
-                element.name == importedStatus[1] &&
-                element.nextStatusIndicator == importedStatus[2]
-            );
-        });
-        if (!hasStatus) {
-            statusTypes.push(new StatusConfiguration(importedStatus[0], importedStatus[1], importedStatus[2], false));
-        } else {
-            notices.push(`The status ${importedStatus[1]} (${importedStatus[0]}) is already added.`);
-        }
-    });
-    return notices;
-}
-
 async function addCustomStatesToSettings(
     supportedStatuses: Array<[string, string, string]>,
     statusTypes: StatusConfiguration[],
     settings: SettingsTab,
 ) {
-    const notices = addCustomStatusesCollection(supportedStatuses, statusTypes);
+    const notices = StatusSettingsHelpers.addCustomStatusesCollection(supportedStatuses, statusTypes);
 
     notices.forEach((notice) => {
         new Notice(notice);
