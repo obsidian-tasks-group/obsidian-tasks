@@ -366,11 +366,7 @@ export class SettingsTab extends PluginSettingTab {
             //const taskStatusDiv = containerEl.createEl('div');
 
             const taskStatusPreview = containerEl.createEl('pre');
-            let commandNotice = '';
-            if (status_type.availableAsCommand) {
-                commandNotice = 'Available as a command.';
-            }
-            taskStatusPreview.textContent = `- [${status_type.indicator}] ${status_type.name}, next status is '${status_type.nextStatusIndicator}'. ${commandNotice}`;
+            taskStatusPreview.textContent = StatusSettingsHelpers.statusPreviewText(status_type);
 
             const setting = new Setting(containerEl);
 

@@ -6,6 +6,18 @@
 import { StatusConfiguration } from '../Status';
 
 /**
+ * Return a one-line summary of the status, for presentation to users.
+ * @param status
+ */
+export function statusPreviewText(status: StatusConfiguration) {
+    let commandNotice = '';
+    if (status.availableAsCommand) {
+        commandNotice = 'Available as a command.';
+    }
+    return `- [${status.indicator}] ${status.name}, next status is '${status.nextStatusIndicator}'. ${commandNotice}`;
+}
+
+/**
  * Add a collection of supported statuses to an existing collection of StatusConfiguration objects.
  * This can be used to quickly populate the user's settings.
  * If there are any exact duplicates already present, they are skipped, and noted in the returned value.
