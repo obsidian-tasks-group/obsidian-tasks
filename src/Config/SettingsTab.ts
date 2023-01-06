@@ -362,13 +362,15 @@ export class SettingsTab extends PluginSettingTab {
      */
     insertTaskStatusSettings(containerEl: HTMLElement, settings: SettingsTab) {
         const { statusTypes } = getSettings();
-        const plugin = settings.plugin;
+
+        /* -------------------- One row per status in the settings -------------------- */
         statusTypes.forEach((status_type) => {
-            createRowForTaskStatus(containerEl, status_type, statusTypes, settings, plugin);
+            createRowForTaskStatus(containerEl, status_type, statusTypes, settings, settings.plugin);
         });
 
         containerEl.createEl('div');
 
+        /* -------------------- 'Add New Task Status' button -------------------- */
         const setting = new Setting(containerEl).addButton((button) => {
             button
                 .setButtonText('Add New Task Status')
