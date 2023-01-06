@@ -417,14 +417,14 @@ export class SettingsTab extends PluginSettingTab {
 /**
  * Create the row to see and modify settings for a single task status type.
  * @param containerEl
- * @param status_type - The status type to be edited.
+ * @param statusType - The status type to be edited.
  * @param statusTypes - All the status types already in the user's settings, EXCEPT the standard ones.
  * @param settings
  * @param plugin
  */
 function createRowForTaskStatus(
     containerEl: HTMLElement,
-    status_type: StatusConfiguration,
+    statusType: StatusConfiguration,
     statusTypes: StatusConfiguration[],
     settings: SettingsTab,
     plugin: TasksPlugin,
@@ -432,7 +432,7 @@ function createRowForTaskStatus(
     //const taskStatusDiv = containerEl.createEl('div');
 
     const taskStatusPreview = containerEl.createEl('pre');
-    taskStatusPreview.textContent = StatusSettingsHelpers.statusPreviewText(status_type);
+    taskStatusPreview.textContent = StatusSettingsHelpers.statusPreviewText(statusType);
 
     const setting = new Setting(containerEl);
 
@@ -444,7 +444,7 @@ function createRowForTaskStatus(
                 .setIcon('cross')
                 .setTooltip('Delete')
                 .onClick(async () => {
-                    const index = statusTypes.indexOf(status_type);
+                    const index = statusTypes.indexOf(statusType);
                     if (index > -1) {
                         statusTypes.splice(index, 1);
                         await updateAndSaveStatusSettings(statusTypes, settings);
@@ -457,11 +457,11 @@ function createRowForTaskStatus(
                 .setIcon('pencil')
                 .setTooltip('Edit')
                 .onClick(async () => {
-                    const modal = new CustomStatusModal(plugin, status_type);
+                    const modal = new CustomStatusModal(plugin, statusType);
 
                     modal.onClose = async () => {
                         if (modal.saved) {
-                            const index = statusTypes.indexOf(status_type);
+                            const index = statusTypes.indexOf(statusType);
                             if (index > -1) {
                                 statusTypes.splice(index, 1, modal.statusConfiguration());
                                 await updateAndSaveStatusSettings(statusTypes, settings);
