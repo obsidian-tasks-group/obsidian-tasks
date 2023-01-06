@@ -52,10 +52,6 @@ export abstract class TextField extends Field {
         return FilterOrErrorMessage.fromFilter(filter);
     }
 
-    public static stringIncludesCaseInsensitive(haystack: string, needle: string): boolean {
-        return SubstringMatcher.stringIncludesCaseInsensitive(haystack, needle);
-    }
-
     /**
      * Returns a regexp pattern matching the field's name and possible aliases
      */
