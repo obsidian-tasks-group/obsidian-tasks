@@ -364,51 +364,7 @@ export class SettingsTab extends PluginSettingTab {
         const { statusTypes } = getSettings();
         const plugin = settings.plugin;
         statusTypes.forEach((status_type) => {
-            //const taskStatusDiv = containerEl.createEl('div');
-
-            const taskStatusPreview = containerEl.createEl('pre');
-            taskStatusPreview.textContent = StatusSettingsHelpers.statusPreviewText(status_type);
-
-            const setting = new Setting(containerEl);
-
-            setting.infoEl.replaceWith(taskStatusPreview);
-
-            setting
-                .addExtraButton((extra) => {
-                    extra
-                        .setIcon('cross')
-                        .setTooltip('Delete')
-                        .onClick(async () => {
-                            const index = statusTypes.indexOf(status_type);
-                            if (index > -1) {
-                                statusTypes.splice(index, 1);
-                                await updateAndSaveStatusSettings(statusTypes, settings);
-                            }
-                        });
-                })
-
-                .addExtraButton((extra) => {
-                    extra
-                        .setIcon('pencil')
-                        .setTooltip('Edit')
-                        .onClick(async () => {
-                            const modal = new CustomStatusModal(plugin, status_type);
-
-                            modal.onClose = async () => {
-                                if (modal.saved) {
-                                    const index = statusTypes.indexOf(status_type);
-                                    if (index > -1) {
-                                        statusTypes.splice(index, 1, modal.statusConfiguration());
-                                        await updateAndSaveStatusSettings(statusTypes, settings);
-                                    }
-                                }
-                            };
-
-                            modal.open();
-                        });
-                });
-
-            setting.infoEl.remove();
+            createRowForTaskStatus(containerEl, status_type, statusTypes, settings, plugin);
         });
 
         containerEl.createEl('div');
@@ -454,6 +410,60 @@ export class SettingsTab extends PluginSettingTab {
         });
         addStatusesSupportedByITSTheme.infoEl.remove();
     }
+}
+
+function createRowForTaskStatus(
+    containerEl: HTMLElement,
+    status_type: StatusConfiguration,
+    statusTypes: StatusConfiguration[],
+    settings: SettingsTab,
+    plugin: TasksPlugin,
+) {
+    //const taskStatusDiv = containerEl.createEl('div');
+
+    const taskStatusPreview = containerEl.createEl('pre');
+    taskStatusPreview.textContent = StatusSettingsHelpers.statusPreviewText(status_type);
+
+    const setting = new Setting(containerEl);
+
+    setting.infoEl.replaceWith(taskStatusPreview);
+
+    setting
+        .addExtraButton((extra) => {
+            extra
+                .setIcon('cross')
+                .setTooltip('Delete')
+                .onClick(async () => {
+                    const index = statusTypes.indexOf(status_type);
+                    if (index > -1) {
+                        statusTypes.splice(index, 1);
+                        await updateAndSaveStatusSettings(statusTypes, settings);
+                    }
+                });
+        })
+
+        .addExtraButton((extra) => {
+            extra
+                .setIcon('pencil')
+                .setTooltip('Edit')
+                .onClick(async () => {
+                    const modal = new CustomStatusModal(plugin, status_type);
+
+                    modal.onClose = async () => {
+                        if (modal.saved) {
+                            const index = statusTypes.indexOf(status_type);
+                            if (index > -1) {
+                                statusTypes.splice(index, 1, modal.statusConfiguration());
+                                await updateAndSaveStatusSettings(statusTypes, settings);
+                            }
+                        }
+                    };
+
+                    modal.open();
+                });
+        });
+
+    setting.infoEl.remove();
 }
 
 async function addCustomStatesToSettings(
