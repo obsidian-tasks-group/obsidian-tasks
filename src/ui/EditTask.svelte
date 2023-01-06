@@ -318,7 +318,7 @@
             <!-- svelte-ignore a11y-accesskey -->
             <input
                 bind:value={editableTask.recurrenceRule}
-                id="description"
+                id="recurrence"
                 type="text"
                 placeholder="Try 'every 2 weeks on Thursday'."
                 accesskey={accesskey("r")}

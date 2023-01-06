@@ -343,9 +343,7 @@ export class Recurrence {
         options.dtstart = after.startOf('day').toDate();
         rrule = new RRule(options);
 
-        const next = window.moment(rrule.after(after.toDate()));
-
-        return next;
+        return window.moment(rrule.after(after.toDate()));
     }
 
     private static addTimezone(date: Moment): Moment {
