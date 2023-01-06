@@ -414,6 +414,14 @@ export class SettingsTab extends PluginSettingTab {
     }
 }
 
+/**
+ * Create the row to see and modify settings for a single task status type.
+ * @param containerEl
+ * @param status_type - The status type to be edited.
+ * @param statusTypes - All the status types already in the user's settings, EXCEPT the standard ones.
+ * @param settings
+ * @param plugin
+ */
 function createRowForTaskStatus(
     containerEl: HTMLElement,
     status_type: StatusConfiguration,
