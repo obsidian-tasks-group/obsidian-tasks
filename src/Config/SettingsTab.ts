@@ -362,6 +362,7 @@ export class SettingsTab extends PluginSettingTab {
      */
     insertTaskStatusSettings(containerEl: HTMLElement, settings: SettingsTab) {
         const { statusTypes } = getSettings();
+        const plugin = settings.plugin;
         statusTypes.forEach((status_type) => {
             //const taskStatusDiv = containerEl.createEl('div');
 
@@ -391,7 +392,7 @@ export class SettingsTab extends PluginSettingTab {
                         .setIcon('pencil')
                         .setTooltip('Edit')
                         .onClick(async () => {
-                            const modal = new CustomStatusModal(settings.plugin, status_type);
+                            const modal = new CustomStatusModal(plugin, status_type);
 
                             modal.onClose = async () => {
                                 if (modal.saved) {
