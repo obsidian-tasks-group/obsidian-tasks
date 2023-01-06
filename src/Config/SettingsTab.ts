@@ -362,56 +362,15 @@ export class SettingsTab extends PluginSettingTab {
      */
     insertTaskStatusSettings(containerEl: HTMLElement, settings: SettingsTab) {
         const { statusTypes } = getSettings();
+
+        /* -------------------- One row per status in the settings -------------------- */
         statusTypes.forEach((status_type) => {
-            //const taskStatusDiv = containerEl.createEl('div');
-
-            const taskStatusPreview = containerEl.createEl('pre');
-            taskStatusPreview.textContent = StatusSettingsHelpers.statusPreviewText(status_type);
-
-            const setting = new Setting(containerEl);
-
-            setting.infoEl.replaceWith(taskStatusPreview);
-
-            setting
-                .addExtraButton((extra) => {
-                    extra
-                        .setIcon('cross')
-                        .setTooltip('Delete')
-                        .onClick(async () => {
-                            const index = statusTypes.indexOf(status_type);
-                            if (index > -1) {
-                                statusTypes.splice(index, 1);
-                                await updateAndSaveStatusSettings(statusTypes, settings);
-                            }
-                        });
-                })
-
-                .addExtraButton((extra) => {
-                    extra
-                        .setIcon('pencil')
-                        .setTooltip('Edit')
-                        .onClick(async () => {
-                            const modal = new CustomStatusModal(settings.plugin, status_type);
-
-                            modal.onClose = async () => {
-                                if (modal.saved) {
-                                    const index = statusTypes.indexOf(status_type);
-                                    if (index > -1) {
-                                        statusTypes.splice(index, 1, modal.statusConfiguration());
-                                        await updateAndSaveStatusSettings(statusTypes, settings);
-                                    }
-                                }
-                            };
-
-                            modal.open();
-                        });
-                });
-
-            setting.infoEl.remove();
+            createRowForTaskStatus(containerEl, status_type, statusTypes, settings, settings.plugin);
         });
 
         containerEl.createEl('div');
 
+        /* -------------------- 'Add New Task Status' button -------------------- */
         const setting = new Setting(containerEl).addButton((button) => {
             button
                 .setButtonText('Add New Task Status')
@@ -453,6 +412,68 @@ export class SettingsTab extends PluginSettingTab {
         });
         addStatusesSupportedByITSTheme.infoEl.remove();
     }
+}
+
+/**
+ * Create the row to see and modify settings for a single task status type.
+ * @param containerEl
+ * @param statusType - The status type to be edited.
+ * @param statusTypes - All the status types already in the user's settings, EXCEPT the standard ones.
+ * @param settings
+ * @param plugin
+ */
+function createRowForTaskStatus(
+    containerEl: HTMLElement,
+    statusType: StatusConfiguration,
+    statusTypes: StatusConfiguration[],
+    settings: SettingsTab,
+    plugin: TasksPlugin,
+) {
+    //const taskStatusDiv = containerEl.createEl('div');
+
+    const taskStatusPreview = containerEl.createEl('pre');
+    taskStatusPreview.textContent = StatusSettingsHelpers.statusPreviewText(statusType);
+
+    const setting = new Setting(containerEl);
+
+    setting.infoEl.replaceWith(taskStatusPreview);
+
+    setting
+        .addExtraButton((extra) => {
+            extra
+                .setIcon('cross')
+                .setTooltip('Delete')
+                .onClick(async () => {
+                    const index = statusTypes.indexOf(statusType);
+                    if (index > -1) {
+                        statusTypes.splice(index, 1);
+                        await updateAndSaveStatusSettings(statusTypes, settings);
+                    }
+                });
+        })
+
+        .addExtraButton((extra) => {
+            extra
+                .setIcon('pencil')
+                .setTooltip('Edit')
+                .onClick(async () => {
+                    const modal = new CustomStatusModal(plugin, statusType);
+
+                    modal.onClose = async () => {
+                        if (modal.saved) {
+                            const index = statusTypes.indexOf(statusType);
+                            if (index > -1) {
+                                statusTypes.splice(index, 1, modal.statusConfiguration());
+                                await updateAndSaveStatusSettings(statusTypes, settings);
+                            }
+                        }
+                    };
+
+                    modal.open();
+                });
+        });
+
+    setting.infoEl.remove();
 }
 
 async function addCustomStatesToSettings(
