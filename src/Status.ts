@@ -45,7 +45,7 @@ export class StatusConfiguration {
      * @param {string} indicator
      * @param {string} name
      * @param {Status} nextStatusIndicator
-     * @param {bool} availableAsCommand
+     * @param {boolean} availableAsCommand
      * @memberof Status
      */
     constructor(indicator: string, name: string, nextStatusIndicator: string, availableAsCommand: boolean) {
