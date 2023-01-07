@@ -1,5 +1,5 @@
 import { Notice, PluginSettingTab, Setting, debounce } from 'obsidian';
-import { StatusConfiguration } from 'Status';
+import { Status, StatusConfiguration } from 'Status';
 import type TasksPlugin from '../main';
 import type { HeadingState } from './Settings';
 import { getSettings, isFeatureEnabled, updateGeneralSetting, updateSettings } from './Settings';
@@ -13,6 +13,7 @@ export class SettingsTab extends PluginSettingTab {
     // custom function and specify it from the json file. It will
     // then be rendered instead of a normal checkbox or text box.
     customFunctions: { [K: string]: Function } = {
+        insertTaskCoreStatusSettings: this.insertTaskCoreStatusSettings,
         insertTaskStatusSettings: this.insertTaskStatusSettings,
     };
 
@@ -96,7 +97,7 @@ export class SettingsTab extends PluginSettingTab {
             });
 
         // ---------------------------------------------------------------------------
-        // Placeholder for Tasks Status Types
+        containerEl.createEl('h4', { text: 'Task Statuses' });
         // ---------------------------------------------------------------------------
 
         const { headingOpened } = getSettings();
@@ -354,6 +355,26 @@ export class SettingsTab extends PluginSettingTab {
     }
 
     /**
+     * Settings for Core Task Status
+     * These are built-in statuses that can have minimal edits made,
+     * but are not allowed to be deleted or added to.
+     *
+     * @param {HTMLElement} containerEl
+     * @param {SettingsTab} settings
+     * @memberof SettingsTab
+     */
+    insertTaskCoreStatusSettings(containerEl: HTMLElement, settings: SettingsTab) {
+        // TODO Make these statuses editable
+        const coreStatuses: StatusConfiguration[] = [];
+        coreStatuses.push(Status.TODO, Status.IN_PROGRESS, Status.DONE, Status.CANCELLED);
+
+        /* -------------------- One row per status in the settings -------------------- */
+        coreStatuses.forEach((status_type) => {
+            createRowForTaskStatus(containerEl, status_type, coreStatuses, settings, settings.plugin, false, false);
+        });
+    }
+
+    /**
      * Settings for Custom Task Status
      *
      * @param {HTMLElement} containerEl
@@ -365,7 +386,7 @@ export class SettingsTab extends PluginSettingTab {
 
         /* -------------------- One row per status in the settings -------------------- */
         statusTypes.forEach((status_type) => {
-            createRowForTaskStatus(containerEl, status_type, statusTypes, settings, settings.plugin);
+            createRowForTaskStatus(containerEl, status_type, statusTypes, settings, settings.plugin, true, true);
         });
 
         containerEl.createEl('div');
@@ -421,6 +442,8 @@ export class SettingsTab extends PluginSettingTab {
  * @param statusTypes - All the status types already in the user's settings, EXCEPT the standard ones.
  * @param settings
  * @param plugin
+ * @param deletable - whether the delete button wil be shown
+ * @param editable - whether the edit button wil be shown
  */
 function createRowForTaskStatus(
     containerEl: HTMLElement,
@@ -428,6 +451,8 @@ function createRowForTaskStatus(
     statusTypes: StatusConfiguration[],
     settings: SettingsTab,
     plugin: TasksPlugin,
+    deletable: boolean,
+    editable: boolean,
 ) {
     //const taskStatusDiv = containerEl.createEl('div');
 
@@ -438,8 +463,8 @@ function createRowForTaskStatus(
 
     setting.infoEl.replaceWith(taskStatusPreview);
 
-    setting
-        .addExtraButton((extra) => {
+    if (deletable) {
+        setting.addExtraButton((extra) => {
             extra
                 .setIcon('cross')
                 .setTooltip('Delete')
@@ -450,9 +475,11 @@ function createRowForTaskStatus(
                         await updateAndSaveStatusSettings(statusTypes, settings);
                     }
                 });
-        })
+        });
+    }
 
-        .addExtraButton((extra) => {
+    if (editable) {
+        setting.addExtraButton((extra) => {
             extra
                 .setIcon('pencil')
                 .setTooltip('Edit')
@@ -472,6 +499,7 @@ function createRowForTaskStatus(
                     modal.open();
                 });
         });
+    }
 
     setting.infoEl.remove();
 }
