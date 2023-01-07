@@ -1,13 +1,36 @@
 [
   {
-    "text": "Tasks Status Types",
+    "text": "Core Status Types",
     "level": "h3",
     "class": "",
-    "open": false,
+    "open": true,
     "notice": {
       "class": "",
-      "text": "If you want to have the tasks support additional statuses outside of the default ones add them here with the status indicator. ",
-      "html": "By default the following statuses are supported:<ul><li><strong>- [ ] Todo</strong> - This has a {space} between the brackets. Will toggle to Done.</li><li><strong>- [/] In Progress</strong> - This has a {/} between the brackets. Will toggle to Done.</li><li><strong>- [x] Done</strong> - This has a {x} between the brackets. Will toggle to Todo.</li><li><strong>- [-] Cancelled</strong> - This has a {-} between the brackets. Will toggle to Todo.</li></ul>"
+      "text": "These are the core status types that Tasks supports. They are not yet editable. You can add custom statuses in the section below.",
+      "html": null
+    },
+    "settings": [
+      {
+        "name": "",
+        "description": "",
+        "type": "function",
+        "initialValue": "",
+        "placeholder": "",
+        "settingName": "insertTaskCoreStatusSettings",
+        "featureFlag": "",
+        "notice": null
+      }
+    ]
+  },
+  {
+    "text": "Custom Status Types",
+    "level": "h3",
+    "class": "",
+    "open": true,
+    "notice": {
+      "class": "",
+      "text": "If you want to have the tasks support additional statuses outside of the default ones add them here with the status symbol. ",
+      "html": null
     },
     "settings": [
       {
