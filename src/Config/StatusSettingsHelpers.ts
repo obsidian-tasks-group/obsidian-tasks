@@ -4,7 +4,7 @@
  * be written for its contents.
  */
 import { Status, StatusConfiguration } from '../Status';
-import type { StatusSettings } from './StatusSettings';
+import { StatusSettings } from './StatusSettings';
 
 /**
  * Return a one-line summary of the status, for presentation to users.
@@ -43,7 +43,8 @@ export function addCustomStatusesCollection(
             );
         });
         if (!hasStatus) {
-            statusSettings.addCustomStatus(
+            StatusSettings.addCustomStatus(
+                statusSettings,
                 new StatusConfiguration(importedStatus[0], importedStatus[1], importedStatus[2], false),
             );
         } else {

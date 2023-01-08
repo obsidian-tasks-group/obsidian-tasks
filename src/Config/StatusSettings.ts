@@ -9,11 +9,15 @@ export class StatusSettings {
     /**
      * Add a new custom status.
      *
+     * This is static so that it can be called from modal onClick() call-backs.
+     *
      * - Currently, duplicates are allowed.
+     * - Allows empty StatusConfiguration objects - where every string is empty
+     * @param statusSettings
      * @param newStatus
      */
-    public addCustomStatus(newStatus: StatusConfiguration) {
-        this.customStatusTypes.push(newStatus);
+    public static addCustomStatus(statusSettings: StatusSettings, newStatus: StatusConfiguration) {
+        statusSettings.customStatusTypes.push(newStatus);
     }
 
     /**
