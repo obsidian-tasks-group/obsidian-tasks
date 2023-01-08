@@ -1,4 +1,5 @@
 import { StatusConfiguration } from '../Status';
+import type { StatusRegistry } from '../StatusRegistry';
 
 /**
  * Class for encapsulating the settings that control custom statuses.
@@ -106,5 +107,15 @@ export class StatusSettings {
             }
         });
         return notices;
+    }
+
+    public static applyToStatusRegistry(statusSettings: StatusSettings, statusRegistry: StatusRegistry) {
+        // Reset the registry as this may also come from a settings add/delete.
+        statusRegistry.clearStatuses();
+        statusSettings.customStatusTypes.forEach((statusType) => {
+            statusRegistry.add(statusType);
+        });
+        console.log(statusSettings.customStatusTypes);
+        console.log(statusRegistry.registeredStatuses);
     }
 }
