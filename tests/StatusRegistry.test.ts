@@ -150,49 +150,51 @@ describe('StatusRegistry', () => {
         expect(status2).toStrictEqual(status);
     });
 
-    it('should allow task to toggle through custom transitions', () => {
-        // Arrange
-        // Toggling code uses the global status registry, so we must explicitly modify that instance.
-        // It will already have been reset in beforeEach() above.
-        const globalStatusRegistry = StatusRegistry.getInstance();
-        const statusA = new Status(new StatusConfiguration('a', 'A', 'b', false));
-        const statusB = new Status(new StatusConfiguration('b', 'B', 'c', false));
-        const statusC = new Status(new StatusConfiguration('c', 'C', 'd', false));
-        const statusD = new Status(new StatusConfiguration('d', 'D', 'a', false));
-        globalStatusRegistry.add(statusA);
-        globalStatusRegistry.add(statusB);
-        globalStatusRegistry.add(statusC);
-        globalStatusRegistry.add(statusD);
-        const line = '- [a] this is a task starting at A';
-        const path = 'file.md';
-        const sectionStart = 1337;
-        const sectionIndex = 1209;
-        const precedingHeader = 'Eloquent Section';
-        const task = Task.fromLine({
-            line,
-            path,
-            sectionStart,
-            sectionIndex,
-            precedingHeader,
-            fallbackDate: null,
+    describe('toggling', () => {
+        it('should allow task to toggle through custom transitions', () => {
+            // Arrange
+            // Toggling code uses the global status registry, so we must explicitly modify that instance.
+            // It will already have been reset in beforeEach() above.
+            const globalStatusRegistry = StatusRegistry.getInstance();
+            const statusA = new Status(new StatusConfiguration('a', 'A', 'b', false));
+            const statusB = new Status(new StatusConfiguration('b', 'B', 'c', false));
+            const statusC = new Status(new StatusConfiguration('c', 'C', 'd', false));
+            const statusD = new Status(new StatusConfiguration('d', 'D', 'a', false));
+            globalStatusRegistry.add(statusA);
+            globalStatusRegistry.add(statusB);
+            globalStatusRegistry.add(statusC);
+            globalStatusRegistry.add(statusD);
+            const line = '- [a] this is a task starting at A';
+            const path = 'file.md';
+            const sectionStart = 1337;
+            const sectionIndex = 1209;
+            const precedingHeader = 'Eloquent Section';
+            const task = Task.fromLine({
+                line,
+                path,
+                sectionStart,
+                sectionIndex,
+                precedingHeader,
+                fallbackDate: null,
+            });
+
+            // Act
+
+            // Assert
+            expect(task).not.toBeNull();
+            expect(task!.status.indicator).toEqual(statusA.indicator);
+
+            const toggledA = task?.toggle()[0];
+            expect(toggledA?.status.indicator).toEqual(statusB.indicator);
+
+            const toggledB = toggledA?.toggle()[0];
+            expect(toggledB?.status.indicator).toEqual(statusC.indicator);
+
+            const toggledC = toggledB?.toggle()[0];
+            expect(toggledC?.status.indicator).toEqual(statusD.indicator);
+
+            const toggledD = toggledC?.toggle()[0];
+            expect(toggledD?.status.indicator).toEqual(statusA.indicator);
         });
-
-        // Act
-
-        // Assert
-        expect(task).not.toBeNull();
-        expect(task!.status.indicator).toEqual(statusA.indicator);
-
-        const toggledA = task?.toggle()[0];
-        expect(toggledA?.status.indicator).toEqual(statusB.indicator);
-
-        const toggledB = toggledA?.toggle()[0];
-        expect(toggledB?.status.indicator).toEqual(statusC.indicator);
-
-        const toggledC = toggledB?.toggle()[0];
-        expect(toggledC?.status.indicator).toEqual(statusD.indicator);
-
-        const toggledD = toggledC?.toggle()[0];
-        expect(toggledD?.status.indicator).toEqual(statusA.indicator);
     });
 });
