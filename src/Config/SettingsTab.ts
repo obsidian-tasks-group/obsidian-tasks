@@ -3,7 +3,7 @@ import { Status, StatusConfiguration } from 'Status';
 import type TasksPlugin from '../main';
 import type { HeadingState } from './Settings';
 import { getSettings, isFeatureEnabled, updateGeneralSetting, updateSettings } from './Settings';
-import type { StatusSettings } from './StatusSettings';
+import { StatusSettings } from './StatusSettings';
 import settingsJson from './settingsConfiguration.json';
 
 import { CustomStatusModal } from './CustomStatusModal';
@@ -366,9 +366,11 @@ export class SettingsTab extends PluginSettingTab {
      */
     insertTaskCoreStatusSettings(containerEl: HTMLElement, settings: SettingsTab) {
         // TODO Make these statuses editable
-        const coreStatuses: StatusSettings = {
-            customStatusTypes: [Status.TODO, Status.IN_PROGRESS, Status.DONE, Status.CANCELLED],
-        };
+        const coreStatuses: StatusSettings = new StatusSettings();
+        coreStatuses.addCustomStatus(Status.TODO);
+        coreStatuses.addCustomStatus(Status.IN_PROGRESS);
+        coreStatuses.addCustomStatus(Status.DONE);
+        coreStatuses.addCustomStatus(Status.CANCELLED);
 
         /* -------------------- One row per status in the settings -------------------- */
         coreStatuses.customStatusTypes.forEach((status_type) => {
@@ -399,7 +401,7 @@ export class SettingsTab extends PluginSettingTab {
                 .setButtonText('Add New Task Status')
                 .setCta()
                 .onClick(async () => {
-                    statusSettings.customStatusTypes.push(new StatusConfiguration('', '', '', false));
+                    statusSettings.addCustomStatus(new StatusConfiguration('', '', '', false));
                     await updateAndSaveStatusSettings(statusSettings, settings);
                 });
         });

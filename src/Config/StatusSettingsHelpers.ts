@@ -43,7 +43,7 @@ export function addCustomStatusesCollection(
             );
         });
         if (!hasStatus) {
-            statusSettings.customStatusTypes.push(
+            statusSettings.addCustomStatus(
                 new StatusConfiguration(importedStatus[0], importedStatus[1], importedStatus[2], false),
             );
         } else {
