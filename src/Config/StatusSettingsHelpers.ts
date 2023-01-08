@@ -3,7 +3,7 @@
  * It intentionally does not import any Obsidian types, so that tests can
  * be written for its contents.
  */
-import { StatusConfiguration } from '../Status';
+import { Status, StatusConfiguration } from '../Status';
 
 /**
  * Return a one-line summary of the status, for presentation to users.
@@ -11,7 +11,7 @@ import { StatusConfiguration } from '../Status';
  */
 export function statusPreviewText(status: StatusConfiguration) {
     let commandNotice = '';
-    if (status.availableAsCommand) {
+    if (Status.tasksPluginCanCreateCommandsForStatuses() && status.availableAsCommand) {
         commandNotice = 'Available as a command.';
     }
     return `- [${status.indicator}] ${status.name}, next status is '${status.nextStatusIndicator}'. ${commandNotice}`;
