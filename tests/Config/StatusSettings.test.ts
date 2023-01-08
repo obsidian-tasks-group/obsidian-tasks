@@ -8,6 +8,16 @@ describe('StatusSettings', () => {
         verifyAsJson(defaultStatusSettings);
     });
 
+    function addThreeStatuses(settings: StatusSettings) {
+        const pro = new StatusConfiguration('P', 'Pro', 'C', false);
+        const imp = new StatusConfiguration('!', 'Important', 'x', false);
+        const con = new StatusConfiguration('C', 'Con', 'P', false);
+        settings.addCustomStatus(pro);
+        settings.addCustomStatus(imp);
+        settings.addCustomStatus(con);
+        return { pro, imp, con };
+    }
+
     it('should add a status', () => {
         // Arrange
         const settings = new StatusSettings();
@@ -25,12 +35,7 @@ describe('StatusSettings', () => {
     it('should delete a status', () => {
         // Arrange
         const settings = new StatusSettings();
-        const pro = new StatusConfiguration('P', 'Pro', 'C', false);
-        const imp = new StatusConfiguration('!', 'Important', 'x', false);
-        const con = new StatusConfiguration('C', 'Con', 'P', false);
-        settings.addCustomStatus(pro);
-        settings.addCustomStatus(imp);
-        settings.addCustomStatus(con);
+        const { pro, imp, con } = addThreeStatuses(settings);
         expect(settings.customStatusTypes.length).toEqual(3);
 
         // Act
