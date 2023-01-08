@@ -1,8 +1,15 @@
 import { StatusConfiguration } from '../Status';
 
+/**
+ * Class for encapsulating the settings that control custom statuses.
+ *
+ * Most methods are static to allow them to be called from call-backs.
+ *
+ * @see Status
+ */
 export class StatusSettings {
     constructor() {
-        this.customStatusTypes = [];
+        this.customStatusTypes = []; // Do not modify directly: use the static mutation methods in this class.
     }
     customStatusTypes: StatusConfiguration[];
 
