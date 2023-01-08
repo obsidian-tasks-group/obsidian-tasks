@@ -4,6 +4,7 @@
  * be written for its contents.
  */
 import { Status, StatusConfiguration } from '../Status';
+import type { StatusSettings } from './StatusSettings';
 
 /**
  * Return a one-line summary of the status, for presentation to users.
@@ -23,14 +24,14 @@ export function statusPreviewText(status: StatusConfiguration) {
  * If there are any exact duplicates already present, they are skipped, and noted in the returned value.
  *
  * @param supportedStatuses - an array of status specifications, for example `['b', 'Bookmark', 'x']`
- * @param statusTypes {@link StatusConfiguration} - an array of existing known statuses
+ * @param statusTypes a StatusSettings
  * @return An array of warning messages to show the user, one for each rejected exact duplicate status.
  *
  * @see {@link minimalSupportedStatuses}, {@link itsSupportedStatuses}
  */
 export function addCustomStatusesCollection(
     supportedStatuses: Array<[string, string, string]>,
-    statusTypes: StatusConfiguration[],
+    statusTypes: StatusSettings,
 ): string[] {
     const notices: string[] = [];
     supportedStatuses.forEach((importedStatus) => {

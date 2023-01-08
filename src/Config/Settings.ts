@@ -1,4 +1,4 @@
-import type { StatusConfiguration } from '../Status';
+import type { StatusSettings } from './StatusSettings';
 import { Feature } from './Feature';
 import type { FeatureFlag } from './Feature';
 
@@ -22,7 +22,7 @@ export interface Settings {
     filenameAsDateFolders: string[];
 
     // The custom status states.
-    statusTypes: StatusConfiguration[];
+    statusTypes: StatusSettings;
 
     // Collection of feature flag IDs and their state.
     features: FeatureFlag;
