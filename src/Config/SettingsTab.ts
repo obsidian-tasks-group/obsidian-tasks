@@ -1,6 +1,7 @@
 import { Notice, PluginSettingTab, Setting, debounce } from 'obsidian';
 import { Status, StatusConfiguration } from 'Status';
 import type TasksPlugin from '../main';
+import { StatusRegistry } from '../StatusRegistry';
 import type { HeadingState } from './Settings';
 import { getSettings, isFeatureEnabled, updateGeneralSetting, updateSettings } from './Settings';
 import { StatusSettings } from './StatusSettings';
@@ -528,6 +529,10 @@ async function updateAndSaveStatusSettings(statusTypes: StatusSettings, settings
     updateSettings({
         statusSettings: statusTypes,
     });
+
+    // Update the active statuses.
+    // This saves the user from having to restart Obsidian in order to apply the changed status(es).
+    StatusSettings.applyToStatusRegistry(statusTypes, StatusRegistry.getInstance());
 
     await settings.saveSettings(true);
 }
