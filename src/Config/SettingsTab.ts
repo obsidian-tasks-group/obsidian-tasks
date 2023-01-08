@@ -3,6 +3,7 @@ import { Status, StatusConfiguration } from 'Status';
 import type TasksPlugin from '../main';
 import type { HeadingState } from './Settings';
 import { getSettings, isFeatureEnabled, updateGeneralSetting, updateSettings } from './Settings';
+import { StatusSettings } from './StatusSettings';
 import settingsJson from './settingsConfiguration.json';
 
 import { CustomStatusModal } from './CustomStatusModal';
@@ -365,11 +366,14 @@ export class SettingsTab extends PluginSettingTab {
      */
     insertTaskCoreStatusSettings(containerEl: HTMLElement, settings: SettingsTab) {
         // TODO Make these statuses editable
-        const coreStatuses: StatusConfiguration[] = [];
-        coreStatuses.push(Status.TODO, Status.IN_PROGRESS, Status.DONE, Status.CANCELLED);
+        const coreStatuses: StatusSettings = new StatusSettings();
+        StatusSettings.addCustomStatus(coreStatuses, Status.TODO.configuration);
+        StatusSettings.addCustomStatus(coreStatuses, Status.IN_PROGRESS.configuration);
+        StatusSettings.addCustomStatus(coreStatuses, Status.DONE.configuration);
+        StatusSettings.addCustomStatus(coreStatuses, Status.CANCELLED.configuration);
 
         /* -------------------- One row per status in the settings -------------------- */
-        coreStatuses.forEach((status_type) => {
+        coreStatuses.customStatusTypes.forEach((status_type) => {
             createRowForTaskStatus(containerEl, status_type, coreStatuses, settings, settings.plugin, false, false);
         });
     }
@@ -382,11 +386,11 @@ export class SettingsTab extends PluginSettingTab {
      * @memberof SettingsTab
      */
     insertTaskStatusSettings(containerEl: HTMLElement, settings: SettingsTab) {
-        const { statusTypes } = getSettings();
+        const { statusSettings } = getSettings();
 
         /* -------------------- One row per status in the settings -------------------- */
-        statusTypes.forEach((status_type) => {
-            createRowForTaskStatus(containerEl, status_type, statusTypes, settings, settings.plugin, true, true);
+        statusSettings.customStatusTypes.forEach((status_type) => {
+            createRowForTaskStatus(containerEl, status_type, statusSettings, settings, settings.plugin, true, true);
         });
 
         containerEl.createEl('div');
@@ -397,8 +401,8 @@ export class SettingsTab extends PluginSettingTab {
                 .setButtonText('Add New Task Status')
                 .setCta()
                 .onClick(async () => {
-                    statusTypes.push(new StatusConfiguration('', '', '', false));
-                    await updateAndSaveStatusSettings(statusTypes, settings);
+                    StatusSettings.addCustomStatus(statusSettings, new StatusConfiguration('', '', '', false));
+                    await updateAndSaveStatusSettings(statusSettings, settings);
                 });
         });
         setting.infoEl.remove();
@@ -411,7 +415,7 @@ export class SettingsTab extends PluginSettingTab {
                 .onClick(async () => {
                     await addCustomStatesToSettings(
                         StatusSettingsHelpers.minimalSupportedStatuses(),
-                        statusTypes,
+                        statusSettings,
                         settings,
                     );
                 });
@@ -426,7 +430,7 @@ export class SettingsTab extends PluginSettingTab {
                 .onClick(async () => {
                     await addCustomStatesToSettings(
                         StatusSettingsHelpers.itsSupportedStatuses(),
-                        statusTypes,
+                        statusSettings,
                         settings,
                     );
                 });
@@ -439,7 +443,7 @@ export class SettingsTab extends PluginSettingTab {
  * Create the row to see and modify settings for a single task status type.
  * @param containerEl
  * @param statusType - The status type to be edited.
- * @param statusTypes - All the status types already in the user's settings, EXCEPT the standard ones.
+ * @param statusSettings - All the status types already in the user's settings, EXCEPT the standard ones.
  * @param settings
  * @param plugin
  * @param deletable - whether the delete button wil be shown
@@ -448,7 +452,7 @@ export class SettingsTab extends PluginSettingTab {
 function createRowForTaskStatus(
     containerEl: HTMLElement,
     statusType: StatusConfiguration,
-    statusTypes: StatusConfiguration[],
+    statusSettings: StatusSettings,
     settings: SettingsTab,
     plugin: TasksPlugin,
     deletable: boolean,
@@ -469,10 +473,8 @@ function createRowForTaskStatus(
                 .setIcon('cross')
                 .setTooltip('Delete')
                 .onClick(async () => {
-                    const index = statusTypes.indexOf(statusType);
-                    if (index > -1) {
-                        statusTypes.splice(index, 1);
-                        await updateAndSaveStatusSettings(statusTypes, settings);
+                    if (StatusSettings.deleteCustomStatus(statusSettings, statusType)) {
+                        await updateAndSaveStatusSettings(statusSettings, settings);
                     }
                 });
         });
@@ -488,10 +490,14 @@ function createRowForTaskStatus(
 
                     modal.onClose = async () => {
                         if (modal.saved) {
-                            const index = statusTypes.indexOf(statusType);
-                            if (index > -1) {
-                                statusTypes.splice(index, 1, modal.statusConfiguration());
-                                await updateAndSaveStatusSettings(statusTypes, settings);
+                            if (
+                                StatusSettings.replaceCustomStatus(
+                                    statusSettings,
+                                    statusType,
+                                    modal.statusConfiguration(),
+                                )
+                            ) {
+                                await updateAndSaveStatusSettings(statusSettings, settings);
                             }
                         }
                     };
@@ -506,21 +512,21 @@ function createRowForTaskStatus(
 
 async function addCustomStatesToSettings(
     supportedStatuses: Array<[string, string, string]>,
-    statusTypes: StatusConfiguration[],
+    statusSettings: StatusSettings,
     settings: SettingsTab,
 ) {
-    const notices = StatusSettingsHelpers.addCustomStatusesCollection(supportedStatuses, statusTypes);
+    const notices = StatusSettings.bulkAddStatusCollection(statusSettings, supportedStatuses);
 
     notices.forEach((notice) => {
         new Notice(notice);
     });
 
-    await updateAndSaveStatusSettings(statusTypes, settings);
+    await updateAndSaveStatusSettings(statusSettings, settings);
 }
 
-async function updateAndSaveStatusSettings(statusTypes: StatusConfiguration[], settings: SettingsTab) {
+async function updateAndSaveStatusSettings(statusTypes: StatusSettings, settings: SettingsTab) {
     updateSettings({
-        statusTypes: statusTypes,
+        statusSettings: statusTypes,
     });
 
     await settings.saveSettings(true);

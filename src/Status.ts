@@ -59,6 +59,13 @@ export class StatusConfiguration {
 /**
  * Tracks the possible states that a task can be in.
  *
+ * Related classes:
+ * @see StatusConfiguration
+ * @see StatusRegistry
+ * @see StatusSettings
+ * @see StatusSettingsHelpers.ts
+ * @see CustomStatusModal
+ *
  * @export
  * @class Status
  */
@@ -114,7 +121,7 @@ export class Status {
      * @type {StatusConfiguration}
      * @memberof Status
      */
-    private readonly configuration: StatusConfiguration;
+    public readonly configuration: StatusConfiguration;
 
     /**
      * Whether Tasks can yet create 'Toggle Status' commands for statuses

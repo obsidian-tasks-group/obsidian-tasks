@@ -1,4 +1,4 @@
-import type { StatusConfiguration } from '../Status';
+import { StatusSettings } from './StatusSettings';
 import { Feature } from './Feature';
 import type { FeatureFlag } from './Feature';
 
@@ -22,7 +22,7 @@ export interface Settings {
     filenameAsDateFolders: string[];
 
     // The custom status states.
-    statusTypes: StatusConfiguration[];
+    statusSettings: StatusSettings;
 
     // Collection of feature flag IDs and their state.
     features: FeatureFlag;
@@ -45,7 +45,7 @@ const defaultSettings: Settings = {
     provideAccessKeys: true,
     useFilenameAsScheduledDate: false,
     filenameAsDateFolders: [],
-    statusTypes: [],
+    statusSettings: new StatusSettings(),
     features: Feature.settingsFlags,
     generalSettings: {
         /* Prevent duplicate values in user settings for now,
