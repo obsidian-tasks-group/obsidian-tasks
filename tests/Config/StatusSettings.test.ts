@@ -1,6 +1,7 @@
 import { verifyAsJson } from 'approvals/lib/Providers/Jest/JestApprovals';
 import { StatusSettings } from '../../src/Config/StatusSettings';
-import { StatusConfiguration } from '../../src/Status';
+import { Status, StatusConfiguration } from '../../src/Status';
+import { StatusRegistry } from '../../src/StatusRegistry';
 
 describe('StatusSettings', () => {
     it('verify default status settings', () => {
@@ -86,5 +87,25 @@ describe('StatusSettings', () => {
         // Delete a second time. It should now report that nothing was deleted.
         const result2 = StatusSettings.deleteCustomStatus(settings, imp);
         expect(result2).toEqual(false);
+    });
+
+    it('should apply settings to a StatusRegistry', () => {
+        // Arrange
+        const settings = new StatusSettings();
+        const { pro, imp, con } = addThreeStatuses(settings);
+        expect(settings.customStatusTypes.length).toEqual(3);
+
+        const statusRegistry = new StatusRegistry();
+        expect(statusRegistry.registeredStatuses.length).toEqual(4);
+
+        // Act
+        StatusSettings.applyToStatusRegistry(settings, statusRegistry);
+
+        // Assert
+        const statuses = statusRegistry.registeredStatuses;
+        expect(statuses.length).toEqual(7);
+        expect(statuses[4]).toStrictEqual(new Status(pro));
+        expect(statuses[5]).toStrictEqual(new Status(imp));
+        expect(statuses[6]).toStrictEqual(new Status(con));
     });
 });

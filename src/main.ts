@@ -11,6 +11,7 @@ import { getSettings, updateSettings } from './Config/Settings';
 import { SettingsTab } from './Config/SettingsTab';
 import { StatusRegistry } from './StatusRegistry';
 import { EditorSuggestor } from './Suggestor/EditorSuggestorPopup';
+import { StatusSettings } from './Config/StatusSettings';
 
 export default class TasksPlugin extends Plugin {
     private cache: Cache | undefined;
@@ -47,12 +48,7 @@ export default class TasksPlugin extends Plugin {
 
     async loadTaskStatuses() {
         const { statusSettings } = getSettings();
-
-        // Reset the registry as this may also come from a settings add/delete.
-        StatusRegistry.getInstance().clearStatuses();
-        statusSettings.customStatusTypes.forEach((statusType) => {
-            StatusRegistry.getInstance().add(statusType);
-        });
+        StatusSettings.applyToStatusRegistry(statusSettings, StatusRegistry.getInstance());
     }
 
     onunload() {
