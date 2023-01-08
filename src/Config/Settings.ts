@@ -1,5 +1,4 @@
-import type { StatusSettings } from './StatusSettings';
-import { defaultStatusSettings } from './StatusSettings';
+import { StatusSettings } from './StatusSettings';
 import { Feature } from './Feature';
 import type { FeatureFlag } from './Feature';
 
@@ -46,7 +45,7 @@ const defaultSettings: Settings = {
     provideAccessKeys: true,
     useFilenameAsScheduledDate: false,
     filenameAsDateFolders: [],
-    statusSettings: defaultStatusSettings,
+    statusSettings: new StatusSettings(),
     features: Feature.settingsFlags,
     generalSettings: {
         /* Prevent duplicate values in user settings for now,

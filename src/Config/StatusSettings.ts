@@ -1,9 +1,8 @@
 import type { StatusConfiguration } from '../Status';
 
-export interface StatusSettings {
+export class StatusSettings {
+    constructor() {
+        this.customStatusTypes = [];
+    }
     customStatusTypes: StatusConfiguration[];
 }
-
-export const defaultStatusSettings: StatusSettings = {
-    customStatusTypes: [],
-};
