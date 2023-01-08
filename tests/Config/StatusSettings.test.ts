@@ -48,6 +48,26 @@ describe('StatusSettings', () => {
         expect(settings.customStatusTypes[1]).toStrictEqual(newImp);
     });
 
+    it('should bulk-add new statuses, reporting errors', () => {
+        // Arrange
+        const newStatuses: Array<[string, string, string]> = [
+            ['>', 'Forwarded', 'x'],
+            ['<', 'Schedule', 'x'],
+            ['?', 'Question', 'x'],
+            ['-', 'Dropped - should not be added as duplicate of core Cancelled', 'x'],
+            ['>', 'Forwarded', 'x'], // is a duplicate so should not be added
+            ['<', 'Duplicate - should not be added as duplicate of Schedule above', 'x'],
+            ['', 'Empty - should not be added as no status character', 'x'],
+        ];
+        const settings = new StatusSettings();
+
+        // Act
+        const result = StatusSettings.bulkAddStatusCollection(settings, newStatuses);
+
+        // Assert
+        expect(result).toStrictEqual(['The status Forwarded (>) is already added.']);
+    });
+
     it('should delete a status', () => {
         // Arrange
         const settings = new StatusSettings();

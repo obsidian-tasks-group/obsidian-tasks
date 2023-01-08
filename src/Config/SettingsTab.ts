@@ -515,7 +515,7 @@ async function addCustomStatesToSettings(
     statusSettings: StatusSettings,
     settings: SettingsTab,
 ) {
-    const notices = StatusSettingsHelpers.addCustomStatusesCollection(supportedStatuses, statusSettings);
+    const notices = StatusSettings.bulkAddStatusCollection(statusSettings, supportedStatuses);
 
     notices.forEach((notice) => {
         new Notice(notice);
