@@ -32,6 +32,22 @@ describe('StatusSettings', () => {
         expect(settings.customStatusTypes[0]).toStrictEqual(newStatus);
     });
 
+    it('should replace a status, if present', () => {
+        // Arrange
+        const settings = new StatusSettings();
+        const { imp } = addThreeStatuses(settings);
+        expect(settings.customStatusTypes.length).toEqual(3);
+        expect(settings.customStatusTypes[1]).toStrictEqual(imp);
+
+        // Act
+        const newImp = new StatusConfiguration('!', 'ReallyImportant', 'X', true);
+        StatusSettings.replaceCustomStatus(settings, imp, newImp);
+
+        // Assert
+        expect(settings.customStatusTypes.length).toEqual(3);
+        expect(settings.customStatusTypes[1]).toStrictEqual(newImp);
+    });
+
     it('should delete a status', () => {
         // Arrange
         const settings = new StatusSettings();
