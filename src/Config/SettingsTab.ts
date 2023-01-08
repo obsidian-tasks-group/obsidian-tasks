@@ -367,10 +367,10 @@ export class SettingsTab extends PluginSettingTab {
     insertTaskCoreStatusSettings(containerEl: HTMLElement, settings: SettingsTab) {
         // TODO Make these statuses editable
         const coreStatuses: StatusSettings = new StatusSettings();
-        StatusSettings.addCustomStatus(coreStatuses, Status.TODO);
-        StatusSettings.addCustomStatus(coreStatuses, Status.IN_PROGRESS);
-        StatusSettings.addCustomStatus(coreStatuses, Status.DONE);
-        StatusSettings.addCustomStatus(coreStatuses, Status.CANCELLED);
+        StatusSettings.addCustomStatus(coreStatuses, Status.TODO.configuration);
+        StatusSettings.addCustomStatus(coreStatuses, Status.IN_PROGRESS.configuration);
+        StatusSettings.addCustomStatus(coreStatuses, Status.DONE.configuration);
+        StatusSettings.addCustomStatus(coreStatuses, Status.CANCELLED.configuration);
 
         /* -------------------- One row per status in the settings -------------------- */
         coreStatuses.customStatusTypes.forEach((status_type) => {
