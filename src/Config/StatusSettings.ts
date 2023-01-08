@@ -1,4 +1,4 @@
-import type { StatusConfiguration } from '../Status';
+import { StatusConfiguration } from '../Status';
 
 export class StatusSettings {
     constructor() {
@@ -61,5 +61,43 @@ export class StatusSettings {
         }
         statusSettings.customStatusTypes.splice(index, 1);
         return true;
+    }
+
+    /**
+     * Add a collection of custom supported statuses to a StatusSettings.
+     * This can be used to quickly populate the user's settings.
+     * If there are any exact duplicates already present, they are skipped, and noted in the returned value.
+     *
+     * This is static so that it can be called from modal onClick() call-backs.
+     *
+     * @param statusSettings a StatusSettings
+     * @param supportedStatuses - an array of status specifications, for example `['b', 'Bookmark', 'x']`
+     * @return An array of warning messages to show the user, one for each rejected exact duplicate status.
+     *
+     * @see {@link minimalSupportedStatuses}, {@link itsSupportedStatuses}
+     */
+    public static bulkAddStatusCollection(
+        statusSettings: StatusSettings,
+        supportedStatuses: Array<[string, string, string]>,
+    ): string[] {
+        const notices: string[] = [];
+        supportedStatuses.forEach((importedStatus) => {
+            const hasStatus = statusSettings.customStatusTypes.find((element) => {
+                return (
+                    element.indicator == importedStatus[0] &&
+                    element.name == importedStatus[1] &&
+                    element.nextStatusIndicator == importedStatus[2]
+                );
+            });
+            if (!hasStatus) {
+                StatusSettings.addCustomStatus(
+                    statusSettings,
+                    new StatusConfiguration(importedStatus[0], importedStatus[1], importedStatus[2], false),
+                );
+            } else {
+                notices.push(`The status ${importedStatus[1]} (${importedStatus[0]}) is already added.`);
+            }
+        });
+        return notices;
     }
 }

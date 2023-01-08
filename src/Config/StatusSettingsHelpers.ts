@@ -4,7 +4,6 @@
  * be written for its contents.
  */
 import { Status, StatusConfiguration } from '../Status';
-import { StatusSettings } from './StatusSettings';
 
 /**
  * Return a one-line summary of the status, for presentation to users.
@@ -19,46 +18,10 @@ export function statusPreviewText(status: StatusConfiguration) {
 }
 
 /**
- * Add a collection of supported statuses to an existing collection of StatusConfiguration objects.
- * This can be used to quickly populate the user's settings.
- * If there are any exact duplicates already present, they are skipped, and noted in the returned value.
- *
- * @param supportedStatuses - an array of status specifications, for example `['b', 'Bookmark', 'x']`
- * @param statusSettings a StatusSettings
- * @return An array of warning messages to show the user, one for each rejected exact duplicate status.
- *
- * @see {@link minimalSupportedStatuses}, {@link itsSupportedStatuses}
- */
-export function addCustomStatusesCollection(
-    supportedStatuses: Array<[string, string, string]>,
-    statusSettings: StatusSettings,
-): string[] {
-    const notices: string[] = [];
-    supportedStatuses.forEach((importedStatus) => {
-        const hasStatus = statusSettings.customStatusTypes.find((element) => {
-            return (
-                element.indicator == importedStatus[0] &&
-                element.name == importedStatus[1] &&
-                element.nextStatusIndicator == importedStatus[2]
-            );
-        });
-        if (!hasStatus) {
-            StatusSettings.addCustomStatus(
-                statusSettings,
-                new StatusConfiguration(importedStatus[0], importedStatus[1], importedStatus[2], false),
-            );
-        } else {
-            notices.push(`The status ${importedStatus[1]} (${importedStatus[0]}) is already added.`);
-        }
-    });
-    return notices;
-}
-
-/**
  * Status supported by the Minimal theme. {@link https://github.com/kepano/obsidian-minimal}
  * Values recognised by Tasks are excluded.
  * @todo Check if this is up-to-date.
- * @see {@link addCustomStatusesCollection}
+ * @see {@link StatusSettings.bulkAddStatusCollection}
  */
 export function minimalSupportedStatuses() {
     const zzz: Array<[string, string, string]> = [
@@ -90,7 +53,7 @@ export function minimalSupportedStatuses() {
  * Status supported by the ITS theme. {@link https://github.com/SlRvb/Obsidian--ITS-Theme}
  * Values recognised by Tasks are excluded.
  * @todo  Check if this is up-to-date.
- * @see {@link addCustomStatusesCollection}
+ * @see {@link StatusSettings.bulkAddStatusCollection}
  */
 export function itsSupportedStatuses() {
     const zzz: Array<[string, string, string]> = [
