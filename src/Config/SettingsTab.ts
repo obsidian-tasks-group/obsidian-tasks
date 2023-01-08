@@ -490,9 +490,13 @@ function createRowForTaskStatus(
 
                     modal.onClose = async () => {
                         if (modal.saved) {
-                            const index = statusSettings.customStatusTypes.indexOf(statusType);
-                            if (index > -1) {
-                                statusSettings.customStatusTypes.splice(index, 1, modal.statusConfiguration());
+                            if (
+                                StatusSettings.replaceCustomStatus(
+                                    statusSettings,
+                                    statusType,
+                                    modal.statusConfiguration(),
+                                )
+                            ) {
                                 await updateAndSaveStatusSettings(statusSettings, settings);
                             }
                         }
