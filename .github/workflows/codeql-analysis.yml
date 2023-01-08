@@ -12,13 +12,17 @@
 name: "CodeQL"
 
 on:
-  push:
-    branches: [ "*" ]
-  pull_request:
-    # The branches below must be a subset of the branches above
-    branches: [ main ]
+# Not run on PRs as too slow: See https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1415
+#  push:
+#    branches: [ "*" ]
+#  pull_request:
+#    # The branches below must be a subset of the branches above
+#    branches: [ main ]
   schedule:
     - cron: '35 18 * * 0'
+  workflow_dispatch:
+    # Inputs the workflow accepts.
+    inputs:
 
 jobs:
   analyze:

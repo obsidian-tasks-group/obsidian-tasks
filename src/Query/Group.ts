@@ -148,7 +148,7 @@ export class Group {
         if (filename === null) {
             return ['Unknown Location'];
         }
-        return [Group.escapeMarkdownCharacters(filename)];
+        return ['[[' + Group.escapeMarkdownCharacters(filename) + ']]'];
     }
 
     private static groupByRoot(task: Task): string[] {
@@ -166,12 +166,18 @@ export class Group {
             return ['Unknown Location'];
         }
 
-        // Markdown characters in the file name must be escaped.
-        // Markdown characters in the heading must NOT be escaped.
-        const filenameComponent = Group.groupByFileName(task)[0];
+        let filenameComponent = 'Unknown Location';
+
+        if (task.filename !== null) {
+            // Markdown characters in the file name must be escaped.
+            filenameComponent = Group.escapeMarkdownCharacters(task.filename);
+        }
+
         if (task.precedingHeader === null || task.precedingHeader.length === 0) {
             return [filenameComponent];
         }
+
+        // Markdown characters in the heading must NOT be escaped.
         const headingComponent = Group.groupByHeading(task)[0];
 
         if (filenameComponent === headingComponent) {
@@ -182,7 +188,14 @@ export class Group {
     }
 
     private static groupByStatus(task: Task): string[] {
-        return [task.status];
+        // Backwards-compatibility note: In Tasks 1.22.0 and earlier, the only
+        // names used by 'group by status' were 'Todo' and 'Done' - and
+        // any character other than a space was considered to be 'Done'.
+        if (task.status.indicator === ' ') {
+            return ['Todo'];
+        } else {
+            return ['Done'];
+        }
     }
 
     private static groupByHeading(task: Task): string[] {

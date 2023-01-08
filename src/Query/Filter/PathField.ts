@@ -20,4 +20,8 @@ export class PathField extends TextField {
     public value(task: Task): string {
         return task.path;
     }
+
+    public supportsSorting(): boolean {
+        return true;
+    }
 }

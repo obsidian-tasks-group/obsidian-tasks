@@ -9,6 +9,13 @@ import { fromLine } from '../../TestHelpers';
 import type { FilterOrErrorMessage } from '../../../src/Query/Filter/Filter';
 import { BooleanField } from '../../../src/Query/Filter/BooleanField';
 import { toMatchTaskFromLine } from '../../CustomMatchers/CustomMatchersForFilters';
+import { Sort } from '../../../src/Query/Sort';
+import {
+    expectTaskComparesAfter,
+    expectTaskComparesBefore,
+    expectTaskComparesEqual,
+} from '../../CustomMatchers/CustomMatchersForSorting';
+import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 
 window.moment = moment;
 
@@ -242,5 +249,154 @@ describe('search description for Alternation (OR)', () => {
         expect(filter).toMatchTaskFromLine('- [ ] Do stuff waiting');
         expect(filter).toMatchTaskFromLine('- [ ] Do stuff waits');
         expect(filter).toMatchTaskFromLine('- [ ] Do stuff wartet');
+    });
+});
+
+describe('sorting by description', () => {
+    it('supports Field sorting methods correctly', () => {
+        const field = new DescriptionField();
+        expect(field.supportsSorting()).toEqual(true);
+    });
+
+    // Helper function to create a task with a given path
+    function with_description(description: string) {
+        return new TaskBuilder().description(description).build();
+    }
+
+    it('sort by description', () => {
+        // Arrange
+        const sorter = new DescriptionField().createNormalSorter();
+
+        // Assert
+        expectTaskComparesEqual(sorter, with_description('Aaa'), with_description('Aaa'));
+        expectTaskComparesBefore(sorter, with_description('AAA'), with_description('ZZZ'));
+
+        // Ignores case if strings differ
+        expectTaskComparesBefore(sorter, with_description('AAA'), with_description('bbb'));
+        expectTaskComparesBefore(sorter, with_description('aaa'), with_description('BBB'));
+        expectTaskComparesBefore(sorter, with_description('aaa'), with_description('AAA'));
+
+        // Sorts text with numbers in correctly
+        expectTaskComparesBefore(sorter, with_description('9 x'), with_description('11 x'));
+        expectTaskComparesBefore(sorter, with_description('x 9'), with_description('x 11'));
+    });
+
+    it('sort by description reverse', () => {
+        // Single example just to prove reverse works.
+        // (There's no need to repeat all the examples above)
+        const sorter = new DescriptionField().createReverseSorter();
+        expectTaskComparesAfter(sorter, with_description('AAA'), with_description('ZZZ'));
+    });
+
+    describe('show how markdown in descriptions gets cleaned', () => {
+        const sorter = new DescriptionField().createNormalSorter();
+
+        it('characters that are not stripped out', () => {
+            // expectTaskComparesBefore() shows that the initial * is not removed removed
+            expectTaskComparesBefore(
+                sorter,
+                new TaskBuilder()
+                    .description('*ZZZ Initial lone asterisk is not stripped, so these two tasks sort unequal')
+                    .build(),
+                new TaskBuilder()
+                    .description('ZZZ Initial lone asterisk is not stripped, so these two tasks sort unequal')
+                    .build(),
+            );
+        });
+
+        // All the strings should be treated as though they contain 'un-format'
+        it.each([
+            '*un-format*',
+            '**un-format**',
+            '_un-format_',
+            '__un-format__',
+            '[[un-format]]',
+            '[[some-other-file-name|un-format]]',
+            '[un-format]',
+            '==un-format==',
+        ])('simple description "%s" is cleaned to "un-format"', (originalDescription: string) => {
+            expect(DescriptionField.cleanDescription(originalDescription)).toStrictEqual('un-format');
+        });
+
+        // Each of these pairs of strings is:
+        // 1. A task description
+        // 2. The result of running that description through the description-cleaning code.
+        it.each([
+            [
+                '[[Better be second]] most [] removed so these sort equal',
+                'Better be second most [] removed so these sort equal',
+            ],
+            [
+                '[[Another|Third it should be]] alias is used from 1st link but not 2nd [last|ZZZ]',
+                'Third it should be alias is used from 1st link but not 2nd [last|ZZZ]',
+            ],
+            [
+                '*Very italic text*', // (comment to override formatting)
+                'Very italic text',
+            ],
+            [
+                '[@Zebra|Zebra] alias is used single []*', // (comment to override formatting)
+                'Zebra alias is used single []*',
+            ],
+            [
+                '==highlighted== then ordinary text', // (comment to override formatting)
+                'highlighted then ordinary text',
+            ],
+
+            [
+                '=non-highlighted= then ordinary text', // (comment to override formatting)
+                '=non-highlighted= then ordinary text',
+            ],
+            [
+                '**bold** then ordinary text', // (comment to override formatting)
+                'bold then ordinary text',
+            ],
+            [
+                '*italic* then ordinary text', // (comment to override formatting)
+                'italic then ordinary text',
+            ],
+        ])('description "%s" is cleaned to "%s"', (originalDescription: string, cleanedDescription: string) => {
+            expect(DescriptionField.cleanDescription(originalDescription)).toStrictEqual(cleanedDescription);
+            expectTaskComparesEqual(
+                sorter,
+                new TaskBuilder().description(originalDescription).build(),
+                new TaskBuilder().description(cleanedDescription).build(),
+            );
+        });
+    });
+
+    // All the strings are expected to be treated as unchanged.
+    // They typically have unbalanced numbers of formatting characters,
+    // or other behaviours not yet supported by Description.
+    it.each([
+        '**originalDescription* following text',
+        '__originalDescription_ following text',
+        '**hello * world** - formatting character inside formatting', // it would be nice for this to become 'hello * world'
+        '=un-format= single hyphen is not a valid formatting, so do not remove it',
+    ])('description "%s" is unchanged when cleaned"', (originalDescription: string) => {
+        expect(DescriptionField.cleanDescription(originalDescription)).toStrictEqual(originalDescription);
+    });
+
+    it('sorts correctly by the link name and not the markdown', () => {
+        const one = fromLine({
+            line: '- [ ] *ZZZ An early task that starts with an A; actually not italic since only one asterisk',
+        });
+        const two = fromLine({
+            line: '- [ ] [[Better be second]] with bla bla behind it',
+        });
+        const three = fromLine({
+            line: '- [ ] [[Another|Third it should be]] and not [last|ZZZ]',
+        });
+        const four = fromLine({
+            line: '- [ ] *Very italic text*',
+        });
+        const five = fromLine({
+            line: '- [ ] [@Zebra|Zebra] should be last for Zebra',
+        });
+
+        const expectedOrder = [one, two, three, four, five];
+        expect(Sort.by([new DescriptionField().createNormalSorter()], [two, one, five, four, three])).toEqual(
+            expectedOrder,
+        );
     });
 });

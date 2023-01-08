@@ -19,36 +19,55 @@ The tasks below should look like one of the images in the [Alternate Checkboxes 
 
 ## One of each task status
 
-- [ ] #task Unchecked
-- [x] #task Regular
-- [X] #task Checked
-- [-] #task Dropped
-- [>] #task Forward
-- [D] #task Defer
-- [?] #task Question
-- [/] #task Half Done
-- [+] #task Add
-- [R] #task Research
-- [!] #task Important
-- [i] #task Idea
-- [B] #task Brainstorm
-- [P] #task Pro
-- [C] #task Con
-- [Q] #task Quote
-- [N] #task Note
-- [b] #task Bookmark
-- [I] #task Information
-- [p] #task Paraphrase
-- [L] #task Location
-- [E] #task Example
-- [A] #task Answer
-- [r] #task Reward
-- [c] #task Choice
+- These are grouped by whether Tasks sees them as Done or Todo.
+- Their appearance can be modified by going to the options for the Style Settings plugin.
+
+Available task states, as of version `7cb837d73d3f39e056d0be8c98539577529c0f90` of SlRvb's Checkboxes snippet:
+
+- [ ] #task `space` Unchecked
+- [x] #task `x` Regular
+- [X] #task `X` Checked
+- [-] #task `-` Dropped
+- [>] #task `>` Forward
+- [D] #task `D` Date
+- [?] #task `?` Question
+- [/] #task `/` Half Done
+- [+] #task `+` Add
+- [R] #task `R` Research
+- [!] #task `!` Important
+- [i] #task `i` Idea
+- [B] #task `B` Brainstorm
+- [P] #task `P` Pro
+- [C] #task `C` Con
+- [Q] #task `Q` Quote
+- [N] #task `N` Note
+- [b] #task `b` Bookmark
+- [I] #task `I` Information
+- [p] #task `p` Paraphrase
+- [L] #task `L` Location
+- [E] #task `E` Example
+- [A] #task `A` Answer
+- [r] #task `r` Reward
+- [c] #task `c` Choice
+- [d] #task `d` Doing
+- [T] #task `T` Time
+- [@] #task `@` Character / Person
+- [t] #task `t` Talk
+- [O] #task `O` Outline / Plot
+- [~] #task `~` Conflict
+- [W] #task `W` World
+- [f] #task `f` Clue / Find
+- [F] #task `F` Foreshadow
+- [H] #task `H` Favorite / Health
+- [&] #task `&` Symbolism
+- [s] #task `s` Secret
 
 ## Rendered in Tasks results block
 
 ```tasks
-path includes Custom Statuses
+path includes SlrVb's Alternative Checkboxes
 group by filename
 short mode
+group by status
+sort by description
 ```

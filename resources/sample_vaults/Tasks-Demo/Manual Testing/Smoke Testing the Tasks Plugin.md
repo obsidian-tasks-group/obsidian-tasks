@@ -13,7 +13,13 @@
 
 ## How the tests work
 
-- Make sure you have the [obsidian-tasks repo](https://github.com/obsidian-tasks-group/obsidian-tasks)cloned and up-to-date on your machine.
+### Get the Tasks-Demo vault with the build to be tested
+
+You can either [download the Tasks-demo vault with the build's Tasks plugin installed](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/CONTRIBUTING.md#how-do-i-test-a-github-build-of-the-tasks-plugin).
+
+Or you can install a download of the build's Tasks plugin inside your clone of the Tasks repo:
+
+- Make sure you have the [obsidian-tasks repo](https://github.com/obsidian-tasks-group/obsidian-tasks) cloned and up-to-date on your machine.
 - Open the Tasks-Demo vault on a machine of your choice:
   - Open Obsidian
   - Click 'Open another vault' button
@@ -22,6 +28,9 @@
   - Click 'Open'
 - Install the candidate build for the pull request or release inside the `Tasks-Demo` vault
   - See the [FAQs in the CONTRIBUTING page](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/CONTRIBUTING.md#faqs).
+
+### Follow the tests
+
 - This note is a self-contained set of steps to check. You should check off tasks beginning `- [ ] check:` as you complete each section.
 
 > [!Important]

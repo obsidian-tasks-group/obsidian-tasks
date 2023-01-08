@@ -1,24 +1,15 @@
 import type { Moment } from 'moment';
 import { LayoutOptions, TaskLayout } from './TaskLayout';
-import type { LayoutComponent } from './TaskLayout';
+import type { TaskLayoutComponent } from './TaskLayout';
 import { Recurrence } from './Recurrence';
 import { getSettings } from './Config/Settings';
+import { StatusRegistry } from './StatusRegistry';
+import { Status, StatusConfiguration } from './Status';
 import { Urgency } from './Urgency';
-import { Sort } from './Query/Sort';
+import { DateField } from './Query/Filter/DateField';
 import { renderTaskLine } from './TaskLineRenderer';
 import type { TaskLineRenderDetails } from './TaskLineRenderer';
 import { DateFallback } from './DateFallback';
-
-/**
- * Collection of status types supported by the plugin.
- * TODO: Make this a class so it can support other types and easier mapping to status character.
- * @export
- * @enum {number}
- */
-export enum Status {
-    TODO = 'Todo',
-    DONE = 'Done',
-}
 
 /**
  * When sorting, make sure low always comes after none. This way any tasks with low will be below any exiting
@@ -53,8 +44,8 @@ export class TaskRegularExpressions {
     // Matches indentation before a list marker (including > for potentially nested blockquotes or Obsidian callouts)
     public static readonly indentationRegex = /^([\s\t>]*)/;
 
-    // Matches (but does not save) - or * list markers.
-    public static readonly listMarkerRegex = /[-*]/;
+    // Matches - or * list markers, or numbered list markers (eg 1.)
+    public static readonly listMarkerRegex = /([-*]|[0-9]+\.)/;
 
     // Matches a checkbox and saves the status character inside
     public static readonly checkboxRegex = /\[(.)\]/u;
@@ -64,6 +55,7 @@ export class TaskRegularExpressions {
 
     // Main regex for parsing a line. It matches the following:
     // - Indentation
+    // - List marker
     // - Status character
     // - Rest of task after checkbox markdown
     public static readonly taskRegex = new RegExp(
@@ -88,7 +80,7 @@ export class TaskRegularExpressions {
 
     // Used with "Toggle Done" command to detect a list item that can get a checkbox added to it.
     public static readonly listItemRegex = new RegExp(
-        TaskRegularExpressions.indentationRegex.source + '(' + TaskRegularExpressions.listMarkerRegex.source + ')',
+        TaskRegularExpressions.indentationRegex.source + TaskRegularExpressions.listMarkerRegex.source,
     );
 
     // Match on block link at end.
@@ -127,15 +119,11 @@ export class Task {
     public readonly description: string;
     public readonly path: string;
     public readonly indentation: string;
+    public readonly listMarker: string;
     /** Line number where the section starts that contains this task. */
     public readonly sectionStart: number;
     /** The index of the nth task in its section. */
     public readonly sectionIndex: number;
-    /**
-     * The original character from within `[]` in the document.
-     * Required to be added to the LI the same way obsidian does as a `data-task` attribute.
-     */
-    public readonly originalStatusCharacter: string;
     public readonly precedingHeader: string | null;
 
     public readonly tags: string[];
@@ -166,9 +154,9 @@ export class Task {
         description,
         path,
         indentation,
+        listMarker,
         sectionStart,
         sectionIndex,
-        originalStatusCharacter,
         precedingHeader,
         priority,
         startDate,
@@ -185,9 +173,9 @@ export class Task {
         description: string;
         path: string;
         indentation: string;
+        listMarker: string;
         sectionStart: number;
         sectionIndex: number;
-        originalStatusCharacter: string;
         precedingHeader: string | null;
         priority: Priority;
         startDate: moment.Moment | null;
@@ -204,9 +192,9 @@ export class Task {
         this.description = description;
         this.path = path;
         this.indentation = indentation;
+        this.listMarker = listMarker;
         this.sectionStart = sectionStart;
         this.sectionIndex = sectionIndex;
-        this.originalStatusCharacter = originalStatusCharacter;
         this.precedingHeader = precedingHeader;
 
         this.tags = tags;
@@ -259,8 +247,8 @@ export class Task {
             return null;
         }
 
-        // match[3] includes the whole body of the task after the brackets.
-        const body = regexMatch[3].trim();
+        // match[4] includes the whole body of the task after the brackets.
+        const body = regexMatch[4].trim();
 
         // return if task does not have the global filter. Do this before processing
         // rest of match to improve performance.
@@ -271,17 +259,13 @@ export class Task {
 
         let description = body;
         const indentation = regexMatch[1];
+        const listMarker = regexMatch[2];
 
-        // Get the status of the task, only todo and done supported.
-        // But custom ones are retained and displayed as-is.
-        const statusString = regexMatch[2];
-        let status: Status;
-        switch (statusString) {
-            case ' ':
-                status = Status.TODO;
-                break;
-            default:
-                status = Status.DONE;
+        // Get the status of the task.
+        const statusString = regexMatch[3];
+        let status = StatusRegistry.getInstance().byIndicator(statusString);
+        if (status === Status.EMPTY) {
+            status = new Status(new StatusConfiguration(statusString, 'Unknown', 'x', false));
         }
 
         // Match for block link and remove if found. Always expected to be
@@ -422,9 +406,9 @@ export class Task {
             description,
             path,
             indentation,
+            listMarker,
             sectionStart,
             sectionIndex,
-            originalStatusCharacter: statusString,
             precedingHeader,
             priority,
             startDate,
@@ -439,14 +423,16 @@ export class Task {
         });
     }
 
-    // TODO: Possibly remove this and call TaskLineRenderer directly
+    /**
+     * Create an HTML rendered List Item element (LI) for the current task.
+     * @param {renderTails}
+     */
     public async toLi(renderDetails: TaskLineRenderDetails): Promise<HTMLLIElement> {
         return renderTaskLine(this, renderDetails);
     }
 
     /**
-     *
-     *
+     * Flatten the task as a string that includes all its components.
      * @param {LayoutOptions} [layoutOptions]
      * @return {*}  {string}
      * @memberof Task
@@ -460,7 +446,10 @@ export class Task {
         return taskString;
     }
 
-    componentToString(layout: TaskLayout, component: LayoutComponent) {
+    /**
+     * Renders a specific TaskLayoutComponent of the task (its description, priority, etc) as a string.
+     */
+    public componentToString(layout: TaskLayout, component: TaskLayoutComponent) {
         switch (component) {
             case 'description':
                 return this.description;
@@ -515,7 +504,7 @@ export class Task {
      * @memberof Task
      */
     public toFileLineString(): string {
-        return `${this.indentation}- [${this.originalStatusCharacter}] ${this.toString()}`;
+        return `${this.indentation}${this.listMarker} [${this.status.indicator}] ${this.toString()}`;
     }
 
     /**
@@ -527,7 +516,7 @@ export class Task {
      * task is not recurring, it will return `[toggled]`.
      */
     public toggle(): Task[] {
-        const newStatus: Status = this.status === Status.TODO ? Status.DONE : Status.TODO;
+        const newStatus = StatusRegistry.getInstance().getNextStatus(this.status);
 
         let newDoneDate = null;
 
@@ -537,7 +526,7 @@ export class Task {
             dueDate: Moment | null;
         } | null = null;
 
-        if (newStatus !== Status.TODO) {
+        if (newStatus.isCompleted()) {
             // Set done date only if setting value is true
             const { setDoneDate } = getSettings();
             if (setDoneDate) {
@@ -554,7 +543,6 @@ export class Task {
             ...this,
             status: newStatus,
             doneDate: newDoneDate,
-            originalStatusCharacter: newStatus === Status.DONE ? 'x' : ' ',
         });
 
         const newTasks: Task[] = [];
@@ -668,9 +656,9 @@ export class Task {
             'description',
             'path',
             'indentation',
+            'listMarker',
             'sectionStart',
             'sectionIndex',
-            'originalStatusCharacter',
             'precedingHeader',
             'priority',
             'blockLink',
@@ -698,7 +686,7 @@ export class Task {
         for (const el of args) {
             const date1 = this[el] as Moment | null;
             const date2 = other[el] as Moment | null;
-            if (Sort.compareByDate(date1, date2) !== 0) {
+            if (DateField.compareByDate(date1, date2) !== 0) {
                 return false;
             }
         }

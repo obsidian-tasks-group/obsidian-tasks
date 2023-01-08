@@ -2,8 +2,9 @@
  * @jest-environment jsdom
  */
 import moment from 'moment';
-import { renderTaskLine } from '../src/TaskLineRenderer';
+import { LayoutClasses, renderTaskLine } from '../src/TaskLineRenderer';
 import { resetSettings, updateSettings } from '../src/Config/Settings';
+import { LayoutOptions } from '../src/TaskLayout';
 import type { Task } from '../src/Task';
 import { fromLine } from './TestHelpers';
 
@@ -14,7 +15,7 @@ window.moment = moment;
  * Creates a dummy 'parent element' to host a task render, renders a task inside it,
  * and returns it for inspection.
  */
-async function createMockParentAndRender(task: Task) {
+async function createMockParentAndRender(task: Task, layoutOptions?: LayoutOptions) {
     const parentElement = document.createElement('div');
     const mockTextRenderer = async (text: string, element: HTMLSpanElement, _path: string) => {
         element.innerText = text;
@@ -24,6 +25,7 @@ async function createMockParentAndRender(task: Task) {
         {
             parentUlElement: parentElement,
             listIndex: 0,
+            layoutOptions: layoutOptions,
         },
         mockTextRenderer,
     );
@@ -39,6 +41,19 @@ function getTextSpan(parentElement: HTMLElement) {
 function getDescriptionText(parentElement: HTMLElement) {
     const textSpan = getTextSpan(parentElement);
     return (textSpan.children[0].children[0] as HTMLElement).innerText;
+}
+
+/*
+ * Returns a list of the task components that are not the description, as strings.
+ */
+function getOtherLayoutComponents(parentElement: HTMLElement): string[] {
+    const textSpan = getTextSpan(parentElement);
+    const components: string[] = [];
+    for (const childSpan of Array.from(textSpan.children)) {
+        if (childSpan.classList.contains(LayoutClasses.description)) continue;
+        if (childSpan?.textContent) components.push(childSpan.textContent);
+    }
+    return components;
 }
 
 describe('task line rendering', () => {
@@ -92,5 +107,109 @@ describe('task line rendering', () => {
         const descriptionWithoutFilter = await getDescriptionTest();
         expect(descriptionWithoutFilter).toEqual('This is a simple task with a  filter');
         resetSettings();
+    });
+
+    const testLayoutOptions = async (
+        taskLine: string,
+        layoutOptions: Partial<LayoutOptions>,
+        expectedDescription: string,
+        expectedComponents: string[],
+    ) => {
+        const task = fromLine({
+            line: taskLine,
+        });
+        const fullLayoutOptions = { ...new LayoutOptions(), ...layoutOptions };
+        const parentRender = await createMockParentAndRender(task, fullLayoutOptions);
+        const renderedDescription = getDescriptionText(parentRender);
+        const renderedComponents = getOtherLayoutComponents(parentRender);
+        expect(renderedDescription).toEqual(expectedDescription);
+        expect(renderedComponents).toEqual(expectedComponents);
+    };
+
+    it('renders correctly with the default layout options', async () => {
+        await testLayoutOptions(
+            '- [ ] Full task ⏫ 📅 2022-07-02 ⏳ 2022-07-03 🛫 2022-07-04 🔁 every day',
+            {},
+            'Full task',
+            [' ⏫', ' 🔁 every day', ' 🛫 2022-07-04', ' ⏳ 2022-07-03', ' 📅 2022-07-02'],
+        );
+    });
+
+    it('renders without priority', async () => {
+        await testLayoutOptions(
+            '- [ ] Full task ⏫ 📅 2022-07-02 ⏳ 2022-07-03 🛫 2022-07-04 🔁 every day',
+            { hidePriority: true },
+            'Full task',
+            [' 🔁 every day', ' 🛫 2022-07-04', ' ⏳ 2022-07-03', ' 📅 2022-07-02'],
+        );
+    });
+
+    it('renders without start date', async () => {
+        await testLayoutOptions(
+            '- [ ] Full task ⏫ 📅 2022-07-02 ⏳ 2022-07-03 🛫 2022-07-04 🔁 every day',
+            { hideStartDate: true },
+            'Full task',
+            [' ⏫', ' 🔁 every day', ' ⏳ 2022-07-03', ' 📅 2022-07-02'],
+        );
+    });
+
+    it('renders without scheduled date', async () => {
+        await testLayoutOptions(
+            '- [ ] Full task ⏫ 📅 2022-07-02 ⏳ 2022-07-03 🛫 2022-07-04 🔁 every day',
+            { hideScheduledDate: true },
+            'Full task',
+            [' ⏫', ' 🔁 every day', ' 🛫 2022-07-04', ' 📅 2022-07-02'],
+        );
+    });
+
+    it('renders without due date', async () => {
+        await testLayoutOptions(
+            '- [ ] Full task ⏫ 📅 2022-07-02 ⏳ 2022-07-03 🛫 2022-07-04 🔁 every day',
+            { hideDueDate: true },
+            'Full task',
+            [' ⏫', ' 🔁 every day', ' 🛫 2022-07-04', ' ⏳ 2022-07-03'],
+        );
+    });
+
+    it('renders without recurrence rule', async () => {
+        await testLayoutOptions(
+            '- [ ] Full task ⏫ 📅 2022-07-02 ⏳ 2022-07-03 🛫 2022-07-04 🔁 every day',
+            { hideRecurrenceRule: true },
+            'Full task',
+            [' ⏫', ' 🛫 2022-07-04', ' ⏳ 2022-07-03', ' 📅 2022-07-02'],
+        );
+    });
+
+    it('renders a done task correctly with the default layout', async () => {
+        await testLayoutOptions(
+            '- [x] Full task ✅ 2022-07-05 ⏫ 📅 2022-07-02 ⏳ 2022-07-03 🛫 2022-07-04 🔁 every day',
+            {},
+            'Full task',
+            [' ⏫', ' 🔁 every day', ' 🛫 2022-07-04', ' ⏳ 2022-07-03', ' 📅 2022-07-02', ' ✅ 2022-07-05'],
+        );
+    });
+
+    it('renders a done task without the done date', async () => {
+        await testLayoutOptions(
+            '- [x] Full task ✅ 2022-07-05 ⏫ 📅 2022-07-02 ⏳ 2022-07-03 🛫 2022-07-04 🔁 every day',
+            { hideDoneDate: true },
+            'Full task',
+            [' ⏫', ' 🔁 every day', ' 🛫 2022-07-04', ' ⏳ 2022-07-03', ' 📅 2022-07-02'],
+        );
+    });
+
+    it('writes a placeholder message if a date is invalid', async () => {
+        await testLayoutOptions('- [ ] Task with invalid due date 📅 2023-13-02', {}, 'Task with invalid due date', [
+            ' 📅 Invalid date',
+        ]);
+    });
+
+    it('standardise the recurrence rule, even if the rule is invalid', async () => {
+        await testLayoutOptions(
+            '- [ ] Task with invalid recurrence rule 🔁 every month on the 32nd',
+            {},
+            'Task with invalid recurrence rule',
+            [' 🔁 every month on the 32th'],
+        );
     });
 });

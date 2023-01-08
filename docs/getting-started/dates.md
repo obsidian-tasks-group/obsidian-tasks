@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Dates
-nav_order: 3
+nav_order: 4
 parent: Getting Started
 ---
 
@@ -61,6 +61,10 @@ Scheduled dates use an hourglass emoji instead of a calendar emoji.
 ```markdown
 - [ ] take out the trash ⏳ 2021-04-09
 ```
+
+See [Use Filename as Default Date]({{ site.baseurl }}{% link getting-started/use-filename-as-default-date.md %}) for how to optionally make Tasks use any dates in file names as the scheduled date for all undated tasks in that file.
+
+> 'Use Filename as Default Date' was introduced in Tasks 1.18.0.
 
 ---
 

@@ -75,8 +75,6 @@ description regex matches /pc_abigail|pc_edwina|at_work/i
 - Regex searches are **case-sensitive**, unlike the simpler  `includes` and  `does not include`
 - A regex search can be made **insensitive** by appending a `i` flag after the closing `/`, for example: `/I aM cAsE INsensitive because of the LiTle i after the closing slash/i`
 - Tasks does not support multi-line regex searches, as each task is a single line.
-- Note that `tags` searches do not yet support regex searches.
-  - As a workaround, search `description` instead.
 
 ## Escaping special characters
 
@@ -104,7 +102,7 @@ Here are a few examples of the [many special characters](https://javascript.info
   - `$` matches the end of the string
   - See [Anchors: string start ^ and end $](https://javascript.info/regexp-anchors)
 - `|` is an `OR` in regular expressions
-  - See [Alternation (OR) |](https://javascript.info/regexp-alternation)
+  - See [Alternation (OR) \|](https://javascript.info/regexp-alternation)
 - `\` adds special meaning to some characters. For example:
   - `\d` matches one digit, from 0 to 9
   - `\D` matches character that is not a digit
@@ -143,8 +141,6 @@ Please be aware of the following limitations in Tasks' implementation of regular
   - Logged in [#1037](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1037)
 - Illegal flags are ignored.
   - For example, the query `description regex matches /CASE/&` should give an error that `&` (and similar) are unrecognised flags.
-- The `tag` or `tags` instruction does not yet support regular expression searches.
-  - Logged in [#1040](https://github.com/obsidian-tasks-group/obsidian-tasks/discussions/1040)
 - [Lookahead and Lookbehind](https://www.regular-expressions.info/lookaround.html) searches are untested, and are presumed not to work on Apple mobile devices, or to cause serious performance problems with slow searches.
 
 ## Regular expression examples
@@ -168,6 +164,22 @@ Find tasks whose description begins with Log, ignoring capitalisation
 ```text
 description regex matches /^Log/i
 ```
+
+### Finding empty fields
+
+I want to find tasks that have no description, perhaps because they were created from a template:
+
+```text
+description regex matches /^$/
+```
+
+I want to exclude tasks with no description:
+
+```text
+description regex does not match /^$/
+```
+
+How this works: in regular expressions, `/^$/` matches text where there is nothing between the start and the end.
 
 ### Finding tasks that are waiting
 

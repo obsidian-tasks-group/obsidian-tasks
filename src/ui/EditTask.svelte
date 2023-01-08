@@ -3,7 +3,8 @@
     import { onMount } from 'svelte';
     import { Recurrence } from '../Recurrence';
     import { getSettings } from '../Config/Settings';
-    import { Priority, Status, Task } from '../Task';
+    import { Status } from '../Status';
+    import { Priority, Task } from '../Task';
     import {
         prioritySymbols,
         recurrenceSymbol,
@@ -13,8 +14,10 @@
     } from '../Task';
     import { doAutocomplete } from '../DateAbbreviations';
 
+    // These exported variables are passed in as props by TaskModal.onOpen():
     export let task: Task;
     export let onSubmit: (updatedTasks: Task[]) => void | Promise<void>;
+    export let statusOptions: Status[];
 
     let descriptionInput: HTMLInputElement;
     let editableTask: {
@@ -364,17 +367,24 @@
                 />
             </div>
         </div>
+        <div class="tasks-modal-section">
+            <label for="status">Status </label>
+            <select bind:value={editableTask.status} id="status-type" class="dropdown">
+                {#each statusOptions as status}
+                    <option value={status}>{status.name} [{status.indicator}]</option>
+                {/each}
+            </select>
+        </div>
         <div class="tasks-modal-section tasks-modal-status">
             <div>
-                <label for="status">Status:</label>
+                <label for="status">Completed:</label>
                 <input
                     id="status"
                     type="checkbox"
                     class="task-list-item-checkbox tasks-modal-checkbox"
-                    checked={editableTask.status === Status.DONE}
+                    checked={editableTask.status.isCompleted()}
                     disabled
                 />
-                <code>{editableTask.status}</code>
             </div>
             <div>
                 <span>Done on:</span>
