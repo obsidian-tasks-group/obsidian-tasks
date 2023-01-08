@@ -24,18 +24,18 @@ export function statusPreviewText(status: StatusConfiguration) {
  * If there are any exact duplicates already present, they are skipped, and noted in the returned value.
  *
  * @param supportedStatuses - an array of status specifications, for example `['b', 'Bookmark', 'x']`
- * @param statusTypes a StatusSettings
+ * @param statusSettings a StatusSettings
  * @return An array of warning messages to show the user, one for each rejected exact duplicate status.
  *
  * @see {@link minimalSupportedStatuses}, {@link itsSupportedStatuses}
  */
 export function addCustomStatusesCollection(
     supportedStatuses: Array<[string, string, string]>,
-    statusTypes: StatusSettings,
+    statusSettings: StatusSettings,
 ): string[] {
     const notices: string[] = [];
     supportedStatuses.forEach((importedStatus) => {
-        const hasStatus = statusTypes.customStatusTypes.find((element) => {
+        const hasStatus = statusSettings.customStatusTypes.find((element) => {
             return (
                 element.indicator == importedStatus[0] &&
                 element.name == importedStatus[1] &&
@@ -43,7 +43,7 @@ export function addCustomStatusesCollection(
             );
         });
         if (!hasStatus) {
-            statusTypes.customStatusTypes.push(
+            statusSettings.customStatusTypes.push(
                 new StatusConfiguration(importedStatus[0], importedStatus[1], importedStatus[2], false),
             );
         } else {

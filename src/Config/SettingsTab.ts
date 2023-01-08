@@ -441,7 +441,7 @@ export class SettingsTab extends PluginSettingTab {
  * Create the row to see and modify settings for a single task status type.
  * @param containerEl
  * @param statusType - The status type to be edited.
- * @param statusTypes - All the status types already in the user's settings, EXCEPT the standard ones.
+ * @param statusSettings - All the status types already in the user's settings, EXCEPT the standard ones.
  * @param settings
  * @param plugin
  * @param deletable - whether the delete button wil be shown
@@ -450,7 +450,7 @@ export class SettingsTab extends PluginSettingTab {
 function createRowForTaskStatus(
     containerEl: HTMLElement,
     statusType: StatusConfiguration,
-    statusTypes: StatusSettings,
+    statusSettings: StatusSettings,
     settings: SettingsTab,
     plugin: TasksPlugin,
     deletable: boolean,
@@ -471,10 +471,10 @@ function createRowForTaskStatus(
                 .setIcon('cross')
                 .setTooltip('Delete')
                 .onClick(async () => {
-                    const index = statusTypes.customStatusTypes.indexOf(statusType);
+                    const index = statusSettings.customStatusTypes.indexOf(statusType);
                     if (index > -1) {
-                        statusTypes.customStatusTypes.splice(index, 1);
-                        await updateAndSaveStatusSettings(statusTypes, settings);
+                        statusSettings.customStatusTypes.splice(index, 1);
+                        await updateAndSaveStatusSettings(statusSettings, settings);
                     }
                 });
         });
@@ -490,10 +490,10 @@ function createRowForTaskStatus(
 
                     modal.onClose = async () => {
                         if (modal.saved) {
-                            const index = statusTypes.customStatusTypes.indexOf(statusType);
+                            const index = statusSettings.customStatusTypes.indexOf(statusType);
                             if (index > -1) {
-                                statusTypes.customStatusTypes.splice(index, 1, modal.statusConfiguration());
-                                await updateAndSaveStatusSettings(statusTypes, settings);
+                                statusSettings.customStatusTypes.splice(index, 1, modal.statusConfiguration());
+                                await updateAndSaveStatusSettings(statusSettings, settings);
                             }
                         }
                     };
@@ -508,16 +508,16 @@ function createRowForTaskStatus(
 
 async function addCustomStatesToSettings(
     supportedStatuses: Array<[string, string, string]>,
-    statusTypes: StatusSettings,
+    statusSettings: StatusSettings,
     settings: SettingsTab,
 ) {
-    const notices = StatusSettingsHelpers.addCustomStatusesCollection(supportedStatuses, statusTypes);
+    const notices = StatusSettingsHelpers.addCustomStatusesCollection(supportedStatuses, statusSettings);
 
     notices.forEach((notice) => {
         new Notice(notice);
     });
 
-    await updateAndSaveStatusSettings(statusTypes, settings);
+    await updateAndSaveStatusSettings(statusSettings, settings);
 }
 
 async function updateAndSaveStatusSettings(statusTypes: StatusSettings, settings: SettingsTab) {
