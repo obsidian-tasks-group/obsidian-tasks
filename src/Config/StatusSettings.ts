@@ -109,6 +109,11 @@ export class StatusSettings {
         return notices;
     }
 
+    /**
+     * Apply the custom statuses in the statusSettings object to the statusRegistry.
+     * @param statusSettings
+     * @param statusRegistry
+     */
     public static applyToStatusRegistry(statusSettings: StatusSettings, statusRegistry: StatusRegistry) {
         // Reset the registry as this may also come from a settings add/delete.
         statusRegistry.clearStatuses();
