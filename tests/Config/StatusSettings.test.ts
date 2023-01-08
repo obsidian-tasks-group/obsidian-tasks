@@ -55,7 +55,7 @@ describe('StatusSettings', () => {
         expect(settings.customStatusTypes.length).toEqual(3);
 
         // Act
-        const result = settings.deleteCustomStatus(imp);
+        const result = StatusSettings.deleteCustomStatus(settings, imp);
 
         // Assert
         expect(result).toEqual(true);
@@ -64,7 +64,7 @@ describe('StatusSettings', () => {
         expect(settings.customStatusTypes[1]).toStrictEqual(con);
 
         // Delete a second time. It should now report that nothing was deleted.
-        const result2 = settings.deleteCustomStatus(imp);
+        const result2 = StatusSettings.deleteCustomStatus(settings, imp);
         expect(result2).toEqual(false);
     });
 });
