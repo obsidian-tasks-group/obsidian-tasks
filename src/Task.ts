@@ -4,7 +4,7 @@ import type { TaskLayoutComponent } from './TaskLayout';
 import { Recurrence } from './Recurrence';
 import { getSettings } from './Config/Settings';
 import { StatusRegistry } from './StatusRegistry';
-import { Status, StatusConfiguration } from './Status';
+import { Status } from './Status';
 import { Urgency } from './Urgency';
 import { DateField } from './Query/Filter/DateField';
 import { renderTaskLine } from './TaskLineRenderer';
@@ -265,7 +265,7 @@ export class Task {
         const statusString = regexMatch[3];
         let status = StatusRegistry.getInstance().byIndicator(statusString);
         if (status === Status.EMPTY) {
-            status = new Status(new StatusConfiguration(statusString, 'Unknown', 'x', false));
+            status = Status.createUnknownStatus(statusString);
         }
 
         // Match for block link and remove if found. Always expected to be
@@ -518,7 +518,7 @@ export class Task {
     public toggle(): Task[] {
         let newStatus = StatusRegistry.getInstance().getNextStatus(this.status);
         if (newStatus === Status.EMPTY) {
-            newStatus = new Status(new StatusConfiguration(this.status.nextStatusIndicator, 'Unknown', 'x', false));
+            newStatus = Status.createUnknownStatus(this.status.nextStatusIndicator);
         }
 
         let newDoneDate = null;
