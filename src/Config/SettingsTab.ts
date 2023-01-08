@@ -473,9 +473,7 @@ function createRowForTaskStatus(
                 .setIcon('cross')
                 .setTooltip('Delete')
                 .onClick(async () => {
-                    const index = statusSettings.customStatusTypes.indexOf(statusType);
-                    if (index > -1) {
-                        statusSettings.customStatusTypes.splice(index, 1);
+                    if (statusSettings.deleteCustomStatus(statusType)) {
                         await updateAndSaveStatusSettings(statusSettings, settings);
                     }
                 });
