@@ -35,7 +35,7 @@ export function addCustomStatusesCollection(
 ): string[] {
     const notices: string[] = [];
     supportedStatuses.forEach((importedStatus) => {
-        const hasStatus = statusTypes.find((element) => {
+        const hasStatus = statusTypes.customStatusTypes.find((element) => {
             return (
                 element.indicator == importedStatus[0] &&
                 element.name == importedStatus[1] &&
@@ -43,7 +43,9 @@ export function addCustomStatusesCollection(
             );
         });
         if (!hasStatus) {
-            statusTypes.push(new StatusConfiguration(importedStatus[0], importedStatus[1], importedStatus[2], false));
+            statusTypes.customStatusTypes.push(
+                new StatusConfiguration(importedStatus[0], importedStatus[1], importedStatus[2], false),
+            );
         } else {
             notices.push(`The status ${importedStatus[1]} (${importedStatus[0]}) is already added.`);
         }

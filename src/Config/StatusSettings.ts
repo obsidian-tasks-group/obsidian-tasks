@@ -1,3 +1,9 @@
 import type { StatusConfiguration } from '../Status';
 
-export type StatusSettings = StatusConfiguration[];
+export interface StatusSettings {
+    customStatusTypes: StatusConfiguration[];
+}
+
+export const defaultStatusSettings: StatusSettings = {
+    customStatusTypes: [],
+};
