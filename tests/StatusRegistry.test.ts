@@ -10,6 +10,9 @@ jest.mock('obsidian');
 window.moment = moment;
 
 describe('StatusRegistry', () => {
+    // Reset the global StatusRegistry before and after each test.
+    // The global StatusRegistry is used by the code that toggles tasks.
+    // Where possible, tests should create their own StatusRegistry to act on.
     beforeEach(() => {
         StatusRegistry.getInstance().clearStatuses();
     });
@@ -22,7 +25,7 @@ describe('StatusRegistry', () => {
         // Arrange
 
         // Act
-        const statusRegistry = StatusRegistry.getInstance();
+        const statusRegistry = new StatusRegistry();
         const doneStatus = statusRegistry.byIndicator('x');
 
         // Assert
@@ -42,8 +45,8 @@ describe('StatusRegistry', () => {
 
     it('should allow task to toggle through standard transitions', () => {
         // Arrange
-        const statusRegistry = StatusRegistry.getInstance();
-        statusRegistry.clearStatuses();
+        // Global statusRegistry instance - which controls toggling - will have been reset
+        // in beforeEach() above.
         const line = '- [ ] this is a task starting at A';
         const path = 'file.md';
         const sectionStart = 1337;
@@ -77,8 +80,8 @@ describe('StatusRegistry', () => {
 
     it('should allow task to toggle from cancelled to todo', () => {
         // Arrange
-        const statusRegistry = StatusRegistry.getInstance();
-        statusRegistry.clearStatuses();
+        // Global statusRegistry instance - which controls toggling - will have been reset
+        // in beforeEach() above.
         const line = '- [-] This is a cancelled task';
         const path = 'file.md';
         const sectionStart = 1337;
@@ -105,7 +108,7 @@ describe('StatusRegistry', () => {
 
     it('should allow lookup of next status for a status', () => {
         // Arrange
-        const statusRegistry = StatusRegistry.getInstance();
+        const statusRegistry = new StatusRegistry();
         statusRegistry.clearStatuses();
         const statusA = new Status(new StatusConfiguration('a', 'A', 'b', false));
         const statusB = new Status(new StatusConfiguration('b', 'B', 'c', false));
@@ -127,7 +130,7 @@ describe('StatusRegistry', () => {
 
     it('should handle adding custom StatusConfiguration', () => {
         // Arrange
-        const statusRegistry = StatusRegistry.getInstance();
+        const statusRegistry = new StatusRegistry();
         const statusConfiguration = new StatusConfiguration('a', 'A', 'b', false);
         statusRegistry.add(statusConfiguration);
 
@@ -138,7 +141,7 @@ describe('StatusRegistry', () => {
 
     it('should not modify an added custom Status', () => {
         // Arrange
-        const statusRegistry = StatusRegistry.getInstance();
+        const statusRegistry = new StatusRegistry();
         const status = new Status(new StatusConfiguration('a', 'A', 'b', false));
         statusRegistry.add(status);
 
@@ -149,16 +152,17 @@ describe('StatusRegistry', () => {
 
     it('should allow task to toggle through custom transitions', () => {
         // Arrange
-        const statusRegistry = StatusRegistry.getInstance();
-        statusRegistry.clearStatuses();
+        // Toggling code uses the global status registry, so we must explicitly modify that instance.
+        // It will already have been reset in beforeEach() above.
+        const globalStatusRegistry = StatusRegistry.getInstance();
         const statusA = new Status(new StatusConfiguration('a', 'A', 'b', false));
         const statusB = new Status(new StatusConfiguration('b', 'B', 'c', false));
         const statusC = new Status(new StatusConfiguration('c', 'C', 'd', false));
         const statusD = new Status(new StatusConfiguration('d', 'D', 'a', false));
-        statusRegistry.add(statusA);
-        statusRegistry.add(statusB);
-        statusRegistry.add(statusC);
-        statusRegistry.add(statusD);
+        globalStatusRegistry.add(statusA);
+        globalStatusRegistry.add(statusB);
+        globalStatusRegistry.add(statusC);
+        globalStatusRegistry.add(statusD);
         const line = '- [a] this is a task starting at A';
         const path = 'file.md';
         const sectionStart = 1337;

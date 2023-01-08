@@ -3,6 +3,16 @@ import { Status, StatusConfiguration } from './Status';
 /**
  * Tracks all the registered statuses a task can have.
  *
+ * There are two ways of using this class.
+ * - In 'production' code, that is in the actual plugin code that is released,
+ *   call `StatusRegistry.getInstance()` to obtain the single global instance.
+ *   Any changes to the statuses in that instance are reflected everywhere throughout
+ *   the plugin.
+ *   For example, the code to toggle task statuses use the global instance.
+ * - Tests of StatusRegistry capabilities do not need to modify the global instance:
+ *   They should use `new StatusRegistry()`, which makes for simpler, more readable
+ *   tests that can be run in parallel.
+ *
  * @export
  * @class StatusRegistry
  */
@@ -15,9 +25,12 @@ export class StatusRegistry {
      * Creates an instance of Status and registers it for use. It will also check to see
      * if the default todo and done are registered and if not handle it internally.
      *
+     * Code in the plugin should use {@link getInstance} to use and modify the global
+     * StatusRegistry.
+     *
      * @memberof StatusRegistry
      */
-    private constructor() {
+    public constructor() {
         this.addDefaultStatusTypes();
     }
 
