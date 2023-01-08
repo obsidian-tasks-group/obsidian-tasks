@@ -121,7 +121,7 @@ export class Status {
      * @type {StatusConfiguration}
      * @memberof Status
      */
-    private readonly configuration: StatusConfiguration;
+    public readonly configuration: StatusConfiguration;
 
     /**
      * Whether Tasks can yet create 'Toggle Status' commands for statuses
