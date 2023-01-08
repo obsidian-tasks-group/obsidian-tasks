@@ -1,5 +1,5 @@
 import { Modal, Setting, TextComponent } from 'obsidian';
-import { StatusConfiguration } from '../Status';
+import { Status, StatusConfiguration } from '../Status';
 import type TasksPlugin from '../main';
 
 export class CustomStatusModal extends Modal {
@@ -81,16 +81,18 @@ export class CustomStatusModal extends Modal {
                 });
             });
 
-        new Setting(settingDiv)
-            .setName('Available as command')
-            .setDesc(
-                'If enabled this status will be available as a command so you can assign a hotkey and toggle the status using it.',
-            )
-            .addToggle((toggle) => {
-                toggle.setValue(this.statusAvailableAsCommand).onChange(async (value) => {
-                    this.statusAvailableAsCommand = value;
+        if (Status.tasksPluginCanCreateCommandsForStatuses()) {
+            new Setting(settingDiv)
+                .setName('Available as command')
+                .setDesc(
+                    'If enabled this status will be available as a command so you can assign a hotkey and toggle the status using it.',
+                )
+                .addToggle((toggle) => {
+                    toggle.setValue(this.statusAvailableAsCommand).onChange(async (value) => {
+                        this.statusAvailableAsCommand = value;
+                    });
                 });
-            });
+        }
 
         const footerEl = contentEl.createDiv();
         const footerButtons = new Setting(footerEl);
