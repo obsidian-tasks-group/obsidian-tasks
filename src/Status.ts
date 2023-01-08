@@ -59,6 +59,13 @@ export class StatusConfiguration {
 /**
  * Tracks the possible states that a task can be in.
  *
+ * Related classes:
+ * @see StatusConfiguration
+ * @see StatusRegistry
+ * @see StatusSettings
+ * @see StatusSettingsHelpers.ts
+ * @see CustomStatusModal
+ *
  * @export
  * @class Status
  */
