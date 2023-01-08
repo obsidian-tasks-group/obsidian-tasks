@@ -46,11 +46,11 @@ export default class TasksPlugin extends Plugin {
     }
 
     async loadTaskStatuses() {
-        const { statusTypes } = getSettings();
+        const { statusSettings } = getSettings();
 
         // Reset the registry as this may also come from a settings add/delete.
         StatusRegistry.getInstance().clearStatuses();
-        statusTypes.forEach((statusType) => {
+        statusSettings.customStatusTypes.forEach((statusType) => {
             StatusRegistry.getInstance().add(statusType);
         });
     }

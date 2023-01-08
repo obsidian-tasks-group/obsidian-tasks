@@ -366,11 +366,12 @@ export class SettingsTab extends PluginSettingTab {
      */
     insertTaskCoreStatusSettings(containerEl: HTMLElement, settings: SettingsTab) {
         // TODO Make these statuses editable
-        const coreStatuses: StatusSettings = [];
-        coreStatuses.push(Status.TODO, Status.IN_PROGRESS, Status.DONE, Status.CANCELLED);
+        const coreStatuses: StatusSettings = {
+            customStatusTypes: [Status.TODO, Status.IN_PROGRESS, Status.DONE, Status.CANCELLED],
+        };
 
         /* -------------------- One row per status in the settings -------------------- */
-        coreStatuses.forEach((status_type) => {
+        coreStatuses.customStatusTypes.forEach((status_type) => {
             createRowForTaskStatus(containerEl, status_type, coreStatuses, settings, settings.plugin, false, false);
         });
     }
@@ -383,11 +384,11 @@ export class SettingsTab extends PluginSettingTab {
      * @memberof SettingsTab
      */
     insertTaskStatusSettings(containerEl: HTMLElement, settings: SettingsTab) {
-        const { statusTypes } = getSettings();
+        const { statusSettings } = getSettings();
 
         /* -------------------- One row per status in the settings -------------------- */
-        statusTypes.forEach((status_type) => {
-            createRowForTaskStatus(containerEl, status_type, statusTypes, settings, settings.plugin, true, true);
+        statusSettings.customStatusTypes.forEach((status_type) => {
+            createRowForTaskStatus(containerEl, status_type, statusSettings, settings, settings.plugin, true, true);
         });
 
         containerEl.createEl('div');
@@ -398,8 +399,8 @@ export class SettingsTab extends PluginSettingTab {
                 .setButtonText('Add New Task Status')
                 .setCta()
                 .onClick(async () => {
-                    statusTypes.push(new StatusConfiguration('', '', '', false));
-                    await updateAndSaveStatusSettings(statusTypes, settings);
+                    statusSettings.customStatusTypes.push(new StatusConfiguration('', '', '', false));
+                    await updateAndSaveStatusSettings(statusSettings, settings);
                 });
         });
         setting.infoEl.remove();
@@ -412,7 +413,7 @@ export class SettingsTab extends PluginSettingTab {
                 .onClick(async () => {
                     await addCustomStatesToSettings(
                         StatusSettingsHelpers.minimalSupportedStatuses(),
-                        statusTypes,
+                        statusSettings,
                         settings,
                     );
                 });
@@ -427,7 +428,7 @@ export class SettingsTab extends PluginSettingTab {
                 .onClick(async () => {
                     await addCustomStatesToSettings(
                         StatusSettingsHelpers.itsSupportedStatuses(),
-                        statusTypes,
+                        statusSettings,
                         settings,
                     );
                 });
@@ -470,9 +471,9 @@ function createRowForTaskStatus(
                 .setIcon('cross')
                 .setTooltip('Delete')
                 .onClick(async () => {
-                    const index = statusTypes.indexOf(statusType);
+                    const index = statusTypes.customStatusTypes.indexOf(statusType);
                     if (index > -1) {
-                        statusTypes.splice(index, 1);
+                        statusTypes.customStatusTypes.splice(index, 1);
                         await updateAndSaveStatusSettings(statusTypes, settings);
                     }
                 });
@@ -489,9 +490,9 @@ function createRowForTaskStatus(
 
                     modal.onClose = async () => {
                         if (modal.saved) {
-                            const index = statusTypes.indexOf(statusType);
+                            const index = statusTypes.customStatusTypes.indexOf(statusType);
                             if (index > -1) {
-                                statusTypes.splice(index, 1, modal.statusConfiguration());
+                                statusTypes.customStatusTypes.splice(index, 1, modal.statusConfiguration());
                                 await updateAndSaveStatusSettings(statusTypes, settings);
                             }
                         }
@@ -521,7 +522,7 @@ async function addCustomStatesToSettings(
 
 async function updateAndSaveStatusSettings(statusTypes: StatusSettings, settings: SettingsTab) {
     updateSettings({
-        statusTypes: statusTypes,
+        statusSettings: statusTypes,
     });
 
     await settings.saveSettings(true);
