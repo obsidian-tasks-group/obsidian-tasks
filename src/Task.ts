@@ -516,7 +516,10 @@ export class Task {
      * task is not recurring, it will return `[toggled]`.
      */
     public toggle(): Task[] {
-        const newStatus = StatusRegistry.getInstance().getNextStatus(this.status);
+        let newStatus = StatusRegistry.getInstance().getNextStatus(this.status);
+        if (newStatus === Status.EMPTY) {
+            newStatus = new Status(new StatusConfiguration(this.status.nextStatusIndicator, 'Unknown', 'x', false));
+        }
 
         let newDoneDate = null;
 
