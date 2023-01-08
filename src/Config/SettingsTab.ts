@@ -3,6 +3,7 @@ import { Status, StatusConfiguration } from 'Status';
 import type TasksPlugin from '../main';
 import type { HeadingState } from './Settings';
 import { getSettings, isFeatureEnabled, updateGeneralSetting, updateSettings } from './Settings';
+import type { StatusSettings } from './StatusSettings';
 import settingsJson from './settingsConfiguration.json';
 
 import { CustomStatusModal } from './CustomStatusModal';
@@ -365,7 +366,7 @@ export class SettingsTab extends PluginSettingTab {
      */
     insertTaskCoreStatusSettings(containerEl: HTMLElement, settings: SettingsTab) {
         // TODO Make these statuses editable
-        const coreStatuses: StatusConfiguration[] = [];
+        const coreStatuses: StatusSettings = [];
         coreStatuses.push(Status.TODO, Status.IN_PROGRESS, Status.DONE, Status.CANCELLED);
 
         /* -------------------- One row per status in the settings -------------------- */
@@ -448,7 +449,7 @@ export class SettingsTab extends PluginSettingTab {
 function createRowForTaskStatus(
     containerEl: HTMLElement,
     statusType: StatusConfiguration,
-    statusTypes: StatusConfiguration[],
+    statusTypes: StatusSettings,
     settings: SettingsTab,
     plugin: TasksPlugin,
     deletable: boolean,
@@ -506,7 +507,7 @@ function createRowForTaskStatus(
 
 async function addCustomStatesToSettings(
     supportedStatuses: Array<[string, string, string]>,
-    statusTypes: StatusConfiguration[],
+    statusTypes: StatusSettings,
     settings: SettingsTab,
 ) {
     const notices = StatusSettingsHelpers.addCustomStatusesCollection(supportedStatuses, statusTypes);
@@ -518,7 +519,7 @@ async function addCustomStatesToSettings(
     await updateAndSaveStatusSettings(statusTypes, settings);
 }
 
-async function updateAndSaveStatusSettings(statusTypes: StatusConfiguration[], settings: SettingsTab) {
+async function updateAndSaveStatusSettings(statusTypes: StatusSettings, settings: SettingsTab) {
     updateSettings({
         statusTypes: statusTypes,
     });
