@@ -115,7 +115,15 @@ export class StatusSettings {
         statusSettings.customStatusTypes.forEach((statusType) => {
             statusRegistry.add(statusType);
         });
-        console.log(statusSettings.customStatusTypes);
-        console.log(statusRegistry.registeredStatuses);
+
+        console.debug('Custom statuses read from settings:');
+        console.debug(statusSettings.customStatusTypes);
+
+        console.debug('All statuses registered in Tasks StatusRegistry (including the core ones):');
+        const registeredStatusTypes: StatusConfiguration[] = [];
+        statusRegistry.registeredStatuses.forEach((s) => {
+            registeredStatusTypes.push(s.configuration);
+        });
+        console.debug(registeredStatusTypes);
     }
 }
