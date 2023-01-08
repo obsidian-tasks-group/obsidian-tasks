@@ -5,6 +5,7 @@ import moment from 'moment';
 import { StatusRegistry } from '../src/StatusRegistry';
 import { Status, StatusConfiguration } from '../src/Status';
 import { Task } from '../src/Task';
+import * as TestHelpers from './TestHelpers';
 
 jest.mock('obsidian');
 window.moment = moment;
@@ -195,6 +196,26 @@ describe('StatusRegistry', () => {
 
             const toggledD = toggledC?.toggle()[0];
             expect(toggledD?.status.indicator).toEqual(statusA.indicator);
+        });
+
+        it('should leave task valid if toggling to unknown status', () => {
+            // Arrange
+            const globalStatusRegistry = StatusRegistry.getInstance();
+            const important = new StatusConfiguration('!', 'Important', 'D', false);
+            globalStatusRegistry.add(important);
+
+            const line = '- [!] this is an important task';
+            const task = TestHelpers.fromLine({ line });
+            expect(task).not.toBeNull();
+            expect(task!.status.indicator).toEqual(important.indicator);
+
+            // Act
+            const toggled = task?.toggle()[0];
+
+            // Assert
+            // Issue https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1499
+            // Ensure that the next status was applied, even though it is an unrecognised status
+            expect(toggled?.status.indicator).toEqual('D');
         });
     });
 });
