@@ -14,12 +14,13 @@ describe('DefaultStatuses', () => {
         // for embedding in the user docs.
         const instance = StatusRegistry.getInstance();
         let commandsTable = '<!-- placeholder to force blank line before table -->\n\n';
-        commandsTable += '| Status Character    | Status Name | Next Status Character |\n';
-        commandsTable += '| ------------------- | ----------- | --------------------- |\n';
+        commandsTable += '| Status Character    | Status Name | Next Status Character | Needs Custom Styling |\n';
+        commandsTable += '| ------------------- | ----------- | --------------------- | -------------------- |\n';
         for (const status of instance.registeredStatuses) {
             const statusCharacter = getPrintableIndicator(status.indicator);
             const nextStatusCharacter = getPrintableIndicator(status.nextStatusIndicator);
-            commandsTable += `| ${statusCharacter} | ${status.name} | ${nextStatusCharacter} |\n`;
+            const needsCustomStyling = status.indicator !== ' ' && status.indicator !== 'x' ? 'Yes' : 'No';
+            commandsTable += `| ${statusCharacter} | ${status.name} | ${nextStatusCharacter} | ${needsCustomStyling} |\n`;
         }
         commandsTable += '\n\n<!-- placeholder to force blank line after table -->\n';
         let options = new Options();
