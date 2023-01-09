@@ -26,7 +26,7 @@ function verifyStatusesAsMarkdownTable(statuses: Status[]) {
 }
 
 describe('DefaultStatuses', () => {
-    it('markdown-table', () => {
+    it('core-statuses', () => {
         // This "test" writes out a markdown representation of the default task statuses,
         // for embedding in the user docs.
         verifyStatusesAsMarkdownTable(new StatusRegistry().registeredStatuses);

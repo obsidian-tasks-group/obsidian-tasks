@@ -42,7 +42,7 @@ Tasks supports custom task statuses.
 
 This table shows the statues provided by default:
 
-<!-- placeholder to force blank line before table --> <!-- include: DocsSamplesForStatuses.test.DefaultStatuses_markdown-table.approved.md -->
+<!-- placeholder to force blank line before table --> <!-- include: DocsSamplesForStatuses.test.DefaultStatuses_core-statuses.approved.md -->
 
 | Status Character    | Status Name | Next Status Character | Needs Custom Styling |
 | ------------------- | ----------- | --------------------- | -------------------- |
