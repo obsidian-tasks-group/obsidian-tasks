@@ -186,6 +186,17 @@ export class Status {
     }
 
     /**
+     * Create a Status representing the given, unknown indicator.
+     *
+     * This can be useful when StatusRegistry does not recognise an indicator,
+     * and we do not want to expose the user's data to the Status.EMPTY status.
+     * @param unknownIndicator
+     */
+    static createUnknownStatus(unknownIndicator: string) {
+        return new Status(new StatusConfiguration(unknownIndicator, 'Unknown', 'x', false));
+    }
+
+    /**
      * Returns the completion status for a task, this is only supported
      * when the task is done/x.
      *
