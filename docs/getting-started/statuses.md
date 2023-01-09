@@ -42,14 +42,16 @@ Tasks supports custom task statuses.
 
 This table shows the statues provided by default:
 
-<!-- include: DocsSamplesForStatuses.test.DefaultStatuses_markdown-table.approved.md -->
+<!-- placeholder to force blank line before table --> <!-- include: DocsSamplesForStatuses.test.DefaultStatuses_markdown-table.approved.md -->
+
 | Status Character    | Status Name | Next Status Character |
 | ------------------- | ----------- | --------------------- |
 | `space` | Todo | `x` |
 | `/` | In Progress | `x` |
 | `x` | Done | `space` |
 | `-` | Cancelled | `space` |
-<!-- endInclude -->
+
+<!-- placeholder to force blank line after table --> <!-- endInclude -->
 
 Note that `Todo` is followed by `Done`, in order to preserve compatibility with earlier Tasks releases.
 
