@@ -2,7 +2,9 @@ import { Options } from 'approvals/lib/Core/Options';
 import { verify } from 'approvals/lib/Providers/Jest/JestApprovals';
 
 import { StatusRegistry } from '../src/StatusRegistry';
-import type { Status } from '../src/Status';
+import { Status } from '../src/Status';
+import * as StatusSettingsHelpers from '../src/Config/StatusSettingsHelpers';
+import { StatusConfiguration } from '../src/Status';
 
 function getPrintableIndicator(indicator: string) {
     const result = indicator !== ' ' ? indicator : 'space';
@@ -30,5 +32,18 @@ describe('DefaultStatuses', () => {
         // This "test" writes out a markdown representation of the default task statuses,
         // for embedding in the user docs.
         verifyStatusesAsMarkdownTable(new StatusRegistry().registeredStatuses);
+    });
+
+    it('minimal-supported-statuses', () => {
+        // This "test" writes out a markdown representation of the default task statuses,
+        // for embedding in the user docs.
+        const importedStatuses = StatusSettingsHelpers.minimalSupportedStatuses();
+        const statuses: Status[] = [];
+        importedStatuses.forEach((importedStatus) => {
+            statuses.push(
+                new Status(new StatusConfiguration(importedStatus[0], importedStatus[1], importedStatus[2], false)),
+            );
+        });
+        verifyStatusesAsMarkdownTable(statuses);
     });
 });
