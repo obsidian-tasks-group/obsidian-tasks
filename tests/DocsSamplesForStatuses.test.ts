@@ -37,16 +37,19 @@ function constructStatuses(importedStatuses: Array<[string, string, string]>) {
 }
 
 describe('DefaultStatuses', () => {
+    // These "test" write out a markdown representation of the default task statuses,
+    // for embedding in the user docs.
     it('core-statuses', () => {
-        // This "test" writes out a markdown representation of the default task statuses,
-        // for embedding in the user docs.
         verifyStatusesAsMarkdownTable(new StatusRegistry().registeredStatuses);
     });
 
     it('minimal-supported-statuses', () => {
-        // This "test" writes out a markdown representation of the default task statuses,
-        // for embedding in the user docs.
         const importedStatuses = StatusSettingsHelpers.minimalSupportedStatuses();
+        verifyStatusesAsMarkdownTable(constructStatuses(importedStatuses));
+    });
+
+    it('its-theme-supported-statuses', () => {
+        const importedStatuses = StatusSettingsHelpers.itsSupportedStatuses();
         verifyStatusesAsMarkdownTable(constructStatuses(importedStatuses));
     });
 });
