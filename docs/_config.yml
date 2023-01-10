@@ -27,3 +27,11 @@ gh_edit_view_mode: "tree" # "tree" or "edit" if you want the user to jump into t
 
 # Build settings
 remote_theme: pmarsceill/just-the-docs
+
+callouts:
+  warning:
+    title: Warning
+    color: red
+  info:
+    title: Information
+    color: blue
