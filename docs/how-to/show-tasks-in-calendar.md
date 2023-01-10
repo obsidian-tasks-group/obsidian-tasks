@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Show tasks in a calendar
-nav_order: 7
+nav_order: 8
 parent: How Tos
 ---
 
