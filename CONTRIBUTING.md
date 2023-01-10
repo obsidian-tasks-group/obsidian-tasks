@@ -7,11 +7,13 @@
 - [Updating documentation](#updating-documentation)
   - [Documentation and branches](#documentation-and-branches)
   - [Adding Tables of Contents to rendered docs](#adding-tables-of-contents-to-rendered-docs)
+  - [Omitting a heading from the page's Table of Contents](#omitting-a-heading-from-the-pages-table-of-contents)
   - [Linking to other pages in the docs](#linking-to-other-pages-in-the-docs)
   - [Screenshots in documentation](#screenshots-in-documentation)
     - [Creating screenshots](#creating-screenshots)
     - [Saving screenshots](#saving-screenshots)
     - [Adding screenshots to the documentation](#adding-screenshots-to-the-documentation)
+  - [Callouts](#callouts)
   - [Version numbers in documentation](#version-numbers-in-documentation)
   - [How the documentation is generated](#how-the-documentation-is-generated)
 - [Updating code](#updating-code)
@@ -155,6 +157,21 @@ The `ACME` note has some tasks - as linked to from any file in a sub-directory o
 ```
 
 With this mechanism, you can preview the embedded images in any decent Markdown editor, including by opening the `obsidian-tasks` directory in Obsidian.
+
+### Callouts
+
+The following callout styles are available. There must be no blank line between the style name and the content.
+
+```text
+{: .warning }
+I will be shown in red
+
+{: .info }
+I will be shown in blue
+
+{: .released }
+I will be shown in green
+```
 
 ### Version numbers in documentation
 
