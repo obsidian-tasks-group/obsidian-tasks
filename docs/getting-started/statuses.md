@@ -83,7 +83,7 @@ Your choice of styling facility will determine which letters and characters you 
 Then see [How to set up your custom statuses]({{ site.baseurl }}{% link how-to/set-up-custom-statuses.md %}) for how to set up your custom statuses.
 
 {: .warning }
-Remember to set up your chosen CSS Snippet or Theme before setting up the custom statues.
+Remember to set up your chosen CSS Snippet or Theme before setting up the custom statuses.
 
 ### Minimal supported statuses
 
@@ -156,9 +156,14 @@ We are tracking this in [issue #1486](https://github.com/obsidian-tasks-group/ob
 
 ### Related searches
 
+- `done` - matches tasks with anything except space as the status symbol
+- `not done` - matches task with a space as the status symbol
+- `status.name` text search
+
+For details, see [Filters for Task Statuses]({{ site.baseurl }}{% link queries/filters.md %}#filters-for-task-statuses)
+
 {: .info }
-There are not yet any new specific searches for applying custom statuses.
-We envisage adding search filters for `status.name` and `status.symbol` initially.
+We envisage adding `status.symbol`.
 
 ## Related pages
 

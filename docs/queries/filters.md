@@ -181,6 +181,34 @@ because the tasks starts before tomorrow. Only one of the dates needs to match.
 
 > `no happens date` and `has happens date` were introduced in Tasks 1.7.0.
 
+## Filters for Task Statuses
+
+### Status
+
+- `done` - matches tasks with anything except space as the status symbol
+- `not done` - matches task with a space as the status symbol
+
+### Status Name
+
+- `status.name (includes|does not include) <string>`
+  - Matches case-insensitive (disregards capitalization).
+- `status.name (regex matches|regex does not match) /<JavaScript-style Regex>/`
+  - Does regular expression match (case-sensitive by default).
+  - Essential reading: [Regular Expression Searches]({{ site.baseurl }}{% link queries/regular-expressions.md %}).
+
+> `status.name` text searching was introduced in Tasks X.Y.Z.
+
+For more information, including adding your own customised statuses, see [Statuses]({{ site.baseurl }}{% link getting-started/statuses.md %}).
+
+### Status Examples
+
+Find any tasks that have status symbols you have not yet added to your Tasks settings:
+
+    ```tasks
+    status.name includes unknown
+    group by path
+    ```
+
 ## Filters for Other Task Properties
 
 As well as the date-related searches above, these filters search other properties in individual tasks.
@@ -255,11 +283,6 @@ For more information, see [Priorities]({{ site.baseurl }}{% link getting-started
   - Essential reading: [Regular Expression Searches]({{ site.baseurl }}{% link queries/regular-expressions.md %}).
 
 > `recurrence` text searching was introduced in Tasks 1.22.0.
-
-### Status
-
-- `done`
-- `not done`
 
 ### Sub-Items
 
