@@ -7,7 +7,6 @@ has_toc: false
 ---
 
 # Use Filename as Default Date
-
 {: .no_toc }
 
 <details open markdown="block">

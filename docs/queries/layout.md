@@ -6,7 +6,6 @@ parent: Queries
 ---
 
 # Layout commands
-
 {: .no_toc }
 
 <details open markdown="block">

@@ -6,7 +6,6 @@ parent: How Tos
 ---
 
 # Find tasks with potentially invalid data
-
 {: .no_toc }
 
 <details open markdown="block">

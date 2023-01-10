@@ -7,7 +7,6 @@ has_toc: false
 ---
 
 # Statuses
-
 {: .no_toc }
 
 <details open markdown="block">

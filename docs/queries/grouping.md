@@ -6,7 +6,6 @@ parent: Queries
 ---
 
 # Grouping
-
 {: .no_toc }
 
 <details open markdown="block">

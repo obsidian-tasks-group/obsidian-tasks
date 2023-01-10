@@ -7,7 +7,6 @@ has_toc: false
 ---
 
 # Combining Dataview and Tasks
-
 {: .no_toc }
 
 <details open markdown="block">

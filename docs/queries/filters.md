@@ -6,7 +6,6 @@ parent: Queries
 ---
 
 # Filters
-
 {: .no_toc }
 
 <details open markdown="block">
@@ -262,7 +261,6 @@ The available priorities are (from high to low):
 For more information, see [Priorities]({{ site.baseurl }}{% link getting-started/priority.md %}) .
 
 #### Examples
-
 {: .no_toc }
 
     ```tasks
@@ -322,7 +320,6 @@ Introduced in Tasks 1.6.0.
 `regex matches` and `regex does not match` were introduced in Tasks 1.13.0.
 
 #### Tag Query Examples
-
 {: .no_toc }
 
 - `tags include #todo`

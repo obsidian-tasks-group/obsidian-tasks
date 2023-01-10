@@ -7,7 +7,6 @@ has_toc: false
 ---
 
 # Intelligent Auto-Suggest
-
 {: .no_toc }
 
 <details open markdown="block">

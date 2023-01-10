@@ -7,7 +7,6 @@ has_toc: false
 ---
 
 # Recurring Tasks (Repetition)
-
 {: .no_toc }
 
 <details open markdown="block">

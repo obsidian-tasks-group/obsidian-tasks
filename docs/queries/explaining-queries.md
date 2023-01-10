@@ -7,7 +7,6 @@ has_toc: false
 ---
 
 # Explaining Queries
-
 {: .no_toc }
 
 <details open markdown="block">

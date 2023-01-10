@@ -7,7 +7,6 @@ has_toc: false
 ---
 
 # Regular Expressions
-
 {: .no_toc }
 
 <details open markdown="block">

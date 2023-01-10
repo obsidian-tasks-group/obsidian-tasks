@@ -6,7 +6,6 @@ has_children: true
 ---
 
 # Getting Started
-
 {: .no_toc }
 
 <details open markdown="block">

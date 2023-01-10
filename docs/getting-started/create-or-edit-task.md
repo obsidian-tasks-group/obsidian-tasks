@@ -7,7 +7,6 @@ has_toc: false
 ---
 
 # 'Create or edit Task' Modal
-
 {: .no_toc }
 
 <details open markdown="block">

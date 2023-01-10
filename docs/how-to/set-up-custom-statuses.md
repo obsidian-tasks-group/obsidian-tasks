@@ -6,7 +6,6 @@ parent: How Tos
 ---
 
 # Set up custom statuses
-
 {: .no_toc }
 
 <details open markdown="block">
