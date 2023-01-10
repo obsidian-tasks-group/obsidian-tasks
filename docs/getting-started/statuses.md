@@ -36,7 +36,8 @@ The convention in markdown is:
 
 ## Tasks core task statuses
 
-- `> Introduced in Tasks X.Y.Z`
+{: .released }
+Introduced in Tasks X.Y.Z
 
 Tasks supports custom task statuses.
 
