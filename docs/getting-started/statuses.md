@@ -53,7 +53,11 @@ This table shows the statues provided by default:
 
 <!-- placeholder to force blank line after table --> <!-- endInclude -->
 
-### Customising tasks core task statuses
+### Editing core statuses
+
+The Tasks settings shows the core statuses:
+
+![Core Statuses](../images/settings-core-statuses.png)
 
 Note that `Todo` is followed by `Done`, in order to preserve compatibility with earlier Tasks releases.
 
