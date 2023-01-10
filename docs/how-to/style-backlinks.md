@@ -6,7 +6,6 @@ parent: How Tos
 ---
 
 # How to style backlinks
-
 {: .no_toc }
 
 <details open markdown="block">

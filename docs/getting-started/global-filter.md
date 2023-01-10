@@ -7,7 +7,6 @@ has_toc: false
 ---
 
 # Global Filter
-
 {: .no_toc }
 
 <details open markdown="block">

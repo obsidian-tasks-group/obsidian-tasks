@@ -6,7 +6,6 @@ parent: Advanced
 ---
 
 # Urgency
-
 {: .no_toc }
 
 <details open markdown="block">

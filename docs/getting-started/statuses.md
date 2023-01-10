@@ -7,7 +7,6 @@ has_toc: false
 ---
 
 # Statuses
-
 {: .no_toc }
 
 <details open markdown="block">
@@ -36,7 +35,8 @@ The convention in markdown is:
 
 ## Tasks core task statuses
 
-- `> Introduced in Tasks X.Y.Z`
+{: .released }
+Introduced in Tasks X.Y.Z
 
 Tasks supports custom task statuses.
 

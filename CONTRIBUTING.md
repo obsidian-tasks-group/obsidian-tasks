@@ -7,11 +7,13 @@
 - [Updating documentation](#updating-documentation)
   - [Documentation and branches](#documentation-and-branches)
   - [Adding Tables of Contents to rendered docs](#adding-tables-of-contents-to-rendered-docs)
+  - [Omitting a heading from the page's Table of Contents](#omitting-a-heading-from-the-pages-table-of-contents)
   - [Linking to other pages in the docs](#linking-to-other-pages-in-the-docs)
   - [Screenshots in documentation](#screenshots-in-documentation)
     - [Creating screenshots](#creating-screenshots)
     - [Saving screenshots](#saving-screenshots)
     - [Adding screenshots to the documentation](#adding-screenshots-to-the-documentation)
+  - [Callouts](#callouts)
   - [Version numbers in documentation](#version-numbers-in-documentation)
   - [How the documentation is generated](#how-the-documentation-is-generated)
 - [Updating code](#updating-code)
@@ -73,6 +75,7 @@ We will help you make this right once you opened the PR.
 Add the following between the H1 and the first H2, to show a table of contents in a page on the published documentation.
 
 ```text
+# Page Heading
 {: .no_toc }
 
 <details open markdown="block">
@@ -86,6 +89,10 @@ Add the following between the H1 and the first H2, to show a table of contents i
 
 ---
 ```
+
+### Omitting a heading from the page's Table of Contents
+
+To omit a heading from the page's table of contents, put a `{: .no_toc }` line immediately after the heading.
 
 ### Linking to other pages in the docs
 
@@ -151,6 +158,21 @@ The `ACME` note has some tasks - as linked to from any file in a sub-directory o
 
 With this mechanism, you can preview the embedded images in any decent Markdown editor, including by opening the `obsidian-tasks` directory in Obsidian.
 
+### Callouts
+
+The following callout styles are available. There must be no blank line between the style name and the content.
+
+```text
+{: .warning }
+I will be shown in red
+
+{: .info }
+I will be shown in blue
+
+{: .released }
+I will be shown in green
+```
+
 ### Version numbers in documentation
 
 We have introduced version markers to the documentation, to show users in which Tasks version a specific feature was introduced.
@@ -160,10 +182,19 @@ version upon release.
 There are 2 styles of placeholders used through the documentation, Please pick the one that
 fits your text better. (If in doubt, take a look at the existing version tags for other features.)
 
-- `> Introduced in Tasks X.Y.Z`
-  - This placeholder is usually used after a section heading.
-- `> X (Y and Z) was introduced in Tasks X.Y.Z`
-  - This placeholder is used when you need to tag a sub-part of something, for example a list.
+This placeholder is usually used after a section heading:
+
+```text
+{: .released }
+Introduced in Tasks X.Y.Z.
+```
+
+This placeholder is used when you need to tag a sub-part of something, for example a list:
+
+```text
+{: .released }
+X (Y and Z) was introduced in Tasks X.Y.Z.
+```
 
 ### How the documentation is generated
 

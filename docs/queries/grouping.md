@@ -6,7 +6,6 @@ parent: Queries
 ---
 
 # Grouping
-
 {: .no_toc }
 
 <details open markdown="block">
@@ -22,17 +21,18 @@ parent: Queries
 
 ## Basics
 
-> Introduced in Tasks 1.6.0.
+{: .released }
+Introduced in Tasks 1.6.0.
 
 By default, Tasks displays tasks in a single list.
 
 To divide the matching tasks up with headings, you can add `group by` lines to the query.
 
-### Available grouping properties
+## Available grouping properties
 
-You can group by the following properties:
+You can group by the following properties.
 
-File locations:
+### File locations
 
 1. `path` (the path to the file that contains the task, that is, the folder and the filename)
 1. `root` (the top-level folder of the file that contains the task, that is, the first directory in the path, which will be `/` for files in root of the vault)
@@ -40,14 +40,15 @@ File locations:
 1. `filename` (the link to the file that contains the task, without the `.md` extension)
     - Note that tasks from different notes with the same file name will be grouped together in the same group.
 
-> `root` grouping option was introduced in Tasks 1.11.0.
+{: .released }
+`root` grouping option was introduced in Tasks 1.11.0.
 
-File contents:
+### File contents
 
 1. `backlink` (the text that would be shown in the task's backlink, combining the task's file name and heading, but with no link added)
 1. `heading` (the heading preceding the task, or `(No heading)` if there are no headings in the file)
 
-Task date properties:
+### Task date properties
 
 1. `start`
    - The start date of the task, including the week-day, or `No start date`.
@@ -60,9 +61,10 @@ Task date properties:
 1. `happens`
     - The earliest of start date, scheduled date, and due date, including the week-day, or `No happens date` if none of those are set.
 
-> `happens` grouping option was introduced in Tasks 1.11.0.
+{: .released }
+`happens` grouping option was introduced in Tasks 1.11.0.
 
-Task properties - other:
+### Other task properties
 
 1. `status` (Done or Todo, which is capitalized for visibility in the headings)
     - Note that the Done group is displayed before the Todo group,
@@ -81,13 +83,12 @@ Task properties - other:
 1. `tags`
     - The tags of the tasks or `(No tags)`. If the task has multiple tags, it will show up under every tag.
 
-> `start`, `scheduled`, `due` and `done` grouping options were introduced in Tasks 1.7.0.
->
-> `tags` grouping option was introduced in Tasks 1.10.0.
->
-> `priority`, `recurring` and `recurrence` grouping options were introduced in Tasks 1.11.0.
+{: .released }
+`start`, `scheduled`, `due` and `done` grouping options were introduced in Tasks 1.7.0.<br>
+`tags` grouping option was introduced in Tasks 1.10.0.<br>
+`priority`, `recurring` and `recurrence` grouping options were introduced in Tasks 1.11.0.
 
-### Multiple groups
+## Multiple groups
 
 You can add multiple `group by` query options, each on an extra line.
 This will create nested groups.

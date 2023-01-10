@@ -6,7 +6,6 @@ parent: How Tos
 ---
 
 # Find all tasks for the coming 7 days
-
 {: .no_toc }
 
 <details open markdown="block">

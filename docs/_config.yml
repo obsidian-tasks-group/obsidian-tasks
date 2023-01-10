@@ -35,3 +35,6 @@ callouts:
   info:
     title: Information
     color: blue
+  released:
+    title: Released
+    color: green
