@@ -1,11 +1,27 @@
 # Custom Task Statuses
 
-- [ ] #task Unchecked `space`
-- [-] #task Dropped `-`
-- [x] #task Regular `x`
-- [X] #task Checked `X`
-- [/] #task Half Done `/`
-- [!] #task Important `!`
+## Standard Markdown statuses
+
+These are the standard markdown statuses:
+
+- [ ] #task I am Todo `space`
+- [x] #task I am Done `x`
+
+## Core Tasks  statuses
+
+These are the core statuses in Tasks.
+
+- [ ] #task I am Todo `space`
+- [x] #task I am Done `x`
+- [/] #task I am In Progress `/`
+- [-] #task I am Cancelled `-`
+
+## Selection of custom Tasks statuses
+
+- [X] #task  I am Checked `X`
+- [!] #task  I am Important `!`
+- [P] #task  I am Pro `P`
+- [C] #task  I am Con `C`
 
 ---
 
