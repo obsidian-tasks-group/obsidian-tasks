@@ -52,4 +52,13 @@ describe('DefaultStatuses', () => {
         const importedStatuses = StatusSettingsHelpers.itsSupportedStatuses();
         verifyStatusesAsMarkdownTable(constructStatuses(importedStatuses));
     });
+
+    it('important-cycle', () => {
+        const importantCycle: Array<[string, string, string]> = [
+            ['!', 'Important', 'D'],
+            ['D', 'Doing - Important', 'X'],
+            ['X', 'Done - Important', '!'],
+        ];
+        verifyStatusesAsMarkdownTable(constructStatuses(importantCycle));
+    });
 });

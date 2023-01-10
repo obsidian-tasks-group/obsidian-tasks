@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Find tasks for coming 7 days
-nav_order: 2
+nav_order: 3
 parent: How Tos
 ---
 
