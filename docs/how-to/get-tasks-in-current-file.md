@@ -6,7 +6,6 @@ parent: How Tos
 ---
 
 # How to get all tasks in the current file
-
 {: .no_toc }
 
 <details open markdown="block">

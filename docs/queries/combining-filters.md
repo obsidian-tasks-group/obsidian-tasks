@@ -6,7 +6,6 @@ parent: Queries
 ---
 
 # Combining Filters
-
 {: .no_toc }
 
 <details open markdown="block">
@@ -22,7 +21,8 @@ parent: Queries
 
 ## Summary
 
-> Introduced in Tasks 1.9.0.
+{: .released }
+Introduced in Tasks 1.9.0.
 
 The [individual filters]({{ site.baseurl }}{% link queries/filters.md %}) provided by Tasks can be combined together in powerful ways, by wrapping each of them in `(` and `)`,
 and then joining them with boolean operators such as `AND`, `OR` and `NOT`.

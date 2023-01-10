@@ -7,7 +7,6 @@ has_toc: false
 ---
 
 # Intelligent Auto-Suggest
-
 {: .no_toc }
 
 <details open markdown="block">
@@ -23,7 +22,8 @@ has_toc: false
 
 ## Introduction
 
-> Introduced in Tasks 1.9.0.
+{: .released }
+Introduced in Tasks 1.9.0.
 
 The [Priorities]({{ site.baseurl }}{% link getting-started/priority.md %}), [Dates]({{ site.baseurl }}{% link getting-started/dates.md %}) and [Recurring Tasks]({{ site.baseurl }}{% link getting-started/recurring-tasks.md %}) pages show various emojis and special phrases that the Tasks plugin recognises, when searching for tasks.
 

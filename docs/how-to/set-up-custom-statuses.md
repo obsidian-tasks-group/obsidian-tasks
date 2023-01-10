@@ -6,7 +6,6 @@ parent: How Tos
 ---
 
 # Set up custom statuses
-
 {: .no_toc }
 
 <details open markdown="block">
@@ -40,7 +39,8 @@ As installed, the Tasks plugin supports just two statuses for your tasks:
 
 Many users would like to represent other statuses, such as Cancelled, Delegated, Blocked and many more.
 
-> Custom statuses were introduced in Tasks X.Y.Z
+{: .released }
+Custom statuses were introduced in Tasks X.Y.Z
 
 Tasks now allows you to add custom statuses to your settings, to give you powerful control over what happens next when you click on the task's checkbox.
 
