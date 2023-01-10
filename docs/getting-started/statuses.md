@@ -40,7 +40,7 @@ The convention in markdown is:
 
 Tasks supports custom task statuses.
 
-This table shows the statues provided by default:
+This table shows the statuses provided by default:
 
 <!-- placeholder to force blank line before table --> <!-- include: DocsSamplesForStatuses.test.DefaultStatuses_core-statuses.approved.md -->
 
@@ -61,11 +61,29 @@ The Tasks settings shows the core statuses:
 
 Note that `Todo` is followed by `Done`, in order to preserve compatibility with earlier Tasks releases.
 
-It will soon be possible to edit these custom statues, and enable `Todo` -> `In Progress` -> `Done`.
+{: .info }
+These core statuses are currently read-only.
+It will soon be possible to edit these custom statuses, and enable `Todo` -> `In Progress` -> `Done`.
 
 ---
 
 ## Custom task statuses
+
+### First choose your styling scheme
+
+First, decide which CSS Snippet or Theme you wish to use, to style your checkboxes.
+
+{: .info }
+We will later enhance this documentation with a more thorough list of available CSS Snippets and Themes that style task checkboxes.
+
+### Editing custom statuses
+
+Your choice of styling facility will determine which letters and characters you wish to you in your custom statuses.
+
+Then see [How to set up your custom statuses]({{ site.baseurl }}{% link how-to/set-up-custom-statuses.md %}) for how to set up your custom statuses.
+
+{: .warning }
+Remember to set up your chosen CSS Snippet or Theme before setting up the custom statues.
 
 ### Minimal supported statuses
 
@@ -123,6 +141,29 @@ It will soon be possible to edit these custom statues, and enable `Todo` -> `In 
 | `c` | Choice | `x` | Yes |
 
 <!-- placeholder to force blank line after table --> <!-- endInclude -->
+
+## Using Statuses
+
+### Editing your tasks
+
+The [‘Create or edit Task’ Modal]({{ site.baseurl }}{% link getting-started/create-or-edit-task.md %}#status-and-done-on) allows you to change the status of a task.
+
+### Related commands
+
+{: .info }
+There are not yet any new commands for applying custom statuses.
+We are tracking this in [issue #1486](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1486) .
+
+### Related searches
+
+{: .info }
+There are not yet any new specific searches for applying custom statuses.
+We envisage adding search filters for `status.name` and `status.symbol` initially.
+
+## Related pages
+
+- [How to set up your custom statuses]({{ site.baseurl }}{% link how-to/set-up-custom-statuses.md %}).
+- [How to style custom statuses]({{ site.baseurl }}{% link how-to/style-custom-statuses.md %}).
 
 ---
 
