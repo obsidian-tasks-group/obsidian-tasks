@@ -17,6 +17,7 @@ describe('status.name', () => {
         expect(filter.value(TestHelpers.fromLine({ line: '- [/] Xxx' }))).toStrictEqual('In Progress');
         expect(filter.value(TestHelpers.fromLine({ line: '- [x] Xxx' }))).toStrictEqual('Done');
         expect(filter.value(TestHelpers.fromLine({ line: '- [-] Xxx' }))).toStrictEqual('Cancelled');
+        expect(filter.value(TestHelpers.fromLine({ line: '- [%] Xxx' }))).toStrictEqual('Unknown');
     });
 
     it('status.name includes', () => {
