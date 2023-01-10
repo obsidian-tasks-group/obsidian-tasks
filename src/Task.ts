@@ -1,22 +1,15 @@
 import type { Moment } from 'moment';
-import { Component, MarkdownRenderer } from 'obsidian';
-import { replaceTaskWithTasks } from './File';
-import { LayoutOptions } from './LayoutOptions';
+import { LayoutOptions, TaskLayout } from './TaskLayout';
+import type { TaskLayoutComponent } from './TaskLayout';
 import { Recurrence } from './Recurrence';
 import { getSettings } from './Config/Settings';
+import { StatusRegistry } from './StatusRegistry';
+import { Status } from './Status';
 import { Urgency } from './Urgency';
-import { Sort } from './Query/Sort';
-
-/**
- * Collection of status types supported by the plugin.
- * TODO: Make this a class so it can support other types and easier mapping to status character.
- * @export
- * @enum {number}
- */
-export enum Status {
-    TODO = 'Todo',
-    DONE = 'Done',
-}
+import { DateField } from './Query/Filter/DateField';
+import { renderTaskLine } from './TaskLineRenderer';
+import type { TaskLineRenderDetails } from './TaskLineRenderer';
+import { DateFallback } from './DateFallback';
 
 /**
  * When sorting, make sure low always comes after none. This way any tasks with low will be below any exiting
@@ -51,8 +44,8 @@ export class TaskRegularExpressions {
     // Matches indentation before a list marker (including > for potentially nested blockquotes or Obsidian callouts)
     public static readonly indentationRegex = /^([\s\t>]*)/;
 
-    // Matches (but does not save) - or * list markers.
-    public static readonly listMarkerRegex = /[-*]/;
+    // Matches - or * list markers, or numbered list markers (eg 1.)
+    public static readonly listMarkerRegex = /([-*]|[0-9]+\.)/;
 
     // Matches a checkbox and saves the status character inside
     public static readonly checkboxRegex = /\[(.)\]/u;
@@ -62,6 +55,7 @@ export class TaskRegularExpressions {
 
     // Main regex for parsing a line. It matches the following:
     // - Indentation
+    // - List marker
     // - Status character
     // - Rest of task after checkbox markdown
     public static readonly taskRegex = new RegExp(
@@ -86,7 +80,7 @@ export class TaskRegularExpressions {
 
     // Used with "Toggle Done" command to detect a list item that can get a checkbox added to it.
     public static readonly listItemRegex = new RegExp(
-        TaskRegularExpressions.indentationRegex.source + '(' + TaskRegularExpressions.listMarkerRegex.source + ')',
+        TaskRegularExpressions.indentationRegex.source + TaskRegularExpressions.listMarkerRegex.source,
     );
 
     // Match on block link at end.
@@ -125,15 +119,11 @@ export class Task {
     public readonly description: string;
     public readonly path: string;
     public readonly indentation: string;
+    public readonly listMarker: string;
     /** Line number where the section starts that contains this task. */
     public readonly sectionStart: number;
     /** The index of the nth task in its section. */
     public readonly sectionIndex: number;
-    /**
-     * The original character from within `[]` in the document.
-     * Required to be added to the LI the same way obsidian does as a `data-task` attribute.
-     */
-    public readonly originalStatusCharacter: string;
     public readonly precedingHeader: string | null;
 
     public readonly tags: string[];
@@ -155,6 +145,8 @@ export class Task {
      * (for example, by Create or Edit Task, or in tests, including via {@link TaskBuilder}). */
     public readonly originalMarkdown: string;
 
+    public readonly scheduledDateIsInferred: boolean;
+
     private _urgency: number | null = null;
 
     constructor({
@@ -162,9 +154,9 @@ export class Task {
         description,
         path,
         indentation,
+        listMarker,
         sectionStart,
         sectionIndex,
-        originalStatusCharacter,
         precedingHeader,
         priority,
         startDate,
@@ -175,14 +167,15 @@ export class Task {
         blockLink,
         tags,
         originalMarkdown,
+        scheduledDateIsInferred,
     }: {
         status: Status;
         description: string;
         path: string;
         indentation: string;
+        listMarker: string;
         sectionStart: number;
         sectionIndex: number;
-        originalStatusCharacter: string;
         precedingHeader: string | null;
         priority: Priority;
         startDate: moment.Moment | null;
@@ -193,14 +186,15 @@ export class Task {
         blockLink: string;
         tags: string[] | [];
         originalMarkdown: string;
+        scheduledDateIsInferred: boolean;
     }) {
         this.status = status;
         this.description = description;
         this.path = path;
         this.indentation = indentation;
+        this.listMarker = listMarker;
         this.sectionStart = sectionStart;
         this.sectionIndex = sectionIndex;
-        this.originalStatusCharacter = originalStatusCharacter;
         this.precedingHeader = precedingHeader;
 
         this.tags = tags;
@@ -215,6 +209,8 @@ export class Task {
         this.recurrence = recurrence;
         this.blockLink = blockLink;
         this.originalMarkdown = originalMarkdown;
+
+        this.scheduledDateIsInferred = scheduledDateIsInferred;
     }
 
     /**
@@ -226,6 +222,7 @@ export class Task {
      * @param {number} sectionStart - Line number where the section starts that contains this task.
      * @param {number} sectionIndex - The index of the nth task in its section.
      * @param {(string | null)} precedingHeader - The header before this task.
+     * @param {(Moment | null)} fallbackDate - The date to use as the scheduled date if no other date is set
      * @return {*}  {(Task | null)}
      * @memberof Task
      */
@@ -235,12 +232,14 @@ export class Task {
         sectionStart,
         sectionIndex,
         precedingHeader,
+        fallbackDate,
     }: {
         line: string;
         path: string;
         sectionStart: number;
         sectionIndex: number;
         precedingHeader: string | null;
+        fallbackDate: Moment | null;
     }): Task | null {
         // Check the line to see if it is a markdown task.
         const regexMatch = line.match(TaskRegularExpressions.taskRegex);
@@ -248,8 +247,8 @@ export class Task {
             return null;
         }
 
-        // match[3] includes the whole body of the task after the brackets.
-        const body = regexMatch[3].trim();
+        // match[4] includes the whole body of the task after the brackets.
+        const body = regexMatch[4].trim();
 
         // return if task does not have the global filter. Do this before processing
         // rest of match to improve performance.
@@ -260,17 +259,13 @@ export class Task {
 
         let description = body;
         const indentation = regexMatch[1];
+        const listMarker = regexMatch[2];
 
-        // Get the status of the task, only todo and done supported.
-        // But custom ones are retained and displayed as-is.
-        const statusString = regexMatch[2];
-        let status: Status;
-        switch (statusString) {
-            case ' ':
-                status = Status.TODO;
-                break;
-            default:
-                status = Status.DONE;
+        // Get the status of the task.
+        const statusString = regexMatch[3];
+        let status = StatusRegistry.getInstance().byIndicator(statusString);
+        if (status === Status.EMPTY) {
+            status = Status.createUnknownStatus(statusString);
         }
 
         // Match for block link and remove if found. Always expected to be
@@ -289,6 +284,7 @@ export class Task {
         let priority: Priority = Priority.None;
         let startDate: Moment | null = null;
         let scheduledDate: Moment | null = null;
+        let scheduledDateIsInferred = false;
         let dueDate: Moment | null = null;
         let doneDate: Moment | null = null;
         let recurrenceRule: string = '';
@@ -384,6 +380,12 @@ export class Task {
             });
         }
 
+        // Infer the scheduled date from the file name if not set explicitly
+        if (DateFallback.canApplyFallback({ startDate, scheduledDate, dueDate }) && fallbackDate !== null) {
+            scheduledDate = fallbackDate;
+            scheduledDateIsInferred = true;
+        }
+
         // Add back any trailing tags to the description. We removed them so we can parse the rest of the
         // components but now we want them back.
         // The goal is for a task of them form 'Do something #tag1 (due) tomorrow #tag2 (start) today'
@@ -404,9 +406,9 @@ export class Task {
             description,
             path,
             indentation,
+            listMarker,
             sectionStart,
             sectionIndex,
-            originalStatusCharacter: statusString,
             precedingHeader,
             priority,
             startDate,
@@ -417,162 +419,82 @@ export class Task {
             blockLink,
             tags,
             originalMarkdown: line,
+            scheduledDateIsInferred,
         });
-    }
-
-    public async toLi({
-        parentUlElement,
-        listIndex,
-        layoutOptions,
-        isFilenameUnique,
-    }: {
-        parentUlElement: HTMLElement;
-        /** The nth item in this list (including non-tasks). */
-        listIndex: number;
-        layoutOptions?: LayoutOptions;
-        isFilenameUnique?: boolean;
-    }): Promise<HTMLLIElement> {
-        const li: HTMLLIElement = parentUlElement.createEl('li');
-        li.addClasses(['task-list-item', 'plugin-tasks-list-item']);
-
-        let taskAsString = this.toString(layoutOptions);
-        const { globalFilter, removeGlobalFilter } = getSettings();
-        if (removeGlobalFilter) {
-            taskAsString = taskAsString.replace(globalFilter, '').trim();
-        }
-
-        const textSpan = li.createSpan();
-        textSpan.addClass('tasks-list-text');
-
-        await MarkdownRenderer.renderMarkdown(taskAsString, textSpan, this.path, null as unknown as Component);
-
-        // If the task is a block quote, the block quote wraps the p-tag that contains the content.
-        // In that case, we need to unwrap the p-tag *inside* the surrounding block quote.
-        // Otherwise, we unwrap the p-tag as a direct descendant of the textSpan.
-        const blockQuote = textSpan.querySelector('blockquote');
-        const directParentOfPTag = blockQuote ?? textSpan;
-
-        // Unwrap the p-tag that was created by the MarkdownRenderer:
-        const pElement = directParentOfPTag.querySelector('p');
-        if (pElement !== null) {
-            while (pElement.firstChild) {
-                directParentOfPTag.insertBefore(pElement.firstChild, pElement);
-            }
-            pElement.remove();
-        }
-
-        // Remove an empty trailing p-tag that the MarkdownRenderer appends when there is a block link:
-        textSpan.findAll('p').forEach((pElement) => {
-            if (!pElement.hasChildNodes()) {
-                pElement.remove();
-            }
-        });
-
-        // Remove the footnote that the MarkdownRenderer appends when there is a footnote in the task:
-        textSpan.findAll('.footnotes').forEach((footnoteElement) => {
-            footnoteElement.remove();
-        });
-
-        const checkbox = li.createEl('input');
-        checkbox.addClass('task-list-item-checkbox');
-        checkbox.type = 'checkbox';
-        if (this.status !== Status.TODO) {
-            checkbox.checked = true;
-            li.addClass('is-checked');
-        }
-        checkbox.onClickEvent((event: MouseEvent) => {
-            event.preventDefault();
-            // It is required to stop propagation so that obsidian won't write the file with the
-            // checkbox (un)checked. Obsidian would write after us and overwrite our change.
-            event.stopPropagation();
-
-            // Should be re-rendered as enabled after update in file.
-            checkbox.disabled = true;
-            const toggledTasks = this.toggle();
-            replaceTaskWithTasks({
-                originalTask: this,
-                newTasks: toggledTasks,
-            });
-        });
-
-        li.prepend(checkbox);
-
-        // Set these to be compatible with stock obsidian lists:
-        li.setAttr('data-task', this.originalStatusCharacter.trim()); // Trim to ensure empty attribute for space. Same way as obsidian.
-        li.setAttr('data-line', listIndex);
-        checkbox.setAttr('data-line', listIndex);
-
-        if (layoutOptions?.shortMode) {
-            this.addTooltip({ element: textSpan, isFilenameUnique });
-        }
-
-        return li;
     }
 
     /**
-     *
-     *
+     * Create an HTML rendered List Item element (LI) for the current task.
+     * @param {renderTails}
+     */
+    public async toLi(renderDetails: TaskLineRenderDetails): Promise<HTMLLIElement> {
+        return renderTaskLine(this, renderDetails);
+    }
+
+    /**
+     * Flatten the task as a string that includes all its components.
      * @param {LayoutOptions} [layoutOptions]
      * @return {*}  {string}
      * @memberof Task
      */
     public toString(layoutOptions?: LayoutOptions): string {
-        layoutOptions = layoutOptions ?? new LayoutOptions();
-        let taskString = this.description;
-
-        if (!layoutOptions.hidePriority) {
-            let priority: string = '';
-
-            if (this.priority === Priority.High) {
-                priority = ' ' + prioritySymbols.High;
-            } else if (this.priority === Priority.Medium) {
-                priority = ' ' + prioritySymbols.Medium;
-            } else if (this.priority === Priority.Low) {
-                priority = ' ' + prioritySymbols.Low;
-            }
-
-            taskString += priority;
+        const taskLayout = new TaskLayout(layoutOptions);
+        let taskString = '';
+        for (const component of taskLayout.layoutComponents) {
+            taskString += this.componentToString(taskLayout, component);
         }
-
-        if (!layoutOptions.hideRecurrenceRule && this.recurrence) {
-            const recurrenceRule: string = layoutOptions.shortMode
-                ? ' ' + recurrenceSymbol
-                : ` ${recurrenceSymbol} ${this.recurrence.toText()}`;
-            taskString += recurrenceRule;
-        }
-
-        if (!layoutOptions.hideStartDate && this.startDate) {
-            const startDate: string = layoutOptions.shortMode
-                ? ' ' + startDateSymbol
-                : ` ${startDateSymbol} ${this.startDate.format(TaskRegularExpressions.dateFormat)}`;
-            taskString += startDate;
-        }
-
-        if (!layoutOptions.hideScheduledDate && this.scheduledDate) {
-            const scheduledDate: string = layoutOptions.shortMode
-                ? ' ' + scheduledDateSymbol
-                : ` ${scheduledDateSymbol} ${this.scheduledDate.format(TaskRegularExpressions.dateFormat)}`;
-            taskString += scheduledDate;
-        }
-
-        if (!layoutOptions.hideDueDate && this.dueDate) {
-            const dueDate: string = layoutOptions.shortMode
-                ? ' ' + dueDateSymbol
-                : ` ${dueDateSymbol} ${this.dueDate.format(TaskRegularExpressions.dateFormat)}`;
-            taskString += dueDate;
-        }
-
-        if (!layoutOptions.hideDoneDate && this.doneDate) {
-            const doneDate: string = layoutOptions.shortMode
-                ? ' ' + doneDateSymbol
-                : ` ${doneDateSymbol} ${this.doneDate.format(TaskRegularExpressions.dateFormat)}`;
-            taskString += doneDate;
-        }
-
-        const blockLink: string = this.blockLink ?? '';
-        taskString += blockLink;
-
         return taskString;
+    }
+
+    /**
+     * Renders a specific TaskLayoutComponent of the task (its description, priority, etc) as a string.
+     */
+    public componentToString(layout: TaskLayout, component: TaskLayoutComponent) {
+        switch (component) {
+            case 'description':
+                return this.description;
+            case 'priority': {
+                let priority: string = '';
+
+                if (this.priority === Priority.High) {
+                    priority = ' ' + prioritySymbols.High;
+                } else if (this.priority === Priority.Medium) {
+                    priority = ' ' + prioritySymbols.Medium;
+                } else if (this.priority === Priority.Low) {
+                    priority = ' ' + prioritySymbols.Low;
+                }
+                return priority;
+            }
+            case 'startDate':
+                if (!this.startDate) return '';
+                return layout.options.shortMode
+                    ? ' ' + startDateSymbol
+                    : ` ${startDateSymbol} ${this.startDate.format(TaskRegularExpressions.dateFormat)}`;
+            case 'scheduledDate':
+                if (!this.scheduledDate || this.scheduledDateIsInferred) return '';
+                return layout.options.shortMode
+                    ? ' ' + scheduledDateSymbol
+                    : ` ${scheduledDateSymbol} ${this.scheduledDate.format(TaskRegularExpressions.dateFormat)}`;
+            case 'doneDate':
+                if (!this.doneDate) return '';
+                return layout.options.shortMode
+                    ? ' ' + doneDateSymbol
+                    : ` ${doneDateSymbol} ${this.doneDate.format(TaskRegularExpressions.dateFormat)}`;
+            case 'dueDate':
+                if (!this.dueDate) return '';
+                return layout.options.shortMode
+                    ? ' ' + dueDateSymbol
+                    : ` ${dueDateSymbol} ${this.dueDate.format(TaskRegularExpressions.dateFormat)}`;
+            case 'recurrenceRule':
+                if (!this.recurrence) return '';
+                return layout.options.shortMode
+                    ? ' ' + recurrenceSymbol
+                    : ` ${recurrenceSymbol} ${this.recurrence.toText()}`;
+            case 'blockLink':
+                return this.blockLink ?? '';
+            default:
+                throw new Error(`Don't know how to render task component of type '${component}'`);
+        }
     }
 
     /**
@@ -582,7 +504,7 @@ export class Task {
      * @memberof Task
      */
     public toFileLineString(): string {
-        return `${this.indentation}- [${this.originalStatusCharacter}] ${this.toString()}`;
+        return `${this.indentation}${this.listMarker} [${this.status.indicator}] ${this.toString()}`;
     }
 
     /**
@@ -594,7 +516,10 @@ export class Task {
      * task is not recurring, it will return `[toggled]`.
      */
     public toggle(): Task[] {
-        const newStatus: Status = this.status === Status.TODO ? Status.DONE : Status.TODO;
+        let newStatus = StatusRegistry.getInstance().getNextStatus(this.status);
+        if (newStatus === Status.EMPTY) {
+            newStatus = Status.createUnknownStatus(this.status.nextStatusIndicator);
+        }
 
         let newDoneDate = null;
 
@@ -604,7 +529,7 @@ export class Task {
             dueDate: Moment | null;
         } | null = null;
 
-        if (newStatus !== Status.TODO) {
+        if (newStatus.isCompleted()) {
             // Set done date only if setting value is true
             const { setDoneDate } = getSettings();
             if (setDoneDate) {
@@ -621,7 +546,6 @@ export class Task {
             ...this,
             status: newStatus,
             doneDate: newDoneDate,
-            originalStatusCharacter: newStatus === Status.DONE ? 'x' : ' ',
         });
 
         const newTasks: Task[] = [];
@@ -735,12 +659,13 @@ export class Task {
             'description',
             'path',
             'indentation',
+            'listMarker',
             'sectionStart',
             'sectionIndex',
-            'originalStatusCharacter',
             'precedingHeader',
             'priority',
             'blockLink',
+            'scheduledDateIsInferred',
         ];
         for (const el of args) {
             if (this[el] !== other[el]) return false;
@@ -764,7 +689,7 @@ export class Task {
         for (const el of args) {
             const date1 = this[el] as Moment | null;
             const date2 = other[el] as Moment | null;
-            if (Sort.compareByDate(date1, date2) !== 0) {
+            if (DateField.compareByDate(date1, date2) !== 0) {
                 return false;
             }
         }
@@ -780,80 +705,6 @@ export class Task {
         }
 
         return true;
-    }
-
-    private addTooltip({
-        element,
-        isFilenameUnique,
-    }: {
-        element: HTMLElement;
-        isFilenameUnique: boolean | undefined;
-    }): void {
-        element.addEventListener('mouseenter', () => {
-            const tooltip = element.createDiv();
-            tooltip.addClasses(['tooltip', 'mod-right']);
-
-            if (this.recurrence) {
-                const recurrenceDiv = tooltip.createDiv();
-                recurrenceDiv.setText(`${recurrenceSymbol} ${this.recurrence.toText()}`);
-            }
-
-            if (this.startDate) {
-                const startDateDiv = tooltip.createDiv();
-                startDateDiv.setText(
-                    Task.toTooltipDate({
-                        signifier: startDateSymbol,
-                        date: this.startDate,
-                    }),
-                );
-            }
-
-            if (this.scheduledDate) {
-                const scheduledDateDiv = tooltip.createDiv();
-                scheduledDateDiv.setText(
-                    Task.toTooltipDate({
-                        signifier: scheduledDateSymbol,
-                        date: this.scheduledDate,
-                    }),
-                );
-            }
-
-            if (this.dueDate) {
-                const dueDateDiv = tooltip.createDiv();
-                dueDateDiv.setText(
-                    Task.toTooltipDate({
-                        signifier: dueDateSymbol,
-                        date: this.dueDate,
-                    }),
-                );
-            }
-
-            if (this.doneDate) {
-                const doneDateDiv = tooltip.createDiv();
-                doneDateDiv.setText(
-                    Task.toTooltipDate({
-                        signifier: doneDateSymbol,
-                        date: this.doneDate,
-                    }),
-                );
-            }
-
-            const linkText = this.getLinkText({ isFilenameUnique });
-            if (linkText) {
-                const backlinkDiv = tooltip.createDiv();
-                backlinkDiv.setText(`🔗 ${linkText}`);
-            }
-
-            element.addEventListener('mouseleave', () => {
-                tooltip.remove();
-            });
-        });
-    }
-
-    private static toTooltipDate({ signifier, date }: { signifier: string; date: Moment }): string {
-        return `${signifier} ${date.format(TaskRegularExpressions.dateFormat)} (${date.from(
-            window.moment().startOf('day'),
-        )})`;
     }
 
     /**

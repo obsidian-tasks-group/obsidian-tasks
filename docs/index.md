@@ -27,11 +27,13 @@ Supports due dates, recurring tasks (repetition), done dates, sub-set of checkli
 
 You can toggle the task status in any view or query and it will update the source file.
 
-> Please submit bugs [here](https://github.com/obsidian-tasks-group/obsidian-tasks/issues).
+> Please submit bugs using the [Bug Report form](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/new?assignees=&labels=type%3A+bug&template=bug-report.yaml).
 >
-> Please submit ideas [here](https://github.com/obsidian-tasks-group/obsidian-tasks/discussions/categories/ideas).
+> Please submit ideas using the [Feature Request form](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/new?assignees=&labels=type%3A+enhancement&template=feature-request.yaml).
 >
-> Please ask for help [here](https://github.com/obsidian-tasks-group/obsidian-tasks/discussions/categories/q-a).
+> Please ask for help in the [Q&A Discussions section](https://github.com/obsidian-tasks-group/obsidian-tasks/discussions/categories/q-a) by clicking **New discussion**.
+>
+> Please share any interesting or fun uses of tasks in the [Show and Tell Discussions section](https://github.com/obsidian-tasks-group/obsidian-tasks/discussions/categories/show-and-tell) by clicking **New discussion**.
 
 For changes in each release, please check the [releases page](https://github.com/obsidian-tasks-group/obsidian-tasks/releases).
 
@@ -42,14 +44,14 @@ For changes in each release, please check the [releases page](https://github.com
 - *All screenshots assume the global filter `#task` which is not set by default (see also "Getting Started").*
 - *The theme is default Obsidian theme.*
 
-![ACME Tasks](https://github.com/obsidian-tasks-group/obsidian-tasks/raw/gh-pages/resources/screenshots/acme.png)
+![ACME Tasks](images/acme.png)
 The `ACME` note has some tasks.
 
-![Important Project Tasks](https://github.com/obsidian-tasks-group/obsidian-tasks/raw/gh-pages/resources/screenshots/important_project.png)
+![Important Project Tasks](images/important_project.png)
 The `Important Project` note also has some tasks.
 
-![Tasks Queries](https://github.com/obsidian-tasks-group/obsidian-tasks/raw/gh-pages/resources/screenshots/tasks_queries.png)
+![Tasks Queries](images/tasks_queries.png)
 The `Tasks` note gathers all tasks from the vault and displays them using queries.
 
-![Create or Edit Modal](https://github.com/obsidian-tasks-group/obsidian-tasks/raw/gh-pages/resources/screenshots/modal.png)
+![Create or Edit Modal](images/modal.png)
 The `Tasks: Create or edit` command helps you when editing a task.

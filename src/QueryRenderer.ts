@@ -10,6 +10,7 @@ import { TaskModal } from './TaskModal';
 import { Task as TaskModel } from './Task';
 import type { TasksEvents } from './TasksEvents';
 import type { Task } from './Task';
+import { DateFallback } from './DateFallback';
 
 export class QueryRenderer {
     private readonly app: App;
@@ -159,6 +160,10 @@ class QueryRenderChild extends MarkdownRenderChild {
                 `Render ${this.queryType} called for a block in active file "${this.filePath}", to select from ${tasks.length} tasks: plugin state: ${state}`,
             );
 
+            if (this.query.layoutOptions.explainQuery) {
+                this.createExplanation(content);
+            }
+
             const tasksSortedLimitedGrouped = this.query.applyQueryToTasks(tasks);
             for (const group of tasksSortedLimitedGrouped.groups) {
                 // If there were no 'group by' instructions, group.groupHeadings
@@ -181,6 +186,16 @@ class QueryRenderChild extends MarkdownRenderChild {
         }
 
         this.containerEl.firstChild?.replaceWith(content);
+    }
+
+    // Use the 'explain' instruction to enable this
+    private createExplanation(content: HTMLDivElement) {
+        const explanationAsString = this.query.explainQuery();
+
+        const explanationsBlock = content.createEl('pre');
+        explanationsBlock.addClasses(['plugin-tasks-query-explanation']);
+        explanationsBlock.setText(explanationAsString);
+        content.appendChild(explanationsBlock);
     }
 
     private async createTasksList({
@@ -239,7 +254,7 @@ class QueryRenderChild extends MarkdownRenderChild {
         return { taskList, tasksCount };
     }
 
-    private addEditButton(listItem: HTMLLIElement, task: Task) {
+    private addEditButton(listItem: HTMLElement, task: Task) {
         const editTaskPencil = listItem.createEl('a', {
             cls: 'tasks-edit',
         });
@@ -249,7 +264,7 @@ class QueryRenderChild extends MarkdownRenderChild {
             const onSubmit = (updatedTasks: Task[]): void => {
                 replaceTaskWithTasks({
                     originalTask: task,
-                    newTasks: updatedTasks,
+                    newTasks: DateFallback.removeInferredStatusIfNeeded(task, updatedTasks),
                 });
             };
 
@@ -263,7 +278,7 @@ class QueryRenderChild extends MarkdownRenderChild {
         });
     }
 
-    private addUrgency(listItem: HTMLLIElement, task: Task) {
+    private addUrgency(listItem: HTMLElement, task: Task) {
         const text = new Intl.NumberFormat().format(task.urgency);
         listItem.createSpan({ text, cls: 'tasks-urgency' });
     }
@@ -303,12 +318,7 @@ class QueryRenderChild extends MarkdownRenderChild {
         await MarkdownRenderer.renderMarkdown(group.name, header, this.filePath, this);
     }
 
-    private addBacklinks(
-        listItem: HTMLLIElement,
-        task: Task,
-        shortMode: boolean,
-        isFilenameUnique: boolean | undefined,
-    ) {
+    private addBacklinks(listItem: HTMLElement, task: Task, shortMode: boolean, isFilenameUnique: boolean | undefined) {
         const backLink = listItem.createSpan({ cls: 'tasks-backlink' });
 
         if (!shortMode) {

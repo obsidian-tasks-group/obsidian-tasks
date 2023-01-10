@@ -2,28 +2,13 @@ import type { ExtendParserHook } from 'QueryRenderer';
 import { LayoutOptions } from '../LayoutOptions';
 import type { Task } from '../Task';
 import type { IQuery } from '../IQuery';
+import { getSettings } from '../Config/Settings';
 import { Sort } from './Sort';
+import type { Sorter } from './Sorter';
 import type { TaskGroups } from './TaskGroups';
-import { parseFilter } from './FilterParser';
+import { parseFilter, parseSorter } from './FilterParser';
 import { Group } from './Group';
 import type { Filter } from './Filter/Filter';
-
-export type SortingProperty =
-    | 'urgency'
-    | 'status'
-    | 'priority'
-    | 'start'
-    | 'scheduled'
-    | 'due'
-    | 'done'
-    | 'path'
-    | 'description'
-    | 'tag';
-type Sorting = {
-    property: SortingProperty;
-    reverse: boolean;
-    propertyInstance: number;
-};
 
 export type GroupingProperty =
     | 'backlink'
@@ -51,13 +36,8 @@ export class Query implements IQuery {
     private _layoutOptions: LayoutOptions = new LayoutOptions();
     private _filters: Filter[] = [];
     private _error: string | undefined = undefined;
-    private _sorting: Sorting[] = [];
+    private _sorting: Sorter[] = [];
     private _grouping: Grouping[] = [];
-
-    // If a tag is specified the user can also add a number to specify
-    // which one to sort by if there is more than one.
-    private readonly sortByRegexp =
-        /^sort by (urgency|status|priority|start|scheduled|due|done|path|description|tag)( reverse)?[\s]*(\d+)?/;
 
     private readonly groupByRegexp =
         /^group by (backlink|done|due|filename|folder|happens|heading|path|priority|recurrence|recurring|root|scheduled|start|status|tags)/;
@@ -65,6 +45,7 @@ export class Query implements IQuery {
     private readonly hideOptionsRegexp =
         /^(hide|show) (task count|backlink|priority|start date|scheduled date|done date|due date|recurrence rule|edit button|urgency)/;
     private readonly shortModeRegexp = /^short/;
+    private readonly explainQueryRegexp = /^explain/;
 
     private readonly limitRegexp = /^limit (to )?(\d+)( tasks?)?/;
 
@@ -82,11 +63,13 @@ export class Query implements IQuery {
                     case this.shortModeRegexp.test(line):
                         this._layoutOptions.shortMode = true;
                         break;
+                    case this.explainQueryRegexp.test(line):
+                        this._layoutOptions.explainQuery = true;
+                        break;
                     case this.limitRegexp.test(line):
                         this.parseLimit({ line });
                         break;
-                    case this.sortByRegexp.test(line):
-                        this.parseSortBy({ line });
+                    case this.parseSortBy({ line }):
                         break;
                     case this.groupByRegexp.test(line):
                         this.parseGroupBy({ line });
@@ -105,6 +88,39 @@ export class Query implements IQuery {
                         this._error = `do not understand query: ${line}`;
                 }
             });
+    }
+
+    public explainQuery(): string {
+        return 'Explanation of this Tasks code block query:\n\n' + this.explainQueryWithoutIntroduction();
+    }
+
+    public explainQueryWithoutIntroduction(): string {
+        let result = '';
+
+        const { globalFilter } = getSettings();
+        if (globalFilter.length !== 0) {
+            result += `Only tasks containing the global filter '${globalFilter}'.\n\n`;
+        }
+
+        const numberOfFilters = this.filters.length;
+        if (numberOfFilters === 0) {
+            result += 'No filters supplied. All tasks will match the query.';
+        } else {
+            for (let i = 0; i < numberOfFilters; i++) {
+                if (i > 0) result += '\n';
+                result += this.filters[i].explainFilterIndented('');
+            }
+        }
+
+        if (this._limit !== undefined) {
+            result += `\n\nAt most ${this._limit} task`;
+            if (this._limit !== 1) {
+                result += 's';
+            }
+            result += '.\n';
+        }
+
+        return result;
     }
 
     public get limit(): number | undefined {
@@ -136,7 +152,7 @@ export class Query implements IQuery {
             tasks = tasks.filter(filter.filterFunction);
         });
 
-        const tasksSortedLimited = Sort.by(this, tasks).slice(0, this.limit);
+        const tasksSortedLimited = Sort.by(this.sorting, tasks).slice(0, this.limit);
         return Group.by(this.grouping, tasksSortedLimited);
     }
 
@@ -203,17 +219,13 @@ export class Query implements IQuery {
         }
     }
 
-    private parseSortBy({ line }: { line: string }): void {
-        const fieldMatch = line.match(this.sortByRegexp);
-        if (fieldMatch !== null) {
-            this._sorting.push({
-                property: fieldMatch[1] as SortingProperty,
-                reverse: !!fieldMatch[2],
-                propertyInstance: isNaN(+fieldMatch[3]) ? 1 : +fieldMatch[3],
-            });
-        } else {
-            this._error = 'do not understand query sorting';
+    private parseSortBy({ line }: { line: string }): boolean {
+        const sortingMaybe = parseSorter(line);
+        if (sortingMaybe) {
+            this._sorting.push(sortingMaybe);
+            return true;
         }
+        return false;
     }
 
     private parseGroupBy({ line }: { line: string }): void {

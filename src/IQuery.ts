@@ -1,4 +1,4 @@
-import type { LayoutOptions } from './LayoutOptions';
+import type { LayoutOptions } from './TaskLayout';
 import type { Task } from './Task';
 import type { TaskGroups } from './Query/TaskGroups';
 import type { Grouping } from './Query/Query';
@@ -60,4 +60,11 @@ export interface IQuery {
      * @memberof Query
      */
     applyQueryToTasks: (tasks: Task[]) => TaskGroups;
+
+    /**
+     * Return a text representation of the query.
+     *
+     * This is currently displayed as a <pre> block, retaining indentation.
+     */
+    explainQuery: () => string;
 }

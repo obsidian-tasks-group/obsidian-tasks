@@ -3,6 +3,11 @@ import type { FilteringCase } from '../../TestingTools/FilterTestHelpers';
 import { shouldSupportFiltering } from '../../TestingTools/FilterTestHelpers';
 import { toMatchTaskFromLine } from '../../CustomMatchers/CustomMatchersForFilters';
 import { TagsField } from '../../../src/Query/Filter/TagsField';
+import { DescriptionField } from '../../../src/Query/Filter/DescriptionField';
+import { fromLine } from '../../TestHelpers';
+import { Sort } from '../../../src/Query/Sort';
+import { TaskBuilder } from '../../TestingTools/TaskBuilder';
+import { expectTaskComparesAfter, expectTaskComparesBefore } from '../../CustomMatchers/CustomMatchersForSorting';
 
 expect.extend({
     toMatchTaskFromLine,
@@ -262,5 +267,306 @@ describe('tag/tags', () => {
         expect(filter).toMatchTaskFromLine('- [ ] stuff #home');
         expect(filter).not.toMatchTaskFromLine('- [ ] stuff #HOME');
         expect(filter).not.toMatchTaskFromLine('- [ ] stuff #work #HOME'); // searches multiple tags
+    });
+});
+
+/*
+ * All the test cases below have tasks with 0 or more tags against them. This is to
+ * ensure that the sorting can handle the ordering correctly when there are no tags or
+ * if one of th tasks has less tags than the other.
+ *
+ * There is also a task with additional characters in the name to ensure it is seen
+ * as bigger that one with the same initial characters.
+ */
+describe('Sort by tags', () => {
+    describe('field supports sorting', () => {
+        const tagsField = new TagsField();
+
+        it('should support sorting', () => {
+            expect(tagsField.supportsSorting()).toEqual(true);
+        });
+
+        it('should report whether it can parse lines', () => {
+            // Valid sort by tag lines:
+            expect(tagsField.canCreateSorterForLine('sort by tag')).toBe(true);
+            expect(tagsField.canCreateSorterForLine('sort by tag 2')).toBe(true);
+            expect(tagsField.canCreateSorterForLine('sort by tag reverse')).toBe(true);
+            expect(tagsField.canCreateSorterForLine('sort by tag reverse 3')).toBe(true);
+
+            // Invalid lines:
+            expect(tagsField.canCreateSorterForLine('sort by description')).toBe(false);
+        });
+
+        const tag_a = new TaskBuilder().tags(['#a']).build();
+        const tag_b = new TaskBuilder().tags(['#b']).build();
+        const tags_a_b = new TaskBuilder().tags(['#a', '#b']).build();
+        const tags_a_c = new TaskBuilder().tags(['#b', '#c']).build();
+        const tags_a_d = new TaskBuilder().tags(['#a', '#d']).build();
+
+        // Helper function to create a task with a given path
+        function with_tags(tags: string[]) {
+            return new TaskBuilder().tags(tags).build();
+        }
+
+        it('should create a default comparator, sorting by first tag', () => {
+            const comparator = tagsField.comparator();
+            expect(comparator(tags_a_d, tags_a_c)).toBeLessThan(0);
+        });
+
+        it('should parse a valid line with default tag number', () => {
+            const sorter = tagsField.parseSortLine('sort by tag');
+            expect(sorter?.property).toEqual('tag');
+            expect(sorter?.comparator(tag_a, tag_b)).toBeLessThan(0);
+            expectTaskComparesBefore(sorter!, tag_a, tag_b);
+        });
+
+        it('should parse a valid line with a non-default tag number', () => {
+            const sorter = tagsField.parseSortLine('sort by tag 2');
+            expect(sorter?.property).toEqual('tag');
+            expectTaskComparesBefore(sorter!, tags_a_b, tags_a_c);
+        });
+
+        it('should parse a valid line with reverse and a non-default tag number', () => {
+            const sorter = tagsField.parseSortLine('sort by tag reverse 2');
+            expect(sorter?.property).toEqual('tag');
+            expectTaskComparesAfter(sorter!, tags_a_b, tags_a_c);
+        });
+
+        it('should sort by tags case-insensitively', () => {
+            const sorter = tagsField.createNormalSorter();
+            expectTaskComparesBefore(sorter, with_tags(['#AAAA']), with_tags(['#bbbb']));
+            expectTaskComparesBefore(sorter, with_tags(['#aaaa']), with_tags(['#BBBB']));
+            expectTaskComparesBefore(sorter, with_tags(['#aaaa']), with_tags(['#AAAA']));
+        });
+
+        it('should sort by tags with numbers correctly', () => {
+            const sorter = tagsField.createNormalSorter();
+            expectTaskComparesBefore(sorter, with_tags(['#a-0']), with_tags(['#a-9']));
+            expectTaskComparesBefore(sorter, with_tags(['#a-9']), with_tags(['#a-11']));
+        });
+
+        it('should fail to parse a invalid line', () => {
+            const line = 'sort by jsdajhasdfa';
+            expect(tagsField.canCreateSorterForLine(line)).toBe(false);
+            expect(tagsField.createSorterFromLine(line)).toBeNull();
+            const sorting = tagsField.parseSortLine(line);
+            expect(sorting).toBeNull();
+        });
+    });
+
+    it('should sort correctly by tag defaulting to first with no global filter', () => {
+        // Arrange
+        const t1 = fromLine({ line: '- [ ] a #aaa #jjj' });
+        const t2 = fromLine({ line: '- [ ] a #bbb #iii' });
+        const t3 = fromLine({ line: '- [ ] a #ccc #bbb' });
+        const t4 = fromLine({ line: '- [ ] a #ddd #ggg' });
+        const t5 = fromLine({ line: '- [ ] a #eee #fff' });
+        const t6 = fromLine({ line: '- [ ] a #fff #aaa' });
+        const t7 = fromLine({ line: '- [ ] a #ggg #ccc' });
+        const t8 = fromLine({ line: '- [ ] a #hhh #eee' });
+        const t9 = fromLine({ line: '- [ ] a #iii #ddd' });
+        const t10 = fromLine({ line: '- [ ] a #jjj #hhh' });
+        const expectedOrder = [t1, t2, t3, t4, t5, t6, t7, t8, t9, t10];
+
+        // Act / Assert
+        expect(
+            Sort.by([new TagsField().parseSortLine('sort by tag 1')!], [t1, t3, t5, t7, t6, t4, t2, t8, t9, t10]),
+        ).toEqual(expectedOrder);
+    });
+
+    it('should sort correctly reversed by tag defaulting to first with no global filter', () => {
+        // Arrange
+        const t1 = fromLine({ line: '- [ ] a #aaa #jjj' });
+        const t2 = fromLine({ line: '- [ ] a #bbb #iii' });
+        const t3 = fromLine({ line: '- [ ] a #ccc #bbb' });
+        const t4 = fromLine({ line: '- [ ] a #ddd #ggg' });
+        const t5 = fromLine({ line: '- [ ] a #eee #fff' });
+        const t6 = fromLine({ line: '- [ ] a #fff #aaa' });
+        const t7 = fromLine({ line: '- [ ] a #ggg #ccc' });
+        const t8 = fromLine({ line: '- [ ] a #hhh #eee' });
+        const t9 = fromLine({ line: '- [ ] a #iii #ddd' });
+        const t10 = fromLine({ line: '- [ ] a #jjj #hhh' });
+        const expectedOrder = [t10, t9, t8, t7, t6, t5, t4, t3, t2, t1];
+
+        // Act / Assert
+        expect(
+            Sort.by(
+                [new TagsField().parseSortLine('sort by tag reverse 1')!],
+                [t1, t3, t5, t7, t6, t4, t2, t8, t9, t10],
+            ),
+        ).toEqual(expectedOrder);
+    });
+
+    it('should sort correctly by second tag with no global filter', () => {
+        const t1 = fromLine({ line: '- [ ] a #fff #aaa' });
+        const t2 = fromLine({ line: '- [ ] a #ccc #bbb' });
+        const t3 = fromLine({ line: '- [ ] a #ggg #ccc' });
+        const t4 = fromLine({ line: '- [ ] a #iii #ddd' });
+        const t5 = fromLine({ line: '- [ ] a #hhh #eee' });
+        const expectedOrder = [t1, t2, t3, t4, t5];
+        expect(Sort.by([new TagsField().parseSortLine('sort by tag 2')!], [t4, t3, t2, t1, t5])).toEqual(expectedOrder);
+    });
+
+    it('should sort correctly reversed by second tag with no global filter', () => {
+        const t1 = fromLine({ line: '- [ ] a #fff #aaa' });
+        const t2 = fromLine({ line: '- [ ] a #ccc #bbb' });
+        const t3 = fromLine({ line: '- [ ] a #ggg #ccc' });
+        const t4 = fromLine({ line: '- [ ] a #iii #ddd' });
+        const t5 = fromLine({ line: '- [ ] a #hhh #eee' });
+        const expectedOrder = [t5, t4, t3, t2, t1];
+        expect(Sort.by([new TagsField().parseSortLine('sort by tag reverse 2')!], [t4, t3, t2, t1, t5])).toEqual(
+            expectedOrder,
+        );
+    });
+
+    it('should sort correctly by tag defaulting to first with global filter', () => {
+        // Arrange
+        updateSettings({ globalFilter: '#task' });
+
+        const t1 = fromLine({ line: '- [ ] #task a #aaa #jjj' });
+        const t2 = fromLine({ line: '- [ ] #task a #aaaa #aaaa' });
+        const t3 = fromLine({ line: '- [ ] #task a #bbb #iii' });
+        const t4 = fromLine({ line: '- [ ] #task a #bbbb ' });
+        const t5 = fromLine({ line: '- [ ] #task a #ccc #bbb' });
+        const t6 = fromLine({ line: '- [ ] #task a #ddd #ggg' });
+        const t7 = fromLine({ line: '- [ ] #task a #eee #fff' });
+        const t8 = fromLine({ line: '- [ ] #task a #fff #aaa' });
+        const t9 = fromLine({ line: '- [ ] #task a #ggg #ccc' });
+        const t10 = fromLine({ line: '- [ ] #task a #hhh #eee' });
+        const t11 = fromLine({ line: '- [ ] #task a #iii #ddd' });
+        const t12 = fromLine({ line: '- [ ] #task a #jjj #hhh' });
+        const t13 = fromLine({ line: '- [ ] #task a' });
+
+        const expectedOrder = [t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13];
+
+        // Act
+        expect(
+            Sort.by(
+                [new TagsField().parseSortLine('sort by tag 1')!],
+                [t1, t12, t3, t13, t5, t7, t6, t4, t2, t8, t9, t10, t11],
+            ),
+        ).toEqual(expectedOrder);
+
+        // Cleanup
+        resetSettings();
+    });
+
+    it('should sort correctly reversed by tag defaulting to first with global filter', () => {
+        // Arrange
+        updateSettings({ globalFilter: '#task' });
+
+        const t1 = fromLine({ line: '- [ ] #task a #aaa #jjj' });
+        const t2 = fromLine({ line: '- [ ] #task a #aaaa #aaaa' });
+        const t3 = fromLine({ line: '- [ ] #task a #bbb #iii' });
+        const t4 = fromLine({ line: '- [ ] #task a #bbbb ' });
+        const t5 = fromLine({ line: '- [ ] #task a #ccc #bbb' });
+        const t6 = fromLine({ line: '- [ ] #task a #ddd #ggg' });
+        const t7 = fromLine({ line: '- [ ] #task a #eee #fff' });
+        const t8 = fromLine({ line: '- [ ] #task a #fff #aaa' });
+        const t9 = fromLine({ line: '- [ ] #task a #ggg #ccc' });
+        const t10 = fromLine({ line: '- [ ] #task a #hhh #eee' });
+        const t11 = fromLine({ line: '- [ ] #task a #iii #ddd' });
+        const t12 = fromLine({ line: '- [ ] #task a #jjj #hhh' });
+        const t13 = fromLine({ line: '- [ ] #task a' });
+
+        const expectedOrder = [t13, t12, t11, t10, t9, t8, t7, t6, t5, t4, t3, t2, t1];
+
+        // Act
+        expect(
+            Sort.by(
+                [new TagsField().parseSortLine('sort by tag reverse 1')!],
+                [t1, t12, t3, t13, t5, t7, t6, t4, t2, t8, t9, t10, t11],
+            ),
+        ).toEqual(expectedOrder);
+
+        // Cleanup
+        resetSettings();
+    });
+
+    it('should sort correctly by second tag with global filter', () => {
+        // Arrange
+        updateSettings({ globalFilter: '#task' });
+
+        const t1 = fromLine({ line: '- [ ] #task a #fff #aaa' });
+        const t2 = fromLine({ line: '- [ ] #task a #aaaa #aaaa' });
+        const t3 = fromLine({ line: '- [ ] #task a #ccc #bbb' });
+        const t4 = fromLine({ line: '- [ ] #task a #ggg #ccc' });
+        const t5 = fromLine({ line: '- [ ] #task a #bbb #iii' });
+        const t6 = fromLine({ line: '- [ ] #task a #aaa #jjj' });
+        const t7 = fromLine({ line: '- [ ] #task a #bbbb' });
+        const t8 = fromLine({ line: '- [ ] #task a' });
+        const expectedOrder = [t1, t2, t3, t4, t5, t6, t7, t8];
+
+        // Act
+        const result = Sort.by([new TagsField().parseSortLine('sort by tag 2')!], [t4, t7, t5, t2, t3, t1, t8, t6]);
+
+        // Assert
+        expect(result).toEqual(expectedOrder);
+
+        // Cleanup
+        resetSettings();
+    });
+
+    it('should sort correctly reversed by second tag with global filter', () => {
+        // Arrange
+        updateSettings({ globalFilter: '#task' });
+
+        const t1 = fromLine({ line: '- [ ] #task a #fff #aaa' });
+        const t2 = fromLine({ line: '- [ ] #task a #aaaa #aaaa' });
+        const t3 = fromLine({ line: '- [ ] #task a #ccc #bbb' });
+        const t4 = fromLine({ line: '- [ ] #task a #ggg #ccc' });
+        const t5 = fromLine({ line: '- [ ] #task a #bbb #iii' });
+        const t6 = fromLine({ line: '- [ ] #task a #aaa #jjj' });
+        const t7 = fromLine({ line: '- [ ] #task a #bbbb' });
+        const t8 = fromLine({ line: '- [ ] #task a' });
+        const expectedOrder = [t8, t7, t6, t5, t4, t3, t2, t1];
+
+        // Act
+        const result = Sort.by(
+            [new TagsField().parseSortLine('sort by tag reverse 2')!],
+            [t4, t7, t5, t2, t3, t1, t8, t6],
+        );
+
+        // Assert
+        expect(result).toEqual(expectedOrder);
+
+        // Cleanup
+        resetSettings();
+    });
+
+    // Issue #1407 - Multiple 'sort by tag' lines ignored all but last one
+    it('should sort correctly with two sort by tag lines', () => {
+        const input = [
+            fromLine({ line: '- [ ] random 2 #a #a 0' }),
+            fromLine({ line: '- [ ] random 9 #a #b 1' }),
+            fromLine({ line: '- [ ] random 4 #a #c 2' }),
+            fromLine({ line: '- [ ] random 7 #b #a 3' }),
+            fromLine({ line: '- [ ] random 1 #b #b 4' }),
+            fromLine({ line: '- [ ] random 5 #b #c 5' }),
+            fromLine({ line: '- [ ] random 3 #c #a 6' }),
+            fromLine({ line: '- [ ] random 8 #c #b 7' }),
+            fromLine({ line: '- [ ] random 6 #c #c 8' }),
+        ];
+        const correctExpectedOrder = [
+            input[0], // 3 values with tag 2 = '#a' - then sorted by tag 1
+            input[3],
+            input[6],
+            input[1], // 3 values with tag 2 = '#b' - then sorted by tag 1
+            input[4],
+            input[7],
+            input[2], // 3 values with tag 2 = '#c' - then sorted by tag 1
+            input[5],
+            input[8],
+        ];
+        expect(
+            Sort.by(
+                [
+                    new TagsField().parseSortLine('sort by tag 2')!, // tag 2 - ascending
+                    new TagsField().parseSortLine('sort by tag 1')!, // tag 1 - ascending
+                    new DescriptionField().createNormalSorter(), // then description - ascending
+                ],
+                input,
+            ),
+        ).toEqual(correctExpectedOrder);
     });
 });

@@ -24,4 +24,8 @@ export class FilenameField extends TextField {
         }
         return filename + '.md';
     }
+
+    supportsSorting(): boolean {
+        return true;
+    }
 }

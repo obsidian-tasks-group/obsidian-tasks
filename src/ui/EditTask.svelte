@@ -3,7 +3,8 @@
     import { onMount } from 'svelte';
     import { Recurrence } from '../Recurrence';
     import { getSettings } from '../Config/Settings';
-    import { Priority, Status, Task } from '../Task';
+    import { Status } from '../Status';
+    import { Priority, Task } from '../Task';
     import {
         prioritySymbols,
         recurrenceSymbol,
@@ -13,8 +14,10 @@
     } from '../Task';
     import { doAutocomplete } from '../DateAbbreviations';
 
+    // These exported variables are passed in as props by TaskModal.onOpen():
     export let task: Task;
     export let onSubmit: (updatedTasks: Task[]) => void | Promise<void>;
+    export let statusOptions: Status[];
 
     let descriptionInput: HTMLInputElement;
     let editableTask: {
@@ -45,10 +48,33 @@
     let parsedRecurrence: string = '';
     let parsedDone: string = '';
     let addGlobalFilterOnSave: boolean = false;
+    let withAccessKeys: boolean = true;
 
     // 'weekend' abbreviation ommitted due to lack of space.
     let datePlaceholder =
         "Try 'Monday' or 'tomorrow', or [td|tm|yd|tw|nw|we] then space.";
+
+    const priorityOptions: {
+            value: typeof editableTask.priority,
+            label: string,
+            symbol: string }[] =
+        [{
+            value: 'low',
+            label: 'Low',
+            symbol: prioritySymbols.Low
+        }, {
+            value: 'none',
+            label: 'Normal',
+            symbol: prioritySymbols.None
+        }, {
+            value: 'medium',
+            label: 'Medium',
+            symbol: prioritySymbols.Medium
+        }, {
+            value: 'high',
+            label: 'High',
+            symbol: prioritySymbols.High
+        }]
 
     function parseDate(
         type: 'start' | 'scheduled' | 'due' | 'done',
@@ -66,6 +92,8 @@
         }
         return `<i>invalid ${type} date</i>`;
     }
+
+    $: accesskey = (key: string) => withAccessKeys ? key : null;
 
     $: {
         editableTask.startDate = doAutocomplete(editableTask.startDate);
@@ -113,9 +141,9 @@
         parsedDone = parseDate('done', editableTask.doneDate);
     }
 
-
     onMount(() => {
-        const { globalFilter } = getSettings();
+        const { globalFilter, provideAccessKeys } = getSettings();
+        withAccessKeys = provideAccessKeys;
         const description = task.getDescriptionWithoutGlobalFilter();
         // If we're displaying to the user the description without the global filter (i.e. it was removed in the method
         // above), or if the description did not include a global filter in the first place, we'll add the global filter
@@ -124,7 +152,7 @@
         // (it returns 0), and thus we *don't* set addGlobalFilterOnSave.
         if (description != task.description || description.indexOf(globalFilter) == -1)
             addGlobalFilterOnSave = true;
-        let priority: 'none' | 'low' | 'medium' | 'high' = 'none';
+        let priority: typeof editableTask.priority = 'none';
         if (task.priority === Priority.Low) {
             priority = 'low';
         } else if (task.priority === Priority.Medium) {
@@ -152,6 +180,20 @@
             descriptionInput.focus();
         }, 10);
     });
+
+    const _onPriorityKeyup = (event: KeyboardEvent) => {
+        if (event.key && !event.altKey && !event.ctrlKey) {
+            const priorityOption = priorityOptions.find(
+                option => option.label.charAt(0).toLowerCase() == event.key);
+            if (priorityOption) {
+                editableTask.priority = priorityOption.value;
+            }
+        }
+    }
+
+    const _onClose = () => {
+        onSubmit([]);
+    }
 
     const _onSubmit = () => {
         const { globalFilter } = getSettings();
@@ -236,9 +278,10 @@
 </script>
 
 <div class="tasks-modal">
-    <form on:submit|preventDefault={_onSubmit}>
+    <form on:submit|preventDefault={_onSubmit} class:with-accesskeys="{withAccessKeys}">
         <div class="tasks-modal-section">
-            <label for="description">Description</label>
+            <label for="description">Descrip<span class="accesskey">t</span>ion</label>
+            <!-- svelte-ignore a11y-accesskey -->
             <input
                 bind:value={editableTask.description}
                 bind:this={descriptionInput}
@@ -246,102 +289,111 @@
                 type="text"
                 class="tasks-modal-description"
                 placeholder="Take out the trash"
+                accesskey={accesskey("t")}
             />
         </div>
-        <hr />
-        <div class="tasks-modal-section">
-            <label for="priority">Priority</label>
-            <select
-                bind:value={editableTask.priority}
-                id="priority"
-                class="dropdown"
-            >
-                <option value="none">None</option>
-                <option value="high">{prioritySymbols.High} High</option>
-                <option value="medium">{prioritySymbols.Medium} Medium</option>
-                <option value="low">{prioritySymbols.Low} Low</option>
-            </select>
+        <div class="tasks-modal-section tasks-modal-priorities" on:keyup={_onPriorityKeyup}>
+            <label for="priority-{editableTask.priority}">Priority</label>
+            {#each priorityOptions as {value, label, symbol}}
+                <span>
+                    <!-- svelte-ignore a11y-accesskey -->
+                    <input
+                        type="radio"
+                        id="priority-{value}"
+                        {value}
+                        bind:group={editableTask.priority}
+                        accesskey={accesskey(label.charAt(0).toLowerCase())}
+                    />
+                    <label for="priority-{value}">
+                        <span class="accesskey-first">{label}</span>
+                        {#if symbol && symbol.charCodeAt(0) >= 0x100}
+                            <span>{symbol}</span>
+                        {/if}
+                    </label>
+                </span>
+            {/each}
         </div>
-        <hr />
-        <div class="tasks-modal-section">
-            <label for="recurrence">Recurrence</label>
+        <div class="tasks-modal-section tasks-modal-dates">
+            <label for="recurrence" class="accesskey-first">Recurs</label>
+            <!-- svelte-ignore a11y-accesskey -->
             <input
                 bind:value={editableTask.recurrenceRule}
-                id="description"
+                id="recurrence"
                 type="text"
                 placeholder="Try 'every 2 weeks on Thursday'."
+                accesskey={accesskey("r")}
             />
             <code>{recurrenceSymbol} {@html parsedRecurrence}</code>
-        </div>
-        <hr />
-        <div class="tasks-modal-section">
-            <div class="tasks-modal-date">
-                <label for="due">Due</label>
-                <input
-                    bind:value={editableTask.dueDate}
-                    id="due"
-                    type="text"
-                    placeholder={datePlaceholder}
-                />
-                <code>{dueDateSymbol} {@html parsedDueDate}</code>
-            </div>
-            <hr />
-            <div class="tasks-modal-date">
-                <label for="scheduled">Scheduled</label>
-                <input
-                    bind:value={editableTask.scheduledDate}
-                    id="scheduled"
-                    type="text"
-                    placeholder={datePlaceholder}
-                />
-                <code>{scheduledDateSymbol} {@html parsedScheduledDate}</code>
-            </div>
-            <hr />
-            <div class="tasks-modal-date">
-                <label for="start">Start</label>
-                <input
-                    bind:value={editableTask.startDate}
-                    id="start"
-                    type="text"
-                    placeholder={datePlaceholder}
-                />
-                <code>{startDateSymbol} {@html parsedStartDate}</code>
-            </div>
-            <hr />
-            <div class="tasks-modal-date">
-                <div>
-                    <label for="forwardOnly">Only future dates:</label>
-                    <input
-                        bind:checked={editableTask.forwardOnly}
-                        id="forwardOnly"
-                        type="checkbox"
-                        class="task-list-item-checkbox tasks-modal-checkbox"
-                    />
-                </div>
-            </div>
-        </div>
-        <hr />
-        <div class="tasks-modal-section">
+            <label for="due" class="accesskey-first">Due</label>
+            <!-- svelte-ignore a11y-accesskey -->
+            <input
+                bind:value={editableTask.dueDate}
+                id="due"
+                type="text"
+                placeholder={datePlaceholder}
+                accesskey={accesskey("d")}
+            />
+            <code>{dueDateSymbol} {@html parsedDueDate}</code>
+            <label for="scheduled" class="accesskey-first">Scheduled</label>
+            <!-- svelte-ignore a11y-accesskey -->
+            <input
+                bind:value={editableTask.scheduledDate}
+                id="scheduled"
+                type="text"
+                placeholder={datePlaceholder}
+                accesskey={accesskey("s")}
+            />
+            <code>{scheduledDateSymbol} {@html parsedScheduledDate}</code>
+            <label for="start">St<span class="accesskey">a</span>rt</label>
+            <!-- svelte-ignore a11y-accesskey -->
+            <input
+                bind:value={editableTask.startDate}
+                id="start"
+                type="text"
+                placeholder={datePlaceholder}
+                accesskey={accesskey("a")}
+            />
+            <code>{startDateSymbol} {@html parsedStartDate}</code>
             <div>
-                <label for="status">Status:</label>
+                <label for="forwardOnly">Only
+                    <span class="accesskey-first">future</span> dates:</label>
+                <!-- svelte-ignore a11y-accesskey -->
+                <input
+                    bind:checked={editableTask.forwardOnly}
+                    id="forwardOnly"
+                    type="checkbox"
+                    class="task-list-item-checkbox tasks-modal-checkbox"
+                    accesskey={accesskey("f")}
+                />
+            </div>
+        </div>
+        <div class="tasks-modal-section">
+            <label for="status">Status </label>
+            <select bind:value={editableTask.status} id="status-type" class="dropdown">
+                {#each statusOptions as status}
+                    <option value={status}>{status.name} [{status.indicator}]</option>
+                {/each}
+            </select>
+        </div>
+        <div class="tasks-modal-section tasks-modal-status">
+            <div>
+                <label for="status">Completed:</label>
                 <input
                     id="status"
                     type="checkbox"
                     class="task-list-item-checkbox tasks-modal-checkbox"
-                    checked={editableTask.status === Status.DONE}
+                    checked={editableTask.status.isCompleted()}
                     disabled
                 />
-                <code>{editableTask.status}</code>
             </div>
             <div>
-                Done on:
+                <span>Done on:</span>
                 <code>{@html parsedDone}</code>
             </div>
         </div>
-        <hr />
-        <div class="tasks-modal-section" />
-        <div class="tasks-modal-section">
+        <div class="tasks-modal-section tasks-modal-buttons">
             <button type="submit" class="mod-cta">Apply</button>
+            <button type="button" on:click={_onClose}>Cancel</button>
         </div>
     </form>
 </div>

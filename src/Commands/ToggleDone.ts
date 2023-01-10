@@ -1,4 +1,5 @@
 import { Editor, MarkdownView, View } from 'obsidian';
+import { StatusRegistry } from '../StatusRegistry';
 
 import { Task, TaskRegularExpressions } from '../Task';
 
@@ -61,6 +62,7 @@ export const toggleLine = (line: string, path: string) => {
         sectionStart: 0, // We don't need this to toggle it here in the editor.
         sectionIndex: 0, // We don't need this to toggle it here in the editor.
         precedingHeader: null, // We don't need this to toggle it here in the editor.
+        fallbackDate: null, // We don't need this to toggle it here in the editor.
     });
     if (task !== null) {
         toggledLine = toggleTask(task);
@@ -69,14 +71,16 @@ export const toggleLine = (line: string, path: string) => {
         // 1. a regular checklist item
         // 2. a list item
         // 3. a simple text line
+        // 4. a standard task, but which does not contain the global filter, to be toggled, but no done date added.
 
         // The task regex will match checklist items.
         const regexMatch = line.match(TaskRegularExpressions.taskRegex);
         if (regexMatch !== null) {
             // Toggle the status of the checklist item.
-            const statusString = regexMatch[2].toLowerCase(); // Note for future: I do not think this toLowerCase is necessary and there is an issue about how it breaks some theme or snippet.
-            const newStatusString = statusString === ' ' ? 'x' : ' ';
-            toggledLine = line.replace(TaskRegularExpressions.taskRegex, `$1- [${newStatusString}] $3`);
+            const statusString = regexMatch[3];
+            const status = StatusRegistry.getInstance().byIndicator(statusString);
+            const newStatusString = status.nextStatusIndicator;
+            toggledLine = line.replace(TaskRegularExpressions.taskRegex, `$1- [${newStatusString}] $4`);
         } else if (TaskRegularExpressions.listItemRegex.test(line)) {
             // Convert the list item to a checklist item.
             toggledLine = line.replace(TaskRegularExpressions.listItemRegex, '$1$2 [ ]');
@@ -92,9 +96,7 @@ export const toggleLine = (line: string, path: string) => {
 const toggleTask = (task: Task): string => {
     // Toggling a recurring task will produce two Tasks
     const toggledTasks = task.toggle();
-    const serialized = toggledTasks.map((task: Task) => task.toFileLineString()).join('\n');
-
-    return serialized;
+    return toggledTasks.map((task: Task) => task.toFileLineString()).join('\n');
 };
 
 /* Cases (another way):

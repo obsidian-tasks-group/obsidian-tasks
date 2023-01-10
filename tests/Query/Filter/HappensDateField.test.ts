@@ -5,8 +5,14 @@ import moment from 'moment';
 import { HappensDateField } from '../../../src/Query/Filter/HappensDateField';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { testFilter } from '../../TestingTools/FilterTestHelpers';
+import { toHaveExplanation } from '../../CustomMatchers/CustomMatchersForFilters';
+import * as CustomMatchersForSorting from '../../CustomMatchers/CustomMatchersForSorting';
 
 window.moment = moment;
+
+expect.extend({
+    toHaveExplanation,
+});
 
 describe('happens date', () => {
     it('by happens date presence', () => {
@@ -73,5 +79,62 @@ describe('accessing earliest happens date', () => {
             new TaskBuilder().dueDate('1989-12-17').startDate('1999-12-17').scheduledDate('2009-12-17'),
             '1989-12-17',
         );
+    });
+});
+
+describe('explain happens date queries', () => {
+    beforeAll(() => {
+        jest.useFakeTimers();
+        jest.setSystemTime(new Date(2022, 0, 15)); // 2022-01-15
+    });
+
+    afterAll(() => {
+        jest.useRealTimers();
+    });
+
+    it('should explain date before', () => {
+        const filterOrMessage = new HappensDateField().createFilterOrErrorMessage('happens before 2023-01-02');
+        expect(filterOrMessage).toHaveExplanation(
+            'due, start or scheduled date is before 2023-01-02 (Monday 2nd January 2023)',
+        );
+    });
+
+    it('should explain date with explicit on', () => {
+        const filterOrMessage = new HappensDateField().createFilterOrErrorMessage('happens on 2024-01-02');
+        expect(filterOrMessage).toHaveExplanation(
+            'due, start or scheduled date is on 2024-01-02 (Tuesday 2nd January 2024)',
+        );
+    });
+
+    it('should explain date with implicit on', () => {
+        const filterOrMessage = new HappensDateField().createFilterOrErrorMessage('happens 2024-01-02');
+        expect(filterOrMessage).toHaveExplanation(
+            'due, start or scheduled date is on 2024-01-02 (Tuesday 2nd January 2024)',
+        );
+    });
+
+    it('should show value of relative dates', () => {
+        const filterOrMessage = new HappensDateField().createFilterOrErrorMessage('happens after today');
+        expect(filterOrMessage).toHaveExplanation(
+            'due, start or scheduled date is after 2022-01-15 (Saturday 15th January 2022)',
+        );
+    });
+});
+
+describe('sorting by happens', () => {
+    it('supports Field sorting methods correctly', () => {
+        const field = new HappensDateField();
+        expect(field.supportsSorting()).toEqual(true);
+    });
+
+    const date1 = new TaskBuilder().startDate('2021-01-12').build();
+    const date2 = new TaskBuilder().scheduledDate('2022-12-23').build();
+
+    it('sort by happens', () => {
+        CustomMatchersForSorting.expectTaskComparesBefore(new HappensDateField().createNormalSorter(), date1, date2);
+    });
+
+    it('sort by happens reverse', () => {
+        CustomMatchersForSorting.expectTaskComparesAfter(new HappensDateField().createReverseSorter(), date1, date2);
     });
 });

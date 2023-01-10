@@ -37,7 +37,7 @@ File locations:
 1. `path` (the path to the file that contains the task, that is, the folder and the filename)
 1. `root` (the top-level folder of the file that contains the task, that is, the first directory in the path, which will be `/` for files in root of the vault)
 1. `folder` (the folder to the file that contains the task, which will be `/` for files in root of the vault)
-1. `filename` (the filename of the file that contains the task, without the `.md` extension)
+1. `filename` (the link to the file that contains the task, without the `.md` extension)
     - Note that tasks from different notes with the same file name will be grouped together in the same group.
 
 > `root` grouping option was introduced in Tasks 1.11.0.
@@ -127,14 +127,14 @@ The order of operations ensures that grouping does not modify which tasks are di
 
 Here is an example Tasks result, without any `group by` commands:
 
-![Tasks Ungrouped](https://github.com/obsidian-tasks-group/obsidian-tasks/raw/gh-pages/resources/screenshots/tasks_ungrouped.png)
+![Tasks Ungrouped](../images/tasks_ungrouped.png)
 Tasks not grouped.
 
 ### After
 
 And here is what this might look like, when grouped by folder, filename and heading:
 
-![Tasks Grouped](https://github.com/obsidian-tasks-group/obsidian-tasks/raw/gh-pages/resources/screenshots/tasks_grouped.png)
+![Tasks Grouped](../images/tasks_grouped.png)
 Tasks grouped.
 
 ---

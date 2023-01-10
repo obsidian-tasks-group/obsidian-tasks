@@ -3,9 +3,10 @@ import type { PostfixExpression } from 'boon-js';
 
 import { parseFilter } from '../FilterParser';
 import type { Task } from '../../Task';
+import { Explanation } from '../Explain/Explanation';
 import { Field } from './Field';
 import { FilterOrErrorMessage } from './Filter';
-import type { Filter } from './Filter';
+import { Filter } from './Filter';
 
 /**
  * BooleanField is a 'container' field type that parses a high-level filtering query of
@@ -92,10 +93,12 @@ export class BooleanField extends Field {
                     }
                 }
             }
-            // Return the filter function that can run the complete query
-            result.filterFunction = (task: Task) => {
+            // Return the filter with filter function that can run the complete query
+            const filterFunction = (task: Task) => {
                 return this.filterTaskWithParsedQuery(task, postfixExpression);
             };
+            const explanation = this.constructExplanation(postfixExpression);
+            result.filter = new Filter(line, filterFunction, explanation);
             return result;
         } catch (error) {
             const message = error instanceof Error ? error.message : 'unknown error type';
@@ -163,5 +166,47 @@ export class BooleanField extends Field {
         }
         // Eventually the result of the expression for this Task is the only item left in the boolean stack
         return toBool(booleanStack[0]);
+    }
+
+    /**
+     * Construct an {@link Explanation} representing the complete Boolean instruction currently being analysed.
+     *
+     * @param postfixExpression
+     */
+    private constructExplanation(postfixExpression: PostfixExpression): Explanation {
+        // For an explanation of the code, see the JSdoc and comments of filterTaskWithParsedQuery()
+        const explanationStack: Explanation[] = [];
+        for (const token of postfixExpression) {
+            if (token.name === 'IDENTIFIER') {
+                if (token.value == null) throw Error('null token value'); // This should not happen
+                const filter = this.subFields[token.value.trim()];
+                explanationStack.push(filter.explanation);
+            } else if (token.name === 'OPERATOR') {
+                // To evaluate an operator we need to pop the required number of items from the boolean stack,
+                // do the logical evaluation and push back the result
+                if (token.value === 'NOT') {
+                    const arg1 = explanationStack.pop();
+                    explanationStack.push(Explanation.booleanNot([arg1!]));
+                } else if (token.value === 'OR') {
+                    const arg2 = explanationStack.pop();
+                    const arg1 = explanationStack.pop();
+                    explanationStack.push(Explanation.booleanOr([arg1!, arg2!]));
+                } else if (token.value === 'AND') {
+                    const arg2 = explanationStack.pop();
+                    const arg1 = explanationStack.pop();
+                    explanationStack.push(Explanation.booleanAnd([arg1!, arg2!]));
+                } else if (token.value === 'XOR') {
+                    const arg2 = explanationStack.pop();
+                    const arg1 = explanationStack.pop();
+                    explanationStack.push(Explanation.booleanXor([arg1!, arg2!]));
+                } else {
+                    throw Error('Unsupported operator: ' + token.value);
+                }
+            } else {
+                throw Error('Unsupported token type: ' + token);
+            }
+        }
+        // Eventually the Explanation is the only item left in the boolean stack
+        return explanationStack[0];
     }
 }

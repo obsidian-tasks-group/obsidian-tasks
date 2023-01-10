@@ -26,22 +26,49 @@ By default Tasks sorts tasks by [a calculated score we call "urgency"]({{ site.b
 
 To sort the results of a query different from the default, you must add at least one `sort by` line to the query.
 
+### Available sorting properties
+
 You can sort tasks by the following properties:
 
+File locations:
+
+1. `path` (the path to the file that contains the task)
+1. `filename` (the filename of the file that contains the task, with its extension)
+    - Note that tasks from different notes with the same file name will be sorter.
+
+> `sort by filename` was introduced in Tasks 1.21.0.
+
+File contents:
+
+1. `sort by heading` (the heading preceding the task; files with empty headings sort before other tasks)
+
+> `sort by heading` was introduced in Tasks 1.21.0.
+
+Task date properties:
+
+1. `start` (the date when the task starts)
+1. `scheduled` (the date when the task is scheduled)
+1. `due` (the date when the task is due)
+1. `done` (the date when the task was done)
+1. `happens` (the earliest of start date, scheduled date, and due date)
+
+> `sort by happens` was introduced in Tasks 1.21.0.
+
+Task properties - other:
+
+1. `description` (the description of the task)
+1. `status` (done or todo)
+1. `priority` (priority of the task; "low" is below "none": [priorities]({{ site.baseurl }}{% link getting-started/priority.md %}))
 1. `urgency` ([urgency]({{ site.baseurl }}{% link advanced/urgency.md %}))
-2. `status` (done or todo)
-3. `priority` (priority of the task; "low" is below "none")
-4. `start` (the date when the task starts)
-5. `scheduled` (the date when the task is scheduled)
-6. `due` (the date when the task is due)
-7. `done` (the date when the task was done)
-8. `path` (the path to the file that contains the task)
-9. `description` (the description of the task)
-10. `tag` (the description of the task)
+1. `tag` (the description of the task)
+
+## Multiple sort criteria
 
 You can add multiple `sort by` query options, each on an extra line.
 The first sort has the highest priority.
 Each subsequent `sort` will sort within the existing sorting.
+
+## Notes
 
 <div class="code-example" markdown="1">
 Info

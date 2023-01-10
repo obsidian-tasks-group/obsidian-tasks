@@ -2,9 +2,11 @@ import type { Task } from '../../Task';
 import { SubstringMatcher } from '../Matchers/SubstringMatcher';
 import { RegexMatcher } from '../Matchers/RegexMatcher';
 import type { IStringMatcher } from '../Matchers/IStringMatcher';
+import { Explanation } from '../Explain/Explanation';
+import type { Comparator } from '../Sorter';
 import { Field } from './Field';
 import type { FilterFunction } from './Filter';
-import { FilterOrErrorMessage } from './Filter';
+import { Filter, FilterOrErrorMessage } from './Filter';
 
 /**
  * TextField is an abstract base class to help implement
@@ -46,11 +48,8 @@ export abstract class TextField extends Field {
         // and tests if it matches the string filtering rule
         // represented by this object.
         const negate = filterOperator.match(/not/) !== null;
-        return FilterOrErrorMessage.fromFilter(line, this.getFilter(matcher, negate));
-    }
-
-    public static stringIncludesCaseInsensitive(haystack: string, needle: string): boolean {
-        return SubstringMatcher.stringIncludesCaseInsensitive(haystack, needle);
+        const filter = new Filter(line, this.getFilter(matcher, negate), new Explanation(line));
+        return FilterOrErrorMessage.fromFilter(filter);
     }
 
     /**
@@ -85,6 +84,19 @@ export abstract class TextField extends Field {
         return (task: Task) => {
             const match = matcher!.matches(this.value(task));
             return negate ? !match : match;
+        };
+    }
+
+    /**
+     * A default implementation of sorting, for text fields where simple locale-aware sorting is the
+     * desired behaviour.
+     *
+     * Each class that wants to use this will need to override supportsSorting() to return true,
+     * to turn on sorting.
+     */
+    comparator(): Comparator {
+        return (a: Task, b: Task) => {
+            return this.value(a).localeCompare(this.value(b), undefined, { numeric: true });
         };
     }
 }

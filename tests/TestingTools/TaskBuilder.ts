@@ -1,6 +1,7 @@
 // Builder
 import type { Moment } from 'moment';
-import { Priority, Status, Task } from '../../src/Task';
+import { Status } from '../../src/Status';
+import { Priority, Task } from '../../src/Task';
 import type { Recurrence } from '../../src/Recurrence';
 import { DateParser } from '../../src/Query/DateParser';
 
@@ -21,11 +22,11 @@ export class TaskBuilder {
     private _description: string = 'my description';
     private _path: string = '';
     private _indentation: string = '';
+    private _listMarker: string = '-';
 
     private _sectionStart: number = 0;
     private _sectionIndex: number = 0;
 
-    private _originalStatusCharacter: string = ' ';
     private _precedingHeader: string | null = null;
     private _tags: string[] = [];
     private _priority: Priority = Priority.None;
@@ -37,6 +38,8 @@ export class TaskBuilder {
 
     private _recurrence: Recurrence | null = null;
     private _blockLink: string = '';
+
+    private _scheduledDateIsInferred: boolean = false;
 
     /**
      * Build a Task
@@ -60,9 +63,9 @@ export class TaskBuilder {
             description: description,
             path: this._path,
             indentation: this._indentation,
+            listMarker: this._listMarker,
             sectionStart: this._sectionStart,
             sectionIndex: this._sectionIndex,
-            originalStatusCharacter: this._originalStatusCharacter,
             precedingHeader: this._precedingHeader,
             priority: this._priority,
             startDate: this._startDate,
@@ -73,9 +76,15 @@ export class TaskBuilder {
             blockLink: this._blockLink,
             tags: this._tags,
             originalMarkdown: '',
+            scheduledDateIsInferred: this._scheduledDateIsInferred,
         });
     }
 
+    /**
+     * Set the status.
+     *
+     * @param status
+     */
     public status(status: Status): TaskBuilder {
         this._status = status;
         return this;
@@ -106,6 +115,11 @@ export class TaskBuilder {
         return this;
     }
 
+    public listMarker(listMarker: string): TaskBuilder {
+        this._listMarker = listMarker;
+        return this;
+    }
+
     public sectionStart(sectionStart: number): TaskBuilder {
         this._sectionStart = sectionStart;
         return this;
@@ -113,11 +127,6 @@ export class TaskBuilder {
 
     public sectionIndex(sectionIndex: number): TaskBuilder {
         this._sectionIndex = sectionIndex;
-        return this;
-    }
-
-    public originalStatusCharacter(originalStatusCharacter: string): TaskBuilder {
-        this._originalStatusCharacter = originalStatusCharacter;
         return this;
     }
 
@@ -163,6 +172,11 @@ export class TaskBuilder {
 
     public blockLink(blockLink: string): TaskBuilder {
         this._blockLink = blockLink;
+        return this;
+    }
+
+    public scheduledDateIsInferred(isInferred: boolean) {
+        this._scheduledDateIsInferred = isInferred;
         return this;
     }
 
