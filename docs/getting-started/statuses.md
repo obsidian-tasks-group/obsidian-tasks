@@ -21,9 +21,7 @@ has_toc: false
 
 ---
 
-## Introduction
-
-### Standard Markdown task statuses
+## Standard Markdown task statuses
 
 Tasks have a status.
 
@@ -34,7 +32,9 @@ The convention in markdown is:
 - [x] I am a task that has been done
 ```
 
-### Custom Markdown task statuses
+---
+
+## Tasks core task statuses
 
 - `> Introduced in Tasks X.Y.Z`
 
@@ -42,18 +42,89 @@ Tasks supports custom task statuses.
 
 This table shows the statues provided by default:
 
-<!-- include: DocsSamplesForStatuses.test.DefaultStatuses_markdown-table.approved.md -->
-| Status Character    | Status Name | Next Status Character |
-| ------------------- | ----------- | --------------------- |
-| `space` | Todo | `x` |
-| `/` | In Progress | `x` |
-| `x` | Done | `space` |
-| `-` | Cancelled | `space` |
-<!-- endInclude -->
+<!-- placeholder to force blank line before table --> <!-- include: DocsSamplesForStatuses.test.DefaultStatuses_core-statuses.approved.md -->
+
+| Status Character    | Status Name | Next Status Character | Needs Custom Styling |
+| ------------------- | ----------- | --------------------- | -------------------- |
+| `space` | Todo | `x` | No |
+| `/` | In Progress | `x` | Yes |
+| `x` | Done | `space` | No |
+| `-` | Cancelled | `space` | Yes |
+
+<!-- placeholder to force blank line after table --> <!-- endInclude -->
+
+### Editing core statuses
+
+The Tasks settings shows the core statuses:
+
+![Core Statuses](../images/settings-core-statuses.png)
 
 Note that `Todo` is followed by `Done`, in order to preserve compatibility with earlier Tasks releases.
 
 It will soon be possible to edit these custom statues, and enable `Todo` -> `In Progress` -> `Done`.
+
+---
+
+## Custom task statuses
+
+### Minimal supported statuses
+
+<!-- placeholder to force blank line before table --> <!-- include: DocsSamplesForStatuses.test.DefaultStatuses_minimal-supported-statuses.approved.md -->
+
+| Status Character    | Status Name | Next Status Character | Needs Custom Styling |
+| ------------------- | ----------- | --------------------- | -------------------- |
+| `>` | Forwarded | `x` | Yes |
+| `<` | Schedule | `x` | Yes |
+| `?` | Question | `x` | Yes |
+| `!` | Important | `x` | Yes |
+| `"` | Quote | `x` | Yes |
+| `-` | Canceled | `x` | Yes |
+| `*` | Star | `x` | Yes |
+| `l` | Location | `x` | Yes |
+| `i` | Info | `x` | Yes |
+| `S` | Amount/savings/money | `x` | Yes |
+| `I` | Idea/lightbulb | `x` | Yes |
+| `f` | Fire | `x` | Yes |
+| `k` | Key | `x` | Yes |
+| `u` | Up | `x` | Yes |
+| `d` | Down | `x` | Yes |
+| `w` | Win | `x` | Yes |
+| `p` | Pros | `x` | Yes |
+| `c` | Cons | `x` | Yes |
+| `b` | Bookmark | `x` | Yes |
+
+<!-- placeholder to force blank line after table --> <!-- endInclude -->
+
+### ITS Theme supported statuses
+
+<!-- placeholder to force blank line before table --> <!-- include: DocsSamplesForStatuses.test.DefaultStatuses_its-theme-supported-statuses.approved.md -->
+
+| Status Character    | Status Name | Next Status Character | Needs Custom Styling |
+| ------------------- | ----------- | --------------------- | -------------------- |
+| `>` | Forward | `x` | Yes |
+| `D` | Deferred/Scheduled | `x` | Yes |
+| `?` | Question | `x` | Yes |
+| `!` | Important | `x` | Yes |
+| `+` | Add | `x` | Yes |
+| `R` | Research | `x` | Yes |
+| `i` | Idea | `x` | Yes |
+| `B` | Brainstorm | `x` | Yes |
+| `P` | Pro | `x` | Yes |
+| `C` | Con | `x` | Yes |
+| `I` | Info | `x` | Yes |
+| `Q` | Quote | `x` | Yes |
+| `N` | Note | `x` | Yes |
+| `b` | Bookmark | `x` | Yes |
+| `p` | Paraphrase | `x` | Yes |
+| `E` | Example | `x` | Yes |
+| `L` | Location | `x` | Yes |
+| `A` | Answer | `x` | Yes |
+| `r` | Reward | `x` | Yes |
+| `c` | Choice | `x` | Yes |
+
+<!-- placeholder to force blank line after table --> <!-- endInclude -->
+
+---
 
 ## Credit: Sytone and the 'Tasks SQL Powered' plugin
 

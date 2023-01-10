@@ -10,3 +10,9 @@ blockquote {
 td {
     vertical-align: top;
 }
+
+img {
+    margin-bottom: 1.5rem;
+    border-radius: 4px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12), 0 3px 10px rgba(0, 0, 0, 0.08);
+}
