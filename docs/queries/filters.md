@@ -323,6 +323,8 @@ Introduced in Tasks 1.6.0.
 
 #### Tag Query Examples
 
+{: .no_toc }
+
 - `tags include #todo`
 - `tags do not include #todo`
 - `tag regex matches /#t$/`

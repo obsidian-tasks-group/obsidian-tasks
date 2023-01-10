@@ -73,6 +73,7 @@ We will help you make this right once you opened the PR.
 Add the following between the H1 and the first H2, to show a table of contents in a page on the published documentation.
 
 ```text
+# Page Heading
 {: .no_toc }
 
 <details open markdown="block">
@@ -86,6 +87,10 @@ Add the following between the H1 and the first H2, to show a table of contents i
 
 ---
 ```
+
+### Omitting a heading from the page's Table of Contents
+
+To omit a heading from the page's table of contents, put a `{: .no_toc }` line immediately after the heading.
 
 ### Linking to other pages in the docs
 

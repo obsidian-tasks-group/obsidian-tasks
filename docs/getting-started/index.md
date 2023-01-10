@@ -5,6 +5,8 @@ nav_order: 3
 has_children: true
 ---
 
+# Getting Started
+
 {: .no_toc }
 
 <details open markdown="block">
@@ -17,8 +19,6 @@ has_children: true
 </details>
 
 ---
-
-# Getting Started
 
 ## Finding tasks in your vault
 

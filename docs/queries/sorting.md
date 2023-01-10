@@ -26,11 +26,11 @@ By default Tasks sorts tasks by [a calculated score we call "urgency"]({{ site.b
 
 To sort the results of a query different from the default, you must add at least one `sort by` line to the query.
 
-### Available sorting properties
+## Available sorting properties
 
-You can sort tasks by the following properties:
+You can sort tasks by the following properties.
 
-File locations:
+### File locations
 
 1. `path` (the path to the file that contains the task)
 1. `filename` (the filename of the file that contains the task, with its extension)
@@ -39,14 +39,14 @@ File locations:
 {: .released }
 `sort by filename` was introduced in Tasks 1.21.0.
 
-File contents:
+### File contents
 
 1. `sort by heading` (the heading preceding the task; files with empty headings sort before other tasks)
 
 {: .released }
 `sort by heading` was introduced in Tasks 1.21.0.
 
-Task date properties:
+### Task date properties
 
 1. `start` (the date when the task starts)
 1. `scheduled` (the date when the task is scheduled)
@@ -57,7 +57,7 @@ Task date properties:
 {: .released }
 `sort by happens` was introduced in Tasks 1.21.0.
 
-Task properties - other:
+### Other task properties
 
 1. `description` (the description of the task)
 1. `status` (done or todo)
