@@ -167,8 +167,12 @@ This placeholder is usually used after a section heading:
 Introduced in Tasks X.Y.Z.
 ```
 
-- `> X (Y and Z) was introduced in Tasks X.Y.Z`
-  - This placeholder is used when you need to tag a sub-part of something, for example a list.
+This placeholder is used when you need to tag a sub-part of something, for example a list:
+
+```text
+{: .released }
+X (Y and Z) was introduced in Tasks X.Y.Z.
+```
 
 ### How the documentation is generated
 

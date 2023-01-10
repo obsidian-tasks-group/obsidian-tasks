@@ -87,7 +87,8 @@ There is a lot of flexibility here. For example:
 
 Note that relative dates will be always interpreted as being in the future, because that is usually what you want. You can change this behavior by unchecking "Only future dates" if you want to enter an overdue task or experiment with the way how relative dates in the past would be interpreted in queries.
 
-> `Only future dates` was introduced in Tasks 1.15.0.
+{: .released }
+`Only future dates` was introduced in Tasks 1.15.0.
 
 ### Date abbreviations
 

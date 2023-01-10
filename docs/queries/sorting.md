@@ -36,13 +36,15 @@ File locations:
 1. `filename` (the filename of the file that contains the task, with its extension)
     - Note that tasks from different notes with the same file name will be sorter.
 
-> `sort by filename` was introduced in Tasks 1.21.0.
+{: .released }
+`sort by filename` was introduced in Tasks 1.21.0.
 
 File contents:
 
 1. `sort by heading` (the heading preceding the task; files with empty headings sort before other tasks)
 
-> `sort by heading` was introduced in Tasks 1.21.0.
+{: .released }
+`sort by heading` was introduced in Tasks 1.21.0.
 
 Task date properties:
 
@@ -52,7 +54,8 @@ Task date properties:
 1. `done` (the date when the task was done)
 1. `happens` (the earliest of start date, scheduled date, and due date)
 
-> `sort by happens` was introduced in Tasks 1.21.0.
+{: .released }
+`sort by happens` was introduced in Tasks 1.21.0.
 
 Task properties - other:
 
