@@ -291,7 +291,8 @@ For more information, see [Priorities]({{ site.baseurl }}{% link getting-started
 
 ### Tags
 
-> Introduced in Tasks 1.6.0.
+{: .released }
+Introduced in Tasks 1.6.0.
 
 - `tags (include|do not include) <tag>` _or_
 - `tag (includes|does not include) <tag>`
@@ -337,7 +338,8 @@ Note that the path includes the `.md` extension.
 
 ### File Name
 
-> Introduced in Tasks 1.13.0.
+{: .released }
+Introduced in Tasks 1.13.0.
 
 Note that the file name includes the `.md` extension.
 

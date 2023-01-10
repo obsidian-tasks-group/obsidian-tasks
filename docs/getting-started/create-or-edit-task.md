@@ -35,7 +35,8 @@ Use the command 'Tasks: Create or edit task' to launch the modal.
 
 ## Keyboard shortcuts
 
-> Introduced in Tasks 1.17.0.
+{: .released }
+Introduced in Tasks 1.17.0.
 
 All the fields of the form have "access keys", that is, keyboard shortcuts. The access keys are displayed as the underlined letters in the labels.
 
@@ -44,7 +45,8 @@ All the fields of the form have "access keys", that is, keyboard shortcuts. The 
 
 ### Turning off keyboard shortcuts
 
-> Introduced in Tasks 1.17.0.
+{: .released }
+Introduced in Tasks 1.17.0.
 
 If the access keys (keyboard shortcuts) for any field conflicts with system keyboard shortcuts or interferes with assistive technology functionality that is important for you, you may want to turn them off in the Tasks plugin's settings:
 
@@ -89,7 +91,8 @@ Note that relative dates will be always interpreted as being in the future, beca
 
 ### Date abbreviations
 
-> Introduced in Tasks 1.8.0.
+{: .released }
+Introduced in Tasks 1.8.0.
 
 The modal also has a few abbreviations of its own, to speed up entering of common values in the date fields.
 

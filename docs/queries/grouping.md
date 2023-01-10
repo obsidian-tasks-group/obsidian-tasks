@@ -22,7 +22,8 @@ parent: Queries
 
 ## Basics
 
-> Introduced in Tasks 1.6.0.
+{: .released }
+Introduced in Tasks 1.6.0.
 
 By default, Tasks displays tasks in a single list.
 
