@@ -1,5 +1,6 @@
 import { Sorter } from '../Sorter';
 import type { Comparator } from '../Sorter';
+import * as RegExpTools from '../../lib/RegExpTools';
 import type { FilterOrErrorMessage } from './Filter';
 
 /**
@@ -191,7 +192,8 @@ export abstract class Field {
             throw Error(`sorterRegExp() unimplemented for ${this.fieldNameSingular()}`);
         }
 
-        return new RegExp(`^sort by ${this.fieldNameSingular()}( reverse)?`);
+        const fieldNameSingularEscaped = RegExpTools.escapeRegExp(this.fieldNameSingular());
+        return new RegExp(`^sort by ${fieldNameSingularEscaped}( reverse)?`);
     }
 
     /**
