@@ -253,6 +253,11 @@ describe('Query parsing', () => {
             expect(query.error).toBeUndefined();
         });
     });
+
+    it('should parse ambiguous queries correctly', () => {
+        expect(new Query({ source: 'sort by status' }).sorting[0].property).toEqual('status');
+        expect(new Query({ source: 'sort by status.name' }).sorting[0].property).toEqual('status.name');
+    });
 });
 
 describe('Query', () => {
