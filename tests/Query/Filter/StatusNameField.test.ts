@@ -29,4 +29,13 @@ describe('status.name', () => {
         expect(filter).toMatchTaskFromLine('- [ ] Xxx');
         expect(filter).not.toMatchTaskFromLine('- [x] Xxx');
     });
+
+    it('status-name is not valid', () => {
+        // Arrange
+        const filter = new StatusNameField().createFilterOrErrorMessage('status-name includes todo');
+
+        // Assert
+        // Check that the '.' in status.name is interpreted exactly as a dot.
+        expect(filter).not.toBeValid();
+    });
 });
