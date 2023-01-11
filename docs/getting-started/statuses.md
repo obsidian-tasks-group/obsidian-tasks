@@ -159,6 +159,7 @@ We are tracking this in [issue #1486](https://github.com/obsidian-tasks-group/ob
 - `done` - matches tasks with anything except space as the status symbol
 - `not done` - matches task with a space as the status symbol
 - `status.name` text search
+- `sort by status.name`
 
 For details, see [Filters for Task Statuses]({{ site.baseurl }}{% link queries/filters.md %}#filters-for-task-statuses)
 
