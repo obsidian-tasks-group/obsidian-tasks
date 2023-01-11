@@ -58,6 +58,11 @@ describe('sorting by status.name', () => {
         expect(field.supportsSorting()).toEqual(true);
     });
 
+    it('should parse sort line correctly', () => {
+        expect(new StatusNameField().createSorterFromLine('sort by status.name reverse')).not.toBeNull();
+        expect(new StatusNameField().createSorterFromLine('sort by status-name reverse')).not.toBeNull(); // Should be null
+    });
+
     it('sort by status.name', () => {
         // Arrange
         const sorter = new StatusNameField().createNormalSorter();
