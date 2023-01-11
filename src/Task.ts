@@ -10,6 +10,7 @@ import { DateField } from './Query/Filter/DateField';
 import { renderTaskLine } from './TaskLineRenderer';
 import type { TaskLineRenderDetails } from './TaskLineRenderer';
 import { DateFallback } from './DateFallback';
+import * as RegExpTools from './lib/RegExpTools';
 
 /**
  * When sorting, make sure low always comes after none. This way any tasks with low will be below any exiting
@@ -708,27 +709,6 @@ export class Task {
     }
 
     /**
-     * Escape a string so it can be used as part of a RegExp literally.
-     * Taken from https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#escaping
-     */
-    private escapeRegExp(s: string) {
-        // NOTE: = is not escaped, as doing so gives error:
-        //         Invalid regular expression: /(^|\s)hello\=world($|\s)/: Invalid escape
-        // NOTE: ! is not escaped, as doing so gives error:
-        //         Invalid regular expression: /(^|\s)hello\!world($|\s)/: Invalid escape
-        // NOTE: : is not escaped, as doing so gives error:
-        //         Invalid regular expression: /(^|\s)hello\:world($|\s)/: Invalid escape
-        //
-        // Explanation from @AnnaKornfeldSimpson in:
-        // https://github.com/esm7/obsidian-tasks/pull/18#issuecomment-1196115407
-        // From what I can tell, the three missing characters from the original regex - : ! =
-        // are all only considered to have special meanings if they directly follow
-        // a ? (all 3) or a ?< (! and =).
-        // So theoretically if the ? are all escaped, those three characters do not have to be.
-        return s.replace(/([.*+?^${}()|[\]/\\])/g, '\\$1');
-    }
-
-    /**
      * Search for the global filter for the purpose of removing it from the description, but do so only
      * if it is a separate word (preceding the beginning of line or a space and followed by the end of line
      * or a space), because we don't want to cut-off nested tags like #task/subtag.
@@ -739,7 +719,7 @@ export class Task {
         let description = this.description;
         if (globalFilter.length === 0) return description;
         // This matches the global filter (after escaping it) only when it's a complete word
-        const globalFilterRegex = RegExp('(^|\\s)' + this.escapeRegExp(globalFilter) + '($|\\s)', 'ug');
+        const globalFilterRegex = RegExp('(^|\\s)' + RegExpTools.escapeRegExp(globalFilter) + '($|\\s)', 'ug');
         if (this.description.search(globalFilterRegex) > -1) {
             description = description.replace(globalFilterRegex, '$1$2').replace('  ', ' ').trim();
         }
