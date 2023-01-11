@@ -56,7 +56,7 @@ export abstract class TextField extends Field {
      * Returns a regexp pattern matching the field's name and possible aliases
      */
     protected fieldPattern(): string {
-        return this.fieldName();
+        return this.fieldNameSingularEscaped();
     }
 
     /**

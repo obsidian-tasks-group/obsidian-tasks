@@ -87,6 +87,7 @@ export abstract class Field {
      * @public
      *
      * @see fieldNameSingular
+     * @see fieldNameSingularEscaped
      */
     public abstract fieldName(): string;
 
@@ -95,9 +96,23 @@ export abstract class Field {
      * @public
      *
      * @see fieldName
+     * @see fieldNameSingularEscaped
      */
     public fieldNameSingular(): string {
         return this.fieldName();
+    }
+
+    /**
+     * Returns the singular form of the field's name, escaped for use in regular expressions.
+     *
+     * This is needed for field names that contain `.` in, for example.
+     * @public
+     *
+     * @see fieldName
+     * @see fieldNameSingular
+     */
+    public fieldNameSingularEscaped() {
+        return RegExpTools.escapeRegExp(this.fieldNameSingular());
     }
 
     // -----------------------------------------------------------------------------------------------------------------
@@ -192,8 +207,7 @@ export abstract class Field {
             throw Error(`sorterRegExp() unimplemented for ${this.fieldNameSingular()}`);
         }
 
-        const fieldNameSingularEscaped = RegExpTools.escapeRegExp(this.fieldNameSingular());
-        return new RegExp(`^sort by ${fieldNameSingularEscaped}( reverse)?`);
+        return new RegExp(`^sort by ${this.fieldNameSingularEscaped()}( reverse)?`);
     }
 
     /**
