@@ -21,6 +21,7 @@ import type { FilterOrErrorMessage } from './Filter/Filter';
 import type { Sorter } from './Sorter';
 
 const fieldCreators = [
+    () => new StatusNameField(), // status.name is before status, to avoid ambiguity
     () => new StatusField(),
     () => new RecurringField(),
     () => new PriorityField(),
@@ -38,7 +39,6 @@ const fieldCreators = [
     () => new FilenameField(),
     () => new UrgencyField(),
     () => new RecurrenceField(),
-    () => new StatusNameField(),
 ];
 
 export function parseFilter(filterString: string): FilterOrErrorMessage | null {
