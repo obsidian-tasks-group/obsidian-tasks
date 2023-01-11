@@ -60,7 +60,7 @@ describe('sorting by status.name', () => {
 
     it('should parse sort line correctly', () => {
         expect(new StatusNameField().createSorterFromLine('sort by status.name reverse')).not.toBeNull();
-        expect(new StatusNameField().createSorterFromLine('sort by status-name reverse')).not.toBeNull(); // Should be null
+        expect(new StatusNameField().createSorterFromLine('sort by status-name reverse')).toBeNull();
     });
 
     it('sort by status.name', () => {
