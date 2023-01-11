@@ -21,4 +21,8 @@ export class StatusNameField extends TextField {
     value(task: Task): string {
         return task.status.name;
     }
+
+    supportsSorting(): boolean {
+        return true;
+    }
 }

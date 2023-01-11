@@ -56,10 +56,19 @@ You can sort tasks by the following properties.
 {: .released }
 `sort by happens` was introduced in Tasks 1.21.0.
 
+### Task statuses
+
+1. `status` (done or todo)
+1. `status.name` (Done, Todo, Cancelled, In Progress, Unknown etc - sorted alphabetically)
+
+{: .released }
+`sort by status.name` was introduced in Tasks X.Y.Z.
+
+For more information, including adding your own customised statuses, see [Statuses]({{ site.baseurl }}{% link getting-started/statuses.md %}).
+
 ### Other task properties
 
 1. `description` (the description of the task)
-1. `status` (done or todo)
 1. `priority` (priority of the task; "low" is below "none": [priorities]({{ site.baseurl }}{% link getting-started/priority.md %}))
 1. `urgency` ([urgency]({{ site.baseurl }}{% link advanced/urgency.md %}))
 1. `tag` (the description of the task)

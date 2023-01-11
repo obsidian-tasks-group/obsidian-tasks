@@ -1,11 +1,23 @@
 import { StatusNameField } from '../../../src/Query/Filter/StatusNameField';
 import * as TestHelpers from '../../TestHelpers';
 import { toBeValid, toMatchTaskFromLine } from '../../CustomMatchers/CustomMatchersForFilters';
+import {
+    expectTaskComparesAfter,
+    expectTaskComparesBefore,
+    expectTaskComparesEqual,
+} from '../../CustomMatchers/CustomMatchersForSorting';
 
 expect.extend({
     toBeValid,
     toMatchTaskFromLine,
 });
+
+// Abbreviated names so that the markdown text is aligned
+const todoTask = TestHelpers.fromLine({ line: '- [ ] Xxx' });
+const inprTask = TestHelpers.fromLine({ line: '- [/] Xxx' });
+const doneTask = TestHelpers.fromLine({ line: '- [x] Xxx' });
+const cancTask = TestHelpers.fromLine({ line: '- [-] Xxx' });
+const unknTask = TestHelpers.fromLine({ line: '- [%] Xxx' });
 
 describe('status.name', () => {
     it('value', () => {
@@ -13,11 +25,11 @@ describe('status.name', () => {
         const filter = new StatusNameField();
 
         // Assert
-        expect(filter.value(TestHelpers.fromLine({ line: '- [ ] Xxx' }))).toStrictEqual('Todo');
-        expect(filter.value(TestHelpers.fromLine({ line: '- [/] Xxx' }))).toStrictEqual('In Progress');
-        expect(filter.value(TestHelpers.fromLine({ line: '- [x] Xxx' }))).toStrictEqual('Done');
-        expect(filter.value(TestHelpers.fromLine({ line: '- [-] Xxx' }))).toStrictEqual('Cancelled');
-        expect(filter.value(TestHelpers.fromLine({ line: '- [%] Xxx' }))).toStrictEqual('Unknown');
+        expect(filter.value(todoTask)).toStrictEqual('Todo');
+        expect(filter.value(inprTask)).toStrictEqual('In Progress');
+        expect(filter.value(doneTask)).toStrictEqual('Done');
+        expect(filter.value(cancTask)).toStrictEqual('Cancelled');
+        expect(filter.value(unknTask)).toStrictEqual('Unknown');
     });
 
     it('status.name includes', () => {
@@ -37,5 +49,38 @@ describe('status.name', () => {
         // Assert
         // Check that the '.' in status.name is interpreted exactly as a dot.
         expect(filter).not.toBeValid();
+    });
+});
+
+describe('sorting by status.name', () => {
+    it('supports Field sorting methods correctly', () => {
+        const field = new StatusNameField();
+        expect(field.supportsSorting()).toEqual(true);
+    });
+
+    it('sort by status.name', () => {
+        // Arrange
+        const sorter = new StatusNameField().createNormalSorter();
+
+        // Assert
+        expectTaskComparesEqual(sorter, cancTask, cancTask);
+        // Reverse of Alphabetical order by status name
+        expectTaskComparesBefore(sorter, cancTask, doneTask);
+        expectTaskComparesBefore(sorter, doneTask, inprTask);
+        expectTaskComparesBefore(sorter, inprTask, todoTask);
+        expectTaskComparesBefore(sorter, todoTask, unknTask);
+    });
+
+    it('sort by status.name reverse', () => {
+        // Arrange
+        const sorter = new StatusNameField().createReverseSorter();
+
+        // Assert
+        expectTaskComparesEqual(sorter, cancTask, cancTask);
+        // Alphabetical order by status name
+        expectTaskComparesAfter(sorter, cancTask, doneTask);
+        expectTaskComparesAfter(sorter, doneTask, inprTask);
+        expectTaskComparesAfter(sorter, inprTask, todoTask);
+        expectTaskComparesAfter(sorter, todoTask, unknTask);
     });
 });
