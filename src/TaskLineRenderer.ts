@@ -27,6 +27,8 @@ export const LayoutClasses: { [c in TaskLayoutComponent]: string } = {
     blockLink: '',
 };
 
+const MAX_DAY_CLASS_RANGE = 7;
+
 /**
  * The function used to render a Markdown task line into an existing HTML element.
  */
@@ -117,15 +119,22 @@ async function taskToHtml(
         let componentString = task.componentToString(taskLayout, component);
         if (componentString) {
             if (component === 'description') componentString = removeGlobalFilterIfNeeded(componentString);
+            // Create the text span that will hold the rendered component
             const span = document.createElement('span');
             parentElement.appendChild(span);
             if (span) {
-                // TODO explain the purpose of this (to enable different formatting to layout like table cells and the text itself)
+                // Inside that text span, we are creating another internal span, that will hold the text itself.
+                // This may seem redundant, and by default it indeed does nothing, but we do it to allow the CSS
+                // to differentiate between the container of the text and the text itself, so it will be possible
+                // to do things like surrouding only the text (rather than its whole placeholder) with a highlight
                 const internalSpan = document.createElement('span');
                 span.appendChild(internalSpan);
                 await renderComponentText(internalSpan, componentString, component, task, textRenderer);
                 const [genericClasses, specificClasses] = getComponentClasses(component, task);
+                // Add the generic classes that apply to what this component is (priority, due date etc)
                 span.classList.add(...genericClasses);
+                // Add the specific classes that describe the content of the component
+                // (task-priority-medium, task-due-past-1d etc).
                 span.classList.add(...specificClasses);
                 allSpecificClasses.push(...specificClasses);
             }
@@ -175,9 +184,15 @@ async function renderComponentText(
     }
 }
 
+/**
+ * This function returns two lists of tags -- genericClasses and specificClasses -- that describe the
+ * given component.
+ * The genericClasses describe what the component is, e.g. a due date or a priority, and are one of the
+ * options in LayoutClasses.
+ * The specificClasses describe the content of the component translated to a CSS class,
+ * e.g. task-priority-medium, task-due-past-1d etc.
+ */
 function getComponentClasses(component: TaskLayoutComponent, task: Task) {
-    // TODO explain the difference
-    // TODO maybe prevent the repetition and use the index of LayoutClasses here
     const genericClasses: string[] = [];
     const specificClasses: string[] = [];
     switch (component) {
@@ -198,7 +213,8 @@ function getComponentClasses(component: TaskLayoutComponent, task: Task) {
             const date = task.dueDate;
             if (date) {
                 genericClasses.push(LayoutClasses.dueDate);
-                specificClasses.push('task-due-' + dateToClassName(date));
+                const dateClass = dateToClassName(date);
+                if (dateClass) specificClasses.push('task-due-' + dateClass);
             }
             break;
         }
@@ -206,7 +222,8 @@ function getComponentClasses(component: TaskLayoutComponent, task: Task) {
             const date = task.startDate;
             if (date) {
                 genericClasses.push(LayoutClasses.startDate);
-                specificClasses.push('task-start-' + dateToClassName(date));
+                const dateClass = dateToClassName(date);
+                if (dateClass) specificClasses.push('task-start-' + dateClass);
             }
             break;
         }
@@ -214,7 +231,8 @@ function getComponentClasses(component: TaskLayoutComponent, task: Task) {
             const date = task.scheduledDate;
             if (date) {
                 genericClasses.push(LayoutClasses.scheduledDate);
-                specificClasses.push('task-scheduled-' + dateToClassName(date));
+                const dateClass = dateToClassName(date);
+                if (dateClass) specificClasses.push('task-scheduled-' + dateClass);
             }
             break;
         }
@@ -222,7 +240,8 @@ function getComponentClasses(component: TaskLayoutComponent, task: Task) {
             const date = task.doneDate;
             if (date) {
                 genericClasses.push(LayoutClasses.doneDate);
-                specificClasses.push('task-done-' + dateToClassName(date));
+                const dateClass = dateToClassName(date);
+                if (dateClass) specificClasses.push('task-done-' + dateClass);
             }
             break;
         }
@@ -234,15 +253,20 @@ function getComponentClasses(component: TaskLayoutComponent, task: Task) {
     return [genericClasses, specificClasses];
 }
 
-// TODO document
+/**
+ * Translate a relative date to a CSS class: 'today', 'future-1d' (for tomorrow), 'past-1d' (for yesterday)
+ * etc.
+ * A cutoff (in days) is defined in MAX_DAY_CLASS_RANGE, from beyond that limit a class name is not output.
+ */
 function dateToClassName(date: Moment) {
     const today = window.moment().startOf('day');
     let result = '';
     const diffDays = today.diff(date, 'days');
+    if (Math.abs(diffDays) > MAX_DAY_CLASS_RANGE) return null;
     if (diffDays === 0) return 'today';
     else if (diffDays > 0) result += 'past-';
     else if (diffDays < 0) result += 'future-';
-    result += diffDays.toString() + 'd';
+    result += Math.abs(diffDays).toString() + 'd';
     return result;
 }
 
