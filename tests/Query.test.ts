@@ -148,6 +148,8 @@ describe('Query parsing', () => {
             'sort by start',
             'sort by status reverse',
             'sort by status',
+            'sort by status.name',
+            'sort by status.name reverse',
             'sort by tag 5',
             'sort by tag reverse 3',
             'sort by tag reverse',
