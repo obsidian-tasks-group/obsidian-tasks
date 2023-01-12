@@ -7,7 +7,6 @@ has_toc: false
 ---
 
 # Regular Expressions
-
 {: .no_toc }
 
 <details open markdown="block">
@@ -23,7 +22,8 @@ has_toc: false
 
 ## Introduction
 
-> Introduced in Tasks 1.12.0.
+{: .released }
+Introduced in Tasks 1.12.0.
 
 [Regular expression](https://en.wikipedia.org/wiki/Regular_expression)  ("regex") searches are a powerful alternative to the simple `includes` and  `does not include` searches.
 

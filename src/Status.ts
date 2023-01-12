@@ -45,7 +45,7 @@ export class StatusConfiguration {
      * @param {string} indicator
      * @param {string} name
      * @param {Status} nextStatusIndicator
-     * @param {bool} availableAsCommand
+     * @param {boolean} availableAsCommand
      * @memberof Status
      */
     constructor(indicator: string, name: string, nextStatusIndicator: string, availableAsCommand: boolean) {
@@ -58,6 +58,13 @@ export class StatusConfiguration {
 
 /**
  * Tracks the possible states that a task can be in.
+ *
+ * Related classes:
+ * @see StatusConfiguration
+ * @see StatusRegistry
+ * @see StatusSettings
+ * @see StatusSettingsHelpers.ts
+ * @see CustomStatusModal
  *
  * @export
  * @class Status
@@ -114,7 +121,18 @@ export class Status {
      * @type {StatusConfiguration}
      * @memberof Status
      */
-    private readonly configuration: StatusConfiguration;
+    public readonly configuration: StatusConfiguration;
+
+    /**
+     * Whether Tasks can yet create 'Toggle Status' commands for statuses
+     *
+     * This is not yet possible, and so some UI features are temporarily hidden.
+     * See https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1486
+     * Once that issue is addressed, this method can be removed.
+     */
+    public static tasksPluginCanCreateCommandsForStatuses(): boolean {
+        return false;
+    }
 
     /**
      * The indicator used between the two square brackets in the markdown task.
@@ -165,6 +183,17 @@ export class Status {
      */
     constructor(configuration: StatusConfiguration) {
         this.configuration = configuration;
+    }
+
+    /**
+     * Create a Status representing the given, unknown indicator.
+     *
+     * This can be useful when StatusRegistry does not recognise an indicator,
+     * and we do not want to expose the user's data to the Status.EMPTY status.
+     * @param unknownIndicator
+     */
+    static createUnknownStatus(unknownIndicator: string) {
+        return new Status(new StatusConfiguration(unknownIndicator, 'Unknown', 'x', false));
     }
 
     /**

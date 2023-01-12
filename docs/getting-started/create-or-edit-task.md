@@ -7,7 +7,6 @@ has_toc: false
 ---
 
 # 'Create or edit Task' Modal
-
 {: .no_toc }
 
 <details open markdown="block">
@@ -35,7 +34,8 @@ Use the command 'Tasks: Create or edit task' to launch the modal.
 
 ## Keyboard shortcuts
 
-> Introduced in Tasks 1.17.0.
+{: .released }
+Introduced in Tasks 1.17.0.
 
 All the fields of the form have "access keys", that is, keyboard shortcuts. The access keys are displayed as the underlined letters in the labels.
 
@@ -44,7 +44,8 @@ All the fields of the form have "access keys", that is, keyboard shortcuts. The 
 
 ### Turning off keyboard shortcuts
 
-> Introduced in Tasks 1.17.0.
+{: .released }
+Introduced in Tasks 1.17.0.
 
 If the access keys (keyboard shortcuts) for any field conflicts with system keyboard shortcuts or interferes with assistive technology functionality that is important for you, you may want to turn them off in the Tasks plugin's settings:
 
@@ -85,11 +86,13 @@ There is a lot of flexibility here. For example:
 
 Note that relative dates will be always interpreted as being in the future, because that is usually what you want. You can change this behavior by unchecking "Only future dates" if you want to enter an overdue task or experiment with the way how relative dates in the past would be interpreted in queries.
 
-> `Only future dates` was introduced in Tasks 1.15.0.
+{: .released }
+`Only future dates` was introduced in Tasks 1.15.0.
 
 ### Date abbreviations
 
-> Introduced in Tasks 1.8.0.
+{: .released }
+Introduced in Tasks 1.8.0.
 
 The modal also has a few abbreviations of its own, to speed up entering of common values in the date fields.
 

@@ -14,12 +14,14 @@ import { TagsField } from './Filter/TagsField';
 import { BooleanField } from './Filter/BooleanField';
 import { FilenameField } from './Filter/FilenameField';
 import { UrgencyField } from './Filter/UrgencyField';
-import { RecurrenceField } from './Filter/RecurrenceField';
+import { StatusNameField } from './Filter/StatusNameField';
 
+import { RecurrenceField } from './Filter/RecurrenceField';
 import type { FilterOrErrorMessage } from './Filter/Filter';
 import type { Sorter } from './Sorter';
 
 const fieldCreators = [
+    () => new StatusNameField(), // status.name is before status, to avoid ambiguity
     () => new StatusField(),
     () => new RecurringField(),
     () => new PriorityField(),

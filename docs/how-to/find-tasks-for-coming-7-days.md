@@ -1,12 +1,11 @@
 ---
 layout: default
 title: Find tasks for coming 7 days
-nav_order: 2
+nav_order: 4
 parent: How Tos
 ---
 
 # Find all tasks for the coming 7 days
-
 {: .no_toc }
 
 <details open markdown="block">

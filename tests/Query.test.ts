@@ -68,6 +68,7 @@ describe('Query parsing', () => {
         'starts after 2021-12-27',
         'starts before 2021-12-27',
         'starts on 2021-12-27',
+        'status.name includes cancelled',
         'tag does not include #sometag',
         'tag does not include sometag',
         'tag includes #sometag',
@@ -147,6 +148,8 @@ describe('Query parsing', () => {
             'sort by start',
             'sort by status reverse',
             'sort by status',
+            'sort by status.name',
+            'sort by status.name reverse',
             'sort by tag 5',
             'sort by tag reverse 3',
             'sort by tag reverse',
@@ -249,6 +252,11 @@ describe('Query parsing', () => {
             // Assert
             expect(query.error).toBeUndefined();
         });
+    });
+
+    it('should parse ambiguous queries correctly', () => {
+        expect(new Query({ source: 'sort by status' }).sorting[0].property).toEqual('status');
+        expect(new Query({ source: 'sort by status.name' }).sorting[0].property).toEqual('status.name');
     });
 });
 

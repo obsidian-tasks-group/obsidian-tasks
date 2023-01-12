@@ -96,9 +96,7 @@ export const toggleLine = (line: string, path: string) => {
 const toggleTask = (task: Task): string => {
     // Toggling a recurring task will produce two Tasks
     const toggledTasks = task.toggle();
-    const serialized = toggledTasks.map((task: Task) => task.toFileLineString()).join('\n');
-
-    return serialized;
+    return toggledTasks.map((task: Task) => task.toFileLineString()).join('\n');
 };
 
 /* Cases (another way):

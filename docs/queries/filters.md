@@ -6,7 +6,6 @@ parent: Queries
 ---
 
 # Filters
-
 {: .no_toc }
 
 <details open markdown="block">
@@ -41,7 +40,8 @@ When the day changes, relative dates like `due today` are re-evaluated so that t
 
 ### Finding Tasks with Invalid Dates
 
-> Validation of dates was introduced in Tasks 1.16.0.
+{: .released }
+Validation of dates was introduced in Tasks 1.16.0.
 
 It is possible to accidentally use a non-existent date on a task signifier, such as `📅 2022-02-30`. February has at most 29 days.
 
@@ -91,7 +91,8 @@ In the following examples, we describe the `heading` filter, but these comments 
 
 ## Matching multiple filters
 
-> Boolean combinations were introduced in Tasks 1.9.0
+{: .released }
+Boolean combinations were introduced in Tasks 1.9.0
 
 Each line of a query has to match in order for a task to be listed.
 In other words, lines are considered to have an 'AND' operator between them.
@@ -122,8 +123,9 @@ For full details of combining filters with boolean operators, see [Combining Fil
 - `done (before|after|on) <date>`
 - `done date is invalid`
 
-> `no done date` and `has done date` were introduced in Tasks 1.7.0.<br>
-> `done date is invalid` was introduced in Tasks 1.16.0.
+{: .released }
+`no done date` and `has done date` were introduced in Tasks 1.7.0.<br>
+`done date is invalid` was introduced in Tasks 1.16.0.
 
 ### Due Date
 
@@ -132,8 +134,9 @@ For full details of combining filters with boolean operators, see [Combining Fil
 - `due (before|after|on) <date>`
 - `due date is invalid`
 
-> `has due date` was introduced in Tasks 1.6.0.<br>
-> `due date is invalid` was introduced in Tasks 1.16.0.
+{: .released }
+`has due date` was introduced in Tasks 1.6.0.<br>
+`due date is invalid` was introduced in Tasks 1.16.0.
 
 ### Scheduled Date
 
@@ -142,8 +145,9 @@ For full details of combining filters with boolean operators, see [Combining Fil
 - `scheduled (before|after|on) <date>`
 - `scheduled date is invalid`
 
-> `has scheduled date` was introduced in Tasks 1.6.0.<br>
-> `scheduled date is invalid` was introduced in Tasks 1.16.0.
+{: .released }
+`has scheduled date` was introduced in Tasks 1.6.0.<br>
+`scheduled date is invalid` was introduced in Tasks 1.16.0.
 
 ### Start Date
 
@@ -152,8 +156,9 @@ For full details of combining filters with boolean operators, see [Combining Fil
 - `starts (before|after|on) <date>`
 - `start date is invalid`
 
-> `has start date` was Introduced in Tasks 1.6.0.<br>
-> `start date is invalid` was introduced in Tasks 1.16.0.
+{: .released }
+`has start date` was Introduced in Tasks 1.6.0.<br>
+`start date is invalid` was introduced in Tasks 1.16.0.
 
 When filtering queries by [start date]({{ site.baseurl }}{% link getting-started/dates.md %}#-start),
 the result will include tasks without a start date.
@@ -179,7 +184,37 @@ because the tasks starts before tomorrow. Only one of the dates needs to match.
 - `has happens date`
   - Return tasks where _any_ of start date, scheduled date, _or_ due date are set.
 
-> `no happens date` and `has happens date` were introduced in Tasks 1.7.0.
+{: .released }
+`no happens date` and `has happens date` were introduced in Tasks 1.7.0.
+
+## Filters for Task Statuses
+
+### Status
+
+- `done` - matches tasks with anything except space as the status symbol
+- `not done` - matches task with a space as the status symbol
+
+### Status Name
+
+- `status.name (includes|does not include) <string>`
+  - Matches case-insensitive (disregards capitalization).
+- `status.name (regex matches|regex does not match) /<JavaScript-style Regex>/`
+  - Does regular expression match (case-sensitive by default).
+  - Essential reading: [Regular Expression Searches]({{ site.baseurl }}{% link queries/regular-expressions.md %}).
+
+{: .released }
+`status.name` text searching was introduced in Tasks X.Y.Z.
+
+For more information, including adding your own customised statuses, see [Statuses]({{ site.baseurl }}{% link getting-started/statuses.md %}).
+
+### Status Examples
+
+Find any tasks that have status symbols you have not yet added to your Tasks settings:
+
+    ```tasks
+    status.name includes unknown
+    group by path
+    ```
 
 ## Filters for Other Task Properties
 
@@ -194,7 +229,8 @@ As well as the date-related searches above, these filters search other propertie
   - Does regular expression match (case-sensitive by default).
   - Essential reading: [Regular Expression Searches]({{ site.baseurl }}{% link queries/regular-expressions.md %}).
 
-> `regex matches` and `regex does not match` were introduced in Tasks 1.12.0.
+{: .released }
+`regex matches` and `regex does not match` were introduced in Tasks 1.12.0.
 
 For precise searches, it may help to know that `description`:
 
@@ -225,7 +261,6 @@ The available priorities are (from high to low):
 For more information, see [Priorities]({{ site.baseurl }}{% link getting-started/priority.md %}) .
 
 #### Examples
-
 {: .no_toc }
 
     ```tasks
@@ -254,12 +289,8 @@ For more information, see [Priorities]({{ site.baseurl }}{% link getting-started
   - Does regular expression match (case-sensitive by default).
   - Essential reading: [Regular Expression Searches]({{ site.baseurl }}{% link queries/regular-expressions.md %}).
 
-> `recurrence` text searching was introduced in Tasks 1.22.0.
-
-### Status
-
-- `done`
-- `not done`
+{: .released }
+`recurrence` text searching was introduced in Tasks 1.22.0.
 
 ### Sub-Items
 
@@ -268,7 +299,8 @@ For more information, see [Priorities]({{ site.baseurl }}{% link getting-started
 
 ### Tags
 
-> Introduced in Tasks 1.6.0.
+{: .released }
+Introduced in Tasks 1.6.0.
 
 - `tags (include|do not include) <tag>` _or_
 - `tag (includes|does not include) <tag>`
@@ -284,9 +316,11 @@ For more information, see [Priorities]({{ site.baseurl }}{% link getting-started
   - This enables tag searches that avoid sub-tags, by putting a `$` character at the end of the regular expression. See examples below.
   - If searching for sub-tags, remember to escape the slashes in regular expressions: `\/`
 
-> `regex matches` and `regex does not match` were introduced in Tasks 1.13.0.
+{: .released }
+`regex matches` and `regex does not match` were introduced in Tasks 1.13.0.
 
 #### Tag Query Examples
+{: .no_toc }
 
 - `tags include #todo`
 - `tags do not include #todo`
@@ -310,11 +344,13 @@ Note that the path includes the `.md` extension.
   - Does regular expression match (case-sensitive by default).
   - Essential reading: [Regular Expression Searches]({{ site.baseurl }}{% link queries/regular-expressions.md %}).
 
-> `regex matches` and `regex does not match` were introduced in Tasks 1.12.0.
+{: .released }
+`regex matches` and `regex does not match` were introduced in Tasks 1.12.0.
 
 ### File Name
 
-> Introduced in Tasks 1.13.0.
+{: .released }
+Introduced in Tasks 1.13.0.
 
 Note that the file name includes the `.md` extension.
 
@@ -337,4 +373,5 @@ Note that the file name includes the `.md` extension.
   - `regex does not match` will match a task that does not have a preceding heading in its file.
   - Essential reading: [Regular Expression Searches]({{ site.baseurl }}{% link queries/regular-expressions.md %}).
 
-> `regex matches` and `regex does not match` were introduced in Tasks 1.12.0.
+{: .released }
+`regex matches` and `regex does not match` were introduced in Tasks 1.12.0.

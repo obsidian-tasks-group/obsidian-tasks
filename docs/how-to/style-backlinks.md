@@ -1,12 +1,11 @@
 ---
 layout: default
 title: How to style backlinks
-nav_order: 4
+nav_order: 7
 parent: How Tos
 ---
 
 # How to style backlinks
-
 {: .no_toc }
 
 <details open markdown="block">

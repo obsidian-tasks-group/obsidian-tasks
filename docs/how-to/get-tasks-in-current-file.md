@@ -1,12 +1,11 @@
 ---
 layout: default
 title: How to get tasks in current file
-nav_order: 3
+nav_order: 6
 parent: How Tos
 ---
 
 # How to get all tasks in the current file
-
 {: .no_toc }
 
 <details open markdown="block">

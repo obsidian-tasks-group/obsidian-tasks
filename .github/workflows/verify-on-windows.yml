@@ -1,0 +1,43 @@
+name: Verify Build on Windows
+on:
+# Not run on PRs as not necessary - run weekly and on request
+#  push:
+#    branches: ['*']
+#  pull_request:
+#    branches: [main]
+  schedule:
+    - cron: '45 18 * * 0'
+  workflow_dispatch:
+    # Inputs the workflow accepts.
+    inputs:
+
+jobs:
+  validate:
+    runs-on: windows-latest
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v3
+
+      - name: Install modules
+        run: yarn
+
+      - name: Run build
+        run: yarn run build
+
+      - name: Run TypeScript compiler ESLint
+        run: yarn run lint
+
+      - name: Run Markdown Lint
+        run: yarn run lint:markdown
+
+      - name: Run Jest
+        run: yarn run test
+
+      - name: Archive verified build
+        uses: actions/upload-artifact@v3
+        with:
+          name: dist-verified-windows
+          path: |
+            main.js
+            manifest.json
+            styles.css

@@ -41,4 +41,19 @@ describe('Status', () => {
         expect(status!.nextStatusIndicator).toEqual(next);
         expect(status!.isCompleted()).toEqual(true);
     });
+
+    it('should construct a Status for unknown symbol', () => {
+        // Arrange
+        const indicator = 'U';
+
+        // Act
+        const status = Status.createUnknownStatus(indicator);
+
+        // Assert
+        expect(status).not.toBeNull();
+        expect(status!.indicator).toEqual(indicator);
+        expect(status!.name).toEqual('Unknown');
+        expect(status!.nextStatusIndicator).toEqual('x');
+        expect(status!.isCompleted()).toEqual(false);
+    });
 });
