@@ -2,6 +2,15 @@ import { Modal, Setting, TextComponent } from 'obsidian';
 import { Status, StatusConfiguration } from '../Status';
 import type TasksPlugin from '../main';
 
+const isInvalidClass = 'is-invalid';
+const hasInvalidMessage = 'has-invalid-message';
+
+const unsetAlignItems = 'unset-align-items';
+const dotUnsetAlignItems = '.' + unsetAlignItems;
+
+const invalidFeedback = 'invalid-feedback';
+const dotInvalidFeedback = '.' + 'invalid-feedback';
+
 export class CustomStatusModal extends Modal {
     statusSymbol: string;
     statusName: string;
@@ -138,25 +147,25 @@ export class CustomStatusModal extends Modal {
     }
 
     static setValidationError(textInput: TextComponent, message?: string) {
-        textInput.inputEl.addClass('is-invalid');
+        textInput.inputEl.addClass(isInvalidClass);
         if (message) {
-            textInput.inputEl.parentElement?.addClasses(['has-invalid-message', 'unset-align-items']);
-            textInput.inputEl.parentElement?.parentElement?.addClass('.unset-align-items');
-            let mDiv = textInput.inputEl.parentElement?.querySelector('.invalid-feedback') as HTMLDivElement;
+            textInput.inputEl.parentElement?.addClasses([hasInvalidMessage, unsetAlignItems]);
+            textInput.inputEl.parentElement?.parentElement?.addClass(dotUnsetAlignItems);
+            let mDiv = textInput.inputEl.parentElement?.querySelector(dotInvalidFeedback) as HTMLDivElement;
 
             if (!mDiv) {
-                mDiv = createDiv({ cls: 'invalid-feedback' });
+                mDiv = createDiv({ cls: invalidFeedback });
             }
             mDiv.innerText = message;
             mDiv.insertAfter(textInput.inputEl);
         }
     }
     static removeValidationError(textInput: TextComponent) {
-        textInput.inputEl.removeClass('is-invalid');
-        textInput.inputEl.parentElement?.removeClasses(['has-invalid-message', 'unset-align-items']);
-        textInput.inputEl.parentElement?.parentElement?.removeClass('.unset-align-items');
+        textInput.inputEl.removeClass(isInvalidClass);
+        textInput.inputEl.parentElement?.removeClasses([hasInvalidMessage, unsetAlignItems]);
+        textInput.inputEl.parentElement?.parentElement?.removeClass(dotUnsetAlignItems);
 
-        const invalidFeedback = textInput.inputEl.parentElement?.querySelector('.invalid-feedback');
+        const invalidFeedback = textInput.inputEl.parentElement?.querySelector(dotInvalidFeedback);
         if (invalidFeedback) {
             textInput.inputEl.parentElement?.removeChild(invalidFeedback);
         }
