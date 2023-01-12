@@ -28,6 +28,7 @@ export const LayoutClasses: { [c in TaskLayoutComponent]: string } = {
 };
 
 const MAX_DAY_CLASS_RANGE = 7;
+const DAY_CLASS_OVER_RANGE_POSTFIX = 'far';
 
 /**
  * The function used to render a Markdown task line into an existing HTML element.
@@ -256,17 +257,21 @@ function getComponentClasses(component: TaskLayoutComponent, task: Task) {
 /**
  * Translate a relative date to a CSS class: 'today', 'future-1d' (for tomorrow), 'past-1d' (for yesterday)
  * etc.
- * A cutoff (in days) is defined in MAX_DAY_CLASS_RANGE, from beyond that limit a class name is not output.
+ * A cutoff (in days) is defined in MAX_DAY_CLASS_RANGE, from beyond that a generic 'far' postfix will be added.
+ * (the cutoff exists because we don't want to flood the DOM with potentially hundreds of unique classes.)
  */
 function dateToClassName(date: Moment) {
     const today = window.moment().startOf('day');
     let result = '';
     const diffDays = today.diff(date, 'days');
-    if (Math.abs(diffDays) > MAX_DAY_CLASS_RANGE) return null;
     if (diffDays === 0) return 'today';
     else if (diffDays > 0) result += 'past-';
     else if (diffDays < 0) result += 'future-';
-    result += Math.abs(diffDays).toString() + 'd';
+    if (Math.abs(diffDays) <= MAX_DAY_CLASS_RANGE) {
+        result += Math.abs(diffDays).toString() + 'd';
+    } else {
+        result += DAY_CLASS_OVER_RANGE_POSTFIX;
+    }
     return result;
 }
 

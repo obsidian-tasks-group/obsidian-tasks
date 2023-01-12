@@ -331,16 +331,28 @@ describe('task line rendering', () => {
         await testComponentClasses(`- [x] Done task ✅ ${past}`, {}, LayoutClasses.doneDate, ['task-done-past-7d']);
     });
 
-    it('does not add a specific class for dates further than 7 days', async () => {
+    it('adds the classes "...future-far" and "...past-far" to dates that are further than 7 days', async () => {
         const future = DateParser.parseDate('in 8 days').format(TaskRegularExpressions.dateFormat);
-        await testComponentClasses(`- [ ] Full task ⏫ 📅 ${future}`, {}, LayoutClasses.dueDate, []);
-        await testComponentClasses(`- [ ] Full task ⏫ ⏳ ${future}`, {}, LayoutClasses.scheduledDate, []);
-        await testComponentClasses(`- [ ] Full task ⏫ 🛫 ${future}`, {}, LayoutClasses.startDate, []);
-        await testComponentClasses(`- [x] Done task ✅ ${future}`, {}, LayoutClasses.doneDate, []);
+        await testComponentClasses(`- [ ] Full task ⏫ 📅 ${future}`, {}, LayoutClasses.dueDate, [
+            'task-due-future-far',
+        ]);
+        await testComponentClasses(`- [ ] Full task ⏫ ⏳ ${future}`, {}, LayoutClasses.scheduledDate, [
+            'task-scheduled-future-far',
+        ]);
+        await testComponentClasses(`- [ ] Full task ⏫ 🛫 ${future}`, {}, LayoutClasses.startDate, [
+            'task-start-future-far',
+        ]);
+        await testComponentClasses(`- [x] Done task ✅ ${future}`, {}, LayoutClasses.doneDate, [
+            'task-done-future-far',
+        ]);
         const past = DateParser.parseDate('8 days ago').format(TaskRegularExpressions.dateFormat);
-        await testComponentClasses(`- [ ] Full task ⏫ 📅 ${past}`, {}, LayoutClasses.dueDate, []);
-        await testComponentClasses(`- [ ] Full task ⏫ ⏳ ${past}`, {}, LayoutClasses.scheduledDate, []);
-        await testComponentClasses(`- [ ] Full task ⏫ 🛫 ${past}`, {}, LayoutClasses.startDate, []);
-        await testComponentClasses(`- [x] Done task ✅ ${past}`, {}, LayoutClasses.doneDate, []);
+        await testComponentClasses(`- [ ] Full task ⏫ 📅 ${past}`, {}, LayoutClasses.dueDate, ['task-due-past-far']);
+        await testComponentClasses(`- [ ] Full task ⏫ ⏳ ${past}`, {}, LayoutClasses.scheduledDate, [
+            'task-scheduled-past-far',
+        ]);
+        await testComponentClasses(`- [ ] Full task ⏫ 🛫 ${past}`, {}, LayoutClasses.startDate, [
+            'task-start-past-far',
+        ]);
+        await testComponentClasses(`- [x] Done task ✅ ${past}`, {}, LayoutClasses.doneDate, ['task-done-past-far']);
     });
 });
