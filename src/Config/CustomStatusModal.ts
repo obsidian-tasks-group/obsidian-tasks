@@ -1,4 +1,4 @@
-import { Modal, Setting, TextComponent } from 'obsidian';
+import { Modal, Notice, Setting, TextComponent } from 'obsidian';
 import { Status, StatusConfiguration } from '../Status';
 import type TasksPlugin from '../main';
 
@@ -43,42 +43,44 @@ export class CustomStatusModal extends Modal {
             .setDesc('This is the character between the square braces.')
             .addText((text) => {
                 statusSymbolText = text;
-                statusSymbolText.setValue(this.statusSymbol).onChange((v) => {
-                    if (!v.length) {
-                        CustomStatusModal.setValidationError(text, 'Task status type cannot be empty.');
-                        return;
-                    }
-
-                    if (v.includes(' ')) {
-                        CustomStatusModal.setValidationError(text, 'Task status type cannot include spaces.');
-                        return;
-                    }
-
-                    if (v.length > 1) {
-                        CustomStatusModal.setValidationError(text, 'Task status must be a single character.');
-                        return;
-                    }
-                    CustomStatusModal.removeValidationError(text);
+                text.setValue(this.statusSymbol).onChange((v) => {
                     this.statusSymbol = v;
+                    CustomStatusModal.setValid(text, this.statusConfiguration().validateIndicator());
                 });
+            })
+            .then((_setting) => {
+                // Show any error if the initial value loaded is incorrect.
+                CustomStatusModal.setValid(statusSymbolText, this.statusConfiguration().validateIndicator());
             });
 
+        let statusNameText: TextComponent;
         new Setting(settingDiv)
             .setName('Task Status Name')
             .setDesc('This is the friendly name of the task status.')
             .addText((text) => {
+                statusNameText = text;
                 text.setValue(this.statusName).onChange((v) => {
                     this.statusName = v;
+                    CustomStatusModal.setValid(text, this.statusConfiguration().validateName());
                 });
+            })
+            .then((_setting) => {
+                CustomStatusModal.setValid(statusNameText, this.statusConfiguration().validateName());
             });
 
+        let statusNextSymbolText: TextComponent;
         new Setting(settingDiv)
             .setName('Task Next Status Symbol')
             .setDesc('When clicked on this is the symbol that should be used next.')
             .addText((text) => {
+                statusNextSymbolText = text;
                 text.setValue(this.statusNextSymbol).onChange((v) => {
                     this.statusNextSymbol = v;
+                    CustomStatusModal.setValid(text, this.statusConfiguration().validateNextIndicator());
                 });
+            })
+            .then((_setting) => {
+                CustomStatusModal.setValid(statusNextSymbolText, this.statusConfiguration().validateNextIndicator());
             });
 
         if (Status.tasksPluginCanCreateCommandsForStatuses()) {
@@ -100,17 +102,13 @@ export class CustomStatusModal extends Modal {
             b.setTooltip('Save')
                 .setIcon('checkmark')
                 .onClick(async () => {
-                    // let error = false;
-                    // if (!this.statusSymbol.length) {
-                    //     SettingsModal.setValidationError(this.statusSymbol, 'Task status type cannot be empty.');
-                    //     error = true;
-                    //     return;
-                    // }
-
-                    // if (error) {
-                    //     new Notice('Fix errors before saving.');
-                    //     return;
-                    // }
+                    const errors = this.statusConfiguration().validate();
+                    if (errors.length > 0) {
+                        const message = errors.join('\n') + '\n\n' + 'Fix errors before saving.';
+                        // console.debug(message);
+                        new Notice(message);
+                        return;
+                    }
                     this.saved = true;
                     this.close();
                 });
@@ -137,28 +135,20 @@ export class CustomStatusModal extends Modal {
         this.display();
     }
 
-    static setValidationError(textInput: TextComponent, message?: string) {
-        textInput.inputEl.addClass('is-invalid');
-        if (message) {
-            textInput.inputEl.parentElement?.addClasses(['has-invalid-message', 'unset-align-items']);
-            textInput.inputEl.parentElement?.parentElement?.addClass('.unset-align-items');
-            let mDiv = textInput.inputEl.parentElement?.querySelector('.invalid-feedback') as HTMLDivElement;
-
-            if (!mDiv) {
-                mDiv = createDiv({ cls: 'invalid-feedback' });
-            }
-            mDiv.innerText = message;
-            mDiv.insertAfter(textInput.inputEl);
-        }
+    static setValidationError(textInput: TextComponent) {
+        textInput.inputEl.addClass('tasks-settings-is-invalid');
     }
-    static removeValidationError(textInput: TextComponent) {
-        textInput.inputEl.removeClass('is-invalid');
-        textInput.inputEl.parentElement?.removeClasses(['has-invalid-message', 'unset-align-items']);
-        textInput.inputEl.parentElement?.parentElement?.removeClass('.unset-align-items');
 
-        const invalidFeedback = textInput.inputEl.parentElement?.querySelector('.invalid-feedback');
-        if (invalidFeedback) {
-            textInput.inputEl.parentElement?.removeChild(invalidFeedback);
+    static removeValidationError(textInput: TextComponent) {
+        textInput.inputEl.removeClass('tasks-settings-is-invalid');
+    }
+
+    private static setValid(text: TextComponent, messages: string[]) {
+        const valid = messages.length === 0;
+        if (valid) {
+            CustomStatusModal.removeValidationError(text);
+        } else {
+            CustomStatusModal.setValidationError(text);
         }
     }
 }

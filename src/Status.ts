@@ -54,6 +54,48 @@ export class StatusConfiguration {
         this.nextStatusIndicator = nextStatusIndicator;
         this.availableAsCommand = availableAsCommand;
     }
+
+    /**
+     * Determine whether the date in this object is valid, and return error message(s) for display if not.
+     */
+    public validate(): string[] {
+        const errors: string[] = [];
+
+        // Messages are added in the order fields are shown when editing statuses.
+        errors.push(...this.validateIndicator());
+        errors.push(...this.validateName());
+        errors.push(...this.validateNextIndicator());
+
+        return errors;
+    }
+
+    public validateIndicator(): string[] {
+        return StatusConfiguration.validateOneIndicator(this.indicator, 'Task Status Symbol');
+    }
+
+    public validateNextIndicator(): string[] {
+        return StatusConfiguration.validateOneIndicator(this.nextStatusIndicator, 'Task Next Status Symbol');
+    }
+
+    public validateName() {
+        const errors: string[] = [];
+        if (this.name.length === 0) {
+            errors.push('Task Status Name cannot be empty.');
+        }
+        return errors;
+    }
+
+    private static validateOneIndicator(indicator: string, indicatorName: string): string[] {
+        const errors: string[] = [];
+        if (indicator.length === 0) {
+            errors.push(`${indicatorName} cannot be empty.`);
+        }
+
+        if (indicator.length > 1) {
+            errors.push(`${indicatorName} ("${indicator}") must be a single character.`);
+        }
+        return errors;
+    }
 }
 
 /**
