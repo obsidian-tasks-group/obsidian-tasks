@@ -211,6 +211,12 @@
  **                            SETTINGS
  *------------------------------------------------------------------------**/
 
+.is-invalid {
+    /*color: red;*/
+    border-color: red !important;
+    /*font-weight: bold;*/
+}
+
 
  .tasks-settings .additional {
     margin: 6px 12px;
