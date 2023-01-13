@@ -54,6 +54,18 @@ export class StatusConfiguration {
         this.nextStatusIndicator = nextStatusIndicator;
         this.availableAsCommand = availableAsCommand;
     }
+
+    /**
+     * Determine whether the date in this object is valid, and return error message(s) for display if not.
+     */
+    public validate(): { valid: boolean; errors: string[] } {
+        const errors: string[] = [];
+        if (this.indicator.length > 1) {
+            errors.push('Symbol ("xxx") must be a single character.');
+        }
+        const valid = errors.length === 0;
+        return { valid, errors };
+    }
 }
 
 /**

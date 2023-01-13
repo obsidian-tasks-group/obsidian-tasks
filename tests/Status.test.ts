@@ -7,6 +7,30 @@ import { Status, StatusConfiguration } from '../src/Status';
 jest.mock('obsidian');
 window.moment = moment;
 
+describe('StatusConfiguration', () => {
+    function checkValidation(
+        statusConfiguration: StatusConfiguration,
+        expectedValid: boolean,
+        expectedMessages: string[],
+    ) {
+        const { valid, errors } = statusConfiguration.validate();
+        expect(valid).toEqual(expectedValid);
+        expect(errors).toEqual(expectedMessages);
+    }
+
+    describe('validation', () => {
+        it('should handle valid input correctly', () => {
+            const config = new StatusConfiguration('X', 'Completed', ' ', false);
+            checkValidation(config, true, []);
+        });
+
+        it('should detect too-long symbol', () => {
+            const config = new StatusConfiguration('xxx', 'Completed', ' ', false);
+            checkValidation(config, false, ['Symbol ("xxx") must be a single character.']);
+        });
+    });
+});
+
 describe('Status', () => {
     it('should initialize with valid properties', () => {
         // Arrange
