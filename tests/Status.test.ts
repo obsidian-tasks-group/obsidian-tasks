@@ -24,9 +24,21 @@ describe('StatusConfiguration', () => {
             checkValidation(config, true, []);
         });
 
+        // Check Symbol
+        it('should detect empty symbol', () => {
+            const config = new StatusConfiguration('', 'Completed', ' ', false);
+            checkValidation(config, false, ['Symbol cannot be empty.']);
+        });
+
         it('should detect too-long symbol', () => {
             const config = new StatusConfiguration('yyy', 'Completed', ' ', false);
             checkValidation(config, false, ['Symbol ("yyy") must be a single character.']);
+        });
+
+        // Check Next symbol
+        it('should detect next empty symbol', () => {
+            const config = new StatusConfiguration('X', 'Completed', '', false);
+            checkValidation(config, false, ['Next symbol cannot be empty.']);
         });
 
         it('should detect too-long next symbol', () => {

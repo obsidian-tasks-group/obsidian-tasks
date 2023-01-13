@@ -67,6 +67,10 @@ export class StatusConfiguration {
     }
 
     private static validateIndicator(indicator: string, errors: string[], indicatorName: string) {
+        if (indicator.length === 0) {
+            errors.push(`${indicatorName} cannot be empty.`);
+        }
+
         if (indicator.length > 1) {
             errors.push(`${indicatorName} ("${indicator}") must be a single character.`);
         }
