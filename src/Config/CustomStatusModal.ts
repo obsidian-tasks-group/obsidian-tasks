@@ -37,60 +37,51 @@ export class CustomStatusModal extends Modal {
         const settingDiv = contentEl.createDiv();
         //const title = this.title ?? '...';
 
-        {
-            let statusSymbolText: TextComponent;
-            new Setting(settingDiv)
-                .setName('Task Status Symbol')
-                .setDesc('This is the character between the square braces.')
-                .addText((text) => {
-                    statusSymbolText = text;
-                    text.setValue(this.statusSymbol).onChange((v) => {
-                        this.statusSymbol = v;
-                        CustomStatusModal.setValid(text, this.statusConfiguration().validateIndicator());
-                    });
-                })
-                .then((_setting) => {
-                    // Show any error if the initial value loaded is incorrect.
-                    CustomStatusModal.setValid(statusSymbolText, this.statusConfiguration().validateIndicator());
+        let statusSymbolText: TextComponent;
+        new Setting(settingDiv)
+            .setName('Task Status Symbol')
+            .setDesc('This is the character between the square braces.')
+            .addText((text) => {
+                statusSymbolText = text;
+                text.setValue(this.statusSymbol).onChange((v) => {
+                    this.statusSymbol = v;
+                    CustomStatusModal.setValid(text, this.statusConfiguration().validateIndicator());
                 });
-        }
+            })
+            .then((_setting) => {
+                // Show any error if the initial value loaded is incorrect.
+                CustomStatusModal.setValid(statusSymbolText, this.statusConfiguration().validateIndicator());
+            });
 
-        {
-            let statusNameText: TextComponent;
-            new Setting(settingDiv)
-                .setName('Task Status Name')
-                .setDesc('This is the friendly name of the task status.')
-                .addText((text) => {
-                    statusNameText = text;
-                    text.setValue(this.statusName).onChange((v) => {
-                        this.statusName = v;
-                        CustomStatusModal.setValid(text, this.statusConfiguration().validateName());
-                    });
-                })
-                .then((_setting) => {
-                    CustomStatusModal.setValid(statusNameText, this.statusConfiguration().validateName());
+        let statusNameText: TextComponent;
+        new Setting(settingDiv)
+            .setName('Task Status Name')
+            .setDesc('This is the friendly name of the task status.')
+            .addText((text) => {
+                statusNameText = text;
+                text.setValue(this.statusName).onChange((v) => {
+                    this.statusName = v;
+                    CustomStatusModal.setValid(text, this.statusConfiguration().validateName());
                 });
-        }
+            })
+            .then((_setting) => {
+                CustomStatusModal.setValid(statusNameText, this.statusConfiguration().validateName());
+            });
 
-        {
-            let statusNextSymbolText: TextComponent;
-            new Setting(settingDiv)
-                .setName('Task Next Status Symbol')
-                .setDesc('When clicked on this is the symbol that should be used next.')
-                .addText((text) => {
-                    statusNextSymbolText = text;
-                    text.setValue(this.statusNextSymbol).onChange((v) => {
-                        this.statusNextSymbol = v;
-                        CustomStatusModal.setValid(text, this.statusConfiguration().validateNextIndicator());
-                    });
-                })
-                .then((_setting) => {
-                    CustomStatusModal.setValid(
-                        statusNextSymbolText,
-                        this.statusConfiguration().validateNextIndicator(),
-                    );
+        let statusNextSymbolText: TextComponent;
+        new Setting(settingDiv)
+            .setName('Task Next Status Symbol')
+            .setDesc('When clicked on this is the symbol that should be used next.')
+            .addText((text) => {
+                statusNextSymbolText = text;
+                text.setValue(this.statusNextSymbol).onChange((v) => {
+                    this.statusNextSymbol = v;
+                    CustomStatusModal.setValid(text, this.statusConfiguration().validateNextIndicator());
                 });
-        }
+            })
+            .then((_setting) => {
+                CustomStatusModal.setValid(statusNextSymbolText, this.statusConfiguration().validateNextIndicator());
+            });
 
         if (Status.tasksPluginCanCreateCommandsForStatuses()) {
             new Setting(settingDiv)
