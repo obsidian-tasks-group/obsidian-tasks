@@ -70,15 +70,11 @@ export class StatusConfiguration {
     }
 
     public validateIndicator(): string[] {
-        const errors: string[] = [];
-        StatusConfiguration.validateOneIndicator(this.indicator, errors, 'Symbol');
-        return errors;
+        return StatusConfiguration.validateOneIndicator(this.indicator, 'Symbol');
     }
 
     public validateNextIndicator(): string[] {
-        const errors: string[] = [];
-        StatusConfiguration.validateOneIndicator(this.nextStatusIndicator, errors, 'Next symbol');
-        return errors;
+        return StatusConfiguration.validateOneIndicator(this.nextStatusIndicator, 'Next symbol');
     }
 
     public validateName() {
@@ -89,7 +85,8 @@ export class StatusConfiguration {
         return errors;
     }
 
-    private static validateOneIndicator(indicator: string, errors: string[], indicatorName: string) {
+    private static validateOneIndicator(indicator: string, indicatorName: string): string[] {
+        const errors: string[] = [];
         if (indicator.length === 0) {
             errors.push(`${indicatorName} cannot be empty.`);
         }
@@ -97,6 +94,7 @@ export class StatusConfiguration {
         if (indicator.length > 1) {
             errors.push(`${indicatorName} ("${indicator}") must be a single character.`);
         }
+        return errors;
     }
 }
 
