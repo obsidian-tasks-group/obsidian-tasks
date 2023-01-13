@@ -24,6 +24,15 @@ describe('StatusConfiguration', () => {
             checkValidation(config, true, []);
         });
 
+        it('should handle totally invalid input correctly', () => {
+            const config = new StatusConfiguration('Xxx', '', '', false);
+            checkValidation(config, false, [
+                'Symbol ("Xxx") must be a single character.',
+                'Name cannot be empty.',
+                'Next symbol cannot be empty.',
+            ]);
+        });
+
         // Check status name
         it('should detect empty name', () => {
             const config = new StatusConfiguration('X', '', ' ', false);
