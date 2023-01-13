@@ -211,6 +211,12 @@
  **                            SETTINGS
  *------------------------------------------------------------------------**/
 
+.tasks-settings-is-invalid {
+    /* Dark red text on pale background*/
+    color: var(--text-error) !important;
+    background-color: rgba(var(--background-modifier-error-rgb), 0.2) !important;
+}
+
 
  .tasks-settings .additional {
     margin: 6px 12px;
