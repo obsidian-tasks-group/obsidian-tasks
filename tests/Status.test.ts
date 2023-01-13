@@ -22,38 +22,38 @@ describe('StatusConfiguration', () => {
         it('should handle totally invalid input correctly', () => {
             const config = new StatusConfiguration('Xxx', '', '', false);
             checkValidation(config, [
-                'Symbol ("Xxx") must be a single character.',
-                'Name cannot be empty.',
-                'Next symbol cannot be empty.',
+                'Task Status Symbol ("Xxx") must be a single character.',
+                'Task Status Name cannot be empty.',
+                'Task Next Status Symbol cannot be empty.',
             ]);
         });
 
         // Check status name
         it('should detect empty name', () => {
             const config = new StatusConfiguration('X', '', ' ', false);
-            checkValidation(config, ['Name cannot be empty.']);
+            checkValidation(config, ['Task Status Name cannot be empty.']);
         });
 
         // Check Symbol
         it('should detect empty symbol', () => {
             const config = new StatusConfiguration('', 'Completed', ' ', false);
-            checkValidation(config, ['Symbol cannot be empty.']);
+            checkValidation(config, ['Task Status Symbol cannot be empty.']);
         });
 
         it('should detect too-long symbol', () => {
             const config = new StatusConfiguration('yyy', 'Completed', ' ', false);
-            checkValidation(config, ['Symbol ("yyy") must be a single character.']);
+            checkValidation(config, ['Task Status Symbol ("yyy") must be a single character.']);
         });
 
         // Check Next symbol
         it('should detect next empty symbol', () => {
             const config = new StatusConfiguration('X', 'Completed', '', false);
-            checkValidation(config, ['Next symbol cannot be empty.']);
+            checkValidation(config, ['Task Next Status Symbol cannot be empty.']);
         });
 
         it('should detect too-long next symbol', () => {
             const config = new StatusConfiguration('X', 'Completed', 'yyy', false);
-            checkValidation(config, ['Next symbol ("yyy") must be a single character.']);
+            checkValidation(config, ['Task Next Status Symbol ("yyy") must be a single character.']);
         });
 
         describe('validate indicator', () => {
@@ -64,7 +64,9 @@ describe('StatusConfiguration', () => {
 
             it('invalid indicator', () => {
                 const config = new StatusConfiguration('XYZ', 'Completed', 'c', false);
-                expect(config.validateIndicator()).toStrictEqual(['Symbol ("XYZ") must be a single character.']);
+                expect(config.validateIndicator()).toStrictEqual([
+                    'Task Status Symbol ("XYZ") must be a single character.',
+                ]);
             });
         });
 
@@ -77,7 +79,7 @@ describe('StatusConfiguration', () => {
             it('invalid next indicator', () => {
                 const config = new StatusConfiguration('c', 'Completed', 'XYZ', false);
                 expect(config.validateNextIndicator()).toStrictEqual([
-                    'Next symbol ("XYZ") must be a single character.',
+                    'Task Next Status Symbol ("XYZ") must be a single character.',
                 ]);
             });
         });
