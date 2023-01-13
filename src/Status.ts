@@ -62,12 +62,24 @@ export class StatusConfiguration {
         const errors: string[] = [];
 
         // Messages are added in the order fields are shown when editing statuses.
-        StatusConfiguration.validateIndicator(this.indicator, errors, 'Symbol');
+        StatusConfiguration.validateOneIndicator(this.indicator, errors, 'Symbol');
         StatusConfiguration.validateName(this.name, errors);
-        StatusConfiguration.validateIndicator(this.nextStatusIndicator, errors, 'Next symbol');
+        StatusConfiguration.validateOneIndicator(this.nextStatusIndicator, errors, 'Next symbol');
 
         const valid = errors.length === 0;
         return { valid, errors };
+    }
+
+    public validateIndicator(): string[] {
+        const errors: string[] = [];
+        StatusConfiguration.validateOneIndicator(this.indicator, errors, 'Symbol'); // TODO Remove duplicate string
+        return errors;
+    }
+
+    public validateNextIndicator(): string[] {
+        const errors: string[] = [];
+        StatusConfiguration.validateOneIndicator(this.nextStatusIndicator, errors, 'Next symbol'); // TODO Remove duplicate string
+        return errors;
     }
 
     private static validateName(name: string, errors: string[]) {
@@ -76,7 +88,7 @@ export class StatusConfiguration {
         }
     }
 
-    private static validateIndicator(indicator: string, errors: string[], indicatorName: string) {
+    private static validateOneIndicator(indicator: string, errors: string[], indicatorName: string) {
         if (indicator.length === 0) {
             errors.push(`${indicatorName} cannot be empty.`);
         }

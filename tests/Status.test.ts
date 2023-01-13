@@ -51,6 +51,32 @@ describe('StatusConfiguration', () => {
             const config = new StatusConfiguration('X', 'Completed', 'yyy', false);
             checkValidation(config, false, ['Next symbol ("yyy") must be a single character.']);
         });
+
+        describe('validate indicator', () => {
+            it('valid indicator', () => {
+                const config = new StatusConfiguration('X', 'Completed', 'c', false);
+                expect(config.validateIndicator()).toStrictEqual([]);
+            });
+
+            it('invalid indicator', () => {
+                const config = new StatusConfiguration('XYZ', 'Completed', 'c', false);
+                expect(config.validateIndicator()).toStrictEqual(['Symbol ("XYZ") must be a single character.']);
+            });
+        });
+
+        describe('validate next indicator', () => {
+            it('valid indicator', () => {
+                const config = new StatusConfiguration('c', 'Completed', 'X', false);
+                expect(config.validateNextIndicator()).toStrictEqual([]);
+            });
+
+            it('invalid next indicator', () => {
+                const config = new StatusConfiguration('c', 'Completed', 'XYZ', false);
+                expect(config.validateNextIndicator()).toStrictEqual([
+                    'Next symbol ("XYZ") must be a single character.',
+                ]);
+            });
+        });
     });
 });
 
