@@ -70,17 +70,17 @@ export class StatusConfiguration {
     }
 
     public validateIndicator(): string[] {
-        return StatusConfiguration.validateOneIndicator(this.indicator, 'Symbol');
+        return StatusConfiguration.validateOneIndicator(this.indicator, 'Task Status Symbol');
     }
 
     public validateNextIndicator(): string[] {
-        return StatusConfiguration.validateOneIndicator(this.nextStatusIndicator, 'Next symbol');
+        return StatusConfiguration.validateOneIndicator(this.nextStatusIndicator, 'Task Next Status Symbol');
     }
 
     public validateName() {
         const errors: string[] = [];
         if (this.name.length === 0) {
-            errors.push('Name cannot be empty.');
+            errors.push('Task Status Name cannot be empty.');
         }
         return errors;
     }
