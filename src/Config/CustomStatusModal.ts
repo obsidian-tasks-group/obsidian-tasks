@@ -145,11 +145,11 @@ export class CustomStatusModal extends Modal {
     }
 
     static setValidationError(textInput: TextComponent) {
-        textInput.inputEl.addClass('is-invalid');
+        textInput.inputEl.addClass('tasks-settings-is-invalid');
     }
 
     static removeValidationError(textInput: TextComponent) {
-        textInput.inputEl.removeClass('is-invalid');
+        textInput.inputEl.removeClass('tasks-settings-is-invalid');
     }
 
     private static setValid(text: TextComponent, messages: string[]) {
