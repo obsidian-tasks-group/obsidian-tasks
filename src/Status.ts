@@ -63,7 +63,7 @@ export class StatusConfiguration {
 
         // Messages are added in the order fields are shown when editing statuses.
         errors.push(...this.validateIndicator());
-        StatusConfiguration.validateName(this.name, errors);
+        errors.push(...this.validateName());
         errors.push(...this.validateNextIndicator());
 
         return errors;
@@ -81,10 +81,12 @@ export class StatusConfiguration {
         return errors;
     }
 
-    private static validateName(name: string, errors: string[]) {
-        if (name.length === 0) {
+    public validateName() {
+        const errors: string[] = [];
+        if (this.name.length === 0) {
             errors.push('Name cannot be empty.');
         }
+        return errors;
     }
 
     private static validateOneIndicator(indicator: string, errors: string[], indicatorName: string) {
