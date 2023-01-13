@@ -25,8 +25,13 @@ describe('StatusConfiguration', () => {
         });
 
         it('should detect too-long symbol', () => {
-            const config = new StatusConfiguration('xxx', 'Completed', ' ', false);
-            checkValidation(config, false, ['Symbol ("xxx") must be a single character.']);
+            const config = new StatusConfiguration('yyy', 'Completed', ' ', false);
+            checkValidation(config, false, ['Symbol ("yyy") must be a single character.']);
+        });
+
+        it('should detect too-long next symbol', () => {
+            const config = new StatusConfiguration('X', 'Completed', 'yyy', false);
+            checkValidation(config, false, ['Next symbol ("yyy") must be a single character.']);
         });
     });
 });

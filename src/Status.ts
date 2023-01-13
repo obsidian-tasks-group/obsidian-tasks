@@ -60,11 +60,16 @@ export class StatusConfiguration {
      */
     public validate(): { valid: boolean; errors: string[] } {
         const errors: string[] = [];
-        if (this.indicator.length > 1) {
-            errors.push('Symbol ("xxx") must be a single character.');
-        }
+        StatusConfiguration.validateIndicator(this.indicator, errors, 'Symbol');
+        StatusConfiguration.validateIndicator(this.nextStatusIndicator, errors, 'Next symbol');
         const valid = errors.length === 0;
         return { valid, errors };
+    }
+
+    private static validateIndicator(indicator: string, errors: string[], indicatorName: string) {
+        if (indicator.length > 1) {
+            errors.push(`${indicatorName} ("${indicator}") must be a single character.`);
+        }
     }
 }
 
