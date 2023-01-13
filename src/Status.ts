@@ -60,10 +60,20 @@ export class StatusConfiguration {
      */
     public validate(): { valid: boolean; errors: string[] } {
         const errors: string[] = [];
+
+        // Messages are added in the order fields are shown when editing statuses.
         StatusConfiguration.validateIndicator(this.indicator, errors, 'Symbol');
+        StatusConfiguration.validateName(this.name, errors);
         StatusConfiguration.validateIndicator(this.nextStatusIndicator, errors, 'Next symbol');
+
         const valid = errors.length === 0;
         return { valid, errors };
+    }
+
+    private static validateName(name: string, errors: string[]) {
+        if (name.length === 0) {
+            errors.push('Name cannot be empty.');
+        }
     }
 
     private static validateIndicator(indicator: string, errors: string[], indicatorName: string) {
