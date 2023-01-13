@@ -282,3 +282,8 @@
     border-top: 0px;
     border-bottom: 1px solid var(--background-modifier-border);
 }
+
+.tasks-settings .row-for-status {
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
