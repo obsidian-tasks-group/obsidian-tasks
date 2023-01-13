@@ -62,22 +62,22 @@ export class StatusConfiguration {
         const errors: string[] = [];
 
         // Messages are added in the order fields are shown when editing statuses.
-        StatusConfiguration.validateOneIndicator(this.indicator, errors, 'Symbol');
+        errors.push(...this.validateIndicator());
         StatusConfiguration.validateName(this.name, errors);
-        StatusConfiguration.validateOneIndicator(this.nextStatusIndicator, errors, 'Next symbol');
+        errors.push(...this.validateNextIndicator());
 
         return errors;
     }
 
     public validateIndicator(): string[] {
         const errors: string[] = [];
-        StatusConfiguration.validateOneIndicator(this.indicator, errors, 'Symbol'); // TODO Remove duplicate string
+        StatusConfiguration.validateOneIndicator(this.indicator, errors, 'Symbol');
         return errors;
     }
 
     public validateNextIndicator(): string[] {
         const errors: string[] = [];
-        StatusConfiguration.validateOneIndicator(this.nextStatusIndicator, errors, 'Next symbol'); // TODO Remove duplicate string
+        StatusConfiguration.validateOneIndicator(this.nextStatusIndicator, errors, 'Next symbol');
         return errors;
     }
 
