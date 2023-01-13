@@ -24,6 +24,12 @@ describe('StatusConfiguration', () => {
             checkValidation(config, true, []);
         });
 
+        // Check status name
+        it('should detect empty name', () => {
+            const config = new StatusConfiguration('X', '', ' ', false);
+            checkValidation(config, false, ['Name cannot be empty.']);
+        });
+
         // Check Symbol
         it('should detect empty symbol', () => {
             const config = new StatusConfiguration('', 'Completed', ' ', false);
