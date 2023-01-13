@@ -38,6 +38,7 @@ export class CustomStatusModal extends Modal {
         //const title = this.title ?? '...';
 
         let statusSymbolText: TextComponent;
+        // TODO Figure out how to show any error in status symbol if the initial value loaded is incorrect.
         new Setting(settingDiv)
             .setName('Task Status Symbol')
             .setDesc('This is the character between the square braces.')
@@ -45,6 +46,7 @@ export class CustomStatusModal extends Modal {
                 statusSymbolText = text;
                 statusSymbolText.setValue(this.statusSymbol).onChange((v) => {
                     this.statusSymbol = v;
+                    CustomStatusModal.setValid(text, this.statusConfiguration().validateIndicator());
                 });
             });
 
@@ -54,6 +56,7 @@ export class CustomStatusModal extends Modal {
             .addText((text) => {
                 text.setValue(this.statusName).onChange((v) => {
                     this.statusName = v;
+                    CustomStatusModal.setValid(text, this.statusConfiguration().validateName());
                 });
             });
 
@@ -63,6 +66,7 @@ export class CustomStatusModal extends Modal {
             .addText((text) => {
                 text.setValue(this.statusNextSymbol).onChange((v) => {
                     this.statusNextSymbol = v;
+                    CustomStatusModal.setValid(text, this.statusConfiguration().validateNextIndicator());
                 });
             });
 
@@ -85,8 +89,8 @@ export class CustomStatusModal extends Modal {
             b.setTooltip('Save')
                 .setIcon('checkmark')
                 .onClick(async () => {
-                    const { valid, errors } = this.statusConfiguration().validate();
-                    if (!valid) {
+                    const errors = this.statusConfiguration().validate();
+                    if (errors.length > 0) {
                         const message = errors.join('\n') + '\n\n' + 'Fix errors before saving.';
                         // console.debug(message);
                         new Notice(message);
@@ -118,28 +122,20 @@ export class CustomStatusModal extends Modal {
         this.display();
     }
 
-    static setValidationError(textInput: TextComponent, message?: string) {
+    static setValidationError(textInput: TextComponent) {
         textInput.inputEl.addClass('is-invalid');
-        if (message) {
-            textInput.inputEl.parentElement?.addClasses(['has-invalid-message', 'unset-align-items']);
-            textInput.inputEl.parentElement?.parentElement?.addClass('.unset-align-items');
-            let mDiv = textInput.inputEl.parentElement?.querySelector('.invalid-feedback') as HTMLDivElement;
-
-            if (!mDiv) {
-                mDiv = createDiv({ cls: 'invalid-feedback' });
-            }
-            mDiv.innerText = message;
-            mDiv.insertAfter(textInput.inputEl);
-        }
     }
+
     static removeValidationError(textInput: TextComponent) {
         textInput.inputEl.removeClass('is-invalid');
-        textInput.inputEl.parentElement?.removeClasses(['has-invalid-message', 'unset-align-items']);
-        textInput.inputEl.parentElement?.parentElement?.removeClass('.unset-align-items');
+    }
 
-        const invalidFeedback = textInput.inputEl.parentElement?.querySelector('.invalid-feedback');
-        if (invalidFeedback) {
-            textInput.inputEl.parentElement?.removeChild(invalidFeedback);
+    private static setValid(text: TextComponent, messages: string[]) {
+        const valid = messages.length === 0;
+        if (valid) {
+            CustomStatusModal.removeValidationError(text);
+        } else {
+            CustomStatusModal.setValidationError(text);
         }
     }
 }
