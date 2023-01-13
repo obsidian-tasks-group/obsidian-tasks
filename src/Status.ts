@@ -58,7 +58,7 @@ export class StatusConfiguration {
     /**
      * Determine whether the date in this object is valid, and return error message(s) for display if not.
      */
-    public validate(): { valid: boolean; errors: string[] } {
+    public validate(): string[] {
         const errors: string[] = [];
 
         // Messages are added in the order fields are shown when editing statuses.
@@ -66,8 +66,7 @@ export class StatusConfiguration {
         StatusConfiguration.validateName(this.name, errors);
         StatusConfiguration.validateOneIndicator(this.nextStatusIndicator, errors, 'Next symbol');
 
-        const valid = errors.length === 0;
-        return { valid, errors };
+        return errors;
     }
 
     public validateIndicator(): string[] {
