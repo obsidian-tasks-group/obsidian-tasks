@@ -1,4 +1,4 @@
-import { Modal, Setting, TextComponent } from 'obsidian';
+import { Modal, Notice, Setting, TextComponent } from 'obsidian';
 import { Status, StatusConfiguration } from '../Status';
 import type TasksPlugin from '../main';
 
@@ -44,21 +44,6 @@ export class CustomStatusModal extends Modal {
             .addText((text) => {
                 statusSymbolText = text;
                 statusSymbolText.setValue(this.statusSymbol).onChange((v) => {
-                    if (!v.length) {
-                        CustomStatusModal.setValidationError(text, 'Task status type cannot be empty.');
-                        return;
-                    }
-
-                    if (v.includes(' ')) {
-                        CustomStatusModal.setValidationError(text, 'Task status type cannot include spaces.');
-                        return;
-                    }
-
-                    if (v.length > 1) {
-                        CustomStatusModal.setValidationError(text, 'Task status must be a single character.');
-                        return;
-                    }
-                    CustomStatusModal.removeValidationError(text);
                     this.statusSymbol = v;
                 });
             });
@@ -100,17 +85,13 @@ export class CustomStatusModal extends Modal {
             b.setTooltip('Save')
                 .setIcon('checkmark')
                 .onClick(async () => {
-                    // let error = false;
-                    // if (!this.statusSymbol.length) {
-                    //     SettingsModal.setValidationError(this.statusSymbol, 'Task status type cannot be empty.');
-                    //     error = true;
-                    //     return;
-                    // }
-
-                    // if (error) {
-                    //     new Notice('Fix errors before saving.');
-                    //     return;
-                    // }
+                    const { valid, errors } = this.statusConfiguration().validate();
+                    if (!valid) {
+                        const message = errors.join('\n') + '\n\n' + 'Fix errors before saving.';
+                        // console.debug(message);
+                        new Notice(message);
+                        return;
+                    }
                     this.saved = true;
                     this.close();
                 });
