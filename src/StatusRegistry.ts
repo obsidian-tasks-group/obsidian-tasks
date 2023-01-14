@@ -1,4 +1,5 @@
-import { Status, StatusConfiguration } from './Status';
+import { Status } from './Status';
+import type { StatusConfiguration } from './StatusConfiguration';
 
 /**
  * Tracks all the registered statuses a task can have.

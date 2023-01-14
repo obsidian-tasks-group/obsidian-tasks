@@ -2,7 +2,8 @@ import { Options } from 'approvals/lib/Core/Options';
 import { verify } from 'approvals/lib/Providers/Jest/JestApprovals';
 
 import { StatusRegistry } from '../src/StatusRegistry';
-import { Status, StatusConfiguration } from '../src/Status';
+import { Status } from '../src/Status';
+import { StatusConfiguration } from '../src/StatusConfiguration';
 import * as StatusSettingsHelpers from '../src/Config/StatusSettingsHelpers';
 
 function getPrintableIndicator(indicator: string) {

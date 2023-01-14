@@ -1,5 +1,6 @@
 import { Notice, PluginSettingTab, Setting, debounce } from 'obsidian';
-import { Status, StatusConfiguration } from 'Status';
+import { Status } from 'Status';
+import { StatusConfiguration } from '../StatusConfiguration';
 import type TasksPlugin from '../main';
 import { StatusRegistry } from '../StatusRegistry';
 import type { HeadingState } from './Settings';

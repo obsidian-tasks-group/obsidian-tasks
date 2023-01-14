@@ -1,4 +1,4 @@
-import { StatusConfiguration } from '../Status';
+import { StatusConfiguration } from '../StatusConfiguration';
 import type { StatusRegistry } from '../StatusRegistry';
 
 /**

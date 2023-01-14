@@ -1,6 +1,7 @@
 import { verifyAsJson } from 'approvals/lib/Providers/Jest/JestApprovals';
 import { StatusSettings } from '../../src/Config/StatusSettings';
-import { Status, StatusConfiguration } from '../../src/Status';
+import { Status } from '../../src/Status';
+import { StatusConfiguration } from '../../src/StatusConfiguration';
 import { StatusRegistry } from '../../src/StatusRegistry';
 
 describe('StatusSettings', () => {

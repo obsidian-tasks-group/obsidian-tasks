@@ -3,7 +3,8 @@
  */
 import moment from 'moment';
 import { StatusRegistry } from '../src/StatusRegistry';
-import { Status, StatusConfiguration } from '../src/Status';
+import { Status } from '../src/Status';
+import { StatusConfiguration } from '../src/StatusConfiguration';
 import { Task } from '../src/Task';
 import * as TestHelpers from './TestHelpers';
 
