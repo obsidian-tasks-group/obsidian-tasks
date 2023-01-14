@@ -1,5 +1,4 @@
 import { Notice, PluginSettingTab, Setting, debounce } from 'obsidian';
-import { Status } from 'Status';
 import { StatusConfiguration } from '../StatusConfiguration';
 import type TasksPlugin from '../main';
 import { StatusRegistry } from '../StatusRegistry';
@@ -369,10 +368,10 @@ export class SettingsTab extends PluginSettingTab {
     insertTaskCoreStatusSettings(containerEl: HTMLElement, settings: SettingsTab) {
         // TODO Make these statuses editable
         const coreStatuses: StatusSettings = new StatusSettings();
-        StatusSettings.addCustomStatus(coreStatuses, Status.TODO.configuration);
-        StatusSettings.addCustomStatus(coreStatuses, Status.IN_PROGRESS.configuration);
-        StatusSettings.addCustomStatus(coreStatuses, Status.DONE.configuration);
-        StatusSettings.addCustomStatus(coreStatuses, Status.CANCELLED.configuration);
+        StatusSettings.addCustomStatus(coreStatuses, StatusConfiguration.makeTodo());
+        StatusSettings.addCustomStatus(coreStatuses, StatusConfiguration.makeInProgress());
+        StatusSettings.addCustomStatus(coreStatuses, StatusConfiguration.makeDone());
+        StatusSettings.addCustomStatus(coreStatuses, StatusConfiguration.makeCancelled());
 
         /* -------------------- One row per status in the settings -------------------- */
         coreStatuses.customStatusTypes.forEach((status_type) => {
