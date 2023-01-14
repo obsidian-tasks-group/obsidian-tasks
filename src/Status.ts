@@ -68,17 +68,6 @@ export class Status {
     public readonly configuration: StatusConfiguration;
 
     /**
-     * Whether Tasks can yet create 'Toggle Status' commands for statuses
-     *
-     * This is not yet possible, and so some UI features are temporarily hidden.
-     * See https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1486
-     * Once that issue is addressed, this method can be removed.
-     */
-    public static tasksPluginCanCreateCommandsForStatuses(): boolean {
-        return false;
-    }
-
-    /**
      * The indicator used between the two square brackets in the markdown task.
      *
      * @type {string}
