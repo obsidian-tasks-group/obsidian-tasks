@@ -1,9 +1,18 @@
 import { StatusConfiguration } from '../src/StatusConfiguration';
+import { Status } from '../src/Status';
 
 describe('StatusConfiguration', () => {
     describe('preview text', () => {
         const configuration = new StatusConfiguration('P', 'Pro', 'Con', true);
         expect(configuration.previewText()).toEqual("- [P] Pro, next status is 'Con'. ");
+    });
+
+    describe('default configurations', () => {
+        expect(Status.DONE.configuration.previewText()).toEqual("- [x] Done, next status is ' '. ");
+        expect(Status.EMPTY.configuration.previewText()).toEqual("- [] EMPTY, next status is ''. ");
+        expect(Status.TODO.configuration.previewText()).toEqual("- [ ] Todo, next status is 'x'. ");
+        expect(Status.CANCELLED.configuration.previewText()).toEqual("- [-] Cancelled, next status is ' '. ");
+        expect(Status.IN_PROGRESS.configuration.previewText()).toEqual("- [/] In Progress, next status is 'x'. ");
     });
 
     function checkValidation(statusConfiguration: StatusConfiguration, expectedMessages: string[]) {
