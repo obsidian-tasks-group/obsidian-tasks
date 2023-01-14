@@ -33,16 +33,16 @@ describe('StatusRegistry', () => {
         // Assert
         expect(statusRegistry).not.toBeNull();
 
-        expect(doneStatus.indicator).toEqual(Status.DONE.indicator);
+        expect(doneStatus.indicator).toEqual(StatusConfiguration.makeDone().indicator);
 
-        expect(statusRegistry.byIndicator('x').indicator).toEqual(Status.DONE.indicator);
-        expect(statusRegistry.byIndicator('').indicator).toEqual(Status.EMPTY.indicator);
-        expect(statusRegistry.byIndicator(' ').indicator).toEqual(Status.TODO.indicator);
-        expect(statusRegistry.byIndicator('-').indicator).toEqual(Status.CANCELLED.indicator);
-        expect(statusRegistry.byIndicator('/').indicator).toEqual(Status.IN_PROGRESS.indicator);
+        expect(statusRegistry.byIndicator('x').indicator).toEqual(StatusConfiguration.makeDone().indicator);
+        expect(statusRegistry.byIndicator('').indicator).toEqual(StatusConfiguration.makeEmpty().indicator);
+        expect(statusRegistry.byIndicator(' ').indicator).toEqual(StatusConfiguration.makeTodo().indicator);
+        expect(statusRegistry.byIndicator('-').indicator).toEqual(StatusConfiguration.makeCancelled().indicator);
+        expect(statusRegistry.byIndicator('/').indicator).toEqual(StatusConfiguration.makeInProgress().indicator);
 
         // Detect unrecognised indicator:
-        expect(statusRegistry.byIndicator('?').indicator).toEqual(Status.EMPTY.indicator);
+        expect(statusRegistry.byIndicator('?').indicator).toEqual(StatusConfiguration.makeEmpty().indicator);
     });
 
     it('should allow lookup of next status for a status', () => {
@@ -112,17 +112,17 @@ describe('StatusRegistry', () => {
 
             // Assert
             expect(task).not.toBeNull();
-            expect(task!.status.indicator).toEqual(Status.TODO.indicator);
+            expect(task!.status.indicator).toEqual(StatusConfiguration.makeTodo().indicator);
 
             // In Tasks, TODO toggles to DONE, for consistency with earlier releases.
             // const toggledInProgress = task?.toggle()[0];
             // expect(toggledInProgress?.status.indicator).toEqual(Status.IN_PROGRESS.indicator);
 
             const toggledDone = task?.toggle()[0];
-            expect(toggledDone?.status.indicator).toEqual(Status.DONE.indicator);
+            expect(toggledDone?.status.indicator).toEqual(StatusConfiguration.makeDone().indicator);
 
             const toggledTodo = toggledDone?.toggle()[0];
-            expect(toggledTodo?.status.indicator).toEqual(Status.TODO.indicator);
+            expect(toggledTodo?.status.indicator).toEqual(StatusConfiguration.makeTodo().indicator);
         });
 
         it('should allow task to toggle from cancelled to todo', () => {
@@ -147,10 +147,10 @@ describe('StatusRegistry', () => {
 
             // Assert
             expect(task).not.toBeNull();
-            expect(task!.status.indicator).toEqual(Status.CANCELLED.indicator);
+            expect(task!.status.indicator).toEqual(StatusConfiguration.makeCancelled().indicator);
 
             const toggledTodo = task?.toggle()[0];
-            expect(toggledTodo?.status.indicator).toEqual(Status.TODO.indicator);
+            expect(toggledTodo?.status.indicator).toEqual(StatusConfiguration.makeTodo().indicator);
         });
 
         it('should allow task to toggle through custom transitions', () => {

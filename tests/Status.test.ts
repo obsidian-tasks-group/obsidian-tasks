@@ -9,6 +9,12 @@ jest.mock('obsidian');
 window.moment = moment;
 
 describe('Status', () => {
+    describe('default configurations', () => {
+        expect(Status.DONE.configuration.previewText()).toEqual("- [x] Done, next status is ' '. ");
+        expect(Status.EMPTY.configuration.previewText()).toEqual("- [] EMPTY, next status is ''. ");
+        expect(Status.TODO.configuration.previewText()).toEqual("- [ ] Todo, next status is 'x'. ");
+    });
+
     it('should initialize with valid properties', () => {
         // Arrange
         const indicator = '/';
