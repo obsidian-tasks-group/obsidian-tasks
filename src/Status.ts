@@ -21,7 +21,7 @@ export class Status {
      * @type {Status}
      * @memberof Status
      */
-    public static DONE: Status = new Status(new StatusConfiguration('x', 'Done', ' ', true));
+    public static DONE: Status = new Status(StatusConfiguration.makeDone());
 
     /**
      * A default status of empty, used when things go wrong.
@@ -29,7 +29,7 @@ export class Status {
      * @static
      * @memberof Status
      */
-    public static EMPTY: Status = new Status(new StatusConfiguration('', 'EMPTY', '', true));
+    public static EMPTY: Status = new Status(StatusConfiguration.makeEmpty());
 
     /**
      * The default Todo status. Goes to Done when toggled.
@@ -39,25 +39,7 @@ export class Status {
      * @type {Status}
      * @memberof Status
      */
-    public static TODO: Status = new Status(new StatusConfiguration(' ', 'Todo', 'x', true));
-
-    /**
-     * The default Cancelled status. Goes to Todo when toggled.
-     *
-     * @static
-     * @type {Status}
-     * @memberof Status
-     */
-    public static CANCELLED: Status = new Status(new StatusConfiguration('-', 'Cancelled', ' ', true));
-
-    /**
-     * The default In Progress status. Goes to Done when toggled.
-     *
-     * @static
-     * @type {Status}
-     * @memberof Status
-     */
-    public static IN_PROGRESS: Status = new Status(new StatusConfiguration('/', 'In Progress', 'x', true));
+    public static TODO: Status = new Status(StatusConfiguration.makeTodo());
 
     /**
      * The configuration stored in the data.json file.
@@ -66,17 +48,6 @@ export class Status {
      * @memberof Status
      */
     public readonly configuration: StatusConfiguration;
-
-    /**
-     * Whether Tasks can yet create 'Toggle Status' commands for statuses
-     *
-     * This is not yet possible, and so some UI features are temporarily hidden.
-     * See https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1486
-     * Once that issue is addressed, this method can be removed.
-     */
-    public static tasksPluginCanCreateCommandsForStatuses(): boolean {
-        return false;
-    }
 
     /**
      * The indicator used between the two square brackets in the markdown task.
