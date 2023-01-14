@@ -21,7 +21,7 @@ export class Status {
      * @type {Status}
      * @memberof Status
      */
-    public static DONE: Status = new Status(StatusConfiguration.makeDone());
+    public static DONE: Status = Status.makeDone();
 
     /**
      * A default status of empty, used when things go wrong.
@@ -29,7 +29,7 @@ export class Status {
      * @static
      * @memberof Status
      */
-    public static EMPTY: Status = new Status(StatusConfiguration.makeEmpty());
+    public static EMPTY: Status = Status.makeEmpty();
 
     /**
      * The default Todo status. Goes to Done when toggled.
@@ -39,7 +39,7 @@ export class Status {
      * @type {Status}
      * @memberof Status
      */
-    public static TODO: Status = new Status(StatusConfiguration.makeTodo());
+    public static TODO: Status = Status.makeTodo();
 
     /**
      * The configuration stored in the data.json file.
