@@ -15,6 +15,14 @@ describe('Status', () => {
         expect(Status.TODO.configuration.previewText()).toEqual("- [ ] Todo, next status is 'x'. ");
     });
 
+    it('factory methods for default statuses', () => {
+        expect(Status.makeDone().configuration.previewText()).toEqual("- [x] Done, next status is ' '. ");
+        expect(Status.makeEmpty().configuration.previewText()).toEqual("- [] EMPTY, next status is ''. ");
+        expect(Status.makeTodo().configuration.previewText()).toEqual("- [ ] Todo, next status is 'x'. ");
+        expect(Status.makeCancelled().configuration.previewText()).toEqual("- [-] Cancelled, next status is ' '. ");
+        expect(Status.makeInProgress().configuration.previewText()).toEqual("- [/] In Progress, next status is 'x'. ");
+    });
+
     it('should initialize with valid properties', () => {
         // Arrange
         const indicator = '/';
