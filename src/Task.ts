@@ -264,10 +264,7 @@ export class Task {
 
         // Get the status of the task.
         const statusString = regexMatch[3];
-        let status = StatusRegistry.getInstance().byIndicator(statusString);
-        if (status === Status.EMPTY) {
-            status = Status.createUnknownStatus(statusString);
-        }
+        const status = StatusRegistry.getInstance().byIndicatorOrCreate(statusString);
 
         // Match for block link and remove if found. Always expected to be
         // at the end of the line.

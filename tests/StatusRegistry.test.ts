@@ -45,6 +45,30 @@ describe('StatusRegistry', () => {
         expect(statusRegistry.byIndicator('?').indicator).toEqual(StatusConfiguration.makeEmpty().indicator);
     });
 
+    it('should return empty status for lookup by unknown indicator with byIndicator()', () => {
+        // Arrange
+        const statusRegistry = new StatusRegistry();
+
+        // Act
+        const result = statusRegistry.byIndicator('?');
+
+        // Assert
+        expect(result).toEqual(Status.EMPTY);
+    });
+
+    it('should return Unknown status for lookup by unknown indicator with byIndicatorOrCreate()', () => {
+        // Arrange
+        const statusRegistry = new StatusRegistry();
+
+        // Act
+        const result = statusRegistry.byIndicatorOrCreate('?');
+
+        // Assert
+        expect(result.indicator).toEqual('?');
+        expect(result.name).toEqual('Unknown');
+        expect(result.nextStatusIndicator).toEqual('x');
+    });
+
     it('should allow lookup of next status for a status', () => {
         // Arrange
         const statusRegistry = new StatusRegistry();

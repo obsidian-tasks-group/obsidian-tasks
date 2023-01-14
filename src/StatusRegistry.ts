@@ -80,6 +80,9 @@ export class StatusRegistry {
     /**
      * Returns the registered status by the indicator between the
      * square braces in the markdown task.
+     * Returns an EMPTY status if indicator is unknown.
+     *
+     * @see byIndicatorOrCreate
      *
      * @param {string} indicator
      * @return {*}  {Status}
@@ -91,6 +94,27 @@ export class StatusRegistry {
         }
 
         return Status.EMPTY;
+    }
+
+    /**
+     * Returns the registered status by the indicator between the
+     * square braces in the markdown task.
+     *
+     * Creates a usable new Status with this given indicator if indicator is unknown.
+     * Note: An unknown indicator is not added to the registry.
+     *
+     * @see hasIndicator
+     *
+     * @param {string} indicator
+     * @return {*}  {Status}
+     * @memberof StatusRegistry
+     */
+    public byIndicatorOrCreate(indicator: string): Status {
+        if (this.hasIndicator(indicator)) {
+            return this.getIndicator(indicator);
+        }
+
+        return Status.createUnknownStatus(indicator);
     }
 
     /**
