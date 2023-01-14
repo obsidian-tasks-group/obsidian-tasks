@@ -64,10 +64,7 @@ export const taskFromLine = ({ line, path }: { line: string; path: string }): Ta
     const indentation: string = nonTaskMatch[1];
     const listMarker = nonTaskMatch[2] ?? '-';
     const statusString: string = nonTaskMatch[4] ?? ' ';
-    let status = StatusRegistry.getInstance().byIndicator(statusString);
-    if (status === Status.EMPTY) {
-        status = Status.createUnknownStatus(statusString);
-    }
+    const status = StatusRegistry.getInstance().byIndicatorOrCreate(statusString);
 
     let description: string = nonTaskMatch[5];
 
