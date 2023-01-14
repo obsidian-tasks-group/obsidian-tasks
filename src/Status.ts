@@ -157,4 +157,26 @@ export class Status {
     public isCompleted(): boolean {
         return this.indicator === 'x' || this.indicator === 'X';
     }
+
+    /**
+     * Return a one-line summary of the status, for presentation to users.
+     */
+    public previewText() {
+        let commandNotice = '';
+        if (Status.tasksPluginCanCreateCommandsForStatuses() && this.availableAsCommand) {
+            commandNotice = 'Available as a command.';
+        }
+        return `- [${this.indicator}] ${this.name}, next status is '${this.nextStatusIndicator}'. ${commandNotice}`;
+    }
+
+    /**
+     * Whether Tasks can yet create 'Toggle Status' commands for statuses
+     *
+     * This is not yet possible, and so some UI features are temporarily hidden.
+     * See https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1486
+     * Once that issue is addressed, this method can be removed.
+     */
+    public static tasksPluginCanCreateCommandsForStatuses(): boolean {
+        return false;
+    }
 }

@@ -2,6 +2,7 @@ import { Modal, Notice, Setting, TextComponent } from 'obsidian';
 import { StatusConfiguration } from '../StatusConfiguration';
 import type TasksPlugin from '../main';
 import { StatusValidator } from '../StatusValidator';
+import { Status } from '../Status';
 
 export class CustomStatusModal extends Modal {
     statusSymbol: string;
@@ -99,7 +100,7 @@ export class CustomStatusModal extends Modal {
                 );
             });
 
-        if (StatusConfiguration.tasksPluginCanCreateCommandsForStatuses()) {
+        if (Status.tasksPluginCanCreateCommandsForStatuses()) {
             new Setting(settingDiv)
                 .setName('Available as command')
                 .setDesc(
