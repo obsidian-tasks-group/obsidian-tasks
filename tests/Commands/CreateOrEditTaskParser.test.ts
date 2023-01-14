@@ -47,6 +47,11 @@ describe('CreateOrEditTaskParser - testing edited task if line is saved unchange
             '- [ ] Some existing test with ^block-link',
             '',
         ],
+        [
+            '- [!] Not a task as no global filter - unknown status symbol', // Ensure unknown status symbol is retained in non-tasks
+            '- [!] Not a task as no global filter - unknown status symbol', // The global filter doesn't get added until the Modal rewrites the line
+            '#task',
+        ],
     ])(
         'line loaded into "Create or edit task" command: "%s"',
         (line: string, expectedResult: string, globalFilter: string) => {

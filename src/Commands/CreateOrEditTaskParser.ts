@@ -1,6 +1,7 @@
 import { Status } from '../Status';
 import { Priority, Task, TaskRegularExpressions } from '../Task';
 import { DateFallback } from '../DateFallback';
+import { StatusRegistry } from '../StatusRegistry';
 
 /**
  * Read any markdown line and treat it as a task, for the purposes of
@@ -63,7 +64,11 @@ export const taskFromLine = ({ line, path }: { line: string; path: string }): Ta
     const indentation: string = nonTaskMatch[1];
     const listMarker = nonTaskMatch[2] ?? '-';
     const statusString: string = nonTaskMatch[4] ?? ' ';
-    const status = statusString === ' ' ? Status.TODO : Status.DONE;
+    let status = StatusRegistry.getInstance().byIndicator(statusString);
+    if (status === Status.EMPTY) {
+        status = Status.createUnknownStatus(statusString);
+    }
+
     let description: string = nonTaskMatch[5];
 
     const blockLinkMatch = line.match(TaskRegularExpressions.blockLinkRegex);
