@@ -118,4 +118,40 @@ export class StatusConfiguration {
         }
         return errors;
     }
+
+    /**
+     * The default Done status. Goes to Todo when toggled.
+     */
+    static makeDone(): StatusConfiguration {
+        return new StatusConfiguration('x', 'Done', ' ', true);
+    }
+
+    /**
+     * A default status of empty, used when things go wrong.
+     */
+    static makeEmpty(): StatusConfiguration {
+        return new StatusConfiguration('', 'EMPTY', '', true);
+    }
+
+    /**
+     * The default Todo status. Goes to Done when toggled.
+     * User may later be able to override this to go to In Progress instead.
+     */
+    static makeTodo(): StatusConfiguration {
+        return new StatusConfiguration(' ', 'Todo', 'x', true);
+    }
+
+    /**
+     * The default Cancelled status. Goes to Todo when toggled.
+     */
+    static makeCancelled(): StatusConfiguration {
+        return new StatusConfiguration('-', 'Cancelled', ' ', true);
+    }
+
+    /**
+     * The default In Progress status. Goes to Done when toggled.
+     */
+    static makeInProgress(): StatusConfiguration {
+        return new StatusConfiguration('/', 'In Progress', 'x', true);
+    }
 }

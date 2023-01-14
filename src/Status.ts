@@ -21,7 +21,7 @@ export class Status {
      * @type {Status}
      * @memberof Status
      */
-    public static DONE: Status = new Status(new StatusConfiguration('x', 'Done', ' ', true));
+    public static DONE: Status = new Status(StatusConfiguration.makeDone());
 
     /**
      * A default status of empty, used when things go wrong.
@@ -29,7 +29,7 @@ export class Status {
      * @static
      * @memberof Status
      */
-    public static EMPTY: Status = new Status(new StatusConfiguration('', 'EMPTY', '', true));
+    public static EMPTY: Status = new Status(StatusConfiguration.makeEmpty());
 
     /**
      * The default Todo status. Goes to Done when toggled.
@@ -39,7 +39,7 @@ export class Status {
      * @type {Status}
      * @memberof Status
      */
-    public static TODO: Status = new Status(new StatusConfiguration(' ', 'Todo', 'x', true));
+    public static TODO: Status = new Status(StatusConfiguration.makeTodo());
 
     /**
      * The default Cancelled status. Goes to Todo when toggled.
@@ -48,7 +48,7 @@ export class Status {
      * @type {Status}
      * @memberof Status
      */
-    public static CANCELLED: Status = new Status(new StatusConfiguration('-', 'Cancelled', ' ', true));
+    public static CANCELLED: Status = new Status(StatusConfiguration.makeCancelled());
 
     /**
      * The default In Progress status. Goes to Done when toggled.
@@ -57,7 +57,7 @@ export class Status {
      * @type {Status}
      * @memberof Status
      */
-    public static IN_PROGRESS: Status = new Status(new StatusConfiguration('/', 'In Progress', 'x', true));
+    public static IN_PROGRESS: Status = new Status(StatusConfiguration.makeInProgress());
 
     /**
      * The configuration stored in the data.json file.
