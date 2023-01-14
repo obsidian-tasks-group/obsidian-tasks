@@ -1,6 +1,7 @@
 import { Modal, Notice, Setting, TextComponent } from 'obsidian';
 import { StatusConfiguration } from '../StatusConfiguration';
 import type TasksPlugin from '../main';
+import { StatusValidator } from '../StatusValidator';
 
 export class CustomStatusModal extends Modal {
     statusSymbol: string;
@@ -45,12 +46,18 @@ export class CustomStatusModal extends Modal {
                 statusSymbolText = text;
                 text.setValue(this.statusSymbol).onChange((v) => {
                     this.statusSymbol = v;
-                    CustomStatusModal.setValid(text, this.statusConfiguration().validateIndicator());
+                    CustomStatusModal.setValid(
+                        text,
+                        new StatusValidator().validateIndicator(this.statusConfiguration()),
+                    );
                 });
             })
             .then((_setting) => {
                 // Show any error if the initial value loaded is incorrect.
-                CustomStatusModal.setValid(statusSymbolText, this.statusConfiguration().validateIndicator());
+                CustomStatusModal.setValid(
+                    statusSymbolText,
+                    new StatusValidator().validateIndicator(this.statusConfiguration()),
+                );
             });
 
         let statusNameText: TextComponent;
@@ -61,11 +68,14 @@ export class CustomStatusModal extends Modal {
                 statusNameText = text;
                 text.setValue(this.statusName).onChange((v) => {
                     this.statusName = v;
-                    CustomStatusModal.setValid(text, this.statusConfiguration().validateName());
+                    CustomStatusModal.setValid(text, new StatusValidator().validateName(this.statusConfiguration()));
                 });
             })
             .then((_setting) => {
-                CustomStatusModal.setValid(statusNameText, this.statusConfiguration().validateName());
+                CustomStatusModal.setValid(
+                    statusNameText,
+                    new StatusValidator().validateName(this.statusConfiguration()),
+                );
             });
 
         let statusNextSymbolText: TextComponent;
@@ -76,11 +86,17 @@ export class CustomStatusModal extends Modal {
                 statusNextSymbolText = text;
                 text.setValue(this.statusNextSymbol).onChange((v) => {
                     this.statusNextSymbol = v;
-                    CustomStatusModal.setValid(text, this.statusConfiguration().validateNextIndicator());
+                    CustomStatusModal.setValid(
+                        text,
+                        new StatusValidator().validateNextIndicator(this.statusConfiguration()),
+                    );
                 });
             })
             .then((_setting) => {
-                CustomStatusModal.setValid(statusNextSymbolText, this.statusConfiguration().validateNextIndicator());
+                CustomStatusModal.setValid(
+                    statusNextSymbolText,
+                    new StatusValidator().validateNextIndicator(this.statusConfiguration()),
+                );
             });
 
         if (StatusConfiguration.tasksPluginCanCreateCommandsForStatuses()) {
@@ -102,7 +118,7 @@ export class CustomStatusModal extends Modal {
             b.setTooltip('Save')
                 .setIcon('checkmark')
                 .onClick(async () => {
-                    const errors = this.statusConfiguration().validate();
+                    const errors = new StatusValidator().validate(this.statusConfiguration());
                     if (errors.length > 0) {
                         const message = errors.join('\n') + '\n\n' + 'Fix errors before saving.';
                         // console.debug(message);
