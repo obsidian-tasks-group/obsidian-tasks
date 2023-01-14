@@ -464,7 +464,7 @@ function createRowForTaskStatus(
 
     const taskStatusPreview = containerEl.createEl('pre');
     taskStatusPreview.addClass('row-for-status');
-    taskStatusPreview.textContent = statusType.previewText();
+    taskStatusPreview.textContent = new Status(statusType).previewText();
 
     const setting = new Setting(containerEl);
 
