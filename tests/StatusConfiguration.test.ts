@@ -1,6 +1,11 @@
 import { StatusConfiguration } from '../src/StatusConfiguration';
 
 describe('StatusConfiguration', () => {
+    describe('preview text', () => {
+        const configuration = new StatusConfiguration('P', 'Pro', 'Con', true);
+        expect(configuration.previewText()).toEqual("- [P] Pro, next status is 'Con'. ");
+    });
+
     function checkValidation(statusConfiguration: StatusConfiguration, expectedMessages: string[]) {
         const errors = statusConfiguration.validate();
         expect(errors).toEqual(expectedMessages);

@@ -56,6 +56,17 @@ export class StatusConfiguration {
     }
 
     /**
+     * Return a one-line summary of the status, for presentation to users.
+     */
+    public previewText() {
+        let commandNotice = '';
+        if (StatusConfiguration.tasksPluginCanCreateCommandsForStatuses() && this.availableAsCommand) {
+            commandNotice = 'Available as a command.';
+        }
+        return `- [${this.indicator}] ${this.name}, next status is '${this.nextStatusIndicator}'. ${commandNotice}`;
+    }
+
+    /**
      * Whether Tasks can yet create 'Toggle Status' commands for statuses
      *
      * This is not yet possible, and so some UI features are temporarily hidden.
