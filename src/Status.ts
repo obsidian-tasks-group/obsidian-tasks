@@ -42,24 +42,6 @@ export class Status {
     public static TODO: Status = new Status(StatusConfiguration.makeTodo());
 
     /**
-     * The default Cancelled status. Goes to Todo when toggled.
-     *
-     * @static
-     * @type {Status}
-     * @memberof Status
-     */
-    public static CANCELLED: Status = new Status(StatusConfiguration.makeCancelled());
-
-    /**
-     * The default In Progress status. Goes to Done when toggled.
-     *
-     * @static
-     * @type {Status}
-     * @memberof Status
-     */
-    public static IN_PROGRESS: Status = new Status(StatusConfiguration.makeInProgress());
-
-    /**
      * The configuration stored in the data.json file.
      *
      * @type {StatusConfiguration}

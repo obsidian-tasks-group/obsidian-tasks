@@ -13,8 +13,6 @@ describe('Status', () => {
         expect(Status.DONE.configuration.previewText()).toEqual("- [x] Done, next status is ' '. ");
         expect(Status.EMPTY.configuration.previewText()).toEqual("- [] EMPTY, next status is ''. ");
         expect(Status.TODO.configuration.previewText()).toEqual("- [ ] Todo, next status is 'x'. ");
-        expect(Status.CANCELLED.configuration.previewText()).toEqual("- [-] Cancelled, next status is ' '. ");
-        expect(Status.IN_PROGRESS.configuration.previewText()).toEqual("- [/] In Progress, next status is 'x'. ");
     });
 
     it('should initialize with valid properties', () => {
