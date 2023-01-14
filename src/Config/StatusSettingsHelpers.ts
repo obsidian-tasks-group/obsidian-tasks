@@ -3,7 +3,8 @@
  * It intentionally does not import any Obsidian types, so that tests can
  * be written for its contents.
  */
-import { Status, StatusConfiguration } from '../Status';
+import { Status } from '../Status';
+import type { StatusConfiguration } from '../StatusConfiguration';
 
 /**
  * Return a one-line summary of the status, for presentation to users.

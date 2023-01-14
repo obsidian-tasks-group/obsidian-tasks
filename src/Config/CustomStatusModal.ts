@@ -1,5 +1,6 @@
 import { Modal, Notice, Setting, TextComponent } from 'obsidian';
-import { Status, StatusConfiguration } from '../Status';
+import { Status } from '../Status';
+import { StatusConfiguration } from '../StatusConfiguration';
 import type TasksPlugin from '../main';
 
 export class CustomStatusModal extends Modal {
