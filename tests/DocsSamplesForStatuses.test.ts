@@ -60,22 +60,22 @@ function getPrintableIndicator(indicator: string) {
 }
 
 function verifyStatusesAsMarkdownTable(statuses: Status[]) {
-    let commandsTable = '<!-- placeholder to force blank line before table -->\n\n';
-    commandsTable +=
-        '| Status Character    | Status Name | Next Status Character | Status Type | Needs Custom Styling |\n';
-    commandsTable +=
-        '| ------------------- | ----------- | --------------------- | ----------- | -------------------- |\n';
+    const table = new MarkdownTable([
+        'Status Character',
+        'Status Name',
+        'Next Status Character',
+        'Status Type',
+        'Needs Custom Styling',
+    ]);
+
     for (const status of statuses) {
         const statusCharacter = getPrintableIndicator(status.indicator);
         const nextStatusCharacter = getPrintableIndicator(status.nextStatusIndicator);
         const type = getPrintableIndicator(status.type);
         const needsCustomStyling = status.indicator !== ' ' && status.indicator !== 'x' ? 'Yes' : 'No';
-        commandsTable += `| ${statusCharacter} | ${status.name} | ${nextStatusCharacter} | ${type} | ${needsCustomStyling} |\n`;
+        table.addRow([statusCharacter, status.name, nextStatusCharacter, type, needsCustomStyling]);
     }
-    commandsTable += '\n\n<!-- placeholder to force blank line after table -->\n';
-    let options = new Options();
-    options = options.forFile().withFileExtention('md');
-    verify(commandsTable, options);
+    table.verify();
 }
 
 function constructStatuses(importedStatuses: Array<[string, string, string]>) {
