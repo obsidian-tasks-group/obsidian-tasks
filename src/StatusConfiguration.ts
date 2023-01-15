@@ -2,12 +2,12 @@
  * Collection of status types supported by the plugin.
  */
 export enum StatusType {
-    TODO = 'Todo',
-    DONE = 'Done',
-    IN_PROGRESS = 'In Progress',
-    CANCELLED = 'Cancelled',
-    NON_TASK = 'Non-Task',
-    EMPTY = 'Empty',
+    TODO = 'TODO',
+    DONE = 'DONE',
+    IN_PROGRESS = 'IN_PROGRESS',
+    CANCELLED = 'CANCELLED',
+    NON_TASK = 'NON_TASK',
+    EMPTY = 'EMPTY',
 }
 
 /**
