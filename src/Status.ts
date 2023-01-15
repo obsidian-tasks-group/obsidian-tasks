@@ -144,6 +144,29 @@ export class Status {
     }
 
     /**
+     * Return the StatusType to use for an indicator, if it is not in the StatusRegistry.
+     * The core indicators are recognised.
+     * Other indicators are treated as StatusType.TODO
+     * @param indicator
+     */
+    static getTypeForUnknownIndicator(indicator: string): StatusType {
+        switch (indicator) {
+            case 'x':
+            case 'X':
+                return StatusType.DONE;
+            case '/':
+                return StatusType.IN_PROGRESS;
+            case '-':
+                return StatusType.CANCELLED;
+            case '':
+                return StatusType.EMPTY;
+            case ' ':
+            default:
+                return StatusType.TODO;
+        }
+    }
+
+    /**
      * Create a Status representing the given, unknown indicator.
      *
      * This can be useful when StatusRegistry does not recognise an indicator,

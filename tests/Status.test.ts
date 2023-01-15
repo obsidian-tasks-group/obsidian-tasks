@@ -67,6 +67,16 @@ describe('Status', () => {
         expect(status!.isCompleted()).toEqual(true);
     });
 
+    it('should deduce type for unknown indicators', () => {
+        expect(Status.getTypeForUnknownIndicator(' ')).toEqual(StatusType.TODO);
+        expect(Status.getTypeForUnknownIndicator('!')).toEqual(StatusType.TODO); // Unknown character treated as TODO
+        expect(Status.getTypeForUnknownIndicator('x')).toEqual(StatusType.DONE);
+        expect(Status.getTypeForUnknownIndicator('X')).toEqual(StatusType.DONE);
+        expect(Status.getTypeForUnknownIndicator('/')).toEqual(StatusType.IN_PROGRESS);
+        expect(Status.getTypeForUnknownIndicator('-')).toEqual(StatusType.CANCELLED);
+        expect(Status.getTypeForUnknownIndicator('')).toEqual(StatusType.EMPTY);
+    });
+
     it('should construct a Status for unknown symbol', () => {
         // Arrange
         const indicator = 'U';
