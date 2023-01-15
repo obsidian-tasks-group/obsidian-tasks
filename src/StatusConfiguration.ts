@@ -50,6 +50,9 @@ export class StatusConfiguration {
      */
     public readonly availableAsCommand: boolean;
 
+    /**
+     * Returns the status type. See {@link StatusType} for details.
+     */
     public readonly type: StatusType;
 
     /**

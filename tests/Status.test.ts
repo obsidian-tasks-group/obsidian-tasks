@@ -3,14 +3,14 @@
  */
 import moment from 'moment';
 import { Status } from '../src/Status';
-import { StatusConfiguration } from '../src/StatusConfiguration';
+import { StatusConfiguration, StatusType } from '../src/StatusConfiguration';
 
 jest.mock('obsidian');
 window.moment = moment;
 
 describe('Status', () => {
     it('preview text', () => {
-        const configuration = new Status(new StatusConfiguration('P', 'Pro', 'Con', true));
+        const configuration = new Status(new StatusConfiguration('P', 'Pro', 'Con', true, StatusType.TODO));
         expect(configuration.previewText()).toEqual("- [P] Pro, next status is 'Con', type is 'TODO'. ");
     });
 
@@ -39,13 +39,14 @@ describe('Status', () => {
         const next = 'x';
 
         // Act
-        const status = new Status(new StatusConfiguration(indicator, name, next, false));
+        const status = new Status(new StatusConfiguration(indicator, name, next, false, StatusType.IN_PROGRESS));
 
         // Assert
         expect(status).not.toBeNull();
         expect(status!.indicator).toEqual(indicator);
         expect(status!.name).toEqual(name);
         expect(status!.nextStatusIndicator).toEqual(next);
+        expect(status!.type).toEqual(StatusType.IN_PROGRESS);
         expect(status!.isCompleted()).toEqual(false);
     });
 
@@ -56,7 +57,7 @@ describe('Status', () => {
         const next = ' ';
 
         // Act
-        const status = new Status(new StatusConfiguration(indicator, name, next, false));
+        const status = new Status(new StatusConfiguration(indicator, name, next, false, StatusType.DONE));
 
         // Assert
         expect(status).not.toBeNull();
@@ -78,6 +79,7 @@ describe('Status', () => {
         expect(status!.indicator).toEqual(indicator);
         expect(status!.name).toEqual('Unknown');
         expect(status!.nextStatusIndicator).toEqual('x');
+        expect(status!.type).toEqual(StatusType.TODO);
         expect(status!.isCompleted()).toEqual(false);
     });
 });
