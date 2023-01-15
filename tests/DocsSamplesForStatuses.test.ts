@@ -11,6 +11,49 @@ import * as FilterParser from '../src/Query/FilterParser';
 import { Group } from '../src/Query/Group';
 import { TaskBuilder } from './TestingTools/TaskBuilder';
 
+class MarkdownTable {
+    private columnNames: string[];
+    private _markdown = '';
+
+    constructor(columnNames: string[]) {
+        this.columnNames = columnNames;
+        this.addTitleRow();
+    }
+
+    get markdown(): string {
+        return this._markdown;
+    }
+
+    private addTitleRow() {
+        let titles = '| ';
+        let divider = '| ';
+        this.columnNames.forEach((s) => {
+            titles += ` ${s} |`;
+            divider += ' ----- |';
+        });
+
+        this._markdown += `${titles}\n`;
+        this._markdown += `${divider}\n`;
+    }
+
+    public addRow(cells: string[]) {
+        let row = '| ';
+        cells.forEach((s) => {
+            row += ` ${s} |`;
+        });
+        this._markdown += `${row}\n`;
+    }
+
+    public verify() {
+        let output = '<!-- placeholder to force blank line before table -->\n\n';
+        output += this.markdown;
+        output += '\n\n<!-- placeholder to force blank line after table -->\n';
+        let options = new Options();
+        options = options.forFile().withFileExtention('md');
+        verify(output, options);
+    }
+}
+
 function getPrintableIndicator(indicator: string) {
     const result = indicator !== ' ' ? indicator : 'space';
     return '`' + result + '`';
@@ -69,49 +112,6 @@ describe('DefaultStatuses', () => {
         verifyStatusesAsMarkdownTable(constructStatuses(importantCycle));
     });
 });
-
-class MarkdownTable {
-    private columnNames: string[];
-    private _markdown = '';
-
-    constructor(columnNames: string[]) {
-        this.columnNames = columnNames;
-        this.addTitleRow();
-    }
-
-    get markdown(): string {
-        return this._markdown;
-    }
-
-    private addTitleRow() {
-        let titles = '| ';
-        let divider = '| ';
-        this.columnNames.forEach((s) => {
-            titles += ` ${s} |`;
-            divider += ' ----- |';
-        });
-
-        this._markdown += `${titles}\n`;
-        this._markdown += `${divider}\n`;
-    }
-
-    public addRow(cells: string[]) {
-        let row = '| ';
-        cells.forEach((s) => {
-            row += ` ${s} |`;
-        });
-        this._markdown += `${row}\n`;
-    }
-
-    public verify() {
-        let output = '<!-- placeholder to force blank line before table -->\n\n';
-        output += this.markdown;
-        output += '\n\n<!-- placeholder to force blank line after table -->\n';
-        let options = new Options();
-        options = options.forFile().withFileExtention('md');
-        verify(output, options);
-    }
-}
 
 function verifyTransitionsAsMarkdownTable(statuses: Status[]) {
     const columnNames: string[] = ['Operation'];
