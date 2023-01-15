@@ -89,8 +89,9 @@ The following additional components have the following classes:
 | tasks-urgency                  | This is applied to the SPAN that wraps the urgency score if displayed on the task.                              |
 | tasks-group-heading            | This is applied to H4, H5 and H6 group headings                                                                 |
 
-> `tasks-group-heading` was introduced in Tasks 1.6.0.<br>
-> `plugin-tasks-query-explanation` was introduced in Tasks 1.19.0.
+{: .released }
+`tasks-group-heading` was introduced in Tasks 1.6.0.<br>
+`plugin-tasks-query-explanation` was introduced in Tasks 1.19.0.
 
 ## Examples
 
