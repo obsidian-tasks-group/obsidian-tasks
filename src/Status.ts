@@ -166,7 +166,7 @@ export class Status {
         if (Status.tasksPluginCanCreateCommandsForStatuses() && this.availableAsCommand) {
             commandNotice = 'Available as a command.';
         }
-        return `- [${this.indicator}] ${this.name}, next status is '${this.nextStatusIndicator}'. ${commandNotice}`;
+        return `- [${this.indicator}] ${this.name}, next status is '${this.nextStatusIndicator}', type is '${this.configuration.type}'. ${commandNotice}`;
     }
 
     /**
