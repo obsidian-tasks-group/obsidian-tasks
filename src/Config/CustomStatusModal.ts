@@ -109,7 +109,7 @@ export class CustomStatusModal extends Modal {
                     dropdown.addOption(s, s);
                 });
                 dropdown.setValue(this.type).onChange((v) => {
-                    this.type = StatusType[v as keyof typeof StatusType] || Status.TODO;
+                    this.type = Status.getTypeFromStatusTypeString(v);
                 });
             });
 

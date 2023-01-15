@@ -1,4 +1,5 @@
-import { StatusConfiguration, StatusType } from '../StatusConfiguration';
+import { StatusConfiguration } from '../StatusConfiguration';
+import { Status } from '../Status';
 import { StatusSettings } from './StatusSettings';
 import { Feature } from './Feature';
 import type { FeatureFlag } from './Feature';
@@ -79,10 +80,9 @@ export const getSettings = (): Settings => {
     }
 
     // In case saves pre-dated StatusConfiguration.type
-    // TODO Put in static function in StatusSettings
     // TODO Special case for indicator 'X' or 'x' (just in case)
     settings.statusSettings.customStatusTypes = settings.statusSettings.customStatusTypes.map((s) => {
-        const newType = StatusType[s.type as keyof typeof StatusType] || StatusType.TODO;
+        const newType = Status.getTypeFromStatusTypeString(s.type);
         return new StatusConfiguration(s.indicator, s.name, s.nextStatusIndicator, s.availableAsCommand, newType);
     });
 

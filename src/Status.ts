@@ -167,6 +167,15 @@ export class Status {
     }
 
     /**
+     * Convert text that was saved from a StatusType value back to a StatusType.
+     * Returns StatusType.TODO if the string is not valid.
+     * @param statusTypeAsString
+     */
+    static getTypeFromStatusTypeString(statusTypeAsString: string): StatusType {
+        return StatusType[statusTypeAsString as keyof typeof StatusType] || StatusType.TODO;
+    }
+
+    /**
      * Create a Status representing the given, unknown indicator.
      *
      * This can be useful when StatusRegistry does not recognise an indicator,

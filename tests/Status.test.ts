@@ -77,6 +77,16 @@ describe('Status', () => {
         expect(Status.getTypeForUnknownIndicator('')).toEqual(StatusType.EMPTY);
     });
 
+    it('should deduce type from StatusType text', () => {
+        expect(Status.getTypeFromStatusTypeString('TODO')).toEqual(StatusType.TODO);
+        expect(Status.getTypeFromStatusTypeString('DONE')).toEqual(StatusType.DONE);
+        expect(Status.getTypeFromStatusTypeString('IN_PROGRESS')).toEqual(StatusType.IN_PROGRESS);
+        expect(Status.getTypeFromStatusTypeString('CANCELLED')).toEqual(StatusType.CANCELLED);
+        expect(Status.getTypeFromStatusTypeString('NON_TASK')).toEqual(StatusType.NON_TASK);
+        expect(Status.getTypeFromStatusTypeString('EMPTY')).toEqual(StatusType.EMPTY);
+        expect(Status.getTypeFromStatusTypeString('i do not exist')).toEqual(StatusType.TODO);
+    });
+
     it('should construct a Status for unknown symbol', () => {
         // Arrange
         const indicator = '/';
