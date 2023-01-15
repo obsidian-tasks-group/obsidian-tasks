@@ -4,6 +4,8 @@ import type TasksPlugin from '../main';
 import { StatusValidator } from '../StatusValidator';
 import { Status } from '../Status';
 
+const validator = new StatusValidator();
+
 export class CustomStatusModal extends Modal {
     statusSymbol: string;
     statusName: string;
@@ -47,18 +49,12 @@ export class CustomStatusModal extends Modal {
                 statusSymbolText = text;
                 text.setValue(this.statusSymbol).onChange((v) => {
                     this.statusSymbol = v;
-                    CustomStatusModal.setValid(
-                        text,
-                        new StatusValidator().validateIndicator(this.statusConfiguration()),
-                    );
+                    CustomStatusModal.setValid(text, validator.validateIndicator(this.statusConfiguration()));
                 });
             })
             .then((_setting) => {
                 // Show any error if the initial value loaded is incorrect.
-                CustomStatusModal.setValid(
-                    statusSymbolText,
-                    new StatusValidator().validateIndicator(this.statusConfiguration()),
-                );
+                CustomStatusModal.setValid(statusSymbolText, validator.validateIndicator(this.statusConfiguration()));
             });
 
         let statusNameText: TextComponent;
@@ -69,14 +65,11 @@ export class CustomStatusModal extends Modal {
                 statusNameText = text;
                 text.setValue(this.statusName).onChange((v) => {
                     this.statusName = v;
-                    CustomStatusModal.setValid(text, new StatusValidator().validateName(this.statusConfiguration()));
+                    CustomStatusModal.setValid(text, validator.validateName(this.statusConfiguration()));
                 });
             })
             .then((_setting) => {
-                CustomStatusModal.setValid(
-                    statusNameText,
-                    new StatusValidator().validateName(this.statusConfiguration()),
-                );
+                CustomStatusModal.setValid(statusNameText, validator.validateName(this.statusConfiguration()));
             });
 
         let statusNextSymbolText: TextComponent;
@@ -87,16 +80,13 @@ export class CustomStatusModal extends Modal {
                 statusNextSymbolText = text;
                 text.setValue(this.statusNextSymbol).onChange((v) => {
                     this.statusNextSymbol = v;
-                    CustomStatusModal.setValid(
-                        text,
-                        new StatusValidator().validateNextIndicator(this.statusConfiguration()),
-                    );
+                    CustomStatusModal.setValid(text, validator.validateNextIndicator(this.statusConfiguration()));
                 });
             })
             .then((_setting) => {
                 CustomStatusModal.setValid(
                     statusNextSymbolText,
-                    new StatusValidator().validateNextIndicator(this.statusConfiguration()),
+                    validator.validateNextIndicator(this.statusConfiguration()),
                 );
             });
 
@@ -119,7 +109,7 @@ export class CustomStatusModal extends Modal {
             b.setTooltip('Save')
                 .setIcon('checkmark')
                 .onClick(async () => {
-                    const errors = new StatusValidator().validate(this.statusConfiguration());
+                    const errors = validator.validate(this.statusConfiguration());
                     if (errors.length > 0) {
                         const message = errors.join('\n') + '\n\n' + 'Fix errors before saving.';
                         // console.debug(message);
