@@ -25,8 +25,8 @@ class MarkdownTable {
     }
 
     private addTitleRow() {
-        let titles = '| ';
-        let divider = '| ';
+        let titles = '|';
+        let divider = '|';
         this.columnNames.forEach((s) => {
             titles += ` ${s} |`;
             divider += ' ----- |';
@@ -37,7 +37,7 @@ class MarkdownTable {
     }
 
     public addRow(cells: string[]) {
-        let row = '| ';
+        let row = '|';
         cells.forEach((s) => {
             row += ` ${s} |`;
         });
