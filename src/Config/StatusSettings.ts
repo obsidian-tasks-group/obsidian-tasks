@@ -1,4 +1,4 @@
-import { StatusConfiguration } from '../StatusConfiguration';
+import type { StatusConfiguration } from '../StatusConfiguration';
 import type { StatusRegistry } from '../StatusRegistry';
 import { Status } from '../Status';
 
@@ -113,10 +113,7 @@ export class StatusSettings {
                 );
             });
             if (!hasStatus) {
-                StatusSettings.addCustomStatus(
-                    statusSettings,
-                    new StatusConfiguration(importedStatus[0], importedStatus[1], importedStatus[2], false),
-                );
+                StatusSettings.addCustomStatus(statusSettings, Status.createFromImportedValue(importedStatus));
             } else {
                 notices.push(`The status ${importedStatus[1]} (${importedStatus[0]}) is already added.`);
             }

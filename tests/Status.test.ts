@@ -92,4 +92,24 @@ describe('Status', () => {
         expect(status!.type).toEqual(StatusType.TODO);
         expect(status!.isCompleted()).toEqual(false);
     });
+
+    it('should construct a Status from a core imported value', () => {
+        const imported: [string, string, string] = ['/', 'in progress', 'x'];
+        const status = Status.createFromImportedValue(imported);
+        expect(status.indicator).toEqual('/');
+        expect(status.name).toEqual('in progress');
+        expect(status.nextStatusIndicator).toEqual('x');
+        expect(status.type).toEqual(StatusType.IN_PROGRESS); // should deduce IN_PROGRESS from indicator '/'
+        expect(status.availableAsCommand).toEqual(false);
+    });
+
+    it('should construct a Status from a custom imported value', () => {
+        const imported: [string, string, string] = ['P', 'Pro', 'C'];
+        const status = Status.createFromImportedValue(imported);
+        expect(status.indicator).toEqual('P');
+        expect(status.name).toEqual('Pro');
+        expect(status.nextStatusIndicator).toEqual('C');
+        expect(status.type).toEqual(StatusType.TODO);
+        expect(status.availableAsCommand).toEqual(false);
+    });
 });
