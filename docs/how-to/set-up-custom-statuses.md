@@ -73,11 +73,11 @@ Suppose that you wanted to create a set of 3 statuses that cycle between each ot
 
 <!-- placeholder to force blank line before table --> <!-- include: DocsSamplesForStatuses.test.DefaultStatuses_important-cycle.approved.md -->
 
-| Status Character    | Status Name | Next Status Character | Needs Custom Styling |
-| ------------------- | ----------- | --------------------- | -------------------- |
-| `!` | Important | `D` | Yes |
-| `D` | Doing - Important | `X` | Yes |
-| `X` | Done - Important | `!` | Yes |
+| Status Character    | Status Name | Next Status Character | Status Type | Needs Custom Styling |
+| ------------------- | ----------- | --------------------- | ----------- | -------------------- |
+| `!` | Important | `D` | `TODO` | Yes |
+| `D` | Doing - Important | `X` | `TODO` | Yes |
+| `X` | Done - Important | `!` | `DONE` | Yes |
 
 <!-- placeholder to force blank line after table --> <!-- endInclude -->
 
