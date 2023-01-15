@@ -21,7 +21,7 @@ export class Status {
      * @type {Status}
      * @memberof Status
      */
-    public static DONE: Status = new Status(StatusConfiguration.makeDone());
+    public static DONE: Status = Status.makeDone();
 
     /**
      * A default status of empty, used when things go wrong.
@@ -29,7 +29,7 @@ export class Status {
      * @static
      * @memberof Status
      */
-    public static EMPTY: Status = new Status(StatusConfiguration.makeEmpty());
+    public static EMPTY: Status = Status.makeEmpty();
 
     /**
      * The default Todo status. Goes to Done when toggled.
@@ -39,7 +39,7 @@ export class Status {
      * @type {Status}
      * @memberof Status
      */
-    public static TODO: Status = new Status(StatusConfiguration.makeTodo());
+    public static TODO: Status = Status.makeTodo();
 
     /**
      * The configuration stored in the data.json file.
@@ -101,6 +101,42 @@ export class Status {
     }
 
     /**
+     * The default Done status. Goes to Todo when toggled.
+     */
+    static makeDone(): Status {
+        return new Status(new StatusConfiguration('x', 'Done', ' ', true));
+    }
+
+    /**
+     * A default status of empty, used when things go wrong.
+     */
+    static makeEmpty(): Status {
+        return new Status(new StatusConfiguration('', 'EMPTY', '', true));
+    }
+
+    /**
+     * The default Todo status. Goes to Done when toggled.
+     * User may later be able to override this to go to In Progress instead.
+     */
+    static makeTodo(): Status {
+        return new Status(new StatusConfiguration(' ', 'Todo', 'x', true));
+    }
+
+    /**
+     * The default Cancelled status. Goes to Todo when toggled.
+     */
+    static makeCancelled(): Status {
+        return new Status(new StatusConfiguration('-', 'Cancelled', ' ', true));
+    }
+
+    /**
+     * The default In Progress status. Goes to Done when toggled.
+     */
+    static makeInProgress(): Status {
+        return new Status(new StatusConfiguration('/', 'In Progress', 'x', true));
+    }
+
+    /**
      * Create a Status representing the given, unknown indicator.
      *
      * This can be useful when StatusRegistry does not recognise an indicator,
@@ -120,5 +156,27 @@ export class Status {
      */
     public isCompleted(): boolean {
         return this.indicator === 'x' || this.indicator === 'X';
+    }
+
+    /**
+     * Return a one-line summary of the status, for presentation to users.
+     */
+    public previewText() {
+        let commandNotice = '';
+        if (Status.tasksPluginCanCreateCommandsForStatuses() && this.availableAsCommand) {
+            commandNotice = 'Available as a command.';
+        }
+        return `- [${this.indicator}] ${this.name}, next status is '${this.nextStatusIndicator}'. ${commandNotice}`;
+    }
+
+    /**
+     * Whether Tasks can yet create 'Toggle Status' commands for statuses
+     *
+     * This is not yet possible, and so some UI features are temporarily hidden.
+     * See https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1486
+     * Once that issue is addressed, this method can be removed.
+     */
+    public static tasksPluginCanCreateCommandsForStatuses(): boolean {
+        return false;
     }
 }
