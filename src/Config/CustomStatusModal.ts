@@ -1,5 +1,5 @@
 import { Modal, Notice, Setting, TextComponent } from 'obsidian';
-import { StatusConfiguration } from '../StatusConfiguration';
+import { StatusConfiguration, StatusType } from '../StatusConfiguration';
 import type TasksPlugin from '../main';
 import { StatusValidator } from '../StatusValidator';
 import { Status } from '../Status';
@@ -11,6 +11,8 @@ export class CustomStatusModal extends Modal {
     statusName: string;
     statusNextSymbol: string;
     statusAvailableAsCommand: boolean;
+    type: StatusType;
+
     saved: boolean = false;
     error: boolean = false;
     constructor(public plugin: TasksPlugin, statusType: StatusConfiguration) {
@@ -19,6 +21,7 @@ export class CustomStatusModal extends Modal {
         this.statusName = statusType.name;
         this.statusNextSymbol = statusType.nextStatusIndicator;
         this.statusAvailableAsCommand = statusType.availableAsCommand;
+        this.type = statusType.type;
     }
 
     /**
@@ -30,6 +33,7 @@ export class CustomStatusModal extends Modal {
             this.statusName,
             this.statusNextSymbol,
             this.statusAvailableAsCommand,
+            this.type,
         );
     }
 
@@ -88,6 +92,25 @@ export class CustomStatusModal extends Modal {
                     statusNextSymbolText,
                     validator.validateNextIndicator(this.statusConfiguration()),
                 );
+            });
+
+        new Setting(settingDiv)
+            .setName('Task Status Type')
+            .setDesc('Control how the status behaves for searching and toggling')
+            .addDropdown((dropdown) => {
+                const types = [
+                    StatusType.TODO,
+                    StatusType.IN_PROGRESS,
+                    StatusType.DONE,
+                    StatusType.CANCELLED,
+                    StatusType.NON_TASK,
+                ];
+                types.forEach((s) => {
+                    dropdown.addOption(s, s);
+                });
+                dropdown.setValue(this.type).onChange((v) => {
+                    this.type = Status.getTypeFromStatusTypeString(v);
+                });
             });
 
         if (Status.tasksPluginCanCreateCommandsForStatuses()) {

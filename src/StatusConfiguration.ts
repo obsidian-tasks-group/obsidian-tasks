@@ -1,4 +1,16 @@
 /**
+ * Collection of status types supported by the plugin.
+ */
+export enum StatusType {
+    TODO = 'TODO',
+    DONE = 'DONE',
+    IN_PROGRESS = 'IN_PROGRESS',
+    CANCELLED = 'CANCELLED',
+    NON_TASK = 'NON_TASK',
+    EMPTY = 'EMPTY',
+}
+
+/**
  * This is the object stored by the Obsidian configuration and used to create the status
  * objects for the session
  *
@@ -39,6 +51,11 @@ export class StatusConfiguration {
     public readonly availableAsCommand: boolean;
 
     /**
+     * Returns the status type. See {@link StatusType} for details.
+     */
+    public readonly type: StatusType;
+
+    /**
      * Creates an instance of Status. The registry will be added later in the case
      * of the default statuses.
      *
@@ -46,12 +63,20 @@ export class StatusConfiguration {
      * @param {string} name
      * @param {Status} nextStatusIndicator
      * @param {boolean} availableAsCommand
+     * @param {StatusType} type
      * @memberof Status
      */
-    constructor(indicator: string, name: string, nextStatusIndicator: string, availableAsCommand: boolean) {
+    constructor(
+        indicator: string,
+        name: string,
+        nextStatusIndicator: string,
+        availableAsCommand: boolean,
+        type: StatusType = StatusType.TODO, // TODO Remove default value
+    ) {
         this.indicator = indicator;
         this.name = name;
         this.nextStatusIndicator = nextStatusIndicator;
         this.availableAsCommand = availableAsCommand;
+        this.type = type;
     }
 }
