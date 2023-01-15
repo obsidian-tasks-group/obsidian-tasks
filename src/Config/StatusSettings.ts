@@ -1,5 +1,6 @@
-import { StatusConfiguration } from '../StatusConfiguration';
+import type { StatusConfiguration } from '../StatusConfiguration';
 import type { StatusRegistry } from '../StatusRegistry';
+import { Status } from '../Status';
 
 /**
  * Class for encapsulating the settings that control custom statuses.
@@ -45,12 +46,26 @@ export class StatusSettings {
         originalStatus: StatusConfiguration,
         newStatus: StatusConfiguration,
     ): boolean {
-        const index = statusSettings.customStatusTypes.indexOf(originalStatus);
+        const index = this.findStatusIndex(originalStatus, statusSettings);
         if (index <= -1) {
             return false;
         }
         statusSettings.customStatusTypes.splice(index, 1, newStatus);
         return true;
+    }
+
+    /**
+     * This is a workaround for the fact that statusSettings.customStatusTypes.indexOf(statusConfiguration)
+     * stopped finding identical statuses since the addition of StatusConfiguration.type.
+     * @param statusConfiguration
+     * @param statusSettings
+     * @private
+     */
+    private static findStatusIndex(statusConfiguration: StatusConfiguration, statusSettings: StatusSettings) {
+        const originalStatusAsStatus = new Status(statusConfiguration);
+        return statusSettings.customStatusTypes.findIndex((s) => {
+            return new Status(s).previewText() == originalStatusAsStatus.previewText();
+        });
     }
 
     /**
@@ -63,7 +78,7 @@ export class StatusSettings {
      * @param status
      */
     public static deleteCustomStatus(statusSettings: StatusSettings, status: StatusConfiguration) {
-        const index = statusSettings.customStatusTypes.indexOf(status);
+        const index = this.findStatusIndex(status, statusSettings);
         if (index <= -1) {
             return false;
         }
@@ -98,10 +113,7 @@ export class StatusSettings {
                 );
             });
             if (!hasStatus) {
-                StatusSettings.addCustomStatus(
-                    statusSettings,
-                    new StatusConfiguration(importedStatus[0], importedStatus[1], importedStatus[2], false),
-                );
+                StatusSettings.addCustomStatus(statusSettings, Status.createFromImportedValue(importedStatus));
             } else {
                 notices.push(`The status ${importedStatus[1]} (${importedStatus[0]}) is already added.`);
             }

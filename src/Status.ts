@@ -1,4 +1,4 @@
-import { StatusConfiguration } from './StatusConfiguration';
+import { StatusConfiguration, StatusType } from './StatusConfiguration';
 
 /**
  * Tracks the possible states that a task can be in.
@@ -90,6 +90,13 @@ export class Status {
     }
 
     /**
+     * Returns the status type. See {@link StatusType} for details.
+     */
+    public get type(): StatusType {
+        return this.configuration.type;
+    }
+
+    /**
      * Creates an instance of Status. The registry will be added later in the case
      * of the default statuses.
      *
@@ -104,14 +111,14 @@ export class Status {
      * The default Done status. Goes to Todo when toggled.
      */
     static makeDone(): Status {
-        return new Status(new StatusConfiguration('x', 'Done', ' ', true));
+        return new Status(new StatusConfiguration('x', 'Done', ' ', true, StatusType.DONE));
     }
 
     /**
      * A default status of empty, used when things go wrong.
      */
     static makeEmpty(): Status {
-        return new Status(new StatusConfiguration('', 'EMPTY', '', true));
+        return new Status(new StatusConfiguration('', 'EMPTY', '', true, StatusType.EMPTY));
     }
 
     /**
@@ -119,21 +126,53 @@ export class Status {
      * User may later be able to override this to go to In Progress instead.
      */
     static makeTodo(): Status {
-        return new Status(new StatusConfiguration(' ', 'Todo', 'x', true));
+        return new Status(new StatusConfiguration(' ', 'Todo', 'x', true, StatusType.TODO));
     }
 
     /**
      * The default Cancelled status. Goes to Todo when toggled.
      */
     static makeCancelled(): Status {
-        return new Status(new StatusConfiguration('-', 'Cancelled', ' ', true));
+        return new Status(new StatusConfiguration('-', 'Cancelled', ' ', true, StatusType.CANCELLED));
     }
 
     /**
      * The default In Progress status. Goes to Done when toggled.
      */
     static makeInProgress(): Status {
-        return new Status(new StatusConfiguration('/', 'In Progress', 'x', true));
+        return new Status(new StatusConfiguration('/', 'In Progress', 'x', true, StatusType.IN_PROGRESS));
+    }
+
+    /**
+     * Return the StatusType to use for an indicator, if it is not in the StatusRegistry.
+     * The core indicators are recognised.
+     * Other indicators are treated as StatusType.TODO
+     * @param indicator
+     */
+    static getTypeForUnknownIndicator(indicator: string): StatusType {
+        switch (indicator) {
+            case 'x':
+            case 'X':
+                return StatusType.DONE;
+            case '/':
+                return StatusType.IN_PROGRESS;
+            case '-':
+                return StatusType.CANCELLED;
+            case '':
+                return StatusType.EMPTY;
+            case ' ':
+            default:
+                return StatusType.TODO;
+        }
+    }
+
+    /**
+     * Convert text that was saved from a StatusType value back to a StatusType.
+     * Returns StatusType.TODO if the string is not valid.
+     * @param statusTypeAsString
+     */
+    static getTypeFromStatusTypeString(statusTypeAsString: string): StatusType {
+        return StatusType[statusTypeAsString as keyof typeof StatusType] || StatusType.TODO;
     }
 
     /**
@@ -141,10 +180,24 @@ export class Status {
      *
      * This can be useful when StatusRegistry does not recognise an indicator,
      * and we do not want to expose the user's data to the Status.EMPTY status.
+     *
+     * The type is set to TODO.
      * @param unknownIndicator
      */
     static createUnknownStatus(unknownIndicator: string) {
-        return new Status(new StatusConfiguration(unknownIndicator, 'Unknown', 'x', false));
+        return new Status(new StatusConfiguration(unknownIndicator, 'Unknown', 'x', false, StatusType.TODO));
+    }
+
+    /**
+     * Helper function for bulk-importing settings from arrays of strings.
+     *
+     * The type is deduced, for a few common status indicators.
+     * @param imported An array of indicator, name, next indicator
+     */
+    static createFromImportedValue(imported: [string, string, string]) {
+        const indicator = imported[0];
+        const type = Status.getTypeForUnknownIndicator(indicator);
+        return new Status(new StatusConfiguration(indicator, imported[1], imported[2], false, type));
     }
 
     /**
@@ -166,7 +219,7 @@ export class Status {
         if (Status.tasksPluginCanCreateCommandsForStatuses() && this.availableAsCommand) {
             commandNotice = 'Available as a command.';
         }
-        return `- [${this.indicator}] ${this.name}, next status is '${this.nextStatusIndicator}'. ${commandNotice}`;
+        return `- [${this.indicator}] ${this.name}, next status is '${this.nextStatusIndicator}', type is '${this.configuration.type}'. ${commandNotice}`;
     }
 
     /**
