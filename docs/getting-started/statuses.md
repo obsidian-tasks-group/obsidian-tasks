@@ -44,12 +44,12 @@ This table shows the statuses provided by default:
 
 <!-- placeholder to force blank line before table --> <!-- include: DocsSamplesForStatuses.test.DefaultStatuses_core-statuses.approved.md -->
 
-| Status Character    | Status Name | Next Status Character | Needs Custom Styling |
-| ------------------- | ----------- | --------------------- | -------------------- |
-| `space` | Todo | `x` | No |
-| `/` | In Progress | `x` | Yes |
-| `x` | Done | `space` | No |
-| `-` | Cancelled | `space` | Yes |
+| Status Character    | Status Name | Next Status Character | Status Type | Needs Custom Styling |
+| ------------------- | ----------- | --------------------- | ----------- | -------------------- |
+| `space` | Todo | `x` | `TODO` | No |
+| `/` | In Progress | `x` | `IN_PROGRESS` | Yes |
+| `x` | Done | `space` | `DONE` | No |
+| `-` | Cancelled | `space` | `CANCELLED` | Yes |
 
 <!-- placeholder to force blank line after table --> <!-- endInclude -->
 
@@ -89,27 +89,27 @@ Remember to set up your chosen CSS Snippet or Theme before setting up the custom
 
 <!-- placeholder to force blank line before table --> <!-- include: DocsSamplesForStatuses.test.DefaultStatuses_minimal-supported-statuses.approved.md -->
 
-| Status Character    | Status Name | Next Status Character | Needs Custom Styling |
-| ------------------- | ----------- | --------------------- | -------------------- |
-| `>` | Forwarded | `x` | Yes |
-| `<` | Schedule | `x` | Yes |
-| `?` | Question | `x` | Yes |
-| `!` | Important | `x` | Yes |
-| `"` | Quote | `x` | Yes |
-| `-` | Canceled | `x` | Yes |
-| `*` | Star | `x` | Yes |
-| `l` | Location | `x` | Yes |
-| `i` | Info | `x` | Yes |
-| `S` | Amount/savings/money | `x` | Yes |
-| `I` | Idea/lightbulb | `x` | Yes |
-| `f` | Fire | `x` | Yes |
-| `k` | Key | `x` | Yes |
-| `u` | Up | `x` | Yes |
-| `d` | Down | `x` | Yes |
-| `w` | Win | `x` | Yes |
-| `p` | Pros | `x` | Yes |
-| `c` | Cons | `x` | Yes |
-| `b` | Bookmark | `x` | Yes |
+| Status Character    | Status Name | Next Status Character | Status Type | Needs Custom Styling |
+| ------------------- | ----------- | --------------------- | ----------- | -------------------- |
+| `>` | Forwarded | `x` | `TODO` | Yes |
+| `<` | Schedule | `x` | `TODO` | Yes |
+| `?` | Question | `x` | `TODO` | Yes |
+| `!` | Important | `x` | `TODO` | Yes |
+| `"` | Quote | `x` | `TODO` | Yes |
+| `-` | Canceled | `x` | `CANCELLED` | Yes |
+| `*` | Star | `x` | `TODO` | Yes |
+| `l` | Location | `x` | `TODO` | Yes |
+| `i` | Info | `x` | `TODO` | Yes |
+| `S` | Amount/savings/money | `x` | `TODO` | Yes |
+| `I` | Idea/lightbulb | `x` | `TODO` | Yes |
+| `f` | Fire | `x` | `TODO` | Yes |
+| `k` | Key | `x` | `TODO` | Yes |
+| `u` | Up | `x` | `TODO` | Yes |
+| `d` | Down | `x` | `TODO` | Yes |
+| `w` | Win | `x` | `TODO` | Yes |
+| `p` | Pros | `x` | `TODO` | Yes |
+| `c` | Cons | `x` | `TODO` | Yes |
+| `b` | Bookmark | `x` | `TODO` | Yes |
 
 <!-- placeholder to force blank line after table --> <!-- endInclude -->
 
@@ -117,28 +117,28 @@ Remember to set up your chosen CSS Snippet or Theme before setting up the custom
 
 <!-- placeholder to force blank line before table --> <!-- include: DocsSamplesForStatuses.test.DefaultStatuses_its-theme-supported-statuses.approved.md -->
 
-| Status Character    | Status Name | Next Status Character | Needs Custom Styling |
-| ------------------- | ----------- | --------------------- | -------------------- |
-| `>` | Forward | `x` | Yes |
-| `D` | Deferred/Scheduled | `x` | Yes |
-| `?` | Question | `x` | Yes |
-| `!` | Important | `x` | Yes |
-| `+` | Add | `x` | Yes |
-| `R` | Research | `x` | Yes |
-| `i` | Idea | `x` | Yes |
-| `B` | Brainstorm | `x` | Yes |
-| `P` | Pro | `x` | Yes |
-| `C` | Con | `x` | Yes |
-| `I` | Info | `x` | Yes |
-| `Q` | Quote | `x` | Yes |
-| `N` | Note | `x` | Yes |
-| `b` | Bookmark | `x` | Yes |
-| `p` | Paraphrase | `x` | Yes |
-| `E` | Example | `x` | Yes |
-| `L` | Location | `x` | Yes |
-| `A` | Answer | `x` | Yes |
-| `r` | Reward | `x` | Yes |
-| `c` | Choice | `x` | Yes |
+| Status Character    | Status Name | Next Status Character | Status Type | Needs Custom Styling |
+| ------------------- | ----------- | --------------------- | ----------- | -------------------- |
+| `>` | Forward | `x` | `TODO` | Yes |
+| `D` | Deferred/Scheduled | `x` | `TODO` | Yes |
+| `?` | Question | `x` | `TODO` | Yes |
+| `!` | Important | `x` | `TODO` | Yes |
+| `+` | Add | `x` | `TODO` | Yes |
+| `R` | Research | `x` | `TODO` | Yes |
+| `i` | Idea | `x` | `TODO` | Yes |
+| `B` | Brainstorm | `x` | `TODO` | Yes |
+| `P` | Pro | `x` | `TODO` | Yes |
+| `C` | Con | `x` | `TODO` | Yes |
+| `I` | Info | `x` | `TODO` | Yes |
+| `Q` | Quote | `x` | `TODO` | Yes |
+| `N` | Note | `x` | `TODO` | Yes |
+| `b` | Bookmark | `x` | `TODO` | Yes |
+| `p` | Paraphrase | `x` | `TODO` | Yes |
+| `E` | Example | `x` | `TODO` | Yes |
+| `L` | Location | `x` | `TODO` | Yes |
+| `A` | Answer | `x` | `TODO` | Yes |
+| `r` | Reward | `x` | `TODO` | Yes |
+| `c` | Choice | `x` | `TODO` | Yes |
 
 <!-- placeholder to force blank line after table --> <!-- endInclude -->
 
