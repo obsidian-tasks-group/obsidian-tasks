@@ -3,7 +3,56 @@ import { verify } from 'approvals/lib/Providers/Jest/JestApprovals';
 
 import { StatusRegistry } from '../src/StatusRegistry';
 import { Status } from '../src/Status';
+import type { Task } from '../src/Task';
 import * as StatusSettingsHelpers from '../src/Config/StatusSettingsHelpers';
+import { StatusConfiguration, StatusType } from '../src/StatusConfiguration';
+import type { FilterOrErrorMessage } from '../src/Query/Filter/Filter';
+import * as FilterParser from '../src/Query/FilterParser';
+import { Group } from '../src/Query/Group';
+import { TaskBuilder } from './TestingTools/TaskBuilder';
+
+class MarkdownTable {
+    private columnNames: string[];
+    private _markdown = '';
+
+    constructor(columnNames: string[]) {
+        this.columnNames = columnNames;
+        this.addTitleRow();
+    }
+
+    get markdown(): string {
+        return this._markdown;
+    }
+
+    private addTitleRow() {
+        let titles = '|';
+        let divider = '|';
+        this.columnNames.forEach((s) => {
+            titles += ` ${s} |`;
+            divider += ' ----- |';
+        });
+
+        this._markdown += `${titles}\n`;
+        this._markdown += `${divider}\n`;
+    }
+
+    public addRow(cells: string[]) {
+        let row = '|';
+        cells.forEach((s) => {
+            row += ` ${s} |`;
+        });
+        this._markdown += `${row}\n`;
+    }
+
+    public verify() {
+        let output = '<!-- placeholder to force blank line before table -->\n\n';
+        output += this.markdown;
+        output += '\n\n<!-- placeholder to force blank line after table -->\n';
+        let options = new Options();
+        options = options.forFile().withFileExtention('md');
+        verify(output, options);
+    }
+}
 
 function getPrintableIndicator(indicator: string) {
     const result = indicator !== ' ' ? indicator : 'space';
@@ -11,22 +60,22 @@ function getPrintableIndicator(indicator: string) {
 }
 
 function verifyStatusesAsMarkdownTable(statuses: Status[]) {
-    let commandsTable = '<!-- placeholder to force blank line before table -->\n\n';
-    commandsTable +=
-        '| Status Character    | Status Name | Next Status Character | Status Type | Needs Custom Styling |\n';
-    commandsTable +=
-        '| ------------------- | ----------- | --------------------- | ----------- | -------------------- |\n';
+    const table = new MarkdownTable([
+        'Status Character',
+        'Status Name',
+        'Next Status Character',
+        'Status Type',
+        'Needs Custom Styling',
+    ]);
+
     for (const status of statuses) {
         const statusCharacter = getPrintableIndicator(status.indicator);
         const nextStatusCharacter = getPrintableIndicator(status.nextStatusIndicator);
         const type = getPrintableIndicator(status.type);
         const needsCustomStyling = status.indicator !== ' ' && status.indicator !== 'x' ? 'Yes' : 'No';
-        commandsTable += `| ${statusCharacter} | ${status.name} | ${nextStatusCharacter} | ${type} | ${needsCustomStyling} |\n`;
+        table.addRow([statusCharacter, status.name, nextStatusCharacter, type, needsCustomStyling]);
     }
-    commandsTable += '\n\n<!-- placeholder to force blank line after table -->\n';
-    let options = new Options();
-    options = options.forFile().withFileExtention('md');
-    verify(commandsTable, options);
+    table.verify();
 }
 
 function constructStatuses(importedStatuses: Array<[string, string, string]>) {
@@ -61,5 +110,67 @@ describe('DefaultStatuses', () => {
             ['X', 'Done - Important', '!'],
         ];
         verifyStatusesAsMarkdownTable(constructStatuses(importantCycle));
+    });
+});
+
+function verifyTransitionsAsMarkdownTable(statuses: Status[]) {
+    const columnNames: string[] = ['Operation'];
+    statuses.forEach((s) => {
+        const title = s.type;
+        columnNames.push(title);
+    });
+
+    const table = new MarkdownTable(columnNames);
+
+    const tasks: Task[] = [];
+    {
+        const cells: string[] = ['Example Task'];
+        statuses.forEach((s) => {
+            const task = new TaskBuilder().status(s).description('demo').build();
+            tasks.push(task);
+            cells.push('`' + task!.toFileLineString() + '`');
+        });
+        table.addRow(cells);
+    }
+
+    function filterAllStatuses(filter: FilterOrErrorMessage) {
+        const cells: string[] = [`Matches \`${filter!.instruction}\``];
+        tasks.forEach((task) => {
+            const matchedText = filter!.filter?.filterFunction(task) ? 'YES' : 'no';
+            cells.push(matchedText);
+        });
+        table.addRow(cells);
+    }
+
+    filterAllStatuses(FilterParser.parseFilter('done')!);
+    filterAllStatuses(FilterParser.parseFilter('not done')!);
+    filterAllStatuses(FilterParser.parseFilter('status.name includes todo')!);
+    filterAllStatuses(FilterParser.parseFilter('status.name includes in progress')!);
+    filterAllStatuses(FilterParser.parseFilter('status.name includes done')!);
+    filterAllStatuses(FilterParser.parseFilter('status.name includes cancelled')!);
+
+    {
+        const cells: string[] = ['Name for `group by status`'];
+        tasks.forEach((task) => {
+            const groupNamesForTask = Group.getGroupNamesForTask('status', task);
+            const names = groupNamesForTask.join(',');
+            cells.push(names);
+        });
+        table.addRow(cells);
+    }
+
+    table.verify();
+}
+
+describe('Status Transitions', () => {
+    it('status-types', () => {
+        const statuses = [
+            Status.makeTodo(),
+            Status.makeInProgress(),
+            Status.makeDone(),
+            Status.makeCancelled(),
+            new Status(new StatusConfiguration('~', 'Non Task', ' ', false, StatusType.NON_TASK)),
+        ];
+        verifyTransitionsAsMarkdownTable(statuses);
     });
 });
