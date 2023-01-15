@@ -3,7 +3,13 @@ import { verify } from 'approvals/lib/Providers/Jest/JestApprovals';
 
 import { StatusRegistry } from '../src/StatusRegistry';
 import { Status } from '../src/Status';
+import type { Task } from '../src/Task';
 import * as StatusSettingsHelpers from '../src/Config/StatusSettingsHelpers';
+import { StatusConfiguration, StatusType } from '../src/StatusConfiguration';
+import type { FilterOrErrorMessage } from '../src/Query/Filter/Filter';
+import * as FilterParser from '../src/Query/FilterParser';
+import { Group } from '../src/Query/Group';
+import { TaskBuilder } from './TestingTools/TaskBuilder';
 
 function getPrintableIndicator(indicator: string) {
     const result = indicator !== ' ' ? indicator : 'space';
@@ -61,5 +67,79 @@ describe('DefaultStatuses', () => {
             ['X', 'Done - Important', '!'],
         ];
         verifyStatusesAsMarkdownTable(constructStatuses(importantCycle));
+    });
+});
+
+function verifyTransitionsAsMarkdownTable(statuses: Status[]) {
+    let commandsTable = '<!-- placeholder to force blank line before table -->\n\n';
+    let titles = '| ';
+    let divider = '| ';
+
+    titles += ' Operation | ';
+    divider += ' ----- | ';
+    statuses.forEach((s) => {
+        titles += ` ${s.type} |`;
+        divider += ' ----- |';
+    });
+
+    commandsTable += `${titles}\n`;
+    commandsTable += `${divider}\n`;
+
+    const tasks: Task[] = [];
+    {
+        let row = '| ';
+        row += ' Example Task | ';
+        statuses.forEach((s) => {
+            const task = new TaskBuilder().status(s).description('demo').build();
+            tasks.push(task);
+            row += ` \`${task!.toFileLineString()}\` |`;
+        });
+        commandsTable += `${row}\n`;
+    }
+
+    function filterAllStatuses(filter: FilterOrErrorMessage) {
+        let row = '| ';
+        row += ` Matches \`${filter!.instruction}\` | `;
+        tasks.forEach((task) => {
+            const matchedText = filter!.filter?.filterFunction(task) ? 'YES' : 'no';
+            row += ` ${matchedText} |`;
+        });
+        commandsTable += `${row}\n`;
+    }
+
+    filterAllStatuses(FilterParser.parseFilter('done')!);
+    filterAllStatuses(FilterParser.parseFilter('not done')!);
+    filterAllStatuses(FilterParser.parseFilter('status.name includes todo')!);
+    filterAllStatuses(FilterParser.parseFilter('status.name includes in progress')!);
+    filterAllStatuses(FilterParser.parseFilter('status.name includes done')!);
+    filterAllStatuses(FilterParser.parseFilter('status.name includes cancelled')!);
+
+    {
+        let row = '| ';
+        row += ' Name for `group by status` | ';
+        tasks.forEach((task) => {
+            const groupNamesForTask = Group.getGroupNamesForTask('status', task);
+            const names = groupNamesForTask.join(',');
+            row += ` ${names} |`;
+        });
+        commandsTable += `${row}\n`;
+    }
+
+    commandsTable += '\n\n<!-- placeholder to force blank line after table -->\n';
+    let options = new Options();
+    options = options.forFile().withFileExtention('md');
+    verify(commandsTable, options);
+}
+
+describe('Status Transitions', () => {
+    it('status-types', () => {
+        const statuses = [
+            Status.makeTodo(),
+            Status.makeInProgress(),
+            Status.makeDone(),
+            Status.makeCancelled(),
+            new Status(new StatusConfiguration('~', 'Non Task', ' ', false, StatusType.NON_TASK)),
+        ];
+        verifyTransitionsAsMarkdownTable(statuses);
     });
 });
