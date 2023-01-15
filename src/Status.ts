@@ -90,6 +90,13 @@ export class Status {
     }
 
     /**
+     * Returns the status type. See {@link StatusType} for details.
+     */
+    public get type(): StatusType {
+        return this.configuration.type;
+    }
+
+    /**
      * Creates an instance of Status. The registry will be added later in the case
      * of the default statuses.
      *
