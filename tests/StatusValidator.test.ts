@@ -1,21 +1,11 @@
 import { StatusConfiguration } from '../src/StatusConfiguration';
+import { StatusValidator } from '../src/StatusValidator';
 
-describe('StatusConfiguration', () => {
-    describe('preview text', () => {
-        const configuration = new StatusConfiguration('P', 'Pro', 'Con', true);
-        expect(configuration.previewText()).toEqual("- [P] Pro, next status is 'Con'. ");
-    });
-
-    describe('factory methods for default statuses', () => {
-        expect(StatusConfiguration.makeDone().previewText()).toEqual("- [x] Done, next status is ' '. ");
-        expect(StatusConfiguration.makeEmpty().previewText()).toEqual("- [] EMPTY, next status is ''. ");
-        expect(StatusConfiguration.makeTodo().previewText()).toEqual("- [ ] Todo, next status is 'x'. ");
-        expect(StatusConfiguration.makeCancelled().previewText()).toEqual("- [-] Cancelled, next status is ' '. ");
-        expect(StatusConfiguration.makeInProgress().previewText()).toEqual("- [/] In Progress, next status is 'x'. ");
-    });
+describe('StatusValidator', () => {
+    const statusValidator = new StatusValidator();
 
     function checkValidation(statusConfiguration: StatusConfiguration, expectedMessages: string[]) {
-        const errors = statusConfiguration.validate();
+        const errors = statusValidator.validate(statusConfiguration);
         expect(errors).toEqual(expectedMessages);
     }
 
@@ -65,12 +55,12 @@ describe('StatusConfiguration', () => {
         describe('validate indicator', () => {
             it('valid indicator', () => {
                 const config = new StatusConfiguration('X', 'Completed', 'c', false);
-                expect(config.validateIndicator()).toStrictEqual([]);
+                expect(statusValidator.validateIndicator(config)).toStrictEqual([]);
             });
 
             it('invalid indicator', () => {
                 const config = new StatusConfiguration('XYZ', 'Completed', 'c', false);
-                expect(config.validateIndicator()).toStrictEqual([
+                expect(statusValidator.validateIndicator(config)).toStrictEqual([
                     'Task Status Symbol ("XYZ") must be a single character.',
                 ]);
             });
@@ -79,12 +69,12 @@ describe('StatusConfiguration', () => {
         describe('validate next indicator', () => {
             it('valid indicator', () => {
                 const config = new StatusConfiguration('c', 'Completed', 'X', false);
-                expect(config.validateNextIndicator()).toStrictEqual([]);
+                expect(statusValidator.validateNextIndicator(config)).toStrictEqual([]);
             });
 
             it('invalid next indicator', () => {
                 const config = new StatusConfiguration('c', 'Completed', 'XYZ', false);
-                expect(config.validateNextIndicator()).toStrictEqual([
+                expect(statusValidator.validateNextIndicator(config)).toStrictEqual([
                     'Task Next Status Symbol ("XYZ") must be a single character.',
                 ]);
             });

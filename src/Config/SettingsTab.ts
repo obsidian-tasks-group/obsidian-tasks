@@ -2,6 +2,7 @@ import { Notice, PluginSettingTab, Setting, debounce } from 'obsidian';
 import { StatusConfiguration } from '../StatusConfiguration';
 import type TasksPlugin from '../main';
 import { StatusRegistry } from '../StatusRegistry';
+import { Status } from '../Status';
 import type { HeadingState } from './Settings';
 import { getSettings, isFeatureEnabled, updateGeneralSetting, updateSettings } from './Settings';
 import { StatusSettings } from './StatusSettings';
@@ -368,10 +369,10 @@ export class SettingsTab extends PluginSettingTab {
     insertTaskCoreStatusSettings(containerEl: HTMLElement, settings: SettingsTab) {
         // TODO Make these statuses editable
         const coreStatuses: StatusSettings = new StatusSettings();
-        StatusSettings.addCustomStatus(coreStatuses, StatusConfiguration.makeTodo());
-        StatusSettings.addCustomStatus(coreStatuses, StatusConfiguration.makeInProgress());
-        StatusSettings.addCustomStatus(coreStatuses, StatusConfiguration.makeDone());
-        StatusSettings.addCustomStatus(coreStatuses, StatusConfiguration.makeCancelled());
+        StatusSettings.addCustomStatus(coreStatuses, Status.makeTodo().configuration);
+        StatusSettings.addCustomStatus(coreStatuses, Status.makeInProgress().configuration);
+        StatusSettings.addCustomStatus(coreStatuses, Status.makeDone().configuration);
+        StatusSettings.addCustomStatus(coreStatuses, Status.makeCancelled().configuration);
 
         /* -------------------- One row per status in the settings -------------------- */
         coreStatuses.customStatusTypes.forEach((status_type) => {
@@ -463,7 +464,7 @@ function createRowForTaskStatus(
 
     const taskStatusPreview = containerEl.createEl('pre');
     taskStatusPreview.addClass('row-for-status');
-    taskStatusPreview.textContent = statusType.previewText();
+    taskStatusPreview.textContent = new Status(statusType).previewText();
 
     const setting = new Setting(containerEl);
 

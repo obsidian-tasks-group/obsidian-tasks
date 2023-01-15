@@ -1,5 +1,5 @@
 import { Status } from './Status';
-import { StatusConfiguration } from './StatusConfiguration';
+import type { StatusConfiguration } from './StatusConfiguration';
 
 /**
  * Tracks all the registered statuses a task can have.
@@ -195,11 +195,11 @@ export class StatusRegistry {
      */
     private addDefaultStatusTypes(): void {
         const defaultStatuses = [
-            new Status(StatusConfiguration.makeTodo()),
-            new Status(StatusConfiguration.makeInProgress()),
-            new Status(StatusConfiguration.makeDone()),
-            new Status(StatusConfiguration.makeCancelled()),
-            new Status(StatusConfiguration.makeEmpty()),
+            Status.makeTodo(),
+            Status.makeInProgress(),
+            Status.makeDone(),
+            Status.makeCancelled(),
+            Status.makeEmpty(),
         ];
 
         defaultStatuses.forEach((status) => {
