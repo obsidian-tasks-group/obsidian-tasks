@@ -13,6 +13,9 @@ Not only each component in a rendered task line is tagged with classes to differ
 
 ## Basic Task Structure
 
+{: .released }
+The following description relates to a restructuring of the rendered tasks that was introduced in Tasks X.Y.Z.
+
 The Tasks plugin renders a task in the following structure (this refers to query results, but the Reading View is the same exact the top-most containers):
 
 ```markdown
@@ -43,6 +46,9 @@ Within each component span there is an additional "internal" span, which is the 
 The reason for this additional internal span is that it allows CSS styles that closely wrap the text itself, rather than its container box, e.g. for the purpose of drawing a highlight or a box that is exactly in the size of the text.
 
 ## Generic and Specific Classes
+
+{: .released }
+Specific classes were introduced in Tasks X.Y.Z.
 
 Each rendered task component (description, priority, recurrence rule etc) includes a **generic class** that denotes this type of component.
 The generic classes are:
