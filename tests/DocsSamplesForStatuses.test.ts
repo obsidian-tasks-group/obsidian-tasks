@@ -94,6 +94,14 @@ class MarkdownTable {
         this._markdown += `${titles}\n`;
         this._markdown += `${divider}\n`;
     }
+
+    addRow(cells: string[]) {
+        let row = '| ';
+        cells.forEach((s) => {
+            row += ` ${s} |`;
+        });
+        this._markdown += `${row}\n`;
+    }
 }
 
 function verifyTransitionsAsMarkdownTable(statuses: Status[]) {
@@ -107,28 +115,25 @@ function verifyTransitionsAsMarkdownTable(statuses: Status[]) {
     });
 
     const table = new MarkdownTable(columnNames);
-    commandsTable += table.markdown;
 
     const tasks: Task[] = [];
     {
-        let row = '| ';
-        row += ' Example Task | ';
+        const cells: string[] = ['Example Task'];
         statuses.forEach((s) => {
             const task = new TaskBuilder().status(s).description('demo').build();
             tasks.push(task);
-            row += ` \`${task!.toFileLineString()}\` |`;
+            cells.push('`' + task!.toFileLineString() + '`');
         });
-        commandsTable += `${row}\n`;
+        table.addRow(cells);
     }
 
     function filterAllStatuses(filter: FilterOrErrorMessage) {
-        let row = '| ';
-        row += ` Matches \`${filter!.instruction}\` | `;
+        const cells: string[] = [`Matches \`${filter!.instruction}\``];
         tasks.forEach((task) => {
             const matchedText = filter!.filter?.filterFunction(task) ? 'YES' : 'no';
-            row += ` ${matchedText} |`;
+            cells.push(matchedText);
         });
-        commandsTable += `${row}\n`;
+        table.addRow(cells);
     }
 
     filterAllStatuses(FilterParser.parseFilter('done')!);
@@ -139,15 +144,15 @@ function verifyTransitionsAsMarkdownTable(statuses: Status[]) {
     filterAllStatuses(FilterParser.parseFilter('status.name includes cancelled')!);
 
     {
-        let row = '| ';
-        row += ' Name for `group by status` | ';
+        const cells: string[] = ['Name for `group by status`'];
         tasks.forEach((task) => {
             const groupNamesForTask = Group.getGroupNamesForTask('status', task);
             const names = groupNamesForTask.join(',');
-            row += ` ${names} |`;
+            cells.push(names);
         });
-        commandsTable += `${row}\n`;
+        table.addRow(cells);
     }
+    commandsTable += table.markdown;
 
     commandsTable += '\n\n<!-- placeholder to force blank line after table -->\n';
     let options = new Options();
