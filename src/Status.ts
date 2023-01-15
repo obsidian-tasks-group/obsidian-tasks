@@ -171,14 +171,18 @@ export class Status {
      *
      * This can be useful when StatusRegistry does not recognise an indicator,
      * and we do not want to expose the user's data to the Status.EMPTY status.
+     *
+     * The type is set to TODO.
      * @param unknownIndicator
      */
     static createUnknownStatus(unknownIndicator: string) {
-        return new Status(new StatusConfiguration(unknownIndicator, 'Unknown', 'x', false));
+        return new Status(new StatusConfiguration(unknownIndicator, 'Unknown', 'x', false, StatusType.TODO));
     }
 
     /**
      * Helper function for bulk-importing settings from arrays of strings.
+     *
+     * The type is deduced, for a few common status indicators.
      * @param imported An array of indicator, name, next indicator
      */
     static createFromImportedValue(imported: [string, string, string]) {
