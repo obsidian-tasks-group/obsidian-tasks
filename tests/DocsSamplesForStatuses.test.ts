@@ -95,20 +95,26 @@ class MarkdownTable {
         this._markdown += `${divider}\n`;
     }
 
-    addRow(cells: string[]) {
+    public addRow(cells: string[]) {
         let row = '| ';
         cells.forEach((s) => {
             row += ` ${s} |`;
         });
         this._markdown += `${row}\n`;
     }
+
+    public verify() {
+        let output = '<!-- placeholder to force blank line before table -->\n\n';
+        output += this.markdown;
+        output += '\n\n<!-- placeholder to force blank line after table -->\n';
+        let options = new Options();
+        options = options.forFile().withFileExtention('md');
+        verify(output, options);
+    }
 }
 
 function verifyTransitionsAsMarkdownTable(statuses: Status[]) {
-    let commandsTable = '<!-- placeholder to force blank line before table -->\n\n';
-
     const columnNames: string[] = ['Operation'];
-
     statuses.forEach((s) => {
         const title = s.type;
         columnNames.push(title);
@@ -152,12 +158,8 @@ function verifyTransitionsAsMarkdownTable(statuses: Status[]) {
         });
         table.addRow(cells);
     }
-    commandsTable += table.markdown;
 
-    commandsTable += '\n\n<!-- placeholder to force blank line after table -->\n';
-    let options = new Options();
-    options = options.forFile().withFileExtention('md');
-    verify(commandsTable, options);
+    table.verify();
 }
 
 describe('Status Transitions', () => {
