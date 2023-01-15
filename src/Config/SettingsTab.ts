@@ -1,5 +1,5 @@
 import { Notice, PluginSettingTab, Setting, debounce } from 'obsidian';
-import { StatusConfiguration } from '../StatusConfiguration';
+import { StatusConfiguration, StatusType } from '../StatusConfiguration';
 import type TasksPlugin from '../main';
 import { StatusRegistry } from '../StatusRegistry';
 import { Status } from '../Status';
@@ -403,7 +403,10 @@ export class SettingsTab extends PluginSettingTab {
                 .setButtonText('Add New Task Status')
                 .setCta()
                 .onClick(async () => {
-                    StatusSettings.addCustomStatus(statusSettings, new StatusConfiguration('', '', '', false));
+                    StatusSettings.addCustomStatus(
+                        statusSettings,
+                        new StatusConfiguration('', '', '', false, StatusType.TODO),
+                    );
                     await updateAndSaveStatusSettings(statusSettings, settings);
                 });
         });
