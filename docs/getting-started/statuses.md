@@ -44,8 +44,8 @@ This table shows the statuses provided by default:
 
 <!-- placeholder to force blank line before table --> <!-- include: DocsSamplesForStatuses.test.DefaultStatuses_core-statuses.approved.md -->
 
-| Status Character    | Status Name | Next Status Character | Status Type | Needs Custom Styling |
-| ------------------- | ----------- | --------------------- | ----------- | -------------------- |
+| Status Character | Status Name | Next Status Character | Status Type | Needs Custom Styling |
+| ----- | ----- | ----- | ----- | ----- |
 | `space` | Todo | `x` | `TODO` | No |
 | `/` | In Progress | `x` | `IN_PROGRESS` | Yes |
 | `x` | Done | `space` | `DONE` | No |
@@ -89,8 +89,8 @@ Remember to set up your chosen CSS Snippet or Theme before setting up the custom
 
 <!-- placeholder to force blank line before table --> <!-- include: DocsSamplesForStatuses.test.DefaultStatuses_minimal-supported-statuses.approved.md -->
 
-| Status Character    | Status Name | Next Status Character | Status Type | Needs Custom Styling |
-| ------------------- | ----------- | --------------------- | ----------- | -------------------- |
+| Status Character | Status Name | Next Status Character | Status Type | Needs Custom Styling |
+| ----- | ----- | ----- | ----- | ----- |
 | `>` | Forwarded | `x` | `TODO` | Yes |
 | `<` | Schedule | `x` | `TODO` | Yes |
 | `?` | Question | `x` | `TODO` | Yes |
@@ -117,8 +117,8 @@ Remember to set up your chosen CSS Snippet or Theme before setting up the custom
 
 <!-- placeholder to force blank line before table --> <!-- include: DocsSamplesForStatuses.test.DefaultStatuses_its-theme-supported-statuses.approved.md -->
 
-| Status Character    | Status Name | Next Status Character | Status Type | Needs Custom Styling |
-| ------------------- | ----------- | --------------------- | ----------- | -------------------- |
+| Status Character | Status Name | Next Status Character | Status Type | Needs Custom Styling |
+| ----- | ----- | ----- | ----- | ----- |
 | `>` | Forward | `x` | `TODO` | Yes |
 | `D` | Deferred/Scheduled | `x` | `TODO` | Yes |
 | `?` | Question | `x` | `TODO` | Yes |
