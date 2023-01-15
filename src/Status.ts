@@ -178,6 +178,16 @@ export class Status {
     }
 
     /**
+     * Helper function for bulk-importing settings from arrays of strings.
+     * @param imported An array of indicator, name, next indicator
+     */
+    static createFromImportedValue(imported: [string, string, string]) {
+        const indicator = imported[0];
+        const type = Status.getTypeForUnknownIndicator(indicator);
+        return new Status(new StatusConfiguration(indicator, imported[1], imported[2], false, type));
+    }
+
+    /**
      * Returns the completion status for a task, this is only supported
      * when the task is done/x.
      *

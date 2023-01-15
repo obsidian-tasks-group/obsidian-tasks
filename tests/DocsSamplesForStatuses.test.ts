@@ -3,7 +3,6 @@ import { verify } from 'approvals/lib/Providers/Jest/JestApprovals';
 
 import { StatusRegistry } from '../src/StatusRegistry';
 import { Status } from '../src/Status';
-import { StatusConfiguration } from '../src/StatusConfiguration';
 import * as StatusSettingsHelpers from '../src/Config/StatusSettingsHelpers';
 
 function getPrintableIndicator(indicator: string) {
@@ -13,13 +12,16 @@ function getPrintableIndicator(indicator: string) {
 
 function verifyStatusesAsMarkdownTable(statuses: Status[]) {
     let commandsTable = '<!-- placeholder to force blank line before table -->\n\n';
-    commandsTable += '| Status Character    | Status Name | Next Status Character | Needs Custom Styling |\n';
-    commandsTable += '| ------------------- | ----------- | --------------------- | -------------------- |\n';
+    commandsTable +=
+        '| Status Character    | Status Name | Next Status Character | Status Type | Needs Custom Styling |\n';
+    commandsTable +=
+        '| ------------------- | ----------- | --------------------- | ----------- | -------------------- |\n';
     for (const status of statuses) {
         const statusCharacter = getPrintableIndicator(status.indicator);
         const nextStatusCharacter = getPrintableIndicator(status.nextStatusIndicator);
+        const type = getPrintableIndicator(status.type);
         const needsCustomStyling = status.indicator !== ' ' && status.indicator !== 'x' ? 'Yes' : 'No';
-        commandsTable += `| ${statusCharacter} | ${status.name} | ${nextStatusCharacter} | ${needsCustomStyling} |\n`;
+        commandsTable += `| ${statusCharacter} | ${status.name} | ${nextStatusCharacter} | ${type} | ${needsCustomStyling} |\n`;
     }
     commandsTable += '\n\n<!-- placeholder to force blank line after table -->\n';
     let options = new Options();
@@ -30,9 +32,7 @@ function verifyStatusesAsMarkdownTable(statuses: Status[]) {
 function constructStatuses(importedStatuses: Array<[string, string, string]>) {
     const statuses: Status[] = [];
     importedStatuses.forEach((importedStatus) => {
-        statuses.push(
-            new Status(new StatusConfiguration(importedStatus[0], importedStatus[1], importedStatus[2], false)),
-        );
+        statuses.push(Status.createFromImportedValue(importedStatus));
     });
     return statuses;
 }
