@@ -20,6 +20,45 @@ has_toc: false
 
 ---
 
+## What's in a status?
+
+- `status symbol`
+  - the single character in the `[]` at the start of the task.
+- `status name`
+  - a name for the status.
+  - is searchable with `status.name`, for example `status.name includes todo`.
+- `next status symbol`
+  - the status symbol to use when the task is toggled.
+- `status type`
+  - one of `TODO`, `IN_PROGRESS`, `DONE`, `CANCELLED`, `NON_TASK`.
+  - these do not yet have any effect on search results.
+  - by assigning one of these types to your custom statuses, you can control some aspects of Tasks' behaviour for all task lines that use that particular custom status.
+
+### Status Types
+
+This table demonstrates the behaviour of each of the status types in Tasks.
+Each column shows an example task with the given status type.
+
+The tasks shown are purely examples for context. The `~` column is just an arbitrary example to show `NON_TASK`'s behaviour'. You can assign each of these types to any of your custom statuses.
+
+<!-- placeholder to force blank line before table --> <!-- include: DocsSamplesForStatuses.test.Status_Transitions status-types.approved.md -->
+
+| Operation | TODO | IN_PROGRESS | DONE | CANCELLED | NON_TASK |
+| ----- | ----- | ----- | ----- | ----- | ----- |
+| Example Task | `- [ ] demo` | `- [/] demo` | `- [x] demo` | `- [-] demo` | `- [~] demo` |
+| Matches `done` | no | YES | YES | YES | YES |
+| Matches `not done` | YES | no | no | no | no |
+| Matches `status.name includes todo` | YES | no | no | no | no |
+| Matches `status.name includes in progress` | no | YES | no | no | no |
+| Matches `status.name includes done` | no | no | YES | no | no |
+| Matches `status.name includes cancelled` | no | no | no | YES | no |
+| Name for `group by status` | Todo | Done | Done | Done | Done |
+
+<!-- placeholder to force blank line after table --> <!-- endInclude -->
+
+{: .warning }
+The results of the above table are subject to change, as the `done` and `not done` filters have not yet been updated for the addition of the status types.
+
 ## Standard Markdown task statuses
 
 Tasks have a status.
