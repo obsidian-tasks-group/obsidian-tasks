@@ -70,20 +70,44 @@ describe('DefaultStatuses', () => {
     });
 });
 
+class MarkdownTable {
+    private columnNames: string[];
+    private _markdown = '';
+
+    constructor(columnNames: string[]) {
+        this.columnNames = columnNames;
+        this.addTitleRow();
+    }
+
+    get markdown(): string {
+        return this._markdown;
+    }
+
+    private addTitleRow() {
+        let titles = '| ';
+        let divider = '| ';
+        this.columnNames.forEach((s) => {
+            titles += ` ${s} |`;
+            divider += ' ----- |';
+        });
+
+        this._markdown += `${titles}\n`;
+        this._markdown += `${divider}\n`;
+    }
+}
+
 function verifyTransitionsAsMarkdownTable(statuses: Status[]) {
     let commandsTable = '<!-- placeholder to force blank line before table -->\n\n';
-    let titles = '| ';
-    let divider = '| ';
 
-    titles += ' Operation | ';
-    divider += ' ----- | ';
+    const columnNames: string[] = ['Operation'];
+
     statuses.forEach((s) => {
-        titles += ` ${s.type} |`;
-        divider += ' ----- |';
+        const title = s.type;
+        columnNames.push(title);
     });
 
-    commandsTable += `${titles}\n`;
-    commandsTable += `${divider}\n`;
+    const table = new MarkdownTable(columnNames);
+    commandsTable += table.markdown;
 
     const tasks: Task[] = [];
     {
