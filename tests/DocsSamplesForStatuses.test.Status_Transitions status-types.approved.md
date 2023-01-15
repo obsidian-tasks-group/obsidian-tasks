@@ -1,7 +1,7 @@
 <!-- placeholder to force blank line before table -->
 
-|  Operation |  TODO | IN_PROGRESS | DONE | CANCELLED | NON_TASK |
-|  ----- |  ----- | ----- | ----- | ----- | ----- |
+|  Operation | TODO | IN_PROGRESS | DONE | CANCELLED | NON_TASK |
+|  ----- | ----- | ----- | ----- | ----- | ----- |
 |  Example Task |  `- [ ] demo` | `- [/] demo` | `- [x] demo` | `- [-] demo` | `- [~] demo` |
 |  Matches `done` |  no | YES | YES | YES | YES |
 |  Matches `not done` |  YES | no | no | no | no |
