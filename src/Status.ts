@@ -1,4 +1,4 @@
-import { StatusConfiguration } from './StatusConfiguration';
+import { StatusConfiguration, StatusType } from './StatusConfiguration';
 
 /**
  * Tracks the possible states that a task can be in.
@@ -104,14 +104,14 @@ export class Status {
      * The default Done status. Goes to Todo when toggled.
      */
     static makeDone(): Status {
-        return new Status(new StatusConfiguration('x', 'Done', ' ', true));
+        return new Status(new StatusConfiguration('x', 'Done', ' ', true, StatusType.DONE));
     }
 
     /**
      * A default status of empty, used when things go wrong.
      */
     static makeEmpty(): Status {
-        return new Status(new StatusConfiguration('', 'EMPTY', '', true));
+        return new Status(new StatusConfiguration('', 'EMPTY', '', true, StatusType.EMPTY));
     }
 
     /**
@@ -119,21 +119,21 @@ export class Status {
      * User may later be able to override this to go to In Progress instead.
      */
     static makeTodo(): Status {
-        return new Status(new StatusConfiguration(' ', 'Todo', 'x', true));
+        return new Status(new StatusConfiguration(' ', 'Todo', 'x', true, StatusType.TODO));
     }
 
     /**
      * The default Cancelled status. Goes to Todo when toggled.
      */
     static makeCancelled(): Status {
-        return new Status(new StatusConfiguration('-', 'Cancelled', ' ', true));
+        return new Status(new StatusConfiguration('-', 'Cancelled', ' ', true, StatusType.CANCELLED));
     }
 
     /**
      * The default In Progress status. Goes to Done when toggled.
      */
     static makeInProgress(): Status {
-        return new Status(new StatusConfiguration('/', 'In Progress', 'x', true));
+        return new Status(new StatusConfiguration('/', 'In Progress', 'x', true, StatusType.IN_PROGRESS));
     }
 
     /**
