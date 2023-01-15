@@ -79,7 +79,7 @@ describe('Status', () => {
 
     it('should construct a Status for unknown symbol', () => {
         // Arrange
-        const indicator = 'U';
+        const indicator = '/';
 
         // Act
         const status = Status.createUnknownStatus(indicator);
@@ -89,6 +89,8 @@ describe('Status', () => {
         expect(status!.indicator).toEqual(indicator);
         expect(status!.name).toEqual('Unknown');
         expect(status!.nextStatusIndicator).toEqual('x');
+        // Even though the type *could* be deduced as IN_PROGRESS, createUnknownStatus() is used when
+        // the user has not defined the meaning of a status indicator, so treat everything as TODO.
         expect(status!.type).toEqual(StatusType.TODO);
         expect(status!.isCompleted()).toEqual(false);
     });
