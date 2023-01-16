@@ -30,7 +30,7 @@
     "notice": {
       "class": "setting-item-description",
       "text": null,
-      "html": "If you want to have the tasks support additional statuses outside of the default ones add them here with the status symbol.<br><b>Note</b>: Any statuses with the same symbol as any earlier statuses will be ignored.<br>You can confirm the actually loaded statuses by running the 'Create or edit task' command and looking at the Status drop-down."
+      "html": "<p>If you want support for additional status types outside of the core ones above, add them here with their status symbol.</p><p><b>Note</b>: Any statuses with the same symbol as any earlier statuses will be ignored.<br>You can confirm the actually loaded statuses by running the 'Create or edit task' command and looking at the Status drop-down.</p><p>See the <a href=\"https://obsidian-tasks-group.github.io/obsidian-tasks/getting-started/statuses/\">documentation</a>.</p>"
     },
     "settings": [
       {

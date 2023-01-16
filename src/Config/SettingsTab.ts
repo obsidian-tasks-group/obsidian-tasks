@@ -16,8 +16,8 @@ export class SettingsTab extends PluginSettingTab {
     // custom function and specify it from the json file. It will
     // then be rendered instead of a normal checkbox or text box.
     customFunctions: { [K: string]: Function } = {
-        insertTaskCoreStatusSettings: this.insertTaskCoreStatusSettings,
-        insertTaskStatusSettings: this.insertTaskStatusSettings,
+        insertTaskCoreStatusSettings: this.insertTaskCoreStatusSettings.bind(this),
+        insertTaskStatusSettings: this.insertTaskStatusSettings.bind(this),
     };
 
     private readonly plugin: TasksPlugin;
@@ -441,6 +441,37 @@ export class SettingsTab extends PluginSettingTab {
                 });
         });
         addStatusesSupportedByITSTheme.infoEl.remove();
+
+        /* -------------------- 'Add All Unknown Status Types' button -------------------- */
+        const addAllUnknownStatuses = new Setting(containerEl).addButton((button) => {
+            button
+                .setButtonText('Add All Unknown Status Types')
+                .setCta()
+                .onClick(async () => {
+                    const tasks = this.plugin.getTasks();
+                    const unknownStatuses = StatusRegistry.getInstance().findUnknownStatuses(tasks!);
+                    if (unknownStatuses.length === 0) {
+                        return;
+                    }
+                    unknownStatuses.forEach((s) => {
+                        StatusSettings.addCustomStatus(statusSettings, s);
+                    });
+                    await updateAndSaveStatusSettings(statusSettings, settings);
+                });
+        });
+        addAllUnknownStatuses.infoEl.remove();
+
+        /* -------------------- 'Delete All Custom Status Types' button -------------------- */
+        const clearCustomStatuses = new Setting(containerEl).addButton((button) => {
+            button
+                .setButtonText('Delete All Custom Status Types')
+                .setWarning()
+                .onClick(async () => {
+                    StatusSettings.deleteAllCustomStatues(statusSettings);
+                    await updateAndSaveStatusSettings(statusSettings, settings);
+                });
+        });
+        clearCustomStatuses.infoEl.remove();
     }
 }
 

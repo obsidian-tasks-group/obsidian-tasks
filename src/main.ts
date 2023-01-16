@@ -12,6 +12,7 @@ import { SettingsTab } from './Config/SettingsTab';
 import { StatusRegistry } from './StatusRegistry';
 import { EditorSuggestor } from './Suggestor/EditorSuggestorPopup';
 import { StatusSettings } from './Config/StatusSettings';
+import type { Task } from './Task';
 
 export default class TasksPlugin extends Plugin {
     private cache: Cache | undefined;
@@ -64,5 +65,9 @@ export default class TasksPlugin extends Plugin {
 
     async saveSettings() {
         await this.saveData(getSettings());
+    }
+
+    public getTasks(): Task[] | undefined {
+        return this.cache?.getTasks();
     }
 }
