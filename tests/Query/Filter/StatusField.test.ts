@@ -1,6 +1,6 @@
 import { StatusField } from '../../../src/Query/Filter/StatusField';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
-import { toMatchTaskFromLine } from '../../CustomMatchers/CustomMatchersForFilters';
+import { toMatchTaskFromLine, toMatchTaskWithStatus } from '../../CustomMatchers/CustomMatchersForFilters';
 import { Status } from '../../../src/Status';
 import * as TestHelpers from '../../TestHelpers';
 import {
@@ -8,9 +8,11 @@ import {
     expectTaskComparesBefore,
     expectTaskComparesEqual,
 } from '../../CustomMatchers/CustomMatchersForSorting';
+import { StatusConfiguration, StatusType } from '../../../src/StatusConfiguration';
 
 expect.extend({
     toMatchTaskFromLine,
+    toMatchTaskWithStatus,
 });
 
 describe('status', () => {
@@ -19,12 +21,12 @@ describe('status', () => {
         const filter = new StatusField().createFilterOrErrorMessage('done');
 
         // Assert
-        expect(filter).not.toMatchTaskFromLine('- [ ] X');
-        expect(filter).toMatchTaskFromLine('- [x] X');
-        expect(filter).toMatchTaskFromLine('- [X] X');
-        expect(filter).toMatchTaskFromLine('- [/] X');
-        expect(filter).toMatchTaskFromLine('- [-] X');
-        expect(filter).toMatchTaskFromLine('- [!] X');
+        expect(filter).not.toMatchTaskWithStatus(Status.makeTodo().configuration);
+        expect(filter).toMatchTaskWithStatus(Status.makeDone().configuration);
+        expect(filter).toMatchTaskWithStatus(new StatusConfiguration('X', 'Really Done', 'x', true, StatusType.DONE));
+        expect(filter).toMatchTaskWithStatus(Status.makeInProgress().configuration);
+        expect(filter).toMatchTaskWithStatus(Status.makeCancelled().configuration);
+        expect(filter).toMatchTaskWithStatus(new StatusConfiguration('!', 'Todo', 'x', true, StatusType.TODO)); // 'done' checks symbol, not type.
     });
 
     it('not done', () => {
@@ -32,12 +34,14 @@ describe('status', () => {
         const filter = new StatusField().createFilterOrErrorMessage('not done');
 
         // Assert
-        expect(filter).toMatchTaskFromLine('- [ ] X');
-        expect(filter).not.toMatchTaskFromLine('- [x] X');
-        expect(filter).not.toMatchTaskFromLine('- [X] X');
-        expect(filter).not.toMatchTaskFromLine('- [/] X');
-        expect(filter).not.toMatchTaskFromLine('- [-] X');
-        expect(filter).not.toMatchTaskFromLine('- [!] X');
+        expect(filter).toMatchTaskWithStatus(Status.makeTodo().configuration);
+        expect(filter).not.toMatchTaskWithStatus(Status.makeDone().configuration);
+        expect(filter).not.toMatchTaskWithStatus(
+            new StatusConfiguration('X', 'Really Done', 'x', true, StatusType.DONE),
+        );
+        expect(filter).not.toMatchTaskWithStatus(Status.makeInProgress().configuration);
+        expect(filter).not.toMatchTaskWithStatus(Status.makeCancelled().configuration);
+        expect(filter).not.toMatchTaskWithStatus(new StatusConfiguration('!', 'Todo', 'x', true, StatusType.TODO)); // 'done' checks symbol, not type.
     });
 });
 
