@@ -191,8 +191,17 @@ because the tasks starts before tomorrow. Only one of the dates needs to match.
 
 ### Status
 
-- `done` - matches tasks with anything except space as the status symbol
-- `not done` - matches task with a space as the status symbol
+- `done` - matches tasks status types `DONE` and `CANCELLED`
+- `not done` - matches status types with type `TODO` and `IN_PROGRESS`
+- Note: tasks with status type `NON_TASK` match neither filter.
+
+{: .info }
+> Prior to Tasks X.Y.Z, there was no concept of task status type, and so only the status symbol was used:
+>
+> - a task with `[ ]` used to count as `not done`
+> - any other character than space used to count as `done`
+>
+> The new behaviour is more flexible and was required to introduce support for in-progress and cancelled tasks. If the original behaviour is preferred, you can change the status types of every symbol except `space` to `DONE`. See [How to set up your custom statuses]({{ site.baseurl }}{% link how-to/set-up-custom-statuses.md %}).
 
 ### Status Name
 
