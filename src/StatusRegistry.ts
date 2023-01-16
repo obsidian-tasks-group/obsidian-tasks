@@ -192,19 +192,23 @@ export class StatusRegistry {
 
             // Go ahead and create a suitably-named copy,
             // including the indicator in the name.
-            const statusConfiguration = new StatusConfiguration(
-                s.indicator,
-                `Unknown (${s.indicator})`,
-                s.nextStatusIndicator,
-                s.availableAsCommand,
-                s.type,
-            );
-            const newStatus = new Status(statusConfiguration);
+            const newStatus = StatusRegistry.copyStatusWithNewName(s, `Unknown (${s.indicator})`);
             namedUniqueStatuses.push(newStatus);
             // And add it to our local registry, to prevent duplicates.
             newStatusRegistry.add(newStatus);
         });
         return namedUniqueStatuses;
+    }
+
+    private static copyStatusWithNewName(s: Status, newName: string) {
+        const statusConfiguration = new StatusConfiguration(
+            s.indicator,
+            newName,
+            s.nextStatusIndicator,
+            s.availableAsCommand,
+            s.type,
+        );
+        return new Status(statusConfiguration);
     }
 
     /**
