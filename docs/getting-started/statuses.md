@@ -57,7 +57,7 @@ The tasks shown are purely examples for context. The `~` column is just an arbit
 <!-- placeholder to force blank line after table --> <!-- endInclude -->
 
 {: .warning }
-The results of the above table are subject to change, as the `done` and `not done` filters have not yet been updated for the addition of the status types.
+The `group by status` results of the above table are subject to change.
 
 ## Standard Markdown task statuses
 
