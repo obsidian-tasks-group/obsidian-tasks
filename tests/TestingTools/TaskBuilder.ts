@@ -4,6 +4,7 @@ import { Status } from '../../src/Status';
 import { Priority, Task } from '../../src/Task';
 import type { Recurrence } from '../../src/Recurrence';
 import { DateParser } from '../../src/Query/DateParser';
+import { StatusConfiguration, StatusType } from '../../src/StatusConfiguration';
 
 /**
  * A fluent class for creating tasks for tests.
@@ -88,6 +89,23 @@ export class TaskBuilder {
     public status(status: Status): TaskBuilder {
         this._status = status;
         return this;
+    }
+
+    public statusValues(
+        indicator: string,
+        name: string,
+        nextStatusIndicator: string,
+        availableAsCommand: boolean,
+        type: StatusType,
+    ): TaskBuilder {
+        const statusConfiguration = new StatusConfiguration(
+            indicator,
+            name,
+            nextStatusIndicator,
+            availableAsCommand,
+            type,
+        );
+        return this.status(new Status(statusConfiguration));
     }
 
     /**

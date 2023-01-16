@@ -4,9 +4,10 @@
 import moment from 'moment';
 import { StatusRegistry } from '../src/StatusRegistry';
 import { Status } from '../src/Status';
-import { StatusConfiguration } from '../src/StatusConfiguration';
+import { StatusConfiguration, StatusType } from '../src/StatusConfiguration';
 import { Task } from '../src/Task';
 import * as TestHelpers from './TestHelpers';
+import { TaskBuilder } from './TestingTools/TaskBuilder';
 
 jest.mock('obsidian');
 window.moment = moment;
@@ -241,6 +242,36 @@ describe('StatusRegistry', () => {
             // Issue https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1499
             // Ensure that the next status was applied, even though it is an unrecognised status
             expect(toggled?.status.indicator).toEqual('D');
+        });
+
+        it('should bulk-add unknown statuses', () => {
+            // Arrange
+            const registry = new StatusRegistry();
+            expect(registry.byIndicator('!').type).toEqual(StatusType.EMPTY);
+            expect(registry.byIndicator('X').type).toEqual(StatusType.EMPTY);
+            expect(registry.byIndicator('d').type).toEqual(StatusType.EMPTY);
+            const tasks = [
+                new TaskBuilder().statusValues('!', 'Unknown', 'X', false, StatusType.TODO).build(),
+                new TaskBuilder().statusValues('X', 'Unknown', '!', false, StatusType.DONE).build(),
+                new TaskBuilder().statusValues('d', 'Unknown', '!', false, StatusType.IN_PROGRESS).build(),
+            ];
+
+            // Act
+            const unknownStatuses = registry.findUnknownStatuses(tasks);
+
+            // Assert
+            let s1;
+            s1 = unknownStatuses[0];
+            expect(s1.type).toEqual(StatusType.TODO);
+            expect(s1.name).toEqual('Unknown (!)');
+
+            s1 = unknownStatuses[1];
+            expect(s1.type).toEqual(StatusType.DONE);
+            expect(s1.name).toEqual('Unknown (X)');
+
+            s1 = unknownStatuses[2];
+            expect(s1.type).toEqual(StatusType.IN_PROGRESS);
+            expect(s1.name).toEqual('Unknown (d)');
         });
     });
 });
