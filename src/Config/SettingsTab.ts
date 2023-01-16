@@ -441,6 +441,18 @@ export class SettingsTab extends PluginSettingTab {
                 });
         });
         addStatusesSupportedByITSTheme.infoEl.remove();
+
+        /* -------------------- 'Delete All Custom Status Types' button -------------------- */
+        const clearCustomStatuses = new Setting(containerEl).addButton((button) => {
+            button
+                .setButtonText('Delete All Custom Status Types')
+                .setWarning()
+                .onClick(async () => {
+                    StatusSettings.deleteAllCustomStatues(statusSettings);
+                    await updateAndSaveStatusSettings(statusSettings, settings);
+                });
+        });
+        clearCustomStatuses.infoEl.remove();
     }
 }
 

@@ -87,6 +87,17 @@ export class StatusSettings {
     }
 
     /**
+     * Delete all custom statuses.
+     *
+     * This is static so that it can be called from modal onClick() call-backs.
+     *
+     * @param statusSettings
+     */
+    public static deleteAllCustomStatues(statusSettings: StatusSettings) {
+        statusSettings.customStatusTypes.splice(0);
+    }
+
+    /**
      * Add a collection of custom supported statuses to a StatusSettings.
      * This can be used to quickly populate the user's settings.
      * If there are any exact duplicates already present, they are skipped, and noted in the returned value.
