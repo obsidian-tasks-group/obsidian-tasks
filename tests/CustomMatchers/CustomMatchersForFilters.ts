@@ -3,6 +3,8 @@ import type { Task } from '../../src/Task';
 import type { FilterOrErrorMessage } from '../../src/Query/Filter/Filter';
 import { fromLine } from '../TestHelpers';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
+import type { StatusConfiguration } from '../../src/StatusConfiguration';
+import { Status } from '../../src/Status';
 
 /**
  @summary
@@ -63,6 +65,7 @@ declare global {
             toMatchTaskFromLine(line: string): R;
             toMatchTaskWithHeading(heading: string | null): R;
             toMatchTaskWithPath(path: string): R;
+            toMatchTaskWithStatus(statusConfiguration: StatusConfiguration): R;
         }
 
         interface Expect {
@@ -72,6 +75,7 @@ declare global {
             toMatchTaskFromLine(line: string): any;
             toMatchTaskWithHeading(heading: string | null): any;
             toMatchTaskWithPath(path: string): any;
+            toMatchTaskWithStatus(statusConfiguration: StatusConfiguration): any;
         }
 
         interface InverseAsymmetricMatchers {
@@ -81,6 +85,7 @@ declare global {
             toMatchTaskFromLine(line: string): any;
             toMatchTaskWithHeading(heading: string | null): any;
             toMatchTaskWithPath(path: string): any;
+            toMatchTaskWithStatus(statusConfiguration: StatusConfiguration): any;
         }
     }
 }
@@ -155,5 +160,11 @@ export function toMatchTaskWithHeading(filter: FilterOrErrorMessage, heading: st
 export function toMatchTaskWithPath(filter: FilterOrErrorMessage, path: string) {
     const builder = new TaskBuilder();
     const task = builder.path(path).build();
+    return toMatchTask(filter, task);
+}
+
+export function toMatchTaskWithStatus(filter: FilterOrErrorMessage, statusConfiguration: StatusConfiguration) {
+    const builder = new TaskBuilder();
+    const task = builder.status(new Status(statusConfiguration)).build();
     return toMatchTask(filter, task);
 }
