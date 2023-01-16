@@ -97,15 +97,15 @@ Suppose that you wanted to create a set of 3 statuses that cycle between each ot
 1. Repeat for the other two statuses and you should see:
     - ![After adding the other two new statuses](../images/settings-custom-statuses-important-loop-added.png)
 
-{: .warning }
-At the moment the error-checking in the status edit modal is not quite working, and if there is an invalid value such as an empty status symbol, the field can disappear completely. If this happens, the workaround is to close the modal, and click on the pencil to re-open it. We are tracking this as [issue #1498](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1498).
+{: .info }
+> The status changes are applied to newly edited tasks and subsequently opened notes immediately.
+>
+> You do not need to restart Obsidian, unless you want to make Tasks re-read all the tasks in your vault, for example so that searches are aware of the changed statuses.
 
 {: .warning }
 Tasks currently allows creation of more than one status with the same symbol. It silently ignores any duplicate symbols: only the first will be used. If in doubt, examine the available statuses in the status dropdown in the [‘Create or edit Task’ Modal]({{ site.baseurl }}{% link getting-started/create-or-edit-task.md %}).
 
 ## Test the new statuses
-
-The status changes are applied immediately. You do not need to restart Obsidian.
 
 Now you can create use the [‘Create or edit Task’ Modal]({{ site.baseurl }}{% link getting-started/create-or-edit-task.md %}) to create a new task and set its status:
 
