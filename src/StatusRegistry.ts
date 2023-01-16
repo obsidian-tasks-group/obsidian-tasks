@@ -1,5 +1,6 @@
 import { Status } from './Status';
-import type { StatusConfiguration } from './StatusConfiguration';
+import { StatusConfiguration } from './StatusConfiguration';
+import type { Task } from './Task';
 
 /**
  * Tracks all the registered statuses a task can have.
@@ -157,6 +158,41 @@ export class StatusRegistry {
             }
         }
         return Status.EMPTY;
+    }
+
+    /**
+     * Find any statuses in the given tasks that are not known to this registry.
+     * This can be used to add all unknown status types to the settings,
+     * to save users from having to do that manually.
+     *
+     * Statuses are returned in the order that they are first found in the
+     * supplied tasks.
+     * @param tasks
+     */
+    public findUnknownStatuses(tasks: Task[]): Status[] {
+        const allStatuses = tasks.map((task) => {
+            return task.status;
+        });
+
+        const uniqueStatuses = [...new Set(allStatuses)];
+        console.log(uniqueStatuses);
+
+        const unknownStatuses = uniqueStatuses.filter((s) => {
+            return !this.hasIndicator(s.indicator);
+        });
+
+        const namedUniqueStatuses: Status[] = [];
+        unknownStatuses.forEach((s) => {
+            const statusConfiguration = new StatusConfiguration(
+                s.indicator,
+                `Unknown (${s.indicator})`,
+                s.nextStatusIndicator,
+                s.availableAsCommand,
+                s.type,
+            );
+            namedUniqueStatuses.push(new Status(statusConfiguration));
+        });
+        return namedUniqueStatuses;
     }
 
     /**

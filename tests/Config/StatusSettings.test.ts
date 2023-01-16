@@ -90,6 +90,19 @@ describe('StatusSettings', () => {
         expect(result2).toEqual(false);
     });
 
+    it('should delete all custom statuses', () => {
+        // Arrange
+        const settings = new StatusSettings();
+        addThreeStatuses(settings);
+        expect(settings.customStatusTypes.length).toEqual(3);
+
+        // Act
+        StatusSettings.deleteAllCustomStatues(settings);
+
+        // Assert
+        expect(settings.customStatusTypes.length).toEqual(0);
+    });
+
     it('should apply settings to a StatusRegistry', () => {
         // Arrange
         const settings = new StatusSettings();
