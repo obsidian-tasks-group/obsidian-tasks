@@ -24,9 +24,9 @@ describe('status', () => {
         expect(filter).not.toMatchTaskWithStatus(Status.makeTodo().configuration);
         expect(filter).toMatchTaskWithStatus(Status.makeDone().configuration);
         expect(filter).toMatchTaskWithStatus(new StatusConfiguration('X', 'Really Done', 'x', true, StatusType.DONE));
-        expect(filter).toMatchTaskWithStatus(Status.makeInProgress().configuration);
+        expect(filter).not.toMatchTaskWithStatus(Status.makeInProgress().configuration);
         expect(filter).toMatchTaskWithStatus(Status.makeCancelled().configuration);
-        expect(filter).toMatchTaskWithStatus(new StatusConfiguration('!', 'Todo', 'x', true, StatusType.TODO)); // 'done' checks symbol, not type.
+        expect(filter).not.toMatchTaskWithStatus(new StatusConfiguration('!', 'Todo', 'x', true, StatusType.TODO)); // 'done' checks type.
     });
 
     it('not done', () => {
@@ -39,9 +39,9 @@ describe('status', () => {
         expect(filter).not.toMatchTaskWithStatus(
             new StatusConfiguration('X', 'Really Done', 'x', true, StatusType.DONE),
         );
-        expect(filter).not.toMatchTaskWithStatus(Status.makeInProgress().configuration);
+        expect(filter).toMatchTaskWithStatus(Status.makeInProgress().configuration);
         expect(filter).not.toMatchTaskWithStatus(Status.makeCancelled().configuration);
-        expect(filter).not.toMatchTaskWithStatus(new StatusConfiguration('!', 'Todo', 'x', true, StatusType.TODO)); // 'done' checks symbol, not type.
+        expect(filter).toMatchTaskWithStatus(new StatusConfiguration('!', 'Todo', 'x', true, StatusType.TODO)); // 'not done' type.
     });
 });
 
