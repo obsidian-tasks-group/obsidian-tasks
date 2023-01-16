@@ -412,25 +412,6 @@ export class SettingsTab extends PluginSettingTab {
         });
         setting.infoEl.remove();
 
-        /* -------------------- 'Add All Unknown Status Types' button -------------------- */
-        const addAllUnknownStatuses = new Setting(containerEl).addButton((button) => {
-            button
-                .setButtonText('Add All Unknown Status Types')
-                .setCta()
-                .onClick(async () => {
-                    const tasks = this.plugin.getTasks();
-                    const unknownStatuses = StatusRegistry.getInstance().findUnknownStatuses(tasks!);
-                    if (unknownStatuses.length === 0) {
-                        return;
-                    }
-                    unknownStatuses.forEach((s) => {
-                        StatusSettings.addCustomStatus(statusSettings, s);
-                    });
-                    await updateAndSaveStatusSettings(statusSettings, settings);
-                });
-        });
-        addAllUnknownStatuses.infoEl.remove();
-
         /* -------------------- Minimal Theme Supported Status Types -------------------- */
         const addStatusesSupportedByMinimalTheme = new Setting(containerEl).addButton((button) => {
             button
@@ -460,6 +441,25 @@ export class SettingsTab extends PluginSettingTab {
                 });
         });
         addStatusesSupportedByITSTheme.infoEl.remove();
+
+        /* -------------------- 'Add All Unknown Status Types' button -------------------- */
+        const addAllUnknownStatuses = new Setting(containerEl).addButton((button) => {
+            button
+                .setButtonText('Add All Unknown Status Types')
+                .setCta()
+                .onClick(async () => {
+                    const tasks = this.plugin.getTasks();
+                    const unknownStatuses = StatusRegistry.getInstance().findUnknownStatuses(tasks!);
+                    if (unknownStatuses.length === 0) {
+                        return;
+                    }
+                    unknownStatuses.forEach((s) => {
+                        StatusSettings.addCustomStatus(statusSettings, s);
+                    });
+                    await updateAndSaveStatusSettings(statusSettings, settings);
+                });
+        });
+        addAllUnknownStatuses.infoEl.remove();
 
         /* -------------------- 'Delete All Custom Status Types' button -------------------- */
         const clearCustomStatuses = new Setting(containerEl).addButton((button) => {
