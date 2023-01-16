@@ -254,12 +254,20 @@ describe('StatusRegistry', () => {
                 new TaskBuilder().statusValues('!', 'Unknown', 'X', false, StatusType.TODO).build(),
                 new TaskBuilder().statusValues('X', 'Unknown', '!', false, StatusType.DONE).build(),
                 new TaskBuilder().statusValues('d', 'Unknown', '!', false, StatusType.IN_PROGRESS).build(),
+                // Include some tasks with duplicate statuses, to make sure duplicates are discarded
+                new TaskBuilder().statusValues('!', 'Unknown', 'X', false, StatusType.TODO).build(),
+                new TaskBuilder().statusValues('X', 'Unknown', '!', false, StatusType.DONE).build(),
+                new TaskBuilder().statusValues('d', 'Unknown', '!', false, StatusType.IN_PROGRESS).build(),
+                // Check that it does not add copies of any core statuses
+                new TaskBuilder().statusValues('-', 'Unknown', '!', false, StatusType.IN_PROGRESS).build(),
             ];
 
             // Act
             const unknownStatuses = registry.findUnknownStatuses(tasks);
 
             // Assert
+            expect(unknownStatuses.length).toEqual(3);
+
             let s1;
             s1 = unknownStatuses[0];
             expect(s1.type).toEqual(StatusType.TODO);

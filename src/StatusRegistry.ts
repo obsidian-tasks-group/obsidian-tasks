@@ -174,25 +174,41 @@ export class StatusRegistry {
             return task.status;
         });
 
-        const uniqueStatuses = [...new Set(allStatuses)];
-        console.log(uniqueStatuses);
-
-        const unknownStatuses = uniqueStatuses.filter((s) => {
+        const unknownStatuses = allStatuses.filter((s) => {
             return !this.hasIndicator(s.indicator);
         });
 
+        // Use a separate StatusRegistry to keep track of duplicates,
+        // because Set is no use to us:
+        // https://stackoverflow.com/questions/29759480/how-to-customize-object-equality-for-javascript-set
+        const newStatusRegistry = new StatusRegistry();
+
         const namedUniqueStatuses: Status[] = [];
         unknownStatuses.forEach((s) => {
-            const statusConfiguration = new StatusConfiguration(
-                s.indicator,
-                `Unknown (${s.indicator})`,
-                s.nextStatusIndicator,
-                s.availableAsCommand,
-                s.type,
-            );
-            namedUniqueStatuses.push(new Status(statusConfiguration));
+            // Check if we have seen this indicator already:
+            if (newStatusRegistry.hasIndicator(s.indicator)) {
+                return;
+            }
+
+            // Go ahead and create a suitably-named copy,
+            // including the indicator in the name.
+            const newStatus = StatusRegistry.copyStatusWithNewName(s, `Unknown (${s.indicator})`);
+            namedUniqueStatuses.push(newStatus);
+            // And add it to our local registry, to prevent duplicates.
+            newStatusRegistry.add(newStatus);
         });
         return namedUniqueStatuses;
+    }
+
+    private static copyStatusWithNewName(s: Status, newName: string) {
+        const statusConfiguration = new StatusConfiguration(
+            s.indicator,
+            newName,
+            s.nextStatusIndicator,
+            s.availableAsCommand,
+            s.type,
+        );
+        return new Status(statusConfiguration);
     }
 
     /**
