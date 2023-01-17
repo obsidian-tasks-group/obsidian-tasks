@@ -1,7 +1,9 @@
 import { Plugin } from 'obsidian';
 
-import { Cache } from './Cache';
+import { Cache, State } from './Cache';
 import { Commands } from './Commands';
+import { Query } from './Query/Query';
+import type { TaskGroups } from './Query/TaskGroups';
 import { TasksEvents } from './TasksEvents';
 import { initializeFile } from './File';
 import { InlineRenderer } from './InlineRenderer';
@@ -69,5 +71,13 @@ export default class TasksPlugin extends Plugin {
 
     public getTasks(): Task[] | undefined {
         return this.cache?.getTasks();
+    }
+
+    public search(source: string): TaskGroups | undefined {
+        const query = new Query({ source });
+        if (this.cache?.getState() !== State.Warm) {
+            return undefined;
+        }
+        return query.applyQueryToTasks(this.cache?.getTasks());
     }
 }
