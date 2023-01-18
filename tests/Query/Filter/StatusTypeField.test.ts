@@ -8,6 +8,7 @@ import {
 } from '../../CustomMatchers/CustomMatchersForSorting';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { StatusType } from '../../../src/StatusConfiguration';
+import { Status } from '../../../src/Status';
 
 expect.extend({
     toBeValid,
@@ -22,6 +23,7 @@ const doneTask = TestHelpers.fromLine({ line: '- [x] Xxx' });
 const cancTask = TestHelpers.fromLine({ line: '- [-] Xxx' });
 const unknTask = TestHelpers.fromLine({ line: '- [%] Xxx' });
 const non_Task = new TaskBuilder().statusValues('^', 'non-task', 'x', false, StatusType.NON_TASK).build();
+const emptTask = new TaskBuilder().status(Status.makeEmpty()).build();
 
 describe('status.name', () => {
     it('value', () => {
@@ -74,12 +76,17 @@ describe('sorting by status.name', () => {
 
         // Assert
         expectTaskComparesEqual(sorter, cancTask, cancTask);
-        // Reverse of Alphabetical order by status name
+        expectTaskComparesEqual(sorter, todoTask, unknTask); // Unknown treated as TODO
+
+        // Alphabetical order by status name
         expectTaskComparesBefore(sorter, cancTask, doneTask);
         expectTaskComparesBefore(sorter, doneTask, inprTask);
         expectTaskComparesBefore(sorter, inprTask, non_Task);
         expectTaskComparesBefore(sorter, non_Task, todoTask);
-        expectTaskComparesEqual(sorter, todoTask, unknTask);
+
+        // Users won't see empty tasks, but test them anyway
+        expectTaskComparesBefore(sorter, doneTask, emptTask);
+        expectTaskComparesBefore(sorter, emptTask, inprTask);
     });
 
     it('sort by status.name reverse', () => {
@@ -88,11 +95,16 @@ describe('sorting by status.name', () => {
 
         // Assert
         expectTaskComparesEqual(sorter, cancTask, cancTask);
-        // Alphabetical order by status name
+        expectTaskComparesEqual(sorter, todoTask, unknTask); // Unknown treated as TODO
+
+        // Reverse of Alphabetical order by status name
         expectTaskComparesAfter(sorter, cancTask, doneTask);
         expectTaskComparesAfter(sorter, doneTask, inprTask);
         expectTaskComparesAfter(sorter, inprTask, non_Task);
         expectTaskComparesAfter(sorter, non_Task, todoTask);
-        expectTaskComparesEqual(sorter, todoTask, unknTask);
+
+        // Users won't see empty tasks, but test them anyway
+        expectTaskComparesAfter(sorter, doneTask, emptTask);
+        expectTaskComparesAfter(sorter, emptTask, inprTask);
     });
 });
