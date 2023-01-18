@@ -3,7 +3,8 @@
  */
 import moment from 'moment';
 import { Group } from '../src/Query/Group';
-import type { Grouping, GroupingProperty } from '../src/Query/Query';
+import { Grouping } from '../src/Query/Query';
+import type { GroupingProperty } from '../src/Query/Query';
 import type { Task } from '../src/Task';
 import { fromLine } from './TestHelpers';
 
@@ -24,7 +25,7 @@ describe('Grouping tasks', () => {
 
         // Act
         const groupBy: GroupingProperty = 'path';
-        const grouping = [{ property: groupBy }];
+        const grouping = [new Grouping(groupBy)];
         const groups = Group.by(grouping, inputs);
 
         // Assert
@@ -79,7 +80,7 @@ describe('Grouping tasks', () => {
         // Arrange
         const inputs: Task[] = [];
         const group_by: GroupingProperty = 'path';
-        const grouping = [{ property: group_by }];
+        const grouping = [new Grouping(group_by)];
 
         // Act
         const groups = Group.by(grouping, inputs);
@@ -106,7 +107,7 @@ describe('Grouping tasks', () => {
         const inputs = [a, b, c];
 
         const group_by: GroupingProperty = 'path';
-        const grouping = [{ property: group_by }];
+        const grouping = [new Grouping(group_by)];
         const groups = Group.by(grouping, inputs);
         expect(groups.toString()).toMatchInlineSnapshot(`
             "
@@ -146,7 +147,7 @@ describe('Grouping tasks', () => {
         const inputs = [a, b, c];
 
         const group_by: GroupingProperty = 'tags';
-        const grouping = [{ property: group_by }];
+        const grouping = [new Grouping(group_by)];
         const groups = Group.by(grouping, inputs);
         expect(groups.toString()).toMatchInlineSnapshot(`
             "
@@ -185,7 +186,7 @@ describe('Grouping tasks', () => {
         });
         const tasks = [t1, t2, t3];
 
-        const grouping: Grouping[] = [{ property: 'folder' }, { property: 'filename' }];
+        const grouping: Grouping[] = [new Grouping('folder'), new Grouping('filename')];
 
         // Act
         const groups = Group.by(grouping, tasks);
