@@ -1,6 +1,6 @@
 import type { Task } from '../Task';
 import { Priority } from '../Task';
-import type { Grouping, GroupingProperty } from './Query';
+import type { GroupingProperty } from './Query';
 import { TaskGroups } from './TaskGroups';
 import { HappensDateField } from './Filter/HappensDateField';
 
@@ -8,6 +8,14 @@ import { HappensDateField } from './Filter/HappensDateField';
  * A naming function, that takes a Task object and returns the corresponding group property name
  */
 type Grouper = (task: Task) => string[];
+
+export class Grouping {
+    public property: GroupingProperty;
+
+    public constructor(property: GroupingProperty) {
+        this.property = property;
+    }
+}
 
 /**
  * Implementation of the 'group by' instruction.

@@ -6,7 +6,7 @@ import { Sort } from './Sort';
 import type { Sorter } from './Sorter';
 import type { TaskGroups } from './TaskGroups';
 import { parseFilter, parseSorter } from './FilterParser';
-import { Group } from './Group';
+import { Group, Grouping } from './Group';
 import type { Filter } from './Filter/Filter';
 
 export type GroupingProperty =
@@ -26,14 +26,6 @@ export type GroupingProperty =
     | 'start'
     | 'status'
     | 'tags';
-
-export class Grouping {
-    public property: GroupingProperty;
-
-    public constructor(property: GroupingProperty) {
-        this.property = property;
-    }
-}
 
 export class Query implements IQuery {
     public source: string;

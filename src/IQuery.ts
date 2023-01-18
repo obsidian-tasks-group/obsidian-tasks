@@ -1,7 +1,7 @@
 import type { LayoutOptions } from './TaskLayout';
 import type { Task } from './Task';
 import type { TaskGroups } from './Query/TaskGroups';
-import type { Grouping } from './Query/Query';
+import type { Grouping } from './Query/Group';
 
 /**
  * Standard interface for the query engine used by Tasks, multiple
