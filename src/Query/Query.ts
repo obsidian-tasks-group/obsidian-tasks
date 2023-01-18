@@ -235,9 +235,7 @@ export class Query implements IQuery {
     private parseGroupBy({ line }: { line: string }): void {
         const fieldMatch = line.match(this.groupByRegexp);
         if (fieldMatch !== null) {
-            this._grouping.push({
-                property: fieldMatch[1] as GroupingProperty,
-            });
+            this._grouping.push(new Grouping(fieldMatch[1] as GroupingProperty));
         } else {
             this._error = 'do not understand query grouping';
         }
