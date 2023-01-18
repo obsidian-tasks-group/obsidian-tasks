@@ -82,7 +82,7 @@ You can group by the following properties.
         - `6 EMPTY`
 
 {: .released }
-`group by status.name` and `group by status.name` were introduced in Tasks X.Y.Z.
+`group by status.name` and `group by status.type` were introduced in Tasks X.Y.Z.
 
 For more information, including adding your own customised statuses, see [Statuses]({{ site.baseurl }}{% link getting-started/statuses.md %}).
 

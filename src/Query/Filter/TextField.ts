@@ -102,7 +102,7 @@ export abstract class TextField extends Field {
     }
 
     /**
-     * A default implementation of grouping, for text fields where simple locale-aware grouping is the
+     * A default implementation of grouping, for text fields where simple grouping by field value is the
      * desired behaviour.
      *
      * Each class that wants to use this will need to override supportsGrouping() to return true,
