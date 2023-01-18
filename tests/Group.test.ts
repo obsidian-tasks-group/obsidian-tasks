@@ -2,7 +2,8 @@
  * @jest-environment jsdom
  */
 import moment from 'moment';
-import { Group, Grouper } from '../src/Query/Group';
+import { Group } from '../src/Query/Group';
+import { Grouper } from '../src/Query/Grouper';
 import type { GroupingProperty } from '../src/Query/Query';
 import type { Task } from '../src/Task';
 import { fromLine } from './TestHelpers';

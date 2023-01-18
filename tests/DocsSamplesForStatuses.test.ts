@@ -8,7 +8,8 @@ import * as StatusSettingsHelpers from '../src/Config/StatusSettingsHelpers';
 import { StatusConfiguration, StatusType } from '../src/StatusConfiguration';
 import type { FilterOrErrorMessage } from '../src/Query/Filter/Filter';
 import * as FilterParser from '../src/Query/FilterParser';
-import { Group, Grouper } from '../src/Query/Group';
+import { Group } from '../src/Query/Group';
+import { Grouper } from '../src/Query/Grouper';
 import { TaskBuilder } from './TestingTools/TaskBuilder';
 
 class MarkdownTable {

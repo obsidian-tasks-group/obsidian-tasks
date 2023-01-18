@@ -3,23 +3,7 @@ import { Priority } from '../Task';
 import type { GroupingProperty } from './Query';
 import { TaskGroups } from './TaskGroups';
 import { HappensDateField } from './Filter/HappensDateField';
-
-/**
- * A naming function, that takes a Task object and returns the corresponding group property name
- */
-type GrouperFunction = (task: Task) => string[];
-
-export class Grouper {
-    public readonly grouper: GrouperFunction;
-
-    private constructor(grouper: GrouperFunction) {
-        this.grouper = grouper;
-    }
-
-    public static fromGroupingProperty(property: GroupingProperty): Grouper {
-        return new Grouper(Group.grouperForProperty(property));
-    }
-}
+import type { Grouper, GrouperFunction } from './Grouper';
 
 /**
  * Implementation of the 'group by' instruction.

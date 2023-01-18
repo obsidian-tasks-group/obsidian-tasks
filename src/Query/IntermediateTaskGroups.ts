@@ -1,5 +1,6 @@
 import type { Task } from '../Task';
-import { Group, Grouper } from './Group';
+import { Group } from './Group';
+import type { Grouper } from './Grouper';
 import { GroupingTreeNode } from './GroupingTreeNode';
 
 /**
