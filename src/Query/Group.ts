@@ -1,9 +1,8 @@
 import type { Task } from '../Task';
 import { Priority } from '../Task';
-import type { GroupingProperty } from './Query';
 import { TaskGroups } from './TaskGroups';
 import { HappensDateField } from './Filter/HappensDateField';
-import type { Grouper, GrouperFunction } from './Grouper';
+import type { Grouper, GrouperFunction, GroupingProperty } from './Grouper';
 
 /**
  * Implementation of the 'group by' instruction.

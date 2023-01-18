@@ -8,25 +8,8 @@ import type { TaskGroups } from './TaskGroups';
 import { parseFilter, parseSorter } from './FilterParser';
 import { Group } from './Group';
 import { Grouper } from './Grouper';
+import type { GroupingProperty } from './Grouper';
 import type { Filter } from './Filter/Filter';
-
-export type GroupingProperty =
-    | 'backlink'
-    | 'done'
-    | 'due'
-    | 'filename'
-    | 'folder'
-    | 'happens'
-    | 'heading'
-    | 'path'
-    | 'priority'
-    | 'recurrence'
-    | 'recurring'
-    | 'root'
-    | 'scheduled'
-    | 'start'
-    | 'status'
-    | 'tags';
 
 export class Query implements IQuery {
     public source: string;

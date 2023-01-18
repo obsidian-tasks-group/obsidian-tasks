@@ -4,7 +4,7 @@
 import moment from 'moment';
 import { Group } from '../src/Query/Group';
 import { Grouper } from '../src/Query/Grouper';
-import type { GroupingProperty } from '../src/Query/Query';
+import type { GroupingProperty } from '../src/Query/Grouper';
 import type { Task } from '../src/Task';
 import { fromLine } from './TestHelpers';
 
