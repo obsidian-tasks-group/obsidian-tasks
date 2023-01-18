@@ -155,14 +155,20 @@ function verifyTransitionsAsMarkdownTable(statuses: Status[]) {
     filterAllStatuses(FilterParser.parseFilter('status.type includes CANCELLED')!);
     filterAllStatuses(FilterParser.parseFilter('status.type includes NON_TASK')!);
 
-    {
-        const cells: string[] = ['Name for `group by status`'];
+    function showGroupNamesForAllTasks(groupName: string, grouperFunction: (task: Task) => string[]) {
+        const cells: string[] = ['Name for `group by ' + groupName + '`'];
         tasks.forEach((task) => {
-            const groupNamesForTask = Group.getGroupNamesForTask(Group.fromGroupingProperty('status'), task);
+            const groupNamesForTask = grouperFunction(task);
             const names = groupNamesForTask.join(',');
             cells.push(names);
         });
         table.addRow(cells);
+    }
+
+    {
+        const groupName = 'status';
+        const grouperFunction = Group.grouperForProperty('status');
+        showGroupNamesForAllTasks(groupName, grouperFunction);
     }
 
     {
