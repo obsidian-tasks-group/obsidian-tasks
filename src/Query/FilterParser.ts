@@ -15,6 +15,7 @@ import { BooleanField } from './Filter/BooleanField';
 import { FilenameField } from './Filter/FilenameField';
 import { UrgencyField } from './Filter/UrgencyField';
 import { StatusNameField } from './Filter/StatusNameField';
+import { StatusTypeField } from './Filter/StatusTypeField';
 
 import { RecurrenceField } from './Filter/RecurrenceField';
 import type { FilterOrErrorMessage } from './Filter/Filter';
@@ -22,6 +23,7 @@ import type { Sorter } from './Sorter';
 
 const fieldCreators = [
     () => new StatusNameField(), // status.name is before status, to avoid ambiguity
+    () => new StatusTypeField(), // status.type is before status, to avoid ambiguity
     () => new StatusField(),
     () => new RecurringField(),
     () => new PriorityField(),

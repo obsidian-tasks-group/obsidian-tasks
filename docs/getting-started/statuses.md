@@ -26,13 +26,15 @@ has_toc: false
   - the single character in the `[]` at the start of the task.
 - `status name`
   - a name for the status.
+  - this is flexible: for custom statuses, you can use any name you wish.
   - is searchable with `status.name`, for example `status.name includes todo`.
 - `next status symbol`
   - the status symbol to use when the task is toggled.
 - `status type`
   - one of `TODO`, `IN_PROGRESS`, `DONE`, `CANCELLED`, `NON_TASK`.
-  - these do not yet have any effect on search results.
   - by assigning one of these types to your custom statuses, you can control some aspects of Tasks' behaviour for all task lines that use that particular custom status.
+  - is searchable with `status.type`, for example `status.type includes IN_PROGRESS`.
+  - you can have any number of custom statuses with the same status type, and then search them conveniently with `status.type`
 
 ### Status Types
 
@@ -49,9 +51,14 @@ The tasks shown are purely examples for context. The `~` column is just an arbit
 | Matches `done` | no | no | YES | YES | no |
 | Matches `not done` | YES | YES | no | no | no |
 | Matches `status.name includes todo` | YES | no | no | no | no |
+| Matches `status.type includes TODO` | YES | no | no | no | no |
 | Matches `status.name includes in progress` | no | YES | no | no | no |
+| Matches `status.type includes IN_PROGRESS` | no | YES | no | no | no |
 | Matches `status.name includes done` | no | no | YES | no | no |
+| Matches `status.type includes DONE` | no | no | YES | no | no |
 | Matches `status.name includes cancelled` | no | no | no | YES | no |
+| Matches `status.type includes CANCELLED` | no | no | no | YES | no |
+| Matches `status.type includes NON_TASK` | no | no | no | no | YES |
 | Name for `group by status` | Todo | Done | Done | Done | Done |
 
 <!-- placeholder to force blank line after table --> <!-- endInclude -->
@@ -199,6 +206,8 @@ We are tracking this in [issue #1486](https://github.com/obsidian-tasks-group/ob
 - `not done` - matches tasks with status types `TODO` and `IN_PROGRESS`
 - `status.name` text search
 - `sort by status.name`
+- `status.type` text search
+- `sort by status.type`
 
 For details, see [Filters for Task Statuses]({{ site.baseurl }}{% link queries/filters.md %}#filters-for-task-statuses)
 
