@@ -157,7 +157,7 @@ function verifyTransitionsAsMarkdownTable(statuses: Status[]) {
     {
         const cells: string[] = ['Name for `group by status`'];
         tasks.forEach((task) => {
-            const groupNamesForTask = Group.getGroupNamesForTask(new Grouping('status'), task);
+            const groupNamesForTask = Group.getGroupNamesForTask(Grouping.fromGroupingProperty('status'), task);
             const names = groupNamesForTask.join(',');
             cells.push(names);
         });

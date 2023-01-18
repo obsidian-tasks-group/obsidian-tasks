@@ -13,9 +13,13 @@ export class Grouping {
     public readonly property: GroupingProperty;
     public readonly grouper: Grouper;
 
-    public constructor(property: GroupingProperty) {
+    private constructor(property: GroupingProperty) {
         this.property = property;
         this.grouper = Group.grouperForProperty(property);
+    }
+
+    public static fromGroupingProperty(property: GroupingProperty): Grouping {
+        return new Grouping(property);
     }
 }
 

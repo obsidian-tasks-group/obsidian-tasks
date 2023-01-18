@@ -10,7 +10,7 @@ import { fromLine } from './TestHelpers';
 window.moment = moment;
 
 function checkGroupNamesOfTask(task: Task, property: GroupingProperty, expectedGroupNames: string[]) {
-    const group = Group.getGroupNamesForTask(new Grouping(property), task);
+    const group = Group.getGroupNamesForTask(Grouping.fromGroupingProperty(property), task);
     expect(group).toEqual(expectedGroupNames);
 }
 
@@ -24,7 +24,7 @@ describe('Grouping tasks', () => {
 
         // Act
         const groupBy: GroupingProperty = 'path';
-        const grouping = [new Grouping(groupBy)];
+        const grouping = [Grouping.fromGroupingProperty(groupBy)];
         const groups = Group.by(grouping, inputs);
 
         // Assert
@@ -79,7 +79,7 @@ describe('Grouping tasks', () => {
         // Arrange
         const inputs: Task[] = [];
         const group_by: GroupingProperty = 'path';
-        const grouping = [new Grouping(group_by)];
+        const grouping = [Grouping.fromGroupingProperty(group_by)];
 
         // Act
         const groups = Group.by(grouping, inputs);
@@ -106,7 +106,7 @@ describe('Grouping tasks', () => {
         const inputs = [a, b, c];
 
         const group_by: GroupingProperty = 'path';
-        const grouping = [new Grouping(group_by)];
+        const grouping = [Grouping.fromGroupingProperty(group_by)];
         const groups = Group.by(grouping, inputs);
         expect(groups.toString()).toMatchInlineSnapshot(`
             "
@@ -146,7 +146,7 @@ describe('Grouping tasks', () => {
         const inputs = [a, b, c];
 
         const group_by: GroupingProperty = 'tags';
-        const grouping = [new Grouping(group_by)];
+        const grouping = [Grouping.fromGroupingProperty(group_by)];
         const groups = Group.by(grouping, inputs);
         expect(groups.toString()).toMatchInlineSnapshot(`
             "
@@ -185,7 +185,10 @@ describe('Grouping tasks', () => {
         });
         const tasks = [t1, t2, t3];
 
-        const grouping: Grouping[] = [new Grouping('folder'), new Grouping('filename')];
+        const grouping: Grouping[] = [
+            Grouping.fromGroupingProperty('folder'),
+            Grouping.fromGroupingProperty('filename'),
+        ];
 
         // Act
         const groups = Group.by(grouping, tasks);
