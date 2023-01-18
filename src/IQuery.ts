@@ -1,7 +1,7 @@
 import type { LayoutOptions } from './TaskLayout';
 import type { Task } from './Task';
 import type { TaskGroups } from './Query/TaskGroups';
-import type { Grouping } from './Query/Group';
+import type { Grouper } from './Query/Group';
 
 /**
  * Standard interface for the query engine used by Tasks, multiple
@@ -25,10 +25,10 @@ export interface IQuery {
      * Collection of groupings being used in this query, this is based off
      * the main task properties like backlink, heading, path, status, etc.
      *
-     * @type {Grouping[]}
+     * @type {Grouper[]}
      * @memberof IQuery
      */
-    grouping: Grouping[];
+    grouping: Grouper[];
 
     /**
      * Error message if there is an error in the query. This will be

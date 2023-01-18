@@ -6,7 +6,7 @@ import { Sort } from './Sort';
 import type { Sorter } from './Sorter';
 import type { TaskGroups } from './TaskGroups';
 import { parseFilter, parseSorter } from './FilterParser';
-import { Group, Grouping } from './Group';
+import { Group, Grouper } from './Group';
 import type { Filter } from './Filter/Filter';
 
 export type GroupingProperty =
@@ -35,7 +35,7 @@ export class Query implements IQuery {
     private _filters: Filter[] = [];
     private _error: string | undefined = undefined;
     private _sorting: Sorter[] = [];
-    private _grouping: Grouping[] = [];
+    private _grouping: Grouper[] = [];
 
     private readonly groupByRegexp =
         /^group by (backlink|done|due|filename|folder|happens|heading|path|priority|recurrence|recurring|root|scheduled|start|status|tags)/;
@@ -227,7 +227,7 @@ export class Query implements IQuery {
     private parseGroupBy({ line }: { line: string }): void {
         const fieldMatch = line.match(this.groupByRegexp);
         if (fieldMatch !== null) {
-            this._grouping.push(Grouping.fromGroupingProperty(fieldMatch[1] as GroupingProperty));
+            this._grouping.push(Grouper.fromGroupingProperty(fieldMatch[1] as GroupingProperty));
         } else {
             this._error = 'do not understand query grouping';
         }
