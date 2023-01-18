@@ -1,6 +1,8 @@
 import { Sorter } from '../Sorter';
 import type { Comparator } from '../Sorter';
 import * as RegExpTools from '../../lib/RegExpTools';
+import { Grouper } from '../Grouper';
+import type { GrouperFunction } from '../Grouper';
 import type { FilterOrErrorMessage } from './Filter';
 
 /**
@@ -123,7 +125,7 @@ export abstract class Field {
      * Return whether the code for this field implements sorting of tasks.
      *
      * If overriding this to return true, in order to enable sorting,
-     * the method ${@link comparator} must also be overridden.
+     * the method {@link comparator} must also be overridden.
      */
     public supportsSorting(): boolean {
         return false;
@@ -213,8 +215,8 @@ export abstract class Field {
     /**
      * Return a function to compare two Task objects, for use in sorting by this field's value.
      *
-     * See ${@link supportsSorting} for what to do, to enable support of sorting in a
-     * particular ${@link Field} implementation.
+     * See {@link supportsSorting} for what to do, to enable support of sorting in a
+     * particular {@link Field} implementation.
      */
     public comparator(): Comparator {
         throw Error(`comparator() unimplemented for ${this.fieldNameSingular()}`);
@@ -246,5 +248,39 @@ export abstract class Field {
      */
     public createReverseSorter(): Sorter {
         return this.createSorter(true);
+    }
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // Grouping
+    // -----------------------------------------------------------------------------------------------------------------
+
+    /**
+     * Return whether the code for this field implements grouping of tasks.
+     *
+     * If overriding this to return true, in order to enable grouping,
+     * the method {@link grouper} must also be overridden.
+     */
+    public supportsGrouping(): boolean {
+        return false;
+    }
+
+    /**
+     * Return a function to get a list of a task's group names, for use in grouping by this field's value.
+     *
+     * See {@link supportsGrouping} for what to do, to enable support of grouping in a
+     * particular {@link Field} implementation.
+     */
+    public grouper(): GrouperFunction {
+        throw Error(`grouper() unimplemented for ${this.fieldNameSingular()}`);
+    }
+
+    /**
+     * Create a {@link Grouper} object for grouping tasks by this field's value.
+     *
+     * For now, parsing of `group by` lines is currently done in {@link FilterParser.parseGrouper()}.
+     * Later, this will probably be moved to the {@link Field} classes.
+     */
+    public createGrouper(): Grouper {
+        return new Grouper(this.fieldNameSingular(), this.grouper());
     }
 }

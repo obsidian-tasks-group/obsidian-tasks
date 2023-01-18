@@ -60,6 +60,7 @@ The tasks shown are purely examples for context. The `~` column is just an arbit
 | Matches `status.type includes CANCELLED` | no | no | no | YES | no |
 | Matches `status.type includes NON_TASK` | no | no | no | no | YES |
 | Name for `group by status` | Todo | Done | Done | Done | Done |
+| Name for `group by status.name` | Todo | In Progress | Done | Cancelled | My custom status |
 
 <!-- placeholder to force blank line after table --> <!-- endInclude -->
 
@@ -90,7 +91,7 @@ This table shows the statuses provided by default:
 
 <!-- placeholder to force blank line before table --> <!-- include: DocsSamplesForStatuses.test.DefaultStatuses_core-statuses.approved.md -->
 
-| Status Character | Status Name | Next Status Character | Status Type | Needs Custom Styling |
+| Status Character | Status Name<br>`status.name includes...`<br>`sort by status.name`<br>`group by status.name` | Next Status Character | Status Type | Needs Custom Styling |
 | ----- | ----- | ----- | ----- | ----- |
 | `space` | Todo | `x` | `TODO` | No |
 | `/` | In Progress | `x` | `IN_PROGRESS` | Yes |
@@ -135,7 +136,7 @@ Remember to set up your chosen CSS Snippet or Theme before setting up the custom
 
 <!-- placeholder to force blank line before table --> <!-- include: DocsSamplesForStatuses.test.DefaultStatuses_minimal-supported-statuses.approved.md -->
 
-| Status Character | Status Name | Next Status Character | Status Type | Needs Custom Styling |
+| Status Character | Status Name<br>`status.name includes...`<br>`sort by status.name`<br>`group by status.name` | Next Status Character | Status Type | Needs Custom Styling |
 | ----- | ----- | ----- | ----- | ----- |
 | `>` | Forwarded | `x` | `TODO` | Yes |
 | `<` | Schedule | `x` | `TODO` | Yes |
@@ -163,7 +164,7 @@ Remember to set up your chosen CSS Snippet or Theme before setting up the custom
 
 <!-- placeholder to force blank line before table --> <!-- include: DocsSamplesForStatuses.test.DefaultStatuses_its-theme-supported-statuses.approved.md -->
 
-| Status Character | Status Name | Next Status Character | Status Type | Needs Custom Styling |
+| Status Character | Status Name<br>`status.name includes...`<br>`sort by status.name`<br>`group by status.name` | Next Status Character | Status Type | Needs Custom Styling |
 | ----- | ----- | ----- | ----- | ----- |
 | `>` | Forward | `x` | `TODO` | Yes |
 | `D` | Deferred/Scheduled | `x` | `TODO` | Yes |
@@ -206,6 +207,7 @@ We are tracking this in [issue #1486](https://github.com/obsidian-tasks-group/ob
 - `not done` - matches tasks with status types `TODO` and `IN_PROGRESS`
 - `status.name` text search
 - `sort by status.name`
+- `group by status.name`
 - `status.type` text search
 - `sort by status.type`
 

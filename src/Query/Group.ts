@@ -12,7 +12,7 @@ export class Group {
     private static readonly groupDateFormat = 'YYYY-MM-DD dddd';
 
     public static fromGroupingProperty(property: GroupingProperty): Grouper {
-        return new Grouper(Group.grouperForProperty(property));
+        return new Grouper(property, Group.grouperForProperty(property));
     }
 
     /**

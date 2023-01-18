@@ -64,11 +64,19 @@ You can group by the following properties.
 {: .released }
 `happens` grouping option was introduced in Tasks 1.11.0.
 
-### Other task properties
+### Task statuses
 
 1. `status` (Done or Todo, which is capitalized for visibility in the headings)
     - Note that the Done group is displayed before the Todo group,
       which differs from the Sorting ordering of this property.
+1. `group by status.name`
+    - This groups by the names you give to your custom statuses, in alphabetical order.
+
+{: .released }  
+`group by status.name` was introduced in Tasks X.Y.Z.
+
+### Other task properties
+
 1. `priority`
     - The priority of the task, namely one of:
         - `Priority 1: High`
