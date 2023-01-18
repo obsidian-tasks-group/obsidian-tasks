@@ -9,15 +9,15 @@ import { HappensDateField } from './Filter/HappensDateField';
  */
 type GrouperFunction = (task: Task) => string[];
 
-export class Grouping {
+export class Grouper {
     public readonly grouper: GrouperFunction;
 
     private constructor(grouper: GrouperFunction) {
         this.grouper = grouper;
     }
 
-    public static fromGroupingProperty(property: GroupingProperty): Grouping {
-        return new Grouping(Group.grouperForProperty(property));
+    public static fromGroupingProperty(property: GroupingProperty): Grouper {
+        return new Grouper(Group.grouperForProperty(property));
     }
 }
 
@@ -32,7 +32,7 @@ export class Group {
      * @param grouping 0 or more Grouping values, one per 'group by' line
      * @param tasks The tasks that match the task block's Query
      */
-    public static by(grouping: Grouping[], tasks: Task[]): TaskGroups {
+    public static by(grouping: Grouper[], tasks: Task[]): TaskGroups {
         return new TaskGroups(grouping, tasks);
     }
 
@@ -44,7 +44,7 @@ export class Group {
      * @param grouping
      * @param task
      */
-    public static getGroupNamesForTask(grouping: Grouping, task: Task): string[] {
+    public static getGroupNamesForTask(grouping: Grouper, task: Task): string[] {
         return grouping.grouper(task);
     }
 
