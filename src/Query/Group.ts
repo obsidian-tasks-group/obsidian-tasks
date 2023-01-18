@@ -2,13 +2,18 @@ import type { Task } from '../Task';
 import { Priority } from '../Task';
 import { TaskGroups } from './TaskGroups';
 import { HappensDateField } from './Filter/HappensDateField';
-import type { Grouper, GrouperFunction, GroupingProperty } from './Grouper';
+import { Grouper } from './Grouper';
+import type { GrouperFunction, GroupingProperty } from './Grouper';
 
 /**
  * Implementation of the 'group by' instruction.
  */
 export class Group {
     private static readonly groupDateFormat = 'YYYY-MM-DD dddd';
+
+    public static fromGroupingProperty(property: GroupingProperty): Grouper {
+        return new Grouper(Group.grouperForProperty(property));
+    }
 
     /**
      * Group a list of tasks, according to one or more task properties

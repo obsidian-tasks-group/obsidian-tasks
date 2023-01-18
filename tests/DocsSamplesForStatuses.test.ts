@@ -9,7 +9,6 @@ import { StatusConfiguration, StatusType } from '../src/StatusConfiguration';
 import type { FilterOrErrorMessage } from '../src/Query/Filter/Filter';
 import * as FilterParser from '../src/Query/FilterParser';
 import { Group } from '../src/Query/Group';
-import { Grouper } from '../src/Query/Grouper';
 import { TaskBuilder } from './TestingTools/TaskBuilder';
 
 class MarkdownTable {
@@ -158,7 +157,7 @@ function verifyTransitionsAsMarkdownTable(statuses: Status[]) {
     {
         const cells: string[] = ['Name for `group by status`'];
         tasks.forEach((task) => {
-            const groupNamesForTask = Group.getGroupNamesForTask(Grouper.fromGroupingProperty('status'), task);
+            const groupNamesForTask = Group.getGroupNamesForTask(Group.fromGroupingProperty('status'), task);
             const names = groupNamesForTask.join(',');
             cells.push(names);
         });
