@@ -26,7 +26,14 @@ export type GroupingProperty =
     | 'start'
     | 'status'
     | 'tags';
-export type Grouping = { property: GroupingProperty };
+
+export class Grouping {
+    public property: GroupingProperty;
+
+    public constructor(property: GroupingProperty) {
+        this.property = property;
+    }
+}
 
 export class Query implements IQuery {
     public source: string;
