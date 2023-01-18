@@ -9,6 +9,7 @@ import { StatusConfiguration, StatusType } from '../src/StatusConfiguration';
 import type { FilterOrErrorMessage } from '../src/Query/Filter/Filter';
 import * as FilterParser from '../src/Query/FilterParser';
 import { Group } from '../src/Query/Group';
+import { StatusNameField } from '../src/Query/Filter/StatusNameField';
 import { TaskBuilder } from './TestingTools/TaskBuilder';
 
 class MarkdownTable {
@@ -62,7 +63,7 @@ function getPrintableIndicator(indicator: string) {
 function verifyStatusesAsMarkdownTable(statuses: Status[]) {
     const table = new MarkdownTable([
         'Status Character',
-        'Status Name',
+        'Status Name<br>`status.name includes...`<br>`sort by status.name`<br>`group by status.name`',
         'Next Status Character',
         'Status Type',
         'Needs Custom Styling',
@@ -164,6 +165,16 @@ function verifyTransitionsAsMarkdownTable(statuses: Status[]) {
         table.addRow(cells);
     }
 
+    {
+        const cells: string[] = ['Name for `group by status.name`'];
+        tasks.forEach((task) => {
+            const groupNamesForTask = new StatusNameField().createGrouper().grouper(task);
+            const names = groupNamesForTask.join(',');
+            cells.push(names);
+        });
+        table.addRow(cells);
+    }
+
     table.verify();
 }
 
@@ -174,7 +185,7 @@ describe('Status Transitions', () => {
             Status.makeInProgress(),
             Status.makeDone(),
             Status.makeCancelled(),
-            new Status(new StatusConfiguration('~', 'Non Task', ' ', false, StatusType.NON_TASK)),
+            new Status(new StatusConfiguration('~', 'My custom status', ' ', false, StatusType.NON_TASK)),
         ];
         verifyTransitionsAsMarkdownTable(statuses);
     });

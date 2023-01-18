@@ -20,6 +20,7 @@ import { StatusTypeField } from './Filter/StatusTypeField';
 import { RecurrenceField } from './Filter/RecurrenceField';
 import type { FilterOrErrorMessage } from './Filter/Filter';
 import type { Sorter } from './Sorter';
+import type { Grouper } from './Grouper';
 
 const fieldCreators = [
     () => new StatusNameField(), // status.name is before status, to avoid ambiguity
@@ -66,6 +67,28 @@ export function parseSorter(sorterString: string): Sorter | null {
         const sorter = field.parseSortLine(sorterString);
         if (sorter) {
             return sorter;
+        }
+    }
+    return null;
+}
+
+export function parseGrouper(line: string): Grouper | null {
+    // New style parsing, using grouping which is done by the Field classes.
+
+    // Optimisation: Check whether line begins with 'group by'
+    const groupByRegexp = /^group by /;
+    if (line.match(groupByRegexp) === null) {
+        return null;
+    }
+
+    // See if any of the fields can parse the line.
+    for (const creator of fieldCreators) {
+        const field = creator();
+        const fieldName = field.fieldNameSingular();
+        if (line === `group by ${fieldName}`) {
+            if (field.supportsGrouping()) {
+                return field.createGrouper();
+            }
         }
     }
     return null;

@@ -89,3 +89,19 @@ describe('sorting by status.name', () => {
         expectTaskComparesAfter(sorter, todoTask, unknTask);
     });
 });
+
+describe('grouping by status.name', () => {
+    it('supports Field grouping methods correctly', () => {
+        const field = new StatusNameField();
+        expect(field.supportsGrouping()).toEqual(true);
+    });
+
+    it('group by status.name', () => {
+        // Arrange
+        const grouper = new StatusNameField().createGrouper();
+
+        // // Assert
+        expect(grouper.grouper(todoTask)).toEqual(['Todo']);
+        expect(grouper.grouper(inprTask)).toEqual(['In Progress']);
+    });
+});

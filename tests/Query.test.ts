@@ -189,6 +189,7 @@ describe('Query parsing', () => {
             'group by scheduled',
             'group by start',
             'group by status',
+            'group by status.type',
             'group by tags',
         ];
         test.concurrent.each<string>(filters)('recognises %j', (filter) => {
@@ -257,9 +258,14 @@ describe('Query parsing', () => {
         });
     });
 
-    it('should parse ambiguous queries correctly', () => {
+    it('should parse ambiguous sort by queries correctly', () => {
         expect(new Query({ source: 'sort by status' }).sorting[0].property).toEqual('status');
         expect(new Query({ source: 'sort by status.name' }).sorting[0].property).toEqual('status.name');
+    });
+
+    it('should parse ambiguous group by queries correctly', () => {
+        expect(new Query({ source: 'group by status' }).grouping[0].property).toEqual('status');
+        expect(new Query({ source: 'group by status.name' }).grouping[0].property).toEqual('status.name');
     });
 });
 
