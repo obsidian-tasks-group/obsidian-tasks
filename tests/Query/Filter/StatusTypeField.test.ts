@@ -120,11 +120,12 @@ describe('grouping by status.type', () => {
         const grouper = new StatusTypeField().createGrouper();
 
         // // Assert
-        expect(grouper.grouper(inprTask)).toEqual(['IN_PROGRESS']);
-        expect(grouper.grouper(todoTask)).toEqual(['TODO']);
-        expect(grouper.grouper(unknTask)).toEqual(['TODO']);
-        expect(grouper.grouper(doneTask)).toEqual(['DONE']);
-        expect(grouper.grouper(cancTask)).toEqual(['CANCELLED']);
-        expect(grouper.grouper(non_Task)).toEqual(['NON_TASK']);
+        expect(grouper.grouper(inprTask)).toEqual(['1 IN_PROGRESS']);
+        expect(grouper.grouper(todoTask)).toEqual(['2 TODO']);
+        expect(grouper.grouper(unknTask)).toEqual(['2 TODO']);
+        expect(grouper.grouper(doneTask)).toEqual(['3 DONE']);
+        expect(grouper.grouper(cancTask)).toEqual(['4 CANCELLED']);
+        expect(grouper.grouper(non_Task)).toEqual(['5 NON_TASK']);
+        expect(grouper.grouper(emptTask)).toEqual(['6 EMPTY']); // won't be seen by users
     });
 });
