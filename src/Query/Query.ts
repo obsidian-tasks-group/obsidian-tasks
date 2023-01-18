@@ -7,7 +7,7 @@ import type { Sorter } from './Sorter';
 import type { TaskGroups } from './TaskGroups';
 import { parseFilter, parseSorter } from './FilterParser';
 import { Group } from './Group';
-import { Grouper } from './Grouper';
+import type { Grouper } from './Grouper';
 import type { GroupingProperty } from './Grouper';
 import type { Filter } from './Filter/Filter';
 
@@ -211,7 +211,7 @@ export class Query implements IQuery {
     private parseGroupBy({ line }: { line: string }): void {
         const fieldMatch = line.match(this.groupByRegexp);
         if (fieldMatch !== null) {
-            this._grouping.push(Grouper.fromGroupingProperty(fieldMatch[1] as GroupingProperty));
+            this._grouping.push(Group.fromGroupingProperty(fieldMatch[1] as GroupingProperty));
         } else {
             this._error = 'do not understand query grouping';
         }
