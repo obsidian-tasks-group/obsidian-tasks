@@ -1,5 +1,5 @@
 import type { Task } from '../Task';
-import type { Grouper } from './Group';
+import type { Grouper } from './Grouper';
 import { GroupHeadings } from './GroupHeadings';
 import { IntermediateTaskGroups } from './IntermediateTaskGroups';
 import { TaskGroup } from './TaskGroup';

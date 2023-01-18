@@ -6,7 +6,8 @@ import { Sort } from './Sort';
 import type { Sorter } from './Sorter';
 import type { TaskGroups } from './TaskGroups';
 import { parseFilter, parseSorter } from './FilterParser';
-import { Group, Grouper } from './Group';
+import { Group } from './Group';
+import { Grouper } from './Grouper';
 import type { Filter } from './Filter/Filter';
 
 export type GroupingProperty =
