@@ -7,12 +7,12 @@ import { HappensDateField } from './Filter/HappensDateField';
 /**
  * A naming function, that takes a Task object and returns the corresponding group property name
  */
-type Grouper = (task: Task) => string[];
+type GrouperFunction = (task: Task) => string[];
 
 export class Grouping {
-    public readonly grouper: Grouper;
+    public readonly grouper: GrouperFunction;
 
-    private constructor(grouper: Grouper) {
+    private constructor(grouper: GrouperFunction) {
         this.grouper = grouper;
     }
 
@@ -52,7 +52,7 @@ export class Group {
         return Group.groupers[property];
     }
 
-    private static groupers: Record<GroupingProperty, Grouper> = {
+    private static groupers: Record<GroupingProperty, GrouperFunction> = {
         backlink: Group.groupByBacklink,
         done: Group.groupByDoneDate,
         due: Group.groupByDueDate,
