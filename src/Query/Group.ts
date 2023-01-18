@@ -10,16 +10,14 @@ import { HappensDateField } from './Filter/HappensDateField';
 type Grouper = (task: Task) => string[];
 
 export class Grouping {
-    public readonly property: GroupingProperty;
     public readonly grouper: Grouper;
 
-    private constructor(property: GroupingProperty) {
-        this.property = property;
-        this.grouper = Group.grouperForProperty(property);
+    private constructor(grouper: Grouper) {
+        this.grouper = grouper;
     }
 
     public static fromGroupingProperty(property: GroupingProperty): Grouping {
-        return new Grouping(property);
+        return new Grouping(Group.grouperForProperty(property));
     }
 }
 
