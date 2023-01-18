@@ -4,6 +4,7 @@ import { RegexMatcher } from '../Matchers/RegexMatcher';
 import type { IStringMatcher } from '../Matchers/IStringMatcher';
 import { Explanation } from '../Explain/Explanation';
 import type { Comparator } from '../Sorter';
+import type { GrouperFunction } from '../Grouper';
 import { Field } from './Field';
 import type { FilterFunction } from './Filter';
 import { Filter, FilterOrErrorMessage } from './Filter';
@@ -97,6 +98,19 @@ export abstract class TextField extends Field {
     comparator(): Comparator {
         return (a: Task, b: Task) => {
             return this.value(a).localeCompare(this.value(b), undefined, { numeric: true });
+        };
+    }
+
+    /**
+     * A default implementation of grouping, for text fields where simple locale-aware grouping is the
+     * desired behaviour.
+     *
+     * Each class that wants to use this will need to override supportsGrouping() to return true,
+     * to turn on grouping.
+     */
+    public grouper(): GrouperFunction {
+        return (task: Task) => {
+            return [this.value(task)];
         };
     }
 }

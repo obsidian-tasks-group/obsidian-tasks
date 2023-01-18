@@ -1,5 +1,4 @@
 import type { Task } from '../../Task';
-import type { GrouperFunction } from '../Grouper';
 import { TextField } from './TextField';
 
 /**
@@ -24,11 +23,5 @@ export class StatusNameField extends TextField {
 
     public supportsGrouping(): boolean {
         return true;
-    }
-
-    public grouper(): GrouperFunction {
-        return (task: Task) => {
-            return [this.value(task)];
-        };
     }
 }
