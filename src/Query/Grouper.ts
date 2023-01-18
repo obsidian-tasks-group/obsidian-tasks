@@ -24,9 +24,11 @@ export type GroupingProperty =
     | 'tags';
 
 export class Grouper {
+    public readonly property: string;
     public readonly grouper: GrouperFunction;
 
-    public constructor(grouper: GrouperFunction) {
+    constructor(property: string, grouper: GrouperFunction) {
+        this.property = property;
         this.grouper = grouper;
     }
 }
