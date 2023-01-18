@@ -108,3 +108,23 @@ describe('sorting by status.name', () => {
         expectTaskComparesAfter(sorter, emptTask, inprTask);
     });
 });
+
+describe('grouping by status.type', () => {
+    it('supports Field grouping methods correctly', () => {
+        const field = new StatusTypeField();
+        expect(field.supportsGrouping()).toEqual(true);
+    });
+
+    it('group by status.type', () => {
+        // Arrange
+        const grouper = new StatusTypeField().createGrouper();
+
+        // // Assert
+        expect(grouper.grouper(inprTask)).toEqual(['IN_PROGRESS']);
+        expect(grouper.grouper(todoTask)).toEqual(['TODO']);
+        expect(grouper.grouper(unknTask)).toEqual(['TODO']);
+        expect(grouper.grouper(doneTask)).toEqual(['DONE']);
+        expect(grouper.grouper(cancTask)).toEqual(['CANCELLED']);
+        expect(grouper.grouper(non_Task)).toEqual(['NON_TASK']);
+    });
+});

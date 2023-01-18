@@ -20,4 +20,8 @@ export class StatusTypeField extends TextField {
     supportsSorting(): boolean {
         return true;
     }
+
+    public supportsGrouping(): boolean {
+        return true;
+    }
 }
