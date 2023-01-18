@@ -79,7 +79,6 @@ You can group by the following properties.
         - `3 DONE`
         - `4 CANCELLED`
         - `5 NON_TASK`
-        - `6 EMPTY`
 
 {: .released }
 `group by status.name` and `group by status.type` were introduced in Tasks X.Y.Z.
