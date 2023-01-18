@@ -15,6 +15,7 @@
 | Matches `status.type includes CANCELLED` | no | no | no | YES | no |
 | Matches `status.type includes NON_TASK` | no | no | no | no | YES |
 | Name for `group by status` | Todo | Done | Done | Done | Done |
+| Name for `group by status.name` | Todo | In Progress | Done | Cancelled | My custom status |
 
 
 <!-- placeholder to force blank line after table -->
