@@ -77,7 +77,7 @@ export class IntermediateTaskGroups {
             const nextTreeLevel = [];
             for (const currentTreeNode of currentTreeLevel) {
                 for (const task of currentTreeNode.values) {
-                    const groupNames = Group.getGroupNamesForTask(grouping.property, task);
+                    const groupNames = Group.getGroupNamesForTask(grouping, task);
                     for (const groupName of groupNames) {
                         let child = currentTreeNode.children.get(groupName);
                         if (child === undefined) {

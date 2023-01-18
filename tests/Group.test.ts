@@ -10,7 +10,7 @@ import { fromLine } from './TestHelpers';
 window.moment = moment;
 
 function checkGroupNamesOfTask(task: Task, property: GroupingProperty, expectedGroupNames: string[]) {
-    const group = Group.getGroupNamesForTask(property, task);
+    const group = Group.getGroupNamesForTask(new Grouping(property), task);
     expect(group).toEqual(expectedGroupNames);
 }
 
