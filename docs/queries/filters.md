@@ -205,6 +205,8 @@ because the tasks starts before tomorrow. Only one of the dates needs to match.
 
 ### Status Name
 
+- This searches the names given to your custom statuses.
+- For example, perhaps you might have named `[!]` as `Important`, and so this field would search then text `Important` for all tasks with that status symbol.
 - `status.name (includes|does not include) <string>`
   - Matches case-insensitive (disregards capitalization).
 - `status.name (regex matches|regex does not match) /<JavaScript-style Regex>/`
@@ -213,6 +215,27 @@ because the tasks starts before tomorrow. Only one of the dates needs to match.
 
 {: .released }
 `status.name` text searching was introduced in Tasks X.Y.Z.
+
+For more information, including adding your own customised statuses, see [Statuses]({{ site.baseurl }}{% link getting-started/statuses.md %}).
+
+### Status Type
+
+- This searches the types you have given to your custom statuses.
+- The following status types are available:
+  - `TODO`
+  - `IN_PROGRESS`
+  - `DONE`
+  - `CANCELLED`
+  - `NON_TASK`
+- This search is efficient if you wish to find all tasks that are `IN_PROGRESS`, and you have set up your statuses to have `[/]`, `[d]` and perhaps several other all treated as `IN_PROGRESS`.
+- `status.type (includes|does not include) <string>`
+  - Matches case-insensitive (disregards capitalization).
+- `status.type (regex matches|regex does not match) /<JavaScript-style Regex>/`
+  - Does regular expression match (case-sensitive by default).
+  - Essential reading: [Regular Expression Searches]({{ site.baseurl }}{% link queries/regular-expressions.md %}).
+
+{: .released }
+`status.type` text searching was introduced in Tasks X.Y.Z.
 
 For more information, including adding your own customised statuses, see [Statuses]({{ site.baseurl }}{% link getting-started/statuses.md %}).
 
