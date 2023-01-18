@@ -1,5 +1,5 @@
 import type { Task } from '../Task';
-import type { Grouping } from './Query';
+import type { Grouper } from './Grouper';
 import { GroupHeadings } from './GroupHeadings';
 import { IntermediateTaskGroups } from './IntermediateTaskGroups';
 import { TaskGroup } from './TaskGroup';
@@ -14,12 +14,12 @@ export class TaskGroups {
 
     /**
      * Constructor for TaskGroups
-     * @param {Grouping[]} groups - 0 or more Grouping values,
+     * @param {Grouper[]} groups - 0 or more Grouping values,
      *                              1 per 'group by' line in the task query block
      * @param {Task[]} tasks - 0 more more Task objects, with all the tasks
      *                         matching the query, already in sort order
      */
-    constructor(groups: Grouping[], tasks: Task[]) {
+    constructor(groups: Grouper[], tasks: Task[]) {
         // Grouping doesn't change the number of tasks, and all the tasks
         // will be shown in at least one group.
         this._totalTaskCount = tasks.length;

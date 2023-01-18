@@ -1,13 +1,9 @@
 import type { Task } from '../Task';
 import { Priority } from '../Task';
-import type { Grouping, GroupingProperty } from './Query';
 import { TaskGroups } from './TaskGroups';
 import { HappensDateField } from './Filter/HappensDateField';
-
-/**
- * A naming function, that takes a Task object and returns the corresponding group property name
- */
-type Grouper = (task: Task) => string[];
+import { Grouper } from './Grouper';
+import type { GrouperFunction, GroupingProperty } from './Grouper';
 
 /**
  * Implementation of the 'group by' instruction.
@@ -15,12 +11,16 @@ type Grouper = (task: Task) => string[];
 export class Group {
     private static readonly groupDateFormat = 'YYYY-MM-DD dddd';
 
+    public static fromGroupingProperty(property: GroupingProperty): Grouper {
+        return new Grouper(Group.grouperForProperty(property));
+    }
+
     /**
      * Group a list of tasks, according to one or more task properties
      * @param grouping 0 or more Grouping values, one per 'group by' line
      * @param tasks The tasks that match the task block's Query
      */
-    public static by(grouping: Grouping[], tasks: Task[]): TaskGroups {
+    public static by(grouping: Grouper[], tasks: Task[]): TaskGroups {
         return new TaskGroups(grouping, tasks);
     }
 
@@ -29,15 +29,18 @@ export class Group {
      *
      * The returned string will be rendered, so any special Markdown characters will be escaped
      *
-     * @param property
+     * @param grouping
      * @param task
      */
-    public static getGroupNamesForTask(property: GroupingProperty, task: Task): string[] {
-        const grouper = Group.groupers[property];
-        return grouper(task);
+    public static getGroupNamesForTask(grouping: Grouper, task: Task): string[] {
+        return grouping.grouper(task);
     }
 
-    private static groupers: Record<GroupingProperty, Grouper> = {
+    public static grouperForProperty(property: GroupingProperty) {
+        return Group.groupers[property];
+    }
+
+    private static groupers: Record<GroupingProperty, GrouperFunction> = {
         backlink: Group.groupByBacklink,
         done: Group.groupByDoneDate,
         due: Group.groupByDueDate,
