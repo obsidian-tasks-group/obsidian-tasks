@@ -1,6 +1,6 @@
 <!-- placeholder to force blank line before table -->
 
-| Status Character | Status Name | Next Status Character | Status Type | Needs Custom Styling |
+| Status Character | Status Name<br>`status.name includes...`<br>`sort by status.name`<br>`group by status.name` | Next Status Character | Status Type | Needs Custom Styling |
 | ----- | ----- | ----- | ----- | ----- |
 | `>` | Forwarded | `x` | `TODO` | Yes |
 | `<` | Schedule | `x` | `TODO` | Yes |
