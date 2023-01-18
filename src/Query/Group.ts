@@ -39,12 +39,11 @@ export class Group {
      *
      * The returned string will be rendered, so any special Markdown characters will be escaped
      *
-     * @param property
+     * @param grouping
      * @param task
      */
-    public static getGroupNamesForTask(property: GroupingProperty, task: Task): string[] {
-        const grouper = Group.groupers[property];
-        return grouper(task);
+    public static getGroupNamesForTask(grouping: Grouping, task: Task): string[] {
+        return grouping.grouper(task);
     }
 
     public static grouperForProperty(property: GroupingProperty) {
