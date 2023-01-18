@@ -10,6 +10,7 @@ import type { FilterOrErrorMessage } from '../src/Query/Filter/Filter';
 import * as FilterParser from '../src/Query/FilterParser';
 import { Group } from '../src/Query/Group';
 import { StatusNameField } from '../src/Query/Filter/StatusNameField';
+import { StatusTypeField } from '../src/Query/Filter/StatusTypeField';
 import { TaskBuilder } from './TestingTools/TaskBuilder';
 
 class MarkdownTable {
@@ -65,7 +66,7 @@ function verifyStatusesAsMarkdownTable(statuses: Status[]) {
         'Status Character',
         'Status Name<br>`status.name includes...`<br>`sort by status.name`<br>`group by status.name`',
         'Next Status Character',
-        'Status Type',
+        'Status Type<br>`status.type includes...`<br>`sort by status.type`<br>`group by status.type`',
         'Needs Custom Styling',
     ]);
 
@@ -166,6 +167,7 @@ function verifyTransitionsAsMarkdownTable(statuses: Status[]) {
     }
 
     showGroupNamesForAllTasks('status', Group.grouperForProperty('status'));
+    showGroupNamesForAllTasks('status.type', new StatusTypeField().createGrouper().grouper);
     showGroupNamesForAllTasks('status.name', new StatusNameField().createGrouper().grouper);
 
     table.verify();
