@@ -63,7 +63,7 @@ function getPrintableIndicator(indicator: string) {
 function verifyStatusesAsMarkdownTable(statuses: Status[]) {
     const table = new MarkdownTable([
         'Status Character',
-        'Status Name',
+        'Status Name<br>`status.name includes...`<br>`sort by status.name`<br>`group by status.name`',
         'Next Status Character',
         'Status Type',
         'Needs Custom Styling',

@@ -72,6 +72,9 @@ You can group by the following properties.
 1. `group by status.name`
     - This groups by the names you give to your custom statuses, in alphabetical order.
 
+{: .released }  
+`group by status.name` was introduced in Tasks X.Y.Z.
+
 ### Other task properties
 
 1. `priority`
