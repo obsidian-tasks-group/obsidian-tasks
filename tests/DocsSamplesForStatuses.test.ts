@@ -165,21 +165,8 @@ function verifyTransitionsAsMarkdownTable(statuses: Status[]) {
         table.addRow(cells);
     }
 
-    {
-        const groupName = 'status';
-        const grouperFunction = Group.grouperForProperty('status');
-        showGroupNamesForAllTasks(groupName, grouperFunction);
-    }
-
-    {
-        const cells: string[] = ['Name for `group by status.name`'];
-        tasks.forEach((task) => {
-            const groupNamesForTask = new StatusNameField().createGrouper().grouper(task);
-            const names = groupNamesForTask.join(',');
-            cells.push(names);
-        });
-        table.addRow(cells);
-    }
+    showGroupNamesForAllTasks('status', Group.grouperForProperty('status'));
+    showGroupNamesForAllTasks('status.name', new StatusNameField().createGrouper().grouper);
 
     table.verify();
 }
