@@ -192,12 +192,11 @@ export class Status {
     /**
      * Helper function for bulk-importing settings from arrays of strings.
      *
-     * The type is deduced, for a few common status indicators.
-     * @param imported An array of indicator, name, next indicator
+     * @param imported An array of indicator, name, next indicator, status type
      */
     static createFromImportedValue(imported: StatusCollectionEntry) {
         const indicator = imported[0];
-        const type = Status.getTypeForUnknownIndicator(indicator);
+        const type = Status.getTypeFromStatusTypeString(imported[3]);
         return new Status(new StatusConfiguration(indicator, imported[1], imported[2], false, type));
     }
 

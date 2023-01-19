@@ -54,13 +54,13 @@ describe('StatusSettings', () => {
     it('should bulk-add new statuses, reporting errors', () => {
         // Arrange
         const newStatuses: StatusCollection = [
-            ['>', 'Forwarded', 'x'],
-            ['<', 'Schedule', 'x'],
-            ['?', 'Question', 'x'],
-            ['-', 'Dropped - should not be added as duplicate of core Cancelled', 'x'],
-            ['>', 'Forwarded', 'x'], // is a duplicate so should not be added
-            ['<', 'Duplicate - should not be added as duplicate of Schedule above', 'x'],
-            ['', 'Empty - should not be added as no status character', 'x'],
+            ['>', 'Forwarded', 'x', 'TODO'],
+            ['<', 'Schedule', 'x', 'TODO'],
+            ['?', 'Question', 'x', 'TODO'],
+            ['-', 'Dropped - should not be added as duplicate of core Cancelled', 'x', 'CANCELLED'],
+            ['>', 'Forwarded', 'x', 'TODO'], // is a duplicate so should not be added
+            ['<', 'Duplicate - should not be added as duplicate of Schedule above', 'x', 'TODO'],
+            ['', 'Empty - should not be added as no status character', 'x', 'TODO'],
         ];
         const settings = new StatusSettings();
 
