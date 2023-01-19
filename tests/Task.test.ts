@@ -468,6 +468,10 @@ describe('toggle done', () => {
             ['!', 'Important', 'D', 'TODO'],
             ['D', 'Doing - Important', 'X', 'IN_PROGRESS'],
             ['X', 'Done - Important', '!', 'DONE'],
+            // A set that uses an unconventional symbol for DONE
+            ['1', 'Status 1', '2', 'TODO'],
+            ['2', 'Status 2', '3', 'IN_PROGRESS'],
+            ['3', 'Status 3', '1', 'DONE'],
         ];
         statuses.forEach((s) => {
             StatusRegistry.getInstance().add(Status.createFromImportedValue(s));
@@ -800,6 +804,12 @@ describe('toggle done', () => {
             doneIndicator: 'X',
             nextIndicator: '!',
             nextDue: '2023-01-20',
+        },
+        {
+            interval: 'every day',
+            indicator: '2',
+            doneIndicator: '3', // 2 toggles to 3
+            nextIndicator: '1', // and the new task should be 1
         },
     ];
 
