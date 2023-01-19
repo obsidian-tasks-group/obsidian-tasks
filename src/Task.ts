@@ -549,7 +549,12 @@ export class Task {
         const newTasks: Task[] = [];
 
         if (nextOccurrence !== null) {
-            const nextStatus = StatusRegistry.getInstance().getNextStatus(newStatus);
+            let nextStatus = StatusRegistry.getInstance().getNextStatus(newStatus);
+            if (nextStatus === Status.EMPTY) {
+                // newStatus is configured to advanced to a symbol that is not registered.
+                // So we go ahead and create it anyway - we just cannot give it a meaningful name.
+                nextStatus = Status.createUnknownStatus(newStatus.nextStatusIndicator);
+            }
             const nextTask = new Task({
                 ...this,
                 ...nextOccurrence,
