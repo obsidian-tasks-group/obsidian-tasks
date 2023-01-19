@@ -472,6 +472,9 @@ describe('toggle done', () => {
             ['1', 'Status 1', '2', 'TODO'],
             ['2', 'Status 2', '3', 'IN_PROGRESS'],
             ['3', 'Status 3', '1', 'DONE'],
+            // A set where the DONE task goes to an unknown symbol
+            ['a', 'Status a', 'b', 'TODO'],
+            ['b', 'Status b', 'c', 'DONE'], // c is not known
         ];
         statuses.forEach((s) => {
             StatusRegistry.getInstance().add(Status.createFromImportedValue(s));
@@ -810,6 +813,12 @@ describe('toggle done', () => {
             indicator: '2',
             doneIndicator: '3', // 2 toggles to 3
             nextIndicator: '1', // and the new task should be 1
+        },
+        {
+            interval: 'every day',
+            indicator: 'a',
+            doneIndicator: 'b', // a toggles to b
+            nextIndicator: 'c', // b says it toggles to c: , but c does not exist: check that it has been chosen anyway
         },
     ];
 
