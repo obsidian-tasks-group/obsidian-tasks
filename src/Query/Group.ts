@@ -36,7 +36,7 @@ export class Group {
         return grouping.grouper(task);
     }
 
-    public static grouperForProperty(property: GroupingProperty) {
+    public static grouperForProperty(property: GroupingProperty): GrouperFunction {
         return Group.groupers[property];
     }
 
