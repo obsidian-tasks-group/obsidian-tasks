@@ -1,4 +1,5 @@
 import { StatusConfiguration, StatusType } from './StatusConfiguration';
+import type { StatusCollectionEntry } from './StatusCollection';
 
 /**
  * Tracks the possible states that a task can be in.
@@ -194,7 +195,7 @@ export class Status {
      * The type is deduced, for a few common status indicators.
      * @param imported An array of indicator, name, next indicator
      */
-    static createFromImportedValue(imported: [string, string, string]) {
+    static createFromImportedValue(imported: StatusCollectionEntry) {
         const indicator = imported[0];
         const type = Status.getTypeForUnknownIndicator(indicator);
         return new Status(new StatusConfiguration(indicator, imported[1], imported[2], false, type));
