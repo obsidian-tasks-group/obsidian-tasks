@@ -1,5 +1,5 @@
 import { Status } from './Status';
-import { StatusConfiguration } from './StatusConfiguration';
+import { StatusConfiguration, StatusType } from './StatusConfiguration';
 import type { Task } from './Task';
 
 /**
@@ -149,6 +149,7 @@ export class StatusRegistry {
      *
      * @return {*}  {Status}
      * @memberof StatusRegistry
+     * @see getNextStatusOrCreate
      */
     public getNextStatus(status: Status): Status {
         if (status.nextStatusIndicator !== '') {
@@ -158,6 +159,24 @@ export class StatusRegistry {
             }
         }
         return Status.EMPTY;
+    }
+
+    /**
+     * Return the next status if it exists, and if not, create a new
+     * TODO status using the requested next symbol.
+     *
+     * @return {*}  {Status}
+     * @memberof StatusRegistry
+     * @see getNextStatus
+     */
+    public getNextStatusOrCreate(status: Status): Status {
+        const nextStatus = this.getNextStatus(status);
+        if (nextStatus.type !== StatusType.EMPTY) {
+            return nextStatus;
+        }
+        // status is configured to advance to a symbol that is not registered.
+        // So we go ahead and create it anyway - we just cannot give it a meaningful name.
+        return Status.createUnknownStatus(status.nextStatusIndicator);
     }
 
     /**
