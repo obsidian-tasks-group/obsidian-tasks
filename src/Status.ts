@@ -208,7 +208,7 @@ export class Status {
      * @memberof Status
      */
     public isCompleted(): boolean {
-        return this.indicator === 'x' || this.indicator === 'X';
+        return this.type === StatusType.DONE;
     }
 
     /**
