@@ -92,6 +92,26 @@ describe('StatusRegistry', () => {
         expect(statusRegistry.getNextStatus(statusD).indicator).toEqual('a');
     });
 
+    it('should return EMPTY if next status does not exist', () => {
+        const statusRegistry = new StatusRegistry();
+        const status = new Status(new StatusConfiguration('P', 'Pro', 'C', false));
+        const nextStatus = statusRegistry.getNextStatus(status);
+        expect(nextStatus.type).toEqual(StatusType.EMPTY);
+    });
+
+    it('should construct a TODO on request if next status does not exist', () => {
+        // Arrange
+        const statusRegistry = new StatusRegistry();
+        const status = new Status(new StatusConfiguration('P', 'Pro', 'C', false));
+        const nextStatus = statusRegistry.getNextStatusOrCreate(status);
+
+        // Assert
+        expect(nextStatus.indicator).toEqual('C');
+        expect(nextStatus.name).toEqual('Unknown');
+        expect(nextStatus.nextStatusIndicator).toEqual('x');
+        expect(nextStatus.type).toEqual(StatusType.TODO);
+    });
+
     it('should handle adding custom StatusConfiguration', () => {
         // Arrange
         const statusRegistry = new StatusRegistry();

@@ -4,7 +4,7 @@ import type { TaskLayoutComponent } from './TaskLayout';
 import { Recurrence } from './Recurrence';
 import { getSettings } from './Config/Settings';
 import { StatusRegistry } from './StatusRegistry';
-import { Status } from './Status';
+import type { Status } from './Status';
 import { Urgency } from './Urgency';
 import { DateField } from './Query/Filter/DateField';
 import { renderTaskLine } from './TaskLineRenderer';
@@ -514,10 +514,7 @@ export class Task {
      * task is not recurring, it will return `[toggled]`.
      */
     public toggle(): Task[] {
-        let newStatus = StatusRegistry.getInstance().getNextStatus(this.status);
-        if (newStatus === Status.EMPTY) {
-            newStatus = Status.createUnknownStatus(this.status.nextStatusIndicator);
-        }
+        const newStatus = StatusRegistry.getInstance().getNextStatusOrCreate(this.status);
 
         let newDoneDate = null;
 
@@ -549,12 +546,7 @@ export class Task {
         const newTasks: Task[] = [];
 
         if (nextOccurrence !== null) {
-            let nextStatus = StatusRegistry.getInstance().getNextStatus(newStatus);
-            if (nextStatus === Status.EMPTY) {
-                // newStatus is configured to advanced to a symbol that is not registered.
-                // So we go ahead and create it anyway - we just cannot give it a meaningful name.
-                nextStatus = Status.createUnknownStatus(newStatus.nextStatusIndicator);
-            }
+            const nextStatus = StatusRegistry.getInstance().getNextStatusOrCreate(newStatus);
             const nextTask = new Task({
                 ...this,
                 ...nextOccurrence,
