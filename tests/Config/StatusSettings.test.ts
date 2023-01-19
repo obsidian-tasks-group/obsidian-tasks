@@ -3,6 +3,7 @@ import { StatusSettings } from '../../src/Config/StatusSettings';
 import { Status } from '../../src/Status';
 import { StatusConfiguration } from '../../src/StatusConfiguration';
 import { StatusRegistry } from '../../src/StatusRegistry';
+import type { StatusCollection } from '../../src/StatusCollection';
 
 describe('StatusSettings', () => {
     it('verify default status settings', () => {
@@ -52,7 +53,7 @@ describe('StatusSettings', () => {
 
     it('should bulk-add new statuses, reporting errors', () => {
         // Arrange
-        const newStatuses: Array<[string, string, string]> = [
+        const newStatuses: StatusCollection = [
             ['>', 'Forwarded', 'x'],
             ['<', 'Schedule', 'x'],
             ['?', 'Question', 'x'],

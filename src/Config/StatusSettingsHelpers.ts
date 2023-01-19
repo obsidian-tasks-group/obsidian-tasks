@@ -4,6 +4,8 @@
  * be written for its contents.
  */
 
+import type { StatusCollection } from '../StatusCollection';
+
 /**
  * Status supported by the Minimal theme. {@link https://github.com/kepano/obsidian-minimal}
  * Values recognised by Tasks are excluded.
@@ -11,7 +13,7 @@
  * @see {@link StatusSettings.bulkAddStatusCollection}
  */
 export function minimalSupportedStatuses() {
-    const zzz: Array<[string, string, string]> = [
+    const zzz: StatusCollection = [
         ['>', 'Forwarded', 'x'],
         ['<', 'Schedule', 'x'],
         ['?', 'Question', 'x'],
@@ -43,7 +45,7 @@ export function minimalSupportedStatuses() {
  * @see {@link StatusSettings.bulkAddStatusCollection}
  */
 export function itsSupportedStatuses() {
-    const zzz: Array<[string, string, string]> = [
+    const zzz: StatusCollection = [
         //['X', 'Checked', 'x'],
         ['>', 'Forward', 'x'],
         ['D', 'Deferred/Scheduled', 'x'],

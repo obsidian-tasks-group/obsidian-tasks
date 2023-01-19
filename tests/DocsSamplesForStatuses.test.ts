@@ -11,6 +11,7 @@ import * as FilterParser from '../src/Query/FilterParser';
 import { Group } from '../src/Query/Group';
 import { StatusNameField } from '../src/Query/Filter/StatusNameField';
 import { StatusTypeField } from '../src/Query/Filter/StatusTypeField';
+import type { StatusCollection } from '../src/StatusCollection';
 import { TaskBuilder } from './TestingTools/TaskBuilder';
 
 class MarkdownTable {
@@ -80,7 +81,7 @@ function verifyStatusesAsMarkdownTable(statuses: Status[]) {
     table.verify();
 }
 
-function constructStatuses(importedStatuses: Array<[string, string, string]>) {
+function constructStatuses(importedStatuses: StatusCollection) {
     const statuses: Status[] = [];
     importedStatuses.forEach((importedStatus) => {
         statuses.push(Status.createFromImportedValue(importedStatus));
@@ -106,7 +107,7 @@ describe('DefaultStatuses', () => {
     });
 
     it('important-cycle', () => {
-        const importantCycle: Array<[string, string, string]> = [
+        const importantCycle: StatusCollection = [
             ['!', 'Important', 'D'],
             ['D', 'Doing - Important', 'X'],
             ['X', 'Done - Important', '!'],

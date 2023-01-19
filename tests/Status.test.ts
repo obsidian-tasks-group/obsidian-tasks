@@ -4,6 +4,7 @@
 import moment from 'moment';
 import { Status } from '../src/Status';
 import { StatusConfiguration, StatusType } from '../src/StatusConfiguration';
+import type { StatusCollectionEntry } from '../src/StatusCollection';
 
 jest.mock('obsidian');
 window.moment = moment;
@@ -106,7 +107,7 @@ describe('Status', () => {
     });
 
     it('should construct a Status from a core imported value', () => {
-        const imported: [string, string, string] = ['/', 'in progress', 'x'];
+        const imported: StatusCollectionEntry = ['/', 'in progress', 'x'];
         const status = Status.createFromImportedValue(imported);
         expect(status.indicator).toEqual('/');
         expect(status.name).toEqual('in progress');
@@ -116,7 +117,7 @@ describe('Status', () => {
     });
 
     it('should construct a Status from a custom imported value', () => {
-        const imported: [string, string, string] = ['P', 'Pro', 'C'];
+        const imported: StatusCollectionEntry = ['P', 'Pro', 'C'];
         const status = Status.createFromImportedValue(imported);
         expect(status.indicator).toEqual('P');
         expect(status.name).toEqual('Pro');

@@ -1,6 +1,7 @@
 import type { StatusConfiguration } from '../StatusConfiguration';
 import type { StatusRegistry } from '../StatusRegistry';
 import { Status } from '../Status';
+import type { StatusCollection } from '../StatusCollection';
 
 /**
  * Class for encapsulating the settings that control custom statuses.
@@ -112,7 +113,7 @@ export class StatusSettings {
      */
     public static bulkAddStatusCollection(
         statusSettings: StatusSettings,
-        supportedStatuses: Array<[string, string, string]>,
+        supportedStatuses: StatusCollection,
     ): string[] {
         const notices: string[] = [];
         supportedStatuses.forEach((importedStatus) => {
