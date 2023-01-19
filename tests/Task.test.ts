@@ -6,6 +6,8 @@ import type { Moment } from 'moment';
 import { Status } from '../src/Status';
 import { Priority, Task } from '../src/Task';
 import { resetSettings, updateSettings } from '../src/Config/Settings';
+import type { StatusCollection } from '../src/StatusCollection';
+import { StatusRegistry } from '../src/StatusRegistry';
 import { fromLine } from './TestHelpers';
 import { TaskBuilder } from './TestingTools/TaskBuilder';
 import { RecurrenceBuilder } from './TestingTools/RecurrenceBuilder';
@@ -459,6 +461,23 @@ describe('to string', () => {
 });
 
 describe('toggle done', () => {
+    beforeAll(() => {
+        const statuses: StatusCollection = [
+            // A custom set of 3 statuses that form a cycle.
+            // The last one has a conventional symbol, 'X' that is recognised as DONE.fix
+            ['!', 'Important', 'D', 'TODO'],
+            ['D', 'Doing - Important', 'X', 'IN_PROGRESS'],
+            ['X', 'Done - Important', '!', 'DONE'],
+        ];
+        statuses.forEach((s) => {
+            StatusRegistry.getInstance().add(Status.createFromImportedValue(s));
+        });
+    });
+
+    afterAll(() => {
+        StatusRegistry.getInstance().clearStatuses();
+    });
+
     it('retains the block link', () => {
         // Arrange
         const line = '- [ ] this is a task 📅 2021-09-12 ^my-precious';
@@ -499,11 +518,16 @@ describe('toggle done', () => {
     });
 
     type RecurrenceCase = {
+        // inputs:
         interval: string;
+        indicator?: string;
         due?: string;
         scheduled?: string;
         start?: string;
         today?: string;
+        // results:
+        doneIndicator?: string; // the indicator of the completed task
+        nextIndicator?: string; // the indicator of the recurrence
         nextDue?: string;
         nextScheduled?: string;
         nextStart?: string;
@@ -765,21 +789,55 @@ describe('toggle done', () => {
             today: '2020-02-29', // is a leap year
             nextStart: '2022-02-28',
         },
+        // ==================================
+        // Test toggling with custom statuses.
+        // See the available statuses, which were set up in the beforeAll() function above.
+        // ==================================
+        {
+            interval: 'every day',
+            indicator: 'D',
+            due: '2023-01-19',
+            doneIndicator: 'X',
+            nextIndicator: '!',
+            nextDue: '2023-01-20',
+        },
     ];
 
-    test.concurrent.each<RecurrenceCase>(recurrenceCases)(
+    // This was calling test.concurrent.each() to run the tests in parallel, but I couldn't
+    // get it to run beforeAll() before running the tests.
+    // https://github.com/facebook/jest/issues/7997#issuecomment-796965078
+    test.each<RecurrenceCase>(recurrenceCases)(
         'recurs correctly (%j)',
-        ({ interval, due, scheduled, start, today, nextDue, nextScheduled, nextStart, nextInterval }) => {
+        ({
+            // inputs:
+            interval,
+            indicator,
+            due,
+            scheduled,
+            start,
+            today,
+            // results:
+            doneIndicator,
+            nextIndicator,
+            nextDue,
+            nextScheduled,
+            nextStart,
+            nextInterval,
+        }) => {
             const todaySpy = jest.spyOn(Date, 'now').mockReturnValue(moment(today).valueOf());
 
             // If this test fails, the RecurrenceCase had no expected new dates set, and so
             // is accidentally not doing any testing.
             const atLeaseOneExpectationSupplied =
-                nextStart !== undefined || nextDue !== undefined || nextScheduled !== undefined;
+                nextStart !== undefined ||
+                nextDue !== undefined ||
+                nextScheduled !== undefined ||
+                nextIndicator !== undefined ||
+                doneIndicator !== undefined;
             expect(atLeaseOneExpectationSupplied).toStrictEqual(true);
 
             const line = [
-                '- [ ] I am task',
+                `- [${indicator ?? ' '}] I am task`,
                 `🔁 ${interval}`,
                 !!scheduled && `⏳ ${scheduled}`,
                 !!due && `📅 ${due}`,
@@ -794,8 +852,11 @@ describe('toggle done', () => {
 
             const tasks = task!.toggle();
             expect(tasks.length).toEqual(2);
+            const doneTask: Task = tasks[1];
             const nextTask: Task = tasks[0];
 
+            expect(doneTask.status.indicator).toEqual(doneIndicator ?? 'x');
+            expect(nextTask.status.indicator).toEqual(nextIndicator ?? ' ');
             expect({
                 nextDue: nextTask.dueDate?.format('YYYY-MM-DD'),
                 nextScheduled: nextTask.scheduledDate?.format('YYYY-MM-DD'),

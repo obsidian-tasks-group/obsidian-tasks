@@ -549,9 +549,11 @@ export class Task {
         const newTasks: Task[] = [];
 
         if (nextOccurrence !== null) {
+            const nextStatus = StatusRegistry.getInstance().getNextStatus(newStatus);
             const nextTask = new Task({
                 ...this,
                 ...nextOccurrence,
+                status: nextStatus,
                 // New occurrences cannot have the same block link.
                 // And random block links don't help.
                 blockLink: '',
