@@ -189,6 +189,7 @@ describe('Query parsing', () => {
             'group by scheduled',
             'group by start',
             'group by status',
+            'group by status.name',
             'group by status.type',
             'group by tags',
         ];
@@ -266,6 +267,7 @@ describe('Query parsing', () => {
     it('should parse ambiguous group by queries correctly', () => {
         expect(new Query({ source: 'group by status' }).grouping[0].property).toEqual('status');
         expect(new Query({ source: 'group by status.name' }).grouping[0].property).toEqual('status.name');
+        expect(new Query({ source: 'group by status.type' }).grouping[0].property).toEqual('status.type');
     });
 });
 
