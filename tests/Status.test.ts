@@ -107,7 +107,7 @@ describe('Status', () => {
     });
 
     it('should construct a Status from a core imported value', () => {
-        const imported: StatusCollectionEntry = ['/', 'in progress', 'x'];
+        const imported: StatusCollectionEntry = ['/', 'in progress', 'x', 'IN_PROGRESS'];
         const status = Status.createFromImportedValue(imported);
         expect(status.indicator).toEqual('/');
         expect(status.name).toEqual('in progress');
@@ -117,12 +117,12 @@ describe('Status', () => {
     });
 
     it('should construct a Status from a custom imported value', () => {
-        const imported: StatusCollectionEntry = ['P', 'Pro', 'C'];
+        const imported: StatusCollectionEntry = ['P', 'Pro', 'C', 'NON_TASK'];
         const status = Status.createFromImportedValue(imported);
         expect(status.indicator).toEqual('P');
         expect(status.name).toEqual('Pro');
         expect(status.nextStatusIndicator).toEqual('C');
-        expect(status.type).toEqual(StatusType.TODO);
+        expect(status.type).toEqual(StatusType.NON_TASK);
         expect(status.availableAsCommand).toEqual(false);
     });
 });

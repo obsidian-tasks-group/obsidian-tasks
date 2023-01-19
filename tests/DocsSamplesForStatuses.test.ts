@@ -108,9 +108,9 @@ describe('DefaultStatuses', () => {
 
     it('important-cycle', () => {
         const importantCycle: StatusCollection = [
-            ['!', 'Important', 'D'],
-            ['D', 'Doing - Important', 'X'],
-            ['X', 'Done - Important', '!'],
+            ['!', 'Important', 'D', 'TODO'],
+            ['D', 'Doing - Important', 'X', 'IN_PROGRESS'],
+            ['X', 'Done - Important', '!', 'DONE'],
         ];
         verifyStatusesAsMarkdownTable(constructStatuses(importantCycle));
     });
