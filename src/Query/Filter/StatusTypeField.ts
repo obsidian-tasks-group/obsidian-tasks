@@ -14,12 +14,17 @@ export class StatusTypeField extends Field {
     // -----------------------------------------------------------------------------------------------------------------
     // Filtering
     // -----------------------------------------------------------------------------------------------------------------
+    public canCreateFilterForLine(line: string): boolean {
+        // Use a relaxed regexp, just checking field name and not the contents,
+        // so that we can parse the line later and give meaningful errors if user uses invalid values.
+        const relaxedRegExp = new RegExp(`^(?:${this.fieldNameSingularEscaped()}) `);
+        return Field.lineMatchesFilter(relaxedRegExp, line);
+    }
 
     createFilterOrErrorMessage(line: string): FilterOrErrorMessage {
         const match = Field.getMatch(this.filterRegExp(), line);
         if (match === null) {
-            // If Field.canCreateFilterForLine() has been checked, we should never get
-            // in to this block.
+            // It's OK to get here, because canCreateFilterForLine() uses a more relaxed regexp.
             return StatusTypeField.helpMessage(line);
         }
 
