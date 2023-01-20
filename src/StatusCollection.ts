@@ -1,6 +1,6 @@
 /**
  * The type used for a single entry in bulk imports of pre-created sets of statuses, such as for Themes or CSS Snippets.
- * The values are: indicator, name, next indicator, status type (must be one of the values in {@link StatusType}
+ * The values are: symbol, name, next symbol, status type (must be one of the values in {@link StatusType}
  */
 export type StatusCollectionEntry = [string, string, string, string];
 

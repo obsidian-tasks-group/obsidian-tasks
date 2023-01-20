@@ -52,29 +52,29 @@ describe('StatusValidator', () => {
             checkValidation(config, ['Task Next Status Symbol ("yyy") must be a single character.']);
         });
 
-        describe('validate indicator', () => {
-            it('valid indicator', () => {
+        describe('validate symbol', () => {
+            it('valid symbol', () => {
                 const config = new StatusConfiguration('X', 'Completed', 'c', false);
-                expect(statusValidator.validateIndicator(config)).toStrictEqual([]);
+                expect(statusValidator.validateSymbol(config)).toStrictEqual([]);
             });
 
-            it('invalid indicator', () => {
+            it('invalid symbol', () => {
                 const config = new StatusConfiguration('XYZ', 'Completed', 'c', false);
-                expect(statusValidator.validateIndicator(config)).toStrictEqual([
+                expect(statusValidator.validateSymbol(config)).toStrictEqual([
                     'Task Status Symbol ("XYZ") must be a single character.',
                 ]);
             });
         });
 
-        describe('validate next indicator', () => {
-            it('valid indicator', () => {
+        describe('validate next symbol', () => {
+            it('valid symbol', () => {
                 const config = new StatusConfiguration('c', 'Completed', 'X', false);
-                expect(statusValidator.validateNextIndicator(config)).toStrictEqual([]);
+                expect(statusValidator.validateNextSymbol(config)).toStrictEqual([]);
             });
 
-            it('invalid next indicator', () => {
+            it('invalid next symbol', () => {
                 const config = new StatusConfiguration('c', 'Completed', 'XYZ', false);
-                expect(statusValidator.validateNextIndicator(config)).toStrictEqual([
+                expect(statusValidator.validateNextSymbol(config)).toStrictEqual([
                     'Task Next Status Symbol ("XYZ") must be a single character.',
                 ]);
             });
