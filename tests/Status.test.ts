@@ -44,7 +44,7 @@ describe('Status', () => {
 
         // Assert
         expect(status).not.toBeNull();
-        expect(status!.indicator).toEqual(indicator);
+        expect(status!.symbol).toEqual(indicator);
         expect(status!.name).toEqual(name);
         expect(status!.nextStatusIndicator).toEqual(next);
         expect(status!.type).toEqual(StatusType.IN_PROGRESS);
@@ -62,7 +62,7 @@ describe('Status', () => {
 
         // Assert
         expect(status).not.toBeNull();
-        expect(status!.indicator).toEqual(indicator);
+        expect(status!.symbol).toEqual(indicator);
         expect(status!.name).toEqual(name);
         expect(status!.nextStatusIndicator).toEqual(next);
         expect(status!.isCompleted()).toEqual(true);
@@ -97,7 +97,7 @@ describe('Status', () => {
 
         // Assert
         expect(status).not.toBeNull();
-        expect(status!.indicator).toEqual(indicator);
+        expect(status!.symbol).toEqual(indicator);
         expect(status!.name).toEqual('Unknown');
         expect(status!.nextStatusIndicator).toEqual('x');
         // Even though the type *could* be deduced as IN_PROGRESS, createUnknownStatus() is used when
@@ -109,7 +109,7 @@ describe('Status', () => {
     it('should construct a Status from a core imported value', () => {
         const imported: StatusCollectionEntry = ['/', 'in progress', 'x', 'IN_PROGRESS'];
         const status = Status.createFromImportedValue(imported);
-        expect(status.indicator).toEqual('/');
+        expect(status.symbol).toEqual('/');
         expect(status.name).toEqual('in progress');
         expect(status.nextStatusIndicator).toEqual('x');
         expect(status.type).toEqual(StatusType.IN_PROGRESS); // should deduce IN_PROGRESS from indicator '/'
@@ -119,7 +119,7 @@ describe('Status', () => {
     it('should construct a Status from a custom imported value', () => {
         const imported: StatusCollectionEntry = ['P', 'Pro', 'C', 'NON_TASK'];
         const status = Status.createFromImportedValue(imported);
-        expect(status.indicator).toEqual('P');
+        expect(status.symbol).toEqual('P');
         expect(status.name).toEqual('Pro');
         expect(status.nextStatusIndicator).toEqual('C');
         expect(status.type).toEqual(StatusType.NON_TASK);

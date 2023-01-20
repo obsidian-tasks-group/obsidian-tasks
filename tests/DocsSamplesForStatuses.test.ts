@@ -72,10 +72,10 @@ function verifyStatusesAsMarkdownTable(statuses: Status[]) {
     ]);
 
     for (const status of statuses) {
-        const statusCharacter = getPrintableIndicator(status.indicator);
+        const statusCharacter = getPrintableIndicator(status.symbol);
         const nextStatusCharacter = getPrintableIndicator(status.nextStatusIndicator);
         const type = getPrintableIndicator(status.type);
-        const needsCustomStyling = status.indicator !== ' ' && status.indicator !== 'x' ? 'Yes' : 'No';
+        const needsCustomStyling = status.symbol !== ' ' && status.symbol !== 'x' ? 'Yes' : 'No';
         table.addRow([statusCharacter, status.name, nextStatusCharacter, type, needsCustomStyling]);
     }
     table.verify();

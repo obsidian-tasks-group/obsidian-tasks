@@ -16,7 +16,7 @@ export class StatusValidator {
     }
 
     public validateIndicator(statusConfiguration: StatusConfiguration): string[] {
-        return StatusValidator.validateOneIndicator(statusConfiguration.indicator, 'Task Status Symbol');
+        return StatusValidator.validateOneIndicator(statusConfiguration.symbol, 'Task Status Symbol');
     }
 
     public validateNextIndicator(statusConfiguration: StatusConfiguration): string[] {

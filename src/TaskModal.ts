@@ -38,7 +38,7 @@ export class TaskModal extends Modal {
      */
     private getKnownStatusesAndCurrentTaskStatusIfNotKnown() {
         const statusOptions: Status[] = StatusRegistry.getInstance().registeredStatuses;
-        if (StatusRegistry.getInstance().byIndicator(this.task.status.indicator) === Status.EMPTY) {
+        if (StatusRegistry.getInstance().byIndicator(this.task.status.symbol) === Status.EMPTY) {
             statusOptions.push(this.task.status);
         }
         return statusOptions;

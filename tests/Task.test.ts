@@ -111,7 +111,7 @@ describe('parsing', () => {
         const task = fromLine({ line: '- [D] this is a deferred task' });
 
         // Assert
-        expect(task!.status.indicator).toStrictEqual('D');
+        expect(task!.status.symbol).toStrictEqual('D');
     });
 
     it('allows signifier emojis as part of the description', () => {
@@ -501,7 +501,7 @@ describe('toggle done', () => {
         expect(toggled).not.toBeNull();
         expect(toggled!.status).toStrictEqual(Status.DONE);
         expect(toggled!.doneDate).not.toBeNull();
-        expect(toggled!.status.indicator).toStrictEqual('x');
+        expect(toggled!.status.symbol).toStrictEqual('x');
         expect(toggled!.blockLink).toEqual(' ^my-precious');
     });
 
@@ -520,7 +520,7 @@ describe('toggle done', () => {
         // Assert
         expect(toggled).not.toBeNull();
         expect(toggled!.status).toStrictEqual(Status.TODO);
-        expect(toggled!.status.indicator).toStrictEqual(' ');
+        expect(toggled!.status.symbol).toStrictEqual(' ');
         expect(toggled!.doneDate).toBeNull();
     });
 
@@ -874,8 +874,8 @@ describe('toggle done', () => {
             const doneTask: Task = tasks[1];
             const nextTask: Task = tasks[0];
 
-            expect(doneTask.status.indicator).toEqual(doneIndicator ?? 'x');
-            expect(nextTask.status.indicator).toEqual(nextIndicator ?? ' ');
+            expect(doneTask.status.symbol).toEqual(doneIndicator ?? 'x');
+            expect(nextTask.status.symbol).toEqual(nextIndicator ?? ' ');
             expect({
                 nextDue: nextTask.dueDate?.format('YYYY-MM-DD'),
                 nextScheduled: nextTask.scheduledDate?.format('YYYY-MM-DD'),

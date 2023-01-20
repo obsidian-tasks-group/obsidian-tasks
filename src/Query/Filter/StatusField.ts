@@ -55,7 +55,7 @@ export class StatusField extends FilterInstructionsBasedField {
     }
 
     private static oldStatusName(a: Task): string {
-        if (a.status.indicator === ' ') {
+        if (a.status.symbol === ' ') {
             return 'Todo';
         } else {
             return 'Done';
