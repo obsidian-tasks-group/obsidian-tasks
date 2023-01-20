@@ -51,7 +51,7 @@ export class Status {
     public readonly configuration: StatusConfiguration;
 
     /**
-     * The indicator used between the two square brackets in the markdown task.
+     * The symbol used between the two square brackets in the markdown task.
      *
      * @type {string}
      * @memberof Status
@@ -145,13 +145,13 @@ export class Status {
     }
 
     /**
-     * Return the StatusType to use for an indicator, if it is not in the StatusRegistry.
-     * The core indicators are recognised.
-     * Other indicators are treated as StatusType.TODO
-     * @param indicator
+     * Return the StatusType to use for a symbol, if it is not in the StatusRegistry.
+     * The core symbols are recognised.
+     * Other symbols are treated as StatusType.TODO
+     * @param symbol
      */
-    static getTypeForUnknownIndicator(indicator: string): StatusType {
-        switch (indicator) {
+    static getTypeForUnknownSymbol(symbol: string): StatusType {
+        switch (symbol) {
             case 'x':
             case 'X':
                 return StatusType.DONE;
@@ -177,27 +177,27 @@ export class Status {
     }
 
     /**
-     * Create a Status representing the given, unknown indicator.
+     * Create a Status representing the given, unknown symbol.
      *
-     * This can be useful when StatusRegistry does not recognise an indicator,
+     * This can be useful when StatusRegistry does not recognise a symbol,
      * and we do not want to expose the user's data to the Status.EMPTY status.
      *
      * The type is set to TODO.
-     * @param unknownIndicator
+     * @param unknownSymbol
      */
-    static createUnknownStatus(unknownIndicator: string) {
-        return new Status(new StatusConfiguration(unknownIndicator, 'Unknown', 'x', false, StatusType.TODO));
+    static createUnknownStatus(unknownSymbol: string) {
+        return new Status(new StatusConfiguration(unknownSymbol, 'Unknown', 'x', false, StatusType.TODO));
     }
 
     /**
      * Helper function for bulk-importing settings from arrays of strings.
      *
-     * @param imported An array of indicator, name, next indicator, status type
+     * @param imported An array of symbol, name, next symbol, status type
      */
     static createFromImportedValue(imported: StatusCollectionEntry) {
-        const indicator = imported[0];
+        const symbol = imported[0];
         const type = Status.getTypeFromStatusTypeString(imported[3]);
-        return new Status(new StatusConfiguration(indicator, imported[1], imported[2], false, type));
+        return new Status(new StatusConfiguration(symbol, imported[1], imported[2], false, type));
     }
 
     /**
