@@ -59,10 +59,11 @@ You can sort tasks by the following properties.
 ### Task statuses
 
 1. `status` (done or todo)
-1. `status.name` (Done, Todo, Cancelled, In Progress, Unknown etc - sorted alphabetically)
+1. `status.name` (Done, Todo, Cancelled, In Progress, Unknown, My very important custom status, etc - sorted alphabetically)
+1. `status.type` (Sorted in the order `IN_PROGRESS`, `TODO`, `DONE`, `CANCELLED` then `NON_TASK`)
 
 {: .released }
-`sort by status.name` was introduced in Tasks X.Y.Z.
+`sort by status.name` and `sort by status.type` were introduced in Tasks X.Y.Z.
 
 For more information, including adding your own customised statuses, see [Statuses]({{ site.baseurl }}{% link getting-started/statuses.md %}).
 

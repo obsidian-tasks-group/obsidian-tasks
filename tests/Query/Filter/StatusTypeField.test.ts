@@ -18,13 +18,16 @@ expect.extend({
 });
 
 // Abbreviated names so that the markdown text is aligned
-const todoTask = TestHelpers.fromLine({ line: '- [ ] Xxx' });
-const inprTask = TestHelpers.fromLine({ line: '- [/] Xxx' });
-const doneTask = TestHelpers.fromLine({ line: '- [x] Xxx' });
-const cancTask = TestHelpers.fromLine({ line: '- [-] Xxx' });
-const unknTask = TestHelpers.fromLine({ line: '- [%] Xxx' });
-const non_Task = new TaskBuilder().statusValues('^', 'non-task', 'x', false, StatusType.NON_TASK).build();
-const emptTask = new TaskBuilder().status(Status.makeEmpty()).build();
+const todoTask = TestHelpers.fromLine({ line: '- [ ] Todo' });
+const inprTask = TestHelpers.fromLine({ line: '- [/] In progress' });
+const doneTask = TestHelpers.fromLine({ line: '- [x] Done' });
+const cancTask = TestHelpers.fromLine({ line: '- [-] Cancelled' });
+const unknTask = TestHelpers.fromLine({ line: '- [%] Unknown' });
+const non_Task = new TaskBuilder()
+    .statusValues('^', 'non-task', 'x', false, StatusType.NON_TASK)
+    .description('Non-task')
+    .build();
+const emptTask = new TaskBuilder().status(Status.makeEmpty()).description('Empty task').build();
 
 describe('status.name', () => {
     it('value', () => {
@@ -115,15 +118,15 @@ describe('sorting by status.name', () => {
         expectTaskComparesEqual(sorter, cancTask, cancTask);
         expectTaskComparesEqual(sorter, todoTask, unknTask); // Unknown treated as TODO
 
-        // Alphabetical order by status name
-        expectTaskComparesBefore(sorter, cancTask, doneTask);
-        expectTaskComparesBefore(sorter, doneTask, inprTask);
-        expectTaskComparesBefore(sorter, inprTask, non_Task);
-        expectTaskComparesBefore(sorter, non_Task, todoTask);
+        // Most actionable type first..
+        expectTaskComparesBefore(sorter, inprTask, todoTask);
+        expectTaskComparesBefore(sorter, todoTask, doneTask);
+        expectTaskComparesBefore(sorter, doneTask, cancTask);
+        expectTaskComparesBefore(sorter, cancTask, non_Task);
 
         // Users won't see empty tasks, but test them anyway
         expectTaskComparesBefore(sorter, doneTask, emptTask);
-        expectTaskComparesBefore(sorter, emptTask, inprTask);
+        expectTaskComparesAfter(sorter, emptTask, inprTask);
     });
 
     it('sort by status.name reverse', () => {
@@ -134,15 +137,15 @@ describe('sorting by status.name', () => {
         expectTaskComparesEqual(sorter, cancTask, cancTask);
         expectTaskComparesEqual(sorter, todoTask, unknTask); // Unknown treated as TODO
 
-        // Reverse of Alphabetical order by status name
-        expectTaskComparesAfter(sorter, cancTask, doneTask);
-        expectTaskComparesAfter(sorter, doneTask, inprTask);
-        expectTaskComparesAfter(sorter, inprTask, non_Task);
-        expectTaskComparesAfter(sorter, non_Task, todoTask);
+        // Reverse of  order by status name
+        expectTaskComparesAfter(sorter, inprTask, todoTask);
+        expectTaskComparesAfter(sorter, todoTask, doneTask);
+        expectTaskComparesAfter(sorter, doneTask, cancTask);
+        expectTaskComparesAfter(sorter, cancTask, non_Task);
 
         // Users won't see empty tasks, but test them anyway
         expectTaskComparesAfter(sorter, doneTask, emptTask);
-        expectTaskComparesAfter(sorter, emptTask, inprTask);
+        expectTaskComparesBefore(sorter, emptTask, inprTask);
     });
 });
 
