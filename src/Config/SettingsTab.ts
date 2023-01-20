@@ -3,6 +3,7 @@ import { StatusConfiguration, StatusType } from '../StatusConfiguration';
 import type TasksPlugin from '../main';
 import { StatusRegistry } from '../StatusRegistry';
 import { Status } from '../Status';
+import type { StatusCollection } from '../StatusCollection';
 import type { HeadingState } from './Settings';
 import { getSettings, isFeatureEnabled, updateGeneralSetting, updateSettings } from './Settings';
 import { StatusSettings } from './StatusSettings';
@@ -548,7 +549,7 @@ function createRowForTaskStatus(
 }
 
 async function addCustomStatesToSettings(
-    supportedStatuses: Array<[string, string, string]>,
+    supportedStatuses: StatusCollection,
     statusSettings: StatusSettings,
     settings: SettingsTab,
 ) {
