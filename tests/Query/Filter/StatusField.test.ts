@@ -27,6 +27,7 @@ describe('status', () => {
         expect(filter).not.toMatchTaskWithStatus(Status.makeInProgress().configuration);
         expect(filter).toMatchTaskWithStatus(Status.makeCancelled().configuration);
         expect(filter).not.toMatchTaskWithStatus(new StatusConfiguration('!', 'Todo', 'x', true, StatusType.TODO)); // 'done' checks type.
+        expect(filter).not.toMatchTaskWithStatus(new StatusConfiguration('^', 'Non', 'x', true, StatusType.NON_TASK));
     });
 
     it('not done', () => {
@@ -42,6 +43,7 @@ describe('status', () => {
         expect(filter).toMatchTaskWithStatus(Status.makeInProgress().configuration);
         expect(filter).not.toMatchTaskWithStatus(Status.makeCancelled().configuration);
         expect(filter).toMatchTaskWithStatus(new StatusConfiguration('!', 'Todo', 'x', true, StatusType.TODO)); // 'not done' type.
+        expect(filter).not.toMatchTaskWithStatus(new StatusConfiguration('^', 'Non', 'x', true, StatusType.NON_TASK));
     });
 });
 
