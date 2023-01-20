@@ -527,14 +527,14 @@ describe('toggle done', () => {
     type RecurrenceCase = {
         // inputs:
         interval: string;
-        indicator?: string;
+        symbol?: string;
         due?: string;
         scheduled?: string;
         start?: string;
         today?: string;
         // results:
-        doneIndicator?: string; // the indicator of the completed task
-        nextIndicator?: string; // the indicator of the recurrence
+        doneSymbol?: string; // the indicator of the completed task
+        nextSymbol?: string; // the indicator of the recurrence
         nextDue?: string;
         nextScheduled?: string;
         nextStart?: string;
@@ -802,23 +802,23 @@ describe('toggle done', () => {
         // ==================================
         {
             interval: 'every day',
-            indicator: 'D',
+            symbol: 'D',
             due: '2023-01-19',
-            doneIndicator: 'X',
-            nextIndicator: '!',
+            doneSymbol: 'X',
+            nextSymbol: '!',
             nextDue: '2023-01-20',
         },
         {
             interval: 'every day',
-            indicator: '2',
-            doneIndicator: '3', // 2 toggles to 3
-            nextIndicator: '1', // and the new task should be 1
+            symbol: '2',
+            doneSymbol: '3', // 2 toggles to 3
+            nextSymbol: '1', // and the new task should be 1
         },
         {
             interval: 'every day',
-            indicator: 'a',
-            doneIndicator: 'b', // a toggles to b
-            nextIndicator: 'c', // b says it toggles to c: , but c does not exist: check that it has been chosen anyway
+            symbol: 'a',
+            doneSymbol: 'b', // a toggles to b
+            nextSymbol: 'c', // b says it toggles to c: , but c does not exist: check that it has been chosen anyway
         },
     ];
 
@@ -830,14 +830,14 @@ describe('toggle done', () => {
         ({
             // inputs:
             interval,
-            indicator,
+            symbol,
             due,
             scheduled,
             start,
             today,
             // results:
-            doneIndicator,
-            nextIndicator,
+            doneSymbol,
+            nextSymbol,
             nextDue,
             nextScheduled,
             nextStart,
@@ -851,12 +851,12 @@ describe('toggle done', () => {
                 nextStart !== undefined ||
                 nextDue !== undefined ||
                 nextScheduled !== undefined ||
-                nextIndicator !== undefined ||
-                doneIndicator !== undefined;
+                nextSymbol !== undefined ||
+                doneSymbol !== undefined;
             expect(atLeaseOneExpectationSupplied).toStrictEqual(true);
 
             const line = [
-                `- [${indicator ?? ' '}] I am task`,
+                `- [${symbol ?? ' '}] I am task`,
                 `🔁 ${interval}`,
                 !!scheduled && `⏳ ${scheduled}`,
                 !!due && `📅 ${due}`,
@@ -874,8 +874,8 @@ describe('toggle done', () => {
             const doneTask: Task = tasks[1];
             const nextTask: Task = tasks[0];
 
-            expect(doneTask.status.symbol).toEqual(doneIndicator ?? 'x');
-            expect(nextTask.status.symbol).toEqual(nextIndicator ?? ' ');
+            expect(doneTask.status.symbol).toEqual(doneSymbol ?? 'x');
+            expect(nextTask.status.symbol).toEqual(nextSymbol ?? ' ');
             expect({
                 nextDue: nextTask.dueDate?.format('YYYY-MM-DD'),
                 nextScheduled: nextTask.scheduledDate?.format('YYYY-MM-DD'),
