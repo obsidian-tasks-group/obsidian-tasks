@@ -1,14 +1,20 @@
 import type { Task } from '../../Task';
 import type { GrouperFunction } from '../Grouper';
 import { StatusType } from '../../StatusConfiguration';
-import { TextField } from './TextField';
+import type { Comparator } from '../Sorter';
+import { FilterInstructionsBasedField } from './FilterInstructionsBasedField';
 
 /**
  * A ${@link Field} implementation for searching status.type
  */
-export class StatusTypeField extends TextField {
+export class StatusTypeField extends FilterInstructionsBasedField {
     constructor() {
         super();
+
+        Object.values(StatusType).forEach((t) => {
+            this._filters.add(`status.type is ${t}`, (task: Task) => task.status.type === t);
+            this._filters.add(`status.type is not ${t}`, (task: Task) => task.status.type !== t);
+        });
     }
 
     public fieldName(): string {
@@ -21,6 +27,12 @@ export class StatusTypeField extends TextField {
 
     supportsSorting(): boolean {
         return true;
+    }
+
+    comparator(): Comparator {
+        return (a: Task, b: Task) => {
+            return this.value(a).localeCompare(this.value(b), undefined, { numeric: true });
+        };
     }
 
     public supportsGrouping(): boolean {

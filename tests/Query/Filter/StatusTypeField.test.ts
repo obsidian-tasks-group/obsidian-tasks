@@ -39,9 +39,9 @@ describe('status.name', () => {
         expect(filter.value(unknTask)).toStrictEqual('TODO');
     });
 
-    it('status.type includes', () => {
+    it('status.type is', () => {
         // Arrange
-        const filter = new StatusTypeField().createFilterOrErrorMessage('status.type includes IN_PROGRESS');
+        const filter = new StatusTypeField().createFilterOrErrorMessage('status.type is IN_PROGRESS');
 
         // Assert
         expect(filter).toBeValid();
@@ -49,13 +49,34 @@ describe('status.name', () => {
         expect(filter).not.toMatchTask(todoTask);
     });
 
+    it('status.type is not', () => {
+        // Arrange
+        const filter = new StatusTypeField().createFilterOrErrorMessage('status.type is not IN_PROGRESS');
+
+        // Assert
+        expect(filter).toBeValid();
+        expect(filter).not.toMatchTask(inprTask);
+        expect(filter).toMatchTask(todoTask);
+    });
+
+    it('status.type is - with incorrect case', () => {
+        // Arrange
+        const filter = new StatusTypeField().createFilterOrErrorMessage('status.type is in_progress');
+
+        // Assert
+        expect(filter).not.toBeValid();
+        // TODO I'd like to provide a help message that lists the valid statuses
+        expect(filter.error).toEqual('do not understand filter: status.type is in_progress');
+    });
+
     it('status-name is not valid', () => {
         // Arrange
-        const filter = new StatusTypeField().createFilterOrErrorMessage('status-type includes NON_TASK');
+        const filter = new StatusTypeField().createFilterOrErrorMessage('status-type is NON_TASK');
 
         // Assert
         // Check that the '.' in status.name is interpreted exactly as a dot.
         expect(filter).not.toBeValid();
+        // TODO check error message
     });
 });
 
