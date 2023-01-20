@@ -19,12 +19,12 @@ export enum StatusType {
  */
 export class StatusConfiguration {
     /**
-     * The indicator used between the two square brackets in the markdown task.
+     * The character used between the two square brackets in the markdown task.
      *
      * @type {string}
      * @memberof Status
      */
-    public readonly indicator: string;
+    public readonly symbol: string;
 
     /**
      * Returns the name of the status for display purposes.
@@ -40,7 +40,7 @@ export class StatusConfiguration {
      * @type {string}
      * @memberof Status
      */
-    public readonly nextStatusIndicator: string;
+    public readonly nextStatusSymbol: string;
 
     /**
      * If true then it is registered as a command that the user can map to.
@@ -59,23 +59,23 @@ export class StatusConfiguration {
      * Creates an instance of Status. The registry will be added later in the case
      * of the default statuses.
      *
-     * @param {string} indicator
+     * @param {string} symbol
      * @param {string} name
-     * @param {Status} nextStatusIndicator
+     * @param {Status} nextStatusSymbol
      * @param {boolean} availableAsCommand
      * @param {StatusType} type
      * @memberof Status
      */
     constructor(
-        indicator: string,
+        symbol: string,
         name: string,
-        nextStatusIndicator: string,
+        nextStatusSymbol: string,
         availableAsCommand: boolean,
         type: StatusType = StatusType.TODO, // TODO Remove default value
     ) {
-        this.indicator = indicator;
+        this.symbol = symbol;
         this.name = name;
-        this.nextStatusIndicator = nextStatusIndicator;
+        this.nextStatusSymbol = nextStatusSymbol;
         this.availableAsCommand = availableAsCommand;
         this.type = type;
     }

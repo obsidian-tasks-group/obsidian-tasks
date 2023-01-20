@@ -264,7 +264,7 @@ export class Task {
 
         // Get the status of the task.
         const statusString = regexMatch[3];
-        const status = StatusRegistry.getInstance().byIndicatorOrCreate(statusString);
+        const status = StatusRegistry.getInstance().bySymbolOrCreate(statusString);
 
         // Match for block link and remove if found. Always expected to be
         // at the end of the line.
@@ -502,7 +502,7 @@ export class Task {
      * @memberof Task
      */
     public toFileLineString(): string {
-        return `${this.indentation}${this.listMarker} [${this.status.indicator}] ${this.toString()}`;
+        return `${this.indentation}${this.listMarker} [${this.status.symbol}] ${this.toString()}`;
     }
 
     /**

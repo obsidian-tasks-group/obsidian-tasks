@@ -119,9 +119,9 @@ export class StatusSettings {
         supportedStatuses.forEach((importedStatus) => {
             const hasStatus = statusSettings.customStatusTypes.find((element) => {
                 return (
-                    element.indicator == importedStatus[0] &&
+                    element.symbol == importedStatus[0] &&
                     element.name == importedStatus[1] &&
-                    element.nextStatusIndicator == importedStatus[2]
+                    element.nextStatusSymbol == importedStatus[2]
                 );
             });
             if (!hasStatus) {
