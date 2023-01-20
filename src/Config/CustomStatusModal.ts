@@ -19,7 +19,7 @@ export class CustomStatusModal extends Modal {
         super(plugin.app);
         this.statusSymbol = statusType.symbol;
         this.statusName = statusType.name;
-        this.statusNextSymbol = statusType.nextStatusIndicator;
+        this.statusNextSymbol = statusType.nextStatusSymbol;
         this.statusAvailableAsCommand = statusType.availableAsCommand;
         this.type = statusType.type;
     }

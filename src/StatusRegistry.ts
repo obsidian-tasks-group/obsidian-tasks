@@ -152,8 +152,8 @@ export class StatusRegistry {
      * @see getNextStatusOrCreate
      */
     public getNextStatus(status: Status): Status {
-        if (status.nextStatusIndicator !== '') {
-            const nextStatus = this.byIndicator(status.nextStatusIndicator);
+        if (status.nextStatusSymbol !== '') {
+            const nextStatus = this.byIndicator(status.nextStatusSymbol);
             if (nextStatus !== null) {
                 return nextStatus;
             }
@@ -176,7 +176,7 @@ export class StatusRegistry {
         }
         // status is configured to advance to a symbol that is not registered.
         // So we go ahead and create it anyway - we just cannot give it a meaningful name.
-        return Status.createUnknownStatus(status.nextStatusIndicator);
+        return Status.createUnknownStatus(status.nextStatusSymbol);
     }
 
     /**
@@ -223,7 +223,7 @@ export class StatusRegistry {
         const statusConfiguration = new StatusConfiguration(
             s.symbol,
             newName,
-            s.nextStatusIndicator,
+            s.nextStatusSymbol,
             s.availableAsCommand,
             s.type,
         );

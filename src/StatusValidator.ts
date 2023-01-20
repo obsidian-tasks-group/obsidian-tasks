@@ -20,7 +20,7 @@ export class StatusValidator {
     }
 
     public validateNextIndicator(statusConfiguration: StatusConfiguration): string[] {
-        return StatusValidator.validateOneIndicator(statusConfiguration.nextStatusIndicator, 'Task Next Status Symbol');
+        return StatusValidator.validateOneIndicator(statusConfiguration.nextStatusSymbol, 'Task Next Status Symbol');
     }
 
     public validateName(statusConfiguration: StatusConfiguration) {

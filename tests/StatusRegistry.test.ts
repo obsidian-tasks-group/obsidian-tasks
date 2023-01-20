@@ -67,7 +67,7 @@ describe('StatusRegistry', () => {
         // Assert
         expect(result.symbol).toEqual('?');
         expect(result.name).toEqual('Unknown');
-        expect(result.nextStatusIndicator).toEqual('x');
+        expect(result.nextStatusSymbol).toEqual('x');
     });
 
     it('should allow lookup of next status for a status', () => {
@@ -108,7 +108,7 @@ describe('StatusRegistry', () => {
         // Assert
         expect(nextStatus.symbol).toEqual('C');
         expect(nextStatus.name).toEqual('Unknown');
-        expect(nextStatus.nextStatusIndicator).toEqual('x');
+        expect(nextStatus.nextStatusSymbol).toEqual('x');
         expect(nextStatus.type).toEqual(StatusType.TODO);
     });
 
