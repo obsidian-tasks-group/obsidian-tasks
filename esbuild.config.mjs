@@ -13,7 +13,7 @@ if you want to view the source visit the plugins github repository
 License obsidian-tasks:
 MIT License
 
-Copyright (c) 2021 Martin Schenck
+Copyright (c) 2021 Martin Schenck and Clare Macrae
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
