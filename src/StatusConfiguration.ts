@@ -59,23 +59,23 @@ export class StatusConfiguration {
      * Creates an instance of Status. The registry will be added later in the case
      * of the default statuses.
      *
-     * @param {string} indicator
+     * @param {string} symbol
      * @param {string} name
-     * @param {Status} nextStatusIndicator
+     * @param {Status} nextStatusSymbol
      * @param {boolean} availableAsCommand
      * @param {StatusType} type
      * @memberof Status
      */
     constructor(
-        indicator: string,
+        symbol: string,
         name: string,
-        nextStatusIndicator: string,
+        nextStatusSymbol: string,
         availableAsCommand: boolean,
         type: StatusType = StatusType.TODO, // TODO Remove default value
     ) {
-        this.symbol = indicator;
+        this.symbol = symbol;
         this.name = name;
-        this.nextStatusSymbol = nextStatusIndicator;
+        this.nextStatusSymbol = nextStatusSymbol;
         this.availableAsCommand = availableAsCommand;
         this.type = type;
     }
