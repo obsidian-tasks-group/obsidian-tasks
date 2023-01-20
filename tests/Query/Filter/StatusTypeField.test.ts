@@ -9,6 +9,7 @@ import {
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { StatusType } from '../../../src/StatusConfiguration';
 import { Status } from '../../../src/Status';
+import * as FilterParser from '../../../src/Query/FilterParser';
 
 expect.extend({
     toBeValid,
@@ -39,9 +40,29 @@ describe('status.name', () => {
         expect(filter.value(unknTask)).toStrictEqual('TODO');
     });
 
-    it('status.type includes', () => {
+    it('status.type is', () => {
         // Arrange
-        const filter = new StatusTypeField().createFilterOrErrorMessage('status.type includes IN_PROGRESS');
+        const filter = new StatusTypeField().createFilterOrErrorMessage('status.type is IN_PROGRESS');
+
+        // Assert
+        expect(filter).toBeValid();
+        expect(filter).toMatchTask(inprTask);
+        expect(filter).not.toMatchTask(todoTask);
+    });
+
+    it('status.type is not', () => {
+        // Arrange
+        const filter = new StatusTypeField().createFilterOrErrorMessage('status.type is not IN_PROGRESS');
+
+        // Assert
+        expect(filter).toBeValid();
+        expect(filter).not.toMatchTask(inprTask);
+        expect(filter).toMatchTask(todoTask);
+    });
+
+    it('status.type is - works with incorrect case', () => {
+        // Arrange
+        const filter = new StatusTypeField().createFilterOrErrorMessage('status.type is in_progress');
 
         // Assert
         expect(filter).toBeValid();
@@ -51,11 +72,27 @@ describe('status.name', () => {
 
     it('status-name is not valid', () => {
         // Arrange
-        const filter = new StatusTypeField().createFilterOrErrorMessage('status-type includes NON_TASK');
+        const filter = new StatusTypeField().createFilterOrErrorMessage('status-type is NON_TASK');
 
         // Assert
         // Check that the '.' in status.name is interpreted exactly as a dot.
         expect(filter).not.toBeValid();
+    });
+
+    it('status.name with invalid line is parsed and user sees helpful message', () => {
+        // Arrange
+        const filter = FilterParser.parseFilter('status.type gobbledygook');
+
+        // Assert
+        expect(filter).not.toBeValid();
+        expect(filter?.error).toMatchInlineSnapshot(`
+            "Invalid status.type instruction: 'status.type gobbledygook'.
+                Allowed options: 'is' and 'is not' (without quotes).
+                Allowed values:  TODO DONE IN_PROGRESS CANCELLED NON_TASK
+                                 Note: values are case-insensitive,
+                                       so 'in_progress' works too, for example.
+                Example:         status.type is not NON_TASK"
+        `);
     });
 });
 
