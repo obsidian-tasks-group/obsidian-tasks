@@ -80,7 +80,7 @@ export const getSettings = (): Settings => {
     }
 
     // In case saves pre-dated StatusConfiguration.type
-    // TODO Special case for indicator 'X' or 'x' (just in case)
+    // TODO Special case for symbol 'X' or 'x' (just in case)
     settings.statusSettings.customStatusTypes = settings.statusSettings.customStatusTypes.map((s) => {
         const newType = Status.getTypeFromStatusTypeString(s.type);
         return new StatusConfiguration(s.symbol, s.name, s.nextStatusSymbol, s.availableAsCommand, newType);
