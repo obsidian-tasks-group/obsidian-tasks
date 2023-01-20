@@ -371,7 +371,7 @@
             <label for="status">Status </label>
             <select bind:value={editableTask.status} id="status-type" class="dropdown">
                 {#each statusOptions as status}
-                    <option value={status}>{status.name} [{status.indicator}]</option>
+                    <option value={status}>{status.name} [{status.symbol}]</option>
                 {/each}
             </select>
         </div>

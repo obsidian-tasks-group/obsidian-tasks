@@ -1,6 +1,7 @@
 import type { StatusConfiguration } from '../StatusConfiguration';
 import type { StatusRegistry } from '../StatusRegistry';
 import { Status } from '../Status';
+import type { StatusCollection } from '../StatusCollection';
 
 /**
  * Class for encapsulating the settings that control custom statuses.
@@ -112,15 +113,15 @@ export class StatusSettings {
      */
     public static bulkAddStatusCollection(
         statusSettings: StatusSettings,
-        supportedStatuses: Array<[string, string, string]>,
+        supportedStatuses: StatusCollection,
     ): string[] {
         const notices: string[] = [];
         supportedStatuses.forEach((importedStatus) => {
             const hasStatus = statusSettings.customStatusTypes.find((element) => {
                 return (
-                    element.indicator == importedStatus[0] &&
+                    element.symbol == importedStatus[0] &&
                     element.name == importedStatus[1] &&
-                    element.nextStatusIndicator == importedStatus[2]
+                    element.nextStatusSymbol == importedStatus[2]
                 );
             });
             if (!hasStatus) {
@@ -143,15 +144,5 @@ export class StatusSettings {
         statusSettings.customStatusTypes.forEach((statusType) => {
             statusRegistry.add(statusType);
         });
-
-        console.debug('Custom statuses read from settings:');
-        console.debug(statusSettings.customStatusTypes);
-
-        console.debug('All statuses registered in Tasks StatusRegistry (including the core ones):');
-        const registeredStatusTypes: StatusConfiguration[] = [];
-        statusRegistry.registeredStatuses.forEach((s) => {
-            registeredStatusTypes.push(s.configuration);
-        });
-        console.debug(registeredStatusTypes);
     }
 }

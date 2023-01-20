@@ -26,13 +26,15 @@ has_toc: false
   - the single character in the `[]` at the start of the task.
 - `status name`
   - a name for the status.
-  - is searchable with `status.name`, for example `status.name includes todo`.
+  - this is flexible: for custom statuses, you can use any name you wish.
+  - is searchable with `status.name`, for example `status.name includes My custom in-progress status`.
 - `next status symbol`
   - the status symbol to use when the task is toggled.
 - `status type`
   - one of `TODO`, `IN_PROGRESS`, `DONE`, `CANCELLED`, `NON_TASK`.
-  - these do not yet have any effect on search results.
-  - by assigning one of these types to your custom statuses, you can control some aspects of Tasks' behaviour for all task lines that use that particular custom status.
+  - Tasks needs to know the type of each custom status, so that it knows how to treat them when searching, and what to do when tasks with the status are toggled.
+  - is searchable with `status.type`, for example `status.type is IN_PROGRESS`.
+  - you can have any number of custom statuses with the same status type, and then search them conveniently with `status.type`
 
 ### Status Types
 
@@ -46,18 +48,25 @@ The tasks shown are purely examples for context. The `~` column is just an arbit
 | Operation | TODO | IN_PROGRESS | DONE | CANCELLED | NON_TASK |
 | ----- | ----- | ----- | ----- | ----- | ----- |
 | Example Task | `- [ ] demo` | `- [/] demo` | `- [x] demo` | `- [-] demo` | `- [~] demo` |
-| Matches `done` | no | no | YES | YES | no |
+| Matches `done` | no | no | YES | YES | YES |
 | Matches `not done` | YES | YES | no | no | no |
 | Matches `status.name includes todo` | YES | no | no | no | no |
+| Matches `status.type is TODO` | YES | no | no | no | no |
 | Matches `status.name includes in progress` | no | YES | no | no | no |
+| Matches `status.type is IN_PROGRESS` | no | YES | no | no | no |
 | Matches `status.name includes done` | no | no | YES | no | no |
+| Matches `status.type is DONE` | no | no | YES | no | no |
 | Matches `status.name includes cancelled` | no | no | no | YES | no |
+| Matches `status.type is CANCELLED` | no | no | no | YES | no |
+| Matches `status.type is NON_TASK` | no | no | no | no | YES |
 | Name for `group by status` | Todo | Done | Done | Done | Done |
+| Name for `group by status.type` | 2 TODO | 1 IN_PROGRESS | 3 DONE | 4 CANCELLED | 5 NON_TASK |
+| Name for `group by status.name` | Todo | In Progress | Done | Cancelled | My custom status |
 
 <!-- placeholder to force blank line after table --> <!-- endInclude -->
 
 {: .warning }
-The `group by status` results of the above table are subject to change.
+The `group by` results of the above table are subject to change.
 
 ## Standard Markdown task statuses
 
@@ -83,7 +92,7 @@ This table shows the statuses provided by default:
 
 <!-- placeholder to force blank line before table --> <!-- include: DocsSamplesForStatuses.test.DefaultStatuses_core-statuses.approved.md -->
 
-| Status Character | Status Name | Next Status Character | Status Type | Needs Custom Styling |
+| Status Character | Status Name<br>`status.name includes...`<br>`sort by status.name`<br>`group by status.name` | Next Status Character | Status Type<br>`status.type is...`<br>`sort by status.type`<br>`group by status.type` | Needs Custom Styling |
 | ----- | ----- | ----- | ----- | ----- |
 | `space` | Todo | `x` | `TODO` | No |
 | `/` | In Progress | `x` | `IN_PROGRESS` | Yes |
@@ -128,7 +137,7 @@ Remember to set up your chosen CSS Snippet or Theme before setting up the custom
 
 <!-- placeholder to force blank line before table --> <!-- include: DocsSamplesForStatuses.test.DefaultStatuses_minimal-supported-statuses.approved.md -->
 
-| Status Character | Status Name | Next Status Character | Status Type | Needs Custom Styling |
+| Status Character | Status Name<br>`status.name includes...`<br>`sort by status.name`<br>`group by status.name` | Next Status Character | Status Type<br>`status.type is...`<br>`sort by status.type`<br>`group by status.type` | Needs Custom Styling |
 | ----- | ----- | ----- | ----- | ----- |
 | `>` | Forwarded | `x` | `TODO` | Yes |
 | `<` | Schedule | `x` | `TODO` | Yes |
@@ -156,7 +165,7 @@ Remember to set up your chosen CSS Snippet or Theme before setting up the custom
 
 <!-- placeholder to force blank line before table --> <!-- include: DocsSamplesForStatuses.test.DefaultStatuses_its-theme-supported-statuses.approved.md -->
 
-| Status Character | Status Name | Next Status Character | Status Type | Needs Custom Styling |
+| Status Character | Status Name<br>`status.name includes...`<br>`sort by status.name`<br>`group by status.name` | Next Status Character | Status Type<br>`status.type is...`<br>`sort by status.type`<br>`group by status.type` | Needs Custom Styling |
 | ----- | ----- | ----- | ----- | ----- |
 | `>` | Forward | `x` | `TODO` | Yes |
 | `D` | Deferred/Scheduled | `x` | `TODO` | Yes |
@@ -197,8 +206,14 @@ We are tracking this in [issue #1486](https://github.com/obsidian-tasks-group/ob
 
 - `done` - matches tasks status types `TODO` and `CANCELLED`
 - `not done` - matches tasks with status types `TODO` and `IN_PROGRESS`
-- `status.name` text search
-- `sort by status.name`
+- **Status Name**
+  - `status.name` text search
+  - `sort by status.name`
+  - `group by status.name`
+- **Status Type**
+  - `status.type` text search
+  - `sort by status.type`
+  - `group by status.type`
 
 For details, see [Filters for Task Statuses]({{ site.baseurl }}{% link queries/filters.md %}#filters-for-task-statuses)
 

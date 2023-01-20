@@ -4,6 +4,7 @@
 import moment from 'moment';
 import { Status } from '../src/Status';
 import { StatusConfiguration, StatusType } from '../src/StatusConfiguration';
+import type { StatusCollectionEntry } from '../src/StatusCollection';
 
 jest.mock('obsidian');
 window.moment = moment;
@@ -34,47 +35,47 @@ describe('Status', () => {
 
     it('should initialize with valid properties', () => {
         // Arrange
-        const indicator = '/';
+        const symbol = '/';
         const name = 'In Progress';
         const next = 'x';
 
         // Act
-        const status = new Status(new StatusConfiguration(indicator, name, next, false, StatusType.IN_PROGRESS));
+        const status = new Status(new StatusConfiguration(symbol, name, next, false, StatusType.IN_PROGRESS));
 
         // Assert
         expect(status).not.toBeNull();
-        expect(status!.indicator).toEqual(indicator);
+        expect(status!.symbol).toEqual(symbol);
         expect(status!.name).toEqual(name);
-        expect(status!.nextStatusIndicator).toEqual(next);
+        expect(status!.nextStatusSymbol).toEqual(next);
         expect(status!.type).toEqual(StatusType.IN_PROGRESS);
         expect(status!.isCompleted()).toEqual(false);
     });
 
-    it('should be complete when indicator is "x"', () => {
+    it('should be complete when symbol is "x"', () => {
         // Arrange
-        const indicator = 'x';
+        const symbol = 'x';
         const name = 'Done';
         const next = ' ';
 
         // Act
-        const status = new Status(new StatusConfiguration(indicator, name, next, false, StatusType.DONE));
+        const status = new Status(new StatusConfiguration(symbol, name, next, false, StatusType.DONE));
 
         // Assert
         expect(status).not.toBeNull();
-        expect(status!.indicator).toEqual(indicator);
+        expect(status!.symbol).toEqual(symbol);
         expect(status!.name).toEqual(name);
-        expect(status!.nextStatusIndicator).toEqual(next);
+        expect(status!.nextStatusSymbol).toEqual(next);
         expect(status!.isCompleted()).toEqual(true);
     });
 
-    it('should deduce type for unknown indicators', () => {
-        expect(Status.getTypeForUnknownIndicator(' ')).toEqual(StatusType.TODO);
-        expect(Status.getTypeForUnknownIndicator('!')).toEqual(StatusType.TODO); // Unknown character treated as TODO
-        expect(Status.getTypeForUnknownIndicator('x')).toEqual(StatusType.DONE);
-        expect(Status.getTypeForUnknownIndicator('X')).toEqual(StatusType.DONE);
-        expect(Status.getTypeForUnknownIndicator('/')).toEqual(StatusType.IN_PROGRESS);
-        expect(Status.getTypeForUnknownIndicator('-')).toEqual(StatusType.CANCELLED);
-        expect(Status.getTypeForUnknownIndicator('')).toEqual(StatusType.EMPTY);
+    it('should deduce type for unknown symbols', () => {
+        expect(Status.getTypeForUnknownSymbol(' ')).toEqual(StatusType.TODO);
+        expect(Status.getTypeForUnknownSymbol('!')).toEqual(StatusType.TODO); // Unknown character treated as TODO
+        expect(Status.getTypeForUnknownSymbol('x')).toEqual(StatusType.DONE);
+        expect(Status.getTypeForUnknownSymbol('X')).toEqual(StatusType.DONE);
+        expect(Status.getTypeForUnknownSymbol('/')).toEqual(StatusType.IN_PROGRESS);
+        expect(Status.getTypeForUnknownSymbol('-')).toEqual(StatusType.CANCELLED);
+        expect(Status.getTypeForUnknownSymbol('')).toEqual(StatusType.EMPTY);
     });
 
     it('should deduce type from StatusType text', () => {
@@ -89,39 +90,39 @@ describe('Status', () => {
 
     it('should construct a Status for unknown symbol', () => {
         // Arrange
-        const indicator = '/';
+        const symbol = '/';
 
         // Act
-        const status = Status.createUnknownStatus(indicator);
+        const status = Status.createUnknownStatus(symbol);
 
         // Assert
         expect(status).not.toBeNull();
-        expect(status!.indicator).toEqual(indicator);
+        expect(status!.symbol).toEqual(symbol);
         expect(status!.name).toEqual('Unknown');
-        expect(status!.nextStatusIndicator).toEqual('x');
+        expect(status!.nextStatusSymbol).toEqual('x');
         // Even though the type *could* be deduced as IN_PROGRESS, createUnknownStatus() is used when
-        // the user has not defined the meaning of a status indicator, so treat everything as TODO.
+        // the user has not defined the meaning of a status symbol, so treat everything as TODO.
         expect(status!.type).toEqual(StatusType.TODO);
         expect(status!.isCompleted()).toEqual(false);
     });
 
     it('should construct a Status from a core imported value', () => {
-        const imported: [string, string, string] = ['/', 'in progress', 'x'];
+        const imported: StatusCollectionEntry = ['/', 'in progress', 'x', 'IN_PROGRESS'];
         const status = Status.createFromImportedValue(imported);
-        expect(status.indicator).toEqual('/');
+        expect(status.symbol).toEqual('/');
         expect(status.name).toEqual('in progress');
-        expect(status.nextStatusIndicator).toEqual('x');
-        expect(status.type).toEqual(StatusType.IN_PROGRESS); // should deduce IN_PROGRESS from indicator '/'
+        expect(status.nextStatusSymbol).toEqual('x');
+        expect(status.type).toEqual(StatusType.IN_PROGRESS); // should deduce IN_PROGRESS from symbol '/'
         expect(status.availableAsCommand).toEqual(false);
     });
 
     it('should construct a Status from a custom imported value', () => {
-        const imported: [string, string, string] = ['P', 'Pro', 'C'];
+        const imported: StatusCollectionEntry = ['P', 'Pro', 'C', 'NON_TASK'];
         const status = Status.createFromImportedValue(imported);
-        expect(status.indicator).toEqual('P');
+        expect(status.symbol).toEqual('P');
         expect(status.name).toEqual('Pro');
-        expect(status.nextStatusIndicator).toEqual('C');
-        expect(status.type).toEqual(StatusType.TODO);
+        expect(status.nextStatusSymbol).toEqual('C');
+        expect(status.type).toEqual(StatusType.NON_TASK);
         expect(status.availableAsCommand).toEqual(false);
     });
 });

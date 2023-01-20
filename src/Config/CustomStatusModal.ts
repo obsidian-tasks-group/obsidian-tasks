@@ -17,9 +17,9 @@ export class CustomStatusModal extends Modal {
     error: boolean = false;
     constructor(public plugin: TasksPlugin, statusType: StatusConfiguration) {
         super(plugin.app);
-        this.statusSymbol = statusType.indicator;
+        this.statusSymbol = statusType.symbol;
         this.statusName = statusType.name;
-        this.statusNextSymbol = statusType.nextStatusIndicator;
+        this.statusNextSymbol = statusType.nextStatusSymbol;
         this.statusAvailableAsCommand = statusType.availableAsCommand;
         this.type = statusType.type;
     }
@@ -53,12 +53,12 @@ export class CustomStatusModal extends Modal {
                 statusSymbolText = text;
                 text.setValue(this.statusSymbol).onChange((v) => {
                     this.statusSymbol = v;
-                    CustomStatusModal.setValid(text, validator.validateIndicator(this.statusConfiguration()));
+                    CustomStatusModal.setValid(text, validator.validateSymbol(this.statusConfiguration()));
                 });
             })
             .then((_setting) => {
                 // Show any error if the initial value loaded is incorrect.
-                CustomStatusModal.setValid(statusSymbolText, validator.validateIndicator(this.statusConfiguration()));
+                CustomStatusModal.setValid(statusSymbolText, validator.validateSymbol(this.statusConfiguration()));
             });
 
         let statusNameText: TextComponent;
@@ -84,13 +84,13 @@ export class CustomStatusModal extends Modal {
                 statusNextSymbolText = text;
                 text.setValue(this.statusNextSymbol).onChange((v) => {
                     this.statusNextSymbol = v;
-                    CustomStatusModal.setValid(text, validator.validateNextIndicator(this.statusConfiguration()));
+                    CustomStatusModal.setValid(text, validator.validateNextSymbol(this.statusConfiguration()));
                 });
             })
             .then((_setting) => {
                 CustomStatusModal.setValid(
                     statusNextSymbolText,
-                    validator.validateNextIndicator(this.statusConfiguration()),
+                    validator.validateNextSymbol(this.statusConfiguration()),
                 );
             });
 

@@ -1,6 +1,6 @@
 import type { Task } from '../Task';
-import type { Grouping } from './Query';
 import { Group } from './Group';
+import type { Grouper } from './Grouper';
 import { GroupingTreeNode } from './GroupingTreeNode';
 
 /**
@@ -56,7 +56,7 @@ export class IntermediateTaskGroups {
      * @param groupings 0 or more Grouping values, one per 'group by' line
      * @param tasks The tasks that match the task block's Query
      */
-    constructor(groupings: Grouping[], tasks: Task[]) {
+    constructor(groupings: Grouper[], tasks: Task[]) {
         const tree = this.buildGroupingTree(groupings, tasks);
         this.groups = tree.generateAllPaths();
         this.groups = this.getSortedGroups();
@@ -65,7 +65,7 @@ export class IntermediateTaskGroups {
     /**
      * Returns a grouping tree that groups the passed @tasks by the passed @groupings.
      */
-    private buildGroupingTree(groupings: Grouping[], tasks: Task[]): TaskGroupingTreeNode {
+    private buildGroupingTree(groupings: Grouper[], tasks: Task[]): TaskGroupingTreeNode {
         // The tree is build layer by layer, starting from the root.
         // At every level, we iterate on the nodes of that level to generate
         // the next one using the next grouping.
@@ -78,7 +78,7 @@ export class IntermediateTaskGroups {
             const nextTreeLevel = [];
             for (const currentTreeNode of currentTreeLevel) {
                 for (const task of currentTreeNode.values) {
-                    const groupNames = Group.getGroupNamesForTask(grouping.property, task);
+                    const groupNames = Group.getGroupNamesForTask(grouping, task);
                     for (const groupName of groupNames) {
                         let child = currentTreeNode.children.get(groupName);
                         if (child === undefined) {

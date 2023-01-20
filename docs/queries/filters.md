@@ -191,9 +191,8 @@ because the tasks starts before tomorrow. Only one of the dates needs to match.
 
 ### Status
 
-- `done` - matches tasks status types `DONE` and `CANCELLED`
+- `done` - matches tasks status types `DONE`, `CANCELLED` and `NON_TASK`
 - `not done` - matches status types with type `TODO` and `IN_PROGRESS`
-- Note: tasks with status type `NON_TASK` match neither filter.
 
 {: .info }
 > Prior to Tasks X.Y.Z, there was no concept of task status type, and so only the status symbol was used:
@@ -205,6 +204,8 @@ because the tasks starts before tomorrow. Only one of the dates needs to match.
 
 ### Status Name
 
+- This searches the names given to your custom statuses.
+- For example, perhaps you might have named `[!]` as `Important`, and so this field would search then text `Important` for all tasks with that status symbol.
 - `status.name (includes|does not include) <string>`
   - Matches case-insensitive (disregards capitalization).
 - `status.name (regex matches|regex does not match) /<JavaScript-style Regex>/`
@@ -213,6 +214,20 @@ because the tasks starts before tomorrow. Only one of the dates needs to match.
 
 {: .released }
 `status.name` text searching was introduced in Tasks X.Y.Z.
+
+For more information, including adding your own customised statuses, see [Statuses]({{ site.baseurl }}{% link getting-started/statuses.md %}).
+
+### Status Type
+
+- `status.type (is|is not) (TODO|DONE|IN_PROGRESS|CANCELLED|NON_TASK)`
+  - The values `TODO` etc are case-insensitive: you can use `in_progress`, for example
+- This searches the types you have given to your custom statuses.
+- This search is efficient if you wish to find all tasks that are `IN_PROGRESS`, and you have set up your statuses to have `[/]`, `[d]` and perhaps several other all treated as `IN_PROGRESS`.
+- To exclude multiple values, you can use multiple `status.type is not` lines.
+- To allow multiple values, use a boolean combination, for example: `( status.type is TODO ) OR ( status.type is IN_PROGRESS )`.
+
+{: .released }
+`status.type` text searching was introduced in Tasks X.Y.Z.
 
 For more information, including adding your own customised statuses, see [Statuses]({{ site.baseurl }}{% link getting-started/statuses.md %}).
 

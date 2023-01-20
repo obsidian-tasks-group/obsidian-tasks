@@ -1,4 +1,5 @@
 import { StatusConfiguration, StatusType } from './StatusConfiguration';
+import type { StatusCollectionEntry } from './StatusCollection';
 
 /**
  * Tracks the possible states that a task can be in.
@@ -50,13 +51,13 @@ export class Status {
     public readonly configuration: StatusConfiguration;
 
     /**
-     * The indicator used between the two square brackets in the markdown task.
+     * The symbol used between the two square brackets in the markdown task.
      *
      * @type {string}
      * @memberof Status
      */
-    public get indicator(): string {
-        return this.configuration.indicator;
+    public get symbol(): string {
+        return this.configuration.symbol;
     }
 
     /**
@@ -75,8 +76,8 @@ export class Status {
      * @type {string}
      * @memberof Status
      */
-    public get nextStatusIndicator(): string {
-        return this.configuration.nextStatusIndicator;
+    public get nextStatusSymbol(): string {
+        return this.configuration.nextStatusSymbol;
     }
 
     /**
@@ -144,13 +145,13 @@ export class Status {
     }
 
     /**
-     * Return the StatusType to use for an indicator, if it is not in the StatusRegistry.
-     * The core indicators are recognised.
-     * Other indicators are treated as StatusType.TODO
-     * @param indicator
+     * Return the StatusType to use for a symbol, if it is not in the StatusRegistry.
+     * The core symbols are recognised.
+     * Other symbols are treated as StatusType.TODO
+     * @param symbol
      */
-    static getTypeForUnknownIndicator(indicator: string): StatusType {
-        switch (indicator) {
+    static getTypeForUnknownSymbol(symbol: string): StatusType {
+        switch (symbol) {
             case 'x':
             case 'X':
                 return StatusType.DONE;
@@ -176,28 +177,27 @@ export class Status {
     }
 
     /**
-     * Create a Status representing the given, unknown indicator.
+     * Create a Status representing the given, unknown symbol.
      *
-     * This can be useful when StatusRegistry does not recognise an indicator,
+     * This can be useful when StatusRegistry does not recognise a symbol,
      * and we do not want to expose the user's data to the Status.EMPTY status.
      *
      * The type is set to TODO.
-     * @param unknownIndicator
+     * @param unknownSymbol
      */
-    static createUnknownStatus(unknownIndicator: string) {
-        return new Status(new StatusConfiguration(unknownIndicator, 'Unknown', 'x', false, StatusType.TODO));
+    static createUnknownStatus(unknownSymbol: string) {
+        return new Status(new StatusConfiguration(unknownSymbol, 'Unknown', 'x', false, StatusType.TODO));
     }
 
     /**
      * Helper function for bulk-importing settings from arrays of strings.
      *
-     * The type is deduced, for a few common status indicators.
-     * @param imported An array of indicator, name, next indicator
+     * @param imported An array of symbol, name, next symbol, status type
      */
-    static createFromImportedValue(imported: [string, string, string]) {
-        const indicator = imported[0];
-        const type = Status.getTypeForUnknownIndicator(indicator);
-        return new Status(new StatusConfiguration(indicator, imported[1], imported[2], false, type));
+    static createFromImportedValue(imported: StatusCollectionEntry) {
+        const symbol = imported[0];
+        const type = Status.getTypeFromStatusTypeString(imported[3]);
+        return new Status(new StatusConfiguration(symbol, imported[1], imported[2], false, type));
     }
 
     /**
@@ -208,7 +208,7 @@ export class Status {
      * @memberof Status
      */
     public isCompleted(): boolean {
-        return this.indicator === 'x' || this.indicator === 'X';
+        return this.type === StatusType.DONE;
     }
 
     /**
@@ -219,7 +219,7 @@ export class Status {
         if (Status.tasksPluginCanCreateCommandsForStatuses() && this.availableAsCommand) {
             commandNotice = 'Available as a command.';
         }
-        return `- [${this.indicator}] ${this.name}, next status is '${this.nextStatusIndicator}', type is '${this.configuration.type}'. ${commandNotice}`;
+        return `- [${this.symbol}] ${this.name}, next status is '${this.nextStatusSymbol}', type is '${this.configuration.type}'. ${commandNotice}`;
     }
 
     /**
