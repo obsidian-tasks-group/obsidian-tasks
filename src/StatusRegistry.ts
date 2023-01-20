@@ -69,7 +69,7 @@ export class StatusRegistry {
      * @memberof StatusRegistry
      */
     public add(status: StatusConfiguration | Status): void {
-        if (!this.hasIndicator(status.symbol)) {
+        if (!this.hasSymbol(status.symbol)) {
             if (status instanceof Status) {
                 this._registeredStatuses.push(status);
             } else {
@@ -79,43 +79,43 @@ export class StatusRegistry {
     }
 
     /**
-     * Returns the registered status by the indicator between the
+     * Returns the registered status by the symbol between the
      * square braces in the markdown task.
-     * Returns an EMPTY status if indicator is unknown.
+     * Returns an EMPTY status if symbol is unknown.
      *
-     * @see byIndicatorOrCreate
+     * @see bySymbolOrCreate
      *
-     * @param {string} indicator
+     * @param {string} symbol
      * @return {*}  {Status}
      * @memberof StatusRegistry
      */
-    public byIndicator(indicator: string): Status {
-        if (this.hasIndicator(indicator)) {
-            return this.getIndicator(indicator);
+    public bySymbol(symbol: string): Status {
+        if (this.hasSymbol(symbol)) {
+            return this.getSymbol(symbol);
         }
 
         return Status.EMPTY;
     }
 
     /**
-     * Returns the registered status by the indicator between the
+     * Returns the registered status by the symbol between the
      * square braces in the markdown task.
      *
-     * Creates a usable new Status with this given indicator if indicator is unknown.
-     * Note: An unknown indicator is not added to the registry.
+     * Creates a usable new Status with this given symbol if symbol is unknown.
+     * Note: An unknown symbol is not added to the registry.
      *
-     * @see hasIndicator
+     * @see hasSymbol
      *
-     * @param {string} indicator
+     * @param {string} symbol
      * @return {*}  {Status}
      * @memberof StatusRegistry
      */
-    public byIndicatorOrCreate(indicator: string): Status {
-        if (this.hasIndicator(indicator)) {
-            return this.getIndicator(indicator);
+    public bySymbolOrCreate(symbol: string): Status {
+        if (this.hasSymbol(symbol)) {
+            return this.getSymbol(symbol);
         }
 
-        return Status.createUnknownStatus(indicator);
+        return Status.createUnknownStatus(symbol);
     }
 
     /**
@@ -153,7 +153,7 @@ export class StatusRegistry {
      */
     public getNextStatus(status: Status): Status {
         if (status.nextStatusSymbol !== '') {
-            const nextStatus = this.byIndicator(status.nextStatusSymbol);
+            const nextStatus = this.bySymbol(status.nextStatusSymbol);
             if (nextStatus !== null) {
                 return nextStatus;
             }
@@ -194,7 +194,7 @@ export class StatusRegistry {
         });
 
         const unknownStatuses = allStatuses.filter((s) => {
-            return !this.hasIndicator(s.symbol);
+            return !this.hasSymbol(s.symbol);
         });
 
         // Use a separate StatusRegistry to keep track of duplicates,
@@ -204,13 +204,13 @@ export class StatusRegistry {
 
         const namedUniqueStatuses: Status[] = [];
         unknownStatuses.forEach((s) => {
-            // Check if we have seen this indicator already:
-            if (newStatusRegistry.hasIndicator(s.symbol)) {
+            // Check if we have seen this symbol already:
+            if (newStatusRegistry.hasSymbol(s.symbol)) {
                 return;
             }
 
             // Go ahead and create a suitably-named copy,
-            // including the indicator in the name.
+            // including the symbol in the name.
             const newStatus = StatusRegistry.copyStatusWithNewName(s, `Unknown (${s.symbol})`);
             namedUniqueStatuses.push(newStatus);
             // And add it to our local registry, to prevent duplicates.
@@ -231,29 +231,29 @@ export class StatusRegistry {
     }
 
     /**
-     * Filters the Status types by the indicator and returns the first one found.
+     * Filters the Status types by the symbol and returns the first one found.
      *
      * @private
-     * @param {string} indicatorToFind
+     * @param {string} symbolToFind
      * @return {*}  {Status}
      * @memberof StatusRegistry
      */
-    private getIndicator(indicatorToFind: string): Status {
-        return this._registeredStatuses.filter(({ symbol }) => symbol === indicatorToFind)[0];
+    private getSymbol(symbolToFind: string): Status {
+        return this._registeredStatuses.filter(({ symbol }) => symbol === symbolToFind)[0];
     }
 
     /**
-     * Filters all the Status types by the indicator and returns true if found.
+     * Filters all the Status types by the symbol and returns true if found.
      *
      * @private
-     * @param {string} indicatorToFind
+     * @param {string} symbolToFind
      * @return {*}  {boolean}
      * @memberof StatusRegistry
      */
-    private hasIndicator(indicatorToFind: string): boolean {
+    private hasSymbol(symbolToFind: string): boolean {
         return (
             this._registeredStatuses.find((element) => {
-                return element.symbol === indicatorToFind;
+                return element.symbol === symbolToFind;
             }) !== undefined
         );
     }
