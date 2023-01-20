@@ -57,8 +57,8 @@ class MarkdownTable {
     }
 }
 
-function getPrintableIndicator(indicator: string) {
-    const result = indicator !== ' ' ? indicator : 'space';
+function getPrintableSymbol(symbol: string) {
+    const result = symbol !== ' ' ? symbol : 'space';
     return '`' + result + '`';
 }
 
@@ -72,9 +72,9 @@ function verifyStatusesAsMarkdownTable(statuses: Status[]) {
     ]);
 
     for (const status of statuses) {
-        const statusCharacter = getPrintableIndicator(status.symbol);
-        const nextStatusCharacter = getPrintableIndicator(status.nextStatusSymbol);
-        const type = getPrintableIndicator(status.type);
+        const statusCharacter = getPrintableSymbol(status.symbol);
+        const nextStatusCharacter = getPrintableSymbol(status.nextStatusSymbol);
+        const type = getPrintableSymbol(status.type);
         const needsCustomStyling = status.symbol !== ' ' && status.symbol !== 'x' ? 'Yes' : 'No';
         table.addRow([statusCharacter, status.name, nextStatusCharacter, type, needsCustomStyling]);
     }

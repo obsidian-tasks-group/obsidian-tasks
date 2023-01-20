@@ -533,8 +533,8 @@ describe('toggle done', () => {
         start?: string;
         today?: string;
         // results:
-        doneSymbol?: string; // the indicator of the completed task
-        nextSymbol?: string; // the indicator of the recurrence
+        doneSymbol?: string; // the symbol of the completed task
+        nextSymbol?: string; // the symbol of the recurrence
         nextDue?: string;
         nextScheduled?: string;
         nextStart?: string;

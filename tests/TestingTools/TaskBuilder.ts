@@ -92,19 +92,13 @@ export class TaskBuilder {
     }
 
     public statusValues(
-        indicator: string,
+        symbol: string,
         name: string,
-        nextStatusIndicator: string,
+        nextStatusSymbol: string,
         availableAsCommand: boolean,
         type: StatusType,
     ): TaskBuilder {
-        const statusConfiguration = new StatusConfiguration(
-            indicator,
-            name,
-            nextStatusIndicator,
-            availableAsCommand,
-            type,
-        );
+        const statusConfiguration = new StatusConfiguration(symbol, name, nextStatusSymbol, availableAsCommand, type);
         return this.status(new Status(statusConfiguration));
     }
 
