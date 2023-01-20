@@ -46,7 +46,7 @@ describe('Status', () => {
         expect(status).not.toBeNull();
         expect(status!.symbol).toEqual(indicator);
         expect(status!.name).toEqual(name);
-        expect(status!.nextStatusIndicator).toEqual(next);
+        expect(status!.nextStatusSymbol).toEqual(next);
         expect(status!.type).toEqual(StatusType.IN_PROGRESS);
         expect(status!.isCompleted()).toEqual(false);
     });
@@ -64,7 +64,7 @@ describe('Status', () => {
         expect(status).not.toBeNull();
         expect(status!.symbol).toEqual(indicator);
         expect(status!.name).toEqual(name);
-        expect(status!.nextStatusIndicator).toEqual(next);
+        expect(status!.nextStatusSymbol).toEqual(next);
         expect(status!.isCompleted()).toEqual(true);
     });
 
@@ -99,7 +99,7 @@ describe('Status', () => {
         expect(status).not.toBeNull();
         expect(status!.symbol).toEqual(indicator);
         expect(status!.name).toEqual('Unknown');
-        expect(status!.nextStatusIndicator).toEqual('x');
+        expect(status!.nextStatusSymbol).toEqual('x');
         // Even though the type *could* be deduced as IN_PROGRESS, createUnknownStatus() is used when
         // the user has not defined the meaning of a status indicator, so treat everything as TODO.
         expect(status!.type).toEqual(StatusType.TODO);
@@ -111,7 +111,7 @@ describe('Status', () => {
         const status = Status.createFromImportedValue(imported);
         expect(status.symbol).toEqual('/');
         expect(status.name).toEqual('in progress');
-        expect(status.nextStatusIndicator).toEqual('x');
+        expect(status.nextStatusSymbol).toEqual('x');
         expect(status.type).toEqual(StatusType.IN_PROGRESS); // should deduce IN_PROGRESS from indicator '/'
         expect(status.availableAsCommand).toEqual(false);
     });
@@ -121,7 +121,7 @@ describe('Status', () => {
         const status = Status.createFromImportedValue(imported);
         expect(status.symbol).toEqual('P');
         expect(status.name).toEqual('Pro');
-        expect(status.nextStatusIndicator).toEqual('C');
+        expect(status.nextStatusSymbol).toEqual('C');
         expect(status.type).toEqual(StatusType.NON_TASK);
         expect(status.availableAsCommand).toEqual(false);
     });

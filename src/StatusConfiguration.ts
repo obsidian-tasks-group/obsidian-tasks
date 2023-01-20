@@ -40,7 +40,7 @@ export class StatusConfiguration {
      * @type {string}
      * @memberof Status
      */
-    public readonly nextStatusIndicator: string;
+    public readonly nextStatusSymbol: string;
 
     /**
      * If true then it is registered as a command that the user can map to.
@@ -75,7 +75,7 @@ export class StatusConfiguration {
     ) {
         this.symbol = indicator;
         this.name = name;
-        this.nextStatusIndicator = nextStatusIndicator;
+        this.nextStatusSymbol = nextStatusIndicator;
         this.availableAsCommand = availableAsCommand;
         this.type = type;
     }

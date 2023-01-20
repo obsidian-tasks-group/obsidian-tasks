@@ -79,7 +79,7 @@ export const toggleLine = (line: string, path: string) => {
             // Toggle the status of the checklist item.
             const statusString = regexMatch[3];
             const status = StatusRegistry.getInstance().byIndicator(statusString);
-            const newStatusString = status.nextStatusIndicator;
+            const newStatusString = status.nextStatusSymbol;
             toggledLine = line.replace(TaskRegularExpressions.taskRegex, `$1- [${newStatusString}] $4`);
         } else if (TaskRegularExpressions.listItemRegex.test(line)) {
             // Convert the list item to a checklist item.

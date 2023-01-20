@@ -76,8 +76,8 @@ export class Status {
      * @type {string}
      * @memberof Status
      */
-    public get nextStatusIndicator(): string {
-        return this.configuration.nextStatusIndicator;
+    public get nextStatusSymbol(): string {
+        return this.configuration.nextStatusSymbol;
     }
 
     /**
@@ -219,7 +219,7 @@ export class Status {
         if (Status.tasksPluginCanCreateCommandsForStatuses() && this.availableAsCommand) {
             commandNotice = 'Available as a command.';
         }
-        return `- [${this.symbol}] ${this.name}, next status is '${this.nextStatusIndicator}', type is '${this.configuration.type}'. ${commandNotice}`;
+        return `- [${this.symbol}] ${this.name}, next status is '${this.nextStatusSymbol}', type is '${this.configuration.type}'. ${commandNotice}`;
     }
 
     /**

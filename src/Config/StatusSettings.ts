@@ -121,7 +121,7 @@ export class StatusSettings {
                 return (
                     element.symbol == importedStatus[0] &&
                     element.name == importedStatus[1] &&
-                    element.nextStatusIndicator == importedStatus[2]
+                    element.nextStatusSymbol == importedStatus[2]
                 );
             });
             if (!hasStatus) {
