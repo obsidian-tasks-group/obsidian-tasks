@@ -9,6 +9,7 @@ import {
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { StatusType } from '../../../src/StatusConfiguration';
 import { Status } from '../../../src/Status';
+import * as FilterParser from '../../../src/Query/FilterParser';
 
 expect.extend({
     toBeValid,
@@ -76,6 +77,16 @@ describe('status.name', () => {
         // Assert
         // Check that the '.' in status.name is interpreted exactly as a dot.
         expect(filter).not.toBeValid();
+    });
+
+    it('status.name with invalid line is parsed and user sees helpful message', () => {
+        // Arrange
+        const filter = FilterParser.parseFilter('status.type gobbledygook');
+
+        // Assert
+        // Check that the '.' in status.name is interpreted exactly as a dot.
+        expect(filter).not.toBeValid();
+        expect(filter?.error).toEqual('do not understand filter');
     });
 });
 
