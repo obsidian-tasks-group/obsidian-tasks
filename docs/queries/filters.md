@@ -191,9 +191,8 @@ because the tasks starts before tomorrow. Only one of the dates needs to match.
 
 ### Status
 
-- `done` - matches tasks status types `DONE` and `CANCELLED`
+- `done` - matches tasks status types `DONE`, `CANCELLED` and `NON_TASK`
 - `not done` - matches status types with type `TODO` and `IN_PROGRESS`
-- Note: tasks with status type `NON_TASK` match neither filter.
 
 {: .info }
 > Prior to Tasks X.Y.Z, there was no concept of task status type, and so only the status symbol was used:
