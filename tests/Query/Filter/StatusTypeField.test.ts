@@ -87,10 +87,11 @@ describe('status.name', () => {
         expect(filter).not.toBeValid();
         expect(filter?.error).toMatchInlineSnapshot(`
             "Invalid status.type instruction: 'status.type gobbledygook'.
-            Allowed options: 'is' and 'is not' (without quotes).
-            Allowed values:  TODO DONE IN_PROGRESS CANCELLED NON_TASK.
-            Capitalisation of values does not matter, so for example, 'in_progress' works too.
-            Example: status.type is not NON_TASK"
+                Allowed options: 'is' and 'is not' (without quotes).
+                Allowed values:  TODO DONE IN_PROGRESS CANCELLED NON_TASK
+                                 Note: values are case-insensitive,
+                                       so 'in_progress' works too, for example.
+                Example:         status.type is not NON_TASK"
         `);
     });
 });

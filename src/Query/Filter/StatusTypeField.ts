@@ -65,10 +65,11 @@ export class StatusTypeField extends Field {
             .join(' ');
 
         const message = `Invalid ${this.fieldNameSingular()} instruction: '${line}'.
-Allowed options: 'is' and 'is not' (without quotes).
-Allowed values:  ${allowedTypes}.
-Capitalisation of values does not matter, so for example, 'in_progress' works too.
-Example: ${this.fieldNameSingular()} is not NON_TASK`;
+    Allowed options: 'is' and 'is not' (without quotes).
+    Allowed values:  ${allowedTypes}
+                     Note: values are case-insensitive,
+                           so 'in_progress' works too, for example.
+    Example:         ${this.fieldNameSingular()} is not NON_TASK`;
         return FilterOrErrorMessage.fromError(line, message);
     }
 
