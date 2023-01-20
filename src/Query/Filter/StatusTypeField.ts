@@ -25,7 +25,7 @@ export class StatusTypeField extends Field {
 
         const [_, filterOperator, statusTypeAsString] = match;
 
-        const statusTypeElement = StatusType[statusTypeAsString as keyof typeof StatusType];
+        const statusTypeElement = StatusType[statusTypeAsString.toUpperCase() as keyof typeof StatusType];
         if (!statusTypeElement) {
             return StatusTypeField.helpMessage(line);
         }
