@@ -93,7 +93,8 @@ declare global {
 export function toBeValid(filter: FilterOrErrorMessage) {
     if (filter.filterFunction === undefined) {
         return {
-            message: () => 'unexpected null filter: check your instruction matches your filter class',
+            message: () =>
+                `unexpected null filter: check your instruction matches your filter class.\n       Error message is "${filter.error}".`,
             pass: false,
         };
     }
