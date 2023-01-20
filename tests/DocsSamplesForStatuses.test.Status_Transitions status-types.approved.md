@@ -3,7 +3,7 @@
 | Operation | TODO | IN_PROGRESS | DONE | CANCELLED | NON_TASK |
 | ----- | ----- | ----- | ----- | ----- | ----- |
 | Example Task | `- [ ] demo` | `- [/] demo` | `- [x] demo` | `- [-] demo` | `- [~] demo` |
-| Matches `done` | no | no | YES | YES | no |
+| Matches `done` | no | no | YES | YES | YES |
 | Matches `not done` | YES | YES | no | no | no |
 | Matches `status.name includes todo` | YES | no | no | no | no |
 | Matches `status.type is TODO` | YES | no | no | no | no |

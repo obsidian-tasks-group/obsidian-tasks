@@ -15,10 +15,13 @@ export class StatusField extends FilterInstructionsBasedField {
         //   StatusType.CANCELLED counts as done
         //   StatusType.TODO counts as not done
         //   StatusType.IN_PROGRESS counts as not done
-        //   StatusType.NON_TASK does not match either
+        //   StatusType.NON_TASK counts as done
         this._filters.add(
             'done',
-            (task: Task) => task.status.type === StatusType.DONE || task.status.type === StatusType.CANCELLED,
+            (task: Task) =>
+                task.status.type === StatusType.DONE ||
+                task.status.type === StatusType.CANCELLED ||
+                task.status.type === StatusType.NON_TASK,
         );
         this._filters.add(
             'not done',
