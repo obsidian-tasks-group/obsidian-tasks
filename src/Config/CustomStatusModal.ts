@@ -84,13 +84,13 @@ export class CustomStatusModal extends Modal {
                 statusNextSymbolText = text;
                 text.setValue(this.statusNextSymbol).onChange((v) => {
                     this.statusNextSymbol = v;
-                    CustomStatusModal.setValid(text, validator.validateNextSynbol(this.statusConfiguration()));
+                    CustomStatusModal.setValid(text, validator.validateNextSymbol(this.statusConfiguration()));
                 });
             })
             .then((_setting) => {
                 CustomStatusModal.setValid(
                     statusNextSymbolText,
-                    validator.validateNextSynbol(this.statusConfiguration()),
+                    validator.validateNextSymbol(this.statusConfiguration()),
                 );
             });
 

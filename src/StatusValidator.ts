@@ -10,17 +10,17 @@ export class StatusValidator {
         // Messages are added in the order fields are shown when editing statuses.
         errors.push(...this.validateSymbol(statusConfiguration));
         errors.push(...this.validateName(statusConfiguration));
-        errors.push(...this.validateNextSynbol(statusConfiguration));
+        errors.push(...this.validateNextSymbol(statusConfiguration));
 
         return errors;
     }
 
     public validateSymbol(statusConfiguration: StatusConfiguration): string[] {
-        return StatusValidator.validateOneSynbol(statusConfiguration.symbol, 'Task Status Symbol');
+        return StatusValidator.validateOneSymbol(statusConfiguration.symbol, 'Task Status Symbol');
     }
 
-    public validateNextSynbol(statusConfiguration: StatusConfiguration): string[] {
-        return StatusValidator.validateOneSynbol(statusConfiguration.nextStatusSymbol, 'Task Next Status Symbol');
+    public validateNextSymbol(statusConfiguration: StatusConfiguration): string[] {
+        return StatusValidator.validateOneSymbol(statusConfiguration.nextStatusSymbol, 'Task Next Status Symbol');
     }
 
     public validateName(statusConfiguration: StatusConfiguration) {
@@ -31,7 +31,7 @@ export class StatusValidator {
         return errors;
     }
 
-    private static validateOneSynbol(symbol: string, symbolName: string): string[] {
+    private static validateOneSymbol(symbol: string, symbolName: string): string[] {
         const errors: string[] = [];
         if (symbol.length === 0) {
             errors.push(`${symbolName} cannot be empty.`);
