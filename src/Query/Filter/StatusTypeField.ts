@@ -17,7 +17,7 @@ export class StatusTypeField extends Field {
     public canCreateFilterForLine(line: string): boolean {
         // Use a relaxed regexp, just checking field name and not the contents,
         // so that we can parse the line later and give meaningful errors if user uses invalid values.
-        const relaxedRegExp = new RegExp(`^(?:${this.fieldNameSingularEscaped()}) `);
+        const relaxedRegExp = new RegExp(`^(?:${this.fieldNameSingularEscaped()})`);
         return Field.lineMatchesFilter(relaxedRegExp, line);
     }
 
@@ -25,14 +25,14 @@ export class StatusTypeField extends Field {
         const match = Field.getMatch(this.filterRegExp(), line);
         if (match === null) {
             // It's OK to get here, because canCreateFilterForLine() uses a more relaxed regexp.
-            return StatusTypeField.helpMessage(line);
+            return this.helpMessage(line);
         }
 
         const [_, filterOperator, statusTypeAsString] = match;
 
         const statusTypeElement = StatusType[statusTypeAsString.toUpperCase() as keyof typeof StatusType];
         if (!statusTypeElement) {
-            return StatusTypeField.helpMessage(line);
+            return this.helpMessage(line);
         }
 
         let filterFunction: FilterFunction;
@@ -49,7 +49,7 @@ export class StatusTypeField extends Field {
                 };
                 break;
             default:
-                return StatusTypeField.helpMessage(line);
+                return this.helpMessage(line);
         }
 
         return FilterOrErrorMessage.fromFilter(new Filter(line, filterFunction, new Explanation(line)));
@@ -59,9 +59,17 @@ export class StatusTypeField extends Field {
         return new RegExp(`^(?:${this.fieldNameSingularEscaped()}) (is|is not) ([^ ]+)$`);
     }
 
-    public static helpMessage(line: string): FilterOrErrorMessage {
-        // TODO I'd like to provide a help message that lists the valid statuses
-        return FilterOrErrorMessage.fromError(line, 'do not understand filter');
+    private helpMessage(line: string): FilterOrErrorMessage {
+        const allowedTypes = Object.values(StatusType)
+            .filter((t) => t !== StatusType.EMPTY)
+            .join(' ');
+
+        const message = `Invalid ${this.fieldNameSingular()} instruction: '${line}'.
+Allowed options: 'is' and 'is not' (without quotes).
+Allowed values:  ${allowedTypes}.
+Capitalisation of values does not matter, so for example, 'in_progress' works too.
+Example: ${this.fieldNameSingular()} is not NON_TASK`;
+        return FilterOrErrorMessage.fromError(line, message);
     }
 
     public fieldName(): string {

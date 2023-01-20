@@ -84,9 +84,14 @@ describe('status.name', () => {
         const filter = FilterParser.parseFilter('status.type gobbledygook');
 
         // Assert
-        // Check that the '.' in status.name is interpreted exactly as a dot.
         expect(filter).not.toBeValid();
-        expect(filter?.error).toEqual('do not understand filter');
+        expect(filter?.error).toMatchInlineSnapshot(`
+            "Invalid status.type instruction: 'status.type gobbledygook'.
+            Allowed options: 'is' and 'is not' (without quotes).
+            Allowed values:  TODO DONE IN_PROGRESS CANCELLED NON_TASK.
+            Capitalisation of values does not matter, so for example, 'in_progress' works too.
+            Example: status.type is not NON_TASK"
+        `);
     });
 });
 
