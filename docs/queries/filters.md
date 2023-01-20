@@ -220,19 +220,12 @@ For more information, including adding your own customised statuses, see [Status
 
 ### Status Type
 
+- `status.type (is|is not) (TODO|DONE|IN_PROGRESS|CANCELLED|NON_TASK)`
+  - The values `TODO` etc are case-insensitive: you can use `in_progress`, for example
 - This searches the types you have given to your custom statuses.
-- The following status types are available:
-  - `TODO`
-  - `IN_PROGRESS`
-  - `DONE`
-  - `CANCELLED`
-  - `NON_TASK`
 - This search is efficient if you wish to find all tasks that are `IN_PROGRESS`, and you have set up your statuses to have `[/]`, `[d]` and perhaps several other all treated as `IN_PROGRESS`.
-- `status.type (includes|does not include) <string>`
-  - Matches case-insensitive (disregards capitalization).
-- `status.type (regex matches|regex does not match) /<JavaScript-style Regex>/`
-  - Does regular expression match (case-sensitive by default).
-  - Essential reading: [Regular Expression Searches]({{ site.baseurl }}{% link queries/regular-expressions.md %}).
+- To exclude multiple values, you can use multiple `status.type is not` lines.
+- To allow multiple values, use a boolean combination, for example: `( status.type is TODO ) OR ( status.type is IN_PROGRESS )`.
 
 {: .released }
 `status.type` text searching was introduced in Tasks X.Y.Z.
