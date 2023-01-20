@@ -8,19 +8,19 @@ export class StatusValidator {
         const errors: string[] = [];
 
         // Messages are added in the order fields are shown when editing statuses.
-        errors.push(...this.validateIndicator(statusConfiguration));
+        errors.push(...this.validateSymbol(statusConfiguration));
         errors.push(...this.validateName(statusConfiguration));
-        errors.push(...this.validateNextIndicator(statusConfiguration));
+        errors.push(...this.validateNextSynbol(statusConfiguration));
 
         return errors;
     }
 
-    public validateIndicator(statusConfiguration: StatusConfiguration): string[] {
-        return StatusValidator.validateOneIndicator(statusConfiguration.symbol, 'Task Status Symbol');
+    public validateSymbol(statusConfiguration: StatusConfiguration): string[] {
+        return StatusValidator.validateOneSynbol(statusConfiguration.symbol, 'Task Status Symbol');
     }
 
-    public validateNextIndicator(statusConfiguration: StatusConfiguration): string[] {
-        return StatusValidator.validateOneIndicator(statusConfiguration.nextStatusSymbol, 'Task Next Status Symbol');
+    public validateNextSynbol(statusConfiguration: StatusConfiguration): string[] {
+        return StatusValidator.validateOneSynbol(statusConfiguration.nextStatusSymbol, 'Task Next Status Symbol');
     }
 
     public validateName(statusConfiguration: StatusConfiguration) {
@@ -31,14 +31,14 @@ export class StatusValidator {
         return errors;
     }
 
-    private static validateOneIndicator(indicator: string, indicatorName: string): string[] {
+    private static validateOneSynbol(symbol: string, symbolName: string): string[] {
         const errors: string[] = [];
-        if (indicator.length === 0) {
-            errors.push(`${indicatorName} cannot be empty.`);
+        if (symbol.length === 0) {
+            errors.push(`${symbolName} cannot be empty.`);
         }
 
-        if (indicator.length > 1) {
-            errors.push(`${indicatorName} ("${indicator}") must be a single character.`);
+        if (symbol.length > 1) {
+            errors.push(`${symbolName} ("${symbol}") must be a single character.`);
         }
         return errors;
     }
