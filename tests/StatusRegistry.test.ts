@@ -24,45 +24,45 @@ describe('StatusRegistry', () => {
         StatusRegistry.getInstance().clearStatuses();
     });
 
-    it('should create a new instance and populate default status indicators', () => {
+    it('should create a new instance and populate default status symbols', () => {
         // Arrange
 
         // Act
         const statusRegistry = new StatusRegistry();
-        const doneStatus = statusRegistry.byIndicator('x');
+        const doneStatus = statusRegistry.bySymbol('x');
 
         // Assert
         expect(statusRegistry).not.toBeNull();
 
         expect(doneStatus.symbol).toEqual(Status.makeDone().symbol);
 
-        expect(statusRegistry.byIndicator('x').symbol).toEqual(Status.makeDone().symbol);
-        expect(statusRegistry.byIndicator('').symbol).toEqual(Status.makeEmpty().symbol);
-        expect(statusRegistry.byIndicator(' ').symbol).toEqual(Status.makeTodo().symbol);
-        expect(statusRegistry.byIndicator('-').symbol).toEqual(Status.makeCancelled().symbol);
-        expect(statusRegistry.byIndicator('/').symbol).toEqual(Status.makeInProgress().symbol);
+        expect(statusRegistry.bySymbol('x').symbol).toEqual(Status.makeDone().symbol);
+        expect(statusRegistry.bySymbol('').symbol).toEqual(Status.makeEmpty().symbol);
+        expect(statusRegistry.bySymbol(' ').symbol).toEqual(Status.makeTodo().symbol);
+        expect(statusRegistry.bySymbol('-').symbol).toEqual(Status.makeCancelled().symbol);
+        expect(statusRegistry.bySymbol('/').symbol).toEqual(Status.makeInProgress().symbol);
 
-        // Detect unrecognised indicator:
-        expect(statusRegistry.byIndicator('?').symbol).toEqual(Status.makeEmpty().symbol);
+        // Detect unrecognised symbol:
+        expect(statusRegistry.bySymbol('?').symbol).toEqual(Status.makeEmpty().symbol);
     });
 
-    it('should return empty status for lookup by unknown indicator with byIndicator()', () => {
+    it('should return empty status for lookup by unknown symbol with bySymbol()', () => {
         // Arrange
         const statusRegistry = new StatusRegistry();
 
         // Act
-        const result = statusRegistry.byIndicator('?');
+        const result = statusRegistry.bySymbol('?');
 
         // Assert
         expect(result).toEqual(Status.EMPTY);
     });
 
-    it('should return Unknown status for lookup by unknown indicator with byIndicatorOrCreate()', () => {
+    it('should return Unknown status for lookup by unknown symbol with bySymbolOrCreate()', () => {
         // Arrange
         const statusRegistry = new StatusRegistry();
 
         // Act
-        const result = statusRegistry.byIndicatorOrCreate('?');
+        const result = statusRegistry.bySymbolOrCreate('?');
 
         // Assert
         expect(result.symbol).toEqual('?');
@@ -119,7 +119,7 @@ describe('StatusRegistry', () => {
         statusRegistry.add(statusConfiguration);
 
         // Assert
-        const status2 = statusRegistry.byIndicator('a');
+        const status2 = statusRegistry.bySymbol('a');
         expect(status2).toStrictEqual(new Status(statusConfiguration));
     });
 
@@ -130,7 +130,7 @@ describe('StatusRegistry', () => {
         statusRegistry.add(status);
 
         // Assert
-        const status2 = statusRegistry.byIndicator('a');
+        const status2 = statusRegistry.bySymbol('a');
         expect(status2).toStrictEqual(status);
     });
 
@@ -158,10 +158,6 @@ describe('StatusRegistry', () => {
             // Assert
             expect(task).not.toBeNull();
             expect(task!.status.symbol).toEqual(Status.makeTodo().symbol);
-
-            // In Tasks, TODO toggles to DONE, for consistency with earlier releases.
-            // const toggledInProgress = task?.toggle()[0];
-            // expect(toggledInProgress?.status.indicator).toEqual(Status.IN_PROGRESS.indicator);
 
             const toggledDone = task?.toggle()[0];
             expect(toggledDone?.status.symbol).toEqual(Status.makeDone().symbol);
@@ -267,9 +263,9 @@ describe('StatusRegistry', () => {
         it('should bulk-add unknown statuses', () => {
             // Arrange
             const registry = new StatusRegistry();
-            expect(registry.byIndicator('!').type).toEqual(StatusType.EMPTY);
-            expect(registry.byIndicator('X').type).toEqual(StatusType.EMPTY);
-            expect(registry.byIndicator('d').type).toEqual(StatusType.EMPTY);
+            expect(registry.bySymbol('!').type).toEqual(StatusType.EMPTY);
+            expect(registry.bySymbol('X').type).toEqual(StatusType.EMPTY);
+            expect(registry.bySymbol('d').type).toEqual(StatusType.EMPTY);
             const tasks = [
                 new TaskBuilder().statusValues('!', 'Unknown', 'X', false, StatusType.TODO).build(),
                 new TaskBuilder().statusValues('X', 'Unknown', '!', false, StatusType.DONE).build(),
