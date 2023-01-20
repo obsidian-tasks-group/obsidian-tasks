@@ -59,13 +59,14 @@ describe('status.name', () => {
         expect(filter).toMatchTask(todoTask);
     });
 
-    it('status.type is - with incorrect case', () => {
+    it('status.type is - works with incorrect case', () => {
         // Arrange
         const filter = new StatusTypeField().createFilterOrErrorMessage('status.type is in_progress');
 
         // Assert
-        expect(filter).not.toBeValid();
-        expect(filter.error).toEqual('do not understand filter');
+        expect(filter).toBeValid();
+        expect(filter).toMatchTask(inprTask);
+        expect(filter).not.toMatchTask(todoTask);
     });
 
     it('status-name is not valid', () => {
