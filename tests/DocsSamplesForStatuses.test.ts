@@ -67,7 +67,7 @@ function verifyStatusesAsMarkdownTable(statuses: Status[]) {
         'Status Character',
         'Status Name<br>`status.name includes...`<br>`sort by status.name`<br>`group by status.name`',
         'Next Status Character',
-        'Status Type<br>`status.type includes...`<br>`sort by status.type`<br>`group by status.type`',
+        'Status Type<br>`status.type is...`<br>`sort by status.type`<br>`group by status.type`',
         'Needs Custom Styling',
     ]);
 
@@ -148,14 +148,14 @@ function verifyTransitionsAsMarkdownTable(statuses: Status[]) {
     filterAllStatuses(FilterParser.parseFilter('done')!);
     filterAllStatuses(FilterParser.parseFilter('not done')!);
     filterAllStatuses(FilterParser.parseFilter('status.name includes todo')!);
-    filterAllStatuses(FilterParser.parseFilter('status.type includes TODO')!);
+    filterAllStatuses(FilterParser.parseFilter('status.type is TODO')!);
     filterAllStatuses(FilterParser.parseFilter('status.name includes in progress')!);
-    filterAllStatuses(FilterParser.parseFilter('status.type includes IN_PROGRESS')!);
+    filterAllStatuses(FilterParser.parseFilter('status.type is IN_PROGRESS')!);
     filterAllStatuses(FilterParser.parseFilter('status.name includes done')!);
-    filterAllStatuses(FilterParser.parseFilter('status.type includes DONE')!);
+    filterAllStatuses(FilterParser.parseFilter('status.type is DONE')!);
     filterAllStatuses(FilterParser.parseFilter('status.name includes cancelled')!);
-    filterAllStatuses(FilterParser.parseFilter('status.type includes CANCELLED')!);
-    filterAllStatuses(FilterParser.parseFilter('status.type includes NON_TASK')!);
+    filterAllStatuses(FilterParser.parseFilter('status.type is CANCELLED')!);
+    filterAllStatuses(FilterParser.parseFilter('status.type is NON_TASK')!);
 
     function showGroupNamesForAllTasks(groupName: string, grouperFunction: (task: Task) => string[]) {
         const cells: string[] = ['Name for `group by ' + groupName + '`'];

@@ -69,7 +69,7 @@ describe('Query parsing', () => {
         'starts before 2021-12-27',
         'starts on 2021-12-27',
         'status.name includes cancelled',
-        'status.type includes IN_PROGRESS',
+        'status.type is IN_PROGRESS',
         'tag does not include #sometag',
         'tag does not include sometag',
         'tag includes #sometag',
