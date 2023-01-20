@@ -65,8 +65,7 @@ describe('status.name', () => {
 
         // Assert
         expect(filter).not.toBeValid();
-        // TODO I'd like to provide a help message that lists the valid statuses
-        expect(filter.error).toEqual('do not understand filter: status.type is in_progress');
+        expect(filter.error).toEqual('do not understand filter');
     });
 
     it('status-name is not valid', () => {
@@ -76,7 +75,6 @@ describe('status.name', () => {
         // Assert
         // Check that the '.' in status.name is interpreted exactly as a dot.
         expect(filter).not.toBeValid();
-        // TODO check error message
     });
 });
 

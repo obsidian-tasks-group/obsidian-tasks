@@ -2,19 +2,61 @@ import type { Task } from '../../Task';
 import type { GrouperFunction } from '../Grouper';
 import { StatusType } from '../../StatusConfiguration';
 import type { Comparator } from '../Sorter';
-import { FilterInstructionsBasedField } from './FilterInstructionsBasedField';
+import { Explanation } from '../Explain/Explanation';
+import { Field } from './Field';
+import { Filter, FilterOrErrorMessage } from './Filter';
+import type { FilterFunction } from './Filter';
 
 /**
  * A ${@link Field} implementation for searching status.type
  */
-export class StatusTypeField extends FilterInstructionsBasedField {
-    constructor() {
-        super();
+export class StatusTypeField extends Field {
+    // -----------------------------------------------------------------------------------------------------------------
+    // Filtering
+    // -----------------------------------------------------------------------------------------------------------------
 
-        Object.values(StatusType).forEach((t) => {
-            this._filters.add(`status.type is ${t}`, (task: Task) => task.status.type === t);
-            this._filters.add(`status.type is not ${t}`, (task: Task) => task.status.type !== t);
-        });
+    createFilterOrErrorMessage(line: string): FilterOrErrorMessage {
+        const match = Field.getMatch(this.filterRegExp(), line);
+        if (match === null) {
+            // If Field.canCreateFilterForLine() has been checked, we should never get
+            // in to this block.
+            return StatusTypeField.helpMessage(line);
+        }
+
+        const [_, filterOperator, statusTypeAsString] = match;
+
+        const statusTypeElement = StatusType[statusTypeAsString as keyof typeof StatusType];
+        if (!statusTypeElement) {
+            return StatusTypeField.helpMessage(line);
+        }
+
+        let filterFunction: FilterFunction;
+
+        switch (filterOperator) {
+            case 'is':
+                filterFunction = (task: Task) => {
+                    return task.status.type === statusTypeElement;
+                };
+                break;
+            case 'is not':
+                filterFunction = (task: Task) => {
+                    return task.status.type !== statusTypeElement;
+                };
+                break;
+            default:
+                return StatusTypeField.helpMessage(line);
+        }
+
+        return FilterOrErrorMessage.fromFilter(new Filter(line, filterFunction, new Explanation(line)));
+    }
+
+    protected filterRegExp(): RegExp | null {
+        return new RegExp(`^(?:${this.fieldNameSingularEscaped()}) (is|is not) ([^ ]+)$`);
+    }
+
+    public static helpMessage(line: string): FilterOrErrorMessage {
+        // TODO I'd like to provide a help message that lists the valid statuses
+        return FilterOrErrorMessage.fromError(line, 'do not understand filter');
     }
 
     public fieldName(): string {
@@ -25,6 +67,10 @@ export class StatusTypeField extends FilterInstructionsBasedField {
         return task.status.type;
     }
 
+    // -----------------------------------------------------------------------------------------------------------------
+    // Sorting
+    // -----------------------------------------------------------------------------------------------------------------
+
     supportsSorting(): boolean {
         return true;
     }
@@ -34,6 +80,10 @@ export class StatusTypeField extends FilterInstructionsBasedField {
             return this.value(a).localeCompare(this.value(b), undefined, { numeric: true });
         };
     }
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // Grouping
+    // -----------------------------------------------------------------------------------------------------------------
 
     public supportsGrouping(): boolean {
         return true;
