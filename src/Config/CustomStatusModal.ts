@@ -17,7 +17,7 @@ export class CustomStatusModal extends Modal {
     error: boolean = false;
     constructor(public plugin: TasksPlugin, statusType: StatusConfiguration) {
         super(plugin.app);
-        this.statusSymbol = statusType.indicator;
+        this.statusSymbol = statusType.symbol;
         this.statusName = statusType.name;
         this.statusNextSymbol = statusType.nextStatusIndicator;
         this.statusAvailableAsCommand = statusType.availableAsCommand;

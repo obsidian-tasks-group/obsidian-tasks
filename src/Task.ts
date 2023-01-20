@@ -502,7 +502,7 @@ export class Task {
      * @memberof Task
      */
     public toFileLineString(): string {
-        return `${this.indentation}${this.listMarker} [${this.status.indicator}] ${this.toString()}`;
+        return `${this.indentation}${this.listMarker} [${this.status.symbol}] ${this.toString()}`;
     }
 
     /**

@@ -59,7 +59,7 @@ export async function renderTaskLine(
     li.appendChild(checkbox);
     checkbox.classList.add('task-list-item-checkbox');
     checkbox.type = 'checkbox';
-    if (task.status.indicator !== ' ') {
+    if (task.status.symbol !== ' ') {
         checkbox.checked = true;
         li.classList.add('is-checked');
     }
@@ -82,7 +82,7 @@ export async function renderTaskLine(
     li.prepend(checkbox);
 
     // Set these to be compatible with stock obsidian lists:
-    li.setAttribute('data-task', task.status.indicator.trim()); // Trim to ensure empty attribute for space. Same way as obsidian.
+    li.setAttribute('data-task', task.status.symbol.trim()); // Trim to ensure empty attribute for space. Same way as obsidian.
     li.setAttribute('data-line', renderDetails.listIndex.toString());
     checkbox.setAttribute('data-line', renderDetails.listIndex.toString());
 

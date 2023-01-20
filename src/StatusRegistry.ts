@@ -44,7 +44,7 @@ export class StatusRegistry {
      * @memberof StatusRegistry
      */
     public get registeredStatuses(): Status[] {
-        return this._registeredStatuses.filter(({ indicator }) => indicator !== Status.EMPTY.indicator);
+        return this._registeredStatuses.filter(({ symbol }) => symbol !== Status.EMPTY.symbol);
     }
 
     /**
@@ -69,7 +69,7 @@ export class StatusRegistry {
      * @memberof StatusRegistry
      */
     public add(status: StatusConfiguration | Status): void {
-        if (!this.hasIndicator(status.indicator)) {
+        if (!this.hasIndicator(status.symbol)) {
             if (status instanceof Status) {
                 this._registeredStatuses.push(status);
             } else {
@@ -194,7 +194,7 @@ export class StatusRegistry {
         });
 
         const unknownStatuses = allStatuses.filter((s) => {
-            return !this.hasIndicator(s.indicator);
+            return !this.hasIndicator(s.symbol);
         });
 
         // Use a separate StatusRegistry to keep track of duplicates,
@@ -205,13 +205,13 @@ export class StatusRegistry {
         const namedUniqueStatuses: Status[] = [];
         unknownStatuses.forEach((s) => {
             // Check if we have seen this indicator already:
-            if (newStatusRegistry.hasIndicator(s.indicator)) {
+            if (newStatusRegistry.hasIndicator(s.symbol)) {
                 return;
             }
 
             // Go ahead and create a suitably-named copy,
             // including the indicator in the name.
-            const newStatus = StatusRegistry.copyStatusWithNewName(s, `Unknown (${s.indicator})`);
+            const newStatus = StatusRegistry.copyStatusWithNewName(s, `Unknown (${s.symbol})`);
             namedUniqueStatuses.push(newStatus);
             // And add it to our local registry, to prevent duplicates.
             newStatusRegistry.add(newStatus);
@@ -221,7 +221,7 @@ export class StatusRegistry {
 
     private static copyStatusWithNewName(s: Status, newName: string) {
         const statusConfiguration = new StatusConfiguration(
-            s.indicator,
+            s.symbol,
             newName,
             s.nextStatusIndicator,
             s.availableAsCommand,
@@ -239,7 +239,7 @@ export class StatusRegistry {
      * @memberof StatusRegistry
      */
     private getIndicator(indicatorToFind: string): Status {
-        return this._registeredStatuses.filter(({ indicator }) => indicator === indicatorToFind)[0];
+        return this._registeredStatuses.filter(({ symbol }) => symbol === indicatorToFind)[0];
     }
 
     /**
@@ -253,7 +253,7 @@ export class StatusRegistry {
     private hasIndicator(indicatorToFind: string): boolean {
         return (
             this._registeredStatuses.find((element) => {
-                return element.indicator === indicatorToFind;
+                return element.symbol === indicatorToFind;
             }) !== undefined
         );
     }
