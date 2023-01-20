@@ -3,6 +3,7 @@ import { StatusSettings } from '../../src/Config/StatusSettings';
 import { Status } from '../../src/Status';
 import { StatusConfiguration } from '../../src/StatusConfiguration';
 import { StatusRegistry } from '../../src/StatusRegistry';
+import type { StatusCollection } from '../../src/StatusCollection';
 
 describe('StatusSettings', () => {
     it('verify default status settings', () => {
@@ -52,14 +53,14 @@ describe('StatusSettings', () => {
 
     it('should bulk-add new statuses, reporting errors', () => {
         // Arrange
-        const newStatuses: Array<[string, string, string]> = [
-            ['>', 'Forwarded', 'x'],
-            ['<', 'Schedule', 'x'],
-            ['?', 'Question', 'x'],
-            ['-', 'Dropped - should not be added as duplicate of core Cancelled', 'x'],
-            ['>', 'Forwarded', 'x'], // is a duplicate so should not be added
-            ['<', 'Duplicate - should not be added as duplicate of Schedule above', 'x'],
-            ['', 'Empty - should not be added as no status character', 'x'],
+        const newStatuses: StatusCollection = [
+            ['>', 'Forwarded', 'x', 'TODO'],
+            ['<', 'Schedule', 'x', 'TODO'],
+            ['?', 'Question', 'x', 'TODO'],
+            ['-', 'Dropped - should not be added as duplicate of core Cancelled', 'x', 'CANCELLED'],
+            ['>', 'Forwarded', 'x', 'TODO'], // is a duplicate so should not be added
+            ['<', 'Duplicate - should not be added as duplicate of Schedule above', 'x', 'TODO'],
+            ['', 'Empty - should not be added as no status character', 'x', 'TODO'],
         ];
         const settings = new StatusSettings();
 
