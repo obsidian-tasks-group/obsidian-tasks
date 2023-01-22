@@ -139,8 +139,15 @@ export class StatusRegistry {
      * @memberof StatusRegistry
      */
     public resetToDefaultStatuses(): void {
-        this._registeredStatuses = [];
+        this.clearStatuses();
         this.addDefaultStatusTypes();
+    }
+
+    /**
+     * Clears the array of Status types to be empty.
+     */
+    public clearStatuses(): void {
+        this._registeredStatuses = [];
     }
 
     /**
