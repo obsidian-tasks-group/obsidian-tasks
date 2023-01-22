@@ -379,8 +379,9 @@ export class SettingsTab extends PluginSettingTab {
                 statusSettings,
                 settings,
                 settings.plugin,
-                false,
-                true,
+                false, // deletable
+                true, // editable
+                false, // symbolMayBeEdited
             );
         });
     }
@@ -404,8 +405,9 @@ export class SettingsTab extends PluginSettingTab {
                 statusSettings,
                 settings,
                 settings.plugin,
-                true,
-                true,
+                true, // deletable
+                true, // editable
+                true, // symbolMayBeEdited
             );
         });
 
@@ -499,6 +501,7 @@ export class SettingsTab extends PluginSettingTab {
  * @param plugin
  * @param deletable - whether the delete button wil be shown
  * @param editable - whether the edit button wil be shown
+ * @param symbolMayBeEdited - whether the status symbol may be edited
  */
 function createRowForTaskStatus(
     containerEl: HTMLElement,
@@ -509,6 +512,7 @@ function createRowForTaskStatus(
     plugin: TasksPlugin,
     deletable: boolean,
     editable: boolean,
+    symbolMayBeEdited: boolean,
 ) {
     //const taskStatusDiv = containerEl.createEl('div');
 
@@ -539,7 +543,7 @@ function createRowForTaskStatus(
                 .setIcon('pencil')
                 .setTooltip('Edit')
                 .onClick(async () => {
-                    const modal = new CustomStatusModal(plugin, statusType);
+                    const modal = new CustomStatusModal(plugin, statusType, symbolMayBeEdited);
 
                     modal.onClose = async () => {
                         if (modal.saved) {
