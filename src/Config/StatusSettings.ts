@@ -101,7 +101,7 @@ export class StatusSettings {
      *
      * @param statusSettings
      */
-    public static deleteAllCustomStatues(statusSettings: StatusSettings) {
+    public static deleteAllCustomStatuses(statusSettings: StatusSettings) {
         statusSettings.customStatusTypes.splice(0);
     }
 
