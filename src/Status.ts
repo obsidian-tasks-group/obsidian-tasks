@@ -219,7 +219,13 @@ export class Status {
         if (Status.tasksPluginCanCreateCommandsForStatuses() && this.availableAsCommand) {
             commandNotice = 'Available as a command.';
         }
-        return `- [${this.symbol}] ${this.name}, next status is '${this.nextStatusSymbol}', type is '${this.configuration.type}'. ${commandNotice}`;
+        return (
+            `- [${this.symbol}]` + // comment to break line
+            ` ${this.name},` +
+            ` next status is '${this.nextStatusSymbol}',` +
+            ` type is '${this.configuration.type}'. ` +
+            `${commandNotice}`
+        );
     }
 
     /**
