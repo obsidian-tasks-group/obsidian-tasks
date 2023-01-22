@@ -134,13 +134,20 @@ export class StatusRegistry {
     }
 
     /**
-     * Resets the array os Status types to be empty.
+     * Resets the array of Status types to the default statuses.
      *
      * @memberof StatusRegistry
      */
+    public resetToDefaultStatuses(): void {
+        this.clearStatuses();
+        this.addDefaultStatusTypes();
+    }
+
+    /**
+     * Clears the array of Status types to be empty.
+     */
     public clearStatuses(): void {
         this._registeredStatuses = [];
-        this.addDefaultStatusTypes();
     }
 
     /**
@@ -265,13 +272,7 @@ export class StatusRegistry {
      * @memberof StatusRegistry
      */
     private addDefaultStatusTypes(): void {
-        const defaultStatuses = [
-            Status.makeTodo(),
-            Status.makeInProgress(),
-            Status.makeDone(),
-            Status.makeCancelled(),
-            Status.makeEmpty(),
-        ];
+        const defaultStatuses = [Status.makeTodo(), Status.makeInProgress(), Status.makeDone(), Status.makeCancelled()];
 
         defaultStatuses.forEach((status) => {
             this.add(status);

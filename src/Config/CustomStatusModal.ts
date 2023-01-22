@@ -15,13 +15,15 @@ export class CustomStatusModal extends Modal {
 
     saved: boolean = false;
     error: boolean = false;
-    constructor(public plugin: TasksPlugin, statusType: StatusConfiguration) {
+    private isCoreStatus: boolean;
+    constructor(public plugin: TasksPlugin, statusType: StatusConfiguration, isCoreStatus: boolean) {
         super(plugin.app);
         this.statusSymbol = statusType.symbol;
         this.statusName = statusType.name;
         this.statusNextSymbol = statusType.nextStatusSymbol;
         this.statusAvailableAsCommand = statusType.availableAsCommand;
         this.type = statusType.type;
+        this.isCoreStatus = isCoreStatus;
     }
 
     /**
@@ -48,7 +50,7 @@ export class CustomStatusModal extends Modal {
         let statusSymbolText: TextComponent;
         new Setting(settingDiv)
             .setName('Task Status Symbol')
-            .setDesc('This is the character between the square braces.')
+            .setDesc('This is the character between the square braces. (It can only be edited for Custom statuses.)')
             .addText((text) => {
                 statusSymbolText = text;
                 text.setValue(this.statusSymbol).onChange((v) => {
@@ -56,6 +58,7 @@ export class CustomStatusModal extends Modal {
                     CustomStatusModal.setValid(text, validator.validateSymbol(this.statusConfiguration()));
                 });
             })
+            .setDisabled(this.isCoreStatus)
             .then((_setting) => {
                 // Show any error if the initial value loaded is incorrect.
                 CustomStatusModal.setValid(statusSymbolText, validator.validateSymbol(this.statusConfiguration()));
