@@ -368,16 +368,20 @@ export class SettingsTab extends PluginSettingTab {
      * @memberof SettingsTab
      */
     insertTaskCoreStatusSettings(containerEl: HTMLElement, settings: SettingsTab) {
-        // TODO Make these statuses editable
-        const coreStatuses: StatusSettings = new StatusSettings();
-        StatusSettings.addStatus(coreStatuses.customStatusTypes, Status.makeTodo().configuration);
-        StatusSettings.addStatus(coreStatuses.customStatusTypes, Status.makeInProgress().configuration);
-        StatusSettings.addStatus(coreStatuses.customStatusTypes, Status.makeDone().configuration);
-        StatusSettings.addStatus(coreStatuses.customStatusTypes, Status.makeCancelled().configuration);
+        const { statusSettings } = getSettings();
 
-        /* -------------------- One row per status in the settings -------------------- */
-        coreStatuses.customStatusTypes.forEach((status_type) => {
-            createRowForTaskStatus(containerEl, status_type, coreStatuses, settings, settings.plugin, false, false);
+        /* -------------------- One row per core status in the settings -------------------- */
+        statusSettings.coreStatusTypes.forEach((status_type) => {
+            createRowForTaskStatus(
+                containerEl,
+                status_type,
+                statusSettings.coreStatusTypes,
+                statusSettings,
+                settings,
+                settings.plugin,
+                false,
+                true,
+            );
         });
     }
 
@@ -391,9 +395,18 @@ export class SettingsTab extends PluginSettingTab {
     insertCustomTaskStatusSettings(containerEl: HTMLElement, settings: SettingsTab) {
         const { statusSettings } = getSettings();
 
-        /* -------------------- One row per status in the settings -------------------- */
+        /* -------------------- One row per custom status in the settings -------------------- */
         statusSettings.customStatusTypes.forEach((status_type) => {
-            createRowForTaskStatus(containerEl, status_type, statusSettings, settings, settings.plugin, true, true);
+            createRowForTaskStatus(
+                containerEl,
+                status_type,
+                statusSettings.customStatusTypes,
+                statusSettings,
+                settings,
+                settings.plugin,
+                true,
+                true,
+            );
         });
 
         containerEl.createEl('div');
@@ -480,6 +493,7 @@ export class SettingsTab extends PluginSettingTab {
  * Create the row to see and modify settings for a single task status type.
  * @param containerEl
  * @param statusType - The status type to be edited.
+ * @param statuses - The list of statuses that statusType is stored in.
  * @param statusSettings - All the status types already in the user's settings, EXCEPT the standard ones.
  * @param settings
  * @param plugin
@@ -489,6 +503,7 @@ export class SettingsTab extends PluginSettingTab {
 function createRowForTaskStatus(
     containerEl: HTMLElement,
     statusType: StatusConfiguration,
+    statuses: StatusConfiguration[],
     statusSettings: StatusSettings,
     settings: SettingsTab,
     plugin: TasksPlugin,
@@ -511,7 +526,7 @@ function createRowForTaskStatus(
                 .setIcon('cross')
                 .setTooltip('Delete')
                 .onClick(async () => {
-                    if (StatusSettings.deleteStatus(statusSettings.customStatusTypes, statusType)) {
+                    if (StatusSettings.deleteStatus(statuses, statusType)) {
                         await updateAndSaveStatusSettings(statusSettings, settings);
                     }
                 });
@@ -528,13 +543,7 @@ function createRowForTaskStatus(
 
                     modal.onClose = async () => {
                         if (modal.saved) {
-                            if (
-                                StatusSettings.replaceStatus(
-                                    statusSettings.customStatusTypes,
-                                    statusType,
-                                    modal.statusConfiguration(),
-                                )
-                            ) {
+                            if (StatusSettings.replaceStatus(statuses, statusType, modal.statusConfiguration())) {
                                 await updateAndSaveStatusSettings(statusSettings, settings);
                             }
                         }
