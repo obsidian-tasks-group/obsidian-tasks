@@ -15,9 +15,9 @@ describe('StatusSettings', () => {
         const pro = new StatusConfiguration('P', 'Pro', 'C', false);
         const imp = new StatusConfiguration('!', 'Important', 'x', false);
         const con = new StatusConfiguration('C', 'Con', 'P', false);
-        StatusSettings.addCustomStatus(settings, pro);
-        StatusSettings.addCustomStatus(settings, imp);
-        StatusSettings.addCustomStatus(settings, con);
+        StatusSettings.addStatus(settings.customStatusTypes, pro);
+        StatusSettings.addStatus(settings.customStatusTypes, imp);
+        StatusSettings.addStatus(settings.customStatusTypes, con);
         return { pro, imp, con };
     }
 
@@ -28,7 +28,7 @@ describe('StatusSettings', () => {
 
         // Act
         const newStatus = new StatusConfiguration('!', 'Important', 'x', false);
-        StatusSettings.addCustomStatus(settings, newStatus);
+        StatusSettings.addStatus(settings.customStatusTypes, newStatus);
 
         // Assert
         expect(settings.customStatusTypes.length).toEqual(1);
