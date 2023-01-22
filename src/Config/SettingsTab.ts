@@ -18,7 +18,7 @@ export class SettingsTab extends PluginSettingTab {
     // then be rendered instead of a normal checkbox or text box.
     customFunctions: { [K: string]: Function } = {
         insertTaskCoreStatusSettings: this.insertTaskCoreStatusSettings.bind(this),
-        insertTaskStatusSettings: this.insertTaskStatusSettings.bind(this),
+        insertCustomTaskStatusSettings: this.insertCustomTaskStatusSettings.bind(this),
     };
 
     private readonly plugin: TasksPlugin;
@@ -388,7 +388,7 @@ export class SettingsTab extends PluginSettingTab {
      * @param {SettingsTab} settings
      * @memberof SettingsTab
      */
-    insertTaskStatusSettings(containerEl: HTMLElement, settings: SettingsTab) {
+    insertCustomTaskStatusSettings(containerEl: HTMLElement, settings: SettingsTab) {
         const { statusSettings } = getSettings();
 
         /* -------------------- One row per status in the settings -------------------- */
