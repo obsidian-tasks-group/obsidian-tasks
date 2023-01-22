@@ -8,6 +8,7 @@ import type { StatusCollection } from '../../src/StatusCollection';
 describe('StatusSettings', () => {
     it('verify default status settings', () => {
         const defaultStatusSettings = new StatusSettings();
+        // This captures the default contents of both core and custom statuses
         verifyAsJson(defaultStatusSettings);
     });
 
@@ -24,6 +25,7 @@ describe('StatusSettings', () => {
     it('should add a status', () => {
         // Arrange
         const settings = new StatusSettings();
+        expect(settings.coreStatusTypes.length).toEqual(4);
         expect(settings.customStatusTypes.length).toEqual(0);
 
         // Act
