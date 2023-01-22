@@ -15,15 +15,15 @@ export class CustomStatusModal extends Modal {
 
     saved: boolean = false;
     error: boolean = false;
-    private symbolMayBeEdited: boolean;
-    constructor(public plugin: TasksPlugin, statusType: StatusConfiguration, symbolMayBeEdited: boolean) {
+    private isCoreStatus: boolean;
+    constructor(public plugin: TasksPlugin, statusType: StatusConfiguration, isCoreStatus: boolean) {
         super(plugin.app);
         this.statusSymbol = statusType.symbol;
         this.statusName = statusType.name;
         this.statusNextSymbol = statusType.nextStatusSymbol;
         this.statusAvailableAsCommand = statusType.availableAsCommand;
         this.type = statusType.type;
-        this.symbolMayBeEdited = symbolMayBeEdited;
+        this.isCoreStatus = isCoreStatus;
     }
 
     /**
@@ -58,7 +58,7 @@ export class CustomStatusModal extends Modal {
                     CustomStatusModal.setValid(text, validator.validateSymbol(this.statusConfiguration()));
                 });
             })
-            .setDisabled(!this.symbolMayBeEdited)
+            .setDisabled(this.isCoreStatus)
             .then((_setting) => {
                 // Show any error if the initial value loaded is incorrect.
                 CustomStatusModal.setValid(statusSymbolText, validator.validateSymbol(this.statusConfiguration()));
