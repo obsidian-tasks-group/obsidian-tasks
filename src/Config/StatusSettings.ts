@@ -109,6 +109,19 @@ export class StatusSettings {
     }
 
     /**
+     * Restore the default custom statuses.
+     *
+     * @param statusSettings
+     */
+    public static resetAllCustomStatuses(statusSettings: StatusSettings) {
+        StatusSettings.deleteAllCustomStatuses(statusSettings);
+        const defaultSettings = new StatusSettings();
+        defaultSettings.customStatusTypes.forEach((s) => {
+            StatusSettings.addStatus(statusSettings.customStatusTypes, s);
+        });
+    }
+
+    /**
      * Add a collection of custom supported statuses to a StatusSettings.
      * This can be used to quickly populate the user's settings.
      * If there are any exact duplicates already present, they are skipped, and noted in the returned value.
