@@ -379,9 +379,7 @@ export class SettingsTab extends PluginSettingTab {
                 statusSettings,
                 settings,
                 settings.plugin,
-                false, // deletable
-                true, // editable
-                false, // symbolMayBeEdited
+                true, // isCoreStatus
             );
         });
     }
@@ -405,9 +403,7 @@ export class SettingsTab extends PluginSettingTab {
                 statusSettings,
                 settings,
                 settings.plugin,
-                true, // deletable
-                true, // editable
-                true, // symbolMayBeEdited
+                false, // isCoreStatus
             );
         });
 
@@ -499,9 +495,7 @@ export class SettingsTab extends PluginSettingTab {
  * @param statusSettings - All the status types already in the user's settings, EXCEPT the standard ones.
  * @param settings
  * @param plugin
- * @param deletable - whether the delete button wil be shown
- * @param editable - whether the edit button wil be shown
- * @param symbolMayBeEdited - whether the status symbol may be edited
+ * @param isCoreStatus - whether the status is a core status
  */
 function createRowForTaskStatus(
     containerEl: HTMLElement,
@@ -510,9 +504,7 @@ function createRowForTaskStatus(
     statusSettings: StatusSettings,
     settings: SettingsTab,
     plugin: TasksPlugin,
-    deletable: boolean,
-    editable: boolean,
-    symbolMayBeEdited: boolean,
+    isCoreStatus: boolean,
 ) {
     //const taskStatusDiv = containerEl.createEl('div');
 
@@ -524,7 +516,7 @@ function createRowForTaskStatus(
 
     setting.infoEl.replaceWith(taskStatusPreview);
 
-    if (deletable) {
+    if (!isCoreStatus) {
         setting.addExtraButton((extra) => {
             extra
                 .setIcon('cross')
@@ -537,26 +529,24 @@ function createRowForTaskStatus(
         });
     }
 
-    if (editable) {
-        setting.addExtraButton((extra) => {
-            extra
-                .setIcon('pencil')
-                .setTooltip('Edit')
-                .onClick(async () => {
-                    const modal = new CustomStatusModal(plugin, statusType, symbolMayBeEdited);
+    setting.addExtraButton((extra) => {
+        extra
+            .setIcon('pencil')
+            .setTooltip('Edit')
+            .onClick(async () => {
+                const modal = new CustomStatusModal(plugin, statusType, isCoreStatus);
 
-                    modal.onClose = async () => {
-                        if (modal.saved) {
-                            if (StatusSettings.replaceStatus(statuses, statusType, modal.statusConfiguration())) {
-                                await updateAndSaveStatusSettings(statusSettings, settings);
-                            }
+                modal.onClose = async () => {
+                    if (modal.saved) {
+                        if (StatusSettings.replaceStatus(statuses, statusType, modal.statusConfiguration())) {
+                            await updateAndSaveStatusSettings(statusSettings, settings);
                         }
-                    };
+                    }
+                };
 
-                    modal.open();
-                });
-        });
-    }
+                modal.open();
+            });
+    });
 
     setting.infoEl.remove();
 }
