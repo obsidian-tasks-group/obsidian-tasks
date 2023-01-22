@@ -479,7 +479,7 @@ export class SettingsTab extends PluginSettingTab {
                 .setButtonText('Delete All Custom Status Types')
                 .setWarning()
                 .onClick(async () => {
-                    StatusSettings.deleteAllCustomStatues(statusSettings);
+                    StatusSettings.deleteAllCustomStatuses(statusSettings);
                     await updateAndSaveStatusSettings(statusSettings, settings);
                 });
         });

@@ -98,7 +98,7 @@ describe('StatusSettings', () => {
         expect(settings.customStatusTypes.length).toEqual(3);
 
         // Act
-        StatusSettings.deleteAllCustomStatues(settings);
+        StatusSettings.deleteAllCustomStatuses(settings);
 
         // Assert
         expect(settings.customStatusTypes.length).toEqual(0);
