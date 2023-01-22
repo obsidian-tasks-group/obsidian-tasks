@@ -473,13 +473,13 @@ export class SettingsTab extends PluginSettingTab {
         });
         addAllUnknownStatuses.infoEl.remove();
 
-        /* -------------------- 'Delete All Custom Status Types' button -------------------- */
+        /* -------------------- 'Reset Custom Status Types to Defaults' button -------------------- */
         const clearCustomStatuses = new Setting(containerEl).addButton((button) => {
             button
-                .setButtonText('Delete All Custom Status Types')
+                .setButtonText('Reset Custom Status Types to Defaults')
                 .setWarning()
                 .onClick(async () => {
-                    StatusSettings.deleteAllCustomStatuses(statusSettings);
+                    StatusSettings.resetAllCustomStatuses(statusSettings);
                     await updateAndSaveStatusSettings(statusSettings, settings);
                 });
         });
