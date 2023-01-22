@@ -70,20 +70,20 @@ export class StatusSettings {
     }
 
     /**
-     * Delete the given custom status.
+     * Delete the given status.
      * Returns true if deleted, and false if not.
      *
      * This is static so that it can be called from modal onClick() call-backs.
      *
-     * @param statusSettings
+     * @param statuses
      * @param status
      */
-    public static deleteCustomStatus(statusSettings: StatusSettings, status: StatusConfiguration) {
-        const index = this.findStatusIndex(status, statusSettings.customStatusTypes);
+    public static deleteStatus(statuses: StatusConfiguration[], status: StatusConfiguration) {
+        const index = this.findStatusIndex(status, statuses);
         if (index <= -1) {
             return false;
         }
-        statusSettings.customStatusTypes.splice(index, 1);
+        statuses.splice(index, 1);
         return true;
     }
 
