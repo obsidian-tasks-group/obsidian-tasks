@@ -8,6 +8,7 @@ import type { StatusCollection } from '../../src/StatusCollection';
 describe('StatusSettings', () => {
     it('verify default status settings', () => {
         const defaultStatusSettings = new StatusSettings();
+        // This captures the default contents of both core and custom statuses
         verifyAsJson(defaultStatusSettings);
     });
 
@@ -15,20 +16,21 @@ describe('StatusSettings', () => {
         const pro = new StatusConfiguration('P', 'Pro', 'C', false);
         const imp = new StatusConfiguration('!', 'Important', 'x', false);
         const con = new StatusConfiguration('C', 'Con', 'P', false);
-        StatusSettings.addCustomStatus(settings, pro);
-        StatusSettings.addCustomStatus(settings, imp);
-        StatusSettings.addCustomStatus(settings, con);
+        StatusSettings.addStatus(settings.customStatusTypes, pro);
+        StatusSettings.addStatus(settings.customStatusTypes, imp);
+        StatusSettings.addStatus(settings.customStatusTypes, con);
         return { pro, imp, con };
     }
 
     it('should add a status', () => {
         // Arrange
         const settings = new StatusSettings();
+        expect(settings.coreStatusTypes.length).toEqual(4);
         expect(settings.customStatusTypes.length).toEqual(0);
 
         // Act
         const newStatus = new StatusConfiguration('!', 'Important', 'x', false);
-        StatusSettings.addCustomStatus(settings, newStatus);
+        StatusSettings.addStatus(settings.customStatusTypes, newStatus);
 
         // Assert
         expect(settings.customStatusTypes.length).toEqual(1);
@@ -44,7 +46,7 @@ describe('StatusSettings', () => {
 
         // Act
         const newImp = new StatusConfiguration('!', 'ReallyImportant', 'X', true);
-        StatusSettings.replaceCustomStatus(settings, imp, newImp);
+        StatusSettings.replaceStatus(settings.customStatusTypes, imp, newImp);
 
         // Assert
         expect(settings.customStatusTypes.length).toEqual(3);
@@ -78,7 +80,7 @@ describe('StatusSettings', () => {
         expect(settings.customStatusTypes.length).toEqual(3);
 
         // Act
-        const result = StatusSettings.deleteCustomStatus(settings, imp);
+        const result = StatusSettings.deleteStatus(settings.customStatusTypes, imp);
 
         // Assert
         expect(result).toEqual(true);
@@ -87,7 +89,7 @@ describe('StatusSettings', () => {
         expect(settings.customStatusTypes[1]).toStrictEqual(con);
 
         // Delete a second time. It should now report that nothing was deleted.
-        const result2 = StatusSettings.deleteCustomStatus(settings, imp);
+        const result2 = StatusSettings.deleteStatus(settings.customStatusTypes, imp);
         expect(result2).toEqual(false);
     });
 
@@ -98,7 +100,7 @@ describe('StatusSettings', () => {
         expect(settings.customStatusTypes.length).toEqual(3);
 
         // Act
-        StatusSettings.deleteAllCustomStatues(settings);
+        StatusSettings.deleteAllCustomStatuses(settings);
 
         // Assert
         expect(settings.customStatusTypes.length).toEqual(0);

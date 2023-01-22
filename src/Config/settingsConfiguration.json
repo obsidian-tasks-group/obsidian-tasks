@@ -6,7 +6,7 @@
     "open": true,
     "notice": {
       "class": "setting-item-description",
-      "text": "These are the core status types that Tasks supports. They are not yet editable. You can add custom statuses in the section below.",
+      "text": "These are the core status types that Tasks supports. You can add custom statuses in the section below.",
       "html": null
     },
     "settings": [
@@ -39,7 +39,7 @@
         "type": "function",
         "initialValue": "",
         "placeholder": "",
-        "settingName": "insertTaskStatusSettings",
+        "settingName": "insertCustomTaskStatusSettings",
         "featureFlag": "",
         "notice": null
       }

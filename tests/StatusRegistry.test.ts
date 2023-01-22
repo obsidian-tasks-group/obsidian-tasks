@@ -17,11 +17,11 @@ describe('StatusRegistry', () => {
     // The global StatusRegistry is used by the code that toggles tasks.
     // Where possible, tests should create their own StatusRegistry to act on.
     beforeEach(() => {
-        StatusRegistry.getInstance().clearStatuses();
+        StatusRegistry.getInstance().resetToDefaultStatuses();
     });
 
     afterEach(() => {
-        StatusRegistry.getInstance().clearStatuses();
+        StatusRegistry.getInstance().resetToDefaultStatuses();
     });
 
     it('should create a new instance and populate default status symbols', () => {
@@ -44,6 +44,18 @@ describe('StatusRegistry', () => {
 
         // Detect unrecognised symbol:
         expect(statusRegistry.bySymbol('?').symbol).toEqual(Status.makeEmpty().symbol);
+    });
+
+    it('should clear the statuses', () => {
+        // Arrange
+        const statusRegistry = new StatusRegistry();
+        expect(statusRegistry.registeredStatuses.length).toEqual(4);
+
+        // Act
+        statusRegistry.clearStatuses();
+
+        // Assert
+        expect(statusRegistry.registeredStatuses.length).toEqual(0);
     });
 
     it('should return empty status for lookup by unknown symbol with bySymbol()', () => {
@@ -73,7 +85,7 @@ describe('StatusRegistry', () => {
     it('should allow lookup of next status for a status', () => {
         // Arrange
         const statusRegistry = new StatusRegistry();
-        statusRegistry.clearStatuses();
+        statusRegistry.resetToDefaultStatuses();
         const statusA = new Status(new StatusConfiguration('a', 'A', 'b', false));
         const statusB = new Status(new StatusConfiguration('b', 'B', 'c', false));
         const statusC = new Status(new StatusConfiguration('c', 'C', 'd', false));
