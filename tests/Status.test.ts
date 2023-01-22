@@ -11,8 +11,8 @@ window.moment = moment;
 
 describe('Status', () => {
     it('preview text', () => {
-        const configuration = new Status(new StatusConfiguration('P', 'Pro', 'Con', true, StatusType.TODO));
-        expect(configuration.previewText()).toEqual("- [P] Pro, next status is 'Con', type is 'TODO'. ");
+        const configuration = new Status(new StatusConfiguration('P', 'Pro', 'C', true, StatusType.TODO));
+        expect(configuration.previewText()).toEqual("- [P] Pro, next status is 'C', type is 'TODO'. ");
     });
 
     it('default configurations', () => {
