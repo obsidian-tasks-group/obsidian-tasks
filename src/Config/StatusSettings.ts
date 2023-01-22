@@ -23,11 +23,11 @@ export class StatusSettings {
      *
      * - Currently, duplicates are allowed.
      * - Allows empty StatusConfiguration objects - where every string is empty
-     * @param statusSettings
+     * @param statuses
      * @param newStatus
      */
-    public static addCustomStatus(statusSettings: StatusSettings, newStatus: StatusConfiguration) {
-        statusSettings.customStatusTypes.push(newStatus);
+    public static addStatus(statuses: StatusConfiguration[], newStatus: StatusConfiguration) {
+        statuses.push(newStatus);
     }
 
     /**
@@ -125,7 +125,10 @@ export class StatusSettings {
                 );
             });
             if (!hasStatus) {
-                StatusSettings.addCustomStatus(statusSettings, Status.createFromImportedValue(importedStatus));
+                StatusSettings.addStatus(
+                    statusSettings.customStatusTypes,
+                    Status.createFromImportedValue(importedStatus),
+                );
             } else {
                 notices.push(`The status ${importedStatus[1]} (${importedStatus[0]}) is already added.`);
             }

@@ -370,10 +370,10 @@ export class SettingsTab extends PluginSettingTab {
     insertTaskCoreStatusSettings(containerEl: HTMLElement, settings: SettingsTab) {
         // TODO Make these statuses editable
         const coreStatuses: StatusSettings = new StatusSettings();
-        StatusSettings.addCustomStatus(coreStatuses, Status.makeTodo().configuration);
-        StatusSettings.addCustomStatus(coreStatuses, Status.makeInProgress().configuration);
-        StatusSettings.addCustomStatus(coreStatuses, Status.makeDone().configuration);
-        StatusSettings.addCustomStatus(coreStatuses, Status.makeCancelled().configuration);
+        StatusSettings.addStatus(coreStatuses.customStatusTypes, Status.makeTodo().configuration);
+        StatusSettings.addStatus(coreStatuses.customStatusTypes, Status.makeInProgress().configuration);
+        StatusSettings.addStatus(coreStatuses.customStatusTypes, Status.makeDone().configuration);
+        StatusSettings.addStatus(coreStatuses.customStatusTypes, Status.makeCancelled().configuration);
 
         /* -------------------- One row per status in the settings -------------------- */
         coreStatuses.customStatusTypes.forEach((status_type) => {
@@ -404,8 +404,8 @@ export class SettingsTab extends PluginSettingTab {
                 .setButtonText('Add New Task Status')
                 .setCta()
                 .onClick(async () => {
-                    StatusSettings.addCustomStatus(
-                        statusSettings,
+                    StatusSettings.addStatus(
+                        statusSettings.customStatusTypes,
                         new StatusConfiguration('', '', '', false, StatusType.TODO),
                     );
                     await updateAndSaveStatusSettings(statusSettings, settings);
@@ -455,7 +455,7 @@ export class SettingsTab extends PluginSettingTab {
                         return;
                     }
                     unknownStatuses.forEach((s) => {
-                        StatusSettings.addCustomStatus(statusSettings, s);
+                        StatusSettings.addStatus(statusSettings.customStatusTypes, s);
                     });
                     await updateAndSaveStatusSettings(statusSettings, settings);
                 });
