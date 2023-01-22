@@ -8,18 +8,20 @@
       "type": "TODO"
     },
     {
-      "symbol": "/",
-      "name": "In Progress",
-      "nextStatusSymbol": "x",
-      "availableAsCommand": true,
-      "type": "IN_PROGRESS"
-    },
-    {
       "symbol": "x",
       "name": "Done",
       "nextStatusSymbol": " ",
       "availableAsCommand": true,
       "type": "DONE"
+    }
+  ],
+  "customStatusTypes": [
+    {
+      "symbol": "/",
+      "name": "In Progress",
+      "nextStatusSymbol": "x",
+      "availableAsCommand": true,
+      "type": "IN_PROGRESS"
     },
     {
       "symbol": "-",
@@ -28,6 +30,5 @@
       "availableAsCommand": true,
       "type": "CANCELLED"
     }
-  ],
-  "customStatusTypes": []
+  ]
 }

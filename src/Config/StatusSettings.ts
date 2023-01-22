@@ -13,12 +13,15 @@ import type { StatusCollection } from '../StatusCollection';
 export class StatusSettings {
     constructor() {
         this.coreStatusTypes = [
+            // The two statuses that do not need CSS styling
             Status.makeTodo().configuration,
-            Status.makeInProgress().configuration,
             Status.makeDone().configuration,
+        ]; // Do not modify directly: use the static mutation methods in this class.
+        this.customStatusTypes = [
+            // Any statuses that are always supported, but need custom CSS styling
+            Status.makeInProgress().configuration,
             Status.makeCancelled().configuration,
         ]; // Do not modify directly: use the static mutation methods in this class.
-        this.customStatusTypes = []; // Do not modify directly: use the static mutation methods in this class.
     }
     readonly coreStatusTypes: StatusConfiguration[]; // TODO - need to handle if this was not present in settings read from disk
     readonly customStatusTypes: StatusConfiguration[];
