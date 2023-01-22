@@ -511,7 +511,7 @@ function createRowForTaskStatus(
                 .setIcon('cross')
                 .setTooltip('Delete')
                 .onClick(async () => {
-                    if (StatusSettings.deleteCustomStatus(statusSettings, statusType)) {
+                    if (StatusSettings.deleteStatus(statusSettings.customStatusTypes, statusType)) {
                         await updateAndSaveStatusSettings(statusSettings, settings);
                     }
                 });
