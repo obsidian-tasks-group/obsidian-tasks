@@ -482,7 +482,7 @@ describe('toggle done', () => {
     });
 
     afterAll(() => {
-        StatusRegistry.getInstance().clearStatuses();
+        StatusRegistry.getInstance().resetToDefaultStatuses();
     });
 
     it('retains the block link', () => {

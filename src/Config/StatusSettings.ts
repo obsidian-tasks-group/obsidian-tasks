@@ -140,7 +140,7 @@ export class StatusSettings {
      */
     public static applyToStatusRegistry(statusSettings: StatusSettings, statusRegistry: StatusRegistry) {
         // Reset the registry as this may also come from a settings add/delete.
-        statusRegistry.clearStatuses();
+        statusRegistry.resetToDefaultStatuses();
         statusSettings.customStatusTypes.forEach((statusType) => {
             statusRegistry.add(statusType);
         });
