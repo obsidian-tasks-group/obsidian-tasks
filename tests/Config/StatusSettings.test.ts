@@ -8,11 +8,22 @@ import type { StatusCollection } from '../../src/StatusCollection';
 describe('StatusSettings', () => {
     it('verify default status settings', () => {
         const defaultStatusSettings = new StatusSettings();
+        // Core statuses
+        expect(defaultStatusSettings.coreStatusTypes.length).toEqual(2);
+        expect(defaultStatusSettings.coreStatusTypes[0].symbol).toEqual(' ');
+        expect(defaultStatusSettings.coreStatusTypes[1].symbol).toEqual('x');
+
+        // Custom statuses
+        expect(defaultStatusSettings.customStatusTypes.length).toEqual(2);
+        expect(defaultStatusSettings.customStatusTypes[0].symbol).toEqual('/');
+        expect(defaultStatusSettings.customStatusTypes[1].symbol).toEqual('-');
+
         // This captures the default contents of both core and custom statuses
         verifyAsJson(defaultStatusSettings);
     });
 
-    function addThreeStatuses(settings: StatusSettings) {
+    function setThreeCustomStatuses(settings: StatusSettings) {
+        StatusSettings.deleteAllCustomStatuses(settings);
         const pro = new StatusConfiguration('P', 'Pro', 'C', false);
         const imp = new StatusConfiguration('!', 'Important', 'x', false);
         const con = new StatusConfiguration('C', 'Con', 'P', false);
@@ -25,22 +36,22 @@ describe('StatusSettings', () => {
     it('should add a status', () => {
         // Arrange
         const settings = new StatusSettings();
-        expect(settings.coreStatusTypes.length).toEqual(4);
-        expect(settings.customStatusTypes.length).toEqual(0);
+        expect(settings.coreStatusTypes.length).toEqual(2);
+        expect(settings.customStatusTypes.length).toEqual(2);
 
         // Act
         const newStatus = new StatusConfiguration('!', 'Important', 'x', false);
         StatusSettings.addStatus(settings.customStatusTypes, newStatus);
 
         // Assert
-        expect(settings.customStatusTypes.length).toEqual(1);
-        expect(settings.customStatusTypes[0]).toStrictEqual(newStatus);
+        expect(settings.customStatusTypes.length).toEqual(3);
+        expect(settings.customStatusTypes[2]).toStrictEqual(newStatus);
     });
 
     it('should replace a status, if present', () => {
         // Arrange
         const settings = new StatusSettings();
-        const { imp } = addThreeStatuses(settings);
+        const { imp } = setThreeCustomStatuses(settings);
         expect(settings.customStatusTypes.length).toEqual(3);
         expect(settings.customStatusTypes[1]).toStrictEqual(imp);
 
@@ -76,7 +87,7 @@ describe('StatusSettings', () => {
     it('should delete a status', () => {
         // Arrange
         const settings = new StatusSettings();
-        const { pro, imp, con } = addThreeStatuses(settings);
+        const { pro, imp, con } = setThreeCustomStatuses(settings);
         expect(settings.customStatusTypes.length).toEqual(3);
 
         // Act
@@ -96,7 +107,7 @@ describe('StatusSettings', () => {
     it('should delete all custom statuses', () => {
         // Arrange
         const settings = new StatusSettings();
-        addThreeStatuses(settings);
+        setThreeCustomStatuses(settings);
         expect(settings.customStatusTypes.length).toEqual(3);
 
         // Act
@@ -109,7 +120,8 @@ describe('StatusSettings', () => {
     it('should apply settings to a StatusRegistry', () => {
         // Arrange
         const settings = new StatusSettings();
-        const { pro, imp, con } = addThreeStatuses(settings);
+        const { pro, imp, con } = setThreeCustomStatuses(settings);
+        expect(settings.coreStatusTypes.length).toEqual(2);
         expect(settings.customStatusTypes.length).toEqual(3);
 
         const statusRegistry = new StatusRegistry();
@@ -120,9 +132,9 @@ describe('StatusSettings', () => {
 
         // Assert
         const statuses = statusRegistry.registeredStatuses;
-        expect(statuses.length).toEqual(7);
-        expect(statuses[4]).toStrictEqual(new Status(pro));
-        expect(statuses[5]).toStrictEqual(new Status(imp));
-        expect(statuses[6]).toStrictEqual(new Status(con));
+        expect(statuses.length).toEqual(5);
+        expect(statuses[2]).toStrictEqual(new Status(pro));
+        expect(statuses[3]).toStrictEqual(new Status(imp));
+        expect(statuses[4]).toStrictEqual(new Status(con));
     });
 });
