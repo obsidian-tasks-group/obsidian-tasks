@@ -47,7 +47,7 @@ export class StatusSettings {
         originalStatus: StatusConfiguration,
         newStatus: StatusConfiguration,
     ): boolean {
-        const index = this.findStatusIndex(originalStatus, statusSettings);
+        const index = this.findStatusIndex(originalStatus, statusSettings.customStatusTypes);
         if (index <= -1) {
             return false;
         }
@@ -59,12 +59,12 @@ export class StatusSettings {
      * This is a workaround for the fact that statusSettings.customStatusTypes.indexOf(statusConfiguration)
      * stopped finding identical statuses since the addition of StatusConfiguration.type.
      * @param statusConfiguration
-     * @param statusSettings
+     * @param statuses
      * @private
      */
-    private static findStatusIndex(statusConfiguration: StatusConfiguration, statusSettings: StatusSettings) {
+    private static findStatusIndex(statusConfiguration: StatusConfiguration, statuses: StatusConfiguration[]) {
         const originalStatusAsStatus = new Status(statusConfiguration);
-        return statusSettings.customStatusTypes.findIndex((s) => {
+        return statuses.findIndex((s) => {
             return new Status(s).previewText() == originalStatusAsStatus.previewText();
         });
     }
@@ -79,7 +79,7 @@ export class StatusSettings {
      * @param status
      */
     public static deleteCustomStatus(statusSettings: StatusSettings, status: StatusConfiguration) {
-        const index = this.findStatusIndex(status, statusSettings);
+        const index = this.findStatusIndex(status, statusSettings.customStatusTypes);
         if (index <= -1) {
             return false;
         }
