@@ -45,3 +45,11 @@ This offers the same checkboxes as [[Snippet - SlRvb's Alternate Checkboxes]].
 - [s] #task `s` Secret
 
 <!-- placeholder to force blank line after tasks --> <!-- endInclude -->
+
+## Status grouped by status.type
+
+```tasks
+path includes Theme - ITS Theme
+group by status.type
+sort by description
+```

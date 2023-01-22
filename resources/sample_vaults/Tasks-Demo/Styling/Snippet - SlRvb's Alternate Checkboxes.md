@@ -51,3 +51,11 @@ File name of downloaded snippet: S - Checkboxes.css
 - [s] #task `s` Secret
 
 <!-- placeholder to force blank line after tasks --> <!-- endInclude -->
+
+## Status grouped by status.type
+
+```tasks
+path includes Snippet - SlRvb's Alternate Checkboxes
+group by status.type
+sort by description
+```
