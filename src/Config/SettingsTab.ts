@@ -529,8 +529,8 @@ function createRowForTaskStatus(
                     modal.onClose = async () => {
                         if (modal.saved) {
                             if (
-                                StatusSettings.replaceCustomStatus(
-                                    statusSettings,
+                                StatusSettings.replaceStatus(
+                                    statusSettings.customStatusTypes,
                                     statusType,
                                     modal.statusConfiguration(),
                                 )
