@@ -1,7 +1,7 @@
 import { verifyAsJson } from 'approvals/lib/Providers/Jest/JestApprovals';
 import { StatusSettings } from '../../src/Config/StatusSettings';
 import { Status } from '../../src/Status';
-import { StatusConfiguration } from '../../src/StatusConfiguration';
+import { StatusConfiguration, StatusType } from '../../src/StatusConfiguration';
 import { StatusRegistry } from '../../src/StatusRegistry';
 import type { StatusCollection } from '../../src/StatusCollection';
 
@@ -115,6 +115,48 @@ describe('StatusSettings', () => {
 
         // Assert
         expect(settings.customStatusTypes.length).toEqual(0);
+    });
+
+    it('should reset all custom statuses', () => {
+        // Arrange
+        const settings = new StatusSettings();
+        // Stomp on the current custom settings.
+        settings.customStatusTypes.forEach((s) => {
+            StatusSettings.replaceStatus(
+                settings.customStatusTypes,
+                s,
+                new StatusConfiguration(s.symbol, 'NONSENSE NAME', 'x', false, StatusType.DONE),
+            );
+        });
+        // Add some additional custom settings.
+        StatusSettings.addStatus(
+            settings.customStatusTypes,
+            new StatusConfiguration('%', 'ANYTHING', '_', true, StatusType.NON_TASK),
+        );
+
+        // Act
+        StatusSettings.resetAllCustomStatuses(settings);
+
+        // Assert
+        expect(settings.customStatusTypes.length).toEqual(2);
+        expect(settings.customStatusTypes[0]).toMatchInlineSnapshot(`
+            StatusConfiguration {
+              "availableAsCommand": true,
+              "name": "In Progress",
+              "nextStatusSymbol": "x",
+              "symbol": "/",
+              "type": "IN_PROGRESS",
+            }
+        `);
+        expect(settings.customStatusTypes[1]).toMatchInlineSnapshot(`
+            StatusConfiguration {
+              "availableAsCommand": true,
+              "name": "Cancelled",
+              "nextStatusSymbol": " ",
+              "symbol": "-",
+              "type": "CANCELLED",
+            }
+        `);
     });
 
     it('should apply settings to a StatusRegistry', () => {
