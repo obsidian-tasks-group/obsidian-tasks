@@ -38,20 +38,20 @@ export class StatusSettings {
      *
      * - Does not currently check whether the status character is the same
      * - If the status character is different, does not check whether the new one is already used in another status
-     * @param statusSettings
+     * @param statuses
      * @param originalStatus
      * @param newStatus
      */
-    public static replaceCustomStatus(
-        statusSettings: StatusSettings,
+    public static replaceStatus(
+        statuses: StatusConfiguration[],
         originalStatus: StatusConfiguration,
         newStatus: StatusConfiguration,
     ): boolean {
-        const index = this.findStatusIndex(originalStatus, statusSettings.customStatusTypes);
+        const index = this.findStatusIndex(originalStatus, statuses);
         if (index <= -1) {
             return false;
         }
-        statusSettings.customStatusTypes.splice(index, 1, newStatus);
+        statuses.splice(index, 1, newStatus);
         return true;
     }
 

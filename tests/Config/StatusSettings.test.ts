@@ -44,7 +44,7 @@ describe('StatusSettings', () => {
 
         // Act
         const newImp = new StatusConfiguration('!', 'ReallyImportant', 'X', true);
-        StatusSettings.replaceCustomStatus(settings, imp, newImp);
+        StatusSettings.replaceStatus(settings.customStatusTypes, imp, newImp);
 
         // Assert
         expect(settings.customStatusTypes.length).toEqual(3);
