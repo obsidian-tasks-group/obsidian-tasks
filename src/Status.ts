@@ -221,9 +221,9 @@ export class Status {
         }
         return (
             `- [${this.symbol}]` + // comment to break line
-            ` ${this.name},` +
-            ` next status is '${this.nextStatusSymbol}',` +
-            ` type is '${this.configuration.type}'. ` +
+            ` => [${this.nextStatusSymbol}],` +
+            ` name: '${this.name}',` +
+            ` type: '${this.configuration.type}'. ` +
             `${commandNotice}`
         );
     }
