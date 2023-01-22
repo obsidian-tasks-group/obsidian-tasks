@@ -217,13 +217,13 @@ export class Status {
     public previewText() {
         let commandNotice = '';
         if (Status.tasksPluginCanCreateCommandsForStatuses() && this.availableAsCommand) {
-            commandNotice = 'Available as a command.';
+            commandNotice = ' Available as a command.';
         }
         return (
             `- [${this.symbol}]` + // comment to break line
             ` => [${this.nextStatusSymbol}],` +
             ` name: '${this.name}',` +
-            ` type: '${this.configuration.type}'. ` +
+            ` type: '${this.configuration.type}'.` +
             `${commandNotice}`
         );
     }
