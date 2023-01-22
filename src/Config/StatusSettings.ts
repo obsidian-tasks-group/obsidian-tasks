@@ -12,9 +12,16 @@ import type { StatusCollection } from '../StatusCollection';
  */
 export class StatusSettings {
     constructor() {
+        this.coreStatusTypes = [
+            Status.makeTodo().configuration,
+            Status.makeInProgress().configuration,
+            Status.makeDone().configuration,
+            Status.makeCancelled().configuration,
+        ]; // Do not modify directly: use the static mutation methods in this class.
         this.customStatusTypes = []; // Do not modify directly: use the static mutation methods in this class.
     }
-    customStatusTypes: StatusConfiguration[];
+    readonly coreStatusTypes: StatusConfiguration[]; // TODO - need to handle if this was not present in settings read from disk
+    readonly customStatusTypes: StatusConfiguration[];
 
     /**
      * Add a new custom status.
@@ -142,8 +149,10 @@ export class StatusSettings {
      * @param statusRegistry
      */
     public static applyToStatusRegistry(statusSettings: StatusSettings, statusRegistry: StatusRegistry) {
-        // Reset the registry as this may also come from a settings add/delete.
-        statusRegistry.resetToDefaultStatuses();
+        statusRegistry.clearStatuses();
+        statusSettings.coreStatusTypes.forEach((statusType) => {
+            statusRegistry.add(statusType);
+        });
         statusSettings.customStatusTypes.forEach((statusType) => {
             statusRegistry.add(statusType);
         });
