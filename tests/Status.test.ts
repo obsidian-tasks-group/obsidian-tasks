@@ -11,25 +11,23 @@ window.moment = moment;
 
 describe('Status', () => {
     it('preview text', () => {
-        const configuration = new Status(new StatusConfiguration('P', 'Pro', 'Con', true, StatusType.TODO));
-        expect(configuration.previewText()).toEqual("- [P] Pro, next status is 'Con', type is 'TODO'. ");
+        const configuration = new Status(new StatusConfiguration('P', 'Pro', 'C', true, StatusType.TODO));
+        expect(configuration.previewText()).toEqual("- [P] => [C], name: 'Pro', type: 'TODO'.");
     });
 
     it('default configurations', () => {
-        expect(Status.DONE.previewText()).toEqual("- [x] Done, next status is ' ', type is 'DONE'. ");
-        expect(Status.EMPTY.previewText()).toEqual("- [] EMPTY, next status is '', type is 'EMPTY'. ");
-        expect(Status.TODO.previewText()).toEqual("- [ ] Todo, next status is 'x', type is 'TODO'. ");
+        expect(Status.DONE.previewText()).toEqual("- [x] => [ ], name: 'Done', type: 'DONE'.");
+        expect(Status.EMPTY.previewText()).toEqual("- [] => [], name: 'EMPTY', type: 'EMPTY'.");
+        expect(Status.TODO.previewText()).toEqual("- [ ] => [x], name: 'Todo', type: 'TODO'.");
     });
 
     it('factory methods for default statuses', () => {
-        expect(Status.makeDone().previewText()).toEqual("- [x] Done, next status is ' ', type is 'DONE'. ");
-        expect(Status.makeEmpty().previewText()).toEqual("- [] EMPTY, next status is '', type is 'EMPTY'. ");
-        expect(Status.makeTodo().previewText()).toEqual("- [ ] Todo, next status is 'x', type is 'TODO'. ");
-        expect(Status.makeCancelled().previewText()).toEqual(
-            "- [-] Cancelled, next status is ' ', type is 'CANCELLED'. ",
-        );
+        expect(Status.makeDone().previewText()).toEqual("- [x] => [ ], name: 'Done', type: 'DONE'.");
+        expect(Status.makeEmpty().previewText()).toEqual("- [] => [], name: 'EMPTY', type: 'EMPTY'.");
+        expect(Status.makeTodo().previewText()).toEqual("- [ ] => [x], name: 'Todo', type: 'TODO'.");
+        expect(Status.makeCancelled().previewText()).toEqual("- [-] => [ ], name: 'Cancelled', type: 'CANCELLED'.");
         expect(Status.makeInProgress().previewText()).toEqual(
-            "- [/] In Progress, next status is 'x', type is 'IN_PROGRESS'. ",
+            "- [/] => [x], name: 'In Progress', type: 'IN_PROGRESS'.",
         );
     });
 
