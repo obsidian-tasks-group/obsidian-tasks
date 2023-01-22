@@ -46,6 +46,18 @@ describe('StatusRegistry', () => {
         expect(statusRegistry.bySymbol('?').symbol).toEqual(Status.makeEmpty().symbol);
     });
 
+    it('should clear the statuses', () => {
+        // Arrange
+        const statusRegistry = new StatusRegistry();
+        expect(statusRegistry.registeredStatuses.length).toEqual(4);
+
+        // Act
+        statusRegistry.clearStatuses();
+
+        // Assert
+        expect(statusRegistry.registeredStatuses.length).toEqual(0);
+    });
+
     it('should return empty status for lookup by unknown symbol with bySymbol()', () => {
         // Arrange
         const statusRegistry = new StatusRegistry();
