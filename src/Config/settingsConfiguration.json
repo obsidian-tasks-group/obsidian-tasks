@@ -39,7 +39,7 @@
         "type": "function",
         "initialValue": "",
         "placeholder": "",
-        "settingName": "insertTaskStatusSettings",
+        "settingName": "insertCustomTaskStatusSettings",
         "featureFlag": "",
         "notice": null
       }
