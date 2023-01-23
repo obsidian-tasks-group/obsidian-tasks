@@ -130,6 +130,23 @@ describe('DefaultStatuses', () => {
         ];
         verifyStatusesAsMarkdownTable(constructStatuses(importantCycle));
     });
+
+    it('todo-in_progress-done', () => {
+        const importantCycle: StatusCollection = [
+            [' ', 'Todo', '/', 'TODO'],
+            ['/', 'In Progress', 'x', 'IN_PROGRESS'],
+            ['x', 'Done', ' ', 'DONE'],
+        ];
+        verifyStatusesAsMarkdownTable(constructStatuses(importantCycle));
+    });
+
+    it('pro-con-cycle', () => {
+        const importantCycle: StatusCollection = [
+            ['P', 'Pro', 'C', 'NON_TASK'],
+            ['C', 'Con', 'P', 'NON_TASK'],
+        ];
+        verifyStatusesAsMarkdownTable(constructStatuses(importantCycle));
+    });
 });
 
 describe('Theme', () => {
