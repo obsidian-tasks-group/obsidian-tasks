@@ -50,3 +50,11 @@ If you are unsure which to use, we recommend using a CSS Snippet rather than a T
 The very widely used [SlRvb’s Alternate Checkboxes]({{ site.baseurl }}{% link reference/status-collections/slrvb-alternate-checkboxes-snippet.md %}) snippet is excellent, and we recommend starting with that.
 
 However, you can also browse through the pages in this section, to see the other options that Tasks is aware of.
+
+## Coming soon
+
+We plan to add one-click support for these themes in a future release:
+
+- [AnuPpuccin](https://publish.obsidian.md/hub/02+-+Community+Expansions/02.05+All+Community+Expansions/Themes/AnuPpuccin)
+- [Aura](https://publish.obsidian.md/hub/02+-+Community+Expansions/02.05+All+Community+Expansions/Themes/Aura)
+- [LYT Mode](https://publish.obsidian.md/hub/02+-+Community+Expansions/02.05+All+Community+Expansions/Themes/LYT+Mode)
