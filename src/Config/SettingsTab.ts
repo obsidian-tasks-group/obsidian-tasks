@@ -11,6 +11,7 @@ import settingsJson from './settingsConfiguration.json';
 
 import { CustomStatusModal } from './CustomStatusModal';
 import * as StatusSettingsHelpers from './StatusSettingsHelpers';
+import { minimalSupportedStatuses } from './Themes/MinimalThemeCollection';
 
 export class SettingsTab extends PluginSettingTab {
     // If the UI needs a more complex setting you can create a
@@ -430,11 +431,7 @@ export class SettingsTab extends PluginSettingTab {
                 .setButtonText('Add all Status types supported by Minimal Theme')
                 .setCta()
                 .onClick(async () => {
-                    await addCustomStatesToSettings(
-                        StatusSettingsHelpers.minimalSupportedStatuses(),
-                        statusSettings,
-                        settings,
-                    );
+                    await addCustomStatesToSettings(minimalSupportedStatuses(), statusSettings, settings);
                 });
         });
         addStatusesSupportedByMinimalTheme.infoEl.remove();
