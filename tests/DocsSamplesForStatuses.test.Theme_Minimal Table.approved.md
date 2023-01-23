@@ -4,7 +4,7 @@
 | ----- | ----- | ----- | ----- | ----- |
 | `space` | `x` | to-do | `TODO` | No |
 | `/` | `x` | incomplete | `IN_PROGRESS` | Yes |
-| `x` | `x` | done | `DONE` | No |
+| `x` | `space` | done | `DONE` | No |
 | `-` | `x` | canceled | `CANCELLED` | Yes |
 | `>` | `x` | forwarded | `TODO` | Yes |
 | `<` | `x` | scheduling | `TODO` | Yes |

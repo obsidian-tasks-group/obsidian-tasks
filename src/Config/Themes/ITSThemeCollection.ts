@@ -8,8 +8,8 @@ import type { StatusCollection } from '../../StatusCollection';
 export function itsSupportedStatuses() {
     const zzz: StatusCollection = [
         [' ', 'Unchecked', 'x', 'TODO'],
-        ['x', 'Regular', 'x', 'DONE'],
-        ['X', 'Checked', 'x', 'DONE'],
+        ['x', 'Regular', ' ', 'DONE'],
+        ['X', 'Checked', ' ', 'DONE'],
         ['-', 'Dropped', 'x', 'CANCELLED'],
         ['>', 'Forward', 'x', 'TODO'],
         ['D', 'Date', 'x', 'TODO'],

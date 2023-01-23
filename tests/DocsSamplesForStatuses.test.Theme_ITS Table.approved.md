@@ -3,8 +3,8 @@
 | Status Symbol | Next Status Symbol | Status Name<br>`status.name includes...`<br>`sort by status.name`<br>`group by status.name` | Status Type<br>`status.type is...`<br>`sort by status.type`<br>`group by status.type` | Needs Custom Styling |
 | ----- | ----- | ----- | ----- | ----- |
 | `space` | `x` | Unchecked | `TODO` | No |
-| `x` | `x` | Regular | `DONE` | No |
-| `X` | `x` | Checked | `DONE` | Yes |
+| `x` | `space` | Regular | `DONE` | No |
+| `X` | `space` | Checked | `DONE` | Yes |
 | `-` | `x` | Dropped | `CANCELLED` | Yes |
 | `>` | `x` | Forward | `TODO` | Yes |
 | `D` | `x` | Date | `TODO` | Yes |
