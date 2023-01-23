@@ -36,7 +36,7 @@ Syntax Description
 ## Status grouped by status.type
 
 ```tasks
-path includes Theme - Primary - AnuPpuccin
+path includes Theme - AnuPpuccin
 group by status.type
 sort by description
 ```
