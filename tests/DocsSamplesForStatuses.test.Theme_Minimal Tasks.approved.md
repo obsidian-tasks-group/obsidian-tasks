@@ -1,4 +1,4 @@
-<!-- placeholder to force blank line before tasks -->
+<!-- placeholder to force blank line before included text -->
 
 - [ ] #task `space` to-do
 - [/] #task `/` incomplete
@@ -24,4 +24,4 @@
 - [d] #task `d` down
 
 
-<!-- placeholder to force blank line after tasks -->
+<!-- placeholder to force blank line after included text -->

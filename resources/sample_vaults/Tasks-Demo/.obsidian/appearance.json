@@ -1,7 +1,5 @@
 {
   "theme": "moonstone",
-  "enabledCssSnippets": [
-    "S - Checkboxes"
-  ],
+  "enabledCssSnippets": [],
   "accentColor": ""
 }

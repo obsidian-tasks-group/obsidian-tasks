@@ -1,4 +1,4 @@
-<!-- placeholder to force blank line before table -->
+<!-- placeholder to force blank line before included text -->
 
 | Status Character | Status Name<br>`status.name includes...`<br>`sort by status.name`<br>`group by status.name` | Next Status Character | Status Type<br>`status.type is...`<br>`sort by status.type`<br>`group by status.type` | Needs Custom Styling |
 | ----- | ----- | ----- | ----- | ----- |
@@ -7,4 +7,4 @@
 | `X` | Done - Important | `!` | `DONE` | Yes |
 
 
-<!-- placeholder to force blank line after table -->
+<!-- placeholder to force blank line after included text -->

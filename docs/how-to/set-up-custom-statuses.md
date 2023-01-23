@@ -71,7 +71,7 @@ We also see that each status consists of:
 
 Suppose that you wanted to create a set of 3 statuses that cycle between each other:
 
-<!-- placeholder to force blank line before table --> <!-- include: DocsSamplesForStatuses.test.DefaultStatuses_important-cycle.approved.md -->
+<!-- placeholder to force blank line before included text --> <!-- include: DocsSamplesForStatuses.test.DefaultStatuses_important-cycle.approved.md -->
 
 | Status Character | Status Name<br>`status.name includes...`<br>`sort by status.name`<br>`group by status.name` | Next Status Character | Status Type<br>`status.type is...`<br>`sort by status.type`<br>`group by status.type` | Needs Custom Styling |
 | ----- | ----- | ----- | ----- | ----- |
@@ -79,7 +79,7 @@ Suppose that you wanted to create a set of 3 statuses that cycle between each ot
 | `D` | Doing - Important | `X` | `IN_PROGRESS` | Yes |
 | `X` | Done - Important | `!` | `DONE` | Yes |
 
-<!-- placeholder to force blank line after table --> <!-- endInclude -->
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
 
 ### The Steps
 

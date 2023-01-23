@@ -1,4 +1,4 @@
-<!-- placeholder to force blank line before tasks -->
+<!-- placeholder to force blank line before included text -->
 
 - [ ] #task `space` Unchecked
 - [x] #task `x` Regular
@@ -39,4 +39,4 @@
 - [s] #task `s` Secret
 
 
-<!-- placeholder to force blank line after tasks -->
+<!-- placeholder to force blank line after included text -->
