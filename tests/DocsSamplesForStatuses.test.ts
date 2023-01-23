@@ -81,6 +81,20 @@ function verifyStatusesAsMarkdownTable(statuses: Status[]) {
     table.verify();
 }
 
+function verifyStatusesAsTasksList(statuses: Status[]) {
+    let markdown = '';
+    for (const status of statuses) {
+        const statusCharacter = getPrintableSymbol(status.symbol);
+        markdown += `- [${status.symbol}] #task ${statusCharacter} ${status.name}\n`;
+    }
+    let output = '<!-- placeholder to force blank line before tasks -->\n\n';
+    output += markdown;
+    output += '\n\n<!-- placeholder to force blank line after tasks -->\n';
+    let options = new Options();
+    options = options.forFile().withFileExtention('tasks.md');
+    verify(output, options);
+}
+
 function constructStatuses(importedStatuses: StatusCollection) {
     const statuses: Status[] = [];
     importedStatuses.forEach((importedStatus) => {
@@ -99,11 +113,13 @@ describe('DefaultStatuses', () => {
     it('minimal-supported-statuses', () => {
         const importedStatuses = StatusSettingsHelpers.minimalSupportedStatuses();
         verifyStatusesAsMarkdownTable(constructStatuses(importedStatuses));
+        verifyStatusesAsTasksList(constructStatuses(importedStatuses));
     });
 
     it('its-theme-supported-statuses', () => {
         const importedStatuses = StatusSettingsHelpers.itsSupportedStatuses();
         verifyStatusesAsMarkdownTable(constructStatuses(importedStatuses));
+        verifyStatusesAsTasksList(constructStatuses(importedStatuses));
     });
 
     it('important-cycle', () => {

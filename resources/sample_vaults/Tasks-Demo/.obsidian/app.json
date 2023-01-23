@@ -6,5 +6,6 @@
   "newFileLocation": "current",
   "attachmentFolderPath": "./",
   "spellcheck": true,
-  "showInlineTitle": false
+  "showInlineTitle": false,
+  "showLineNumber": true
 }
