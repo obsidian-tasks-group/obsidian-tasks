@@ -32,3 +32,11 @@ Syntax Description
 - [7] Speech bubble 7
 - [8] Speech bubble 8
 - [9] Speech bubble 9
+
+## Status grouped by status.type
+
+```tasks
+path includes Theme - Primary - AnuPpuccin
+group by status.type
+sort by description
+```

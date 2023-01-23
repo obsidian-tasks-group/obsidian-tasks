@@ -28,3 +28,11 @@ Only supports Dark mode.
 - [w] Win
 - [u] Up
 - [d] Down
+
+## Status grouped by status.type
+
+```tasks
+path includes Theme - LYT Mode
+group by status.type
+sort by description
+```
