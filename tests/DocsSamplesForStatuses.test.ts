@@ -15,9 +15,9 @@ import type { StatusCollection } from '../src/StatusCollection';
 import { TaskBuilder } from './TestingTools/TaskBuilder';
 
 function verifyMarkdown(markdown: string) {
-    let output = '<!-- placeholder to force blank line before table -->\n\n';
+    let output = '<!-- placeholder to force blank line before included text -->\n\n';
     output += markdown;
-    output += '\n\n<!-- placeholder to force blank line after table -->\n';
+    output += '\n\n<!-- placeholder to force blank line after included text -->\n';
     let options = new Options();
     options = options.forFile().withFileExtention('md');
     verify(output, options);
@@ -91,9 +91,9 @@ function verifyStatusesAsTasksList(statuses: Status[]) {
         const statusCharacter = getPrintableSymbol(status.symbol);
         markdown += `- [${status.symbol}] #task ${statusCharacter} ${status.name}\n`;
     }
-    let output = '<!-- placeholder to force blank line before tasks -->\n\n';
+    let output = '<!-- placeholder to force blank line before included text -->\n\n';
     output += markdown;
-    output += '\n\n<!-- placeholder to force blank line after tasks -->\n';
+    output += '\n\n<!-- placeholder to force blank line after included text -->\n';
     let options = new Options();
     options = options.forFile().withFileExtention('tasks.md');
     verify(output, options);

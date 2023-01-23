@@ -1,4 +1,4 @@
-<!-- placeholder to force blank line before table -->
+<!-- placeholder to force blank line before included text -->
 
 | Operation | TODO | IN_PROGRESS | DONE | CANCELLED | NON_TASK |
 | ----- | ----- | ----- | ----- | ----- | ----- |
@@ -19,4 +19,4 @@
 | Name for `group by status.name` | Todo | In Progress | Done | Cancelled | My custom status |
 
 
-<!-- placeholder to force blank line after table -->
+<!-- placeholder to force blank line after included text -->
