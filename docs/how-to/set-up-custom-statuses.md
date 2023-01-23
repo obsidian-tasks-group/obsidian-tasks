@@ -52,10 +52,16 @@ This is what you see in the Tasks settings when you first look at the Task Statu
 
 There are two sections:
 
-1. **Core Status Types**
-    - These are statuses that are built in to Tasks, and cannot be edited or deleted.
-2. **Custom Status Types**
-    - This is where you can add your own custom statuses.
+1. **Core Statuses**
+    - These are statuses that are built in to Tasks, and cannot be deleted.
+    - They are the two task types that are built in to Obsidian and Tasks natively: `[ ]` and `[x]`.
+    - Their status symbols cannot be changed.
+    - All their other properties can be edited.
+2. **Custom Statuses**
+    - These statuses are what many themes call 'custom checkboxes'.
+    - You will need to choose and install a Theme or CSS Snippet that supports 'custom checkboxes'
+    - Tasks automatically adds `[/]` and `[-]`
+    - And this is where you can add your own custom statuses.
 
 We also see that each status consists of:
 
