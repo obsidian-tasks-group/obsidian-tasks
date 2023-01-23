@@ -95,6 +95,15 @@ function verifyStatusesAsTasksList(statuses: Status[]) {
     verifyMarkdown(markdown);
 }
 
+function verifyStatusesAsTasksText(statuses: Status[]) {
+    let markdown = '';
+    for (const status of statuses) {
+        const statusCharacter = getPrintableSymbol(status.symbol);
+        markdown += `- [${status.symbol}] #task ${statusCharacter} ${status.name}\n`;
+    }
+    verify(markdown);
+}
+
 function constructStatuses(importedStatuses: StatusCollection) {
     const statuses: Status[] = [];
     importedStatuses.forEach((importedStatus) => {
@@ -128,6 +137,9 @@ describe('Theme', () => {
         });
         it('Tasks', () => {
             verifyStatusesAsTasksList(constructStatuses(statuses));
+        });
+        it('Text', () => {
+            verifyStatusesAsTasksText(constructStatuses(statuses));
         });
     });
 

@@ -20,7 +20,67 @@ has_toc: false
 
 ---
 
-## ITS Theme supported statuses
+## Introduction
+
+This theme offers the same checkboxes as [SlRvb's Alternate Checkboxes]({{ site.baseurl }}{% link reference/status-collections/slrvb-alternate-checkboxes-snippet.md %}), which works in combination with other themes too, so is more flexible.
+
+|                       Location | Link                                                                                                                                                        |
+| ------------------------------:|:----------------------------------------------------------------------------------------------------------------------------------------------------------- |
+|                        GitHub: | <https://github.com/SlRvb/Obsidian--ITS-Theme>                                                                                                              |
+|                  Obsidian Hub: | [ITS Theme](https://publish.obsidian.md/hub/02+-+Community+Expansions/02.05+All+Community+Expansions/Themes/ITS+Theme)                                      |
+| Test note in Tasks-Demo vault: | [Theme - ITS Theme](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/resources/sample_vaults/Tasks-Demo/Styling/Theme%20-%20ITS%20Theme.md) |
+
+## Screenshot
+
+![Sample tasks show in Reading mode, with the ITS Theme](../../../images/theme-its-reading-view.png)
+
+## Supported statuses
+
+<!-- snippet: DocsSamplesForStatuses.test.Theme_ITS Text.approved.txt -->
+```txt
+- [ ] #task `space` Unchecked
+- [x] #task `x` Regular
+- [X] #task `X` Checked
+- [-] #task `-` Dropped
+- [>] #task `>` Forward
+- [D] #task `D` Date
+- [?] #task `?` Question
+- [/] #task `/` Half Done
+- [+] #task `+` Add
+- [R] #task `R` Research
+- [!] #task `!` Important
+- [i] #task `i` Idea
+- [B] #task `B` Brainstorm
+- [P] #task `P` Pro
+- [C] #task `C` Con
+- [Q] #task `Q` Quote
+- [N] #task `N` Note
+- [b] #task `b` Bookmark
+- [I] #task `I` Information
+- [p] #task `p` Paraphrase
+- [L] #task `L` Location
+- [E] #task `E` Example
+- [A] #task `A` Answer
+- [r] #task `r` Reward
+- [c] #task `c` Choice
+- [d] #task `d` Doing
+- [T] #task `T` Time
+- [@] #task `@` Character / Person
+- [t] #task `t` Talk
+- [O] #task `O` Outline / Plot
+- [~] #task `~` Conflict
+- [W] #task `W` World
+- [f] #task `f` Clue / Find
+- [F] #task `F` Foreshadow
+- [H] #task `H` Favorite / Health
+- [&] #task `&` Symbolism
+- [s] #task `s` Secret
+```
+<!-- endSnippet -->
+
+## Tasks' one-click addition
+
+Tasks' setting pane has a one-click button to add the following information, representing the custom checkboxes in this plugin.
 
 <!-- placeholder to force blank line before included text --> <!-- include: DocsSamplesForStatuses.test.Theme_ITS Table.approved.md -->
 
