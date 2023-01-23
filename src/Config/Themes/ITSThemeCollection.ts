@@ -1,49 +1,8 @@
-/* This file contains re-usable functions for use in managing and editing
- * user settings for custom task statuses.
- * It intentionally does not import any Obsidian types, so that tests can
- * be written for its contents.
- */
-
-import type { StatusCollection } from '../StatusCollection';
-
-/**
- * Status supported by the Minimal theme. {@link https://github.com/kepano/obsidian-minimal}
- * Values recognised by Tasks are excluded.
- * @todo Check if this is up-to-date.
- * @see {@link StatusSettings.bulkAddStatusCollection}
- */
-export function minimalSupportedStatuses() {
-    const zzz: StatusCollection = [
-        [' ', 'to-do', 'x', 'TODO'],
-        ['/', 'incomplete', 'x', 'IN_PROGRESS'],
-        ['x', 'done', 'x', 'DONE'],
-        ['-', 'canceled', 'x', 'CANCELLED'],
-        ['>', 'forwarded', 'x', 'TODO'],
-        ['<', 'scheduling', 'x', 'TODO'],
-        ['?', 'question', 'x', 'TODO'],
-        ['!', 'important', 'x', 'TODO'],
-        ['*', 'star', 'x', 'TODO'],
-        ['"', 'quote', 'x', 'TODO'],
-        ['l', 'location', 'x', 'TODO'],
-        ['b', 'bookmark', 'x', 'TODO'],
-        ['i', 'information', 'x', 'TODO'],
-        ['S', 'savings', 'x', 'TODO'],
-        ['I', 'idea', 'x', 'TODO'],
-        ['p', 'pros', 'x', 'TODO'],
-        ['c', 'cons', 'x', 'TODO'],
-        ['f', 'fire', 'x', 'TODO'],
-        ['k', 'key', 'x', 'TODO'],
-        ['w', 'win', 'x', 'TODO'],
-        ['u', 'up', 'x', 'TODO'],
-        ['d', 'down', 'x', 'TODO'],
-    ];
-    return zzz;
-}
+import type { StatusCollection } from '../../StatusCollection';
 
 /**
  * Status supported by the ITS theme. {@link https://github.com/SlRvb/Obsidian--ITS-Theme}
  * Values recognised by Tasks are excluded.
- * @todo  Check if this is up-to-date.
  * @see {@link StatusSettings.bulkAddStatusCollection}
  */
 export function itsSupportedStatuses() {
