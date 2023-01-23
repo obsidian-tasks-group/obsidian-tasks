@@ -1,10 +1,10 @@
 <!-- placeholder to force blank line before included text -->
 
-| Status Character | Status Name<br>`status.name includes...`<br>`sort by status.name`<br>`group by status.name` | Next Status Character | Status Type<br>`status.type is...`<br>`sort by status.type`<br>`group by status.type` | Needs Custom Styling |
+| Status Symbol | Next Status Symbol | Status Name<br>`status.name includes...`<br>`sort by status.name`<br>`group by status.name` | Status Type<br>`status.type is...`<br>`sort by status.type`<br>`group by status.type` | Needs Custom Styling |
 | ----- | ----- | ----- | ----- | ----- |
-| `!` | Important | `D` | `TODO` | Yes |
-| `D` | Doing - Important | `X` | `IN_PROGRESS` | Yes |
-| `X` | Done - Important | `!` | `DONE` | Yes |
+| `!` | `D` | Important | `TODO` | Yes |
+| `D` | `X` | Doing - Important | `IN_PROGRESS` | Yes |
+| `X` | `!` | Done - Important | `DONE` | Yes |
 
 
 <!-- placeholder to force blank line after included text -->

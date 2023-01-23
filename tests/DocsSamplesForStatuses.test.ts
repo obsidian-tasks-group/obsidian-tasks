@@ -68,9 +68,9 @@ function getPrintableSymbol(symbol: string) {
 
 function verifyStatusesAsMarkdownTable(statuses: Status[]) {
     const table = new MarkdownTable([
-        'Status Character',
+        'Status Symbol',
+        'Next Status Symbol',
         'Status Name<br>`status.name includes...`<br>`sort by status.name`<br>`group by status.name`',
-        'Next Status Character',
         'Status Type<br>`status.type is...`<br>`sort by status.type`<br>`group by status.type`',
         'Needs Custom Styling',
     ]);
@@ -80,7 +80,7 @@ function verifyStatusesAsMarkdownTable(statuses: Status[]) {
         const nextStatusCharacter = getPrintableSymbol(status.nextStatusSymbol);
         const type = getPrintableSymbol(status.type);
         const needsCustomStyling = status.symbol !== ' ' && status.symbol !== 'x' ? 'Yes' : 'No';
-        table.addRow([statusCharacter, status.name, nextStatusCharacter, type, needsCustomStyling]);
+        table.addRow([statusCharacter, nextStatusCharacter, status.name, type, needsCustomStyling]);
     }
     table.verify();
 }
