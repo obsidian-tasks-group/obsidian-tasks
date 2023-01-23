@@ -66,12 +66,18 @@ function getPrintableSymbol(symbol: string) {
     return '`' + result + '`';
 }
 
-function verifyStatusesAsMarkdownTable(statuses: Status[]) {
+function verifyStatusesAsMarkdownTable(statuses: Status[], showQueryInstructions: boolean) {
+    let statusName = 'Status Name';
+    let statusType = 'Status Type';
+    if (showQueryInstructions) {
+        statusName += '<br>`status.name includes...`<br>`sort by status.name`<br>`group by status.name`';
+        statusType += '<br>`status.type is...`<br>`sort by status.type`<br>`group by status.type`';
+    }
     const table = new MarkdownTable([
         'Status Symbol',
         'Next Status Symbol',
-        'Status Name<br>`status.name includes...`<br>`sort by status.name`<br>`group by status.name`',
-        'Status Type<br>`status.type is...`<br>`sort by status.type`<br>`group by status.type`',
+        statusName,
+        statusType,
         'Needs Custom Styling',
     ]);
 
@@ -115,11 +121,11 @@ describe('DefaultStatuses', () => {
     // These "test" write out a markdown representation of the default task statuses,
     // for embedding in the user docs.
     it('core-statuses', () => {
-        verifyStatusesAsMarkdownTable([Status.makeTodo(), Status.makeDone()]);
+        verifyStatusesAsMarkdownTable([Status.makeTodo(), Status.makeDone()], true);
     });
 
     it('custom-statuses', () => {
-        verifyStatusesAsMarkdownTable([Status.makeInProgress(), Status.makeCancelled()]);
+        verifyStatusesAsMarkdownTable([Status.makeInProgress(), Status.makeCancelled()], true);
     });
 
     it('important-cycle', () => {
@@ -128,7 +134,7 @@ describe('DefaultStatuses', () => {
             ['D', 'Doing - Important', 'X', 'IN_PROGRESS'],
             ['X', 'Done - Important', '!', 'DONE'],
         ];
-        verifyStatusesAsMarkdownTable(constructStatuses(importantCycle));
+        verifyStatusesAsMarkdownTable(constructStatuses(importantCycle), false);
     });
 
     it('todo-in_progress-done', () => {
@@ -137,7 +143,7 @@ describe('DefaultStatuses', () => {
             ['/', 'In Progress', 'x', 'IN_PROGRESS'],
             ['x', 'Done', ' ', 'DONE'],
         ];
-        verifyStatusesAsMarkdownTable(constructStatuses(importantCycle));
+        verifyStatusesAsMarkdownTable(constructStatuses(importantCycle), false);
     });
 
     it('pro-con-cycle', () => {
@@ -145,7 +151,7 @@ describe('DefaultStatuses', () => {
             ['P', 'Pro', 'C', 'NON_TASK'],
             ['C', 'Con', 'P', 'NON_TASK'],
         ];
-        verifyStatusesAsMarkdownTable(constructStatuses(importantCycle));
+        verifyStatusesAsMarkdownTable(constructStatuses(importantCycle), false);
     });
 });
 
@@ -153,7 +159,7 @@ describe('Theme', () => {
     describe('ITS', () => {
         const statuses = itsSupportedStatuses();
         it('Table', () => {
-            verifyStatusesAsMarkdownTable(constructStatuses(statuses));
+            verifyStatusesAsMarkdownTable(constructStatuses(statuses), true);
         });
         it('Tasks', () => {
             verifyStatusesAsTasksList(constructStatuses(statuses));
@@ -166,7 +172,7 @@ describe('Theme', () => {
     describe('Minimal', () => {
         const statuses = minimalSupportedStatuses();
         it('Table', () => {
-            verifyStatusesAsMarkdownTable(constructStatuses(statuses));
+            verifyStatusesAsMarkdownTable(constructStatuses(statuses), true);
         });
         it('Tasks', () => {
             verifyStatusesAsTasksList(constructStatuses(statuses));

@@ -78,11 +78,11 @@ We also see that each status consists of:
 
 ### Goal
 
-Suppose that you wanted to create a set of 3 statuses that cycle between each other:
+Suppose that you wanted to create a set of 3 statuses that cycle between each other, perhaps to make important tasks stand-out from everything else:
 
 <!-- placeholder to force blank line before included text --> <!-- include: DocsSamplesForStatuses.test.DefaultStatuses_important-cycle.approved.md -->
 
-| Status Symbol | Next Status Symbol | Status Name<br>`status.name includes...`<br>`sort by status.name`<br>`group by status.name` | Status Type<br>`status.type is...`<br>`sort by status.type`<br>`group by status.type` | Needs Custom Styling |
+| Status Symbol | Next Status Symbol | Status Name | Status Type | Needs Custom Styling |
 | ----- | ----- | ----- | ----- | ----- |
 | `!` | `D` | Important | `TODO` | Yes |
 | `D` | `X` | Doing - Important | `IN_PROGRESS` | Yes |
