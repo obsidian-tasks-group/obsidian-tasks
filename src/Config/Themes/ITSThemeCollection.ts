@@ -3,7 +3,6 @@ import type { StatusCollection } from '../../StatusCollection';
 /**
  * Status supported by the ITS theme. {@link https://github.com/SlRvb/Obsidian--ITS-Theme}
  * Values recognised by Tasks are excluded.
- * @todo  Check if this is up-to-date.
  * @see {@link StatusSettings.bulkAddStatusCollection}
  */
 export function itsSupportedStatuses() {

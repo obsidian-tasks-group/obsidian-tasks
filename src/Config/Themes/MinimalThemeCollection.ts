@@ -3,7 +3,6 @@ import type { StatusCollection } from '../../StatusCollection';
 /**
  * Status supported by the Minimal theme. {@link https://github.com/kepano/obsidian-minimal}
  * Values recognised by Tasks are excluded.
- * @todo Check if this is up-to-date.
  * @see {@link StatusSettings.bulkAddStatusCollection}
  */
 export function minimalSupportedStatuses() {
