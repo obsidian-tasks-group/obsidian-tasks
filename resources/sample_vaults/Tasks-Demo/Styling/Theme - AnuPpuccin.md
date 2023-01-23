@@ -1,4 +1,4 @@
-# Theme - Primary - AnuPpuccin
+# Theme - AnuPpuccin
 
 <https://github.com/AnubisNekhet/AnuPpuccin>
 
