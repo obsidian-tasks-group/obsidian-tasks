@@ -139,25 +139,28 @@ Remember to set up your chosen CSS Snippet or Theme before setting up the custom
 
 | Status Character | Status Name<br>`status.name includes...`<br>`sort by status.name`<br>`group by status.name` | Next Status Character | Status Type<br>`status.type is...`<br>`sort by status.type`<br>`group by status.type` | Needs Custom Styling |
 | ----- | ----- | ----- | ----- | ----- |
-| `>` | Forwarded | `x` | `TODO` | Yes |
-| `<` | Schedule | `x` | `TODO` | Yes |
-| `?` | Question | `x` | `TODO` | Yes |
-| `!` | Important | `x` | `TODO` | Yes |
-| `"` | Quote | `x` | `TODO` | Yes |
-| `-` | Canceled | `x` | `CANCELLED` | Yes |
-| `*` | Star | `x` | `TODO` | Yes |
-| `l` | Location | `x` | `TODO` | Yes |
-| `i` | Info | `x` | `TODO` | Yes |
-| `S` | Amount/savings/money | `x` | `TODO` | Yes |
-| `I` | Idea/lightbulb | `x` | `TODO` | Yes |
-| `f` | Fire | `x` | `TODO` | Yes |
-| `k` | Key | `x` | `TODO` | Yes |
-| `u` | Up | `x` | `TODO` | Yes |
-| `d` | Down | `x` | `TODO` | Yes |
-| `w` | Win | `x` | `TODO` | Yes |
-| `p` | Pros | `x` | `TODO` | Yes |
-| `c` | Cons | `x` | `TODO` | Yes |
-| `b` | Bookmark | `x` | `TODO` | Yes |
+| `space` | to-do | `x` | `TODO` | No |
+| `/` | incomplete | `x` | `IN_PROGRESS` | Yes |
+| `x` | done | `x` | `DONE` | No |
+| `-` | canceled | `x` | `CANCELLED` | Yes |
+| `>` | forwarded | `x` | `TODO` | Yes |
+| `<` | scheduling | `x` | `TODO` | Yes |
+| `?` | question | `x` | `TODO` | Yes |
+| `!` | important | `x` | `TODO` | Yes |
+| `*` | star | `x` | `TODO` | Yes |
+| `"` | quote | `x` | `TODO` | Yes |
+| `l` | location | `x` | `TODO` | Yes |
+| `b` | bookmark | `x` | `TODO` | Yes |
+| `i` | information | `x` | `TODO` | Yes |
+| `S` | savings | `x` | `TODO` | Yes |
+| `I` | idea | `x` | `TODO` | Yes |
+| `p` | pros | `x` | `TODO` | Yes |
+| `c` | cons | `x` | `TODO` | Yes |
+| `f` | fire | `x` | `TODO` | Yes |
+| `k` | key | `x` | `TODO` | Yes |
+| `w` | win | `x` | `TODO` | Yes |
+| `u` | up | `x` | `TODO` | Yes |
+| `d` | down | `x` | `TODO` | Yes |
 
 <!-- placeholder to force blank line after table --> <!-- endInclude -->
 
@@ -167,26 +170,43 @@ Remember to set up your chosen CSS Snippet or Theme before setting up the custom
 
 | Status Character | Status Name<br>`status.name includes...`<br>`sort by status.name`<br>`group by status.name` | Next Status Character | Status Type<br>`status.type is...`<br>`sort by status.type`<br>`group by status.type` | Needs Custom Styling |
 | ----- | ----- | ----- | ----- | ----- |
+| `space` | Unchecked | `x` | `TODO` | No |
+| `x` | Regular | `x` | `DONE` | No |
+| `X` | Checked | `x` | `DONE` | Yes |
+| `-` | Dropped | `x` | `CANCELLED` | Yes |
 | `>` | Forward | `x` | `TODO` | Yes |
-| `D` | Deferred/Scheduled | `x` | `TODO` | Yes |
+| `D` | Date | `x` | `TODO` | Yes |
 | `?` | Question | `x` | `TODO` | Yes |
-| `!` | Important | `x` | `TODO` | Yes |
+| `/` | Half Done | `x` | `IN_PROGRESS` | Yes |
 | `+` | Add | `x` | `TODO` | Yes |
 | `R` | Research | `x` | `TODO` | Yes |
+| `!` | Important | `x` | `TODO` | Yes |
 | `i` | Idea | `x` | `TODO` | Yes |
 | `B` | Brainstorm | `x` | `TODO` | Yes |
 | `P` | Pro | `x` | `TODO` | Yes |
 | `C` | Con | `x` | `TODO` | Yes |
-| `I` | Info | `x` | `TODO` | Yes |
 | `Q` | Quote | `x` | `TODO` | Yes |
 | `N` | Note | `x` | `TODO` | Yes |
 | `b` | Bookmark | `x` | `TODO` | Yes |
+| `I` | Information | `x` | `TODO` | Yes |
 | `p` | Paraphrase | `x` | `TODO` | Yes |
-| `E` | Example | `x` | `TODO` | Yes |
 | `L` | Location | `x` | `TODO` | Yes |
+| `E` | Example | `x` | `TODO` | Yes |
 | `A` | Answer | `x` | `TODO` | Yes |
 | `r` | Reward | `x` | `TODO` | Yes |
 | `c` | Choice | `x` | `TODO` | Yes |
+| `d` | Doing | `x` | `TODO` | Yes |
+| `T` | Time | `x` | `TODO` | Yes |
+| `@` | Character / Person | `x` | `TODO` | Yes |
+| `t` | Talk | `x` | `TODO` | Yes |
+| `O` | Outline / Plot | `x` | `TODO` | Yes |
+| `~` | Conflict | `x` | `TODO` | Yes |
+| `W` | World | `x` | `TODO` | Yes |
+| `f` | Clue / Find | `x` | `TODO` | Yes |
+| `F` | Foreshadow | `x` | `TODO` | Yes |
+| `H` | Favorite / Health | `x` | `TODO` | Yes |
+| `&` | Symbolism | `x` | `TODO` | Yes |
+| `s` | Secret | `x` | `TODO` | Yes |
 
 <!-- placeholder to force blank line after table --> <!-- endInclude -->
 
