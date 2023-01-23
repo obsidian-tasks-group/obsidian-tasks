@@ -23,6 +23,8 @@ parent: How Tos
 
 This page shows you how to customise the statuses used in your Tasks vault.
 
+For more information, see [Statuses]({{ site.baseurl }}{% link getting-started/statuses.md %}).
+
 ### Core (Built-in) statuses
 
 As installed, the Tasks plugin supports just two statuses for your tasks:
@@ -80,11 +82,11 @@ Suppose that you wanted to create a set of 3 statuses that cycle between each ot
 
 <!-- placeholder to force blank line before included text --> <!-- include: DocsSamplesForStatuses.test.DefaultStatuses_important-cycle.approved.md -->
 
-| Status Character | Status Name<br>`status.name includes...`<br>`sort by status.name`<br>`group by status.name` | Next Status Character | Status Type<br>`status.type is...`<br>`sort by status.type`<br>`group by status.type` | Needs Custom Styling |
+| Status Symbol | Next Status Symbol | Status Name<br>`status.name includes...`<br>`sort by status.name`<br>`group by status.name` | Status Type<br>`status.type is...`<br>`sort by status.type`<br>`group by status.type` | Needs Custom Styling |
 | ----- | ----- | ----- | ----- | ----- |
-| `!` | Important | `D` | `TODO` | Yes |
-| `D` | Doing - Important | `X` | `IN_PROGRESS` | Yes |
-| `X` | Done - Important | `!` | `DONE` | Yes |
+| `!` | `D` | Important | `TODO` | Yes |
+| `D` | `X` | Doing - Important | `IN_PROGRESS` | Yes |
+| `X` | `!` | Done - Important | `DONE` | Yes |
 
 <!-- placeholder to force blank line after included text --> <!-- endInclude -->
 

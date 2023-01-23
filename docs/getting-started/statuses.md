@@ -136,10 +136,10 @@ And this is how you can use them:
 
 <!-- placeholder to force blank line before included text --> <!-- include: DocsSamplesForStatuses.test.DefaultStatuses_core-statuses.approved.md -->
 
-| Status Character | Status Name<br>`status.name includes...`<br>`sort by status.name`<br>`group by status.name` | Next Status Character | Status Type<br>`status.type is...`<br>`sort by status.type`<br>`group by status.type` | Needs Custom Styling |
+| Status Symbol | Next Status Symbol | Status Name<br>`status.name includes...`<br>`sort by status.name`<br>`group by status.name` | Status Type<br>`status.type is...`<br>`sort by status.type`<br>`group by status.type` | Needs Custom Styling |
 | ----- | ----- | ----- | ----- | ----- |
-| `space` | Todo | `x` | `TODO` | No |
-| `x` | Done | `space` | `DONE` | No |
+| `space` | `x` | Todo | `TODO` | No |
+| `x` | `space` | Done | `DONE` | No |
 
 <!-- placeholder to force blank line after included text --> <!-- endInclude -->
 
@@ -167,10 +167,10 @@ And this is how you can use them:
 
 <!-- placeholder to force blank line before included text --> <!-- include: DocsSamplesForStatuses.test.DefaultStatuses_custom-statuses.approved.md -->
 
-| Status Character | Status Name<br>`status.name includes...`<br>`sort by status.name`<br>`group by status.name` | Next Status Character | Status Type<br>`status.type is...`<br>`sort by status.type`<br>`group by status.type` | Needs Custom Styling |
+| Status Symbol | Next Status Symbol | Status Name<br>`status.name includes...`<br>`sort by status.name`<br>`group by status.name` | Status Type<br>`status.type is...`<br>`sort by status.type`<br>`group by status.type` | Needs Custom Styling |
 | ----- | ----- | ----- | ----- | ----- |
-| `/` | In Progress | `x` | `IN_PROGRESS` | Yes |
-| `-` | Cancelled | `space` | `CANCELLED` | Yes |
+| `/` | `x` | In Progress | `IN_PROGRESS` | Yes |
+| `-` | `space` | Cancelled | `CANCELLED` | Yes |
 
 <!-- placeholder to force blank line after included text --> <!-- endInclude -->
 

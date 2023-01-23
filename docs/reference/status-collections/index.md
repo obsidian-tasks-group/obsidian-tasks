@@ -24,7 +24,7 @@ has_toc: true
 {: .released }
 Custom statuses were introduced in Tasks X.Y.Z
 
-You can control the behaviour of your tasks (such as what happens when you click on a checkbox), using Tasks' [Custom Statuses]({{ site.baseurl }}{% link getting-started/statuses.md %}) feature.
+You can control the behaviour of your tasks (such as what happens when you click on a checkbox), using Tasks' [Statuses]({{ site.baseurl }}{% link getting-started/statuses.md %}) feature.
 
 The theme and snippet authors generally refer to this as 'custom checkboxes'.
 
@@ -58,3 +58,7 @@ We plan to add one-click support for these themes in a future release:
 - [AnuPpuccin](https://publish.obsidian.md/hub/02+-+Community+Expansions/02.05+All+Community+Expansions/Themes/AnuPpuccin)
 - [Aura](https://publish.obsidian.md/hub/02+-+Community+Expansions/02.05+All+Community+Expansions/Themes/Aura)
 - [LYT Mode](https://publish.obsidian.md/hub/02+-+Community+Expansions/02.05+All+Community+Expansions/Themes/LYT+Mode)
+
+## Supported CSS Snippets and Themes
+
+See the table of contents below.

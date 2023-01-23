@@ -27,6 +27,8 @@ This pages walks through downloading and using a CSS snippet to make them look g
 
 We assume that you know how to [use CSS snippets in Obsidian](https://help.obsidian.md/How+to/Add+custom+styles#Use+Themes+and+or+CSS+snippets).
 
+For more information, see [Statuses]({{ site.baseurl }}{% link getting-started/statuses.md %}).
+
 ## Summary
 
 If you are using custom statuses in Tasks, you will need to install and enable **one of** the following, in order for your tasks to look good:
