@@ -22,7 +22,10 @@ has_toc: false
 
 ## Introduction
 
-This page provides an overview of using Tasks with **Custom Statuses**, which are also known as Custom Checkboxes, or Alternative Checkboxes.
+This page provides an overview of using Tasks with **Core Statuses** **Custom Statuses**, which some people refer to as Custom Checkboxes or Alternative/Alternate Checkboxes.
+
+{: .released }
+Custom Statuses were introduced in Tasks X.Y.Z
 
 Further information is available in the following related pages.
 
@@ -107,27 +110,29 @@ The tasks shown are purely examples for context. The `~` column is just an arbit
 {: .warning }
 The `group by` results of the above table are subject to change.
 
-## Standard Markdown task statuses
+---
 
-Tasks have a status.
+## Core Statuses
 
-The convention in markdown is:
+Core statuses represent conventional markdown tasks:
 
 ```text
 - [ ] I am a task that is not yet done
 - [x] I am a task that has been done
 ```
 
----
+They don't require any custom CSS styling or theming on order to display correctly in Tasks blocks or Live Preview.
 
-## Core Statuses
+This is what the Core Statuses look like initially in Tasks' settings:
 
-{: .released }
-Introduced in Tasks X.Y.Z
+![Core Statuses](../images/settings-core-statuses.png)
 
-Tasks supports custom task statuses.
+Note that `Todo` is followed by `Done`, in order to preserve compatibility with earlier Tasks releases.
 
-This table shows the statuses provided by default:
+{: .info }
+You can edit the 'Todo' core status to make its Next Status Symbol be `/` and enable `Todo` -> `In Progress` -> `Done`, if you prefer.
+
+And this is how you can use them:
 
 <!-- placeholder to force blank line before included text --> <!-- include: DocsSamplesForStatuses.test.DefaultStatuses_core-statuses.approved.md -->
 
@@ -140,21 +145,25 @@ This table shows the statuses provided by default:
 
 ### Editing core statuses
 
-The Tasks settings shows the core statuses:
+The only restriction on editing core statuses is that you cannot change their Status Symbols.
 
-![Core Statuses](../images/settings-core-statuses.png)
-
-Note that `Todo` is followed by `Done`, in order to preserve compatibility with earlier Tasks releases.
-
-{: .info }
-These core statuses are currently read-only.
-It will soon be possible to edit these custom statuses, and enable `Todo` -> `In Progress` -> `Done`.
+You are free to rename them, change their next character, and even change their Status Type, should you wish.
 
 ---
 
-## Custom task statuses
+## Custom Statuses
+
+Custom statuses represent any non-standard markdown tasks.
+
+They **require custom CSS styling or theming** on order to display correctly in Tasks blocks or Live Preview.
 
 ### Default custom statuses
+
+This is what the Custom Statuses look like initially in Tasks' settings:
+
+![Default custom statuses](../images/settings-custom-statuses-initial.png)
+
+And this is how you can use them:
 
 <!-- placeholder to force blank line before included text --> <!-- include: DocsSamplesForStatuses.test.DefaultStatuses_custom-statuses.approved.md -->
 

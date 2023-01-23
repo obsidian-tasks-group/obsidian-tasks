@@ -23,7 +23,7 @@ parent: How Tos
 
 This page shows you how to customise the statuses used in your Tasks vault.
 
-### Built-in statuses
+### Core (Built-in) statuses
 
 As installed, the Tasks plugin supports just two statuses for your tasks:
 
@@ -48,7 +48,7 @@ Tasks now allows you to add custom statuses to your settings, to give you powerf
 
 This is what you see in the Tasks settings when you first look at the Task Statuses section:
 
-![Initial Task Statuses Options](../images/settings-custom-statuses-initial.png)
+![Initial Task Statuses Options](../images/settings-statuses-initial.png)
 
 There are two sections:
 
@@ -68,6 +68,7 @@ We also see that each status consists of:
 - **Status Symbol** (for example, `x` and  `-`)
 - **Status Name** (for example, 'In Progress')
 - **Next Status Symbol** (for example, `x` and `space`)
+- **Status Type** (one of `TODO`, `DONE`, `IN_PROGRESS` or `CANCELLED`)
 
 ---
 
@@ -94,19 +95,24 @@ Suppose that you wanted to create a set of 3 statuses that cycle between each ot
     - This will create a new, empty status:
     - ![Settings after adding a new empty status](../images/settings-custom-statuses-added-1.png)
 1. Click on the pencil icon
-    - This will open the status edit modal:
+    - This will open the status edit modal.
+    - Notice the red colouring, to indicate values which are not yet valid.
+    - If you aren't sure why something is invalid, click on the Checkmark button and an explanatory notice will pop up for a few seconds.
     - ![The modal for editing statuses](../images/settings-custom-statuses-dialog-1.png)
-1. Enter the desired values:
+1. Enter the desired values (see the table in Goal above):
     - ![Enter the values for our new status](../images/settings-custom-statuses-dialog-2.png)
-1. Click on the Check button to save the new status, and view the result:
+1. Click on the Checkmark button to save the new status, and view the result:
     - ![After saving the values for the new status](../images/settings-custom-statuses-added.png)
-1. Repeat for the other two statuses and you should see:
+1. Repeat for the other two statuses in Goal above and you should see a clear reflection of the flow of your new statuses
+    - `[!]` -> `[D]` -> `[X]` -> `[!]`:
     - ![After adding the other two new statuses](../images/settings-custom-statuses-important-loop-added.png)
 
 {: .info }
 > The status changes are applied to newly edited tasks and subsequently opened notes immediately.
 >
-> You do not need to restart Obsidian, unless you want to make Tasks re-read all the tasks in your vault, for example so that searches are aware of the changed statuses.
+> Whilst experimenting and setting up your statuses, you do not need to restart Obsidian, unless you want to make Tasks re-read all the tasks in your vault, for example so that searches are aware of the changed statuses.
+>
+> Once you are happy with your statuses, we recommend restarting Obsidian, to ensure that all tasks and query results use the correct settings.
 
 {: .warning }
 Tasks currently allows creation of more than one status with the same symbol. It silently ignores any duplicate symbols: only the first will be used. If in doubt, examine the available statuses in the status dropdown in the [‘Create or edit Task’ Modal]({{ site.baseurl }}{% link getting-started/create-or-edit-task.md %}).
