@@ -151,6 +151,9 @@ describe('Theme', () => {
         it('Tasks', () => {
             verifyStatusesAsTasksList(constructStatuses(statuses));
         });
+        it('Text', () => {
+            verifyStatusesAsTasksText(constructStatuses(statuses));
+        });
     });
 });
 
