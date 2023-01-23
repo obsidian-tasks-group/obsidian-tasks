@@ -14,6 +14,15 @@ import { StatusTypeField } from '../src/Query/Filter/StatusTypeField';
 import type { StatusCollection } from '../src/StatusCollection';
 import { TaskBuilder } from './TestingTools/TaskBuilder';
 
+function verifyMarkdown(markdown: string) {
+    let output = '<!-- placeholder to force blank line before table -->\n\n';
+    output += markdown;
+    output += '\n\n<!-- placeholder to force blank line after table -->\n';
+    let options = new Options();
+    options = options.forFile().withFileExtention('md');
+    verify(output, options);
+}
+
 class MarkdownTable {
     private columnNames: string[];
     private _markdown = '';
@@ -48,12 +57,7 @@ class MarkdownTable {
     }
 
     public verify() {
-        let output = '<!-- placeholder to force blank line before table -->\n\n';
-        output += this.markdown;
-        output += '\n\n<!-- placeholder to force blank line after table -->\n';
-        let options = new Options();
-        options = options.forFile().withFileExtention('md');
-        verify(output, options);
+        verifyMarkdown(this.markdown);
     }
 }
 
