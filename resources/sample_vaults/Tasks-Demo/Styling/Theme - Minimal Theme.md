@@ -4,7 +4,7 @@
 
 Available checkbox icons: <https://minimal.guide/Block+types/Checklists>
 
-<!-- placeholder to force blank line before tasks --> <!-- include: DocsSamplesForStatuses.test.DefaultStatuses_minimal-supported-statuses.approved.tasks.md -->
+<!-- placeholder to force blank line before included text --> <!-- include: DocsSamplesForStatuses.test.Theme_Minimal Tasks.approved.md -->
 
 - [ ] #task `space` to-do
 - [/] #task `/` incomplete
@@ -29,7 +29,7 @@ Available checkbox icons: <https://minimal.guide/Block+types/Checklists>
 - [u] #task `u` up
 - [d] #task `d` down
 
-<!-- placeholder to force blank line after tasks --> <!-- endInclude -->
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
 
 ## Status grouped by status.type
 

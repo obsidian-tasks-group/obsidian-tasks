@@ -43,7 +43,7 @@ Each column shows an example task with the given status type.
 
 The tasks shown are purely examples for context. The `~` column is just an arbitrary example to show `NON_TASK`'s behaviour'. You can assign each of these types to any of your custom statuses.
 
-<!-- placeholder to force blank line before table --> <!-- include: DocsSamplesForStatuses.test.Status_Transitions status-types.approved.md -->
+<!-- placeholder to force blank line before included text --> <!-- include: DocsSamplesForStatuses.test.Status_Transitions status-types.approved.md -->
 
 | Operation | TODO | IN_PROGRESS | DONE | CANCELLED | NON_TASK |
 | ----- | ----- | ----- | ----- | ----- | ----- |
@@ -63,7 +63,7 @@ The tasks shown are purely examples for context. The `~` column is just an arbit
 | Name for `group by status.type` | 2 TODO | 1 IN_PROGRESS | 3 DONE | 4 CANCELLED | 5 NON_TASK |
 | Name for `group by status.name` | Todo | In Progress | Done | Cancelled | My custom status |
 
-<!-- placeholder to force blank line after table --> <!-- endInclude -->
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
 
 {: .warning }
 The `group by` results of the above table are subject to change.
@@ -90,7 +90,7 @@ Tasks supports custom task statuses.
 
 This table shows the statuses provided by default:
 
-<!-- placeholder to force blank line before table --> <!-- include: DocsSamplesForStatuses.test.DefaultStatuses_core-statuses.approved.md -->
+<!-- placeholder to force blank line before included text --> <!-- include: DocsSamplesForStatuses.test.DefaultStatuses_core-statuses.approved.md -->
 
 | Status Character | Status Name<br>`status.name includes...`<br>`sort by status.name`<br>`group by status.name` | Next Status Character | Status Type<br>`status.type is...`<br>`sort by status.type`<br>`group by status.type` | Needs Custom Styling |
 | ----- | ----- | ----- | ----- | ----- |
@@ -99,7 +99,7 @@ This table shows the statuses provided by default:
 | `x` | Done | `space` | `DONE` | No |
 | `-` | Cancelled | `space` | `CANCELLED` | Yes |
 
-<!-- placeholder to force blank line after table --> <!-- endInclude -->
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
 
 ### Editing core statuses
 
@@ -135,7 +135,7 @@ Remember to set up your chosen CSS Snippet or Theme before setting up the custom
 
 ### Minimal supported statuses
 
-<!-- placeholder to force blank line before table --> <!-- include: DocsSamplesForStatuses.test.DefaultStatuses_minimal-supported-statuses.approved.md -->
+<!-- placeholder to force blank line before included text --> <!-- include: DocsSamplesForStatuses.test.Theme_Minimal Table.approved.md -->
 
 | Status Character | Status Name<br>`status.name includes...`<br>`sort by status.name`<br>`group by status.name` | Next Status Character | Status Type<br>`status.type is...`<br>`sort by status.type`<br>`group by status.type` | Needs Custom Styling |
 | ----- | ----- | ----- | ----- | ----- |
@@ -162,11 +162,11 @@ Remember to set up your chosen CSS Snippet or Theme before setting up the custom
 | `u` | up | `x` | `TODO` | Yes |
 | `d` | down | `x` | `TODO` | Yes |
 
-<!-- placeholder to force blank line after table --> <!-- endInclude -->
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
 
 ### ITS Theme supported statuses
 
-<!-- placeholder to force blank line before table --> <!-- include: DocsSamplesForStatuses.test.DefaultStatuses_its-theme-supported-statuses.approved.md -->
+<!-- placeholder to force blank line before included text --> <!-- include: DocsSamplesForStatuses.test.Theme_ITS Table.approved.md -->
 
 | Status Character | Status Name<br>`status.name includes...`<br>`sort by status.name`<br>`group by status.name` | Next Status Character | Status Type<br>`status.type is...`<br>`sort by status.type`<br>`group by status.type` | Needs Custom Styling |
 | ----- | ----- | ----- | ----- | ----- |
@@ -208,7 +208,7 @@ Remember to set up your chosen CSS Snippet or Theme before setting up the custom
 | `&` | Symbolism | `x` | `TODO` | Yes |
 | `s` | Secret | `x` | `TODO` | Yes |
 
-<!-- placeholder to force blank line after table --> <!-- endInclude -->
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
 
 ## Using Statuses
 
