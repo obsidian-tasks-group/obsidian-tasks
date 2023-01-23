@@ -15,7 +15,7 @@ To:
 ## Printable ASCII characters
 ( alphanumeric, symbols and signs )
 
-- [ ] #task `` ASCII code 32 - Space
+- [ ] #task `space` ASCII code 32 - Space
 - [!] #task `!` ASCII code 33 - Exclamation mark
 - ["] #task `"` ASCII code 34 - Double quotes ; Quotation mark ; speech marks
 - [#] #task `#` ASCII code 35 - Number sign
@@ -79,7 +79,7 @@ To:
 - []] #task `]` ASCII code 93 - box brackets or square brackets, closing bracket
 - [^] #task `^` ASCII code 94 - Circumflex accent or Caret
 - [_] #task `_` ASCII code 95 - underscore , understrike , underbar or low line
-- [`] #task ``` ASCII code 96 - Grave accent
+- [`] #task `backtick` ASCII code 96 - Grave accent
 - [a] #task `a` ASCII code 97 - Lowercase letter a , minuscule a
 - [b] #task `b` ASCII code 98 - Lowercase letter b , minuscule b
 - [c] #task `c` ASCII code 99 - Lowercase letter c , minuscule c
