@@ -1,6 +1,6 @@
 <!-- placeholder to force blank line before included text -->
 
-| Operation | TODO | IN_PROGRESS | DONE | CANCELLED | NON_TASK |
+| Operation and status.type | TODO | IN_PROGRESS | DONE | CANCELLED | NON_TASK |
 | ----- | ----- | ----- | ----- | ----- | ----- |
 | Example Task | `- [ ] demo` | `- [/] demo` | `- [x] demo` | `- [-] demo` | `- [~] demo` |
 | Matches `done` | no | no | YES | YES | YES |

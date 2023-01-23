@@ -158,7 +158,7 @@ describe('Theme', () => {
 });
 
 function verifyTransitionsAsMarkdownTable(statuses: Status[]) {
-    const columnNames: string[] = ['Operation'];
+    const columnNames: string[] = ['Operation and status.type'];
     statuses.forEach((s) => {
         const title = s.type;
         columnNames.push(title);

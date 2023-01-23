@@ -45,7 +45,7 @@ The tasks shown are purely examples for context. The `~` column is just an arbit
 
 <!-- placeholder to force blank line before included text --> <!-- include: DocsSamplesForStatuses.test.Status_Transitions status-types.approved.md -->
 
-| Operation | TODO | IN_PROGRESS | DONE | CANCELLED | NON_TASK |
+| Operation and status.type | TODO | IN_PROGRESS | DONE | CANCELLED | NON_TASK |
 | ----- | ----- | ----- | ----- | ----- | ----- |
 | Example Task | `- [ ] demo` | `- [/] demo` | `- [x] demo` | `- [-] demo` | `- [~] demo` |
 | Matches `done` | no | no | YES | YES | YES |
