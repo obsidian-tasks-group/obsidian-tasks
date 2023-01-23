@@ -133,6 +133,17 @@ Either way, I can make them toggle to each other, and by giving them the type `N
 
 <!-- placeholder to force blank line after included text --> <!-- endInclude -->
 
+## Done date, Recurrence and Statuses
+
+It is the Task Status Type changing **to** `DONE` that controls when:
+
+- tasks **gain** their Done dates (if Done dates are enabled in settings),
+- new copies of recurring tasks are created.
+
+It is the Task Status Type changing **from** `DONE` that controls when:
+
+- tasks **lose** their Done dates (if Done dates are enabled in settings).
+
 ## Controlling behaviour of Statuses
 
 This table demonstrates the behaviour of each of the status types in Tasks.
