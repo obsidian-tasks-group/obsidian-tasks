@@ -20,6 +20,20 @@ has_toc: false
 
 ---
 
+## Introduction
+
+This page provides an overview of using Tasks with **Custom Statuses**, which are also known as Custom Checkboxes, or Alternative Checkboxes.
+
+Further information is available in the following related pages.
+
+### Related pages
+
+- [How to style custom statuses]({{ site.baseurl }}{% link how-to/style-custom-statuses.md %}).
+- [How to set up your custom statuses]({{ site.baseurl }}{% link how-to/set-up-custom-statuses.md %}).
+- [Status Collections]({{ site.baseurl }}{% link reference/status-collections/index.md %}).
+
+---
+
 ## What's in a status?
 
 - `status symbol`
@@ -163,14 +177,6 @@ For details, see [Filters for Task Statuses]({{ site.baseurl }}{% link queries/f
 
 {: .info }
 We envisage adding `status.symbol`.
-
-## Related pages
-
-- [How to set up your custom statuses]({{ site.baseurl }}{% link how-to/set-up-custom-statuses.md %}).
-- [How to style custom statuses]({{ site.baseurl }}{% link how-to/style-custom-statuses.md %}).
-- [Status Collections]({{ site.baseurl }}{% link reference/status-collections/index.md %}).
-
----
 
 ## Credit: Sytone and the 'Tasks SQL Powered' plugin
 
