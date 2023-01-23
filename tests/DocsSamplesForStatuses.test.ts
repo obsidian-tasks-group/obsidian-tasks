@@ -11,8 +11,8 @@ import { Group } from '../src/Query/Group';
 import { StatusNameField } from '../src/Query/Filter/StatusNameField';
 import { StatusTypeField } from '../src/Query/Filter/StatusTypeField';
 import type { StatusCollection } from '../src/StatusCollection';
-import { minimalSupportedStatuses } from '../src/Config/Themes/MinimalThemeCollection';
-import { itsSupportedStatuses } from '../src/Config/Themes/ITSThemeCollection';
+import { minimalSupportedStatuses } from '../src/Config/Themes';
+import { itsSupportedStatuses } from '../src/Config/Themes';
 import { TaskBuilder } from './TestingTools/TaskBuilder';
 
 function verifyMarkdown(markdown: string) {

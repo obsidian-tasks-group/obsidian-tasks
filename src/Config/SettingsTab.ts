@@ -10,8 +10,8 @@ import { StatusSettings } from './StatusSettings';
 import settingsJson from './settingsConfiguration.json';
 
 import { CustomStatusModal } from './CustomStatusModal';
-import { minimalSupportedStatuses } from './Themes/MinimalThemeCollection';
-import { itsSupportedStatuses } from './Themes/ITSThemeCollection';
+import { minimalSupportedStatuses } from './Themes';
+import { itsSupportedStatuses } from './Themes';
 
 export class SettingsTab extends PluginSettingTab {
     // If the UI needs a more complex setting you can create a
