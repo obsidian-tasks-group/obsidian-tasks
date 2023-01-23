@@ -22,14 +22,18 @@ has_toc: false
 
 ## Introduction
 
-This page provides an overview of using Tasks with **Core Statuses** **Custom Statuses**, which some people refer to as Custom Checkboxes or Alternative/Alternate Checkboxes.
-
 {: .released }
 Custom Statuses were introduced in Tasks X.Y.Z
 
-Further information is available in the following related pages.
+This page provides an overview of using Tasks with **Custom Statuses**, which some people refer to as Custom Checkboxes or Alternative/Alternate Checkboxes.
+
+Here's the kind of thing that you can do:
+
+![Selection of checkboxes from Minimal theme](../images/theme-minimal-reading-view-sample.png) ![Selection of checkboxes from ITS theme](../images/theme-its-reading-view-sample.png)
 
 ### Related pages
+
+Once you're comfortable with the background information in this page, further information is available in the following related pages.
 
 - [How to style custom statuses]({{ site.baseurl }}{% link how-to/style-custom-statuses.md %}).
 - [How to set up your custom statuses]({{ site.baseurl }}{% link how-to/set-up-custom-statuses.md %}).
