@@ -91,12 +91,7 @@ function verifyStatusesAsTasksList(statuses: Status[]) {
         const statusCharacter = getPrintableSymbol(status.symbol);
         markdown += `- [${status.symbol}] #task ${statusCharacter} ${status.name}\n`;
     }
-    let output = '<!-- placeholder to force blank line before included text -->\n\n';
-    output += markdown;
-    output += '\n\n<!-- placeholder to force blank line after included text -->\n';
-    let options = new Options();
-    options = options.forFile().withFileExtention('tasks.md');
-    verify(output, options);
+    verifyMarkdown(markdown);
 }
 
 function constructStatuses(importedStatuses: StatusCollection) {
@@ -114,18 +109,6 @@ describe('DefaultStatuses', () => {
         verifyStatusesAsMarkdownTable(new StatusRegistry().registeredStatuses);
     });
 
-    it('minimal-supported-statuses', () => {
-        const importedStatuses = StatusSettingsHelpers.minimalSupportedStatuses();
-        verifyStatusesAsMarkdownTable(constructStatuses(importedStatuses));
-        verifyStatusesAsTasksList(constructStatuses(importedStatuses));
-    });
-
-    it('its-theme-supported-statuses', () => {
-        const importedStatuses = StatusSettingsHelpers.itsSupportedStatuses();
-        verifyStatusesAsMarkdownTable(constructStatuses(importedStatuses));
-        verifyStatusesAsTasksList(constructStatuses(importedStatuses));
-    });
-
     it('important-cycle', () => {
         const importantCycle: StatusCollection = [
             ['!', 'Important', 'D', 'TODO'],
@@ -133,6 +116,28 @@ describe('DefaultStatuses', () => {
             ['X', 'Done - Important', '!', 'DONE'],
         ];
         verifyStatusesAsMarkdownTable(constructStatuses(importantCycle));
+    });
+});
+
+describe('Theme', () => {
+    describe('ITS', () => {
+        const statuses = StatusSettingsHelpers.itsSupportedStatuses();
+        it('Table', () => {
+            verifyStatusesAsMarkdownTable(constructStatuses(statuses));
+        });
+        it('Tasks', () => {
+            verifyStatusesAsTasksList(constructStatuses(statuses));
+        });
+    });
+
+    describe('Minimal', () => {
+        const statuses = StatusSettingsHelpers.minimalSupportedStatuses();
+        it('Table', () => {
+            verifyStatusesAsMarkdownTable(constructStatuses(statuses));
+        });
+        it('Tasks', () => {
+            verifyStatusesAsTasksList(constructStatuses(statuses));
+        });
     });
 });
 
