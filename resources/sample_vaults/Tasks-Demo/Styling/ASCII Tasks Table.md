@@ -9,234 +9,234 @@ Conversion done on the 'Printable ASCII characters' table from the above site:
 From:
     (ASCII code \d+) =.\*\*(.)\*\*.\( (.+) \)
 To:
-    - [$2] #task `$2` $1 - $3
+    - [$2] #task $1 - `$2` - $3
 -->
 
 ## Printable ASCII characters
 ( alphanumeric, symbols and signs )
 
-- [ ] #task `space` ASCII code 32 - Space
-- [!] #task `!` ASCII code 33 - Exclamation mark
-- ["] #task `"` ASCII code 34 - Double quotes ; Quotation mark ; speech marks
-- [#] #task `#` ASCII code 35 - Number sign
-- [$] #task `$` ASCII code 36 - Dollar sign
-- [%] #task `%` ASCII code 37 - Percent sign
-- [&] #task `&` ASCII code 38 - Ampersand
-- ['] #task `'` ASCII code 39 - Single quote or Apostrophe
-- [(] #task `(` ASCII code 40 - round brackets or parentheses, opening round bracket
-- [)] #task `)` ASCII code 41 - parentheses or round brackets, closing parentheses
-- [*] #task `*` ASCII code 42 - Asterisk
-- [+] #task `+` ASCII code 43 - Plus sign
-- [,] #task `,` ASCII code 44 - Comma
-- [-] #task `-` ASCII code 45 - Hyphen , minus sign
-- [.] #task `.` ASCII code 46 - Dot, full stop
-- [/] #task `/` ASCII code 47 - Slash , forward slash , fraction bar , division slash
-- [0] #task `0` ASCII code 48 - number zero
-- [1] #task `1` ASCII code 49 - number one
-- [2] #task `2` ASCII code 50 - number two
-- [3] #task `3` ASCII code 51 - number three
-- [4] #task `4` ASCII code 52 - number four
-- [5] #task `5` ASCII code 53 - number five
-- [6] #task `6` ASCII code 54 - number six
-- [7] #task `7` ASCII code 55 - number seven
-- [8] #task `8` ASCII code 56 - number eight
-- [9] #task `9` ASCII code 57 - number nine
-- [:] #task `:` ASCII code 58 - Colon
-- [;] #task `;` ASCII code 59 - Semicolon
-- [<] #task `<` ASCII code 60 - Less-than sign
-- [=] #task `=` ASCII code 61 - Equals sign
-- [>] #task `>` ASCII code 62 - Greater-than sign ; Inequality
-- [?] #task `?` ASCII code 63 - Question mark
-- [@] #task `@` ASCII code 64 - At sign
-- [A] #task `A` ASCII code 65 - Capital letter A
-- [B] #task `B` ASCII code 66 - Capital letter B
-- [C] #task `C` ASCII code 67 - Capital letter C
-- [D] #task `D` ASCII code 68 - Capital letter D
-- [E] #task `E` ASCII code 69 - Capital letter E
-- [F] #task `F` ASCII code 70 - Capital letter F
-- [G] #task `G` ASCII code 71 - Capital letter G
-- [H] #task `H` ASCII code 72 - Capital letter H
-- [I] #task `I` ASCII code 73 - Capital letter I
-- [J] #task `J` ASCII code 74 - Capital letter J
-- [K] #task `K` ASCII code 75 - Capital letter K
-- [L] #task `L` ASCII code 76 - Capital letter L
-- [M] #task `M` ASCII code 77 - Capital letter M
-- [N] #task `N` ASCII code 78 - Capital letter N
-- [O] #task `O` ASCII code 79 - Capital letter O
-- [P] #task `P` ASCII code 80 - Capital letter P
-- [Q] #task `Q` ASCII code 81 - Capital letter Q
-- [R] #task `R` ASCII code 82 - Capital letter R
-- [S] #task `S` ASCII code 83 - Capital letter S
-- [T] #task `T` ASCII code 84 - Capital letter T
-- [U] #task `U` ASCII code 85 - Capital letter U
-- [V] #task `V` ASCII code 86 - Capital letter V
-- [W] #task `W` ASCII code 87 - Capital letter W
-- [X] #task `X` ASCII code 88 - Capital letter X
-- [Y] #task `Y` ASCII code 89 - Capital letter Y
-- [Z] #task `Z` ASCII code 90 - Capital letter Z
-- [[] #task `[` ASCII code 91 - square brackets or box brackets, opening bracket
-- [\] #task `\` ASCII code 92 - Backslash , reverse slash
-- []] #task `]` ASCII code 93 - box brackets or square brackets, closing bracket
-- [^] #task `^` ASCII code 94 - Circumflex accent or Caret
-- [_] #task `_` ASCII code 95 - underscore , understrike , underbar or low line
-- [`] #task `backtick` ASCII code 96 - Grave accent
-- [a] #task `a` ASCII code 97 - Lowercase letter a , minuscule a
-- [b] #task `b` ASCII code 98 - Lowercase letter b , minuscule b
-- [c] #task `c` ASCII code 99 - Lowercase letter c , minuscule c
-- [d] #task `d` ASCII code 100 - Lowercase letter d , minuscule d
-- [e] #task `e` ASCII code 101 - Lowercase letter e , minuscule e
-- [f] #task `f` ASCII code 102 - Lowercase letter f , minuscule f
-- [g] #task `g` ASCII code 103 - Lowercase letter g , minuscule g
-- [h] #task `h` ASCII code 104 - Lowercase letter h , minuscule h
-- [i] #task `i` ASCII code 105 - Lowercase letter i , minuscule i
-- [j] #task `j` ASCII code 106 - Lowercase letter j , minuscule j
-- [k] #task `k` ASCII code 107 - Lowercase letter k , minuscule k
-- [l] #task `l` ASCII code 108 - Lowercase letter l , minuscule l
-- [m] #task `m` ASCII code 109 - Lowercase letter m , minuscule m
-- [n] #task `n` ASCII code 110 - Lowercase letter n , minuscule n
-- [o] #task `o` ASCII code 111 - Lowercase letter o , minuscule o
-- [p] #task `p` ASCII code 112 - Lowercase letter p , minuscule p
-- [q] #task `q` ASCII code 113 - Lowercase letter q , minuscule q
-- [r] #task `r` ASCII code 114 - Lowercase letter r , minuscule r
-- [s] #task `s` ASCII code 115 - Lowercase letter s , minuscule s
-- [t] #task `t` ASCII code 116 - Lowercase letter t , minuscule t
-- [u] #task `u` ASCII code 117 - Lowercase letter u , minuscule u
-- [v] #task `v` ASCII code 118 - Lowercase letter v , minuscule v
-- [w] #task `w` ASCII code 119 - Lowercase letter w , minuscule w
-- [x] #task `x` ASCII code 120 - Lowercase letter x , minuscule x
-- [y] #task `y` ASCII code 121 - Lowercase letter y , minuscule y
-- [z] #task `z` ASCII code 122 - Lowercase letter z , minuscule z
-- [{] #task `{` ASCII code 123 - braces or curly brackets, opening braces
-- [|] #task `|` ASCII code 124 - vertical-bar, vbar, vertical line or vertical slash
-- [}] #task `}` ASCII code 125 - curly brackets or braces, closing curly brackets
-- [~] #task `~` ASCII code 126 - Tilde ; swung dash
+- [ ] #task ASCII code 32 - `space` 2 - Space
+- [!] #task ASCII code 33 - `!` - Exclamation mark
+- ["] #task ASCII code 34 - `"` - Double quotes ; Quotation mark ; speech marks
+- [#] #task ASCII code 35 - `#` - Number sign
+- [$] #task ASCII code 36 - `$` - Dollar sign
+- [%] #task ASCII code 37 - `%` - Percent sign
+- [&] #task ASCII code 38 - `&` - Ampersand
+- ['] #task ASCII code 39 - `'` - Single quote or Apostrophe
+- [(] #task ASCII code 40 - `(` - round brackets or parentheses, opening round bracket
+- [)] #task ASCII code 41 - `)` - parentheses or round brackets, closing parentheses
+- [*] #task ASCII code 42 - `*` - Asterisk
+- [+] #task ASCII code 43 - `+` - Plus sign
+- [,] #task ASCII code 44 - `,` - Comma
+- [-] #task ASCII code 45 - `-` - Hyphen , minus sign
+- [.] #task ASCII code 46 - `.` - Dot, full stop
+- [/] #task ASCII code 47 - `/` - Slash , forward slash , fraction bar , division slash
+- [0] #task ASCII code 48 - `0` - number zero
+- [1] #task ASCII code 49 - `1` - number one
+- [2] #task ASCII code 50 - `2` - number two
+- [3] #task ASCII code 51 - `3` - number three
+- [4] #task ASCII code 52 - `4` - number four
+- [5] #task ASCII code 53 - `5` - number five
+- [6] #task ASCII code 54 - `6` - number six
+- [7] #task ASCII code 55 - `7` - number seven
+- [8] #task ASCII code 56 - `8` - number eight
+- [9] #task ASCII code 57 - `9` - number nine
+- [:] #task ASCII code 58 - `:` - Colon
+- [;] #task ASCII code 59 - `;` - Semicolon
+- [<] #task ASCII code 60 - `<` - Less-than sign
+- [=] #task ASCII code 61 - `=` - Equals sign
+- [>] #task ASCII code 62 - `>` - Greater-than sign ; Inequality
+- [?] #task ASCII code 63 - `?` - Question mark
+- [@] #task ASCII code 64 - `@` - At sign
+- [A] #task ASCII code 65 - `A` - Capital letter A
+- [B] #task ASCII code 66 - `B` - Capital letter B
+- [C] #task ASCII code 67 - `C` - Capital letter C
+- [D] #task ASCII code 68 - `D` - Capital letter D
+- [E] #task ASCII code 69 - `E` - Capital letter E
+- [F] #task ASCII code 70 - `F` - Capital letter F
+- [G] #task ASCII code 71 - `G` - Capital letter G
+- [H] #task ASCII code 72 - `H` - Capital letter H
+- [I] #task ASCII code 73 - `I` - Capital letter I
+- [J] #task ASCII code 74 - `J` - Capital letter J
+- [K] #task ASCII code 75 - `K` - Capital letter K
+- [L] #task ASCII code 76 - `L` - Capital letter L
+- [M] #task ASCII code 77 - `M` - Capital letter M
+- [N] #task ASCII code 78 - `N` - Capital letter N
+- [O] #task ASCII code 79 - `O` - Capital letter O
+- [P] #task ASCII code 80 - `P` - Capital letter P
+- [Q] #task ASCII code 81 - `Q` - Capital letter Q
+- [R] #task ASCII code 82 - `R` - Capital letter R
+- [S] #task ASCII code 83 - `S` - Capital letter S
+- [T] #task ASCII code 84 - `T` - Capital letter T
+- [U] #task ASCII code 85 - `U` - Capital letter U
+- [V] #task ASCII code 86 - `V` - Capital letter V
+- [W] #task ASCII code 87 - `W` - Capital letter W
+- [X] #task ASCII code 88 - `X` - Capital letter X
+- [Y] #task ASCII code 89 - `Y` - Capital letter Y
+- [Z] #task ASCII code 90 - `Z` - Capital letter Z
+- [[] #task ASCII code 91 - `[` - square brackets or box brackets, opening bracket
+- [\] #task ASCII code 92 - `\` - Backslash , reverse slash
+- []] #task ASCII code 93 - `]` - box brackets or square brackets, closing bracket
+- [^] #task ASCII code 94 - `^` - Circumflex accent or Caret
+- [_] #task ASCII code 95 - `_` - underscore , understrike , underbar or low line
+- [`] #task ASCII code 96 - `backtick` - Grave accent
+- [a] #task ASCII code 97 - `a` - Lowercase letter a , minuscule a
+- [b] #task ASCII code 98 - `b` - Lowercase letter b , minuscule b
+- [c] #task ASCII code 99 - `c` - Lowercase letter c , minuscule c
+- [d] #task ASCII code 100 - `d` - Lowercase letter d , minuscule d
+- [e] #task ASCII code 101 - `e` - Lowercase letter e , minuscule e
+- [f] #task ASCII code 102 - `f` - Lowercase letter f , minuscule f
+- [g] #task ASCII code 103 - `g` - Lowercase letter g , minuscule g
+- [h] #task ASCII code 104 - `h` - Lowercase letter h , minuscule h
+- [i] #task ASCII code 105 - `i` - Lowercase letter i , minuscule i
+- [j] #task ASCII code 106 - `j` - Lowercase letter j , minuscule j
+- [k] #task ASCII code 107 - `k` - Lowercase letter k , minuscule k
+- [l] #task ASCII code 108 - `l` - Lowercase letter l , minuscule l
+- [m] #task ASCII code 109 - `m` - Lowercase letter m , minuscule m
+- [n] #task ASCII code 110 - `n` - Lowercase letter n , minuscule n
+- [o] #task ASCII code 111 - `o` - Lowercase letter o , minuscule o
+- [p] #task ASCII code 112 - `p` - Lowercase letter p , minuscule p
+- [q] #task ASCII code 113 - `q` - Lowercase letter q , minuscule q
+- [r] #task ASCII code 114 - `r` - Lowercase letter r , minuscule r
+- [s] #task ASCII code 115 - `s` - Lowercase letter s , minuscule s
+- [t] #task ASCII code 116 - `t` - Lowercase letter t , minuscule t
+- [u] #task ASCII code 117 - `u` - Lowercase letter u , minuscule u
+- [v] #task ASCII code 118 - `v` - Lowercase letter v , minuscule v
+- [w] #task ASCII code 119 - `w` - Lowercase letter w , minuscule w
+- [x] #task ASCII code 120 - `x` - Lowercase letter x , minuscule x
+- [y] #task ASCII code 121 - `y` - Lowercase letter y , minuscule y
+- [z] #task ASCII code 122 - `z` - Lowercase letter z , minuscule z
+- [{] #task ASCII code 123 - `{` - braces or curly brackets, opening braces
+- [|] #task ASCII code 124 - `|` - vertical-bar, vbar, vertical line or vertical slash
+- [}] #task ASCII code 125 - `}` - curly brackets or braces, closing curly brackets
+- [~] #task ASCII code 126 - `~` - Tilde ; swung dash
 
 ## ASCII Extended Characters
 
-- [Ç] #task `Ç` ASCII code 128 - Majuscule C-cedilla
-- [ü] #task `ü` ASCII code 129 - letter u with umlaut or diaeresis , u-umlaut
-- [é] #task `é` ASCII code 130 - letter e with acute accent or e-acute
-- [â] #task `â` ASCII code 131 - letter a with circumflex accent or a-circumflex
-- [ä] #task `ä` ASCII code 132 - letter a with umlaut or diaeresis , a-umlaut
-- [à] #task `à` ASCII code 133 - letter a with grave accent
-- [å] #task `å` ASCII code 134 - letter a with a ring
-- [ç] #task `ç` ASCII code 135 - Minuscule c-cedilla
-- [ê] #task `ê` ASCII code 136 - letter e with circumflex accent or e-circumflex
-- [ë] #task `ë` ASCII code 137 - letter e with umlaut or diaeresis ; e-umlauts
-- [è] #task `è` ASCII code 138 - letter e with grave accent
-- [ï] #task `ï` ASCII code 139 - letter i with umlaut or diaeresis ; i-umlaut
-- [î] #task `î` ASCII code 140 - letter i with circumflex accent or i-circumflex
-- [ì] #task `ì` ASCII code 141 - letter i with grave accent
-- [Ä] #task `Ä` ASCII code 142 - letter A with umlaut or diaeresis ; A-umlaut
-- [Å] #task `Å` ASCII code 143 - Capital letter A with a ring
-- [É] #task `É` ASCII code 144 - Capital letter E with acute accent or E-acute
-- [æ] #task `æ` ASCII code 145 - Latin diphthong ae in lowercase
-- [Æ] #task `Æ` ASCII code 146 - Latin diphthong AE in uppercase
-- [ô] #task `ô` ASCII code 147 - letter o with circumflex accent or o-circumflex
-- [ö] #task `ö` ASCII code 148 - letter o with umlaut or diaeresis ; o-umlaut
-- [ò] #task `ò` ASCII code 149 - letter o with grave accent
-- [û] #task `û` ASCII code 150 - letter u with circumflex accent or u-circumflex
-- [ù] #task `ù` ASCII code 151 - letter u with grave accent
-- [ÿ] #task `ÿ` ASCII code 152 - Lowercase letter y with diaeresis
-- [Ö] #task `Ö` ASCII code 153 - Letter O with umlaut or diaeresis ; O-umlaut
-- [Ü] #task `Ü` ASCII code 154 - Letter U with umlaut or diaeresis ; U-umlaut
-- [ø] #task `ø` ASCII code 155 - Lowercase slashed zero or empty set
-- [£] #task `£` ASCII code 156 - Pound sign ; symbol for the pound sterling
-- [Ø] #task `Ø` ASCII code 157 - Uppercase slashed zero or empty set
-- [×] #task `×` ASCII code 158 - Multiplication sign
-- [ƒ] #task `ƒ` ASCII code 159 - Function sign ; f with hook sign ; florin sign
-- [á] #task `á` ASCII code 160 - Lowercase letter a with acute accent or a-acute
-- [í] #task `í` ASCII code 161 - Lowercase letter i with acute accent or i-acute
-- [ó] #task `ó` ASCII code 162 - Lowercase letter o with acute accent or o-acute
-- [ú] #task `ú` ASCII code 163 - Lowercase letter u with acute accent or u-acute
-- [ñ] #task `ñ` ASCII code 164 - eñe, enie, spanish letter enye, lowercase n with tilde
-- [Ñ] #task `Ñ` ASCII code 165 - Spanish letter enye, uppercase N with tilde, EÑE, enie
-- [ª] #task `ª` ASCII code 166 - feminine ordinal indicator
-- [º] #task `º` ASCII code 167 - masculine ordinal indicator
-- [¿] #task `¿` ASCII code 168 - Inverted question marks
-- [®] #task `®` ASCII code 169 - Registered trademark symbol
-- [¬] #task `¬` ASCII code 170 - Logical negation symbol
-- [½] #task `½` ASCII code 171 - One half
-- [¼] #task `¼` ASCII code 172 - Quarter, one fourth
-- [¡] #task `¡` ASCII code 173 - Inverted exclamation marks
-- [«] #task `«` ASCII code 174 - Angle quotes, guillemets, right-pointing quotation mark
-- [»] #task `»` ASCII code 175 - Guillemets, angle quotes, left-pointing quotation marks
-- [░] #task `░` ASCII code 176 - Graphic character, low density dotted
-- [▒] #task `▒` ASCII code 177 - Graphic character, medium density dotted
-- [▓] #task `▓` ASCII code 178 - Graphic character, high density dotted
-- [│] #task `│` ASCII code 179 - Box drawing character single vertical line
-- [┤] #task `┤` ASCII code 180 - Box drawing character single vertical and left line
-- [Á] #task `Á` ASCII code 181 - Capital letter A with acute accent or A-acute
-- [Â] #task `Â` ASCII code 182 - Letter A with circumflex accent or A-circumflex
-- [À] #task `À` ASCII code 183 - Letter A with grave accent
-- [©] #task `©` ASCII code 184 - Copyright symbol
-- [╣] #task `╣` ASCII code 185 - Box drawing character double line vertical and left
-- [║] #task `║` ASCII code 186 - Box drawing character double vertical line
-- [╗] #task `╗` ASCII code 187 - Box drawing character double line upper right corner
-- [╝] #task `╝` ASCII code 188 - Box drawing character double line lower right corner
-- [¢] #task `¢` ASCII code 189 - Cent symbol
-- [¥] #task `¥` ASCII code 190 - YEN and YUAN sign
-- [┐] #task `┐` ASCII code 191 - Box drawing character single line upper right corner
-- [└] #task `└` ASCII code 192 - Box drawing character single line lower left corner
-- [┴] #task `┴` ASCII code 193 - Box drawing character single line horizontal and up
-- [┬] #task `┬` ASCII code 194 - Box drawing character single line horizontal down
-- [├] #task `├` ASCII code 195 - Box drawing character single line vertical and right
-- [─] #task `─` ASCII code 196 - Box drawing character single horizontal line
-- [┼] #task `┼` ASCII code 197 - Box drawing character single line horizontal vertical
-- [ã] #task `ã` ASCII code 198 - Lowercase letter a with tilde or a-tilde
-- [Ã] #task `Ã` ASCII code 199 - Capital letter A with tilde or A-tilde
-- [╚] #task `╚` ASCII code 200 - Box drawing character double line lower left corner
-- [╔] #task `╔` ASCII code 201 - Box drawing character double line upper left corner
-- [╩] #task `╩` ASCII code 202 - Box drawing character double line horizontal and up
-- [╦] #task `╦` ASCII code 203 - Box drawing character double line horizontal down
-- [╠] #task `╠` ASCII code 204 - Box drawing character double line vertical and right
-- [═] #task `═` ASCII code 205 - Box drawing character double horizontal line
-- [╬] #task `╬` ASCII code 206 - Box drawing character double line horizontal vertical
-- [¤] #task `¤` ASCII code 207 - Generic currency sign
-- [ð] #task `ð` ASCII code 208 - Lowercase letter eth
-- [Ð] #task `Ð` ASCII code 209 - Capital letter Eth
-- [Ê] #task `Ê` ASCII code 210 - Letter E with circumflex accent or E-circumflex
-- [Ë] #task `Ë` ASCII code 211 - Letter E with umlaut or diaeresis, E-umlaut
-- [È] #task `È` ASCII code 212 - Capital letter E with grave accent
-- [ı] #task `ı` ASCII code 213 - Lowercase dot less i
-- [Í] #task `Í` ASCII code 214 - Capital letter I with acute accent or I-acute
-- [Î] #task `Î` ASCII code 215 - Letter I with circumflex accent or I-circumflex
-- [Ï] #task `Ï` ASCII code 216 - Letter I with umlaut or diaeresis ; I-umlaut
-- [┘] #task `┘` ASCII code 217 - Box drawing character single line lower right corner
-- [┌] #task `┌` ASCII code 218 - Box drawing character single line upper left corner
-- [█] #task `█` ASCII code 219 - Block, graphic character
-- [▄] #task `▄` ASCII code 220 - Bottom half block
-- [¦] #task `¦` ASCII code 221 - Vertical broken bar
-- [Ì] #task `Ì` ASCII code 222 - Capital letter I with grave accent
-- [▀] #task `▀` ASCII code 223 - Top half block
-- [Ó] #task `Ó` ASCII code 224 - Capital letter O with acute accent or O-acute
-- [ß] #task `ß` ASCII code 225 - Letter Eszett ; scharfes S or sharp S
-- [Ô] #task `Ô` ASCII code 226 - Letter O with circumflex accent or O-circumflex
-- [Ò] #task `Ò` ASCII code 227 - Capital letter O with grave accent
-- [õ] #task `õ` ASCII code 228 - Lowercase letter o with tilde or o-tilde
-- [Õ] #task `Õ` ASCII code 229 - Capital letter O with tilde or O-tilde
-- [µ] #task `µ` ASCII code 230 - Lowercase letter Mu ; micro sign or micron
-- [þ] #task `þ` ASCII code 231 - Lowercase letter Thorn
-- [Þ] #task `Þ` ASCII code 232 - Capital letter Thorn
-- [Ú] #task `Ú` ASCII code 233 - Capital letter U with acute accent or U-acute
-- [Û] #task `Û` ASCII code 234 - Letter U with circumflex accent or U-circumflex
-- [Ù] #task `Ù` ASCII code 235 - Capital letter U with grave accent
-- [ý] #task `ý` ASCII code 236 - Lowercase letter y with acute accent
-- [Ý] #task `Ý` ASCII code 237 - Capital letter Y with acute accent
-- [¯] #task `¯` ASCII code 238 - Macron symbol
-- [´] #task `´` ASCII code 239 - Acute accent
-- [≡] #task `≡` ASCII code 240 - Congruence relation symbol
-- [±] #task `±` ASCII code 241 - Plus-minus sign
-- [‗] #task `‗` ASCII code 242 - underline or underscore
-- [¾] #task `¾` ASCII code 243 - three quarters, three-fourths
-- [¶] #task `¶` ASCII code 244 - Paragraph sign or pilcrow ; end paragraph mark
-- [§] #task `§` ASCII code 245 - Section sign
-- [÷] #task `÷` ASCII code 246 - The division sign ; Obelus
-- [¸] #task `¸` ASCII code 247 - cedilla
-- [°] #task `°` ASCII code 248 - Degree symbol
-- [¨] #task `¨` ASCII code 249 - Diaresis
-- [·] #task `·` ASCII code 250 - Interpunct or space dot
-- [¹] #task `¹` ASCII code 251 - Superscript one, exponent 1, first power
-- [³] #task `³` ASCII code 252 - Superscript three, exponent 3, cube, third power
-- [²] #task `²` ASCII code 253 - Superscript two, exponent 2, square, second power
-- [■] #task `■` ASCII code 254 - black square
+- [Ç] #task ASCII code 128 - `Ç` - Majuscule C-cedilla
+- [ü] #task ASCII code 129 - `ü` - letter u with umlaut or diaeresis , u-umlaut
+- [é] #task ASCII code 130 - `é` - letter e with acute accent or e-acute
+- [â] #task ASCII code 131 - `â` - letter a with circumflex accent or a-circumflex
+- [ä] #task ASCII code 132 - `ä` - letter a with umlaut or diaeresis , a-umlaut
+- [à] #task ASCII code 133 - `à` - letter a with grave accent
+- [å] #task ASCII code 134 - `å` - letter a with a ring
+- [ç] #task ASCII code 135 - `ç` - Minuscule c-cedilla
+- [ê] #task ASCII code 136 - `ê` - letter e with circumflex accent or e-circumflex
+- [ë] #task ASCII code 137 - `ë` - letter e with umlaut or diaeresis ; e-umlauts
+- [è] #task ASCII code 138 - `è` - letter e with grave accent
+- [ï] #task ASCII code 139 - `ï` - letter i with umlaut or diaeresis ; i-umlaut
+- [î] #task ASCII code 140 - `î` - letter i with circumflex accent or i-circumflex
+- [ì] #task ASCII code 141 - `ì` - letter i with grave accent
+- [Ä] #task ASCII code 142 - `Ä` - letter A with umlaut or diaeresis ; A-umlaut
+- [Å] #task ASCII code 143 - `Å` - Capital letter A with a ring
+- [É] #task ASCII code 144 - `É` - Capital letter E with acute accent or E-acute
+- [æ] #task ASCII code 145 - `æ` - Latin diphthong ae in lowercase
+- [Æ] #task ASCII code 146 - `Æ` - Latin diphthong AE in uppercase
+- [ô] #task ASCII code 147 - `ô` - letter o with circumflex accent or o-circumflex
+- [ö] #task ASCII code 148 - `ö` - letter o with umlaut or diaeresis ; o-umlaut
+- [ò] #task ASCII code 149 - `ò` - letter o with grave accent
+- [û] #task ASCII code 150 - `û` - letter u with circumflex accent or u-circumflex
+- [ù] #task ASCII code 151 - `ù` - letter u with grave accent
+- [ÿ] #task ASCII code 152 - `ÿ` - Lowercase letter y with diaeresis
+- [Ö] #task ASCII code 153 - `Ö` - Letter O with umlaut or diaeresis ; O-umlaut
+- [Ü] #task ASCII code 154 - `Ü` - Letter U with umlaut or diaeresis ; U-umlaut
+- [ø] #task ASCII code 155 - `ø` - Lowercase slashed zero or empty set
+- [£] #task ASCII code 156 - `£` - Pound sign ; symbol for the pound sterling
+- [Ø] #task ASCII code 157 - `Ø` - Uppercase slashed zero or empty set
+- [×] #task ASCII code 158 - `×` - Multiplication sign
+- [ƒ] #task ASCII code 159 - `ƒ` - Function sign ; f with hook sign ; florin sign
+- [á] #task ASCII code 160 - `á` - Lowercase letter a with acute accent or a-acute
+- [í] #task ASCII code 161 - `í` - Lowercase letter i with acute accent or i-acute
+- [ó] #task ASCII code 162 - `ó` - Lowercase letter o with acute accent or o-acute
+- [ú] #task ASCII code 163 - `ú` - Lowercase letter u with acute accent or u-acute
+- [ñ] #task ASCII code 164 - `ñ` - eñe, enie, spanish letter enye, lowercase n with tilde
+- [Ñ] #task ASCII code 165 - `Ñ` - Spanish letter enye, uppercase N with tilde, EÑE, enie
+- [ª] #task ASCII code 166 - `ª` - feminine ordinal indicator
+- [º] #task ASCII code 167 - `º` - masculine ordinal indicator
+- [¿] #task ASCII code 168 - `¿` - Inverted question marks
+- [®] #task ASCII code 169 - `®` - Registered trademark symbol
+- [¬] #task ASCII code 170 - `¬` - Logical negation symbol
+- [½] #task ASCII code 171 - `½` - One half
+- [¼] #task ASCII code 172 - `¼` - Quarter, one fourth
+- [¡] #task ASCII code 173 - `¡` - Inverted exclamation marks
+- [«] #task ASCII code 174 - `«` - Angle quotes, guillemets, right-pointing quotation mark
+- [»] #task ASCII code 175 - `»` - Guillemets, angle quotes, left-pointing quotation marks
+- [░] #task ASCII code 176 - `░` - Graphic character, low density dotted
+- [▒] #task ASCII code 177 - `▒` - Graphic character, medium density dotted
+- [▓] #task ASCII code 178 - `▓` - Graphic character, high density dotted
+- [│] #task ASCII code 179 - `│` - Box drawing character single vertical line
+- [┤] #task ASCII code 180 - `┤` - Box drawing character single vertical and left line
+- [Á] #task ASCII code 181 - `Á` - Capital letter A with acute accent or A-acute
+- [Â] #task ASCII code 182 - `Â` - Letter A with circumflex accent or A-circumflex
+- [À] #task ASCII code 183 - `À` - Letter A with grave accent
+- [©] #task ASCII code 184 - `©` - Copyright symbol
+- [╣] #task ASCII code 185 - `╣` - Box drawing character double line vertical and left
+- [║] #task ASCII code 186 - `║` - Box drawing character double vertical line
+- [╗] #task ASCII code 187 - `╗` - Box drawing character double line upper right corner
+- [╝] #task ASCII code 188 - `╝` - Box drawing character double line lower right corner
+- [¢] #task ASCII code 189 - `¢` - Cent symbol
+- [¥] #task ASCII code 190 - `¥` - YEN and YUAN sign
+- [┐] #task ASCII code 191 - `┐` - Box drawing character single line upper right corner
+- [└] #task ASCII code 192 - `└` - Box drawing character single line lower left corner
+- [┴] #task ASCII code 193 - `┴` - Box drawing character single line horizontal and up
+- [┬] #task ASCII code 194 - `┬` - Box drawing character single line horizontal down
+- [├] #task ASCII code 195 - `├` - Box drawing character single line vertical and right
+- [─] #task ASCII code 196 - `─` - Box drawing character single horizontal line
+- [┼] #task ASCII code 197 - `┼` - Box drawing character single line horizontal vertical
+- [ã] #task ASCII code 198 - `ã` - Lowercase letter a with tilde or a-tilde
+- [Ã] #task ASCII code 199 - `Ã` - Capital letter A with tilde or A-tilde
+- [╚] #task ASCII code 200 - `╚` - Box drawing character double line lower left corner
+- [╔] #task ASCII code 201 - `╔` - Box drawing character double line upper left corner
+- [╩] #task ASCII code 202 - `╩` - Box drawing character double line horizontal and up
+- [╦] #task ASCII code 203 - `╦` - Box drawing character double line horizontal down
+- [╠] #task ASCII code 204 - `╠` - Box drawing character double line vertical and right
+- [═] #task ASCII code 205 - `═` - Box drawing character double horizontal line
+- [╬] #task ASCII code 206 - `╬` - Box drawing character double line horizontal vertical
+- [¤] #task ASCII code 207 - `¤` - Generic currency sign
+- [ð] #task ASCII code 208 - `ð` - Lowercase letter eth
+- [Ð] #task ASCII code 209 - `Ð` - Capital letter Eth
+- [Ê] #task ASCII code 210 - `Ê` - Letter E with circumflex accent or E-circumflex
+- [Ë] #task ASCII code 211 - `Ë` - Letter E with umlaut or diaeresis, E-umlaut
+- [È] #task ASCII code 212 - `È` - Capital letter E with grave accent
+- [ı] #task ASCII code 213 - `ı` - Lowercase dot less i
+- [Í] #task ASCII code 214 - `Í` - Capital letter I with acute accent or I-acute
+- [Î] #task ASCII code 215 - `Î` - Letter I with circumflex accent or I-circumflex
+- [Ï] #task ASCII code 216 - `Ï` - Letter I with umlaut or diaeresis ; I-umlaut
+- [┘] #task ASCII code 217 - `┘` - Box drawing character single line lower right corner
+- [┌] #task ASCII code 218 - `┌` - Box drawing character single line upper left corner
+- [█] #task ASCII code 219 - `█` - Block, graphic character
+- [▄] #task ASCII code 220 - `▄` - Bottom half block
+- [¦] #task ASCII code 221 - `¦` - Vertical broken bar
+- [Ì] #task ASCII code 222 - `Ì` - Capital letter I with grave accent
+- [▀] #task ASCII code 223 - `▀` - Top half block
+- [Ó] #task ASCII code 224 - `Ó` - Capital letter O with acute accent or O-acute
+- [ß] #task ASCII code 225 - `ß` - Letter Eszett ; scharfes S or sharp S
+- [Ô] #task ASCII code 226 - `Ô` - Letter O with circumflex accent or O-circumflex
+- [Ò] #task ASCII code 227 - `Ò` - Capital letter O with grave accent
+- [õ] #task ASCII code 228 - `õ` - Lowercase letter o with tilde or o-tilde
+- [Õ] #task ASCII code 229 - `Õ` - Capital letter O with tilde or O-tilde
+- [µ] #task ASCII code 230 - `µ` - Lowercase letter Mu ; micro sign or micron
+- [þ] #task ASCII code 231 - `þ` - Lowercase letter Thorn
+- [Þ] #task ASCII code 232 - `Þ` - Capital letter Thorn
+- [Ú] #task ASCII code 233 - `Ú` - Capital letter U with acute accent or U-acute
+- [Û] #task ASCII code 234 - `Û` - Letter U with circumflex accent or U-circumflex
+- [Ù] #task ASCII code 235 - `Ù` - Capital letter U with grave accent
+- [ý] #task ASCII code 236 - `ý` - Lowercase letter y with acute accent
+- [Ý] #task ASCII code 237 - `Ý` - Capital letter Y with acute accent
+- [¯] #task ASCII code 238 - `¯` - Macron symbol
+- [´] #task ASCII code 239 - `´` - Acute accent
+- [≡] #task ASCII code 240 - `≡` - Congruence relation symbol
+- [±] #task ASCII code 241 - `±` - Plus-minus sign
+- [‗] #task ASCII code 242 - `‗` - underline or underscore
+- [¾] #task ASCII code 243 - `¾` - three quarters, three-fourths
+- [¶] #task ASCII code 244 - `¶` - Paragraph sign or pilcrow ; end paragraph mark
+- [§] #task ASCII code 245 - `§` - Section sign
+- [÷] #task ASCII code 246 - `÷` - The division sign ; Obelus
+- [¸] #task ASCII code 247 - `¸` - cedilla
+- [°] #task ASCII code 248 - `°` - Degree symbol
+- [¨] #task ASCII code 249 - `¨` - Diaresis
+- [·] #task ASCII code 250 - `·` - Interpunct or space dot
+- [¹] #task ASCII code 251 - `¹` - Superscript one, exponent 1, first power
+- [³] #task ASCII code 252 - `³` - Superscript three, exponent 3, cube, third power
+- [²] #task ASCII code 253 - `²` - Superscript two, exponent 2, square, second power
+- [■] #task ASCII code 254 - `■` - black square
