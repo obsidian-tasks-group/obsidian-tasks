@@ -10,8 +10,8 @@ import { StatusSettings } from './StatusSettings';
 import settingsJson from './settingsConfiguration.json';
 
 import { CustomStatusModal } from './CustomStatusModal';
-import * as StatusSettingsHelpers from './StatusSettingsHelpers';
 import { minimalSupportedStatuses } from './Themes/MinimalThemeCollection';
+import { itsSupportedStatuses } from './Themes/ITSThemeCollection';
 
 export class SettingsTab extends PluginSettingTab {
     // If the UI needs a more complex setting you can create a
@@ -442,11 +442,7 @@ export class SettingsTab extends PluginSettingTab {
                 .setButtonText('Add all Status types supported by ITS Theme')
                 .setCta()
                 .onClick(async () => {
-                    await addCustomStatesToSettings(
-                        StatusSettingsHelpers.itsSupportedStatuses(),
-                        statusSettings,
-                        settings,
-                    );
+                    await addCustomStatesToSettings(itsSupportedStatuses(), statusSettings, settings);
                 });
         });
         addStatusesSupportedByITSTheme.infoEl.remove();

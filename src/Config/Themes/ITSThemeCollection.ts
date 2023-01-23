@@ -1,10 +1,4 @@
-/* This file contains re-usable functions for use in managing and editing
- * user settings for custom task statuses.
- * It intentionally does not import any Obsidian types, so that tests can
- * be written for its contents.
- */
-
-import type { StatusCollection } from '../StatusCollection';
+import type { StatusCollection } from '../../StatusCollection';
 
 /**
  * Status supported by the ITS theme. {@link https://github.com/SlRvb/Obsidian--ITS-Theme}

@@ -4,7 +4,6 @@ import { verify } from 'approvals/lib/Providers/Jest/JestApprovals';
 import { StatusRegistry } from '../src/StatusRegistry';
 import { Status } from '../src/Status';
 import type { Task } from '../src/Task';
-import * as StatusSettingsHelpers from '../src/Config/StatusSettingsHelpers';
 import { StatusConfiguration, StatusType } from '../src/StatusConfiguration';
 import type { FilterOrErrorMessage } from '../src/Query/Filter/Filter';
 import * as FilterParser from '../src/Query/FilterParser';
@@ -13,6 +12,7 @@ import { StatusNameField } from '../src/Query/Filter/StatusNameField';
 import { StatusTypeField } from '../src/Query/Filter/StatusTypeField';
 import type { StatusCollection } from '../src/StatusCollection';
 import { minimalSupportedStatuses } from '../src/Config/Themes/MinimalThemeCollection';
+import { itsSupportedStatuses } from '../src/Config/Themes/ITSThemeCollection';
 import { TaskBuilder } from './TestingTools/TaskBuilder';
 
 function verifyMarkdown(markdown: string) {
@@ -122,7 +122,7 @@ describe('DefaultStatuses', () => {
 
 describe('Theme', () => {
     describe('ITS', () => {
-        const statuses = StatusSettingsHelpers.itsSupportedStatuses();
+        const statuses = itsSupportedStatuses();
         it('Table', () => {
             verifyStatusesAsMarkdownTable(constructStatuses(statuses));
         });
