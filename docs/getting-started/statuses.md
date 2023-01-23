@@ -75,8 +75,14 @@ Here is some more detail.
 
 - one of `TODO`, `IN_PROGRESS`, `DONE`, `CANCELLED`, `NON_TASK`.
 - Tasks needs to know the type of each status, so that it knows how to treat them when searching, and what to do when tasks with the status are toggled.
-- is searchable with `status.type`, for example `status.type is IN_PROGRESS`.
-- you can have any number of custom statuses with the same status type, and then search them conveniently with `status.type`
+- the `DONE` type is used to determine:
+  - whether to add the Done date, and
+  - whether to create new instances of recurring tasks.
+- types are searchable with `status.type`, for example `status.type is IN_PROGRESS`.
+- you can have any number of statuses with the same status type, and then search them conveniently with `status.type`
+- Also available:
+  - `sort by status.type`
+  - `group by status.type`
 
 ## What can Statuses do?
 
