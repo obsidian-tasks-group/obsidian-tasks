@@ -34,23 +34,48 @@ Further information is available in the following related pages.
 
 ---
 
-## What's in a status?
+## What IS a Status?
 
-- `status symbol`
-  - the single character in the `[]` at the start of the task.
-- `status name`
-  - a name for the status.
-  - this is flexible: for custom statuses, you can use any name you wish.
-  - is searchable with `status.name`, for example `status.name includes My custom in-progress status`.
-- `next status symbol`
-  - the status symbol to use when the task is toggled.
-- `status type`
-  - one of `TODO`, `IN_PROGRESS`, `DONE`, `CANCELLED`, `NON_TASK`.
-  - Tasks needs to know the type of each custom status, so that it knows how to treat them when searching, and what to do when tasks with the status are toggled.
-  - is searchable with `status.type`, for example `status.type is IN_PROGRESS`.
-  - you can have any number of custom statuses with the same status type, and then search them conveniently with `status.type`
+Every task in the Tasks plugin now has a Status.
 
-### Status Types
+Status is just Tasks' name for:
+
+1. the character (`symbol`) between the `[` and `]` in a task line
+2. AND some options that you can customise, to tell tasks how to treat all your tasks with that character.
+
+Some obsidian users call them other names, like 'Alternative Checkboxes', but that is more about how they are displayed, rather than about the actual *behaviour* of tasks with particular statuses.
+
+## What's IN a Status?
+
+These are the options that you can modify, for each status:
+
+![Task Status modal](../images/settings-custom-statuses-dialog-2.png)
+
+Here is some more detail.
+
+### Status Symbol
+
+- the single character in the `[]` at the start of the task.
+- this character will control what how tasks are rendered by your Theme or CSS Snippet.
+
+### Status Name
+
+- a name for the status.
+- this is flexible: for custom statuses, you can use any name you wish.
+- is searchable with `status.name`, for example `status.name includes My custom in-progress status`.
+
+### Next Status Symbol
+
+- the status symbol to use when the task is toggled.
+
+### Status Type
+
+- one of `TODO`, `IN_PROGRESS`, `DONE`, `CANCELLED`, `NON_TASK`.
+- Tasks needs to know the type of each status, so that it knows how to treat them when searching, and what to do when tasks with the status are toggled.
+- is searchable with `status.type`, for example `status.type is IN_PROGRESS`.
+- you can have any number of custom statuses with the same status type, and then search them conveniently with `status.type`
+
+## Controlling behaviour of Statuses
 
 This table demonstrates the behaviour of each of the status types in Tasks.
 Each column shows an example task with the given status type.
@@ -95,7 +120,7 @@ The convention in markdown is:
 
 ---
 
-## Tasks core task statuses
+## Core Statuses
 
 {: .released }
 Introduced in Tasks X.Y.Z
@@ -109,9 +134,7 @@ This table shows the statuses provided by default:
 | Status Character | Status Name<br>`status.name includes...`<br>`sort by status.name`<br>`group by status.name` | Next Status Character | Status Type<br>`status.type is...`<br>`sort by status.type`<br>`group by status.type` | Needs Custom Styling |
 | ----- | ----- | ----- | ----- | ----- |
 | `space` | Todo | `x` | `TODO` | No |
-| `/` | In Progress | `x` | `IN_PROGRESS` | Yes |
 | `x` | Done | `space` | `DONE` | No |
-| `-` | Cancelled | `space` | `CANCELLED` | Yes |
 
 <!-- placeholder to force blank line after included text --> <!-- endInclude -->
 
@@ -130,6 +153,17 @@ It will soon be possible to edit these custom statuses, and enable `Todo` -> `In
 ---
 
 ## Custom task statuses
+
+### Default custom statuses
+
+<!-- placeholder to force blank line before included text --> <!-- include: DocsSamplesForStatuses.test.DefaultStatuses_custom-statuses.approved.md -->
+
+| Status Character | Status Name<br>`status.name includes...`<br>`sort by status.name`<br>`group by status.name` | Next Status Character | Status Type<br>`status.type is...`<br>`sort by status.type`<br>`group by status.type` | Needs Custom Styling |
+| ----- | ----- | ----- | ----- | ----- |
+| `/` | In Progress | `x` | `IN_PROGRESS` | Yes |
+| `-` | Cancelled | `space` | `CANCELLED` | Yes |
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
 
 ### First choose your styling scheme
 
