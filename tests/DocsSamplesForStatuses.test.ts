@@ -1,7 +1,6 @@
 import { Options } from 'approvals/lib/Core/Options';
 import { verify } from 'approvals/lib/Providers/Jest/JestApprovals';
 
-import { StatusRegistry } from '../src/StatusRegistry';
 import { Status } from '../src/Status';
 import type { Task } from '../src/Task';
 import { StatusConfiguration, StatusType } from '../src/StatusConfiguration';
@@ -116,7 +115,11 @@ describe('DefaultStatuses', () => {
     // These "test" write out a markdown representation of the default task statuses,
     // for embedding in the user docs.
     it('core-statuses', () => {
-        verifyStatusesAsMarkdownTable(new StatusRegistry().registeredStatuses);
+        verifyStatusesAsMarkdownTable([Status.makeTodo(), Status.makeDone()]);
+    });
+
+    it('custom-statuses', () => {
+        verifyStatusesAsMarkdownTable([Status.makeInProgress(), Status.makeCancelled()]);
     });
 
     it('important-cycle', () => {
