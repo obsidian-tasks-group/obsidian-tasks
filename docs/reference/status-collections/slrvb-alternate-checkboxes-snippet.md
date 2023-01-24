@@ -111,7 +111,7 @@ Tasks' setting pane has a one-click button to add the following information, rep
 | `A` | `x` | Answer | `TODO` | Yes |
 | `r` | `x` | Reward | `TODO` | Yes |
 | `c` | `x` | Choice | `TODO` | Yes |
-| `d` | `x` | Doing | `TODO` | Yes |
+| `d` | `x` | Doing | `IN_PROGRESS` | Yes |
 | `T` | `x` | Time | `TODO` | Yes |
 | `@` | `x` | Character / Person | `TODO` | Yes |
 | `t` | `x` | Talk | `TODO` | Yes |
