@@ -19,18 +19,6 @@ parent: How Tos
 
 ---
 
-<!--
-
-## Motivation and assumptions
-
-Choose your status styling scheme: this will determine the names and symbols for your custom statuses:
-
-Before [setting up our custom statuses]({{ site.baseurl }}{% link how-to/set-up-custom-statuses.md %}), we need to set up
-
-For more information, see [Statuses]({{ site.baseurl }}{% link getting-started/statuses.md %}).
-
--->
-
 ## Summary
 
 If you plan to use [Custom Statuses]({{ site.baseurl }}{% link getting-started/statuses/custom-statuses.md %}) in Tasks, you will need to install and enable **one of** the following, in order for your tasks to look good:
