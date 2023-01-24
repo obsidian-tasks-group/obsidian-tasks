@@ -153,6 +153,17 @@ describe('DefaultStatuses', () => {
         ];
         verifyStatusesAsMarkdownTable(constructStatuses(importantCycle), false);
     });
+
+    it('toggle-does-nothing', () => {
+        const importantCycle: StatusCollection = [
+            ['b', 'Bookmark', 'b', 'NON_TASK'],
+            ['E', 'Example', 'E', 'NON_TASK'],
+            ['I', 'Information', 'I', 'NON_TASK'],
+            ['P', 'Paraphrase', 'P', 'NON_TASK'],
+            ['Q', 'Quote', 'Q', 'NON_TASK'],
+        ];
+        verifyStatusesAsMarkdownTable(constructStatuses(importantCycle), false);
+    });
 });
 
 describe('Theme', () => {

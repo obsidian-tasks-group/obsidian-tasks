@@ -74,3 +74,23 @@ Either way, I can make them toggle to each other, and by giving them the type `N
 | `C` | `P` | Con | `NON_TASK` | Yes |
 
 <!-- placeholder to force blank line after included text --> <!-- endInclude -->
+
+## Ignoring clicks and toggles
+
+Suppose you have some statuses which are purely for display purposes: they will definitely never be used for actionable tasks, and if you click on one by mistake, you do not want it to toggle or get a Done date.
+
+There is a nice property that statuses with the same Status Symbol and Next Status Symbol - and a type other than `DONE` - do nothing when they are toggled.
+
+Here are some statuses from the ITS Theme where this behaviour might be useful.
+
+<!-- placeholder to force blank line before included text --> <!-- include: DocsSamplesForStatuses.test.DefaultStatuses_toggle-does-nothing.approved.md -->
+
+| Status Symbol | Next Status Symbol | Status Name | Status Type | Needs Custom Styling |
+| ----- | ----- | ----- | ----- | ----- |
+| `b` | `b` | Bookmark | `NON_TASK` | Yes |
+| `E` | `E` | Example | `NON_TASK` | Yes |
+| `I` | `I` | Information | `NON_TASK` | Yes |
+| `P` | `P` | Paraphrase | `NON_TASK` | Yes |
+| `Q` | `Q` | Quote | `NON_TASK` | Yes |
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
