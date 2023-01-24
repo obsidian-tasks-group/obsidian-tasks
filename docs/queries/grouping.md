@@ -81,7 +81,7 @@ You can group by the following properties.
         - `5 NON_TASK`
 
 {: .released }
-`group by status.name` and `group by status.type` were introduced in Tasks X.Y.Z.
+`group by status.name` and `group by status.type` were introduced in Tasks 1.23.0.
 
 For more information, including adding your own customised statuses, see [Statuses]({{ site.baseurl }}{% link getting-started/statuses.md %}).
 

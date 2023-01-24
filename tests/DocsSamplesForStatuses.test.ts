@@ -1,7 +1,6 @@
 import { Options } from 'approvals/lib/Core/Options';
 import { verify } from 'approvals/lib/Providers/Jest/JestApprovals';
 
-import { StatusRegistry } from '../src/StatusRegistry';
 import { Status } from '../src/Status';
 import type { Task } from '../src/Task';
 import { StatusConfiguration, StatusType } from '../src/StatusConfiguration';
@@ -67,12 +66,18 @@ function getPrintableSymbol(symbol: string) {
     return '`' + result + '`';
 }
 
-function verifyStatusesAsMarkdownTable(statuses: Status[]) {
+function verifyStatusesAsMarkdownTable(statuses: Status[], showQueryInstructions: boolean) {
+    let statusName = 'Status Name';
+    let statusType = 'Status Type';
+    if (showQueryInstructions) {
+        statusName += '<br>`status.name includes...`<br>`sort by status.name`<br>`group by status.name`';
+        statusType += '<br>`status.type is...`<br>`sort by status.type`<br>`group by status.type`';
+    }
     const table = new MarkdownTable([
-        'Status Character',
-        'Status Name<br>`status.name includes...`<br>`sort by status.name`<br>`group by status.name`',
-        'Next Status Character',
-        'Status Type<br>`status.type is...`<br>`sort by status.type`<br>`group by status.type`',
+        'Status Symbol',
+        'Next Status Symbol',
+        statusName,
+        statusType,
         'Needs Custom Styling',
     ]);
 
@@ -81,7 +86,7 @@ function verifyStatusesAsMarkdownTable(statuses: Status[]) {
         const nextStatusCharacter = getPrintableSymbol(status.nextStatusSymbol);
         const type = getPrintableSymbol(status.type);
         const needsCustomStyling = status.symbol !== ' ' && status.symbol !== 'x' ? 'Yes' : 'No';
-        table.addRow([statusCharacter, status.name, nextStatusCharacter, type, needsCustomStyling]);
+        table.addRow([statusCharacter, nextStatusCharacter, status.name, type, needsCustomStyling]);
     }
     table.verify();
 }
@@ -116,7 +121,11 @@ describe('DefaultStatuses', () => {
     // These "test" write out a markdown representation of the default task statuses,
     // for embedding in the user docs.
     it('core-statuses', () => {
-        verifyStatusesAsMarkdownTable(new StatusRegistry().registeredStatuses);
+        verifyStatusesAsMarkdownTable([Status.makeTodo(), Status.makeDone()], true);
+    });
+
+    it('custom-statuses', () => {
+        verifyStatusesAsMarkdownTable([Status.makeInProgress(), Status.makeCancelled()], true);
     });
 
     it('important-cycle', () => {
@@ -125,7 +134,35 @@ describe('DefaultStatuses', () => {
             ['D', 'Doing - Important', 'X', 'IN_PROGRESS'],
             ['X', 'Done - Important', '!', 'DONE'],
         ];
-        verifyStatusesAsMarkdownTable(constructStatuses(importantCycle));
+        verifyStatusesAsMarkdownTable(constructStatuses(importantCycle), false);
+    });
+
+    it('todo-in_progress-done', () => {
+        const importantCycle: StatusCollection = [
+            [' ', 'Todo', '/', 'TODO'],
+            ['/', 'In Progress', 'x', 'IN_PROGRESS'],
+            ['x', 'Done', ' ', 'DONE'],
+        ];
+        verifyStatusesAsMarkdownTable(constructStatuses(importantCycle), false);
+    });
+
+    it('pro-con-cycle', () => {
+        const importantCycle: StatusCollection = [
+            ['P', 'Pro', 'C', 'NON_TASK'],
+            ['C', 'Con', 'P', 'NON_TASK'],
+        ];
+        verifyStatusesAsMarkdownTable(constructStatuses(importantCycle), false);
+    });
+
+    it('toggle-does-nothing', () => {
+        const importantCycle: StatusCollection = [
+            ['b', 'Bookmark', 'b', 'NON_TASK'],
+            ['E', 'Example', 'E', 'NON_TASK'],
+            ['I', 'Information', 'I', 'NON_TASK'],
+            ['P', 'Paraphrase', 'P', 'NON_TASK'],
+            ['Q', 'Quote', 'Q', 'NON_TASK'],
+        ];
+        verifyStatusesAsMarkdownTable(constructStatuses(importantCycle), false);
     });
 });
 
@@ -133,7 +170,7 @@ describe('Theme', () => {
     describe('ITS', () => {
         const statuses = itsSupportedStatuses();
         it('Table', () => {
-            verifyStatusesAsMarkdownTable(constructStatuses(statuses));
+            verifyStatusesAsMarkdownTable(constructStatuses(statuses), true);
         });
         it('Tasks', () => {
             verifyStatusesAsTasksList(constructStatuses(statuses));
@@ -146,7 +183,7 @@ describe('Theme', () => {
     describe('Minimal', () => {
         const statuses = minimalSupportedStatuses();
         it('Table', () => {
-            verifyStatusesAsMarkdownTable(constructStatuses(statuses));
+            verifyStatusesAsMarkdownTable(constructStatuses(statuses), true);
         });
         it('Tasks', () => {
             verifyStatusesAsTasksList(constructStatuses(statuses));
@@ -158,7 +195,7 @@ describe('Theme', () => {
 });
 
 function verifyTransitionsAsMarkdownTable(statuses: Status[]) {
-    const columnNames: string[] = ['Operation'];
+    const columnNames: string[] = ['Operation and status.type'];
     statuses.forEach((s) => {
         const title = s.type;
         columnNames.push(title);
@@ -186,17 +223,17 @@ function verifyTransitionsAsMarkdownTable(statuses: Status[]) {
         table.addRow(cells);
     }
 
-    filterAllStatuses(FilterParser.parseFilter('done')!);
     filterAllStatuses(FilterParser.parseFilter('not done')!);
-    filterAllStatuses(FilterParser.parseFilter('status.name includes todo')!);
+    filterAllStatuses(FilterParser.parseFilter('done')!);
     filterAllStatuses(FilterParser.parseFilter('status.type is TODO')!);
-    filterAllStatuses(FilterParser.parseFilter('status.name includes in progress')!);
     filterAllStatuses(FilterParser.parseFilter('status.type is IN_PROGRESS')!);
-    filterAllStatuses(FilterParser.parseFilter('status.name includes done')!);
     filterAllStatuses(FilterParser.parseFilter('status.type is DONE')!);
-    filterAllStatuses(FilterParser.parseFilter('status.name includes cancelled')!);
     filterAllStatuses(FilterParser.parseFilter('status.type is CANCELLED')!);
     filterAllStatuses(FilterParser.parseFilter('status.type is NON_TASK')!);
+    filterAllStatuses(FilterParser.parseFilter('status.name includes todo')!);
+    filterAllStatuses(FilterParser.parseFilter('status.name includes in progress')!);
+    filterAllStatuses(FilterParser.parseFilter('status.name includes done')!);
+    filterAllStatuses(FilterParser.parseFilter('status.name includes cancelled')!);
 
     function showGroupNamesForAllTasks(groupName: string, grouperFunction: (task: Task) => string[]) {
         const cells: string[] = ['Name for `group by ' + groupName + '`'];

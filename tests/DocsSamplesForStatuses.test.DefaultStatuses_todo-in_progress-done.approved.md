@@ -2,9 +2,9 @@
 
 | Status Symbol | Next Status Symbol | Status Name | Status Type | Needs Custom Styling |
 | ----- | ----- | ----- | ----- | ----- |
-| `!` | `D` | Important | `TODO` | Yes |
-| `D` | `X` | Doing - Important | `IN_PROGRESS` | Yes |
-| `X` | `!` | Done - Important | `DONE` | Yes |
+| `space` | `/` | Todo | `TODO` | No |
+| `/` | `x` | In Progress | `IN_PROGRESS` | Yes |
+| `x` | `space` | Done | `DONE` | No |
 
 
 <!-- placeholder to force blank line after included text -->

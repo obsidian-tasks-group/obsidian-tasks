@@ -12,19 +12,19 @@ import type { StatusCollection } from '../StatusCollection';
  */
 export class StatusSettings {
     constructor() {
-        this.coreStatusTypes = [
+        this.coreStatuses = [
             // The two statuses that do not need CSS styling
             Status.makeTodo().configuration,
             Status.makeDone().configuration,
         ]; // Do not modify directly: use the static mutation methods in this class.
-        this.customStatusTypes = [
+        this.customStatuses = [
             // Any statuses that are always supported, but need custom CSS styling
             Status.makeInProgress().configuration,
             Status.makeCancelled().configuration,
         ]; // Do not modify directly: use the static mutation methods in this class.
     }
-    readonly coreStatusTypes: StatusConfiguration[]; // TODO - need to handle if this was not present in settings read from disk
-    readonly customStatusTypes: StatusConfiguration[];
+    readonly coreStatuses: StatusConfiguration[];
+    readonly customStatuses: StatusConfiguration[];
 
     /**
      * Add a new custom status.
@@ -105,7 +105,7 @@ export class StatusSettings {
      * @param statusSettings
      */
     public static deleteAllCustomStatuses(statusSettings: StatusSettings) {
-        statusSettings.customStatusTypes.splice(0);
+        statusSettings.customStatuses.splice(0);
     }
 
     /**
@@ -116,8 +116,8 @@ export class StatusSettings {
     public static resetAllCustomStatuses(statusSettings: StatusSettings) {
         StatusSettings.deleteAllCustomStatuses(statusSettings);
         const defaultSettings = new StatusSettings();
-        defaultSettings.customStatusTypes.forEach((s) => {
-            StatusSettings.addStatus(statusSettings.customStatusTypes, s);
+        defaultSettings.customStatuses.forEach((s) => {
+            StatusSettings.addStatus(statusSettings.customStatuses, s);
         });
     }
 
@@ -140,7 +140,7 @@ export class StatusSettings {
     ): string[] {
         const notices: string[] = [];
         supportedStatuses.forEach((importedStatus) => {
-            const hasStatus = statusSettings.customStatusTypes.find((element) => {
+            const hasStatus = statusSettings.customStatuses.find((element) => {
                 return (
                     element.symbol == importedStatus[0] &&
                     element.name == importedStatus[1] &&
@@ -148,10 +148,7 @@ export class StatusSettings {
                 );
             });
             if (!hasStatus) {
-                StatusSettings.addStatus(
-                    statusSettings.customStatusTypes,
-                    Status.createFromImportedValue(importedStatus),
-                );
+                StatusSettings.addStatus(statusSettings.customStatuses, Status.createFromImportedValue(importedStatus));
             } else {
                 notices.push(`The status ${importedStatus[1]} (${importedStatus[0]}) is already added.`);
             }
@@ -166,10 +163,10 @@ export class StatusSettings {
      */
     public static applyToStatusRegistry(statusSettings: StatusSettings, statusRegistry: StatusRegistry) {
         statusRegistry.clearStatuses();
-        statusSettings.coreStatusTypes.forEach((statusType) => {
+        statusSettings.coreStatuses.forEach((statusType) => {
             statusRegistry.add(statusType);
         });
-        statusSettings.customStatusTypes.forEach((statusType) => {
+        statusSettings.customStatuses.forEach((statusType) => {
             statusRegistry.add(statusType);
         });
     }

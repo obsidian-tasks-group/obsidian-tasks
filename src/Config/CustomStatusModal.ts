@@ -50,7 +50,9 @@ export class CustomStatusModal extends Modal {
         let statusSymbolText: TextComponent;
         new Setting(settingDiv)
             .setName('Task Status Symbol')
-            .setDesc('This is the character between the square braces. (It can only be edited for Custom statuses.)')
+            .setDesc(
+                'This is the character between the square braces. (It can only be edited for Custom statuses, and not Core statuses.)',
+            )
             .addText((text) => {
                 statusSymbolText = text;
                 text.setValue(this.statusSymbol).onChange((v) => {
@@ -99,7 +101,7 @@ export class CustomStatusModal extends Modal {
 
         new Setting(settingDiv)
             .setName('Task Status Type')
-            .setDesc('Control how the status behaves for searching and toggling')
+            .setDesc('Control how the status behaves for searching and toggling.')
             .addDropdown((dropdown) => {
                 const types = [
                     StatusType.TODO,
