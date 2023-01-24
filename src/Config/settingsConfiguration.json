@@ -1,6 +1,6 @@
 [
   {
-    "text": "Core Status Types",
+    "text": "Core Statuses",
     "level": "h3",
     "class": "",
     "open": true,
@@ -23,7 +23,7 @@
     ]
   },
   {
-    "text": "Custom Status Types",
+    "text": "Custom Statuses",
     "level": "h3",
     "class": "",
     "open": true,

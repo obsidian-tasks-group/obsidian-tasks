@@ -9,7 +9,7 @@ export function minimalSupportedStatuses() {
     const zzz: StatusCollection = [
         [' ', 'to-do', 'x', 'TODO'],
         ['/', 'incomplete', 'x', 'IN_PROGRESS'],
-        ['x', 'done', 'x', 'DONE'],
+        ['x', 'done', ' ', 'DONE'],
         ['-', 'canceled', 'x', 'CANCELLED'],
         ['>', 'forwarded', 'x', 'TODO'],
         ['<', 'scheduling', 'x', 'TODO'],
