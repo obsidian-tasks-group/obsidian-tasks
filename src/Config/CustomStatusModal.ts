@@ -101,7 +101,7 @@ export class CustomStatusModal extends Modal {
 
         new Setting(settingDiv)
             .setName('Task Status Type')
-            .setDesc('Control how the status behaves for searching and toggling')
+            .setDesc('Control how the status behaves for searching and toggling.')
             .addDropdown((dropdown) => {
                 const types = [
                     StatusType.TODO,
