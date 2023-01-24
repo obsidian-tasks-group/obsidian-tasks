@@ -72,7 +72,7 @@ You may wish to assign this type to some of your statuses, to allow you to write
   - `sort by status.type`
   - `group by status.type`
 
-The `status.type` command uses a new pattern in the Tasks code which some refer to as 'write Help messages rather than Error messages'.
+The `status.type` filter uses a new pattern in the Tasks code which some refer to as '[write Help messages rather than Error messages](https://twitter.com/travis_simon/status/1069074730211135488)'.
 
 If Tasks does not understand a `status.type` instruction, it reports this kind of message:
 
