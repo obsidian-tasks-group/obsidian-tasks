@@ -97,3 +97,13 @@ For example, in a vault that has already used a few custom statuses, we might se
 This resets the entire Custom Statuses section back to its default list.
 
 This allows you to try out each of the buttons above, and if you don't like them, you can quickly undo their changes.
+
+## Limitations and Issues
+
+- Any statuses in the settings with the same symbol as any earlier statuses will be ignored.
+  - There is no visual feedback in the settings pane if there are any duplicates
+  - You have to confirm the actually loaded statuses by running the 'Create or edit task' command and looking at the Status drop-down.
+- The Core and Custom Status sections in the settings are collapsible, but they keep expanding.
+  - The mechanism to remember which sections were collapsed is not yet working.
+- Usability wise, it would be good if the 'Add New Task Status' button opened the modal to immediately edit the new status.
+- Ideally, the lists of statuses, with their delete and edit buttons, would be a table instead, with the ability to edit the properties directly in the table, instead of having to open up a modal.
