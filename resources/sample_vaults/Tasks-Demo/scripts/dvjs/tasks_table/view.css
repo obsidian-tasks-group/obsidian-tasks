@@ -1,0 +1,36 @@
+/* https://discord.com/channels/686053708261228577/702656734631821413/1002908559442448444 */
+.markdown-preview-view table td,
+.markdown-source-view table td {
+        vertical-align: top;
+    padding-left: 2px;
+    padding-right: 2px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+
+.markdown-preview-view tr:nth-child(even) {
+      background-color: var(--background-primary) !important;
+}
+
+.markdown-preview-view tr:nth-child(odd) {
+      background-color: rgba(142, 191, 236, 0.24) !important;
+}
+
+table {
+    table-layout: fixed !important;
+}
+
+/* Copied from tasks-block.css*/
+:not(.callout-content) > .block-language-tasks {
+    background-color: #fcfcfc;
+
+    /*padding: 5px 15px;*/
+    padding: 2px 2px;
+
+    border: 2px solid rgb(238, 238, 238);
+
+    /*border-radius: 10px;*/
+    border-radius: 2px;
+
+    margin: 1em 0;
+}
