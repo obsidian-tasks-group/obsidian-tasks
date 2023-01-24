@@ -29,6 +29,23 @@ We assume that you know how to [use CSS snippets in Obsidian](https://help.obsid
 
 For more information, see [Statuses]({{ site.baseurl }}{% link getting-started/statuses.md %}).
 
+<!-- force a blank line --> <!-- include: snippet-statuses-overview.md -->
+
+{: .info }
+> Broad steps to set up Statuses (or "Alternate Checkboxes"):
+>
+> - Understand what Statuses are
+>   - [Statuses]({{ site.baseurl }}{% link getting-started/statuses.md %})
+> - Choose your status styling scheme: this will determine the names and symbols for your custom statuses
+>   - Some common ones [Status Collections]({{ site.baseurl }}{% link reference/status-collections/index.md %}).
+> - Set up your status styling scheme
+>   - [How to style custom statuses]({{ site.baseurl }}{% link how-to/style-custom-statuses.md %}).
+> - Configure Tasks to use your custom statuses
+>   - [How to set up your custom statuses]({{ site.baseurl }}{% link how-to/set-up-custom-statuses.md %}).
+> - Optionally, update your tasks searches to take advantage of the new flexibility
+
+<!-- force a blank line --> <!-- endInclude -->
+
 ## Summary
 
 If you are using custom statuses in Tasks, you will need to install and enable **one of** the following, in order for your tasks to look good:

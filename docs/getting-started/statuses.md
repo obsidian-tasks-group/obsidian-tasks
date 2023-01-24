@@ -250,7 +250,26 @@ And this is how you can use them:
 
 <!-- placeholder to force blank line after included text --> <!-- endInclude -->
 
-### First choose your styling scheme
+### Overview
+
+<!-- force a blank line --> <!-- include: snippet-statuses-overview.md -->
+
+{: .info }
+> Broad steps to set up Statuses (or "Alternate Checkboxes"):
+>
+> - Understand what Statuses are
+>   - [Statuses]({{ site.baseurl }}{% link getting-started/statuses.md %})
+> - Choose your status styling scheme: this will determine the names and symbols for your custom statuses
+>   - Some common ones [Status Collections]({{ site.baseurl }}{% link reference/status-collections/index.md %}).
+> - Set up your status styling scheme
+>   - [How to style custom statuses]({{ site.baseurl }}{% link how-to/style-custom-statuses.md %}).
+> - Configure Tasks to use your custom statuses
+>   - [How to set up your custom statuses]({{ site.baseurl }}{% link how-to/set-up-custom-statuses.md %}).
+> - Optionally, update your tasks searches to take advantage of the new flexibility
+
+<!-- force a blank line --> <!-- endInclude -->
+
+### 1 First choose your styling scheme
 
 You can use any snippet or theme you wish. If you are already using a snippet or theme that supports "custom checkboxes", you should stick with that.
 
@@ -258,7 +277,9 @@ If, however, you are using the default theme, or a theme that doesn't know style
 
 [Status Collections]({{ site.baseurl }}{% link reference/status-collections/index.md %}) has a list of the ones that Tasks already has one-click support for, to help you choose.
 
-### Editing custom statuses
+### 2 Install your styling scheme
+
+### 3 Editing custom statuses
 
 Your choice of styling facility will determine which letters and characters you wish to you in your custom statuses.
 
