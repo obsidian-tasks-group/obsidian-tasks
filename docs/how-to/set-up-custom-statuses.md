@@ -96,7 +96,7 @@ Suppose that you wanted to create a set of 3 statuses that cycle between each ot
     - This will create a new, empty status:
     - ![Settings after adding a new empty status](../images/settings-custom-statuses-added-1.png)
 1. Click on the pencil icon
-    - This will open the status edit modal.
+    - This will open the [status edit modal]({{ site.baseurl }}{% link getting-started/statuses/editing-a-status.md %}).
     - Notice the red colouring, to indicate values which are not yet valid.
     - If you aren't sure why something is invalid, click on the Checkmark button and an explanatory notice will pop up for a few seconds.
     - ![The modal for editing statuses](../images/settings-custom-statuses-dialog-1.png)
