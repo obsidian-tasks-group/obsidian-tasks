@@ -42,7 +42,15 @@ Once you're comfortable with the background information in this page, further in
 
 ---
 
-## What IS a Status?
+## Do I need to set up statuses?
+
+If you are happy with all your tasks beginning with `[ ]` and `[x]`, then **no**, you can just ignore Tasks' Statuses facility.
+
+---
+
+## About Statuses
+
+### What IS a Status?
 
 Every task in the Tasks plugin now has a Status.
 
@@ -53,7 +61,7 @@ Status is just Tasks' name for:
 
 Some obsidian users call them other names, like 'Alternative Checkboxes', but that is more about how they are displayed, rather than about the actual *behaviour* of tasks with particular statuses.
 
-## What's IN a Status?
+### What's IN a Status?
 
 These are the options that you can modify, for each status:
 
@@ -79,13 +87,9 @@ Here is some more detail.
     - `group by status.type`
   - For more information, see [Status Types]({{ site.baseurl }}{% link getting-started/statuses/status-types.md %})
 
-## What can Statuses do?
+---
 
-Now we have seen what is in a Status, what can we do with them?
-
-The [Example Statuses]({{ site.baseurl }}{% link getting-started/statuses/example-statuses.md %}) page has some examples, for inspiration.
-
-## Done date, Recurrence and Statuses
+### Done date, Recurrence and Statuses
 
 It is the Task Status Type changing **to** `DONE` that controls when:
 
@@ -95,6 +99,16 @@ It is the Task Status Type changing **to** `DONE` that controls when:
 It is the Task Status Type changing **from** `DONE` that controls when:
 
 - tasks **lose** their Done dates (if Done dates are enabled in settings).
+
+---
+
+## What can Statuses do?
+
+Now we have seen what is in a Status, what can we do with them?
+
+We can use them to control what Tasks does when a task's checkbox is clicked, or toggled.
+
+The [Example Statuses]({{ site.baseurl }}{% link getting-started/statuses/example-statuses.md %}) page has a variety of examples, for inspiration.
 
 ---
 
@@ -171,6 +185,8 @@ For details, see [Filters for Task Statuses]({{ site.baseurl }}{% link queries/f
 
 {: .info }
 We envisage adding `status.symbol`.
+
+---
 
 ## Credit: Sytone and the 'Tasks SQL Powered' plugin
 
