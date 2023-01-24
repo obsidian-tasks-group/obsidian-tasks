@@ -21,28 +21,7 @@ parent: How Tos
 
 ## Motivation
 
-This page shows you how to customise the statuses used in your Tasks vault.
-
-For more information, see [Statuses]({{ site.baseurl }}{% link getting-started/statuses.md %}).
-
-<!-- force a blank line --> <!-- include: snippet-statuses-overview.md -->
-
-{: .info }
-> Broad steps to understand and set up Statuses (or "Alternate Checkboxes"):
->
-> - Understand what Statuses are:
->   - [Statuses]({{ site.baseurl }}{% link getting-started/statuses.md %})
->   - [Custom Statuses]({{ site.baseurl }}{% link getting-started/statuses/custom-statuses.md %})
-> - Choose your status styling scheme: this will determine the names and symbols for your custom statuses:
->   - Some common ones are shown in [Status Collections]({{ site.baseurl }}{% link reference/status-collections/index.md %})
-> - Set up your status styling scheme
->   - [How to style custom statuses]({{ site.baseurl }}{% link how-to/style-custom-statuses.md %}).
-> - Configure Tasks to use your custom statuses
->   - [How to set up your custom statuses]({{ site.baseurl }}{% link how-to/set-up-custom-statuses.md %})
-> - Optionally, update your tasks searches to take advantage of the new flexibility
->   - [Filters for Task Statuses]({{ site.baseurl }}{% link queries/filters.md %}#filters-for-task-statuses)
-
-<!-- force a blank line --> <!-- endInclude -->
+This page shows you how to customise the statuses used in your Tasks vault, once you have decided which letters and symbols inside `[` and `]` you wish to use, and what they should be called.
 
 ### Core (Built-in) statuses
 
@@ -71,7 +50,7 @@ This is what you see in the Tasks settings when you first look at the Task Statu
 
 ![Initial Task Statuses Options](../images/settings-statuses-initial.png)
 
-You can read about it at [Status Settings]({{ site.baseurl }}{% link getting-started/statuses/status-settings.md %}).
+You can read about it in [Status Settings]({{ site.baseurl }}{% link getting-started/statuses/status-settings.md %}).
 
 ---
 
@@ -120,7 +99,7 @@ Suppose that you wanted to create a set of 3 statuses that cycle between each ot
 {: .warning }
 Tasks currently allows creation of more than one status with the same symbol. It silently ignores any duplicate symbols: only the first will be used. If in doubt, examine the available statuses in the status dropdown in the [‘Create or edit Task’ Modal]({{ site.baseurl }}{% link getting-started/create-or-edit-task.md %}).
 
-## Test the new statuses
+### Test the new statuses
 
 Now you can create use the [‘Create or edit Task’ Modal]({{ site.baseurl }}{% link getting-started/create-or-edit-task.md %}) to create a new task and set its status:
 
@@ -151,3 +130,28 @@ Repeat again:
 ```text
 - [!] #task Do important stuff
 ```
+
+## Adding more statuses
+
+[Bulk-adding Statuses]({{ site.baseurl }}{% link getting-started/statuses/status-settings.md %}#bulk-adding-statuses) shows various ways of quickly adding large numbers of statuses in single steps.
+
+## Related pages
+
+<!-- force a blank line --> <!-- include: snippet-statuses-overview.md -->
+
+{: .info }
+> Broad steps to understand and set up Statuses (or "Alternate Checkboxes"):
+>
+> - Understand what Statuses are:
+>   - [Statuses]({{ site.baseurl }}{% link getting-started/statuses.md %})
+>   - [Custom Statuses]({{ site.baseurl }}{% link getting-started/statuses/custom-statuses.md %})
+> - Choose your status styling scheme: this will determine the names and symbols for your custom statuses:
+>   - Some common ones are shown in [Status Collections]({{ site.baseurl }}{% link reference/status-collections/index.md %})
+> - Set up your status styling scheme
+>   - [How to style custom statuses]({{ site.baseurl }}{% link how-to/style-custom-statuses.md %}).
+> - Configure Tasks to use your custom statuses
+>   - [How to set up your custom statuses]({{ site.baseurl }}{% link how-to/set-up-custom-statuses.md %})
+> - Optionally, update your tasks searches to take advantage of the new flexibility
+>   - [Filters for Task Statuses]({{ site.baseurl }}{% link queries/filters.md %}#filters-for-task-statuses)
+
+<!-- force a blank line --> <!-- endInclude -->
