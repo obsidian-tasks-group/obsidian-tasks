@@ -23,7 +23,7 @@ has_toc: false
 ## Introduction
 
 {: .released }
-Custom Statuses were introduced in Tasks X.Y.Z
+Custom Statuses were introduced in Tasks 1.23.0.
 
 Custom statuses represent any non-standard markdown tasks.
 

@@ -195,7 +195,7 @@ because the tasks starts before tomorrow. Only one of the dates needs to match.
 - `not done` - matches status types with type `TODO` and `IN_PROGRESS`
 
 {: .info }
-> Prior to Tasks X.Y.Z, there was no concept of task status type, and so only the status symbol was used:
+> Prior to Tasks 1.23.0, there was no concept of task status type, and so only the status symbol was used:
 >
 > - a task with `[ ]` used to count as `not done`
 > - any other character than space used to count as `done`
@@ -213,7 +213,7 @@ because the tasks starts before tomorrow. Only one of the dates needs to match.
   - Essential reading: [Regular Expression Searches]({{ site.baseurl }}{% link queries/regular-expressions.md %}).
 
 {: .released }
-`status.name` text searching was introduced in Tasks X.Y.Z.
+`status.name` text searching was introduced in Tasks 1.23.0.
 
 For more information, including adding your own customised statuses, see [Statuses]({{ site.baseurl }}{% link getting-started/statuses.md %}).
 
@@ -227,7 +227,7 @@ For more information, including adding your own customised statuses, see [Status
 - To allow multiple values, use a boolean combination, for example: `( status.type is TODO ) OR ( status.type is IN_PROGRESS )`.
 
 {: .released }
-`status.type` text searching was introduced in Tasks X.Y.Z.
+`status.type` text searching was introduced in Tasks 1.23.0.
 
 For more information, including adding your own customised statuses, see [Statuses]({{ site.baseurl }}{% link getting-started/statuses.md %}).
 

@@ -24,7 +24,7 @@ has_children: true
 ## Introduction
 
 {: .released }
-Custom Statuses were introduced in Tasks X.Y.Z
+Custom Statuses were introduced in Tasks 1.23.0.
 
 This page provides an overview of using Tasks with **Custom Statuses**, which some people refer to as Custom Checkboxes or Alternative/Alternate Checkboxes.
 
@@ -136,7 +136,7 @@ Core statuses represent conventional markdown tasks:
 
 They don't require any custom CSS styling or theming on order to display correctly in Tasks blocks or Live Preview.
 
-Before Tasks X.Y.Z, these were the only statuses that Tasks knew about.
+Before Tasks 1.23.0, these were the only statuses that Tasks knew about.
 
 See [Core Statuses]({{ site.baseurl }}{% link getting-started/statuses/core-statuses.md %}) to find out more.
 

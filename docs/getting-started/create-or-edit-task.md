@@ -113,7 +113,7 @@ Supported abbreviations:
 ### Status
 
 {: .released }
-Introduced in Tasks X.Y.Z.
+Introduced in Tasks 1.23.0.
 
 Use the Status dropdown to change the Status Symbol for the task.
 
