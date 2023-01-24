@@ -87,7 +87,18 @@ Here is some more detail.
     - `group by status.type`
   - For more information, see [Status Types]({{ site.baseurl }}{% link getting-started/statuses/status-types.md %})
 
----
+### Unknown Statuses
+
+What happens if Tasks reads a line with a status symbol that it does not know about?
+
+All such tasks are given a status called `Unknown`, with these properties:
+
+| Property           | Value                                                               |
+| ------------------ | ------------------------------------------------------------------- |
+| Status Symbol      | The unrecognised character between the `[` and `]` in the task line |
+| Status Name        | **Unknown**                                                         |
+| Next Status Symbol | `x`                                                                 |
+| Status Type        | `TODO`                                                              |
 
 ### Done date, Recurrence and Statuses
 
@@ -112,7 +123,9 @@ The [Example Statuses]({{ site.baseurl }}{% link getting-started/statuses/exampl
 
 ---
 
-## Core Statuses
+## More about Statuses
+
+### Core Statuses
 
 Core statuses represent conventional markdown tasks:
 
@@ -127,9 +140,7 @@ Before Tasks X.Y.Z, these were the only statuses that Tasks knew about.
 
 See [Core Statuses]({{ site.baseurl }}{% link getting-started/statuses/core-statuses.md %}) to find out more.
 
----
-
-## Custom Statuses
+### Custom Statuses
 
 Custom statuses represent any non-standard markdown tasks.
 
