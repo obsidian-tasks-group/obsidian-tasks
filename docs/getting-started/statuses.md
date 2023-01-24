@@ -61,33 +61,23 @@ These are the options that you can modify, for each status:
 
 Here is some more detail.
 
-### Status Symbol
-
-- the single character in the `[]` at the start of the task.
-- this character will control what how tasks are rendered by your Theme or CSS Snippet.
-
-### Status Name
-
-- a name for the status.
-- this is flexible: for custom statuses, you can use any name you wish.
-- is searchable with `status.name`, for example `status.name includes My custom in-progress status`.
-
-### Next Status Symbol
-
-- the status symbol to use when the task is toggled.
-
-### Status Type
-
-- one of `TODO`, `IN_PROGRESS`, `DONE`, `CANCELLED`, `NON_TASK`.
-- Tasks needs to know the type of each status, so that it knows how to treat them when searching, and what to do when tasks with the status are toggled.
-- the `DONE` type is used to determine:
-  - whether to add the Done date, and
-  - whether to create new instances of recurring tasks.
-- types are searchable with `status.type`, for example `status.type is IN_PROGRESS`.
-- you can have any number of statuses with the same status type, and then search them conveniently with `status.type`
-- Also available:
-  - `sort by status.type`
-  - `group by status.type`
+- **Status Symbol**
+  - the single character in the `[]` at the start of the task.
+  - this character will control what how tasks are rendered by your Theme or CSS Snippet.
+- **Status Name**
+  - a name for the status.
+  - this is flexible: for custom statuses, you can use any name you wish.
+  - is searchable with `status.name`, for example `status.name includes My custom in-progress status`.
+- **Next Status Symbol**
+  - the status symbol to use when the task is toggled.
+- **Status Type**
+  - one of `TODO`, `IN_PROGRESS`, `DONE`, `CANCELLED`, `NON_TASK`.
+  - Tasks needs to know the type of each status, so that it knows how to treat them when searching, and what to do when tasks with the status are toggled.
+  - types are searchable with `status.type`, for example `status.type is IN_PROGRESS`.
+  - Also available:
+    - `sort by status.type`
+    - `group by status.type`
+  - For more information, see [Status Types]({{ site.baseurl }}{% link getting-started/statuses/status-types.md %})
 
 ## What can Statuses do?
 
@@ -105,38 +95,6 @@ It is the Task Status Type changing **to** `DONE` that controls when:
 It is the Task Status Type changing **from** `DONE` that controls when:
 
 - tasks **lose** their Done dates (if Done dates are enabled in settings).
-
-## Controlling behaviour of Statuses
-
-This table demonstrates the behaviour of each of the status types in Tasks.
-Each column shows an example task with the given status type.
-
-The tasks shown are purely examples for context. The `~` column is just an arbitrary example to show `NON_TASK`'s behaviour'. You can assign each of these types to any of your custom statuses.
-
-<!-- placeholder to force blank line before included text --> <!-- include: DocsSamplesForStatuses.test.Status_Transitions status-types.approved.md -->
-
-| Operation and status.type | TODO | IN_PROGRESS | DONE | CANCELLED | NON_TASK |
-| ----- | ----- | ----- | ----- | ----- | ----- |
-| Example Task | `- [ ] demo` | `- [/] demo` | `- [x] demo` | `- [-] demo` | `- [~] demo` |
-| Matches `done` | no | no | YES | YES | YES |
-| Matches `not done` | YES | YES | no | no | no |
-| Matches `status.name includes todo` | YES | no | no | no | no |
-| Matches `status.type is TODO` | YES | no | no | no | no |
-| Matches `status.name includes in progress` | no | YES | no | no | no |
-| Matches `status.type is IN_PROGRESS` | no | YES | no | no | no |
-| Matches `status.name includes done` | no | no | YES | no | no |
-| Matches `status.type is DONE` | no | no | YES | no | no |
-| Matches `status.name includes cancelled` | no | no | no | YES | no |
-| Matches `status.type is CANCELLED` | no | no | no | YES | no |
-| Matches `status.type is NON_TASK` | no | no | no | no | YES |
-| Name for `group by status` | Todo | Done | Done | Done | Done |
-| Name for `group by status.type` | 2 TODO | 1 IN_PROGRESS | 3 DONE | 4 CANCELLED | 5 NON_TASK |
-| Name for `group by status.name` | Todo | In Progress | Done | Cancelled | My custom status |
-
-<!-- placeholder to force blank line after included text --> <!-- endInclude -->
-
-{: .warning }
-The `group by` results of the above table are subject to change.
 
 ---
 
