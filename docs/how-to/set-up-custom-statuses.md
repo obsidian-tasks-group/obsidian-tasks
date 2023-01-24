@@ -63,31 +63,13 @@ Custom statuses were introduced in Tasks X.Y.Z
 
 Tasks now allows you to add custom statuses to your settings, to give you powerful control over what happens next when you click on the task's checkbox.
 
-## Task Statuses Options
+## Task Statuses Settings
 
 This is what you see in the Tasks settings when you first look at the Task Statuses section:
 
 ![Initial Task Statuses Options](../images/settings-statuses-initial.png)
 
-There are two sections:
-
-1. **Core Statuses**
-    - These are statuses that are built in to Tasks, and cannot be deleted.
-    - They are the two task types that are built in to Obsidian and Tasks natively: `[ ]` and `[x]`.
-    - Their status symbols cannot be changed.
-    - All their other properties can be edited.
-2. **Custom Statuses**
-    - These statuses are what many themes call 'custom checkboxes'.
-    - You will need to choose and install a Theme or CSS Snippet that supports 'custom checkboxes'
-    - Tasks automatically adds `[/]` and `[-]`
-    - And this is where you can add your own custom statuses.
-
-We also see that each status consists of:
-
-- **Status Symbol** (for example, `x` and  `-`)
-- **Status Name** (for example, 'In Progress')
-- **Next Status Symbol** (for example, `x` and `space`)
-- **Status Type** (one of `TODO`, `DONE`, `IN_PROGRESS` or `CANCELLED`)
+You can read about it at [Status Settings]({{ site.baseurl }}{% link getting-started/statuses/status-settings.md %}).
 
 ---
 
