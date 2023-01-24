@@ -161,62 +161,28 @@ See [Core Statuses]({{ site.baseurl }}{% link getting-started/statuses/core-stat
 
 Custom statuses represent any non-standard markdown tasks.
 
+Here are some tasks with example custom statuses, that is, with non-standard characters between the `[` and `]`:
+
+```text
+- [X] Checked
+- [-] A dropped/cancelled task
+- [?] A question
+- [/] A Half Done/In-progress task
+```
+
 They **require custom CSS styling or theming** on order to display correctly in Tasks blocks or Live Preview.
 
-### Default custom statuses
+### What's the Big Deal?
 
-This is what the Custom Statuses look like initially in Tasks' settings:
+People have been using themes and CSS snippets to style custom checkboxes in Obsidian all along.
 
-![Default custom statuses](../images/settings-custom-statuses-initial.png)
+What Tasks's custom statuses allow you to do is to **also customise the behaviour of your tasks**.
 
-And this is how you can use them:
+### Setting up Custom Statuses
 
-<!-- placeholder to force blank line before included text --> <!-- include: DocsSamplesForStatuses.test.DefaultStatuses_custom-statuses.approved.md -->
+See [Custom Statuses]({{ site.baseurl }}{% link getting-started/statuses/custom-statuses.md %}) to find out more.
 
-| Status Symbol | Next Status Symbol | Status Name<br>`status.name includes...`<br>`sort by status.name`<br>`group by status.name` | Status Type<br>`status.type is...`<br>`sort by status.type`<br>`group by status.type` | Needs Custom Styling |
-| ----- | ----- | ----- | ----- | ----- |
-| `/` | `x` | In Progress | `IN_PROGRESS` | Yes |
-| `-` | `space` | Cancelled | `CANCELLED` | Yes |
-
-<!-- placeholder to force blank line after included text --> <!-- endInclude -->
-
-### Overview
-
-<!-- force a blank line --> <!-- include: snippet-statuses-overview.md -->
-
-{: .info }
-> Broad steps to set up Statuses (or "Alternate Checkboxes"):
->
-> - Understand what Statuses are
->   - [Statuses]({{ site.baseurl }}{% link getting-started/statuses.md %})
-> - Choose your status styling scheme: this will determine the names and symbols for your custom statuses
->   - Some common ones [Status Collections]({{ site.baseurl }}{% link reference/status-collections/index.md %}).
-> - Set up your status styling scheme
->   - [How to style custom statuses]({{ site.baseurl }}{% link how-to/style-custom-statuses.md %}).
-> - Configure Tasks to use your custom statuses
->   - [How to set up your custom statuses]({{ site.baseurl }}{% link how-to/set-up-custom-statuses.md %}).
-> - Optionally, update your tasks searches to take advantage of the new flexibility
-
-<!-- force a blank line --> <!-- endInclude -->
-
-### 1 First choose your styling scheme
-
-You can use any snippet or theme you wish. If you are already using a snippet or theme that supports "custom checkboxes", you should stick with that.
-
-If, however, you are using the default theme, or a theme that doesn't know style "custom checkboxes", you will need to pick one.
-
-[Status Collections]({{ site.baseurl }}{% link reference/status-collections/index.md %}) has a list of the ones that Tasks already has one-click support for, to help you choose.
-
-### 2 Install your styling scheme
-
-### 3 Editing custom statuses
-
-Your choice of styling facility will determine which letters and characters you wish to you in your custom statuses.
-
-Then see [How to set up your custom statuses]({{ site.baseurl }}{% link how-to/set-up-custom-statuses.md %}) for how to set up your custom statuses.
-
-{: .warning }
-Remember to set up your chosen CSS Snippet or Theme before setting up the custom statuses.
+---
 
 ## Using Statuses
 
