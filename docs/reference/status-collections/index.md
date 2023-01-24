@@ -32,15 +32,17 @@ Tasks only knows how to display two core statuses, `[space]` and `[x]`.
 
 So before setting up custom statuses, you need to decide which CSS Snippet or Theme to adopt. This section will help with that.
 
-## Your current Theme or CSS Snippet
+## The Options
+
+### Your current Theme or CSS Snippet
 
 If you are already happy with a Theme or CSS Snippet that supports custom checkboxes, you can stop reading this section, and move on to configuring Tasks to use it: see [How to set up your custom statuses]({{ site.baseurl }}{% link how-to/set-up-custom-statuses.md %}).
 
-## Selecting a Theme or CSS Snippet
+### Selecting a Theme or CSS Snippet
 
 Tasks provides easy one-click set up of all the Themes and CSS Snippets in the 'Table of Contents' below.
 
-## Our recommendation: SlRvb’s Alternate Checkboxes
+### Our recommendation: SlRvb’s Alternate Checkboxes
 
 If you are unsure which to use, we recommend using a CSS Snippet rather than a Theme:
 
