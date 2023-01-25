@@ -355,4 +355,18 @@ describe('task line rendering', () => {
         ]);
         await testComponentClasses(`- [x] Done task ✅ ${past}`, {}, LayoutClasses.doneDate, ['task-done-past-far']);
     });
+
+    it('adds classes for task tags', async () => {
+        await testComponentClasses('- [ ] Task with #tag1 #tag2/subtag', {}, LayoutClasses.description, [
+            'task-tag-tag1',
+            'task-tag-tag2-subtag',
+        ]);
+    });
+
+    it('correctly sanitizes tag names to be legal CSS classes', async () => {
+        await testComponentClasses('- [ ] Task with #$ #_tag/אבג/x #__other/tag', {}, LayoutClasses.description, [
+            'task-tag-tag-----x',
+            'task-tag-other-tag',
+        ]);
+    });
 });
