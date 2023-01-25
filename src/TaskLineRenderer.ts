@@ -199,6 +199,16 @@ function getComponentClasses(component: TaskLayoutComponent, task: Task) {
     switch (component) {
         case 'description':
             genericClasses.push(LayoutClasses.description);
+            for (const tag of task.tags) {
+                // Add task tags as specific classes, but sanitize them first to contain only characters that are legal
+                // for CSS classes.
+                // Taken from here: https://stackoverflow.com/questions/448981/which-characters-are-valid-in-css-class-names-selectors
+                const illegalCssClassChars = /[^_a-zA-Z0-9-]/g;
+                let sanitizedTag = tag.replace(illegalCssClassChars, '-');
+                // And if after sanitazation the name starts with dashes or underscores, remove them.
+                sanitizedTag = sanitizedTag.replace(/^[-_]+/, '');
+                if (sanitizedTag.length > 0) specificClasses.push(`task-tag-${sanitizedTag}`);
+            }
             break;
         case 'priority': {
             let priorityClass = null;

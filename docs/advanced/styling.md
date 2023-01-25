@@ -21,10 +21,10 @@ The Tasks plugin renders a task in the following structure (this refers to query
 ```markdown
 - Obsidian code block (div class="block-language-tasks")
   - Results list (ul class="plugin-tasks-query-result")
-    - Task (li class="task-list-item" + specific classes like "tasks-priority-medium tasks-due-past-1d")
+    - Task (li class="task-list-item" + specific classes like "tasks-tag-atHome tasks-priority-medium tasks-due-past-1d")
       - Task checkbox (li class="task-list-item-checkbox")
       - Task content (span class="tasks-list-text")
-        - Task description and tags (span class="task-description")
+        - Task description and tags (span class="task-description" + tag specific classes)
           - Internal span
         - Task priority (span class="task-priority" + priority specific classes)
           - Internal span
@@ -79,7 +79,16 @@ It starts with `task-due-`, `task-start-`, `task-scheduled-` or `task-done-` fol
 - These specific classes are added up to 7 days in the future or past, e.g. `task-scheduled-future-7d` or `task-due-past-7d`.
 - Dates that are further than 7 days in the future or past are given a `far` postfix, e.g. `task-scheduled-future-far` or `task-due-past-far`.
 
-Specific classes are added to both their corresponding components (e.g. to the due date component) and also to the complete task `li`, to make it easy for a CSS rule to style a complete task according to some property (e.g. color differently the complete task if it's due today) or just one relevant component.
+A **tag specific class** translates each task tag into a CSS class, for the purpose of applying formatting according to specific tags.
+It starts with `task-tag-` followed by a *sanitized* version of the tag name, which basically means that characters that are illegal to use in CSS class names are replaced by dashes.
+(CSS class names allow only alphanumeric characters, a dash and an underscore.)
+Examples:
+
+- A task with the tag `#phone` will be added with the specific class `task-tag-phone`.
+- A task with the tag `#t/easy` will be added with the specific class `task-tag-t-easy`.
+- A task with the tag `#task/atHome` will be added the specific class `task-tag-task-atHome`.
+
+Specific classes are added to both their corresponding components (e.g. to the due date component) and also to the complete task `li`, to make it easy for a CSS rule to style a complete task according to some property (e.g. color differently the complete task if it's due today, color a task according to a tag) or just one relevant component.
 
 **Tip:** [CSS wildcard selectors](https://www.geeksforgeeks.org/wildcard-selectors-and-in-css-for-classes/) are a good way to select all past dates or future dates at once -- just use `[class*="past-"] .task-due ...` to address all overdue tasks, for example.
 
