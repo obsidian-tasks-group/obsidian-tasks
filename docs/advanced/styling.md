@@ -33,7 +33,7 @@ The Tasks plugin renders a task in the following structure (this refers to query
         - Task start date (span class="task-start" + date specific classes)
           - Internal span
         - ... scheduled date, due date and done date in this order
-      - Task extras (link, edit button) (span class="task-extras")
+      - Task extras (link, edit button, goto button) (span class="task-extras")
   - Tasks count (div class="tasks-count")
 ```
 
@@ -92,12 +92,14 @@ The following additional components have the following classes:
 | plugin-tasks-query-explanation | This is applied to the PRE showing the query's explanation when the `explain` instruction is used.              |
 | tasks-backlink                 | This is applied to the SPAN that wraps the backlink if displayed on the task.                                   |
 | tasks-edit                     | This is applied to the SPAN that wraps the edit button/icon shown next to the task that opens the task edit UI. |
+| tasks-goto                     | This is applied to the SPAN that wraps the goto button/icon shown next to the task
 | tasks-urgency                  | This is applied to the SPAN that wraps the urgency score if displayed on the task.                              |
 | tasks-group-heading            | This is applied to H4, H5 and H6 group headings                                                                 |
 
 {: .released }
 `tasks-group-heading` was introduced in Tasks 1.6.0.<br>
 `plugin-tasks-query-explanation` was introduced in Tasks 1.19.0.
+`tasks-goto` was introduced in Tasks X.Y.Z.
 
 ## Examples
 

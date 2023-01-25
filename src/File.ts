@@ -50,6 +50,8 @@ export const replaceTaskWithTasks = async ({
     });
 };
 
+class ErrorWorthRetrying extends Error {}
+
 /**
  * This is a workaround to re-try when the returned file cache is `undefined`.
  * Retrying after a while may return a valid file cache.
@@ -86,27 +88,72 @@ const tryRepetitive = async ({
         }, timeout);
     };
 
-    const file = vault.getAbstractFileByPath(originalTask.path);
+    try {
+        const result = await getTaskListItemInFile(originalTask, metadataCache, vault);
+        if (result === undefined) {
+            console.error('Tasks: could not find task to toggle in the file.');
+            return;
+        }
+        const [listItem, fileLines, file] = result;
+
+        const updatedFileLines = [
+            ...fileLines.slice(0, listItem.position.start.line),
+            ...newTasks.map((task: Task) => task.toFileLineString()),
+            ...fileLines.slice(listItem.position.start.line + 1), // Only supports single-line tasks.
+        ];
+
+        await vault.modify(file, updatedFileLines.join('\n'));
+    } catch (error) {
+        if (error instanceof ErrorWorthRetrying) {
+            console.warn(error.message);
+            retry();
+        }
+        return;
+    }
+};
+
+export async function getTaskFileAndLine(task: Task): Promise<[TFile, number] | undefined> {
+    if (!metadataCache || !vault) {
+        console.error('Unable to get task file due to uninitialized metadata or vault:', metadataCache, vault);
+        return undefined;
+    }
+    const item = await getTaskListItemInFile(task, metadataCache, vault);
+    if (item) {
+        const [listItem, _, file] = item;
+        return [file, listItem.position.start.line];
+    } else return undefined;
+}
+
+/**
+ * Find the file line on which the task is defined.
+ * It is done by iterating over Obsidian's listItems cache, counting the list items in the section that the
+ * task belongs to (according to sectionStart), and comparing to the task's stored sectionIndex.
+ * Since this is used as part of a context that can retry a few times, some errors are considered "worth retrying",
+ * see the documentation for tryRepetitive above.
+ */
+async function getTaskListItemInFile(
+    task: Task,
+    metadataCache: MetadataCache,
+    vault: Vault,
+): Promise<[ListItemCache, string[], TFile] | undefined> {
+    const file = vault.getAbstractFileByPath(task.path);
     if (!(file instanceof TFile)) {
-        console.warn(`Tasks: No file found for task ${originalTask.description}. Retrying ...`);
-        return retry();
+        throw new ErrorWorthRetrying(`Tasks: No file found for task ${task.description}. Retrying ...`);
     }
 
     if (file.extension !== 'md') {
         console.error('Tasks: Only supporting files with the .md file extension.');
-        return;
+        return undefined;
     }
 
     const fileCache = metadataCache.getFileCache(file);
     if (fileCache == undefined || fileCache === null) {
-        console.warn(`Tasks: No file cache found for file ${file.path}. Retrying ...`);
-        return retry();
+        throw new ErrorWorthRetrying(`Tasks: No file cache found for file ${file.path}. Retrying ...`);
     }
 
     const listItemsCache = fileCache.listItems;
     if (listItemsCache === undefined || listItemsCache.length === 0) {
-        console.warn(`Tasks: No list items found in file cache of ${file.path}. Retrying ...`);
-        return retry();
+        throw new ErrorWorthRetrying(`Tasks: No list items found in file cache of ${file.path}. Retrying ...`);
     }
 
     const fileContent = await vault.read(file);
@@ -116,7 +163,7 @@ const tryRepetitive = async ({
     let listItem: ListItemCache | undefined;
     let sectionIndex = 0;
     for (const listItemCache of listItemsCache) {
-        if (listItemCache.position.start.line < originalTask.sectionStart) {
+        if (listItemCache.position.start.line < task.sectionStart) {
             continue;
         }
 
@@ -127,7 +174,7 @@ const tryRepetitive = async ({
         const line = fileLines[listItemCache.position.start.line];
 
         if (line.includes(globalFilter)) {
-            if (sectionIndex === originalTask.sectionIndex) {
+            if (sectionIndex === task.sectionIndex) {
                 listItem = listItemCache;
                 break;
             }
@@ -135,16 +182,6 @@ const tryRepetitive = async ({
             sectionIndex++;
         }
     }
-    if (listItem === undefined) {
-        console.error('Tasks: could not find task to toggle in the file.');
-        return;
-    }
-
-    const updatedFileLines = [
-        ...fileLines.slice(0, listItem.position.start.line),
-        ...newTasks.map((task: Task) => task.toFileLineString()),
-        ...fileLines.slice(listItem.position.start.line + 1), // Only supports single-line tasks.
-    ];
-
-    await vault.modify(file, updatedFileLines.join('\n'));
-};
+    if (listItem) return [listItem, fileLines, file];
+    else return undefined;
+}

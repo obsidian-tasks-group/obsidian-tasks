@@ -447,8 +447,8 @@ export class SettingsTab extends PluginSettingTab {
  * @param statusSettings - All the status types already in the user's settings, EXCEPT the standard ones.
  * @param settings
  * @param plugin
- * @param deletable - whether the delete button wil be shown
- * @param editable - whether the edit button wil be shown
+ * @param deletable - whether the delete button will be shown
+ * @param editable - whether the edit button will be shown
  */
 function createRowForTaskStatus(
     containerEl: HTMLElement,

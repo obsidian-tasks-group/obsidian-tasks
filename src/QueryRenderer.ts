@@ -1,9 +1,9 @@
-import { App, MarkdownRenderChild, MarkdownRenderer, Plugin, TFile } from 'obsidian';
-import type { EventRef, MarkdownPostProcessorContext } from 'obsidian';
+import { App, MarkdownRenderChild, MarkdownRenderer, MarkdownView, Plugin, TFile, setIcon } from 'obsidian';
+import type { EditorPosition, EventRef, MarkdownPostProcessorContext } from 'obsidian';
 
 import type { IQuery } from './IQuery';
 import { State } from './Cache';
-import { replaceTaskWithTasks } from './File';
+import { getTaskFileAndLine, replaceTaskWithTasks } from './File';
 import { Query } from './Query/Query';
 import type { GroupHeading } from './Query/GroupHeading';
 import { TaskModal } from './TaskModal';
@@ -217,6 +217,10 @@ class QueryRenderChild extends MarkdownRenderChild {
                 this.addEditButton(extrasSpan, task);
             }
 
+            if (!this.query.layoutOptions.hideGoToButton) {
+                this.addGoToButton(extrasSpan, task);
+            }
+
             taskList.appendChild(listItem);
         }
 
@@ -244,6 +248,31 @@ class QueryRenderChild extends MarkdownRenderChild {
                 onSubmit,
             });
             taskModal.open();
+        });
+    }
+
+    private addGoToButton(listItem: HTMLElement, task: Task) {
+        const gotoTaskButton = listItem.createEl('a', {
+            cls: 'tasks-goto',
+        });
+        setIcon(gotoTaskButton, 'file-check', 13);
+        gotoTaskButton.onClickEvent(async (event: MouseEvent) => {
+            event.preventDefault();
+            const result = await getTaskFileAndLine(task);
+            if (result) {
+                const [file, line] = result;
+                const leaf = this.app.workspace.getLeaf();
+                await leaf.openFile(file);
+                if (leaf.view instanceof MarkdownView) {
+                    const editor = leaf.view.editor;
+                    // Go to the end of the line
+                    const pos: EditorPosition = { line: line, ch: -1 };
+                    editor.setCursor(pos);
+                    editor.scrollIntoView({ from: pos, to: pos }, true);
+                    editor.refresh();
+                    editor.focus();
+                }
+            }
         });
     }
 
