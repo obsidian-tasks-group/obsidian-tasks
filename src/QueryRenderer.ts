@@ -256,6 +256,8 @@ class QueryRenderChild extends MarkdownRenderChild {
             cls: 'tasks-goto',
         });
         setIcon(gotoTaskButton, 'file-check', 13);
+        // Show the note name in a hover
+        listItem.title = task.getLinkText({ isFilenameUnique: true }) ?? '';
         gotoTaskButton.onClickEvent(async (event: MouseEvent) => {
             event.preventDefault();
             const result = await getTaskFileAndLine(task);
