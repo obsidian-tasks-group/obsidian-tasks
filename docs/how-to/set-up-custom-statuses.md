@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Set up custom statuses
-nav_order: 2
+nav_order: 3
 parent: How Tos
 ---
 
@@ -21,9 +21,9 @@ parent: How Tos
 
 ## Motivation
 
-This page shows you how to customise the statuses used in your Tasks vault.
+This page shows you how to customise the statuses used in your Tasks vault, once you have decided which letters and symbols inside `[` and `]` you wish to use, and what they should be called.
 
-### Built-in statuses
+### Core (Built-in) statuses
 
 As installed, the Tasks plugin supports just two statuses for your tasks:
 
@@ -40,28 +40,17 @@ As installed, the Tasks plugin supports just two statuses for your tasks:
 Many users would like to represent other statuses, such as Cancelled, Delegated, Blocked and many more.
 
 {: .released }
-Custom statuses were introduced in Tasks X.Y.Z
+Custom statuses were introduced in Tasks 1.23.0.
 
 Tasks now allows you to add custom statuses to your settings, to give you powerful control over what happens next when you click on the task's checkbox.
 
-## Task Statuses Options
+## Task Statuses Settings
 
 This is what you see in the Tasks settings when you first look at the Task Statuses section:
 
-![Initial Task Statuses Options](../images/settings-custom-statuses-initial.png)
+![Initial Task Statuses Options](../images/settings-statuses-initial.png)
 
-There are two sections:
-
-1. **Core Status Types**
-    - These are statuses that are built in to Tasks, and cannot be edited or deleted.
-2. **Custom Status Types**
-    - This is where you can add your own custom statuses.
-
-We also see that each status consists of:
-
-- **Status Symbol** (for example, `x` and  `-`)
-- **Status Name** (for example, 'In Progress')
-- **Next Status Symbol** (for example, `x` and `space`)
+You can read about it in [Status Settings]({{ site.baseurl }}{% link getting-started/statuses/status-settings.md %}).
 
 ---
 
@@ -69,17 +58,17 @@ We also see that each status consists of:
 
 ### Goal
 
-Suppose that you wanted to create a set of 3 statuses that cycle between each other:
+Suppose that you wanted to create a set of 3 statuses that cycle between each other, perhaps to make important tasks stand-out from everything else:
 
-<!-- placeholder to force blank line before table --> <!-- include: DocsSamplesForStatuses.test.DefaultStatuses_important-cycle.approved.md -->
+<!-- placeholder to force blank line before included text --> <!-- include: DocsSamplesForStatuses.test.DefaultStatuses_important-cycle.approved.md -->
 
-| Status Character | Status Name<br>`status.name includes...`<br>`sort by status.name`<br>`group by status.name` | Next Status Character | Status Type<br>`status.type is...`<br>`sort by status.type`<br>`group by status.type` | Needs Custom Styling |
+| Status Symbol | Next Status Symbol | Status Name | Status Type | Needs Custom Styling |
 | ----- | ----- | ----- | ----- | ----- |
-| `!` | Important | `D` | `TODO` | Yes |
-| `D` | Doing - Important | `X` | `IN_PROGRESS` | Yes |
-| `X` | Done - Important | `!` | `DONE` | Yes |
+| `!` | `D` | Important | `TODO` | Yes |
+| `D` | `X` | Doing - Important | `IN_PROGRESS` | Yes |
+| `X` | `!` | Done - Important | `DONE` | Yes |
 
-<!-- placeholder to force blank line after table --> <!-- endInclude -->
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
 
 ### The Steps
 
@@ -88,24 +77,29 @@ Suppose that you wanted to create a set of 3 statuses that cycle between each ot
     - This will create a new, empty status:
     - ![Settings after adding a new empty status](../images/settings-custom-statuses-added-1.png)
 1. Click on the pencil icon
-    - This will open the status edit modal:
+    - This will open the [status edit modal]({{ site.baseurl }}{% link getting-started/statuses/editing-a-status.md %}).
+    - Notice the red colouring, to indicate values which are not yet valid.
+    - If you aren't sure why something is invalid, click on the Checkmark button and an explanatory notice will pop up for a few seconds.
     - ![The modal for editing statuses](../images/settings-custom-statuses-dialog-1.png)
-1. Enter the desired values:
+1. Enter the desired values (see the table in Goal above):
     - ![Enter the values for our new status](../images/settings-custom-statuses-dialog-2.png)
-1. Click on the Check button to save the new status, and view the result:
+1. Click on the Checkmark button to save the new status, and view the result:
     - ![After saving the values for the new status](../images/settings-custom-statuses-added.png)
-1. Repeat for the other two statuses and you should see:
+1. Repeat for the other two statuses in Goal above and you should see a clear reflection of the flow of your new statuses
+    - `[!]` -> `[D]` -> `[X]` -> `[!]`:
     - ![After adding the other two new statuses](../images/settings-custom-statuses-important-loop-added.png)
 
 {: .info }
 > The status changes are applied to newly edited tasks and subsequently opened notes immediately.
 >
-> You do not need to restart Obsidian, unless you want to make Tasks re-read all the tasks in your vault, for example so that searches are aware of the changed statuses.
+> Whilst experimenting and setting up your statuses, you do not need to restart Obsidian, unless you want to make Tasks re-read all the tasks in your vault, for example so that searches are aware of the changed statuses.
+>
+> Once you are happy with your statuses, we recommend restarting Obsidian, to ensure that all tasks and query results use the correct settings.
 
 {: .warning }
 Tasks currently allows creation of more than one status with the same symbol. It silently ignores any duplicate symbols: only the first will be used. If in doubt, examine the available statuses in the status dropdown in the [‘Create or edit Task’ Modal]({{ site.baseurl }}{% link getting-started/create-or-edit-task.md %}).
 
-## Test the new statuses
+### Test the new statuses
 
 Now you can create use the [‘Create or edit Task’ Modal]({{ site.baseurl }}{% link getting-started/create-or-edit-task.md %}) to create a new task and set its status:
 
@@ -136,3 +130,28 @@ Repeat again:
 ```text
 - [!] #task Do important stuff
 ```
+
+## Adding more statuses
+
+[Bulk-adding Statuses]({{ site.baseurl }}{% link getting-started/statuses/status-settings.md %}#bulk-adding-statuses) shows various ways of quickly adding large numbers of statuses in single steps.
+
+## Related pages
+
+<!-- force a blank line --> <!-- include: snippet-statuses-overview.md -->
+
+{: .info }
+> Broad steps to understand and set up Statuses (or "Alternate Checkboxes"):
+>
+> - Understand what Statuses are:
+>   - [Statuses]({{ site.baseurl }}{% link getting-started/statuses.md %})
+>   - [Custom Statuses]({{ site.baseurl }}{% link getting-started/statuses/custom-statuses.md %})
+> - Choose your status styling scheme: this will determine the names and symbols for your custom statuses:
+>   - Some common ones are shown in [Status Collections]({{ site.baseurl }}{% link reference/status-collections/index.md %})
+> - Set up your status styling scheme
+>   - [How to style custom statuses]({{ site.baseurl }}{% link how-to/style-custom-statuses.md %}).
+> - Configure Tasks to use your custom statuses
+>   - [How to set up your custom statuses]({{ site.baseurl }}{% link how-to/set-up-custom-statuses.md %})
+> - Optionally, update your tasks searches to take advantage of the new flexibility
+>   - [Filters for Task Statuses]({{ site.baseurl }}{% link queries/filters.md %}#filters-for-task-statuses)
+
+<!-- force a blank line --> <!-- endInclude -->

@@ -10,7 +10,8 @@ import { StatusSettings } from './StatusSettings';
 import settingsJson from './settingsConfiguration.json';
 
 import { CustomStatusModal } from './CustomStatusModal';
-import * as StatusSettingsHelpers from './StatusSettingsHelpers';
+import { minimalSupportedStatuses } from './Themes';
+import { itsSupportedStatuses } from './Themes';
 
 export class SettingsTab extends PluginSettingTab {
     // If the UI needs a more complex setting you can create a
@@ -18,7 +19,7 @@ export class SettingsTab extends PluginSettingTab {
     // then be rendered instead of a normal checkbox or text box.
     customFunctions: { [K: string]: Function } = {
         insertTaskCoreStatusSettings: this.insertTaskCoreStatusSettings.bind(this),
-        insertTaskStatusSettings: this.insertTaskStatusSettings.bind(this),
+        insertCustomTaskStatusSettings: this.insertCustomTaskStatusSettings.bind(this),
     };
 
     private readonly plugin: TasksPlugin;
@@ -368,16 +369,19 @@ export class SettingsTab extends PluginSettingTab {
      * @memberof SettingsTab
      */
     insertTaskCoreStatusSettings(containerEl: HTMLElement, settings: SettingsTab) {
-        // TODO Make these statuses editable
-        const coreStatuses: StatusSettings = new StatusSettings();
-        StatusSettings.addCustomStatus(coreStatuses, Status.makeTodo().configuration);
-        StatusSettings.addCustomStatus(coreStatuses, Status.makeInProgress().configuration);
-        StatusSettings.addCustomStatus(coreStatuses, Status.makeDone().configuration);
-        StatusSettings.addCustomStatus(coreStatuses, Status.makeCancelled().configuration);
+        const { statusSettings } = getSettings();
 
-        /* -------------------- One row per status in the settings -------------------- */
-        coreStatuses.customStatusTypes.forEach((status_type) => {
-            createRowForTaskStatus(containerEl, status_type, coreStatuses, settings, settings.plugin, false, false);
+        /* -------------------- One row per core status in the settings -------------------- */
+        statusSettings.coreStatuses.forEach((status_type) => {
+            createRowForTaskStatus(
+                containerEl,
+                status_type,
+                statusSettings.coreStatuses,
+                statusSettings,
+                settings,
+                settings.plugin,
+                true, // isCoreStatus
+            );
         });
     }
 
@@ -388,12 +392,20 @@ export class SettingsTab extends PluginSettingTab {
      * @param {SettingsTab} settings
      * @memberof SettingsTab
      */
-    insertTaskStatusSettings(containerEl: HTMLElement, settings: SettingsTab) {
+    insertCustomTaskStatusSettings(containerEl: HTMLElement, settings: SettingsTab) {
         const { statusSettings } = getSettings();
 
-        /* -------------------- One row per status in the settings -------------------- */
-        statusSettings.customStatusTypes.forEach((status_type) => {
-            createRowForTaskStatus(containerEl, status_type, statusSettings, settings, settings.plugin, true, true);
+        /* -------------------- One row per custom status in the settings -------------------- */
+        statusSettings.customStatuses.forEach((status_type) => {
+            createRowForTaskStatus(
+                containerEl,
+                status_type,
+                statusSettings.customStatuses,
+                statusSettings,
+                settings,
+                settings.plugin,
+                false, // isCoreStatus
+            );
         });
 
         containerEl.createEl('div');
@@ -404,8 +416,8 @@ export class SettingsTab extends PluginSettingTab {
                 .setButtonText('Add New Task Status')
                 .setCta()
                 .onClick(async () => {
-                    StatusSettings.addCustomStatus(
-                        statusSettings,
+                    StatusSettings.addStatus(
+                        statusSettings.customStatuses,
                         new StatusConfiguration('', '', '', false, StatusType.TODO),
                     );
                     await updateAndSaveStatusSettings(statusSettings, settings);
@@ -419,11 +431,7 @@ export class SettingsTab extends PluginSettingTab {
                 .setButtonText('Add all Status types supported by Minimal Theme')
                 .setCta()
                 .onClick(async () => {
-                    await addCustomStatesToSettings(
-                        StatusSettingsHelpers.minimalSupportedStatuses(),
-                        statusSettings,
-                        settings,
-                    );
+                    await addCustomStatesToSettings(minimalSupportedStatuses(), statusSettings, settings);
                 });
         });
         addStatusesSupportedByMinimalTheme.infoEl.remove();
@@ -434,11 +442,7 @@ export class SettingsTab extends PluginSettingTab {
                 .setButtonText('Add all Status types supported by ITS Theme')
                 .setCta()
                 .onClick(async () => {
-                    await addCustomStatesToSettings(
-                        StatusSettingsHelpers.itsSupportedStatuses(),
-                        statusSettings,
-                        settings,
-                    );
+                    await addCustomStatesToSettings(itsSupportedStatuses(), statusSettings, settings);
                 });
         });
         addStatusesSupportedByITSTheme.infoEl.remove();
@@ -455,20 +459,20 @@ export class SettingsTab extends PluginSettingTab {
                         return;
                     }
                     unknownStatuses.forEach((s) => {
-                        StatusSettings.addCustomStatus(statusSettings, s);
+                        StatusSettings.addStatus(statusSettings.customStatuses, s);
                     });
                     await updateAndSaveStatusSettings(statusSettings, settings);
                 });
         });
         addAllUnknownStatuses.infoEl.remove();
 
-        /* -------------------- 'Delete All Custom Status Types' button -------------------- */
+        /* -------------------- 'Reset Custom Status Types to Defaults' button -------------------- */
         const clearCustomStatuses = new Setting(containerEl).addButton((button) => {
             button
-                .setButtonText('Delete All Custom Status Types')
+                .setButtonText('Reset Custom Status Types to Defaults')
                 .setWarning()
                 .onClick(async () => {
-                    StatusSettings.deleteAllCustomStatues(statusSettings);
+                    StatusSettings.resetAllCustomStatuses(statusSettings);
                     await updateAndSaveStatusSettings(statusSettings, settings);
                 });
         });
@@ -480,20 +484,20 @@ export class SettingsTab extends PluginSettingTab {
  * Create the row to see and modify settings for a single task status type.
  * @param containerEl
  * @param statusType - The status type to be edited.
+ * @param statuses - The list of statuses that statusType is stored in.
  * @param statusSettings - All the status types already in the user's settings, EXCEPT the standard ones.
  * @param settings
  * @param plugin
- * @param deletable - whether the delete button wil be shown
- * @param editable - whether the edit button wil be shown
+ * @param isCoreStatus - whether the status is a core status
  */
 function createRowForTaskStatus(
     containerEl: HTMLElement,
     statusType: StatusConfiguration,
+    statuses: StatusConfiguration[],
     statusSettings: StatusSettings,
     settings: SettingsTab,
     plugin: TasksPlugin,
-    deletable: boolean,
-    editable: boolean,
+    isCoreStatus: boolean,
 ) {
     //const taskStatusDiv = containerEl.createEl('div');
 
@@ -505,45 +509,37 @@ function createRowForTaskStatus(
 
     setting.infoEl.replaceWith(taskStatusPreview);
 
-    if (deletable) {
+    if (!isCoreStatus) {
         setting.addExtraButton((extra) => {
             extra
                 .setIcon('cross')
                 .setTooltip('Delete')
                 .onClick(async () => {
-                    if (StatusSettings.deleteCustomStatus(statusSettings, statusType)) {
+                    if (StatusSettings.deleteStatus(statuses, statusType)) {
                         await updateAndSaveStatusSettings(statusSettings, settings);
                     }
                 });
         });
     }
 
-    if (editable) {
-        setting.addExtraButton((extra) => {
-            extra
-                .setIcon('pencil')
-                .setTooltip('Edit')
-                .onClick(async () => {
-                    const modal = new CustomStatusModal(plugin, statusType);
+    setting.addExtraButton((extra) => {
+        extra
+            .setIcon('pencil')
+            .setTooltip('Edit')
+            .onClick(async () => {
+                const modal = new CustomStatusModal(plugin, statusType, isCoreStatus);
 
-                    modal.onClose = async () => {
-                        if (modal.saved) {
-                            if (
-                                StatusSettings.replaceCustomStatus(
-                                    statusSettings,
-                                    statusType,
-                                    modal.statusConfiguration(),
-                                )
-                            ) {
-                                await updateAndSaveStatusSettings(statusSettings, settings);
-                            }
+                modal.onClose = async () => {
+                    if (modal.saved) {
+                        if (StatusSettings.replaceStatus(statuses, statusType, modal.statusConfiguration())) {
+                            await updateAndSaveStatusSettings(statusSettings, settings);
                         }
-                    };
+                    }
+                };
 
-                    modal.open();
-                });
-        });
-    }
+                modal.open();
+            });
+    });
 
     setting.infoEl.remove();
 }

@@ -81,9 +81,9 @@ export const getSettings = (): Settings => {
 
     // In case saves pre-dated StatusConfiguration.type
     // TODO Special case for symbol 'X' or 'x' (just in case)
-    settings.statusSettings.customStatusTypes = settings.statusSettings.customStatusTypes.map((s) => {
+    settings.statusSettings.customStatuses.forEach((s, index, array) => {
         const newType = Status.getTypeFromStatusTypeString(s.type);
-        return new StatusConfiguration(
+        array[index] = new StatusConfiguration(
             s.symbol ?? ' ',
             s.name,
             s.nextStatusSymbol ?? 'x',

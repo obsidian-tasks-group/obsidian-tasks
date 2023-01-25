@@ -110,7 +110,25 @@ Supported abbreviations:
 | `weekend`    | `sat`         |
 | `we`         | `sat`         |
 
-### Status and Done on
+### Status
+
+{: .released }
+Introduced in Tasks 1.23.0.
+
+Use the Status dropdown to change the Status Symbol for the task.
+
+![Task edit modal shows new statuses immediately](../images/modal-showing-new-statuses.png)
+
+For more information, including adding your own customised statuses, see [Statuses]({{ site.baseurl }}{% link getting-started/statuses.md %}).
+
+{: .warning }
+> Editing the Status in the modal does not yet add, remove or update the Done date.
+>
+> Also, completing a recurring task via the Status in the modal does not yet add the new recurrence.
+>
+> For now, you should still complete tasks via command or by clicking on task checkboxes.
+
+### Completed and Done on
 
 These values cannot currently be edited in this modal.
 
