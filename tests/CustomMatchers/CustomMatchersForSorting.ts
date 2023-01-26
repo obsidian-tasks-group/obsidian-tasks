@@ -1,8 +1,8 @@
 import type moment from 'moment';
 import { DateParser } from '../../src/Query/DateParser';
-import { DateField } from '../../src/Query/Filter/DateField';
 import type { Sorter } from '../../src/Query/Sorter';
 import type { Task } from '../../src/Task';
+import { compareByDate } from '../../src/lib/DateTools';
 
 declare global {
     namespace jest {
@@ -26,7 +26,7 @@ expect.extend({
         let b: moment.Moment | null = null;
         if (dateB !== null) b = DateParser.parseDate(dateB);
 
-        const actual = DateField.compareByDate(a, b);
+        const actual = compareByDate(a, b);
 
         const pass = actual === expected;
         const message = () => `${dateA} < ${dateB}: expected=${expected} actual=${actual}`;

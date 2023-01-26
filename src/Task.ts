@@ -6,11 +6,11 @@ import { getSettings } from './Config/Settings';
 import { StatusRegistry } from './StatusRegistry';
 import type { Status } from './Status';
 import { Urgency } from './Urgency';
-import { DateField } from './Query/Filter/DateField';
 import { renderTaskLine } from './TaskLineRenderer';
 import type { TaskLineRenderDetails } from './TaskLineRenderer';
 import { DateFallback } from './DateFallback';
 import * as RegExpTools from './lib/RegExpTools';
+import { compareByDate } from './lib/DateTools';
 
 /**
  * When sorting, make sure low always comes after none. This way any tasks with low will be below any exiting
@@ -686,7 +686,7 @@ export class Task {
         for (const el of args) {
             const date1 = this[el] as Moment | null;
             const date2 = other[el] as Moment | null;
-            if (DateField.compareByDate(date1, date2) !== 0) {
+            if (compareByDate(date1, date2) !== 0) {
                 return false;
             }
         }
