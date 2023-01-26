@@ -3,6 +3,7 @@ import type { Task } from '../../Task';
 import { DateParser } from '../DateParser';
 import { Explanation } from '../Explain/Explanation';
 import type { Comparator } from '../Sorter';
+import { compareByDate } from '../../lib/DateTools';
 import { Field } from './Field';
 import { Filter, FilterOrErrorMessage } from './Filter';
 import { FilterInstructions } from './FilterInstructions';
@@ -92,7 +93,7 @@ export class HappensDateField extends Field {
      */
     public earliestDate(task: Task): Moment | null {
         const happensDates = new HappensDateField().dates(task);
-        const sortedHappensDates = happensDates.sort(DateField.compareByDate);
+        const sortedHappensDates = happensDates.sort(compareByDate);
         return sortedHappensDates[0];
     }
 
@@ -120,7 +121,7 @@ export class HappensDateField extends Field {
      */
     public comparator(): Comparator {
         return (a: Task, b: Task) => {
-            return DateField.compareByDate(this.earliestDate(a), this.earliestDate(b));
+            return compareByDate(this.earliestDate(a), this.earliestDate(b));
         };
     }
 }
