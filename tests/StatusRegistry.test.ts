@@ -7,7 +7,6 @@ import { Status } from '../src/Status';
 import { StatusConfiguration, StatusType } from '../src/StatusConfiguration';
 import { Task } from '../src/Task';
 import * as TestHelpers from './TestHelpers';
-import { TaskBuilder } from './TestingTools/TaskBuilder';
 
 jest.mock('obsidian');
 window.moment = moment;
@@ -278,20 +277,20 @@ describe('StatusRegistry', () => {
             expect(registry.bySymbol('!').type).toEqual(StatusType.EMPTY);
             expect(registry.bySymbol('X').type).toEqual(StatusType.EMPTY);
             expect(registry.bySymbol('d').type).toEqual(StatusType.EMPTY);
-            const tasks = [
-                new TaskBuilder().statusValues('!', 'Unknown', 'X', false, StatusType.TODO).build(),
-                new TaskBuilder().statusValues('X', 'Unknown', '!', false, StatusType.DONE).build(),
-                new TaskBuilder().statusValues('d', 'Unknown', '!', false, StatusType.IN_PROGRESS).build(),
+            const allStatuses = [
+                new Status(new StatusConfiguration('!', 'Unknown', 'X', false, StatusType.TODO)),
+                new Status(new StatusConfiguration('X', 'Unknown', '!', false, StatusType.DONE)),
+                new Status(new StatusConfiguration('d', 'Unknown', '!', false, StatusType.IN_PROGRESS)),
                 // Include some tasks with duplicate statuses, to make sure duplicates are discarded
-                new TaskBuilder().statusValues('!', 'Unknown', 'X', false, StatusType.TODO).build(),
-                new TaskBuilder().statusValues('X', 'Unknown', '!', false, StatusType.DONE).build(),
-                new TaskBuilder().statusValues('d', 'Unknown', '!', false, StatusType.IN_PROGRESS).build(),
+                new Status(new StatusConfiguration('!', 'Unknown', 'X', false, StatusType.TODO)),
+                new Status(new StatusConfiguration('X', 'Unknown', '!', false, StatusType.DONE)),
+                new Status(new StatusConfiguration('d', 'Unknown', '!', false, StatusType.IN_PROGRESS)),
                 // Check that it does not add copies of any core statuses
-                new TaskBuilder().statusValues('-', 'Unknown', '!', false, StatusType.IN_PROGRESS).build(),
+                new Status(new StatusConfiguration('-', 'Unknown', '!', false, StatusType.IN_PROGRESS)),
             ];
 
             // Act
-            const unknownStatuses = registry.findUnknownStatuses(tasks);
+            const unknownStatuses = registry.findUnknownStatuses(allStatuses);
 
             // Assert
             expect(unknownStatuses.length).toEqual(3);

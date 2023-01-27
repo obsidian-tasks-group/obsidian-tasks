@@ -454,7 +454,10 @@ export class SettingsTab extends PluginSettingTab {
                 .setCta()
                 .onClick(async () => {
                     const tasks = this.plugin.getTasks();
-                    const unknownStatuses = StatusRegistry.getInstance().findUnknownStatuses(tasks!);
+                    const allStatuses = tasks!.map((task) => {
+                        return task.status;
+                    });
+                    const unknownStatuses = StatusRegistry.getInstance().findUnknownStatuses(allStatuses);
                     if (unknownStatuses.length === 0) {
                         return;
                     }
