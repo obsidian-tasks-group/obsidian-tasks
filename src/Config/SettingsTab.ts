@@ -10,8 +10,9 @@ import { StatusSettings } from './StatusSettings';
 import settingsJson from './settingsConfiguration.json';
 
 import { CustomStatusModal } from './CustomStatusModal';
-import { minimalSupportedStatuses } from './Themes';
 import { itsSupportedStatuses } from './Themes';
+import { minimalSupportedStatuses } from './Themes';
+import { thingsSupportedStatuses } from './Themes';
 
 export class SettingsTab extends PluginSettingTab {
     // If the UI needs a more complex setting you can create a
@@ -446,6 +447,17 @@ export class SettingsTab extends PluginSettingTab {
                 });
         });
         addStatusesSupportedByITSTheme.infoEl.remove();
+
+        /* -------------------- Things Theme Supported Status Types -------------------- */
+        const addStatusesSupportedByThingsTheme = new Setting(containerEl).addButton((button) => {
+            button
+                .setButtonText('Add all Status types supported by Things Theme')
+                .setCta()
+                .onClick(async () => {
+                    await addCustomStatesToSettings(thingsSupportedStatuses(), statusSettings, settings);
+                });
+        });
+        addStatusesSupportedByThingsTheme.infoEl.remove();
 
         /* -------------------- 'Add All Unknown Status Types' button -------------------- */
         const addAllUnknownStatuses = new Setting(containerEl).addButton((button) => {

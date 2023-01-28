@@ -10,8 +10,9 @@ import { Group } from '../src/Query/Group';
 import { StatusNameField } from '../src/Query/Filter/StatusNameField';
 import { StatusTypeField } from '../src/Query/Filter/StatusTypeField';
 import type { StatusCollection } from '../src/StatusCollection';
-import { minimalSupportedStatuses } from '../src/Config/Themes';
 import { itsSupportedStatuses } from '../src/Config/Themes';
+import { minimalSupportedStatuses } from '../src/Config/Themes';
+import { thingsSupportedStatuses } from '../src/Config/Themes';
 import { TaskBuilder } from './TestingTools/TaskBuilder';
 
 function verifyMarkdown(markdown: string) {
@@ -182,6 +183,19 @@ describe('Theme', () => {
 
     describe('Minimal', () => {
         const statuses = minimalSupportedStatuses();
+        it('Table', () => {
+            verifyStatusesAsMarkdownTable(constructStatuses(statuses), true);
+        });
+        it('Tasks', () => {
+            verifyStatusesAsTasksList(constructStatuses(statuses));
+        });
+        it('Text', () => {
+            verifyStatusesAsTasksText(constructStatuses(statuses));
+        });
+    });
+
+    describe('Things', () => {
+        const statuses = thingsSupportedStatuses();
         it('Table', () => {
             verifyStatusesAsMarkdownTable(constructStatuses(statuses), true);
         });
