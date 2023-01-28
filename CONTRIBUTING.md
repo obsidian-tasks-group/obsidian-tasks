@@ -587,14 +587,20 @@ For help on editing the documentation, see [Updating documentation](https://gith
 - Open the vault folder in Obsidian
 - Install latest version of theme or snippet
 - Create a sample note for users to test
-- Embed the tasks in it using `include: .....md`
+- Embed the approved file showing the tasks with supported statuses in it
+  - for an example, see `resources/sample_vaults/Tasks-Demo/Styling/Theme - Minimal Theme.md`
+    - `include:` then `DocsSamplesForStatuses.test.Theme_Things Tasks.approved.md`
 
 #### Update doc/
 
-- Create a reference documentation
-- Embed the 3 blocks of text in using `include: .....md`
+- Create a reference note
+  - for example: `docs/reference/status-collections/minimal-theme.md`
+  - Best to copy and paste an existing one
+  - Embed the 2 blocks of text in it, for example:
+    - `snippet:` then `DocsSamplesForStatuses.test.Theme_Minimal Text.approved.txt`
+    - `include:` then `DocsSamplesForStatuses.test.Theme_Minimal Table.approved.md`
 - Save a screenshot of the supported checkboxes, displayed with just the theme or snippet enabled
-- Add the theme-specific screenshot to the reference file
+- Add the theme-specific screenshot to the reference documentation
 - Update any images in the screenshots that show all the available 'One Click' buttons
 
 #### Finishing off
