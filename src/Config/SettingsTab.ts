@@ -10,9 +10,7 @@ import { StatusSettings } from './StatusSettings';
 import settingsJson from './settingsConfiguration.json';
 
 import { CustomStatusModal } from './CustomStatusModal';
-import { itsSupportedStatuses } from './Themes';
-import { minimalSupportedStatuses } from './Themes';
-import { thingsSupportedStatuses } from './Themes';
+import { itsSupportedStatuses, minimalSupportedStatuses, thingsSupportedStatuses } from './Themes';
 
 export class SettingsTab extends PluginSettingTab {
     // If the UI needs a more complex setting you can create a
@@ -427,12 +425,10 @@ export class SettingsTab extends PluginSettingTab {
         setting.infoEl.remove();
 
         /* -------------------- Minimal Theme Supported Status Types -------------------- */
-        const themeName = 'Minimal Theme';
-        const themeStatuses = minimalSupportedStatuses();
         type NamedTheme = [string, StatusCollection];
-        const themes: NamedTheme[] = [[themeName, themeStatuses]];
+        const themes: NamedTheme[] = [['Minimal Theme', minimalSupportedStatuses()]];
         for (const [name, collection] of themes) {
-            const addStatusesSupportedByMinimalTheme = new Setting(containerEl).addButton((button) => {
+            const addStatusesSupportedByThisTheme = new Setting(containerEl).addButton((button) => {
                 button
                     .setButtonText('Add all Status types supported by ' + name)
                     .setCta()
@@ -440,7 +436,7 @@ export class SettingsTab extends PluginSettingTab {
                         await addCustomStatesToSettings(collection, statusSettings, settings);
                     });
             });
-            addStatusesSupportedByMinimalTheme.infoEl.remove();
+            addStatusesSupportedByThisTheme.infoEl.remove();
         }
 
         /* -------------------- ITS Theme Supported Status Types -------------------- */
