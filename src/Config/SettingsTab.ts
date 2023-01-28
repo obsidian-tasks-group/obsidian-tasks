@@ -427,15 +427,21 @@ export class SettingsTab extends PluginSettingTab {
         setting.infoEl.remove();
 
         /* -------------------- Minimal Theme Supported Status Types -------------------- */
-        const addStatusesSupportedByMinimalTheme = new Setting(containerEl).addButton((button) => {
-            button
-                .setButtonText('Add all Status types supported by Minimal Theme')
-                .setCta()
-                .onClick(async () => {
-                    await addCustomStatesToSettings(minimalSupportedStatuses(), statusSettings, settings);
-                });
-        });
-        addStatusesSupportedByMinimalTheme.infoEl.remove();
+        const themeName = 'Minimal Theme';
+        const themeStatuses = minimalSupportedStatuses();
+        type NamedTheme = [string, StatusCollection];
+        const themes: NamedTheme[] = [[themeName, themeStatuses]];
+        for (const [name, collection] of themes) {
+            const addStatusesSupportedByMinimalTheme = new Setting(containerEl).addButton((button) => {
+                button
+                    .setButtonText('Add all Status types supported by ' + name)
+                    .setCta()
+                    .onClick(async () => {
+                        await addCustomStatesToSettings(collection, statusSettings, settings);
+                    });
+            });
+            addStatusesSupportedByMinimalTheme.infoEl.remove();
+        }
 
         /* -------------------- ITS Theme Supported Status Types -------------------- */
         const addStatusesSupportedByITSTheme = new Setting(containerEl).addButton((button) => {
