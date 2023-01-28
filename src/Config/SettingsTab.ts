@@ -424,9 +424,13 @@ export class SettingsTab extends PluginSettingTab {
         });
         setting.infoEl.remove();
 
-        /* -------------------- Minimal Theme Supported Status Types -------------------- */
+        /* -------------------- Add all Status types supported by ... buttons -------------------- */
         type NamedTheme = [string, StatusCollection];
-        const themes: NamedTheme[] = [['Minimal Theme', minimalSupportedStatuses()]];
+        const themes: NamedTheme[] = [
+            ['Minimal Theme', minimalSupportedStatuses()],
+            ['ITS Theme', itsSupportedStatuses()],
+            ['Things Theme', thingsSupportedStatuses()],
+        ];
         for (const [name, collection] of themes) {
             const addStatusesSupportedByThisTheme = new Setting(containerEl).addButton((button) => {
                 button
@@ -438,28 +442,6 @@ export class SettingsTab extends PluginSettingTab {
             });
             addStatusesSupportedByThisTheme.infoEl.remove();
         }
-
-        /* -------------------- ITS Theme Supported Status Types -------------------- */
-        const addStatusesSupportedByITSTheme = new Setting(containerEl).addButton((button) => {
-            button
-                .setButtonText('Add all Status types supported by ITS Theme')
-                .setCta()
-                .onClick(async () => {
-                    await addCustomStatesToSettings(itsSupportedStatuses(), statusSettings, settings);
-                });
-        });
-        addStatusesSupportedByITSTheme.infoEl.remove();
-
-        /* -------------------- Things Theme Supported Status Types -------------------- */
-        const addStatusesSupportedByThingsTheme = new Setting(containerEl).addButton((button) => {
-            button
-                .setButtonText('Add all Status types supported by Things Theme')
-                .setCta()
-                .onClick(async () => {
-                    await addCustomStatesToSettings(thingsSupportedStatuses(), statusSettings, settings);
-                });
-        });
-        addStatusesSupportedByThingsTheme.infoEl.remove();
 
         /* -------------------- 'Add All Unknown Status Types' button -------------------- */
         const addAllUnknownStatuses = new Setting(containerEl).addButton((button) => {
