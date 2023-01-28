@@ -10,7 +10,12 @@ import { StatusSettings } from './StatusSettings';
 import settingsJson from './settingsConfiguration.json';
 
 import { CustomStatusModal } from './CustomStatusModal';
-import { itsSupportedStatuses, minimalSupportedStatuses, thingsSupportedStatuses } from './Themes';
+import {
+    auraSupportedStatuses,
+    itsSupportedStatuses,
+    minimalSupportedStatuses,
+    thingsSupportedStatuses,
+} from './Themes';
 
 export class SettingsTab extends PluginSettingTab {
     // If the UI needs a more complex setting you can create a
@@ -430,6 +435,7 @@ export class SettingsTab extends PluginSettingTab {
             ['Minimal Theme', minimalSupportedStatuses()],
             ['ITS Theme', itsSupportedStatuses()],
             ['Things Theme', thingsSupportedStatuses()],
+            ['Aura Theme (Dark mode only)', auraSupportedStatuses()],
         ];
         for (const [name, collection] of themes) {
             const addStatusesSupportedByThisTheme = new Setting(containerEl).addButton((button) => {
