@@ -10,9 +10,7 @@ import { Group } from '../src/Query/Group';
 import { StatusNameField } from '../src/Query/Filter/StatusNameField';
 import { StatusTypeField } from '../src/Query/Filter/StatusTypeField';
 import type { StatusCollection } from '../src/StatusCollection';
-import { auraSupportedStatuses, itsSupportedStatuses } from '../src/Config/Themes';
-import { minimalSupportedStatuses } from '../src/Config/Themes';
-import { thingsSupportedStatuses } from '../src/Config/Themes';
+import * as Themes from '../src/Config/Themes';
 import { TaskBuilder } from './TestingTools/TaskBuilder';
 
 function verifyMarkdown(markdown: string) {
@@ -171,10 +169,10 @@ describe('Theme', () => {
     type NamedTheme = [string, StatusCollection];
     const themes: NamedTheme[] = [
         // Alphabetical order by name:
-        ['Aura', auraSupportedStatuses()],
-        ['ITS', itsSupportedStatuses()],
-        ['Minimal', minimalSupportedStatuses()],
-        ['Things', thingsSupportedStatuses()],
+        ['Aura', Themes.auraSupportedStatuses()],
+        ['ITS', Themes.itsSupportedStatuses()],
+        ['Minimal', Themes.minimalSupportedStatuses()],
+        ['Things', Themes.thingsSupportedStatuses()],
     ];
 
     describe.each(themes)('%s', (_, statuses) => {
