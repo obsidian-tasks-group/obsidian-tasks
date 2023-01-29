@@ -168,53 +168,24 @@ describe('DefaultStatuses', () => {
 });
 
 describe('Theme', () => {
-    describe('Aura', () => {
-        const statuses = auraSupportedStatuses();
-        it('Table', () => {
-            verifyStatusesAsMarkdownTable(constructStatuses(statuses), true);
-        });
-        it('Tasks', () => {
-            verifyStatusesAsTasksList(constructStatuses(statuses));
-        });
-        it('Text', () => {
-            verifyStatusesAsTasksText(constructStatuses(statuses));
-        });
-    });
+    type NamedTheme = [string, StatusCollection];
+    const themes: NamedTheme[] = [
+        // Alphabetical order by name:
+        ['Aura', auraSupportedStatuses()],
+        ['ITS', itsSupportedStatuses()],
+        ['Minimal', minimalSupportedStatuses()],
+        ['Things', thingsSupportedStatuses()],
+    ];
 
-    describe('ITS', () => {
-        const statuses = itsSupportedStatuses();
+    describe.each(themes)('%s', (_, statuses) => {
         it('Table', () => {
             verifyStatusesAsMarkdownTable(constructStatuses(statuses), true);
         });
-        it('Tasks', () => {
-            verifyStatusesAsTasksList(constructStatuses(statuses));
-        });
-        it('Text', () => {
-            verifyStatusesAsTasksText(constructStatuses(statuses));
-        });
-    });
 
-    describe('Minimal', () => {
-        const statuses = minimalSupportedStatuses();
-        it('Table', () => {
-            verifyStatusesAsMarkdownTable(constructStatuses(statuses), true);
-        });
         it('Tasks', () => {
             verifyStatusesAsTasksList(constructStatuses(statuses));
         });
-        it('Text', () => {
-            verifyStatusesAsTasksText(constructStatuses(statuses));
-        });
-    });
 
-    describe('Things', () => {
-        const statuses = thingsSupportedStatuses();
-        it('Table', () => {
-            verifyStatusesAsMarkdownTable(constructStatuses(statuses), true);
-        });
-        it('Tasks', () => {
-            verifyStatusesAsTasksList(constructStatuses(statuses));
-        });
         it('Text', () => {
             verifyStatusesAsTasksText(constructStatuses(statuses));
         });
