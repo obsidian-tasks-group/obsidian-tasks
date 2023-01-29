@@ -19,6 +19,14 @@ export class StatusValidator {
         return errors;
     }
 
+    /**
+     * Validate data in StatusCollection lists. These are the descriptions of statuses in various themes,
+     * that are imported via one-click buttons in the Custom Status settings.
+     *
+     * This does a few checks to guard against human error when creating the lists, and then
+     * also calls {@link validate} too.
+     * @param entry
+     */
     public validateStatusCollectionEntry(entry: StatusCollectionEntry) {
         const [symbol, _name, nextStatusSymbol, typeAsString] = entry;
 
