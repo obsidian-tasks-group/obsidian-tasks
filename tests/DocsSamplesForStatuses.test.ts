@@ -170,6 +170,7 @@ describe('Theme', () => {
     const themes: NamedTheme[] = [
         // Alphabetical order by name:
         ['Aura', Themes.auraSupportedStatuses()],
+        ['Ebullientworks', Themes.ebullientworksSupportedStatuses()],
         ['ITS', Themes.itsSupportedStatuses()],
         ['Minimal', Themes.minimalSupportedStatuses()],
         ['Things', Themes.thingsSupportedStatuses()],
