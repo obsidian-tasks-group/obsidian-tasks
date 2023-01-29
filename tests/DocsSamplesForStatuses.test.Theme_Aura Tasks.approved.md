@@ -1,10 +1,4 @@
-# Theme - Aura
-
-<https://github.com/ashwinjadhav818/obsidian-aura>
-
-Dark mode only
-
-<!-- placeholder to force blank line before included text --> <!-- include: DocsSamplesForStatuses.test.Theme_Aura Tasks.approved.md -->
+<!-- placeholder to force blank line before included text -->
 
 - [ ] #task `space` incomplete
 - [x] #task `x` complete / done
@@ -26,12 +20,5 @@ Dark mode only
 - [P] #task `P` pro
 - [C] #task `C` con
 
-<!-- placeholder to force blank line after included text --> <!-- endInclude -->
 
-## Status grouped by status.type
-
-```tasks
-path includes Theme - Aura
-group by status.type
-sort by description
-```
+<!-- placeholder to force blank line after included text -->
