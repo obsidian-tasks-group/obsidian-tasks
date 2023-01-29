@@ -1,5 +1,8 @@
 # Contribution Guidelines Obsidian Tasks
 
+<!-- markdownlint-disable MD024 -->
+<!--                      MD024/no-duplicate-heading/no-duplicate-header Multiple headings with the same content -->
+
 <!-- toc -->
 ## Contents
 
@@ -43,6 +46,12 @@
     - [Update tests/](#update-tests)
     - [Update doc/](#update-doc)
     - [Examples Pull Requests](#examples-pull-requests)
+  - [How do I add one-click support for new themes or snippets for custom statuses?](#how-do-i-add-one-click-support-for-new-themes-or-snippets-for-custom-statuses)
+    - [Update tests/](#update-tests-1)
+    - [Update src/](#update-src-1)
+    - [Update sample vault: resources/sample_vaults/Tasks-Demo/](#update-sample-vault-resourcessample_vaultstasks-demo)
+    - [Update doc/](#update-doc-1)
+    - [Finishing off](#finishing-off)
   - [How do I test a GitHub build of the Tasks plugin?](#how-do-i-test-a-github-build-of-the-tasks-plugin)
     - [Option 1: Download Tasks-Demo test vault with the build's Tasks plugin installed](#option-1-download-tasks-demo-test-vault-with-the-builds-tasks-plugin-installed)
     - [Option 2: Download the built plugin to add to your vault](#option-2-download-the-built-plugin-to-add-to-your-vault)
@@ -552,6 +561,58 @@ For help on editing the documentation, see [Updating documentation](https://gith
   - It was sufficient to add tests of the new feature in just one of the instructions implemented via DateField.
   - It also shows adding a file to the sample vault, to demonstrate and test the new feature.
 
+### How do I add one-click support for new themes or snippets for custom statuses?
+
+#### Update tests/
+
+- Add a new test block to generate files for inclusion in docs:
+  - See examples in [tests/DocsSamplesForStatuses.test.ts](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/DocsSamplesForStatuses.test.ts)
+  - Section = `describe('Theme', () => {`
+  - After implementing the code below, run the tests
+  - Run the new test and approve all the output files
+  - (By adding the tests first, the new code will be consistent with old)
+
+#### Update src/
+
+- Add a file that contains the checkbox info
+  - Be sure to check for ones which should be IN_PROGRESS, DONE or CANCELLED
+  - Example: [src/Config/Themes/MinimalThemeCollection.ts](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/src/Config/Themes/MinimalThemeCollection.ts)
+- Add the new source file to [src/Config/Themes/index.ts](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/src/Config/Themes/index.ts)
+- Add a button to the Status Settings
+  - See examples in [src/Config/SettingsTab.ts](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/src/Config/SettingsTab.ts)
+  - See 'Add all Status types supported by Minimal Theme'
+
+#### Update sample vault: resources/sample_vaults/Tasks-Demo/
+
+- Open the vault folder in Obsidian
+- Install latest version of theme or snippet
+- Create a sample note for users to test
+- Embed the approved file showing the tasks with supported statuses in it
+  - for an example, see `resources/sample_vaults/Tasks-Demo/Styling/Theme - Minimal Theme.md`
+    - `include:` then `DocsSamplesForStatuses.test.Theme_Things Tasks.approved.md`
+
+#### Update doc/
+
+- Create a reference note
+  - for example: `docs/reference/status-collections/minimal-theme.md`
+  - Best to copy and paste an existing one
+  - Embed the 2 blocks of text in it, for example:
+    - `snippet:` then `DocsSamplesForStatuses.test.Theme_Minimal Text.approved.txt`
+    - `include:` then `DocsSamplesForStatuses.test.Theme_Minimal Table.approved.md`
+- Save a screenshot of the supported checkboxes, displayed with just the theme or snippet enabled
+- Add the theme-specific screenshot to the reference documentation
+- Update any images in the screenshots that show all the available 'One Click' buttons
+
+#### Finishing off
+
+- Run `mdsnippets` to replace the `include: ....md` lines with embedded text.
+- Make sure the sample vault is left with:
+  - Default Theme enabled
+  - No custom checkbox CSS Snippets enabled
+- Create a branch
+- Commit the changes to the branch
+- Create a pull request
+
 ### How do I test a GitHub build of the Tasks plugin?
 
 First...
@@ -634,3 +695,6 @@ mdsnippets && yarn run lint:markdown && git add --renormalize .
 ```
 
 The background to this is in [PR #1248](https://github.com/obsidian-tasks-group/obsidian-tasks/pull/1248).
+
+<!-- markdownlint-enable MD024 -->
+<!--                     MD024/no-duplicate-heading/no-duplicate-header Multiple headings with the same content -->

@@ -10,8 +10,9 @@ import { Group } from '../src/Query/Group';
 import { StatusNameField } from '../src/Query/Filter/StatusNameField';
 import { StatusTypeField } from '../src/Query/Filter/StatusTypeField';
 import type { StatusCollection } from '../src/StatusCollection';
+import { auraSupportedStatuses, itsSupportedStatuses } from '../src/Config/Themes';
 import { minimalSupportedStatuses } from '../src/Config/Themes';
-import { itsSupportedStatuses } from '../src/Config/Themes';
+import { thingsSupportedStatuses } from '../src/Config/Themes';
 import { TaskBuilder } from './TestingTools/TaskBuilder';
 
 function verifyMarkdown(markdown: string) {
@@ -167,27 +168,24 @@ describe('DefaultStatuses', () => {
 });
 
 describe('Theme', () => {
-    describe('ITS', () => {
-        const statuses = itsSupportedStatuses();
-        it('Table', () => {
-            verifyStatusesAsMarkdownTable(constructStatuses(statuses), true);
-        });
-        it('Tasks', () => {
-            verifyStatusesAsTasksList(constructStatuses(statuses));
-        });
-        it('Text', () => {
-            verifyStatusesAsTasksText(constructStatuses(statuses));
-        });
-    });
+    type NamedTheme = [string, StatusCollection];
+    const themes: NamedTheme[] = [
+        // Alphabetical order by name:
+        ['Aura', auraSupportedStatuses()],
+        ['ITS', itsSupportedStatuses()],
+        ['Minimal', minimalSupportedStatuses()],
+        ['Things', thingsSupportedStatuses()],
+    ];
 
-    describe('Minimal', () => {
-        const statuses = minimalSupportedStatuses();
+    describe.each(themes)('%s', (_, statuses) => {
         it('Table', () => {
             verifyStatusesAsMarkdownTable(constructStatuses(statuses), true);
         });
+
         it('Tasks', () => {
             verifyStatusesAsTasksList(constructStatuses(statuses));
         });
+
         it('Text', () => {
             verifyStatusesAsTasksText(constructStatuses(statuses));
         });
