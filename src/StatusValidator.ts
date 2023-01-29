@@ -40,7 +40,8 @@ export class StatusValidator {
         // For users, it is valid to have a status that toggles to itself.
         // For imported data for themes, it seems worth preventing that situation,
         // to guard against human error when setting up the status collections.
-        if (symbol === nextStatusSymbol) {
+        // But make an exception for any non-tasks in imported data.
+        if (symbol === nextStatusSymbol && typeAsString !== 'NON_TASK') {
             errors.push(`Status symbol '${symbol}' toggles to itself`);
         }
 
