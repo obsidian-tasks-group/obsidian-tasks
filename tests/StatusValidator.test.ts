@@ -51,33 +51,33 @@ describe('StatusValidator', () => {
             const config = new StatusConfiguration('X', 'Completed', 'yyy', false);
             checkValidation(config, ['Task Next Status Symbol ("yyy") must be a single character.']);
         });
+    });
 
-        describe('validate symbol', () => {
-            it('valid symbol', () => {
-                const config = new StatusConfiguration('X', 'Completed', 'c', false);
-                expect(statusValidator.validateSymbol(config)).toStrictEqual([]);
-            });
-
-            it('invalid symbol', () => {
-                const config = new StatusConfiguration('XYZ', 'Completed', 'c', false);
-                expect(statusValidator.validateSymbol(config)).toStrictEqual([
-                    'Task Status Symbol ("XYZ") must be a single character.',
-                ]);
-            });
+    describe('validate symbol', () => {
+        it('valid symbol', () => {
+            const config = new StatusConfiguration('X', 'Completed', 'c', false);
+            expect(statusValidator.validateSymbol(config)).toStrictEqual([]);
         });
 
-        describe('validate next symbol', () => {
-            it('valid symbol', () => {
-                const config = new StatusConfiguration('c', 'Completed', 'X', false);
-                expect(statusValidator.validateNextSymbol(config)).toStrictEqual([]);
-            });
+        it('invalid symbol', () => {
+            const config = new StatusConfiguration('XYZ', 'Completed', 'c', false);
+            expect(statusValidator.validateSymbol(config)).toStrictEqual([
+                'Task Status Symbol ("XYZ") must be a single character.',
+            ]);
+        });
+    });
 
-            it('invalid next symbol', () => {
-                const config = new StatusConfiguration('c', 'Completed', 'XYZ', false);
-                expect(statusValidator.validateNextSymbol(config)).toStrictEqual([
-                    'Task Next Status Symbol ("XYZ") must be a single character.',
-                ]);
-            });
+    describe('validate next symbol', () => {
+        it('valid symbol', () => {
+            const config = new StatusConfiguration('c', 'Completed', 'X', false);
+            expect(statusValidator.validateNextSymbol(config)).toStrictEqual([]);
+        });
+
+        it('invalid next symbol', () => {
+            const config = new StatusConfiguration('c', 'Completed', 'XYZ', false);
+            expect(statusValidator.validateNextSymbol(config)).toStrictEqual([
+                'Task Next Status Symbol ("XYZ") must be a single character.',
+            ]);
         });
     });
 
