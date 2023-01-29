@@ -170,6 +170,7 @@ describe('Theme', () => {
     type NamedTheme = [string, StatusCollection];
     const themes: NamedTheme[] = [
         // Alphabetical order by name:
+        ['AnuPpuccin', Themes.anuppuccinSupportedStatuses()],
         ['Aura', Themes.auraSupportedStatuses()],
         ['Ebullientworks', Themes.ebullientworksSupportedStatuses()],
         ['ITS', Themes.itsSupportedStatuses()],

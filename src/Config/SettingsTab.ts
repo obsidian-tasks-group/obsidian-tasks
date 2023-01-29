@@ -428,6 +428,7 @@ export class SettingsTab extends PluginSettingTab {
         type NamedTheme = [string, StatusCollection];
         const themes: NamedTheme[] = [
             // Light and Dark themes - alphabetical order
+            ['AnuPpuccin Theme', Themes.anuppuccinSupportedStatuses()],
             ['Ebullientworks Theme', Themes.ebullientworksSupportedStatuses()],
             ['ITS Theme & SlRvb Checkboxes', Themes.itsSupportedStatuses()],
             ['Minimal Theme', Themes.minimalSupportedStatuses()],
