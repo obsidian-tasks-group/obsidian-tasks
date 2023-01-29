@@ -1,5 +1,6 @@
 import { StatusConfiguration, StatusType } from '../src/StatusConfiguration';
 import { StatusValidator } from '../src/StatusValidator';
+import type { StatusCollectionEntry } from '../src/StatusCollection';
 
 describe('StatusValidator', () => {
     const statusValidator = new StatusValidator();
@@ -53,6 +54,34 @@ describe('StatusValidator', () => {
         });
     });
 
+    describe('validate StatusCollectionEntry', () => {
+        it('should produce no messages for valid entry', () => {
+            const entry: StatusCollectionEntry = ['x', 'Name', ' ', 'DONE'];
+            expect(statusValidator.validateStatusCollectionEntry(entry)).toStrictEqual([]);
+        });
+
+        it('should validate type', () => {
+            const entry: StatusCollectionEntry = ['!', 'Name', ' ', 'Done'];
+            expect(statusValidator.validateStatusCollectionEntry(entry)).toStrictEqual([
+                'Status Type "Done" is not a valid type',
+            ]);
+        });
+
+        it('should recognise inconsistent symbol and type', () => {
+            const entry: StatusCollectionEntry = ['x', 'Name', ' ', 'TODO'];
+            expect(statusValidator.validateStatusCollectionEntry(entry)).toStrictEqual([
+                "Status Type 'TODO' is not consistent with conventions for symbol 'x'",
+            ]);
+        });
+
+        it('should recognise an error in created StatusConfiguration', () => {
+            const entry: StatusCollectionEntry = ['x', 'Name', 'cc', 'DONE'];
+            expect(statusValidator.validateStatusCollectionEntry(entry)).toStrictEqual([
+                'Task Next Status Symbol ("cc") must be a single character.',
+            ]);
+        });
+    });
+
     describe('validate symbol', () => {
         it('valid symbol', () => {
             const config = new StatusConfiguration('X', 'Completed', 'c', false);
@@ -93,6 +122,12 @@ describe('StatusValidator', () => {
             ]);
             expect(statusValidator.validateType('CANCELED')).toStrictEqual([
                 'Status Type "CANCELED" is not a valid type',
+            ]);
+        });
+
+        it('should forbid type EMPTY', () => {
+            expect(statusValidator.validateType('EMPTY')).toStrictEqual([
+                'Status Type "EMPTY" is not permitted in user data',
             ]);
         });
     });

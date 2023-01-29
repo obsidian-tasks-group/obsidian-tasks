@@ -1,5 +1,7 @@
 import type { StatusConfiguration } from './StatusConfiguration';
 import { StatusType } from './StatusConfiguration';
+import type { StatusCollectionEntry } from './StatusCollection';
+import { Status } from './Status';
 
 export class StatusValidator {
     /**
@@ -12,6 +14,29 @@ export class StatusValidator {
         errors.push(...this.validateSymbol(statusConfiguration));
         errors.push(...this.validateName(statusConfiguration));
         errors.push(...this.validateNextSymbol(statusConfiguration));
+
+        return errors;
+    }
+
+    public validateStatusCollectionEntry(entry: StatusCollectionEntry) {
+        const [_symbol, _name, _nextSymbol, typeAsString] = entry;
+
+        const errors: string[] = [];
+
+        // Checks that can only be done on the raw data.
+        // Status.createFromImportedValue() falls back to StatusType.TODO if the
+        // type string is not recognised, so we have to test that first.
+        errors.push(...this.validateType(typeAsString));
+
+        // If the raw data was not valid, return now, to avoid potentially misleading
+        // errors from later checks.
+        if (errors.length > 0) {
+            return errors;
+        }
+
+        const configuration = Status.createFromImportedValue(entry).configuration;
+        errors.push(...this.validateSymbolTypeConventions(configuration));
+        errors.push(...this.validate(configuration));
 
         return errors;
     }
@@ -34,11 +59,14 @@ export class StatusValidator {
 
     public validateType(symbolName: string): string[] {
         const statusTypeElement = StatusType[symbolName as keyof typeof StatusType];
-        if (statusTypeElement) {
-            return [];
-        } else {
-            return [`Status Type "${symbolName}" is not a valid type`];
+        const errors: string[] = [];
+        if (!statusTypeElement) {
+            errors.push(`Status Type "${symbolName}" is not a valid type`);
         }
+        if (statusTypeElement == StatusType.EMPTY) {
+            errors.push('Status Type "EMPTY" is not permitted in user data');
+        }
+        return errors;
     }
 
     public validateSymbolTypeConventions(configuration: StatusConfiguration): string[] {
