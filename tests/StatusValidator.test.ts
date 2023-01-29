@@ -81,11 +81,11 @@ describe('StatusValidator', () => {
             ]);
         });
 
-        it('should recognise symbol toggling to itself', () => {
-            const entry: StatusCollectionEntry = ['!', 'Name', '!', 'TODO'];
-            expect(statusValidator.validateStatusCollectionEntry(entry)).toStrictEqual([
+        it('should recognise symbol toggling to itself, if type not NON_TASK', () => {
+            expect(statusValidator.validateStatusCollectionEntry(['!', 'Name', '!', 'TODO'])).toStrictEqual([
                 "Status symbol '!' toggles to itself",
             ]);
+            expect(statusValidator.validateStatusCollectionEntry(['!', 'Name', '!', 'NON_TASK'])).toStrictEqual([]);
         });
 
         it('should recognise an error in created StatusConfiguration', () => {
