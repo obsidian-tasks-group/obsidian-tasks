@@ -78,24 +78,21 @@ export class StatusValidator {
     }
 
     public validateSymbolTypeConventions(configuration: StatusConfiguration): string[] {
+        const errors: string[] = [];
+
         const symbol = configuration.symbol;
         const type = configuration.type;
-        let suspect = false;
 
         const registry = new StatusRegistry();
         const symbolToSearchFor = symbol === 'X' ? 'x' : symbol;
         const defaultStatusFromRegistry = registry.bySymbol(symbolToSearchFor);
         if (defaultStatusFromRegistry.type !== StatusType.EMPTY) {
             if (defaultStatusFromRegistry.type !== configuration.type) {
-                suspect = true;
+                errors.push(`Status Type '${type}' is not consistent with conventions for symbol '${symbol}'`);
             }
         }
 
-        if (suspect) {
-            return [`Status Type '${type}' is not consistent with conventions for symbol '${symbol}'`];
-        } else {
-            return [];
-        }
+        return errors;
     }
 
     private static validateOneSymbol(symbol: string, symbolName: string): string[] {
