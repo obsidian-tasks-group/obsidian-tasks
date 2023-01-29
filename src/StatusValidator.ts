@@ -1,4 +1,5 @@
 import type { StatusConfiguration } from './StatusConfiguration';
+import { StatusType } from './StatusConfiguration';
 
 export class StatusValidator {
     /**
@@ -29,6 +30,41 @@ export class StatusValidator {
             errors.push('Task Status Name cannot be empty.');
         }
         return errors;
+    }
+
+    public validateType(symbolName: string): string[] {
+        const statusTypeElement = StatusType[symbolName as keyof typeof StatusType];
+        if (statusTypeElement) {
+            return [];
+        } else {
+            return [`Status Type "${symbolName}" is not a valid type`];
+        }
+    }
+
+    public validateSymbolTypeConventions(configuration: StatusConfiguration): string[] {
+        const symbol = configuration.symbol;
+        const type = configuration.type;
+        let suspect = false;
+        if (symbol === ' ' && type !== StatusType.TODO) {
+            suspect = true;
+        }
+        if (symbol === 'x' && type !== StatusType.DONE) {
+            suspect = true;
+        }
+        if (symbol === 'X' && type !== StatusType.DONE) {
+            suspect = true;
+        }
+        if (symbol === '/' && type !== StatusType.IN_PROGRESS) {
+            suspect = true;
+        }
+        if (symbol === '-' && type !== StatusType.CANCELLED) {
+            suspect = true;
+        }
+        if (suspect) {
+            return [`Status Type '${type}' is not consistent with conventions for symbol '${symbol}'`];
+        } else {
+            return [];
+        }
     }
 
     private static validateOneSymbol(symbol: string, symbolName: string): string[] {

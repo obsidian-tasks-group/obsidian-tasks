@@ -1,4 +1,4 @@
-import { StatusConfiguration } from '../src/StatusConfiguration';
+import { StatusConfiguration, StatusType } from '../src/StatusConfiguration';
 import { StatusValidator } from '../src/StatusValidator';
 
 describe('StatusValidator', () => {
@@ -9,7 +9,7 @@ describe('StatusValidator', () => {
         expect(errors).toEqual(expectedMessages);
     }
 
-    describe('validation', () => {
+    describe('validate StatusConfiguration', () => {
         it('should handle valid input correctly', () => {
             const config = new StatusConfiguration('X', 'Completed', ' ', false);
             checkValidation(config, []);
@@ -78,6 +78,51 @@ describe('StatusValidator', () => {
                     'Task Next Status Symbol ("XYZ") must be a single character.',
                 ]);
             });
+        });
+    });
+
+    describe('validate type as raw string', () => {
+        it('valid symbol', () => {
+            expect(statusValidator.validateType('TODO')).toStrictEqual([]);
+            expect(statusValidator.validateType('IN_PROGRESS')).toStrictEqual([]);
+        });
+
+        it('invalidate type as raw string', () => {
+            expect(statusValidator.validateType('in_progress')).toStrictEqual([
+                'Status Type "in_progress" is not a valid type',
+            ]);
+            expect(statusValidator.validateType('CANCELED')).toStrictEqual([
+                'Status Type "CANCELED" is not a valid type',
+            ]);
+        });
+    });
+
+    describe('validate symbol/type consistency for convention', () => {
+        function checkSymbolTypeConsistent(symbol: string, type: StatusType) {
+            const configuration = new StatusConfiguration(symbol, 'Any old name', 'x', false, type);
+            expect(statusValidator.validateSymbolTypeConventions(configuration)).toEqual([]);
+        }
+
+        function checkSymbolTypeInconsistent(symbol: string, type: StatusType) {
+            const configuration = new StatusConfiguration(symbol, 'Any old name', 'x', false, type);
+            const expectation = [`Status Type '${type}' is not consistent with conventions for symbol '${symbol}'`];
+            expect(statusValidator.validateSymbolTypeConventions(configuration)).toEqual(expectation);
+        }
+
+        it('matches convention', () => {
+            checkSymbolTypeConsistent(' ', StatusType.TODO);
+            checkSymbolTypeConsistent('x', StatusType.DONE);
+            checkSymbolTypeConsistent('X', StatusType.DONE);
+            checkSymbolTypeConsistent('/', StatusType.IN_PROGRESS);
+            checkSymbolTypeConsistent('-', StatusType.CANCELLED);
+        });
+
+        it('does not match convention', () => {
+            checkSymbolTypeInconsistent(' ', StatusType.NON_TASK);
+            checkSymbolTypeInconsistent('x', StatusType.NON_TASK);
+            checkSymbolTypeInconsistent('X', StatusType.NON_TASK);
+            checkSymbolTypeInconsistent('/', StatusType.NON_TASK);
+            checkSymbolTypeInconsistent('-', StatusType.NON_TASK);
         });
     });
 });
