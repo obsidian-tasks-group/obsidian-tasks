@@ -2,6 +2,7 @@ import type { StatusConfiguration } from './StatusConfiguration';
 import { StatusType } from './StatusConfiguration';
 import type { StatusCollectionEntry } from './StatusCollection';
 import { Status } from './Status';
+import { StatusRegistry } from './StatusRegistry';
 
 export class StatusValidator {
     /**
@@ -80,21 +81,16 @@ export class StatusValidator {
         const symbol = configuration.symbol;
         const type = configuration.type;
         let suspect = false;
-        if (symbol === ' ' && type !== StatusType.TODO) {
-            suspect = true;
+
+        const registry = new StatusRegistry();
+        const symbolToSearchFor = symbol === 'X' ? 'x' : symbol;
+        const defaultStatusFromRegistry = registry.bySymbol(symbolToSearchFor);
+        if (defaultStatusFromRegistry.type !== StatusType.EMPTY) {
+            if (defaultStatusFromRegistry.type !== configuration.type) {
+                suspect = true;
+            }
         }
-        if (symbol === 'x' && type !== StatusType.DONE) {
-            suspect = true;
-        }
-        if (symbol === 'X' && type !== StatusType.DONE) {
-            suspect = true;
-        }
-        if (symbol === '/' && type !== StatusType.IN_PROGRESS) {
-            suspect = true;
-        }
-        if (symbol === '-' && type !== StatusType.CANCELLED) {
-            suspect = true;
-        }
+
         if (suspect) {
             return [`Status Type '${type}' is not consistent with conventions for symbol '${symbol}'`];
         } else {
