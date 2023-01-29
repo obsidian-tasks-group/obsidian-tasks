@@ -70,7 +70,7 @@ describe('StatusValidator', () => {
         it('should recognise inconsistent symbol and type', () => {
             const entry: StatusCollectionEntry = ['x', 'Name', ' ', 'TODO'];
             expect(statusValidator.validateStatusCollectionEntry(entry)).toStrictEqual([
-                "Status Type 'TODO' is not consistent with conventions for symbol 'x'",
+                "Status Type for symbol 'x': 'TODO' is inconsistent with convention 'DONE'",
             ]);
         });
 
@@ -145,9 +145,12 @@ describe('StatusValidator', () => {
             expect(statusValidator.validateSymbolTypeConventions(configuration)).toEqual([]);
         }
 
-        function checkSymbolTypeInconsistent(symbol: string, type: StatusType) {
-            const configuration = new StatusConfiguration(symbol, 'Any old name', 'x', false, type);
-            const expectation = [`Status Type '${type}' is not consistent with conventions for symbol '${symbol}'`];
+        function checkSymbolTypeInconsistent(symbol: string, actualType: StatusType, expectedType: StatusType) {
+            const configuration = new StatusConfiguration(symbol, 'Any old name', 'x', false, actualType);
+            const expectation = [
+                `Status Type for symbol '${symbol}': '${actualType}' is inconsistent with convention '${expectedType}'`,
+            ];
+            // ""
             expect(statusValidator.validateSymbolTypeConventions(configuration)).toEqual(expectation);
         }
 
@@ -160,11 +163,11 @@ describe('StatusValidator', () => {
         });
 
         it('does not match convention', () => {
-            checkSymbolTypeInconsistent(' ', StatusType.NON_TASK);
-            checkSymbolTypeInconsistent('x', StatusType.NON_TASK);
-            checkSymbolTypeInconsistent('X', StatusType.NON_TASK);
-            checkSymbolTypeInconsistent('/', StatusType.NON_TASK);
-            checkSymbolTypeInconsistent('-', StatusType.NON_TASK);
+            checkSymbolTypeInconsistent(' ', StatusType.NON_TASK, StatusType.TODO);
+            checkSymbolTypeInconsistent('x', StatusType.NON_TASK, StatusType.DONE);
+            checkSymbolTypeInconsistent('X', StatusType.NON_TASK, StatusType.DONE);
+            checkSymbolTypeInconsistent('/', StatusType.NON_TASK, StatusType.IN_PROGRESS);
+            checkSymbolTypeInconsistent('-', StatusType.NON_TASK, StatusType.CANCELLED);
         });
     });
 });
