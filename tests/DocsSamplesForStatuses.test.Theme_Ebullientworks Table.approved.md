@@ -4,7 +4,7 @@
 | ----- | ----- | ----- | ----- | ----- |
 | `space` | `x` | Unchecked | `TODO` | No |
 | `x` | `space` | Checked | `DONE` | No |
-| `-` | `x` | Cancelled | `CANCELLED` | Yes |
+| `-` | `space` | Cancelled | `CANCELLED` | Yes |
 | `/` | `x` | In Progress | `IN_PROGRESS` | Yes |
 | `>` | `x` | Deferred | `TODO` | Yes |
 | `!` | `x` | Important | `TODO` | Yes |

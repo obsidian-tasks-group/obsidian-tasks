@@ -8,7 +8,7 @@ export function auraSupportedStatuses() {
     const zzz: StatusCollection = [
         [' ', 'incomplete', 'x', 'TODO'],
         ['x', 'complete / done', ' ', 'DONE'],
-        ['-', 'cancelled', 'x', 'CANCELLED'],
+        ['-', 'cancelled', ' ', 'CANCELLED'],
         ['>', 'deferred', 'x', 'TODO'],
         ['/', 'in progress, or half-done', 'x', 'IN_PROGRESS'],
         ['!', 'Important', 'x', 'TODO'],
