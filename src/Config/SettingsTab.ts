@@ -427,20 +427,20 @@ export class SettingsTab extends PluginSettingTab {
         /* -------------------- Add all Status types supported by ... buttons -------------------- */
         type NamedTheme = [string, StatusCollection];
         const themes: NamedTheme[] = [
-            ['Minimal Theme', Themes.minimalSupportedStatuses()],
-            ['ITS Theme', Themes.itsSupportedStatuses()],
-            ['Things Theme', Themes.thingsSupportedStatuses()],
-            ['Aura Theme (Dark mode only)', Themes.auraSupportedStatuses()],
+            // Light and Dark themes - alphabetical order
             ['Ebullientworks Theme', Themes.ebullientworksSupportedStatuses()],
+            ['ITS Theme & SlRvb Checkboxes', Themes.itsSupportedStatuses()],
+            ['Minimal Theme', Themes.minimalSupportedStatuses()],
+            ['Things Theme', Themes.thingsSupportedStatuses()],
+            // Dark only themes - alphabetical order
+            ['Aura Theme (Dark mode only)', Themes.auraSupportedStatuses()],
         ];
         for (const [name, collection] of themes) {
             const addStatusesSupportedByThisTheme = new Setting(containerEl).addButton((button) => {
-                button
-                    .setButtonText('Add all Status types supported by ' + name)
-                    .setCta()
-                    .onClick(async () => {
-                        await addCustomStatesToSettings(collection, statusSettings, settings);
-                    });
+                const label = `${name}: Add ${collection.length} supported Statuses`;
+                button.setButtonText(label).onClick(async () => {
+                    await addCustomStatesToSettings(collection, statusSettings, settings);
+                });
             });
             addStatusesSupportedByThisTheme.infoEl.remove();
         }
