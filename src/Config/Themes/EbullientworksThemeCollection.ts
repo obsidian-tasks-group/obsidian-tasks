@@ -8,7 +8,7 @@ export function ebullientworksSupportedStatuses() {
     const zzz: StatusCollection = [
         [' ', 'Unchecked', 'x', 'TODO'],
         ['x', 'Checked', ' ', 'DONE'],
-        ['-', 'Cancelled', 'x', 'CANCELLED'],
+        ['-', 'Cancelled', ' ', 'CANCELLED'],
         ['/', 'In Progress', 'x', 'IN_PROGRESS'],
         ['>', 'Deferred', 'x', 'TODO'],
         ['!', 'Important', 'x', 'TODO'],

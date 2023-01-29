@@ -10,7 +10,7 @@ export function thingsSupportedStatuses() {
         [' ', 'to-do', 'x', 'TODO'],
         ['/', 'incomplete', 'x', 'IN_PROGRESS'],
         ['x', 'done', ' ', 'DONE'],
-        ['-', 'canceled', 'x', 'CANCELLED'],
+        ['-', 'canceled', ' ', 'CANCELLED'],
         ['>', 'forwarded', 'x', 'TODO'],
         ['<', 'scheduling', 'x', 'TODO'],
         // Extras
