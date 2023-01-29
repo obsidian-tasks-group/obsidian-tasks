@@ -85,7 +85,12 @@ export class StatusValidator {
         const symbolToSearchFor = symbol === 'X' ? 'x' : symbol;
         const defaultStatusFromRegistry = registry.bySymbol(symbolToSearchFor);
         if (defaultStatusFromRegistry.type !== StatusType.EMPTY) {
-            if (defaultStatusFromRegistry.type !== configuration.type) {
+            if (configuration.nextStatusSymbol !== defaultStatusFromRegistry.nextStatusSymbol) {
+                errors.push(
+                    `Next Status Symbol for symbol '${symbol}': '${configuration.nextStatusSymbol}' is inconsistent with convention '${defaultStatusFromRegistry.nextStatusSymbol}'`,
+                );
+            }
+            if (configuration.type !== defaultStatusFromRegistry.type) {
                 errors.push(
                     `Status Type for symbol '${symbol}': '${configuration.type}' is inconsistent with convention '${defaultStatusFromRegistry.type}'`,
                 );

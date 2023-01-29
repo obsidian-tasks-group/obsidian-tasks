@@ -56,8 +56,8 @@ describe('StatusValidator', () => {
 
     describe('validate StatusCollectionEntry', () => {
         it('should produce no messages for valid entry', () => {
-            const entry: StatusCollectionEntry = ['x', 'Name', ' ', 'DONE'];
-            expect(statusValidator.validateStatusCollectionEntry(entry)).toStrictEqual([]);
+            expect(statusValidator.validateStatusCollectionEntry(['x', 'Name', ' ', 'DONE'])).toStrictEqual([]);
+            expect(statusValidator.validateStatusCollectionEntry(['X', 'Name', ' ', 'DONE'])).toStrictEqual([]);
         });
 
         it('should validate type', () => {
@@ -67,14 +67,21 @@ describe('StatusValidator', () => {
             ]);
         });
 
+        it('should recognise inconsistent symbol and next symbol', () => {
+            const entry: StatusCollectionEntry = ['-', 'cancelled', 'x', 'CANCELLED'];
+            expect(statusValidator.validateStatusCollectionEntry(entry)).toStrictEqual([
+                "Next Status Symbol for symbol '-': 'x' is inconsistent with convention ' '",
+            ]);
+        });
+
         it('should recognise inconsistent symbol and type', () => {
-            const entry: StatusCollectionEntry = ['x', 'Name', ' ', 'TODO'];
+            const entry: StatusCollectionEntry = ['x', 'Done', ' ', 'TODO'];
             expect(statusValidator.validateStatusCollectionEntry(entry)).toStrictEqual([
                 "Status Type for symbol 'x': 'TODO' is inconsistent with convention 'DONE'",
             ]);
         });
 
-        it('should recognise symbol toggling to itsel', () => {
+        it('should recognise symbol toggling to itself', () => {
             const entry: StatusCollectionEntry = ['!', 'Name', '!', 'TODO'];
             expect(statusValidator.validateStatusCollectionEntry(entry)).toStrictEqual([
                 "Status symbol '!' toggles to itself",
@@ -82,7 +89,7 @@ describe('StatusValidator', () => {
         });
 
         it('should recognise an error in created StatusConfiguration', () => {
-            const entry: StatusCollectionEntry = ['x', 'Name', 'cc', 'DONE'];
+            const entry: StatusCollectionEntry = ['!', 'Name', 'cc', 'DONE'];
             expect(statusValidator.validateStatusCollectionEntry(entry)).toStrictEqual([
                 'Task Next Status Symbol ("cc") must be a single character.',
             ]);
@@ -140,34 +147,44 @@ describe('StatusValidator', () => {
     });
 
     describe('validate symbol/type consistency for convention', () => {
-        function checkSymbolTypeConsistent(symbol: string, type: StatusType) {
-            const configuration = new StatusConfiguration(symbol, 'Any old name', 'x', false, type);
-            expect(statusValidator.validateSymbolTypeConventions(configuration)).toEqual([]);
-        }
-
-        function checkSymbolTypeInconsistent(symbol: string, actualType: StatusType, expectedType: StatusType) {
-            const configuration = new StatusConfiguration(symbol, 'Any old name', 'x', false, actualType);
-            const expectation = [
-                `Status Type for symbol '${symbol}': '${actualType}' is inconsistent with convention '${expectedType}'`,
-            ];
-            // ""
-            expect(statusValidator.validateSymbolTypeConventions(configuration)).toEqual(expectation);
-        }
-
         it('matches convention', () => {
-            checkSymbolTypeConsistent(' ', StatusType.TODO);
-            checkSymbolTypeConsistent('x', StatusType.DONE);
-            checkSymbolTypeConsistent('X', StatusType.DONE);
-            checkSymbolTypeConsistent('/', StatusType.IN_PROGRESS);
-            checkSymbolTypeConsistent('-', StatusType.CANCELLED);
+            expect(
+                statusValidator.validateSymbolTypeConventions(
+                    new StatusConfiguration(' ', 'Any old name', 'x', false, StatusType.TODO),
+                ),
+            ).toEqual([]);
+
+            expect(
+                statusValidator.validateSymbolTypeConventions(
+                    new StatusConfiguration('X', 'Any old name', ' ', false, StatusType.DONE),
+                ),
+            ).toEqual([]);
         });
 
         it('does not match convention', () => {
-            checkSymbolTypeInconsistent(' ', StatusType.NON_TASK, StatusType.TODO);
-            checkSymbolTypeInconsistent('x', StatusType.NON_TASK, StatusType.DONE);
-            checkSymbolTypeInconsistent('X', StatusType.NON_TASK, StatusType.DONE);
-            checkSymbolTypeInconsistent('/', StatusType.NON_TASK, StatusType.IN_PROGRESS);
-            checkSymbolTypeInconsistent('-', StatusType.NON_TASK, StatusType.CANCELLED);
+            expect(
+                statusValidator.validateSymbolTypeConventions(
+                    new StatusConfiguration(' ', 'Any old name', '!', false, StatusType.IN_PROGRESS),
+                ),
+            ).toEqual([
+                "Next Status Symbol for symbol ' ': '!' is inconsistent with convention 'x'",
+                "Status Type for symbol ' ': 'IN_PROGRESS' is inconsistent with convention 'TODO'",
+            ]);
+
+            expect(
+                statusValidator.validateSymbolTypeConventions(
+                    new StatusConfiguration(' ', 'Any old name', 'x', false, StatusType.NON_TASK),
+                ),
+            ).toEqual(["Status Type for symbol ' ': 'NON_TASK' is inconsistent with convention 'TODO'"]);
+
+            expect(
+                statusValidator.validateSymbolTypeConventions(
+                    new StatusConfiguration('X', 'Name', '-', false, StatusType.TODO),
+                ),
+            ).toEqual([
+                "Next Status Symbol for symbol 'X': '-' is inconsistent with convention ' '",
+                "Status Type for symbol 'X': 'TODO' is inconsistent with convention 'DONE'",
+            ]);
         });
     });
 });
