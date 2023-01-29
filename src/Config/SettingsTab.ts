@@ -431,6 +431,7 @@ export class SettingsTab extends PluginSettingTab {
             ['ITS Theme', Themes.itsSupportedStatuses()],
             ['Things Theme', Themes.thingsSupportedStatuses()],
             ['Aura Theme (Dark mode only)', Themes.auraSupportedStatuses()],
+            ['Ebullientworks Theme', Themes.ebullientworksSupportedStatuses()],
         ];
         for (const [name, collection] of themes) {
             const addStatusesSupportedByThisTheme = new Setting(containerEl).addButton((button) => {
