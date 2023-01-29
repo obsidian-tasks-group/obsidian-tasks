@@ -9,8 +9,9 @@ import * as FilterParser from '../src/Query/FilterParser';
 import { Group } from '../src/Query/Group';
 import { StatusNameField } from '../src/Query/Filter/StatusNameField';
 import { StatusTypeField } from '../src/Query/Filter/StatusTypeField';
-import type { StatusCollection } from '../src/StatusCollection';
+import type { StatusCollection, StatusCollectionEntry } from '../src/StatusCollection';
 import * as Themes from '../src/Config/Themes';
+import { StatusValidator } from '../src/StatusValidator';
 import { TaskBuilder } from './TestingTools/TaskBuilder';
 
 function verifyMarkdown(markdown: string) {
@@ -176,7 +177,13 @@ describe('Theme', () => {
         ['Things', Themes.thingsSupportedStatuses()],
     ];
 
-    describe.each(themes)('%s', (_, statuses) => {
+    describe.each(themes)('%s', (_: string, statuses: StatusCollection) => {
+        it.each(statuses)('Validate status: "%s", "%s", "%s", "%s"', (symbol, name, nextSymbol, type) => {
+            const statusValidator = new StatusValidator();
+            const entry: StatusCollectionEntry = [symbol, name, nextSymbol, type];
+            expect(statusValidator.validateStatusCollectionEntry(entry)).toEqual([]);
+        });
+
         it('Table', () => {
             verifyStatusesAsMarkdownTable(constructStatuses(statuses), true);
         });

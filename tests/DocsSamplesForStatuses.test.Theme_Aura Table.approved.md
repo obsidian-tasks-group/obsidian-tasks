@@ -4,7 +4,7 @@
 | ----- | ----- | ----- | ----- | ----- |
 | `space` | `x` | incomplete | `TODO` | No |
 | `x` | `space` | complete / done | `DONE` | No |
-| `-` | `x` | cancelled | `CANCELLED` | Yes |
+| `-` | `space` | cancelled | `CANCELLED` | Yes |
 | `>` | `x` | deferred | `TODO` | Yes |
 | `/` | `x` | in progress, or half-done | `IN_PROGRESS` | Yes |
 | `!` | `x` | Important | `TODO` | Yes |

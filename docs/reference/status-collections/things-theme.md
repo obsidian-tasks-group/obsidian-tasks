@@ -72,7 +72,7 @@ Tasks' setting pane has a one-click button to add the following information, rep
 | `space` | `x` | to-do | `TODO` | No |
 | `/` | `x` | incomplete | `IN_PROGRESS` | Yes |
 | `x` | `space` | done | `DONE` | No |
-| `-` | `x` | canceled | `CANCELLED` | Yes |
+| `-` | `space` | canceled | `CANCELLED` | Yes |
 | `>` | `x` | forwarded | `TODO` | Yes |
 | `<` | `x` | scheduling | `TODO` | Yes |
 | `?` | `x` | question | `TODO` | Yes |

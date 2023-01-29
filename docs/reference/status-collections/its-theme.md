@@ -89,7 +89,7 @@ Tasks' setting pane has a one-click button to add the following information, rep
 | `space` | `x` | Unchecked | `TODO` | No |
 | `x` | `space` | Regular | `DONE` | No |
 | `X` | `space` | Checked | `DONE` | Yes |
-| `-` | `x` | Dropped | `CANCELLED` | Yes |
+| `-` | `space` | Dropped | `CANCELLED` | Yes |
 | `>` | `x` | Forward | `TODO` | Yes |
 | `D` | `x` | Date | `TODO` | Yes |
 | `?` | `x` | Question | `TODO` | Yes |
