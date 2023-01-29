@@ -1,5 +1,6 @@
-import { StatusConfiguration } from '../src/StatusConfiguration';
+import { StatusConfiguration, StatusType } from '../src/StatusConfiguration';
 import { StatusValidator } from '../src/StatusValidator';
+import type { StatusCollectionEntry } from '../src/StatusCollection';
 
 describe('StatusValidator', () => {
     const statusValidator = new StatusValidator();
@@ -9,7 +10,7 @@ describe('StatusValidator', () => {
         expect(errors).toEqual(expectedMessages);
     }
 
-    describe('validation', () => {
+    describe('validate StatusConfiguration', () => {
         it('should handle valid input correctly', () => {
             const config = new StatusConfiguration('X', 'Completed', ' ', false);
             checkValidation(config, []);
@@ -51,33 +52,139 @@ describe('StatusValidator', () => {
             const config = new StatusConfiguration('X', 'Completed', 'yyy', false);
             checkValidation(config, ['Task Next Status Symbol ("yyy") must be a single character.']);
         });
+    });
 
-        describe('validate symbol', () => {
-            it('valid symbol', () => {
-                const config = new StatusConfiguration('X', 'Completed', 'c', false);
-                expect(statusValidator.validateSymbol(config)).toStrictEqual([]);
-            });
-
-            it('invalid symbol', () => {
-                const config = new StatusConfiguration('XYZ', 'Completed', 'c', false);
-                expect(statusValidator.validateSymbol(config)).toStrictEqual([
-                    'Task Status Symbol ("XYZ") must be a single character.',
-                ]);
-            });
+    describe('validate StatusCollectionEntry', () => {
+        it('should produce no messages for valid entry', () => {
+            expect(statusValidator.validateStatusCollectionEntry(['x', 'Name', ' ', 'DONE'])).toStrictEqual([]);
+            expect(statusValidator.validateStatusCollectionEntry(['X', 'Name', ' ', 'DONE'])).toStrictEqual([]);
         });
 
-        describe('validate next symbol', () => {
-            it('valid symbol', () => {
-                const config = new StatusConfiguration('c', 'Completed', 'X', false);
-                expect(statusValidator.validateNextSymbol(config)).toStrictEqual([]);
-            });
+        it('should validate type', () => {
+            const entry: StatusCollectionEntry = ['!', 'Name', ' ', 'Done'];
+            expect(statusValidator.validateStatusCollectionEntry(entry)).toStrictEqual([
+                'Status Type "Done" is not a valid type',
+            ]);
+        });
 
-            it('invalid next symbol', () => {
-                const config = new StatusConfiguration('c', 'Completed', 'XYZ', false);
-                expect(statusValidator.validateNextSymbol(config)).toStrictEqual([
-                    'Task Next Status Symbol ("XYZ") must be a single character.',
-                ]);
-            });
+        it('should recognise inconsistent symbol and next symbol', () => {
+            const entry: StatusCollectionEntry = ['-', 'cancelled', 'x', 'CANCELLED'];
+            expect(statusValidator.validateStatusCollectionEntry(entry)).toStrictEqual([
+                "Next Status Symbol for symbol '-': 'x' is inconsistent with convention ' '",
+            ]);
+        });
+
+        it('should recognise inconsistent symbol and type', () => {
+            const entry: StatusCollectionEntry = ['x', 'Done', ' ', 'TODO'];
+            expect(statusValidator.validateStatusCollectionEntry(entry)).toStrictEqual([
+                "Status Type for symbol 'x': 'TODO' is inconsistent with convention 'DONE'",
+            ]);
+        });
+
+        it('should recognise symbol toggling to itself', () => {
+            const entry: StatusCollectionEntry = ['!', 'Name', '!', 'TODO'];
+            expect(statusValidator.validateStatusCollectionEntry(entry)).toStrictEqual([
+                "Status symbol '!' toggles to itself",
+            ]);
+        });
+
+        it('should recognise an error in created StatusConfiguration', () => {
+            const entry: StatusCollectionEntry = ['!', 'Name', 'cc', 'DONE'];
+            expect(statusValidator.validateStatusCollectionEntry(entry)).toStrictEqual([
+                'Task Next Status Symbol ("cc") must be a single character.',
+            ]);
+        });
+    });
+
+    describe('validate symbol', () => {
+        it('valid symbol', () => {
+            const config = new StatusConfiguration('X', 'Completed', 'c', false);
+            expect(statusValidator.validateSymbol(config)).toStrictEqual([]);
+        });
+
+        it('invalid symbol', () => {
+            const config = new StatusConfiguration('XYZ', 'Completed', 'c', false);
+            expect(statusValidator.validateSymbol(config)).toStrictEqual([
+                'Task Status Symbol ("XYZ") must be a single character.',
+            ]);
+        });
+    });
+
+    describe('validate next symbol', () => {
+        it('valid symbol', () => {
+            const config = new StatusConfiguration('c', 'Completed', 'X', false);
+            expect(statusValidator.validateNextSymbol(config)).toStrictEqual([]);
+        });
+
+        it('invalid next symbol', () => {
+            const config = new StatusConfiguration('c', 'Completed', 'XYZ', false);
+            expect(statusValidator.validateNextSymbol(config)).toStrictEqual([
+                'Task Next Status Symbol ("XYZ") must be a single character.',
+            ]);
+        });
+    });
+
+    describe('validate type as raw string', () => {
+        it('valid symbol', () => {
+            expect(statusValidator.validateType('TODO')).toStrictEqual([]);
+            expect(statusValidator.validateType('IN_PROGRESS')).toStrictEqual([]);
+        });
+
+        it('invalidate type as raw string', () => {
+            expect(statusValidator.validateType('in_progress')).toStrictEqual([
+                'Status Type "in_progress" is not a valid type',
+            ]);
+            expect(statusValidator.validateType('CANCELED')).toStrictEqual([
+                'Status Type "CANCELED" is not a valid type',
+            ]);
+        });
+
+        it('should forbid type EMPTY', () => {
+            expect(statusValidator.validateType('EMPTY')).toStrictEqual([
+                'Status Type "EMPTY" is not permitted in user data',
+            ]);
+        });
+    });
+
+    describe('validate symbol/type consistency for convention', () => {
+        it('matches convention', () => {
+            expect(
+                statusValidator.validateSymbolTypeConventions(
+                    new StatusConfiguration(' ', 'Any old name', 'x', false, StatusType.TODO),
+                ),
+            ).toEqual([]);
+
+            expect(
+                statusValidator.validateSymbolTypeConventions(
+                    new StatusConfiguration('X', 'Any old name', ' ', false, StatusType.DONE),
+                ),
+            ).toEqual([]);
+        });
+
+        it('does not match convention', () => {
+            expect(
+                statusValidator.validateSymbolTypeConventions(
+                    new StatusConfiguration(' ', 'Any old name', '!', false, StatusType.IN_PROGRESS),
+                ),
+            ).toEqual([
+                "Next Status Symbol for symbol ' ': '!' is inconsistent with convention 'x'",
+                "Status Type for symbol ' ': 'IN_PROGRESS' is inconsistent with convention 'TODO'",
+            ]);
+
+            expect(
+                statusValidator.validateSymbolTypeConventions(
+                    new StatusConfiguration(' ', 'Any old name', 'x', false, StatusType.NON_TASK),
+                ),
+            ).toEqual(["Status Type for symbol ' ': 'NON_TASK' is inconsistent with convention 'TODO'"]);
+
+            expect(
+                statusValidator.validateSymbolTypeConventions(
+                    new StatusConfiguration('X', 'Name', '-', false, StatusType.TODO),
+                ),
+            ).toEqual([
+                "Next Status Symbol for symbol 'X': '-' is inconsistent with convention ' '",
+                "Status Type for symbol 'X': 'TODO' is inconsistent with convention 'DONE'",
+            ]);
         });
     });
 });
