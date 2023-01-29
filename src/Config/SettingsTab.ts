@@ -4,18 +4,13 @@ import type TasksPlugin from '../main';
 import { StatusRegistry } from '../StatusRegistry';
 import { Status } from '../Status';
 import type { StatusCollection } from '../StatusCollection';
+import * as Themes from './Themes';
 import type { HeadingState } from './Settings';
 import { getSettings, isFeatureEnabled, updateGeneralSetting, updateSettings } from './Settings';
 import { StatusSettings } from './StatusSettings';
 import settingsJson from './settingsConfiguration.json';
 
 import { CustomStatusModal } from './CustomStatusModal';
-import {
-    auraSupportedStatuses,
-    itsSupportedStatuses,
-    minimalSupportedStatuses,
-    thingsSupportedStatuses,
-} from './Themes';
 
 export class SettingsTab extends PluginSettingTab {
     // If the UI needs a more complex setting you can create a
@@ -432,10 +427,10 @@ export class SettingsTab extends PluginSettingTab {
         /* -------------------- Add all Status types supported by ... buttons -------------------- */
         type NamedTheme = [string, StatusCollection];
         const themes: NamedTheme[] = [
-            ['Minimal Theme', minimalSupportedStatuses()],
-            ['ITS Theme', itsSupportedStatuses()],
-            ['Things Theme', thingsSupportedStatuses()],
-            ['Aura Theme (Dark mode only)', auraSupportedStatuses()],
+            ['Minimal Theme', Themes.minimalSupportedStatuses()],
+            ['ITS Theme', Themes.itsSupportedStatuses()],
+            ['Things Theme', Themes.thingsSupportedStatuses()],
+            ['Aura Theme (Dark mode only)', Themes.auraSupportedStatuses()],
         ];
         for (const [name, collection] of themes) {
             const addStatusesSupportedByThisTheme = new Setting(containerEl).addButton((button) => {
