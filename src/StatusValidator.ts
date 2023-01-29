@@ -81,14 +81,14 @@ export class StatusValidator {
         const errors: string[] = [];
 
         const symbol = configuration.symbol;
-        const type = configuration.type;
-
         const registry = new StatusRegistry();
         const symbolToSearchFor = symbol === 'X' ? 'x' : symbol;
         const defaultStatusFromRegistry = registry.bySymbol(symbolToSearchFor);
         if (defaultStatusFromRegistry.type !== StatusType.EMPTY) {
             if (defaultStatusFromRegistry.type !== configuration.type) {
-                errors.push(`Status Type '${type}' is not consistent with conventions for symbol '${symbol}'`);
+                errors.push(
+                    `Status Type for symbol '${symbol}': '${configuration.type}' is inconsistent with convention '${defaultStatusFromRegistry.type}'`,
+                );
             }
         }
 
