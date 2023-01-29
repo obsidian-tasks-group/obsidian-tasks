@@ -19,7 +19,7 @@ export class StatusValidator {
     }
 
     public validateStatusCollectionEntry(entry: StatusCollectionEntry) {
-        const [_symbol, _name, _nextSymbol, typeAsString] = entry;
+        const [symbol, _name, nextStatusSymbol, typeAsString] = entry;
 
         const errors: string[] = [];
 
@@ -27,6 +27,13 @@ export class StatusValidator {
         // Status.createFromImportedValue() falls back to StatusType.TODO if the
         // type string is not recognised, so we have to test that first.
         errors.push(...this.validateType(typeAsString));
+
+        // For users, it is valid to have a status that toggles to itself.
+        // For imported data for themes, it seems worth preventing that situation,
+        // to guard against human error when setting up the status collections.
+        if (symbol === nextStatusSymbol) {
+            errors.push(`Status symbol '${symbol}' toggles to itself`);
+        }
 
         // If the raw data was not valid, return now, to avoid potentially misleading
         // errors from later checks.

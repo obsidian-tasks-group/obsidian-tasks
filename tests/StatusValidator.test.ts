@@ -74,6 +74,13 @@ describe('StatusValidator', () => {
             ]);
         });
 
+        it('should recognise symbol toggling to itsel', () => {
+            const entry: StatusCollectionEntry = ['!', 'Name', '!', 'TODO'];
+            expect(statusValidator.validateStatusCollectionEntry(entry)).toStrictEqual([
+                "Status symbol '!' toggles to itself",
+            ]);
+        });
+
         it('should recognise an error in created StatusConfiguration', () => {
             const entry: StatusCollectionEntry = ['x', 'Name', 'cc', 'DONE'];
             expect(statusValidator.validateStatusCollectionEntry(entry)).toStrictEqual([
