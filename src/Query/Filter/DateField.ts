@@ -47,7 +47,7 @@ export abstract class DateField extends Field {
         let filterFunction;
         if (match !== null) {
             const filterDate = DateParser.parseDate(match[2]);
-            const matchCurrentPeriod = match[2].match(this.currentPeriodRegexp);
+            const matchCurrentPeriod = match[2].match(Field.currentPeriodRegexp);
 
             // Something is wrong if the date is wrong AND we are not in current w/m/y case
             if (!filterDate.isValid() && matchCurrentPeriod == null) {

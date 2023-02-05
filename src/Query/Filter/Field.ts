@@ -24,7 +24,7 @@ export abstract class Field {
     // -----------------------------------------------------------------------------------------------------------------
 
     // TODO add previous and next
-    protected readonly currentPeriodRegexp = /^current (week|month|year)$/;
+    protected static readonly currentPeriodRegexp = /^current (week|month|year)$/;
 
     /**
      * Returns true if the class can parse the given instruction line.
