@@ -121,44 +121,52 @@ For full details of combining filters with boolean operators, see [Combining Fil
 - `no done date`
 - `has done date`
 - `done (before|after|on) <date>`
+- `done in current (week|month|year)`
 - `done date is invalid`
 
 {: .released }
 `no done date` and `has done date` were introduced in Tasks 1.7.0.<br>
 `done date is invalid` was introduced in Tasks 1.16.0.
+`done in current (week|month|year)` was introduced in Tasks 1.25.0
 
 ### Due Date
 
 - `no due date`
 - `has due date`
 - `due (before|after|on) <date>`
+- `due in current (week|month|year)`
 - `due date is invalid`
 
 {: .released }
 `has due date` was introduced in Tasks 1.6.0.<br>
 `due date is invalid` was introduced in Tasks 1.16.0.
+`due in current (week|month|year)` was introduced in Tasks 1.25.0
 
 ### Scheduled Date
 
 - `no scheduled date`
 - `has scheduled date`
 - `scheduled (before|after|on) <date>`
+- `scheduled in current (week|month|year)`
 - `scheduled date is invalid`
 
 {: .released }
 `has scheduled date` was introduced in Tasks 1.6.0.<br>
 `scheduled date is invalid` was introduced in Tasks 1.16.0.
+`scheduled in current (week|month|year)` was introduced in Tasks 1.25.0
 
 ### Start Date
 
 - `no start date`
 - `has start date`
 - `starts (before|after|on) <date>`
+- `starts in current (week|month|year)`
 - `start date is invalid`
 
 {: .released }
 `has start date` was Introduced in Tasks 1.6.0.<br>
 `start date is invalid` was introduced in Tasks 1.16.0.
+`start in current (week|month|year)` was introduced in Tasks 1.25.0
 
 When filtering queries by [start date]({{ site.baseurl }}{% link getting-started/dates.md %}#-start),
 the result will include tasks without a start date.
@@ -173,6 +181,7 @@ Such filter could be:
 ### Happens
 
 - `happens (before|after|on) <date>`
+- `happens in current (week|month|year)`
 
 `happens` returns any task for a matching start date, scheduled date, _or_ due date.
 For example, `happens before tomorrow` will return all tasks that are starting, scheduled, or due earlier than tomorrow.
@@ -186,6 +195,7 @@ because the tasks starts before tomorrow. Only one of the dates needs to match.
 
 {: .released }
 `no happens date` and `has happens date` were introduced in Tasks 1.7.0.
+`happens in current (week|month|year)` was introduced in Tasks 1.25.0
 
 ## Filters for Task Statuses
 
