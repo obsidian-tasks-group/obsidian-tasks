@@ -20,7 +20,7 @@ The Tasks plugin renders a task in the following structure (this refers to query
 
 ```markdown
 - Obsidian code block (div class="block-language-tasks")
-  - Results list (ul class="plugin-tasks-query-result")
+  - Results list (ul class="plugin-tasks-query-result") OR Reading View list (ul class="contains-task-list")
     - Task (li class="task-list-item" + specific classes like "tasks-tag-atHome tasks-priority-medium tasks-due-past-1d")
       - Task checkbox (li class="task-list-item-checkbox")
       - Task content (span class="tasks-list-text")

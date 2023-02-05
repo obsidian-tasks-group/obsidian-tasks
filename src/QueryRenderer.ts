@@ -10,6 +10,7 @@ import { TaskModal } from './TaskModal';
 import type { TasksEvents } from './TasksEvents';
 import type { Task } from './Task';
 import { DateFallback } from './DateFallback';
+import { TaskLayout } from './TaskLayout';
 
 export class QueryRenderer {
     private readonly app: App;
@@ -184,8 +185,10 @@ class QueryRenderChild extends MarkdownRenderChild {
     }): Promise<{ taskList: HTMLUListElement; tasksCount: number }> {
         const tasksCount = tasks.length;
 
+        const layout = new TaskLayout(this.query.layoutOptions);
         const taskList = content.createEl('ul');
         taskList.addClasses(['contains-task-list', 'plugin-tasks-query-result']);
+        taskList.addClasses(layout.specificClasses);
         for (let i = 0; i < tasksCount; i++) {
             const task = tasks[i];
             const isFilenameUnique = this.isFilenameUnique({ task });
@@ -195,6 +198,7 @@ class QueryRenderChild extends MarkdownRenderChild {
                 listIndex: i,
                 layoutOptions: this.query.layoutOptions,
                 isFilenameUnique,
+                taskLayout: layout,
             });
 
             // Remove all footnotes. They don't re-appear in another document.

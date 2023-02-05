@@ -14,6 +14,7 @@ export type TaskLineRenderDetails = {
     listIndex: number;
     layoutOptions?: LayoutOptions;
     isFilenameUnique?: boolean;
+    taskLayout?: TaskLayout;
 };
 
 export const LayoutClasses: { [c in TaskLayoutComponent]: string } = {
@@ -115,7 +116,7 @@ async function taskToHtml(
     textRenderer: TextRenderer,
 ) {
     const allSpecificClasses: string[] = [];
-    const taskLayout = new TaskLayout(renderDetails.layoutOptions);
+    const taskLayout = renderDetails.taskLayout ?? new TaskLayout(renderDetails.layoutOptions);
     for (const component of taskLayout.layoutComponents) {
         let componentString = task.componentToString(taskLayout, component);
         if (componentString) {
