@@ -81,7 +81,22 @@ export abstract class DateField extends Field {
                             ? DateField.isDateInCurrentPeriod(date, matchCurrentPeriod[1])
                             : this.filterResultIfFieldMissing();
                     };
-                    relative = ' in current ' + matchCurrentPeriod[1];
+
+                    result.filter = new Filter(
+                        line,
+                        filterFunction,
+                        new Explanation(
+                            DateField.getExplanationString(
+                                this.fieldName(),
+                                '',
+                                this.filterResultIfFieldMissing(),
+                                DateField.currentPeriodBoundaryDates(matchCurrentPeriod[1]),
+                            ),
+                        ),
+                    );
+
+                    // Exit here to return the result for 'current period'
+                    return result;
                 }
 
                 const explanation = DateField.getExplanationString(
@@ -116,11 +131,21 @@ export abstract class DateField extends Field {
         fieldName: string,
         relationshipPrefixedWithSpace: string,
         filterResultIfFieldMissing: boolean,
-        filterDate: moment.Moment,
+        filterDate: moment.Moment | [moment.Moment, moment.Moment],
     ) {
-        // Example of formatted date: '2024-01-02 (Tuesday 2nd January 2024)'
-        const actualDate = filterDate.format('YYYY-MM-DD (dddd Do MMMM YYYY)');
-        let result = `${fieldName} date is${relationshipPrefixedWithSpace} ${actualDate}`;
+        let result = `${fieldName} date is${relationshipPrefixedWithSpace}`;
+
+        if (window.moment.isMoment(filterDate)) {
+            // Example of formatted date: '2024-01-02 (Tuesday 2nd January 2024)'
+            const actualDate = filterDate.format('YYYY-MM-DD (dddd Do MMMM YYYY)');
+            result += ` ${actualDate}`;
+        } else {
+            result += ' between ';
+            result += filterDate[0].format('YYYY-MM-DD (dddd Do MMMM YYYY)');
+            result += ' and ';
+            result += filterDate[1].format('YYYY-MM-DD (dddd Do MMMM YYYY)');
+        }
+
         if (filterResultIfFieldMissing) {
             result += ` OR no ${fieldName} date`;
         }
@@ -146,26 +171,21 @@ export abstract class DateField extends Field {
         };
     }
 
-    public static isDateInCurrentPeriod(date: moment.Moment, period: string): boolean {
-        const currentPeriod = [];
+    public static currentPeriodBoundaryDates(period: string): [moment.Moment, moment.Moment] {
         switch (period) {
             case 'week':
-                currentPeriod.push(window.moment().startOf('week'));
-                currentPeriod.push(window.moment().endOf('week'));
-                break;
+                return [window.moment().startOf('week'), window.moment().endOf('week')];
             case 'month':
-                currentPeriod.push(window.moment().startOf('month'));
-                currentPeriod.push(window.moment().endOf('month'));
-                break;
+                return [window.moment().startOf('month'), window.moment().endOf('month')];
             case 'year':
-                currentPeriod.push(window.moment().startOf('year'));
-                currentPeriod.push(window.moment().endOf('year'));
-                break;
-            default:
-            // error case here? like
-            // currentPeriod.push(window.moment());
-            // currentPeriod.push(window.moment());
+                return [window.moment().startOf('year'), window.moment().endOf('year')];
         }
+
+        // error case here?
+        return [window.moment(), window.moment()];
+    }
+    public static isDateInCurrentPeriod(date: moment.Moment, period: string): boolean {
+        const currentPeriod = DateField.currentPeriodBoundaryDates(period);
 
         return date.isSameOrAfter(currentPeriod[0]) && date.isSameOrBefore(currentPeriod[1]);
     }

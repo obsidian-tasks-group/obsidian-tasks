@@ -80,7 +80,22 @@ export class HappensDateField extends Field {
                             (date) => date && DateField.isDateInCurrentPeriod(date, matchCurrentPeriod[1]),
                         );
                     };
-                    relative = ' in current ' + matchCurrentPeriod[1];
+
+                    result.filter = new Filter(
+                        line,
+                        filterFunction,
+                        new Explanation(
+                            DateField.getExplanationString(
+                                'due, start or scheduled',
+                                '',
+                                false,
+                                DateField.currentPeriodBoundaryDates(matchCurrentPeriod[1]),
+                            ),
+                        ),
+                    );
+
+                    // Exit here to return the result for 'current period'
+                    return result;
                 }
 
                 const explanation = DateField.getExplanationString(
