@@ -47,7 +47,10 @@ export abstract class DateField extends Field {
         let filterFunction;
         if (match !== null) {
             const filterDate = DateParser.parseDate(match[2]);
-            if (!filterDate.isValid()) {
+            const matchCurrentPeriod = match[2].match(this.currentPeriodRegexp);
+
+            // Something is wrong if the date is wrong AND we are not in current w/m/y case
+            if (!filterDate.isValid() && matchCurrentPeriod == null) {
                 result.error = 'do not understand ' + this.fieldName() + ' date';
             } else {
                 let relative;
@@ -70,6 +73,17 @@ export abstract class DateField extends Field {
                     };
                     relative = ' on';
                 }
+
+                if (match[1] === 'in' && matchCurrentPeriod !== null) {
+                    filterFunction = (task: Task) => {
+                        const date = this.date(task);
+                        return date
+                            ? DateField.isDateInCurrentPeriod(date, matchCurrentPeriod[1])
+                            : this.filterResultIfFieldMissing();
+                    };
+                    relative = ' in current ' + matchCurrentPeriod[1];
+                }
+
                 const explanation = DateField.getExplanationString(
                     this.fieldName(),
                     relative,
@@ -130,5 +144,29 @@ export abstract class DateField extends Field {
         return (a: Task, b: Task) => {
             return compareByDate(this.date(a), this.date(b));
         };
+    }
+
+    public static isDateInCurrentPeriod(date: moment.Moment, period: string): boolean {
+        const currentPeriod = [];
+        switch (period) {
+            case 'week':
+                currentPeriod.push(window.moment().startOf('week'));
+                currentPeriod.push(window.moment().endOf('week'));
+                break;
+            case 'month':
+                currentPeriod.push(window.moment().startOf('month'));
+                currentPeriod.push(window.moment().endOf('month'));
+                break;
+            case 'year':
+                currentPeriod.push(window.moment().startOf('year'));
+                currentPeriod.push(window.moment().endOf('year'));
+                break;
+            default:
+            // error case here? like
+            // currentPeriod.push(window.moment());
+            // currentPeriod.push(window.moment());
+        }
+
+        return date.isSameOrAfter(currentPeriod[0]) && date.isSameOrBefore(currentPeriod[1]);
     }
 }

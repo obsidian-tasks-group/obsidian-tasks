@@ -49,7 +49,10 @@ export class HappensDateField extends Field {
         const happensMatch = Field.getMatch(this.filterRegExp(), line);
         if (happensMatch !== null) {
             const filterDate = DateParser.parseDate(happensMatch[2]);
-            if (!filterDate.isValid()) {
+            const matchCurrentPeriod = happensMatch[2].match(this.currentPeriodRegexp);
+
+            // Something is wrong if the date is wrong AND we are not in current w/m/y case
+            if (!filterDate.isValid() && matchCurrentPeriod == null) {
                 result.error = 'do not understand happens date';
             } else {
                 let filterFunction;
@@ -70,6 +73,16 @@ export class HappensDateField extends Field {
                     };
                     relative = ' on';
                 }
+
+                if (happensMatch[1] === 'in' && matchCurrentPeriod !== null) {
+                    filterFunction = (task: Task) => {
+                        return this.dates(task).some(
+                            (date) => date && DateField.isDateInCurrentPeriod(date, matchCurrentPeriod[1]),
+                        );
+                    };
+                    relative = ' in current ' + matchCurrentPeriod[1];
+                }
+
                 const explanation = DateField.getExplanationString(
                     'due, start or scheduled',
                     relative,
