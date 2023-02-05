@@ -14,7 +14,7 @@ import { DateField } from './DateField';
  * start, scheduled and due dates.
  */
 export class HappensDateField extends Field {
-    private static readonly happensRegexp = /^happens (before|after|on)? ?(.*)/;
+    private static readonly happensRegexp = /^happens (before|after|on|in)? ?(.*)/;
     private static readonly instructionForFieldPresence = 'has happens date';
     private static readonly instructionForFieldAbsence = 'no happens date';
     private readonly filterInstructions: FilterInstructions;

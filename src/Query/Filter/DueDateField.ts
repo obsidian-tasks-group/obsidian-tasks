@@ -6,7 +6,7 @@ import { DateField } from './DateField';
  * Support the 'due' search instruction.
  */
 export class DueDateField extends DateField {
-    private static readonly dueRegexp = /^due (before|after|on)? ?(.*)/;
+    private static readonly dueRegexp = /^due (before|after|on|in)? ?(.*)/;
 
     protected filterRegExp(): RegExp {
         return DueDateField.dueRegexp;

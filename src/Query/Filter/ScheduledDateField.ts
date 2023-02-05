@@ -6,7 +6,7 @@ import { DateField } from './DateField';
  * Support the 'scheduled' search instruction.
  */
 export class ScheduledDateField extends DateField {
-    private static readonly scheduledRegexp = /^scheduled (before|after|on)? ?(.*)/;
+    private static readonly scheduledRegexp = /^scheduled (before|after|on|in)? ?(.*)/;
 
     protected filterRegExp(): RegExp {
         return ScheduledDateField.scheduledRegexp;

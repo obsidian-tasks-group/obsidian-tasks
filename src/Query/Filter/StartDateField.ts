@@ -6,7 +6,7 @@ import { DateField } from './DateField';
  * Support the 'starts' search instruction.
  */
 export class StartDateField extends DateField {
-    private static readonly startRegexp = /^starts (before|after|on)? ?(.*)/;
+    private static readonly startRegexp = /^starts (before|after|on|in)? ?(.*)/;
 
     protected filterRegExp(): RegExp {
         return StartDateField.startRegexp;
