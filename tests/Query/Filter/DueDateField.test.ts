@@ -5,7 +5,7 @@ import moment from 'moment';
 import { DueDateField } from '../../../src/Query/Filter/DueDateField';
 import type { FilterOrErrorMessage } from '../../../src/Query/Filter/Filter';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
-import { currentPeriodsTestArray, testFilter } from '../../TestingTools/FilterTestHelpers';
+import { currentPeriodsTestArray, explainPeriod, testFilter } from '../../TestingTools/FilterTestHelpers';
 import { toHaveExplanation } from '../../CustomMatchers/CustomMatchersForFilters';
 import {
     expectTaskComparesAfter,
@@ -74,6 +74,13 @@ describe('explain due date queries', () => {
     it('implicit "on" gets added to explanation', () => {
         const filterOrMessage = new DueDateField().createFilterOrErrorMessage('due 2023-01-02');
         expect(filterOrMessage).toHaveExplanation('due date is on 2023-01-02 (Monday 2nd January 2023)');
+    });
+
+    it('in current week/month/year', () => {
+        currentPeriodsTestArray.forEach((p) => {
+            const filterOrMessage = new DueDateField().createFilterOrErrorMessage('due in current ' + p);
+            expect(filterOrMessage).toHaveExplanation('due date is ' + explainPeriod(p));
+        });
     });
 });
 

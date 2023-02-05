@@ -5,7 +5,7 @@ import moment from 'moment';
 import { DoneDateField } from '../../../src/Query/Filter/DoneDateField';
 import type { FilterOrErrorMessage } from '../../../src/Query/Filter/Filter';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
-import { currentPeriodsTestArray, testFilter } from '../../TestingTools/FilterTestHelpers';
+import { currentPeriodsTestArray, explainPeriod, testFilter } from '../../TestingTools/FilterTestHelpers';
 import { toHaveExplanation } from '../../CustomMatchers/CustomMatchersForFilters';
 import { expectTaskComparesAfter, expectTaskComparesBefore } from '../../CustomMatchers/CustomMatchersForSorting';
 
@@ -84,6 +84,13 @@ describe('explain done date queries', () => {
     it('should show value of relative dates', () => {
         const filterOrMessage = new DoneDateField().createFilterOrErrorMessage('done after today');
         expect(filterOrMessage).toHaveExplanation('done date is after 2022-01-15 (Saturday 15th January 2022)');
+    });
+
+    it('in current week/month/year', () => {
+        currentPeriodsTestArray.forEach((p) => {
+            const filterOrMessage = new DoneDateField().createFilterOrErrorMessage('done in current ' + p);
+            expect(filterOrMessage).toHaveExplanation('done date is ' + explainPeriod(p));
+        });
     });
 });
 

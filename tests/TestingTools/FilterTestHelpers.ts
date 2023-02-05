@@ -1,9 +1,27 @@
+import moment from 'moment';
 import type { FilterOrErrorMessage } from '../../src/Query/Filter/Filter';
 import { Task } from '../../src/Task';
 import { Query } from '../../src/Query/Query';
 import type { TaskBuilder } from './TaskBuilder';
 
+/**
+ * Current w/m/y period test array. It is not String[] as the moment
+ * framework needs the unitOfTime type
+ */
 export const currentPeriodsTestArray: moment.unitOfTime.DurationConstructor[] = ['week', 'month', 'year'];
+
+/**
+ * Convenience function to generate current w/m/y description with boundary dates
+ *
+ * @param period - the current period eg w/m/y to be generated.
+ */
+export function explainPeriod(period: moment.unitOfTime.DurationConstructor): String {
+    let explanation = 'between ';
+    explanation += moment().startOf(period).format('YYYY-MM-DD (dddd Do MMMM YYYY)');
+    explanation += ' and ';
+    explanation += moment().endOf(period).format('YYYY-MM-DD (dddd Do MMMM YYYY)');
+    return explanation;
+}
 
 /**
  * Convenience function to test a Filter on a single Task

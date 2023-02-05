@@ -4,7 +4,7 @@
 import moment from 'moment';
 import { HappensDateField } from '../../../src/Query/Filter/HappensDateField';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
-import { currentPeriodsTestArray, testFilter } from '../../TestingTools/FilterTestHelpers';
+import { currentPeriodsTestArray, explainPeriod, testFilter } from '../../TestingTools/FilterTestHelpers';
 import { toHaveExplanation } from '../../CustomMatchers/CustomMatchersForFilters';
 import * as CustomMatchersForSorting from '../../CustomMatchers/CustomMatchersForSorting';
 
@@ -178,6 +178,13 @@ describe('explain happens date queries', () => {
         expect(filterOrMessage).toHaveExplanation(
             'due, start or scheduled date is after 2022-01-15 (Saturday 15th January 2022)',
         );
+    });
+
+    it('in current week/month/year', () => {
+        currentPeriodsTestArray.forEach((p) => {
+            const filterOrMessage = new HappensDateField().createFilterOrErrorMessage('happens in current ' + p);
+            expect(filterOrMessage).toHaveExplanation('due, start or scheduled date is ' + explainPeriod(p));
+        });
     });
 });
 

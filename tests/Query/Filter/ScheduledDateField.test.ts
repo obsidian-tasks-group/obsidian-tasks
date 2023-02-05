@@ -6,7 +6,7 @@ import { toHaveExplanation } from '../../CustomMatchers/CustomMatchersForFilters
 import { ScheduledDateField } from '../../../src/Query/Filter/ScheduledDateField';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { expectTaskComparesAfter, expectTaskComparesBefore } from '../../CustomMatchers/CustomMatchersForSorting';
-import { currentPeriodsTestArray, testFilter } from '../../TestingTools/FilterTestHelpers';
+import { currentPeriodsTestArray, explainPeriod, testFilter } from '../../TestingTools/FilterTestHelpers';
 
 window.moment = moment;
 
@@ -23,6 +23,13 @@ describe('explain scheduled date queries', () => {
     it('implicit "on" gets added to explanation', () => {
         const filterOrMessage = new ScheduledDateField().createFilterOrErrorMessage('scheduled 2023-01-02');
         expect(filterOrMessage).toHaveExplanation('scheduled date is on 2023-01-02 (Monday 2nd January 2023)');
+    });
+
+    it('in current week/month/year', () => {
+        currentPeriodsTestArray.forEach((p) => {
+            const filterOrMessage = new ScheduledDateField().createFilterOrErrorMessage('scheduled in current ' + p);
+            expect(filterOrMessage).toHaveExplanation('scheduled date is ' + explainPeriod(p));
+        });
     });
 });
 

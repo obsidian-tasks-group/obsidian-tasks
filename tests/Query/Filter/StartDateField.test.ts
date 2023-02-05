@@ -6,7 +6,7 @@ import { toHaveExplanation } from '../../CustomMatchers/CustomMatchersForFilters
 import { StartDateField } from '../../../src/Query/Filter/StartDateField';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { expectTaskComparesAfter, expectTaskComparesBefore } from '../../CustomMatchers/CustomMatchersForSorting';
-import { currentPeriodsTestArray, testFilter } from '../../TestingTools/FilterTestHelpers';
+import { currentPeriodsTestArray, explainPeriod, testFilter } from '../../TestingTools/FilterTestHelpers';
 
 window.moment = moment;
 
@@ -27,6 +27,13 @@ describe('explain start date queries', () => {
         expect(filterOrMessage).toHaveExplanation(
             'start date is on 2023-01-02 (Monday 2nd January 2023) OR no start date',
         );
+    });
+
+    it('in current week/month/year', () => {
+        currentPeriodsTestArray.forEach((p) => {
+            const filterOrMessage = new StartDateField().createFilterOrErrorMessage('starts in current ' + p);
+            expect(filterOrMessage).toHaveExplanation('start date is ' + explainPeriod(p) + ' OR no start date');
+        });
     });
 });
 
