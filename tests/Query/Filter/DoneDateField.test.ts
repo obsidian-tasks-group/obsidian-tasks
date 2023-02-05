@@ -5,7 +5,7 @@ import moment from 'moment';
 import { DoneDateField } from '../../../src/Query/Filter/DoneDateField';
 import type { FilterOrErrorMessage } from '../../../src/Query/Filter/Filter';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
-import { testFilter } from '../../TestingTools/FilterTestHelpers';
+import { currentPeriodsTestArray, testFilter } from '../../TestingTools/FilterTestHelpers';
 import { toHaveExplanation } from '../../CustomMatchers/CustomMatchersForFilters';
 import { expectTaskComparesAfter, expectTaskComparesBefore } from '../../CustomMatchers/CustomMatchersForSorting';
 
@@ -37,6 +37,22 @@ describe('done date', () => {
         // Act, Assert
         testTaskFilterForTaskWithDoneDate(filter, null, true);
         testTaskFilterForTaskWithDoneDate(filter, '2022-04-15', false);
+    });
+
+    it('in current week/month/year', () => {
+        currentPeriodsTestArray.forEach((p) => {
+            const filter = new DoneDateField().createFilterOrErrorMessage('done in current ' + p);
+            testTaskFilterForTaskWithDoneDate(filter, null, false);
+            testTaskFilterForTaskWithDoneDate(filter, moment().format('YYYY-MM-DD'), true);
+            testTaskFilterForTaskWithDoneDate(filter, moment().startOf(p).format('YYYY-MM-DD'), true);
+            testTaskFilterForTaskWithDoneDate(filter, moment().endOf(p).format('YYYY-MM-DD'), true);
+            testTaskFilterForTaskWithDoneDate(
+                filter,
+                moment().startOf(p).subtract(1, 'second').format('YYYY-MM-DD'),
+                false,
+            );
+            testTaskFilterForTaskWithDoneDate(filter, moment().endOf(p).add(1, 'second').format('YYYY-MM-DD'), false);
+        });
     });
 });
 

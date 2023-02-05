@@ -5,7 +5,7 @@ import moment from 'moment';
 import { DueDateField } from '../../../src/Query/Filter/DueDateField';
 import type { FilterOrErrorMessage } from '../../../src/Query/Filter/Filter';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
-import { testFilter } from '../../TestingTools/FilterTestHelpers';
+import { currentPeriodsTestArray, testFilter } from '../../TestingTools/FilterTestHelpers';
 import { toHaveExplanation } from '../../CustomMatchers/CustomMatchersForFilters';
 import {
     expectTaskComparesAfter,
@@ -46,6 +46,22 @@ describe('due date', () => {
         testTaskFilterForTaskWithDueDate(filter, '2022-02-30', true); // 30 February is not valid
         testTaskFilterForTaskWithDueDate(filter, '2022-00-01', true); // month 0 not valid
         testTaskFilterForTaskWithDueDate(filter, '2022-13-01', true); // month 13 not valid
+    });
+
+    it('in current week/month/year', () => {
+        currentPeriodsTestArray.forEach((p) => {
+            const filter = new DueDateField().createFilterOrErrorMessage('due in current ' + p);
+            testTaskFilterForTaskWithDueDate(filter, null, false);
+            testTaskFilterForTaskWithDueDate(filter, moment().format('YYYY-MM-DD'), true);
+            testTaskFilterForTaskWithDueDate(filter, moment().startOf(p).format('YYYY-MM-DD'), true);
+            testTaskFilterForTaskWithDueDate(filter, moment().endOf(p).format('YYYY-MM-DD'), true);
+            testTaskFilterForTaskWithDueDate(
+                filter,
+                moment().startOf(p).subtract(1, 'second').format('YYYY-MM-DD'),
+                false,
+            );
+            testTaskFilterForTaskWithDueDate(filter, moment().endOf(p).add(1, 'second').format('YYYY-MM-DD'), false);
+        });
     });
 });
 

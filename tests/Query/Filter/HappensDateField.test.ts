@@ -4,7 +4,7 @@
 import moment from 'moment';
 import { HappensDateField } from '../../../src/Query/Filter/HappensDateField';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
-import { testFilter } from '../../TestingTools/FilterTestHelpers';
+import { currentPeriodsTestArray, testFilter } from '../../TestingTools/FilterTestHelpers';
 import { toHaveExplanation } from '../../CustomMatchers/CustomMatchersForFilters';
 import * as CustomMatchersForSorting from '../../CustomMatchers/CustomMatchersForSorting';
 
@@ -45,6 +45,66 @@ describe('happens date', () => {
 
         // Done date is ignored by happens
         testFilter(filter, new TaskBuilder().doneDate('2022-04-15'), true);
+    });
+
+    it('in current week/month/year (date in start date field)', () => {
+        currentPeriodsTestArray.forEach((p) => {
+            const filter = new HappensDateField().createFilterOrErrorMessage('happens in current ' + p);
+            testFilter(filter, new TaskBuilder().startDate(null), false);
+            testFilter(filter, new TaskBuilder().startDate(moment().format('YYYY-MM-DD')), true);
+            testFilter(filter, new TaskBuilder().startDate(moment().startOf(p).format('YYYY-MM-DD')), true);
+            testFilter(filter, new TaskBuilder().startDate(moment().endOf(p).format('YYYY-MM-DD')), true);
+            testFilter(
+                filter,
+                new TaskBuilder().startDate(moment().startOf(p).subtract(1, 'second').format('YYYY-MM-DD')),
+                false,
+            );
+            testFilter(
+                filter,
+                new TaskBuilder().startDate(moment().endOf(p).add(1, 'second').format('YYYY-MM-DD')),
+                false,
+            );
+        });
+    });
+
+    it('in current week/month/year (date in scheduled date field)', () => {
+        currentPeriodsTestArray.forEach((p) => {
+            const filter = new HappensDateField().createFilterOrErrorMessage('happens in current ' + p);
+            testFilter(filter, new TaskBuilder().scheduledDate(null), false);
+            testFilter(filter, new TaskBuilder().scheduledDate(moment().format('YYYY-MM-DD')), true);
+            testFilter(filter, new TaskBuilder().scheduledDate(moment().startOf(p).format('YYYY-MM-DD')), true);
+            testFilter(filter, new TaskBuilder().scheduledDate(moment().endOf(p).format('YYYY-MM-DD')), true);
+            testFilter(
+                filter,
+                new TaskBuilder().scheduledDate(moment().startOf(p).subtract(1, 'second').format('YYYY-MM-DD')),
+                false,
+            );
+            testFilter(
+                filter,
+                new TaskBuilder().scheduledDate(moment().endOf(p).add(1, 'second').format('YYYY-MM-DD')),
+                false,
+            );
+        });
+    });
+
+    it('in current week/month/year (date in due date field)', () => {
+        currentPeriodsTestArray.forEach((p) => {
+            const filter = new HappensDateField().createFilterOrErrorMessage('happens in current ' + p);
+            testFilter(filter, new TaskBuilder().dueDate(null), false);
+            testFilter(filter, new TaskBuilder().dueDate(moment().format('YYYY-MM-DD')), true);
+            testFilter(filter, new TaskBuilder().dueDate(moment().startOf(p).format('YYYY-MM-DD')), true);
+            testFilter(filter, new TaskBuilder().dueDate(moment().endOf(p).format('YYYY-MM-DD')), true);
+            testFilter(
+                filter,
+                new TaskBuilder().dueDate(moment().startOf(p).subtract(1, 'second').format('YYYY-MM-DD')),
+                false,
+            );
+            testFilter(
+                filter,
+                new TaskBuilder().dueDate(moment().endOf(p).add(1, 'second').format('YYYY-MM-DD')),
+                false,
+            );
+        });
     });
 });
 

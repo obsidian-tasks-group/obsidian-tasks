@@ -6,6 +6,7 @@ import { toHaveExplanation } from '../../CustomMatchers/CustomMatchersForFilters
 import { ScheduledDateField } from '../../../src/Query/Filter/ScheduledDateField';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { expectTaskComparesAfter, expectTaskComparesBefore } from '../../CustomMatchers/CustomMatchersForSorting';
+import { currentPeriodsTestArray, testFilter } from '../../TestingTools/FilterTestHelpers';
 
 window.moment = moment;
 
@@ -43,5 +44,27 @@ describe('sorting by scheduled', () => {
 
     it('sort by scheduled reverse', () => {
         expectTaskComparesAfter(new ScheduledDateField().createReverseSorter(), date1, date2);
+    });
+});
+
+describe('scheduled date', () => {
+    it('in current week/month/year', () => {
+        currentPeriodsTestArray.forEach((p) => {
+            const filter = new ScheduledDateField().createFilterOrErrorMessage('scheduled in current ' + p);
+            testFilter(filter, new TaskBuilder().scheduledDate(null), false);
+            testFilter(filter, new TaskBuilder().scheduledDate(moment().format('YYYY-MM-DD')), true);
+            testFilter(filter, new TaskBuilder().scheduledDate(moment().startOf(p).format('YYYY-MM-DD')), true);
+            testFilter(filter, new TaskBuilder().scheduledDate(moment().endOf(p).format('YYYY-MM-DD')), true);
+            testFilter(
+                filter,
+                new TaskBuilder().scheduledDate(moment().startOf(p).subtract(1, 'second').format('YYYY-MM-DD')),
+                false,
+            );
+            testFilter(
+                filter,
+                new TaskBuilder().scheduledDate(moment().endOf(p).add(1, 'second').format('YYYY-MM-DD')),
+                false,
+            );
+        });
     });
 });

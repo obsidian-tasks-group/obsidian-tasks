@@ -6,6 +6,7 @@ import { toHaveExplanation } from '../../CustomMatchers/CustomMatchersForFilters
 import { StartDateField } from '../../../src/Query/Filter/StartDateField';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { expectTaskComparesAfter, expectTaskComparesBefore } from '../../CustomMatchers/CustomMatchersForSorting';
+import { currentPeriodsTestArray, testFilter } from '../../TestingTools/FilterTestHelpers';
 
 window.moment = moment;
 
@@ -47,5 +48,30 @@ describe('sorting by start', () => {
 
     it('sort by start reverse', () => {
         expectTaskComparesAfter(new StartDateField().createReverseSorter(), date1, date2);
+    });
+});
+
+describe('start date', () => {
+    it('in current week/month/year', () => {
+        currentPeriodsTestArray.forEach((p) => {
+            const filter = new StartDateField().createFilterOrErrorMessage('starts in current ' + p);
+
+            // reference: https://obsidian-tasks-group.github.io/obsidian-tasks/queries/filters/#start-date
+            testFilter(filter, new TaskBuilder().startDate(null), true);
+
+            testFilter(filter, new TaskBuilder().startDate(moment().format('YYYY-MM-DD')), true);
+            testFilter(filter, new TaskBuilder().startDate(moment().startOf(p).format('YYYY-MM-DD')), true);
+            testFilter(filter, new TaskBuilder().startDate(moment().endOf(p).format('YYYY-MM-DD')), true);
+            testFilter(
+                filter,
+                new TaskBuilder().startDate(moment().startOf(p).subtract(1, 'second').format('YYYY-MM-DD')),
+                false,
+            );
+            testFilter(
+                filter,
+                new TaskBuilder().startDate(moment().endOf(p).add(1, 'second').format('YYYY-MM-DD')),
+                false,
+            );
+        });
     });
 });

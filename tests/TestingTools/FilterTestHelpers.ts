@@ -3,6 +3,8 @@ import { Task } from '../../src/Task';
 import { Query } from '../../src/Query/Query';
 import type { TaskBuilder } from './TaskBuilder';
 
+export const currentPeriodsTestArray: moment.unitOfTime.DurationConstructor[] = ['week', 'month', 'year'];
+
 /**
  * Convenience function to test a Filter on a single Task
  *
