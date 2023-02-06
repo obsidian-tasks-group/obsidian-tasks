@@ -135,20 +135,20 @@ export abstract class DateField extends Field {
         fieldName: string,
         relationshipPrefixedWithSpace: string,
         filterResultIfFieldMissing: boolean,
-        filterDate: moment.Moment | [moment.Moment, moment.Moment],
+        filterDateOrDateRange: moment.Moment | [moment.Moment, moment.Moment],
     ) {
         // Example of formatted date: '2024-01-02 (Tuesday 2nd January 2024)'
         const outputDateFormat = 'YYYY-MM-DD (dddd Do MMMM YYYY)';
         let result = `${fieldName} date is${relationshipPrefixedWithSpace}`;
 
-        if (window.moment.isMoment(filterDate)) {
-            const actualDate = filterDate.format(outputDateFormat);
+        if (window.moment.isMoment(filterDateOrDateRange)) {
+            const actualDate = filterDateOrDateRange.format(outputDateFormat);
             result += ` ${actualDate}`;
         } else {
             result += ' between ';
-            result += filterDate[0].format(outputDateFormat);
+            result += filterDateOrDateRange[0].format(outputDateFormat);
             result += ' and ';
-            result += filterDate[1].format(outputDateFormat);
+            result += filterDateOrDateRange[1].format(outputDateFormat);
         }
 
         if (filterResultIfFieldMissing) {
