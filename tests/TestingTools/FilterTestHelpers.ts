@@ -118,7 +118,6 @@ export function explainPeriod(period: moment.unitOfTime.DurationConstructor | st
             break;
         default:
             return '--ERROR: WRONG PERIOD:' + period + '! PERIOD SHALL BE (week|month|year)';
-
     }
     explained += ' inclusive';
     return explained;
