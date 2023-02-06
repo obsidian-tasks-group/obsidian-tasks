@@ -4,7 +4,7 @@
 import moment from 'moment';
 import { HappensDateField } from '../../../src/Query/Filter/HappensDateField';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
-import { currentPeriodsTestArray, explainPeriod, testFilter } from '../../TestingTools/FilterTestHelpers';
+import { testFilter } from '../../TestingTools/FilterTestHelpers';
 import { toHaveExplanation } from '../../CustomMatchers/CustomMatchersForFilters';
 import * as CustomMatchersForSorting from '../../CustomMatchers/CustomMatchersForSorting';
 
@@ -47,65 +47,48 @@ describe('happens date', () => {
         testFilter(filter, new TaskBuilder().doneDate('2022-04-15'), true);
     });
 
-    it('in current week/month/year (date in start date field)', () => {
-        currentPeriodsTestArray.forEach((p) => {
-            const filter = new HappensDateField().createFilterOrErrorMessage('happens in current ' + p);
-            testFilter(filter, new TaskBuilder().startDate(null), false);
-            testFilter(filter, new TaskBuilder().startDate(moment().format('YYYY-MM-DD')), true);
-            testFilter(filter, new TaskBuilder().startDate(moment().startOf(p).format('YYYY-MM-DD')), true);
-            testFilter(filter, new TaskBuilder().startDate(moment().endOf(p).format('YYYY-MM-DD')), true);
-            testFilter(
-                filter,
-                new TaskBuilder().startDate(moment().startOf(p).subtract(1, 'second').format('YYYY-MM-DD')),
-                false,
-            );
-            testFilter(
-                filter,
-                new TaskBuilder().startDate(moment().endOf(p).add(1, 'second').format('YYYY-MM-DD')),
-                false,
-            );
-        });
-    });
+    it.each([
+        // Week
+        ['happens in current week', '2022-01-09 (Sunday 9th January 2022)', false],
+        ['happens in current week', '2022-01-10 (Monday 10th January 2022)', true],
+        ['happens in current week', '2022-01-16 (Sunday 16th January 2022)', true],
+        ['happens in current week', '2022-01-17 (Monday 16th January 2022)', false],
 
-    it('in current week/month/year (date in scheduled date field)', () => {
-        currentPeriodsTestArray.forEach((p) => {
-            const filter = new HappensDateField().createFilterOrErrorMessage('happens in current ' + p);
+        // Month
+        ['happens in current month', '2021-12-31 (Friday 31st December 2021)', false],
+        ['happens in current month', '2022-01-01 (Saturday 1st January 2022)', true],
+        ['happens in current month', '2022-01-31 (Monday 31st January 2022)', true],
+        ['happens in current month', '2022-02-01 (Tuesday 1st February 2022)', false],
+
+        // Year
+        ['happens in current year', '2021-12-31', false],
+        ['happens in current year', '2022-01-01 (Saturday 1st January 2022)', true],
+        ['happens in current year', '2022-12-31 (Saturday 31st December 2022)', true],
+        ['happens in current year', '2023-01-01 (Sunday 1st January 2023)', false],
+    ])(
+        'For filter "%s" expect a task with "%s" date in scheduled/start/due field to be "%s"',
+        (filterString: string, testDate: string, expected: boolean) => {
+            jest.useFakeTimers();
+            jest.setSystemTime(new Date(2022, 0, 15)); // 2022-01-15
+
+            const filter = new HappensDateField().createFilterOrErrorMessage(filterString);
+
+            // Act, Assert
             testFilter(filter, new TaskBuilder().scheduledDate(null), false);
-            testFilter(filter, new TaskBuilder().scheduledDate(moment().format('YYYY-MM-DD')), true);
-            testFilter(filter, new TaskBuilder().scheduledDate(moment().startOf(p).format('YYYY-MM-DD')), true);
-            testFilter(filter, new TaskBuilder().scheduledDate(moment().endOf(p).format('YYYY-MM-DD')), true);
-            testFilter(
-                filter,
-                new TaskBuilder().scheduledDate(moment().startOf(p).subtract(1, 'second').format('YYYY-MM-DD')),
-                false,
-            );
-            testFilter(
-                filter,
-                new TaskBuilder().scheduledDate(moment().endOf(p).add(1, 'second').format('YYYY-MM-DD')),
-                false,
-            );
-        });
-    });
-
-    it('in current week/month/year (date in due date field)', () => {
-        currentPeriodsTestArray.forEach((p) => {
-            const filter = new HappensDateField().createFilterOrErrorMessage('happens in current ' + p);
+            testFilter(filter, new TaskBuilder().startDate(null), false);
             testFilter(filter, new TaskBuilder().dueDate(null), false);
-            testFilter(filter, new TaskBuilder().dueDate(moment().format('YYYY-MM-DD')), true);
-            testFilter(filter, new TaskBuilder().dueDate(moment().startOf(p).format('YYYY-MM-DD')), true);
-            testFilter(filter, new TaskBuilder().dueDate(moment().endOf(p).format('YYYY-MM-DD')), true);
-            testFilter(
-                filter,
-                new TaskBuilder().dueDate(moment().startOf(p).subtract(1, 'second').format('YYYY-MM-DD')),
-                false,
-            );
-            testFilter(
-                filter,
-                new TaskBuilder().dueDate(moment().endOf(p).add(1, 'second').format('YYYY-MM-DD')),
-                false,
-            );
-        });
-    });
+
+            // scheduled, start and due all contribute to happens:
+            testFilter(filter, new TaskBuilder().scheduledDate(testDate), expected);
+            testFilter(filter, new TaskBuilder().startDate(testDate), expected);
+            testFilter(filter, new TaskBuilder().dueDate(testDate), expected);
+
+            // Done date is ignored by happens
+            testFilter(filter, new TaskBuilder().doneDate(testDate), false);
+
+            jest.useRealTimers();
+        },
+    );
 });
 
 describe('accessing earliest happens date', () => {
@@ -180,11 +163,22 @@ describe('explain happens date queries', () => {
         );
     });
 
-    it('in current week/month/year', () => {
-        currentPeriodsTestArray.forEach((p) => {
-            const filterOrMessage = new HappensDateField().createFilterOrErrorMessage('happens in current ' + p);
-            expect(filterOrMessage).toHaveExplanation('due, start or scheduled date is ' + explainPeriod(p));
-        });
+    it.each([
+        [
+            'happens in current week',
+            'due, start or scheduled date is between 2022-01-10 (Monday 10th January 2022) and 2022-01-16 (Sunday 16th January 2022) inclusive',
+        ],
+        [
+            'happens in current month',
+            'due, start or scheduled date is between 2022-01-01 (Saturday 1st January 2022) and 2022-01-31 (Monday 31st January 2022) inclusive',
+        ],
+        [
+            'happens in current year',
+            'due, start or scheduled date is between 2022-01-01 (Saturday 1st January 2022) and 2022-12-31 (Saturday 31st December 2022) inclusive',
+        ],
+    ])('explains "%s" as "%s"', (filter: string, expectedExpanation: string) => {
+        const filterOrMessage = new HappensDateField().createFilterOrErrorMessage(filter);
+        expect(filterOrMessage).toHaveExplanation(expectedExpanation);
     });
 });
 
