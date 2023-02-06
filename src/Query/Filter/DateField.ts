@@ -182,11 +182,9 @@ export abstract class DateField extends Field {
     public static currentPeriodBoundaryDates(period: string): [moment.Moment, moment.Moment] {
         switch (period) {
             case 'week':
-                return [window.moment().startOf('week'), window.moment().endOf('week')];
             case 'month':
-                return [window.moment().startOf('month'), window.moment().endOf('month')];
             case 'year':
-                return [window.moment().startOf('year'), window.moment().endOf('year')];
+                return [window.moment().startOf(period), window.moment().endOf(period)];
         }
 
         // error case here?
