@@ -49,7 +49,7 @@ export class HappensDateField extends Field {
         const happensMatch = Field.getMatch(this.filterRegExp(), line);
         if (happensMatch !== null) {
             const filterDate = DateParser.parseDate(happensMatch[2]);
-            const matchCurrentPeriod = happensMatch[2].match(Field.currentPeriodRegexp);
+            const matchCurrentPeriod = happensMatch[2].match(DateField.currentPeriodRegexp);
 
             // Something is wrong if the date is wrong AND we are not in current w/m/y case
             if (!filterDate.isValid() && matchCurrentPeriod == null) {
