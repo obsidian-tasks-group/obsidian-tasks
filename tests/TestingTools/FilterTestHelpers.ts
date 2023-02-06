@@ -60,6 +60,9 @@ export const periodTestVectors = [
 
 /**
  * Generic DateField tester (presence in the query)
+ * Builds queries as 'starts/due/scheduled/done in current week/month/year'
+ * and performs the test: filter function is defined, not an error,
+ * tests the filter function
  *
  * @param - class implementing DateField
  * @param - name of the field TODO write this into the DateField implementing classes and remove the parameter
@@ -84,6 +87,8 @@ export function testDateFilterInCurrentPeriod(dateField: new () => DateField, fi
 
 /**
  * Generic DateField tester (explanation)
+ * Builds queries as 'starts/due/scheduled/done in current week/month/year'
+ * and checks the explanation
  *
  * @param - class implementing DateField
  * @param - name of the field TODO write this into the DateField implementing classes and remove the parameter
