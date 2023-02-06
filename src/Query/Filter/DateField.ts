@@ -182,6 +182,8 @@ export abstract class DateField extends Field {
     public static currentPeriodBoundaryDates(period: string): [moment.Moment, moment.Moment] {
         switch (period) {
             case 'week':
+                // Use locale-independant ISO 8601 weeks
+                return [window.moment().startOf('isoWeek'), window.moment().endOf('isoWeek')];
             case 'month':
             case 'year':
                 return [window.moment().startOf(period), window.moment().endOf(period)];
