@@ -152,6 +152,7 @@ export abstract class DateField extends Field {
             result += filterDateOrDateRange[0].format(outputDateFormat);
             result += ' and ';
             result += filterDateOrDateRange[1].format(outputDateFormat);
+            result += ' inclusive';
         }
 
         if (filterResultIfFieldMissing) {

@@ -105,16 +105,23 @@ export function testDateFilterInCurrentPeriodExplanation(dateField: new () => Da
  * @param period - the current period eg w/m/y to be generated.
  */
 export function explainPeriod(period: moment.unitOfTime.DurationConstructor | string): String {
+    let explained = 'between ';
     switch (period) {
         case 'week':
-            return 'between 2022-01-10 (Monday 10th January 2022) and 2022-01-16 (Sunday 16th January 2022)';
+            explained += '2022-01-10 (Monday 10th January 2022) and 2022-01-16 (Sunday 16th January 2022)';
+            break;
         case 'month':
-            return 'between 2022-01-01 (Saturday 1st January 2022) and 2022-01-31 (Monday 31st January 2022)';
+            explained += '2022-01-01 (Saturday 1st January 2022) and 2022-01-31 (Monday 31st January 2022)';
+            break;
         case 'year':
-            return 'between 2022-01-01 (Saturday 1st January 2022) and 2022-12-31 (Saturday 31st December 2022)';
-    }
+            explained += '2022-01-01 (Saturday 1st January 2022) and 2022-12-31 (Saturday 31st December 2022)';
+            break;
+        default:
+            return '--ERROR: WRONG PERIOD:' + period + '! PERIOD SHALL BE (week|month|year)';
 
-    return '--ERROR: WRONG PERIOD:' + period + '! PERIOD SHALL BE (week|month|year)';
+    }
+    explained += ' inclusive';
+    return explained;
 }
 
 /**
