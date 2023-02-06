@@ -5,7 +5,11 @@ import moment from 'moment';
 import { DoneDateField } from '../../../src/Query/Filter/DoneDateField';
 import type { FilterOrErrorMessage } from '../../../src/Query/Filter/Filter';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
-import { periodTestVectors, explainPeriod, testFilter } from '../../TestingTools/FilterTestHelpers';
+import {
+    testDateFilterInCurrentPeriod,
+    testDateFilterInCurrentPeriodExplanation,
+    testFilter,
+} from '../../TestingTools/FilterTestHelpers';
 import { toHaveExplanation } from '../../CustomMatchers/CustomMatchersForFilters';
 import { expectTaskComparesAfter, expectTaskComparesBefore } from '../../CustomMatchers/CustomMatchersForSorting';
 
@@ -49,11 +53,7 @@ describe('done date', () => {
     });
 
     it('in current week/month/year', () => {
-        periodTestVectors.forEach((testVector) => {
-            const filter = new DoneDateField().createFilterOrErrorMessage('done in current ' + testVector.period);
-            testTaskFilterForTaskWithDoneDate(filter, null, false);
-            testTaskFilterForTaskWithDoneDate(filter, testVector.date, testVector.expected);
-        });
+        testDateFilterInCurrentPeriod(DoneDateField, 'done');
     });
 });
 
@@ -88,10 +88,7 @@ describe('explain done date queries', () => {
     });
 
     it('in current week/month/year', () => {
-        periodTestVectors.forEach((testVector) => {
-            const filterOrMessage = new DoneDateField().createFilterOrErrorMessage('done in current ' + testVector.period);
-            expect(filterOrMessage).toHaveExplanation('done date is ' + explainPeriod(testVector.period));
-        });
+        testDateFilterInCurrentPeriodExplanation(DoneDateField, 'done');
     });
 });
 

@@ -1,7 +1,9 @@
 import type { FilterOrErrorMessage } from '../../src/Query/Filter/Filter';
 import { Task } from '../../src/Task';
 import { Query } from '../../src/Query/Query';
-import type { TaskBuilder } from './TaskBuilder';
+import type { DateField } from '../../src/Query/Filter/DateField';
+import { DoneDateField } from '../../src/Query/Filter/DoneDateField';
+import { TaskBuilder } from './TaskBuilder';
 
 /**
  * Current w/m/y period test array. It is not String[] as the moment
@@ -55,6 +57,46 @@ export const periodTestVectors = [
     new periodTestVector('year', '2021-12-31 (Friday 31st December 2021)', false),
     new periodTestVector('year', '2023-01-01 (Sunday 1st January 2023)', false),
 ];
+
+/**
+ * Generic DateField tester (presence in the query)
+ *
+ * @param - class implementing DateField
+ * @param - name of the field TODO write this into the DateField implementing classes and remove the parameter
+ */
+export function testDateFilterInCurrentPeriod(dateField: new () => DateField, fieldName: string): void {
+    periodTestVectors.forEach((testVector) => {
+        const builder = new TaskBuilder();
+        const testDateField = new dateField();
+        if (testDateField instanceof DoneDateField) {
+            builder.doneDate(testVector.date);
+        }
+        const task = builder.build();
+        const filterOrMessage = testDateField.createFilterOrErrorMessage(
+            fieldName + ' in current ' + testVector.period,
+        );
+
+        expect(filterOrMessage.filterFunction).toBeDefined();
+        expect(filterOrMessage.error).toBeUndefined();
+        expect(filterOrMessage.filterFunction!(task)).toEqual(testVector.expected);
+    });
+}
+
+/**
+ * Generic DateField tester (explanation)
+ *
+ * @param - class implementing DateField
+ * @param - name of the field TODO write this into the DateField implementing classes and remove the parameter
+ */
+export function testDateFilterInCurrentPeriodExplanation(dateField: new () => DateField, fieldName: string): void {
+    periodTestVectors.forEach((testVector) => {
+        const filterOrMessage = new dateField().createFilterOrErrorMessage(
+            fieldName + ' in current ' + testVector.period,
+        );
+
+        expect(filterOrMessage).toHaveExplanation(fieldName + ' date is ' + explainPeriod(testVector.period));
+    });
+}
 
 /**
  * Convenience function to generate current w/m/y description with boundary dates
