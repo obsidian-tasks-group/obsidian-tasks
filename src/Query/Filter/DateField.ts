@@ -50,10 +50,15 @@ export abstract class DateField extends Field {
         let filterFunction;
         if (match !== null) {
             const filterDate = DateParser.parseDate(match[2]);
-            const matchCurrentPeriod = match[2].match(DateField.currentPeriodRegexp);
 
-            // Something is wrong if the date is wrong AND we are not in current w/m/y case
-            if (!filterDate.isValid() && matchCurrentPeriod == null) {
+            // The period shall be matched only if 'in' is present. This will catch 'due current week' error queries
+            let matchCurrentPeriod: RegExpMatchArray | null = null;
+            if (match[1] === 'in') {
+                matchCurrentPeriod = match[2].match(DateField.currentPeriodRegexp);
+            }
+
+            // Something is wrong if the date is wrong AND it is not '... in current w/m/y' case
+            if (!filterDate.isValid() && matchCurrentPeriod === null) {
                 result.error = 'do not understand ' + this.fieldName() + ' date';
             } else {
                 let relative;
@@ -84,7 +89,7 @@ export abstract class DateField extends Field {
                         filterFunction = (task: Task) => {
                             const date = this.date(task);
                             return date
-                                ? DateField.isDateInCurrentPeriod(date, matchCurrentPeriod[1])
+                                ? DateField.isDateInCurrentPeriod(date, matchCurrentPeriod![1])
                                 : this.filterResultIfFieldMissing();
                         };
 
