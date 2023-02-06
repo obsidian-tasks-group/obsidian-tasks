@@ -74,28 +74,32 @@ export class HappensDateField extends Field {
                     relative = ' on';
                 }
 
-                if (happensMatch[1] === 'in' && matchCurrentPeriod !== null) {
-                    filterFunction = (task: Task) => {
-                        return this.dates(task).some(
-                            (date) => date && DateField.isDateInCurrentPeriod(date, matchCurrentPeriod[1]),
-                        );
-                    };
+                if (happensMatch[1] === 'in') {
+                    if (matchCurrentPeriod === null) {
+                        result.error = 'do not understand query filter (happens date)';
+                    } else {
+                        filterFunction = (task: Task) => {
+                            return this.dates(task).some(
+                                (date) => date && DateField.isDateInCurrentPeriod(date, matchCurrentPeriod[1]),
+                            );
+                        };
 
-                    result.filter = new Filter(
-                        line,
-                        filterFunction,
-                        new Explanation(
-                            DateField.getExplanationString(
-                                'due, start or scheduled',
-                                '',
-                                false,
-                                DateField.currentPeriodBoundaryDates(matchCurrentPeriod[1]),
+                        result.filter = new Filter(
+                            line,
+                            filterFunction,
+                            new Explanation(
+                                DateField.getExplanationString(
+                                    'due, start or scheduled',
+                                    '',
+                                    false,
+                                    DateField.currentPeriodBoundaryDates(matchCurrentPeriod[1]),
+                                ),
                             ),
-                        ),
-                    );
+                        );
 
-                    // Exit here to return the result for 'current period'
-                    return result;
+                        // Exit here to return the result for 'current period'
+                        return result;
+                    }
                 }
 
                 const explanation = DateField.getExplanationString(

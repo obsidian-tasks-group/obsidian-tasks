@@ -74,29 +74,33 @@ export abstract class DateField extends Field {
                     relative = ' on';
                 }
 
-                if (match[1] === 'in' && matchCurrentPeriod !== null) {
-                    filterFunction = (task: Task) => {
-                        const date = this.date(task);
-                        return date
-                            ? DateField.isDateInCurrentPeriod(date, matchCurrentPeriod[1])
-                            : this.filterResultIfFieldMissing();
-                    };
+                if (match[1] === 'in') {
+                    if (matchCurrentPeriod === null) {
+                        result.error = 'do not understand query filter (' + this.fieldName() + ' date)';
+                    } else {
+                        filterFunction = (task: Task) => {
+                            const date = this.date(task);
+                            return date
+                                ? DateField.isDateInCurrentPeriod(date, matchCurrentPeriod[1])
+                                : this.filterResultIfFieldMissing();
+                        };
 
-                    result.filter = new Filter(
-                        line,
-                        filterFunction,
-                        new Explanation(
-                            DateField.getExplanationString(
-                                this.fieldName(),
-                                '',
-                                this.filterResultIfFieldMissing(),
-                                DateField.currentPeriodBoundaryDates(matchCurrentPeriod[1]),
+                        result.filter = new Filter(
+                            line,
+                            filterFunction,
+                            new Explanation(
+                                DateField.getExplanationString(
+                                    this.fieldName(),
+                                    '',
+                                    this.filterResultIfFieldMissing(),
+                                    DateField.currentPeriodBoundaryDates(matchCurrentPeriod[1]),
+                                ),
                             ),
-                        ),
-                    );
+                        );
 
-                    // Exit here to return the result for 'current period'
-                    return result;
+                        // Exit here to return the result for 'current period'
+                        return result;
+                    }
                 }
 
                 const explanation = DateField.getExplanationString(
