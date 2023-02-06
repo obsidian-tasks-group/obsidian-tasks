@@ -126,7 +126,7 @@ For full details of combining filters with boolean operators, see [Combining Fil
 
 {: .released }
 `no done date` and `has done date` were introduced in Tasks 1.7.0.<br>
-`done date is invalid` was introduced in Tasks 1.16.0.
+`done date is invalid` was introduced in Tasks 1.16.0.<br>
 `done in current (week|month|year)` was introduced in Tasks 1.25.0
 
 ### Due Date
@@ -139,7 +139,7 @@ For full details of combining filters with boolean operators, see [Combining Fil
 
 {: .released }
 `has due date` was introduced in Tasks 1.6.0.<br>
-`due date is invalid` was introduced in Tasks 1.16.0.
+`due date is invalid` was introduced in Tasks 1.16.0.<br>
 `due in current (week|month|year)` was introduced in Tasks 1.25.0
 
 ### Scheduled Date
@@ -152,7 +152,7 @@ For full details of combining filters with boolean operators, see [Combining Fil
 
 {: .released }
 `has scheduled date` was introduced in Tasks 1.6.0.<br>
-`scheduled date is invalid` was introduced in Tasks 1.16.0.
+`scheduled date is invalid` was introduced in Tasks 1.16.0.<br>
 `scheduled in current (week|month|year)` was introduced in Tasks 1.25.0
 
 ### Start Date
@@ -165,7 +165,7 @@ For full details of combining filters with boolean operators, see [Combining Fil
 
 {: .released }
 `has start date` was Introduced in Tasks 1.6.0.<br>
-`start date is invalid` was introduced in Tasks 1.16.0.
+`start date is invalid` was introduced in Tasks 1.16.0.<br>
 `start in current (week|month|year)` was introduced in Tasks 1.25.0
 
 When filtering queries by [start date]({{ site.baseurl }}{% link getting-started/dates.md %}#-start),
@@ -194,7 +194,7 @@ because the tasks starts before tomorrow. Only one of the dates needs to match.
   - Return tasks where _any_ of start date, scheduled date, _or_ due date are set.
 
 {: .released }
-`no happens date` and `has happens date` were introduced in Tasks 1.7.0.
+`no happens date` and `has happens date` were introduced in Tasks 1.7.0.<br>
 `happens in current (week|month|year)` was introduced in Tasks 1.25.0
 
 ## Filters for Task Statuses
