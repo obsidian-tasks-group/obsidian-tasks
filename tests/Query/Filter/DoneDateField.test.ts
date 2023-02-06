@@ -5,7 +5,7 @@ import moment from 'moment';
 import { DoneDateField } from '../../../src/Query/Filter/DoneDateField';
 import type { FilterOrErrorMessage } from '../../../src/Query/Filter/Filter';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
-import { currentPeriodsTestArray, explainPeriod, testFilter } from '../../TestingTools/FilterTestHelpers';
+import { periodTestVectors, explainPeriod, testFilter } from '../../TestingTools/FilterTestHelpers';
 import { toHaveExplanation } from '../../CustomMatchers/CustomMatchersForFilters';
 import { expectTaskComparesAfter, expectTaskComparesBefore } from '../../CustomMatchers/CustomMatchersForSorting';
 
@@ -21,6 +21,15 @@ function testTaskFilterForTaskWithDoneDate(filter: FilterOrErrorMessage, doneDat
 }
 
 describe('done date', () => {
+    beforeAll(() => {
+        jest.useFakeTimers();
+        jest.setSystemTime(new Date(2022, 0, 15)); // 2022-01-15
+    });
+
+    afterAll(() => {
+        jest.useRealTimers();
+    });
+
     it('by done date presence', () => {
         // Arrange
         const filter = new DoneDateField().createFilterOrErrorMessage('has done date');
@@ -40,18 +49,10 @@ describe('done date', () => {
     });
 
     it('in current week/month/year', () => {
-        currentPeriodsTestArray.forEach((p) => {
-            const filter = new DoneDateField().createFilterOrErrorMessage('done in current ' + p);
+        periodTestVectors.forEach((testVector) => {
+            const filter = new DoneDateField().createFilterOrErrorMessage('done in current ' + testVector.period);
             testTaskFilterForTaskWithDoneDate(filter, null, false);
-            testTaskFilterForTaskWithDoneDate(filter, moment().format('YYYY-MM-DD'), true);
-            testTaskFilterForTaskWithDoneDate(filter, moment().startOf(p).format('YYYY-MM-DD'), true);
-            testTaskFilterForTaskWithDoneDate(filter, moment().endOf(p).format('YYYY-MM-DD'), true);
-            testTaskFilterForTaskWithDoneDate(
-                filter,
-                moment().startOf(p).subtract(1, 'second').format('YYYY-MM-DD'),
-                false,
-            );
-            testTaskFilterForTaskWithDoneDate(filter, moment().endOf(p).add(1, 'second').format('YYYY-MM-DD'), false);
+            testTaskFilterForTaskWithDoneDate(filter, testVector.date, testVector.expected);
         });
     });
 });
@@ -87,9 +88,9 @@ describe('explain done date queries', () => {
     });
 
     it('in current week/month/year', () => {
-        currentPeriodsTestArray.forEach((p) => {
-            const filterOrMessage = new DoneDateField().createFilterOrErrorMessage('done in current ' + p);
-            expect(filterOrMessage).toHaveExplanation('done date is ' + explainPeriod(p));
+        periodTestVectors.forEach((testVector) => {
+            const filterOrMessage = new DoneDateField().createFilterOrErrorMessage('done in current ' + testVector.period);
+            expect(filterOrMessage).toHaveExplanation('done date is ' + explainPeriod(testVector.period));
         });
     });
 });

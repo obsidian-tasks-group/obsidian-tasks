@@ -1,4 +1,3 @@
-import moment from 'moment';
 import type { FilterOrErrorMessage } from '../../src/Query/Filter/Filter';
 import { Task } from '../../src/Task';
 import { Query } from '../../src/Query/Query';
@@ -11,16 +10,69 @@ import type { TaskBuilder } from './TaskBuilder';
 export const currentPeriodsTestArray: moment.unitOfTime.DurationConstructor[] = ['week', 'month', 'year'];
 
 /**
+ * Class for one period test vector
+ * period - the period name eg week/month/year
+ * date - date to be set in the task filter
+ * expected - filter result
+ */
+class periodTestVector {
+    readonly period: string;
+    readonly date: string;
+    readonly expected: boolean;
+
+    constructor(period: string, date: string, expected: boolean) {
+        this.period = period;
+        this.date = date;
+        this.expected = expected;
+    }
+}
+
+/**
+ * Vectors to test the period
+ */
+export const periodTestVectors = [
+    // Inside the week
+    new periodTestVector('week', '2022-01-10 (Monday 10th January 2022)', true),
+    new periodTestVector('week', '2022-01-16 (Sunday 16th January 2022)', true),
+
+    // Outside of the week
+    new periodTestVector('week', '2022-01-09 (Sunday 9th January 2022)', false),
+    new periodTestVector('week', '2022-01-17 (Monday 16th January 2022)', false),
+
+    // Inside the month
+    new periodTestVector('month', '2022-01-01 (Saturday 1st January 2022)', true),
+    new periodTestVector('month', '2022-01-31 (Monday 31st January 2022)', true),
+
+    // Outside of the month
+    new periodTestVector('month', '2021-12-31 (Friday 31st December 2021)', false),
+    new periodTestVector('month', '2022-02-01 (Tuesday 1st February 2022)', false),
+
+    // Inside the year
+    new periodTestVector('year', '2022-01-01 (Saturday 1st January 2022)', true),
+    new periodTestVector('year', '2022-12-31 (Saturday 31st December 2022)', true),
+
+    // Outside of the year
+    new periodTestVector('year', '2021-12-31 (Friday 31st December 2021)', false),
+    new periodTestVector('year', '2023-01-01 (Sunday 1st January 2023)', false),
+];
+
+/**
  * Convenience function to generate current w/m/y description with boundary dates
+ * TODO remove moment.unitOfTime.DurationConstructor type once migration on periodTestVector is done
  *
  * @param period - the current period eg w/m/y to be generated.
  */
-export function explainPeriod(period: moment.unitOfTime.DurationConstructor): String {
-    let explanation = 'between ';
-    explanation += moment().startOf(period).format('YYYY-MM-DD (dddd Do MMMM YYYY)');
-    explanation += ' and ';
-    explanation += moment().endOf(period).format('YYYY-MM-DD (dddd Do MMMM YYYY)');
-    return explanation;
+export function explainPeriod(period: moment.unitOfTime.DurationConstructor | string): String {
+    switch (period) {
+        case 'week':
+            return 'between 2022-01-10 (Monday 10th January 2022) and 2022-01-16 (Sunday 16th January 2022)';
+        case 'month':
+            return 'between 2022-01-01 (Saturday 1st January 2022) and 2022-01-31 (Monday 31st January 2022)';
+        case 'year':
+            return 'between 2022-01-01 (Saturday 1st January 2022) and 2022-12-31 (Saturday 31st December 2022)';
+    }
+
+    return '--ERROR: WRONG PERIOD:' + period + '! PERIOD SHALL BE (week|month|year)';
 }
 
 /**
