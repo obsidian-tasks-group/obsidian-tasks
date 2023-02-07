@@ -279,6 +279,7 @@
 
 <div class="tasks-modal">
     <form on:submit|preventDefault={_onSubmit} class:with-accesskeys="{withAccessKeys}">
+        <!--  Description  -->
         <div class="tasks-modal-section">
             <label for="description">Descrip<span class="accesskey">t</span>ion</label>
             <!-- svelte-ignore a11y-accesskey -->
@@ -292,6 +293,8 @@
                 accesskey={accesskey("t")}
             />
         </div>
+
+        <!--  Priority  -->
         <div class="tasks-modal-section tasks-modal-priorities" on:keyup={_onPriorityKeyup}>
             <label for="priority-{editableTask.priority}">Priority</label>
             {#each priorityOptions as {value, label, symbol}}
@@ -313,6 +316,8 @@
                 </span>
             {/each}
         </div>
+
+        <!--  Recurrence and Dates  -->
         <div class="tasks-modal-section tasks-modal-dates">
             <label for="recurrence" class="accesskey-first">Recurs</label>
             <!-- svelte-ignore a11y-accesskey -->
@@ -324,6 +329,8 @@
                 accesskey={accesskey("r")}
             />
             <code>{recurrenceSymbol} {@html parsedRecurrence}</code>
+
+            <!--  Due Date  -->
             <label for="due" class="accesskey-first">Due</label>
             <!-- svelte-ignore a11y-accesskey -->
             <input
@@ -334,6 +341,8 @@
                 accesskey={accesskey("d")}
             />
             <code>{dueDateSymbol} {@html parsedDueDate}</code>
+
+            <!--  Scheduled Date  -->
             <label for="scheduled" class="accesskey-first">Scheduled</label>
             <!-- svelte-ignore a11y-accesskey -->
             <input
@@ -344,6 +353,8 @@
                 accesskey={accesskey("s")}
             />
             <code>{scheduledDateSymbol} {@html parsedScheduledDate}</code>
+
+            <!--  Start Date  -->
             <label for="start">St<span class="accesskey">a</span>rt</label>
             <!-- svelte-ignore a11y-accesskey -->
             <input
@@ -354,6 +365,8 @@
                 accesskey={accesskey("a")}
             />
             <code>{startDateSymbol} {@html parsedStartDate}</code>
+
+            <!--  Only future dates  -->
             <div>
                 <label for="forwardOnly">Only
                     <span class="accesskey-first">future</span> dates:</label>
@@ -367,6 +380,8 @@
                 />
             </div>
         </div>
+
+        <!--  Status  -->
         <div class="tasks-modal-section">
             <label for="status">Status </label>
             <select bind:value={editableTask.status} id="status-type" class="dropdown">
@@ -375,7 +390,9 @@
                 {/each}
             </select>
         </div>
+
         <div class="tasks-modal-section tasks-modal-status">
+            <!--  Completed  -->
             <div>
                 <label for="status">Completed:</label>
                 <input
@@ -386,6 +403,7 @@
                     disabled
                 />
             </div>
+            <!--  Done on  -->
             <div>
                 <span>Done on:</span>
                 <code>{@html parsedDone}</code>
