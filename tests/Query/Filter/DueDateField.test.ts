@@ -5,7 +5,7 @@ import moment from 'moment';
 import { DueDateField } from '../../../src/Query/Filter/DueDateField';
 import type { FilterOrErrorMessage } from '../../../src/Query/Filter/Filter';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
-import { currentPeriodsTestArray, explainPeriod, testFilter } from '../../TestingTools/FilterTestHelpers';
+import { testFilter } from '../../TestingTools/FilterTestHelpers';
 import { toHaveExplanation } from '../../CustomMatchers/CustomMatchersForFilters';
 import {
     expectTaskComparesAfter,
@@ -48,21 +48,38 @@ describe('due date', () => {
         testTaskFilterForTaskWithDueDate(filter, '2022-13-01', true); // month 13 not valid
     });
 
-    it('in current week/month/year', () => {
-        currentPeriodsTestArray.forEach((p) => {
-            const filter = new DueDateField().createFilterOrErrorMessage('due in current ' + p);
-            testTaskFilterForTaskWithDueDate(filter, null, false);
-            testTaskFilterForTaskWithDueDate(filter, moment().format('YYYY-MM-DD'), true);
-            testTaskFilterForTaskWithDueDate(filter, moment().startOf(p).format('YYYY-MM-DD'), true);
-            testTaskFilterForTaskWithDueDate(filter, moment().endOf(p).format('YYYY-MM-DD'), true);
-            testTaskFilterForTaskWithDueDate(
-                filter,
-                moment().startOf(p).subtract(1, 'second').format('YYYY-MM-DD'),
-                false,
-            );
-            testTaskFilterForTaskWithDueDate(filter, moment().endOf(p).add(1, 'second').format('YYYY-MM-DD'), false);
-        });
-    });
+    it.each([
+        // Week
+        ['due in current week', '2022-01-09 (Sunday 9th January 2022)', false],
+        ['due in current week', '2022-01-10 (Monday 10th January 2022)', true],
+        ['due in current week', '2022-01-16 (Sunday 16th January 2022)', true],
+        ['due in current week', '2022-01-17 (Monday 16th January 2022)', false],
+
+        // Month
+        ['due in current month', '2021-12-31 (Friday 31st December 2021)', false],
+        ['due in current month', '2022-01-01 (Saturday 1st January 2022)', true],
+        ['due in current month', '2022-01-31 (Monday 31st January 2022)', true],
+        ['due in current month', '2022-02-01 (Tuesday 1st February 2022)', false],
+
+        // Year
+        ['due in current year', '2021-12-31 (Friday 31st December 2021)', false],
+        ['due in current year', '2022-01-01 (Saturday 1st January 2022)', true],
+        ['due in current year', '2022-12-31 (Saturday 31st December 2022)', true],
+        ['due in current year', '2023-01-01 (Sunday 1st January 2023)', false],
+    ])(
+        '"%s" expect a task with "%s" date in due field to be "%s"',
+        (filterString: string, testDate: string, expected: boolean) => {
+            jest.useFakeTimers();
+            jest.setSystemTime(new Date(2022, 0, 15)); // 2022-01-15
+
+            const filter = new DueDateField().createFilterOrErrorMessage(filterString);
+
+            testFilter(filter, new TaskBuilder().dueDate(null), false);
+            testFilter(filter, new TaskBuilder().dueDate(testDate), expected);
+
+            jest.useRealTimers();
+        },
+    );
 });
 
 describe('explain due date queries', () => {
@@ -76,11 +93,27 @@ describe('explain due date queries', () => {
         expect(filterOrMessage).toHaveExplanation('due date is on 2023-01-02 (Monday 2nd January 2023)');
     });
 
-    it('in current week/month/year', () => {
-        currentPeriodsTestArray.forEach((p) => {
-            const filterOrMessage = new DueDateField().createFilterOrErrorMessage('due in current ' + p);
-            expect(filterOrMessage).toHaveExplanation('due date is ' + explainPeriod(p));
-        });
+    it.each([
+        [
+            'due in current week',
+            'due date is between 2022-01-10 (Monday 10th January 2022) and 2022-01-16 (Sunday 16th January 2022) inclusive',
+        ],
+        [
+            'due in current month',
+            'due date is between 2022-01-01 (Saturday 1st January 2022) and 2022-01-31 (Monday 31st January 2022) inclusive',
+        ],
+        [
+            'due in current year',
+            'due date is between 2022-01-01 (Saturday 1st January 2022) and 2022-12-31 (Saturday 31st December 2022) inclusive',
+        ],
+    ])('explains "%s" as "%s"', (filter: string, expectedExpanation: string) => {
+        jest.useFakeTimers();
+        jest.setSystemTime(new Date(2022, 0, 15)); // 2022-01-15
+
+        const filterOrMessage = new DueDateField().createFilterOrErrorMessage(filter);
+        expect(filterOrMessage).toHaveExplanation(expectedExpanation);
+
+        jest.useRealTimers();
     });
 });
 
