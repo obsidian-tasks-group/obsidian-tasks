@@ -10,7 +10,7 @@ export function itsSupportedStatuses() {
         [' ', 'Unchecked', 'x', 'TODO'],
         ['x', 'Regular', ' ', 'DONE'],
         ['X', 'Checked', ' ', 'DONE'],
-        ['-', 'Dropped', 'x', 'CANCELLED'],
+        ['-', 'Dropped', ' ', 'CANCELLED'],
         ['>', 'Forward', 'x', 'TODO'],
         ['D', 'Date', 'x', 'TODO'],
         ['?', 'Question', 'x', 'TODO'],

@@ -9,7 +9,7 @@ import {
     expectDateComparesAfter,
     expectDateComparesBefore,
     expectDateComparesEqual,
-} from '../../CustomMatchers/CustomMatchersForSorting';
+} from '../CustomMatchers/CustomMatchersForSorting';
 
 // These are lower-level tests that the Task-based ones above, for ease of test coverage.
 describe('compareBy', () => {

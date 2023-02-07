@@ -9,9 +9,9 @@ import * as FilterParser from '../src/Query/FilterParser';
 import { Group } from '../src/Query/Group';
 import { StatusNameField } from '../src/Query/Filter/StatusNameField';
 import { StatusTypeField } from '../src/Query/Filter/StatusTypeField';
-import type { StatusCollection } from '../src/StatusCollection';
-import { minimalSupportedStatuses } from '../src/Config/Themes';
-import { itsSupportedStatuses } from '../src/Config/Themes';
+import type { StatusCollection, StatusCollectionEntry } from '../src/StatusCollection';
+import * as Themes from '../src/Config/Themes';
+import { StatusValidator } from '../src/StatusValidator';
 import { TaskBuilder } from './TestingTools/TaskBuilder';
 
 function verifyMarkdown(markdown: string) {
@@ -167,27 +167,32 @@ describe('DefaultStatuses', () => {
 });
 
 describe('Theme', () => {
-    describe('ITS', () => {
-        const statuses = itsSupportedStatuses();
-        it('Table', () => {
-            verifyStatusesAsMarkdownTable(constructStatuses(statuses), true);
-        });
-        it('Tasks', () => {
-            verifyStatusesAsTasksList(constructStatuses(statuses));
-        });
-        it('Text', () => {
-            verifyStatusesAsTasksText(constructStatuses(statuses));
-        });
-    });
+    type NamedTheme = [string, StatusCollection];
+    const themes: NamedTheme[] = [
+        // Alphabetical order by name:
+        ['AnuPpuccin', Themes.anuppuccinSupportedStatuses()],
+        ['Aura', Themes.auraSupportedStatuses()],
+        ['Ebullientworks', Themes.ebullientworksSupportedStatuses()],
+        ['ITS', Themes.itsSupportedStatuses()],
+        ['Minimal', Themes.minimalSupportedStatuses()],
+        ['Things', Themes.thingsSupportedStatuses()],
+    ];
 
-    describe('Minimal', () => {
-        const statuses = minimalSupportedStatuses();
+    describe.each(themes)('%s', (_: string, statuses: StatusCollection) => {
+        it.each(statuses)('Validate status: "%s", "%s", "%s", "%s"', (symbol, name, nextSymbol, type) => {
+            const statusValidator = new StatusValidator();
+            const entry: StatusCollectionEntry = [symbol, name, nextSymbol, type];
+            expect(statusValidator.validateStatusCollectionEntry(entry)).toEqual([]);
+        });
+
         it('Table', () => {
             verifyStatusesAsMarkdownTable(constructStatuses(statuses), true);
         });
+
         it('Tasks', () => {
             verifyStatusesAsTasksList(constructStatuses(statuses));
         });
+
         it('Text', () => {
             verifyStatusesAsTasksText(constructStatuses(statuses));
         });

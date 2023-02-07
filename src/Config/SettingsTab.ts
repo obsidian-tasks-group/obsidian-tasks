@@ -4,14 +4,13 @@ import type TasksPlugin from '../main';
 import { StatusRegistry } from '../StatusRegistry';
 import { Status } from '../Status';
 import type { StatusCollection } from '../StatusCollection';
+import * as Themes from './Themes';
 import type { HeadingState } from './Settings';
 import { getSettings, isFeatureEnabled, updateGeneralSetting, updateSettings } from './Settings';
 import { StatusSettings } from './StatusSettings';
 import settingsJson from './settingsConfiguration.json';
 
 import { CustomStatusModal } from './CustomStatusModal';
-import { minimalSupportedStatuses } from './Themes';
-import { itsSupportedStatuses } from './Themes';
 
 export class SettingsTab extends PluginSettingTab {
     // If the UI needs a more complex setting you can create a
@@ -425,27 +424,27 @@ export class SettingsTab extends PluginSettingTab {
         });
         setting.infoEl.remove();
 
-        /* -------------------- Minimal Theme Supported Status Types -------------------- */
-        const addStatusesSupportedByMinimalTheme = new Setting(containerEl).addButton((button) => {
-            button
-                .setButtonText('Add all Status types supported by Minimal Theme')
-                .setCta()
-                .onClick(async () => {
-                    await addCustomStatesToSettings(minimalSupportedStatuses(), statusSettings, settings);
+        /* -------------------- Add all Status types supported by ... buttons -------------------- */
+        type NamedTheme = [string, StatusCollection];
+        const themes: NamedTheme[] = [
+            // Light and Dark themes - alphabetical order
+            ['AnuPpuccin Theme', Themes.anuppuccinSupportedStatuses()],
+            ['Ebullientworks Theme', Themes.ebullientworksSupportedStatuses()],
+            ['ITS Theme & SlRvb Checkboxes', Themes.itsSupportedStatuses()],
+            ['Minimal Theme', Themes.minimalSupportedStatuses()],
+            ['Things Theme', Themes.thingsSupportedStatuses()],
+            // Dark only themes - alphabetical order
+            ['Aura Theme (Dark mode only)', Themes.auraSupportedStatuses()],
+        ];
+        for (const [name, collection] of themes) {
+            const addStatusesSupportedByThisTheme = new Setting(containerEl).addButton((button) => {
+                const label = `${name}: Add ${collection.length} supported Statuses`;
+                button.setButtonText(label).onClick(async () => {
+                    await addCustomStatesToSettings(collection, statusSettings, settings);
                 });
-        });
-        addStatusesSupportedByMinimalTheme.infoEl.remove();
-
-        /* -------------------- ITS Theme Supported Status Types -------------------- */
-        const addStatusesSupportedByITSTheme = new Setting(containerEl).addButton((button) => {
-            button
-                .setButtonText('Add all Status types supported by ITS Theme')
-                .setCta()
-                .onClick(async () => {
-                    await addCustomStatesToSettings(itsSupportedStatuses(), statusSettings, settings);
-                });
-        });
-        addStatusesSupportedByITSTheme.infoEl.remove();
+            });
+            addStatusesSupportedByThisTheme.infoEl.remove();
+        }
 
         /* -------------------- 'Add All Unknown Status Types' button -------------------- */
         const addAllUnknownStatuses = new Setting(containerEl).addButton((button) => {
@@ -454,7 +453,10 @@ export class SettingsTab extends PluginSettingTab {
                 .setCta()
                 .onClick(async () => {
                     const tasks = this.plugin.getTasks();
-                    const unknownStatuses = StatusRegistry.getInstance().findUnknownStatuses(tasks!);
+                    const allStatuses = tasks!.map((task) => {
+                        return task.status;
+                    });
+                    const unknownStatuses = StatusRegistry.getInstance().findUnknownStatuses(allStatuses);
                     if (unknownStatuses.length === 0) {
                         return;
                     }

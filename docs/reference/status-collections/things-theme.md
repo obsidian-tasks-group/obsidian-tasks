@@ -1,12 +1,12 @@
 ---
 layout: default
-title: Minimal Theme
+title: Things Theme
 parent: Status Collections
 grand_parent: Reference
 has_toc: false
 ---
 
-# Minimal Theme
+# Things Theme
 {: .no_toc }
 
 <details open markdown="block">
@@ -24,17 +24,17 @@ has_toc: false
 
 |                       Location | Link                                                                                                                                                                |
 | ------------------------------:|:------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-|                        GitHub: | <https://github.com/kepano/obsidian-minimal>                                                                                                                        |
-|                  Obsidian Hub: | [Minimal Theme](https://publish.obsidian.md/hub/02+-+Community+Expansions/02.05+All+Community+Expansions/Themes/Minimal)                                            |
-| Test note in Tasks-Demo vault: | [Theme - Minimal Theme](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/resources/sample_vaults/Tasks-Demo/Styling/Theme%20-%20Minimal%20Theme.md) |
+|                        GitHub: | <https://github.com/colineckert/obsidian-things>                                                                                                                        |
+|                  Obsidian Hub: | [Things Theme](https://publish.obsidian.md/hub/02+-+Community+Expansions/02.05+All+Community+Expansions/Themes/Things)                                            |
+| Test note in Tasks-Demo vault: | [Theme - Things Theme](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/resources/sample_vaults/Tasks-Demo/Styling/Theme%20-%20Things%20Theme.md) |
 
 ## Screenshot
 
-![Sample tasks show in Reading mode, with the Minimal Theme](../../../images/theme-minimal-reading-view.png)
+![Sample tasks show in Reading mode, with the Things Theme](../../../images/theme-things-reading-view.png)
 
 ## Supported statuses
 
-<!-- snippet: DocsSamplesForStatuses.test.Theme_Minimal Text.approved.txt -->
+<!-- snippet: DocsSamplesForStatuses.test.Theme_Things Text.approved.txt -->
 ```txt
 - [ ] #task `space` to-do
 - [/] #task `/` incomplete
@@ -65,7 +65,7 @@ has_toc: false
 
 Tasks' setting pane has a one-click button to add the following information, representing the custom checkboxes in this plugin.
 
-<!-- placeholder to force blank line before included text --> <!-- include: DocsSamplesForStatuses.test.Theme_Minimal Table.approved.md -->
+<!-- placeholder to force blank line before included text --> <!-- include: DocsSamplesForStatuses.test.Theme_Things Table.approved.md -->
 
 | Status Symbol | Next Status Symbol | Status Name<br>`status.name includes...`<br>`sort by status.name`<br>`group by status.name` | Status Type<br>`status.type is...`<br>`sort by status.type`<br>`group by status.type` | Needs Custom Styling |
 | ----- | ----- | ----- | ----- | ----- |

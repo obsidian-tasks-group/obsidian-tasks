@@ -76,8 +76,6 @@ However, you can also browse through the pages in this section, to see the other
 
 We plan to add one-click support for these themes in a future release:
 
-- [AnuPpuccin](https://publish.obsidian.md/hub/02+-+Community+Expansions/02.05+All+Community+Expansions/Themes/AnuPpuccin)
-- [Aura](https://publish.obsidian.md/hub/02+-+Community+Expansions/02.05+All+Community+Expansions/Themes/Aura)
 - [LYT Mode](https://publish.obsidian.md/hub/02+-+Community+Expansions/02.05+All+Community+Expansions/Themes/LYT+Mode)
 
 ## Supported CSS Snippets and Themes

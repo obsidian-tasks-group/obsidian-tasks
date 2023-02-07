@@ -58,9 +58,9 @@ You can then click its Pencil icon and fill in the details for your new Status.
 
 ## Bulk-adding Statuses
 
-### Add all Status types supported by Minimal Theme
+### Minimal Theme
 
-This populates the Custom Statuses list with all the statuses supported by the Minimal Theme.
+This button populates the Custom Statuses list with all the statuses supported by the Minimal Theme.
 
 You may wish to delete the default custom statuses first, so that you only see the Minimal statuses.
 
@@ -69,9 +69,9 @@ You may wish to delete the default custom statuses first, so that you only see t
 
 The [Minimal Theme]({{ site.baseurl }}{% link reference/status-collections/minimal-theme.md %}) page shows the full list statuses that will be added, and what they look like in that theme.
 
-### Add all Status types supported by ITS Theme and SlRvb's Alternate Checkboxes
+### ITS Theme & SlRvb Checkboxes
 
-This populates the Custom Statuses list with all the statuses supported by the ITS Theme, and also the identical SlRvb's Alternate Checkboxes.
+This button populates the Custom Statuses list with all the statuses supported by the ITS Theme, and also the identical SlRvb's Alternate Checkboxes.
 
 ![The first few statuses supported by ITS Theme and SlRvb's Alternate Checkboxes](../../images/settings-custom-statuses-its-theme-first-few.png)<br>
 *The first few statuses supported by ITS Theme and SlRvb's Alternate Checkboxes*
@@ -80,6 +80,12 @@ You can see screenshots, and the statuses that will be added:
 
 - [SlRvb’s Alternate Checkboxes]({{ site.baseurl }}{% link reference/status-collections/slrvb-alternate-checkboxes-snippet.md %})
 - [ITS Theme]({{ site.baseurl }}{% link reference/status-collections/its-theme.md %})
+
+### Other supported themes
+
+Tasks knows about a growing list of custom checkboxes in Themes and CSS Snippets.
+
+You can find a full list, with screenshots and complete details of the supported checkboxes, in [Status Collections]({{ site.baseurl }}{% link reference/status-collections/index.md %}).
 
 ### Add All Unknown Status Types
 
