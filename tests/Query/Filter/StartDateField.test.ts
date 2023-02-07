@@ -74,6 +74,8 @@ describe('start date', () => {
         // Thorough testing is done in DueDateField.test.ts.
         ['starts in this week', '2022-01-10 (Monday 10th January 2022)', true],
         ['starts in this month', '2022-01-01 (Saturday 1st January 2022)', true],
+        ['starts in this quarter', '2022-01-01 (Saturday 1st January 2022)', true],
+        ['starts in this half', '2022-01-01 (Saturday 1st January 2022)', true],
         ['starts in this year', '2022-01-01 (Saturday 1st January 2022)', true],
     ])(
         '"%s" expect a task with "%s" date in starts field to be "%s"',

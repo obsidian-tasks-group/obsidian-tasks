@@ -60,6 +60,18 @@ describe('happens date', () => {
         ['happens in this month', '2022-01-31 (Monday 31st January 2022)', true],
         ['happens in this month', '2022-02-01 (Tuesday 1st February 2022)', false],
 
+        // Quarter
+        ['happens in this quarter', '2021-12-31 (Friday 31st December 2021)', false],
+        ['happens in this quarter', '2022-01-01 (Saturday 1st January 2022)', true],
+        ['happens in this quarter', '2022-03-31 (Thursday 31st March 2022)', true],
+        ['happens in this quarter', '2022-04-01 (Friday 1st April 2022)', false],
+
+        // Half
+        ['happens in this half', '2021-12-31 (Friday 31st December 2021)', false],
+        ['happens in this half', '2022-01-01 (Saturday 1st January 2022)', true],
+        ['happens in this half', '2022-06-30 (Thursday 30th June 2022)', true],
+        ['happens in this half', '2022-07-01 (Friday 1st July 2022)', false],
+
         // Year
         ['happens in this year', '2021-12-31', false],
         ['happens in this year', '2022-01-01 (Saturday 1st January 2022)', true],
@@ -171,6 +183,14 @@ describe('explain happens date queries', () => {
         [
             'happens in this month',
             'due, start or scheduled date is between 2022-01-01 (Saturday 1st January 2022) and 2022-01-31 (Monday 31st January 2022) inclusive',
+        ],
+        [
+            'happens in this quarter',
+            'due, start or scheduled date is between 2022-01-01 (Saturday 1st January 2022) and 2022-03-31 (Thursday 31st March 2022) inclusive',
+        ],
+        [
+            'happens in this half',
+            'due, start or scheduled date is between 2022-01-01 (Saturday 1st January 2022) and 2022-06-30 (Thursday 30th June 2022) inclusive',
         ],
         [
             'happens in this year',

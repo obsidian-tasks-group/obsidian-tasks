@@ -70,6 +70,8 @@ describe('scheduled date', () => {
         // Thorough testing is done in DueDateField.test.ts.
         ['scheduled in this week', '2022-01-10 (Monday 10th January 2022)', true],
         ['scheduled in this month', '2022-01-01 (Saturday 1st January 2022)', true],
+        ['scheduled in this quarter', '2022-01-01 (Saturday 1st January 2022)', true],
+        ['scheduled in this half', '2022-01-01 (Saturday 1st January 2022)', true],
         ['scheduled in this year', '2022-01-01 (Saturday 1st January 2022)', true],
     ])(
         '"%s" expect a task with "%s" date in scheduled field to be "%s"',

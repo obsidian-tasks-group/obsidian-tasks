@@ -53,6 +53,8 @@ describe('done date', () => {
         // Thorough testing is done in DueDateField.test.ts.
         ['done in this week', '2022-01-10 (Monday 10th January 2022)', true],
         ['done in this month', '2022-01-01 (Saturday 1st January 2022)', true],
+        ['done in this quarter', '2022-01-01 (Saturday 1st January 2022)', true],
+        ['done in this half', '2022-01-01 (Saturday 1st January 2022)', true],
         ['done in this year', '2022-01-01 (Saturday 1st January 2022)', true],
     ])(
         '"%s" expect a task with "%s" date in done field to be "%s"',

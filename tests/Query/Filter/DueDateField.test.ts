@@ -61,6 +61,18 @@ describe('due date', () => {
         ['due in this month', '2022-01-31 (Monday 31st January 2022)', true],
         ['due in this month', '2022-02-01 (Tuesday 1st February 2022)', false],
 
+        // Quarter
+        ['due in this quarter', '2021-12-31 (Friday 31st December 2021)', false],
+        ['due in this quarter', '2022-01-01 (Saturday 1st January 2022)', true],
+        ['due in this quarter', '2022-03-31 (Thursday 31st March 2022)', true],
+        ['due in this quarter', '2022-04-01 (Friday 1st April 2022)', false],
+
+        // Half
+        ['due in this half', '2021-12-31 (Friday 31st December 2021)', false],
+        ['due in this half', '2022-01-01 (Saturday 1st January 2022)', true],
+        ['due in this half', '2022-06-30 (Thursday 30th June 2022)', true],
+        ['due in this half', '2022-07-01 (Friday 1st July 2022)', false],
+
         // Year
         ['due in this year', '2021-12-31 (Friday 31st December 2021)', false],
         ['due in this year', '2022-01-01 (Saturday 1st January 2022)', true],
@@ -101,6 +113,14 @@ describe('explain due date queries', () => {
         [
             'due in this month',
             'due date is between 2022-01-01 (Saturday 1st January 2022) and 2022-01-31 (Monday 31st January 2022) inclusive',
+        ],
+        [
+            'due in this quarter',
+            'due date is between 2022-01-01 (Saturday 1st January 2022) and 2022-03-31 (Thursday 31st March 2022) inclusive',
+        ],
+        [
+            'due in this half',
+            'due date is between 2022-01-01 (Saturday 1st January 2022) and 2022-06-30 (Thursday 30th June 2022) inclusive',
         ],
         [
             'due in this year',

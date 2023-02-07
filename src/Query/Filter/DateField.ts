@@ -17,7 +17,7 @@ export abstract class DateField extends Field {
     private readonly filterInstructions: FilterInstructions;
 
     // TODO add previous and next
-    public static readonly thisPeriodRegexp = /^this (week|month|year)$/;
+    public static readonly thisPeriodRegexp = /^this (week|month|quarter|half|year)$/;
 
     constructor() {
         super();
@@ -191,8 +191,19 @@ export abstract class DateField extends Field {
                 // Use locale-independant ISO 8601 weeks
                 return [window.moment().startOf('isoWeek'), window.moment().endOf('isoWeek')];
             case 'month':
+            case 'quarter':
             case 'year':
                 return [window.moment().startOf(period), window.moment().endOf(period)];
+            case 'half':
+                // Moment.js doesn't manage 'half a year' or 'semester' periods
+                switch (window.moment().quarter()) {
+                    case 1:
+                    case 3:
+                        return [window.moment().startOf('quarter'), window.moment().add(1, 'Q').endOf('quarter')];
+                    case 2:
+                    case 4:
+                        return [window.moment().subtract(1, 'Q').startOf('quarter'), window.moment().endOf('quarter')];
+                }
         }
 
         // error case here?
