@@ -101,6 +101,19 @@
         );
     }
 
+    function parseTypedDate(typedDate: string): moment.Moment | null {
+        let date: moment.Moment | null = null;
+        const parsedDate = chrono.parseDate(
+            typedDate,
+            new Date(),
+            { forwardDate: editableTask.forwardOnly },
+        );
+        if (parsedDate !== null) {
+            date = window.moment(parsedDate);
+        }
+        return date;
+    }
+
     $: accesskey = (key: string) => withAccessKeys ? key : null;
 
     $: {
@@ -198,35 +211,11 @@
             description = globalFilter + ' ' + description;
         }
 
-        let startDate: moment.Moment | null = null;
-        const parsedStartDate = chrono.parseDate(
-            editableTask.startDate,
-            new Date(),
-            { forwardDate: editableTask.forwardOnly },
-        );
-        if (parsedStartDate !== null) {
-            startDate = window.moment(parsedStartDate);
-        }
+        const startDate = parseTypedDate(editableTask.startDate);
 
-        let scheduledDate: moment.Moment | null = null;
-        const parsedScheduledDate = chrono.parseDate(
-            editableTask.scheduledDate,
-            new Date(),
-            { forwardDate: editableTask.forwardOnly },
-        );
-        if (parsedScheduledDate !== null) {
-            scheduledDate = window.moment(parsedScheduledDate);
-        }
+        const scheduledDate = parseTypedDate(editableTask.scheduledDate);
 
-        let dueDate: moment.Moment | null = null;
-        const parsedDueDate = chrono.parseDate(
-            editableTask.dueDate,
-            new Date(),
-            { forwardDate: editableTask.forwardOnly },
-        );
-        if (parsedDueDate !== null) {
-            dueDate = window.moment(parsedDueDate);
-        }
+        const dueDate = parseTypedDate(editableTask.dueDate);
 
         let recurrence: Recurrence | null = null;
         if (editableTask.recurrenceRule) {
