@@ -93,33 +93,29 @@
         return `<i>invalid ${type} date</i>`;
     }
 
+    function parseDate2(type: 'start' | 'scheduled' | 'due' | 'done', date: string): string {
+        return parseDate(
+            type,
+            date,
+            editableTask.forwardOnly ? new Date() : undefined,
+        );
+    }
+
     $: accesskey = (key: string) => withAccessKeys ? key : null;
 
     $: {
         editableTask.startDate = doAutocomplete(editableTask.startDate);
-        parsedStartDate = parseDate(
-            'start',
-            editableTask.startDate,
-            editableTask.forwardOnly ? new Date() : undefined,
-        );
+        parsedStartDate = parseDate2('start', editableTask.startDate);
     }
 
     $: {
         editableTask.scheduledDate = doAutocomplete(editableTask.scheduledDate);
-        parsedScheduledDate = parseDate(
-            'scheduled',
-            editableTask.scheduledDate,
-            editableTask.forwardOnly ? new Date() : undefined,
-        );
+        parsedScheduledDate = parseDate2('scheduled', editableTask.scheduledDate);
     }
 
     $: {
         editableTask.dueDate = doAutocomplete(editableTask.dueDate);
-        parsedDueDate = parseDate(
-            'due',
-            editableTask.dueDate,
-            editableTask.forwardOnly ? new Date() : undefined,
-        );
+        parsedDueDate = parseDate2('due', editableTask.dueDate);
     }
 
     $: {
