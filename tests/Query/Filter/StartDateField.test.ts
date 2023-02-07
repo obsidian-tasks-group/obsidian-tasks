@@ -31,15 +31,15 @@ describe('explain start date queries', () => {
 
     it.each([
         [
-            'starts in current week',
+            'starts in this week',
             'start date is between 2022-01-10 (Monday 10th January 2022) and 2022-01-16 (Sunday 16th January 2022) inclusive OR no start date',
         ],
         [
-            'starts in current month',
+            'starts in this month',
             'start date is between 2022-01-01 (Saturday 1st January 2022) and 2022-01-31 (Monday 31st January 2022) inclusive OR no start date',
         ],
         [
-            'starts in current year',
+            'starts in this year',
             'start date is between 2022-01-01 (Saturday 1st January 2022) and 2022-12-31 (Saturday 31st December 2022) inclusive OR no start date',
         ],
     ])('explains "%s" as "%s"', (filter: string, expectedExpanation: string) => {
@@ -78,9 +78,9 @@ describe('start date', () => {
     it.each([
         // These are minimal tests just to confirm basic behaviour is set up for this field.
         // Thorough testing is done in DueDateField.test.ts.
-        ['starts in current week', '2022-01-10 (Monday 10th January 2022)', true],
-        ['starts in current month', '2022-01-01 (Saturday 1st January 2022)', true],
-        ['starts in current year', '2022-01-01 (Saturday 1st January 2022)', true],
+        ['starts in this week', '2022-01-10 (Monday 10th January 2022)', true],
+        ['starts in this month', '2022-01-01 (Saturday 1st January 2022)', true],
+        ['starts in this year', '2022-01-01 (Saturday 1st January 2022)', true],
     ])(
         '"%s" expect a task with "%s" date in starts field to be "%s"',
         (filterString: string, testDate: string, expected: boolean) => {

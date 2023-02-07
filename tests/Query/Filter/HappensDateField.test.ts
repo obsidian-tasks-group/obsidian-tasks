@@ -49,22 +49,22 @@ describe('happens date', () => {
 
     it.each([
         // Week
-        ['happens in current week', '2022-01-09 (Sunday 9th January 2022)', false],
-        ['happens in current week', '2022-01-10 (Monday 10th January 2022)', true],
-        ['happens in current week', '2022-01-16 (Sunday 16th January 2022)', true],
-        ['happens in current week', '2022-01-17 (Monday 16th January 2022)', false],
+        ['happens in this week', '2022-01-09 (Sunday 9th January 2022)', false],
+        ['happens in this week', '2022-01-10 (Monday 10th January 2022)', true],
+        ['happens in this week', '2022-01-16 (Sunday 16th January 2022)', true],
+        ['happens in this week', '2022-01-17 (Monday 16th January 2022)', false],
 
         // Month
-        ['happens in current month', '2021-12-31 (Friday 31st December 2021)', false],
-        ['happens in current month', '2022-01-01 (Saturday 1st January 2022)', true],
-        ['happens in current month', '2022-01-31 (Monday 31st January 2022)', true],
-        ['happens in current month', '2022-02-01 (Tuesday 1st February 2022)', false],
+        ['happens in this month', '2021-12-31 (Friday 31st December 2021)', false],
+        ['happens in this month', '2022-01-01 (Saturday 1st January 2022)', true],
+        ['happens in this month', '2022-01-31 (Monday 31st January 2022)', true],
+        ['happens in this month', '2022-02-01 (Tuesday 1st February 2022)', false],
 
         // Year
-        ['happens in current year', '2021-12-31', false],
-        ['happens in current year', '2022-01-01 (Saturday 1st January 2022)', true],
-        ['happens in current year', '2022-12-31 (Saturday 31st December 2022)', true],
-        ['happens in current year', '2023-01-01 (Sunday 1st January 2023)', false],
+        ['happens in this year', '2021-12-31', false],
+        ['happens in this year', '2022-01-01 (Saturday 1st January 2022)', true],
+        ['happens in this year', '2022-12-31 (Saturday 31st December 2022)', true],
+        ['happens in this year', '2023-01-01 (Sunday 1st January 2023)', false],
     ])(
         'For filter "%s" expect a task with "%s" date in scheduled/start/due field to be "%s"',
         (filterString: string, testDate: string, expected: boolean) => {
@@ -165,15 +165,15 @@ describe('explain happens date queries', () => {
 
     it.each([
         [
-            'happens in current week',
+            'happens in this week',
             'due, start or scheduled date is between 2022-01-10 (Monday 10th January 2022) and 2022-01-16 (Sunday 16th January 2022) inclusive',
         ],
         [
-            'happens in current month',
+            'happens in this month',
             'due, start or scheduled date is between 2022-01-01 (Saturday 1st January 2022) and 2022-01-31 (Monday 31st January 2022) inclusive',
         ],
         [
-            'happens in current year',
+            'happens in this year',
             'due, start or scheduled date is between 2022-01-01 (Saturday 1st January 2022) and 2022-12-31 (Saturday 31st December 2022) inclusive',
         ],
     ])('explains "%s" as "%s"', (filter: string, expectedExpanation: string) => {

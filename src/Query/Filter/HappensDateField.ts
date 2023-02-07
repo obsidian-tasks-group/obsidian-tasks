@@ -49,10 +49,10 @@ export class HappensDateField extends Field {
         const happensMatch = Field.getMatch(this.filterRegExp(), line);
         if (happensMatch !== null) {
             const filterDate = DateParser.parseDate(happensMatch[2]);
-            const matchCurrentPeriod = happensMatch[2].match(DateField.currentPeriodRegexp);
+            const matchThisPeriod = happensMatch[2].match(DateField.thisPeriodRegexp);
 
-            // Something is wrong if the date is wrong AND we are not in current w/m/y case
-            if (!filterDate.isValid() && matchCurrentPeriod == null) {
+            // Something is wrong if the date is wrong AND we are not in this w/m/y case
+            if (!filterDate.isValid() && matchThisPeriod == null) {
                 result.error = 'do not understand happens date';
             } else {
                 let filterFunction;
@@ -75,12 +75,12 @@ export class HappensDateField extends Field {
                 }
 
                 if (happensMatch[1] === 'in') {
-                    if (matchCurrentPeriod === null) {
+                    if (matchThisPeriod === null) {
                         result.error = 'do not understand query filter (happens date)';
                     } else {
                         filterFunction = (task: Task) => {
                             return this.dates(task).some(
-                                (date) => date && DateField.isDateInCurrentPeriod(date, matchCurrentPeriod[1]),
+                                (date) => date && DateField.isDateInThisPeriod(date, matchThisPeriod[1]),
                             );
                         };
 
@@ -92,12 +92,12 @@ export class HappensDateField extends Field {
                                     'due, start or scheduled',
                                     '',
                                     false,
-                                    DateField.currentPeriodBoundaryDates(matchCurrentPeriod[1]),
+                                    DateField.thisPeriodBoundaryDates(matchThisPeriod[1]),
                                 ),
                             ),
                         );
 
-                        // Exit here to return the result for 'current period'
+                        // Exit here to return the result for 'this period'
                         return result;
                     }
                 }

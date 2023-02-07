@@ -50,22 +50,22 @@ describe('due date', () => {
 
     it.each([
         // Week
-        ['due in current week', '2022-01-09 (Sunday 9th January 2022)', false],
-        ['due in current week', '2022-01-10 (Monday 10th January 2022)', true],
-        ['due in current week', '2022-01-16 (Sunday 16th January 2022)', true],
-        ['due in current week', '2022-01-17 (Monday 16th January 2022)', false],
+        ['due in this week', '2022-01-09 (Sunday 9th January 2022)', false],
+        ['due in this week', '2022-01-10 (Monday 10th January 2022)', true],
+        ['due in this week', '2022-01-16 (Sunday 16th January 2022)', true],
+        ['due in this week', '2022-01-17 (Monday 16th January 2022)', false],
 
         // Month
-        ['due in current month', '2021-12-31 (Friday 31st December 2021)', false],
-        ['due in current month', '2022-01-01 (Saturday 1st January 2022)', true],
-        ['due in current month', '2022-01-31 (Monday 31st January 2022)', true],
-        ['due in current month', '2022-02-01 (Tuesday 1st February 2022)', false],
+        ['due in this month', '2021-12-31 (Friday 31st December 2021)', false],
+        ['due in this month', '2022-01-01 (Saturday 1st January 2022)', true],
+        ['due in this month', '2022-01-31 (Monday 31st January 2022)', true],
+        ['due in this month', '2022-02-01 (Tuesday 1st February 2022)', false],
 
         // Year
-        ['due in current year', '2021-12-31 (Friday 31st December 2021)', false],
-        ['due in current year', '2022-01-01 (Saturday 1st January 2022)', true],
-        ['due in current year', '2022-12-31 (Saturday 31st December 2022)', true],
-        ['due in current year', '2023-01-01 (Sunday 1st January 2023)', false],
+        ['due in this year', '2021-12-31 (Friday 31st December 2021)', false],
+        ['due in this year', '2022-01-01 (Saturday 1st January 2022)', true],
+        ['due in this year', '2022-12-31 (Saturday 31st December 2022)', true],
+        ['due in this year', '2023-01-01 (Sunday 1st January 2023)', false],
     ])(
         '"%s" expect a task with "%s" date in due field to be "%s"',
         (filterString: string, testDate: string, expected: boolean) => {
@@ -95,15 +95,15 @@ describe('explain due date queries', () => {
 
     it.each([
         [
-            'due in current week',
+            'due in this week',
             'due date is between 2022-01-10 (Monday 10th January 2022) and 2022-01-16 (Sunday 16th January 2022) inclusive',
         ],
         [
-            'due in current month',
+            'due in this month',
             'due date is between 2022-01-01 (Saturday 1st January 2022) and 2022-01-31 (Monday 31st January 2022) inclusive',
         ],
         [
-            'due in current year',
+            'due in this year',
             'due date is between 2022-01-01 (Saturday 1st January 2022) and 2022-12-31 (Saturday 31st December 2022) inclusive',
         ],
     ])('explains "%s" as "%s"', (filter: string, expectedExpanation: string) => {

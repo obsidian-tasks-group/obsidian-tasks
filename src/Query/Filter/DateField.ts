@@ -17,7 +17,7 @@ export abstract class DateField extends Field {
     private readonly filterInstructions: FilterInstructions;
 
     // TODO add previous and next
-    public static readonly currentPeriodRegexp = /^current (week|month|year)$/;
+    public static readonly thisPeriodRegexp = /^this (week|month|year)$/;
 
     constructor() {
         super();
@@ -51,14 +51,14 @@ export abstract class DateField extends Field {
         if (match !== null) {
             const filterDate = DateParser.parseDate(match[2]);
 
-            // The period shall be matched only if 'in' is present. This will catch 'due current week' error queries
-            let matchCurrentPeriod: RegExpMatchArray | null = null;
+            // The period shall be matched only if 'in' is present. This will catch 'due this week' error queries
+            let matchThisPeriod: RegExpMatchArray | null = null;
             if (match[1] === 'in') {
-                matchCurrentPeriod = match[2].match(DateField.currentPeriodRegexp);
+                matchThisPeriod = match[2].match(DateField.thisPeriodRegexp);
             }
 
-            // Something is wrong if the date is wrong AND it is not '... in current w/m/y' case
-            if (!filterDate.isValid() && matchCurrentPeriod === null) {
+            // Something is wrong if the date is wrong AND it is not '... in this w/m/y' case
+            if (!filterDate.isValid() && matchThisPeriod === null) {
                 result.error = 'do not understand ' + this.fieldName() + ' date';
             } else {
                 let relative;
@@ -83,13 +83,13 @@ export abstract class DateField extends Field {
                 }
 
                 if (match[1] === 'in') {
-                    if (matchCurrentPeriod === null) {
+                    if (matchThisPeriod === null) {
                         result.error = 'do not understand query filter (' + this.fieldName() + ' date)';
                     } else {
                         filterFunction = (task: Task) => {
                             const date = this.date(task);
                             return date
-                                ? DateField.isDateInCurrentPeriod(date, matchCurrentPeriod![1])
+                                ? DateField.isDateInThisPeriod(date, matchThisPeriod![1])
                                 : this.filterResultIfFieldMissing();
                         };
 
@@ -101,12 +101,12 @@ export abstract class DateField extends Field {
                                     this.fieldName(),
                                     '',
                                     this.filterResultIfFieldMissing(),
-                                    DateField.currentPeriodBoundaryDates(matchCurrentPeriod[1]),
+                                    DateField.thisPeriodBoundaryDates(matchThisPeriod[1]),
                                 ),
                             ),
                         );
 
-                        // Exit here to return the result for 'current period'
+                        // Exit here to return the result for 'this period'
                         return result;
                     }
                 }
@@ -185,7 +185,7 @@ export abstract class DateField extends Field {
         };
     }
 
-    public static currentPeriodBoundaryDates(period: string): [moment.Moment, moment.Moment] {
+    public static thisPeriodBoundaryDates(period: string): [moment.Moment, moment.Moment] {
         switch (period) {
             case 'week':
                 // Use locale-independant ISO 8601 weeks
@@ -198,9 +198,9 @@ export abstract class DateField extends Field {
         // error case here?
         return [window.moment(), window.moment()];
     }
-    public static isDateInCurrentPeriod(date: moment.Moment, period: string): boolean {
-        const currentPeriod = DateField.currentPeriodBoundaryDates(period);
+    public static isDateInThisPeriod(date: moment.Moment, period: string): boolean {
+        const thisPeriod = DateField.thisPeriodBoundaryDates(period);
 
-        return date.isSameOrAfter(currentPeriod[0]) && date.isSameOrBefore(currentPeriod[1]);
+        return date.isSameOrAfter(thisPeriod[0]) && date.isSameOrBefore(thisPeriod[1]);
     }
 }

@@ -51,9 +51,9 @@ describe('done date', () => {
     it.each([
         // These are minimal tests just to confirm basic behaviour is set up for this field.
         // Thorough testing is done in DueDateField.test.ts.
-        ['done in current week', '2022-01-10 (Monday 10th January 2022)', true],
-        ['done in current month', '2022-01-01 (Saturday 1st January 2022)', true],
-        ['done in current year', '2022-01-01 (Saturday 1st January 2022)', true],
+        ['done in this week', '2022-01-10 (Monday 10th January 2022)', true],
+        ['done in this month', '2022-01-01 (Saturday 1st January 2022)', true],
+        ['done in this year', '2022-01-01 (Saturday 1st January 2022)', true],
     ])(
         '"%s" expect a task with "%s" date in done field to be "%s"',
         (filterString: string, testDate: string, expected: boolean) => {
@@ -102,15 +102,15 @@ describe('explain done date queries', () => {
 
     it.each([
         [
-            'done in current week',
+            'done in this week',
             'done date is between 2022-01-10 (Monday 10th January 2022) and 2022-01-16 (Sunday 16th January 2022) inclusive',
         ],
         [
-            'done in current month',
+            'done in this month',
             'done date is between 2022-01-01 (Saturday 1st January 2022) and 2022-01-31 (Monday 31st January 2022) inclusive',
         ],
         [
-            'done in current year',
+            'done in this year',
             'done date is between 2022-01-01 (Saturday 1st January 2022) and 2022-12-31 (Saturday 31st December 2022) inclusive',
         ],
     ])('explains "%s" as "%s"', (filter: string, expectedExpanation: string) => {
