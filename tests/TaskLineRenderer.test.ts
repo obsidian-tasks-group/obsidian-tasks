@@ -3,6 +3,7 @@
  */
 import moment from 'moment';
 import { LayoutClasses, renderTaskLine } from '../src/TaskLineRenderer';
+import type { TextRenderer } from '../src/TaskLineRenderer';
 import { resetSettings, updateSettings } from '../src/Config/Settings';
 import { LayoutOptions } from '../src/TaskLayout';
 import type { Task } from '../src/Task';
@@ -17,11 +18,13 @@ window.moment = moment;
  * Creates a dummy 'parent element' to host a task render, renders a task inside it,
  * and returns it for inspection.
  */
-async function createMockParentAndRender(task: Task, layoutOptions?: LayoutOptions) {
+async function createMockParentAndRender(task: Task, layoutOptions?: LayoutOptions, mockTextRenderer?: TextRenderer) {
     const parentElement = document.createElement('div');
-    const mockTextRenderer = async (text: string, element: HTMLSpanElement, _path: string) => {
-        element.innerText = text;
-    };
+    // Our default text renderer for this method is a simplistic flat text
+    if (!mockTextRenderer)
+        mockTextRenderer = async (text: string, element: HTMLSpanElement, _path: string) => {
+            element.innerText = text;
+        };
     await renderTaskLine(
         task,
         {
@@ -239,6 +242,26 @@ describe('task line rendering', () => {
         expect(found).toBeTruthy();
     };
 
+    const testHiddenComponentClasses = async (
+        taskLine: string,
+        layoutOptions: Partial<LayoutOptions>,
+        hiddenGenericClass: string,
+        expectedSpecificClass: string,
+    ) => {
+        const task = fromLine({
+            line: taskLine,
+        });
+        const fullLayoutOptions = { ...new LayoutOptions(), ...layoutOptions };
+        const parentRender = await createMockParentAndRender(task, fullLayoutOptions);
+
+        const textSpan = getTextSpan(parentRender);
+        for (const childSpan of Array.from(textSpan.children)) {
+            expect(childSpan.classList.contains(hiddenGenericClass)).toBeFalsy();
+        }
+        const li = parentRender.children[0];
+        expect(li.classList.contains(expectedSpecificClass)).toBeTruthy();
+    };
+
     it('renders priority with its correct classes', async () => {
         await testComponentClasses(
             '- [ ] Full task ⏫ 📅 2022-07-02 ⏳ 2022-07-03 🛫 2022-07-04 🔁 every day',
@@ -368,5 +391,63 @@ describe('task line rendering', () => {
             'task-tag-tag-----x',
             'task-tag-other-tag',
         ]);
+    });
+
+    // TODO TEMP add documentation
+    it('does not render hidden components but sets their specific classes to the upper li element', async () => {
+        await testHiddenComponentClasses(
+            '- [ ] Full task ⏫ 📅 2022-07-02 ⏳ 2022-07-03 🛫 2022-07-04 🔁 every day',
+            { hidePriority: true },
+            LayoutClasses.priority,
+            'task-priority-high',
+        );
+        await testHiddenComponentClasses(
+            '- [ ] Full task ⏫ 📅 2022-07-02 ⏳ 2022-07-03 🛫 2022-07-04 🔁 every day',
+            { hideDueDate: true },
+            LayoutClasses.dueDate,
+            'task-due-past-far',
+        );
+        await testHiddenComponentClasses(
+            '- [ ] Full task ⏫ 📅 2022-07-02 ⏳ 2022-07-03 🛫 2022-07-04 🔁 every day',
+            { hideScheduledDate: true },
+            LayoutClasses.scheduledDate,
+            'task-scheduled-past-far',
+        );
+        await testHiddenComponentClasses(
+            '- [ ] Full task ⏫ 📅 2022-07-02 ⏳ 2022-07-03 🛫 2022-07-04 🔁 every day',
+            { hideStartDate: true },
+            LayoutClasses.startDate,
+            'task-start-past-far',
+        );
+    });
+
+    // TODO TEMP add to documentation
+    /*
+     * In this test we try to imitate Obsidian's Markdown renderer more thoroughly than other tests,
+     * so we can verify that the rendering code adds the correct tag classes inside the rendered
+     * Markdown.
+     * Note that this test, just like the code that it tests, assumed a specific rendered structure
+     * by Obsidian, which is not guaranteed by the API.
+     */
+    it('adds tag specific classes inside the description span', async () => {
+        const taskLine = '- [ ] Class with <a class="tag">#someTag</a>';
+        const task = fromLine({
+            line: taskLine,
+        });
+
+        // Unlike the default renderer in createMockParentAndRender, this one accepts a raw HTML rather
+        // than a text
+        const mockInnerHtmlRenderer = async (text: string, element: HTMLSpanElement, _path: string) => {
+            element.innerHTML = text;
+        };
+        const parentRender = await createMockParentAndRender(task, new LayoutOptions(), mockInnerHtmlRenderer);
+
+        const textSpan = getTextSpan(parentRender);
+        const descriptionSpan = textSpan.children[0].children[0] as HTMLElement;
+        expect(descriptionSpan.textContent).toEqual('Class with #someTag');
+        const tagSpan = descriptionSpan.children[0];
+        expect(tagSpan.textContent).toEqual('#someTag');
+        expect(tagSpan.classList[0]).toEqual('tag');
+        expect(tagSpan.classList[1]).toEqual('task-tag-someTag');
     });
 });

@@ -43,6 +43,7 @@ export class TaskLayout {
         'blockLink',
     ];
     public layoutComponents: TaskLayoutComponent[];
+    public hiddenComponents: TaskLayoutComponent[] = [];
     public options: LayoutOptions;
     public specificClasses: string[] = [];
 
@@ -74,6 +75,7 @@ export class TaskLayout {
         ) => {
             if (shouldRemove) {
                 this.specificClasses.push(`tasks-layout-hide-${componentToRemove}`);
+                this.hiddenComponents.push(componentToRemove);
                 return taskComponents.filter((element) => element != componentToRemove);
             } else {
                 return taskComponents;
