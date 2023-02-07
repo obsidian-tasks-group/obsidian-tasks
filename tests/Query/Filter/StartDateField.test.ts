@@ -6,7 +6,7 @@ import { toHaveExplanation } from '../../CustomMatchers/CustomMatchersForFilters
 import { StartDateField } from '../../../src/Query/Filter/StartDateField';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { expectTaskComparesAfter, expectTaskComparesBefore } from '../../CustomMatchers/CustomMatchersForSorting';
-import { currentPeriodsTestArray, explainPeriod, testFilter } from '../../TestingTools/FilterTestHelpers';
+import { testFilter } from '../../TestingTools/FilterTestHelpers';
 
 window.moment = moment;
 
@@ -29,11 +29,27 @@ describe('explain start date queries', () => {
         );
     });
 
-    it('in current week/month/year', () => {
-        currentPeriodsTestArray.forEach((p) => {
-            const filterOrMessage = new StartDateField().createFilterOrErrorMessage('starts in current ' + p);
-            expect(filterOrMessage).toHaveExplanation('start date is ' + explainPeriod(p) + ' OR no start date');
-        });
+    it.each([
+        [
+            'starts in current week',
+            'start date is between 2022-01-10 (Monday 10th January 2022) and 2022-01-16 (Sunday 16th January 2022) inclusive OR no start date',
+        ],
+        [
+            'starts in current month',
+            'start date is between 2022-01-01 (Saturday 1st January 2022) and 2022-01-31 (Monday 31st January 2022) inclusive OR no start date',
+        ],
+        [
+            'starts in current year',
+            'start date is between 2022-01-01 (Saturday 1st January 2022) and 2022-12-31 (Saturday 31st December 2022) inclusive OR no start date',
+        ],
+    ])('explains "%s" as "%s"', (filter: string, expectedExpanation: string) => {
+        jest.useFakeTimers();
+        jest.setSystemTime(new Date(2022, 0, 15)); // 2022-01-15
+
+        const filterOrMessage = new StartDateField().createFilterOrErrorMessage(filter);
+        expect(filterOrMessage).toHaveExplanation(expectedExpanation);
+
+        jest.useRealTimers();
     });
 });
 
@@ -59,26 +75,26 @@ describe('sorting by start', () => {
 });
 
 describe('start date', () => {
-    it('in current week/month/year', () => {
-        currentPeriodsTestArray.forEach((p) => {
-            const filter = new StartDateField().createFilterOrErrorMessage('starts in current ' + p);
+    it.each([
+        // These are minimal tests just to confirm basic behaviour is set up for this field.
+        // Thorough testing is done in DueDateField.test.ts.
+        ['starts in current week', '2022-01-10 (Monday 10th January 2022)', true],
+        ['starts in current month', '2022-01-01 (Saturday 1st January 2022)', true],
+        ['starts in current year', '2022-01-01 (Saturday 1st January 2022)', true],
+    ])(
+        '"%s" expect a task with "%s" date in starts field to be "%s"',
+        (filterString: string, testDate: string, expected: boolean) => {
+            jest.useFakeTimers();
+            jest.setSystemTime(new Date(2022, 0, 15)); // 2022-01-15
+
+            const filter = new StartDateField().createFilterOrErrorMessage(filterString);
 
             // reference: https://obsidian-tasks-group.github.io/obsidian-tasks/queries/filters/#start-date
             testFilter(filter, new TaskBuilder().startDate(null), true);
 
-            testFilter(filter, new TaskBuilder().startDate(moment().format('YYYY-MM-DD')), true);
-            testFilter(filter, new TaskBuilder().startDate(moment().startOf(p).format('YYYY-MM-DD')), true);
-            testFilter(filter, new TaskBuilder().startDate(moment().endOf(p).format('YYYY-MM-DD')), true);
-            testFilter(
-                filter,
-                new TaskBuilder().startDate(moment().startOf(p).subtract(1, 'second').format('YYYY-MM-DD')),
-                false,
-            );
-            testFilter(
-                filter,
-                new TaskBuilder().startDate(moment().endOf(p).add(1, 'second').format('YYYY-MM-DD')),
-                false,
-            );
-        });
-    });
+            testFilter(filter, new TaskBuilder().startDate(testDate), expected);
+
+            jest.useRealTimers();
+        },
+    );
 });

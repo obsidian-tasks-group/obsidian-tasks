@@ -6,7 +6,7 @@ import { toHaveExplanation } from '../../CustomMatchers/CustomMatchersForFilters
 import { ScheduledDateField } from '../../../src/Query/Filter/ScheduledDateField';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { expectTaskComparesAfter, expectTaskComparesBefore } from '../../CustomMatchers/CustomMatchersForSorting';
-import { currentPeriodsTestArray, explainPeriod, testFilter } from '../../TestingTools/FilterTestHelpers';
+import { testFilter } from '../../TestingTools/FilterTestHelpers';
 
 window.moment = moment;
 
@@ -25,11 +25,27 @@ describe('explain scheduled date queries', () => {
         expect(filterOrMessage).toHaveExplanation('scheduled date is on 2023-01-02 (Monday 2nd January 2023)');
     });
 
-    it('in current week/month/year', () => {
-        currentPeriodsTestArray.forEach((p) => {
-            const filterOrMessage = new ScheduledDateField().createFilterOrErrorMessage('scheduled in current ' + p);
-            expect(filterOrMessage).toHaveExplanation('scheduled date is ' + explainPeriod(p));
-        });
+    it.each([
+        [
+            'scheduled in current week',
+            'scheduled date is between 2022-01-10 (Monday 10th January 2022) and 2022-01-16 (Sunday 16th January 2022) inclusive',
+        ],
+        [
+            'scheduled in current month',
+            'scheduled date is between 2022-01-01 (Saturday 1st January 2022) and 2022-01-31 (Monday 31st January 2022) inclusive',
+        ],
+        [
+            'scheduled in current year',
+            'scheduled date is between 2022-01-01 (Saturday 1st January 2022) and 2022-12-31 (Saturday 31st December 2022) inclusive',
+        ],
+    ])('explains "%s" as "%s"', (filter: string, expectedExpanation: string) => {
+        jest.useFakeTimers();
+        jest.setSystemTime(new Date(2022, 0, 15)); // 2022-01-15
+
+        const filterOrMessage = new ScheduledDateField().createFilterOrErrorMessage(filter);
+        expect(filterOrMessage).toHaveExplanation(expectedExpanation);
+
+        jest.useRealTimers();
     });
 });
 
@@ -55,23 +71,24 @@ describe('sorting by scheduled', () => {
 });
 
 describe('scheduled date', () => {
-    it('in current week/month/year', () => {
-        currentPeriodsTestArray.forEach((p) => {
-            const filter = new ScheduledDateField().createFilterOrErrorMessage('scheduled in current ' + p);
+    it.each([
+        // These are minimal tests just to confirm basic behaviour is set up for this field.
+        // Thorough testing is done in DueDateField.test.ts.
+        ['scheduled in current week', '2022-01-10 (Monday 10th January 2022)', true],
+        ['scheduled in current month', '2022-01-01 (Saturday 1st January 2022)', true],
+        ['scheduled in current year', '2022-01-01 (Saturday 1st January 2022)', true],
+    ])(
+        '"%s" expect a task with "%s" date in scheduled field to be "%s"',
+        (filterString: string, testDate: string, expected: boolean) => {
+            jest.useFakeTimers();
+            jest.setSystemTime(new Date(2022, 0, 15)); // 2022-01-15
+
+            const filter = new ScheduledDateField().createFilterOrErrorMessage(filterString);
+
             testFilter(filter, new TaskBuilder().scheduledDate(null), false);
-            testFilter(filter, new TaskBuilder().scheduledDate(moment().format('YYYY-MM-DD')), true);
-            testFilter(filter, new TaskBuilder().scheduledDate(moment().startOf(p).format('YYYY-MM-DD')), true);
-            testFilter(filter, new TaskBuilder().scheduledDate(moment().endOf(p).format('YYYY-MM-DD')), true);
-            testFilter(
-                filter,
-                new TaskBuilder().scheduledDate(moment().startOf(p).subtract(1, 'second').format('YYYY-MM-DD')),
-                false,
-            );
-            testFilter(
-                filter,
-                new TaskBuilder().scheduledDate(moment().endOf(p).add(1, 'second').format('YYYY-MM-DD')),
-                false,
-            );
-        });
-    });
+            testFilter(filter, new TaskBuilder().scheduledDate(testDate), expected);
+
+            jest.useRealTimers();
+        },
+    );
 });

@@ -5,11 +5,7 @@ import moment from 'moment';
 import { DoneDateField } from '../../../src/Query/Filter/DoneDateField';
 import type { FilterOrErrorMessage } from '../../../src/Query/Filter/Filter';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
-import {
-    testDateFilterInCurrentPeriod,
-    testDateFilterInCurrentPeriodExplanation,
-    testFilter,
-} from '../../TestingTools/FilterTestHelpers';
+import { testFilter } from '../../TestingTools/FilterTestHelpers';
 import { toHaveExplanation } from '../../CustomMatchers/CustomMatchersForFilters';
 import { expectTaskComparesAfter, expectTaskComparesBefore } from '../../CustomMatchers/CustomMatchersForSorting';
 
@@ -52,9 +48,26 @@ describe('done date', () => {
         testTaskFilterForTaskWithDoneDate(filter, '2022-04-15', false);
     });
 
-    it('in current week/month/year', () => {
-        testDateFilterInCurrentPeriod(DoneDateField, 'done');
-    });
+    it.each([
+        // These are minimal tests just to confirm basic behaviour is set up for this field.
+        // Thorough testing is done in DueDateField.test.ts.
+        ['done in current week', '2022-01-10 (Monday 10th January 2022)', true],
+        ['done in current month', '2022-01-01 (Saturday 1st January 2022)', true],
+        ['done in current year', '2022-01-01 (Saturday 1st January 2022)', true],
+    ])(
+        '"%s" expect a task with "%s" date in done field to be "%s"',
+        (filterString: string, testDate: string, expected: boolean) => {
+            jest.useFakeTimers();
+            jest.setSystemTime(new Date(2022, 0, 15)); // 2022-01-15
+
+            const filter = new DoneDateField().createFilterOrErrorMessage(filterString);
+
+            testFilter(filter, new TaskBuilder().doneDate(null), false);
+            testFilter(filter, new TaskBuilder().doneDate(testDate), expected);
+
+            jest.useRealTimers();
+        },
+    );
 });
 
 describe('explain done date queries', () => {
@@ -87,8 +100,27 @@ describe('explain done date queries', () => {
         expect(filterOrMessage).toHaveExplanation('done date is after 2022-01-15 (Saturday 15th January 2022)');
     });
 
-    it('in current week/month/year', () => {
-        testDateFilterInCurrentPeriodExplanation(DoneDateField, 'done');
+    it.each([
+        [
+            'done in current week',
+            'done date is between 2022-01-10 (Monday 10th January 2022) and 2022-01-16 (Sunday 16th January 2022) inclusive',
+        ],
+        [
+            'done in current month',
+            'done date is between 2022-01-01 (Saturday 1st January 2022) and 2022-01-31 (Monday 31st January 2022) inclusive',
+        ],
+        [
+            'done in current year',
+            'done date is between 2022-01-01 (Saturday 1st January 2022) and 2022-12-31 (Saturday 31st December 2022) inclusive',
+        ],
+    ])('explains "%s" as "%s"', (filter: string, expectedExpanation: string) => {
+        jest.useFakeTimers();
+        jest.setSystemTime(new Date(2022, 0, 15)); // 2022-01-15
+
+        const filterOrMessage = new DoneDateField().createFilterOrErrorMessage(filter);
+        expect(filterOrMessage).toHaveExplanation(expectedExpanation);
+
+        jest.useRealTimers();
     });
 });
 
