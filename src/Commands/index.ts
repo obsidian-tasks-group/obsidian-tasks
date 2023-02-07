@@ -1,6 +1,7 @@
 import type { App, Editor, MarkdownFileInfo, MarkdownView, TFile, View } from 'obsidian';
 import type TasksPlugin from '../main';
 import { createOrEdit } from './CreateOrEdit';
+import { createAtIndex } from './CreateOrEditAtIndex';
 
 import { toggleDone } from './ToggleDone';
 import { ensureQueryFileDefaultsInFrontmatter } from './AddQueryFileDefaultsProperties';
@@ -14,6 +15,13 @@ export class Commands {
 
     constructor({ plugin }: { plugin: TasksPlugin }) {
         this.plugin = plugin;
+
+        plugin.addCommand({
+            id: 'edit-task-at-index',
+            name: 'Create or edit task at index',
+            icon: 'pencil',
+            callback: () => createAtIndex(this.app, this.plugin.getTasks()),
+        });
 
         plugin.addCommand({
             id: 'edit-task',
