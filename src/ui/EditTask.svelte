@@ -117,7 +117,7 @@
      * Read the entered value for a date field, and return the value to be saved in the edited task.
      * @param typedDate - what the user has entered, such as '2023-01-23' or 'tomorrow'
      */
-    function parseTypedDate(typedDate: string): moment.Moment | null {
+    function parseTypedDateForSaving(typedDate: string): moment.Moment | null {
         let date: moment.Moment | null = null;
         const parsedDate = chrono.parseDate(
             typedDate,
@@ -227,11 +227,11 @@
             description = globalFilter + ' ' + description;
         }
 
-        const startDate = parseTypedDate(editableTask.startDate);
+        const startDate = parseTypedDateForSaving(editableTask.startDate);
 
-        const scheduledDate = parseTypedDate(editableTask.scheduledDate);
+        const scheduledDate = parseTypedDateForSaving(editableTask.scheduledDate);
 
-        const dueDate = parseTypedDate(editableTask.dueDate);
+        const dueDate = parseTypedDateForSaving(editableTask.dueDate);
 
         let recurrence: Recurrence | null = null;
         if (editableTask.recurrenceRule) {
