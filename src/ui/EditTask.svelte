@@ -105,7 +105,7 @@
      * @param fieldName
      * @param typedDate - what the user has entered, such as '2023-01-23' or 'tomorrow'
      */
-    function parseDate2(fieldName: 'start' | 'scheduled' | 'due' | 'done', typedDate: string): string {
+    function parseTypedDateForDisplayUsingFutureDate(fieldName: 'start' | 'scheduled' | 'due' | 'done', typedDate: string): string {
         return parseTypedDateForDisplay(
             fieldName,
             typedDate,
@@ -134,17 +134,17 @@
 
     $: {
         editableTask.startDate = doAutocomplete(editableTask.startDate);
-        parsedStartDate = parseDate2('start', editableTask.startDate);
+        parsedStartDate = parseTypedDateForDisplayUsingFutureDate('start', editableTask.startDate);
     }
 
     $: {
         editableTask.scheduledDate = doAutocomplete(editableTask.scheduledDate);
-        parsedScheduledDate = parseDate2('scheduled', editableTask.scheduledDate);
+        parsedScheduledDate = parseTypedDateForDisplayUsingFutureDate('scheduled', editableTask.scheduledDate);
     }
 
     $: {
         editableTask.dueDate = doAutocomplete(editableTask.dueDate);
-        parsedDueDate = parseDate2('due', editableTask.dueDate);
+        parsedDueDate = parseTypedDateForDisplayUsingFutureDate('due', editableTask.dueDate);
     }
 
     $: {
