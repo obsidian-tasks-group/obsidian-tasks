@@ -300,6 +300,7 @@ function dateToClassName(date: Moment) {
     const today = window.moment().startOf('day');
     let result = '';
     const diffDays = today.diff(date, 'days');
+    if (isNaN(diffDays)) return null;
     if (diffDays === 0) return 'today';
     else if (diffDays > 0) result += 'past-';
     else if (diffDays < 0) result += 'future-';

@@ -21,7 +21,7 @@ The Tasks plugin renders a task in the following structure (this refers to query
 ```markdown
 - Obsidian code block (div class="block-language-tasks")
   - Results list (ul class="plugin-tasks-query-result") OR Reading View list (ul class="contains-task-list")
-    - Task (li class="task-list-item" + specific classes like "tasks-tag-atHome tasks-priority-medium tasks-due-past-1d")
+    - Task (li class="task-list-item" + specific classes like "tasks-tag-atHome tasks-priority-medium tasks-due-past-1d" + data-task="[custom_status]" + data+line="[line]")
       - Task checkbox (li class="task-list-item-checkbox")
       - Task content (span class="tasks-list-text")
         - Task description and tags (span class="task-description" + tag specific classes)
@@ -179,7 +179,7 @@ The following rules mark 'today' due dates as blue and past due dates as red:
  padding: 2px 8px;
 }
 /* A special color for overdue due dates */
-[class*="past-"] .task-due span {
+.task-due[class*="past-"] span {
  background: var(--color-pink);
  border-radius: 10px;
  padding: 2px 8px;
@@ -310,7 +310,7 @@ span.task-priority {
  padding: 2px 8px;
 }
 /* A special color for overdue due dates */
-[class*="past-"] .task-due span {
+.task-due[class*="past-"] span {
  background: var(--color-pink);
  border-radius: 10px;
  padding: 2px 8px;

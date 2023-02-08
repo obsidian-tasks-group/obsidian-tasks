@@ -379,6 +379,10 @@ describe('task line rendering', () => {
         await testComponentClasses(`- [x] Done task ✅ ${past}`, {}, LayoutClasses.doneDate, ['task-done-past-far']);
     });
 
+    it('does not add specific classes to invalid dates', async () => {
+        await testComponentClasses('- [ ] Full task ⏫ 📅 2023-02-29', {}, LayoutClasses.dueDate, []);
+    });
+
     it('adds classes for task tags', async () => {
         await testComponentClasses('- [ ] Task with #tag1 #tag2/subtag', {}, LayoutClasses.description, [
             'task-tag-tag1',
