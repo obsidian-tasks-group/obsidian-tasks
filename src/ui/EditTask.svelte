@@ -76,6 +76,21 @@
             symbol: prioritySymbols.High
         }]
 
+    /*
+        MAINTENANCE NOTE on these Date functions:
+            Repetitious date-related code in this file has been extracted
+            out in to several parseTypedDateFor....() functions over time.
+
+            There is some similarity between these functions, and also
+            some subtle differences.
+
+            Future refactoring to simplify them would be welcomed.
+
+            When editing of Done date is introduced, the functions
+            parseTypedDateForDisplayUsingFutureDate() and parseTypedDateForDisplay()
+            may collapse in to a single case.
+     */
+
     /**
      * Read the entered value for a date field, and return the text to be displayed,
      * to explain how the date string was interpreted.
