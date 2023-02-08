@@ -4,6 +4,7 @@ title: Statuses
 nav_order: 2
 parent: Getting Started
 has_toc: false
+has_children: true
 ---
 
 # Statuses
@@ -20,127 +21,168 @@ has_toc: false
 
 ---
 
-## Standard Markdown task statuses
+## Introduction
 
-Tasks have a status.
+{: .released }
+Custom Statuses were introduced in Tasks 1.23.0.
 
-The convention in markdown is:
+This page provides an overview of using Tasks with **Custom Statuses**, which some people refer to as Custom Checkboxes or Alternative/Alternate Checkboxes.
+
+Here's the kind of thing that you can do:
+
+![Selection of checkboxes from Minimal theme](../images/theme-minimal-reading-view-sample.png) ![Selection of checkboxes from ITS theme](../images/theme-its-reading-view-sample.png)
+
+### Related pages
+
+Once you're comfortable with the background information in this page, further information is available in the following related pages.
+
+- [How to style custom statuses]({{ site.baseurl }}{% link how-to/style-custom-statuses.md %}).
+- [How to set up your custom statuses]({{ site.baseurl }}{% link how-to/set-up-custom-statuses.md %}).
+- [Status Collections]({{ site.baseurl }}{% link reference/status-collections/index.md %}).
+
+---
+
+## Do I need to set up statuses?
+
+If you are happy with all your tasks beginning with `[ ]` and `[x]`, then **no**, you can just ignore Tasks' Statuses facility.
+
+---
+
+## About Statuses
+
+### What IS a Status?
+
+Every task in the Tasks plugin now has a Status.
+
+Status is just Tasks' name for:
+
+1. the character (`symbol`) between the `[` and `]` in a task line
+2. AND some options that you can customise, to tell tasks how to treat all your tasks with that character.
+
+Some obsidian users call them other names, like 'Alternative Checkboxes', but that is more about how they are displayed, rather than about the actual *behaviour* of tasks with particular statuses.
+
+### What's IN a Status?
+
+These are the options that you can modify, for each status:
+
+![Task Status modal](../images/settings-custom-statuses-dialog-2.png)
+
+Here is some more detail.
+
+- **Status Symbol**
+  - the single character in the `[]` at the start of the task.
+  - this character will control what how tasks are rendered by your Theme or CSS Snippet.
+- **Status Name**
+  - a name for the status.
+  - this is flexible: for custom statuses, you can use any name you wish.
+  - is searchable with `status.name`, for example `status.name includes My custom in-progress status`.
+- **Next Status Symbol**
+  - the status symbol to use when the task is toggled.
+- **Status Type**
+  - one of `TODO`, `IN_PROGRESS`, `DONE`, `CANCELLED`, `NON_TASK`.
+  - Tasks needs to know the type of each status, so that it knows how to treat them when searching, and what to do when tasks with the status are toggled.
+  - types are searchable with `status.type`, for example `status.type is IN_PROGRESS`.
+  - Also available:
+    - `sort by status.type`
+    - `group by status.type`
+  - For more information, see [Status Types]({{ site.baseurl }}{% link getting-started/statuses/status-types.md %})
+
+### Unknown Statuses
+
+What happens if Tasks reads a line with a status symbol that it does not know about?
+
+All such tasks are given a status called `Unknown`, with these properties:
+
+| Property           | Value                                                               |
+| ------------------ | ------------------------------------------------------------------- |
+| Status Symbol      | The unrecognised character between the `[` and `]` in the task line |
+| Status Name        | **Unknown**                                                         |
+| Next Status Symbol | `x`                                                                 |
+| Status Type        | `TODO`                                                              |
+
+### Done date, Recurrence and Statuses
+
+It is the Task Status Type changing **to** `DONE` that controls when:
+
+- tasks **gain** their Done dates (if Done dates are enabled in settings),
+- new copies of recurring tasks are created.
+
+It is the Task Status Type changing **from** `DONE` that controls when:
+
+- tasks **lose** their Done dates (if Done dates are enabled in settings).
+
+---
+
+## What can Statuses do?
+
+Now we have seen what is in a Status, what can we do with them?
+
+We can use them to control what Tasks does when a task's checkbox is clicked, or toggled.
+
+The [Example Statuses]({{ site.baseurl }}{% link getting-started/statuses/example-statuses.md %}) page has a variety of examples, for inspiration.
+
+---
+
+## More about Statuses
+
+### Core Statuses
+
+Core statuses represent conventional markdown tasks:
 
 ```text
 - [ ] I am a task that is not yet done
 - [x] I am a task that has been done
 ```
 
----
+They don't require any custom CSS styling or theming on order to display correctly in Tasks blocks or Live Preview.
 
-## Tasks core task statuses
+Before Tasks 1.23.0, these were the only statuses that Tasks knew about.
 
-{: .released }
-Introduced in Tasks X.Y.Z
+See [Core Statuses]({{ site.baseurl }}{% link getting-started/statuses/core-statuses.md %}) to find out more.
 
-Tasks supports custom task statuses.
+### Custom Statuses
 
-This table shows the statuses provided by default:
+Custom statuses represent any non-standard markdown tasks.
 
-<!-- placeholder to force blank line before table --> <!-- include: DocsSamplesForStatuses.test.DefaultStatuses_core-statuses.approved.md -->
+Here are some tasks with example custom statuses, that is, with non-standard characters between the `[` and `]`:
 
-| Status Character    | Status Name | Next Status Character | Needs Custom Styling |
-| ------------------- | ----------- | --------------------- | -------------------- |
-| `space` | Todo | `x` | No |
-| `/` | In Progress | `x` | Yes |
-| `x` | Done | `space` | No |
-| `-` | Cancelled | `space` | Yes |
+```text
+- [X] Checked
+- [-] A dropped/cancelled task
+- [?] A question
+- [/] A Half Done/In-progress task
+```
 
-<!-- placeholder to force blank line after table --> <!-- endInclude -->
+They **require custom CSS styling or theming** on order to display correctly in Tasks blocks or Live Preview.
 
-### Editing core statuses
+### What's the Big Deal?
 
-The Tasks settings shows the core statuses:
+People have been using themes and CSS snippets to style custom checkboxes in Obsidian all along.
 
-![Core Statuses](../images/settings-core-statuses.png)
+What Tasks's custom statuses allow you to do is to **also customise the behaviour of your tasks**.
 
-Note that `Todo` is followed by `Done`, in order to preserve compatibility with earlier Tasks releases.
+### Setting up Custom Statuses
 
-{: .info }
-These core statuses are currently read-only.
-It will soon be possible to edit these custom statuses, and enable `Todo` -> `In Progress` -> `Done`.
-
----
-
-## Custom task statuses
-
-### First choose your styling scheme
-
-First, decide which CSS Snippet or Theme you wish to use, to style your checkboxes.
+<!-- force a blank line --> <!-- include: snippet-statuses-overview.md -->
 
 {: .info }
-We will later enhance this documentation with a more thorough list of available CSS Snippets and Themes that style task checkboxes.
+> Broad steps to understand and set up Statuses (or "Alternate Checkboxes"):
+>
+> - Understand what Statuses are:
+>   - [Statuses]({{ site.baseurl }}{% link getting-started/statuses.md %})
+>   - [Custom Statuses]({{ site.baseurl }}{% link getting-started/statuses/custom-statuses.md %})
+> - Choose your status styling scheme: this will determine the names and symbols for your custom statuses:
+>   - Some common ones are shown in [Status Collections]({{ site.baseurl }}{% link reference/status-collections/index.md %})
+> - Set up your status styling scheme
+>   - [How to style custom statuses]({{ site.baseurl }}{% link how-to/style-custom-statuses.md %}).
+> - Configure Tasks to use your custom statuses
+>   - [How to set up your custom statuses]({{ site.baseurl }}{% link how-to/set-up-custom-statuses.md %})
+> - Optionally, update your tasks searches to take advantage of the new flexibility
+>   - [Filters for Task Statuses]({{ site.baseurl }}{% link queries/filters.md %}#filters-for-task-statuses)
 
-### Editing custom statuses
+<!-- force a blank line --> <!-- endInclude -->
 
-Your choice of styling facility will determine which letters and characters you wish to you in your custom statuses.
-
-Then see [How to set up your custom statuses]({{ site.baseurl }}{% link how-to/set-up-custom-statuses.md %}) for how to set up your custom statuses.
-
-{: .warning }
-Remember to set up your chosen CSS Snippet or Theme before setting up the custom statuses.
-
-### Minimal supported statuses
-
-<!-- placeholder to force blank line before table --> <!-- include: DocsSamplesForStatuses.test.DefaultStatuses_minimal-supported-statuses.approved.md -->
-
-| Status Character    | Status Name | Next Status Character | Needs Custom Styling |
-| ------------------- | ----------- | --------------------- | -------------------- |
-| `>` | Forwarded | `x` | Yes |
-| `<` | Schedule | `x` | Yes |
-| `?` | Question | `x` | Yes |
-| `!` | Important | `x` | Yes |
-| `"` | Quote | `x` | Yes |
-| `-` | Canceled | `x` | Yes |
-| `*` | Star | `x` | Yes |
-| `l` | Location | `x` | Yes |
-| `i` | Info | `x` | Yes |
-| `S` | Amount/savings/money | `x` | Yes |
-| `I` | Idea/lightbulb | `x` | Yes |
-| `f` | Fire | `x` | Yes |
-| `k` | Key | `x` | Yes |
-| `u` | Up | `x` | Yes |
-| `d` | Down | `x` | Yes |
-| `w` | Win | `x` | Yes |
-| `p` | Pros | `x` | Yes |
-| `c` | Cons | `x` | Yes |
-| `b` | Bookmark | `x` | Yes |
-
-<!-- placeholder to force blank line after table --> <!-- endInclude -->
-
-### ITS Theme supported statuses
-
-<!-- placeholder to force blank line before table --> <!-- include: DocsSamplesForStatuses.test.DefaultStatuses_its-theme-supported-statuses.approved.md -->
-
-| Status Character    | Status Name | Next Status Character | Needs Custom Styling |
-| ------------------- | ----------- | --------------------- | -------------------- |
-| `>` | Forward | `x` | Yes |
-| `D` | Deferred/Scheduled | `x` | Yes |
-| `?` | Question | `x` | Yes |
-| `!` | Important | `x` | Yes |
-| `+` | Add | `x` | Yes |
-| `R` | Research | `x` | Yes |
-| `i` | Idea | `x` | Yes |
-| `B` | Brainstorm | `x` | Yes |
-| `P` | Pro | `x` | Yes |
-| `C` | Con | `x` | Yes |
-| `I` | Info | `x` | Yes |
-| `Q` | Quote | `x` | Yes |
-| `N` | Note | `x` | Yes |
-| `b` | Bookmark | `x` | Yes |
-| `p` | Paraphrase | `x` | Yes |
-| `E` | Example | `x` | Yes |
-| `L` | Location | `x` | Yes |
-| `A` | Answer | `x` | Yes |
-| `r` | Reward | `x` | Yes |
-| `c` | Choice | `x` | Yes |
-
-<!-- placeholder to force blank line after table --> <!-- endInclude -->
+---
 
 ## Using Statuses
 
@@ -156,45 +198,30 @@ We are tracking this in [issue #1486](https://github.com/obsidian-tasks-group/ob
 
 ### Related searches
 
-- `done` - matches tasks with anything except space as the status symbol
-- `not done` - matches task with a space as the status symbol
-- `status.name` text search
-- `sort by status.name`
+- `done` - matches tasks status types `TODO` and `CANCELLED`
+- `not done` - matches tasks with status types `TODO` and `IN_PROGRESS`
+- **Status Name**
+  - `status.name` text search
+  - `sort by status.name`
+  - `group by status.name`
+- **Status Type**
+  - `status.type` text search
+  - `sort by status.type`
+  - `group by status.type`
 
 For details, see [Filters for Task Statuses]({{ site.baseurl }}{% link queries/filters.md %}#filters-for-task-statuses)
 
 {: .info }
 We envisage adding `status.symbol`.
 
-## Related pages
-
-- [How to set up your custom statuses]({{ site.baseurl }}{% link how-to/set-up-custom-statuses.md %}).
-- [How to style custom statuses]({{ site.baseurl }}{% link how-to/style-custom-statuses.md %}).
-
 ---
 
 ## Credit: Sytone and the 'Tasks SQL Powered' plugin
 
-This plugin's implementation of reading, searching and editing custom statuses was entirely made possible by the work of [Sytone](https://github.com/sytone) and his fork of Tasks called ['Tasks SQL Powered'](https://github.com/sytone/obsidian-tasks-x).
+This plugin's implementation of reading, searching and editing custom statuses was entirely made possible by the work of [Sytone](https://github.com/sytone) and his fork of Tasks called ['Tasks SQL Powered'](https://github.com/sytone/obsidian-tasks-x). [^task-x-version]
 
-When code in Tasks has been copied from 'Tasks SQL Powered', Sytone has been specifically credited as a co-author, that is, joint author, and these commits can be seen on the GitHub site: [Commits "Co-Authored-By: Sytone"](https://github.com/search?q=repo%3Aobsidian-tasks-group%2Fobsidian-tasks+%22Co-Authored-By%3A+Sytone%22&type=commits).
+Where code in Tasks has been copied from 'Tasks SQL Powered', Sytone has been specifically credited as a co-author, that is, joint author, and these commits can be seen on the GitHub site: [Commits "Co-Authored-By: Sytone"](https://github.com/search?q=repo%3Aobsidian-tasks-group%2Fobsidian-tasks+%22Co-Authored-By%3A+Sytone%22&type=commits).
 
-### Differences between 'Tasks' and 'Tasks SQL Powered'
-
-These two plugins are developed with justifiably different requirements:
-
-- As a released plugin, a priority of 'Tasks' is ensuring **backwards compatibility** with previous plugin releases, to avoid changing any (non-broken) behaviour of users' existing searches.
-- As an independent fork of 'Tasks', 'Tasks SQL Powered' is free to make changes to existing Tasks behaviour that could well be seen by users as improvements, and is **not required to maintain backwards compatibility** with 'Tasks'.
-
-The notes below may help anyone who is switching their vaults between the 'Tasks' and 'Tasks SQL Powered' to update their tasks or their queries to retain their intended results.
-
-They describe the changes made when back-porting the 'Tasks SQL Powered' custom status code, to retain backwards compatibility.
-
-| Topic                                                 | 'Tasks SQL Powered' [^task-x-version]                                                                                                                                                                                                                  | 'Tasks'                                                                                                        |
-| ----------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------- |
-| `done`, `not done`                                    | Only tasks with status characters `x` and `X` are treated as `done`.                                                                                                                                                                                   | All tasks with status characters other than `space` are treated as `done`  - for backwards compatibility.      |
-| `sort by status`                                      | Case-sensitive sort of the status character, in reverse alphabetical order. Unrecognised status characters are treated as empty, and appear before all other statuses.                                                                                 | All tasks with `space` status character sort first, then all other tasks  - for backwards compatibility.       |
-| `group by status`                                     | Groups by the name of the status, for example `Cancelled`, `Done`, `In Progress`, `EMPTY`.                                                                                                                                                             | Groups by either `Todo` if the status character is a space, or otherwise `Done` - for backwards compatibility. |
-| Handling unknown status characters, for example `[%]` | Stores and displays the task with no status character:<br>- this affects any custom CSS styling,<br>- toggling changes the line to `[]` - with no status character.<br>(The fix is to ensure all status characters are added in the plugin's settings) | Retains any unknown status characters:<br> - styling and toggling are unchanged                                |
+Subsequently, the custom statuses implementation in Tasks has diverged from the 'Tasks SQL Powered' significantly. However, none of the new features and fixes would have been possible without Sytone's foundation work, for which we are very grateful.
 
 [^task-x-version]: 'Tasks SQL Powered' as of [revision 2c0b659](https://github.com/sytone/obsidian-tasks-x/tree/2c0b659457cc80806ff18585c955496c76861b87) on 2 August 2022

@@ -3,17 +3,17 @@
 name: SlRvb's Checkboxes
 id: checkbox
 settings:
-    - 
+    -
         title: Colorful Task Text
         description: Add color to the text of the task.
         id: check-color
         type: class-toggle
-    - 
+    -
         title: Colorful Task Background
         description: Add color to the background of the task.
         id: check-bg
         type: class-toggle
-    - 
+    -
         title: Normal Task Text
         description: Reapply regular text color to the text of the task.
         id: check-text
@@ -35,7 +35,7 @@ settings:
         id: chck-pad
         type: class-toggle
         default: true
-    - 
+    -
         title: Checkbox Height Adjustment (LP/P/R)
         description: Preview/Reading Mode Icon adjustment slider.
         id: chbx-pre-height
@@ -45,7 +45,7 @@ settings:
         min: -8
         max: 8
         step: 1
-    - 
+    -
         title: Checkbox Height Adjustment (S)
         description: Source Mode Icon adjustment slider.
         id: chbx-ed-height
@@ -463,7 +463,7 @@ body:not(.alt-chkbx-off) .markdown-source-view.mod-cm6 .HyperMD-task-line[data-t
 ul > li.task-list-item.is-checked,
 ol > li.task-list-item.is-checked {
   color: var(--lines, var(--text-faint));
-  /*font-weight: bold; CFM */
+  font-weight: bold;
 }
 
 :not(.chkbx-strike) .markdown-source-view.mod-cm6 .HyperMD-task-line[data-task]:not([data-task=" "]),

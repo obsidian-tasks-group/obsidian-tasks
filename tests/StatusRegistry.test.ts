@@ -3,7 +3,8 @@
  */
 import moment from 'moment';
 import { StatusRegistry } from '../src/StatusRegistry';
-import { Status, StatusConfiguration } from '../src/Status';
+import { Status } from '../src/Status';
+import { StatusConfiguration, StatusType } from '../src/StatusConfiguration';
 import { Task } from '../src/Task';
 import * as TestHelpers from './TestHelpers';
 
@@ -15,39 +16,75 @@ describe('StatusRegistry', () => {
     // The global StatusRegistry is used by the code that toggles tasks.
     // Where possible, tests should create their own StatusRegistry to act on.
     beforeEach(() => {
-        StatusRegistry.getInstance().clearStatuses();
+        StatusRegistry.getInstance().resetToDefaultStatuses();
     });
 
     afterEach(() => {
-        StatusRegistry.getInstance().clearStatuses();
+        StatusRegistry.getInstance().resetToDefaultStatuses();
     });
 
-    it('should create a new instance and populate default status indicators', () => {
+    it('should create a new instance and populate default status symbols', () => {
         // Arrange
 
         // Act
         const statusRegistry = new StatusRegistry();
-        const doneStatus = statusRegistry.byIndicator('x');
+        const doneStatus = statusRegistry.bySymbol('x');
 
         // Assert
         expect(statusRegistry).not.toBeNull();
 
-        expect(doneStatus.indicator).toEqual(Status.DONE.indicator);
+        expect(doneStatus.symbol).toEqual(Status.makeDone().symbol);
 
-        expect(statusRegistry.byIndicator('x').indicator).toEqual(Status.DONE.indicator);
-        expect(statusRegistry.byIndicator('').indicator).toEqual(Status.EMPTY.indicator);
-        expect(statusRegistry.byIndicator(' ').indicator).toEqual(Status.TODO.indicator);
-        expect(statusRegistry.byIndicator('-').indicator).toEqual(Status.CANCELLED.indicator);
-        expect(statusRegistry.byIndicator('/').indicator).toEqual(Status.IN_PROGRESS.indicator);
+        expect(statusRegistry.bySymbol('x').symbol).toEqual(Status.makeDone().symbol);
+        expect(statusRegistry.bySymbol('').symbol).toEqual(Status.makeEmpty().symbol);
+        expect(statusRegistry.bySymbol(' ').symbol).toEqual(Status.makeTodo().symbol);
+        expect(statusRegistry.bySymbol('-').symbol).toEqual(Status.makeCancelled().symbol);
+        expect(statusRegistry.bySymbol('/').symbol).toEqual(Status.makeInProgress().symbol);
 
-        // Detect unrecognised indicator:
-        expect(statusRegistry.byIndicator('?').indicator).toEqual(Status.EMPTY.indicator);
+        // Detect unrecognised symbol:
+        expect(statusRegistry.bySymbol('?').symbol).toEqual(Status.makeEmpty().symbol);
+    });
+
+    it('should clear the statuses', () => {
+        // Arrange
+        const statusRegistry = new StatusRegistry();
+        expect(statusRegistry.registeredStatuses.length).toEqual(4);
+
+        // Act
+        statusRegistry.clearStatuses();
+
+        // Assert
+        expect(statusRegistry.registeredStatuses.length).toEqual(0);
+    });
+
+    it('should return empty status for lookup by unknown symbol with bySymbol()', () => {
+        // Arrange
+        const statusRegistry = new StatusRegistry();
+
+        // Act
+        const result = statusRegistry.bySymbol('?');
+
+        // Assert
+        expect(result).toEqual(Status.EMPTY);
+    });
+
+    it('should return Unknown status for lookup by unknown symbol with bySymbolOrCreate()', () => {
+        // Arrange
+        const statusRegistry = new StatusRegistry();
+
+        // Act
+        const result = statusRegistry.bySymbolOrCreate('?');
+
+        // Assert
+        expect(result.symbol).toEqual('?');
+        expect(result.name).toEqual('Unknown');
+        expect(result.nextStatusSymbol).toEqual('x');
     });
 
     it('should allow lookup of next status for a status', () => {
         // Arrange
         const statusRegistry = new StatusRegistry();
-        statusRegistry.clearStatuses();
+        statusRegistry.resetToDefaultStatuses();
         const statusA = new Status(new StatusConfiguration('a', 'A', 'b', false));
         const statusB = new Status(new StatusConfiguration('b', 'B', 'c', false));
         const statusC = new Status(new StatusConfiguration('c', 'C', 'd', false));
@@ -60,10 +97,30 @@ describe('StatusRegistry', () => {
         statusRegistry.add(statusD);
 
         // Assert
-        expect(statusRegistry.getNextStatus(statusA).indicator).toEqual('b');
-        expect(statusRegistry.getNextStatus(statusB).indicator).toEqual('c');
-        expect(statusRegistry.getNextStatus(statusC).indicator).toEqual('d');
-        expect(statusRegistry.getNextStatus(statusD).indicator).toEqual('a');
+        expect(statusRegistry.getNextStatus(statusA).symbol).toEqual('b');
+        expect(statusRegistry.getNextStatus(statusB).symbol).toEqual('c');
+        expect(statusRegistry.getNextStatus(statusC).symbol).toEqual('d');
+        expect(statusRegistry.getNextStatus(statusD).symbol).toEqual('a');
+    });
+
+    it('should return EMPTY if next status does not exist', () => {
+        const statusRegistry = new StatusRegistry();
+        const status = new Status(new StatusConfiguration('P', 'Pro', 'C', false));
+        const nextStatus = statusRegistry.getNextStatus(status);
+        expect(nextStatus.type).toEqual(StatusType.EMPTY);
+    });
+
+    it('should construct a TODO on request if next status does not exist', () => {
+        // Arrange
+        const statusRegistry = new StatusRegistry();
+        const status = new Status(new StatusConfiguration('P', 'Pro', 'C', false));
+        const nextStatus = statusRegistry.getNextStatusOrCreate(status);
+
+        // Assert
+        expect(nextStatus.symbol).toEqual('C');
+        expect(nextStatus.name).toEqual('Unknown');
+        expect(nextStatus.nextStatusSymbol).toEqual('x');
+        expect(nextStatus.type).toEqual(StatusType.TODO);
     });
 
     it('should handle adding custom StatusConfiguration', () => {
@@ -73,7 +130,7 @@ describe('StatusRegistry', () => {
         statusRegistry.add(statusConfiguration);
 
         // Assert
-        const status2 = statusRegistry.byIndicator('a');
+        const status2 = statusRegistry.bySymbol('a');
         expect(status2).toStrictEqual(new Status(statusConfiguration));
     });
 
@@ -84,7 +141,7 @@ describe('StatusRegistry', () => {
         statusRegistry.add(status);
 
         // Assert
-        const status2 = statusRegistry.byIndicator('a');
+        const status2 = statusRegistry.bySymbol('a');
         expect(status2).toStrictEqual(status);
     });
 
@@ -111,17 +168,13 @@ describe('StatusRegistry', () => {
 
             // Assert
             expect(task).not.toBeNull();
-            expect(task!.status.indicator).toEqual(Status.TODO.indicator);
-
-            // In Tasks, TODO toggles to DONE, for consistency with earlier releases.
-            // const toggledInProgress = task?.toggle()[0];
-            // expect(toggledInProgress?.status.indicator).toEqual(Status.IN_PROGRESS.indicator);
+            expect(task!.status.symbol).toEqual(Status.makeTodo().symbol);
 
             const toggledDone = task?.toggle()[0];
-            expect(toggledDone?.status.indicator).toEqual(Status.DONE.indicator);
+            expect(toggledDone?.status.symbol).toEqual(Status.makeDone().symbol);
 
             const toggledTodo = toggledDone?.toggle()[0];
-            expect(toggledTodo?.status.indicator).toEqual(Status.TODO.indicator);
+            expect(toggledTodo?.status.symbol).toEqual(Status.makeTodo().symbol);
         });
 
         it('should allow task to toggle from cancelled to todo', () => {
@@ -146,10 +199,10 @@ describe('StatusRegistry', () => {
 
             // Assert
             expect(task).not.toBeNull();
-            expect(task!.status.indicator).toEqual(Status.CANCELLED.indicator);
+            expect(task!.status.symbol).toEqual(Status.makeCancelled().symbol);
 
             const toggledTodo = task?.toggle()[0];
-            expect(toggledTodo?.status.indicator).toEqual(Status.TODO.indicator);
+            expect(toggledTodo?.status.symbol).toEqual(Status.makeTodo().symbol);
         });
 
         it('should allow task to toggle through custom transitions', () => {
@@ -183,19 +236,19 @@ describe('StatusRegistry', () => {
 
             // Assert
             expect(task).not.toBeNull();
-            expect(task!.status.indicator).toEqual(statusA.indicator);
+            expect(task!.status.symbol).toEqual(statusA.symbol);
 
             const toggledA = task?.toggle()[0];
-            expect(toggledA?.status.indicator).toEqual(statusB.indicator);
+            expect(toggledA?.status.symbol).toEqual(statusB.symbol);
 
             const toggledB = toggledA?.toggle()[0];
-            expect(toggledB?.status.indicator).toEqual(statusC.indicator);
+            expect(toggledB?.status.symbol).toEqual(statusC.symbol);
 
             const toggledC = toggledB?.toggle()[0];
-            expect(toggledC?.status.indicator).toEqual(statusD.indicator);
+            expect(toggledC?.status.symbol).toEqual(statusD.symbol);
 
             const toggledD = toggledC?.toggle()[0];
-            expect(toggledD?.status.indicator).toEqual(statusA.indicator);
+            expect(toggledD?.status.symbol).toEqual(statusA.symbol);
         });
 
         it('should leave task valid if toggling to unknown status', () => {
@@ -207,7 +260,7 @@ describe('StatusRegistry', () => {
             const line = '- [!] this is an important task';
             const task = TestHelpers.fromLine({ line });
             expect(task).not.toBeNull();
-            expect(task!.status.indicator).toEqual(important.indicator);
+            expect(task!.status.symbol).toEqual(important.symbol);
 
             // Act
             const toggled = task?.toggle()[0];
@@ -215,7 +268,45 @@ describe('StatusRegistry', () => {
             // Assert
             // Issue https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1499
             // Ensure that the next status was applied, even though it is an unrecognised status
-            expect(toggled?.status.indicator).toEqual('D');
+            expect(toggled?.status.symbol).toEqual('D');
+        });
+
+        it('should bulk-add unknown statuses', () => {
+            // Arrange
+            const registry = new StatusRegistry();
+            expect(registry.bySymbol('!').type).toEqual(StatusType.EMPTY);
+            expect(registry.bySymbol('X').type).toEqual(StatusType.EMPTY);
+            expect(registry.bySymbol('d').type).toEqual(StatusType.EMPTY);
+            const allStatuses = [
+                new Status(new StatusConfiguration('!', 'Unknown', 'X', false, StatusType.TODO)),
+                new Status(new StatusConfiguration('X', 'Unknown', '!', false, StatusType.DONE)),
+                new Status(new StatusConfiguration('d', 'Unknown', '!', false, StatusType.IN_PROGRESS)),
+                // Include some tasks with duplicate statuses, to make sure duplicates are discarded
+                new Status(new StatusConfiguration('!', 'Unknown', 'X', false, StatusType.TODO)),
+                new Status(new StatusConfiguration('X', 'Unknown', '!', false, StatusType.DONE)),
+                new Status(new StatusConfiguration('d', 'Unknown', '!', false, StatusType.IN_PROGRESS)),
+                // Check that it does not add copies of any core statuses
+                new Status(new StatusConfiguration('-', 'Unknown', '!', false, StatusType.IN_PROGRESS)),
+            ];
+
+            // Act
+            const unknownStatuses = registry.findUnknownStatuses(allStatuses);
+
+            // Assert
+            expect(unknownStatuses.length).toEqual(3);
+
+            let s1;
+            s1 = unknownStatuses[0];
+            expect(s1.type).toEqual(StatusType.TODO);
+            expect(s1.name).toEqual('Unknown (!)');
+
+            s1 = unknownStatuses[1];
+            expect(s1.type).toEqual(StatusType.DONE);
+            expect(s1.name).toEqual('Unknown (X)');
+
+            s1 = unknownStatuses[2];
+            expect(s1.type).toEqual(StatusType.IN_PROGRESS);
+            expect(s1.name).toEqual('Unknown (d)');
         });
     });
 });

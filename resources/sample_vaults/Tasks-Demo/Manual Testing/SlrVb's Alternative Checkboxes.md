@@ -24,6 +24,8 @@ The tasks below should look like one of the images in the [Alternate Checkboxes 
 
 Available task states, as of version `7cb837d73d3f39e056d0be8c98539577529c0f90` of SlRvb's Checkboxes snippet:
 
+<!-- placeholder to force blank line before included text --> <!-- include: DocsSamplesForStatuses.test.Theme_ITS Tasks.approved.md -->
+
 - [ ] #task `space` Unchecked
 - [x] #task `x` Regular
 - [X] #task `X` Checked
@@ -61,6 +63,8 @@ Available task states, as of version `7cb837d73d3f39e056d0be8c98539577529c0f90` 
 - [H] #task `H` Favorite / Health
 - [&] #task `&` Symbolism
 - [s] #task `s` Secret
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
 
 ## Rendered in Tasks results block
 

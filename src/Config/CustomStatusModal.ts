@@ -1,20 +1,29 @@
-import { Modal, Setting, TextComponent } from 'obsidian';
-import { Status, StatusConfiguration } from '../Status';
-import type TasksPlugin from '../main';
+import { Modal, Notice, Setting, TextComponent } from 'obsidian';
+import type { Plugin } from 'obsidian';
+import { StatusConfiguration, StatusType } from '../StatusConfiguration';
+import { StatusValidator } from '../StatusValidator';
+import { Status } from '../Status';
+
+const validator = new StatusValidator();
 
 export class CustomStatusModal extends Modal {
     statusSymbol: string;
     statusName: string;
     statusNextSymbol: string;
     statusAvailableAsCommand: boolean;
+    type: StatusType;
+
     saved: boolean = false;
     error: boolean = false;
-    constructor(public plugin: TasksPlugin, statusType: StatusConfiguration) {
+    private isCoreStatus: boolean;
+    constructor(public plugin: Plugin, statusType: StatusConfiguration, isCoreStatus: boolean) {
         super(plugin.app);
-        this.statusSymbol = statusType.indicator;
+        this.statusSymbol = statusType.symbol;
         this.statusName = statusType.name;
-        this.statusNextSymbol = statusType.nextStatusIndicator;
+        this.statusNextSymbol = statusType.nextStatusSymbol;
         this.statusAvailableAsCommand = statusType.availableAsCommand;
+        this.type = statusType.type;
+        this.isCoreStatus = isCoreStatus;
     }
 
     /**
@@ -26,6 +35,7 @@ export class CustomStatusModal extends Modal {
             this.statusName,
             this.statusNextSymbol,
             this.statusAvailableAsCommand,
+            this.type,
         );
     }
 
@@ -40,44 +50,71 @@ export class CustomStatusModal extends Modal {
         let statusSymbolText: TextComponent;
         new Setting(settingDiv)
             .setName('Task Status Symbol')
-            .setDesc('This is the character between the square braces.')
+            .setDesc(
+                'This is the character between the square braces. (It can only be edited for Custom statuses, and not Core statuses.)',
+            )
             .addText((text) => {
                 statusSymbolText = text;
-                statusSymbolText.setValue(this.statusSymbol).onChange((v) => {
-                    if (!v.length) {
-                        CustomStatusModal.setValidationError(text, 'Task status type cannot be empty.');
-                        return;
-                    }
-
-                    if (v.includes(' ')) {
-                        CustomStatusModal.setValidationError(text, 'Task status type cannot include spaces.');
-                        return;
-                    }
-
-                    if (v.length > 1) {
-                        CustomStatusModal.setValidationError(text, 'Task status must be a single character.');
-                        return;
-                    }
-                    CustomStatusModal.removeValidationError(text);
+                text.setValue(this.statusSymbol).onChange((v) => {
                     this.statusSymbol = v;
+                    CustomStatusModal.setValid(text, validator.validateSymbol(this.statusConfiguration()));
                 });
+            })
+            .setDisabled(this.isCoreStatus)
+            .then((_setting) => {
+                // Show any error if the initial value loaded is incorrect.
+                CustomStatusModal.setValid(statusSymbolText, validator.validateSymbol(this.statusConfiguration()));
             });
 
+        let statusNameText: TextComponent;
         new Setting(settingDiv)
             .setName('Task Status Name')
             .setDesc('This is the friendly name of the task status.')
             .addText((text) => {
+                statusNameText = text;
                 text.setValue(this.statusName).onChange((v) => {
                     this.statusName = v;
+                    CustomStatusModal.setValid(text, validator.validateName(this.statusConfiguration()));
                 });
+            })
+            .then((_setting) => {
+                CustomStatusModal.setValid(statusNameText, validator.validateName(this.statusConfiguration()));
             });
 
+        let statusNextSymbolText: TextComponent;
         new Setting(settingDiv)
             .setName('Task Next Status Symbol')
             .setDesc('When clicked on this is the symbol that should be used next.')
             .addText((text) => {
+                statusNextSymbolText = text;
                 text.setValue(this.statusNextSymbol).onChange((v) => {
                     this.statusNextSymbol = v;
+                    CustomStatusModal.setValid(text, validator.validateNextSymbol(this.statusConfiguration()));
+                });
+            })
+            .then((_setting) => {
+                CustomStatusModal.setValid(
+                    statusNextSymbolText,
+                    validator.validateNextSymbol(this.statusConfiguration()),
+                );
+            });
+
+        new Setting(settingDiv)
+            .setName('Task Status Type')
+            .setDesc('Control how the status behaves for searching and toggling.')
+            .addDropdown((dropdown) => {
+                const types = [
+                    StatusType.TODO,
+                    StatusType.IN_PROGRESS,
+                    StatusType.DONE,
+                    StatusType.CANCELLED,
+                    StatusType.NON_TASK,
+                ];
+                types.forEach((s) => {
+                    dropdown.addOption(s, s);
+                });
+                dropdown.setValue(this.type).onChange((v) => {
+                    this.type = Status.getTypeFromStatusTypeString(v);
                 });
             });
 
@@ -100,17 +137,13 @@ export class CustomStatusModal extends Modal {
             b.setTooltip('Save')
                 .setIcon('checkmark')
                 .onClick(async () => {
-                    // let error = false;
-                    // if (!this.statusSymbol.length) {
-                    //     SettingsModal.setValidationError(this.statusSymbol, 'Task status type cannot be empty.');
-                    //     error = true;
-                    //     return;
-                    // }
-
-                    // if (error) {
-                    //     new Notice('Fix errors before saving.');
-                    //     return;
-                    // }
+                    const errors = validator.validate(this.statusConfiguration());
+                    if (errors.length > 0) {
+                        const message = errors.join('\n') + '\n\n' + 'Fix errors before saving.';
+                        // console.debug(message);
+                        new Notice(message);
+                        return;
+                    }
                     this.saved = true;
                     this.close();
                 });
@@ -137,28 +170,20 @@ export class CustomStatusModal extends Modal {
         this.display();
     }
 
-    static setValidationError(textInput: TextComponent, message?: string) {
-        textInput.inputEl.addClass('is-invalid');
-        if (message) {
-            textInput.inputEl.parentElement?.addClasses(['has-invalid-message', 'unset-align-items']);
-            textInput.inputEl.parentElement?.parentElement?.addClass('.unset-align-items');
-            let mDiv = textInput.inputEl.parentElement?.querySelector('.invalid-feedback') as HTMLDivElement;
-
-            if (!mDiv) {
-                mDiv = createDiv({ cls: 'invalid-feedback' });
-            }
-            mDiv.innerText = message;
-            mDiv.insertAfter(textInput.inputEl);
-        }
+    static setValidationError(textInput: TextComponent) {
+        textInput.inputEl.addClass('tasks-settings-is-invalid');
     }
-    static removeValidationError(textInput: TextComponent) {
-        textInput.inputEl.removeClass('is-invalid');
-        textInput.inputEl.parentElement?.removeClasses(['has-invalid-message', 'unset-align-items']);
-        textInput.inputEl.parentElement?.parentElement?.removeClass('.unset-align-items');
 
-        const invalidFeedback = textInput.inputEl.parentElement?.querySelector('.invalid-feedback');
-        if (invalidFeedback) {
-            textInput.inputEl.parentElement?.removeChild(invalidFeedback);
+    static removeValidationError(textInput: TextComponent) {
+        textInput.inputEl.removeClass('tasks-settings-is-invalid');
+    }
+
+    private static setValid(text: TextComponent, messages: string[]) {
+        const valid = messages.length === 0;
+        if (valid) {
+            CustomStatusModal.removeValidationError(text);
+        } else {
+            CustomStatusModal.setValidationError(text);
         }
     }
 }

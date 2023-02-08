@@ -1,22 +1,24 @@
 import { Notice, PluginSettingTab, Setting, debounce } from 'obsidian';
-import { Status, StatusConfiguration } from 'Status';
+import { StatusConfiguration, StatusType } from '../StatusConfiguration';
 import type TasksPlugin from '../main';
 import { StatusRegistry } from '../StatusRegistry';
+import { Status } from '../Status';
+import type { StatusCollection } from '../StatusCollection';
+import * as Themes from './Themes';
 import type { HeadingState } from './Settings';
 import { getSettings, isFeatureEnabled, updateGeneralSetting, updateSettings } from './Settings';
 import { StatusSettings } from './StatusSettings';
 import settingsJson from './settingsConfiguration.json';
 
 import { CustomStatusModal } from './CustomStatusModal';
-import * as StatusSettingsHelpers from './StatusSettingsHelpers';
 
 export class SettingsTab extends PluginSettingTab {
     // If the UI needs a more complex setting you can create a
     // custom function and specify it from the json file. It will
     // then be rendered instead of a normal checkbox or text box.
     customFunctions: { [K: string]: Function } = {
-        insertTaskCoreStatusSettings: this.insertTaskCoreStatusSettings,
-        insertTaskStatusSettings: this.insertTaskStatusSettings,
+        insertTaskCoreStatusSettings: this.insertTaskCoreStatusSettings.bind(this),
+        insertCustomTaskStatusSettings: this.insertCustomTaskStatusSettings.bind(this),
     };
 
     private readonly plugin: TasksPlugin;
@@ -366,16 +368,19 @@ export class SettingsTab extends PluginSettingTab {
      * @memberof SettingsTab
      */
     insertTaskCoreStatusSettings(containerEl: HTMLElement, settings: SettingsTab) {
-        // TODO Make these statuses editable
-        const coreStatuses: StatusSettings = new StatusSettings();
-        StatusSettings.addCustomStatus(coreStatuses, Status.TODO.configuration);
-        StatusSettings.addCustomStatus(coreStatuses, Status.IN_PROGRESS.configuration);
-        StatusSettings.addCustomStatus(coreStatuses, Status.DONE.configuration);
-        StatusSettings.addCustomStatus(coreStatuses, Status.CANCELLED.configuration);
+        const { statusSettings } = getSettings();
 
-        /* -------------------- One row per status in the settings -------------------- */
-        coreStatuses.customStatusTypes.forEach((status_type) => {
-            createRowForTaskStatus(containerEl, status_type, coreStatuses, settings, settings.plugin, false, false);
+        /* -------------------- One row per core status in the settings -------------------- */
+        statusSettings.coreStatuses.forEach((status_type) => {
+            createRowForTaskStatus(
+                containerEl,
+                status_type,
+                statusSettings.coreStatuses,
+                statusSettings,
+                settings,
+                settings.plugin,
+                true, // isCoreStatus
+            );
         });
     }
 
@@ -386,12 +391,20 @@ export class SettingsTab extends PluginSettingTab {
      * @param {SettingsTab} settings
      * @memberof SettingsTab
      */
-    insertTaskStatusSettings(containerEl: HTMLElement, settings: SettingsTab) {
+    insertCustomTaskStatusSettings(containerEl: HTMLElement, settings: SettingsTab) {
         const { statusSettings } = getSettings();
 
-        /* -------------------- One row per status in the settings -------------------- */
-        statusSettings.customStatusTypes.forEach((status_type) => {
-            createRowForTaskStatus(containerEl, status_type, statusSettings, settings, settings.plugin, true, true);
+        /* -------------------- One row per custom status in the settings -------------------- */
+        statusSettings.customStatuses.forEach((status_type) => {
+            createRowForTaskStatus(
+                containerEl,
+                status_type,
+                statusSettings.customStatuses,
+                statusSettings,
+                settings,
+                settings.plugin,
+                false, // isCoreStatus
+            );
         });
 
         containerEl.createEl('div');
@@ -402,41 +415,70 @@ export class SettingsTab extends PluginSettingTab {
                 .setButtonText('Add New Task Status')
                 .setCta()
                 .onClick(async () => {
-                    StatusSettings.addCustomStatus(statusSettings, new StatusConfiguration('', '', '', false));
+                    StatusSettings.addStatus(
+                        statusSettings.customStatuses,
+                        new StatusConfiguration('', '', '', false, StatusType.TODO),
+                    );
                     await updateAndSaveStatusSettings(statusSettings, settings);
                 });
         });
         setting.infoEl.remove();
 
-        /* -------------------- Minimal Theme Supported Status Types -------------------- */
-        const addStatusesSupportedByMinimalTheme = new Setting(containerEl).addButton((button) => {
-            button
-                .setButtonText('Add all Status types supported by Minimal Theme')
-                .setCta()
-                .onClick(async () => {
-                    await addCustomStatesToSettings(
-                        StatusSettingsHelpers.minimalSupportedStatuses(),
-                        statusSettings,
-                        settings,
-                    );
+        /* -------------------- Add all Status types supported by ... buttons -------------------- */
+        type NamedTheme = [string, StatusCollection];
+        const themes: NamedTheme[] = [
+            // Light and Dark themes - alphabetical order
+            ['AnuPpuccin Theme', Themes.anuppuccinSupportedStatuses()],
+            ['Ebullientworks Theme', Themes.ebullientworksSupportedStatuses()],
+            ['ITS Theme & SlRvb Checkboxes', Themes.itsSupportedStatuses()],
+            ['Minimal Theme', Themes.minimalSupportedStatuses()],
+            ['Things Theme', Themes.thingsSupportedStatuses()],
+            // Dark only themes - alphabetical order
+            ['Aura Theme (Dark mode only)', Themes.auraSupportedStatuses()],
+        ];
+        for (const [name, collection] of themes) {
+            const addStatusesSupportedByThisTheme = new Setting(containerEl).addButton((button) => {
+                const label = `${name}: Add ${collection.length} supported Statuses`;
+                button.setButtonText(label).onClick(async () => {
+                    await addCustomStatesToSettings(collection, statusSettings, settings);
                 });
-        });
-        addStatusesSupportedByMinimalTheme.infoEl.remove();
+            });
+            addStatusesSupportedByThisTheme.infoEl.remove();
+        }
 
-        /* -------------------- ITS Theme Supported Status Types -------------------- */
-        const addStatusesSupportedByITSTheme = new Setting(containerEl).addButton((button) => {
+        /* -------------------- 'Add All Unknown Status Types' button -------------------- */
+        const addAllUnknownStatuses = new Setting(containerEl).addButton((button) => {
             button
-                .setButtonText('Add all Status types supported by ITS Theme')
+                .setButtonText('Add All Unknown Status Types')
                 .setCta()
                 .onClick(async () => {
-                    await addCustomStatesToSettings(
-                        StatusSettingsHelpers.itsSupportedStatuses(),
-                        statusSettings,
-                        settings,
-                    );
+                    const tasks = this.plugin.getTasks();
+                    const allStatuses = tasks!.map((task) => {
+                        return task.status;
+                    });
+                    const unknownStatuses = StatusRegistry.getInstance().findUnknownStatuses(allStatuses);
+                    if (unknownStatuses.length === 0) {
+                        return;
+                    }
+                    unknownStatuses.forEach((s) => {
+                        StatusSettings.addStatus(statusSettings.customStatuses, s);
+                    });
+                    await updateAndSaveStatusSettings(statusSettings, settings);
                 });
         });
-        addStatusesSupportedByITSTheme.infoEl.remove();
+        addAllUnknownStatuses.infoEl.remove();
+
+        /* -------------------- 'Reset Custom Status Types to Defaults' button -------------------- */
+        const clearCustomStatuses = new Setting(containerEl).addButton((button) => {
+            button
+                .setButtonText('Reset Custom Status Types to Defaults')
+                .setWarning()
+                .onClick(async () => {
+                    StatusSettings.resetAllCustomStatuses(statusSettings);
+                    await updateAndSaveStatusSettings(statusSettings, settings);
+                });
+        });
+        clearCustomStatuses.infoEl.remove();
     }
 }
 
@@ -444,75 +486,68 @@ export class SettingsTab extends PluginSettingTab {
  * Create the row to see and modify settings for a single task status type.
  * @param containerEl
  * @param statusType - The status type to be edited.
+ * @param statuses - The list of statuses that statusType is stored in.
  * @param statusSettings - All the status types already in the user's settings, EXCEPT the standard ones.
  * @param settings
  * @param plugin
- * @param deletable - whether the delete button wil be shown
- * @param editable - whether the edit button wil be shown
+ * @param isCoreStatus - whether the status is a core status
  */
 function createRowForTaskStatus(
     containerEl: HTMLElement,
     statusType: StatusConfiguration,
+    statuses: StatusConfiguration[],
     statusSettings: StatusSettings,
     settings: SettingsTab,
     plugin: TasksPlugin,
-    deletable: boolean,
-    editable: boolean,
+    isCoreStatus: boolean,
 ) {
     //const taskStatusDiv = containerEl.createEl('div');
 
     const taskStatusPreview = containerEl.createEl('pre');
-    taskStatusPreview.textContent = StatusSettingsHelpers.statusPreviewText(statusType);
+    taskStatusPreview.addClass('row-for-status');
+    taskStatusPreview.textContent = new Status(statusType).previewText();
 
     const setting = new Setting(containerEl);
 
     setting.infoEl.replaceWith(taskStatusPreview);
 
-    if (deletable) {
+    if (!isCoreStatus) {
         setting.addExtraButton((extra) => {
             extra
                 .setIcon('cross')
                 .setTooltip('Delete')
                 .onClick(async () => {
-                    if (StatusSettings.deleteCustomStatus(statusSettings, statusType)) {
+                    if (StatusSettings.deleteStatus(statuses, statusType)) {
                         await updateAndSaveStatusSettings(statusSettings, settings);
                     }
                 });
         });
     }
 
-    if (editable) {
-        setting.addExtraButton((extra) => {
-            extra
-                .setIcon('pencil')
-                .setTooltip('Edit')
-                .onClick(async () => {
-                    const modal = new CustomStatusModal(plugin, statusType);
+    setting.addExtraButton((extra) => {
+        extra
+            .setIcon('pencil')
+            .setTooltip('Edit')
+            .onClick(async () => {
+                const modal = new CustomStatusModal(plugin, statusType, isCoreStatus);
 
-                    modal.onClose = async () => {
-                        if (modal.saved) {
-                            if (
-                                StatusSettings.replaceCustomStatus(
-                                    statusSettings,
-                                    statusType,
-                                    modal.statusConfiguration(),
-                                )
-                            ) {
-                                await updateAndSaveStatusSettings(statusSettings, settings);
-                            }
+                modal.onClose = async () => {
+                    if (modal.saved) {
+                        if (StatusSettings.replaceStatus(statuses, statusType, modal.statusConfiguration())) {
+                            await updateAndSaveStatusSettings(statusSettings, settings);
                         }
-                    };
+                    }
+                };
 
-                    modal.open();
-                });
-        });
-    }
+                modal.open();
+            });
+    });
 
     setting.infoEl.remove();
 }
 
 async function addCustomStatesToSettings(
-    supportedStatuses: Array<[string, string, string]>,
+    supportedStatuses: StatusCollection,
     statusSettings: StatusSettings,
     settings: SettingsTab,
 ) {

@@ -1,3 +1,5 @@
+import { StatusConfiguration } from '../StatusConfiguration';
+import { Status } from '../Status';
 import { StatusSettings } from './StatusSettings';
 import { Feature } from './Feature';
 import type { FeatureFlag } from './Feature';
@@ -76,6 +78,19 @@ export const getSettings = (): Settings => {
             settings.features[flag] = Feature.settingsFlags[flag];
         }
     }
+
+    // In case saves pre-dated StatusConfiguration.type
+    // TODO Special case for symbol 'X' or 'x' (just in case)
+    settings.statusSettings.customStatuses.forEach((s, index, array) => {
+        const newType = Status.getTypeFromStatusTypeString(s.type);
+        array[index] = new StatusConfiguration(
+            s.symbol ?? ' ',
+            s.name,
+            s.nextStatusSymbol ?? 'x',
+            s.availableAsCommand,
+            newType,
+        );
+    });
 
     return { ...settings };
 };

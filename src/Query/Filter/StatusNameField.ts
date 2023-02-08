@@ -2,7 +2,7 @@ import type { Task } from '../../Task';
 import { TextField } from './TextField';
 
 /**
- * A ${@link Field} implementation for searching status.name
+ * A {@link Field} implementation for searching status.name
  */
 export class StatusNameField extends TextField {
     constructor() {
@@ -18,6 +18,10 @@ export class StatusNameField extends TextField {
     }
 
     supportsSorting(): boolean {
+        return true;
+    }
+
+    public supportsGrouping(): boolean {
         return true;
     }
 }

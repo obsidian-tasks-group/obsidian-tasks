@@ -1,10 +1,10 @@
-<!-- placeholder to force blank line before table -->
+<!-- placeholder to force blank line before included text -->
 
-| Status Character    | Status Name | Next Status Character | Needs Custom Styling |
-| ------------------- | ----------- | --------------------- | -------------------- |
-| `!` | Important | `D` | Yes |
-| `D` | Doing - Important | `X` | Yes |
-| `X` | Done - Important | `!` | Yes |
+| Status Symbol | Next Status Symbol | Status Name | Status Type | Needs Custom Styling |
+| ----- | ----- | ----- | ----- | ----- |
+| `!` | `D` | Important | `TODO` | Yes |
+| `D` | `X` | Doing - Important | `IN_PROGRESS` | Yes |
+| `X` | `!` | Done - Important | `DONE` | Yes |
 
 
-<!-- placeholder to force blank line after table -->
+<!-- placeholder to force blank line after included text -->

@@ -6,7 +6,8 @@ import moment from 'moment';
 import { calculateCursorOffset, toggleLine } from '../../src/Commands/ToggleDone';
 import { resetSettings, updateSettings } from '../../src/Config/Settings';
 import { StatusRegistry } from '../../src/StatusRegistry';
-import { Status, StatusConfiguration } from '../../src/Status';
+import { Status } from '../../src/Status';
+import { StatusConfiguration } from '../../src/StatusConfiguration';
 
 window.moment = moment;
 
@@ -170,7 +171,7 @@ describe('ToggleDone', () => {
 
         // Arrange
         const statusRegistry = StatusRegistry.getInstance();
-        statusRegistry.clearStatuses();
+        statusRegistry.resetToDefaultStatuses();
         statusRegistry.add(new Status(new StatusConfiguration('P', 'Pro', 'C', false)));
         statusRegistry.add(new Status(new StatusConfiguration('C', 'Con', 'P', false)));
 

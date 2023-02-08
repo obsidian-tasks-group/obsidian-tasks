@@ -211,6 +211,12 @@
  **                            SETTINGS
  *------------------------------------------------------------------------**/
 
+.tasks-settings-is-invalid {
+    /* Dark red text on pale background*/
+    color: var(--text-error) !important;
+    background-color: rgba(var(--background-modifier-error-rgb), 0.2) !important;
+}
+
 
  .tasks-settings .additional {
     margin: 6px 12px;
@@ -275,4 +281,9 @@
 .tasks-nested-settings:not(details) .setting-item-heading {
     border-top: 0px;
     border-bottom: 1px solid var(--background-modifier-border);
+}
+
+.tasks-settings .row-for-status {
+    margin-top: 0px;
+    margin-bottom: 0px;
 }

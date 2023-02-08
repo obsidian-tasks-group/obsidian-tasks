@@ -1,6 +1,6 @@
 import type { Moment } from 'moment';
 import { RRule } from 'rrule';
-import { DateField } from './Query/Filter/DateField';
+import { compareByDate } from './lib/DateTools';
 
 export class Recurrence {
     private readonly rrule: RRule;
@@ -195,13 +195,13 @@ export class Recurrence {
         }
 
         // Compare Date fields
-        if (DateField.compareByDate(this.startDate, other.startDate) !== 0) {
+        if (compareByDate(this.startDate, other.startDate) !== 0) {
             return false;
         }
-        if (DateField.compareByDate(this.scheduledDate, other.scheduledDate) !== 0) {
+        if (compareByDate(this.scheduledDate, other.scheduledDate) !== 0) {
             return false;
         }
-        if (DateField.compareByDate(this.dueDate, other.dueDate) !== 0) {
+        if (compareByDate(this.dueDate, other.dueDate) !== 0) {
             return false;
         }
 

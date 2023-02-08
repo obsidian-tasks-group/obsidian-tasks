@@ -158,7 +158,8 @@ class QueryRenderChild extends MarkdownRenderChild {
             console.debug(`${totalTasksCount} of ${tasks.length} tasks displayed in a block in "${this.filePath}"`);
             this.addTaskCount(content, totalTasksCount);
         } else if (this.query.error !== undefined) {
-            content.setText(`Tasks query: ${this.query.error}`);
+            content.createDiv().innerHTML =
+                '<pre>' + `Tasks query: ${this.query.error.replace(/\n/g, '<br>')}` + '</pre>';
         } else {
             content.setText('Loading Tasks ...');
         }
