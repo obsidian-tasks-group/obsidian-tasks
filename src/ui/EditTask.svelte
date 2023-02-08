@@ -76,31 +76,47 @@
             symbol: prioritySymbols.High
         }]
 
+    /**
+     * Read the entered value for a date field, and return the text to be displayed,
+     * to explain how the date string was interpreted.
+     * @param fieldName
+     * @param typedDate - what the user has entered, such as '2023-01-23' or 'tomorrow'
+     * @param forwardDate
+     */
     function parseDate(
-        type: 'start' | 'scheduled' | 'due' | 'done',
-        date: string,
+        fieldName: 'start' | 'scheduled' | 'due' | 'done',
+        typedDate: string,
         forwardDate: Date | undefined = undefined,
     ): string {
-        if (!date) {
-            return `<i>no ${type} date</i>`;
+        if (!typedDate) {
+            return `<i>no ${fieldName} date</i>`;
         }
-        const parsed = chrono.parseDate(date, forwardDate, {
+        const parsed = chrono.parseDate(typedDate, forwardDate, {
             forwardDate: forwardDate != undefined,
         });
         if (parsed !== null) {
             return window.moment(parsed).format('YYYY-MM-DD');
         }
-        return `<i>invalid ${type} date</i>`;
+        return `<i>invalid ${fieldName} date</i>`;
     }
 
-    function parseDate2(type: 'start' | 'scheduled' | 'due' | 'done', date: string): string {
+    /**
+     * Like {@link parseDate} but also accounts for the 'Only future dates' setting.
+     * @param fieldName
+     * @param typedDate - what the user has entered, such as '2023-01-23' or 'tomorrow'
+     */
+    function parseDate2(fieldName: 'start' | 'scheduled' | 'due' | 'done', typedDate: string): string {
         return parseDate(
-            type,
-            date,
+            fieldName,
+            typedDate,
             editableTask.forwardOnly ? new Date() : undefined,
         );
     }
 
+    /**
+     * Read the entered value for a date field, and return the value to be saved in the edited task.
+     * @param typedDate - what the user has entered, such as '2023-01-23' or 'tomorrow'
+     */
     function parseTypedDate(typedDate: string): moment.Moment | null {
         let date: moment.Moment | null = null;
         const parsedDate = chrono.parseDate(
