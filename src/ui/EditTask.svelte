@@ -83,7 +83,7 @@
      * @param typedDate - what the user has entered, such as '2023-01-23' or 'tomorrow'
      * @param forwardDate
      */
-    function parseDate(
+    function parseTypedDateForDisplay(
         fieldName: 'start' | 'scheduled' | 'due' | 'done',
         typedDate: string,
         forwardDate: Date | undefined = undefined,
@@ -101,12 +101,12 @@
     }
 
     /**
-     * Like {@link parseDate} but also accounts for the 'Only future dates' setting.
+     * Like {@link parseTypedDateForDisplay} but also accounts for the 'Only future dates' setting.
      * @param fieldName
      * @param typedDate - what the user has entered, such as '2023-01-23' or 'tomorrow'
      */
     function parseDate2(fieldName: 'start' | 'scheduled' | 'due' | 'done', typedDate: string): string {
-        return parseDate(
+        return parseTypedDateForDisplay(
             fieldName,
             typedDate,
             editableTask.forwardOnly ? new Date() : undefined,
@@ -163,7 +163,7 @@
     }
 
     $: {
-        parsedDone = parseDate('done', editableTask.doneDate);
+        parsedDone = parseTypedDateForDisplay('done', editableTask.doneDate);
     }
 
     onMount(() => {
