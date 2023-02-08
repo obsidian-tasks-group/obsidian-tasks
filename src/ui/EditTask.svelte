@@ -76,50 +76,90 @@
             symbol: prioritySymbols.High
         }]
 
-    function parseDate(
-        type: 'start' | 'scheduled' | 'due' | 'done',
-        date: string,
+    /*
+        MAINTENANCE NOTE on these Date functions:
+            Repetitious date-related code in this file has been extracted
+            out in to several parseTypedDateFor....() functions over time.
+
+            There is some similarity between these functions, and also
+            some subtle differences.
+
+            Future refactoring to simplify them would be welcomed.
+
+            When editing of Done date is introduced, the functions
+            parseTypedDateForDisplayUsingFutureDate() and parseTypedDateForDisplay()
+            may collapse in to a single case.
+     */
+
+    /**
+     * Read the entered value for a date field, and return the text to be displayed,
+     * to explain how the date string was interpreted.
+     * @param fieldName
+     * @param typedDate - what the user has entered, such as '2023-01-23' or 'tomorrow'
+     * @param forwardDate
+     */
+    function parseTypedDateForDisplay(
+        fieldName: 'start' | 'scheduled' | 'due' | 'done',
+        typedDate: string,
         forwardDate: Date | undefined = undefined,
     ): string {
-        if (!date) {
-            return `<i>no ${type} date</i>`;
+        if (!typedDate) {
+            return `<i>no ${fieldName} date</i>`;
         }
-        const parsed = chrono.parseDate(date, forwardDate, {
+        const parsed = chrono.parseDate(typedDate, forwardDate, {
             forwardDate: forwardDate != undefined,
         });
         if (parsed !== null) {
             return window.moment(parsed).format('YYYY-MM-DD');
         }
-        return `<i>invalid ${type} date</i>`;
+        return `<i>invalid ${fieldName} date</i>`;
+    }
+
+    /**
+     * Like {@link parseTypedDateForDisplay} but also accounts for the 'Only future dates' setting.
+     * @param fieldName
+     * @param typedDate - what the user has entered, such as '2023-01-23' or 'tomorrow'
+     */
+    function parseTypedDateForDisplayUsingFutureDate(fieldName: 'start' | 'scheduled' | 'due' | 'done', typedDate: string): string {
+        return parseTypedDateForDisplay(
+            fieldName,
+            typedDate,
+            editableTask.forwardOnly ? new Date() : undefined,
+        );
+    }
+
+    /**
+     * Read the entered value for a date field, and return the value to be saved in the edited task.
+     * @param typedDate - what the user has entered, such as '2023-01-23' or 'tomorrow'
+     */
+    function parseTypedDateForSaving(typedDate: string): moment.Moment | null {
+        let date: moment.Moment | null = null;
+        const parsedDate = chrono.parseDate(
+            typedDate,
+            new Date(),
+            { forwardDate: editableTask.forwardOnly },
+        );
+        if (parsedDate !== null) {
+            date = window.moment(parsedDate);
+        }
+        return date;
     }
 
     $: accesskey = (key: string) => withAccessKeys ? key : null;
 
     $: {
         editableTask.startDate = doAutocomplete(editableTask.startDate);
-        parsedStartDate = parseDate(
-            'start',
-            editableTask.startDate,
-            editableTask.forwardOnly ? new Date() : undefined,
-        );
+        parsedStartDate = parseTypedDateForDisplayUsingFutureDate('start', editableTask.startDate);
     }
 
     $: {
         editableTask.scheduledDate = doAutocomplete(editableTask.scheduledDate);
-        parsedScheduledDate = parseDate(
-            'scheduled',
-            editableTask.scheduledDate,
-            editableTask.forwardOnly ? new Date() : undefined,
-        );
+        parsedScheduledDate = parseTypedDateForDisplayUsingFutureDate('scheduled', editableTask.scheduledDate);
     }
 
     $: {
         editableTask.dueDate = doAutocomplete(editableTask.dueDate);
-        parsedDueDate = parseDate(
-            'due',
-            editableTask.dueDate,
-            editableTask.forwardOnly ? new Date() : undefined,
-        );
+        parsedDueDate = parseTypedDateForDisplayUsingFutureDate('due', editableTask.dueDate);
     }
 
     $: {
@@ -138,7 +178,7 @@
     }
 
     $: {
-        parsedDone = parseDate('done', editableTask.doneDate);
+        parsedDone = parseTypedDateForDisplay('done', editableTask.doneDate);
     }
 
     onMount(() => {
@@ -202,35 +242,11 @@
             description = globalFilter + ' ' + description;
         }
 
-        let startDate: moment.Moment | null = null;
-        const parsedStartDate = chrono.parseDate(
-            editableTask.startDate,
-            new Date(),
-            { forwardDate: editableTask.forwardOnly },
-        );
-        if (parsedStartDate !== null) {
-            startDate = window.moment(parsedStartDate);
-        }
+        const startDate = parseTypedDateForSaving(editableTask.startDate);
 
-        let scheduledDate: moment.Moment | null = null;
-        const parsedScheduledDate = chrono.parseDate(
-            editableTask.scheduledDate,
-            new Date(),
-            { forwardDate: editableTask.forwardOnly },
-        );
-        if (parsedScheduledDate !== null) {
-            scheduledDate = window.moment(parsedScheduledDate);
-        }
+        const scheduledDate = parseTypedDateForSaving(editableTask.scheduledDate);
 
-        let dueDate: moment.Moment | null = null;
-        const parsedDueDate = chrono.parseDate(
-            editableTask.dueDate,
-            new Date(),
-            { forwardDate: editableTask.forwardOnly },
-        );
-        if (parsedDueDate !== null) {
-            dueDate = window.moment(parsedDueDate);
-        }
+        const dueDate = parseTypedDateForSaving(editableTask.dueDate);
 
         let recurrence: Recurrence | null = null;
         if (editableTask.recurrenceRule) {
@@ -279,6 +295,9 @@
 
 <div class="tasks-modal">
     <form on:submit|preventDefault={_onSubmit} class:with-accesskeys="{withAccessKeys}">
+        <!-- --------------------------------------------------------------------------- -->
+        <!--  Description  -->
+        <!-- --------------------------------------------------------------------------- -->
         <div class="tasks-modal-section">
             <label for="description">Descrip<span class="accesskey">t</span>ion</label>
             <!-- svelte-ignore a11y-accesskey -->
@@ -292,6 +311,10 @@
                 accesskey={accesskey("t")}
             />
         </div>
+
+        <!-- --------------------------------------------------------------------------- -->
+        <!--  Priority  -->
+        <!-- --------------------------------------------------------------------------- -->
         <div class="tasks-modal-section tasks-modal-priorities" on:keyup={_onPriorityKeyup}>
             <label for="priority-{editableTask.priority}">Priority</label>
             {#each priorityOptions as {value, label, symbol}}
@@ -313,7 +336,14 @@
                 </span>
             {/each}
         </div>
+
+        <!-- --------------------------------------------------------------------------- -->
+        <!--  Recurrence and Dates  -->
+        <!-- --------------------------------------------------------------------------- -->
         <div class="tasks-modal-section tasks-modal-dates">
+            <!-- --------------------------------------------------------------------------- -->
+            <!--  Recurrence  -->
+            <!-- --------------------------------------------------------------------------- -->
             <label for="recurrence" class="accesskey-first">Recurs</label>
             <!-- svelte-ignore a11y-accesskey -->
             <input
@@ -324,6 +354,10 @@
                 accesskey={accesskey("r")}
             />
             <code>{recurrenceSymbol} {@html parsedRecurrence}</code>
+
+            <!-- --------------------------------------------------------------------------- -->
+            <!--  Due Date  -->
+            <!-- --------------------------------------------------------------------------- -->
             <label for="due" class="accesskey-first">Due</label>
             <!-- svelte-ignore a11y-accesskey -->
             <input
@@ -334,6 +368,10 @@
                 accesskey={accesskey("d")}
             />
             <code>{dueDateSymbol} {@html parsedDueDate}</code>
+
+            <!-- --------------------------------------------------------------------------- -->
+            <!--  Scheduled Date  -->
+            <!-- --------------------------------------------------------------------------- -->
             <label for="scheduled" class="accesskey-first">Scheduled</label>
             <!-- svelte-ignore a11y-accesskey -->
             <input
@@ -344,6 +382,10 @@
                 accesskey={accesskey("s")}
             />
             <code>{scheduledDateSymbol} {@html parsedScheduledDate}</code>
+
+            <!-- --------------------------------------------------------------------------- -->
+            <!--  Start Date  -->
+            <!-- --------------------------------------------------------------------------- -->
             <label for="start">St<span class="accesskey">a</span>rt</label>
             <!-- svelte-ignore a11y-accesskey -->
             <input
@@ -354,6 +396,10 @@
                 accesskey={accesskey("a")}
             />
             <code>{startDateSymbol} {@html parsedStartDate}</code>
+
+            <!-- --------------------------------------------------------------------------- -->
+            <!--  Only future dates  -->
+            <!-- --------------------------------------------------------------------------- -->
             <div>
                 <label for="forwardOnly">Only
                     <span class="accesskey-first">future</span> dates:</label>
@@ -367,6 +413,10 @@
                 />
             </div>
         </div>
+
+        <!-- --------------------------------------------------------------------------- -->
+        <!--  Status  -->
+        <!-- --------------------------------------------------------------------------- -->
         <div class="tasks-modal-section">
             <label for="status">Status </label>
             <select bind:value={editableTask.status} id="status-type" class="dropdown">
@@ -375,7 +425,11 @@
                 {/each}
             </select>
         </div>
+
         <div class="tasks-modal-section tasks-modal-status">
+            <!-- --------------------------------------------------------------------------- -->
+            <!--  Completed  -->
+            <!-- --------------------------------------------------------------------------- -->
             <div>
                 <label for="status">Completed:</label>
                 <input
@@ -386,6 +440,10 @@
                     disabled
                 />
             </div>
+
+            <!-- --------------------------------------------------------------------------- -->
+            <!--  Done on  -->
+            <!-- --------------------------------------------------------------------------- -->
             <div>
                 <span>Done on:</span>
                 <code>{@html parsedDone}</code>
