@@ -146,7 +146,6 @@ async function taskToHtml(
     }
 
     // Now build classes for the hidden task components without rendering them
-    // TODO TEMP add tests and document
     for (const component of taskLayout.hiddenComponents) {
         const [_, specificClasses] = getComponentClasses(component, task);
         allSpecificClasses.push(...specificClasses);

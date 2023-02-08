@@ -91,6 +91,7 @@ Steps to do:
 - [ ] #task View this file in **Reading view** and confirm that the tasks in this section are listed
 - [ ] #task View this file in **Live Preview** and confirm that the tasks in this section are listed
 - [ ] #task **check**: Checked all above steps for **viewing task blocks** worked
+- [ ] #task **check**: Open the file "Styling of Queries" and follow the steps there
 
 ---
 

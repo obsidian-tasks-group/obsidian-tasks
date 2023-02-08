@@ -1,0 +1,11 @@
+.block-language-tasks:has(ul.plugin-tasks-query-result.tasks-group-by-priority) .tasks-group-heading {
+    color: red;
+}
+
+.block-language-tasks .tasks-layout-short-mode {
+    background-color: aqua;
+}
+
+ul.contains-task-list.tasks-layout-hide-priority {
+    color: red;
+}
