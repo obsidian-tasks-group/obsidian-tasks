@@ -2,6 +2,7 @@
  * @jest-environment jsdom
  */
 import moment from 'moment';
+import { verify } from 'approvals/lib/Providers/Jest/JestApprovals';
 import { DueDateField } from '../../../src/Query/Filter/DueDateField';
 import type { FilterOrErrorMessage } from '../../../src/Query/Filter/Filter';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
@@ -12,6 +13,7 @@ import {
     expectTaskComparesBefore,
     expectTaskComparesEqual,
 } from '../../CustomMatchers/CustomMatchersForSorting';
+import { Query } from '../../../src/Query/Query';
 
 window.moment = moment;
 
@@ -88,5 +90,27 @@ describe('sorting by due', () => {
         expectTaskComparesAfter(sorter, date1, date2);
         expectTaskComparesBefore(sorter, date2, date1);
         expectTaskComparesEqual(sorter, date2, date2);
+    });
+});
+
+describe('due date', () => {
+    beforeAll(() => {
+        jest.useFakeTimers();
+        jest.setSystemTime(new Date(2023, 1, 10)); // 2023-02-10
+    });
+
+    afterAll(() => {
+        jest.useRealTimers();
+    });
+
+    it('approval tests', () => {
+        const queries = ['due this week', 'due today'];
+
+        const query = new Query({ source: queries.join('\n') });
+        const explanation = query.explainQueryWithoutIntroduction();
+
+        expect(query.error).toBeUndefined();
+
+        verify(explanation);
     });
 });
