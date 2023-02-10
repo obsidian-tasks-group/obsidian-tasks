@@ -105,12 +105,12 @@ describe('due date', () => {
 
     it('approval tests', () => {
         const dates = ['last week', 'this week', 'next week', '2023-02-09', '2023-02-07 2023-02-11'];
-        const keywords = ['before', 'on', 'after', 'in', ''];
+        const keywords = ['before ', 'on ', 'after ', 'in ', ''];
         const queries: string[] = [];
 
         keywords.forEach((keyword) => {
             dates.forEach((date) => {
-                queries.push(`due ${keyword} ${date}`);
+                queries.push(`due ${keyword}${date}`);
             });
         });
 
