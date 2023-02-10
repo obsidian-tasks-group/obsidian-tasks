@@ -43,9 +43,13 @@
     };
 
     let parsedStartDate: string = '';
+    let isStartDateValid: boolean = true;
     let parsedScheduledDate: string = '';
+    let isScheduledDateValid: boolean = true;
     let parsedDueDate: string = '';
+    let isDueDateValid: boolean = true;
     let parsedRecurrence: string = '';
+    let isRecurrenceValid: boolean = true;
     let parsedDone: string = '';
     let addGlobalFilterOnSave: boolean = false;
     let withAccessKeys: boolean = true;
@@ -92,11 +96,11 @@
      */
 
     /**
-     * Read the entered value for a date field, and return the text to be displayed,
-     * to explain how the date string was interpreted.
+     * Parse and return the entered value for a date field.
      * @param fieldName
      * @param typedDate - what the user has entered, such as '2023-01-23' or 'tomorrow'
      * @param forwardDate
+     * @returns the parsed date string. Includes "invalid" if {@code typedDate} was invalid.
      */
     function parseTypedDateForDisplay(
         fieldName: 'start' | 'scheduled' | 'due' | 'done',
@@ -119,6 +123,7 @@
      * Like {@link parseTypedDateForDisplay} but also accounts for the 'Only future dates' setting.
      * @param fieldName
      * @param typedDate - what the user has entered, such as '2023-01-23' or 'tomorrow'
+     * @returns the parsed date string. Includes "invalid" if {@code typedDate} was invalid.
      */
     function parseTypedDateForDisplayUsingFutureDate(fieldName: 'start' | 'scheduled' | 'due' | 'done', typedDate: string): string {
         return parseTypedDateForDisplay(
@@ -150,30 +155,39 @@
     $: {
         editableTask.startDate = doAutocomplete(editableTask.startDate);
         parsedStartDate = parseTypedDateForDisplayUsingFutureDate('start', editableTask.startDate);
+        isStartDateValid = !parsedStartDate.includes('invalid');
     }
 
     $: {
         editableTask.scheduledDate = doAutocomplete(editableTask.scheduledDate);
         parsedScheduledDate = parseTypedDateForDisplayUsingFutureDate('scheduled', editableTask.scheduledDate);
+        isScheduledDateValid = !parsedScheduledDate.includes('invalid');
     }
 
     $: {
         editableTask.dueDate = doAutocomplete(editableTask.dueDate);
         parsedDueDate = parseTypedDateForDisplayUsingFutureDate('due', editableTask.dueDate);
+        isDueDateValid = !parsedDueDate.includes('invalid');
     }
 
     $: {
+        isRecurrenceValid = true;
         if (!editableTask.recurrenceRule) {
             parsedRecurrence = '<i>not recurring</>';
         } else {
-            parsedRecurrence =
-                Recurrence.fromText({
+            const recurrenceFromText = Recurrence.fromText({
                     recurrenceRuleText: editableTask.recurrenceRule,
                     // Only for representation in the modal, no dates required.
                     startDate: null,
                     scheduledDate: null,
                     dueDate: null,
-                })?.toText() ?? '<i>invalid recurrence rule</i>';
+                })?.toText();
+            if (!recurrenceFromText) {
+                parsedRecurrence = '<i>invalid recurrence rule</i>';
+                isRecurrenceValid = false;
+            } else {
+                parsedRecurrence = recurrenceFromText;
+            }
         }
     }
 
@@ -350,6 +364,7 @@
                 bind:value={editableTask.recurrenceRule}
                 id="recurrence"
                 type="text"
+                class:tasks-modal-error={!isRecurrenceValid}
                 placeholder="Try 'every 2 weeks on Thursday'."
                 accesskey={accesskey("r")}
             />
@@ -364,6 +379,7 @@
                 bind:value={editableTask.dueDate}
                 id="due"
                 type="text"
+                class:tasks-modal-error={!isDueDateValid}
                 placeholder={datePlaceholder}
                 accesskey={accesskey("d")}
             />
@@ -378,6 +394,7 @@
                 bind:value={editableTask.scheduledDate}
                 id="scheduled"
                 type="text"
+                class:tasks-modal-error={!isScheduledDateValid}
                 placeholder={datePlaceholder}
                 accesskey={accesskey("s")}
             />
@@ -392,6 +409,7 @@
                 bind:value={editableTask.startDate}
                 id="start"
                 type="text"
+                class:tasks-modal-error={!isStartDateValid}
                 placeholder={datePlaceholder}
                 accesskey={accesskey("a")}
             />
@@ -450,7 +468,9 @@
             </div>
         </div>
         <div class="tasks-modal-section tasks-modal-buttons">
-            <button type="submit" class="mod-cta">Apply</button>
+            <button disabled={!(isDueDateValid && isRecurrenceValid && isScheduledDateValid && isStartDateValid)}
+                type="submit" class="mod-cta">Apply
+            </button>
             <button type="button" on:click={_onClose}>Cancel</button>
         </div>
     </form>
