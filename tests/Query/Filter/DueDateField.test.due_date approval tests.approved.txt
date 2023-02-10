@@ -58,17 +58,17 @@ due in 2023-02-09 =>
 due in 2023-02-07 2023-02-11 =>
   due date is on 2023-02-07 (Tuesday 7th February 2023)
 
-due  last week =>
+due last week =>
   due date is on 2023-02-03 (Friday 3rd February 2023)
 
-due  this week =>
+due this week =>
   due date is on 2023-02-05 (Sunday 5th February 2023)
 
-due  next week =>
+due next week =>
   due date is on 2023-02-17 (Friday 17th February 2023)
 
-due  2023-02-09 =>
+due 2023-02-09 =>
   due date is on 2023-02-09 (Thursday 9th February 2023)
 
-due  2023-02-07 2023-02-11 =>
+due 2023-02-07 2023-02-11 =>
   due date is on 2023-02-07 (Tuesday 7th February 2023)
