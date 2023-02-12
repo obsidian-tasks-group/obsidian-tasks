@@ -88,7 +88,11 @@ You can validate that tasks understands your rule by using the `Tasks: Create or
 
 ---
 
-## Repeating a Task Based on the Original Due Date or the Completion Date
+## Make Overdue Recurring Tasks Skip to Next Future Date: use `when done`
+
+Use `when done` at the end of your recurrence rule. For details, see below.
+
+### Repeating a Task Based on the Original Due Date or the Completion Date
 
 When you create a recurring task, you can decide whether the next occurrence should be based on the original dates or the date when you completed the task.
 The default behavior results in newly created tasks having dates relative to the original task rather than "today".
