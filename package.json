@@ -23,7 +23,7 @@
   "author": "Martin Schenck and Clare Macrae",
   "license": "MIT",
   "devDependencies": {
-    "@codemirror/view": "^6.2.0",
+    "@codemirror/view": "^6.9.0",
     "@evilmartians/lefthook": "^1.1.1",
     "@tsconfig/svelte": "^3.0.0",
     "@types/jest": "^29.2.3",
