@@ -61,7 +61,7 @@ class MarkdownTable {
         this._markdown += `${row}\n`;
     }
 
-    public verify() {
+    public verifyForDocs() {
         verifyMarkdownForDocs(this.markdown);
     }
 }
@@ -93,7 +93,7 @@ function verifyStatusesAsMarkdownTable(statuses: Status[], showQueryInstructions
         const needsCustomStyling = status.symbol !== ' ' && status.symbol !== 'x' ? 'Yes' : 'No';
         table.addRow([statusCharacter, nextStatusCharacter, status.name, type, needsCustomStyling]);
     }
-    table.verify();
+    table.verifyForDocs();
 }
 
 function verifyStatusesAsTasksList(statuses: Status[]) {
@@ -259,7 +259,7 @@ function verifyTransitionsAsMarkdownTable(statuses: Status[]) {
     showGroupNamesForAllTasks('status.type', new StatusTypeField().createGrouper().grouper);
     showGroupNamesForAllTasks('status.name', new StatusNameField().createGrouper().grouper);
 
-    table.verify();
+    table.verifyForDocs();
 }
 
 describe('Status Transitions', () => {
