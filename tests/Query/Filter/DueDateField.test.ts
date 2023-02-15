@@ -2,7 +2,6 @@
  * @jest-environment jsdom
  */
 import moment from 'moment';
-import { verify } from 'approvals/lib/Providers/Jest/JestApprovals';
 import { DueDateField } from '../../../src/Query/Filter/DueDateField';
 import type { FilterOrErrorMessage } from '../../../src/Query/Filter/Filter';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
@@ -14,6 +13,7 @@ import {
     expectTaskComparesEqual,
 } from '../../CustomMatchers/CustomMatchersForSorting';
 import { Query } from '../../../src/Query/Query';
+import { MarkdownTable } from '../../TestingTools/VerifyMarkdownTable';
 
 window.moment = moment;
 
@@ -106,19 +106,21 @@ describe('due date', () => {
     it('approval tests', () => {
         const dates = ['last week', 'this week', 'next week', '2023-02-09', '2023-02-07 2023-02-11'];
         const keywords = ['before ', 'on ', 'after ', 'in ', ''];
-        const queries: string[] = [];
+
+        const table = new MarkdownTable(['date / keyword'].concat(dates));
 
         keywords.forEach((keyword) => {
+            const newRow = [keyword];
             dates.forEach((date) => {
-                queries.push(`due ${keyword}${date}`);
+                const query = new Query({ source: `due ${keyword}${date}` });
+                expect(query.error).toBeUndefined();
+
+                newRow.push(query.explainQueryWithoutIntroduction().replace(/(\n)/g, '<br>'));
             });
+
+            table.addRow(newRow);
         });
 
-        const query = new Query({ source: queries.join('\n') });
-        const explanation = query.explainQueryWithoutIntroduction();
-
-        expect(query.error).toBeUndefined();
-
-        verify(explanation);
+        table.verify();
     });
 });
