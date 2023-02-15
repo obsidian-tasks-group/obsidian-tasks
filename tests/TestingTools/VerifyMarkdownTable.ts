@@ -51,4 +51,8 @@ export class MarkdownTable {
     public verifyForDocs() {
         verifyMarkdownForDocs(this.markdown);
     }
+
+    public verify() {
+        verifyMarkdown(this.markdown);
+    }
 }
