@@ -14,7 +14,7 @@ import * as Themes from '../src/Config/Themes';
 import { StatusValidator } from '../src/StatusValidator';
 import { TaskBuilder } from './TestingTools/TaskBuilder';
 
-function verifyMarkdown(markdown: string) {
+function verifyMarkdownForDocs(markdown: string) {
     let output = '<!-- placeholder to force blank line before included text -->\n\n';
     output += markdown;
     output += '\n\n<!-- placeholder to force blank line after included text -->\n';
@@ -57,7 +57,7 @@ class MarkdownTable {
     }
 
     public verify() {
-        verifyMarkdown(this.markdown);
+        verifyMarkdownForDocs(this.markdown);
     }
 }
 
@@ -97,7 +97,7 @@ function verifyStatusesAsTasksList(statuses: Status[]) {
         const statusCharacter = getPrintableSymbol(status.symbol);
         markdown += `- [${status.symbol}] #task ${statusCharacter} ${status.name}\n`;
     }
-    verifyMarkdown(markdown);
+    verifyMarkdownForDocs(markdown);
 }
 
 function verifyStatusesAsTasksText(statuses: Status[]) {
