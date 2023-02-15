@@ -14,13 +14,18 @@ import * as Themes from '../src/Config/Themes';
 import { StatusValidator } from '../src/StatusValidator';
 import { TaskBuilder } from './TestingTools/TaskBuilder';
 
+function verifyMarkdown(output: string) {
+    let options = new Options();
+    options = options.forFile().withFileExtention('md');
+    verify(output, options);
+}
+
 function verifyMarkdownForDocs(markdown: string) {
     let output = '<!-- placeholder to force blank line before included text -->\n\n';
     output += markdown;
     output += '\n\n<!-- placeholder to force blank line after included text -->\n';
-    let options = new Options();
-    options = options.forFile().withFileExtention('md');
-    verify(output, options);
+
+    verifyMarkdown(output);
 }
 
 class MarkdownTable {
