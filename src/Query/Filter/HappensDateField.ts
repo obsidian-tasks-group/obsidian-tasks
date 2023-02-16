@@ -47,21 +47,15 @@ export class HappensDateField extends DateField {
      * @returns the function that filters the tasks
      */
     protected buildFilterFunction(fieldKeyword: string, fieldDate: moment.Moment): FilterFunction {
-        let filterFunction;
+        let dateComparator: (date: Moment) => boolean;
         if (fieldKeyword === 'before') {
-            filterFunction = (task: Task) => {
-                return this.dates(task).some((date) => date && date.isBefore(fieldDate));
-            };
+            dateComparator = (date) => date.isBefore(fieldDate);
         } else if (fieldKeyword === 'after') {
-            filterFunction = (task: Task) => {
-                return this.dates(task).some((date) => date && date.isAfter(fieldDate));
-            };
+            dateComparator = (date) => date.isAfter(fieldDate);
         } else {
-            filterFunction = (task: Task) => {
-                return this.dates(task).some((date) => date && date.isSame(fieldDate));
-            };
+            dateComparator = (date) => date.isSame(fieldDate);
         }
-        return filterFunction;
+        return (task: Task) => this.dates(task).some((date) => date && dateComparator(date));
     }
 
     /**

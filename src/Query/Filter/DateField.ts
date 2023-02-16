@@ -77,24 +77,19 @@ export abstract class DateField extends Field {
      * @returns the function that filters the tasks
      */
     protected buildFilterFunction(fieldKeyword: string, fieldDate: moment.Moment): FilterFunction {
-        let filterFunction;
+        let dateComparator: (date: Moment) => boolean;
         if (fieldKeyword === 'before') {
-            filterFunction = (task: Task) => {
-                const date = this.date(task);
-                return date ? date.isBefore(fieldDate) : this.filterResultIfFieldMissing();
-            };
+            dateComparator = (date: Moment) => date.isBefore(fieldDate);
         } else if (fieldKeyword === 'after') {
-            filterFunction = (task: Task) => {
-                const date = this.date(task);
-                return date ? date.isAfter(fieldDate) : this.filterResultIfFieldMissing();
-            };
+            dateComparator = (date: Moment) => date.isAfter(fieldDate);
         } else {
-            filterFunction = (task: Task) => {
-                const date = this.date(task);
-                return date ? date.isSame(fieldDate) : this.filterResultIfFieldMissing();
-            };
+            dateComparator = (date: Moment) => date.isSame(fieldDate);
         }
-        return filterFunction;
+
+        return (task: Task) => {
+            const date = this.date(task);
+            return date ? dateComparator(date) : this.filterResultIfFieldMissing();
+        };
     }
 
     /**
