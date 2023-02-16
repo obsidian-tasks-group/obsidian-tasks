@@ -44,13 +44,13 @@ export abstract class DateField extends Field {
         const result = new FilterOrErrorMessage(line);
 
         const fieldNameKeywordDate = Field.getMatch(this.filterRegExp(), line);
-        let filterFunction;
         if (fieldNameKeywordDate !== null) {
             const fieldKeyword = fieldNameKeywordDate[1];
             const fieldDate = DateParser.parseDate(fieldNameKeywordDate[2]);
             if (!fieldDate.isValid()) {
                 result.error = 'do not understand ' + this.fieldName() + ' date';
             } else {
+                let filterFunction;
                 if (fieldKeyword === 'before') {
                     filterFunction = (task: Task) => {
                         const date = this.date(task);
