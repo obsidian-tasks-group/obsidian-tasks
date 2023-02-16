@@ -1,11 +1,8 @@
 import type { Moment } from 'moment';
 import type { Task } from '../../Task';
-import { DateParser } from '../DateParser';
-import { Explanation } from '../Explain/Explanation';
 import type { Comparator } from '../Sorter';
 import { compareByDate } from '../../lib/DateTools';
-import { Field } from './Field';
-import { Filter, type FilterFunction, FilterOrErrorMessage } from './Filter';
+import type { FilterFunction } from './Filter';
 import { FilterInstructions } from './FilterInstructions';
 import { DateField } from './DateField';
 
@@ -28,44 +25,6 @@ export class HappensDateField extends DateField {
             (task: Task) => !this.dates(task).some((date) => date !== null),
         );
         super(filterInstructions);
-    }
-
-    public canCreateFilterForLine(line: string): boolean {
-        if (this.filterInstructions.canCreateFilterForLine(line)) {
-            return true;
-        }
-        return super.canCreateFilterForLine(line);
-    }
-
-    public createFilterOrErrorMessage(line: string): FilterOrErrorMessage {
-        const filterResult = this.filterInstructions.createFilterOrErrorMessage(line);
-        if (filterResult.filter !== undefined) {
-            return filterResult;
-        }
-
-        const result = new FilterOrErrorMessage(line);
-
-        const fieldNameKeywordDate = Field.getMatch(this.filterRegExp(), line);
-        if (fieldNameKeywordDate !== null) {
-            const fieldKeyword = fieldNameKeywordDate[1];
-            const fieldDate = DateParser.parseDate(fieldNameKeywordDate[2]);
-            if (!fieldDate.isValid()) {
-                result.error = 'do not understand ' + this.fieldName() + ' date';
-            } else {
-                const filterFunction = this.buildFilterFunction(fieldKeyword, fieldDate);
-
-                const explanation = DateField.buildExplanation(
-                    this.fieldNameForExplanation(),
-                    fieldKeyword,
-                    this.filterResultIfFieldMissing(),
-                    fieldDate,
-                );
-                result.filter = new Filter(line, filterFunction, new Explanation(explanation));
-            }
-        } else {
-            result.error = 'do not understand query filter (' + this.fieldName() + ' date)';
-        }
-        return result;
     }
 
     /**
@@ -114,10 +73,6 @@ export class HappensDateField extends DateField {
 
     protected fieldNameForExplanation() {
         return 'due, start or scheduled';
-    }
-
-    public supportsSorting(): boolean {
-        return true;
     }
 
     /**
