@@ -68,20 +68,9 @@ export abstract class DateField extends Field {
                     };
                 }
 
-                let relative;
-                switch (fieldKeyword) {
-                    case 'before':
-                    case 'after':
-                        relative = ' ' + fieldKeyword;
-                        break;
-                    default:
-                        relative = ' on';
-                        break;
-                }
-
                 const explanation = DateField.getExplanationString(
                     this.fieldName(),
-                    relative,
+                    fieldKeyword,
                     this.filterResultIfFieldMissing(),
                     fieldDate,
                 );
@@ -109,10 +98,20 @@ export abstract class DateField extends Field {
      */
     public static getExplanationString(
         fieldName: string,
-        relationshipPrefixedWithSpace: string,
+        fieldKeyword: string,
         filterResultIfFieldMissing: boolean,
         filterDate: moment.Moment,
     ) {
+        let relationshipPrefixedWithSpace;
+        switch (fieldKeyword) {
+            case 'before':
+            case 'after':
+                relationshipPrefixedWithSpace = ' ' + fieldKeyword;
+                break;
+            default:
+                relationshipPrefixedWithSpace = ' on';
+                break;
+        }
         // Example of formatted date: '2024-01-02 (Tuesday 2nd January 2024)'
         const actualDate = filterDate.format('YYYY-MM-DD (dddd Do MMMM YYYY)');
         let result = `${fieldName} date is${relationshipPrefixedWithSpace} ${actualDate}`;
