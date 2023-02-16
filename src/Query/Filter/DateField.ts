@@ -46,27 +46,27 @@ export abstract class DateField extends Field {
         const fieldInstructionKeywordDate = Field.getMatch(this.filterRegExp(), line);
         let filterFunction;
         if (fieldInstructionKeywordDate !== null) {
-            const filterDate = DateParser.parseDate(fieldInstructionKeywordDate[2]);
-            if (!filterDate.isValid()) {
+            const fieldDate = DateParser.parseDate(fieldInstructionKeywordDate[2]);
+            if (!fieldDate.isValid()) {
                 result.error = 'do not understand ' + this.fieldName() + ' date';
             } else {
                 let relative;
                 if (fieldInstructionKeywordDate[1] === 'before') {
                     filterFunction = (task: Task) => {
                         const date = this.date(task);
-                        return date ? date.isBefore(filterDate) : this.filterResultIfFieldMissing();
+                        return date ? date.isBefore(fieldDate) : this.filterResultIfFieldMissing();
                     };
                     relative = ' ' + fieldInstructionKeywordDate[1];
                 } else if (fieldInstructionKeywordDate[1] === 'after') {
                     filterFunction = (task: Task) => {
                         const date = this.date(task);
-                        return date ? date.isAfter(filterDate) : this.filterResultIfFieldMissing();
+                        return date ? date.isAfter(fieldDate) : this.filterResultIfFieldMissing();
                     };
                     relative = ' ' + fieldInstructionKeywordDate[1];
                 } else {
                     filterFunction = (task: Task) => {
                         const date = this.date(task);
-                        return date ? date.isSame(filterDate) : this.filterResultIfFieldMissing();
+                        return date ? date.isSame(fieldDate) : this.filterResultIfFieldMissing();
                     };
                     relative = ' on';
                 }
@@ -74,7 +74,7 @@ export abstract class DateField extends Field {
                     this.fieldName(),
                     relative,
                     this.filterResultIfFieldMissing(),
-                    filterDate,
+                    fieldDate,
                 );
                 result.filter = new Filter(line, filterFunction, new Explanation(explanation));
             }
