@@ -27,6 +27,19 @@ export class HappensDateField extends DateField {
         super(filterInstructions);
     }
 
+    protected filterRegExp(): RegExp {
+        return HappensDateField.happensRegexp;
+    }
+    public fieldName(): string {
+        return 'happens';
+    }
+    public date(): Moment | null {
+        return null;
+    }
+    protected filterResultIfFieldMissing() {
+        return false;
+    }
+
     /**
      * Builds function that actually filters the tasks depending on the date
      * @param fieldKeyword relationship to be held with the date 'before', 'after'
@@ -56,19 +69,6 @@ export class HappensDateField extends DateField {
      */
     public dates(task: Task): (Moment | null)[] {
         return Array.of(task.startDate, task.scheduledDate, task.dueDate);
-    }
-
-    protected filterRegExp(): RegExp {
-        return HappensDateField.happensRegexp;
-    }
-    public fieldName(): string {
-        return 'happens';
-    }
-    public date(): Moment | null {
-        return null;
-    }
-    protected filterResultIfFieldMissing() {
-        return false;
     }
 
     protected fieldNameForExplanation() {
