@@ -13,22 +13,21 @@ import { DateField } from './DateField';
  * Support the 'happens' search instruction, which searches all of
  * start, scheduled and due dates.
  */
-export class HappensDateField extends Field {
+export class HappensDateField extends DateField {
     private static readonly happensRegexp = /^happens (before|after|on)? ?(.*)/;
     private static readonly instructionForFieldPresence = 'has happens date';
     private static readonly instructionForFieldAbsence = 'no happens date';
-    private readonly filterInstructions: FilterInstructions;
 
     constructor() {
-        super();
-        this.filterInstructions = new FilterInstructions();
-        this.filterInstructions.add(HappensDateField.instructionForFieldPresence, (task: Task) =>
+        const filterInstructions = new FilterInstructions();
+        filterInstructions.add(HappensDateField.instructionForFieldPresence, (task: Task) =>
             this.dates(task).some((date) => date !== null),
         );
-        this.filterInstructions.add(
+        filterInstructions.add(
             HappensDateField.instructionForFieldAbsence,
             (task: Task) => !this.dates(task).some((date) => date !== null),
         );
+        super(filterInstructions);
     }
 
     public canCreateFilterForLine(line: string): boolean {
@@ -75,7 +74,7 @@ export class HappensDateField extends Field {
      * @param fieldDate the date to be used by the filter function
      * @returns the function that filters the tasks
      */
-    private buildFilterFunction(fieldKeyword: string, fieldDate: moment.Moment): FilterFunction {
+    protected buildFilterFunction(fieldKeyword: string, fieldDate: moment.Moment): FilterFunction {
         let filterFunction;
         if (fieldKeyword === 'before') {
             filterFunction = (task: Task) => {
@@ -105,6 +104,9 @@ export class HappensDateField extends Field {
     }
     public fieldName(): string {
         return 'happens';
+    }
+    public date(): Moment | null {
+        return null;
     }
     protected filterResultIfFieldMissing() {
         return false;

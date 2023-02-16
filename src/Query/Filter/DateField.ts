@@ -14,7 +14,7 @@ import { FilterInstructions } from './FilterInstructions';
  * value, such as the done date.
  */
 export abstract class DateField extends Field {
-    private readonly filterInstructions: FilterInstructions;
+    protected readonly filterInstructions: FilterInstructions;
 
     constructor(filterInstructions: FilterInstructions | null = null) {
         super();
@@ -76,7 +76,7 @@ export abstract class DateField extends Field {
      * @param fieldDate the date to be used by the filter function
      * @returns the function that filters the tasks
      */
-    private buildFilterFunction(fieldKeyword: string, fieldDate: moment.Moment): FilterFunction {
+    protected buildFilterFunction(fieldKeyword: string, fieldDate: moment.Moment): FilterFunction {
         let filterFunction;
         if (fieldKeyword === 'before') {
             filterFunction = (task: Task) => {
