@@ -68,7 +68,7 @@ export abstract class DateField extends Field {
                     };
                 }
 
-                const explanation = DateField.getExplanationString(
+                const explanation = DateField.buildExplanation(
                     this.fieldName(),
                     fieldKeyword,
                     this.filterResultIfFieldMissing(),
@@ -96,12 +96,12 @@ export abstract class DateField extends Field {
      * @param filterResultIfFieldMissing - whether the search matches tasks without the requested date value
      * @param filterDate - the date used in the filter
      */
-    public static getExplanationString(
+    public static buildExplanation(
         fieldName: string,
         fieldKeyword: string,
         filterResultIfFieldMissing: boolean,
         filterDate: moment.Moment,
-    ) {
+    ): string {
         let relationship;
         switch (fieldKeyword) {
             case 'before':
