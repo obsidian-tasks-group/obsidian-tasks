@@ -5,7 +5,7 @@ import { Explanation } from '../Explain/Explanation';
 import type { Comparator } from '../Sorter';
 import { compareByDate } from '../../lib/DateTools';
 import { Field } from './Field';
-import { Filter, FilterOrErrorMessage } from './Filter';
+import { Filter, type FilterFunction, FilterOrErrorMessage } from './Filter';
 import { FilterInstructions } from './FilterInstructions';
 
 /**
@@ -50,23 +50,7 @@ export abstract class DateField extends Field {
             if (!fieldDate.isValid()) {
                 result.error = 'do not understand ' + this.fieldName() + ' date';
             } else {
-                let filterFunction;
-                if (fieldKeyword === 'before') {
-                    filterFunction = (task: Task) => {
-                        const date = this.date(task);
-                        return date ? date.isBefore(fieldDate) : this.filterResultIfFieldMissing();
-                    };
-                } else if (fieldKeyword === 'after') {
-                    filterFunction = (task: Task) => {
-                        const date = this.date(task);
-                        return date ? date.isAfter(fieldDate) : this.filterResultIfFieldMissing();
-                    };
-                } else {
-                    filterFunction = (task: Task) => {
-                        const date = this.date(task);
-                        return date ? date.isSame(fieldDate) : this.filterResultIfFieldMissing();
-                    };
-                }
+                const filterFunction = this.buildFilterFunction(fieldKeyword, fieldDate);
 
                 const explanation = DateField.buildExplanation(
                     this.fieldName(),
@@ -80,6 +64,33 @@ export abstract class DateField extends Field {
             result.error = 'do not understand query filter (' + this.fieldName() + ' date)';
         }
         return result;
+    }
+
+    /**
+     * Builds function that actually filters the tasks depending on the date
+     * @param fieldKeyword relationship to be held with the date 'before', 'after'
+     * @param fieldDate the date to be used by the filter function
+     * @returns the function that filters the tasks
+     */
+    private buildFilterFunction(fieldKeyword: string, fieldDate: moment.Moment): FilterFunction {
+        let filterFunction;
+        if (fieldKeyword === 'before') {
+            filterFunction = (task: Task) => {
+                const date = this.date(task);
+                return date ? date.isBefore(fieldDate) : this.filterResultIfFieldMissing();
+            };
+        } else if (fieldKeyword === 'after') {
+            filterFunction = (task: Task) => {
+                const date = this.date(task);
+                return date ? date.isAfter(fieldDate) : this.filterResultIfFieldMissing();
+            };
+        } else {
+            filterFunction = (task: Task) => {
+                const date = this.date(task);
+                return date ? date.isSame(fieldDate) : this.filterResultIfFieldMissing();
+            };
+        }
+        return filterFunction;
     }
 
     /**
