@@ -55,7 +55,7 @@ export class HappensDateField extends DateField {
                 const filterFunction = this.buildFilterFunction(fieldKeyword, fieldDate);
 
                 const explanation = DateField.buildExplanation(
-                    'due, start or scheduled',
+                    this.fieldNameForExplanation(),
                     fieldKeyword,
                     this.filterResultIfFieldMissing(),
                     fieldDate,
@@ -110,6 +110,10 @@ export class HappensDateField extends DateField {
     }
     protected filterResultIfFieldMissing() {
         return false;
+    }
+
+    protected fieldNameForExplanation() {
+        return 'due, start or scheduled';
     }
 
     public supportsSorting(): boolean {
