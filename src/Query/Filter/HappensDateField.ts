@@ -46,30 +46,39 @@ export class HappensDateField extends Field {
 
         const result = new FilterOrErrorMessage(line);
 
-        const happensMatch = Field.getMatch(this.filterRegExp(), line);
-        if (happensMatch !== null) {
-            const filterDate = DateParser.parseDate(happensMatch[2]);
+        const fieldNameKeywordDate = Field.getMatch(this.filterRegExp(), line);
+        if (fieldNameKeywordDate !== null) {
+            const fieldKeyword = fieldNameKeywordDate[1];
+            const filterDate = DateParser.parseDate(fieldNameKeywordDate[2]);
             if (!filterDate.isValid()) {
                 result.error = 'do not understand happens date';
             } else {
                 let filterFunction;
-                let relative;
-                if (happensMatch[1] === 'before') {
+                if (fieldKeyword === 'before') {
                     filterFunction = (task: Task) => {
                         return this.dates(task).some((date) => date && date.isBefore(filterDate));
                     };
-                    relative = ' ' + happensMatch[1];
-                } else if (happensMatch[1] === 'after') {
+                } else if (fieldKeyword === 'after') {
                     filterFunction = (task: Task) => {
                         return this.dates(task).some((date) => date && date.isAfter(filterDate));
                     };
-                    relative = ' ' + happensMatch[1];
                 } else {
                     filterFunction = (task: Task) => {
                         return this.dates(task).some((date) => date && date.isSame(filterDate));
                     };
-                    relative = ' on';
                 }
+
+                let relative;
+                switch (fieldKeyword) {
+                    case 'before':
+                    case 'after':
+                        relative = ' ' + fieldKeyword;
+                        break;
+                    default:
+                        relative = ' on';
+                        break;
+                }
+
                 const explanation = DateField.getExplanationString(
                     'due, start or scheduled',
                     relative,
