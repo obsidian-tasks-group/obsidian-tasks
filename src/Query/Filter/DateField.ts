@@ -103,7 +103,7 @@ export abstract class DateField extends Field {
     /**
      * Construct a string used to explain a date-based filter
      * @param fieldName - for example, 'due'
-     * @param relationshipPrefixedWithSpace - for example ' before' or ''
+     * @param fieldKeyword - one of the keywords like 'before' or 'after'
      * @param filterResultIfFieldMissing - whether the search matches tasks without the requested date value
      * @param filterDate - the date used in the filter
      */
