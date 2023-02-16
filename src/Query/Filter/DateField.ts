@@ -43,26 +43,26 @@ export abstract class DateField extends Field {
 
         const result = new FilterOrErrorMessage(line);
 
-        const fieldInstructionKeywordDate = Field.getMatch(this.filterRegExp(), line);
+        const fieldNameKeywordDate = Field.getMatch(this.filterRegExp(), line);
         let filterFunction;
-        if (fieldInstructionKeywordDate !== null) {
-            const fieldDate = DateParser.parseDate(fieldInstructionKeywordDate[2]);
+        if (fieldNameKeywordDate !== null) {
+            const fieldDate = DateParser.parseDate(fieldNameKeywordDate[2]);
             if (!fieldDate.isValid()) {
                 result.error = 'do not understand ' + this.fieldName() + ' date';
             } else {
                 let relative;
-                if (fieldInstructionKeywordDate[1] === 'before') {
+                if (fieldNameKeywordDate[1] === 'before') {
                     filterFunction = (task: Task) => {
                         const date = this.date(task);
                         return date ? date.isBefore(fieldDate) : this.filterResultIfFieldMissing();
                     };
-                    relative = ' ' + fieldInstructionKeywordDate[1];
-                } else if (fieldInstructionKeywordDate[1] === 'after') {
+                    relative = ' ' + fieldNameKeywordDate[1];
+                } else if (fieldNameKeywordDate[1] === 'after') {
                     filterFunction = (task: Task) => {
                         const date = this.date(task);
                         return date ? date.isAfter(fieldDate) : this.filterResultIfFieldMissing();
                     };
-                    relative = ' ' + fieldInstructionKeywordDate[1];
+                    relative = ' ' + fieldNameKeywordDate[1];
                 } else {
                     filterFunction = (task: Task) => {
                         const date = this.date(task);
