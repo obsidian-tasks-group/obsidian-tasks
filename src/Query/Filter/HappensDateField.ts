@@ -93,19 +93,6 @@ export class HappensDateField extends Field {
         return filterFunction;
     }
 
-    /**
-     * Return the earliest of the dates used by 'happens' in the given task, or null if none set.
-     *
-     * Generally speaking, the earliest date is considered to be the highest priority,
-     * as it is the first point at which the user might wish to act on the task.
-     * @param task
-     */
-    public earliestDate(task: Task): Moment | null {
-        const happensDates = new HappensDateField().dates(task);
-        const sortedHappensDates = happensDates.sort(compareByDate);
-        return sortedHappensDates[0];
-    }
-
     protected filterRegExp(): RegExp {
         return HappensDateField.happensRegexp;
     }
@@ -132,5 +119,18 @@ export class HappensDateField extends Field {
         return (a: Task, b: Task) => {
             return compareByDate(this.earliestDate(a), this.earliestDate(b));
         };
+    }
+
+    /**
+     * Return the earliest of the dates used by 'happens' in the given task, or null if none set.
+     *
+     * Generally speaking, the earliest date is considered to be the highest priority,
+     * as it is the first point at which the user might wish to act on the task.
+     * @param task
+     */
+    public earliestDate(task: Task): Moment | null {
+        const happensDates = new HappensDateField().dates(task);
+        const sortedHappensDates = happensDates.sort(compareByDate);
+        return sortedHappensDates[0];
     }
 }
