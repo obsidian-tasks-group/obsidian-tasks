@@ -12,6 +12,8 @@ import {
     expectTaskComparesBefore,
     expectTaskComparesEqual,
 } from '../../CustomMatchers/CustomMatchersForSorting';
+import { Query } from '../../../src/Query/Query';
+import { MarkdownTable } from '../../TestingTools/VerifyMarkdownTable';
 
 window.moment = moment;
 
@@ -88,5 +90,37 @@ describe('sorting by due', () => {
         expectTaskComparesAfter(sorter, date1, date2);
         expectTaskComparesBefore(sorter, date2, date1);
         expectTaskComparesEqual(sorter, date2, date2);
+    });
+});
+
+describe('due date', () => {
+    beforeAll(() => {
+        jest.useFakeTimers();
+        jest.setSystemTime(new Date(2023, 1, 10)); // 2023-02-10
+    });
+
+    afterAll(() => {
+        jest.useRealTimers();
+    });
+
+    it('approval tests', () => {
+        const dates = ['last week', 'this week', 'next week', '2023-02-09', '2023-02-07 2023-02-11'];
+        const keywords = ['before ', 'on ', 'after ', 'in ', ''];
+
+        const table = new MarkdownTable(['date / keyword'].concat(dates));
+
+        keywords.forEach((keyword) => {
+            const newRow = [keyword];
+            dates.forEach((date) => {
+                const query = new Query({ source: `due ${keyword}${date}` });
+                expect(query.error).toBeUndefined();
+
+                newRow.push(query.explainQueryWithoutIntroduction().replace(/(\n)/g, '<br>'));
+            });
+
+            table.addRow(newRow);
+        });
+
+        table.verify();
     });
 });
