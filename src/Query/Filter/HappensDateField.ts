@@ -75,19 +75,19 @@ export class HappensDateField extends Field {
      * @param fieldDate the date to be used by the filter function
      * @returns the function that filters the tasks
      */
-    private buildFilterFunction(fieldKeyword: string, filterDate: moment.Moment): FilterFunction {
+    private buildFilterFunction(fieldKeyword: string, fieldDate: moment.Moment): FilterFunction {
         let filterFunction;
         if (fieldKeyword === 'before') {
             filterFunction = (task: Task) => {
-                return this.dates(task).some((date) => date && date.isBefore(filterDate));
+                return this.dates(task).some((date) => date && date.isBefore(fieldDate));
             };
         } else if (fieldKeyword === 'after') {
             filterFunction = (task: Task) => {
-                return this.dates(task).some((date) => date && date.isAfter(filterDate));
+                return this.dates(task).some((date) => date && date.isAfter(fieldDate));
             };
         } else {
             filterFunction = (task: Task) => {
-                return this.dates(task).some((date) => date && date.isSame(filterDate));
+                return this.dates(task).some((date) => date && date.isSame(fieldDate));
             };
         }
         return filterFunction;
