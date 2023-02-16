@@ -93,10 +93,6 @@ export class HappensDateField extends Field {
         return filterFunction;
     }
 
-    protected filterRegExp(): RegExp {
-        return HappensDateField.happensRegexp;
-    }
-
     /**
      * Return the task's start, scheduled and due dates, any or all of which may be null.
      */
@@ -104,12 +100,14 @@ export class HappensDateField extends Field {
         return Array.of(task.startDate, task.scheduledDate, task.dueDate);
     }
 
-    protected filterResultIfFieldMissing() {
-        return false;
+    protected filterRegExp(): RegExp {
+        return HappensDateField.happensRegexp;
     }
-
     public fieldName(): string {
         return 'happens';
+    }
+    protected filterResultIfFieldMissing() {
+        return false;
     }
 
     public supportsSorting(): boolean {
