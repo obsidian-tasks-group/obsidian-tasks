@@ -49,17 +49,17 @@ export class HappensDateField extends Field {
         const fieldNameKeywordDate = Field.getMatch(this.filterRegExp(), line);
         if (fieldNameKeywordDate !== null) {
             const fieldKeyword = fieldNameKeywordDate[1];
-            const filterDate = DateParser.parseDate(fieldNameKeywordDate[2]);
-            if (!filterDate.isValid()) {
+            const fieldDate = DateParser.parseDate(fieldNameKeywordDate[2]);
+            if (!fieldDate.isValid()) {
                 result.error = 'do not understand happens date';
             } else {
-                const filterFunction = this.buildFilterFunction(fieldKeyword, filterDate);
+                const filterFunction = this.buildFilterFunction(fieldKeyword, fieldDate);
 
                 const explanation = DateField.buildExplanation(
                     'due, start or scheduled',
                     fieldKeyword,
                     false,
-                    filterDate,
+                    fieldDate,
                 );
                 result.filter = new Filter(line, filterFunction, new Explanation(explanation));
             }
