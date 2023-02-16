@@ -68,7 +68,7 @@ export class HappensDateField extends Field {
                     };
                 }
 
-                const explanation = DateField.getExplanationString(
+                const explanation = DateField.buildExplanation(
                     'due, start or scheduled',
                     fieldKeyword,
                     false,
