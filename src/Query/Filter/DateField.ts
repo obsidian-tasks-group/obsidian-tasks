@@ -5,7 +5,7 @@ import { Explanation } from '../Explain/Explanation';
 import type { Comparator } from '../Sorter';
 import { compareByDate } from '../../lib/DateTools';
 import { Field } from './Field';
-import { Filter, FilterOrErrorMessage } from './Filter';
+import { Filter, type FilterFunction, FilterOrErrorMessage } from './Filter';
 import { FilterInstructions } from './FilterInstructions';
 
 /**
@@ -43,38 +43,20 @@ export abstract class DateField extends Field {
 
         const result = new FilterOrErrorMessage(line);
 
-        const match = Field.getMatch(this.filterRegExp(), line);
-        let filterFunction;
-        if (match !== null) {
-            const filterDate = DateParser.parseDate(match[2]);
-            if (!filterDate.isValid()) {
+        const fieldNameKeywordDate = Field.getMatch(this.filterRegExp(), line);
+        if (fieldNameKeywordDate !== null) {
+            const fieldKeyword = fieldNameKeywordDate[1];
+            const fieldDate = DateParser.parseDate(fieldNameKeywordDate[2]);
+            if (!fieldDate.isValid()) {
                 result.error = 'do not understand ' + this.fieldName() + ' date';
             } else {
-                let relative;
-                if (match[1] === 'before') {
-                    filterFunction = (task: Task) => {
-                        const date = this.date(task);
-                        return date ? date.isBefore(filterDate) : this.filterResultIfFieldMissing();
-                    };
-                    relative = ' ' + match[1];
-                } else if (match[1] === 'after') {
-                    filterFunction = (task: Task) => {
-                        const date = this.date(task);
-                        return date ? date.isAfter(filterDate) : this.filterResultIfFieldMissing();
-                    };
-                    relative = ' ' + match[1];
-                } else {
-                    filterFunction = (task: Task) => {
-                        const date = this.date(task);
-                        return date ? date.isSame(filterDate) : this.filterResultIfFieldMissing();
-                    };
-                    relative = ' on';
-                }
-                const explanation = DateField.getExplanationString(
+                const filterFunction = this.buildFilterFunction(fieldKeyword, fieldDate);
+
+                const explanation = DateField.buildExplanation(
                     this.fieldName(),
-                    relative,
+                    fieldKeyword,
                     this.filterResultIfFieldMissing(),
-                    filterDate,
+                    fieldDate,
                 );
                 result.filter = new Filter(line, filterFunction, new Explanation(explanation));
             }
@@ -82,6 +64,33 @@ export abstract class DateField extends Field {
             result.error = 'do not understand query filter (' + this.fieldName() + ' date)';
         }
         return result;
+    }
+
+    /**
+     * Builds function that actually filters the tasks depending on the date
+     * @param fieldKeyword relationship to be held with the date 'before', 'after'
+     * @param fieldDate the date to be used by the filter function
+     * @returns the function that filters the tasks
+     */
+    private buildFilterFunction(fieldKeyword: string, fieldDate: moment.Moment): FilterFunction {
+        let filterFunction;
+        if (fieldKeyword === 'before') {
+            filterFunction = (task: Task) => {
+                const date = this.date(task);
+                return date ? date.isBefore(fieldDate) : this.filterResultIfFieldMissing();
+            };
+        } else if (fieldKeyword === 'after') {
+            filterFunction = (task: Task) => {
+                const date = this.date(task);
+                return date ? date.isAfter(fieldDate) : this.filterResultIfFieldMissing();
+            };
+        } else {
+            filterFunction = (task: Task) => {
+                const date = this.date(task);
+                return date ? date.isSame(fieldDate) : this.filterResultIfFieldMissing();
+            };
+        }
+        return filterFunction;
     }
 
     /**
@@ -94,19 +103,29 @@ export abstract class DateField extends Field {
     /**
      * Construct a string used to explain a date-based filter
      * @param fieldName - for example, 'due'
-     * @param relationshipPrefixedWithSpace - for example ' before' or ''
+     * @param fieldKeyword - one of the keywords like 'before' or 'after'
      * @param filterResultIfFieldMissing - whether the search matches tasks without the requested date value
      * @param filterDate - the date used in the filter
      */
-    public static getExplanationString(
+    public static buildExplanation(
         fieldName: string,
-        relationshipPrefixedWithSpace: string,
+        fieldKeyword: string,
         filterResultIfFieldMissing: boolean,
         filterDate: moment.Moment,
-    ) {
+    ): string {
+        let relationship;
+        switch (fieldKeyword) {
+            case 'before':
+            case 'after':
+                relationship = fieldKeyword;
+                break;
+            default:
+                relationship = 'on';
+                break;
+        }
         // Example of formatted date: '2024-01-02 (Tuesday 2nd January 2024)'
         const actualDate = filterDate.format('YYYY-MM-DD (dddd Do MMMM YYYY)');
-        let result = `${fieldName} date is${relationshipPrefixedWithSpace} ${actualDate}`;
+        let result = `${fieldName} date is ${relationship} ${actualDate}`;
         if (filterResultIfFieldMissing) {
             result += ` OR no ${fieldName} date`;
         }
