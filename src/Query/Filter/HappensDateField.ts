@@ -58,7 +58,7 @@ export class HappensDateField extends Field {
                 const explanation = DateField.buildExplanation(
                     'due, start or scheduled',
                     fieldKeyword,
-                    false,
+                    this.filterResultIfFieldMissing(),
                     fieldDate,
                 );
                 result.filter = new Filter(line, filterFunction, new Explanation(explanation));
@@ -102,6 +102,10 @@ export class HappensDateField extends Field {
      */
     public dates(task: Task): (Moment | null)[] {
         return Array.of(task.startDate, task.scheduledDate, task.dueDate);
+    }
+
+    protected filterResultIfFieldMissing() {
+        return false;
     }
 
     public fieldName(): string {
