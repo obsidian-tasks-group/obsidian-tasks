@@ -68,20 +68,9 @@ export class HappensDateField extends Field {
                     };
                 }
 
-                let relative;
-                switch (fieldKeyword) {
-                    case 'before':
-                    case 'after':
-                        relative = ' ' + fieldKeyword;
-                        break;
-                    default:
-                        relative = ' on';
-                        break;
-                }
-
                 const explanation = DateField.getExplanationString(
                     'due, start or scheduled',
-                    relative,
+                    fieldKeyword,
                     false,
                     filterDate,
                 );
