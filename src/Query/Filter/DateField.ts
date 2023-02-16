@@ -102,19 +102,19 @@ export abstract class DateField extends Field {
         filterResultIfFieldMissing: boolean,
         filterDate: moment.Moment,
     ) {
-        let relationshipPrefixedWithSpace;
+        let relationship;
         switch (fieldKeyword) {
             case 'before':
             case 'after':
-                relationshipPrefixedWithSpace = ' ' + fieldKeyword;
+                relationship = fieldKeyword;
                 break;
             default:
-                relationshipPrefixedWithSpace = ' on';
+                relationship = 'on';
                 break;
         }
         // Example of formatted date: '2024-01-02 (Tuesday 2nd January 2024)'
         const actualDate = filterDate.format('YYYY-MM-DD (dddd Do MMMM YYYY)');
-        let result = `${fieldName} date is${relationshipPrefixedWithSpace} ${actualDate}`;
+        let result = `${fieldName} date is ${relationship} ${actualDate}`;
         if (filterResultIfFieldMissing) {
             result += ` OR no ${fieldName} date`;
         }
