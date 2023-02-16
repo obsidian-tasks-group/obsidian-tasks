@@ -51,7 +51,7 @@ export class HappensDateField extends Field {
             const fieldKeyword = fieldNameKeywordDate[1];
             const fieldDate = DateParser.parseDate(fieldNameKeywordDate[2]);
             if (!fieldDate.isValid()) {
-                result.error = 'do not understand happens date';
+                result.error = 'do not understand ' + this.fieldName() + ' date';
             } else {
                 const filterFunction = this.buildFilterFunction(fieldKeyword, fieldDate);
 
@@ -64,7 +64,7 @@ export class HappensDateField extends Field {
                 result.filter = new Filter(line, filterFunction, new Explanation(explanation));
             }
         } else {
-            result.error = 'do not understand query filter (happens date)';
+            result.error = 'do not understand query filter (' + this.fieldName() + ' date)';
         }
         return result;
     }
