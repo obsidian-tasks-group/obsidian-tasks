@@ -57,7 +57,7 @@ export abstract class DateField extends Field {
                 const filterFunction = this.buildFilterFunction(fieldKeyword, fieldDate);
 
                 const explanation = DateField.buildExplanation(
-                    this.fieldName(),
+                    this.fieldNameForExplanation(),
                     fieldKeyword,
                     this.filterResultIfFieldMissing(),
                     fieldDate,
@@ -134,6 +134,10 @@ export abstract class DateField extends Field {
             result += ` OR no ${fieldName} date`;
         }
         return result;
+    }
+
+    protected fieldNameForExplanation() {
+        return this.fieldName();
     }
 
     /**
