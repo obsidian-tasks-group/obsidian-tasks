@@ -6,13 +6,11 @@ import { DateField } from './DateField';
  * Support the 'starts' search instruction.
  */
 export class StartDateField extends DateField {
-    private static readonly startRegexp = /^starts (before|after|on)? ?(.*)/;
-
-    protected filterRegExp(): RegExp {
-        return StartDateField.startRegexp;
-    }
     public fieldName(): string {
         return 'start';
+    }
+    protected fieldNameForFilterInstruction(): string {
+        return 'starts';
     }
     public date(task: Task): Moment | null {
         return task.startDate;

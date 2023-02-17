@@ -96,6 +96,17 @@ export abstract class DateField extends Field {
         };
     }
 
+    protected filterRegExp(): RegExp {
+        return new RegExp(`^${this.fieldNameForFilterInstruction()} (before|after|on)? ?(.*)`);
+    }
+
+    /**
+     * Enable support for 'starts ...' as filter where the field name is different ('start').
+     */
+    protected fieldNameForFilterInstruction(): string {
+        return this.fieldName();
+    }
+
     /**
      * Return the task's value for this date field, if any.
      * @param task - a Task object
