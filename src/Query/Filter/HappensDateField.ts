@@ -1,6 +1,5 @@
 import type { Moment } from 'moment';
 import type { Task } from '../../Task';
-import type { Comparator } from '../Sorter';
 import { compareByDate } from '../../lib/DateTools';
 import type { FilterFunction } from './Filter';
 import { FilterInstructions } from './FilterInstructions';
@@ -34,8 +33,12 @@ export class HappensDateField extends DateField {
     public fieldName(): string {
         return 'happens';
     }
-    public date(): Moment | null {
-        return null;
+    /**
+     * Returns {@link earliestDate}
+     * @param task
+     */
+    public date(task: Task): Moment | null {
+        return this.earliestDate(task);
     }
     protected filterResultIfFieldMissing() {
         return false;
@@ -56,15 +59,6 @@ export class HappensDateField extends DateField {
 
     protected fieldNameForExplanation() {
         return 'due, start or scheduled';
-    }
-
-    /**
-     * This sorts on the earliest of start, scheduled and due dates.
-     */
-    public comparator(): Comparator {
-        return (a: Task, b: Task) => {
-            return compareByDate(this.earliestDate(a), this.earliestDate(b));
-        };
     }
 
     /**
