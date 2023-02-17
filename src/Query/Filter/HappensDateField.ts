@@ -23,9 +23,15 @@ export class HappensDateField extends DateField {
     protected filterRegExp(): RegExp {
         return HappensDateField.happensRegexp;
     }
+
     public fieldName(): string {
         return 'happens';
     }
+
+    protected fieldNameForExplanation() {
+        return 'due, start or scheduled';
+    }
+
     /**
      * Returns {@link earliestDate}
      * @param task
@@ -33,25 +39,12 @@ export class HappensDateField extends DateField {
     public date(task: Task): Moment | null {
         return this.earliestDate(task);
     }
-    protected filterResultIfFieldMissing() {
-        return false;
-    }
-
-    protected getFilter(dateFilterFunction: DateFilterFunction): FilterFunction {
-        return (task: Task) => {
-            return this.dates(task).some((date) => dateFilterFunction(date));
-        };
-    }
 
     /**
      * Return the task's start, scheduled and due dates, any or all of which may be null.
      */
     public dates(task: Task): (Moment | null)[] {
         return Array.of(task.startDate, task.scheduledDate, task.dueDate);
-    }
-
-    protected fieldNameForExplanation() {
-        return 'due, start or scheduled';
     }
 
     /**
@@ -65,5 +58,15 @@ export class HappensDateField extends DateField {
         const happensDates = new HappensDateField().dates(task);
         const sortedHappensDates = happensDates.sort(compareByDate);
         return sortedHappensDates[0];
+    }
+
+    protected filterResultIfFieldMissing() {
+        return false;
+    }
+
+    protected getFilter(dateFilterFunction: DateFilterFunction): FilterFunction {
+        return (task: Task) => {
+            return this.dates(task).some((date) => dateFilterFunction(date));
+        };
     }
 }
