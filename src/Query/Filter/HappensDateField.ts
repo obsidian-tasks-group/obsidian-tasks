@@ -1,100 +1,43 @@
 import type { Moment } from 'moment';
 import type { Task } from '../../Task';
-import { DateParser } from '../DateParser';
-import { Explanation } from '../Explain/Explanation';
-import type { Comparator } from '../Sorter';
 import { compareByDate } from '../../lib/DateTools';
-import { Field } from './Field';
-import { Filter, type FilterFunction, FilterOrErrorMessage } from './Filter';
+import type { FilterFunction } from './Filter';
 import { FilterInstructions } from './FilterInstructions';
+import type { DateFilterFunction } from './DateField';
 import { DateField } from './DateField';
 
 /**
  * Support the 'happens' search instruction, which searches all of
  * start, scheduled and due dates.
  */
-export class HappensDateField extends Field {
+export class HappensDateField extends DateField {
     private static readonly happensRegexp = /^happens (before|after|on)? ?(.*)/;
-    private static readonly instructionForFieldPresence = 'has happens date';
-    private static readonly instructionForFieldAbsence = 'no happens date';
-    private readonly filterInstructions: FilterInstructions;
 
     constructor() {
-        super();
-        this.filterInstructions = new FilterInstructions();
-        this.filterInstructions.add(HappensDateField.instructionForFieldPresence, (task: Task) =>
-            this.dates(task).some((date) => date !== null),
-        );
-        this.filterInstructions.add(
-            HappensDateField.instructionForFieldAbsence,
-            (task: Task) => !this.dates(task).some((date) => date !== null),
-        );
-    }
-
-    public canCreateFilterForLine(line: string): boolean {
-        if (this.filterInstructions.canCreateFilterForLine(line)) {
-            return true;
-        }
-        return super.canCreateFilterForLine(line);
-    }
-
-    public createFilterOrErrorMessage(line: string): FilterOrErrorMessage {
-        const filterResult = this.filterInstructions.createFilterOrErrorMessage(line);
-        if (filterResult.filter !== undefined) {
-            return filterResult;
-        }
-
-        const result = new FilterOrErrorMessage(line);
-
-        const fieldNameKeywordDate = Field.getMatch(this.filterRegExp(), line);
-        if (fieldNameKeywordDate !== null) {
-            const fieldKeyword = fieldNameKeywordDate[1];
-            const fieldDate = DateParser.parseDate(fieldNameKeywordDate[2]);
-            if (!fieldDate.isValid()) {
-                result.error = 'do not understand happens date';
-            } else {
-                const filterFunction = this.buildFilterFunction(fieldKeyword, fieldDate);
-
-                const explanation = DateField.buildExplanation(
-                    'due, start or scheduled',
-                    fieldKeyword,
-                    false,
-                    fieldDate,
-                );
-                result.filter = new Filter(line, filterFunction, new Explanation(explanation));
-            }
-        } else {
-            result.error = 'do not understand query filter (happens date)';
-        }
-        return result;
-    }
-
-    /**
-     * Builds function that actually filters the tasks depending on the date
-     * @param fieldKeyword relationship to be held with the date 'before', 'after'
-     * @param fieldDate the date to be used by the filter function
-     * @returns the function that filters the tasks
-     */
-    private buildFilterFunction(fieldKeyword: string, fieldDate: moment.Moment): FilterFunction {
-        let filterFunction;
-        if (fieldKeyword === 'before') {
-            filterFunction = (task: Task) => {
-                return this.dates(task).some((date) => date && date.isBefore(fieldDate));
-            };
-        } else if (fieldKeyword === 'after') {
-            filterFunction = (task: Task) => {
-                return this.dates(task).some((date) => date && date.isAfter(fieldDate));
-            };
-        } else {
-            filterFunction = (task: Task) => {
-                return this.dates(task).some((date) => date && date.isSame(fieldDate));
-            };
-        }
-        return filterFunction;
+        const filterInstructions = new FilterInstructions();
+        filterInstructions.add('has happens date', (task: Task) => this.dates(task).some((date) => date !== null));
+        filterInstructions.add('no happens date', (task: Task) => !this.dates(task).some((date) => date !== null));
+        super(filterInstructions);
     }
 
     protected filterRegExp(): RegExp {
         return HappensDateField.happensRegexp;
+    }
+
+    public fieldName(): string {
+        return 'happens';
+    }
+
+    protected fieldNameForExplanation() {
+        return 'due, start or scheduled';
+    }
+
+    /**
+     * Returns {@link earliestDate}
+     * @param task
+     */
+    public date(task: Task): Moment | null {
+        return this.earliestDate(task);
     }
 
     /**
@@ -102,23 +45,6 @@ export class HappensDateField extends Field {
      */
     public dates(task: Task): (Moment | null)[] {
         return Array.of(task.startDate, task.scheduledDate, task.dueDate);
-    }
-
-    public fieldName(): string {
-        return 'happens';
-    }
-
-    public supportsSorting(): boolean {
-        return true;
-    }
-
-    /**
-     * This sorts on the earliest of start, scheduled and due dates.
-     */
-    public comparator(): Comparator {
-        return (a: Task, b: Task) => {
-            return compareByDate(this.earliestDate(a), this.earliestDate(b));
-        };
     }
 
     /**
@@ -132,5 +58,15 @@ export class HappensDateField extends Field {
         const happensDates = new HappensDateField().dates(task);
         const sortedHappensDates = happensDates.sort(compareByDate);
         return sortedHappensDates[0];
+    }
+
+    protected filterResultIfFieldMissing() {
+        return false;
+    }
+
+    protected getFilter(dateFilterFunction: DateFilterFunction): FilterFunction {
+        return (task: Task) => {
+            return this.dates(task).some((date) => dateFilterFunction(date));
+        };
     }
 }
