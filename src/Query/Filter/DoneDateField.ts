@@ -6,11 +6,6 @@ import { DateField } from './DateField';
  * Support the 'done' search instruction.
  */
 export class DoneDateField extends DateField {
-    private static readonly doneRegexp = /^done (before|after|on)? ?(.*)/;
-
-    protected filterRegExp(): RegExp {
-        return DoneDateField.doneRegexp;
-    }
     public fieldName(): string {
         return 'done';
     }

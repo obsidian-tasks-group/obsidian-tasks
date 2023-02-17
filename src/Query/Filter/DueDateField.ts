@@ -6,11 +6,6 @@ import { DateField } from './DateField';
  * Support the 'due' search instruction.
  */
 export class DueDateField extends DateField {
-    private static readonly dueRegexp = /^due (before|after|on)? ?(.*)/;
-
-    protected filterRegExp(): RegExp {
-        return DueDateField.dueRegexp;
-    }
     public fieldName(): string {
         return 'due';
     }
