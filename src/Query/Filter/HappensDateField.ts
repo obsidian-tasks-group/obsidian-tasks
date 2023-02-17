@@ -4,6 +4,7 @@ import type { Comparator } from '../Sorter';
 import { compareByDate } from '../../lib/DateTools';
 import type { FilterFunction } from './Filter';
 import { FilterInstructions } from './FilterInstructions';
+import type { DateFilterFunction } from './DateField';
 import { DateField } from './DateField';
 
 /**
@@ -40,22 +41,10 @@ export class HappensDateField extends DateField {
         return false;
     }
 
-    /**
-     * Builds function that actually filters the tasks depending on the date
-     * @param fieldKeyword relationship to be held with the date 'before', 'after'
-     * @param fieldDate the date to be used by the filter function
-     * @returns the function that filters the tasks
-     */
-    protected buildFilterFunction(fieldKeyword: string, fieldDate: moment.Moment): FilterFunction {
-        let dateComparator: (date: Moment) => boolean;
-        if (fieldKeyword === 'before') {
-            dateComparator = (date) => date.isBefore(fieldDate);
-        } else if (fieldKeyword === 'after') {
-            dateComparator = (date) => date.isAfter(fieldDate);
-        } else {
-            dateComparator = (date) => date.isSame(fieldDate);
-        }
-        return (task: Task) => this.dates(task).some((date) => date && dateComparator(date));
+    protected getFilter(dateFilterFunction: DateFilterFunction): FilterFunction {
+        return (task: Task) => {
+            return this.dates(task).some((date) => dateFilterFunction(date));
+        };
     }
 
     /**

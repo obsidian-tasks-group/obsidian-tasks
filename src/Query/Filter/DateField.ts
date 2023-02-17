@@ -8,6 +8,8 @@ import { Field } from './Field';
 import { Filter, type FilterFunction, FilterOrErrorMessage } from './Filter';
 import { FilterInstructions } from './FilterInstructions';
 
+export type DateFilterFunction = (date: Moment | null) => boolean;
+
 /**
  * DateField is an abstract base class to help implement
  * all the filter instructions that act on a single type of date
@@ -77,18 +79,20 @@ export abstract class DateField extends Field {
      * @returns the function that filters the tasks
      */
     protected buildFilterFunction(fieldKeyword: string, fieldDate: moment.Moment): FilterFunction {
-        let dateComparator: (date: Moment) => boolean;
+        let dateFilter: DateFilterFunction;
         if (fieldKeyword === 'before') {
-            dateComparator = (date: Moment) => date.isBefore(fieldDate);
+            dateFilter = (date) => (date ? date.isBefore(fieldDate) : this.filterResultIfFieldMissing());
         } else if (fieldKeyword === 'after') {
-            dateComparator = (date: Moment) => date.isAfter(fieldDate);
+            dateFilter = (date) => (date ? date.isAfter(fieldDate) : this.filterResultIfFieldMissing());
         } else {
-            dateComparator = (date: Moment) => date.isSame(fieldDate);
+            dateFilter = (date) => (date ? date.isSame(fieldDate) : this.filterResultIfFieldMissing());
         }
+        return this.getFilter(dateFilter);
+    }
 
+    protected getFilter(dateFilterFunction: DateFilterFunction): FilterFunction {
         return (task: Task) => {
-            const date = this.date(task);
-            return date ? dateComparator(date) : this.filterResultIfFieldMissing();
+            return dateFilterFunction(this.date(task));
         };
     }
 
