@@ -97,7 +97,14 @@ export abstract class DateField extends Field {
     }
 
     protected filterRegExp(): RegExp {
-        return new RegExp(`^${this.fieldName()} (before|after|on)? ?(.*)`);
+        return new RegExp(`^${this.fieldNameForFilterInstruction()} (before|after|on)? ?(.*)`);
+    }
+
+    /**
+     * Enable support for 'starts ...' as filter where the field name is different ('start').
+     */
+    protected fieldNameForFilterInstruction(): string {
+        return this.fieldName();
     }
 
     /**
