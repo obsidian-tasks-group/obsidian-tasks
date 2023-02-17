@@ -11,8 +11,6 @@ import { DateField } from './DateField';
  * start, scheduled and due dates.
  */
 export class HappensDateField extends DateField {
-    private static readonly happensRegexp = /^happens (before|after|on)? ?(.*)/;
-
     constructor() {
         const filterInstructions = new FilterInstructions();
         filterInstructions.add('has happens date', (task: Task) => this.dates(task).some((date) => date !== null));
@@ -21,7 +19,7 @@ export class HappensDateField extends DateField {
     }
 
     protected filterRegExp(): RegExp {
-        return HappensDateField.happensRegexp;
+        return /^happens (before|after|on)? ?(.*)/;
     }
 
     public fieldName(): string {
