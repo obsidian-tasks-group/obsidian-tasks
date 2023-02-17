@@ -96,6 +96,10 @@ export abstract class DateField extends Field {
         };
     }
 
+    protected filterRegExp(): RegExp {
+        return /^happens (before|after|on)? ?(.*)/;
+    }
+
     /**
      * Return the task's value for this date field, if any.
      * @param task - a Task object

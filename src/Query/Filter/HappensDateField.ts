@@ -18,10 +18,6 @@ export class HappensDateField extends DateField {
         super(filterInstructions);
     }
 
-    protected filterRegExp(): RegExp {
-        return /^happens (before|after|on)? ?(.*)/;
-    }
-
     public fieldName(): string {
         return 'happens';
     }
