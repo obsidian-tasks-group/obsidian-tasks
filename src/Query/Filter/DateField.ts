@@ -56,7 +56,8 @@ export abstract class DateField extends Field {
             if (!fieldDate.isValid()) {
                 result.error = 'do not understand ' + this.fieldName() + ' date';
             } else {
-                const filterFunction = this.buildFilterFunction(fieldKeyword, fieldDate);
+                const fieldDates: [moment.Moment, moment.Moment] = [fieldDate, fieldDate];
+                const filterFunction = this.buildFilterFunction(fieldKeyword, fieldDates);
 
                 const explanation = DateField.buildExplanation(
                     this.fieldNameForExplanation(),
@@ -78,14 +79,17 @@ export abstract class DateField extends Field {
      * @param fieldDate the date to be used by the filter function
      * @returns the function that filters the tasks
      */
-    protected buildFilterFunction(fieldKeyword: string, fieldDate: moment.Moment): FilterFunction {
+    protected buildFilterFunction(fieldKeyword: string, fieldDates: [moment.Moment, moment.Moment]): FilterFunction {
         let dateFilter: DateFilterFunction;
         if (fieldKeyword === 'before') {
-            dateFilter = (date) => (date ? date.isBefore(fieldDate) : this.filterResultIfFieldMissing());
+            dateFilter = (date) => (date ? date.isBefore(fieldDates[0]) : this.filterResultIfFieldMissing());
         } else if (fieldKeyword === 'after') {
-            dateFilter = (date) => (date ? date.isAfter(fieldDate) : this.filterResultIfFieldMissing());
+            dateFilter = (date) => (date ? date.isAfter(fieldDates[1]) : this.filterResultIfFieldMissing());
         } else {
-            dateFilter = (date) => (date ? date.isSame(fieldDate) : this.filterResultIfFieldMissing());
+            dateFilter = (date) =>
+                date
+                    ? date.isSameOrAfter(fieldDates[0]) && date.isSameOrBefore(fieldDates[1])
+                    : this.filterResultIfFieldMissing();
         }
         return this.getFilter(dateFilter);
     }
