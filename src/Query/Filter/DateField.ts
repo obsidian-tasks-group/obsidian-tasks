@@ -8,23 +8,29 @@ import { Field } from './Field';
 import { Filter, type FilterFunction, FilterOrErrorMessage } from './Filter';
 import { FilterInstructions } from './FilterInstructions';
 
+export type DateFilterFunction = (date: Moment | null) => boolean;
+
 /**
  * DateField is an abstract base class to help implement
  * all the filter instructions that act on a single type of date
  * value, such as the done date.
  */
 export abstract class DateField extends Field {
-    private readonly filterInstructions: FilterInstructions;
+    protected readonly filterInstructions: FilterInstructions;
 
-    constructor() {
+    constructor(filterInstructions: FilterInstructions | null = null) {
         super();
-        this.filterInstructions = new FilterInstructions();
-        this.filterInstructions.add(`has ${this.fieldName()} date`, (task: Task) => this.date(task) !== null);
-        this.filterInstructions.add(`no ${this.fieldName()} date`, (task: Task) => this.date(task) === null);
-        this.filterInstructions.add(`${this.fieldName()} date is invalid`, (task: Task) => {
-            const date = this.date(task);
-            return date !== null && !date.isValid();
-        });
+        if (filterInstructions !== null) {
+            this.filterInstructions = filterInstructions;
+        } else {
+            this.filterInstructions = new FilterInstructions();
+            this.filterInstructions.add(`has ${this.fieldName()} date`, (task: Task) => this.date(task) !== null);
+            this.filterInstructions.add(`no ${this.fieldName()} date`, (task: Task) => this.date(task) === null);
+            this.filterInstructions.add(`${this.fieldName()} date is invalid`, (task: Task) => {
+                const date = this.date(task);
+                return date !== null && !date.isValid();
+            });
+        }
     }
 
     public canCreateFilterForLine(line: string): boolean {
@@ -53,7 +59,7 @@ export abstract class DateField extends Field {
                 const filterFunction = this.buildFilterFunction(fieldKeyword, fieldDate);
 
                 const explanation = DateField.buildExplanation(
-                    this.fieldName(),
+                    this.fieldNameForExplanation(),
                     fieldKeyword,
                     this.filterResultIfFieldMissing(),
                     fieldDate,
@@ -72,25 +78,22 @@ export abstract class DateField extends Field {
      * @param fieldDate the date to be used by the filter function
      * @returns the function that filters the tasks
      */
-    private buildFilterFunction(fieldKeyword: string, fieldDate: moment.Moment): FilterFunction {
-        let filterFunction;
+    protected buildFilterFunction(fieldKeyword: string, fieldDate: moment.Moment): FilterFunction {
+        let dateFilter: DateFilterFunction;
         if (fieldKeyword === 'before') {
-            filterFunction = (task: Task) => {
-                const date = this.date(task);
-                return date ? date.isBefore(fieldDate) : this.filterResultIfFieldMissing();
-            };
+            dateFilter = (date) => (date ? date.isBefore(fieldDate) : this.filterResultIfFieldMissing());
         } else if (fieldKeyword === 'after') {
-            filterFunction = (task: Task) => {
-                const date = this.date(task);
-                return date ? date.isAfter(fieldDate) : this.filterResultIfFieldMissing();
-            };
+            dateFilter = (date) => (date ? date.isAfter(fieldDate) : this.filterResultIfFieldMissing());
         } else {
-            filterFunction = (task: Task) => {
-                const date = this.date(task);
-                return date ? date.isSame(fieldDate) : this.filterResultIfFieldMissing();
-            };
+            dateFilter = (date) => (date ? date.isSame(fieldDate) : this.filterResultIfFieldMissing());
         }
-        return filterFunction;
+        return this.getFilter(dateFilter);
+    }
+
+    protected getFilter(dateFilterFunction: DateFilterFunction): FilterFunction {
+        return (task: Task) => {
+            return dateFilterFunction(this.date(task));
+        };
     }
 
     /**
@@ -130,6 +133,10 @@ export abstract class DateField extends Field {
             result += ` OR no ${fieldName} date`;
         }
         return result;
+    }
+
+    protected fieldNameForExplanation() {
+        return this.fieldName();
     }
 
     /**
