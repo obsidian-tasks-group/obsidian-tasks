@@ -28,6 +28,7 @@ export default class TasksPlugin extends Plugin {
         initializeFile({
             metadataCache: this.app.metadataCache,
             vault: this.app.vault,
+            workspace: this.app.workspace,
         });
 
         // Load configured status types.
