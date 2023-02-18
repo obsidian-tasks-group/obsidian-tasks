@@ -2,7 +2,10 @@ import { MetadataCache, TFile, Vault } from 'obsidian';
 import type { ListItemCache } from 'obsidian';
 
 import { getSettings } from './Config/Settings';
-import type { Task } from './Task';
+import { Task } from './Task';
+
+import { DateFallback } from './DateFallback';
+import { Lazy } from './lib/Lazy';
 
 let metadataCache: MetadataCache | undefined;
 let vault: Vault | undefined;
@@ -24,6 +27,10 @@ export const initializeFile = ({
  * If you pass more than one replacement task, all subsequent tasks in the same
  * section must be re-rendered, as their section indexes change. Assuming that
  * this is done faster than user interaction in practice.
+ *
+ * In addition, this function is meant to be called with reasonable confidence
+ * that the {@code originalTask} is unmodified and at the exact same section and
+ * sectionIdx in the source file it was originally found in. It will fail otherwise.
  */
 export const replaceTaskWithTasks = async ({
     originalTask,
@@ -125,10 +132,26 @@ const tryRepetitive = async ({
         }
 
         const line = fileLines[listItemCache.position.start.line];
-
         if (line.includes(globalFilter)) {
             if (sectionIndex === originalTask.sectionIndex) {
-                listItem = listItemCache;
+                const dateFromFileName = new Lazy(() => DateFallback.fromPath(originalTask.path));
+                const taskFromLine = Task.fromLine({
+                    line,
+                    path: originalTask.path,
+                    precedingHeader: originalTask.precedingHeader,
+                    sectionStart: originalTask.sectionStart,
+                    sectionIndex: originalTask.sectionIndex,
+                    fallbackDate: dateFromFileName.value,
+                });
+                if (taskFromLine?.identicalTo(originalTask) === true) {
+                    listItem = listItemCache;
+                } else {
+                    console.error(
+                        `Tasks: Unable to find task in file ${originalTask.path}.\n` +
+                            `Expected task: ${originalTask.toFileLineString()}. Found task line: ${line}.`,
+                    );
+                    return;
+                }
                 break;
             }
 
