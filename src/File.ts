@@ -2,7 +2,7 @@ import { MarkdownView, MetadataCache, TFile, Vault, Workspace } from 'obsidian';
 import type { ListItemCache } from 'obsidian';
 
 import { getSettings } from './Config/Settings';
-import { Task } from './Task';
+import type { Task } from './Task';
 
 let metadataCache: MetadataCache | undefined;
 let vault: Vault | undefined;
@@ -10,7 +10,7 @@ let workspace: Workspace | undefined;
 
 /** the two lists below must be maintained together. */
 const supportedFileExtensions = ['md'];
-const supportedViewTypes      = [MarkdownView];
+const supportedViewTypes = [MarkdownView];
 
 export const initializeFile = ({
     metadataCache: newMetadataCache,
@@ -127,7 +127,7 @@ const tryRepetitive = async ({
 
     // before reading the file, save all open views which may contain dirty data not yet saved to filesys.
     // TODO: future opt is save only if some dirty bit is set.
-    const promises : Promise<void>[] = [];
+    const promises: Promise<void>[] = [];
     workspace.iterateAllLeaves((leaf) => {
         supportedViewTypes.forEach((viewType) => {
             if (leaf.view instanceof viewType && leaf.view.file.path === file.path) {
@@ -160,7 +160,7 @@ const tryRepetitive = async ({
                 } else {
                     console.error(
                         `Tasks: Unable to find task in file ${originalTask.path}.\n` +
-                        `Expected task:\n${originalTask.toFileLineString()}.\nFound task:\n${line}.`,
+                            `Expected task:\n${originalTask.toFileLineString()}.\nFound task:\n${line}.`,
                     );
                     return;
                 }
