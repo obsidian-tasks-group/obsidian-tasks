@@ -134,16 +134,7 @@ const tryRepetitive = async ({
         const line = fileLines[listItemCache.position.start.line];
         if (line.includes(globalFilter)) {
             if (sectionIndex === originalTask.sectionIndex) {
-                const dateFromFileName = new Lazy(() => DateFallback.fromPath(originalTask.path));
-                const taskFromLine = Task.fromLine({
-                    line,
-                    path: originalTask.path,
-                    precedingHeader: originalTask.precedingHeader,
-                    sectionStart: originalTask.sectionStart,
-                    sectionIndex: originalTask.sectionIndex,
-                    fallbackDate: dateFromFileName.value,
-                });
-                if (taskFromLine?.identicalTo(originalTask) === true) {
+                if (line === originalTask.originalMarkdown) {
                     listItem = listItemCache;
                 } else {
                     console.error(
