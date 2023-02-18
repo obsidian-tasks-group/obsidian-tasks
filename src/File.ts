@@ -1,24 +1,29 @@
-import { MetadataCache, TFile, Vault } from 'obsidian';
+import { MarkdownView, MetadataCache, TFile, Vault, Workspace } from 'obsidian';
 import type { ListItemCache } from 'obsidian';
 
 import { getSettings } from './Config/Settings';
 import { Task } from './Task';
 
-import { DateFallback } from './DateFallback';
-import { Lazy } from './lib/Lazy';
-
 let metadataCache: MetadataCache | undefined;
 let vault: Vault | undefined;
+let workspace: Workspace | undefined;
+
+/** the two lists below must be maintained together. */
+const supportedFileExtensions = ['md'];
+const supportedViewTypes      = [MarkdownView];
 
 export const initializeFile = ({
     metadataCache: newMetadataCache,
     vault: newVault,
+    workspace: newWorkspace,
 }: {
     metadataCache: MetadataCache;
     vault: Vault;
+    workspace: Workspace;
 }) => {
     metadataCache = newMetadataCache;
     vault = newVault;
+    workspace = newWorkspace;
 };
 
 /**
@@ -39,7 +44,7 @@ export const replaceTaskWithTasks = async ({
     originalTask: Task;
     newTasks: Task | Task[];
 }): Promise<void> => {
-    if (vault === undefined || metadataCache === undefined) {
+    if (vault === undefined || metadataCache === undefined || workspace === undefined) {
         console.error('Tasks: cannot use File before initializing it.');
         return;
     }
@@ -53,6 +58,7 @@ export const replaceTaskWithTasks = async ({
         newTasks,
         vault,
         metadataCache,
+        workspace,
         previousTries: 0,
     });
 };
@@ -67,12 +73,14 @@ const tryRepetitive = async ({
     newTasks,
     vault,
     metadataCache,
+    workspace,
     previousTries,
 }: {
     originalTask: Task;
     newTasks: Task[];
     vault: Vault;
     metadataCache: MetadataCache;
+    workspace: Workspace;
     previousTries: number;
 }): Promise<void> => {
     const retry = () => {
@@ -88,6 +96,7 @@ const tryRepetitive = async ({
                 newTasks,
                 vault,
                 metadataCache,
+                workspace,
                 previousTries: previousTries + 1,
             });
         }, timeout);
@@ -99,8 +108,8 @@ const tryRepetitive = async ({
         return retry();
     }
 
-    if (file.extension !== 'md') {
-        console.error('Tasks: Only supporting files with the .md file extension.');
+    if (!supportedFileExtensions.includes(file.extension)) {
+        console.error(`Tasks: Does not support files with the ${file.extension} file extension.`);
         return;
     }
 
@@ -116,7 +125,19 @@ const tryRepetitive = async ({
         return retry();
     }
 
-    const fileContent = await vault.read(file);
+    // before reading the file, save all open views which may contain dirty data not yet saved to filesys.
+    // TODO: future opt is save only if some dirty bit is set.
+    const promises : Promise<void>[] = [];
+    workspace.iterateAllLeaves((leaf) => {
+        supportedViewTypes.forEach((viewType) => {
+            if (leaf.view instanceof viewType && leaf.view.file.path === file.path) {
+                promises.push(leaf.view.save());
+            }
+        });
+    });
+    await Promise.all(promises);
+
+    const fileContent = await vault.read(file); // TODO: replace with vault.process.
     const fileLines = fileContent.split('\n');
 
     const { globalFilter } = getSettings();
