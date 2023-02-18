@@ -139,7 +139,7 @@ const tryRepetitive = async ({
                 } else {
                     console.error(
                         `Tasks: Unable to find task in file ${originalTask.path}.\n` +
-                            `Expected task: ${originalTask.toFileLineString()}. Found task line: ${line}.`,
+                        `Expected task:\n${originalTask.toFileLineString()}.\nFound task:\n${line}.`,
                     );
                     return;
                 }
