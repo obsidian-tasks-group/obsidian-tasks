@@ -135,18 +135,22 @@ export abstract class DateField extends Field {
         let relationship;
         // Example of formatted date: '2024-01-02 (Tuesday 2nd January 2024)'
         const dateFormat = 'YYYY-MM-DD (dddd Do MMMM YYYY)';
+        let explanationDates;
         switch (fieldKeyword) {
             case 'before':
                 relationship = fieldKeyword;
+                explanationDates = filterDates[0].format(dateFormat);
                 break;
             case 'after':
                 relationship = fieldKeyword;
+                explanationDates = filterDates[0].format(dateFormat);
                 break;
             default:
                 relationship = 'on';
+                explanationDates = filterDates[0].format(dateFormat);
                 break;
         }
-        const explanationDates = filterDates[0].format(dateFormat);
+
         let result = `${fieldName} date is ${relationship} ${explanationDates}`;
         if (filterResultIfFieldMissing) {
             result += ` OR no ${fieldName} date`;
