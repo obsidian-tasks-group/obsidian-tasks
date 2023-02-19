@@ -124,7 +124,7 @@ export abstract class DateField extends Field {
      * @param fieldName - for example, 'due'
      * @param fieldKeyword - one of the keywords like 'before' or 'after'
      * @param filterResultIfFieldMissing - whether the search matches tasks without the requested date value
-     * @param filterDate - the date used in the filter
+     * @param filterDates - the date range used in the filter
      */
     public static buildExplanation(
         fieldName: string,
