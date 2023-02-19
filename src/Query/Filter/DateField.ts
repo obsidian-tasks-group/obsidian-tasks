@@ -146,8 +146,8 @@ export abstract class DateField extends Field {
                 relationship = 'on';
                 break;
         }
-        const actualDate = filterDates[0].format(dateFormat);
-        let result = `${fieldName} date is ${relationship} ${actualDate}`;
+        const explanationDates = filterDates[0].format(dateFormat);
+        let result = `${fieldName} date is ${relationship} ${explanationDates}`;
         if (filterResultIfFieldMissing) {
             result += ` OR no ${fieldName} date`;
         }
