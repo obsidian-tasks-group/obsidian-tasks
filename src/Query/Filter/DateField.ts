@@ -52,7 +52,8 @@ export abstract class DateField extends Field {
         const fieldNameKeywordDate = Field.getMatch(this.filterRegExp(), line);
         if (fieldNameKeywordDate !== null) {
             const fieldKeyword = fieldNameKeywordDate[1];
-            const fieldDate = DateParser.parseDate(fieldNameKeywordDate[2]);
+            const fieldDateString = fieldNameKeywordDate[2];
+            const fieldDate = DateParser.parseDate(fieldDateString);
             if (!fieldDate.isValid()) {
                 result.error = 'do not understand ' + this.fieldName() + ' date';
             } else {
