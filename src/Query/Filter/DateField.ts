@@ -135,6 +135,8 @@ export abstract class DateField extends Field {
         let relationship;
         switch (fieldKeyword) {
             case 'before':
+                relationship = fieldKeyword;
+                break;
             case 'after':
                 relationship = fieldKeyword;
                 break;
