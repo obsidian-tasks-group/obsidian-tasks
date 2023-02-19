@@ -1,5 +1,5 @@
-import { App, MarkdownRenderChild, MarkdownRenderer, MarkdownView, Plugin, TFile, setIcon } from 'obsidian';
-import type { EditorPosition, EventRef, MarkdownPostProcessorContext } from 'obsidian';
+import { App, MarkdownRenderChild, MarkdownRenderer, Plugin, TFile } from 'obsidian';
+import type { EventRef, MarkdownPostProcessorContext } from 'obsidian';
 
 import type { IQuery } from './IQuery';
 import { State } from './Cache';
@@ -11,6 +11,7 @@ import type { TasksEvents } from './TasksEvents';
 import type { Task } from './Task';
 import { DateFallback } from './DateFallback';
 import { TaskLayout } from './TaskLayout';
+import { getSettings } from './Config/Settings';
 
 export class QueryRenderer {
     private readonly app: App;
@@ -224,10 +225,6 @@ class QueryRenderChild extends MarkdownRenderChild {
                 this.addEditButton(extrasSpan, task);
             }
 
-            if (!this.query.layoutOptions.hideGoToButton) {
-                this.addGoToButton(extrasSpan, task);
-            }
-
             taskList.appendChild(listItem);
         }
 
@@ -255,33 +252,6 @@ class QueryRenderChild extends MarkdownRenderChild {
                 onSubmit,
             });
             taskModal.open();
-        });
-    }
-
-    private addGoToButton(listItem: HTMLElement, task: Task) {
-        const gotoTaskButton = listItem.createEl('a', {
-            cls: 'tasks-goto',
-        });
-        setIcon(gotoTaskButton, 'file-check', 13);
-        // Show the note name in a hover
-        listItem.title = task.getLinkText({ isFilenameUnique: true }) ?? '';
-        gotoTaskButton.onClickEvent(async (event: MouseEvent) => {
-            event.preventDefault();
-            const result = await getTaskFileAndLine(task);
-            if (result) {
-                const [file, line] = result;
-                const leaf = this.app.workspace.getLeaf();
-                await leaf.openFile(file);
-                if (leaf.view instanceof MarkdownView) {
-                    const editor = leaf.view.editor;
-                    // Go to the end of the line
-                    const pos: EditorPosition = { line: line, ch: -1 };
-                    editor.setCursor(pos);
-                    editor.scrollIntoView({ from: pos, to: pos }, true);
-                    editor.refresh();
-                    editor.focus();
-                }
-            }
         });
     }
 
@@ -334,19 +304,11 @@ class QueryRenderChild extends MarkdownRenderChild {
 
         const link = backLink.createEl('a');
 
-        link.href = task.path;
-        link.setAttribute('data-href', task.path);
         link.rel = 'noopener';
         link.target = '_blank';
         link.addClass('internal-link');
         if (shortMode) {
             link.addClass('internal-link-short-mode');
-        }
-
-        if (task.precedingHeader !== null) {
-            const sanitisedHeading = task.precedingHeader.replace(/#/g, '');
-            link.href = link.href + '#' + sanitisedHeading;
-            link.setAttribute('data-href', link.getAttribute('data-href') + '#' + sanitisedHeading);
         }
 
         let linkText: string;
@@ -357,6 +319,44 @@ class QueryRenderChild extends MarkdownRenderChild {
         }
 
         link.setText(linkText);
+
+        const { backlinkBehavior } = getSettings();
+        if (backlinkBehavior === 'taskHeading') {
+            // Go to the heading the task is defined at
+            link.href = task.path;
+            link.setAttribute('data-href', task.path);
+            if (task.precedingHeader !== null) {
+                const sanitisedHeading = task.precedingHeader.replace(/#/g, '');
+                link.href = link.href + '#' + sanitisedHeading;
+                link.setAttribute('data-href', link.getAttribute('data-href') + '#' + sanitisedHeading);
+            }
+        } else if (backlinkBehavior === 'taskLine') {
+            // Go to the line the task is defined at
+            link.addEventListener('click', async () => {
+                const result = await getTaskFileAndLine(task);
+                if (result) {
+                    const [file, line] = result;
+                    const leaf = this.app.workspace.getLeaf();
+                    await leaf.openFile(file, { eState: { line: line } });
+                }
+            });
+
+            link.addEventListener('mousedown', async (ev: MouseEvent) => {
+                // Open in a new tab on middle-click.
+                // This distinction is not available in the 'click' event, so we handle the 'mousedown' event
+                // solely for this.
+                // (for regular left-click we prefer the 'click' event, and not to just do everything here, because
+                // the 'click' event is more generic for touch devices etc.)
+                if (ev.button === 1) {
+                    const result = await getTaskFileAndLine(task);
+                    if (result) {
+                        const [file, line] = result;
+                        const leaf = this.app.workspace.getLeaf('tab');
+                        await leaf.openFile(file, { eState: { line: line } });
+                    }
+                }
+            });
+        }
 
         if (!shortMode) {
             backLink.append(')');

@@ -33,14 +33,6 @@
     cursor: pointer;
 }
 
-.tasks-goto {
-    color: var(--text-faint);
-    position: absolute;
-    margin-left: 0.5em;
-    cursor: pointer;
-    margin-top: 2px;
-}
-
 /* Urgency score */
 .tasks-urgency {
     font-size: var(--font-ui-smaller);

@@ -68,17 +68,6 @@ Show all open tasks that are due within two weeks and hide the due date and edit
 
 ---
 
-Show all open tasks that happen today or in the past, and show only the Edit and Goto buttons without the section link:
-
-    ```tasks
-    not done
-    happens before tomorrow
-    show goto button
-    hide backlinks
-    ```
-
----
-
 Show all tasks that were done before the 1st of December 2020:
 
     ```tasks

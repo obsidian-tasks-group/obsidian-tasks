@@ -12,6 +12,8 @@ export type HeadingState = {
     [id: string]: boolean;
 };
 
+export type GotoTaskType = 'taskHeading' | 'taskLine';
+
 export interface Settings {
     globalFilter: string;
     removeGlobalFilter: boolean;
@@ -35,6 +37,9 @@ export interface Settings {
 
     // Tracks the stage of the headings in the settings UI.
     headingOpened: HeadingState;
+
+    // What to do when clicking the task backlink -- open the heading that includes the task or go to the line the task is defined at
+    backlinkBehavior: GotoTaskType;
 }
 
 const defaultSettings: Settings = {
@@ -59,6 +64,7 @@ const defaultSettings: Settings = {
         // setDoneDate: true,
     },
     headingOpened: {},
+    backlinkBehavior: 'taskLine',
 };
 
 let settings: Settings = { ...defaultSettings };

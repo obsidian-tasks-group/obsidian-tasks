@@ -14,7 +14,6 @@ export class LayoutOptions {
     hideUrgency: boolean = true;
     shortMode: boolean = false;
     explainQuery: boolean = false;
-    hideGoToButton: boolean = true;
 }
 
 export type TaskLayoutComponent =
