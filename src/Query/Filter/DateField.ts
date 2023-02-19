@@ -64,7 +64,7 @@ export abstract class DateField extends Field {
                     this.fieldNameForExplanation(),
                     fieldKeyword,
                     this.filterResultIfFieldMissing(),
-                    fieldDate,
+                    fieldDates,
                 );
                 result.filter = new Filter(line, filterFunction, new Explanation(explanation));
             }
@@ -130,7 +130,7 @@ export abstract class DateField extends Field {
         fieldName: string,
         fieldKeyword: string,
         filterResultIfFieldMissing: boolean,
-        filterDate: moment.Moment,
+        filterDates: [moment.Moment, moment.Moment],
     ): string {
         let relationship;
         // Example of formatted date: '2024-01-02 (Tuesday 2nd January 2024)'
@@ -146,7 +146,7 @@ export abstract class DateField extends Field {
                 relationship = 'on';
                 break;
         }
-        const actualDate = filterDate.format(dateFormat);
+        const actualDate = filterDates[0].format(dateFormat);
         let result = `${fieldName} date is ${relationship} ${actualDate}`;
         if (filterResultIfFieldMissing) {
             result += ` OR no ${fieldName} date`;
