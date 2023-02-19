@@ -20,12 +20,13 @@ The Tasks plugin renders a task in the following structure (this refers to query
 
 ```markdown
 - Obsidian code block (div class="block-language-tasks")
-  - Results list (ul class="plugin-tasks-query-result")
-    - Task (li class="task-list-item" + specific classes like "tasks-tag-atHome tasks-priority-medium tasks-due-past-1d")
+  - Results list (ul class="plugin-tasks-query-result") OR Reading View list (ul class="contains-task-list")
+    - Task (li class="task-list-item" + specific classes like "tasks-tag-atHome tasks-priority-medium tasks-due-past-1d" + data-task="[custom_status]" + data+line="[line]")
       - Task checkbox (li class="task-list-item-checkbox")
       - Task content (span class="tasks-list-text")
         - Task description and tags (span class="task-description" + tag specific classes)
           - Internal span
+            - Each tag in the description is wrapped in <a href class="tag" + tag specific classes>
         - Task priority (span class="task-priority" + priority specific classes)
           - Internal span
         - Task recurrence rule (span class="task-recurring")
@@ -88,9 +89,22 @@ Examples:
 - A task with the tag `#t/easy` will be added with the specific class `task-tag-t-easy`.
 - A task with the tag `#task/atHome` will be added the specific class `task-tag-task-atHome`.
 
+Note that tag specific classes are also added to the tag `<a>` element within the rendered description.
+
 Specific classes are added to both their corresponding components (e.g. to the due date component) and also to the complete task `li`, to make it easy for a CSS rule to style a complete task according to some property (e.g. color differently the complete task if it's due today, color a task according to a tag) or just one relevant component.
 
 **Tip:** [CSS wildcard selectors](https://www.geeksforgeeks.org/wildcard-selectors-and-in-css-for-classes/) are a good way to select all past dates or future dates at once -- just use `[class*="past-"] .task-due ...` to address all overdue tasks, for example.
+
+## Hidden Components, Groups & Short Mode
+
+**Hidden components**, e.g. a `hide priority` line in a query, will generate the following:
+
+- The query container (`class="plugin-tasks-query-result"`) will include a `tasks-layout-hide...` class, e.g. `tasks-layout-hide-priority`.
+- Although the priority will not be rendered in the query, the upper task element (`li class="task-list-item"`) will still be added the specific class of hidden components, e.g. `task-priority-high`.
+
+**Short mode** will add a `tasks-layout-short-mode` class to the query container.
+
+**Grouping rules** will add `tasks-group-by...` classes to the query container, e.g. `tasks-group-by-due`.
 
 ## More Classes
 
@@ -167,10 +181,20 @@ The following rules mark 'today' due dates as blue and past due dates as red:
  padding: 2px 8px;
 }
 /* A special color for overdue due dates */
-[class*="past-"] .task-due span {
+.task-due[class*="past-"] span {
  background: var(--color-pink);
  border-radius: 10px;
  padding: 2px 8px;
+}
+```
+
+### Highlight for a Specific Tag
+
+The following rule adds a green glow around `#task/atHome` tags inside the description:
+
+```css
+a.tag.task-tag-task-atHome {
+    box-shadow: 0 0 5px green;
 }
 ```
 
@@ -288,7 +312,7 @@ span.task-priority {
  padding: 2px 8px;
 }
 /* A special color for overdue due dates */
-[class*="past-"] .task-due span {
+.task-due[class*="past-"] span {
  background: var(--color-pink);
  border-radius: 10px;
  padding: 2px 8px;

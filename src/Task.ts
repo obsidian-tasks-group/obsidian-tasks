@@ -4,13 +4,13 @@ import type { TaskLayoutComponent } from './TaskLayout';
 import { Recurrence } from './Recurrence';
 import { getSettings } from './Config/Settings';
 import { StatusRegistry } from './StatusRegistry';
-import { Status } from './Status';
+import type { Status } from './Status';
 import { Urgency } from './Urgency';
-import { DateField } from './Query/Filter/DateField';
 import { renderTaskLine } from './TaskLineRenderer';
 import type { TaskLineRenderDetails } from './TaskLineRenderer';
 import { DateFallback } from './DateFallback';
 import * as RegExpTools from './lib/RegExpTools';
+import { compareByDate } from './lib/DateTools';
 
 /**
  * When sorting, make sure low always comes after none. This way any tasks with low will be below any exiting
@@ -264,10 +264,7 @@ export class Task {
 
         // Get the status of the task.
         const statusString = regexMatch[3];
-        let status = StatusRegistry.getInstance().byIndicator(statusString);
-        if (status === Status.EMPTY) {
-            status = Status.createUnknownStatus(statusString);
-        }
+        const status = StatusRegistry.getInstance().bySymbolOrCreate(statusString);
 
         // Match for block link and remove if found. Always expected to be
         // at the end of the line.
@@ -505,7 +502,7 @@ export class Task {
      * @memberof Task
      */
     public toFileLineString(): string {
-        return `${this.indentation}${this.listMarker} [${this.status.indicator}] ${this.toString()}`;
+        return `${this.indentation}${this.listMarker} [${this.status.symbol}] ${this.toString()}`;
     }
 
     /**
@@ -517,10 +514,7 @@ export class Task {
      * task is not recurring, it will return `[toggled]`.
      */
     public toggle(): Task[] {
-        let newStatus = StatusRegistry.getInstance().getNextStatus(this.status);
-        if (newStatus === Status.EMPTY) {
-            newStatus = Status.createUnknownStatus(this.status.nextStatusIndicator);
-        }
+        const newStatus = StatusRegistry.getInstance().getNextStatusOrCreate(this.status);
 
         let newDoneDate = null;
 
@@ -552,9 +546,11 @@ export class Task {
         const newTasks: Task[] = [];
 
         if (nextOccurrence !== null) {
+            const nextStatus = StatusRegistry.getInstance().getNextStatusOrCreate(newStatus);
             const nextTask = new Task({
                 ...this,
                 ...nextOccurrence,
+                status: nextStatus,
                 // New occurrences cannot have the same block link.
                 // And random block links don't help.
                 blockLink: '',
@@ -690,7 +686,7 @@ export class Task {
         for (const el of args) {
             const date1 = this[el] as Moment | null;
             const date2 = other[el] as Moment | null;
-            if (DateField.compareByDate(date1, date2) !== 0) {
+            if (compareByDate(date1, date2) !== 0) {
                 return false;
             }
         }

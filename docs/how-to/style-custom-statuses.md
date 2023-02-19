@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Style custom statuses
-nav_order: 3
+nav_order: 2
 parent: How Tos
 ---
 
@@ -19,17 +19,9 @@ parent: How Tos
 
 ---
 
-## Motivation and assumptions
-
-After setting up [setting up our custom statuses]({{ site.baseurl }}{% link how-to/set-up-custom-statuses.md %}), they look very unappealing in Obsidian.
-
-This pages walks through downloading and using a CSS snippet to make them look good.
-
-We assume that you know how to [use CSS snippets in Obsidian](https://help.obsidian.md/How+to/Add+custom+styles#Use+Themes+and+or+CSS+snippets).
-
 ## Summary
 
-If you are using custom statuses in Tasks, you will need to install and enable **one of** the following, in order for your tasks to look good:
+If you plan to use [Custom Statuses]({{ site.baseurl }}{% link getting-started/statuses/custom-statuses.md %}) in Tasks, you will need to install and enable **one of** the following, in order for your tasks to look good:
 
 - A custom CSS Snippet
 - A Theme
@@ -39,6 +31,14 @@ We recommend selecting a snippet rather than a theme.
 This is because if you choose custom checkboxes from a theme, you are tied that theme permanently.
 
 However, most snippets can be applied to any theme, giving you much more flexibility.
+
+Different CSS Snippets and Themes use different letters and symbols inside `[` and `]`, so it's more efficient to select your styling first, and then [set up your custom statuses]({{ site.baseurl }}{% link how-to/set-up-custom-statuses.md %}) for the symbol character your chosen styling supports.
+
+This pages walks through downloading and using a CSS snippet to make them look good.
+
+## Assumptions
+
+We assume that you know how to [use CSS snippets in Obsidian](https://help.obsidian.md/How+to/Add+custom+styles#Use+Themes+and+or+CSS+snippets).
 
 ## Default appearance
 
@@ -62,17 +62,19 @@ Tasks doesn't know the meaning of any custom statuses. This means that by defaul
 
 There are many community Snippets and Themes available to customise the appearance of checkboxes in Obsidian, and different people have different preferences.
 
-Tasks allows (and requires) you to choose your own styling option.
+Tasks allows (and requires) you to choose your own styling option. We have a list of common ones in [Status Collections]({{ site.baseurl }}{% link reference/status-collections/index.md %})
 
-For this example, we will choose to style our tasks with SlrVb's [Alternate-Checkboxes](https://github.com/SlRvb/Obsidian--ITS-Theme/blob/main/Guide/Alternate-Checkboxes.md) from the [ITS-Theme.](https://github.com/SlRvb/Obsidian--ITS-Theme).
+For this example, we will choose to style our tasks with [SlRvb's Alternate Checkboxes]({{ site.baseurl }}{% link getting-started/statuses/custom-statuses.md %}).
 
-Download the snippet, add it to your vault's snippet folder, and enable the snippet.
+## Installing SlrVb's Alternate-Checkboxes
+
+[Download the snippet](https://github.com/SlRvb/Obsidian--ITS-Theme/blob/main/Guide/Alternate-Checkboxes.md), add it to your vault's snippet folder, and enable the snippet.
 
 The above 3  task lines now look like this:
 
 ![3 sample tasks styled with SlrVb's Alternate-Checkboxes](../images/styling-sample-tasks-slrvb-custom-checkboxes.png)
 
-### Customising the custom style: Style Settings plugin
+## Customising the custom style: Style Settings plugin
 
 We also have the option to install the [Style Settings](https://github.com/mgmeyers/obsidian-style-settings) plugin and customise the appearance of SlrVb's Alternate Checkboxes.
 
@@ -90,3 +92,24 @@ Expand the 'SlRvb's Checkboxes' section and turn on these options:
 Now the above three tasks look more colourful, and tasks with `[x]` and `[X]` are crossed out, indicating they are completed:
 
 ![3 sample tasks, with SlrVb's Alternate-Checkboxes modified by Style Settings](../images/styling-sample-tasks-slrvb-custom-checkboxes-modified.png)
+
+## Related pages
+
+<!-- force a blank line --> <!-- include: snippet-statuses-overview.md -->
+
+{: .info }
+> Broad steps to understand and set up Statuses (or "Alternate Checkboxes"):
+>
+> - Understand what Statuses are:
+>   - [Statuses]({{ site.baseurl }}{% link getting-started/statuses.md %})
+>   - [Custom Statuses]({{ site.baseurl }}{% link getting-started/statuses/custom-statuses.md %})
+> - Choose your status styling scheme: this will determine the names and symbols for your custom statuses:
+>   - Some common ones are shown in [Status Collections]({{ site.baseurl }}{% link reference/status-collections/index.md %})
+> - Set up your status styling scheme
+>   - [How to style custom statuses]({{ site.baseurl }}{% link how-to/style-custom-statuses.md %}).
+> - Configure Tasks to use your custom statuses
+>   - [How to set up your custom statuses]({{ site.baseurl }}{% link how-to/set-up-custom-statuses.md %})
+> - Optionally, update your tasks searches to take advantage of the new flexibility
+>   - [Filters for Task Statuses]({{ site.baseurl }}{% link queries/filters.md %}#filters-for-task-statuses)
+
+<!-- force a blank line --> <!-- endInclude -->

@@ -44,7 +44,9 @@ export class TaskLayout {
         'blockLink',
     ];
     public layoutComponents: TaskLayoutComponent[];
+    public hiddenComponents: TaskLayoutComponent[] = [];
     public options: LayoutOptions;
+    public specificClasses: string[] = [];
 
     constructor(options?: LayoutOptions, components?: TaskLayoutComponent[]) {
         if (options) {
@@ -64,13 +66,17 @@ export class TaskLayout {
      * Return a new list of components with the given options applied.
      */
     applyOptions(layoutOptions: LayoutOptions): TaskLayoutComponent[] {
-        // Remove a component from the taskComponents array if the given layoutOption criteria is met
+        // Remove a component from the taskComponents array if the given layoutOption criteria is met,
+        // and add to the layout's specific classes list the class that denotes that this component
+        // isn't in the layout
         const removeIf = (
             taskComponents: TaskLayoutComponent[],
             shouldRemove: boolean,
             componentToRemove: TaskLayoutComponent,
         ) => {
             if (shouldRemove) {
+                this.specificClasses.push(`tasks-layout-hide-${componentToRemove}`);
+                this.hiddenComponents.push(componentToRemove);
                 return taskComponents.filter((element) => element != componentToRemove);
             } else {
                 return taskComponents;
@@ -85,6 +91,7 @@ export class TaskLayout {
         newComponents = removeIf(newComponents, layoutOptions.hideScheduledDate, 'scheduledDate');
         newComponents = removeIf(newComponents, layoutOptions.hideDueDate, 'dueDate');
         newComponents = removeIf(newComponents, layoutOptions.hideDoneDate, 'doneDate');
+        if (layoutOptions.shortMode) this.specificClasses.push('tasks-layout-short-mode');
         return newComponents;
     }
 }

@@ -1,0 +1,1634 @@
+/* Aura - An Minimilistic Theme for Obsidian */
+/* By Ashwin Jadhav */
+@import url('https://fonts.googleapis.com/css2?family=Overpass:ital,wght@0,400;0,700;1,400;1,700&family=Rubik:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+/* 
+==============================================================================
+========================= STYLE SETTINGS ==============================
+==============================================================================
+*/
+/* @settings
+
+name: Aura
+id: aura
+level: 1
+settings:
+   - 
+      id: aura-colors
+      title: Colors
+      type: heading
+      level: 2
+      collapsed: true
+   - 
+      id: aura-accent
+      title: Theme accent
+      description: Change the theme accent as you like
+      type: class-select
+      allowEmpty: false
+      default: color-blue
+      options:
+         - 
+            label: Red
+            value: color-red
+         - 
+            label: Orange
+            value: color-orange
+         - 
+            label: Yellow
+            value: color-yellow
+         - 
+            label: Green
+            value: color-green
+         - 
+            label: Blue
+            value: color-blue
+         - 
+            label: Purple
+            value: color-purple
+   - 
+      id: aura-colorschemes
+      title: Enable custom colorschemes
+      description: Customize the theme colorscheme
+      type: class-toggle
+   - 
+      id: aura-colorshemes
+      title: Colorscheme
+      type: class-select
+      allowEmpty: false
+      default: aura-colorschemes-dracula
+      options:
+      -
+         label: Dracula
+         value: aura-colorschemes-dracula
+      -
+         label: Kanagawa
+         value: aura-colorschemes-kanagawa
+      - 
+         label: Gruvbox
+         value: aura-colorschemes-gruvbox
+      - 
+         label: Solarized
+         value: aura-colorschemes-solarized
+   - 
+      id: aura-interface-colors
+      title: Interface colors
+      type: heading
+      level: 3
+      collapsed: true
+   - 
+      id: bg-primary
+      title: Primary background
+      type: variable-color
+      opacity: false
+      format: rgb-values
+      default: 'rgb(18, 18, 18)'
+   - 
+      id: bg-secondary
+      title: Secondary background
+      type: variable-color
+      opacity: false
+      format: rgb-values
+      default: 'rgb(15, 15, 16)'
+   -
+      id: aura-extended-colors
+      title: Extended colors
+      type: heading
+      level: 3
+      collapsed: true
+   - 
+      id: accent-red
+      title: Red
+      type: variable-color
+      opacity: false
+      format: rgb-values
+      default: 'rgb(208, 66, 85)'
+   - 
+      id: accent-orange
+      title: Orange
+      type: variable-color
+      opacity: false
+      format: rgb-values
+      default: 'rgb(213, 118, 52)'
+   - 
+      id: accent-yellow
+      title: Yellow
+      type: variable-color
+      opacity: false
+      format: rgb-values
+      default: 'rgb(229, 181, 103)'
+   - 
+      id: accent-green
+      title: Green
+      type: variable-color
+      opacity: false
+      format: rgb-values
+      default: 'rgb(168, 195, 115)'
+   - 
+      id: accent-blue
+      title: Blue
+      type: variable-color
+      opacity: false
+      format: rgb-values
+      default: 'rgb(108, 153, 187)'
+   - 
+      id: accent-purple
+      title: Purple
+      type: variable-color
+      opacity: false
+      format: rgb-values
+      default: 'rgb(147, 134, 200)'
+
+   - 
+      id: aura-text
+      title: Text
+      type: heading
+      level: 2
+      collapsed: true
+   - 
+      id: font-interface
+      title: UI font
+      description: Font used for the user interface
+      type: variable-text
+      default: Overpass, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif
+   - 
+      id: font-text
+      title: Text font
+      description: Font used for the documents
+      type: variable-text
+      default: Rubik, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif
+
+   - 
+      id: aura-workspace
+      title: Workspace
+      type: heading
+      level: 2
+      collapsed: true
+   - 
+      id: status-bar-position
+      title: Status bar
+      description: change the status bar style
+      type: variable-select
+      default: fixed
+      options:
+         - 
+            label: full
+            value: inherit
+         - 
+            label: minimal
+            value: fixed
+   - 
+      id: aura-workspace-background
+      title: Workspace Background
+      type: heading
+      level: 4
+      collapsed: true
+   -
+      id: aura-workspace-background
+      title: Enable Workspace Backgound
+      description: Customize your workspace background by adding images to it
+      type: class-toggle
+   -
+      id: aura-workspace-background-image
+      title: Select Workspace Background Image
+      description: Customize your workspace background by adding images to it
+      type: class-select
+      allowEmpty: false
+      default: aura-workspace-background-image-tokoyo
+      options:
+         - 
+            label: Tokoyo
+            value: aura-workspace-background-image-tokoyo
+         - 
+            label: Skyline
+            value: aura-workspace-background-image-skyline
+         - 
+            label: Spider Man Multiverse
+            value: aura-workspace-background-image-spiderman
+         -
+            label: Custom
+            value: aura-workspace-background-image-custom
+   -
+      id: aura-workspace-background-image-custom-option
+      title: Custom Workspace Background Image
+      description: Customize the background image. Use the default format below for an online image. Use the following format to point to a local file - url("app://local/D:/Pictures/Mountain.jpg").
+      type: variable-text
+      default: url("https://")
+   -
+      id: aura-workspace-background-workspace-slider
+      title: Container opacity
+      type: variable-number-slider
+      min: 0
+      max: 1
+      step: 0.05
+      default: 0.4
+   - 
+      id: aura-workspace-background-blur
+      title: Background blur
+      type: variable-number-slider
+      min: 0
+      max: 20
+      step: 1
+      default: 5
+      format: px
+   - 
+      id: aura-workspace-background-brightness
+      title: Background brightness
+      type: variable-number-slider
+      min: 0
+      max: 1
+      step: 0.05
+      default: 0.7
+   - 
+      id: aura-layout-heading
+      title: Layout
+      type: heading
+      level: 4
+      collapsed: true
+   - 
+      id: aura-layout-select
+      title: Layout Style
+      type: class-select
+      allowEmpty: false
+      default: aura-default-layout
+      options:
+         -
+            label: Default
+            value: aura-default-layout
+         -
+            label: Cards
+            value: aura-card-layout
+   - 
+      id: aura-disable-borders
+      title: Disable borders
+      type: class-toggle
+   -
+      id: tab-outline-color
+      title: Custom borders Color
+      type: variable-color
+      opacity: true
+      format: hex
+      default: '#'
+   - 
+      id: aura-card-radius
+      title: Card radius
+      description: Size unit is px
+      type: variable-number
+      default: 16
+      format: px
+   - 
+      id: aura-card-layout-padding
+      title: Card padding
+      description: Size unit is px
+      type: variable-number
+      default: 10
+      format: px
+   - 
+      id: aura-card-header-left-padding
+      title: Tab left padding
+      description: Size unit is px
+      type: variable-number
+      default: 20
+      format: px
+   - 
+      id: aura-card-shadows
+      title: Enable shadows for cards
+      type: class-toggle
+   - 
+      id: aura-card-layout-actions
+      title: Enable card format for left ribbon
+      type: class-toggle
+   - 
+      id: aura-card-layout-fileexplorer
+      title: Enable card format for file explorer
+      default: true
+      type: class-toggle
+   - 
+      id: aura-sidebar
+      title: Sidebar
+      type: heading
+      level: 3
+      collapsed: true
+   -
+      id: aura-rainbow-folders
+      title: Rainbow Folders
+      description: Customize your folder colors
+      type: class-toggle
+   -
+      id: aura-folder-icons
+      title: Folder Icons
+      description: Customize your folder by adding icons to it
+      type: class-toggle
+   - 
+      id: aura-editor
+      title: Editor
+      type: heading
+      level: 2
+      collapsed: true
+   -
+      id: aura-custom-checkbox
+      title: Custom Checkbox
+      description: Enable custom checkboxes for checkbox customization
+      default: true
+      type: class-toggle
+   -
+      id: aura-rainbow-tags
+      title: Rainbow Tags
+      description: Customize your tag with rainbow colors
+      type: class-toggle
+   - 
+      id: aura-headings
+      title: Heading
+      type: heading
+      level: 3
+      collapsed: true
+   -
+      id: aura-heading-color
+      title: Colored Headings
+      description: Turn on or off colored heading
+      type: class-toggle
+   - 
+      id: h1-color
+      title: H1 color
+      type: variable-color
+      opacity: false
+      format: rgb
+      default: 'rgb(255, 255, 255)'
+   - 
+      id: h2-color
+      title: H2 color
+      type: variable-color
+      opacity: false
+      format: rgb
+      default: 'rgb(255, 255, 255)'
+   - 
+      id: h3-color
+      title: H3 color
+      type: variable-color
+      opacity: false
+      format: rgb
+      default: 'rgb(255, 255, 255)'
+   - 
+      id: h4-color
+      title: H4 color
+      type: variable-color
+      opacity: false
+      format: rgb
+      default: 'rgb(255, 255, 255)'
+   - 
+      id: h5-color
+      title: H5 color
+      type: variable-color
+      opacity: false
+      format: rgb
+      default: 'rgb(255, 255, 255)'
+   - 
+      id: h6-color
+      title: H6 color
+      type: variable-color
+      opacity: false
+      format: rgb
+      default: 'rgb(255, 255, 255)'
+   - 
+      id: aura-callouts-heading
+      title: Callouts
+      type: heading
+      level: 3
+      collapsed: true
+
+   -
+      id: aura-callouts
+      title: Enable Callout Styling
+      type: class-toggle
+
+   -
+      id: aura-callouts-select
+      title: Custom Callouts
+      type: class-select
+      allowEmpty: false
+      default: default
+      options:
+            - 
+               label: Default
+               value: default
+            - 
+               label: Sleek
+               value: aura-callouts-sleek
+            - 
+               label: Vanilla
+               value: aura-callouts-vanilla
+
+   
+*/
+.style-settings-container
+   [data-level='1'].setting-item-heading
+   .setting-item-name,
+.style-settings-container
+   [data-level='2'].setting-item-heading
+   .setting-item-name,
+.style-settings-container
+   [data-level='3'].setting-item-heading
+   .setting-item-name,
+.style-settings-container
+   [data-level='4'].setting-item-heading
+   .setting-item-name,
+.style-settings-container
+   [data-level='5'].setting-item-heading
+   .setting-item-name {
+   color: var(--text-normal);
+}
+.style-settings-container
+   [data-level='1'].setting-item-heading.style-settings-heading,
+.style-settings-container
+   [data-level='2'].setting-item-heading.style-settings-heading,
+.style-settings-container
+   [data-level='3'].setting-item-heading.style-settings-heading,
+.style-settings-container
+   [data-level='4'].setting-item-heading.style-settings-heading,
+.style-settings-container
+   [data-level='5'].setting-item-heading.style-settings-heading {
+   border-bottom: 1px solid rgba(var(--accent), 0.2);
+}
+.style-settings-container
+   [data-level='1'].setting-item-heading.style-settings-heading:not(
+      .is-collapsed
+   ),
+.style-settings-container
+   [data-level='2'].setting-item-heading.style-settings-heading:not(
+      .is-collapsed
+   ),
+.style-settings-container
+   [data-level='3'].setting-item-heading.style-settings-heading:not(
+      .is-collapsed
+   ),
+.style-settings-container
+   [data-level='4'].setting-item-heading.style-settings-heading:not(
+      .is-collapsed
+   ),
+.style-settings-container
+   [data-level='5'].setting-item-heading.style-settings-heading:not(
+      .is-collapsed
+   ) {
+   border-color: transparent;
+   margin-bottom: 0px;
+}
+.style-settings-container [data-level='1'].style-settings-container,
+.style-settings-container [data-level='2'].style-settings-container,
+.style-settings-container [data-level='3'].style-settings-container,
+.style-settings-container [data-level='4'].style-settings-container,
+.style-settings-container [data-level='5'].style-settings-container {
+   border: 1px solid var(--background-secondary-alt);
+   border-radius: 5px;
+   padding: 5px;
+   background-color: var(--background-secondary);
+}
+
+.style-settings-heading[data-id='aura'] {
+   background-color: rgb(var(--accent));
+   -webkit-background-clip: text;
+   -webkit-text-fill-color: transparent;
+   font-weight: bold;
+}
+
+/* 
+==============================================================================
+========================= VARIABLES ==============================
+==============================================================================
+*/
+body {
+   --font-interface: 'Overpass', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+      Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+   --font-text: 'Rubik', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+      Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+}
+
+.theme-dark {
+   --accent: var(--accent-blue);
+   --accent-muted: var(--accent-blue-muted);
+
+   --black: 0, 0, 0;
+   --white: 255, 255, 255;
+   --accent-red: 208, 66, 85;
+   --accent-orange: 213, 118, 52;
+   --accent-yellow: 229, 181, 103;
+   --accent-green: 168, 195, 115;
+   --accent-blue: 108, 153, 187;
+   --accent-purple: 147, 134, 200;
+
+   --white-muted: 225, 225, 225, 0.871;
+   --accent-red-muted: 196, 49, 69;
+   --accent-orange-muted: 169, 88, 30;
+   --accent-yellow-muted: 227, 160, 51;
+   --accent-green-muted: 140, 169, 82;
+   --accent-blue-muted: 71, 115, 148;
+   --accent-purple-muted: 104, 92, 152;
+
+   /* Background */
+   --bg-primary: 18, 18, 18;
+   --bg-primary-alt: 20, 20, 20;
+   --bg-secondary: 15, 15, 16;
+   --bg-secondary-alt: 17, 17, 17;
+
+   --background-primary: rgb(var(--bg-primary));
+   --background-primary-alt: rgb(var(--bg-primary-alt));
+   --background-secondary: rgb(var(--bg-secondary));
+   --background-secondary-alt: rgb(var(--bg-primary-alt));
+   --titlebar-background: rgb(var(--ribbon-background));
+   --titlebar-background-focused: rgb(var(--ribbon-background-collapsed));
+   --background-modifier-border-focus: rgba(var(--accent), 0.5);
+
+   /* Interictive elements */
+   --interactive-normal: rgba(var(--accent), 0.2);
+   --interactive-hover: rgba(var(--accent-muted), 0.2);
+   --interactive-accent: rgb(var(--accent));
+   --interactive-accent-hover: rgb(var(--accent-muted));
+
+   /* Text */
+   --text-normal: rgb(var(--white));
+   --text-faint: rgba(var(--white-muted));
+   --text-accent: rgb(var(--accent));
+   --text-accent-hover: var(--accent-muted);
+   --text-on-accent: rgb(var(--black));
+   --text-selection: rgba(var(--white), 0.075);
+   --bold-color: rgb(var(--accent-red));
+   --italic-color: rgb(var(--accent-blue));
+
+   /* Sidebar */
+   --nav-item-color: rgb(var(--white));
+}
+
+/*------------------Accent-------------------*/
+.color-red {
+   --accent: var(--accent-red);
+   --accent-muted: var(--accent-red-muted);
+}
+.color-orange {
+   --accent: var(--accent-orange);
+   --accent-muted: var(--accent-orange-muted);
+}
+.color-yellow {
+   --accent: var(--accent-yellow);
+   --accent-muted: var(--accent-yellow-muted);
+}
+.color-green {
+   --accent: var(--accent-green);
+   --accent-muted: var(--accent-green-muted);
+}
+.color-blue {
+   --accent: var(--accent-blue);
+   --accent-muted: var(--accent-blue-muted);
+}
+.color-purple {
+   --accent: var(--accent-purple);
+   --accent-muted: var(--accent-purple-muted);
+}
+
+/* 
+==============================================================================
+========================= HEADING ==============================
+==============================================================================
+*/
+.aura-heading-color {
+   --h1-color: rgb(var(--accent-red));
+   --h2-color: rgb(var(--accent-orange));
+   --h3-color: rgb(var(--accent-yellow));
+   --h4-color: rgb(var(--accent-green));
+   --h5-color: rgb(var(--accent-blue));
+   --h6-color: rgb(var(--accent-purple));
+}
+
+/* 
+==============================================================================
+========================= COLORSCHEMES ==============================
+==============================================================================
+*/
+.aura-colorschemes.aura-colorschemes-dracula {
+   --bg-primary: 40, 42, 54;
+   --bg-primary-alt: 42, 44, 56;
+   --bg-secondary: 33, 34, 44;
+   --bg-secondary-alt: 35, 36, 46;
+   --accent-red: 255, 85, 85;
+   --accent-orange: 255, 184, 108;
+   --accent-yellow: 241, 250, 140;
+   --accent-green: 80, 250, 123;
+   --accent-blue: 95, 126, 222;
+   --accent-purple: 189, 147, 249;
+}
+.aura-colorschemes.aura-colorschemes-kanagawa {
+   --bg-primary: 31, 31, 40;
+   --bg-secondary: 22, 22, 29;
+   --accent-red: 255, 93, 98;
+   --accent-orange: 255, 158, 59;
+   --accent-yellow: 230, 195, 132;
+   --accent-green: 152, 187, 108;
+   --accent-blue: 126, 156, 216;
+   --accent-purple: 149, 127, 184;
+}
+.aura-colorschemes.aura-colorschemes-gruvbox {
+   --bg-primary: 40, 40, 40;
+   --bg-secondary: 29, 32, 33;
+   --accent-red: 204, 36, 29;
+   --accent-orange: 214, 93, 14;
+   --accent-yellow: 215, 153, 33;
+   --accent-green: 152, 151, 26;
+   --accent-blue: 69, 133, 136;
+   --accent-purple: 177, 98, 134;
+}
+.aura-colorschemes.aura-colorschemes-solarized {
+   --bg-primary: 7, 54, 66;
+   --bg-secondary: 0, 43, 54;
+   --accent-red: 220, 50, 47;
+   --accent-orange: 227, 131, 89;
+   --accent-yellow: 181, 137, 0;
+   --accent-green: 133, 153, 0;
+   --accent-blue: 38, 139, 210;
+   --accent-purple: 108, 113, 196;
+}
+
+/* 
+==============================================================================
+========================= FOLDER ICONS ==============================
+==============================================================================
+*/
+.aura-folder-icons .nav-folder-children .nav-folder-title-content::before {
+   content: '📂 ';
+}
+
+/* 
+==============================================================================
+========================= RAINBOW FOLDERS ==============================
+==============================================================================
+*/
+.aura-rainbow-folders .nav-folder-title-content .nav-file-title-content {
+   color: rgb(var(--white));
+}
+.aura-rainbow-folders
+   .nav-folder.mod-root
+   > .nav-folder-children
+   > .nav-folder:nth-child(11n + 2) {
+   background-color: rgb(var(--accent-red));
+   border-color: rgb(var(--accent-red));
+   border-radius: 5px;
+   margin-top: 2px;
+}
+.aura-rainbow-folders
+   .nav-folder.mod-root
+   > .nav-folder-children
+   > .nav-folder:nth-child(11n + 3) {
+   background-color: rgb(var(--accent-orange));
+   border-color: rgb(var(--accent-orange));
+   border-radius: 5px;
+   margin-top: 2px;
+}
+.aura-rainbow-folders
+   .nav-folder.mod-root
+   > .nav-folder-children
+   > .nav-folder:nth-child(11n + 4) {
+   background-color: rgb(var(--accent-yellow));
+   border-color: rgb(var(--accent-yellow));
+   border-radius: 5px;
+   margin-top: 2px;
+}
+.aura-rainbow-folders
+   .nav-folder.mod-root
+   > .nav-folder-children
+   > .nav-folder:nth-child(11n + 5) {
+   background-color: rgb(var(--accent-green));
+   border-color: rgb(var(--accent-green));
+   border-radius: 5px;
+   margin-top: 2px;
+}
+.aura-rainbow-folders
+   .nav-folder.mod-root
+   > .nav-folder-children
+   > .nav-folder:nth-child(11n + 6) {
+   background-color: rgb(var(--accent-blue));
+   border-color: rgb(var(--accent-blue));
+   border-radius: 5px;
+   margin-top: 2px;
+}
+.aura-rainbow-folders
+   .nav-folder.mod-root
+   > .nav-folder-children
+   > .nav-folder:nth-child(11n + 7) {
+   background-color: rgb(var(--accent-purple));
+   border-color: rgb(var(--accent-purple));
+   border-radius: 5px;
+   margin-top: 2px;
+}
+.aura-rainbow-folders
+   .nav-folder.mod-root
+   > .nav-folder-children
+   > .nav-folder:nth-child(11n + 8) {
+   background-color: rgb(var(--accent-red-muted));
+   border-color: rgb(var(--accent-red-muted));
+   border-radius: 5px;
+   margin-top: 2px;
+}
+.aura-rainbow-folders
+   .nav-folder.mod-root
+   > .nav-folder-children
+   > .nav-folder:nth-child(11n + 9) {
+   background-color: rgb(var(--accent-orange-muted));
+   border-color: rgb(var(--accent-orange-muted));
+   border-radius: 5px;
+   margin-top: 2px;
+}
+.aura-rainbow-folders
+   .nav-folder.mod-root
+   > .nav-folder-children
+   > .nav-folder:nth-child(11n + 10) {
+   background-color: rgb(var(--accent-yellow-muted));
+   border-color: rgb(var(--accent-yellow-muted));
+   border-radius: 5px;
+   margin-top: 2px;
+}
+.aura-rainbow-folders
+   .nav-folder.mod-root
+   > .nav-folder-children
+   > .nav-folder:nth-child(11n + 11) {
+   background-color: rgb(var(--accent-green-muted));
+   border-color: rgb(var(--accent-green-muted));
+   border-radius: 5px;
+   margin-top: 2px;
+}
+.aura-rainbow-folders
+   .nav-folder.mod-root
+   > .nav-folder-children
+   > .nav-folder:nth-child(11n + 12) {
+   background-color: rgb(var(--accent-blue-muted));
+   border-color: rgb(var(--accent-blue-muted));
+   border-radius: 5px;
+   margin-top: 2px;
+}
+
+/* 
+==============================================================================
+========================= CUSTOM CALLOUTS ==============================
+==============================================================================
+*/
+.aura-callouts.aura-callouts-vanilla {
+   --callout-title-padding: 7px;
+}
+.aura-callouts.aura-callouts-vanilla .callout {
+   background-color: transparent;
+   border-radius: var(--radius-s);
+   padding: 0;
+}
+.aura-callouts.aura-callouts-vanilla .callout .callout-title {
+   background-color: rgba(var(--callout-color), 0.1);
+}
+.aura-callouts.aura-callouts-vanilla .callout .callout-content {
+   padding: var(--callout-padding);
+   background-color: rgb(var(--accent));
+}
+.aura-callouts.aura-callouts-vanilla .callout .callout-title,
+.aura-callouts.aura-callouts-vanilla .callout .callout-content {
+   border-left: var(--size-2-3) solid rgb(var(--callout-color));
+}
+.aura-callouts.aura-callouts-sleek .callout:not(.is-collapsible) {
+   padding: 0px;
+}
+.aura-callouts.aura-callouts-sleek
+   .callout:not(.is-collapsible)
+   .callout-content {
+   padding: 0 var(--callout-title-padding) var(--callout-title-padding)
+      var(--callout-title-padding);
+}
+.aura-callouts.aura-callouts-sleek
+   .callout:not(.is-collapsible)
+   .callout-title {
+   background-color: rgba(var(--callout-color), 0 0.5);
+   padding: var(--callout-title-padding);
+   cursor: pointer;
+}
+.aura-callouts.aura-callouts-sleek
+   .callout:not(.is-collapsible)
+   .callout-title
+   .callout-title-inner {
+   font-weight: normal;
+}
+.aura-callouts.aura-callouts-sleek .callout:not(.is-collapsible) {
+   border-color: rgba(var(--callout-color), 0.4);
+   border-width: 1px;
+   border-radius: var(--callout-radius);
+   background-color: rgba(var(--ctp-mantle), 0.4);
+}
+.aura-callouts.aura-callouts-sleek .callout-content {
+   padding: var(--callout-title-padding) var(--callout-title-padding)
+      var(--callout-title-padding) calc(var(--callout-title-padding) * 1.5);
+   border-top: 1px dashed rgba(var(--callout-color), 0.4);
+}
+.aura-callouts.aura-callouts-sleek .callout-fold {
+   padding-right: 0px;
+}
+.aura-callouts.aura-callouts-sleek .callout {
+   --callout-title-padding: var(--size-4-2);
+}
+.aura-callouts.aura-callouts-sleek .callout.is-collapsible {
+   border-color: rgba(var(--callout-color), 0.4);
+   border-width: 1px;
+   border-radius: var(--callout-radius);
+   background-color: rgba(var(--ctp-mantle), 0.4);
+   --bold-weight: bolder;
+}
+.aura-callouts.aura-callouts-sleek .callout.is-collapsible .callout-fold {
+   padding-right: 0px;
+}
+.aura-callouts.aura-callouts-sleek .callout.is-collapsible.is-collapsed {
+   padding: 0;
+}
+.aura-callouts.aura-callouts-sleek
+   .callout.is-collapsible.is-collapsed
+   .callout-title {
+   background-color: rgba(var(--callout-color), 0.1);
+   padding: var(--callout-title-padding);
+   cursor: pointer;
+}
+.aura-callouts.aura-callouts-sleek
+   .callout.is-collapsible.is-collapsed
+   .callout-content {
+   display: none;
+}
+.aura-callouts.aura-callouts-sleek .callout.is-collapsible:not(.is-collapsed) {
+   padding: 0px 0px var(--callout-title-padding) 0px;
+}
+.aura-callouts.aura-callouts-sleek
+   .callout.is-collapsible:not(.is-collapsed)
+   .callout-title {
+   background-color: rgba(var(--callout-color), 0.1);
+   padding: var(--callout-title-padding);
+   border-color: rgba(var(--callout-color), 0.4);
+   cursor: pointer;
+}
+.aura-callouts.aura-callouts-sleek
+   .callout.is-collapsible:not(.is-collapsed)
+   .callout-content {
+   padding: var(--callout-title-padding) var(--callout-title-padding) 0
+      calc(var(--callout-title-padding) * 1.5);
+   border-top: 1px dashed rgba(var(--callout-color), 0.4);
+}
+.aura-callouts.aura-callouts-sleek .callout:not(.is-collapsible) {
+   padding: 0px;
+}
+.aura-callouts.aura-callouts-sleek
+   .callout:not(.is-collapsible)
+   .callout-title {
+   background-color: rgba(var(--callout-color), 0.1);
+   padding: var(--callout-title-padding);
+   border-color: rgba(var(--callout-color), 0.4);
+}
+.aura-callouts.aura-callouts-sleek .callout .list-collapse-indicator {
+   margin-left: -35px;
+   padding-right: 3px;
+}
+/* 
+==============================================================================
+========================= RAINBOW TAGS ==============================
+==============================================================================
+*/
+.aura-rainbow-tags a.tag {
+   font-weight: bold;
+   box-decoration-break: clone;
+   -webkit-box-decoration-break: clone;
+   display: inline-block;
+}
+
+.aura-rainbow-tags a.tag:hover,
+.aura-rainbow-tags a.tag:focus {
+   transform: translateY(-0.25em);
+}
+
+.aura-rainbow-tags p > a.tag:nth-child(7n + 1) {
+   color: rgb(var(--accent-red));
+}
+
+.aura-rainbow-tags p > a.tag:nth-child(7n + 2) {
+   color: rgb(var(--accent-orange));
+}
+
+.aura-rainbow-tags p > a.tag:nth-child(7n + 3) {
+   color: rgb(var(--accent-yellow));
+}
+
+.aura-rainbow-tags p > a.tag:nth-child(7n + 4) {
+   color: rgb(var(--accent-green));
+}
+
+.aura-rainbow-tags p > a.tag:nth-child(7n + 5) {
+   color: rgb(var(--accent-blue));
+}
+
+.aura-rainbow-tags p > a.tag:nth-child(7n + 6) {
+   color: rgb(var(--accent-purple));
+}
+
+/* 
+==============================================================================
+========================= CUSTOM CHECKBOXES ==============================
+==============================================================================
+*/
+.aura-custom-checkbox input[type='checkbox']:checked:after {
+   background-color: rgb(var(--black));
+}
+.aura-custom-checkbox .task-list-item-checkbox[data-task='x'],
+.aura-custom-checkbox
+   ul
+   > li.task-list-item[data-task='x']
+   .task-list-item-checkbox {
+   background-color: rgb(var(--accent-green));
+   border: 1px solid rgb(var(--accent-green));
+}
+.aura-custom-checkbox .task-list-item-checkbox[data-task='x']:hover,
+.aura-custom-checkbox
+   ul
+   > li.task-list-item[data-task='x']
+   .task-list-item-checkbox:hover {
+   background-color: rgb(var(--accent-green-muted));
+   border: 1px solid rgb(var(--accent-green-muted));
+}
+.aura-custom-checkbox
+   .task-list-item-checkbox[data-task='X']
+   > input[type='checkbox']:checked
+   ul
+   > li.task-list-item[data-task='X']
+   .task-list-item-checkbox {
+   background-color: rgb(var(--accent-green));
+   border: 1px solid rgb(var(--accent-green));
+}
+.aura-custom-checkbox .task-list-item-checkbox[data-task='X']:hover,
+.aura-custom-checkbox
+   ul
+   > li.task-list-item[data-task='X']
+   .task-list-item-checkbox:hover {
+   background-color: rgb(var(--accent-green-muted));
+   border: 1px solid rgb(var(--accent-green-muted));
+}
+.aura-custom-checkbox .task-list-item-checkbox[data-task='?'],
+.aura-custom-checkbox
+   ul
+   > li.task-list-item[data-task='?']
+   .task-list-item-checkbox {
+   background-color: rgb(var(--accent-yellow));
+   border: 1px solid rgb(var(--accent-yellow));
+   border-radius: 10px;
+}
+.aura-custom-checkbox .task-list-item-checkbox[data-task='?']:hover,
+.aura-custom-checkbox
+   ul
+   > li.task-list-item[data-task='?']
+   .task-list-item-checkbox:hover {
+   background-color: rgb(var(--accent-yellow-muted));
+   border: 1px solid rgb(var(--accent-yellow-muted));
+}
+.aura-custom-checkbox [data-task='?'] input[type='checkbox']:checked:after,
+.aura-custom-checkbox [data-task='?'][type='checkbox']:checked:after {
+   -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 512'%3E%3C!--! Font Awesome Pro 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --%3E%3Cpath d='M96 96c-17.7 0-32 14.3-32 32s-14.3 32-32 32s-32-14.3-32-32C0 75 43 32 96 32h97c70.1 0 127 56.9 127 127c0 52.4-32.2 99.4-81 118.4l-63 24.5 0 18.1c0 17.7-14.3 32-32 32s-32-14.3-32-32V301.9c0-26.4 16.2-50.1 40.8-59.6l63-24.5C240 208.3 256 185 256 159c0-34.8-28.2-63-63-63H96zm48 384c-22.1 0-40-17.9-40-40s17.9-40 40-40s40 17.9 40 40s-17.9 40-40 40z'/%3E%3C/svg%3E");
+   -webkit-mask-size: 50%;
+}
+
+.aura-custom-checkbox .task-list-item-checkbox[data-task='-'],
+.aura-custom-checkbox
+   ul
+   > li.task-list-item[data-task='-']
+   .task-list-item-checkbox {
+   background-color: rgb(var(--accent-red));
+   border: 1px solid rgb(var(--accent-red));
+}
+.aura-custom-checkbox .task-list-item-checkbox[data-task='-']:hover,
+.aura-custom-checkbox
+   ul
+   > li.task-list-item[data-task='-']
+   .task-list-item-checkbox:hover {
+   background-color: rgb(var(--accent-red-muted));
+   border: 1px solid rgb(var(--accent-red-muted));
+}
+.aura-custom-checkbox [data-task='-'] input[type='checkbox']:checked:after,
+.aura-custom-checkbox [data-task='-'][type='checkbox']:checked:after {
+   -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 512'%3E%3C!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --%3E%3Cpath d='M310.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L160 210.7 54.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L114.7 256 9.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 301.3 265.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L205.3 256 310.6 150.6z'/%3E%3C/svg%3E");
+   -webkit-mask-size: 50%;
+}
+
+.aura-custom-checkbox .task-list-item-checkbox[data-task='!'],
+.aura-custom-checkbox
+   ul
+   > li.task-list-item[data-task='!']
+   .task-list-item-checkbox {
+   background-color: rgb(var(--accent-orange));
+   border: 1px solid rgb(var(--accent-orange));
+}
+.aura-custom-checkbox .task-list-item-checkbox[data-task='!']:hover,
+.aura-custom-checkbox
+   ul
+   > li.task-list-item[data-task='!']
+   .task-list-item-checkbox:hover {
+   background-color: rgb(var(--accent-orange-muted));
+   border: 1px solid rgb(var(--accent-orange-muted));
+}
+.aura-custom-checkbox [data-task='!'] input[type='checkbox']:checked:after,
+.aura-custom-checkbox [data-task='!'][type='checkbox']:checked:after {
+   -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 128 512'%3E%3C!--! Font Awesome Pro 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --%3E%3Cpath d='M96 64c0-17.7-14.3-32-32-32S32 46.3 32 64V320c0 17.7 14.3 32 32 32s32-14.3 32-32V64zM64 480c22.1 0 40-17.9 40-40s-17.9-40-40-40s-40 17.9-40 40s17.9 40 40 40z'/%3E%3C/svg%3E");
+   -webkit-mask-size: 20%;
+}
+
+.aura-custom-checkbox .task-list-item-checkbox[data-task='>'],
+.aura-custom-checkbox
+   ul
+   > li.task-list-item[data-task='>']
+   .task-list-item-checkbox {
+   background-color: rgb(var(--accent-blue));
+   border: 1px solid rgb(var(--accent-blue));
+}
+.aura-custom-checkbox .task-list-item-checkbox[data-task='>']:hover,
+.aura-custom-checkbox
+   ul
+   > li.task-list-item[data-task='>']
+   .task-list-item-checkbox:hover {
+   background-color: rgb(var(--accent-blue-muted));
+   border: 1px solid rgb(var(--accent-blue-muted));
+}
+.aura-custom-checkbox [data-task='>'] input[type='checkbox']:checked:after,
+.aura-custom-checkbox [data-task='>'][type='checkbox']:checked:after {
+   -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 384 512'%3E%3C!--! Font Awesome Pro 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --%3E%3Cpath d='M3.4 81.7c-7.9 15.8-1.5 35 14.3 42.9L280.5 256 17.7 387.4C1.9 395.3-4.5 414.5 3.4 430.3s27.1 22.2 42.9 14.3l320-160c10.8-5.4 17.7-16.5 17.7-28.6s-6.8-23.2-17.7-28.6l-320-160c-15.8-7.9-35-1.5-42.9 14.3z'/%3E%3C/svg%3E");
+   -webkit-mask-size: 50%;
+}
+
+.aura-custom-checkbox .task-list-item-checkbox[data-task='/'],
+.aura-custom-checkbox
+   ul
+   > li.task-list-item[data-task='/']
+   .task-list-item-checkbox {
+   background-color: rgb(var(--accent-purple));
+   border: 1px solid rgb(var(--accent-purple));
+}
+.aura-custom-checkbox .task-list-item-checkbox[data-task='/']:hover,
+.aura-custom-checkbox
+   ul
+   > li.task-list-item[data-task='/']
+   .task-list-item-checkbox:hover {
+   background-color: rgb(var(--accent-purple-muted));
+   border: 1px solid rgb(var(--accent-purple-muted));
+}
+.aura-custom-checkbox [data-task='/'] input[type='checkbox']:checked:after,
+.aura-custom-checkbox [data-task='/'][type='checkbox']:checked:after {
+   -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3C!--! Font Awesome Pro 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --%3E%3Cpath d='M0 416c0-17.7 14.3-32 32-32l54.7 0c12.3-28.3 40.5-48 73.3-48s61 19.7 73.3 48L480 384c17.7 0 32 14.3 32 32s-14.3 32-32 32l-246.7 0c-12.3 28.3-40.5 48-73.3 48s-61-19.7-73.3-48L32 448c-17.7 0-32-14.3-32-32zm192 0c0-17.7-14.3-32-32-32s-32 14.3-32 32s14.3 32 32 32s32-14.3 32-32zM384 256c0-17.7-14.3-32-32-32s-32 14.3-32 32s14.3 32 32 32s32-14.3 32-32zm-32-80c32.8 0 61 19.7 73.3 48l54.7 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-54.7 0c-12.3 28.3-40.5 48-73.3 48s-61-19.7-73.3-48L32 288c-17.7 0-32-14.3-32-32s14.3-32 32-32l246.7 0c12.3-28.3 40.5-48 73.3-48zM192 64c-17.7 0-32 14.3-32 32s14.3 32 32 32s32-14.3 32-32s-14.3-32-32-32zm73.3 0L480 64c17.7 0 32 14.3 32 32s-14.3 32-32 32l-214.7 0c-12.3 28.3-40.5 48-73.3 48s-61-19.7-73.3-48L32 128C14.3 128 0 113.7 0 96S14.3 64 32 64l86.7 0C131 35.7 159.2 16 192 16s61 19.7 73.3 48z'/%3E%3C/svg%3E");
+   -webkit-mask-size: 60%;
+}
+
+.aura-custom-checkbox .task-list-item-checkbox[data-task='R'],
+.aura-custom-checkbox
+   ul
+   > li.task-list-item[data-task='R']
+   .task-list-item-checkbox {
+   background-color: rgb(var(--accent-green));
+   border: 1px solid rgb(var(--accent-green));
+}
+.aura-custom-checkbox .task-list-item-checkbox[data-task='R']:hover,
+.aura-custom-checkbox
+   ul
+   > li.task-list-item[data-task='R']
+   .task-list-item-checkbox:hover {
+   background-color: rgb(var(--accent-green-muted));
+   border: 1px solid rgb(var(--accent-green-muted));
+}
+.aura-custom-checkbox [data-task='R'] input[type='checkbox']:checked:after,
+.aura-custom-checkbox [data-task='R'][type='checkbox']:checked:after {
+   -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3C!--! Font Awesome Pro 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --%3E%3Cpath d='M256 512C114.6 512 0 397.4 0 256S114.6 0 256 0S512 114.6 512 256s-114.6 256-256 256zM232 120V256c0 8 4 15.5 10.7 20l96 64c11 7.4 25.9 4.4 33.3-6.7s4.4-25.9-6.7-33.3L280 243.2V120c0-13.3-10.7-24-24-24s-24 10.7-24 24z'/%3E%3C/svg%3E");
+   -webkit-mask-size: 60%;
+}
+
+.aura-custom-checkbox .task-list-item-checkbox[data-task='+'],
+.aura-custom-checkbox
+   ul
+   > li.task-list-item[data-task='+']
+   .task-list-item-checkbox {
+   background-color: rgb(var(--accent-purple));
+   border: 1px solid rgb(var(--accent-purple));
+}
+.aura-custom-checkbox .task-list-item-checkbox[data-task='+']:hover,
+.aura-custom-checkbox
+   ul
+   > li.task-list-item[data-task='+']
+   .task-list-item-checkbox:hover {
+   background-color: rgb(var(--accent-purple-muted));
+   border: 1px solid rgb(var(--accent-purple-muted));
+}
+.aura-custom-checkbox [data-task='+'] input[type='checkbox']:checked:after,
+.aura-custom-checkbox [data-task='+'][type='checkbox']:checked:after {
+   -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 448 512'%3E%3C!--! Font Awesome Pro 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --%3E%3Cpath d='M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z'/%3E%3C/svg%3E");
+   -webkit-mask-size: 60%;
+}
+
+.aura-custom-checkbox .task-list-item-checkbox[data-task='b'],
+.aura-custom-checkbox
+   ul
+   > li.task-list-item[data-task='b']
+   .task-list-item-checkbox {
+   background-color: rgb(var(--accent-orange));
+   border: 1px solid rgb(var(--accent-orange));
+}
+.aura-custom-checkbox .task-list-item-checkbox[data-task='b']:hover,
+.aura-custom-checkbox
+   ul
+   > li.task-list-item[data-task='b']
+   .task-list-item-checkbox:hover {
+   background-color: rgb(var(--accent-orange-muted));
+   border: 1px solid rgb(var(--accent-orange-muted));
+}
+.aura-custom-checkbox [data-task='b'] input[type='checkbox']:checked:after,
+.aura-custom-checkbox [data-task='b'][type='checkbox']:checked:after {
+   -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 384 512'%3E%3C!--! Font Awesome Pro 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --%3E%3Cpath d='M0 48V487.7C0 501.1 10.9 512 24.3 512c5 0 9.9-1.5 14-4.4L192 400 345.7 507.6c4.1 2.9 9 4.4 14 4.4c13.4 0 24.3-10.9 24.3-24.3V48c0-26.5-21.5-48-48-48H48C21.5 0 0 21.5 0 48z'/%3E%3C/svg%3E");
+   -webkit-mask-size: 40%;
+}
+
+.aura-custom-checkbox .task-list-item-checkbox[data-task='B'],
+.aura-custom-checkbox
+   ul
+   > li.task-list-item[data-task='B']
+   .task-list-item-checkbox {
+   background-color: rgb(var(--accent-blue));
+   border: 1px solid rgb(var(--accent-blue));
+}
+.aura-custom-checkbox .task-list-item-checkbox[data-task='B']:hover,
+.aura-custom-checkbox
+   ul
+   > li.task-list-item[data-task='B']
+   .task-list-item-checkbox:hover {
+   background-color: rgb(var(--accent-blue-muted));
+   border: 1px solid rgb(var(--accent-blue-muted));
+}
+.aura-custom-checkbox [data-task='B'] input[type='checkbox']:checked:after,
+.aura-custom-checkbox [data-task='B'][type='checkbox']:checked:after {
+   -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 448 512'%3E%3C!--! Font Awesome Pro 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --%3E%3Cpath d='M349.4 44.6c5.9-13.7 1.5-29.7-10.6-38.5s-28.6-8-39.9 1.8l-256 224c-10 8.8-13.6 22.9-8.9 35.3S50.7 288 64 288H175.5L98.6 467.4c-5.9 13.7-1.5 29.7 10.6 38.5s28.6 8 39.9-1.8l256-224c10-8.8 13.6-22.9 8.9-35.3s-16.6-20.7-30-20.7H272.5L349.4 44.6z'/%3E%3C/svg%3E");
+   -webkit-mask-size: 60%;
+}
+
+.aura-custom-checkbox .task-list-item-checkbox[data-task='D'],
+.aura-custom-checkbox
+   ul
+   > li.task-list-item[data-task='D']
+   .task-list-item-checkbox {
+   background-color: rgb(var(--white));
+   border: 1px solid rgb(var(--white));
+}
+.aura-custom-checkbox .task-list-item-checkbox[data-task='D']:hover,
+.aura-custom-checkbox
+   ul
+   > li.task-list-item[data-task='D']
+   .task-list-item-checkbox:hover {
+   background-color: rgb(var(--white-muted));
+   border: 1px solid rgb(var(--white-muted));
+}
+.aura-custom-checkbox [data-task='D'] input[type='checkbox']:checked:after,
+.aura-custom-checkbox [data-task='D'][type='checkbox']:checked:after {
+   -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 448 512'%3E%3C!--! Font Awesome Pro 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --%3E%3Cpath d='M96 32V64H48C21.5 64 0 85.5 0 112v48H448V112c0-26.5-21.5-48-48-48H352V32c0-17.7-14.3-32-32-32s-32 14.3-32 32V64H160V32c0-17.7-14.3-32-32-32S96 14.3 96 32zM448 192H0V464c0 26.5 21.5 48 48 48H400c26.5 0 48-21.5 48-48V192z'/%3E%3C/svg%3E");
+   -webkit-mask-size: 50%;
+}
+
+.aura-custom-checkbox .task-list-item-checkbox[data-task='I'],
+.aura-custom-checkbox
+   ul
+   > li.task-list-item[data-task='I']
+   .task-list-item-checkbox {
+   background-color: rgb(var(--accent-blue));
+   border: 1px solid rgb(var(--accent-blue));
+   border-radius: 10px;
+}
+.aura-custom-checkbox .task-list-item-checkbox[data-task='I']:hover,
+.aura-custom-checkbox
+   ul
+   > li.task-list-item[data-task='I']
+   .task-list-item-checkbox:hover {
+   background-color: rgb(var(--accent-blue-muted));
+   border: 1px solid rgb(var(--accent-blue-muted));
+}
+.aura-custom-checkbox [data-task='I'] input[type='checkbox']:checked:after,
+.aura-custom-checkbox [data-task='I'][type='checkbox']:checked:after {
+   -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 512'%3E%3C!--! Font Awesome Pro 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --%3E%3Cpath d='M144 80c0 26.5-21.5 48-48 48s-48-21.5-48-48s21.5-48 48-48s48 21.5 48 48zM0 224c0-17.7 14.3-32 32-32H96c17.7 0 32 14.3 32 32V448h32c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H64V256H32c-17.7 0-32-14.3-32-32z'/%3E%3C/svg%3E");
+   -webkit-mask-size: 25%;
+}
+
+.aura-custom-checkbox .task-list-item-checkbox[data-task='i'],
+.aura-custom-checkbox
+   ul
+   > li.task-list-item[data-task='i']
+   .task-list-item-checkbox {
+   background-color: rgb(var(--accent-yellow));
+   border: 1px solid rgb(var(--accent-yellow));
+}
+.aura-custom-checkbox .task-list-item-checkbox[data-task='i']:hover,
+.aura-custom-checkbox
+   ul
+   > li.task-list-item[data-task='i']
+   .task-list-item-checkbox:hover {
+   background-color: rgb(var(--accent-yellow-muted));
+   border: 1px solid rgb(var(--accent-yellow-muted));
+}
+.aura-custom-checkbox [data-task='i'] input[type='checkbox']:checked:after,
+.aura-custom-checkbox [data-task='i'][type='checkbox']:checked:after {
+   -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 384 512'%3E%3C!--! Font Awesome Pro 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --%3E%3Cpath d='M272 384c9.6-31.9 29.5-59.1 49.2-86.2l0 0c5.2-7.1 10.4-14.2 15.4-21.4c19.8-28.5 31.4-63 31.4-100.3C368 78.8 289.2 0 192 0S16 78.8 16 176c0 37.3 11.6 71.9 31.4 100.3c5 7.2 10.2 14.3 15.4 21.4l0 0c19.8 27.1 39.7 54.4 49.2 86.2H272zM192 512c44.2 0 80-35.8 80-80V416H112v16c0 44.2 35.8 80 80 80zM112 176c0 8.8-7.2 16-16 16s-16-7.2-16-16c0-61.9 50.1-112 112-112c8.8 0 16 7.2 16 16s-7.2 16-16 16c-44.2 0-80 35.8-80 80z'/%3E%3C/svg%3E");
+   -webkit-mask-size: 40%;
+}
+
+.aura-custom-checkbox .task-list-item-checkbox[data-task='N'],
+.aura-custom-checkbox
+   ul
+   > li.task-list-item[data-task='N']
+   .task-list-item-checkbox {
+   background-color: rgb(var(--accent-orange));
+   border: 1px solid rgb(var(--accent-orange));
+}
+.aura-custom-checkbox .task-list-item-checkbox[data-task='N']:hover,
+.aura-custom-checkbox
+   ul
+   > li.task-list-item[data-task='N']
+   .task-list-item-checkbox:hover {
+   background-color: rgb(var(--accent-orange-muted));
+   border: 1px solid rgb(var(--accent-orange-muted));
+}
+.aura-custom-checkbox [data-task='N'] input[type='checkbox']:checked:after,
+.aura-custom-checkbox [data-task='N'][type='checkbox']:checked:after {
+   -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 448 512'%3E%3C!--! Font Awesome Pro 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --%3E%3Cpath d='M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H288V368c0-26.5 21.5-48 48-48H448V96c0-35.3-28.7-64-64-64H64zM448 352H402.7 336c-8.8 0-16 7.2-16 16v66.7V480l32-32 64-64 32-32z'/%3E%3C/svg%3E");
+   -webkit-mask-size: 50%;
+}
+
+.aura-custom-checkbox .task-list-item-checkbox[data-task='Q'],
+.aura-custom-checkbox
+   ul
+   > li.task-list-item[data-task='Q']
+   .task-list-item-checkbox {
+   background-color: rgb(var(--white));
+   border: 1px solid rgb(var(--white));
+}
+.aura-custom-checkbox .task-list-item-checkbox[data-task='Q']:hover,
+.aura-custom-checkbox
+   ul
+   > li.task-list-item[data-task='Q']
+   .task-list-item-checkbox:hover {
+   background-color: rgb(var(--white-muted));
+   border: 1px solid rgb(var(--white-muted));
+}
+.aura-custom-checkbox [data-task='Q'] input[type='checkbox']:checked:after,
+.aura-custom-checkbox [data-task='Q'][type='checkbox']:checked:after {
+   -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 448 512'%3E%3C!--! Font Awesome Pro 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --%3E%3Cpath d='M448 296c0 66.3-53.7 120-120 120h-8c-17.7 0-32-14.3-32-32s14.3-32 32-32h8c30.9 0 56-25.1 56-56v-8H320c-35.3 0-64-28.7-64-64V160c0-35.3 28.7-64 64-64h64c35.3 0 64 28.7 64 64v32 32 72zm-256 0c0 66.3-53.7 120-120 120H64c-17.7 0-32-14.3-32-32s14.3-32 32-32h8c30.9 0 56-25.1 56-56v-8H64c-35.3 0-64-28.7-64-64V160c0-35.3 28.7-64 64-64h64c35.3 0 64 28.7 64 64v32 32 72z'/%3E%3C/svg%3E");
+   -webkit-mask-size: 50%;
+}
+
+.aura-custom-checkbox .task-list-item-checkbox[data-task='P'],
+.aura-custom-checkbox
+   ul
+   > li.task-list-item[data-task='P']
+   .task-list-item-checkbox {
+   background-color: rgb(var(--accent-blue));
+   border: 1px solid rgb(var(--accent-blue));
+}
+.aura-custom-checkbox .task-list-item-checkbox[data-task='P']:hover,
+.aura-custom-checkbox
+   ul
+   > li.task-list-item[data-task='P']
+   .task-list-item-checkbox:hover {
+   background-color: rgb(var(--accent-blue-muted));
+   border: 1px solid rgb(var(--accent-blue-muted));
+}
+.aura-custom-checkbox [data-task='P'] input[type='checkbox']:checked:after,
+.aura-custom-checkbox [data-task='P'][type='checkbox']:checked:after {
+   -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3C!--! Font Awesome Pro 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --%3E%3Cpath d='M313.4 32.9c26 5.2 42.9 30.5 37.7 56.5l-2.3 11.4c-5.3 26.7-15.1 52.1-28.8 75.2H464c26.5 0 48 21.5 48 48c0 25.3-19.5 46-44.3 47.9c7.7 8.5 12.3 19.8 12.3 32.1c0 23.4-16.8 42.9-38.9 47.1c4.4 7.2 6.9 15.8 6.9 24.9c0 21.3-13.9 39.4-33.1 45.6c.7 3.3 1.1 6.8 1.1 10.4c0 26.5-21.5 48-48 48H294.5c-19 0-37.5-5.6-53.3-16.1l-38.5-25.7C176 420.4 160 390.4 160 358.3V320 272 247.1c0-29.2 13.3-56.7 36-75l7.4-5.9c26.5-21.2 44.6-51 51.2-84.2l2.3-11.4c5.2-26 30.5-42.9 56.5-37.7zM32 192H96c17.7 0 32 14.3 32 32V448c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32V224c0-17.7 14.3-32 32-32z'/%3E%3C/svg%3E");
+   -webkit-mask-size: 50%;
+}
+
+.aura-custom-checkbox .task-list-item-checkbox[data-task='C'],
+.aura-custom-checkbox
+   ul
+   > li.task-list-item[data-task='C']
+   .task-list-item-checkbox {
+   background-color: rgb(var(--accent-red));
+   border: 1px solid rgb(var(--accent-red));
+}
+.aura-custom-checkbox .task-list-item-checkbox[data-task='C']:hover,
+.aura-custom-checkbox
+   ul
+   > li.task-list-item[data-task='C']
+   .task-list-item-checkbox:hover {
+   background-color: rgb(var(--accent-red-muted));
+   border: 1px solid rgb(var(--accent-red-muted));
+}
+.aura-custom-checkbox [data-task='C'] input[type='checkbox']:checked:after,
+.aura-custom-checkbox [data-task='C'][type='checkbox']:checked:after {
+   -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3C!--! Font Awesome Pro 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --%3E%3Cpath d='M313.4 479.1c26-5.2 42.9-30.5 37.7-56.5l-2.3-11.4c-5.3-26.7-15.1-52.1-28.8-75.2H464c26.5 0 48-21.5 48-48c0-25.3-19.5-46-44.3-47.9c7.7-8.5 12.3-19.8 12.3-32.1c0-23.4-16.8-42.9-38.9-47.1c4.4-7.3 6.9-15.8 6.9-24.9c0-21.3-13.9-39.4-33.1-45.6c.7-3.3 1.1-6.8 1.1-10.4c0-26.5-21.5-48-48-48H294.5c-19 0-37.5 5.6-53.3 16.1L202.7 73.8C176 91.6 160 121.6 160 153.7V192v48 24.9c0 29.2 13.3 56.7 36 75l7.4 5.9c26.5 21.2 44.6 51 51.2 84.2l2.3 11.4c5.2 26 30.5 42.9 56.5 37.7zM32 320H96c17.7 0 32-14.3 32-32V64c0-17.7-14.3-32-32-32H32C14.3 32 0 46.3 0 64V288c0 17.7 14.3 32 32 32z'/%3E%3C/svg%3E");
+   -webkit-mask-size: 50%;
+}
+
+/* 
+==============================================================================
+========================= WORKSPACE BACKGROUND ==============================
+==============================================================================
+*/
+/*------------------Custom colors-------------------*/
+.aura-workspace-background {
+   --background-primary: rgba(
+      var(--bg-primary),
+      var(--aura-workspace-background-workspace-slider)
+   );
+   --background-primary-alt: rgba(
+      var(--bg-primary-alt),
+      var(--aura-workspace-background-workspace-slider)
+   );
+   --background-secondary: rgba(
+      var(--bg-secondary),
+      var(--aura-workspace-background-workspace-slider)
+   );
+   --background-secondary-alt: rgba(
+      var(--bg-secondary-alt),
+      var(--aura-workspace-background-workspace-slider)
+   );
+   --ribbon-background: rgba(
+      var(--bg-secondary),
+      var(--aura-workspace-background-workspace-slider)
+   );
+   --ribbon-background-collapsed: rgba(
+      var(--bg-secondary),
+      var(--aura-workspace-background-workspace-slider)
+   );
+}
+
+/*------------------Backgrounds Images-------------------*/
+.aura-workspace-background .horizontal-main-container {
+   background: var(--workspace-background-image);
+   background-color: transparent;
+   background-size: cover;
+}
+.aura-workspace-background .workspace {
+   background-color: rgba(var(--bg-primary), 0.2);
+   backdrop-filter: brightness(var(--aura-workspace-background-brightness, 0.5))
+      blur(var(--aura-workspace-background-blur, 5px));
+}
+
+.aura-workspace-background.aura-workspace-background-image-tokoyo
+   .horizontal-main-container {
+   --tokyo: url('https://www.pixel4k.com/wp-content/uploads/2018/09/tokyo-tower-4k_1538072109.jpg');
+   --workspace-background-image: var(--tokyo);
+}
+.aura-workspace-background.aura-workspace-background-image-skyline
+   .horizontal-main-container {
+   --skyline: url('https://i.redd.it/m23bwh4n0x151.png');
+   --workspace-background-image: var(--skyline);
+}
+.aura-workspace-background.aura-workspace-background-image-spiderman
+   .horizontal-main-container {
+   --sipder-man-multiverse: url('https://i.imgur.com/OuXoXpu.jpeg');
+   --workspace-background-image: var(--sipder-man-multiverse);
+}
+.aura-workspace-background.aura-workspace-background-image-custom
+   .horizontal-main-container {
+   --workspace-background-image: var(
+      --aura-workspace-background-image-custom-option
+   );
+}
+
+/*------------------Workspace customization-------------------*/
+.aura-workspace-background {
+   --titlebar-background: rgb(var(--ribbon-background));
+   --titlebar-background-focused: rgb(var(--ribbon-background-collapsed));
+}
+
+.aura-workspace-background .modal,
+.menu {
+   --background-primary: rgba(var(--bg-primary), 0.8);
+   --background-primary-alt: rgba(var(--bg-primary-alt), 0.8);
+   --background-secondary: rgba(var(--bg-secondary), 0.9);
+   --background-secondary-alt: rgba(var(--bg-secondary-alt), 0.8);
+   --modal-background: rgba(var(--bg-secondary), 0.9);
+}
+
+.aura-workspace-background .modal-container > .prompt {
+   --background-primary: rgba(var(--bg-primary), 0.718);
+}
+.aura-workspace-background .prompt-results {
+   background-color: var(--background-secondary);
+}
+
+.aura-workspace-background .suggestion-container {
+   --background-primary: rgba(var(--bg-primary), 0.922);
+}
+
+/* 
+==============================================================================
+========================= CARD LAYOUT ==============================
+==============================================================================
+*/
+.horizontal-main-container,
+.aura-card-layout .mod-left-split,
+.aura-card-layout .mod-left-split .workspace-tabs .workspace-leaf,
+.aura-card-layout .mod-right-split .workspace-tabs .workspace-leaf,
+.aura-card-layout .mod-root .workspace-tabs .workspace-leaf,
+.aura-card-layout .mod-vertical,
+.aura-card-layout .mod-vertical .workspace-tab-container,
+.aura-card-layout .mod-vertical .workspace-tabs,
+.aura-card-layout
+   .workspace-fake-target-overlay:not(.is-in-sidebar)
+   .workspace-tabs
+   .workspace-leaf,
+.aura-card-layout .workspace-split.mod-vertical,
+.workspace {
+   background-color: var(--tab-container-background);
+}
+
+.workspace-split:not(.mod-root) .graph-controls,
+.workspace-split:not(.mod-root) .graph-controls.is-close,
+.workspace-split:not(.mod-root) .graph-controls:not(.is-close) {
+   background-color: rgb(var(--exterior));
+}
+
+.aura-card-layout .workspace-split:not(.mod-root) .graph-controls,
+.aura-card-layout .workspace-split:not(.mod-root) .graph-controls.is-close,
+.aura-card-layout
+   .workspace-split:not(.mod-root)
+   .graph-controls:not(.is-close),
+.workspace-leaf .graph-controls,
+.workspace-leaf .graph-controls.is-close,
+.workspace-leaf .graph-controls:not(.is-close) {
+   background-color: rgb(var(--side));
+}
+
+body {
+   --card-background-color: rgb(var(--exterior));
+   --card-foreground-color: var(--background-primary);
+}
+
+.aura-card-layout .sidebar-toggle-button,
+.aura-card-layout .workspace-tabs.mod-top,
+body.aura-card-layout {
+   --tab-container-background: var(--card-background-color);
+   --file-header-border: var(--border-width) dotted
+      var(--background-modifier-border);
+}
+
+body.is-focused.aura-card-layout,
+body.is-focused.aura-card-layout .sidebar-toggle-button,
+body.is-focused.aura-card-layout .workspace-tabs.mod-top {
+   --tab-container-background: var(--card-background-color);
+}
+
+.aura-card-layout .mod-left-split .workspace-tab-header-container,
+.aura-card-layout .workspace-tab-header-container {
+   border-bottom: none;
+}
+
+.aura-card-layout .workspace-ribbon.mod-left {
+   padding: 0;
+   background-color: var(--tab-container-background);
+   border: none;
+}
+
+.aura-card-layout-actions.aura-card-layout .workspace-ribbon.mod-left {
+   margin-right: var(--aura-card-layout-padding, 10px);
+}
+
+.aura-card-layout .workspace-ribbon.mod-left:before {
+   border-bottom: none;
+   background-color: var(--tab-container-background) !important;
+}
+
+.aura-card-layout .side-dock-actions,
+.aura-card-layout .side-dock-settings {
+   padding: var(--ribbon-padding);
+}
+
+.aura-card-layout-actions.aura-card-layout .side-dock-actions {
+   border-radius: 0 var(--aura-card-radius, var(--radius-xl))
+      var(--aura-card-radius, var(--radius-xl)) 0;
+   border: 1px solid var(--tab-outline-color);
+   background-color: var(--card-foreground-color);
+   margin-top: 2px;
+}
+
+.aura-card-layout-actions.aura-card-layout .side-dock-settings {
+   border-radius: 0 var(--aura-card-radius, var(--radius-xl)) 0 0;
+   border: 1px solid var(--tab-outline-color);
+   background-color: var(--card-foreground-color);
+}
+
+.aura-card-layout .workspace-ribbon.mod-left {
+   margin-top: calc(var(--header-height) - 1px) !important;
+}
+
+.aura-card-layout .mod-vertical .workspace-tab-header-container {
+   padding-left: var(--aura-card-header-left-padding, 20px);
+}
+
+.aura-card-layout .mod-vertical .workspace-tab-header-container-inner {
+   margin: 6px -5px calc(var(--tab-outline-width) * -1);
+   z-index: 1;
+}
+
+.aura-card-layout .mod-vertical .workspace-tabs {
+   padding-left: var(--aura-card-layout-padding, 10px);
+   padding-right: var(--aura-card-layout-padding, 10px);
+}
+
+.aura-card-layout .mod-left-split .workspace-tab-container,
+.aura-card-layout .mod-right-split .workspace-tab-container {
+   padding-left: var(--aura-card-layout-padding, 10px);
+   padding-right: var(--aura-card-layout-padding, 10px);
+   background-color: var(--tab-container-background);
+}
+
+.aura-card-layout
+   .workspace-split.mod-horizontal
+   > *
+   > .workspace-leaf-resize-handle,
+.aura-card-layout
+   .workspace-split.mod-left-split
+   > .workspace-leaf-resize-handle,
+.aura-card-layout
+   .workspace-split.mod-right-split
+   > .workspace-leaf-resize-handle {
+   border: 2px solid transparent;
+}
+
+.aura-card-layout .workspace-split .workspace-leaf-content {
+   border-radius: var(--aura-card-radius, var(--radius-xl));
+   background-color: var(--card-foreground-color);
+   border: 1px solid var(--tab-outline-color);
+   margin-bottom: var(--aura-card-layout-padding, 10px);
+}
+
+.aura-card-layout.aura-card-shadows .side-dock-actions,
+.aura-card-layout.aura-card-shadows .workspace-split .workspace-leaf-content,
+.aura-card-layout.aura-card-shadows.aura-card-layout-fileexplorer
+   .workspace-split
+   .workspace-leaf-content[data-type='file-explorer'] {
+   box-shadow: 0 3px 4px 0 rgba(0, 0, 0, 0.05);
+}
+
+.aura-card-layout
+   .workspace-split
+   .workspace-leaf-content[data-type='file-explorer'] {
+   background-color: var(--tab-container-background);
+   box-shadow: none;
+   border-width: 0;
+}
+
+.aura-card-layout.aura-card-layout-fileexplorer
+   .workspace-split
+   .workspace-leaf-content[data-type='file-explorer'] {
+   background-color: var(--card-foreground-color);
+   border-width: 1px;
+}
+
+.aura-card-layout .workspace-split .mod-stacked .workspace-leaf-content {
+   border-radius: 0;
+   border: none;
+   margin-bottom: 0;
+   border-left: none;
+}
+
+.aura-card-layout .workspace-split.mod-horizontal > * {
+   width: unset;
+}
+
+.aura-card-layout .mod-stacked .workspace-tab-header {
+   border-style: solid;
+   border-radius: var(--aura-card-radius, var(--radius-xl)) 0 0
+      var(--aura-card-radius, var(--radius-xl)) !important;
+   border-width: var(--tab-outline-width);
+   border-color: var(--tab-outline-color);
+   border-right: var(--tab-outline-width) dashed var(--tab-outline-color);
+}
+
+.aura-card-layout .mod-stacked .workspace-leaf {
+   border-left-width: 0;
+   border-top-width: var(--tab-outline-width);
+   border-bottom-width: var(--tab-outline-width);
+   border-style: solid;
+   border-color: var(--tab-outline-color);
+   border-radius: 0 var(--aura-card-radius, var(--radius-xl))
+      var(--aura-card-radius, var(--radius-xl)) 0;
+}
+
+.aura-card-layout .mod-stacked .workspace-tab-container {
+   padding-bottom: var(--aura-card-layout-padding, 10px);
+}
+
+.aura-card-layout .mod-top .workspace-leaf-resize-handle {
+   border-color: transparent;
+}
+
+body.aura-disable-borders,
+body.aura-disable-borders.aura-workspace-background-image-toggle {
+   --divider-color: transparent;
+}
+
+.aura-card-layout .workspace-drop-overlay:before {
+   width: calc(100% - 6px - var(--aura-card-layout-padding, 0) * 2);
+   height: calc(100% - 6px - var(--aura-card-layout-padding, 0) * 2);
+   margin: auto;
+}
+
+.aura-card-layout
+   .workspace
+   .mod-root
+   .workspace-tabs.mod-stacked
+   .workspace-tab-container
+   .workspace-leaf {
+   background-color: var(--background-primary);
+}

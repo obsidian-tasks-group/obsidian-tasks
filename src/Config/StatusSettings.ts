@@ -1,5 +1,7 @@
-import { StatusConfiguration } from '../Status';
+import type { StatusConfiguration } from '../StatusConfiguration';
 import type { StatusRegistry } from '../StatusRegistry';
+import { Status } from '../Status';
+import type { StatusCollection } from '../StatusCollection';
 
 /**
  * Class for encapsulating the settings that control custom statuses.
@@ -10,9 +12,19 @@ import type { StatusRegistry } from '../StatusRegistry';
  */
 export class StatusSettings {
     constructor() {
-        this.customStatusTypes = []; // Do not modify directly: use the static mutation methods in this class.
+        this.coreStatuses = [
+            // The two statuses that do not need CSS styling
+            Status.makeTodo().configuration,
+            Status.makeDone().configuration,
+        ]; // Do not modify directly: use the static mutation methods in this class.
+        this.customStatuses = [
+            // Any statuses that are always supported, but need custom CSS styling
+            Status.makeInProgress().configuration,
+            Status.makeCancelled().configuration,
+        ]; // Do not modify directly: use the static mutation methods in this class.
     }
-    customStatusTypes: StatusConfiguration[];
+    readonly coreStatuses: StatusConfiguration[];
+    readonly customStatuses: StatusConfiguration[];
 
     /**
      * Add a new custom status.
@@ -21,11 +33,11 @@ export class StatusSettings {
      *
      * - Currently, duplicates are allowed.
      * - Allows empty StatusConfiguration objects - where every string is empty
-     * @param statusSettings
+     * @param statuses
      * @param newStatus
      */
-    public static addCustomStatus(statusSettings: StatusSettings, newStatus: StatusConfiguration) {
-        statusSettings.customStatusTypes.push(newStatus);
+    public static addStatus(statuses: StatusConfiguration[], newStatus: StatusConfiguration) {
+        statuses.push(newStatus);
     }
 
     /**
@@ -36,39 +48,77 @@ export class StatusSettings {
      *
      * - Does not currently check whether the status character is the same
      * - If the status character is different, does not check whether the new one is already used in another status
-     * @param statusSettings
+     * @param statuses
      * @param originalStatus
      * @param newStatus
      */
-    public static replaceCustomStatus(
-        statusSettings: StatusSettings,
+    public static replaceStatus(
+        statuses: StatusConfiguration[],
         originalStatus: StatusConfiguration,
         newStatus: StatusConfiguration,
     ): boolean {
-        const index = statusSettings.customStatusTypes.indexOf(originalStatus);
+        const index = this.findStatusIndex(originalStatus, statuses);
         if (index <= -1) {
             return false;
         }
-        statusSettings.customStatusTypes.splice(index, 1, newStatus);
+        statuses.splice(index, 1, newStatus);
         return true;
     }
 
     /**
-     * Delete the given custom status.
+     * This is a workaround for the fact that statusSettings.customStatusTypes.indexOf(statusConfiguration)
+     * stopped finding identical statuses since the addition of StatusConfiguration.type.
+     * @param statusConfiguration
+     * @param statuses
+     * @private
+     */
+    private static findStatusIndex(statusConfiguration: StatusConfiguration, statuses: StatusConfiguration[]) {
+        const originalStatusAsStatus = new Status(statusConfiguration);
+        return statuses.findIndex((s) => {
+            return new Status(s).previewText() == originalStatusAsStatus.previewText();
+        });
+    }
+
+    /**
+     * Delete the given status.
      * Returns true if deleted, and false if not.
      *
      * This is static so that it can be called from modal onClick() call-backs.
      *
-     * @param statusSettings
+     * @param statuses
      * @param status
      */
-    public static deleteCustomStatus(statusSettings: StatusSettings, status: StatusConfiguration) {
-        const index = statusSettings.customStatusTypes.indexOf(status);
+    public static deleteStatus(statuses: StatusConfiguration[], status: StatusConfiguration) {
+        const index = this.findStatusIndex(status, statuses);
         if (index <= -1) {
             return false;
         }
-        statusSettings.customStatusTypes.splice(index, 1);
+        statuses.splice(index, 1);
         return true;
+    }
+
+    /**
+     * Delete all custom statuses.
+     *
+     * This is static so that it can be called from modal onClick() call-backs.
+     *
+     * @param statusSettings
+     */
+    public static deleteAllCustomStatuses(statusSettings: StatusSettings) {
+        statusSettings.customStatuses.splice(0);
+    }
+
+    /**
+     * Restore the default custom statuses.
+     *
+     * @param statusSettings
+     */
+    public static resetAllCustomStatuses(statusSettings: StatusSettings) {
+        StatusSettings.deleteAllCustomStatuses(statusSettings);
+        const defaultSettings = new StatusSettings();
+        defaultSettings.customStatuses.forEach((s) => {
+            StatusSettings.addStatus(statusSettings.customStatuses, s);
+        });
     }
 
     /**
@@ -86,22 +136,19 @@ export class StatusSettings {
      */
     public static bulkAddStatusCollection(
         statusSettings: StatusSettings,
-        supportedStatuses: Array<[string, string, string]>,
+        supportedStatuses: StatusCollection,
     ): string[] {
         const notices: string[] = [];
         supportedStatuses.forEach((importedStatus) => {
-            const hasStatus = statusSettings.customStatusTypes.find((element) => {
+            const hasStatus = statusSettings.customStatuses.find((element) => {
                 return (
-                    element.indicator == importedStatus[0] &&
+                    element.symbol == importedStatus[0] &&
                     element.name == importedStatus[1] &&
-                    element.nextStatusIndicator == importedStatus[2]
+                    element.nextStatusSymbol == importedStatus[2]
                 );
             });
             if (!hasStatus) {
-                StatusSettings.addCustomStatus(
-                    statusSettings,
-                    new StatusConfiguration(importedStatus[0], importedStatus[1], importedStatus[2], false),
-                );
+                StatusSettings.addStatus(statusSettings.customStatuses, Status.createFromImportedValue(importedStatus));
             } else {
                 notices.push(`The status ${importedStatus[1]} (${importedStatus[0]}) is already added.`);
             }
@@ -115,20 +162,12 @@ export class StatusSettings {
      * @param statusRegistry
      */
     public static applyToStatusRegistry(statusSettings: StatusSettings, statusRegistry: StatusRegistry) {
-        // Reset the registry as this may also come from a settings add/delete.
         statusRegistry.clearStatuses();
-        statusSettings.customStatusTypes.forEach((statusType) => {
+        statusSettings.coreStatuses.forEach((statusType) => {
             statusRegistry.add(statusType);
         });
-
-        console.debug('Custom statuses read from settings:');
-        console.debug(statusSettings.customStatusTypes);
-
-        console.debug('All statuses registered in Tasks StatusRegistry (including the core ones):');
-        const registeredStatusTypes: StatusConfiguration[] = [];
-        statusRegistry.registeredStatuses.forEach((s) => {
-            registeredStatusTypes.push(s.configuration);
+        statusSettings.customStatuses.forEach((statusType) => {
+            statusRegistry.add(statusType);
         });
-        console.debug(registeredStatusTypes);
     }
 }

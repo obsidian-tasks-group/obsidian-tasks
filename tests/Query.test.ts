@@ -69,6 +69,7 @@ describe('Query parsing', () => {
         'starts before 2021-12-27',
         'starts on 2021-12-27',
         'status.name includes cancelled',
+        'status.type is IN_PROGRESS',
         'tag does not include #sometag',
         'tag does not include sometag',
         'tag includes #sometag',
@@ -150,6 +151,8 @@ describe('Query parsing', () => {
             'sort by status',
             'sort by status.name',
             'sort by status.name reverse',
+            'sort by status.type',
+            'sort by status.type reverse',
             'sort by tag 5',
             'sort by tag reverse 3',
             'sort by tag reverse',
@@ -186,6 +189,8 @@ describe('Query parsing', () => {
             'group by scheduled',
             'group by start',
             'group by status',
+            'group by status.name',
+            'group by status.type',
             'group by tags',
         ];
         test.concurrent.each<string>(filters)('recognises %j', (filter) => {
@@ -256,9 +261,15 @@ describe('Query parsing', () => {
         });
     });
 
-    it('should parse ambiguous queries correctly', () => {
+    it('should parse ambiguous sort by queries correctly', () => {
         expect(new Query({ source: 'sort by status' }).sorting[0].property).toEqual('status');
         expect(new Query({ source: 'sort by status.name' }).sorting[0].property).toEqual('status.name');
+    });
+
+    it('should parse ambiguous group by queries correctly', () => {
+        expect(new Query({ source: 'group by status' }).grouping[0].property).toEqual('status');
+        expect(new Query({ source: 'group by status.name' }).grouping[0].property).toEqual('status.name');
+        expect(new Query({ source: 'group by status.type' }).grouping[0].property).toEqual('status.type');
     });
 });
 

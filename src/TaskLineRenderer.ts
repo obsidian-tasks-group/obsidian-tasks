@@ -1,6 +1,5 @@
 import { Component, MarkdownRenderer } from 'obsidian';
 import type { Moment } from 'moment';
-import { Status } from './Status';
 import type { Task } from './Task';
 import * as taskModule from './Task';
 import type { LayoutOptions, TaskLayoutComponent } from './TaskLayout';
@@ -14,6 +13,7 @@ export type TaskLineRenderDetails = {
     listIndex: number;
     layoutOptions?: LayoutOptions;
     isFilenameUnique?: boolean;
+    taskLayout?: TaskLayout;
 };
 
 export const LayoutClasses: { [c in TaskLayoutComponent]: string } = {
@@ -74,7 +74,7 @@ export async function renderTaskLine(
     li.appendChild(checkbox);
     checkbox.classList.add('task-list-item-checkbox');
     checkbox.type = 'checkbox';
-    if (task.status !== Status.TODO) {
+    if (task.status.symbol !== ' ') {
         checkbox.checked = true;
         li.classList.add('is-checked');
     }
@@ -97,7 +97,7 @@ export async function renderTaskLine(
     li.prepend(checkbox);
 
     // Set these to be compatible with stock obsidian lists:
-    li.setAttribute('data-task', task.status.indicator.trim()); // Trim to ensure empty attribute for space. Same way as obsidian.
+    li.setAttribute('data-task', task.status.symbol.trim()); // Trim to ensure empty attribute for space. Same way as obsidian.
     li.setAttribute('data-line', renderDetails.listIndex.toString());
     checkbox.setAttribute('data-line', renderDetails.listIndex.toString());
 
@@ -115,7 +115,8 @@ async function taskToHtml(
     textRenderer: TextRenderer,
 ) {
     const allSpecificClasses: string[] = [];
-    const taskLayout = new TaskLayout(renderDetails.layoutOptions);
+    const taskLayout = renderDetails.taskLayout ?? new TaskLayout(renderDetails.layoutOptions);
+    // Render and build classes for all the task's visible components
     for (const component of taskLayout.layoutComponents) {
         let componentString = task.componentToString(taskLayout, component);
         if (componentString) {
@@ -132,6 +133,7 @@ async function taskToHtml(
                 span.appendChild(internalSpan);
                 await renderComponentText(internalSpan, componentString, component, task, textRenderer);
                 const [genericClasses, specificClasses] = getComponentClasses(component, task);
+                addInternalClasses(component, internalSpan);
                 // Add the generic classes that apply to what this component is (priority, due date etc)
                 span.classList.add(...genericClasses);
                 // Add the specific classes that describe the content of the component
@@ -141,9 +143,19 @@ async function taskToHtml(
             }
         }
     }
+
+    // Now build classes for the hidden task components without rendering them
+    for (const component of taskLayout.hiddenComponents) {
+        const [_, specificClasses] = getComponentClasses(component, task);
+        allSpecificClasses.push(...specificClasses);
+    }
+
     return allSpecificClasses;
 }
 
+/*
+ * Renders the given component into the given HTML span element.
+ */
 async function renderComponentText(
     span: HTMLSpanElement,
     componentString: string,
@@ -200,14 +212,8 @@ function getComponentClasses(component: TaskLayoutComponent, task: Task) {
         case 'description':
             genericClasses.push(LayoutClasses.description);
             for (const tag of task.tags) {
-                // Add task tags as specific classes, but sanitize them first to contain only characters that are legal
-                // for CSS classes.
-                // Taken from here: https://stackoverflow.com/questions/448981/which-characters-are-valid-in-css-class-names-selectors
-                const illegalCssClassChars = /[^_a-zA-Z0-9-]/g;
-                let sanitizedTag = tag.replace(illegalCssClassChars, '-');
-                // And if after sanitazation the name starts with dashes or underscores, remove them.
-                sanitizedTag = sanitizedTag.replace(/^[-_]+/, '');
-                if (sanitizedTag.length > 0) specificClasses.push(`task-tag-${sanitizedTag}`);
+                const className = tagToClassName(tag);
+                if (className) specificClasses.push(className);
             }
             break;
         case 'priority': {
@@ -264,6 +270,26 @@ function getComponentClasses(component: TaskLayoutComponent, task: Task) {
     return [genericClasses, specificClasses];
 }
 
+/*
+ * Adds internal classes for various components (right now just tags actually), meaning that we modify the existing
+ * rendered element to add classes inside it.
+ * In the case of tags, Obsidian renders a Markdown description with <a class="tag"> elements for tags. We want to
+ * enable users to style these, so we modify the rendered Markdown by adding the specific tag classes for these <a>
+ * elements.
+ */
+function addInternalClasses(component: TaskLayoutComponent, renderedComponent: HTMLSpanElement) {
+    if (component === 'description') {
+        const tags = renderedComponent.getElementsByClassName('tag');
+        for (let i = 0; i < tags.length; i++) {
+            const tagName = tags[i].textContent;
+            if (tagName) {
+                const className = tagToClassName(tagName);
+                if (className) tags[i].classList.add(className);
+            }
+        }
+    }
+}
+
 /**
  * Translate a relative date to a CSS class: 'today', 'future-1d' (for tomorrow), 'past-1d' (for yesterday)
  * etc.
@@ -274,6 +300,7 @@ function dateToClassName(date: Moment) {
     const today = window.moment().startOf('day');
     let result = '';
     const diffDays = today.diff(date, 'days');
+    if (isNaN(diffDays)) return null;
     if (diffDays === 0) return 'today';
     else if (diffDays > 0) result += 'past-';
     else if (diffDays < 0) result += 'future-';
@@ -283,6 +310,20 @@ function dateToClassName(date: Moment) {
         result += DAY_CLASS_OVER_RANGE_POSTFIX;
     }
     return result;
+}
+
+/*
+ * Convert a tag name to a name that can be used as a CSS class, sanitizing them according to CSS class
+ * name rules.
+ * Taken from here: https://stackoverflow.com/questions/448981/which-characters-are-valid-in-css-class-names-selectors
+ */
+function tagToClassName(tag: string) {
+    const illegalCssClassChars = /[^_a-zA-Z0-9-]/g;
+    let sanitizedTag = tag.replace(illegalCssClassChars, '-');
+    // And if after sanitazation the name starts with dashes or underscores, remove them.
+    sanitizedTag = sanitizedTag.replace(/^[-_]+/, '');
+    if (sanitizedTag.length > 0) return `task-tag-${sanitizedTag}`;
+    else return null;
 }
 
 function addTooltip({

@@ -1,16 +1,32 @@
 import type { Task } from '../../Task';
 import type { Comparator } from '../Sorter';
+import { StatusType } from '../../StatusConfiguration';
 import { FilterInstructionsBasedField } from './FilterInstructionsBasedField';
 
 export class StatusField extends FilterInstructionsBasedField {
     constructor() {
         super();
 
-        // Backwards-compatibility note: In Tasks 1.22.0 and earlier, all tasks
+        // Backwards-compatibility change: In Tasks 1.22.0 and earlier, all tasks
         // with any status character except space were considered by the status filter
         // instructions to be done.
-        this._filters.add('done', (task: Task) => task.status.indicator !== ' ');
-        this._filters.add('not done', (task: Task) => task.status.indicator === ' ');
+        // In later versions:
+        //   StatusType.DONE counts as done
+        //   StatusType.CANCELLED counts as done
+        //   StatusType.TODO counts as not done
+        //   StatusType.IN_PROGRESS counts as not done
+        //   StatusType.NON_TASK counts as done
+        this._filters.add(
+            'done',
+            (task: Task) =>
+                task.status.type === StatusType.DONE ||
+                task.status.type === StatusType.CANCELLED ||
+                task.status.type === StatusType.NON_TASK,
+        );
+        this._filters.add(
+            'not done',
+            (task: Task) => task.status.type === StatusType.TODO || task.status.type === StatusType.IN_PROGRESS,
+        );
     }
 
     public fieldName(): string {
@@ -42,7 +58,7 @@ export class StatusField extends FilterInstructionsBasedField {
     }
 
     private static oldStatusName(a: Task): string {
-        if (a.status.indicator === ' ') {
+        if (a.status.symbol === ' ') {
             return 'Todo';
         } else {
             return 'Done';

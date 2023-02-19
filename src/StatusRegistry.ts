@@ -1,4 +1,5 @@
-import { Status, StatusConfiguration } from './Status';
+import { Status } from './Status';
+import { StatusConfiguration, StatusType } from './StatusConfiguration';
 
 /**
  * Tracks all the registered statuses a task can have.
@@ -42,7 +43,7 @@ export class StatusRegistry {
      * @memberof StatusRegistry
      */
     public get registeredStatuses(): Status[] {
-        return this._registeredStatuses.filter(({ indicator }) => indicator !== Status.EMPTY.indicator);
+        return this._registeredStatuses.filter(({ symbol }) => symbol !== Status.EMPTY.symbol);
     }
 
     /**
@@ -67,7 +68,7 @@ export class StatusRegistry {
      * @memberof StatusRegistry
      */
     public add(status: StatusConfiguration | Status): void {
-        if (!this.hasIndicator(status.indicator)) {
+        if (!this.hasSymbol(status.symbol)) {
             if (status instanceof Status) {
                 this._registeredStatuses.push(status);
             } else {
@@ -77,19 +78,43 @@ export class StatusRegistry {
     }
 
     /**
-     * Returns the registered status by the indicator between the
+     * Returns the registered status by the symbol between the
      * square braces in the markdown task.
+     * Returns an EMPTY status if symbol is unknown.
      *
-     * @param {string} indicator
+     * @see bySymbolOrCreate
+     *
+     * @param {string} symbol
      * @return {*}  {Status}
      * @memberof StatusRegistry
      */
-    public byIndicator(indicator: string): Status {
-        if (this.hasIndicator(indicator)) {
-            return this.getIndicator(indicator);
+    public bySymbol(symbol: string): Status {
+        if (this.hasSymbol(symbol)) {
+            return this.getSymbol(symbol);
         }
 
         return Status.EMPTY;
+    }
+
+    /**
+     * Returns the registered status by the symbol between the
+     * square braces in the markdown task.
+     *
+     * Creates a usable new Status with this given symbol if symbol is unknown.
+     * Note: An unknown symbol is not added to the registry.
+     *
+     * @see hasSymbol
+     *
+     * @param {string} symbol
+     * @return {*}  {Status}
+     * @memberof StatusRegistry
+     */
+    public bySymbolOrCreate(symbol: string): Status {
+        if (this.hasSymbol(symbol)) {
+            return this.getSymbol(symbol);
+        }
+
+        return Status.createUnknownStatus(symbol);
     }
 
     /**
@@ -108,13 +133,20 @@ export class StatusRegistry {
     }
 
     /**
-     * Resets the array os Status types to be empty.
+     * Resets the array of Status types to the default statuses.
      *
      * @memberof StatusRegistry
      */
+    public resetToDefaultStatuses(): void {
+        this.clearStatuses();
+        this.addDefaultStatusTypes();
+    }
+
+    /**
+     * Clears the array of Status types to be empty.
+     */
     public clearStatuses(): void {
         this._registeredStatuses = [];
-        this.addDefaultStatusTypes();
     }
 
     /**
@@ -123,10 +155,11 @@ export class StatusRegistry {
      *
      * @return {*}  {Status}
      * @memberof StatusRegistry
+     * @see getNextStatusOrCreate
      */
     public getNextStatus(status: Status): Status {
-        if (status.nextStatusIndicator !== '') {
-            const nextStatus = this.byIndicator(status.nextStatusIndicator);
+        if (status.nextStatusSymbol !== '') {
+            const nextStatus = this.bySymbol(status.nextStatusSymbol);
             if (nextStatus !== null) {
                 return nextStatus;
             }
@@ -135,29 +168,94 @@ export class StatusRegistry {
     }
 
     /**
-     * Filters the Status types by the indicator and returns the first one found.
+     * Return the next status if it exists, and if not, create a new
+     * TODO status using the requested next symbol.
      *
-     * @private
-     * @param {string} indicatorToFind
      * @return {*}  {Status}
      * @memberof StatusRegistry
+     * @see getNextStatus
      */
-    private getIndicator(indicatorToFind: string): Status {
-        return this._registeredStatuses.filter(({ indicator }) => indicator === indicatorToFind)[0];
+    public getNextStatusOrCreate(status: Status): Status {
+        const nextStatus = this.getNextStatus(status);
+        if (nextStatus.type !== StatusType.EMPTY) {
+            return nextStatus;
+        }
+        // status is configured to advance to a symbol that is not registered.
+        // So we go ahead and create it anyway - we just cannot give it a meaningful name.
+        return Status.createUnknownStatus(status.nextStatusSymbol);
     }
 
     /**
-     * Filters all the Status types by the indicator and returns true if found.
+     * Find any statuses in the given list that are not known to this registry.
+     * This can be used to add all unknown status types to the settings,
+     * to save users from having to do that manually.
+     *
+     * Statuses are returned in the order that they are first found in the
+     * supplied list.
+     * @param allStatuses
+     */
+    public findUnknownStatuses(allStatuses: Status[]): Status[] {
+        const unknownStatuses = allStatuses.filter((s) => {
+            return !this.hasSymbol(s.symbol);
+        });
+
+        // Use a separate StatusRegistry to keep track of duplicates,
+        // because Set is no use to us:
+        // https://stackoverflow.com/questions/29759480/how-to-customize-object-equality-for-javascript-set
+        const newStatusRegistry = new StatusRegistry();
+
+        const namedUniqueStatuses: Status[] = [];
+        unknownStatuses.forEach((s) => {
+            // Check if we have seen this symbol already:
+            if (newStatusRegistry.hasSymbol(s.symbol)) {
+                return;
+            }
+
+            // Go ahead and create a suitably-named copy,
+            // including the symbol in the name.
+            const newStatus = StatusRegistry.copyStatusWithNewName(s, `Unknown (${s.symbol})`);
+            namedUniqueStatuses.push(newStatus);
+            // And add it to our local registry, to prevent duplicates.
+            newStatusRegistry.add(newStatus);
+        });
+        return namedUniqueStatuses;
+    }
+
+    private static copyStatusWithNewName(s: Status, newName: string) {
+        const statusConfiguration = new StatusConfiguration(
+            s.symbol,
+            newName,
+            s.nextStatusSymbol,
+            s.availableAsCommand,
+            s.type,
+        );
+        return new Status(statusConfiguration);
+    }
+
+    /**
+     * Filters the Status types by the symbol and returns the first one found.
      *
      * @private
-     * @param {string} indicatorToFind
+     * @param {string} symbolToFind
+     * @return {*}  {Status}
+     * @memberof StatusRegistry
+     */
+    private getSymbol(symbolToFind: string): Status {
+        return this._registeredStatuses.filter(({ symbol }) => symbol === symbolToFind)[0];
+    }
+
+    /**
+     * Filters all the Status types by the symbol and returns true if found.
+     *
+     * @private
+     * @param {string} symbolToFind
      * @return {*}  {boolean}
      * @memberof StatusRegistry
      */
-    private hasIndicator(indicatorToFind: string): boolean {
+    private hasSymbol(symbolToFind: string): boolean {
         return (
             this._registeredStatuses.find((element) => {
-                return element.indicator === indicatorToFind;
+                return element.symbol === symbolToFind;
             }) !== undefined
         );
     }
@@ -169,7 +267,7 @@ export class StatusRegistry {
      * @memberof StatusRegistry
      */
     private addDefaultStatusTypes(): void {
-        const defaultStatuses = [Status.TODO, Status.IN_PROGRESS, Status.DONE, Status.CANCELLED, Status.EMPTY];
+        const defaultStatuses = [Status.makeTodo(), Status.makeInProgress(), Status.makeDone(), Status.makeCancelled()];
 
         defaultStatuses.forEach((status) => {
             this.add(status);

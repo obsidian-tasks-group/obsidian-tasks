@@ -5,28 +5,11 @@ import { getSettings } from '../Config/Settings';
 import { Sort } from './Sort';
 import type { Sorter } from './Sorter';
 import type { TaskGroups } from './TaskGroups';
-import { parseFilter, parseSorter } from './FilterParser';
+import * as FilterParser from './FilterParser';
 import { Group } from './Group';
+import type { Grouper } from './Grouper';
+import type { GroupingProperty } from './Grouper';
 import type { Filter } from './Filter/Filter';
-
-export type GroupingProperty =
-    | 'backlink'
-    | 'done'
-    | 'due'
-    | 'filename'
-    | 'folder'
-    | 'happens'
-    | 'heading'
-    | 'path'
-    | 'priority'
-    | 'recurrence'
-    | 'recurring'
-    | 'root'
-    | 'scheduled'
-    | 'start'
-    | 'status'
-    | 'tags';
-export type Grouping = { property: GroupingProperty };
 
 export class Query implements IQuery {
     public source: string;
@@ -36,7 +19,7 @@ export class Query implements IQuery {
     private _filters: Filter[] = [];
     private _error: string | undefined = undefined;
     private _sorting: Sorter[] = [];
-    private _grouping: Grouping[] = [];
+    private _grouping: Grouper[] = [];
 
     private readonly groupByRegexp =
         /^group by (backlink|done|due|filename|folder|happens|heading|path|priority|recurrence|recurring|root|scheduled|start|status|tags)/;
@@ -69,6 +52,8 @@ export class Query implements IQuery {
                         this.parseLimit({ line });
                         break;
                     case this.parseSortBy({ line }):
+                        break;
+                    case this.parseGroupBy2({ line }):
                         break;
                     case this.groupByRegexp.test(line):
                         this.parseGroupBy({ line });
@@ -200,7 +185,7 @@ export class Query implements IQuery {
     }
 
     private parseFilter(line: string) {
-        const filterOrError = parseFilter(line);
+        const filterOrError = FilterParser.parseFilter(line);
         if (filterOrError != null) {
             if (filterOrError.filter) this._filters.push(filterOrError.filter);
             else this._error = filterOrError.error;
@@ -220,7 +205,7 @@ export class Query implements IQuery {
     }
 
     private parseSortBy({ line }: { line: string }): boolean {
-        const sortingMaybe = parseSorter(line);
+        const sortingMaybe = FilterParser.parseSorter(line);
         if (sortingMaybe) {
             this._sorting.push(sortingMaybe);
             return true;
@@ -228,14 +213,41 @@ export class Query implements IQuery {
         return false;
     }
 
+    /**
+     * Old-style parsing of `group by` lines, for grouping that is implemented with static
+     * methods in {@link Group}, that are looked up from a {@link GroupingProperty}.
+     *
+     * These will be gradually migrated to the grouping method in {@link Field}
+     * classes, after which this method will be deleted.
+     *
+     * @param line
+     * @private
+     * @see parseGroupBy2
+     */
     private parseGroupBy({ line }: { line: string }): void {
         const fieldMatch = line.match(this.groupByRegexp);
         if (fieldMatch !== null) {
-            this._grouping.push({
-                property: fieldMatch[1] as GroupingProperty,
-            });
+            this._grouping.push(Group.fromGroupingProperty(fieldMatch[1] as GroupingProperty));
         } else {
             this._error = 'do not understand query grouping';
         }
+    }
+
+    /**
+     * New-style parsing of `group by` lines, for grouping that is implemented in the {@link Field}
+     * classes.
+     *
+     * Once the original {@link parseGroupBy} has been removed, rename this to parseGroupBy()
+     * @param line
+     * @private
+     * @see parseGroupBy
+     */
+    private parseGroupBy2({ line }: { line: string }): boolean {
+        const groupingMaybe = FilterParser.parseGrouper(line);
+        if (groupingMaybe) {
+            this._grouping.push(groupingMaybe);
+            return true;
+        }
+        return false;
     }
 }

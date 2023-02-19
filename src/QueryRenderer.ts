@@ -10,6 +10,7 @@ import { TaskModal } from './TaskModal';
 import type { TasksEvents } from './TasksEvents';
 import type { Task } from './Task';
 import { DateFallback } from './DateFallback';
+import { TaskLayout } from './TaskLayout';
 
 export class QueryRenderer {
     private readonly app: App;
@@ -157,7 +158,8 @@ class QueryRenderChild extends MarkdownRenderChild {
             console.debug(`${totalTasksCount} of ${tasks.length} tasks displayed in a block in "${this.filePath}"`);
             this.addTaskCount(content, totalTasksCount);
         } else if (this.query.error !== undefined) {
-            content.setText(`Tasks query: ${this.query.error}`);
+            content.createDiv().innerHTML =
+                '<pre>' + `Tasks query: ${this.query.error.replace(/\n/g, '<br>')}` + '</pre>';
         } else {
             content.setText('Loading Tasks ...');
         }
@@ -184,8 +186,12 @@ class QueryRenderChild extends MarkdownRenderChild {
     }): Promise<{ taskList: HTMLUListElement; tasksCount: number }> {
         const tasksCount = tasks.length;
 
+        const layout = new TaskLayout(this.query.layoutOptions);
         const taskList = content.createEl('ul');
         taskList.addClasses(['contains-task-list', 'plugin-tasks-query-result']);
+        taskList.addClasses(layout.specificClasses);
+        // TODO TEMP add tests
+        taskList.addClasses(this.getGroupingClasses());
         for (let i = 0; i < tasksCount; i++) {
             const task = tasks[i];
             const isFilenameUnique = this.isFilenameUnique({ task });
@@ -195,6 +201,7 @@ class QueryRenderChild extends MarkdownRenderChild {
                 listIndex: i,
                 layoutOptions: this.query.layoutOptions,
                 isFilenameUnique,
+                taskLayout: layout,
             });
 
             // Remove all footnotes. They don't re-appear in another document.
@@ -381,5 +388,14 @@ class QueryRenderChild extends MarkdownRenderChild {
         });
 
         return allFilesWithSameName.length < 2;
+    }
+
+    private getGroupingClasses() {
+        const classes: string[] = [];
+        for (const group of this.query.grouping) {
+            const className = `tasks-group-by-${group.property}`;
+            classes.push(className);
+        }
+        return classes;
     }
 }

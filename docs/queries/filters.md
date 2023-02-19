@@ -191,11 +191,21 @@ because the tasks starts before tomorrow. Only one of the dates needs to match.
 
 ### Status
 
-- `done` - matches tasks with anything except space as the status symbol
-- `not done` - matches task with a space as the status symbol
+- `done` - matches tasks status types `DONE`, `CANCELLED` and `NON_TASK`
+- `not done` - matches status types with type `TODO` and `IN_PROGRESS`
+
+{: .info }
+> Prior to Tasks 1.23.0, there was no concept of task status type, and so only the status symbol was used:
+>
+> - a task with `[ ]` used to count as `not done`
+> - any other character than space used to count as `done`
+>
+> The new behaviour is more flexible and was required to introduce support for in-progress and cancelled tasks. If the original behaviour is preferred, you can change the status types of every symbol except `space` to `DONE`. See [How to set up your custom statuses]({{ site.baseurl }}{% link how-to/set-up-custom-statuses.md %}).
 
 ### Status Name
 
+- This searches the names given to your custom statuses.
+- For example, perhaps you might have named `[!]` as `Important`, and so this field would search then text `Important` for all tasks with that status symbol.
 - `status.name (includes|does not include) <string>`
   - Matches case-insensitive (disregards capitalization).
 - `status.name (regex matches|regex does not match) /<JavaScript-style Regex>/`
@@ -203,7 +213,21 @@ because the tasks starts before tomorrow. Only one of the dates needs to match.
   - Essential reading: [Regular Expression Searches]({{ site.baseurl }}{% link queries/regular-expressions.md %}).
 
 {: .released }
-`status.name` text searching was introduced in Tasks X.Y.Z.
+`status.name` text searching was introduced in Tasks 1.23.0.
+
+For more information, including adding your own customised statuses, see [Statuses]({{ site.baseurl }}{% link getting-started/statuses.md %}).
+
+### Status Type
+
+- `status.type (is|is not) (TODO|DONE|IN_PROGRESS|CANCELLED|NON_TASK)`
+  - The values `TODO` etc are case-insensitive: you can use `in_progress`, for example
+- This searches the types you have given to your custom statuses.
+- This search is efficient if you wish to find all tasks that are `IN_PROGRESS`, and you have set up your statuses to have `[/]`, `[d]` and perhaps several other all treated as `IN_PROGRESS`.
+- To exclude multiple values, you can use multiple `status.type is not` lines.
+- To allow multiple values, use a boolean combination, for example: `( status.type is TODO ) OR ( status.type is IN_PROGRESS )`.
+
+{: .released }
+`status.type` text searching was introduced in Tasks 1.23.0.
 
 For more information, including adding your own customised statuses, see [Statuses]({{ site.baseurl }}{% link getting-started/statuses.md %}).
 
