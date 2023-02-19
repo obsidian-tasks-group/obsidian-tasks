@@ -133,6 +133,8 @@ export abstract class DateField extends Field {
         filterDate: moment.Moment,
     ): string {
         let relationship;
+        // Example of formatted date: '2024-01-02 (Tuesday 2nd January 2024)'
+        const dateFormat = 'YYYY-MM-DD (dddd Do MMMM YYYY)';
         switch (fieldKeyword) {
             case 'before':
                 relationship = fieldKeyword;
@@ -144,8 +146,7 @@ export abstract class DateField extends Field {
                 relationship = 'on';
                 break;
         }
-        // Example of formatted date: '2024-01-02 (Tuesday 2nd January 2024)'
-        const actualDate = filterDate.format('YYYY-MM-DD (dddd Do MMMM YYYY)');
+        const actualDate = filterDate.format(dateFormat);
         let result = `${fieldName} date is ${relationship} ${actualDate}`;
         if (filterResultIfFieldMissing) {
             result += ` OR no ${fieldName} date`;
