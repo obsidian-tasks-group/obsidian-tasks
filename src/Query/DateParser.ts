@@ -15,7 +15,7 @@ export class DateParser {
 
     /**
      * Parse a line and extract a pair of dates, returned in a tuple
-     * @param input - any pair of dates, separate by a hyphen '17 August 2013 - 19 August 2013',
+     * @param input - any pair of dates, separate by one or more spaces '17 August 2013 19 August 2013',
      *                or a single date
      */
     public static parseDateRange(input: string): [moment.Moment, moment.Moment] {
@@ -24,7 +24,7 @@ export class DateParser {
         });
 
         const start = result[0].start;
-        const end = result[0].end ? result[0].end : start;
+        const end = result[1] && result[1].start ? result[1].start : start;
         return [window.moment(start.date()), window.moment(end.date())];
     }
 }
