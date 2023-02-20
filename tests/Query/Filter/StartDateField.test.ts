@@ -2,16 +2,11 @@
  * @jest-environment jsdom
  */
 import moment from 'moment';
-import { toHaveExplanation } from '../../CustomMatchers/CustomMatchersForFilters';
 import { StartDateField } from '../../../src/Query/Filter/StartDateField';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { expectTaskComparesAfter, expectTaskComparesBefore } from '../../CustomMatchers/CustomMatchersForSorting';
 
 window.moment = moment;
-
-expect.extend({
-    toHaveExplanation,
-});
 
 describe('explain start date queries', () => {
     it('should explain explicit date', () => {

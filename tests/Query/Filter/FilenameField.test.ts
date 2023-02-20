@@ -1,15 +1,6 @@
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { FilenameField } from '../../../src/Query/Filter/FilenameField';
-import { toBeValid, toMatchTaskWithPath } from '../../CustomMatchers/CustomMatchersForFilters';
 import * as CustomMatchersForSorting from '../../CustomMatchers/CustomMatchersForSorting';
-
-expect.extend({
-    toMatchTaskWithPath,
-});
-
-expect.extend({
-    toBeValid,
-});
 
 describe('filename', () => {
     it('should provide access to the file name with extension', () => {

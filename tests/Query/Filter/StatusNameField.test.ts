@@ -1,16 +1,10 @@
 import { StatusNameField } from '../../../src/Query/Filter/StatusNameField';
 import * as TestHelpers from '../../TestHelpers';
-import { toBeValid, toMatchTaskFromLine } from '../../CustomMatchers/CustomMatchersForFilters';
 import {
     expectTaskComparesAfter,
     expectTaskComparesBefore,
     expectTaskComparesEqual,
 } from '../../CustomMatchers/CustomMatchersForSorting';
-
-expect.extend({
-    toBeValid,
-    toMatchTaskFromLine,
-});
 
 // Abbreviated names so that the markdown text is aligned
 const todoTask = TestHelpers.fromLine({ line: '- [ ] Xxx' });
