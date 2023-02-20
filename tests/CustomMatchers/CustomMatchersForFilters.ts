@@ -53,6 +53,13 @@ import { Status } from '../../src/Status';
 
  */
 
+/* MAINTENANCE NOTE:
+        Please add any newly added matchers to this file:
+            tests/CustomMatchers/jest.custom_matchers.setup.ts
+        so that tests can find them automatically, without needing
+        to write imports, and complex 'expect.extend(...)' lines.
+        Thank you.
+ */
 declare global {
     namespace jest {
         interface Matchers<R> {
