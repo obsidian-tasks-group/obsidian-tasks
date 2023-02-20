@@ -5,15 +5,9 @@ import moment from 'moment';
 
 import { RecurrenceField } from '../../../src/Query/Filter/RecurrenceField';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
-import { toBeValid, toMatchTask } from '../../CustomMatchers/CustomMatchersForFilters';
 import { RecurrenceBuilder } from '../../TestingTools/RecurrenceBuilder';
 
 window.moment = moment;
-
-expect.extend({
-    toBeValid,
-    toMatchTask,
-});
 
 describe('recurrence', () => {
     // Note: We don't need to check all behaviours that are implemented in the base class.

@@ -8,7 +8,6 @@ import { testTaskFilter } from '../../TestingTools/FilterTestHelpers';
 import { fromLine } from '../../TestHelpers';
 import type { FilterOrErrorMessage } from '../../../src/Query/Filter/Filter';
 import { BooleanField } from '../../../src/Query/Filter/BooleanField';
-import { toMatchTaskFromLine } from '../../CustomMatchers/CustomMatchersForFilters';
 import { Sort } from '../../../src/Query/Sort';
 import {
     expectTaskComparesAfter,
@@ -25,10 +24,6 @@ function testDescriptionFilter(filter: FilterOrErrorMessage, line: string, expec
     });
     testTaskFilter(filter, task, expected);
 }
-
-expect.extend({
-    toMatchTaskFromLine,
-});
 
 describe('description should strip signifiers, some duplicate spaces and trailing spaces', () => {
     const field = new DescriptionField();

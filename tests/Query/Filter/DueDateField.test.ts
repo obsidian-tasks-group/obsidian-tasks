@@ -6,7 +6,6 @@ import { DueDateField } from '../../../src/Query/Filter/DueDateField';
 import type { FilterOrErrorMessage } from '../../../src/Query/Filter/Filter';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { testFilter } from '../../TestingTools/FilterTestHelpers';
-import { toHaveExplanation } from '../../CustomMatchers/CustomMatchersForFilters';
 import {
     expectTaskComparesAfter,
     expectTaskComparesBefore,
@@ -16,10 +15,6 @@ import { Query } from '../../../src/Query/Query';
 import { MarkdownTable } from '../../TestingTools/VerifyMarkdownTable';
 
 window.moment = moment;
-
-expect.extend({
-    toHaveExplanation,
-});
 
 function testTaskFilterForTaskWithDueDate(filter: FilterOrErrorMessage, dueDate: string | null, expected: boolean) {
     const builder = new TaskBuilder();

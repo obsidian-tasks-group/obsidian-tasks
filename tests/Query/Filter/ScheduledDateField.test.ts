@@ -2,16 +2,11 @@
  * @jest-environment jsdom
  */
 import moment from 'moment';
-import { toHaveExplanation } from '../../CustomMatchers/CustomMatchersForFilters';
 import { ScheduledDateField } from '../../../src/Query/Filter/ScheduledDateField';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { expectTaskComparesAfter, expectTaskComparesBefore } from '../../CustomMatchers/CustomMatchersForSorting';
 
 window.moment = moment;
-
-expect.extend({
-    toHaveExplanation,
-});
 
 describe('explain scheduled date queries', () => {
     it('should explain explicit date', () => {

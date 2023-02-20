@@ -1,12 +1,7 @@
 import { Filter, FilterOrErrorMessage } from '../../../src/Query/Filter/Filter';
 import type { FilterFunction } from '../../../src/Query/Filter/Filter';
 import type { Task } from '../../../src/Task';
-import { toMatchTaskFromLine } from '../../CustomMatchers/CustomMatchersForFilters';
 import { Explanation } from '../../../src/Query/Explain/Explanation';
-
-expect.extend({
-    toMatchTaskFromLine,
-});
 
 describe('Filter', () => {
     it('should create a Filter object', () => {

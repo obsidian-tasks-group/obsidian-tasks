@@ -1,17 +1,12 @@
 import { resetSettings, updateSettings } from '../../../src/Config/Settings';
 import type { FilteringCase } from '../../TestingTools/FilterTestHelpers';
 import { shouldSupportFiltering } from '../../TestingTools/FilterTestHelpers';
-import { toMatchTaskFromLine } from '../../CustomMatchers/CustomMatchersForFilters';
 import { TagsField } from '../../../src/Query/Filter/TagsField';
 import { DescriptionField } from '../../../src/Query/Filter/DescriptionField';
 import { fromLine } from '../../TestHelpers';
 import { Sort } from '../../../src/Query/Sort';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { expectTaskComparesAfter, expectTaskComparesBefore } from '../../CustomMatchers/CustomMatchersForSorting';
-
-expect.extend({
-    toMatchTaskFromLine,
-});
 
 describe('tag/tags', () => {
     it('should honour any # in query', () => {

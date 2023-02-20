@@ -3,18 +3,11 @@ import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { testFilter } from '../../TestingTools/FilterTestHelpers';
 import { PriorityField } from '../../../src/Query/Filter/PriorityField';
 
-import { toBeValid, toHaveExplanation } from '../../CustomMatchers/CustomMatchersForFilters';
-
 import {
     expectTaskComparesAfter,
     expectTaskComparesBefore,
     expectTaskComparesEqual,
 } from '../../CustomMatchers/CustomMatchersForSorting';
-
-expect.extend({
-    toBeValid,
-    toHaveExplanation,
-});
 
 function testTaskFilterForTaskWithPriority(filter: string, priority: Priority, expected: boolean) {
     const builder = new TaskBuilder();

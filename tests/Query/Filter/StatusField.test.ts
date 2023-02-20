@@ -1,6 +1,5 @@
 import { StatusField } from '../../../src/Query/Filter/StatusField';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
-import { toMatchTaskFromLine, toMatchTaskWithStatus } from '../../CustomMatchers/CustomMatchersForFilters';
 import { Status } from '../../../src/Status';
 import * as TestHelpers from '../../TestHelpers';
 import {
@@ -9,11 +8,6 @@ import {
     expectTaskComparesEqual,
 } from '../../CustomMatchers/CustomMatchersForSorting';
 import { StatusConfiguration, StatusType } from '../../../src/StatusConfiguration';
-
-expect.extend({
-    toMatchTaskFromLine,
-    toMatchTaskWithStatus,
-});
 
 describe('status', () => {
     it('done', () => {
