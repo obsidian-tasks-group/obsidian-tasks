@@ -2,34 +2,23 @@
  * @jest-environment jsdom
  */
 import moment from 'moment';
-
-window.moment = moment;
-
 import { DateParser } from '../../src/Query/DateParser';
 import { TaskRegularExpressions } from '../../src/Task';
 
+window.moment = moment;
+
+function testParsingeSingleDate(input: string, result: string) {
+    const moment = DateParser.parseDate(input);
+    expect(moment.format(TaskRegularExpressions.dateFormat)).toEqual(result);
+}
+
 describe('DateParser', () => {
     it('should parse a valid fixed date correctly', () => {
-        // Arrange
         const input = '2021-03-17';
-
-        // Act
-        const moment = DateParser.parseDate(input);
-
-        // Assert
-        expect(moment.isValid()).toEqual(true);
-        expect(moment.format(TaskRegularExpressions.dateFormat)).toEqual(input);
+        testParsingeSingleDate(input, input);
     });
 
     it('should recognise an invalid date correctly', () => {
-        // Arrange
-        const input = '2021-13-17';
-
-        // Act
-        const moment = DateParser.parseDate(input);
-
-        // Assert
-        expect(moment.isValid()).toEqual(false);
-        expect(moment.format(TaskRegularExpressions.dateFormat)).toEqual('Invalid date');
+        testParsingeSingleDate('2021-13-17', 'Invalid date');
     });
 });
