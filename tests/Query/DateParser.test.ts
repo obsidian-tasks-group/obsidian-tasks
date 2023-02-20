@@ -18,12 +18,12 @@ function testParsingDateRange(input: string, expectedStart: string, expectedEnd:
 
     // Assert
     const start = result[0];
-    expect(start).toBeDefined();
-    expect(start.format(TaskRegularExpressions.dateFormat)).toEqual(expectedStart);
-
     const end = result[1];
+    expect(start).toBeDefined();
     expect(end).toBeDefined();
-    expect(end.format(TaskRegularExpressions.dateFormat)).toEqual(expectedEnd);
+    const startFmt = start.format(TaskRegularExpressions.dateFormat);
+    const endFmt = end.format(TaskRegularExpressions.dateFormat);
+    expect([startFmt, endFmt]).toStrictEqual([expectedStart, expectedEnd]);
 }
 
 describe('DateParser - single dates', () => {
@@ -45,6 +45,10 @@ describe('DateParser - date ranges', () => {
 
     it('should parse date range with  multiple spaces', () => {
         testParsingDateRange('2013-08-17   2014-08-19', '2013-08-17', '2014-08-19');
+    });
+
+    it('should parse date range with end before start', () => {
+        testParsingDateRange('2017-08-17 2014-08-19', '2014-08-19', '2017-08-17');
     });
 
     it('should parse single date as date range', () => {
