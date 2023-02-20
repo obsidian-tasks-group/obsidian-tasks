@@ -2,7 +2,6 @@
  * @jest-environment jsdom
  */
 import moment from 'moment';
-import * as chrono from 'chrono-node';
 import { DateParser } from '../../src/Query/DateParser';
 import { TaskRegularExpressions } from '../../src/Task';
 
@@ -42,24 +41,21 @@ describe('DateParser - date ranges', () => {
         expect(end.format(TaskRegularExpressions.dateFormat)).toEqual('2013-08-19');
     });
 
-    it('should parse date range without hyphen and multiple spaces', () => {
+    it('should parse date range with  multiple spaces', () => {
         // Arrange
-        const input = '2013-08-17   2013-08-19';
+        const input = '2013-08-17   2014-08-19';
 
         // Act
-        const result = chrono.parse(input, undefined, {
-            forwardDate: true,
-        });
+        const result = DateParser.parseDateRange(input);
 
         // Assert
-        expect(result.length).toEqual(2);
-        const start = result[0].start;
+        const start = result[0];
         expect(start).toBeDefined();
-        expect(window.moment(start.date()).format(TaskRegularExpressions.dateFormat)).toEqual('2013-08-17');
+        expect(start.format(TaskRegularExpressions.dateFormat)).toEqual('2013-08-17');
 
-        const end = result[1].start;
+        const end = result[1];
         expect(end).toBeDefined();
-        expect(window.moment(end!.date()).format(TaskRegularExpressions.dateFormat)).toEqual('2013-08-19');
+        expect(end.format(TaskRegularExpressions.dateFormat)).toEqual('2014-08-19');
     });
 
     it('should parse single date as date range', () => {
