@@ -14,17 +14,22 @@ export class DateParser {
     }
 
     /**
-     * Parse a line and extract a pair of dates, returned in a tuple
+     * Parse a line and extract a pair of dates, returned in a tuple, sorted by date.
      * @param input - any pair of dates, separate by one or more spaces '17 August 2013 19 August 2013',
-     *                or a single date
+     *                or a single date.
      */
     public static parseDateRange(input: string): [moment.Moment, moment.Moment] {
         const result = chrono.parse(input, undefined, {
             forwardDate: true,
         });
 
-        const start = result[0].start;
-        const end = result[1] && result[1].start ? result[1].start : start;
-        return [window.moment(start.date()), window.moment(end.date())];
+        const startDate = result[0].start;
+        const endDate = result[1] && result[1].start ? result[1].start : startDate;
+        const start = window.moment(startDate.date());
+        const end = window.moment(endDate.date());
+        if (end.isBefore(start)) {
+            return [end, start];
+        }
+        return [start, end];
     }
 }
