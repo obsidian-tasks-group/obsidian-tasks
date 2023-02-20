@@ -25,7 +25,7 @@ describe('DateParser - single dates', () => {
 });
 
 describe('DateParser - date ranges', () => {
-    it('should parse date range from chrono docs', () => {
+    it('should parse date range from chrono docs - with hyphen', () => {
         // Arrange
         const input = '17 August 2013 - 19 August 2013';
 
@@ -43,7 +43,25 @@ describe('DateParser - date ranges', () => {
         const end = result[0].end;
         expect(end).toBeDefined();
         expect(window.moment(end!.date()).format(TaskRegularExpressions.dateFormat)).toEqual('2013-08-19');
+    });
 
-        console.log(result);
+    it('should parse date range without hyphen', () => {
+        // Arrange
+        const input = '17 August 2013 19 August 2013';
+
+        // Act
+        const result = chrono.parse(input, undefined, {
+            forwardDate: true,
+        });
+
+        // Assert
+        expect(result.length).toEqual(2);
+        const start = result[0].start;
+        expect(start).toBeDefined();
+        expect(window.moment(start.date()).format(TaskRegularExpressions.dateFormat)).toEqual('2013-08-17');
+
+        const end = result[1].start;
+        expect(end).toBeDefined();
+        expect(window.moment(end!.date()).format(TaskRegularExpressions.dateFormat)).toEqual('2013-08-19');
     });
 });
