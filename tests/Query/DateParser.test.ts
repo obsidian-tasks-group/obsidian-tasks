@@ -24,7 +24,7 @@ describe('DateParser - single dates', () => {
 });
 
 describe('DateParser - date ranges', () => {
-    it('should parse date range from chrono docs - but without hyphen', () => {
+    it('should parse date range from natural dates', () => {
         // Arrange
         const input = '17 August 2013 19 August 2013';
 
