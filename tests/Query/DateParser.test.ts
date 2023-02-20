@@ -61,4 +61,21 @@ describe('DateParser - date ranges', () => {
         expect(end).toBeDefined();
         expect(window.moment(end!.date()).format(TaskRegularExpressions.dateFormat)).toEqual('2013-08-19');
     });
+
+    it('should parse date range without hyphen and multiple spaces', () => {
+        // Arrange
+        const input = '2019-12-28';
+
+        // Act
+        const result = DateParser.parseDateRange(input);
+
+        // Assert
+        const start = result[0];
+        expect(start).toBeDefined();
+        expect(start.format(TaskRegularExpressions.dateFormat)).toEqual(input);
+
+        const end = result[1];
+        expect(end).toBeDefined();
+        expect(end.format(TaskRegularExpressions.dateFormat)).toEqual(input);
+    });
 });
