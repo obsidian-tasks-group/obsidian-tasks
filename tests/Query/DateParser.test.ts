@@ -45,9 +45,9 @@ describe('DateParser - date ranges', () => {
         expect(window.moment(end!.date()).format(TaskRegularExpressions.dateFormat)).toEqual('2013-08-19');
     });
 
-    it('should parse date range without hyphen', () => {
+    it('should parse date range without hyphen and multiple spaces', () => {
         // Arrange
-        const input = '17 August 2013 19 August 2013';
+        const input = '2013-08-17   2013-08-19';
 
         // Act
         const result = chrono.parse(input, undefined, {
