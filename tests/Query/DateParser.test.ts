@@ -56,4 +56,16 @@ describe('DateParser - date ranges', () => {
         const input = '2019-12-28';
         testParsingDateRange(input, input, input);
     });
+
+    it('should ignore invalid start date when parsing range', () => {
+        testParsingDateRange('2013-99-29 2014-08-19', '2014-08-19', '2014-08-19');
+    });
+
+    it('should ignore invalid end date when parsing range', () => {
+        testParsingDateRange('2014-08-19 2015-99-29', '2014-08-19', '2014-08-19');
+    });
+
+    it('should return 2 invalid dates when both dates are invalid', () => {
+        testParsingDateRange('2015-99-29 2015-99-29', 'Invalid date', 'Invalid date');
+    });
 });
