@@ -11,4 +11,14 @@ export class DateParser {
             )
             .startOf('day');
     }
+
+    public static parseDateRange(input: string) {
+        const result = chrono.parse(input, undefined, {
+            forwardDate: true,
+        });
+
+        const start = result[0].start;
+        const end = result[0].end;
+        return [window.moment(start.date()), window.moment(end!.date())];
+    }
 }
