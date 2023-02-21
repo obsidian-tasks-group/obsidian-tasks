@@ -3277,6 +3277,157 @@ var chroma = createCommonjsModule(function (module, exports) {
 })));
 });
 
+class ImportModal extends obsidian.Modal {
+    constructor(app, plugin) {
+        super(app);
+        this.plugin = plugin;
+    }
+    onOpen() {
+        const { contentEl, modalEl } = this;
+        modalEl.addClass('modal-style-settings');
+        new obsidian.Setting(contentEl)
+            .setName('Import style setting')
+            .setDesc('Import an entire or partial configuration. Warning: this may override existing settings');
+        new obsidian.Setting(contentEl).then((setting) => {
+            // Build an error message container
+            const errorSpan = createSpan({
+                cls: 'style-settings-import-error',
+                text: 'Error importing config',
+            });
+            setting.nameEl.appendChild(errorSpan);
+            // Attempt to parse the imported data and close if successful
+            const importAndClose = (str) => __awaiter(this, void 0, void 0, function* () {
+                if (str) {
+                    try {
+                        const importedSettings = JSON.parse(str);
+                        yield this.plugin.settingsManager.setSettings(importedSettings);
+                        this.plugin.settingsTab.display();
+                        this.close();
+                    }
+                    catch (e) {
+                        errorSpan.addClass('active');
+                        errorSpan.setText(`Error importing style settings: ${e}`);
+                    }
+                }
+                else {
+                    errorSpan.addClass('active');
+                    errorSpan.setText(`Error importing style settings: config is empty`);
+                }
+            });
+            // Build a file input
+            setting.controlEl.createEl('input', {
+                cls: 'style-settings-import-input',
+                attr: {
+                    id: 'style-settings-import-input',
+                    name: 'style-settings-import-input',
+                    type: 'file',
+                    accept: '.json',
+                },
+            }, (importInput) => {
+                // Set up a FileReader so we can parse the file contents
+                importInput.addEventListener('change', (e) => {
+                    const reader = new FileReader();
+                    reader.onload = (e) => __awaiter(this, void 0, void 0, function* () {
+                        yield importAndClose(e.target.result.toString().trim());
+                    });
+                    reader.readAsText(e.target.files[0]);
+                });
+            });
+            // Build a label we will style as a link
+            setting.controlEl.createEl('label', {
+                cls: 'style-settings-import-label',
+                text: 'Import from file',
+                attr: {
+                    for: 'style-settings-import-input',
+                },
+            });
+            new obsidian.TextAreaComponent(contentEl)
+                .setPlaceholder('Paste config here...')
+                .then((ta) => {
+                new obsidian.ButtonComponent(contentEl)
+                    .setButtonText('Save')
+                    .onClick(() => __awaiter(this, void 0, void 0, function* () {
+                    yield importAndClose(ta.getValue().trim());
+                }));
+            });
+        });
+    }
+    onClose() {
+        const { contentEl } = this;
+        contentEl.empty();
+    }
+}
+
+class ExportModal extends obsidian.Modal {
+    constructor(app, plugin, section, config) {
+        super(app);
+        this.plugin = plugin;
+        this.config = config;
+        this.section = section;
+    }
+    onOpen() {
+        const { contentEl, modalEl } = this;
+        modalEl.addClass('modal-style-settings');
+        new obsidian.Setting(contentEl)
+            .setName(`Export settings for: ${this.section}`)
+            .then((setting) => {
+            const output = JSON.stringify(this.config, null, 2);
+            // Build a copy to clipboard link
+            setting.controlEl.createEl('a', {
+                cls: 'style-settings-copy',
+                text: 'Copy to clipboard',
+                href: '#',
+            }, (copyButton) => {
+                new obsidian.TextAreaComponent(contentEl)
+                    .setValue(output)
+                    .then((textarea) => {
+                    copyButton.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        // Select the textarea contents and copy them to the clipboard
+                        textarea.inputEl.select();
+                        textarea.inputEl.setSelectionRange(0, 99999);
+                        document.execCommand('copy');
+                        copyButton.addClass('success');
+                        setTimeout(() => {
+                            // If the button is still in the dom, remove the success class
+                            if (copyButton.parentNode) {
+                                copyButton.removeClass('success');
+                            }
+                        }, 2000);
+                    });
+                });
+            });
+            // Build a download link
+            setting.controlEl.createEl('a', {
+                cls: 'style-settings-download',
+                text: 'Download',
+                attr: {
+                    download: 'style-settings.json',
+                    href: `data:application/json;charset=utf-8,${encodeURIComponent(output)}`,
+                },
+            });
+        });
+    }
+    onClose() {
+        const { contentEl } = this;
+        contentEl.empty();
+    }
+}
+
+const SettingType = {
+    HEADING: 'heading',
+    INFO_TEXT: 'info-text',
+    CLASS_TOGGLE: 'class-toggle',
+    CLASS_SELECT: 'class-select',
+    VARIABLE_TEXT: 'variable-text',
+    VARIABLE_NUMBER: 'variable-number',
+    VARIABLE_NUMBER_SLIDER: 'variable-number-slider',
+    VARIABLE_SELECT: 'variable-select',
+    VARIABLE_COLOR: 'variable-color',
+    VARIABLE_THEMED_COLOR: 'variable-themed-color',
+    COLOR_GRADIENT: 'color-gradient',
+};
+
 function generateColorVariables(key, format, colorStr, opacity, altFormats = []) {
     const parsedColor = chroma(colorStr);
     const alts = altFormats.reduce((a, alt) => {
@@ -3284,19 +3435,19 @@ function generateColorVariables(key, format, colorStr, opacity, altFormats = [])
         return a;
     }, []);
     switch (format) {
-        case "hex":
+        case 'hex':
             return [{ key, value: colorStr }, ...alts];
-        case "hsl":
+        case 'hsl':
             return [
                 {
                     key,
-                    value: parsedColor.css("hsl"),
+                    value: parsedColor.css('hsl'),
                 },
                 ...alts,
             ];
-        case "hsl-values": {
+        case 'hsl-values': {
             const hsl = parsedColor.hsl();
-            const alpha = opacity ? `,${parsedColor.alpha()}` : "";
+            const alpha = opacity ? `,${parsedColor.alpha()}` : '';
             const h = isNaN(hsl[0]) ? 0 : hsl[0];
             return [
                 {
@@ -3306,7 +3457,7 @@ function generateColorVariables(key, format, colorStr, opacity, altFormats = [])
                 ...alts,
             ];
         }
-        case "hsl-split": {
+        case 'hsl-split': {
             const hsl = parsedColor.hsl();
             const h = isNaN(hsl[0]) ? 0 : hsl[0];
             const out = [
@@ -3316,11 +3467,11 @@ function generateColorVariables(key, format, colorStr, opacity, altFormats = [])
                 },
                 {
                     key: `${key}-s`,
-                    value: (hsl[1] * 100).toString() + "%",
+                    value: (hsl[1] * 100).toString() + '%',
                 },
                 {
                     key: `${key}-l`,
-                    value: (hsl[2] * 100).toString() + "%",
+                    value: (hsl[2] * 100).toString() + '%',
                 },
                 ...alts,
             ];
@@ -3331,7 +3482,32 @@ function generateColorVariables(key, format, colorStr, opacity, altFormats = [])
                 });
             return out;
         }
-        case "rgb":
+        case 'hsl-split-decimal': {
+            const hsl = parsedColor.hsl();
+            const h = isNaN(hsl[0]) ? 0 : hsl[0];
+            const out = [
+                {
+                    key: `${key}-h`,
+                    value: h.toString(),
+                },
+                {
+                    key: `${key}-s`,
+                    value: hsl[1].toString(),
+                },
+                {
+                    key: `${key}-l`,
+                    value: hsl[2].toString(),
+                },
+                ...alts,
+            ];
+            if (opacity)
+                out.push({
+                    key: `${key}-a`,
+                    value: parsedColor.alpha().toString(),
+                });
+            return out;
+        }
+        case 'rgb':
             return [
                 {
                     key,
@@ -3339,9 +3515,9 @@ function generateColorVariables(key, format, colorStr, opacity, altFormats = [])
                 },
                 ...alts,
             ];
-        case "rgb-values": {
+        case 'rgb-values': {
             const rgb = parsedColor.rgb();
-            const alpha = opacity ? `,${parsedColor.alpha()}` : "";
+            const alpha = opacity ? `,${parsedColor.alpha()}` : '';
             return [
                 {
                     key,
@@ -3350,7 +3526,7 @@ function generateColorVariables(key, format, colorStr, opacity, altFormats = [])
                 ...alts,
             ];
         }
-        case "rgb-split": {
+        case 'rgb-split': {
             const rgb = parsedColor.rgb();
             const out = [
                 {
@@ -3381,7 +3557,7 @@ function pushColors(arr, id, from, to, format, step, pad) {
     for (let i = 0; i <= 100; i++) {
         if (i % step === 0) {
             const c = scale(i);
-            arr.push(...generateColorVariables(`${id}-${i.toString().padStart(pad, "0")}`, format, c.css(), c.alpha() !== 1));
+            arr.push(...generateColorVariables(`${id}-${i.toString().padStart(pad, '0')}`, format, c.css(), c.alpha() !== 1));
         }
     }
 }
@@ -3394,7 +3570,7 @@ function getCSSVariables(settings, config, gradients, settingsManager) {
     const gradientCandidatesDark = {};
     const seenGradientSections = new Set();
     for (const key in settings) {
-        const [sectionId, settingId, modifier] = key.split("@@");
+        const [sectionId, settingId, modifier] = key.split('@@');
         const section = config[sectionId];
         if (!section)
             continue;
@@ -3403,19 +3579,25 @@ function getCSSVariables(settings, config, gradients, settingsManager) {
             continue;
         const value = settings[key];
         switch (setting.type) {
-            case "variable-number":
-            case "variable-number-slider":
-                const format = setting.format;
-                const val = value !== undefined ? value : setting.default;
+            case SettingType.VARIABLE_NUMBER:
+            case SettingType.VARIABLE_NUMBER_SLIDER: {
+                const format = setting
+                    .format;
+                const val = value !== undefined
+                    ? value
+                    : setting.default;
                 vars.push({
                     key: setting.id,
-                    value: `${val}${format || ""}`,
+                    value: `${val}${format || ''}`,
                 });
                 continue;
-            case "variable-text":
-            case "variable-select":
+            }
+            case SettingType.VARIABLE_TEXT:
+            case SettingType.VARIABLE_SELECT: {
                 const format_text = setting;
-                let text = value !== undefined ? value.toString() : format_text.default.toString();
+                let text = value !== undefined
+                    ? value.toString()
+                    : format_text.default.toString();
                 if (format_text.quotes) {
                     if (text !== `""`) {
                         text = `'${text}'`;
@@ -3429,27 +3611,27 @@ function getCSSVariables(settings, config, gradients, settingsManager) {
                     value: text,
                 });
                 continue;
-            case "variable-color": {
+            }
+            case SettingType.VARIABLE_COLOR: {
                 if (!seenGradientSections.has(sectionId))
                     seenGradientSections.add(sectionId);
                 const colorSetting = setting;
                 const color = value !== undefined ? value.toString() : colorSetting.default;
-                vars.push(...generateColorVariables(setting.id, colorSetting.format, color, colorSetting.opacity, colorSetting["alt-format"]));
-                generateColorVariables(setting.id, "rgb", color, colorSetting.opacity).forEach((kv) => {
+                vars.push(...generateColorVariables(setting.id, colorSetting.format, color, colorSetting.opacity, colorSetting['alt-format']));
+                generateColorVariables(setting.id, 'rgb', color, colorSetting.opacity).forEach((kv) => {
                     gradientCandidates[kv.key] = kv.value;
                 });
                 continue;
             }
-            case "variable-themed-color": {
+            case SettingType.VARIABLE_THEMED_COLOR: {
                 if (!seenGradientSections.has(sectionId))
                     seenGradientSections.add(sectionId);
                 const colorSetting = setting;
-                const color = value !== undefined
-                    ? value.toString()
-                    : colorSetting[modifier === "light" ? "default-light" : "default-dark"];
-                (modifier === "light" ? themedLight : themedDark).push(...generateColorVariables(setting.id, colorSetting.format, color, colorSetting.opacity, colorSetting["alt-format"]));
-                generateColorVariables(setting.id, "rgb", color, colorSetting.opacity).forEach((kv) => {
-                    if (modifier === "light") {
+                const colorKey = modifier === 'light' ? 'default-light' : 'default-dark';
+                const color = value !== undefined ? value.toString() : colorSetting[colorKey];
+                (modifier === 'light' ? themedLight : themedDark).push(...generateColorVariables(setting.id, colorSetting.format, color, colorSetting.opacity, colorSetting['alt-format']));
+                generateColorVariables(setting.id, 'rgb', color, colorSetting.opacity).forEach((kv) => {
+                    if (modifier === 'light') {
                         gradientCandidatesLight[kv.key] = kv.value;
                     }
                     else {
@@ -3469,21 +3651,24 @@ function getCSSVariables(settings, config, gradients, settingsManager) {
             const { from, to, format, step, id, pad = 0 } = def;
             if (gradientCandidatesLight[from]) {
                 const fromColor = gradientCandidatesLight[from];
-                const toColor = gradientCandidatesLight[to] || ((_a = settingsManager.plugin.getCSSVar(to).light) === null || _a === void 0 ? void 0 : _a.trim());
+                const toColor = gradientCandidatesLight[to] ||
+                    ((_a = settingsManager.plugin.getCSSVar(to).light) === null || _a === void 0 ? void 0 : _a.trim());
                 if (toColor) {
                     pushColors(themedLight, id, fromColor, toColor, format, step, pad);
                 }
             }
             if (gradientCandidatesDark[from]) {
                 const fromColor = gradientCandidatesDark[from];
-                const toColor = gradientCandidatesDark[to] || ((_b = settingsManager.plugin.getCSSVar(to).dark) === null || _b === void 0 ? void 0 : _b.trim());
+                const toColor = gradientCandidatesDark[to] ||
+                    ((_b = settingsManager.plugin.getCSSVar(to).dark) === null || _b === void 0 ? void 0 : _b.trim());
                 if (toColor) {
                     pushColors(themedDark, id, fromColor, toColor, format, step, pad);
                 }
             }
             if (gradientCandidates[from]) {
                 const fromColor = gradientCandidates[from];
-                const toColor = gradientCandidates[to] || ((_c = settingsManager.plugin.getCSSVar(to).current) === null || _c === void 0 ? void 0 : _c.trim());
+                const toColor = gradientCandidates[to] ||
+                    ((_c = settingsManager.plugin.getCSSVar(to).current) === null || _c === void 0 ? void 0 : _c.trim());
                 if (toColor) {
                     pushColors(vars, id, fromColor, toColor, format, step, pad);
                 }
@@ -3498,9 +3683,9 @@ class CSSSettingsManager {
         this.gradients = {};
         this.plugin = plugin;
         this.settings = {};
-        this.styleTag = document.createElement("style");
-        this.styleTag.id = "css-settings-manager";
-        document.getElementsByTagName("head")[0].appendChild(this.styleTag);
+        this.styleTag = document.createElement('style');
+        this.styleTag.id = 'css-settings-manager';
+        document.getElementsByTagName('head')[0].appendChild(this.styleTag);
     }
     cleanup() {
         this.styleTag.remove();
@@ -3522,23 +3707,24 @@ class CSSSettingsManager {
             const config = this.config[section];
             Object.keys(config).forEach((settingId) => {
                 const setting = config[settingId];
-                if (setting.type === "class-toggle") {
+                if (setting.type === SettingType.CLASS_TOGGLE) {
                     const classToggle = setting;
-                    let value = this.getSetting(section, settingId);
-                    if (value === true || (value === undefined && classToggle.default === true)) {
+                    const value = this.getSetting(section, settingId);
+                    if (value === true ||
+                        (value === undefined && classToggle.default === true)) {
                         document.body.classList.add(setting.id);
                     }
                 }
-                else if (setting.type === "class-select") {
+                else if (setting.type === SettingType.CLASS_SELECT) {
                     const multiToggle = setting;
                     let value = this.getSetting(section, settingId);
                     if (value === undefined && !!multiToggle.default) {
                         value = multiToggle.default;
                     }
                     else if (value === undefined) {
-                        value = "none";
+                        value = 'none';
                     }
-                    if (value !== "none") {
+                    if (value !== 'none') {
                         document.body.classList.add(value);
                     }
                 }
@@ -3550,7 +3736,7 @@ class CSSSettingsManager {
             const config = this.config[section];
             Object.keys(config).forEach((settingId) => {
                 const setting = config[settingId];
-                if (setting.type === "class-toggle") {
+                if (setting.type === SettingType.CLASS_TOGGLE) {
                     if (this.getSetting(section, settingId)) {
                         document.body.classList.remove(setting.id);
                     }
@@ -3564,23 +3750,23 @@ class CSSSettingsManager {
       body.css-settings-manager {
         ${vars.reduce((combined, current) => {
             return combined + `--${current.key}: ${current.value}; `;
-        }, "")}
+        }, '')}
       }
 
       body.theme-light.css-settings-manager {
         ${themedLight.reduce((combined, current) => {
             return combined + `--${current.key}: ${current.value}; `;
-        }, "")}
+        }, '')}
       }
 
       body.theme-dark.css-settings-manager {
         ${themedDark.reduce((combined, current) => {
             return combined + `--${current.key}: ${current.value}; `;
-        }, "")}
+        }, '')}
       }
     `
             .trim()
-            .replace(/[\r\n\s]+/g, " ");
+            .replace(/[\r\n\s]+/g, ' ');
     }
     setConfig(settings) {
         this.config = {};
@@ -3589,7 +3775,7 @@ class CSSSettingsManager {
             this.config[s.id] = {};
             s.settings.forEach((setting) => {
                 this.config[s.id][setting.id] = setting;
-                if (setting.type === "color-gradient") {
+                if (setting.type === SettingType.COLOR_GRADIENT) {
                     if (!this.gradients[s.id])
                         this.gradients[s.id] = [];
                     this.gradients[s.id].push(setting);
@@ -3598,7 +3784,7 @@ class CSSSettingsManager {
         });
         let pruned = false;
         for (const key in this.settings) {
-            const [sectionId, settingId] = key.split("@@");
+            const [sectionId, settingId] = key.split('@@');
             if (this.config[sectionId] && !this.config[sectionId][settingId]) {
                 delete this.settings[key];
                 pruned = true;
@@ -3617,7 +3803,7 @@ class CSSSettingsManager {
     getSettings(sectionId, ids) {
         return ids.reduce((settings, id) => {
             const fullId = `${sectionId}@@${id}`;
-            const alts = ["dark", "light"];
+            const alts = ['dark', 'light'];
             if (this.settings[fullId]) {
                 settings[fullId] = this.settings[fullId];
             }
@@ -3646,7 +3832,7 @@ class CSSSettingsManager {
     }
     clearSection(sectionId) {
         Object.keys(this.settings).forEach((key) => {
-            const [section] = key.split("@@");
+            const [section] = key.split('@@');
             if (section === sectionId) {
                 delete this.settings[key];
             }
@@ -3659,970 +3845,6 @@ class CSSSettingsManager {
     import() {
         new ImportModal(this.plugin.app, this.plugin).open();
     }
-}
-class ExportModal extends obsidian.Modal {
-    constructor(app, plugin, section, config) {
-        super(app);
-        this.plugin = plugin;
-        this.config = config;
-        this.section = section;
-    }
-    onOpen() {
-        let { contentEl, modalEl } = this;
-        modalEl.addClass("modal-style-settings");
-        new obsidian.Setting(contentEl).setName(`Export settings for: ${this.section}`).then((setting) => {
-            const output = JSON.stringify(this.config, null, 2);
-            // Build a copy to clipboard link
-            setting.controlEl.createEl("a", {
-                cls: "style-settings-copy",
-                text: "Copy to clipboard",
-                href: "#",
-            }, (copyButton) => {
-                new obsidian.TextAreaComponent(contentEl).setValue(output).then((textarea) => {
-                    copyButton.addEventListener("click", (e) => {
-                        e.preventDefault();
-                        // Select the textarea contents and copy them to the clipboard
-                        textarea.inputEl.select();
-                        textarea.inputEl.setSelectionRange(0, 99999);
-                        document.execCommand("copy");
-                        copyButton.addClass("success");
-                        setTimeout(() => {
-                            // If the button is still in the dom, remove the success class
-                            if (copyButton.parentNode) {
-                                copyButton.removeClass("success");
-                            }
-                        }, 2000);
-                    });
-                });
-            });
-            // Build a download link
-            setting.controlEl.createEl("a", {
-                cls: "style-settings-download",
-                text: "Download",
-                attr: {
-                    download: "style-settings.json",
-                    href: `data:application/json;charset=utf-8,${encodeURIComponent(output)}`,
-                },
-            });
-        });
-    }
-    onClose() {
-        let { contentEl } = this;
-        contentEl.empty();
-    }
-}
-class ImportModal extends obsidian.Modal {
-    constructor(app, plugin) {
-        super(app);
-        this.plugin = plugin;
-    }
-    onOpen() {
-        let { contentEl, modalEl } = this;
-        modalEl.addClass("modal-style-settings");
-        new obsidian.Setting(contentEl)
-            .setName("Import style setting")
-            .setDesc("Import an entire or partial configuration. Warning: this may override existing settings");
-        new obsidian.Setting(contentEl).then((setting) => {
-            // Build an error message container
-            const errorSpan = createSpan({
-                cls: "style-settings-import-error",
-                text: "Error importing config",
-            });
-            setting.nameEl.appendChild(errorSpan);
-            // Attempt to parse the imported data and close if successful
-            const importAndClose = (str) => __awaiter(this, void 0, void 0, function* () {
-                if (str) {
-                    try {
-                        const importedSettings = JSON.parse(str);
-                        yield this.plugin.settingsManager.setSettings(importedSettings);
-                        this.plugin.settingsTab.display();
-                        this.close();
-                    }
-                    catch (e) {
-                        errorSpan.addClass("active");
-                        errorSpan.setText(`Error importing style settings: ${e}`);
-                    }
-                }
-                else {
-                    errorSpan.addClass("active");
-                    errorSpan.setText(`Error importing style settings: config is empty`);
-                }
-            });
-            // Build a file input
-            setting.controlEl.createEl("input", {
-                cls: "style-settings-import-input",
-                attr: {
-                    id: "style-settings-import-input",
-                    name: "style-settings-import-input",
-                    type: "file",
-                    accept: ".json",
-                },
-            }, (importInput) => {
-                // Set up a FileReader so we can parse the file contents
-                importInput.addEventListener("change", (e) => {
-                    const reader = new FileReader();
-                    reader.onload = (e) => __awaiter(this, void 0, void 0, function* () {
-                        yield importAndClose(e.target.result.toString().trim());
-                    });
-                    reader.readAsText(e.target.files[0]);
-                });
-            });
-            // Build a label we will style as a link
-            setting.controlEl.createEl("label", {
-                cls: "style-settings-import-label",
-                text: "Import from file",
-                attr: {
-                    for: "style-settings-import-input",
-                },
-            });
-            new obsidian.TextAreaComponent(contentEl).setPlaceholder("Paste config here...").then((ta) => {
-                new obsidian.ButtonComponent(contentEl).setButtonText("Save").onClick(() => __awaiter(this, void 0, void 0, function* () {
-                    yield importAndClose(ta.getValue().trim());
-                }));
-            });
-        });
-    }
-    onClose() {
-        let { contentEl } = this;
-        contentEl.empty();
-    }
-}
-
-var pickr_min = createCommonjsModule(function (module, exports) {
-/*! Pickr 1.8.4 MIT | https://github.com/Simonwep/pickr */
-!function(t,e){module.exports=e();}(self,(function(){return (()=>{var t={d:(e,o)=>{for(var n in o)t.o(o,n)&&!t.o(e,n)&&Object.defineProperty(e,n,{enumerable:!0,get:o[n]});},o:(t,e)=>Object.prototype.hasOwnProperty.call(t,e),r:t=>{"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(t,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(t,"__esModule",{value:!0});}},e={};t.d(e,{default:()=>x});var o={};function n(t,e,o,n){let i=arguments.length>4&&void 0!==arguments[4]?arguments[4]:{};e instanceof HTMLCollection||e instanceof NodeList?e=Array.from(e):Array.isArray(e)||(e=[e]),Array.isArray(o)||(o=[o]);for(const s of e)for(const e of o)s[t](e,n,{capture:!1,...i});return Array.prototype.slice.call(arguments,1)}t.r(o),t.d(o,{adjustableInputNumbers:()=>p,createElementFromString:()=>r,createFromTemplate:()=>a,eventPath:()=>l,off:()=>s,on:()=>i,resolveElement:()=>c});const i=n.bind(null,"addEventListener"),s=n.bind(null,"removeEventListener");function r(t){const e=document.createElement("div");return e.innerHTML=t.trim(),e.firstElementChild}function a(t){const e=(t,e)=>{const o=t.getAttribute(e);return t.removeAttribute(e),o},o=function(t){let n=arguments.length>1&&void 0!==arguments[1]?arguments[1]:{};const i=e(t,":obj"),s=e(t,":ref"),r=i?n[i]={}:n;s&&(n[s]=t);for(const n of Array.from(t.children)){const t=e(n,":arr"),i=o(n,t?{}:r);t&&(r[t]||(r[t]=[])).push(Object.keys(i).length?i:n);}return n};return o(r(t))}function l(t){let e=t.path||t.composedPath&&t.composedPath();if(e)return e;let o=t.target.parentElement;for(e=[t.target,o];o=o.parentElement;)e.push(o);return e.push(document,window),e}function c(t){return t instanceof Element?t:"string"==typeof t?t.split(/>>/g).reduce(((t,e,o,n)=>(t=t.querySelector(e),o<n.length-1?t.shadowRoot:t)),document):null}function p(t){let e=arguments.length>1&&void 0!==arguments[1]?arguments[1]:t=>t;function o(o){const n=[.001,.01,.1][Number(o.shiftKey||2*o.ctrlKey)]*(o.deltaY<0?1:-1);let i=0,s=t.selectionStart;t.value=t.value.replace(/[\d.]+/g,((t,o)=>o<=s&&o+t.length>=s?(s=o,e(Number(t),n,i)):(i++,t))),t.focus(),t.setSelectionRange(s,s),o.preventDefault(),t.dispatchEvent(new Event("input"));}i(t,"focus",(()=>i(window,"wheel",o,{passive:!1}))),i(t,"blur",(()=>s(window,"wheel",o)));}const{min:h,max:u,floor:d,round:v}=Math;function m(t,e,o){e/=100,o/=100;const n=d(t=t/360*6),i=t-n,s=o*(1-e),r=o*(1-i*e),a=o*(1-(1-i)*e),l=n%6;return [255*[o,r,s,s,a,o][l],255*[a,o,o,r,s,s][l],255*[s,s,a,o,o,r][l]]}function f(t,e,o){return m(t,e,o).map((t=>v(t).toString(16).padStart(2,"0")))}function g(t,e,o){const n=m(t,e,o),i=n[0]/255,s=n[1]/255,r=n[2]/255,a=h(1-i,1-s,1-r);return [100*(1===a?0:(1-i-a)/(1-a)),100*(1===a?0:(1-s-a)/(1-a)),100*(1===a?0:(1-r-a)/(1-a)),100*a]}function b(t,e,o){const n=(2-(e/=100))*(o/=100)/2;return 0!==n&&(e=1===n?0:n<.5?e*o/(2*n):e*o/(2-2*n)),[t,100*e,100*n]}function y(t,e,o){const n=h(t/=255,e/=255,o/=255),i=u(t,e,o),s=i-n;let r,a;if(0===s)r=a=0;else {a=s/i;const n=((i-t)/6+s/2)/s,l=((i-e)/6+s/2)/s,c=((i-o)/6+s/2)/s;t===i?r=c-l:e===i?r=1/3+n-c:o===i&&(r=2/3+l-n),r<0?r+=1:r>1&&(r-=1);}return [360*r,100*a,100*i]}function _(t,e,o,n){e/=100,o/=100;return [...y(255*(1-h(1,(t/=100)*(1-(n/=100))+n)),255*(1-h(1,e*(1-n)+n)),255*(1-h(1,o*(1-n)+n)))]}function w(t,e,o){e/=100;const n=2*(e*=(o/=100)<.5?o:1-o)/(o+e)*100,i=100*(o+e);return [t,isNaN(n)?0:n,i]}function A(t){return y(...t.match(/.{2}/g).map((t=>parseInt(t,16))))}function C(t){t=t.match(/^[a-zA-Z]+$/)?function(t){if("black"===t.toLowerCase())return "#000";const e=document.createElement("canvas").getContext("2d");return e.fillStyle=t,"#000"===e.fillStyle?null:e.fillStyle}(t):t;const e={cmyk:/^cmyk[\D]+([\d.]+)[\D]+([\d.]+)[\D]+([\d.]+)[\D]+([\d.]+)/i,rgba:/^((rgba)|rgb)[\D]+([\d.]+)[\D]+([\d.]+)[\D]+([\d.]+)[\D]*?([\d.]+|$)/i,hsla:/^((hsla)|hsl)[\D]+([\d.]+)[\D]+([\d.]+)[\D]+([\d.]+)[\D]*?([\d.]+|$)/i,hsva:/^((hsva)|hsv)[\D]+([\d.]+)[\D]+([\d.]+)[\D]+([\d.]+)[\D]*?([\d.]+|$)/i,hexa:/^#?(([\dA-Fa-f]{3,4})|([\dA-Fa-f]{6})|([\dA-Fa-f]{8}))$/i},o=t=>t.map((t=>/^(|\d+)\.\d+|\d+$/.test(t)?Number(t):void 0));let n;t:for(const i in e){if(!(n=e[i].exec(t)))continue;const s=t=>!!n[2]==("number"==typeof t);switch(i){case"cmyk":{const[,t,e,s,r]=o(n);if(t>100||e>100||s>100||r>100)break t;return {values:_(t,e,s,r),type:i}}case"rgba":{const[,,,t,e,r,a]=o(n);if(t>255||e>255||r>255||a<0||a>1||!s(a))break t;return {values:[...y(t,e,r),a],a,type:i}}case"hexa":{let[,t]=n;4!==t.length&&3!==t.length||(t=t.split("").map((t=>t+t)).join(""));const e=t.substring(0,6);let o=t.substring(6);return o=o?parseInt(o,16)/255:void 0,{values:[...A(e),o],a:o,type:i}}case"hsla":{const[,,,t,e,r,a]=o(n);if(t>360||e>100||r>100||a<0||a>1||!s(a))break t;return {values:[...w(t,e,r),a],a,type:i}}case"hsva":{const[,,,t,e,r,a]=o(n);if(t>360||e>100||r>100||a<0||a>1||!s(a))break t;return {values:[t,e,r,a],a,type:i}}}}return {values:null,type:null}}function $(){let t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:0,e=arguments.length>1&&void 0!==arguments[1]?arguments[1]:0,o=arguments.length>2&&void 0!==arguments[2]?arguments[2]:0,n=arguments.length>3&&void 0!==arguments[3]?arguments[3]:1;const i=(t,e)=>function(){let o=arguments.length>0&&void 0!==arguments[0]?arguments[0]:-1;return e(~o?t.map((t=>Number(t.toFixed(o)))):t)},s={h:t,s:e,v:o,a:n,toHSVA(){const t=[s.h,s.s,s.v,s.a];return t.toString=i(t,(t=>`hsva(${t[0]}, ${t[1]}%, ${t[2]}%, ${s.a})`)),t},toHSLA(){const t=[...b(s.h,s.s,s.v),s.a];return t.toString=i(t,(t=>`hsla(${t[0]}, ${t[1]}%, ${t[2]}%, ${s.a})`)),t},toRGBA(){const t=[...m(s.h,s.s,s.v),s.a];return t.toString=i(t,(t=>`rgba(${t[0]}, ${t[1]}, ${t[2]}, ${s.a})`)),t},toCMYK(){const t=g(s.h,s.s,s.v);return t.toString=i(t,(t=>`cmyk(${t[0]}%, ${t[1]}%, ${t[2]}%, ${t[3]}%)`)),t},toHEXA(){const t=f(s.h,s.s,s.v),e=s.a>=1?"":Number((255*s.a).toFixed(0)).toString(16).toUpperCase().padStart(2,"0");return e&&t.push(e),t.toString=()=>`#${t.join("").toUpperCase()}`,t},clone:()=>$(s.h,s.s,s.v,s.a)};return s}const k=t=>Math.max(Math.min(t,1),0);function S(t){const e={options:Object.assign({lock:null,onchange:()=>0,onstop:()=>0},t),_keyboard(t){const{options:o}=e,{type:n,key:i}=t;if(document.activeElement===o.wrapper){const{lock:o}=e.options,s="ArrowUp"===i,r="ArrowRight"===i,a="ArrowDown"===i,l="ArrowLeft"===i;if("keydown"===n&&(s||r||a||l)){let n=0,i=0;"v"===o?n=s||r?1:-1:"h"===o?n=s||r?-1:1:(i=s?-1:a?1:0,n=l?-1:r?1:0),e.update(k(e.cache.x+.01*n),k(e.cache.y+.01*i)),t.preventDefault();}else i.startsWith("Arrow")&&(e.options.onstop(),t.preventDefault());}},_tapstart(t){i(document,["mouseup","touchend","touchcancel"],e._tapstop),i(document,["mousemove","touchmove"],e._tapmove),t.cancelable&&t.preventDefault(),e._tapmove(t);},_tapmove(t){const{options:o,cache:n}=e,{lock:i,element:s,wrapper:r}=o,a=r.getBoundingClientRect();let l=0,c=0;if(t){const e=t&&t.touches&&t.touches[0];l=t?(e||t).clientX:0,c=t?(e||t).clientY:0,l<a.left?l=a.left:l>a.left+a.width&&(l=a.left+a.width),c<a.top?c=a.top:c>a.top+a.height&&(c=a.top+a.height),l-=a.left,c-=a.top;}else n&&(l=n.x*a.width,c=n.y*a.height);"h"!==i&&(s.style.left=`calc(${l/a.width*100}% - ${s.offsetWidth/2}px)`),"v"!==i&&(s.style.top=`calc(${c/a.height*100}% - ${s.offsetHeight/2}px)`),e.cache={x:l/a.width,y:c/a.height};const p=k(l/a.width),h=k(c/a.height);switch(i){case"v":return o.onchange(p);case"h":return o.onchange(h);default:return o.onchange(p,h)}},_tapstop(){e.options.onstop(),s(document,["mouseup","touchend","touchcancel"],e._tapstop),s(document,["mousemove","touchmove"],e._tapmove);},trigger(){e._tapmove();},update(){let t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:0,o=arguments.length>1&&void 0!==arguments[1]?arguments[1]:0;const{left:n,top:i,width:s,height:r}=e.options.wrapper.getBoundingClientRect();"h"===e.options.lock&&(o=t),e._tapmove({clientX:n+s*t,clientY:i+r*o});},destroy(){const{options:t,_tapstart:o,_keyboard:n}=e;s(document,["keydown","keyup"],n),s([t.wrapper,t.element],"mousedown",o),s([t.wrapper,t.element],"touchstart",o,{passive:!1});}},{options:o,_tapstart:n,_keyboard:r}=e;return i([o.wrapper,o.element],"mousedown",n),i([o.wrapper,o.element],"touchstart",n,{passive:!1}),i(document,["keydown","keyup"],r),e}function O(){let t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:{};t=Object.assign({onchange:()=>0,className:"",elements:[]},t);const e=i(t.elements,"click",(e=>{t.elements.forEach((o=>o.classList[e.target===o?"add":"remove"](t.className))),t.onchange(e),e.stopPropagation();}));return {destroy:()=>s(...e)}}const E={variantFlipOrder:{start:"sme",middle:"mse",end:"ems"},positionFlipOrder:{top:"tbrl",right:"rltb",bottom:"btrl",left:"lrbt"},position:"bottom",margin:8},L=(t,e,o)=>{const{container:n,margin:i,position:s,variantFlipOrder:r,positionFlipOrder:a}={container:document.documentElement.getBoundingClientRect(),...E,...o},{left:l,top:c}=e.style;e.style.left="0",e.style.top="0";const p=t.getBoundingClientRect(),h=e.getBoundingClientRect(),u={t:p.top-h.height-i,b:p.bottom+i,r:p.right+i,l:p.left-h.width-i},d={vs:p.left,vm:p.left+p.width/2+-h.width/2,ve:p.left+p.width-h.width,hs:p.top,hm:p.bottom-p.height/2-h.height/2,he:p.bottom-h.height},[v,m="middle"]=s.split("-"),f=a[v],g=r[m],{top:b,left:y,bottom:_,right:w}=n;for(const t of f){const o="t"===t||"b"===t,n=u[t],[i,s]=o?["top","left"]:["left","top"],[r,a]=o?[h.height,h.width]:[h.width,h.height],[l,c]=o?[_,w]:[w,_],[p,v]=o?[b,y]:[y,b];if(!(n<p||n+r>l))for(const r of g){const l=d[(o?"v":"h")+r];if(!(l<v||l+a>c))return e.style[s]=l-h[s]+"px",e.style[i]=n-h[i]+"px",t+r}}return e.style.left=l,e.style.top=c,null};function P(t,e,o){return e in t?Object.defineProperty(t,e,{value:o,enumerable:!0,configurable:!0,writable:!0}):t[e]=o,t}class x{constructor(t){P(this,"_initializingActive",!0),P(this,"_recalc",!0),P(this,"_nanopop",null),P(this,"_root",null),P(this,"_color",$()),P(this,"_lastColor",$()),P(this,"_swatchColors",[]),P(this,"_setupAnimationFrame",null),P(this,"_eventListener",{init:[],save:[],hide:[],show:[],clear:[],change:[],changestop:[],cancel:[],swatchselect:[]}),this.options=t=Object.assign({...x.DEFAULT_OPTIONS},t);const{swatches:e,components:o,theme:n,sliders:i,lockOpacity:s,padding:r}=t;["nano","monolith"].includes(n)&&!i&&(t.sliders="h"),o.interaction||(o.interaction={});const{preview:a,opacity:l,hue:c,palette:p}=o;o.opacity=!s&&l,o.palette=p||a||l||c,this._preBuild(),this._buildComponents(),this._bindEvents(),this._finalBuild(),e&&e.length&&e.forEach((t=>this.addSwatch(t)));const{button:h,app:u}=this._root;this._nanopop=((t,e,o)=>{const n="object"!=typeof t||t instanceof HTMLElement?{reference:t,popper:e,...o}:t;return {update(){let t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:n;const{reference:e,popper:o}=Object.assign(n,t);if(!o||!e)throw new Error("Popper- or reference-element missing.");return L(e,o,n)}}})(h,u,{margin:r}),h.setAttribute("role","button"),h.setAttribute("aria-label",this._t("btn:toggle"));const d=this;this._setupAnimationFrame=requestAnimationFrame((function e(){if(!u.offsetWidth)return d._setupAnimationFrame=requestAnimationFrame(e);d.setColor(t.default),d._rePositioningPicker(),t.defaultRepresentation&&(d._representation=t.defaultRepresentation,d.setColorRepresentation(d._representation)),t.showAlways&&d.show(),d._initializingActive=!1,d._emit("init");}));}_preBuild(){const{options:t}=this;for(const e of ["el","container"])t[e]=c(t[e]);this._root=(t=>{const{components:e,useAsButton:o,inline:n,appClass:i,theme:s,lockOpacity:r}=t.options,l=t=>t?"":'style="display:none" hidden',c=e=>t._t(e),p=a(`\n      <div :ref="root" class="pickr">\n\n        ${o?"":'<button type="button" :ref="button" class="pcr-button"></button>'}\n\n        <div :ref="app" class="pcr-app ${i||""}" data-theme="${s}" ${n?'style="position: unset"':""} aria-label="${c("ui:dialog")}" role="window">\n          <div class="pcr-selection" ${l(e.palette)}>\n            <div :obj="preview" class="pcr-color-preview" ${l(e.preview)}>\n              <button type="button" :ref="lastColor" class="pcr-last-color" aria-label="${c("btn:last-color")}"></button>\n              <div :ref="currentColor" class="pcr-current-color"></div>\n            </div>\n\n            <div :obj="palette" class="pcr-color-palette">\n              <div :ref="picker" class="pcr-picker"></div>\n              <div :ref="palette" class="pcr-palette" tabindex="0" aria-label="${c("aria:palette")}" role="listbox"></div>\n            </div>\n\n            <div :obj="hue" class="pcr-color-chooser" ${l(e.hue)}>\n              <div :ref="picker" class="pcr-picker"></div>\n              <div :ref="slider" class="pcr-hue pcr-slider" tabindex="0" aria-label="${c("aria:hue")}" role="slider"></div>\n            </div>\n\n            <div :obj="opacity" class="pcr-color-opacity" ${l(e.opacity)}>\n              <div :ref="picker" class="pcr-picker"></div>\n              <div :ref="slider" class="pcr-opacity pcr-slider" tabindex="0" aria-label="${c("aria:opacity")}" role="slider"></div>\n            </div>\n          </div>\n\n          <div class="pcr-swatches ${e.palette?"":"pcr-last"}" :ref="swatches"></div>\n\n          <div :obj="interaction" class="pcr-interaction" ${l(Object.keys(e.interaction).length)}>\n            <input :ref="result" class="pcr-result" type="text" spellcheck="false" ${l(e.interaction.input)} aria-label="${c("aria:input")}">\n\n            <input :arr="options" class="pcr-type" data-type="HEXA" value="${r?"HEX":"HEXA"}" type="button" ${l(e.interaction.hex)}>\n            <input :arr="options" class="pcr-type" data-type="RGBA" value="${r?"RGB":"RGBA"}" type="button" ${l(e.interaction.rgba)}>\n            <input :arr="options" class="pcr-type" data-type="HSLA" value="${r?"HSL":"HSLA"}" type="button" ${l(e.interaction.hsla)}>\n            <input :arr="options" class="pcr-type" data-type="HSVA" value="${r?"HSV":"HSVA"}" type="button" ${l(e.interaction.hsva)}>\n            <input :arr="options" class="pcr-type" data-type="CMYK" value="CMYK" type="button" ${l(e.interaction.cmyk)}>\n\n            <input :ref="save" class="pcr-save" value="${c("btn:save")}" type="button" ${l(e.interaction.save)} aria-label="${c("aria:btn:save")}">\n            <input :ref="cancel" class="pcr-cancel" value="${c("btn:cancel")}" type="button" ${l(e.interaction.cancel)} aria-label="${c("aria:btn:cancel")}">\n            <input :ref="clear" class="pcr-clear" value="${c("btn:clear")}" type="button" ${l(e.interaction.clear)} aria-label="${c("aria:btn:clear")}">\n          </div>\n        </div>\n      </div>\n    `),h=p.interaction;return h.options.find((t=>!t.hidden&&!t.classList.add("active"))),h.type=()=>h.options.find((t=>t.classList.contains("active"))),p})(this),t.useAsButton&&(this._root.button=t.el),t.container.appendChild(this._root.root);}_finalBuild(){const t=this.options,e=this._root;if(t.container.removeChild(e.root),t.inline){const o=t.el.parentElement;t.el.nextSibling?o.insertBefore(e.app,t.el.nextSibling):o.appendChild(e.app);}else t.container.appendChild(e.app);t.useAsButton?t.inline&&t.el.remove():t.el.parentNode.replaceChild(e.root,t.el),t.disabled&&this.disable(),t.comparison||(e.button.style.transition="none",t.useAsButton||(e.preview.lastColor.style.transition="none")),this.hide();}_buildComponents(){const t=this,e=this.options.components,o=(t.options.sliders||"v").repeat(2),[n,i]=o.match(/^[vh]+$/g)?o:[],s=()=>this._color||(this._color=this._lastColor.clone()),r={palette:S({element:t._root.palette.picker,wrapper:t._root.palette.palette,onstop:()=>t._emit("changestop","slider",t),onchange(o,n){if(!e.palette)return;const i=s(),{_root:r,options:a}=t,{lastColor:l,currentColor:c}=r.preview;t._recalc&&(i.s=100*o,i.v=100-100*n,i.v<0&&(i.v=0),t._updateOutput("slider"));const p=i.toRGBA().toString(0);this.element.style.background=p,this.wrapper.style.background=`\n                        linear-gradient(to top, rgba(0, 0, 0, ${i.a}), transparent),\n                        linear-gradient(to left, hsla(${i.h}, 100%, 50%, ${i.a}), rgba(255, 255, 255, ${i.a}))\n                    `,a.comparison?a.useAsButton||t._lastColor||l.style.setProperty("--pcr-color",p):(r.button.style.setProperty("--pcr-color",p),r.button.classList.remove("clear"));const h=i.toHEXA().toString();for(const{el:e,color:o}of t._swatchColors)e.classList[h===o.toHEXA().toString()?"add":"remove"]("pcr-active");c.style.setProperty("--pcr-color",p);}}),hue:S({lock:"v"===i?"h":"v",element:t._root.hue.picker,wrapper:t._root.hue.slider,onstop:()=>t._emit("changestop","slider",t),onchange(o){if(!e.hue||!e.palette)return;const n=s();t._recalc&&(n.h=360*o),this.element.style.backgroundColor=`hsl(${n.h}, 100%, 50%)`,r.palette.trigger();}}),opacity:S({lock:"v"===n?"h":"v",element:t._root.opacity.picker,wrapper:t._root.opacity.slider,onstop:()=>t._emit("changestop","slider",t),onchange(o){if(!e.opacity||!e.palette)return;const n=s();t._recalc&&(n.a=Math.round(100*o)/100),this.element.style.background=`rgba(0, 0, 0, ${n.a})`,r.palette.trigger();}}),selectable:O({elements:t._root.interaction.options,className:"active",onchange(e){t._representation=e.target.getAttribute("data-type").toUpperCase(),t._recalc&&t._updateOutput("swatch");}})};this._components=r;}_bindEvents(){const{_root:t,options:e}=this,o=[i(t.interaction.clear,"click",(()=>this._clearColor())),i([t.interaction.cancel,t.preview.lastColor],"click",(()=>{this.setHSVA(...(this._lastColor||this._color).toHSVA(),!0),this._emit("cancel");})),i(t.interaction.save,"click",(()=>{!this.applyColor()&&!e.showAlways&&this.hide();})),i(t.interaction.result,["keyup","input"],(t=>{this.setColor(t.target.value,!0)&&!this._initializingActive&&(this._emit("change",this._color,"input",this),this._emit("changestop","input",this)),t.stopImmediatePropagation();})),i(t.interaction.result,["focus","blur"],(t=>{this._recalc="blur"===t.type,this._recalc&&this._updateOutput(null);})),i([t.palette.palette,t.palette.picker,t.hue.slider,t.hue.picker,t.opacity.slider,t.opacity.picker],["mousedown","touchstart"],(()=>this._recalc=!0),{passive:!0})];if(!e.showAlways){const n=e.closeWithKey;o.push(i(t.button,"click",(()=>this.isOpen()?this.hide():this.show())),i(document,"keyup",(t=>this.isOpen()&&(t.key===n||t.code===n)&&this.hide())),i(document,["touchstart","mousedown"],(e=>{this.isOpen()&&!l(e).some((e=>e===t.app||e===t.button))&&this.hide();}),{capture:!0}));}if(e.adjustableNumbers){const e={rgba:[255,255,255,1],hsva:[360,100,100,1],hsla:[360,100,100,1],cmyk:[100,100,100,100]};p(t.interaction.result,((t,o,n)=>{const i=e[this.getColorRepresentation().toLowerCase()];if(i){const e=i[n],s=t+(e>=100?1e3*o:o);return s<=0?0:Number((s<e?s:e).toPrecision(3))}return t}));}if(e.autoReposition&&!e.inline){let t=null;const n=this;o.push(i(window,["scroll","resize"],(()=>{n.isOpen()&&(e.closeOnScroll&&n.hide(),null===t?(t=setTimeout((()=>t=null),100),requestAnimationFrame((function e(){n._rePositioningPicker(),null!==t&&requestAnimationFrame(e);}))):(clearTimeout(t),t=setTimeout((()=>t=null),100)));}),{capture:!0}));}this._eventBindings=o;}_rePositioningPicker(){const{options:t}=this;if(!t.inline){if(!this._nanopop.update({container:document.body.getBoundingClientRect(),position:t.position})){const t=this._root.app,e=t.getBoundingClientRect();t.style.top=(window.innerHeight-e.height)/2+"px",t.style.left=(window.innerWidth-e.width)/2+"px";}}}_updateOutput(t){const{_root:e,_color:o,options:n}=this;if(e.interaction.type()){const t=`to${e.interaction.type().getAttribute("data-type")}`;e.interaction.result.value="function"==typeof o[t]?o[t]().toString(n.outputPrecision):"";}!this._initializingActive&&this._recalc&&this._emit("change",o,t,this);}_clearColor(){let t=arguments.length>0&&void 0!==arguments[0]&&arguments[0];const{_root:e,options:o}=this;o.useAsButton||e.button.style.setProperty("--pcr-color","rgba(0, 0, 0, 0.15)"),e.button.classList.add("clear"),o.showAlways||this.hide(),this._lastColor=null,this._initializingActive||t||(this._emit("save",null),this._emit("clear"));}_parseLocalColor(t){const{values:e,type:o,a:n}=C(t),{lockOpacity:i}=this.options,s=void 0!==n&&1!==n;return e&&3===e.length&&(e[3]=void 0),{values:!e||i&&s?null:e,type:o}}_t(t){return this.options.i18n[t]||x.I18N_DEFAULTS[t]}_emit(t){for(var e=arguments.length,o=new Array(e>1?e-1:0),n=1;n<e;n++)o[n-1]=arguments[n];this._eventListener[t].forEach((t=>t(...o,this)));}on(t,e){return this._eventListener[t].push(e),this}off(t,e){const o=this._eventListener[t]||[],n=o.indexOf(e);return ~n&&o.splice(n,1),this}addSwatch(t){const{values:e}=this._parseLocalColor(t);if(e){const{_swatchColors:t,_root:o}=this,n=$(...e),s=r(`<button type="button" style="--pcr-color: ${n.toRGBA().toString(0)}" aria-label="${this._t("btn:swatch")}"/>`);return o.swatches.appendChild(s),t.push({el:s,color:n}),this._eventBindings.push(i(s,"click",(()=>{this.setHSVA(...n.toHSVA(),!0),this._emit("swatchselect",n),this._emit("change",n,"swatch",this);}))),!0}return !1}removeSwatch(t){const e=this._swatchColors[t];if(e){const{el:o}=e;return this._root.swatches.removeChild(o),this._swatchColors.splice(t,1),!0}return !1}applyColor(){let t=arguments.length>0&&void 0!==arguments[0]&&arguments[0];const{preview:e,button:o}=this._root,n=this._color.toRGBA().toString(0);return e.lastColor.style.setProperty("--pcr-color",n),this.options.useAsButton||o.style.setProperty("--pcr-color",n),o.classList.remove("clear"),this._lastColor=this._color.clone(),this._initializingActive||t||this._emit("save",this._color),this}destroy(){cancelAnimationFrame(this._setupAnimationFrame),this._eventBindings.forEach((t=>s(...t))),Object.keys(this._components).forEach((t=>this._components[t].destroy()));}destroyAndRemove(){this.destroy();const{root:t,app:e}=this._root;t.parentElement&&t.parentElement.removeChild(t),e.parentElement.removeChild(e),Object.keys(this).forEach((t=>this[t]=null));}hide(){return !!this.isOpen()&&(this._root.app.classList.remove("visible"),this._emit("hide"),!0)}show(){return !this.options.disabled&&!this.isOpen()&&(this._root.app.classList.add("visible"),this._rePositioningPicker(),this._emit("show",this._color),this)}isOpen(){return this._root.app.classList.contains("visible")}setHSVA(){let t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:360,e=arguments.length>1&&void 0!==arguments[1]?arguments[1]:0,o=arguments.length>2&&void 0!==arguments[2]?arguments[2]:0,n=arguments.length>3&&void 0!==arguments[3]?arguments[3]:1,i=arguments.length>4&&void 0!==arguments[4]&&arguments[4];const s=this._recalc;if(this._recalc=!1,t<0||t>360||e<0||e>100||o<0||o>100||n<0||n>1)return !1;this._color=$(t,e,o,n);const{hue:r,opacity:a,palette:l}=this._components;return r.update(t/360),a.update(n),l.update(e/100,1-o/100),i||this.applyColor(),s&&this._updateOutput(),this._recalc=s,!0}setColor(t){let e=arguments.length>1&&void 0!==arguments[1]&&arguments[1];if(null===t)return this._clearColor(e),!0;const{values:o,type:n}=this._parseLocalColor(t);if(o){const t=n.toUpperCase(),{options:i}=this._root.interaction,s=i.find((e=>e.getAttribute("data-type")===t));if(s&&!s.hidden)for(const t of i)t.classList[t===s?"add":"remove"]("active");return !!this.setHSVA(...o,e)&&this.setColorRepresentation(t)}return !1}setColorRepresentation(t){return t=t.toUpperCase(),!!this._root.interaction.options.find((e=>e.getAttribute("data-type").startsWith(t)&&!e.click()))}getColorRepresentation(){return this._representation}getColor(){return this._color}getSelectedColor(){return this._lastColor}getRoot(){return this._root}disable(){return this.hide(),this.options.disabled=!0,this._root.button.classList.add("disabled"),this}enable(){return this.options.disabled=!1,this._root.button.classList.remove("disabled"),this}}return P(x,"utils",o),P(x,"version","1.8.4"),P(x,"I18N_DEFAULTS",{"ui:dialog":"color picker dialog","btn:toggle":"toggle color picker dialog","btn:swatch":"color swatch","btn:last-color":"use previous color","btn:save":"Save","btn:cancel":"Cancel","btn:clear":"Clear","aria:btn:save":"save and close","aria:btn:cancel":"cancel and close","aria:btn:clear":"clear and close","aria:input":"color input field","aria:palette":"color selection area","aria:hue":"hue selection slider","aria:opacity":"selection slider"}),P(x,"DEFAULT_OPTIONS",{appClass:null,theme:"classic",useAsButton:!1,padding:8,disabled:!1,comparison:!0,closeOnScroll:!1,outputPrecision:0,lockOpacity:!1,autoReposition:!0,container:"body",components:{interaction:{}},i18n:{},swatches:null,inline:!1,sliders:null,default:"#42445a",defaultRepresentation:null,position:"bottom-middle",adjustableNumbers:!0,showAlways:!1,closeWithKey:"Escape"}),P(x,"create",(t=>new x(t))),e=e.default})()}));
-
-});
-
-var Pickr = /*@__PURE__*/getDefaultExportFromCjs(pickr_min);
-
-const ar = {};
-
-const cz = {};
-
-const da = {};
-
-const de = {
-    "Default:": "Standard:",
-    "Error:": "Fehler:",
-    "missing default light value, or value is not in a valid color format": "Fehlender heller standard Wert oder Wert ist in keinem validen Farb-Format",
-    "missing default dark value, or value is not in a valid color format": "Fehlender dunkler standard Wert oder Wert ist in keinem validen Farb-Format",
-    "missing default value, or value is not in a valid color format": "Fehlender standard Wert oder Wert ist in keinem validen Farb-Format",
-    "missing default value": "Fehlender standard Wert",
-};
-
-const en = {
-    "Default:": "Default:",
-    "Error:": "Error:",
-    "missing default light value, or value is not in a valid color format": "missing default light value, or value is not in a valid color format",
-    "missing default dark value, or value is not in a valid color format": "missing default dark value, or value is not in a valid color format",
-    "missing default value, or value is not in a valid color format": "missing default value, or value is not in a valid color format",
-    "missing default value": "missing default value",
-};
-
-const es = {};
-
-const fr = {};
-
-const hi = {};
-
-const id = {};
-
-const it = {};
-
-const ja = {};
-
-const ko = {};
-
-const nl = {
-    "Default:": "Standaard:",
-    "Error:": "Error:",
-    "missing default light value, or value is not in a valid color format": "Geen standaard waarde voor het lichte thema, of de waarde is niet in het goede formaat",
-    "missing default dark value, or value is not in a valid color format": "Geen standaard waarde voor het donkere thema, of de waarde is niet in het goede formaat",
-    "missing default value, or value is not in a valid color format": "Geen standaard waarde, of de waarde is niet in het goede formaat",
-    "missing default value": "Geen standaard waarde",
-};
-
-const no = {};
-
-const pl = {};
-
-const pt = {};
-
-const ptBr = {};
-
-const ro = {};
-
-const ru = {};
-
-const sq = {};
-
-const tr = {};
-
-const uk = {};
-
-const zh = {
-    "Default:": "默认：",
-    "Error:": "错误：",
-    "missing default light value, or value is not in a valid color format": "缺少默认的浅色模式色值，或该色值没有采用一个有效的颜色格式",
-    "missing default dark value, or value is not in a valid color format": "缺少默认的深色模式色值，或该色值没有采用一个有效的颜色格式",
-    "missing default value, or value is not in a valid color format": "缺少默认色值，或该色值没有采用一个有效的颜色格式",
-    "missing default value": "缺少默认色值",
-};
-
-const zhTw = {};
-
-const lang = window.localStorage.getItem("language");
-const localeMap = {
-    ar,
-    cz,
-    da,
-    de,
-    en,
-    es,
-    fr,
-    hi,
-    id,
-    it,
-    ja,
-    ko,
-    nl,
-    no,
-    pl,
-    "pt-BR": ptBr,
-    pt,
-    ro,
-    ru,
-    sq,
-    tr,
-    uk,
-    "zh-TW": zhTw,
-    zh,
-};
-const locale = localeMap[lang || "en"];
-function t(str) {
-    if (!locale) {
-        console.error("Error: Style Settings locale not found", lang);
-    }
-    return (locale && locale[str]) || en[str];
-}
-
-const resetTooltip = "Restore default";
-function sanitizeText(str) {
-    if (str === "") {
-        return `""`;
-    }
-    return str.replace(/[;<>]/g, "");
-}
-function createDescription(description, def, defLabel) {
-    const fragment = createFragment();
-    if (description) {
-        fragment.appendChild(document.createTextNode(description));
-    }
-    if (def) {
-        const small = createEl("small");
-        small.appendChild(createEl("strong", { text: `${t("Default:")} ` }));
-        small.appendChild(document.createTextNode(defLabel || def));
-        const div = createEl("div");
-        div.appendChild(small);
-        fragment.appendChild(div);
-    }
-    return fragment;
-}
-function getTitle(config) {
-    if (lang) {
-        return config[`title.${lang}`] || config.title;
-    }
-    return config.title;
-}
-function getDescription(config) {
-    if (lang) {
-        return (config[`description.${lang}`] ||
-            config.description);
-    }
-    return config.description;
-}
-function createHeading(opts) {
-    new obsidian.Setting(opts.containerEl)
-        .setHeading()
-        .setClass("style-settings-heading")
-        .setName(getTitle(opts.config))
-        .setDesc(getDescription(opts.config) ? getDescription(opts.config) : "")
-        .then((setting) => {
-        if (opts.config.collapsed)
-            setting.settingEl.addClass("is-collapsed");
-        setting.settingEl.dataset.level = opts.config.level.toString();
-        setting.settingEl.dataset.id = opts.config.id;
-        const iconContainer = createSpan({
-            cls: "style-settings-collapse-indicator",
-        });
-        obsidian.setIcon(iconContainer, "right-triangle");
-        setting.nameEl.prepend(iconContainer);
-        setting.settingEl.addEventListener("click", (e) => {
-            setting.settingEl.toggleClass("is-collapsed", !setting.settingEl.hasClass("is-collapsed"));
-        });
-        if (opts.config.resetFn) {
-            setting.addExtraButton((b) => {
-                b.setIcon("reset")
-                    .setTooltip("Reset all settings to default")
-                    .onClick(opts.config.resetFn);
-            });
-        }
-        setting.addExtraButton((b) => {
-            b.setIcon("install")
-                .setTooltip("Export settings")
-                .then((b) => {
-                b.extraSettingsEl.onClickEvent((e) => {
-                    e.stopPropagation();
-                    const title = opts.sectionName === getTitle(opts.config)
-                        ? getTitle(opts.config)
-                        : `${opts.sectionName} > ${getTitle(opts.config)}`;
-                    opts.settingsManager.export(title, opts.settingsManager.getSettings(opts.sectionId, opts.children));
-                });
-            });
-        });
-    });
-}
-function createClassToggle(opts) {
-    const { sectionId, config, containerEl, settingsManager } = opts;
-    let toggleComponent;
-    new obsidian.Setting(containerEl)
-        .setName(getTitle(config))
-        .setDesc(getDescription(config) || "")
-        .addToggle((toggle) => {
-        const value = settingsManager.getSetting(sectionId, config.id);
-        toggle
-            .setValue(value !== undefined ? !!value : !!config.default)
-            .onChange((value) => {
-            settingsManager.setSetting(sectionId, config.id, value);
-            if (value) {
-                document.body.classList.add(config.id);
-            }
-            else {
-                document.body.classList.remove(config.id);
-            }
-        });
-        toggleComponent = toggle;
-    })
-        .addExtraButton((b) => {
-        b.setIcon("reset");
-        b.onClick(() => {
-            const value = !!config.default;
-            toggleComponent.setValue(value);
-            if (value) {
-                document.body.classList.add(config.id);
-            }
-            else {
-                document.body.classList.remove(config.id);
-            }
-            settingsManager.clearSetting(sectionId, config.id);
-        });
-        b.setTooltip(resetTooltip);
-    })
-        .then((setting) => {
-        setting.settingEl.dataset.id = opts.config.id;
-    });
-}
-function createClassMultiToggle(opts) {
-    const { sectionId, config, containerEl, settingsManager } = opts;
-    let dropdownComponent;
-    if (typeof config.default !== "string") {
-        return console.error(`${t("Error:")} ${getTitle(config)} ${t("missing default value")}`);
-    }
-    let prevValue = settingsManager.getSetting(sectionId, config.id);
-    if (prevValue === undefined && !!config.default) {
-        prevValue = config.default;
-    }
-    else if (prevValue === undefined) {
-        prevValue = "none";
-    }
-    const defaultOption = config.default
-        ? config.options.find((o) => {
-            if (typeof o === "string") {
-                return o === config.default;
-            }
-            return o.value === config.default;
-        })
-        : undefined;
-    let defaultLabel = undefined;
-    if (defaultOption && typeof defaultOption === "string") {
-        defaultLabel = defaultOption;
-    }
-    else if (defaultOption && typeof defaultOption === "object") {
-        defaultLabel = defaultOption.label;
-    }
-    new obsidian.Setting(containerEl)
-        .setName(getTitle(config))
-        .setDesc(createDescription(getDescription(config), config.default, defaultLabel))
-        .addDropdown((dropdown) => {
-        if (config.allowEmpty) {
-            dropdown.addOption("none", "");
-        }
-        config.options.forEach((o) => {
-            if (typeof o === "string") {
-                dropdown.addOption(o, o);
-            }
-            else {
-                dropdown.addOption(o.value, o.label);
-            }
-        });
-        dropdown.setValue(prevValue).onChange((value) => {
-            settingsManager.setSetting(sectionId, config.id, value);
-            if (value !== "none") {
-                document.body.classList.add(value);
-            }
-            if (prevValue) {
-                document.body.classList.remove(prevValue);
-            }
-            prevValue = value;
-        });
-        dropdownComponent = dropdown;
-    })
-        .addExtraButton((b) => {
-        b.setIcon("reset");
-        b.onClick(() => {
-            const value = config.default || "none";
-            dropdownComponent.setValue(config.default || "none");
-            if (value !== "none") {
-                document.body.classList.add(value);
-            }
-            if (prevValue) {
-                document.body.classList.remove(prevValue);
-            }
-            settingsManager.clearSetting(sectionId, config.id);
-        });
-        b.setTooltip(resetTooltip);
-    })
-        .then((setting) => {
-        setting.settingEl.dataset.id = opts.config.id;
-    });
-}
-function createVariableText(opts) {
-    const { sectionId, config, containerEl, settingsManager } = opts;
-    let textComponent;
-    if (typeof config.default !== "string") {
-        return console.error(`${t("Error:")} ${getTitle(config)} ${t("missing default value")}`);
-    }
-    new obsidian.Setting(containerEl)
-        .setName(getTitle(config))
-        .setDesc(createDescription(getDescription(config), config.default))
-        .addText((text) => {
-        let value = settingsManager.getSetting(sectionId, config.id);
-        const onChange = obsidian.debounce((value) => {
-            settingsManager.setSetting(sectionId, config.id, sanitizeText(value));
-        }, 250, true);
-        if (config.quotes && value === `""`) {
-            value = ``;
-        }
-        text
-            .setValue(value ? value.toString() : config.default)
-            .onChange(onChange);
-        textComponent = text;
-    })
-        .addExtraButton((b) => {
-        b.setIcon("reset");
-        b.onClick(() => {
-            textComponent.setValue(config.default);
-            settingsManager.clearSetting(sectionId, config.id);
-        });
-        b.setTooltip(resetTooltip);
-    })
-        .then((setting) => {
-        setting.settingEl.dataset.id = opts.config.id;
-    });
-}
-function createVariableNumber(opts) {
-    const { sectionId, config, containerEl, settingsManager } = opts;
-    let textComponent;
-    if (typeof config.default !== "number") {
-        return console.error(`${t("Error:")} ${getTitle(config)} ${t("missing default value")}`);
-    }
-    new obsidian.Setting(containerEl)
-        .setName(getTitle(config))
-        .setDesc(createDescription(getDescription(config), config.default.toString(10)))
-        .addText((text) => {
-        const value = settingsManager.getSetting(sectionId, config.id);
-        const onChange = obsidian.debounce((value) => {
-            const isFloat = /\./.test(value);
-            settingsManager.setSetting(sectionId, config.id, isFloat ? parseFloat(value) : parseInt(value, 10));
-        }, 250, true);
-        text
-            .setValue(value !== undefined ? value.toString() : config.default.toString())
-            .onChange(onChange);
-        textComponent = text;
-    })
-        .addExtraButton((b) => {
-        b.setIcon("reset");
-        b.onClick(() => {
-            textComponent.setValue(config.default.toString());
-            settingsManager.clearSetting(sectionId, config.id);
-        });
-        b.setTooltip(resetTooltip);
-    })
-        .then((setting) => {
-        setting.settingEl.dataset.id = opts.config.id;
-    });
-}
-function createVariableNumberSlider(opts) {
-    const { sectionId, config, containerEl, settingsManager } = opts;
-    let sliderComponent;
-    if (typeof config.default !== "number") {
-        return console.error(`${t("Error:")} ${getTitle(config)} ${t("missing default value")}`);
-    }
-    new obsidian.Setting(containerEl)
-        .setName(getTitle(config))
-        .setDesc(createDescription(getDescription(config), config.default.toString(10)))
-        .addSlider((slider) => {
-        const value = settingsManager.getSetting(sectionId, config.id);
-        const onChange = obsidian.debounce((value) => {
-            settingsManager.setSetting(sectionId, config.id, value);
-        }, 250, true);
-        slider
-            .setDynamicTooltip()
-            .setLimits(config.min, config.max, config.step)
-            .setValue(value !== undefined ? value : config.default)
-            .onChange(onChange);
-        sliderComponent = slider;
-    })
-        .addExtraButton((b) => {
-        b.setIcon("reset");
-        b.onClick(() => {
-            sliderComponent.setValue(config.default);
-            settingsManager.clearSetting(sectionId, config.id);
-        });
-        b.setTooltip(resetTooltip);
-    })
-        .then((setting) => {
-        setting.settingEl.dataset.id = opts.config.id;
-    });
-}
-function createVariableSelect(opts) {
-    const { sectionId, config, containerEl, settingsManager } = opts;
-    let dropdownComponent;
-    if (typeof config.default !== "string") {
-        return console.error(`${t("Error:")} ${getTitle(config)} ${t("missing default value")}`);
-    }
-    const defaultOption = config.default
-        ? config.options.find((o) => {
-            if (typeof o === "string") {
-                return o === config.default;
-            }
-            return o.value === config.default;
-        })
-        : undefined;
-    let defaultLabel = undefined;
-    if (defaultOption && typeof defaultOption === "string") {
-        defaultLabel = defaultOption;
-    }
-    else if (defaultOption && typeof defaultOption === "object") {
-        defaultLabel = defaultOption.label;
-    }
-    new obsidian.Setting(containerEl)
-        .setName(getTitle(config))
-        .setDesc(createDescription(getDescription(config), config.default, defaultLabel))
-        .addDropdown((dropdown) => {
-        const value = settingsManager.getSetting(sectionId, config.id);
-        config.options.forEach((o) => {
-            if (typeof o === "string") {
-                dropdown.addOption(o, o);
-            }
-            else {
-                dropdown.addOption(o.value, o.label);
-            }
-        });
-        dropdown
-            .setValue(value !== undefined ? value : config.default)
-            .onChange((value) => {
-            settingsManager.setSetting(sectionId, config.id, value);
-        });
-        dropdownComponent = dropdown;
-    })
-        .addExtraButton((b) => {
-        b.setIcon("reset");
-        b.onClick(() => {
-            dropdownComponent.setValue(config.default);
-            settingsManager.clearSetting(sectionId, config.id);
-        });
-        b.setTooltip(resetTooltip);
-    })
-        .then((setting) => {
-        setting.settingEl.dataset.id = opts.config.id;
-    });
-}
-function getPickrSettings(opts) {
-    const { el, isView, containerEl, swatches, opacity, defaultColor } = opts;
-    return {
-        el,
-        container: isView ? document.body : containerEl,
-        theme: "nano",
-        swatches,
-        lockOpacity: !opacity,
-        default: defaultColor,
-        position: "left-middle",
-        components: {
-            preview: true,
-            hue: true,
-            opacity: !!opacity,
-            interaction: {
-                hex: true,
-                rgba: true,
-                hsla: true,
-                input: true,
-                cancel: true,
-                save: true,
-            },
-        },
-    };
-}
-function onPickrCancel(instance) {
-    instance.hide();
-}
-function isValidDefaultColor(color) {
-    return /^(#|rgb|hsl)/.test(color);
-}
-function createVariableColor(opts) {
-    var _a;
-    const { isView, sectionId, config, containerEl, settingsManager } = opts;
-    if (typeof config.default !== "string" ||
-        !isValidDefaultColor(config.default)) {
-        config.default = (_a = settingsManager.plugin.getCSSVar(config.id).current) === null || _a === void 0 ? void 0 : _a.trim();
-    }
-    if (typeof config.default !== "string" ||
-        !isValidDefaultColor(config.default)) {
-        return console.error(`${t("Error:")} ${getTitle(config)} ${t("missing default value, or value is not in a valid color format")}`);
-    }
-    const value = settingsManager.getSetting(sectionId, config.id);
-    const swatches = [];
-    let pickr;
-    if (config.default) {
-        swatches.push(config.default);
-    }
-    if (value !== undefined) {
-        swatches.push(value);
-    }
-    new obsidian.Setting(containerEl)
-        .setName(getTitle(config))
-        .setDesc(createDescription(getDescription(config), config.default))
-        .then((setting) => {
-        setting.settingEl.dataset.id = opts.config.id;
-        pickr = Pickr.create(getPickrSettings({
-            isView,
-            el: setting.controlEl.createDiv({ cls: "picker" }),
-            containerEl,
-            swatches,
-            opacity: config.opacity,
-            defaultColor: value !== undefined ? value : config.default,
-        }))
-            .on("save", (color, instance) => {
-            if (!color)
-                return;
-            settingsManager.setSetting(sectionId, config.id, color.toHEXA().toString());
-            instance.hide();
-            instance.addSwatch(color.toHEXA().toString());
-        })
-            .on("show", () => {
-            const { result } = pickr.getRoot().interaction;
-            requestAnimationFrame(() => requestAnimationFrame(() => result.select()));
-        })
-            .on("cancel", onPickrCancel);
-    })
-        .addExtraButton((b) => {
-        b.setIcon("reset")
-            .onClick(() => {
-            pickr.setColor(config.default);
-            settingsManager.clearSetting(sectionId, config.id);
-        })
-            .setTooltip(resetTooltip);
-    });
-    return () => pickr.destroyAndRemove();
-}
-function createVariableThemedColor(opts) {
-    const { sectionId, isView, config, containerEl, settingsManager } = opts;
-    if (typeof config["default-light"] !== "string" ||
-        !isValidDefaultColor(config["default-light"])) {
-        return console.error(`${t("Error:")} ${getTitle(config)} ${t("missing default light value, or value is not in a valid color format")}`);
-    }
-    if (typeof config["default-dark"] !== "string" ||
-        !isValidDefaultColor(config["default-dark"])) {
-        return console.error(`${t("Error:")} ${getTitle(config)} ${t("missing default dark value, or value is not in a valid color format")}`);
-    }
-    const idLight = `${config.id}@@light`;
-    const idDark = `${config.id}@@dark`;
-    const valueLight = settingsManager.getSetting(sectionId, idLight);
-    const valueDark = settingsManager.getSetting(sectionId, idDark);
-    const swatchesLight = [];
-    const swatchesDark = [];
-    let pickrLight;
-    let pickrDark;
-    if (config["default-light"]) {
-        swatchesLight.push(config["default-light"]);
-    }
-    if (valueLight !== undefined) {
-        swatchesLight.push(valueLight);
-    }
-    if (config["default-dark"]) {
-        swatchesDark.push(config["default-dark"]);
-    }
-    if (valueDark !== undefined) {
-        swatchesDark.push(valueDark);
-    }
-    const onSave = (id) => (color, instance) => {
-        if (!color)
-            return;
-        settingsManager.setSetting(sectionId, id, color.toHEXA().toString());
-        instance.hide();
-        instance.addSwatch(color.toHEXA().toString());
-    };
-    new obsidian.Setting(containerEl)
-        .setName(getTitle(config))
-        .then((setting) => {
-        setting.settingEl.dataset.id = opts.config.id;
-        // Construct description
-        setting.descEl.createSpan({}, (span) => {
-            if (getDescription(config)) {
-                span.appendChild(document.createTextNode(getDescription(config)));
-            }
-        });
-        setting.descEl.createDiv({}, (div) => {
-            div.createEl("small", {}, (sm) => {
-                sm.appendChild(createEl("strong", { text: "Default (light): " }));
-                sm.appendChild(document.createTextNode(config["default-light"]));
-            });
-            div.createEl("br");
-            div.createEl("small", {}, (sm) => {
-                sm.appendChild(createEl("strong", { text: "Default (dark): " }));
-                sm.appendChild(document.createTextNode(config["default-dark"]));
-            });
-        });
-    })
-        .then((setting) => {
-        setting.controlEl.createDiv({ cls: "themed-color-wrapper" }, (wrapper) => {
-            // Create light color picker
-            wrapper.createDiv({ cls: "theme-light" }, (themeWrapper) => {
-                pickrLight = Pickr.create(getPickrSettings({
-                    isView,
-                    el: themeWrapper.createDiv({ cls: "picker" }),
-                    containerEl,
-                    swatches: swatchesLight,
-                    opacity: config.opacity,
-                    defaultColor: valueLight !== undefined
-                        ? valueLight
-                        : config["default-light"],
-                }))
-                    .on("show", () => {
-                    const { result } = pickrLight.getRoot().interaction;
-                    requestAnimationFrame(() => requestAnimationFrame(() => result.select()));
-                })
-                    .on("save", onSave(idLight))
-                    .on("cancel", onPickrCancel);
-                new obsidian.ButtonComponent(themeWrapper.createDiv({ cls: "pickr-reset" }))
-                    .setIcon("reset")
-                    .onClick(() => {
-                    pickrLight.setColor(config["default-light"]);
-                    settingsManager.clearSetting(sectionId, idLight);
-                })
-                    .setTooltip(resetTooltip);
-            });
-            // Create dark color picker
-            wrapper.createDiv({ cls: "theme-dark" }, (themeWrapper) => {
-                pickrDark = Pickr.create(getPickrSettings({
-                    isView,
-                    el: themeWrapper.createDiv({ cls: "picker" }),
-                    containerEl,
-                    swatches: swatchesDark,
-                    opacity: config.opacity,
-                    defaultColor: valueDark !== undefined
-                        ? valueDark
-                        : config["default-dark"],
-                }))
-                    .on("show", () => {
-                    const { result } = pickrDark.getRoot().interaction;
-                    requestAnimationFrame(() => requestAnimationFrame(() => result.select()));
-                })
-                    .on("save", onSave(idDark))
-                    .on("cancel", onPickrCancel);
-                new obsidian.ButtonComponent(themeWrapper.createDiv({ cls: "pickr-reset" }))
-                    .setIcon("reset")
-                    .onClick(() => {
-                    pickrDark.setColor(config["default-dark"]);
-                    settingsManager.clearSetting(sectionId, idDark);
-                })
-                    .setTooltip(resetTooltip);
-            });
-        });
-    });
-    return () => {
-        pickrLight.destroyAndRemove();
-        pickrDark.destroyAndRemove();
-    };
-}
-function createSettings(opts) {
-    const { isView, containerEl, sectionId, settings, settingsManager, sectionName, } = opts;
-    const containerStack = [containerEl];
-    const idStack = [sectionId];
-    const cleanup = [];
-    const settingGroups = {
-        [sectionId]: [],
-    };
-    let containerLevel = 0;
-    function getTargetContainer(stack) {
-        if (!stack.length)
-            return containerEl;
-        return stack[stack.length - 1];
-    }
-    function pushId(id) {
-        idStack.forEach((containerId) => {
-            if (settingGroups[containerId]) {
-                settingGroups[containerId].push(id);
-            }
-            else {
-                settingGroups[containerId] = [id];
-            }
-        });
-    }
-    settings.forEach((setting) => {
-        switch (setting.type) {
-            case "heading": {
-                const config = setting;
-                settingGroups[config.id] = [];
-                let targetContainer = getTargetContainer(containerStack);
-                if (config.level > containerLevel) {
-                    // Nest one level
-                    createHeading({
-                        config,
-                        containerEl: targetContainer,
-                        children: settingGroups[config.id],
-                        settingsManager,
-                        sectionName,
-                        sectionId,
-                    });
-                }
-                else if (config.level === containerLevel) {
-                    // Same level
-                    containerStack.pop();
-                    idStack.pop();
-                    targetContainer = getTargetContainer(containerStack);
-                    createHeading({
-                        config,
-                        containerEl: targetContainer,
-                        children: settingGroups[config.id],
-                        settingsManager,
-                        sectionName,
-                        sectionId,
-                    });
-                }
-                else {
-                    // Step up to the appropriate level
-                    while (containerStack.length > 1 &&
-                        parseInt(containerStack[containerStack.length - 1].dataset.level) >=
-                            config.level) {
-                        containerStack.pop();
-                        idStack.pop();
-                    }
-                    targetContainer = getTargetContainer(containerStack);
-                    createHeading({
-                        config,
-                        containerEl: targetContainer,
-                        children: settingGroups[config.id],
-                        settingsManager,
-                        sectionName,
-                        sectionId,
-                    });
-                }
-                targetContainer.createDiv({ cls: "style-settings-container" }, (container) => {
-                    container.dataset.level = config.level.toString();
-                    containerStack.push(container);
-                    idStack.push(config.id);
-                });
-                containerLevel = config.level;
-                break;
-            }
-            case "class-toggle": {
-                pushId(setting.id);
-                createClassToggle({
-                    sectionId,
-                    config: setting,
-                    containerEl: getTargetContainer(containerStack),
-                    settingsManager,
-                });
-                break;
-            }
-            case "class-select": {
-                pushId(setting.id);
-                createClassMultiToggle({
-                    sectionId,
-                    config: setting,
-                    containerEl: getTargetContainer(containerStack),
-                    settingsManager,
-                });
-                break;
-            }
-            case "variable-text": {
-                pushId(setting.id);
-                createVariableText({
-                    sectionId,
-                    config: setting,
-                    containerEl: getTargetContainer(containerStack),
-                    settingsManager,
-                });
-                break;
-            }
-            case "variable-number": {
-                pushId(setting.id);
-                createVariableNumber({
-                    sectionId,
-                    config: setting,
-                    containerEl: getTargetContainer(containerStack),
-                    settingsManager,
-                });
-                break;
-            }
-            case "variable-number-slider": {
-                pushId(setting.id);
-                createVariableNumberSlider({
-                    sectionId,
-                    config: setting,
-                    containerEl: getTargetContainer(containerStack),
-                    settingsManager,
-                });
-                break;
-            }
-            case "variable-select": {
-                pushId(setting.id);
-                createVariableSelect({
-                    sectionId,
-                    config: setting,
-                    containerEl: getTargetContainer(containerStack),
-                    settingsManager,
-                });
-                break;
-            }
-            case "variable-color": {
-                pushId(setting.id);
-                cleanup.push(createVariableColor({
-                    sectionId,
-                    config: setting,
-                    containerEl: getTargetContainer(containerStack),
-                    settingsManager,
-                    isView,
-                }));
-                break;
-            }
-            case "variable-themed-color": {
-                // TODO: multiple ids?
-                pushId(setting.id);
-                cleanup.push(createVariableThemedColor({
-                    sectionId,
-                    config: setting,
-                    containerEl: getTargetContainer(containerStack),
-                    settingsManager,
-                    isView,
-                }));
-                break;
-            }
-        }
-    });
-    return cleanup;
 }
 
 /*! js-yaml 4.1.0 https://github.com/nodeca/js-yaml @license MIT */
@@ -8627,121 +7849,1537 @@ function detectIndent(string) {
 	};
 }
 
+const ar = {};
+
+const cz = {};
+
+const da = {};
+
+const de = {
+    'Default:': 'Standard:',
+    'Error:': 'Fehler:',
+    'missing default light value, or value is not in a valid color format': 'Fehlender heller standard Wert oder Wert ist in keinem validen Farb-Format',
+    'missing default dark value, or value is not in a valid color format': 'Fehlender dunkler standard Wert oder Wert ist in keinem validen Farb-Format',
+    'missing default value, or value is not in a valid color format': 'Fehlender standard Wert oder Wert ist in keinem validen Farb-Format',
+    'missing default value': 'Fehlender standard Wert',
+};
+
+const en = {
+    'Default:': 'Default:',
+    'Error:': 'Error:',
+    'missing default light value, or value is not in a valid color format': 'missing default light value, or value is not in a valid color format',
+    'missing default dark value, or value is not in a valid color format': 'missing default dark value, or value is not in a valid color format',
+    'missing default value, or value is not in a valid color format': 'missing default value, or value is not in a valid color format',
+    'missing default value': 'missing default value',
+};
+
+const es = {};
+
+const fr = {};
+
+const hi = {};
+
+const id = {};
+
+const it = {};
+
+const ja = {};
+
+const ko = {};
+
+const nl = {
+    'Default:': 'Standaard:',
+    'Error:': 'Error:',
+    'missing default light value, or value is not in a valid color format': 'Geen standaard waarde voor het lichte thema, of de waarde is niet in het goede formaat',
+    'missing default dark value, or value is not in a valid color format': 'Geen standaard waarde voor het donkere thema, of de waarde is niet in het goede formaat',
+    'missing default value, or value is not in a valid color format': 'Geen standaard waarde, of de waarde is niet in het goede formaat',
+    'missing default value': 'Geen standaard waarde',
+};
+
+const no = {};
+
+const pl = {};
+
+const pt = {};
+
+const ptBr = {};
+
+const ro = {};
+
+const ru = {};
+
+const sq = {};
+
+const tr = {};
+
+const uk = {};
+
+const zh = {
+    'Default:': '默认：',
+    'Error:': '错误：',
+    'missing default light value, or value is not in a valid color format': '缺少默认的浅色模式色值，或该色值没有采用一个有效的颜色格式',
+    'missing default dark value, or value is not in a valid color format': '缺少默认的深色模式色值，或该色值没有采用一个有效的颜色格式',
+    'missing default value, or value is not in a valid color format': '缺少默认色值，或该色值没有采用一个有效的颜色格式',
+    'missing default value': '缺少默认色值',
+};
+
+const zhTw = {};
+
+const lang = window.localStorage.getItem('language');
+const localeMap = {
+    ar,
+    cz,
+    da,
+    de,
+    en,
+    es,
+    fr,
+    hi,
+    id,
+    it,
+    ja,
+    ko,
+    nl,
+    no,
+    pl,
+    'pt-BR': ptBr,
+    pt,
+    ro,
+    ru,
+    sq,
+    tr,
+    uk,
+    'zh-TW': zhTw,
+    zh,
+};
+const locale = localeMap[lang || 'en'];
+function t(str) {
+    if (!locale) {
+        console.error('Error: Style Settings locale not found', lang);
+    }
+    return (locale && locale[str]) || en[str];
+}
+
 const settingRegExp = /\/\*\s*@settings[\r\n]+?([\s\S]+?)\*\//g;
 const nameRegExp = /^name:\s*(.+)$/m;
-class CSSSettingsPlugin extends obsidian.Plugin {
-    constructor() {
-        super(...arguments);
-        this.settingsList = [];
-        this.errorList = [];
-        this.debounceTimer = 0;
+function getTitle(config) {
+    if (lang) {
+        return config[`title.${lang}`] || config.title;
     }
-    onload() {
-        return __awaiter(this, void 0, void 0, function* () {
-            this.settingsManager = new CSSSettingsManager(this);
-            yield this.settingsManager.load();
-            this.settingsTab = new CSSSettingsTab(this.app, this);
-            this.addSettingTab(this.settingsTab);
-            this.registerView(viewType, (leaf) => new SettingsView(this, leaf));
-            this.addCommand({
-                id: "show-style-settings-leaf",
-                name: "Show style settings view",
-                callback: () => {
-                    this.activateView();
-                },
-            });
-            this.registerEvent(this.app.workspace.on("css-change", () => {
-                this.parseCSS();
-            }));
-            this.registerEvent(this.app.workspace.on("parse-style-settings", () => {
-                this.parseCSS();
-            }));
-            this.lightEl = document.body.createDiv("theme-light style-settings-ref");
-            this.darkEl = document.body.createDiv("theme-dark style-settings-ref");
-            document.body.classList.add("css-settings-manager");
-            this.parseCSS();
-        });
+    return config.title;
+}
+function getDescription(config) {
+    if (lang) {
+        return (config[`description.${lang}`] ||
+            config.description);
     }
-    getCSSVar(id) {
-        const light = getComputedStyle(this.lightEl).getPropertyValue(`--${id}`);
-        const dark = getComputedStyle(this.darkEl).getPropertyValue(`--${id}`);
-        const current = getComputedStyle(document.body).getPropertyValue(`--${id}`);
-        console.log(id, light, dark, current);
-        return { light, dark, current };
+    return config.description;
+}
+function isValidDefaultColor(color) {
+    return /^(#|rgb|hsl)/.test(color);
+}
+function getPickrSettings(opts) {
+    const { el, isView, containerEl, swatches, opacity, defaultColor } = opts;
+    return {
+        el,
+        container: isView ? document.body : containerEl,
+        theme: 'nano',
+        swatches,
+        lockOpacity: !opacity,
+        default: defaultColor,
+        position: 'left-middle',
+        components: {
+            preview: true,
+            hue: true,
+            opacity: !!opacity,
+            interaction: {
+                hex: true,
+                rgba: true,
+                hsla: true,
+                input: true,
+                cancel: true,
+                save: true,
+            },
+        },
+    };
+}
+function onPickrCancel(instance) {
+    instance.hide();
+}
+function sanitizeText(str) {
+    if (str === '') {
+        return `""`;
     }
-    parseCSS() {
-        clearTimeout(this.debounceTimer);
-        this.settingsList = [];
-        this.errorList = [];
-        this.debounceTimer = window.setTimeout(() => {
-            const styleSheets = document.styleSheets;
-            for (let i = 0, len = styleSheets.length; i < len; i++) {
-                const sheet = styleSheets.item(i);
-                const text = sheet.ownerNode.textContent.trim();
-                let match = settingRegExp.exec(text);
-                if (match && match.length) {
-                    do {
-                        const nameMatch = text.match(nameRegExp);
-                        const name = nameMatch
-                            ? nameMatch[1]
-                            : undefined;
-                        try {
-                            const str = match[1].trim();
-                            const indent = detectIndent(str);
-                            const settings = jsYaml.load(str.replace(/\t/g, indent.type === "space" ? indent.indent : "    "), {
-                                filename: name,
-                            });
-                            if (!settings.settings)
-                                continue;
-                            settings.settings = settings.settings.filter((setting) => setting);
-                            if (typeof settings === "object" &&
-                                settings.name &&
-                                settings.id &&
-                                settings.settings &&
-                                settings.settings.length) {
-                                this.settingsList.push(settings);
-                            }
-                        }
-                        catch (e) {
-                            this.errorList.push({ name, error: `${e}` });
-                        }
-                    } while ((match = settingRegExp.exec(text)) !== null);
-                }
-            }
-            this.settingsTab.settingsMarkup.setSettings(this.settingsList, this.errorList);
-            this.app.workspace.getLeavesOfType(viewType).forEach((leaf) => {
-                leaf.view.settingsMarkup.setSettings(this.settingsList, this.errorList);
-            });
-            this.settingsManager.initClasses();
-        }, 100);
+    return str.replace(/[;<>]/g, '');
+}
+function createDescription(description, def, defLabel) {
+    const fragment = createFragment();
+    if (description) {
+        fragment.appendChild(document.createTextNode(description));
     }
-    onunload() {
-        this.lightEl.remove();
-        this.darkEl.remove();
-        this.lightEl = null;
-        this.darkEl = null;
-        document.body.classList.remove("css-settings-manager");
-        this.settingsManager.cleanup();
-        this.settingsTab.settingsMarkup.cleanup();
-        this.deactivateView();
+    if (def) {
+        const small = createEl('small');
+        small.appendChild(createEl('strong', { text: `${t('Default:')} ` }));
+        small.appendChild(document.createTextNode(defLabel || def));
+        const div = createEl('div');
+        div.appendChild(small);
+        fragment.appendChild(div);
     }
-    deactivateView() {
-        this.app.workspace.detachLeavesOfType(viewType);
+    return fragment;
+}
+let timer;
+function customDebounce(cb, timeout = 300) {
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+        cb();
+    }, timeout);
+}
+
+var fuzzysort = createCommonjsModule(function (module) {
+((root, UMD) => {
+  if(module.exports) module.exports = UMD();
+  else root['fuzzysort'] = UMD();
+})(commonjsGlobal, _ => {
+
+  var single = (search, target) => {                                                                                                                                                                                                                        if(search=='farzher')return {target:"farzher was here (^-^*)/",score:0,_indexes:[0]}
+    if(!search || !target) return NULL
+
+    var preparedSearch = getPreparedSearch(search);
+    if(!isObj(target)) target = getPrepared(target);
+
+    var searchBitflags = preparedSearch.bitflags;
+    if((searchBitflags & target._bitflags) !== searchBitflags) return NULL
+
+    return algorithm(preparedSearch, target)
+  };
+
+
+  var go = (search, targets, options) => {                                                                                                                                                                                                                  if(search=='farzher')return [{target:"farzher was here (^-^*)/",score:0,_indexes:[0],obj:targets?targets[0]:NULL}]
+    if(!search) return options&&options.all ? all(search, targets, options) : noResults
+
+    var preparedSearch = getPreparedSearch(search);
+    var searchBitflags = preparedSearch.bitflags;
+    preparedSearch.containsSpace;
+
+    var threshold = options&&options.threshold || INT_MIN;
+    var limit     = options&&options['limit']  || INT_MAX; // for some reason only limit breaks when minified
+
+    var resultsLen = 0; var limitedCount = 0;
+    var targetsLen = targets.length;
+
+    // This code is copy/pasted 3 times for performance reasons [options.keys, options.key, no keys]
+
+    // options.key
+    if(options && options.key) {
+      var key = options.key;
+      for(var i = 0; i < targetsLen; ++i) { var obj = targets[i];
+        var target = getValue(obj, key);
+        if(!target) continue
+        if(!isObj(target)) target = getPrepared(target);
+
+        if((searchBitflags & target._bitflags) !== searchBitflags) continue
+        var result = algorithm(preparedSearch, target);
+        if(result === NULL) continue
+        if(result.score < threshold) continue
+
+        // have to clone result so duplicate targets from different obj can each reference the correct obj
+        result = {target:result.target, _targetLower:'', _targetLowerCodes:NULL, _nextBeginningIndexes:NULL, _bitflags:0, score:result.score, _indexes:result._indexes, obj:obj}; // hidden
+
+        if(resultsLen < limit) { q.add(result); ++resultsLen; }
+        else {
+          ++limitedCount;
+          if(result.score > q.peek().score) q.replaceTop(result);
+        }
+      }
+
+    // options.keys
+    } else if(options && options.keys) {
+      var scoreFn = options['scoreFn'] || defaultScoreFn;
+      var keys = options.keys;
+      var keysLen = keys.length;
+      for(var i = 0; i < targetsLen; ++i) { var obj = targets[i];
+        var objResults = new Array(keysLen);
+        for (var keyI = 0; keyI < keysLen; ++keyI) {
+          var key = keys[keyI];
+          var target = getValue(obj, key);
+          if(!target) { objResults[keyI] = NULL; continue }
+          if(!isObj(target)) target = getPrepared(target);
+
+          if((searchBitflags & target._bitflags) !== searchBitflags) objResults[keyI] = NULL;
+          else objResults[keyI] = algorithm(preparedSearch, target);
+        }
+        objResults.obj = obj; // before scoreFn so scoreFn can use it
+        var score = scoreFn(objResults);
+        if(score === NULL) continue
+        if(score < threshold) continue
+        objResults.score = score;
+        if(resultsLen < limit) { q.add(objResults); ++resultsLen; }
+        else {
+          ++limitedCount;
+          if(score > q.peek().score) q.replaceTop(objResults);
+        }
+      }
+
+    // no keys
+    } else {
+      for(var i = 0; i < targetsLen; ++i) { var target = targets[i];
+        if(!target) continue
+        if(!isObj(target)) target = getPrepared(target);
+
+        if((searchBitflags & target._bitflags) !== searchBitflags) continue
+        var result = algorithm(preparedSearch, target);
+        if(result === NULL) continue
+        if(result.score < threshold) continue
+        if(resultsLen < limit) { q.add(result); ++resultsLen; }
+        else {
+          ++limitedCount;
+          if(result.score > q.peek().score) q.replaceTop(result);
+        }
+      }
     }
-    activateView() {
-        return __awaiter(this, void 0, void 0, function* () {
-            this.deactivateView();
-            const leaf = this.app.workspace.createLeafBySplit(this.app.workspace.activeLeaf, "vertical");
-            yield leaf.setViewState({
-                type: viewType,
-            });
-            leaf.view.settingsMarkup.setSettings(this.settingsList, this.errorList);
-        });
+
+    if(resultsLen === 0) return noResults
+    var results = new Array(resultsLen);
+    for(var i = resultsLen - 1; i >= 0; --i) results[i] = q.poll();
+    results.total = resultsLen + limitedCount;
+    return results
+  };
+
+
+  var highlight = (result, hOpen, hClose) => {
+    if(typeof hOpen === 'function') return highlightCallback(result, hOpen)
+    if(result === NULL) return NULL
+    if(hOpen === undefined) hOpen = '<b>';
+    if(hClose === undefined) hClose = '</b>';
+    var highlighted = '';
+    var matchesIndex = 0;
+    var opened = false;
+    var target = result.target;
+    var targetLen = target.length;
+    var indexes = result._indexes;
+    indexes = indexes.slice(0, indexes.len).sort((a,b)=>a-b);
+    for(var i = 0; i < targetLen; ++i) { var char = target[i];
+      if(indexes[matchesIndex] === i) {
+        ++matchesIndex;
+        if(!opened) { opened = true;
+          highlighted += hOpen;
+        }
+
+        if(matchesIndex === indexes.length) {
+          highlighted += char + hClose + target.substr(i+1);
+          break
+        }
+      } else {
+        if(opened) { opened = false;
+          highlighted += hClose;
+        }
+      }
+      highlighted += char;
+    }
+
+    return highlighted
+  };
+  var highlightCallback = (result, cb) => {
+    if(result === NULL) return NULL
+    var target = result.target;
+    var targetLen = target.length;
+    var indexes = result._indexes;
+    indexes = indexes.slice(0, indexes.len).sort((a,b)=>a-b);
+    var highlighted = '';
+    var matchI = 0;
+    var indexesI = 0;
+    var opened = false;
+    var result = [];
+    for(var i = 0; i < targetLen; ++i) { var char = target[i];
+      if(indexes[indexesI] === i) {
+        ++indexesI;
+        if(!opened) { opened = true;
+          result.push(highlighted); highlighted = '';
+        }
+
+        if(indexesI === indexes.length) {
+          highlighted += char;
+          result.push(cb(highlighted, matchI++)); highlighted = '';
+          result.push(target.substr(i+1));
+          break
+        }
+      } else {
+        if(opened) { opened = false;
+          result.push(cb(highlighted, matchI++)); highlighted = '';
+        }
+      }
+      highlighted += char;
+    }
+    return result
+  };
+
+
+  var indexes = result => result._indexes.slice(0, result._indexes.len).sort((a,b)=>a-b);
+
+
+  var prepare = (target) => {
+    if(typeof target !== 'string') target = '';
+    var info = prepareLowerInfo(target);
+    return {'target':target, _targetLower:info._lower, _targetLowerCodes:info.lowerCodes, _nextBeginningIndexes:NULL, _bitflags:info.bitflags, 'score':NULL, _indexes:[0], 'obj':NULL} // hidden
+  };
+
+
+  // Below this point is only internal code
+  // Below this point is only internal code
+  // Below this point is only internal code
+  // Below this point is only internal code
+
+
+  var prepareSearch = (search) => {
+    if(typeof search !== 'string') search = '';
+    search = search.trim();
+    var info = prepareLowerInfo(search);
+
+    var spaceSearches = [];
+    if(info.containsSpace) {
+      var searches = search.split(/\s+/);
+      searches = [...new Set(searches)]; // distinct
+      for(var i=0; i<searches.length; i++) {
+        if(searches[i] === '') continue
+        var _info = prepareLowerInfo(searches[i]);
+        spaceSearches.push({lowerCodes:_info.lowerCodes, _lower:searches[i].toLowerCase(), containsSpace:false});
+      }
+    }
+
+    return {lowerCodes: info.lowerCodes, bitflags: info.bitflags, containsSpace: info.containsSpace, _lower: info._lower, spaceSearches: spaceSearches}
+  };
+
+
+
+  var getPrepared = (target) => {
+    if(target.length > 999) return prepare(target) // don't cache huge targets
+    var targetPrepared = preparedCache.get(target);
+    if(targetPrepared !== undefined) return targetPrepared
+    targetPrepared = prepare(target);
+    preparedCache.set(target, targetPrepared);
+    return targetPrepared
+  };
+  var getPreparedSearch = (search) => {
+    if(search.length > 999) return prepareSearch(search) // don't cache huge searches
+    var searchPrepared = preparedSearchCache.get(search);
+    if(searchPrepared !== undefined) return searchPrepared
+    searchPrepared = prepareSearch(search);
+    preparedSearchCache.set(search, searchPrepared);
+    return searchPrepared
+  };
+
+
+  var all = (search, targets, options) => {
+    var results = []; results.total = targets.length;
+
+    var limit = options && options.limit || INT_MAX;
+
+    if(options && options.key) {
+      for(var i=0;i<targets.length;i++) { var obj = targets[i];
+        var target = getValue(obj, options.key);
+        if(!target) continue
+        if(!isObj(target)) target = getPrepared(target);
+        target.score = INT_MIN;
+        target._indexes.len = 0;
+        var result = target;
+        result = {target:result.target, _targetLower:'', _targetLowerCodes:NULL, _nextBeginningIndexes:NULL, _bitflags:0, score:target.score, _indexes:NULL, obj:obj}; // hidden
+        results.push(result); if(results.length >= limit) return results
+      }
+    } else if(options && options.keys) {
+      for(var i=0;i<targets.length;i++) { var obj = targets[i];
+        var objResults = new Array(options.keys.length);
+        for (var keyI = options.keys.length - 1; keyI >= 0; --keyI) {
+          var target = getValue(obj, options.keys[keyI]);
+          if(!target) { objResults[keyI] = NULL; continue }
+          if(!isObj(target)) target = getPrepared(target);
+          target.score = INT_MIN;
+          target._indexes.len = 0;
+          objResults[keyI] = target;
+        }
+        objResults.obj = obj;
+        objResults.score = INT_MIN;
+        results.push(objResults); if(results.length >= limit) return results
+      }
+    } else {
+      for(var i=0;i<targets.length;i++) { var target = targets[i];
+        if(!target) continue
+        if(!isObj(target)) target = getPrepared(target);
+        target.score = INT_MIN;
+        target._indexes.len = 0;
+        results.push(target); if(results.length >= limit) return results
+      }
+    }
+
+    return results
+  };
+
+
+  var algorithm = (preparedSearch, prepared, allowSpaces=false) => {
+    if(allowSpaces===false && preparedSearch.containsSpace) return algorithmSpaces(preparedSearch, prepared)
+
+    var searchLower = preparedSearch._lower;
+    var searchLowerCodes = preparedSearch.lowerCodes;
+    var searchLowerCode = searchLowerCodes[0];
+    var targetLowerCodes = prepared._targetLowerCodes;
+    var searchLen = searchLowerCodes.length;
+    var targetLen = targetLowerCodes.length;
+    var searchI = 0; // where we at
+    var targetI = 0; // where you at
+    var matchesSimpleLen = 0;
+
+    // very basic fuzzy match; to remove non-matching targets ASAP!
+    // walk through target. find sequential matches.
+    // if all chars aren't found then exit
+    for(;;) {
+      var isMatch = searchLowerCode === targetLowerCodes[targetI];
+      if(isMatch) {
+        matchesSimple[matchesSimpleLen++] = targetI;
+        ++searchI; if(searchI === searchLen) break
+        searchLowerCode = searchLowerCodes[searchI];
+      }
+      ++targetI; if(targetI >= targetLen) return NULL // Failed to find searchI
+    }
+
+    var searchI = 0;
+    var successStrict = false;
+    var matchesStrictLen = 0;
+
+    var nextBeginningIndexes = prepared._nextBeginningIndexes;
+    if(nextBeginningIndexes === NULL) nextBeginningIndexes = prepared._nextBeginningIndexes = prepareNextBeginningIndexes(prepared.target);
+    targetI = matchesSimple[0]===0 ? 0 : nextBeginningIndexes[matchesSimple[0]-1];
+
+    // Our target string successfully matched all characters in sequence!
+    // Let's try a more advanced and strict test to improve the score
+    // only count it as a match if it's consecutive or a beginning character!
+    var backtrackCount = 0;
+    if(targetI !== targetLen) for(;;) {
+      if(targetI >= targetLen) {
+        // We failed to find a good spot for this search char, go back to the previous search char and force it forward
+        if(searchI <= 0) break // We failed to push chars forward for a better match
+
+        ++backtrackCount; if(backtrackCount > 200) break // exponential backtracking is taking too long, just give up and return a bad match
+
+        --searchI;
+        var lastMatch = matchesStrict[--matchesStrictLen];
+        targetI = nextBeginningIndexes[lastMatch];
+
+      } else {
+        var isMatch = searchLowerCodes[searchI] === targetLowerCodes[targetI];
+        if(isMatch) {
+          matchesStrict[matchesStrictLen++] = targetI;
+          ++searchI; if(searchI === searchLen) { successStrict = true; break }
+          ++targetI;
+        } else {
+          targetI = nextBeginningIndexes[targetI];
+        }
+      }
+    }
+
+    // check if it's a substring match
+    var substringIndex = prepared._targetLower.indexOf(searchLower, matchesSimple[0]); // perf: this is slow
+    var isSubstring = ~substringIndex;
+    if(isSubstring && !successStrict) { // rewrite the indexes from basic to the substring
+      for(var i=0; i<matchesSimpleLen; ++i) matchesSimple[i] = substringIndex+i;
+    }
+    var isSubstringBeginning = false;
+    if(isSubstring) {
+      isSubstringBeginning = prepared._nextBeginningIndexes[substringIndex-1] === substringIndex;
+    }
+
+    { // tally up the score & keep track of matches for highlighting later
+      if(successStrict) { var matchesBest = matchesStrict; var matchesBestLen = matchesStrictLen; }
+      else { var matchesBest = matchesSimple; var matchesBestLen = matchesSimpleLen; }
+
+      var score = 0;
+
+      var extraMatchGroupCount = 0;
+      for(var i = 1; i < searchLen; ++i) {
+        if(matchesBest[i] - matchesBest[i-1] !== 1) {score -= matchesBest[i]; ++extraMatchGroupCount;}
+      }
+      var unmatchedDistance = matchesBest[searchLen-1] - matchesBest[0] - (searchLen-1);
+
+      score -= (12+unmatchedDistance) * extraMatchGroupCount; // penality for more groups
+
+      if(matchesBest[0] !== 0) score -= matchesBest[0]*matchesBest[0]*.2; // penality for not starting near the beginning
+
+      if(!successStrict) {
+        score *= 1000;
+      } else {
+        // successStrict on a target with too many beginning indexes loses points for being a bad target
+        var uniqueBeginningIndexes = 1;
+        for(var i = nextBeginningIndexes[0]; i < targetLen; i=nextBeginningIndexes[i]) ++uniqueBeginningIndexes;
+
+        if(uniqueBeginningIndexes > 24) score *= (uniqueBeginningIndexes-24)*10; // quite arbitrary numbers here ...
+      }
+
+      if(isSubstring)          score /= 1+searchLen*searchLen*1; // bonus for being a full substring
+      if(isSubstringBeginning) score /= 1+searchLen*searchLen*1; // bonus for substring starting on a beginningIndex
+
+      score -= targetLen - searchLen; // penality for longer targets
+      prepared.score = score;
+
+      for(var i = 0; i < matchesBestLen; ++i) prepared._indexes[i] = matchesBest[i];
+      prepared._indexes.len = matchesBestLen;
+
+      return prepared
+    }
+  };
+  var algorithmSpaces = (preparedSearch, target) => {
+    var seen_indexes = new Set();
+    var score = 0;
+    var result = NULL;
+
+    var first_seen_index_last_search = 0;
+    var searches = preparedSearch.spaceSearches;
+    for(var i=0; i<searches.length; ++i) {
+      var search = searches[i];
+
+      result = algorithm(search, target);
+      if(result === NULL) return NULL
+
+      score += result.score;
+
+      // dock points based on order otherwise "c man" returns Manifest.cpp instead of CheatManager.h
+      if(result._indexes[0] < first_seen_index_last_search) {
+        score -= first_seen_index_last_search - result._indexes[0];
+      }
+      first_seen_index_last_search = result._indexes[0];
+
+      for(var j=0; j<result._indexes.len; ++j) seen_indexes.add(result._indexes[j]);
+    }
+
+    // allows a search with spaces that's an exact substring to score well
+    var allowSpacesResult = algorithm(preparedSearch, target, /*allowSpaces=*/true);
+    if(allowSpacesResult !== NULL && allowSpacesResult.score > score) {
+      return allowSpacesResult
+    }
+
+    result.score = score;
+
+    var i = 0;
+    for (let index of seen_indexes) result._indexes[i++] = index;
+    result._indexes.len = i;
+
+    return result
+  };
+
+
+  var prepareLowerInfo = (str) => {
+    var strLen = str.length;
+    var lower = str.toLowerCase();
+    var lowerCodes = []; // new Array(strLen)    sparse array is too slow
+    var bitflags = 0;
+    var containsSpace = false; // space isn't stored in bitflags because of how searching with a space works
+
+    for(var i = 0; i < strLen; ++i) {
+      var lowerCode = lowerCodes[i] = lower.charCodeAt(i);
+
+      if(lowerCode === 32) {
+        containsSpace = true;
+        continue // it's important that we don't set any bitflags for space
+      }
+
+      var bit = lowerCode>=97&&lowerCode<=122 ? lowerCode-97 // alphabet
+              : lowerCode>=48&&lowerCode<=57  ? 26           // numbers
+                                                             // 3 bits available
+              : lowerCode<=127                ? 30           // other ascii
+              :                                 31;           // other utf8
+      bitflags |= 1<<bit;
+    }
+
+    return {lowerCodes:lowerCodes, bitflags:bitflags, containsSpace:containsSpace, _lower:lower}
+  };
+  var prepareBeginningIndexes = (target) => {
+    var targetLen = target.length;
+    var beginningIndexes = []; var beginningIndexesLen = 0;
+    var wasUpper = false;
+    var wasAlphanum = false;
+    for(var i = 0; i < targetLen; ++i) {
+      var targetCode = target.charCodeAt(i);
+      var isUpper = targetCode>=65&&targetCode<=90;
+      var isAlphanum = isUpper || targetCode>=97&&targetCode<=122 || targetCode>=48&&targetCode<=57;
+      var isBeginning = isUpper && !wasUpper || !wasAlphanum || !isAlphanum;
+      wasUpper = isUpper;
+      wasAlphanum = isAlphanum;
+      if(isBeginning) beginningIndexes[beginningIndexesLen++] = i;
+    }
+    return beginningIndexes
+  };
+  var prepareNextBeginningIndexes = (target) => {
+    var targetLen = target.length;
+    var beginningIndexes = prepareBeginningIndexes(target);
+    var nextBeginningIndexes = []; // new Array(targetLen)     sparse array is too slow
+    var lastIsBeginning = beginningIndexes[0];
+    var lastIsBeginningI = 0;
+    for(var i = 0; i < targetLen; ++i) {
+      if(lastIsBeginning > i) {
+        nextBeginningIndexes[i] = lastIsBeginning;
+      } else {
+        lastIsBeginning = beginningIndexes[++lastIsBeginningI];
+        nextBeginningIndexes[i] = lastIsBeginning===undefined ? targetLen : lastIsBeginning;
+      }
+    }
+    return nextBeginningIndexes
+  };
+
+
+  var cleanup = () => { preparedCache.clear(); preparedSearchCache.clear(); matchesSimple = []; matchesStrict = []; };
+
+  var preparedCache       = new Map();
+  var preparedSearchCache = new Map();
+  var matchesSimple = []; var matchesStrict = [];
+
+
+  // for use with keys. just returns the maximum score
+  var defaultScoreFn = (a) => {
+    var max = INT_MIN;
+    var len = a.length;
+    for (var i = 0; i < len; ++i) {
+      var result = a[i]; if(result === NULL) continue
+      var score = result.score;
+      if(score > max) max = score;
+    }
+    if(max === INT_MIN) return NULL
+    return max
+  };
+
+  // prop = 'key'              2.5ms optimized for this case, seems to be about as fast as direct obj[prop]
+  // prop = 'key1.key2'        10ms
+  // prop = ['key1', 'key2']   27ms
+  var getValue = (obj, prop) => {
+    var tmp = obj[prop]; if(tmp !== undefined) return tmp
+    var segs = prop;
+    if(!Array.isArray(prop)) segs = prop.split('.');
+    var len = segs.length;
+    var i = -1;
+    while (obj && (++i < len)) obj = obj[segs[i]];
+    return obj
+  };
+
+  var isObj = (x) => { return typeof x === 'object' }; // faster as a function
+  // var INT_MAX = 9007199254740991; var INT_MIN = -INT_MAX
+  var INT_MAX = Infinity; var INT_MIN = -INT_MAX;
+  var noResults = []; noResults.total = 0;
+  var NULL = null;
+
+
+  // Hacked version of https://github.com/lemire/FastPriorityQueue.js
+  var fastpriorityqueue=r=>{var e=[],o=0,a={},v=r=>{for(var a=0,v=e[a],c=1;c<o;){var s=c+1;a=c,s<o&&e[s].score<e[c].score&&(a=s),e[a-1>>1]=e[a],c=1+(a<<1);}for(var f=a-1>>1;a>0&&v.score<e[f].score;f=(a=f)-1>>1)e[a]=e[f];e[a]=v;};return a.add=(r=>{var a=o;e[o++]=r;for(var v=a-1>>1;a>0&&r.score<e[v].score;v=(a=v)-1>>1)e[a]=e[v];e[a]=r;}),a.poll=(r=>{if(0!==o){var a=e[0];return e[0]=e[--o],v(),a}}),a.peek=(r=>{if(0!==o)return e[0]}),a.replaceTop=(r=>{e[0]=r,v();}),a};
+  var q = fastpriorityqueue(); // reuse this
+
+
+  // fuzzysort is written this way for minification. all names are mangeled unless quoted
+  return {'single':single, 'go':go, 'highlight':highlight, 'prepare':prepare, 'indexes':indexes, 'cleanup':cleanup}
+}); // UMD
+
+// TODO: (feature) frecency
+// TODO: (perf) use different sorting algo depending on the # of results?
+// TODO: (perf) preparedCache is a memory leak
+// TODO: (like sublime) backslash === forwardslash
+// TODO: (perf) prepareSearch seems slow
+});
+
+class AbstractSettingComponent {
+    constructor(sectionId, sectionName, setting, settingsManager, isView) {
+        this.sectionId = sectionId;
+        this.sectionName = sectionName;
+        this.setting = setting;
+        this.settingsManager = settingsManager;
+        this.isView = isView;
+        this.onInit();
+    }
+    onInit() { }
+    /**
+     * Matches the Component against `str`. A perfect match returns 0, no match returns negative infinity.
+     *
+     * @param str the string to match this Component against.
+     */
+    match(str) {
+        var _a, _b, _c, _d;
+        if (!str) {
+            return Number.NEGATIVE_INFINITY;
+        }
+        return Math.max((_b = (_a = fuzzysort.single(str, getTitle(this.setting))) === null || _a === void 0 ? void 0 : _a.score) !== null && _b !== void 0 ? _b : Number.NEGATIVE_INFINITY, (_d = (_c = fuzzysort.single(str, getDescription(this.setting))) === null || _c === void 0 ? void 0 : _c.score) !== null && _d !== void 0 ? _d : Number.NEGATIVE_INFINITY);
+    }
+    /**
+     * Matches the Component against `str`. A match returns true, no match  or a bad match returns false.
+     *
+     * @param str the string to match this Component against.
+     */
+    decisiveMatch(str) {
+        return this.match(str) > -100000;
     }
 }
+
+const resetTooltip = 'Restore default';
+
+class ClassToggleSettingComponent extends AbstractSettingComponent {
+    render(containerEl) {
+        const title = getTitle(this.setting);
+        const description = getDescription(this.setting);
+        this.settingEl = new obsidian.Setting(containerEl);
+        this.settingEl.setName(title);
+        this.settingEl.setDesc(description !== null && description !== void 0 ? description : '');
+        this.settingEl.addToggle((toggle) => {
+            const value = this.settingsManager.getSetting(this.sectionId, this.setting.id);
+            toggle.setValue(value !== undefined ? !!value : !!this.setting.default);
+            toggle.onChange((value) => {
+                this.settingsManager.setSetting(this.sectionId, this.setting.id, value);
+                if (value) {
+                    document.body.classList.add(this.setting.id);
+                }
+                else {
+                    document.body.classList.remove(this.setting.id);
+                }
+            });
+            this.toggleComponent = toggle;
+        });
+        this.settingEl.addExtraButton((b) => {
+            b.setIcon('reset');
+            b.onClick(() => {
+                const value = !!this.setting.default;
+                this.toggleComponent.setValue(value);
+                if (value) {
+                    document.body.classList.add(this.setting.id);
+                }
+                else {
+                    document.body.classList.remove(this.setting.id);
+                }
+                this.settingsManager.clearSetting(this.sectionId, this.setting.id);
+            });
+            b.setTooltip(resetTooltip);
+        });
+        this.settingEl.settingEl.dataset.id = this.setting.id;
+    }
+    destroy() {
+        var _a;
+        (_a = this.settingEl) === null || _a === void 0 ? void 0 : _a.settingEl.remove();
+    }
+}
+
+class ClassMultiToggleSettingComponent extends AbstractSettingComponent {
+    render(containerEl) {
+        const title = getTitle(this.setting);
+        const description = getDescription(this.setting);
+        if (typeof this.setting.default !== 'string') {
+            return console.error(`${t('Error:')} ${title} ${t('missing default value')}`);
+        }
+        let prevValue = this.getPreviousValue();
+        const defaultLabel = this.getDefaultOptionLabel();
+        this.settingEl = new obsidian.Setting(containerEl);
+        this.settingEl.setName(title);
+        this.settingEl.setDesc(createDescription(description, this.setting.default, defaultLabel));
+        this.settingEl.addDropdown((dropdown) => {
+            if (this.setting.allowEmpty) {
+                dropdown.addOption('none', '');
+            }
+            for (const o of this.setting.options) {
+                if (typeof o === 'string') {
+                    dropdown.addOption(o, o);
+                }
+                else {
+                    dropdown.addOption(o.value, o.label);
+                }
+            }
+            dropdown.setValue(prevValue);
+            dropdown.onChange((value) => {
+                this.settingsManager.setSetting(this.sectionId, this.setting.id, value);
+                if (value !== 'none') {
+                    document.body.classList.add(value);
+                }
+                if (prevValue) {
+                    document.body.classList.remove(prevValue);
+                }
+                prevValue = value;
+            });
+            this.dropdownComponent = dropdown;
+        });
+        this.settingEl.addExtraButton((b) => {
+            b.setIcon('reset');
+            b.onClick(() => {
+                const value = this.setting.default || 'none';
+                this.dropdownComponent.setValue(this.setting.default || 'none');
+                if (value !== 'none') {
+                    document.body.classList.add(value);
+                }
+                if (prevValue) {
+                    document.body.classList.remove(prevValue);
+                }
+                this.settingsManager.clearSetting(this.sectionId, this.setting.id);
+            });
+            b.setTooltip(resetTooltip);
+        });
+        this.settingEl.settingEl.dataset.id = this.setting.id;
+    }
+    destroy() {
+        var _a;
+        (_a = this.settingEl) === null || _a === void 0 ? void 0 : _a.settingEl.remove();
+    }
+    getDefaultOption() {
+        if (this.setting.default) {
+            return this.setting.options.find((o) => {
+                if (typeof o === 'string') {
+                    return o === this.setting.default;
+                }
+                return o.value === this.setting.default;
+            });
+        }
+        return undefined;
+    }
+    getDefaultOptionLabel() {
+        const defaultOption = this.getDefaultOption();
+        if (defaultOption) {
+            if (typeof defaultOption === 'string') {
+                return defaultOption;
+            }
+            return defaultOption.label;
+        }
+        return undefined;
+    }
+    getPreviousValue() {
+        const prevValue = this.settingsManager.getSetting(this.sectionId, this.setting.id);
+        if (prevValue === undefined) {
+            if (this.setting.default) {
+                return this.setting.default;
+            }
+            return 'none';
+        }
+        return prevValue;
+    }
+}
+
+class VariableTextSettingComponent extends AbstractSettingComponent {
+    render(containerEl) {
+        const title = getTitle(this.setting);
+        const description = getDescription(this.setting);
+        if (typeof this.setting.default !== 'string') {
+            return console.error(`${t('Error:')} ${title} ${t('missing default value')}`);
+        }
+        this.settingEl = new obsidian.Setting(containerEl);
+        this.settingEl.setName(title);
+        this.settingEl.setDesc(createDescription(description, this.setting.default));
+        this.settingEl.addText((text) => {
+            let value = this.settingsManager.getSetting(this.sectionId, this.setting.id);
+            const onChange = obsidian.debounce((value) => {
+                this.settingsManager.setSetting(this.sectionId, this.setting.id, sanitizeText(value));
+            }, 250, true);
+            if (this.setting.quotes && value === `""`) {
+                value = ``;
+            }
+            text.setValue(value ? value.toString() : this.setting.default);
+            text.onChange(onChange);
+            this.textComponent = text;
+        });
+        this.settingEl.addExtraButton((b) => {
+            b.setIcon('reset');
+            b.onClick(() => {
+                this.textComponent.setValue(this.setting.default);
+                this.settingsManager.clearSetting(this.sectionId, this.setting.id);
+            });
+            b.setTooltip(resetTooltip);
+        });
+        this.settingEl.settingEl.dataset.id = this.setting.id;
+    }
+    destroy() {
+        var _a;
+        (_a = this.settingEl) === null || _a === void 0 ? void 0 : _a.settingEl.remove();
+    }
+}
+
+class VariableNumberSettingComponent extends AbstractSettingComponent {
+    render(containerEl) {
+        const title = getTitle(this.setting);
+        const description = getDescription(this.setting);
+        if (typeof this.setting.default !== 'number') {
+            return console.error(`${t('Error:')} ${title} ${t('missing default value')}`);
+        }
+        this.settingEl = new obsidian.Setting(containerEl);
+        this.settingEl.setName(title);
+        this.settingEl.setDesc(createDescription(description, this.setting.default.toString(10)));
+        this.settingEl.addText((text) => {
+            const value = this.settingsManager.getSetting(this.sectionId, this.setting.id);
+            const onChange = obsidian.debounce((value) => {
+                const isFloat = /\./.test(value);
+                this.settingsManager.setSetting(this.sectionId, this.setting.id, isFloat ? parseFloat(value) : parseInt(value, 10));
+            }, 250, true);
+            text.setValue(value !== undefined ? value.toString() : this.setting.default.toString());
+            text.onChange(onChange);
+            this.textComponent = text;
+        });
+        this.settingEl.addExtraButton((b) => {
+            b.setIcon('reset');
+            b.onClick(() => {
+                this.textComponent.setValue(this.setting.default.toString());
+                this.settingsManager.clearSetting(this.sectionId, this.setting.id);
+            });
+            b.setTooltip(resetTooltip);
+        });
+        this.settingEl.settingEl.dataset.id = this.setting.id;
+    }
+    destroy() {
+        var _a;
+        (_a = this.settingEl) === null || _a === void 0 ? void 0 : _a.settingEl.remove();
+    }
+}
+
+class VariableNumberSliderSettingComponent extends AbstractSettingComponent {
+    render(containerEl) {
+        const title = getTitle(this.setting);
+        const description = getDescription(this.setting);
+        if (typeof this.setting.default !== 'number') {
+            return console.error(`${t('Error:')} ${title} ${t('missing default value')}`);
+        }
+        this.settingEl = new obsidian.Setting(containerEl);
+        this.settingEl.setName(title);
+        this.settingEl.setDesc(createDescription(description, this.setting.default.toString(10)));
+        this.settingEl.addSlider((slider) => {
+            const value = this.settingsManager.getSetting(this.sectionId, this.setting.id);
+            const onChange = obsidian.debounce((value) => {
+                this.settingsManager.setSetting(this.sectionId, this.setting.id, value);
+            }, 250, true);
+            slider.setDynamicTooltip();
+            slider.setLimits(this.setting.min, this.setting.max, this.setting.step);
+            slider.setValue(value !== undefined ? value : this.setting.default);
+            slider.onChange(onChange);
+            this.sliderComponent = slider;
+        });
+        this.settingEl.addExtraButton((b) => {
+            b.setIcon('reset');
+            b.onClick(() => {
+                this.sliderComponent.setValue(this.setting.default);
+                this.settingsManager.clearSetting(this.sectionId, this.setting.id);
+            });
+            b.setTooltip(resetTooltip);
+        });
+        this.settingEl.settingEl.dataset.id = this.setting.id;
+    }
+    destroy() {
+        var _a;
+        (_a = this.settingEl) === null || _a === void 0 ? void 0 : _a.settingEl.remove();
+    }
+}
+
+class VariableSelectSettingComponent extends AbstractSettingComponent {
+    render(containerEl) {
+        const title = getTitle(this.setting);
+        const description = getDescription(this.setting);
+        if (typeof this.setting.default !== 'string') {
+            return console.error(`${t('Error:')} ${title} ${t('missing default value')}`);
+        }
+        const defaultLabel = this.getDefaultOptionLabel();
+        this.settingEl = new obsidian.Setting(containerEl);
+        this.settingEl.setName(title);
+        this.settingEl.setDesc(createDescription(description, this.setting.default, defaultLabel));
+        this.settingEl.addDropdown((dropdown) => {
+            const value = this.settingsManager.getSetting(this.sectionId, this.setting.id);
+            for (const o of this.setting.options) {
+                if (typeof o === 'string') {
+                    dropdown.addOption(o, o);
+                }
+                else {
+                    dropdown.addOption(o.value, o.label);
+                }
+            }
+            dropdown.setValue(value !== undefined ? value : this.setting.default);
+            dropdown.onChange((value) => {
+                this.settingsManager.setSetting(this.sectionId, this.setting.id, value);
+            });
+            this.dropdownComponent = dropdown;
+        });
+        this.settingEl.addExtraButton((b) => {
+            b.setIcon('reset');
+            b.onClick(() => {
+                this.dropdownComponent.setValue(this.setting.default);
+                this.settingsManager.clearSetting(this.sectionId, this.setting.id);
+            });
+            b.setTooltip(resetTooltip);
+        });
+        this.settingEl.settingEl.dataset.id = this.setting.id;
+    }
+    destroy() {
+        var _a;
+        (_a = this.settingEl) === null || _a === void 0 ? void 0 : _a.settingEl.remove();
+    }
+    getDefaultOption() {
+        if (this.setting.default) {
+            return this.setting.options.find((o) => {
+                if (typeof o === 'string') {
+                    return o === this.setting.default;
+                }
+                return o.value === this.setting.default;
+            });
+        }
+        return undefined;
+    }
+    getDefaultOptionLabel() {
+        const defaultOption = this.getDefaultOption();
+        if (defaultOption) {
+            if (typeof defaultOption === 'string') {
+                return defaultOption;
+            }
+            return defaultOption.label;
+        }
+        return undefined;
+    }
+}
+
+var pickr_min = createCommonjsModule(function (module, exports) {
+/*! Pickr 1.8.4 MIT | https://github.com/Simonwep/pickr */
+!function(t,e){module.exports=e();}(self,(function(){return (()=>{var t={d:(e,o)=>{for(var n in o)t.o(o,n)&&!t.o(e,n)&&Object.defineProperty(e,n,{enumerable:!0,get:o[n]});},o:(t,e)=>Object.prototype.hasOwnProperty.call(t,e),r:t=>{"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(t,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(t,"__esModule",{value:!0});}},e={};t.d(e,{default:()=>x});var o={};function n(t,e,o,n){let i=arguments.length>4&&void 0!==arguments[4]?arguments[4]:{};e instanceof HTMLCollection||e instanceof NodeList?e=Array.from(e):Array.isArray(e)||(e=[e]),Array.isArray(o)||(o=[o]);for(const s of e)for(const e of o)s[t](e,n,{capture:!1,...i});return Array.prototype.slice.call(arguments,1)}t.r(o),t.d(o,{adjustableInputNumbers:()=>p,createElementFromString:()=>r,createFromTemplate:()=>a,eventPath:()=>l,off:()=>s,on:()=>i,resolveElement:()=>c});const i=n.bind(null,"addEventListener"),s=n.bind(null,"removeEventListener");function r(t){const e=document.createElement("div");return e.innerHTML=t.trim(),e.firstElementChild}function a(t){const e=(t,e)=>{const o=t.getAttribute(e);return t.removeAttribute(e),o},o=function(t){let n=arguments.length>1&&void 0!==arguments[1]?arguments[1]:{};const i=e(t,":obj"),s=e(t,":ref"),r=i?n[i]={}:n;s&&(n[s]=t);for(const n of Array.from(t.children)){const t=e(n,":arr"),i=o(n,t?{}:r);t&&(r[t]||(r[t]=[])).push(Object.keys(i).length?i:n);}return n};return o(r(t))}function l(t){let e=t.path||t.composedPath&&t.composedPath();if(e)return e;let o=t.target.parentElement;for(e=[t.target,o];o=o.parentElement;)e.push(o);return e.push(document,window),e}function c(t){return t instanceof Element?t:"string"==typeof t?t.split(/>>/g).reduce(((t,e,o,n)=>(t=t.querySelector(e),o<n.length-1?t.shadowRoot:t)),document):null}function p(t){let e=arguments.length>1&&void 0!==arguments[1]?arguments[1]:t=>t;function o(o){const n=[.001,.01,.1][Number(o.shiftKey||2*o.ctrlKey)]*(o.deltaY<0?1:-1);let i=0,s=t.selectionStart;t.value=t.value.replace(/[\d.]+/g,((t,o)=>o<=s&&o+t.length>=s?(s=o,e(Number(t),n,i)):(i++,t))),t.focus(),t.setSelectionRange(s,s),o.preventDefault(),t.dispatchEvent(new Event("input"));}i(t,"focus",(()=>i(window,"wheel",o,{passive:!1}))),i(t,"blur",(()=>s(window,"wheel",o)));}const{min:h,max:u,floor:d,round:v}=Math;function m(t,e,o){e/=100,o/=100;const n=d(t=t/360*6),i=t-n,s=o*(1-e),r=o*(1-i*e),a=o*(1-(1-i)*e),l=n%6;return [255*[o,r,s,s,a,o][l],255*[a,o,o,r,s,s][l],255*[s,s,a,o,o,r][l]]}function f(t,e,o){return m(t,e,o).map((t=>v(t).toString(16).padStart(2,"0")))}function g(t,e,o){const n=m(t,e,o),i=n[0]/255,s=n[1]/255,r=n[2]/255,a=h(1-i,1-s,1-r);return [100*(1===a?0:(1-i-a)/(1-a)),100*(1===a?0:(1-s-a)/(1-a)),100*(1===a?0:(1-r-a)/(1-a)),100*a]}function b(t,e,o){const n=(2-(e/=100))*(o/=100)/2;return 0!==n&&(e=1===n?0:n<.5?e*o/(2*n):e*o/(2-2*n)),[t,100*e,100*n]}function y(t,e,o){const n=h(t/=255,e/=255,o/=255),i=u(t,e,o),s=i-n;let r,a;if(0===s)r=a=0;else {a=s/i;const n=((i-t)/6+s/2)/s,l=((i-e)/6+s/2)/s,c=((i-o)/6+s/2)/s;t===i?r=c-l:e===i?r=1/3+n-c:o===i&&(r=2/3+l-n),r<0?r+=1:r>1&&(r-=1);}return [360*r,100*a,100*i]}function _(t,e,o,n){e/=100,o/=100;return [...y(255*(1-h(1,(t/=100)*(1-(n/=100))+n)),255*(1-h(1,e*(1-n)+n)),255*(1-h(1,o*(1-n)+n)))]}function w(t,e,o){e/=100;const n=2*(e*=(o/=100)<.5?o:1-o)/(o+e)*100,i=100*(o+e);return [t,isNaN(n)?0:n,i]}function A(t){return y(...t.match(/.{2}/g).map((t=>parseInt(t,16))))}function C(t){t=t.match(/^[a-zA-Z]+$/)?function(t){if("black"===t.toLowerCase())return "#000";const e=document.createElement("canvas").getContext("2d");return e.fillStyle=t,"#000"===e.fillStyle?null:e.fillStyle}(t):t;const e={cmyk:/^cmyk[\D]+([\d.]+)[\D]+([\d.]+)[\D]+([\d.]+)[\D]+([\d.]+)/i,rgba:/^((rgba)|rgb)[\D]+([\d.]+)[\D]+([\d.]+)[\D]+([\d.]+)[\D]*?([\d.]+|$)/i,hsla:/^((hsla)|hsl)[\D]+([\d.]+)[\D]+([\d.]+)[\D]+([\d.]+)[\D]*?([\d.]+|$)/i,hsva:/^((hsva)|hsv)[\D]+([\d.]+)[\D]+([\d.]+)[\D]+([\d.]+)[\D]*?([\d.]+|$)/i,hexa:/^#?(([\dA-Fa-f]{3,4})|([\dA-Fa-f]{6})|([\dA-Fa-f]{8}))$/i},o=t=>t.map((t=>/^(|\d+)\.\d+|\d+$/.test(t)?Number(t):void 0));let n;t:for(const i in e){if(!(n=e[i].exec(t)))continue;const s=t=>!!n[2]==("number"==typeof t);switch(i){case"cmyk":{const[,t,e,s,r]=o(n);if(t>100||e>100||s>100||r>100)break t;return {values:_(t,e,s,r),type:i}}case"rgba":{const[,,,t,e,r,a]=o(n);if(t>255||e>255||r>255||a<0||a>1||!s(a))break t;return {values:[...y(t,e,r),a],a,type:i}}case"hexa":{let[,t]=n;4!==t.length&&3!==t.length||(t=t.split("").map((t=>t+t)).join(""));const e=t.substring(0,6);let o=t.substring(6);return o=o?parseInt(o,16)/255:void 0,{values:[...A(e),o],a:o,type:i}}case"hsla":{const[,,,t,e,r,a]=o(n);if(t>360||e>100||r>100||a<0||a>1||!s(a))break t;return {values:[...w(t,e,r),a],a,type:i}}case"hsva":{const[,,,t,e,r,a]=o(n);if(t>360||e>100||r>100||a<0||a>1||!s(a))break t;return {values:[t,e,r,a],a,type:i}}}}return {values:null,type:null}}function $(){let t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:0,e=arguments.length>1&&void 0!==arguments[1]?arguments[1]:0,o=arguments.length>2&&void 0!==arguments[2]?arguments[2]:0,n=arguments.length>3&&void 0!==arguments[3]?arguments[3]:1;const i=(t,e)=>function(){let o=arguments.length>0&&void 0!==arguments[0]?arguments[0]:-1;return e(~o?t.map((t=>Number(t.toFixed(o)))):t)},s={h:t,s:e,v:o,a:n,toHSVA(){const t=[s.h,s.s,s.v,s.a];return t.toString=i(t,(t=>`hsva(${t[0]}, ${t[1]}%, ${t[2]}%, ${s.a})`)),t},toHSLA(){const t=[...b(s.h,s.s,s.v),s.a];return t.toString=i(t,(t=>`hsla(${t[0]}, ${t[1]}%, ${t[2]}%, ${s.a})`)),t},toRGBA(){const t=[...m(s.h,s.s,s.v),s.a];return t.toString=i(t,(t=>`rgba(${t[0]}, ${t[1]}, ${t[2]}, ${s.a})`)),t},toCMYK(){const t=g(s.h,s.s,s.v);return t.toString=i(t,(t=>`cmyk(${t[0]}%, ${t[1]}%, ${t[2]}%, ${t[3]}%)`)),t},toHEXA(){const t=f(s.h,s.s,s.v),e=s.a>=1?"":Number((255*s.a).toFixed(0)).toString(16).toUpperCase().padStart(2,"0");return e&&t.push(e),t.toString=()=>`#${t.join("").toUpperCase()}`,t},clone:()=>$(s.h,s.s,s.v,s.a)};return s}const k=t=>Math.max(Math.min(t,1),0);function S(t){const e={options:Object.assign({lock:null,onchange:()=>0,onstop:()=>0},t),_keyboard(t){const{options:o}=e,{type:n,key:i}=t;if(document.activeElement===o.wrapper){const{lock:o}=e.options,s="ArrowUp"===i,r="ArrowRight"===i,a="ArrowDown"===i,l="ArrowLeft"===i;if("keydown"===n&&(s||r||a||l)){let n=0,i=0;"v"===o?n=s||r?1:-1:"h"===o?n=s||r?-1:1:(i=s?-1:a?1:0,n=l?-1:r?1:0),e.update(k(e.cache.x+.01*n),k(e.cache.y+.01*i)),t.preventDefault();}else i.startsWith("Arrow")&&(e.options.onstop(),t.preventDefault());}},_tapstart(t){i(document,["mouseup","touchend","touchcancel"],e._tapstop),i(document,["mousemove","touchmove"],e._tapmove),t.cancelable&&t.preventDefault(),e._tapmove(t);},_tapmove(t){const{options:o,cache:n}=e,{lock:i,element:s,wrapper:r}=o,a=r.getBoundingClientRect();let l=0,c=0;if(t){const e=t&&t.touches&&t.touches[0];l=t?(e||t).clientX:0,c=t?(e||t).clientY:0,l<a.left?l=a.left:l>a.left+a.width&&(l=a.left+a.width),c<a.top?c=a.top:c>a.top+a.height&&(c=a.top+a.height),l-=a.left,c-=a.top;}else n&&(l=n.x*a.width,c=n.y*a.height);"h"!==i&&(s.style.left=`calc(${l/a.width*100}% - ${s.offsetWidth/2}px)`),"v"!==i&&(s.style.top=`calc(${c/a.height*100}% - ${s.offsetHeight/2}px)`),e.cache={x:l/a.width,y:c/a.height};const p=k(l/a.width),h=k(c/a.height);switch(i){case"v":return o.onchange(p);case"h":return o.onchange(h);default:return o.onchange(p,h)}},_tapstop(){e.options.onstop(),s(document,["mouseup","touchend","touchcancel"],e._tapstop),s(document,["mousemove","touchmove"],e._tapmove);},trigger(){e._tapmove();},update(){let t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:0,o=arguments.length>1&&void 0!==arguments[1]?arguments[1]:0;const{left:n,top:i,width:s,height:r}=e.options.wrapper.getBoundingClientRect();"h"===e.options.lock&&(o=t),e._tapmove({clientX:n+s*t,clientY:i+r*o});},destroy(){const{options:t,_tapstart:o,_keyboard:n}=e;s(document,["keydown","keyup"],n),s([t.wrapper,t.element],"mousedown",o),s([t.wrapper,t.element],"touchstart",o,{passive:!1});}},{options:o,_tapstart:n,_keyboard:r}=e;return i([o.wrapper,o.element],"mousedown",n),i([o.wrapper,o.element],"touchstart",n,{passive:!1}),i(document,["keydown","keyup"],r),e}function O(){let t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:{};t=Object.assign({onchange:()=>0,className:"",elements:[]},t);const e=i(t.elements,"click",(e=>{t.elements.forEach((o=>o.classList[e.target===o?"add":"remove"](t.className))),t.onchange(e),e.stopPropagation();}));return {destroy:()=>s(...e)}}const E={variantFlipOrder:{start:"sme",middle:"mse",end:"ems"},positionFlipOrder:{top:"tbrl",right:"rltb",bottom:"btrl",left:"lrbt"},position:"bottom",margin:8},L=(t,e,o)=>{const{container:n,margin:i,position:s,variantFlipOrder:r,positionFlipOrder:a}={container:document.documentElement.getBoundingClientRect(),...E,...o},{left:l,top:c}=e.style;e.style.left="0",e.style.top="0";const p=t.getBoundingClientRect(),h=e.getBoundingClientRect(),u={t:p.top-h.height-i,b:p.bottom+i,r:p.right+i,l:p.left-h.width-i},d={vs:p.left,vm:p.left+p.width/2+-h.width/2,ve:p.left+p.width-h.width,hs:p.top,hm:p.bottom-p.height/2-h.height/2,he:p.bottom-h.height},[v,m="middle"]=s.split("-"),f=a[v],g=r[m],{top:b,left:y,bottom:_,right:w}=n;for(const t of f){const o="t"===t||"b"===t,n=u[t],[i,s]=o?["top","left"]:["left","top"],[r,a]=o?[h.height,h.width]:[h.width,h.height],[l,c]=o?[_,w]:[w,_],[p,v]=o?[b,y]:[y,b];if(!(n<p||n+r>l))for(const r of g){const l=d[(o?"v":"h")+r];if(!(l<v||l+a>c))return e.style[s]=l-h[s]+"px",e.style[i]=n-h[i]+"px",t+r}}return e.style.left=l,e.style.top=c,null};function P(t,e,o){return e in t?Object.defineProperty(t,e,{value:o,enumerable:!0,configurable:!0,writable:!0}):t[e]=o,t}class x{constructor(t){P(this,"_initializingActive",!0),P(this,"_recalc",!0),P(this,"_nanopop",null),P(this,"_root",null),P(this,"_color",$()),P(this,"_lastColor",$()),P(this,"_swatchColors",[]),P(this,"_setupAnimationFrame",null),P(this,"_eventListener",{init:[],save:[],hide:[],show:[],clear:[],change:[],changestop:[],cancel:[],swatchselect:[]}),this.options=t=Object.assign({...x.DEFAULT_OPTIONS},t);const{swatches:e,components:o,theme:n,sliders:i,lockOpacity:s,padding:r}=t;["nano","monolith"].includes(n)&&!i&&(t.sliders="h"),o.interaction||(o.interaction={});const{preview:a,opacity:l,hue:c,palette:p}=o;o.opacity=!s&&l,o.palette=p||a||l||c,this._preBuild(),this._buildComponents(),this._bindEvents(),this._finalBuild(),e&&e.length&&e.forEach((t=>this.addSwatch(t)));const{button:h,app:u}=this._root;this._nanopop=((t,e,o)=>{const n="object"!=typeof t||t instanceof HTMLElement?{reference:t,popper:e,...o}:t;return {update(){let t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:n;const{reference:e,popper:o}=Object.assign(n,t);if(!o||!e)throw new Error("Popper- or reference-element missing.");return L(e,o,n)}}})(h,u,{margin:r}),h.setAttribute("role","button"),h.setAttribute("aria-label",this._t("btn:toggle"));const d=this;this._setupAnimationFrame=requestAnimationFrame((function e(){if(!u.offsetWidth)return d._setupAnimationFrame=requestAnimationFrame(e);d.setColor(t.default),d._rePositioningPicker(),t.defaultRepresentation&&(d._representation=t.defaultRepresentation,d.setColorRepresentation(d._representation)),t.showAlways&&d.show(),d._initializingActive=!1,d._emit("init");}));}_preBuild(){const{options:t}=this;for(const e of ["el","container"])t[e]=c(t[e]);this._root=(t=>{const{components:e,useAsButton:o,inline:n,appClass:i,theme:s,lockOpacity:r}=t.options,l=t=>t?"":'style="display:none" hidden',c=e=>t._t(e),p=a(`\n      <div :ref="root" class="pickr">\n\n        ${o?"":'<button type="button" :ref="button" class="pcr-button"></button>'}\n\n        <div :ref="app" class="pcr-app ${i||""}" data-theme="${s}" ${n?'style="position: unset"':""} aria-label="${c("ui:dialog")}" role="window">\n          <div class="pcr-selection" ${l(e.palette)}>\n            <div :obj="preview" class="pcr-color-preview" ${l(e.preview)}>\n              <button type="button" :ref="lastColor" class="pcr-last-color" aria-label="${c("btn:last-color")}"></button>\n              <div :ref="currentColor" class="pcr-current-color"></div>\n            </div>\n\n            <div :obj="palette" class="pcr-color-palette">\n              <div :ref="picker" class="pcr-picker"></div>\n              <div :ref="palette" class="pcr-palette" tabindex="0" aria-label="${c("aria:palette")}" role="listbox"></div>\n            </div>\n\n            <div :obj="hue" class="pcr-color-chooser" ${l(e.hue)}>\n              <div :ref="picker" class="pcr-picker"></div>\n              <div :ref="slider" class="pcr-hue pcr-slider" tabindex="0" aria-label="${c("aria:hue")}" role="slider"></div>\n            </div>\n\n            <div :obj="opacity" class="pcr-color-opacity" ${l(e.opacity)}>\n              <div :ref="picker" class="pcr-picker"></div>\n              <div :ref="slider" class="pcr-opacity pcr-slider" tabindex="0" aria-label="${c("aria:opacity")}" role="slider"></div>\n            </div>\n          </div>\n\n          <div class="pcr-swatches ${e.palette?"":"pcr-last"}" :ref="swatches"></div>\n\n          <div :obj="interaction" class="pcr-interaction" ${l(Object.keys(e.interaction).length)}>\n            <input :ref="result" class="pcr-result" type="text" spellcheck="false" ${l(e.interaction.input)} aria-label="${c("aria:input")}">\n\n            <input :arr="options" class="pcr-type" data-type="HEXA" value="${r?"HEX":"HEXA"}" type="button" ${l(e.interaction.hex)}>\n            <input :arr="options" class="pcr-type" data-type="RGBA" value="${r?"RGB":"RGBA"}" type="button" ${l(e.interaction.rgba)}>\n            <input :arr="options" class="pcr-type" data-type="HSLA" value="${r?"HSL":"HSLA"}" type="button" ${l(e.interaction.hsla)}>\n            <input :arr="options" class="pcr-type" data-type="HSVA" value="${r?"HSV":"HSVA"}" type="button" ${l(e.interaction.hsva)}>\n            <input :arr="options" class="pcr-type" data-type="CMYK" value="CMYK" type="button" ${l(e.interaction.cmyk)}>\n\n            <input :ref="save" class="pcr-save" value="${c("btn:save")}" type="button" ${l(e.interaction.save)} aria-label="${c("aria:btn:save")}">\n            <input :ref="cancel" class="pcr-cancel" value="${c("btn:cancel")}" type="button" ${l(e.interaction.cancel)} aria-label="${c("aria:btn:cancel")}">\n            <input :ref="clear" class="pcr-clear" value="${c("btn:clear")}" type="button" ${l(e.interaction.clear)} aria-label="${c("aria:btn:clear")}">\n          </div>\n        </div>\n      </div>\n    `),h=p.interaction;return h.options.find((t=>!t.hidden&&!t.classList.add("active"))),h.type=()=>h.options.find((t=>t.classList.contains("active"))),p})(this),t.useAsButton&&(this._root.button=t.el),t.container.appendChild(this._root.root);}_finalBuild(){const t=this.options,e=this._root;if(t.container.removeChild(e.root),t.inline){const o=t.el.parentElement;t.el.nextSibling?o.insertBefore(e.app,t.el.nextSibling):o.appendChild(e.app);}else t.container.appendChild(e.app);t.useAsButton?t.inline&&t.el.remove():t.el.parentNode.replaceChild(e.root,t.el),t.disabled&&this.disable(),t.comparison||(e.button.style.transition="none",t.useAsButton||(e.preview.lastColor.style.transition="none")),this.hide();}_buildComponents(){const t=this,e=this.options.components,o=(t.options.sliders||"v").repeat(2),[n,i]=o.match(/^[vh]+$/g)?o:[],s=()=>this._color||(this._color=this._lastColor.clone()),r={palette:S({element:t._root.palette.picker,wrapper:t._root.palette.palette,onstop:()=>t._emit("changestop","slider",t),onchange(o,n){if(!e.palette)return;const i=s(),{_root:r,options:a}=t,{lastColor:l,currentColor:c}=r.preview;t._recalc&&(i.s=100*o,i.v=100-100*n,i.v<0&&(i.v=0),t._updateOutput("slider"));const p=i.toRGBA().toString(0);this.element.style.background=p,this.wrapper.style.background=`\n                        linear-gradient(to top, rgba(0, 0, 0, ${i.a}), transparent),\n                        linear-gradient(to left, hsla(${i.h}, 100%, 50%, ${i.a}), rgba(255, 255, 255, ${i.a}))\n                    `,a.comparison?a.useAsButton||t._lastColor||l.style.setProperty("--pcr-color",p):(r.button.style.setProperty("--pcr-color",p),r.button.classList.remove("clear"));const h=i.toHEXA().toString();for(const{el:e,color:o}of t._swatchColors)e.classList[h===o.toHEXA().toString()?"add":"remove"]("pcr-active");c.style.setProperty("--pcr-color",p);}}),hue:S({lock:"v"===i?"h":"v",element:t._root.hue.picker,wrapper:t._root.hue.slider,onstop:()=>t._emit("changestop","slider",t),onchange(o){if(!e.hue||!e.palette)return;const n=s();t._recalc&&(n.h=360*o),this.element.style.backgroundColor=`hsl(${n.h}, 100%, 50%)`,r.palette.trigger();}}),opacity:S({lock:"v"===n?"h":"v",element:t._root.opacity.picker,wrapper:t._root.opacity.slider,onstop:()=>t._emit("changestop","slider",t),onchange(o){if(!e.opacity||!e.palette)return;const n=s();t._recalc&&(n.a=Math.round(100*o)/100),this.element.style.background=`rgba(0, 0, 0, ${n.a})`,r.palette.trigger();}}),selectable:O({elements:t._root.interaction.options,className:"active",onchange(e){t._representation=e.target.getAttribute("data-type").toUpperCase(),t._recalc&&t._updateOutput("swatch");}})};this._components=r;}_bindEvents(){const{_root:t,options:e}=this,o=[i(t.interaction.clear,"click",(()=>this._clearColor())),i([t.interaction.cancel,t.preview.lastColor],"click",(()=>{this.setHSVA(...(this._lastColor||this._color).toHSVA(),!0),this._emit("cancel");})),i(t.interaction.save,"click",(()=>{!this.applyColor()&&!e.showAlways&&this.hide();})),i(t.interaction.result,["keyup","input"],(t=>{this.setColor(t.target.value,!0)&&!this._initializingActive&&(this._emit("change",this._color,"input",this),this._emit("changestop","input",this)),t.stopImmediatePropagation();})),i(t.interaction.result,["focus","blur"],(t=>{this._recalc="blur"===t.type,this._recalc&&this._updateOutput(null);})),i([t.palette.palette,t.palette.picker,t.hue.slider,t.hue.picker,t.opacity.slider,t.opacity.picker],["mousedown","touchstart"],(()=>this._recalc=!0),{passive:!0})];if(!e.showAlways){const n=e.closeWithKey;o.push(i(t.button,"click",(()=>this.isOpen()?this.hide():this.show())),i(document,"keyup",(t=>this.isOpen()&&(t.key===n||t.code===n)&&this.hide())),i(document,["touchstart","mousedown"],(e=>{this.isOpen()&&!l(e).some((e=>e===t.app||e===t.button))&&this.hide();}),{capture:!0}));}if(e.adjustableNumbers){const e={rgba:[255,255,255,1],hsva:[360,100,100,1],hsla:[360,100,100,1],cmyk:[100,100,100,100]};p(t.interaction.result,((t,o,n)=>{const i=e[this.getColorRepresentation().toLowerCase()];if(i){const e=i[n],s=t+(e>=100?1e3*o:o);return s<=0?0:Number((s<e?s:e).toPrecision(3))}return t}));}if(e.autoReposition&&!e.inline){let t=null;const n=this;o.push(i(window,["scroll","resize"],(()=>{n.isOpen()&&(e.closeOnScroll&&n.hide(),null===t?(t=setTimeout((()=>t=null),100),requestAnimationFrame((function e(){n._rePositioningPicker(),null!==t&&requestAnimationFrame(e);}))):(clearTimeout(t),t=setTimeout((()=>t=null),100)));}),{capture:!0}));}this._eventBindings=o;}_rePositioningPicker(){const{options:t}=this;if(!t.inline){if(!this._nanopop.update({container:document.body.getBoundingClientRect(),position:t.position})){const t=this._root.app,e=t.getBoundingClientRect();t.style.top=(window.innerHeight-e.height)/2+"px",t.style.left=(window.innerWidth-e.width)/2+"px";}}}_updateOutput(t){const{_root:e,_color:o,options:n}=this;if(e.interaction.type()){const t=`to${e.interaction.type().getAttribute("data-type")}`;e.interaction.result.value="function"==typeof o[t]?o[t]().toString(n.outputPrecision):"";}!this._initializingActive&&this._recalc&&this._emit("change",o,t,this);}_clearColor(){let t=arguments.length>0&&void 0!==arguments[0]&&arguments[0];const{_root:e,options:o}=this;o.useAsButton||e.button.style.setProperty("--pcr-color","rgba(0, 0, 0, 0.15)"),e.button.classList.add("clear"),o.showAlways||this.hide(),this._lastColor=null,this._initializingActive||t||(this._emit("save",null),this._emit("clear"));}_parseLocalColor(t){const{values:e,type:o,a:n}=C(t),{lockOpacity:i}=this.options,s=void 0!==n&&1!==n;return e&&3===e.length&&(e[3]=void 0),{values:!e||i&&s?null:e,type:o}}_t(t){return this.options.i18n[t]||x.I18N_DEFAULTS[t]}_emit(t){for(var e=arguments.length,o=new Array(e>1?e-1:0),n=1;n<e;n++)o[n-1]=arguments[n];this._eventListener[t].forEach((t=>t(...o,this)));}on(t,e){return this._eventListener[t].push(e),this}off(t,e){const o=this._eventListener[t]||[],n=o.indexOf(e);return ~n&&o.splice(n,1),this}addSwatch(t){const{values:e}=this._parseLocalColor(t);if(e){const{_swatchColors:t,_root:o}=this,n=$(...e),s=r(`<button type="button" style="--pcr-color: ${n.toRGBA().toString(0)}" aria-label="${this._t("btn:swatch")}"/>`);return o.swatches.appendChild(s),t.push({el:s,color:n}),this._eventBindings.push(i(s,"click",(()=>{this.setHSVA(...n.toHSVA(),!0),this._emit("swatchselect",n),this._emit("change",n,"swatch",this);}))),!0}return !1}removeSwatch(t){const e=this._swatchColors[t];if(e){const{el:o}=e;return this._root.swatches.removeChild(o),this._swatchColors.splice(t,1),!0}return !1}applyColor(){let t=arguments.length>0&&void 0!==arguments[0]&&arguments[0];const{preview:e,button:o}=this._root,n=this._color.toRGBA().toString(0);return e.lastColor.style.setProperty("--pcr-color",n),this.options.useAsButton||o.style.setProperty("--pcr-color",n),o.classList.remove("clear"),this._lastColor=this._color.clone(),this._initializingActive||t||this._emit("save",this._color),this}destroy(){cancelAnimationFrame(this._setupAnimationFrame),this._eventBindings.forEach((t=>s(...t))),Object.keys(this._components).forEach((t=>this._components[t].destroy()));}destroyAndRemove(){this.destroy();const{root:t,app:e}=this._root;t.parentElement&&t.parentElement.removeChild(t),e.parentElement.removeChild(e),Object.keys(this).forEach((t=>this[t]=null));}hide(){return !!this.isOpen()&&(this._root.app.classList.remove("visible"),this._emit("hide"),!0)}show(){return !this.options.disabled&&!this.isOpen()&&(this._root.app.classList.add("visible"),this._rePositioningPicker(),this._emit("show",this._color),this)}isOpen(){return this._root.app.classList.contains("visible")}setHSVA(){let t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:360,e=arguments.length>1&&void 0!==arguments[1]?arguments[1]:0,o=arguments.length>2&&void 0!==arguments[2]?arguments[2]:0,n=arguments.length>3&&void 0!==arguments[3]?arguments[3]:1,i=arguments.length>4&&void 0!==arguments[4]&&arguments[4];const s=this._recalc;if(this._recalc=!1,t<0||t>360||e<0||e>100||o<0||o>100||n<0||n>1)return !1;this._color=$(t,e,o,n);const{hue:r,opacity:a,palette:l}=this._components;return r.update(t/360),a.update(n),l.update(e/100,1-o/100),i||this.applyColor(),s&&this._updateOutput(),this._recalc=s,!0}setColor(t){let e=arguments.length>1&&void 0!==arguments[1]&&arguments[1];if(null===t)return this._clearColor(e),!0;const{values:o,type:n}=this._parseLocalColor(t);if(o){const t=n.toUpperCase(),{options:i}=this._root.interaction,s=i.find((e=>e.getAttribute("data-type")===t));if(s&&!s.hidden)for(const t of i)t.classList[t===s?"add":"remove"]("active");return !!this.setHSVA(...o,e)&&this.setColorRepresentation(t)}return !1}setColorRepresentation(t){return t=t.toUpperCase(),!!this._root.interaction.options.find((e=>e.getAttribute("data-type").startsWith(t)&&!e.click()))}getColorRepresentation(){return this._representation}getColor(){return this._color}getSelectedColor(){return this._lastColor}getRoot(){return this._root}disable(){return this.hide(),this.options.disabled=!0,this._root.button.classList.add("disabled"),this}enable(){return this.options.disabled=!1,this._root.button.classList.remove("disabled"),this}}return P(x,"utils",o),P(x,"version","1.8.4"),P(x,"I18N_DEFAULTS",{"ui:dialog":"color picker dialog","btn:toggle":"toggle color picker dialog","btn:swatch":"color swatch","btn:last-color":"use previous color","btn:save":"Save","btn:cancel":"Cancel","btn:clear":"Clear","aria:btn:save":"save and close","aria:btn:cancel":"cancel and close","aria:btn:clear":"clear and close","aria:input":"color input field","aria:palette":"color selection area","aria:hue":"hue selection slider","aria:opacity":"selection slider"}),P(x,"DEFAULT_OPTIONS",{appClass:null,theme:"classic",useAsButton:!1,padding:8,disabled:!1,comparison:!0,closeOnScroll:!1,outputPrecision:0,lockOpacity:!1,autoReposition:!0,container:"body",components:{interaction:{}},i18n:{},swatches:null,inline:!1,sliders:null,default:"#42445a",defaultRepresentation:null,position:"bottom-middle",adjustableNumbers:!0,showAlways:!1,closeWithKey:"Escape"}),P(x,"create",(t=>new x(t))),e=e.default})()}));
+
+});
+
+var Pickr = /*@__PURE__*/getDefaultExportFromCjs(pickr_min);
+
+class VariableColorSettingComponent extends AbstractSettingComponent {
+    render(containerEl) {
+        var _a;
+        const title = getTitle(this.setting);
+        const description = getDescription(this.setting);
+        if (typeof this.setting.default !== 'string' ||
+            !isValidDefaultColor(this.setting.default)) {
+            this.setting.default = (_a = this.settingsManager.plugin
+                .getCSSVar(this.setting.id)
+                .current) === null || _a === void 0 ? void 0 : _a.trim();
+        }
+        if (typeof this.setting.default !== 'string' ||
+            !isValidDefaultColor(this.setting.default)) {
+            return console.error(`${t('Error:')} ${title} ${t('missing default value, or value is not in a valid color format')}`);
+        }
+        const value = this.settingsManager.getSetting(this.sectionId, this.setting.id);
+        const swatches = [];
+        if (this.setting.default) {
+            swatches.push(this.setting.default);
+        }
+        if (value !== undefined) {
+            swatches.push(value);
+        }
+        this.settingEl = new obsidian.Setting(containerEl);
+        this.settingEl.setName(title);
+        this.settingEl.setDesc(createDescription(description, this.setting.default));
+        // fix, so that the color is correctly shown before the color picker has been opened
+        const defaultColor = value !== undefined ? value : this.setting.default;
+        containerEl.style.setProperty('--pcr-color', defaultColor);
+        this.pickr = Pickr.create(getPickrSettings({
+            isView: this.isView,
+            el: this.settingEl.controlEl.createDiv({ cls: 'picker' }),
+            containerEl: containerEl,
+            swatches: swatches,
+            opacity: this.setting.opacity,
+            defaultColor: defaultColor,
+        }));
+        this.pickr.on('save', (color, instance) => {
+            if (!color)
+                return;
+            this.settingsManager.setSetting(this.sectionId, this.setting.id, color.toHEXA().toString());
+            instance.hide();
+            instance.addSwatch(color.toHEXA().toString());
+        });
+        this.pickr.on('show', () => {
+            const { result } = this.pickr.getRoot().interaction;
+            requestAnimationFrame(() => requestAnimationFrame(() => result.select()));
+        });
+        this.pickr.on('cancel', onPickrCancel);
+        this.settingEl.addExtraButton((b) => {
+            b.setIcon('reset');
+            b.onClick(() => {
+                this.pickr.setColor(this.setting.default);
+                this.settingsManager.clearSetting(this.sectionId, this.setting.id);
+            });
+            b.setTooltip(resetTooltip);
+        });
+        this.settingEl.settingEl.dataset.id = this.setting.id;
+    }
+    destroy() {
+        var _a, _b;
+        (_a = this.pickr) === null || _a === void 0 ? void 0 : _a.destroyAndRemove();
+        this.pickr = undefined;
+        (_b = this.settingEl) === null || _b === void 0 ? void 0 : _b.settingEl.remove();
+    }
+}
+
+class VariableThemedColorSettingComponent extends AbstractSettingComponent {
+    render(containerEl) {
+        const title = getTitle(this.setting);
+        const description = getDescription(this.setting);
+        if (typeof this.setting['default-light'] !== 'string' ||
+            !isValidDefaultColor(this.setting['default-light'])) {
+            return console.error(`${t('Error:')} ${title} ${t('missing default light value, or value is not in a valid color format')}`);
+        }
+        if (typeof this.setting['default-dark'] !== 'string' ||
+            !isValidDefaultColor(this.setting['default-dark'])) {
+            return console.error(`${t('Error:')} ${title} ${t('missing default dark value, or value is not in a valid color format')}`);
+        }
+        const idLight = `${this.setting.id}@@light`;
+        const idDark = `${this.setting.id}@@dark`;
+        const valueLight = this.settingsManager.getSetting(this.sectionId, idLight);
+        const valueDark = this.settingsManager.getSetting(this.sectionId, idDark);
+        const swatchesLight = [];
+        const swatchesDark = [];
+        if (this.setting['default-light']) {
+            swatchesLight.push(this.setting['default-light']);
+        }
+        if (valueLight !== undefined) {
+            swatchesLight.push(valueLight);
+        }
+        if (this.setting['default-dark']) {
+            swatchesDark.push(this.setting['default-dark']);
+        }
+        if (valueDark !== undefined) {
+            swatchesDark.push(valueDark);
+        }
+        this.settingEl = new obsidian.Setting(containerEl);
+        this.settingEl.setName(title);
+        // Construct description
+        this.settingEl.descEl.createSpan({}, (span) => {
+            if (description) {
+                span.appendChild(document.createTextNode(description));
+            }
+        });
+        this.settingEl.descEl.createDiv({}, (div) => {
+            div.createEl('small', {}, (sm) => {
+                sm.appendChild(createEl('strong', { text: 'Default (light): ' }));
+                sm.appendChild(document.createTextNode(this.setting['default-light']));
+            });
+            div.createEl('br');
+            div.createEl('small', {}, (sm) => {
+                sm.appendChild(createEl('strong', { text: 'Default (dark): ' }));
+                sm.appendChild(document.createTextNode(this.setting['default-dark']));
+            });
+        });
+        const wrapper = this.settingEl.controlEl.createDiv({
+            cls: 'themed-color-wrapper',
+        });
+        // Create light color picker
+        this.createColorPickerLight(wrapper, containerEl, swatchesLight, valueLight, idLight);
+        // Create dark color picker
+        this.createColorPickerDark(wrapper, containerEl, swatchesDark, valueDark, idDark);
+        this.settingEl.settingEl.dataset.id = this.setting.id;
+    }
+    destroy() {
+        var _a, _b, _c;
+        (_a = this.pickrLight) === null || _a === void 0 ? void 0 : _a.destroyAndRemove();
+        (_b = this.pickrDark) === null || _b === void 0 ? void 0 : _b.destroyAndRemove();
+        this.pickrLight = undefined;
+        this.pickrDark = undefined;
+        (_c = this.settingEl) === null || _c === void 0 ? void 0 : _c.settingEl.remove();
+    }
+    createColorPickerLight(wrapper, containerEl, swatchesLight, valueLight, idLight) {
+        const themeLightWrapper = wrapper.createDiv({ cls: 'theme-light' });
+        // fix, so that the color is correctly shown before the color picker has been opened
+        const defaultColor = valueLight !== undefined
+            ? valueLight
+            : this.setting['default-light'];
+        themeLightWrapper.style.setProperty('--pcr-color', defaultColor);
+        this.pickrLight = Pickr.create(getPickrSettings({
+            isView: this.isView,
+            el: themeLightWrapper.createDiv({ cls: 'picker' }),
+            containerEl,
+            swatches: swatchesLight,
+            opacity: this.setting.opacity,
+            defaultColor: defaultColor,
+        }));
+        this.pickrLight.on('show', () => {
+            const { result } = this.pickrLight.getRoot().interaction;
+            requestAnimationFrame(() => requestAnimationFrame(() => result.select()));
+        });
+        this.pickrLight.on('save', (color, instance) => this.onSave(idLight, color, instance));
+        this.pickrLight.on('cancel', onPickrCancel);
+        const themeLightReset = new obsidian.ButtonComponent(themeLightWrapper.createDiv({ cls: 'pickr-reset' }));
+        themeLightReset.setIcon('reset');
+        themeLightReset.onClick(() => {
+            this.pickrLight.setColor(this.setting['default-light']);
+            this.settingsManager.clearSetting(this.sectionId, idLight);
+        });
+        themeLightReset.setTooltip(resetTooltip);
+    }
+    createColorPickerDark(wrapper, containerEl, swatchesDark, valueDark, idDark) {
+        const themeDarkWrapper = wrapper.createDiv({ cls: 'theme-dark' });
+        // fix, so that the color is correctly shown before the color picker has been opened
+        const defaultColor = valueDark !== undefined
+            ? valueDark
+            : this.setting['default-dark'];
+        themeDarkWrapper.style.setProperty('--pcr-color', defaultColor);
+        this.pickrDark = Pickr.create(getPickrSettings({
+            isView: this.isView,
+            el: themeDarkWrapper.createDiv({ cls: 'picker' }),
+            containerEl,
+            swatches: swatchesDark,
+            opacity: this.setting.opacity,
+            defaultColor: defaultColor,
+        }));
+        this.pickrDark.on('show', () => {
+            const { result } = this.pickrDark.getRoot().interaction;
+            requestAnimationFrame(() => requestAnimationFrame(() => result.select()));
+        });
+        this.pickrDark.on('save', (color, instance) => this.onSave(idDark, color, instance));
+        this.pickrDark.on('cancel', onPickrCancel);
+        const themeDarkReset = new obsidian.ButtonComponent(themeDarkWrapper.createDiv({ cls: 'pickr-reset' }));
+        themeDarkReset.setIcon('reset');
+        themeDarkReset.onClick(() => {
+            this.pickrDark.setColor(this.setting['default-dark']);
+            this.settingsManager.clearSetting(this.sectionId, idDark);
+        });
+        themeDarkReset.setTooltip(resetTooltip);
+    }
+    onSave(id, color, instance) {
+        if (!color)
+            return;
+        this.settingsManager.setSetting(this.sectionId, id, color.toHEXA().toString());
+        instance.hide();
+        instance.addSwatch(color.toHEXA().toString());
+    }
+}
+
+class InfoTextSettingComponent extends AbstractSettingComponent {
+    render(containerEl) {
+        const title = getTitle(this.setting);
+        const description = getDescription(this.setting);
+        this.settingEl = new obsidian.Setting(containerEl);
+        this.settingEl.setClass('style-settings-info-text');
+        if (title) {
+            this.settingEl.setName(title);
+        }
+        if (description) {
+            if (this.setting.markdown) {
+                obsidian.MarkdownRenderer.renderMarkdown(description, this.settingEl.descEl, '', undefined);
+                this.settingEl.descEl.addClass('style-settings-markdown');
+            }
+            else {
+                this.settingEl.setDesc(description);
+            }
+        }
+        this.settingEl.settingEl.dataset.id = this.setting.id;
+    }
+    destroy() {
+        var _a;
+        (_a = this.settingEl) === null || _a === void 0 ? void 0 : _a.settingEl.remove();
+    }
+}
+
+function createSettingComponent(sectionId, sectionName, setting, settingsManager, isView) {
+    if (setting.type === SettingType.HEADING) {
+        return new HeadingSettingComponent(sectionId, sectionName, setting, settingsManager, isView);
+    }
+    else if (setting.type === SettingType.INFO_TEXT) {
+        return new InfoTextSettingComponent(sectionId, sectionName, setting, settingsManager, isView);
+    }
+    else if (setting.type === SettingType.CLASS_TOGGLE) {
+        return new ClassToggleSettingComponent(sectionId, sectionName, setting, settingsManager, isView);
+    }
+    else if (setting.type === SettingType.CLASS_SELECT) {
+        return new ClassMultiToggleSettingComponent(sectionId, sectionName, setting, settingsManager, isView);
+    }
+    else if (setting.type === SettingType.VARIABLE_TEXT) {
+        return new VariableTextSettingComponent(sectionId, sectionName, setting, settingsManager, isView);
+    }
+    else if (setting.type === SettingType.VARIABLE_NUMBER) {
+        return new VariableNumberSettingComponent(sectionId, sectionName, setting, settingsManager, isView);
+    }
+    else if (setting.type === SettingType.VARIABLE_NUMBER_SLIDER) {
+        return new VariableNumberSliderSettingComponent(sectionId, sectionName, setting, settingsManager, isView);
+    }
+    else if (setting.type === SettingType.VARIABLE_SELECT) {
+        return new VariableSelectSettingComponent(sectionId, sectionName, setting, settingsManager, isView);
+    }
+    else if (setting.type === SettingType.VARIABLE_COLOR) {
+        return new VariableColorSettingComponent(sectionId, sectionName, setting, settingsManager, isView);
+    }
+    else if (setting.type === SettingType.VARIABLE_THEMED_COLOR) {
+        return new VariableThemedColorSettingComponent(sectionId, sectionName, setting, settingsManager, isView);
+    }
+    else {
+        return undefined;
+    }
+}
+class HeadingSettingComponent extends AbstractSettingComponent {
+    onInit() {
+        this.children = [];
+        this.filteredChildren = [];
+        this.filterMode = false;
+        this.filterResultCount = 0;
+    }
+    render(containerEl) {
+        const title = getTitle(this.setting);
+        const description = getDescription(this.setting);
+        this.settingEl = new obsidian.Setting(containerEl);
+        this.settingEl.setHeading();
+        this.settingEl.setClass('style-settings-heading');
+        this.settingEl.setName(title);
+        this.settingEl.setDesc(description !== null && description !== void 0 ? description : '');
+        this.settingEl.settingEl.dataset.level = this.setting.level.toString();
+        this.settingEl.settingEl.dataset.id = this.setting.id;
+        const iconContainer = createSpan({
+            cls: 'style-settings-collapse-indicator',
+        });
+        obsidian.setIcon(iconContainer, 'right-triangle');
+        this.settingEl.nameEl.prepend(iconContainer);
+        if (this.filterMode) {
+            this.settingEl.nameEl.createSpan({
+                cls: 'style-settings-filter-result-count',
+                text: `${this.filterResultCount} Results`,
+            });
+        }
+        this.settingEl.settingEl.addEventListener('click', () => {
+            this.toggleVisible();
+        });
+        this.addResetButton();
+        this.addExportButton();
+        this.childEl = containerEl.createDiv({ cls: 'style-settings-container' });
+        this.setCollapsed(this.setting.collapsed);
+    }
+    destroy() {
+        var _a;
+        if (!this.setting.collapsed) {
+            this.destroyChildren();
+        }
+        (_a = this.settingEl) === null || _a === void 0 ? void 0 : _a.settingEl.remove();
+    }
+    filter(filterString) {
+        this.filteredChildren = [];
+        this.filterResultCount = 0;
+        for (const child of this.children) {
+            if (child.setting.type === SettingType.HEADING) {
+                const childResultCount = child.filter(filterString);
+                if (childResultCount > 0) {
+                    this.filterResultCount += childResultCount;
+                    this.filteredChildren.push(child);
+                }
+            }
+            else {
+                if (child.decisiveMatch(filterString)) {
+                    this.filteredChildren.push(child);
+                    this.filterResultCount += 1;
+                }
+            }
+        }
+        this.filterMode = true;
+        this.setting.collapsed = false;
+        return this.filterResultCount;
+    }
+    clearFilter() {
+        this.filteredChildren = [];
+        for (const child of this.children) {
+            if (child.setting.type === SettingType.HEADING) {
+                child.clearFilter();
+            }
+        }
+        this.filterMode = false;
+        this.setting.collapsed = true;
+    }
+    renderChildren() {
+        this.destroyChildren();
+        if (this.filterMode) {
+            for (const child of this.filteredChildren) {
+                child.render(this.childEl);
+            }
+        }
+        else {
+            for (const child of this.children) {
+                child.render(this.childEl);
+            }
+        }
+    }
+    destroyChildren() {
+        var _a;
+        for (const child of this.children) {
+            child.destroy();
+        }
+        (_a = this.childEl) === null || _a === void 0 ? void 0 : _a.empty();
+    }
+    toggleVisible() {
+        this.setCollapsed(!this.setting.collapsed);
+    }
+    setCollapsed(collapsed) {
+        this.setting.collapsed = collapsed;
+        this.settingEl.settingEl.toggleClass('is-collapsed', collapsed);
+        if (collapsed) {
+            this.destroyChildren();
+        }
+        else {
+            this.renderChildren();
+        }
+    }
+    addResetButton() {
+        if (this.setting.resetFn) {
+            this.settingEl.addExtraButton((b) => {
+                b.setIcon('reset')
+                    .setTooltip('Reset all settings to default')
+                    .onClick(this.setting.resetFn);
+            });
+        }
+    }
+    addExportButton() {
+        this.settingEl.addExtraButton((b) => {
+            b.setIcon('install');
+            b.setTooltip('Export settings');
+            b.extraSettingsEl.onClickEvent((e) => {
+                e.stopPropagation();
+                let title = getTitle(this.setting);
+                title =
+                    this.sectionName === title ? title : `${this.sectionName} > ${title}`;
+                this.settingsManager.export(title, this.settingsManager.getSettings(this.sectionId, this.getAllChildrenIds()));
+            });
+        });
+    }
+    addChild(child) {
+        const newSettingComponent = createSettingComponent(this.sectionId, this.sectionName, child, this.settingsManager, this.isView);
+        if (!newSettingComponent) {
+            return undefined;
+        }
+        if (newSettingComponent.setting.type === SettingType.HEADING) {
+            newSettingComponent.parent = this;
+        }
+        this.children.push(newSettingComponent);
+        return newSettingComponent;
+    }
+    getAllChildrenIds() {
+        const children = [];
+        for (const child of this.children) {
+            children.push(child.setting.id);
+            if (child.setting.type === 'heading') {
+                children.push(...child.getAllChildrenIds());
+            }
+        }
+        return children;
+    }
+}
+function buildSettingComponentTree(opts) {
+    const { isView, sectionId, settings, settingsManager, sectionName } = opts;
+    const root = new HeadingSettingComponent(sectionId, sectionName, settings[0], settingsManager, isView);
+    let currentHeading = root;
+    for (const setting of settings.splice(1)) {
+        if (setting.type === 'heading') {
+            const newHeading = setting;
+            if (newHeading.level < currentHeading.setting.level) {
+                while (newHeading.level < currentHeading.setting.level) {
+                    currentHeading = currentHeading.parent;
+                }
+                if (currentHeading.setting.id === root.setting.id) {
+                    currentHeading = currentHeading.addChild(newHeading);
+                }
+                else {
+                    currentHeading = currentHeading.parent.addChild(newHeading);
+                }
+            }
+            else if (newHeading.level === currentHeading.setting.level) {
+                currentHeading = currentHeading.parent.addChild(newHeading);
+            }
+            else {
+                currentHeading = currentHeading.addChild(newHeading);
+            }
+        }
+        else {
+            currentHeading.addChild(setting);
+        }
+    }
+    return root;
+}
+
 class SettingsMarkup {
     constructor(app, plugin, containerEl, isView) {
-        this.cleanupFns = [];
+        this.settingsComponentTrees = [];
+        this.filterString = '';
         this.settings = [];
         this.errorList = [];
         this.app = app;
@@ -8752,11 +9390,15 @@ class SettingsMarkup {
     display() {
         this.generate(this.settings);
     }
+    /**
+     * Recursively destroys all setting elements.
+     */
     cleanup() {
-        Array.from(this.cleanupFns).forEach((fn) => {
-            fn && fn();
-            this.cleanupFns.remove(fn);
-        });
+        var _a;
+        for (const settingsComponentTree of this.settingsComponentTrees) {
+            settingsComponentTree.destroy();
+        }
+        (_a = this.settingsContainerEl) === null || _a === void 0 ? void 0 : _a.empty();
     }
     setSettings(settings, errorList) {
         this.settings = settings;
@@ -8767,38 +9409,39 @@ class SettingsMarkup {
         }
     }
     displayErrors() {
-        let { containerEl, errorList } = this;
+        const { containerEl, errorList } = this;
         errorList.forEach((err) => {
-            containerEl.createDiv({ cls: "style-settings-error" }, (wrapper) => {
+            containerEl.createDiv({ cls: 'style-settings-error' }, (wrapper) => {
                 wrapper.createDiv({
-                    cls: "style-settings-error-name",
+                    cls: 'style-settings-error-name',
                     text: `Error: ${err.name}`,
                 });
                 wrapper.createDiv({
-                    cls: "style-settings-error-desc",
+                    cls: 'style-settings-error-desc',
                     text: err.error,
                 });
             });
         });
     }
     displayEmpty() {
-        let { containerEl } = this;
-        containerEl.createDiv({ cls: "style-settings-empty" }, (wrapper) => {
+        const { containerEl } = this;
+        containerEl.createDiv({ cls: 'style-settings-empty' }, (wrapper) => {
             wrapper.createDiv({
-                cls: "style-settings-empty-name",
-                text: "No style settings found",
+                cls: 'style-settings-empty-name',
+                text: 'No style settings found',
             });
-            wrapper.createDiv({ cls: "style-settings-empty-desc" }).appendChild(createFragment((frag) => {
-                frag.appendText("Style settings configured by theme and plugin authors will show up here. You can also create your own configuration by creating a CSS snippet in your vault. ");
-                frag.createEl("a", {
-                    text: "Click here for details and examples.",
-                    href: "https://github.com/mgmeyers/obsidian-style-settings#obsidian-style-settings-plugin",
+            wrapper.createDiv({ cls: 'style-settings-empty-desc' }).appendChild(createFragment((frag) => {
+                frag.appendText('Style settings configured by theme and plugin authors will show up here. You can also create your own configuration by creating a CSS snippet in your vault. ');
+                frag.createEl('a', {
+                    text: 'Click here for details and examples.',
+                    href: 'https://github.com/mgmeyers/obsidian-style-settings#obsidian-style-settings-plugin',
                 });
             }));
         });
     }
     generate(settings) {
-        let { containerEl, plugin } = this;
+        var _a;
+        const { containerEl, plugin } = this;
         containerEl.empty();
         this.cleanup();
         this.displayErrors();
@@ -8807,37 +9450,58 @@ class SettingsMarkup {
         }
         new obsidian.Setting(containerEl).then((setting) => {
             // Build and import link to open the import modal
-            setting.controlEl.createEl("a", {
-                cls: "style-settings-import",
-                text: "Import",
-                href: "#",
+            setting.controlEl.createEl('a', {
+                cls: 'style-settings-import',
+                text: 'Import',
+                href: '#',
             }, (el) => {
-                el.addEventListener("click", (e) => {
+                el.addEventListener('click', (e) => {
                     e.preventDefault();
                     this.plugin.settingsManager.import();
                 });
             });
             // Build and export link to open the export modal
-            setting.controlEl.createEl("a", {
-                cls: "style-settings-export",
-                text: "Export",
-                href: "#",
+            setting.controlEl.createEl('a', {
+                cls: 'style-settings-export',
+                text: 'Export',
+                href: '#',
             }, (el) => {
-                el.addEventListener("click", (e) => {
+                el.addEventListener('click', (e) => {
                     e.preventDefault();
-                    this.plugin.settingsManager.export("All settings", this.plugin.settingsManager.settings);
+                    this.plugin.settingsManager.export('All settings', this.plugin.settingsManager.settings);
                 });
             });
+            // Searchbar
+            let searchComponent;
+            setting.addSearch((s) => {
+                searchComponent = s;
+            });
+            // move the search component from the back to the front
+            setting.nameEl.appendChild(setting.controlEl.lastChild);
+            searchComponent.setValue(this.filterString);
+            searchComponent.onChange((value) => {
+                customDebounce(() => {
+                    this.filterString = value;
+                    if (value) {
+                        this.filter();
+                    }
+                    else {
+                        this.clearFilter();
+                    }
+                }, 250);
+            });
+            searchComponent.setPlaceholder('Search Style Settings...');
         });
-        const cleanupFns = [];
-        settings.forEach((s) => {
+        this.settingsContainerEl = containerEl.createDiv();
+        this.settingsComponentTrees = [];
+        for (const s of settings) {
             const options = [
                 {
                     id: s.id,
-                    type: "heading",
+                    type: 'heading',
                     title: s.name,
                     level: 0,
-                    collapsed: true,
+                    collapsed: (_a = s.collapsed) !== null && _a !== void 0 ? _a : true,
                     resetFn: () => {
                         plugin.settingsManager.clearSection(s.id);
                         this.generate(this.settings);
@@ -8845,20 +9509,49 @@ class SettingsMarkup {
                 },
                 ...s.settings,
             ];
-            const cleanup = createSettings({
-                containerEl,
-                isView: this.isView,
-                sectionId: s.id,
-                sectionName: s.name,
-                settings: options,
-                settingsManager: plugin.settingsManager,
-            });
-            if (cleanup.length)
-                cleanupFns.push(...cleanup);
-        });
-        this.cleanupFns = cleanupFns;
+            try {
+                const settingsComponentTree = buildSettingComponentTree({
+                    isView: this.isView,
+                    sectionId: s.id,
+                    sectionName: s.name,
+                    settings: options,
+                    settingsManager: plugin.settingsManager,
+                });
+                settingsComponentTree.render(this.settingsContainerEl);
+                this.settingsComponentTrees.push(settingsComponentTree);
+            }
+            catch (e) {
+                console.error('Style Settings | Failed to render section', e);
+            }
+        }
+    }
+    /**
+     * Recursively filter all setting elements based on `filterString` and then re-renders.
+     */
+    filter() {
+        this.cleanup();
+        for (const settingsComponentTree of this.settingsComponentTrees) {
+            settingsComponentTree.filter(this.filterString);
+            settingsComponentTree.render(this.settingsContainerEl);
+        }
+    }
+    /**
+     * Recursively clears the filter and then re-renders.
+     */
+    clearFilter() {
+        this.cleanup();
+        for (const settingsComponentTree of this.settingsComponentTrees) {
+            settingsComponentTree.clearFilter();
+            settingsComponentTree.render(this.settingsContainerEl);
+        }
+    }
+    rerender() {
+        for (const settingsComponentTree of this.settingsComponentTrees) {
+            settingsComponentTree.render(this.settingsContainerEl);
+        }
     }
 }
+
 class CSSSettingsTab extends obsidian.PluginSettingTab {
     constructor(app, plugin) {
         super(app, plugin);
@@ -8871,7 +9564,8 @@ class CSSSettingsTab extends obsidian.PluginSettingTab {
         this.settingsMarkup.cleanup();
     }
 }
-const viewType = "style-settings";
+
+const viewType = 'style-settings';
 class SettingsView extends obsidian.ItemView {
     constructor(plugin, leaf) {
         super(leaf);
@@ -8882,10 +9576,10 @@ class SettingsView extends obsidian.ItemView {
         return viewType;
     }
     getIcon() {
-        return "gear";
+        return 'gear';
     }
     getDisplayText() {
-        return "Style Settings";
+        return 'Style Settings';
     }
     onOpen() {
         return __awaiter(this, void 0, void 0, function* () {
@@ -8895,6 +9589,228 @@ class SettingsView extends obsidian.ItemView {
     onClose() {
         return __awaiter(this, void 0, void 0, function* () {
             return this.settingsMarkup.cleanup();
+        });
+    }
+}
+
+class CSSSettingsPlugin extends obsidian.Plugin {
+    constructor() {
+        super(...arguments);
+        this.settingsList = [];
+        this.errorList = [];
+        this.commandList = [];
+        this.debounceTimer = 0;
+    }
+    onload() {
+        return __awaiter(this, void 0, void 0, function* () {
+            this.settingsManager = new CSSSettingsManager(this);
+            yield this.settingsManager.load();
+            this.settingsTab = new CSSSettingsTab(this.app, this);
+            this.addSettingTab(this.settingsTab);
+            this.registerView(viewType, (leaf) => new SettingsView(this, leaf));
+            this.addCommand({
+                id: 'show-style-settings-leaf',
+                name: 'Show style settings view',
+                callback: () => {
+                    this.activateView();
+                },
+            });
+            this.registerEvent(this.app.workspace.on('css-change', () => {
+                this.parseCSS();
+            }));
+            this.registerEvent(this.app.workspace.on('parse-style-settings', () => {
+                this.parseCSS();
+            }));
+            this.lightEl = document.body.createDiv('theme-light style-settings-ref');
+            this.darkEl = document.body.createDiv('theme-dark style-settings-ref');
+            document.body.classList.add('css-settings-manager');
+            this.parseCSS();
+        });
+    }
+    getCSSVar(id) {
+        const light = getComputedStyle(this.lightEl).getPropertyValue(`--${id}`);
+        const dark = getComputedStyle(this.darkEl).getPropertyValue(`--${id}`);
+        const current = getComputedStyle(document.body).getPropertyValue(`--${id}`);
+        return { light, dark, current };
+    }
+    parseCSS() {
+        clearTimeout(this.debounceTimer);
+        this.settingsList = [];
+        this.errorList = [];
+        // remove registered theme commands (sadly undocumented API)
+        for (const command of this.commandList) {
+            // @ts-ignore
+            this.app.commands.removeCommand(command.id);
+        }
+        this.commandList = [];
+        this.debounceTimer = window.setTimeout(() => {
+            const styleSheets = document.styleSheets;
+            for (let i = 0, len = styleSheets.length; i < len; i++) {
+                const sheet = styleSheets.item(i);
+                this.parseCSSStyleSheet(sheet);
+            }
+            // compatability with Settings Search Plugin
+            this.registerSettingsToSettingsSearch();
+            this.settingsTab.settingsMarkup.setSettings(this.settingsList, this.errorList);
+            this.app.workspace.getLeavesOfType(viewType).forEach((leaf) => {
+                leaf.view.settingsMarkup.setSettings(this.settingsList, this.errorList);
+            });
+            this.settingsManager.initClasses();
+            this.registerSettingCommands();
+        }, 100);
+    }
+    /**
+     * Registers the current settings to the settings search plugin.
+     * It also unregisters the old settings.
+     *
+     * @private
+     */
+    registerSettingsToSettingsSearch() {
+        var _a;
+        const onSettingsSearchLoaded = () => {
+            if (window.SettingsSearch) {
+                const settingsSearch = window.SettingsSearch;
+                settingsSearch.removeTabResources('obsidian-style-settings');
+                for (const parsedCSSSetting of this.settingsList) {
+                    settingsSearch.addResources(...parsedCSSSetting.settings.map((x) => {
+                        var _a, _b;
+                        const settingsSearchResource = {
+                            tab: 'obsidian-style-settings',
+                            name: 'Style Settings',
+                            text: (_a = getTitle(x)) !== null && _a !== void 0 ? _a : '',
+                            desc: (_b = getDescription(x)) !== null && _b !== void 0 ? _b : '',
+                        };
+                        return settingsSearchResource;
+                    }));
+                }
+            }
+        };
+        // @ts-ignore TODO: expand obsidian types, so that the ts-ignore is not needed
+        if ((_a = this.app.plugins.plugins['settings-search']) === null || _a === void 0 ? void 0 : _a.loaded) {
+            onSettingsSearchLoaded();
+        }
+        else {
+            // @ts-ignore
+            this.app.workspace.on('settings-search-loaded', () => {
+                onSettingsSearchLoaded();
+            });
+        }
+    }
+    /**
+     * Remove any settings from settings search if settings search is loaded.
+     *
+     * @private
+     */
+    unregisterSettingsFromSettingsSearch() {
+        var _a;
+        // @ts-ignore TODO: expand obsidian types, so that the ts-ignore is not needed
+        if ((_a = this.app.plugins.plugins['settings-search']) === null || _a === void 0 ? void 0 : _a.loaded) {
+            // @ts-ignore
+            window.SettingsSearch.removeTabResources('obsidian-style-settings');
+        }
+    }
+    /**
+     * Parses the settings from a css style sheet.
+     * Adds the parsed settings to `settingsList` and any errors to `errorList`.
+     *
+     * @param sheet the stylesheet to parse
+     * @private
+     */
+    parseCSSStyleSheet(sheet) {
+        const text = sheet.ownerNode.textContent.trim();
+        let match = settingRegExp.exec(text);
+        if (match && match.length) {
+            do {
+                const nameMatch = text.match(nameRegExp);
+                const name = nameMatch ? nameMatch[1] : undefined;
+                try {
+                    const str = match[1].trim();
+                    const settings = this.parseCSSSettings(str, name);
+                    if (settings &&
+                        typeof settings === 'object' &&
+                        settings.name &&
+                        settings.id &&
+                        settings.settings &&
+                        settings.settings.length) {
+                        this.settingsList.push(settings);
+                    }
+                }
+                catch (e) {
+                    this.errorList.push({ name, error: `${e}` });
+                }
+            } while ((match = settingRegExp.exec(text)) !== null);
+        }
+    }
+    /**
+     * Parse css settings from a string.
+     *
+     * @param str the stringified settings to parse
+     * @param name the name of the file
+     * @private
+     */
+    parseCSSSettings(str, name) {
+        const indent = detectIndent(str);
+        const settings = jsYaml.load(str.replace(/\t/g, indent.type === 'space' ? indent.indent : '    '), {
+            filename: name,
+        });
+        if (!settings.settings)
+            return undefined;
+        settings.settings = settings.settings.filter((setting) => setting);
+        return settings;
+    }
+    registerSettingCommands() {
+        for (const section of this.settingsList) {
+            for (const setting of section.settings) {
+                if (setting.type === SettingType.CLASS_TOGGLE &&
+                    setting.addCommand) {
+                    this.addClassToggleCommand(section, setting);
+                }
+            }
+        }
+    }
+    addClassToggleCommand(section, setting) {
+        this.commandList.push(this.addCommand({
+            id: `style-settings-class-toggle-${section.id}-${setting.id}`,
+            name: `Toggle ${setting.title}`,
+            callback: () => {
+                const value = !this.settingsManager.getSetting(section.id, setting.id);
+                this.settingsManager.setSetting(section.id, setting.id, value);
+                if (value) {
+                    document.body.classList.add(setting.id);
+                }
+                else {
+                    document.body.classList.remove(setting.id);
+                }
+                this.settingsTab.settingsMarkup.rerender();
+                for (const leaf of this.app.workspace.getLeavesOfType(viewType)) {
+                    leaf.view.settingsMarkup.rerender();
+                }
+            },
+        }));
+    }
+    onunload() {
+        this.lightEl.remove();
+        this.darkEl.remove();
+        this.lightEl = null;
+        this.darkEl = null;
+        document.body.classList.remove('css-settings-manager');
+        this.settingsManager.cleanup();
+        this.settingsTab.settingsMarkup.cleanup();
+        this.deactivateView();
+        this.unregisterSettingsFromSettingsSearch();
+    }
+    deactivateView() {
+        this.app.workspace.detachLeavesOfType(viewType);
+    }
+    activateView() {
+        return __awaiter(this, void 0, void 0, function* () {
+            this.deactivateView();
+            const leaf = this.app.workspace.getLeaf('tab');
+            yield leaf.setViewState({
+                type: viewType,
+                active: true,
+            });
+            leaf.view.settingsMarkup.setSettings(this.settingsList, this.errorList);
         });
     }
 }
