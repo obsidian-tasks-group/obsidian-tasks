@@ -163,6 +163,15 @@
     justify-content: space-between;
 }
 
+.tasks-modal-error {
+    border: 1px solid red !important;
+}
+
+.tasks-modal button:disabled {
+    pointer-events: none !important;
+    opacity: 0.3 !important;
+}
+
 @media (max-width: 649px) {
     .tasks-modal-priorities {
         grid-template-columns: 4em 7.5em 5em;
