@@ -2,6 +2,7 @@
  * @jest-environment jsdom
  */
 import moment from 'moment';
+import { DebugSettings } from '../src/Config/DebugSettings';
 import { renderTaskLine } from '../src/TaskLineRenderer';
 import { resetSettings, updateSettings } from '../src/Config/Settings';
 import { LayoutOptions } from '../src/TaskLayout';
@@ -44,6 +45,10 @@ function getDescriptionText(parentElement: HTMLElement) {
 }
 
 describe('task line rendering', () => {
+    afterEach(() => {
+        resetSettings();
+    });
+
     it('creates the correct span structure for a basic task', async () => {
         const taskLine = '- [ ] This is a simple task';
         const task = fromLine({
@@ -97,6 +102,8 @@ describe('task line rendering', () => {
     ) => {
         const task = fromLine({
             line: taskLine,
+            path: 'a/b/c.d',
+            precedingHeader: 'Previous Heading',
         });
         const fullLayoutOptions = { ...new LayoutOptions(), ...layoutOptions };
         const parentRender = await createMockParentAndRender(task, fullLayoutOptions);
@@ -173,6 +180,16 @@ describe('task line rendering', () => {
             '- [ ] Task with invalid due date 📅 2023-13-02',
             {},
             'Task with invalid due date 📅 Invalid date',
+        );
+    });
+
+    it('renders debug info if requested', async () => {
+        // Disable sort instructions
+        updateSettings({ debugSettings: new DebugSettings(false, true) });
+        await testLayoutOptions(
+            '- [ ] Task with invalid due date 📅 2023-11-02',
+            {},
+            "Task with invalid due date 📅 2023-11-02<br>🐛 <b>0</b> . 0 . 'Previous Heading'<br>",
         );
     });
 
