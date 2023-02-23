@@ -54,10 +54,10 @@ export abstract class DateField extends Field {
             const fieldKeyword = fieldNameKeywordDate[1];
             const fieldDateString = fieldNameKeywordDate[2];
             const fieldDate = DateParser.parseDate(fieldDateString);
-            if (!fieldDate.isValid()) {
+            const fieldDates: [moment.Moment, moment.Moment] = [fieldDate, fieldDate];
+            if (!fieldDates[0].isValid() || !fieldDates[1].isValid()) {
                 result.error = 'do not understand ' + this.fieldName() + ' date';
             } else {
-                const fieldDates: [moment.Moment, moment.Moment] = [fieldDate, fieldDate];
                 const filterFunction = this.buildFilterFunction(fieldKeyword, fieldDates);
 
                 const explanation = DateField.buildExplanation(
