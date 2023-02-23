@@ -45,7 +45,55 @@ describe('due date', () => {
         testTaskFilterForTaskWithDueDate(filter, '2022-13-01', true); // month 13 not valid
     });
 
+    it('by due date - before inclusive range', () => {
+        // Arrange
+        const filter = new DueDateField().createFilterOrErrorMessage('due before 2022-04-20 2022-04-24');
+
+        // Act, Assert
+        testTaskFilterForTaskWithDueDate(filter, null, false);
+        testTaskFilterForTaskWithDueDate(filter, '2022-04-19', true);
+        testTaskFilterForTaskWithDueDate(filter, '2022-04-20', false);
+        testTaskFilterForTaskWithDueDate(filter, '2022-04-24', false);
+        testTaskFilterForTaskWithDueDate(filter, '2022-04-25', false);
+    });
+
+    it('by due date - on inclusive range', () => {
+        // Arrange
+        const filter = new DueDateField().createFilterOrErrorMessage('due on 2022-04-20 2022-04-24');
+
+        // Act, Assert
+        testTaskFilterForTaskWithDueDate(filter, null, false);
+        testTaskFilterForTaskWithDueDate(filter, '2022-04-19', false);
+        testTaskFilterForTaskWithDueDate(filter, '2022-04-20', true);
+        testTaskFilterForTaskWithDueDate(filter, '2022-04-24', true);
+        testTaskFilterForTaskWithDueDate(filter, '2022-04-25', false);
+    });
+
+    it('by due date - after inclusive range', () => {
+        // Arrange
+        const filter = new DueDateField().createFilterOrErrorMessage('due after 2022-04-20 2022-04-24');
+
+        // Act, Assert
+        testTaskFilterForTaskWithDueDate(filter, null, false);
+        testTaskFilterForTaskWithDueDate(filter, '2022-04-19', false);
+        testTaskFilterForTaskWithDueDate(filter, '2022-04-20', false);
+        testTaskFilterForTaskWithDueDate(filter, '2022-04-24', false);
+        testTaskFilterForTaskWithDueDate(filter, '2022-04-25', true);
+    });
+
     it('by due date - in inclusive range', () => {
+        // Arrange
+        const filter = new DueDateField().createFilterOrErrorMessage('due in 2022-04-20 2022-04-24');
+
+        // Act, Assert
+        testTaskFilterForTaskWithDueDate(filter, null, false);
+        testTaskFilterForTaskWithDueDate(filter, '2022-04-19', false);
+        testTaskFilterForTaskWithDueDate(filter, '2022-04-20', true);
+        testTaskFilterForTaskWithDueDate(filter, '2022-04-24', true);
+        testTaskFilterForTaskWithDueDate(filter, '2022-04-25', false);
+    });
+
+    it('by due date - inclusive range', () => {
         // Arrange
         const filter = new DueDateField().createFilterOrErrorMessage('due 2022-04-20 2022-04-24');
 
