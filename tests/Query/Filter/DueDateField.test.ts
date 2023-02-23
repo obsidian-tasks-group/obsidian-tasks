@@ -68,6 +68,13 @@ describe('explain due date queries', () => {
         const filterOrMessage = new DueDateField().createFilterOrErrorMessage('due 2023-01-02');
         expect(filterOrMessage).toHaveExplanation('due date is on 2023-01-02 (Monday 2nd January 2023)');
     });
+
+    it('should explain date range', () => {
+        const filterOrMessage = new DueDateField().createFilterOrErrorMessage('due 2022-11-25 2023-01-17');
+        expect(filterOrMessage).toHaveExplanation(
+            'due date is between 2022-11-25 (Friday 25th November 2022) and 2023-01-17 (Tuesday 17th January 2023) inclusive',
+        );
+    });
 });
 
 describe('sorting by due', () => {
