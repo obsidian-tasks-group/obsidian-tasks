@@ -142,11 +142,18 @@ export abstract class DateField extends Field {
                 break;
             case 'after':
                 relationship = fieldKeyword;
-                explanationDates = filterDates[0].format(dateFormat);
+                explanationDates = filterDates[1].format(dateFormat);
                 break;
             default:
-                relationship = 'on';
-                explanationDates = filterDates[0].format(dateFormat);
+                if (filterDates[0].isSame(filterDates[1])) {
+                    relationship = 'on';
+                    explanationDates = filterDates[0].format(dateFormat);
+                } else {
+                    relationship = 'between';
+                    explanationDates = `${filterDates[0].format(dateFormat)} and ${filterDates[1].format(
+                        dateFormat,
+                    )} inclusive`;
+                }
                 break;
         }
 
