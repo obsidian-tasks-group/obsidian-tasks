@@ -44,6 +44,18 @@ describe('due date', () => {
         testTaskFilterForTaskWithDueDate(filter, '2022-00-01', true); // month 0 not valid
         testTaskFilterForTaskWithDueDate(filter, '2022-13-01', true); // month 13 not valid
     });
+
+    it('by due date - in inclusive range', () => {
+        // Arrange
+        const filter = new DueDateField().createFilterOrErrorMessage('due 2022-04-20 2022-04-24');
+
+        // Act, Assert
+        testTaskFilterForTaskWithDueDate(filter, null, false);
+        testTaskFilterForTaskWithDueDate(filter, '2022-04-19', false);
+        testTaskFilterForTaskWithDueDate(filter, '2022-04-20', true);
+        testTaskFilterForTaskWithDueDate(filter, '2022-04-24', true);
+        testTaskFilterForTaskWithDueDate(filter, '2022-04-25', false);
+    });
 });
 
 describe('explain due date queries', () => {
