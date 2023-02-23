@@ -30,8 +30,8 @@ export class DateParser {
 
         const startDate = result[0].start;
         const endDate = result[1] && result[1].start ? result[1].start : startDate;
-        const start = window.moment(startDate.date());
-        const end = window.moment(endDate.date());
+        const start = window.moment(startDate.date()).startOf('day');
+        const end = window.moment(endDate.date()).startOf('day');
         if (end.isBefore(start)) {
             return [end, start];
         }

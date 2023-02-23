@@ -35,6 +35,12 @@ describe('DateParser - single dates', () => {
     it('should recognise an invalid date correctly', () => {
         testParsingeSingleDate('2021-13-17', 'Invalid date');
     });
+
+    it('should return date at midnight', () => {
+        const dateToParse = '2023-07-08';
+        const parsedDate = DateParser.parseDate(dateToParse);
+        expect(parsedDate.format('YYYY-MM-DD HH:mm')).toStrictEqual('2023-07-08 00:00');
+    });
 });
 
 describe('DateParser - date ranges', () => {
@@ -67,5 +73,12 @@ describe('DateParser - date ranges', () => {
 
     it('should return 2 invalid dates when both dates are invalid', () => {
         testParsingDateRange('2015-99-29 2015-99-29', 'Invalid date', 'Invalid date');
+    });
+
+    it('should return date ranges at midnight', () => {
+        const dateRangeToParse = '2023-09-28 2023-10-01';
+        const parsedDateRange = DateParser.parseDateRange(dateRangeToParse);
+        expect(parsedDateRange[0].format('YYYY-MM-DD HH:mm')).toStrictEqual('2023-09-28 00:00');
+        expect(parsedDateRange[1].format('YYYY-MM-DD HH:mm')).toStrictEqual('2023-10-01 00:00');
     });
 });
