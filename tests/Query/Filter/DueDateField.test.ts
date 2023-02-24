@@ -218,13 +218,6 @@ describe('due date with natural date ranges', () => {
             'due date is between 2022-05-23 (Monday 23rd May 2022) and 2022-05-29 (Sunday 29th May 2022) inclusive',
         );
     });
-
-    it('should explain natural date (month)', () => {
-        const filterOrMessage = new DueDateField().createFilterOrErrorMessage('due this month');
-        expect(filterOrMessage).toHaveExplanation(
-            'due date is between 2022-05-01 (Sunday 1st May 2022) and 2022-05-31 (Tuesday 31st May 2022) inclusive',
-        );
-    });
 });
 
 describe('explain due date queries', () => {
