@@ -93,14 +93,14 @@ describe('DateParser - date ranges', () => {
         jest.useRealTimers();
     });
 
-    it('should return natural date range (month)', () => {
-        testParsingDateRange('this month', '2021-10-01', '2021-10-31');
-    });
-
     it('should return natural date range at midnight (week)', () => {
         const dateRangeToParse = 'this week';
         const parsedDateRange = DateParser.parseDateRange(dateRangeToParse);
         expect(parsedDateRange[0].format('YYYY-MM-DD HH:mm')).toStrictEqual('2021-10-04 00:00');
         expect(parsedDateRange[1].format('YYYY-MM-DD HH:mm')).toStrictEqual('2021-10-10 00:00');
+    });
+
+    it('should return natural date range (month)', () => {
+        testParsingDateRange('this month', '2021-10-01', '2021-10-31');
     });
 });
