@@ -100,6 +100,14 @@ describe('DateParser - date ranges', () => {
         expect(parsedDateRange[1].format('YYYY-MM-DD HH:mm')).toStrictEqual('2021-10-10 00:00');
     });
 
+    it('should return next natural date range (next week)', () => {
+        testParsingDateRange('next week', '2021-10-11', '2021-10-17');
+    });
+
+    it('should return last natural date range (last week)', () => {
+        testParsingDateRange('last week', '2021-09-27', '2021-10-03');
+    });
+
     it('should return natural date range (month)', () => {
         testParsingDateRange('this month', '2021-10-01', '2021-10-31');
     });
