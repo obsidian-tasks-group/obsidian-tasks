@@ -83,7 +83,7 @@ describe('DateParser - date ranges', () => {
     });
 });
 
-describe('DateParser - date ranges', () => {
+describe('DateParser - natural date ranges', () => {
     beforeAll(() => {
         jest.useFakeTimers();
         jest.setSystemTime(new Date(2021, 9, 6)); // 2021-10-06
