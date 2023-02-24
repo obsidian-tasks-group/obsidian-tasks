@@ -106,6 +106,72 @@ describe('due date', () => {
     });
 });
 
+describe('due date with natural date ranges', () => {
+    beforeAll(() => {
+        jest.useFakeTimers();
+        jest.setSystemTime(new Date(2022, 4, 25)); // 2022-05-25
+    });
+
+    afterAll(() => {
+        jest.useRealTimers();
+    });
+
+    it('by due date (before)', () => {
+        // Arrange
+        const filter = new DueDateField().createFilterOrErrorMessage('due before this month');
+
+        // Act, Assert
+        testTaskFilterForTaskWithDueDate(filter, null, false);
+        testTaskFilterForTaskWithDueDate(filter, '2022-04-30', true);
+        testTaskFilterForTaskWithDueDate(filter, '2022-05-01', false);
+        testTaskFilterForTaskWithDueDate(filter, '2022-05-31', false);
+        testTaskFilterForTaskWithDueDate(filter, '2022-06-01', false);
+    });
+
+    it('by due date (on)', () => {
+        // Arrange
+        const filter = new DueDateField().createFilterOrErrorMessage('due on this month');
+
+        // Act, Assert
+        testTaskFilterForTaskWithDueDate(filter, null, false);
+        testTaskFilterForTaskWithDueDate(filter, '2022-04-30', false);
+        testTaskFilterForTaskWithDueDate(filter, '2022-05-01', true);
+        testTaskFilterForTaskWithDueDate(filter, '2022-05-31', true);
+        testTaskFilterForTaskWithDueDate(filter, '2022-06-01', false);
+    });
+
+    it('by due date (after)', () => {
+        // Arrange
+        const filter = new DueDateField().createFilterOrErrorMessage('due after this month');
+
+        // Act, Assert
+        testTaskFilterForTaskWithDueDate(filter, null, false);
+        testTaskFilterForTaskWithDueDate(filter, '2022-04-30', false);
+        testTaskFilterForTaskWithDueDate(filter, '2022-05-01', false);
+        testTaskFilterForTaskWithDueDate(filter, '2022-05-31', false);
+        testTaskFilterForTaskWithDueDate(filter, '2022-06-01', true);
+    });
+
+    it('by due date (no keyword)', () => {
+        // Arrange
+        const filter = new DueDateField().createFilterOrErrorMessage('due this month');
+
+        // Act, Assert
+        testTaskFilterForTaskWithDueDate(filter, null, false);
+        testTaskFilterForTaskWithDueDate(filter, '2022-04-30', false);
+        testTaskFilterForTaskWithDueDate(filter, '2022-05-01', true);
+        testTaskFilterForTaskWithDueDate(filter, '2022-05-31', true);
+        testTaskFilterForTaskWithDueDate(filter, '2022-06-01', false);
+    });
+
+    it('should explain natural date (month)', () => {
+        const filterOrMessage = new DueDateField().createFilterOrErrorMessage('due this month');
+        expect(filterOrMessage).toHaveExplanation(
+            'due date is between 2022-05-01 (Sunday 1st May 2022) and 2022-05-31 (Tuesday 31st May 2022) inclusive',
+        );
+    });
+});
+
 describe('explain due date queries', () => {
     it('should explain explicit date', () => {
         const filterOrMessage = new DueDateField().createFilterOrErrorMessage('due before 2023-01-02');
