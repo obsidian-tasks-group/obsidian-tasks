@@ -116,7 +116,7 @@ describe('due date with natural date ranges', () => {
         jest.useRealTimers();
     });
 
-    it('by due date (before)', () => {
+    it('by due date (before this month)', () => {
         // Arrange
         const filter = new DueDateField().createFilterOrErrorMessage('due before this month');
 
@@ -128,7 +128,7 @@ describe('due date with natural date ranges', () => {
         testTaskFilterForTaskWithDueDate(filter, '2022-06-01', false);
     });
 
-    it('by due date (on)', () => {
+    it('by due date (on this month)', () => {
         // Arrange
         const filter = new DueDateField().createFilterOrErrorMessage('due on this month');
 
@@ -140,7 +140,7 @@ describe('due date with natural date ranges', () => {
         testTaskFilterForTaskWithDueDate(filter, '2022-06-01', false);
     });
 
-    it('by due date (after)', () => {
+    it('by due date (after this month)', () => {
         // Arrange
         const filter = new DueDateField().createFilterOrErrorMessage('due after this month');
 
@@ -152,7 +152,7 @@ describe('due date with natural date ranges', () => {
         testTaskFilterForTaskWithDueDate(filter, '2022-06-01', true);
     });
 
-    it('by due date (in)', () => {
+    it('by due date (in this month)', () => {
         // Arrange
         const filter = new DueDateField().createFilterOrErrorMessage('due in this month');
 
@@ -164,7 +164,7 @@ describe('due date with natural date ranges', () => {
         testTaskFilterForTaskWithDueDate(filter, '2022-06-01', false);
     });
 
-    it('by due date (no keyword)', () => {
+    it('by due date (this month)', () => {
         // Arrange
         const filter = new DueDateField().createFilterOrErrorMessage('due this month');
 
@@ -174,6 +174,25 @@ describe('due date with natural date ranges', () => {
         testTaskFilterForTaskWithDueDate(filter, '2022-05-01', true);
         testTaskFilterForTaskWithDueDate(filter, '2022-05-31', true);
         testTaskFilterForTaskWithDueDate(filter, '2022-06-01', false);
+    });
+
+    it('by due date (this week)', () => {
+        // Arrange
+        const filter = new DueDateField().createFilterOrErrorMessage('due this week');
+
+        // Act, Assert
+        testTaskFilterForTaskWithDueDate(filter, null, false);
+        testTaskFilterForTaskWithDueDate(filter, '2022-05-22', false);
+        testTaskFilterForTaskWithDueDate(filter, '2022-05-23', true);
+        testTaskFilterForTaskWithDueDate(filter, '2022-05-29', true);
+        testTaskFilterForTaskWithDueDate(filter, '2022-05-30', false);
+    });
+
+    it('should explain natural date (week)', () => {
+        const filterOrMessage = new DueDateField().createFilterOrErrorMessage('due this week');
+        expect(filterOrMessage).toHaveExplanation(
+            'due date is between 2022-05-23 (Monday 23rd May 2022) and 2022-05-29 (Sunday 29th May 2022) inclusive',
+        );
     });
 
     it('should explain natural date (month)', () => {
