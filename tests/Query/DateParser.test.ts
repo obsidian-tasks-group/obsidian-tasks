@@ -103,4 +103,12 @@ describe('DateParser - date ranges', () => {
     it('should return natural date range (month)', () => {
         testParsingDateRange('this month', '2021-10-01', '2021-10-31');
     });
+
+    it('should return natural date range (quarter)', () => {
+        testParsingDateRange('this quarter', '2021-10-01', '2021-12-31');
+    });
+
+    it('should return natural date range (year)', () => {
+        testParsingDateRange('this year', '2021-01-01', '2021-12-31');
+    });
 });
