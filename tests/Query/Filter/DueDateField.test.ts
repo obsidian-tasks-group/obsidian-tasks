@@ -176,6 +176,18 @@ describe('due date with natural date ranges', () => {
         testTaskFilterForTaskWithDueDate(filter, '2022-06-01', false);
     });
 
+    it('by due date (last week)', () => {
+        // Arrange
+        const filter = new DueDateField().createFilterOrErrorMessage('due last week');
+
+        // Act, Assert
+        testTaskFilterForTaskWithDueDate(filter, null, false);
+        testTaskFilterForTaskWithDueDate(filter, '2022-05-15', false);
+        testTaskFilterForTaskWithDueDate(filter, '2022-05-16', true);
+        testTaskFilterForTaskWithDueDate(filter, '2022-05-22', true);
+        testTaskFilterForTaskWithDueDate(filter, '2022-05-23', false);
+    });
+
     it('by due date (this week)', () => {
         // Arrange
         const filter = new DueDateField().createFilterOrErrorMessage('due this week');
@@ -186,6 +198,18 @@ describe('due date with natural date ranges', () => {
         testTaskFilterForTaskWithDueDate(filter, '2022-05-23', true);
         testTaskFilterForTaskWithDueDate(filter, '2022-05-29', true);
         testTaskFilterForTaskWithDueDate(filter, '2022-05-30', false);
+    });
+
+    it('by due date (next week)', () => {
+        // Arrange
+        const filter = new DueDateField().createFilterOrErrorMessage('due next week');
+
+        // Act, Assert
+        testTaskFilterForTaskWithDueDate(filter, null, false);
+        testTaskFilterForTaskWithDueDate(filter, '2022-05-29', false);
+        testTaskFilterForTaskWithDueDate(filter, '2022-05-30', true);
+        testTaskFilterForTaskWithDueDate(filter, '2022-06-05', true);
+        testTaskFilterForTaskWithDueDate(filter, '2022-06-06', false);
     });
 
     it('by due date (this quarter)', () => {
