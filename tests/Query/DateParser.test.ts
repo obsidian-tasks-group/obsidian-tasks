@@ -82,3 +82,18 @@ describe('DateParser - date ranges', () => {
         expect(parsedDateRange[1].format('YYYY-MM-DD HH:mm')).toStrictEqual('2023-10-01 00:00');
     });
 });
+
+describe('DateParser - date ranges', () => {
+    beforeAll(() => {
+        jest.useFakeTimers();
+        jest.setSystemTime(new Date(2021, 9, 6)); // 2021-10-06
+    });
+
+    afterAll(() => {
+        jest.useRealTimers();
+    });
+
+    it('should return natural date range (month)', () => {
+        testParsingDateRange('this month', '2021-10-01', '2021-10-31');
+    });
+});
