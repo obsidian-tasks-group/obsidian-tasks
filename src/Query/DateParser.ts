@@ -32,10 +32,14 @@ export class DateParser {
         const endDate = result[1] && result[1].start ? result[1].start : startDate;
         const start = window.moment(startDate.date()).startOf('day');
         const end = window.moment(endDate.date()).startOf('day');
-        
-        let dateRange:[moment.Moment, moment.Moment] = [start, end];
+
+        let dateRange: [moment.Moment, moment.Moment] = [start, end];
         if (end.isBefore(start)) {
             dateRange = [end, start];
+        }
+
+        if (input === 'this month') {
+            dateRange = [window.moment().startOf('month'), window.moment().endOf('month')];
         }
 
         return dateRange;
