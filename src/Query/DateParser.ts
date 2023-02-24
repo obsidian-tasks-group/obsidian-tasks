@@ -30,8 +30,8 @@ export class DateParser {
 
         const startDate = result[0].start;
         const endDate = result[1] && result[1].start ? result[1].start : startDate;
-        const start = window.moment(startDate.date()).startOf('day');
-        const end = window.moment(endDate.date()).startOf('day');
+        const start = window.moment(startDate.date());
+        const end = window.moment(endDate.date());
 
         let dateRange: [moment.Moment, moment.Moment] = [start, end];
         if (end.isBefore(start)) {
@@ -42,6 +42,8 @@ export class DateParser {
             dateRange = [window.moment().startOf('month'), window.moment().endOf('month')];
         }
 
+        // Dates shall be at midnight eg 00:00
+        dateRange.forEach((d) => d.startOf('day'));
         return dateRange;
     }
 }
