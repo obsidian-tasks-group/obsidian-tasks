@@ -101,7 +101,7 @@ export abstract class DateField extends Field {
     }
 
     protected filterRegExp(): RegExp {
-        return new RegExp(`^${this.fieldNameForFilterInstruction()} (before|after|on)? ?(.*)`);
+        return new RegExp(`^${this.fieldNameForFilterInstruction()} (before|after|on|in)? ?(.*)`);
     }
 
     /**
