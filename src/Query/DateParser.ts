@@ -42,6 +42,10 @@ export class DateParser {
             dateRange = [window.moment().startOf('month'), window.moment().endOf('month')];
         } else if (input === 'this week') {
             dateRange = [window.moment().startOf('isoWeek'), window.moment().endOf('isoWeek')];
+        } else if (input === 'this quarter') {
+            dateRange = [window.moment().startOf('quarter'), window.moment().endOf('quarter')];
+        } else if (input === 'this year') {
+            dateRange = [window.moment().startOf('year'), window.moment().endOf('year')];
         }
 
         // Dates shall be at midnight eg 00:00
