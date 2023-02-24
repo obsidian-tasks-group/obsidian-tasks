@@ -152,6 +152,18 @@ describe('due date with natural date ranges', () => {
         testTaskFilterForTaskWithDueDate(filter, '2022-06-01', true);
     });
 
+    it('by due date (in)', () => {
+        // Arrange
+        const filter = new DueDateField().createFilterOrErrorMessage('due in this month');
+
+        // Act, Assert
+        testTaskFilterForTaskWithDueDate(filter, null, false);
+        testTaskFilterForTaskWithDueDate(filter, '2022-04-30', false);
+        testTaskFilterForTaskWithDueDate(filter, '2022-05-01', true);
+        testTaskFilterForTaskWithDueDate(filter, '2022-05-31', true);
+        testTaskFilterForTaskWithDueDate(filter, '2022-06-01', false);
+    });
+
     it('by due date (no keyword)', () => {
         // Arrange
         const filter = new DueDateField().createFilterOrErrorMessage('due this month');
