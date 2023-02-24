@@ -38,14 +38,18 @@ export class DateParser {
             dateRange = [end, start];
         }
 
-        if (input === 'this month') {
-            dateRange = [window.moment().startOf('month'), window.moment().endOf('month')];
-        } else if (input === 'this week') {
-            dateRange = [window.moment().startOf('isoWeek'), window.moment().endOf('isoWeek')];
-        } else if (input === 'this quarter') {
-            dateRange = [window.moment().startOf('quarter'), window.moment().endOf('quarter')];
-        } else if (input === 'this year') {
-            dateRange = [window.moment().startOf('year'), window.moment().endOf('year')];
+        const naturalDateRangeRegexp = /(this) (week|month|quarter|year)/;
+        const naturalDateRangeMatch = input.match(naturalDateRangeRegexp);
+        if (naturalDateRangeMatch && naturalDateRangeMatch.length === 3) {
+            if (naturalDateRangeMatch[2] === 'month') {
+                dateRange = [window.moment().startOf('month'), window.moment().endOf('month')];
+            } else if (naturalDateRangeMatch[2] === 'week') {
+                dateRange = [window.moment().startOf('isoWeek'), window.moment().endOf('isoWeek')];
+            } else if (naturalDateRangeMatch[2] === 'quarter') {
+                dateRange = [window.moment().startOf('quarter'), window.moment().endOf('quarter')];
+            } else if (naturalDateRangeMatch[2] === 'year') {
+                dateRange = [window.moment().startOf('year'), window.moment().endOf('year')];
+            }
         }
 
         // Dates shall be at midnight eg 00:00
