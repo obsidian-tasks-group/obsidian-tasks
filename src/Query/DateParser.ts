@@ -42,14 +42,15 @@ export class DateParser {
         const naturalDateRangeMatch = input.match(naturalDateRangeRegexp);
         if (naturalDateRangeMatch && naturalDateRangeMatch.length === 3) {
             const range = naturalDateRangeMatch[2];
-            if (range === 'month') {
-                dateRange = [window.moment().startOf('month'), window.moment().endOf('month')];
-            } else if (range === 'week') {
-                dateRange = [window.moment().startOf('isoWeek'), window.moment().endOf('isoWeek')];
-            } else if (range === 'quarter') {
-                dateRange = [window.moment().startOf('quarter'), window.moment().endOf('quarter')];
-            } else if (range === 'year') {
-                dateRange = [window.moment().startOf('year'), window.moment().endOf('year')];
+            switch (range) {
+                case 'month':
+                case 'quarter':
+                case 'year':
+                    dateRange = [window.moment().startOf(range), window.moment().endOf(range)];
+                    break;
+                case 'week':
+                    dateRange = [window.moment().startOf('isoWeek'), window.moment().endOf('isoWeek')];
+                    break;
             }
         }
 
