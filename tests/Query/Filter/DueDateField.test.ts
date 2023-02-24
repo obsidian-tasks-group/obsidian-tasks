@@ -188,6 +188,30 @@ describe('due date with natural date ranges', () => {
         testTaskFilterForTaskWithDueDate(filter, '2022-05-30', false);
     });
 
+    it('by due date (this quarter)', () => {
+        // Arrange
+        const filter = new DueDateField().createFilterOrErrorMessage('due this quarter');
+
+        // Act, Assert
+        testTaskFilterForTaskWithDueDate(filter, null, false);
+        testTaskFilterForTaskWithDueDate(filter, '2022-03-31', false);
+        testTaskFilterForTaskWithDueDate(filter, '2022-04-01', true);
+        testTaskFilterForTaskWithDueDate(filter, '2022-06-30', true);
+        testTaskFilterForTaskWithDueDate(filter, '2022-07-01', false);
+    });
+
+    it('by due date (this year)', () => {
+        // Arrange
+        const filter = new DueDateField().createFilterOrErrorMessage('due this year');
+
+        // Act, Assert
+        testTaskFilterForTaskWithDueDate(filter, null, false);
+        testTaskFilterForTaskWithDueDate(filter, '2021-12-31', false);
+        testTaskFilterForTaskWithDueDate(filter, '2022-01-01', true);
+        testTaskFilterForTaskWithDueDate(filter, '2022-12-31', true);
+        testTaskFilterForTaskWithDueDate(filter, '2023-01-01', false);
+    });
+
     it('should explain natural date (week)', () => {
         const filterOrMessage = new DueDateField().createFilterOrErrorMessage('due this week');
         expect(filterOrMessage).toHaveExplanation(
