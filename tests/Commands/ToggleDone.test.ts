@@ -3,7 +3,8 @@
  */
 
 import moment from 'moment';
-import { calculateCursorOffset, toggleLine } from '../../src/Commands/ToggleDone';
+import type { EditorPosition } from 'obsidian';
+import { getNewCursorPosition, toggleLine } from '../../src/Commands/ToggleDone';
 import { resetSettings, updateSettings } from '../../src/Config/Settings';
 import { StatusRegistry } from '../../src/StatusRegistry';
 import { Status } from '../../src/Status';
@@ -32,11 +33,18 @@ function testToggleLine(inputWithCursorMark: string, expectedWithCursorMark: str
     expect(input.length).toEqual(inputWithCursorMark.length - 1);
     expect(expected.length).toEqual(expectedWithCursorMark.length - 1);
 
+    const cursorPosition = (s: string): EditorPosition => {
+        const beforeCursor = s.slice(0, s.indexOf(cursorMarker)).split('\n');
+        const line = beforeCursor.length - 1;
+        const ch = beforeCursor[line].length;
+        return { line, ch };
+    };
+
     testToggleLineForOutOfRangeCursorPositions(
         input,
-        inputWithCursorMark.indexOf(cursorMarker),
+        cursorPosition(inputWithCursorMark),
         expected,
-        expectedWithCursorMark.indexOf(cursorMarker),
+        cursorPosition(expectedWithCursorMark),
     );
 }
 
@@ -56,13 +64,13 @@ function testToggleLine(inputWithCursorMark: string, expectedWithCursorMark: str
  */
 function testToggleLineForOutOfRangeCursorPositions(
     input: string,
-    initialCursorOffset: number,
+    initialCursorOffset: EditorPosition,
     expected: string,
-    expectedCursorOffset: number,
+    expectedCursorOffset: EditorPosition,
 ) {
     const result = toggleLine(input, 'x.md');
-    expect(result).toStrictEqual(expected);
-    const actualCursorOffset = calculateCursorOffset(initialCursorOffset, input, result);
+    expect(result.text.join('\n')).toStrictEqual(expected);
+    const actualCursorOffset = getNewCursorPosition(initialCursorOffset, result);
     expect(actualCursorOffset).toEqual(expectedCursorOffset);
 }
 
@@ -87,13 +95,13 @@ describe('ToggleDone', () => {
         testToggleLine('|', '- |');
     });
 
-    it('should add checkbox to hyphen and space', () => {
-        testToggleLine('|- ', '- [ |] ');
+    it('box to hyphen and space', () => {
+        testToggleLine('|- ', '- [ ] |');
         testToggleLine('- |', '- [ ] |');
 
         updateSettings({ globalFilter: '#task' });
 
-        testToggleLine('|- ', '- [ |] ');
+        testToggleLine('|- ', '- [ ] |');
         testToggleLine('- |', '- [ ] |');
     });
 
@@ -141,11 +149,11 @@ describe('ToggleDone', () => {
         );
 
         // With a trailing space at the end of the initial line, which is deleted
-        // when the task lines are regenerated, the cursor moves one character to the left:
+        // when the task lines are regenerated, the cursor does not move one character to the left:
         testToggleLine(
             '- [ ] I am a recurring task| 🔁 every day 📅 2022-09-04 ',
             `- [ ] I am a recurring task 🔁 every day 📅 2022-09-05
-- [x] I am a recurring tas|k 🔁 every day 📅 2022-09-04 ✅ 2022-09-04`,
+- [x] I am a recurring task| 🔁 every day 📅 2022-09-04 ✅ 2022-09-04`,
         );
 
         updateSettings({ globalFilter: '#task' });
@@ -179,11 +187,11 @@ describe('ToggleDone', () => {
             const line1 = '- [P] this is a task starting at Pro';
 
             // Assert
-            const line2 = toggleLine(line1, 'x.md');
-            expect(line2).toStrictEqual('- [C] this is a task starting at Pro');
+            const { text: line2 } = toggleLine(line1, 'x.md');
+            expect(line2.join('\n')).toStrictEqual('- [C] this is a task starting at Pro');
 
-            const line3 = toggleLine(line2, 'x.md');
-            expect(line3).toStrictEqual('- [P] this is a task starting at Pro');
+            const { text: line3 } = toggleLine(line2.join('\n'), 'x.md');
+            expect(line3.join('\n')).toStrictEqual('- [P] this is a task starting at Pro');
         });
 
         it('when there is a global filter and task with global filter is toggled', () => {
@@ -192,11 +200,11 @@ describe('ToggleDone', () => {
             const line1 = '- [C] #task this is a task starting at Con';
 
             // Assert
-            const line2 = toggleLine(line1, 'x.md');
-            expect(line2).toStrictEqual('- [P] #task this is a task starting at Con');
+            const { text: line2 } = toggleLine(line1, 'x.md');
+            expect(line2.join('\n')).toStrictEqual('- [P] #task this is a task starting at Con');
 
-            const line3 = toggleLine(line2, 'x.md');
-            expect(line3).toStrictEqual('- [C] #task this is a task starting at Con');
+            const { text: line3 } = toggleLine(line2.join('\n'), 'x.md');
+            expect(line3.join('\n')).toStrictEqual('- [C] #task this is a task starting at Con');
         });
 
         it('when there is a global filter and task without global filter is toggled', () => {
@@ -205,11 +213,15 @@ describe('ToggleDone', () => {
             const line1 = '- [P] this is a task starting at Pro, not matching the global filter';
 
             // Assert
-            const line2 = toggleLine(line1, 'x.md');
-            expect(line2).toStrictEqual('- [C] this is a task starting at Pro, not matching the global filter');
+            const { text: line2 } = toggleLine(line1, 'x.md');
+            expect(line2.join('\n')).toStrictEqual(
+                '- [C] this is a task starting at Pro, not matching the global filter',
+            );
 
-            const line3 = toggleLine(line2, 'x.md');
-            expect(line3).toStrictEqual('- [P] this is a task starting at Pro, not matching the global filter');
+            const { text: line3 } = toggleLine(line2.join('\n'), 'x.md');
+            expect(line3.join('\n')).toStrictEqual(
+                '- [P] this is a task starting at Pro, not matching the global filter',
+            );
         });
     });
 
