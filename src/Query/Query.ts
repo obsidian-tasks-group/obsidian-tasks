@@ -102,6 +102,12 @@ export class Query implements IQuery {
             result += '.\n';
         }
 
+        const { debugSettings } = getSettings();
+        if (debugSettings.ignoreSortInstructions) {
+            result +=
+                "\n\nNOTE: All sort instructions, including default sort order, are disabled, due to 'ignoreSortInstructions' setting.";
+        }
+
         return result;
     }
 
@@ -134,7 +140,9 @@ export class Query implements IQuery {
             tasks = tasks.filter(filter.filterFunction);
         });
 
-        const tasksSortedLimited = Sort.by(this.sorting, tasks).slice(0, this.limit);
+        const { debugSettings } = getSettings();
+        const tasksSorted = debugSettings.ignoreSortInstructions ? tasks : Sort.by(this.sorting, tasks);
+        const tasksSortedLimited = tasksSorted.slice(0, this.limit);
         return Group.by(this.grouping, tasksSortedLimited);
     }
 
