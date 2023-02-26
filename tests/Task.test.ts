@@ -267,6 +267,20 @@ describe('parsing', () => {
             });
         }
     });
+
+    it('supports saving of location of the task line', () => {
+        // Arrange
+        const line = '- [ ] anything';
+
+        // Act
+        const task = fromLine({
+            line,
+        });
+
+        // Assert
+        // More info will be added to TaskLineLocation
+        expect(task.taskLineLocation).toBeDefined();
+    });
 });
 
 type TagParsingExpectations = {
