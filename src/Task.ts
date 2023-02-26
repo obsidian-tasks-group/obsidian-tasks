@@ -123,7 +123,6 @@ export class Task {
     public readonly listMarker: string;
 
     public readonly taskLineLocation: TaskLineLocation;
-    public readonly precedingHeader: string | null;
 
     public readonly tags: string[];
 
@@ -154,7 +153,6 @@ export class Task {
         taskLineLocation,
         indentation,
         listMarker,
-        precedingHeader,
         priority,
         startDate,
         scheduledDate,
@@ -171,7 +169,6 @@ export class Task {
         taskLineLocation: TaskLineLocation;
         indentation: string;
         listMarker: string;
-        precedingHeader: string | null;
         priority: Priority;
         startDate: moment.Moment | null;
         scheduledDate: moment.Moment | null;
@@ -188,7 +185,6 @@ export class Task {
         this.indentation = indentation;
         this.listMarker = listMarker;
         this.taskLineLocation = taskLineLocation;
-        this.precedingHeader = precedingHeader;
 
         this.tags = tags;
 
@@ -250,7 +246,7 @@ export class Task {
             return null;
         }
 
-        const taskLineLocation = new TaskLineLocation(path, sectionStart, sectionIndex);
+        const taskLineLocation = new TaskLineLocation(path, sectionStart, sectionIndex, precedingHeader);
 
         let description = body;
         const indentation = regexMatch[1];
@@ -399,7 +395,6 @@ export class Task {
             indentation,
             listMarker,
             taskLineLocation,
-            precedingHeader,
             priority,
             startDate,
             scheduledDate,
@@ -586,6 +581,10 @@ export class Task {
 
     get sectionIndex(): number {
         return this.taskLineLocation.sectionIndex;
+    }
+
+    public get precedingHeader(): string | null {
+        return this.taskLineLocation.precedingHeader;
     }
 
     /**

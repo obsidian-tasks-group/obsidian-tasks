@@ -8,7 +8,6 @@ import type { TasksEvents } from './TasksEvents';
 import { DateFallback } from './DateFallback';
 import { getSettings } from './Config/Settings';
 import { Lazy } from './lib/Lazy';
-import { TaskLineLocation } from './TaskLineLocation';
 
 export enum State {
     Cold = 'Cold',
@@ -150,7 +149,7 @@ export class Cache {
                         if (!useFilenameAsScheduledDate) {
                             return new Task({
                                 ...task,
-                                taskLineLocation: new TaskLineLocation(file.path, task.sectionStart, task.sectionIndex),
+                                taskLineLocation: task.taskLineLocation.fromRenamedFile(file.path),
                             });
                         } else {
                             return DateFallback.updateTaskPath(task, file.path, fallbackDate.value);
