@@ -1,6 +1,7 @@
 import type { FilterOrErrorMessage } from '../../src/Query/Filter/Filter';
 import { Task } from '../../src/Task';
 import { Query } from '../../src/Query/Query';
+import { TaskLocation } from '../../src/TaskLocation';
 import type { TaskBuilder } from './TaskBuilder';
 
 /**
@@ -75,10 +76,7 @@ export function shouldSupportFiltering(
         (taskLine) =>
             Task.fromLine({
                 line: taskLine,
-                sectionStart: 0,
-                sectionIndex: 0,
-                path: '',
-                precedingHeader: '',
+                taskLocation: TaskLocation.fromUnknownPosition(''),
                 fallbackDate: null, // For tests scheduled date needs to be set explicitly
             }) as Task,
     );

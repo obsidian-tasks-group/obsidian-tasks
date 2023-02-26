@@ -8,6 +8,7 @@ import { Priority, Task } from '../src/Task';
 import { resetSettings, updateSettings } from '../src/Config/Settings';
 import type { StatusCollection } from '../src/StatusCollection';
 import { StatusRegistry } from '../src/StatusRegistry';
+import { TaskLocation } from '../src/TaskLocation';
 import { fromLine } from './TestHelpers';
 import { TaskBuilder } from './TestingTools/TaskBuilder';
 import { RecurrenceBuilder } from './TestingTools/RecurrenceBuilder';
@@ -279,10 +280,7 @@ type TagParsingExpectations = {
 function constructTaskFromLine(line: string, path: string = 'file.md', fallbackDate: Moment | null = null) {
     return Task.fromLine({
         line,
-        path: path,
-        sectionStart: 0,
-        sectionIndex: 0,
-        precedingHeader: '',
+        taskLocation: TaskLocation.fromUnknownPosition(path),
         fallbackDate,
     });
 }
