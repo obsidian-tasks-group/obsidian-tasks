@@ -11,6 +11,14 @@ export class TaskLineLocation {
         this._sectionStart = sectionStart;
     }
 
+    /**
+     * Constructor, for use when the Task's exact location in a file is either unknown, or not needed
+     * @param path
+     */
+    public static fromUnknownPosition(path: string): TaskLineLocation {
+        return new TaskLineLocation(path, 0);
+    }
+
     public get path(): string {
         return this._path;
     }

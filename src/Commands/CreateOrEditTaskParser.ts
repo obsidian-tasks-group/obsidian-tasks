@@ -42,7 +42,7 @@ export const taskFromLine = ({ line, path }: { line: string; path: string }): Ta
         return new Task({
             status: Status.TODO,
             description: '',
-            taskLineLocation: new TaskLineLocation(path, 0),
+            taskLineLocation: TaskLineLocation.fromUnknownPosition(path),
             indentation: '',
             listMarker: '-',
             priority: Priority.None,
@@ -78,7 +78,7 @@ export const taskFromLine = ({ line, path }: { line: string; path: string }): Ta
     return new Task({
         status,
         description,
-        taskLineLocation: new TaskLineLocation(path, 0),
+        taskLineLocation: TaskLineLocation.fromUnknownPosition(path),
         indentation,
         listMarker,
         blockLink,
