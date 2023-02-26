@@ -2,13 +2,16 @@
  * @jest-environment jsdom
  */
 import moment from 'moment';
-import { TASK_FORMATS, getSettings } from '../src/Config/Settings';
-import { buildSuggestions } from '../src/Suggestor/Suggestor';
+import { getSettings } from '../src/Config/Settings';
 import type { SuggestInfo } from '../src/Suggestor';
+import { makeDefaultSuggestionBuilder } from '../src/Suggestor/Suggestor';
+import { DEFAULT_SYMBOLS } from '../src/TaskSerializer/DefaultTaskSerializer';
 
 window.moment = moment;
 
 describe('auto-complete', () => {
+    const symbols = DEFAULT_SYMBOLS;
+    const buildSuggestions = makeDefaultSuggestionBuilder(symbols);
     it('offers basic completion options for an empty task', () => {
         // Arrange
         const originalSettings = getSettings();
@@ -82,8 +85,7 @@ describe('auto-complete', () => {
     // See suggestions in https://github.com/obsidian-tasks-group/obsidian-tasks/issues/861#issuecomment-1180788860
     it.skip('show all suggested text', () => {
         // Arrange
-        const { dueDateSymbol, scheduledDateSymbol, startDateSymbol, recurrenceSymbol } =
-            TASK_FORMATS.tasksPluginEmoji.taskSerializer.symbols;
+        const { dueDateSymbol, scheduledDateSymbol, startDateSymbol, recurrenceSymbol } = symbols;
         const originalSettings = getSettings();
         originalSettings.autoSuggestMaxItems = 200;
 
