@@ -1,7 +1,7 @@
 import type { Moment } from 'moment';
 import { LayoutOptions, TaskLayout } from './TaskLayout';
 import type { TaskLayoutComponent } from './TaskLayout';
-import { TaskLineLocation } from './TaskLineLocation';
+import { TaskLocation } from './TaskLocation';
 import { Recurrence } from './Recurrence';
 import { getSettings } from './Config/Settings';
 import { StatusRegistry } from './StatusRegistry';
@@ -122,7 +122,7 @@ export class Task {
     public readonly indentation: string;
     public readonly listMarker: string;
 
-    public readonly taskLineLocation: TaskLineLocation;
+    public readonly taskLineLocation: TaskLocation;
 
     public readonly tags: string[];
 
@@ -166,7 +166,7 @@ export class Task {
     }: {
         status: Status;
         description: string;
-        taskLineLocation: TaskLineLocation;
+        taskLineLocation: TaskLocation;
         indentation: string;
         listMarker: string;
         priority: Priority;
@@ -246,7 +246,7 @@ export class Task {
             return null;
         }
 
-        const taskLineLocation = new TaskLineLocation(path, sectionStart, sectionIndex, precedingHeader);
+        const taskLineLocation = new TaskLocation(path, sectionStart, sectionIndex, precedingHeader);
 
         let description = body;
         const indentation = regexMatch[1];

@@ -1,8 +1,8 @@
 /**
- * TaskLineLocation will evolve in to the place where all information about a task line's location
- * in a markdown file will be stored, so that testable algorithms can then be added here.
+ * TaskLocation is the place where all information about a task line's location
+ * in a markdown file is stored, so that testable algorithms can then be added here.
  */
-export class TaskLineLocation {
+export class TaskLocation {
     private readonly _path: string;
     private readonly _sectionStart: number;
     private readonly _sectionIndex: number;
@@ -19,8 +19,8 @@ export class TaskLineLocation {
      * Constructor, for use when the Task's exact location in a file is either unknown, or not needed.
      * @param path
      */
-    public static fromUnknownPosition(path: string): TaskLineLocation {
-        return new TaskLineLocation(path, 0, 0, null);
+    public static fromUnknownPosition(path: string): TaskLocation {
+        return new TaskLocation(path, 0, 0, null);
     }
 
     /**
@@ -28,7 +28,7 @@ export class TaskLineLocation {
      * @param newPath
      */
     fromRenamedFile(newPath: string) {
-        return new TaskLineLocation(newPath, this.sectionStart, this.sectionIndex, this.precedingHeader);
+        return new TaskLocation(newPath, this.sectionStart, this.sectionIndex, this.precedingHeader);
     }
 
     public get path(): string {

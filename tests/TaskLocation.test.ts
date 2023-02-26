@@ -1,4 +1,4 @@
-import { TaskLineLocation } from '../src/TaskLineLocation';
+import { TaskLocation } from '../src/TaskLocation';
 
 describe('TaskLineLocation', () => {
     it('should store the full task location', () => {
@@ -9,7 +9,7 @@ describe('TaskLineLocation', () => {
         const precedingHeader = 'My Header';
 
         // Act
-        const taskLineLocation = new TaskLineLocation(path, sectionStart, sectionIndex, precedingHeader);
+        const taskLineLocation = new TaskLocation(path, sectionStart, sectionIndex, precedingHeader);
 
         // Assert
         expect(taskLineLocation.path).toStrictEqual(path);
@@ -23,7 +23,7 @@ describe('TaskLineLocation', () => {
         const path = 'a/b/c.md';
 
         // Act
-        const taskLineLocation = TaskLineLocation.fromUnknownPosition(path);
+        const taskLineLocation = TaskLocation.fromUnknownPosition(path);
 
         // Assert
         expect(taskLineLocation.path).toStrictEqual(path);
@@ -38,7 +38,7 @@ describe('TaskLineLocation', () => {
         const sectionStart = 13;
         const sectionIndex = 10;
         const precedingHeader = 'My Previous Header';
-        const taskLineLocation = new TaskLineLocation(path, sectionStart, sectionIndex, precedingHeader);
+        const taskLineLocation = new TaskLocation(path, sectionStart, sectionIndex, precedingHeader);
 
         // Act
         const newPath = 'd/e/f.md';
