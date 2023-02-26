@@ -42,6 +42,7 @@ export const taskFromLine = ({ line, path }: { line: string; path: string }): Ta
         return new Task({
             status: Status.TODO,
             description: '',
+            // We don't need the location fields except file to edit here in the editor.
             taskLineLocation: TaskLineLocation.fromUnknownPosition(path),
             indentation: '',
             listMarker: '-',
@@ -51,8 +52,6 @@ export const taskFromLine = ({ line, path }: { line: string; path: string }): Ta
             dueDate: null,
             doneDate: null,
             recurrence: null,
-            // We don't need the following fields to edit here in the editor.
-            precedingHeader: null,
             blockLink: '',
             tags: [],
             originalMarkdown: '',
@@ -77,6 +76,7 @@ export const taskFromLine = ({ line, path }: { line: string; path: string }): Ta
     return new Task({
         status,
         description,
+        // We don't need the location fields except file to edit here in the editor.
         taskLineLocation: TaskLineLocation.fromUnknownPosition(path),
         indentation,
         listMarker,
@@ -87,8 +87,6 @@ export const taskFromLine = ({ line, path }: { line: string; path: string }): Ta
         dueDate: null,
         doneDate: null,
         recurrence: null,
-        // We don't need the following fields to edit here in the editor.
-        precedingHeader: null,
         tags: [],
         originalMarkdown: '',
         // Not needed since the inferred status is always re-computed after submitting.

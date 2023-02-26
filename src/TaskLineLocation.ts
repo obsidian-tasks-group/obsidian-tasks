@@ -6,11 +6,13 @@ export class TaskLineLocation {
     private readonly _path: string;
     private readonly _sectionStart: number;
     private readonly _sectionIndex: number;
+    private readonly _precedingHeader: string | null;
 
-    public constructor(path: string, sectionStart: number, sectionIndex: number) {
+    public constructor(path: string, sectionStart: number, sectionIndex: number, precedingHeader: string | null) {
         this._path = path;
         this._sectionStart = sectionStart;
         this._sectionIndex = sectionIndex;
+        this._precedingHeader = precedingHeader;
     }
 
     /**
@@ -18,7 +20,7 @@ export class TaskLineLocation {
      * @param path
      */
     public static fromUnknownPosition(path: string): TaskLineLocation {
-        return new TaskLineLocation(path, 0, 0);
+        return new TaskLineLocation(path, 0, 0, null);
     }
 
     /**
@@ -26,7 +28,7 @@ export class TaskLineLocation {
      * @param newPath
      */
     fromRenamedFile(newPath: string) {
-        return new TaskLineLocation(newPath, this.sectionStart, this.sectionIndex);
+        return new TaskLineLocation(newPath, this.sectionStart, this.sectionIndex, this.precedingHeader);
     }
 
     public get path(): string {
@@ -41,5 +43,9 @@ export class TaskLineLocation {
     /** The index of the nth task in its section. */
     get sectionIndex(): number {
         return this._sectionIndex;
+    }
+
+    public get precedingHeader(): string | null {
+        return this._precedingHeader;
     }
 }
