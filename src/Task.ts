@@ -1,6 +1,7 @@
 import type { Moment } from 'moment';
 import { LayoutOptions, TaskLayout } from './TaskLayout';
 import type { TaskLayoutComponent } from './TaskLayout';
+import { TaskLineLocation } from './TaskLineLocation';
 import { Recurrence } from './Recurrence';
 import { getSettings } from './Config/Settings';
 import { StatusRegistry } from './StatusRegistry';
@@ -121,6 +122,8 @@ export class Task {
     public readonly path: string;
     public readonly indentation: string;
     public readonly listMarker: string;
+
+    public readonly taskLineLocation: TaskLineLocation;
     /** Line number where the section starts that contains this task. */
     public readonly sectionStart: number;
     /** The index of the nth task in its section. */
@@ -194,6 +197,7 @@ export class Task {
         this.path = path;
         this.indentation = indentation;
         this.listMarker = listMarker;
+        this.taskLineLocation = new TaskLineLocation();
         this.sectionStart = sectionStart;
         this.sectionIndex = sectionIndex;
         this.precedingHeader = precedingHeader;
