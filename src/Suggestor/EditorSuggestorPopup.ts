@@ -3,12 +3,15 @@ import type { EditorPosition, EditorSuggestContext, EditorSuggestTriggerInfo } f
 
 import type { Settings } from '../Config/Settings';
 import * as task from '../Task';
-import { buildSuggestions } from './Suggestor';
+import { DEFAULT_SYMBOLS } from '../TaskSerializer/DefaultTaskSerializer';
+import { makeDefaultSuggestionBuilder } from './Suggestor';
 import type { SuggestInfo } from '.';
 
 export type SuggestInfoWithContext = SuggestInfo & {
     context: EditorSuggestContext;
 };
+
+const buildSuggestions = makeDefaultSuggestionBuilder(DEFAULT_SYMBOLS);
 
 export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
     private settings: Settings;
