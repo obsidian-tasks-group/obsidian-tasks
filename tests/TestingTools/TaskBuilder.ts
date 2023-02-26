@@ -5,6 +5,7 @@ import { Priority, Task } from '../../src/Task';
 import type { Recurrence } from '../../src/Recurrence';
 import { DateParser } from '../../src/Query/DateParser';
 import { StatusConfiguration, StatusType } from '../../src/StatusConfiguration';
+import { TaskLocation } from '../../src/TaskLocation';
 
 /**
  * A fluent class for creating tasks for tests.
@@ -62,12 +63,9 @@ export class TaskBuilder {
         return new Task({
             status: this._status,
             description: description,
-            path: this._path,
+            taskLocation: new TaskLocation(this._path, this._sectionStart, this._sectionIndex, this._precedingHeader),
             indentation: this._indentation,
             listMarker: this._listMarker,
-            sectionStart: this._sectionStart,
-            sectionIndex: this._sectionIndex,
-            precedingHeader: this._precedingHeader,
             priority: this._priority,
             startDate: this._startDate,
             scheduledDate: this._scheduledDate,

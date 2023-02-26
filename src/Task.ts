@@ -1,6 +1,7 @@
 import type { Moment } from 'moment';
 import { LayoutOptions, TaskLayout } from './TaskLayout';
 import type { TaskLayoutComponent } from './TaskLayout';
+import type { TaskLocation } from './TaskLocation';
 import { Recurrence } from './Recurrence';
 import { getSettings } from './Config/Settings';
 import { StatusRegistry } from './StatusRegistry';
@@ -118,14 +119,10 @@ export class TaskRegularExpressions {
 export class Task {
     public readonly status: Status;
     public readonly description: string;
-    public readonly path: string;
     public readonly indentation: string;
     public readonly listMarker: string;
-    /** Line number where the section starts that contains this task. */
-    public readonly sectionStart: number;
-    /** The index of the nth task in its section. */
-    public readonly sectionIndex: number;
-    public readonly precedingHeader: string | null;
+
+    public readonly taskLocation: TaskLocation;
 
     public readonly tags: string[];
 
@@ -153,12 +150,9 @@ export class Task {
     constructor({
         status,
         description,
-        path,
+        taskLocation,
         indentation,
         listMarker,
-        sectionStart,
-        sectionIndex,
-        precedingHeader,
         priority,
         startDate,
         scheduledDate,
@@ -172,12 +166,9 @@ export class Task {
     }: {
         status: Status;
         description: string;
-        path: string;
+        taskLocation: TaskLocation;
         indentation: string;
         listMarker: string;
-        sectionStart: number;
-        sectionIndex: number;
-        precedingHeader: string | null;
         priority: Priority;
         startDate: moment.Moment | null;
         scheduledDate: moment.Moment | null;
@@ -191,12 +182,9 @@ export class Task {
     }) {
         this.status = status;
         this.description = description;
-        this.path = path;
         this.indentation = indentation;
         this.listMarker = listMarker;
-        this.sectionStart = sectionStart;
-        this.sectionIndex = sectionIndex;
-        this.precedingHeader = precedingHeader;
+        this.taskLocation = taskLocation;
 
         this.tags = tags;
 
@@ -219,27 +207,18 @@ export class Task {
      *
      * @static
      * @param {string} line - The full line in the note to parse.
-     * @param {string} path - Path to the note in obsidian.
-     * @param {number} sectionStart - Line number where the section starts that contains this task.
-     * @param {number} sectionIndex - The index of the nth task in its section.
-     * @param {(string | null)} precedingHeader - The header before this task.
+     * @param {TaskLocation} taskLocation - The location of the task line
      * @param {(Moment | null)} fallbackDate - The date to use as the scheduled date if no other date is set
      * @return {*}  {(Task | null)}
      * @memberof Task
      */
     public static fromLine({
         line,
-        path,
-        sectionStart,
-        sectionIndex,
-        precedingHeader,
+        taskLocation,
         fallbackDate,
     }: {
         line: string;
-        path: string;
-        sectionStart: number;
-        sectionIndex: number;
-        precedingHeader: string | null;
+        taskLocation: TaskLocation;
         fallbackDate: Moment | null;
     }): Task | null {
         // Check the line to see if it is a markdown task.
@@ -402,12 +381,9 @@ export class Task {
         return new Task({
             status,
             description,
-            path,
             indentation,
             listMarker,
-            sectionStart,
-            sectionIndex,
-            precedingHeader,
+            taskLocation: taskLocation,
             priority,
             startDate,
             scheduledDate,
@@ -572,6 +548,10 @@ export class Task {
         return this._urgency;
     }
 
+    public get path(): string {
+        return this.taskLocation.path;
+    }
+
     /**
      * Return the name of the file containing the task, with the .md extension removed.
      */
@@ -582,6 +562,18 @@ export class Task {
         } else {
             return null;
         }
+    }
+
+    get sectionStart(): number {
+        return this.taskLocation.sectionStart;
+    }
+
+    get sectionIndex(): number {
+        return this.taskLocation.sectionIndex;
+    }
+
+    public get precedingHeader(): string | null {
+        return this.taskLocation.precedingHeader;
     }
 
     /**

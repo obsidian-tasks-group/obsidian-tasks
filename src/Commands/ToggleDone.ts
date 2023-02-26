@@ -2,6 +2,7 @@ import { Editor, MarkdownView, View } from 'obsidian';
 import { StatusRegistry } from '../StatusRegistry';
 
 import { Task, TaskRegularExpressions } from '../Task';
+import { TaskLocation } from '../TaskLocation';
 
 export const toggleDone = (checking: boolean, editor: Editor, view: View) => {
     if (checking) {
@@ -58,10 +59,7 @@ export const toggleLine = (line: string, path: string) => {
     const task = Task.fromLine({
         // Why are we using Task.fromLine instead of the Cache here?
         line,
-        path,
-        sectionStart: 0, // We don't need this to toggle it here in the editor.
-        sectionIndex: 0, // We don't need this to toggle it here in the editor.
-        precedingHeader: null, // We don't need this to toggle it here in the editor.
+        taskLocation: TaskLocation.fromUnknownPosition(path), // We don't need precise location to toggle it here in the editor.
         fallbackDate: null, // We don't need this to toggle it here in the editor.
     });
     if (task !== null) {

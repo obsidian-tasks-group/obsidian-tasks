@@ -2,6 +2,7 @@ import { Status } from '../Status';
 import { Priority, Task, TaskRegularExpressions } from '../Task';
 import { DateFallback } from '../DateFallback';
 import { StatusRegistry } from '../StatusRegistry';
+import { TaskLocation } from '../TaskLocation';
 
 /**
  * Read any markdown line and treat it as a task, for the purposes of
@@ -21,10 +22,7 @@ export const taskFromLine = ({ line, path }: { line: string; path: string }): Ta
 
     const task = Task.fromLine({
         line,
-        path,
-        sectionStart: 0, // We don't need this to toggle it here in the editor.
-        sectionIndex: 0, // We don't need this to toggle it here in the editor.
-        precedingHeader: null, // We don't need this to toggle it here in the editor.
+        taskLocation: TaskLocation.fromUnknownPosition(path), // We don't need precise location to toggle it here in the editor.
         fallbackDate, // set the scheduled date from the filename, so it can be displayed in the dialog
     });
 
@@ -41,7 +39,8 @@ export const taskFromLine = ({ line, path }: { line: string; path: string }): Ta
         return new Task({
             status: Status.TODO,
             description: '',
-            path,
+            // We don't need the location fields except file to edit here in the editor.
+            taskLocation: TaskLocation.fromUnknownPosition(path),
             indentation: '',
             listMarker: '-',
             priority: Priority.None,
@@ -50,10 +49,6 @@ export const taskFromLine = ({ line, path }: { line: string; path: string }): Ta
             dueDate: null,
             doneDate: null,
             recurrence: null,
-            // We don't need the following fields to edit here in the editor.
-            sectionStart: 0,
-            sectionIndex: 0,
-            precedingHeader: null,
             blockLink: '',
             tags: [],
             originalMarkdown: '',
@@ -78,7 +73,8 @@ export const taskFromLine = ({ line, path }: { line: string; path: string }): Ta
     return new Task({
         status,
         description,
-        path,
+        // We don't need the location fields except file to edit here in the editor.
+        taskLocation: TaskLocation.fromUnknownPosition(path),
         indentation,
         listMarker,
         blockLink,
@@ -88,10 +84,6 @@ export const taskFromLine = ({ line, path }: { line: string; path: string }): Ta
         dueDate: null,
         doneDate: null,
         recurrence: null,
-        // We don't need the following fields to edit here in the editor.
-        sectionStart: 0,
-        sectionIndex: 0,
-        precedingHeader: null,
         tags: [],
         originalMarkdown: '',
         // Not needed since the inferred status is always re-computed after submitting.
