@@ -1,7 +1,9 @@
+import { defaultSuggestionBuilderFactory } from '../Suggestor/Suggestor';
 import { DEFAULT_SYMBOLS } from '../TaskSerializer/default';
 import { StatusConfiguration } from '../StatusConfiguration';
 import { Status } from '../Status';
 import { DefaultTaskSerializer, type TaskSerializer } from '../TaskSerializer';
+import type { SuggestionBuilder } from '../Suggestor';
 import { DebugSettings } from './DebugSettings';
 import { StatusSettings } from './StatusSettings';
 import { Feature } from './Feature';
@@ -17,10 +19,14 @@ export type HeadingState = {
 
 interface TaskFormat {
     taskSerializer: TaskSerializer;
+    buildSuggestions?: SuggestionBuilder;
 }
 
 const TaskFormatMap = {
-    Default: { taskSerializer: new DefaultTaskSerializer(DEFAULT_SYMBOLS) },
+    Default: {
+        taskSerializer: new DefaultTaskSerializer(DEFAULT_SYMBOLS),
+        buildSuggestions: defaultSuggestionBuilderFactory(DEFAULT_SYMBOLS),
+    },
 } as const;
 
 type TaskFormatMap = typeof TaskFormatMap;

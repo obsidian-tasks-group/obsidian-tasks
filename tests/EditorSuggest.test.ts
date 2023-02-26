@@ -3,12 +3,12 @@
  */
 import moment from 'moment';
 import { getSettings, getTaskFormat } from '../src/Config/Settings';
-import { buildSuggestions } from '../src/Suggestor/Suggestor';
 import type { SuggestInfo } from '../src/Suggestor';
 
 window.moment = moment;
 
 describe('auto-complete', () => {
+    const buildSuggestions = getTaskFormat('Default').buildSuggestions;
     it('offers basic completion options for an empty task', () => {
         // Arrange
         const originalSettings = getSettings();
