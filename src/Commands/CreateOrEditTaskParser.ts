@@ -42,7 +42,7 @@ export const taskFromLine = ({ line, path }: { line: string; path: string }): Ta
         return new Task({
             status: Status.TODO,
             description: '',
-            taskLineLocation: new TaskLineLocation(path),
+            taskLineLocation: new TaskLineLocation(path, 0),
             indentation: '',
             listMarker: '-',
             priority: Priority.None,
@@ -52,7 +52,6 @@ export const taskFromLine = ({ line, path }: { line: string; path: string }): Ta
             doneDate: null,
             recurrence: null,
             // We don't need the following fields to edit here in the editor.
-            sectionStart: 0,
             sectionIndex: 0,
             precedingHeader: null,
             blockLink: '',
@@ -79,7 +78,7 @@ export const taskFromLine = ({ line, path }: { line: string; path: string }): Ta
     return new Task({
         status,
         description,
-        taskLineLocation: new TaskLineLocation(path),
+        taskLineLocation: new TaskLineLocation(path, 0),
         indentation,
         listMarker,
         blockLink,
@@ -90,7 +89,6 @@ export const taskFromLine = ({ line, path }: { line: string; path: string }): Ta
         doneDate: null,
         recurrence: null,
         // We don't need the following fields to edit here in the editor.
-        sectionStart: 0,
         sectionIndex: 0,
         precedingHeader: null,
         tags: [],

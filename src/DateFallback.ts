@@ -115,7 +115,7 @@ export class DateFallback {
 
         return new Task({
             ...task,
-            taskLineLocation: new TaskLineLocation(newPath),
+            taskLineLocation: new TaskLineLocation(newPath, task.sectionStart),
             scheduledDate,
             scheduledDateIsInferred,
         });
