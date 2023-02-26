@@ -14,11 +14,19 @@ export class TaskLineLocation {
     }
 
     /**
-     * Constructor, for use when the Task's exact location in a file is either unknown, or not needed
+     * Constructor, for use when the Task's exact location in a file is either unknown, or not needed.
      * @param path
      */
     public static fromUnknownPosition(path: string): TaskLineLocation {
         return new TaskLineLocation(path, 0, 0);
+    }
+
+    /**
+     * Constructor, for when the file has been renamed, and all other data remains the same.
+     * @param newPath
+     */
+    fromRenamedFile(newPath: string) {
+        return new TaskLineLocation(newPath, this.sectionStart, this.sectionIndex);
     }
 
     public get path(): string {
