@@ -6,6 +6,7 @@ import { StatusRegistry } from '../src/StatusRegistry';
 import { Status } from '../src/Status';
 import { StatusConfiguration, StatusType } from '../src/StatusConfiguration';
 import { Task } from '../src/Task';
+import { TaskLocation } from '../src/TaskLocation';
 import * as TestHelpers from './TestHelpers';
 
 jest.mock('obsidian');
@@ -157,10 +158,7 @@ describe('StatusRegistry', () => {
             const precedingHeader = 'Eloquent Section';
             const task = Task.fromLine({
                 line,
-                path,
-                sectionStart,
-                sectionIndex,
-                precedingHeader,
+                taskLocation: new TaskLocation(path, sectionStart, sectionIndex, precedingHeader),
                 fallbackDate: null,
             });
 
@@ -188,10 +186,7 @@ describe('StatusRegistry', () => {
             const precedingHeader = 'Eloquent Section';
             const task = Task.fromLine({
                 line,
-                path,
-                sectionStart,
-                sectionIndex,
-                precedingHeader,
+                taskLocation: new TaskLocation(path, sectionStart, sectionIndex, precedingHeader),
                 fallbackDate: null,
             });
 
@@ -225,10 +220,7 @@ describe('StatusRegistry', () => {
             const precedingHeader = 'Eloquent Section';
             const task = Task.fromLine({
                 line,
-                path,
-                sectionStart,
-                sectionIndex,
-                precedingHeader,
+                taskLocation: new TaskLocation(path, sectionStart, sectionIndex, precedingHeader),
                 fallbackDate: null,
             });
 
