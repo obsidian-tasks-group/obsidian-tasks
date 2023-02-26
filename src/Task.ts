@@ -197,7 +197,7 @@ export class Task {
         this.path = path;
         this.indentation = indentation;
         this.listMarker = listMarker;
-        this.taskLineLocation = new TaskLineLocation();
+        this.taskLineLocation = new TaskLineLocation(path);
         this.sectionStart = sectionStart;
         this.sectionIndex = sectionIndex;
         this.precedingHeader = precedingHeader;
