@@ -5,10 +5,12 @@
 export class TaskLineLocation {
     private readonly _path: string;
     private readonly _sectionStart: number;
+    private readonly _sectionIndex: number;
 
-    public constructor(path: string, sectionStart: number) {
+    public constructor(path: string, sectionStart: number, sectionIndex: number) {
         this._path = path;
         this._sectionStart = sectionStart;
+        this._sectionIndex = sectionIndex;
     }
 
     /**
@@ -16,7 +18,7 @@ export class TaskLineLocation {
      * @param path
      */
     public static fromUnknownPosition(path: string): TaskLineLocation {
-        return new TaskLineLocation(path, 0);
+        return new TaskLineLocation(path, 0, 0);
     }
 
     public get path(): string {
@@ -26,5 +28,10 @@ export class TaskLineLocation {
     /** Line number where the section starts that contains this task. */
     get sectionStart(): number {
         return this._sectionStart;
+    }
+
+    /** The index of the nth task in its section. */
+    get sectionIndex(): number {
+        return this._sectionIndex;
     }
 }

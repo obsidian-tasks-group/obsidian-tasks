@@ -123,8 +123,6 @@ export class Task {
     public readonly listMarker: string;
 
     public readonly taskLineLocation: TaskLineLocation;
-    /** The index of the nth task in its section. */
-    public readonly sectionIndex: number;
     public readonly precedingHeader: string | null;
 
     public readonly tags: string[];
@@ -156,7 +154,6 @@ export class Task {
         taskLineLocation,
         indentation,
         listMarker,
-        sectionIndex,
         precedingHeader,
         priority,
         startDate,
@@ -174,7 +171,6 @@ export class Task {
         taskLineLocation: TaskLineLocation;
         indentation: string;
         listMarker: string;
-        sectionIndex: number;
         precedingHeader: string | null;
         priority: Priority;
         startDate: moment.Moment | null;
@@ -192,7 +188,6 @@ export class Task {
         this.indentation = indentation;
         this.listMarker = listMarker;
         this.taskLineLocation = taskLineLocation;
-        this.sectionIndex = sectionIndex;
         this.precedingHeader = precedingHeader;
 
         this.tags = tags;
@@ -255,7 +250,7 @@ export class Task {
             return null;
         }
 
-        const taskLineLocation = new TaskLineLocation(path, sectionStart);
+        const taskLineLocation = new TaskLineLocation(path, sectionStart, sectionIndex);
 
         let description = body;
         const indentation = regexMatch[1];
@@ -404,7 +399,6 @@ export class Task {
             indentation,
             listMarker,
             taskLineLocation,
-            sectionIndex,
             precedingHeader,
             priority,
             startDate,
@@ -588,6 +582,10 @@ export class Task {
 
     get sectionStart(): number {
         return this.taskLineLocation.sectionStart;
+    }
+
+    get sectionIndex(): number {
+        return this.taskLineLocation.sectionIndex;
     }
 
     /**

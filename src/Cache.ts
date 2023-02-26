@@ -150,7 +150,7 @@ export class Cache {
                         if (!useFilenameAsScheduledDate) {
                             return new Task({
                                 ...task,
-                                taskLineLocation: new TaskLineLocation(file.path, task.sectionStart),
+                                taskLineLocation: new TaskLineLocation(file.path, task.sectionStart, task.sectionIndex),
                             });
                         } else {
                             return DateFallback.updateTaskPath(task, file.path, fallbackDate.value);
