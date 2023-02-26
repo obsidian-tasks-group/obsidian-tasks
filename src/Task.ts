@@ -119,7 +119,6 @@ export class TaskRegularExpressions {
 export class Task {
     public readonly status: Status;
     public readonly description: string;
-    public readonly path: string;
     public readonly indentation: string;
     public readonly listMarker: string;
 
@@ -156,7 +155,7 @@ export class Task {
     constructor({
         status,
         description,
-        path,
+        taskLineLocation,
         indentation,
         listMarker,
         sectionStart,
@@ -175,7 +174,7 @@ export class Task {
     }: {
         status: Status;
         description: string;
-        path: string;
+        taskLineLocation: TaskLineLocation;
         indentation: string;
         listMarker: string;
         sectionStart: number;
@@ -194,10 +193,9 @@ export class Task {
     }) {
         this.status = status;
         this.description = description;
-        this.path = path;
         this.indentation = indentation;
         this.listMarker = listMarker;
-        this.taskLineLocation = new TaskLineLocation(path);
+        this.taskLineLocation = taskLineLocation;
         this.sectionStart = sectionStart;
         this.sectionIndex = sectionIndex;
         this.precedingHeader = precedingHeader;
@@ -261,6 +259,8 @@ export class Task {
         if (!body.includes(globalFilter)) {
             return null;
         }
+
+        const taskLineLocation = new TaskLineLocation(path);
 
         let description = body;
         const indentation = regexMatch[1];
@@ -406,9 +406,9 @@ export class Task {
         return new Task({
             status,
             description,
-            path,
             indentation,
             listMarker,
+            taskLineLocation,
             sectionStart,
             sectionIndex,
             precedingHeader,
@@ -574,6 +574,10 @@ export class Task {
         }
 
         return this._urgency;
+    }
+
+    public get path(): string {
+        return this.taskLineLocation.path;
     }
 
     /**

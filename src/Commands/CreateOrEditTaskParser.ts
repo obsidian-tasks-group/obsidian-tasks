@@ -2,6 +2,7 @@ import { Status } from '../Status';
 import { Priority, Task, TaskRegularExpressions } from '../Task';
 import { DateFallback } from '../DateFallback';
 import { StatusRegistry } from '../StatusRegistry';
+import { TaskLineLocation } from '../TaskLineLocation';
 
 /**
  * Read any markdown line and treat it as a task, for the purposes of
@@ -41,7 +42,7 @@ export const taskFromLine = ({ line, path }: { line: string; path: string }): Ta
         return new Task({
             status: Status.TODO,
             description: '',
-            path,
+            taskLineLocation: new TaskLineLocation(path),
             indentation: '',
             listMarker: '-',
             priority: Priority.None,
@@ -78,7 +79,7 @@ export const taskFromLine = ({ line, path }: { line: string; path: string }): Ta
     return new Task({
         status,
         description,
-        path,
+        taskLineLocation: new TaskLineLocation(path),
         indentation,
         listMarker,
         blockLink,

@@ -1,6 +1,7 @@
 import type { Moment } from 'moment/moment';
 import { getSettings } from './Config/Settings';
 import { Task } from './Task';
+import { TaskLineLocation } from './TaskLineLocation';
 
 /**
  * Implement date from path detection
@@ -114,7 +115,7 @@ export class DateFallback {
 
         return new Task({
             ...task,
-            path: newPath,
+            taskLineLocation: new TaskLineLocation(newPath),
             scheduledDate,
             scheduledDateIsInferred,
         });
