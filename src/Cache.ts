@@ -148,7 +148,10 @@ export class Cache {
                 this.tasks = this.tasks.map((task: Task): Task => {
                     if (task.path === oldPath) {
                         if (!useFilenameAsScheduledDate) {
-                            return new Task({ ...task, taskLineLocation: new TaskLineLocation(file.path) });
+                            return new Task({
+                                ...task,
+                                taskLineLocation: new TaskLineLocation(file.path, task.sectionStart),
+                            });
                         } else {
                             return DateFallback.updateTaskPath(task, file.path, fallbackDate.value);
                         }
