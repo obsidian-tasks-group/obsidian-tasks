@@ -5,11 +5,13 @@ describe('TaskLineLocation', () => {
         // Arrange
         const path = 'a/b/c.md';
         const sectionStart = 3;
-        const taskLineLocation = new TaskLineLocation(path, sectionStart);
+        const sectionIndex = 7;
+        const taskLineLocation = new TaskLineLocation(path, sectionStart, sectionIndex);
 
         // Assert
         expect(taskLineLocation.path).toStrictEqual(path);
         expect(taskLineLocation.sectionStart).toStrictEqual(sectionStart);
+        expect(taskLineLocation.sectionIndex).toStrictEqual(sectionIndex);
     });
 
     it('should construct from only the file path', () => {
@@ -20,5 +22,6 @@ describe('TaskLineLocation', () => {
         // Assert
         expect(taskLineLocation.path).toStrictEqual(path);
         expect(taskLineLocation.sectionStart).toStrictEqual(0);
+        expect(taskLineLocation.sectionIndex).toStrictEqual(0);
     });
 });

@@ -63,10 +63,9 @@ export class TaskBuilder {
         return new Task({
             status: this._status,
             description: description,
-            taskLineLocation: new TaskLineLocation(this._path, this._sectionStart),
+            taskLineLocation: new TaskLineLocation(this._path, this._sectionStart, this._sectionIndex),
             indentation: this._indentation,
             listMarker: this._listMarker,
-            sectionIndex: this._sectionIndex,
             precedingHeader: this._precedingHeader,
             priority: this._priority,
             startDate: this._startDate,

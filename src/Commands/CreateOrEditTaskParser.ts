@@ -52,7 +52,6 @@ export const taskFromLine = ({ line, path }: { line: string; path: string }): Ta
             doneDate: null,
             recurrence: null,
             // We don't need the following fields to edit here in the editor.
-            sectionIndex: 0,
             precedingHeader: null,
             blockLink: '',
             tags: [],
@@ -89,7 +88,6 @@ export const taskFromLine = ({ line, path }: { line: string; path: string }): Ta
         doneDate: null,
         recurrence: null,
         // We don't need the following fields to edit here in the editor.
-        sectionIndex: 0,
         precedingHeader: null,
         tags: [],
         originalMarkdown: '',
