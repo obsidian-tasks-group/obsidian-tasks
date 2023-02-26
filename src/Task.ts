@@ -122,7 +122,7 @@ export class Task {
     public readonly indentation: string;
     public readonly listMarker: string;
 
-    public readonly taskLineLocation: TaskLocation;
+    public readonly taskLocation: TaskLocation;
 
     public readonly tags: string[];
 
@@ -150,7 +150,7 @@ export class Task {
     constructor({
         status,
         description,
-        taskLineLocation,
+        taskLocation,
         indentation,
         listMarker,
         priority,
@@ -166,7 +166,7 @@ export class Task {
     }: {
         status: Status;
         description: string;
-        taskLineLocation: TaskLocation;
+        taskLocation: TaskLocation;
         indentation: string;
         listMarker: string;
         priority: Priority;
@@ -184,7 +184,7 @@ export class Task {
         this.description = description;
         this.indentation = indentation;
         this.listMarker = listMarker;
-        this.taskLineLocation = taskLineLocation;
+        this.taskLocation = taskLocation;
 
         this.tags = tags;
 
@@ -246,7 +246,7 @@ export class Task {
             return null;
         }
 
-        const taskLineLocation = new TaskLocation(path, sectionStart, sectionIndex, precedingHeader);
+        const taskLocation = new TaskLocation(path, sectionStart, sectionIndex, precedingHeader);
 
         let description = body;
         const indentation = regexMatch[1];
@@ -394,7 +394,7 @@ export class Task {
             description,
             indentation,
             listMarker,
-            taskLineLocation,
+            taskLocation: taskLocation,
             priority,
             startDate,
             scheduledDate,
@@ -560,7 +560,7 @@ export class Task {
     }
 
     public get path(): string {
-        return this.taskLineLocation.path;
+        return this.taskLocation.path;
     }
 
     /**
@@ -576,15 +576,15 @@ export class Task {
     }
 
     get sectionStart(): number {
-        return this.taskLineLocation.sectionStart;
+        return this.taskLocation.sectionStart;
     }
 
     get sectionIndex(): number {
-        return this.taskLineLocation.sectionIndex;
+        return this.taskLocation.sectionIndex;
     }
 
     public get precedingHeader(): string | null {
-        return this.taskLineLocation.precedingHeader;
+        return this.taskLocation.precedingHeader;
     }
 
     /**

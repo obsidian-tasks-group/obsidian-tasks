@@ -1,6 +1,6 @@
 import { TaskLocation } from '../src/TaskLocation';
 
-describe('TaskLineLocation', () => {
+describe('TaskLocation', () => {
     it('should store the full task location', () => {
         // Arrange
         const path = 'a/b/c.md';
@@ -9,13 +9,13 @@ describe('TaskLineLocation', () => {
         const precedingHeader = 'My Header';
 
         // Act
-        const taskLineLocation = new TaskLocation(path, sectionStart, sectionIndex, precedingHeader);
+        const taskLocation = new TaskLocation(path, sectionStart, sectionIndex, precedingHeader);
 
         // Assert
-        expect(taskLineLocation.path).toStrictEqual(path);
-        expect(taskLineLocation.sectionStart).toStrictEqual(sectionStart);
-        expect(taskLineLocation.sectionIndex).toStrictEqual(sectionIndex);
-        expect(taskLineLocation.precedingHeader).toStrictEqual(precedingHeader);
+        expect(taskLocation.path).toStrictEqual(path);
+        expect(taskLocation.sectionStart).toStrictEqual(sectionStart);
+        expect(taskLocation.sectionIndex).toStrictEqual(sectionIndex);
+        expect(taskLocation.precedingHeader).toStrictEqual(precedingHeader);
     });
 
     it('should construct from only the file path', () => {
@@ -23,13 +23,13 @@ describe('TaskLineLocation', () => {
         const path = 'a/b/c.md';
 
         // Act
-        const taskLineLocation = TaskLocation.fromUnknownPosition(path);
+        const taskLocation = TaskLocation.fromUnknownPosition(path);
 
         // Assert
-        expect(taskLineLocation.path).toStrictEqual(path);
-        expect(taskLineLocation.sectionStart).toStrictEqual(0);
-        expect(taskLineLocation.sectionIndex).toStrictEqual(0);
-        expect(taskLineLocation.precedingHeader).toBeNull();
+        expect(taskLocation.path).toStrictEqual(path);
+        expect(taskLocation.sectionStart).toStrictEqual(0);
+        expect(taskLocation.sectionIndex).toStrictEqual(0);
+        expect(taskLocation.precedingHeader).toBeNull();
     });
 
     it('should provide convenient renaming of path', () => {
@@ -38,11 +38,11 @@ describe('TaskLineLocation', () => {
         const sectionStart = 13;
         const sectionIndex = 10;
         const precedingHeader = 'My Previous Header';
-        const taskLineLocation = new TaskLocation(path, sectionStart, sectionIndex, precedingHeader);
+        const taskLocation = new TaskLocation(path, sectionStart, sectionIndex, precedingHeader);
 
         // Act
         const newPath = 'd/e/f.md';
-        const newLocation = taskLineLocation.fromRenamedFile(newPath);
+        const newLocation = taskLocation.fromRenamedFile(newPath);
 
         // Assert
         expect(newLocation.path).toStrictEqual(newPath);

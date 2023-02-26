@@ -280,7 +280,7 @@ describe('Query', () => {
                 new Task({
                     status: Status.TODO,
                     description: 'description',
-                    taskLineLocation: TaskLocation.fromUnknownPosition('Ab/C D'),
+                    taskLocation: TaskLocation.fromUnknownPosition('Ab/C D'),
                     indentation: '',
                     listMarker: '-',
                     priority: Priority.None,
@@ -297,7 +297,7 @@ describe('Query', () => {
                 new Task({
                     status: Status.TODO,
                     description: 'description',
-                    taskLineLocation: TaskLocation.fromUnknownPosition('FF/C D'),
+                    taskLocation: TaskLocation.fromUnknownPosition('FF/C D'),
                     indentation: '',
                     listMarker: '-',
                     priority: Priority.None,
