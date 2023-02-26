@@ -2,7 +2,7 @@ import { Status } from '../Status';
 import { Priority, Task, TaskRegularExpressions } from '../Task';
 import { DateFallback } from '../DateFallback';
 import { StatusRegistry } from '../StatusRegistry';
-import { TaskLineLocation } from '../TaskLineLocation';
+import { TaskLocation } from '../TaskLocation';
 
 /**
  * Read any markdown line and treat it as a task, for the purposes of
@@ -43,7 +43,7 @@ export const taskFromLine = ({ line, path }: { line: string; path: string }): Ta
             status: Status.TODO,
             description: '',
             // We don't need the location fields except file to edit here in the editor.
-            taskLineLocation: TaskLineLocation.fromUnknownPosition(path),
+            taskLineLocation: TaskLocation.fromUnknownPosition(path),
             indentation: '',
             listMarker: '-',
             priority: Priority.None,
@@ -77,7 +77,7 @@ export const taskFromLine = ({ line, path }: { line: string; path: string }): Ta
         status,
         description,
         // We don't need the location fields except file to edit here in the editor.
-        taskLineLocation: TaskLineLocation.fromUnknownPosition(path),
+        taskLineLocation: TaskLocation.fromUnknownPosition(path),
         indentation,
         listMarker,
         blockLink,
