@@ -279,7 +279,7 @@ describe('parsing', () => {
 
         // Assert
         // More info will be added to TaskLineLocation
-        expect(task.taskLineLocation).toBeDefined();
+        expect(task.taskLocation).toBeDefined();
     });
 });
 

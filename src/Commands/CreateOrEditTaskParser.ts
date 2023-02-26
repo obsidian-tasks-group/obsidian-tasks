@@ -43,7 +43,7 @@ export const taskFromLine = ({ line, path }: { line: string; path: string }): Ta
             status: Status.TODO,
             description: '',
             // We don't need the location fields except file to edit here in the editor.
-            taskLineLocation: TaskLocation.fromUnknownPosition(path),
+            taskLocation: TaskLocation.fromUnknownPosition(path),
             indentation: '',
             listMarker: '-',
             priority: Priority.None,
@@ -77,7 +77,7 @@ export const taskFromLine = ({ line, path }: { line: string; path: string }): Ta
         status,
         description,
         // We don't need the location fields except file to edit here in the editor.
-        taskLineLocation: TaskLocation.fromUnknownPosition(path),
+        taskLocation: TaskLocation.fromUnknownPosition(path),
         indentation,
         listMarker,
         blockLink,
