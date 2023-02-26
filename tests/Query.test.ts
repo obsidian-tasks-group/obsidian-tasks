@@ -6,6 +6,7 @@ import { Query } from '../src/Query/Query';
 import { Status } from '../src/Status';
 import { Priority, Task } from '../src/Task';
 import { resetSettings, updateSettings } from '../src/Config/Settings';
+import { TaskLineLocation } from '../src/TaskLineLocation';
 import { createTasksFromMarkdown, fromLine } from './TestHelpers';
 import { shouldSupportFiltering } from './TestingTools/FilterTestHelpers';
 import type { FilteringCase } from './TestingTools/FilterTestHelpers';
@@ -279,7 +280,7 @@ describe('Query', () => {
                 new Task({
                     status: Status.TODO,
                     description: 'description',
-                    path: 'Ab/C D',
+                    taskLineLocation: new TaskLineLocation('Ab/C D'),
                     indentation: '',
                     listMarker: '-',
                     sectionStart: 0,
@@ -299,7 +300,7 @@ describe('Query', () => {
                 new Task({
                     status: Status.TODO,
                     description: 'description',
-                    path: 'FF/C D',
+                    taskLineLocation: new TaskLineLocation('FF/C D'),
                     indentation: '',
                     listMarker: '-',
                     sectionStart: 0,
