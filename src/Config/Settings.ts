@@ -1,5 +1,6 @@
 import { StatusConfiguration } from '../StatusConfiguration';
 import { Status } from '../Status';
+import { DebugSettings } from './DebugSettings';
 import { StatusSettings } from './StatusSettings';
 import { Feature } from './Feature';
 import type { FeatureFlag } from './Feature';
@@ -35,6 +36,7 @@ export interface Settings {
 
     // Tracks the stage of the headings in the settings UI.
     headingOpened: HeadingState;
+    debugSettings: DebugSettings;
 }
 
 const defaultSettings: Settings = {
@@ -59,6 +61,7 @@ const defaultSettings: Settings = {
         // setDoneDate: true,
     },
     headingOpened: {},
+    debugSettings: new DebugSettings(),
 };
 
 let settings: Settings = { ...defaultSettings };
