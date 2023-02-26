@@ -22,10 +22,7 @@ export const taskFromLine = ({ line, path }: { line: string; path: string }): Ta
 
     const task = Task.fromLine({
         line,
-        path,
-        sectionStart: 0, // We don't need this to toggle it here in the editor.
-        sectionIndex: 0, // We don't need this to toggle it here in the editor.
-        precedingHeader: null, // We don't need this to toggle it here in the editor.
+        taskLocation: TaskLocation.fromUnknownPosition(path), // We don't need precise location to toggle it here in the editor.
         fallbackDate, // set the scheduled date from the filename, so it can be displayed in the dialog
     });
 

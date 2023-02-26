@@ -6,6 +6,7 @@ import moment from 'moment';
 import { Task } from '../src/Task';
 import { resetSettings, updateSettings } from '../src/Config/Settings';
 import { DateFallback } from '../src/DateFallback';
+import { TaskLocation } from '../src/TaskLocation';
 import { TaskBuilder } from './TestingTools/TaskBuilder';
 
 jest.mock('obsidian');
@@ -185,10 +186,7 @@ describe('extract date from filename', () => {
 function constructTaskFromLine(line: string, fallbackDate: string | null) {
     return Task.fromLine({
         line,
-        path: 'file.md', // filename must be parsed before calling Task.fromLine, so irrelevant for these tests
-        sectionStart: 0,
-        sectionIndex: 0,
-        precedingHeader: '',
+        taskLocation: TaskLocation.fromUnknownPosition('file.md'), // filename must be parsed before calling Task.fromLine, so irrelevant for these tests
         fallbackDate: date(fallbackDate),
     });
 }

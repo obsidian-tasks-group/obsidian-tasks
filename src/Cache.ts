@@ -8,6 +8,7 @@ import type { TasksEvents } from './TasksEvents';
 import { DateFallback } from './DateFallback';
 import { getSettings } from './Config/Settings';
 import { Lazy } from './lib/Lazy';
+import { TaskLocation } from './TaskLocation';
 
 export enum State {
     Cold = 'Cold',
@@ -297,10 +298,12 @@ export class Cache {
                 try {
                     task = Task.fromLine({
                         line,
-                        path: file.path,
-                        sectionStart: currentSection.position.start.line,
-                        sectionIndex,
-                        precedingHeader: Cache.getPrecedingHeader(lineNumber, fileCache.headings),
+                        taskLocation: new TaskLocation(
+                            file.path,
+                            currentSection.position.start.line,
+                            sectionIndex,
+                            Cache.getPrecedingHeader(lineNumber, fileCache.headings),
+                        ),
                         fallbackDate: dateFromFileName.value,
                     });
                 } catch (e) {

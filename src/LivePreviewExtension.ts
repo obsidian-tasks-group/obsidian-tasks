@@ -3,6 +3,7 @@ import type { PluginValue } from '@codemirror/view';
 import { Notice } from 'obsidian';
 
 import { Task } from './Task';
+import { TaskLocation } from './TaskLocation';
 
 export const newLivePreviewExtension = () => {
     return ViewPlugin.fromClass(LivePreviewExtension);
@@ -59,10 +60,7 @@ class LivePreviewExtension implements PluginValue {
             // None of this data is relevant here.
             // The task is created, toggled, and written back to the CM6 document,
             // replacing the old task in-place.
-            path: '',
-            sectionStart: 0,
-            sectionIndex: 0,
-            precedingHeader: null,
+            taskLocation: TaskLocation.fromUnknownPosition(''),
             fallbackDate: null,
         });
 

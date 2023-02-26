@@ -1,7 +1,7 @@
 import type { Moment } from 'moment';
 import { LayoutOptions, TaskLayout } from './TaskLayout';
 import type { TaskLayoutComponent } from './TaskLayout';
-import { TaskLocation } from './TaskLocation';
+import type { TaskLocation } from './TaskLocation';
 import { Recurrence } from './Recurrence';
 import { getSettings } from './Config/Settings';
 import { StatusRegistry } from './StatusRegistry';
@@ -207,27 +207,18 @@ export class Task {
      *
      * @static
      * @param {string} line - The full line in the note to parse.
-     * @param {string} path - Path to the note in obsidian.
-     * @param {number} sectionStart - Line number where the section starts that contains this task.
-     * @param {number} sectionIndex - The index of the nth task in its section.
-     * @param {(string | null)} precedingHeader - The header before this task.
+     * @param {TaskLocation} taskLocation - The location of the task line
      * @param {(Moment | null)} fallbackDate - The date to use as the scheduled date if no other date is set
      * @return {*}  {(Task | null)}
      * @memberof Task
      */
     public static fromLine({
         line,
-        path,
-        sectionStart,
-        sectionIndex,
-        precedingHeader,
+        taskLocation,
         fallbackDate,
     }: {
         line: string;
-        path: string;
-        sectionStart: number;
-        sectionIndex: number;
-        precedingHeader: string | null;
+        taskLocation: TaskLocation;
         fallbackDate: Moment | null;
     }): Task | null {
         // Check the line to see if it is a markdown task.
@@ -245,8 +236,6 @@ export class Task {
         if (!body.includes(globalFilter)) {
             return null;
         }
-
-        const taskLocation = new TaskLocation(path, sectionStart, sectionIndex, precedingHeader);
 
         let description = body;
         const indentation = regexMatch[1];
