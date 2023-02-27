@@ -12,7 +12,7 @@ export function fromLine({
 }) {
     return Task.fromLine({
         line,
-        taskLocation: new TaskLocation(path, 0, 0, precedingHeader),
+        taskLocation: new TaskLocation(path, 0, 0, 0, precedingHeader),
         fallbackDate: null,
     })!;
 }
@@ -23,7 +23,7 @@ export function createTasksFromMarkdown(tasksAsMarkdown: string, path: string, p
     for (const line of taskLines) {
         const task = Task.fromLine({
             line: line,
-            taskLocation: new TaskLocation(path, 0, 0, precedingHeader),
+            taskLocation: new TaskLocation(path, 0, 0, 0, precedingHeader),
             fallbackDate: null,
         });
         if (task) {

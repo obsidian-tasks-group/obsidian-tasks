@@ -26,6 +26,7 @@ export class TaskBuilder {
     private _indentation: string = '';
     private _listMarker: string = '-';
 
+    private _lineNumber: number = 0;
     private _sectionStart: number = 0;
     private _sectionIndex: number = 0;
 
@@ -63,7 +64,13 @@ export class TaskBuilder {
         return new Task({
             status: this._status,
             description: description,
-            taskLocation: new TaskLocation(this._path, this._sectionStart, this._sectionIndex, this._precedingHeader),
+            taskLocation: new TaskLocation(
+                this._path,
+                this._lineNumber,
+                this._sectionStart,
+                this._sectionIndex,
+                this._precedingHeader,
+            ),
             indentation: this._indentation,
             listMarker: this._listMarker,
             priority: this._priority,
@@ -127,6 +134,11 @@ export class TaskBuilder {
 
     public listMarker(listMarker: string): TaskBuilder {
         this._listMarker = listMarker;
+        return this;
+    }
+
+    public lineNumber(lineNumber: number): TaskBuilder {
+        this._lineNumber = lineNumber;
         return this;
     }
 

@@ -300,6 +300,7 @@ export class Cache {
                         line,
                         taskLocation: new TaskLocation(
                             file.path,
+                            lineNumber,
                             currentSection.position.start.line,
                             sectionIndex,
                             Cache.getPrecedingHeader(lineNumber, fileCache.headings),

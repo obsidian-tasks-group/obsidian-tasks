@@ -40,6 +40,7 @@
   - [Notes and Special Cases](#notes-and-special-cases)
 - [FAQs](#faqs)
   - [How does Tasks handle status changes?](#how-does-tasks-handle-status-changes)
+  - [How do I enable hidden debugging/visualisation facilities?](#how-do-i-enable-hidden-debuggingvisualisation-facilities)
   - [How do I add a new field to the Task class?](#how-do-i-add-a-new-field-to-the-task-class)
   - [How do I add a new task filter?](#how-do-i-add-a-new-task-filter)
     - [Update src/](#update-src)
@@ -523,15 +524,15 @@ This is what these options do:
   - This adjusts the rendering of Task objects to display some extra information, to make the plugin's behaviour easier to inspect.
   - The values display are:
     - Line 1:
+      - `task.lineNumber`
       - `task.sectionStart`
       - `task.sectionIndex`
-      - `task.precedingHeader`
-      - `task.path`
-    - Line 2:
       - `task.originalMarkdown`
-  - Here is an example of the extra output:
-  🐛 **4** . 6 . 'Steps to world domination' . 'ACME.md'
-  '`- [ ] #task Feed the baby 🔽 📅 2021-11-21`'
+    - Line 2:
+      - `task.path`
+      - `task.precedingHeader`
+  - Here is an example of the extra output:<br>
+  🐛 **11** . 4 . 6 . '`- [ ] #task Feed the baby 🔽 📅 2021-11-21`'<br>'`a/b/c.d`' > '`Previous Heading`'<br>
 
 ### How do I add a new field to the Task class?
 
