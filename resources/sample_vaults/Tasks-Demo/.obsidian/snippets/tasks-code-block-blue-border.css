@@ -1,0 +1,7 @@
+/* Make Tasks code blocks stand out visually, to distinguish them from Task lists in Reading mode */
+:not(.callout-content) > .block-language-tasks {
+    padding: 5px 15px;
+    border: 2px solid var(--color-blue);
+    border-radius: 5px;
+    margin: 1em 0;
+}
