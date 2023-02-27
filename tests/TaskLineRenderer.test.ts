@@ -189,7 +189,7 @@ describe('task line rendering', () => {
         await testLayoutOptions(
             '- [ ] Task with invalid due date 📅 2023-11-02',
             {},
-            "Task with invalid due date 📅 2023-11-02<br>🐛 <b>0</b> . 0 . 'Previous Heading' . 'a/b/c.d'<br>'<code>- [ ] Task with invalid due date 📅 2023-11-02</code>'<br>",
+            "Task with invalid due date 📅 2023-11-02<br>🐛 <b>0</b> . 0 . 0 . '<code>- [ ] Task with invalid due date 📅 2023-11-02</code>'<br>'<code>a/b/c.d</code>' > '<code>Previous Heading</code>'<br>",
         );
     });
 
