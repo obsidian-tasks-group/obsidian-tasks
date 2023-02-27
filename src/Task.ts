@@ -564,6 +564,10 @@ export class Task {
         }
     }
 
+    get lineNumber(): number {
+        return this.taskLocation.lineNumber;
+    }
+
     get sectionStart(): number {
         return this.taskLocation.sectionStart;
     }
@@ -649,6 +653,7 @@ export class Task {
             'path',
             'indentation',
             'listMarker',
+            'lineNumber',
             'sectionStart',
             'sectionIndex',
             'precedingHeader',

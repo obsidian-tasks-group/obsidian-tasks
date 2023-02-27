@@ -65,14 +65,10 @@ export class InlineRenderer {
                 continue;
             }
 
+            const precedingHeader = null; // We don't need the preceding header for in-line rendering.
             const task = Task.fromLine({
                 line,
-                taskLocation: new TaskLocation(
-                    path,
-                    section.lineStart,
-                    sectionIndex,
-                    null, // We don't need the preceding header for in-line rendering.
-                ),
+                taskLocation: new TaskLocation(path, lineNumber, section.lineStart, sectionIndex, precedingHeader),
                 fallbackDate: null, // We don't need the fallback date for in-line rendering
             });
             if (task !== null) {

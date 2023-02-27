@@ -36,6 +36,7 @@ describe('parsing', () => {
         expect(task!.doneDate).not.toBeNull();
         expect(task!.doneDate!.isSame(moment('2021-06-20', 'YYYY-MM-DD'))).toStrictEqual(true);
         expect(task!.originalMarkdown).toStrictEqual(line);
+        expect(task!.lineNumber).toEqual(0);
     });
 
     it('parses a task from a line starting with asterisk', () => {
@@ -992,6 +993,12 @@ describe('identicalTo', () => {
         const lhs = new TaskBuilder().listMarker('*');
         expect(lhs).toBeIdenticalTo(new TaskBuilder().listMarker('*'));
         expect(lhs).not.toBeIdenticalTo(new TaskBuilder().listMarker('-'));
+    });
+
+    it('should check lineNumber', () => {
+        const lhs = new TaskBuilder().lineNumber(0);
+        expect(lhs).toBeIdenticalTo(new TaskBuilder().lineNumber(0));
+        expect(lhs).not.toBeIdenticalTo(new TaskBuilder().lineNumber(2));
     });
 
     it('should check sectionStart', () => {

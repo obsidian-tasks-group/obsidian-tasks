@@ -112,7 +112,7 @@ async function taskToHtml(
     const { debugSettings } = getSettings();
     if (debugSettings.showTaskHiddenData) {
         // Add some debug output to enable hidden information in the task to be inspected.
-        taskAsString += `<br>🐛 <b>${task.sectionStart}</b> . ${task.sectionIndex} . '${task.precedingHeader}' . '${task.path}'<br>'<code>${task.originalMarkdown}</code>'<br>`;
+        taskAsString += `<br>🐛 <b>${task.lineNumber}</b> . ${task.sectionStart} . ${task.sectionIndex} . '<code>${task.originalMarkdown}</code>'<br>'<code>${task.path}</code>' > '<code>${task.precedingHeader}</code>'<br>`;
     }
 
     await renderComponentText(parentElement, taskAsString, 'description', task, textRenderer);
