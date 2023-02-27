@@ -29,4 +29,5 @@ Some more random tasks
 
 ```tasks
 path includes 1680 - Reading Mode line numbers not updated on editing
+sort by description
 ```
