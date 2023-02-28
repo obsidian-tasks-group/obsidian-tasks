@@ -1,6 +1,7 @@
 # Welcome
 
-Welcome, and thank you for wanting to contribute to Obsidian Tasks!
+Welcome, and thank you for wanting to contribute to [Obsidian Tasks](https://github.com/obsidian-tasks-group/obsidian-tasks)!
+
 Every contribution is much appreciated!
 
 ## For Contributors  
