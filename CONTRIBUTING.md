@@ -67,7 +67,7 @@ Every contribution is much appreciated!
 
 ## Updating documentation
 
-The documentation resides under the `./docs` directory.
+The documentation resides under the [./docs](./docs) directory.
 It consists of markdown files, which [Jekyll](https://jekyllrb.com/) will transform into web pages that you can view at <https://obsidian-tasks-group.github.io/obsidian-tasks/> .
 In the simplest case, you can update the existing markdown file and create a pull request (PR) with your changes.
 
@@ -280,7 +280,7 @@ The [Expect](https://jestjs.io/docs/expect) page is a good reference for the man
 
 - Tests that test low-level implementation details are hard to maintain over time. Instead, test user-visible features.
 - Try to think of the purpose of the code that has missing tests.
-  - For example, in `taskFromLine()` in `src/Commands/CreateOrEdit.ts` the comments are quite useful in terms of showing the different scenarios being considered. Something like:
+  - For example, in `taskFromLine()` in [./src/Commands/CreateOrEdit.ts](./src/Commands/CreateOrEdit.ts) the comments are quite useful in terms of showing the different scenarios being considered. Something like:
         _already a task line with a global filter, already a task line missing the global filter, already a task line and there is no global filter, already a bullet item, not in a bullet item_
   - These then would be good tests to write: specifically, tests to check that each of those scenarios does actually behave as expected.
   - And if the implementation changed in future, those tests would be extremely useful to the maintainer at the time.
@@ -323,7 +323,7 @@ in some text or an object to be tested.
 
 #### Example Approval tests
 
-Example test in `ApprovalTestsDemo.test`, that saves its input in a text file:
+Example test in [./tests/TestingTools/ApprovalTestsDemo.test.ts](./tests/TestingTools/ApprovalTestsDemo.test.ts), that saves its input in a text file:
 
 <!-- snippet: approval-test-as-text -->
 ```ts
@@ -333,7 +333,7 @@ test('SimpleVerify', () => {
 ```
 <!-- endSnippet -->
 
-The corresponding `approved` file, named `ApprovalTestsDemo.test.ApprovalTests_SimpleVerify.approved.txt`:
+The corresponding `approved` file, named [./tests/TestingTools/ApprovalTestsDemo.test.ApprovalTests_SimpleVerify.approved.txt](./tests/TestingTools/ApprovalTestsDemo.test.ApprovalTests_SimpleVerify.approved.txt):
 
 <!-- snippet: ApprovalTestsDemo.test.ApprovalTests_SimpleVerify.approved.txt -->
 ```txt
@@ -350,7 +350,7 @@ test('JsonVerify', () => {
 ```
 <!-- endSnippet -->
 
-The corresponding `approved` file, named `ApprovalTestsDemo.test.ApprovalTests_JsonVerify.approved.json`:
+The corresponding `approved` file, named [./tests/TestingTools/ApprovalTestsDemo.test.ApprovalTests_JsonVerify.approved.json](./tests/TestingTools/ApprovalTestsDemo.test.ApprovalTests_JsonVerify.approved.json):
 
 <!-- snippet: ApprovalTestsDemo.test.ApprovalTests_JsonVerify.approved.json -->
 ```json
@@ -375,18 +375,19 @@ of one or all snapshot failures.
 
 ### Test Coverage
 
-`yarn run jest --coverage` will generate a coverage report in the `coverage` directory, which is ignored by this project's `.gitignore`.
+`yarn run jest --coverage` will generate a coverage report in the `coverage` directory, which is ignored by this project's [.gitignore](.gitignore).
 Your IDE may also be able to show you the test coverage of a source file.
 Adding tests where possible - see [Location of code](#location-of-code) for constraints to code not currently covered by the automated tests is a great way to contribute!
 
 ## Dependency Upgrades and Repository Maintenance
 
-Dependencies for the plugin are set using the `package.json` (human-editable) and `yarn.lock` (machine-generated) files.
+Dependencies for the plugin are set using the `package.json`
+ (human-editable) and [yarn.lock](yarn.lock) (machine-generated) files.
 After any change to dependencies in `package.json`, run `yarn` to update the `yarn.lock` file and commit the changes in both files.
 If you see a warning from `yarn` about a **missing peer dependency that mentions `obsidian` or `@codemirror`, you can safely ignore it**. Other yarn messages should likely be resolved before commit.
 
 Code changes that also involve dependency changes may require additional testing and review.
-Please only change `package.json` if necessary for your contribution.
+Please only change [package.json](package.json) if necessary for your contribution.
 
 Package management for the documentation site is handled separately; see the [documentation site README](./docs/README.md) for details on that.
 
@@ -406,7 +407,7 @@ After linting, testing, and smoke-testing (using `yarn build:dev` and manually c
 
 ### Overview of dependencies and `package.json`
 
-The `package.json` file is the human-editable interface for dependency management.
+The [package.json](package.json) file is the human-editable interface for dependency management.
 Acceptable dependency versions are specified using [semver](https://semver.org/) version ranges.
 This project pins certain dependencies to exact version numbers, and others to major version ranges.
 
@@ -420,7 +421,7 @@ The newly-generated file can then be committed to resolve the merge conflict.
 
 `package.json` separates dependencies only used in the development, testing, and building process ("devDependencies") from those contained as part of the plugin's `main.js` file because they are used at runtime ("dependencies").
 However, Obsidian's plugin architecture handles linking in the Obsidian API and its dependencies (such as `@codemirror/*` packages), so those are not part of the runtime "dependencies" in `package.json` and must also be marked as "external" in the build system configuration (`esbuild.config.mjs`).
-Some subset of the packages marked "external" in `esbuild.config.mjs` will be listed as "devDependencies" because their APIs are used in the plugin or its tests.
+Some subset of the packages marked "external" in [esbuild.config.mjs](esbuild.config.mjs) will be listed as "devDependencies" because their APIs are used in the plugin or its tests.
 Therefore, "devDependency" vs. "dependency" separation is not a sufficient indicator of whether a package
 needs manual "smoke testing" of runtime behavior.
 
@@ -466,7 +467,7 @@ Note that yarn's `upgrade` and `upgrade-interactive` commands will respect the p
 To upgrade major version numbers or a dependency where a fixed version is used, you must
 manually edit the `package.json` file. **Note**: Remember `yarn` after any edits to `package.json` to ensure the `yarn.lock` file is updated.
 
-Updates to the `obsidian` package may require additional changes to `manifest.json` and `versions.json` and should be handled with care so that Tasks users who are not on the latest version of Obsidian have time to update.
+Updates to the `obsidian` package may require additional changes to [manifest.json](manifest.json) and [versions.json](versions.json) and should be handled with care so that Tasks users who are not on the latest version of Obsidian have time to update.
 
 </details>
 
@@ -485,9 +486,9 @@ You can toggle a task‘s status by:
 
 The code is located as follows:
 
-- For 1.: `./src/Commands/ToggleDone.ts`
+- For 1.: [./src/Commands/ToggleDone.ts](./src/Commands/ToggleDone.ts)
 - Numbers 2. and 4. use a checkbox created by `TaskLineRenderer.renderTaskLine`. There, the checkbox gets a click event handler.
-- For 3.: `./src/LivePreviewExtension.ts`
+- For 3.: [./src/LivePreviewExtension.ts](./src/LivePreviewExtension.ts)
 
 Toggle behavior:
 
@@ -540,7 +541,7 @@ This is what these options do:
   - Add a new failing block to the `'identicalTo'` section.
   - Here is an existing example: ['should check path'](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/5b0831c36a80c4cde2d64a6cd281bb4b51e9a142/tests/Task.test.ts#L834-L840).
 - In [src/Task.ts](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/src/Task.ts), update `Task.identicalTo()`:
-  - Once you have a failing test in `Task.test.ts`, implement the check for changed value of your new field in `Task.identicalTo()`.
+  - Once you have a failing test in [./tests/Task.test.ts](./tests/Task.test.ts), implement the check for changed value of your new field in `Task.identicalTo()`.
   - This important method is used to detect whether any edits of any kind have been made to a task, to detect whether task block results need to be updated.
   - Here is the code for the method as of 2022-11-12:
     - [Task.identicalTo() in 5b0831c36a80c4cde2d64a6cd281bb4b51e9a142](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/5b0831c36a80c4cde2d64a6cd281bb4b51e9a142/src/Task.ts#L732-L802)
@@ -626,13 +627,13 @@ For help on editing the documentation, see [Updating documentation](https://gith
 - Install latest version of theme or snippet
 - Create a sample note for users to test
 - Embed the approved file showing the tasks with supported statuses in it
-  - for an example, see `resources/sample_vaults/Tasks-Demo/Styling/Theme - Minimal Theme.md`
+  - for an example, see [./resources/sample_vaults/Tasks-Demo/Styling](./resources/sample_vaults/Tasks-Demo/Styling) for `Theme - Minimal Theme.md`
     - `include:` then `DocsSamplesForStatuses.test.Theme_Things Tasks.approved.md`
 
 #### Update doc/
 
 - Create a reference note
-  - for example: `docs/reference/status-collections/minimal-theme.md`
+  - for example: [./docs/reference/status-collections/minimal-theme.md](./docs/reference/status-collections/minimal-theme.md)
   - Best to copy and paste an existing one
   - Embed the 2 blocks of text in it, for example:
     - `snippet:` then `DocsSamplesForStatuses.test.Theme_Minimal Text.approved.txt`
@@ -697,12 +698,12 @@ Follow the steps in `resources/sample_vaults/Tasks-Demo/Manual Testing/Smoke Tes
     - Wait for them to succeed
     - If they fail, put the release on hold and fix any issues first. (Failures are very rare.)
 2. Check out the `main` branch
-3. Check for the current version in `package.json` (for example, `1.4.1`) and decide on a next version
+3. Check for the current version in [package.json](package.json) (for example, `1.4.1`) and decide on a next version
     - Backwards incompatible change: increase major version
     - New functionality: increase minor version
     - Only bug fixes: increase patch version
 4. Having decided on the new version, replace all `X.Y.Z` in the documentation with the new version number.
-5. Check the current version of the obsidian dependency in `package.json` (for example, `0.13.21`)
+5. Check the current version of the obsidian dependency in [package.json](package.json) (for example, `0.13.21`)
 6. Run `./release.sh <new tasks version> <obsidian version>`
     - Make sure there are no uncommitted changes. Stash them if necessary.
 7. Wait for [GitHub Actions](https://github.com/obsidian-tasks-group/obsidian-tasks/actions/workflows/release.yml) to create the new release
