@@ -381,8 +381,7 @@ Adding tests where possible - see [Location of code](#location-of-code) for cons
 
 ## Dependency Upgrades and Repository Maintenance
 
-Dependencies for the plugin are set using the `package.json`
- (human-editable) and [yarn.lock](yarn.lock) (machine-generated) files.
+Dependencies for the plugin are set using the `package.json`  (human-editable) and [yarn.lock](yarn.lock) (machine-generated) files.
 After any change to dependencies in `package.json`, run `yarn` to update the `yarn.lock` file and commit the changes in both files.
 If you see a warning from `yarn` about a **missing peer dependency that mentions `obsidian` or `@codemirror`, you can safely ignore it**. Other yarn messages should likely be resolved before commit.
 
