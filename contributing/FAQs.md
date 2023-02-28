@@ -101,7 +101,7 @@ Write tests as you go.
 
 Ideally, write a failing test first, and then implement the minimum code for the failing test to pass.
 
-For help on writing and running the tests, see [Maintaining the tests](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/CONTRIBUTING.md#maintaining-the-tests)
+For help on writing and running the tests, see [[Maintaining the tests]]
 
 - Add to [tests/Query/Filter](https://github.com/obsidian-tasks-group/obsidian-tasks/tree/main/tests/Query/Filter) a new test file.
   - This should focus on testing whether or not individual Task objects, with carefully selected sample date, match the filter.
@@ -113,10 +113,10 @@ For help on writing and running the tests, see [Maintaining the tests](https://g
 
 It can be worth writing the documentation first, to ensure that you can explain the new feature clearly before implementing it.
 
-For help on editing the documentation, see [Updating documentation](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/CONTRIBUTING.md#updating-documentation)
+For help on editing the documentation, see [[Updating documentation]]
 
 - Document the new instruction(s) in [docs/queries/filters.md](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/docs/queries/filters.md)
-  - Add the placeholder to indicate which version the feature will be released in: see [Version numbers in documentation](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/CONTRIBUTING.md#version-numbers-in-documentation)
+  - Add the placeholder to indicate which version the feature will be released in: see [[Updating documentation#Version numbers in documentation]]
 - Add the new instruction(s) to [docs/quick-reference/index.md](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/docs/quick-reference/index.md)
 
 ### Examples Pull Requests
