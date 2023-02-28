@@ -1,8 +1,5 @@
 # Contribution Guidelines Obsidian Tasks
 
-<!-- markdownlint-disable MD024 -->
-<!--                      MD024/no-duplicate-heading/no-duplicate-header Multiple headings with the same content -->
-
 ## Thank you
 
 Thank you for wanting to contribute to Obsidian Tasks!
@@ -410,6 +407,9 @@ manually edit the `package.json` file. **Note**: Remember `yarn` after any edits
 Updates to the `obsidian` package may require additional changes to [manifest.json](manifest.json) and [versions.json](versions.json) and should be handled with care so that Tasks users who are not on the latest version of Obsidian have time to update.
 
 ## FAQs
+
+<!-- markdownlint-disable MD024 -->
+<!--                      MD024/no-duplicate-heading/no-duplicate-header Multiple headings with the same content -->
 
 ### How does Tasks handle status changes?
 
