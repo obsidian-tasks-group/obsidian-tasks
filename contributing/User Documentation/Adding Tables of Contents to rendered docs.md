@@ -1,5 +1,8 @@
 # Adding Tables of Contents to rendered docs
 
+> [!Note]
+> This page is about the original user documentation setup, published using #jekyll on #github-pages.
+
 Add the following between the H1 and the first H2, to show a table of contents in a page on the published documentation.
 
 ```text

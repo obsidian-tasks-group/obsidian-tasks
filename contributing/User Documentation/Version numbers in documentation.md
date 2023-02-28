@@ -1,5 +1,8 @@
 # Version numbers in documentation
 
+> [!Note]
+> The formatting below is specific to the original user documentation setup, published using #jekyll on #github-pages.
+
 We have introduced version markers to the documentation, to show users in which Tasks version a specific feature was introduced.
 This means that newly written documentation should be tagged with a placeholder, which will be replaced with the actual
 version upon release.

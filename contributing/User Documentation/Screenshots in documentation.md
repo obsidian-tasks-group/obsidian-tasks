@@ -19,6 +19,9 @@ Saving images:
 
 ## Adding screenshots to the documentation
 
+> [!Note]
+> This section is about the original user documentation setup, published using #jekyll on #github-pages.
+
 When embedding an image inside a documentation page, please link to the local file and include a brief summary underneath.
 
 For example, to embed the `acme.png` file in the documentation:

@@ -1,5 +1,8 @@
 # Linking to other pages in the docs
 
+> [!Note]
+> This page is about the original user documentation setup, published using #jekyll on #github-pages.
+
 Linking to other pages in the documentation is non-obvious and a bit tedious.
 
 Here are some examples to copy-and-paste:
