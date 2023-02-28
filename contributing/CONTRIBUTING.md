@@ -3,63 +3,6 @@
 <!-- markdownlint-disable MD024 -->
 <!--                      MD024/no-duplicate-heading/no-duplicate-header Multiple headings with the same content -->
 
-<!-- toc -->
-## Contents
-
-- [Thank you](#thank-you)
-- [Updating documentation](#updating-documentation)
-  - [Documentation and branches](#documentation-and-branches)
-  - [Adding Tables of Contents to rendered docs](#adding-tables-of-contents-to-rendered-docs)
-  - [Omitting a heading from the page's Table of Contents](#omitting-a-heading-from-the-pages-table-of-contents)
-  - [Linking to other pages in the docs](#linking-to-other-pages-in-the-docs)
-  - [Screenshots in documentation](#screenshots-in-documentation)
-    - [Creating screenshots](#creating-screenshots)
-    - [Saving screenshots](#saving-screenshots)
-    - [Adding screenshots to the documentation](#adding-screenshots-to-the-documentation)
-  - [Callouts](#callouts)
-  - [Version numbers in documentation](#version-numbers-in-documentation)
-  - [How the documentation is generated](#how-the-documentation-is-generated)
-- [Updating code](#updating-code)
-- [Local setup and workflow for changes to code and tests](#local-setup-and-workflow-for-changes-to-code-and-tests)
-  - [Setting up build environment](#setting-up-build-environment)
-  - [Local development](#local-development)
-- [Maintaining the tests](#maintaining-the-tests)
-  - [Writing Tests for New or Refactored Code](#writing-tests-for-new-or-refactored-code)
-    - [Think of it as testing user-visible features](#think-of-it-as-testing-user-visible-features)
-    - [Location of code](#location-of-code)
-    - [Then start writing tests](#then-start-writing-tests)
-  - [Snapshot Tests](#snapshot-tests)
-  - [Approval Tests](#approval-tests)
-    - [Example Approval tests](#example-approval-tests)
-  - [Jest and the WebStorm IDE](#jest-and-the-webstorm-ide)
-  - [Test Coverage](#test-coverage)
-- [Dependency Upgrades and Repository Maintenance](#dependency-upgrades-and-repository-maintenance)
-  - [Overview of dependencies and `package.json`](#overview-of-dependencies-and-packagejson)
-  - [Thought-Process for Deciding Whether a Dependency Needs Manual Testing](#thought-process-for-deciding-whether-a-dependency-needs-manual-testing)
-  - [Dependency Groups](#dependency-groups)
-  - [Notes and Special Cases](#notes-and-special-cases)
-- [FAQs](#faqs)
-  - [How does Tasks handle status changes?](#how-does-tasks-handle-status-changes)
-  - [How do I enable hidden debugging/visualisation facilities?](#how-do-i-enable-hidden-debuggingvisualisation-facilities)
-  - [How do I add a new field to the Task class?](#how-do-i-add-a-new-field-to-the-task-class)
-  - [How do I add a new task filter?](#how-do-i-add-a-new-task-filter)
-    - [Update src/](#update-src)
-    - [Update tests/](#update-tests)
-    - [Update doc/](#update-doc)
-    - [Examples Pull Requests](#examples-pull-requests)
-  - [How do I add one-click support for new themes or snippets for custom statuses?](#how-do-i-add-one-click-support-for-new-themes-or-snippets-for-custom-statuses)
-    - [Update tests/](#update-tests-1)
-    - [Update src/](#update-src-1)
-    - [Update sample vault: resources/sample_vaults/Tasks-Demo/](#update-sample-vault-resourcessample_vaultstasks-demo)
-    - [Update doc/](#update-doc-1)
-    - [Finishing off](#finishing-off)
-  - [How do I test a GitHub build of the Tasks plugin?](#how-do-i-test-a-github-build-of-the-tasks-plugin)
-    - [Option 1: Download Tasks-Demo test vault with the build's Tasks plugin installed](#option-1-download-tasks-demo-test-vault-with-the-builds-tasks-plugin-installed)
-    - [Option 2: Download the built plugin to add to your vault](#option-2-download-the-built-plugin-to-add-to-your-vault)
-  - [How do I smoke-test the Tasks plugin?](#how-do-i-smoke-test-the-tasks-plugin)
-  - [How do I make a release?](#how-do-i-make-a-release)
-  - [How do I update the Tables of Contents in CONTRIBUTING and similar?](#how-do-i-update-the-tables-of-contents-in-contributing-and-similar)<!-- endToc -->
-
 ## Thank you
 
 Thank you for wanting to contribute to Obsidian Tasks!
