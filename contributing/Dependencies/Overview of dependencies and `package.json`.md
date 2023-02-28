@@ -16,4 +16,4 @@ The newly-generated file can then be committed to resolve the merge conflict.
 However, Obsidian's plugin architecture handles linking in the Obsidian API and its dependencies (such as `@codemirror/*` packages), so those are not part of the runtime "dependencies" in `package.json` and must also be marked as "external" in the build system configuration (`esbuild.config.mjs`).
 Some subset of the packages marked "external" in [esbuild.config.mjs](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/esbuild.config.mjs) will be listed as "devDependencies" because their APIs are used in the plugin or its tests.
 Therefore, "devDependency" vs. "dependency" separation is not a sufficient indicator of whether a package
-needs manual "smoke testing" of runtime behavior.
+needs manual "[[How do I smoke-test the Tasks plugin|smoke testing]]" of runtime behavior.

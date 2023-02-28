@@ -34,7 +34,7 @@ It can be worth writing the documentation first, to ensure that you can explain 
 For help on editing the documentation, see [[About Documentation]]
 
 - Document the new instruction(s) in [docs/queries/filters.md](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/docs/queries/filters.md)
-  - Add the placeholder to indicate which version the feature will be released in: see [[About Documentation#Version numbers in documentation]]
+  - Add the placeholder to indicate which version the feature will be released in: see [[Version numbers in documentation]]
 - Add the new instruction(s) to [docs/quick-reference/index.md](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/docs/quick-reference/index.md)
 
 ## Examples Pull Requests
