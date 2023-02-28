@@ -27,9 +27,9 @@ yarn-error.log
 # asdf
 .tool-versions
 
-# files in sample vaults
-/resources/sample_vaults/Tasks-Demo/.obsidian/workspace
-/resources/sample_vaults/Tasks-Demo/.obsidian/workspace.json
+# files in local vaults
+**/workspace
+**/workspace.json
 .hotreload
 
 # Backup files.
