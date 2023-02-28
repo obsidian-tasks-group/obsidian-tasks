@@ -100,23 +100,27 @@ describe('DateParser - natural date ranges', () => {
         expect(parsedDateRange[1].format('YYYY-MM-DD HH:mm')).toStrictEqual('2021-10-10 00:00');
     });
 
-    it('should return next natural date range (next week)', () => {
+    it('should return natural date range (week)', () => {
+        testParsingDateRange('last week', '2021-09-27', '2021-10-03');
+        testParsingDateRange('this week', '2021-10-04', '2021-10-10');
         testParsingDateRange('next week', '2021-10-11', '2021-10-17');
     });
 
-    it('should return last natural date range (last week)', () => {
-        testParsingDateRange('last week', '2021-09-27', '2021-10-03');
-    });
-
     it('should return natural date range (month)', () => {
+        testParsingDateRange('last month', '2021-09-01', '2021-09-30');
         testParsingDateRange('this month', '2021-10-01', '2021-10-31');
+        testParsingDateRange('next month', '2021-11-01', '2021-11-30');
     });
 
     it('should return natural date range (quarter)', () => {
+        testParsingDateRange('last quarter', '2021-07-01', '2021-09-30');
         testParsingDateRange('this quarter', '2021-10-01', '2021-12-31');
+        testParsingDateRange('next quarter', '2022-01-01', '2022-03-31');
     });
 
     it('should return natural date range (year)', () => {
+        testParsingDateRange('last year', '2020-01-01', '2020-12-31');
         testParsingDateRange('this year', '2021-01-01', '2021-12-31');
+        testParsingDateRange('next year', '2022-01-01', '2022-12-31');
     });
 });
