@@ -14,9 +14,9 @@ You can toggle a task‘s status by:
 
 The code is located as follows:
 
-- For 1.: [./src/Commands/ToggleDone.ts](./src/Commands/ToggleDone.ts)
+- For 1.: [./src/Commands/ToggleDone.ts](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/src/Commands/ToggleDone.ts)
 - Numbers 2. and 4. use a checkbox created by `TaskLineRenderer.renderTaskLine`. There, the checkbox gets a click event handler.
-- For 3.: [./src/LivePreviewExtension.ts](./src/LivePreviewExtension.ts)
+- For 3.: [./src/LivePreviewExtension.ts](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/src/LivePreviewExtension.ts)
 
 Toggle behavior:
 
@@ -69,7 +69,7 @@ This is what these options do:
   - Add a new failing block to the `'identicalTo'` section.
   - Here is an existing example: ['should check path'](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/5b0831c36a80c4cde2d64a6cd281bb4b51e9a142/tests/Task.test.ts#L834-L840).
 - In [src/Task.ts](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/src/Task.ts), update `Task.identicalTo()`:
-  - Once you have a failing test in [./tests/Task.test.ts](./tests/Task.test.ts), implement the check for changed value of your new field in `Task.identicalTo()`.
+  - Once you have a failing test in [./tests/Task.test.ts](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/Task.test.ts), implement the check for changed value of your new field in `Task.identicalTo()`.
   - This important method is used to detect whether any edits of any kind have been made to a task, to detect whether task block results need to be updated.
   - Here is the code for the method as of 2022-11-12:
     - [Task.identicalTo() in 5b0831c36a80c4cde2d64a6cd281bb4b51e9a142](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/5b0831c36a80c4cde2d64a6cd281bb4b51e9a142/src/Task.ts#L732-L802)
@@ -155,13 +155,13 @@ For help on editing the documentation, see [Updating documentation](https://gith
 - Install latest version of theme or snippet
 - Create a sample note for users to test
 - Embed the approved file showing the tasks with supported statuses in it
-  - for an example, see [./resources/sample_vaults/Tasks-Demo/Styling](./resources/sample_vaults/Tasks-Demo/Styling) for `Theme - Minimal Theme.md`
+  - for an example, see [./resources/sample_vaults/Tasks-Demo/Styling](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/resources/sample_vaults/Tasks-Demo/Styling) for `Theme - Minimal Theme.md`
     - `include:` then `DocsSamplesForStatuses.test.Theme_Things Tasks.approved.md`
 
 ### Update doc/
 
 - Create a reference note
-  - for example: [./docs/reference/status-collections/minimal-theme.md](./docs/reference/status-collections/minimal-theme.md)
+  - for example: [./docs/reference/status-collections/minimal-theme.md](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/docs/reference/status-collections/minimal-theme.md)
   - Best to copy and paste an existing one
   - Embed the 2 blocks of text in it, for example:
     - `snippet:` then `DocsSamplesForStatuses.test.Theme_Minimal Text.approved.txt`
@@ -226,12 +226,12 @@ Follow the steps in `resources/sample_vaults/Tasks-Demo/Manual Testing/Smoke Tes
     - Wait for them to succeed
     - If they fail, put the release on hold and fix any issues first. (Failures are very rare.)
 2. Check out the `main` branch
-3. Check for the current version in [package.json](package.json) (for example, `1.4.1`) and decide on a next version
+3. Check for the current version in [package.json](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/package.json) (for example, `1.4.1`) and decide on a next version
     - Backwards incompatible change: increase major version
     - New functionality: increase minor version
     - Only bug fixes: increase patch version
 4. Having decided on the new version, replace all `X.Y.Z` in the documentation with the new version number.
-5. Check the current version of the obsidian dependency in [package.json](package.json) (for example, `0.13.21`)
+5. Check the current version of the obsidian dependency in [package.json](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/package.json) (for example, `0.13.21`)
 6. Run `./release.sh <new tasks version> <obsidian version>`
     - Make sure there are no uncommitted changes. Stash them if necessary.
 7. Wait for [GitHub Actions](https://github.com/obsidian-tasks-group/obsidian-tasks/actions/workflows/release.yml) to create the new release

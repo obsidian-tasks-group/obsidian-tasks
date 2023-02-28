@@ -1,6 +1,6 @@
 # Updating documentation
 
-The documentation resides under the [./docs](./docs) directory.
+The documentation resides under the [./docs](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/docs) directory.
 It consists of markdown files, which [Jekyll](https://jekyllrb.com/) will transform into web pages that you can view at <https://obsidian-tasks-group.github.io/obsidian-tasks/> .
 In the simplest case, you can update the existing markdown file and create a pull request (PR) with your changes.
 
@@ -145,4 +145,4 @@ We use [GitHub pages](https://pages.github.com/) for our documentation.
 You can read more about it at their [official documentation](https://docs.github.com/en/pages).
 
 To generate the documentation site on your machine,
-see [docs/README.md](docs/README.md).
+see [docs/README.md](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/docs/README.md).

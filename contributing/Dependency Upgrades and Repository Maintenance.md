@@ -1,13 +1,13 @@
 # Dependency Upgrades and Repository Maintenance
 
-Dependencies for the plugin are set using the `package.json`  (human-editable) and [yarn.lock](yarn.lock) (machine-generated) files.
+Dependencies for the plugin are set using the `package.json`  (human-editable) and [yarn.lock](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/yarn.lock) (machine-generated) files.
 After any change to dependencies in `package.json`, run `yarn` to update the `yarn.lock` file and commit the changes in both files.
 If you see a warning from `yarn` about a **missing peer dependency that mentions `obsidian` or `@codemirror`, you can safely ignore it**. Other yarn messages should likely be resolved before commit.
 
 Code changes that also involve dependency changes may require additional testing and review.
-Please only change [package.json](package.json) if necessary for your contribution.
+Please only change [package.json](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/package.json) if necessary for your contribution.
 
-Package management for the documentation site is handled separately; see the [documentation site README](./docs/README.md) for details on that.
+Package management for the documentation site is handled separately; see the [documentation site README](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/docs/README.md) for details on that.
 
 The rest of this section is most useful for maintainers of the repository and not necessary for typical documentation, code, or test contributions.
 
@@ -25,7 +25,7 @@ After linting, testing, and smoke-testing (using `yarn build:dev` and manually c
 
 ## Overview of dependencies and `package.json`
 
-The [package.json](package.json) file is the human-editable interface for dependency management.
+The [package.json](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/package.json) file is the human-editable interface for dependency management.
 Acceptable dependency versions are specified using [semver](https://semver.org/) version ranges.
 This project pins certain dependencies to exact version numbers, and others to major version ranges.
 
@@ -39,7 +39,7 @@ The newly-generated file can then be committed to resolve the merge conflict.
 
 `package.json` separates dependencies only used in the development, testing, and building process ("devDependencies") from those contained as part of the plugin's `main.js` file because they are used at runtime ("dependencies").
 However, Obsidian's plugin architecture handles linking in the Obsidian API and its dependencies (such as `@codemirror/*` packages), so those are not part of the runtime "dependencies" in `package.json` and must also be marked as "external" in the build system configuration (`esbuild.config.mjs`).
-Some subset of the packages marked "external" in [esbuild.config.mjs](esbuild.config.mjs) will be listed as "devDependencies" because their APIs are used in the plugin or its tests.
+Some subset of the packages marked "external" in [esbuild.config.mjs](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/esbuild.config.mjs) will be listed as "devDependencies" because their APIs are used in the plugin or its tests.
 Therefore, "devDependency" vs. "dependency" separation is not a sufficient indicator of whether a package
 needs manual "smoke testing" of runtime behavior.
 
@@ -85,4 +85,4 @@ Note that yarn's `upgrade` and `upgrade-interactive` commands will respect the p
 To upgrade major version numbers or a dependency where a fixed version is used, you must
 manually edit the `package.json` file. **Note**: Remember `yarn` after any edits to `package.json` to ensure the `yarn.lock` file is updated.
 
-Updates to the `obsidian` package may require additional changes to [manifest.json](manifest.json) and [versions.json](versions.json) and should be handled with care so that Tasks users who are not on the latest version of Obsidian have time to update.
+Updates to the `obsidian` package may require additional changes to [manifest.json](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/manifest.json) and [versions.json](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/versions.json) and should be handled with care so that Tasks users who are not on the latest version of Obsidian have time to update.
