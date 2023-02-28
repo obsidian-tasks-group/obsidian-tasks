@@ -1,3 +1,5 @@
 {
-  "showInlineTitle": false
+  "showInlineTitle": false,
+  "showLineNumber": true,
+  "strictLineBreaks": true
 }
