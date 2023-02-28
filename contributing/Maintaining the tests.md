@@ -11,7 +11,7 @@ The [Expect](https://jestjs.io/docs/expect) page is a good reference for the man
 
 - Tests that test low-level implementation details are hard to maintain over time. Instead, test user-visible features.
 - Try to think of the purpose of the code that has missing tests.
-  - For example, in `taskFromLine()` in [./src/Commands/CreateOrEdit.ts](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/src/Commands/CreateOrEdit.ts) the comments are quite useful in terms of showing the different scenarios being considered. Something like:
+  - For example, in `taskFromLine()` in [src/Commands/CreateOrEdit.ts](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/src/Commands/CreateOrEdit.ts) the comments are quite useful in terms of showing the different scenarios being considered. Something like:
         _already a task line with a global filter, already a task line missing the global filter, already a task line and there is no global filter, already a bullet item, not in a bullet item_
   - These then would be good tests to write: specifically, tests to check that each of those scenarios does actually behave as expected.
   - And if the implementation changed in future, those tests would be extremely useful to the maintainer at the time.
@@ -54,7 +54,7 @@ in some text or an object to be tested.
 
 ### Example Approval tests
 
-Example test in [./tests/TestingTools/ApprovalTestsDemo.test.ts](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/TestingTools/ApprovalTestsDemo.test.ts), that saves its input in a text file:
+Example test in [tests/TestingTools/ApprovalTestsDemo.test.ts](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/TestingTools/ApprovalTestsDemo.test.ts), that saves its input in a text file:
 
 <!-- snippet: approval-test-as-text -->
 ```ts
@@ -64,7 +64,7 @@ test('SimpleVerify', () => {
 ```
 <!-- endSnippet -->
 
-The corresponding `approved` file, named [./tests/TestingTools/ApprovalTestsDemo.test.ApprovalTests_SimpleVerify.approved.txt](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/TestingTools/ApprovalTestsDemo.test.ApprovalTests_SimpleVerify.approved.txt):
+The corresponding `approved` file, named [tests/TestingTools/ApprovalTestsDemo.test.ApprovalTests_SimpleVerify.approved.txt](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/TestingTools/ApprovalTestsDemo.test.ApprovalTests_SimpleVerify.approved.txt):
 
 <!-- snippet: ApprovalTestsDemo.test.ApprovalTests_SimpleVerify.approved.txt -->
 ```txt
@@ -81,7 +81,7 @@ test('JsonVerify', () => {
 ```
 <!-- endSnippet -->
 
-The corresponding `approved` file, named [./tests/TestingTools/ApprovalTestsDemo.test.ApprovalTests_JsonVerify.approved.json](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/TestingTools/ApprovalTestsDemo.test.ApprovalTests_JsonVerify.approved.json):
+The corresponding `approved` file, named [tests/TestingTools/ApprovalTestsDemo.test.ApprovalTests_JsonVerify.approved.json](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/TestingTools/ApprovalTestsDemo.test.ApprovalTests_JsonVerify.approved.json):
 
 <!-- snippet: ApprovalTestsDemo.test.ApprovalTests_JsonVerify.approved.json -->
 ```json
