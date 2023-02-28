@@ -22,3 +22,9 @@ In the simplest case, you can update the existing markdown file and create a pul
 [[Version numbers in documentation]]
 
 [[How the documentation is generated]]
+
+[[Overview of Jekyll-based docs]]
+
+[[Test documentation locally with Jekyll]]
+
+[[Dependency Management and Updates for the Docs]]
