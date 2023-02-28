@@ -259,7 +259,7 @@ soon start using the [Approval Tests implementation in NodeJS](https://github.co
 If these tests fail, they will currently try and launch [diffmerge](https://sourcegear.com/diffmerge/) to show
 the differences between received and approved files.
 
-<details><summary>Expand Details on Approval Tests</summary>
+#### Summary of Approval Tests
 
 Approval tests typically call a function beginning `verify`, and pass
 in some text or an object to be tested.
@@ -304,8 +304,6 @@ The corresponding `approved` file, named [./tests/TestingTools/ApprovalTestsDemo
 ```
 <!-- endSnippet -->
 
-</details>
-
 ### Jest and the WebStorm IDE
 
 The WebStorm IDE has a [helpful page](https://www.jetbrains.com/help/webstorm/running-unit-tests-on-jest.html)
@@ -335,7 +333,7 @@ Package management for the documentation site is handled separately; see the [do
 
 The rest of this section is most useful for maintainers of the repository and not necessary for typical documentation, code, or test contributions.
 
-<details><summary>Expand Details on Dependency Upgrades and Dependabot</summary>
+### Summary of Dependency Upgrades and Dependabot
 
 Keeping dependencies up to date ensures the best experience and security for Tasks plugin users.
 This project uses Dependabot to help automate dependency updates, but some dependencies require manual testing
@@ -410,10 +408,6 @@ To upgrade major version numbers or a dependency where a fixed version is used, 
 manually edit the `package.json` file. **Note**: Remember `yarn` after any edits to `package.json` to ensure the `yarn.lock` file is updated.
 
 Updates to the `obsidian` package may require additional changes to [manifest.json](manifest.json) and [versions.json](versions.json) and should be handled with care so that Tasks users who are not on the latest version of Obsidian have time to update.
-
-</details>
-
-Click the "Expand Details" line above to expand or close the section.
 
 ## FAQs
 
