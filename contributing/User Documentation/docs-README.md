@@ -44,19 +44,16 @@ there is a fast feedback cycle of:
 
 1. Reload the page in your browser to see the changes
 
-## Option 1 - Running inside a Docker container
+### Option 1 - Running inside a Docker container
 
-> [!Note]
-> This page is about the original user documentation setup, published using #jekyll on #github-pages.
+f you can run docker, this is the easiest way.
 
-If you can run docker, this is the easiest way.
-
-### Prerequisites for using Docker
+#### Prerequisites for using Docker
 
 1. Install Docker
 2. Ensure Docker is running
 
-### Seeing the docs via Docker
+#### Seeing the docs via Docker
 
 > Note: If using Windows, there are some interoperability issues with Windows, Docker, and Jekyll.
 > Recommend running the command below from a Windows Subsystem for Linux (WSL) shell,
@@ -94,12 +91,9 @@ It will be something like <http://0.0.0.0:4000/obsidian-tasks/>.
 
 You can stop the service by hitting `Ctrl+c`.
 
-## Option 2 - Running without Docker
+### Option 2 - Running without Docker
 
-> [!Note]
-> This page is about the original user documentation setup, published using #jekyll on #github-pages.
-
-### Prerequisites for using installed Jekyll
+#### Prerequisites for using installed Jekyll
 
 1. Install ruby 2.x.
     - It is important that you use a version 2 of ruby, not version 3, for example 2.7.0.
@@ -115,7 +109,7 @@ You can stop the service by hitting `Ctrl+c`.
 You can find more information about these tools, and download links, at
 [Testing your GitHub Pages site locally with Jekyll](https://docs.github.com/en/pages/setting-up-a-github-pages-site-with-jekyll/testing-your-github-pages-site-locally-with-jekyll).
 
-### Seeing the docs via installed Jekyll
+#### Seeing the docs via installed Jekyll
 
 Now every time you want to see the docs locally, run:
 
