@@ -5,7 +5,7 @@
 
 [[How does Tasks handle status changes]]
 
-[[How do I enable hidden debuggingvisualisation facilities]]
+[[How do I enable hidden debugging and visualisation facilities]]
 
 [[How do I add a new field to the Task class]]
 
