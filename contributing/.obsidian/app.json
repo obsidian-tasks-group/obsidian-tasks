@@ -2,5 +2,6 @@
   "showInlineTitle": false,
   "showLineNumber": true,
   "strictLineBreaks": true,
-  "promptDelete": false
+  "promptDelete": false,
+  "alwaysUpdateLinks": true
 }
