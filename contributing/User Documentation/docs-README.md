@@ -1,6 +1,9 @@
 # Documentation for Obsidian Tasks
 
-## Overview
+## Overview of Jekyll-based docs
+
+> [!Note]
+> This page is about the original user documentation setup, published using #jekyll on #github-pages.
 
 - For background, including which branch to work on, see ["Updating documentation" in CONTRIBUTING](../CONTRIBUTING.md#updating-documentation)
 - The documentation is written in Markdown
@@ -10,6 +13,9 @@
 
 ## Test documentation locally with Jekyll
 
+> [!Note]
+> This page is about the original user documentation setup, published using #jekyll on #github-pages.
+
 When making significant edits to the documentation, it is helpful to see what
 the published docs will look like. This allows spotting of problems like formatting oddities.
 
@@ -17,8 +23,8 @@ the published docs will look like. This allows spotting of problems like formatt
 
 See below for how to set up either of two options for creating the published pages during development:
 
-1. [Running inside a Docker container (recommended)](#option-1-running-inside-a-docker-container)
-2. [Running without Docker](#option-2-running-without-docker)
+1. [[#Option 1 - Running inside a Docker container]]
+2. [[#Option 2 - Running without Docker]]
 
 ### Development cycle
 
@@ -38,7 +44,10 @@ there is a fast feedback cycle of:
 
 1. Reload the page in your browser to see the changes
 
-## Option 1: Running inside a Docker container
+## Option 1 - Running inside a Docker container
+
+> [!Note]
+> This page is about the original user documentation setup, published using #jekyll on #github-pages.
 
 If you can run docker, this is the easiest way.
 
@@ -85,7 +94,10 @@ It will be something like <http://0.0.0.0:4000/obsidian-tasks/>.
 
 You can stop the service by hitting `Ctrl+c`.
 
-## Option 2: Running without Docker
+## Option 2 - Running without Docker
+
+> [!Note]
+> This page is about the original user documentation setup, published using #jekyll on #github-pages.
 
 ### Prerequisites for using installed Jekyll
 
@@ -116,6 +128,9 @@ In the output, look for the line containing `Server address:` and open that URL 
 It will be something like <http://0.0.0.0:4000/obsidian-tasks/>.
 
 ## Dependency Management and Updates for the Docs
+
+> [!Note]
+> This page is about the original user documentation setup, published using #jekyll on #github-pages.
 
 The dependencies for running the docs locally are stored in the `Gemfile` (short, equivalent to Javascript `package.json`) and `Gemfile.lock` (auto-generated, equivalent to `yarn.lock`) files.
 The package manager (equivalent to "yarn") is "bundle" [docs here](https://bundler.io/guides/using_bundler_in_applications.html#recommended-workflow). The "docker_start" script runs the initial
