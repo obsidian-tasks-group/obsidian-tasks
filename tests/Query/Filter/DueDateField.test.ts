@@ -106,7 +106,7 @@ describe('due date', () => {
     });
 });
 
-describe('due date with natural date ranges', () => {
+describe('due date with natural date ranges (Today is 2022-05-25)', () => {
     beforeAll(() => {
         jest.useFakeTimers();
         jest.setSystemTime(new Date(2022, 4, 25)); // 2022-05-25
