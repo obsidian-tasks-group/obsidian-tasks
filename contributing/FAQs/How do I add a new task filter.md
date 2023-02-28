@@ -19,7 +19,7 @@ Write tests as you go.
 
 Ideally, write a failing test first, and then implement the minimum code for the failing test to pass.
 
-For help on writing and running the tests, see [[Maintaining the tests]]
+For help on writing and running the tests, see [[About Testing]]
 
 - Add to [tests/Query/Filter](https://github.com/obsidian-tasks-group/obsidian-tasks/tree/main/tests/Query/Filter) a new test file.
   - This should focus on testing whether or not individual Task objects, with carefully selected sample date, match the filter.
@@ -31,10 +31,10 @@ For help on writing and running the tests, see [[Maintaining the tests]]
 
 It can be worth writing the documentation first, to ensure that you can explain the new feature clearly before implementing it.
 
-For help on editing the documentation, see [[Updating documentation]]
+For help on editing the documentation, see [[About Documentation]]
 
 - Document the new instruction(s) in [docs/queries/filters.md](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/docs/queries/filters.md)
-  - Add the placeholder to indicate which version the feature will be released in: see [[Updating documentation#Version numbers in documentation]]
+  - Add the placeholder to indicate which version the feature will be released in: see [[About Documentation#Version numbers in documentation]]
 - Add the new instruction(s) to [docs/quick-reference/index.md](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/docs/quick-reference/index.md)
 
 ## Examples Pull Requests

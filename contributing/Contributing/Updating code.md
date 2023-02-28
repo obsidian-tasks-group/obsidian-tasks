@@ -8,4 +8,4 @@ This is _not_ mandatory, but it helps improve the process and reduce unnecessary
 Once you want to propose your changes, create a PR and we'll have a look when we have time.
 Discussion will take place inside the PR.
 
-If you can, please add/update [[Maintaining the tests|tests]] and [[Updating documentation|documentation]] where appropriate.
+If you can, please add/update [[About Testing|tests]] and [[About Documentation|documentation]] where appropriate.

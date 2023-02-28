@@ -3,7 +3,7 @@
 > [!Note]
 > This page is about the original user documentation setup, published using #jekyll on #github-pages.
 
-- For background, including which branch to work on, see [[Updating documentation]] and [[Documentation and branches]]
+- For background, including which branch to work on, see [[About Documentation]] and [[Documentation and branches]]
 - The documentation is written in Markdown
 - It is converted to HTML via Ruby and Jekyll
   - Important: Ruby 2 is required, for example, Ruby 2.7

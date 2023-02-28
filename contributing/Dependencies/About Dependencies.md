@@ -11,12 +11,8 @@ Package management for the documentation site is handled separately; see the [do
 
 The rest of this section is most useful for maintainers of the repository and not necessary for typical documentation, code, or test contributions.
 
-[[Summary of Dependency Upgrades and Dependabot]]
-
-[[Overview of dependencies and `package.json`]]
-
-[[Thought-Process for Deciding Whether a Dependency Needs Manual Testing]]
-
-[[Dependency Groups]]
-
-[[Notes and Special Cases]]
+- [[Summary of Dependency Upgrades and Dependabot]]
+- [[Overview of dependencies and `package.json`]]
+- [[Thought-Process for Deciding Whether a Dependency Needs Manual Testing]]
+- [[Dependency Groups]]
+- [[Notes and Special Cases]]
