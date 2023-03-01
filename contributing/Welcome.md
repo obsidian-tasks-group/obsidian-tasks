@@ -19,7 +19,7 @@ Getting the most from this documentation:
 - See [[About Building]] if you would like to build and run the plugin on your machine
 - See [[About Testing]] to learn about automated and manual testing of the plugin
 - See [[About Debugging]] for tips to debug the plugin
-- See [[About FAQs]] for descriptions of some parts of the project's code
+- See [[About Code]] for descriptions of the project's source code
 - See [[About Documentation]] if you would like to improve and test the user docs
 
 ## For Maintainers
