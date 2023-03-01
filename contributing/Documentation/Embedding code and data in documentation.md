@@ -46,7 +46,7 @@ For example:
 
 2 **Run mdsnippets to expand the 'snippet:' line**
 
-Run `mdsnippets` - see [[#Running mdsnippets in Tasks]]
+Run `mdsnippets` - see [[#Running mdsnippets]]
 
 Your `include: ...` line will be converted to this:
 
@@ -71,7 +71,7 @@ For example:
 
 2 **Run mdsnippets to expand the 'include:' line**
 
-Run `mdsnippets` - see [[#Running mdsnippets in Tasks]]
+Run `mdsnippets` - see [[#Running mdsnippets]]
 
 Your `include: ...` line will be converted to this:
 
@@ -104,6 +104,10 @@ Generates this:
 }
 ```
 <!-- endSnippet -->
+
+> [!Warning] Browser issue?
+> You should see 3 lines of comments at the top of the above sample, starting `/* By David Phillips...`
+> If you see 3 empty grey lines, your browser is for some reason hiding the comments, and for this page to be any use, you will unfortunately need to find a different browser.
 
 ### Embedding parts of files
 
@@ -138,7 +142,7 @@ In a Markdown documentation file, add a line `snippet: unique-name-of-snippet-ac
 
 3 **Run mdsnippets to expand the 'snippet:' line**
 
-Run `mdsnippets` - see [[#Running mdsnippets in Tasks]]
+Run `mdsnippets` - see [[#Running mdsnippets]]
 
 Your `snippet: ...` line will be converted to this:
 
