@@ -1,6 +1,6 @@
 # Welcome
 
-Welcome, and thank you for wanting to contribute to [Obsidian Tasks](https://github.com/obsidian-tasks-group/obsidian-tasks)!
+Welcome, and thank you for wanting to contribute to the [Obsidian Tasks plugin](https://github.com/obsidian-tasks-group/obsidian-tasks)!
 
 Every contribution is much appreciated!
 
@@ -8,8 +8,10 @@ Every contribution is much appreciated!
 
 Getting the most from this documentation:
 
-- If you are looking at this directory **on GitHub**, instead visit its Obsidian Publish site: <https://publish.obsidian.md/tasks-contributing>.
-- If you are looking at this directory **on your local machine**, open the `contributing/`  folder as a **vault in Obsidian**.
+- If you are looking at this directory **on GitHub**:
+  - instead visit its Obsidian Publish site [publish.obsidian.md/tasks-contributing](https://publish.obsidian.md/tasks-contributing).
+- If you are looking at this directory **on your local machine**:
+  - open the `contributing/`  folder as a **vault in Obsidian**.
 
 ## For Contributors
 
