@@ -98,7 +98,7 @@ For user documentation, please check [https://obsidian-tasks-group.github.io/obs
 
 Clone the repository, run `yarn` to install the dependencies, and run `yarn dev` to compile the plugin and watch file changes.
 
-Then see [CONTRIBUTING.md](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/CONTRIBUTING.md).
+Then see [the Contributing Guide](https://publish.obsidian.md/tasks-contributing).
 
 ## Donations
 

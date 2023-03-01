@@ -17,7 +17,7 @@ In the simplest case, you can update the existing markdown file and create a pul
 - [[Version numbers in documentation]]
 - [[Adding Tables of Contents to rendered docs]]
 - [[Omitting a heading from the page's Table of Contents]]
-- [[How do I update the Tables of Contents in CONTRIBUTING and similar]]
+- [[Embedding code and data in documentation]]
 - [[Documentation and branches]]
 
 ## Seeing the documentation locally

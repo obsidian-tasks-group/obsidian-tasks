@@ -42,17 +42,17 @@ Internal changes:
 
 - [ ] My code follows the code style of this project and passes `yarn run lint`.
 - [ ] My change requires a change to the documentation.
-- [ ] I have [updated the documentation](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/CONTRIBUTING.md#updating-documentation) accordingly.
-- [ ] My change has adequate [Unit Test coverage](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/CONTRIBUTING.md#maintaining-the-tests).
+- [ ] I have [updated the documentation](https://publish.obsidian.md/tasks-contributing/Documentation/About+Documentation) accordingly.
+- [ ] My change has adequate [Unit Test coverage](https://publish.obsidian.md/tasks-contributing/Testing/About+Testing).
 
 ## Terms
 
 <!--
 By submitting this pull request, you must agree to follow our
-[contributing guide](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/CONTRIBUTING.md) and
+[contributing guide](https://publish.obsidian.md/tasks-contributing) and
 [Code of Conduct](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/CODE_OF_CONDUCT.md).
 Put an x in the boxes to confirm you agree.
 -->
 
-- [ ] My contribution follow this project's [contributing guide](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/CONTRIBUTING.md)
+- [ ] My contribution follow this project's [contributing guide](https://publish.obsidian.md/tasks-contributing)
 - [ ] I agree to follow this project's [Code of Conduct](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/CODE_OF_CONDUCT.md)
