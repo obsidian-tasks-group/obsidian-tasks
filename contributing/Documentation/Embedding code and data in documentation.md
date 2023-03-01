@@ -38,13 +38,13 @@ The configuration file for mdsnippets is:
 
 ### Embedding a whole file as a code block, with 'snippet:'
 
-#### 1 Add 'snippet:' instruction to embed the file
+1 **Add 'snippet:' instruction to embed the file**
 
 For example:
 
 - `snippet: ApprovalTestsDemo.test.ApprovalTests_JsonVerify.approved.json`
 
-#### 2 Run mdsnippets to expand the 'snippet:' line
+2 **Run mdsnippets to expand the 'snippet:' line**
 
 Run `mdsnippets` - see [[#Running mdsnippets in Tasks]]
 
@@ -63,13 +63,13 @@ Notice how the above has syntax highlighting, as the `.json` file extension on t
 
 ### Embedding a whole file as a code block, with 'include:'
 
-#### 1 Add 'include:' instruction to embed the file
+1 **Add 'include:' instruction to embed the file**
 
 For example:
 
 - `include: ApprovalTestsDemo.test.ApprovalTests_JsonVerify.approved.json`
 
-#### 2 Run mdsnippets to expand the 'include:' line
+2 **Run mdsnippets to expand the 'include:' line**
 
 Run `mdsnippets` - see [[#Running mdsnippets in Tasks]]
 
@@ -109,7 +109,7 @@ Generates this:
 
 This section describes how to embed a section/snippet of source file in to Markdown, for easy writing of documentation, and keeping the docs up-to-date.
 
-#### 1 Label the snippet with 'begin-snippet:' and 'end-snippet'
+1 **Label the snippet with 'begin-snippet:' and 'end-snippet'**
 
 Think of a descriptive name for your snippet (file segment), and then surround it with two comments:
 
@@ -126,7 +126,7 @@ Think of a descriptive name for your snippet (file segment), and then surround i
      // end-snippet
  ```
 
-#### 2 Put a 'snippet:' line in the documentation
+2 **Put a 'snippet:' line in the documentation**
 
 In a Markdown documentation file, add a line `snippet: unique-name-of-snippet-across-your-repo`
 
@@ -136,7 +136,7 @@ In a Markdown documentation file, add a line `snippet: unique-name-of-snippet-ac
  snippet: approval-test-as-text
  ```
 
-#### 3 Run mdsnippets to expand the 'snippet:' line
+3 **Run mdsnippets to expand the 'snippet:' line**
 
 Run `mdsnippets` - see [[#Running mdsnippets in Tasks]]
 
