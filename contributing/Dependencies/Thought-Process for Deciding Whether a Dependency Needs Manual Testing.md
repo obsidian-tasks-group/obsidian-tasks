@@ -7,7 +7,7 @@ Look at the `package.json` entry for a package and search for which files import
   - everything in the "dependencies" (rather than "devDependencies") list in `package.json`
   - `esbuild` (the build system)
   - anything imported by the esbuild config file `esbuild.config.mjs` (for example, `builtin-modules`, `svelte-preprocess`)
-  - `obsidian` (also see [[#Notes and Special Cases]] below)
+  - `obsidian` (also see [[Notes and Special Cases]] below)
   - all `@codemirror/*`
   - `moment`
 - **Automated testing sufficient**: Our linting, formatting, and testing code does not affect the built output and is run automatically on each PR, so it does not need smoke tests. An automated test fail for an upgrade to one of these packages may be an indication of a newly found linter error in the code and should be investigated. However, if all the automatic checks pass, these packages can be merged right away:
@@ -16,5 +16,5 @@ Look at the `package.json` entry for a package and search for which files import
   - `svelte-check` (but not other svelte things, which are used in the build system)
   - anything with `prettier`
   - `lefthook`
-  - anything with `jest` in it (but see the note on [[#Dependency Groups]] for details).
+  - anything with `jest` in it (but see the note on [[Dependency Groups]] for details).
 - For anything else, where and how is it being used? If it's only in tests, or only used by developers, no need to smoke test.
