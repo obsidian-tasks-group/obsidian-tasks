@@ -15,7 +15,7 @@
 
 ### Get the Tasks-Demo vault with the build to be tested
 
-You can either [download the Tasks-demo vault with the build's Tasks plugin installed](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/CONTRIBUTING.md#how-do-i-test-a-github-build-of-the-tasks-plugin).
+You can either [download the Tasks-demo vault with the build's Tasks plugin installed](https://publish.obsidian.md/tasks-contributing/Testing/How+do+I+test+a+GitHub+build+of+the+Tasks+plugin) - see Option 1.
 
 Or you can install a download of the build's Tasks plugin inside your clone of the Tasks repo:
 
@@ -27,7 +27,7 @@ Or you can install a download of the build's Tasks plugin inside your clone of t
   - Navigate to `obsidian-tasks/resources/sample_vaults/Tasks-Demo`
   - Click 'Open'
 - Install the candidate build for the pull request or release inside the `Tasks-Demo` vault
-  - See the [FAQs in the CONTRIBUTING page](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/CONTRIBUTING.md#faqs).
+  - See [How do I test a GitHub build of the Tasks plugin](https://publish.obsidian.md/tasks-contributing/Testing/How+do+I+test+a+GitHub+build+of+the+Tasks+plugin) - see Option 2.
 
 ### Follow the tests
 
