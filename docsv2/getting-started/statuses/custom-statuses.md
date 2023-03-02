@@ -94,5 +94,5 @@ Now you can follow [How to set up your custom statuses]({{ site.baseurl }}{% lin
 
 Or you can read about [Status Settings]({{ site.baseurl }}{% link getting-started/statuses/status-settings.md %}), and see how to [edit a Status]({{ site.baseurl }}{% link getting-started/statuses/editing-a-status.md %}).
 
-{: .warning }
+> [!warning]
 Remember to set up your chosen CSS Snippet or Theme before setting up the custom statuses.

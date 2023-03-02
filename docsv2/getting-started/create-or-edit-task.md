@@ -109,7 +109,7 @@ Use the Status dropdown to change the Status Symbol for the task.
 
 For more information, including adding your own customised statuses, see [Statuses]({{ site.baseurl }}{% link getting-started/statuses.md %}).
 
-{: .warning }
+> [!warning]
 > Editing the Status in the modal does not yet add, remove or update the Done date.
 >
 > Also, completing a recurring task via the Status in the modal does not yet add the new recurrence.

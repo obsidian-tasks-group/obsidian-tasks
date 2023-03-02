@@ -84,7 +84,7 @@ Suppose that you wanted to create a set of 3 statuses that cycle between each ot
 >
 > Once you are happy with your statuses, we recommend restarting Obsidian, to ensure that all tasks and query results use the correct settings.
 
-{: .warning }
+> [!warning]
 Tasks currently allows creation of more than one status with the same symbol. It silently ignores any duplicate symbols: only the first will be used. If in doubt, examine the available statuses in the status dropdown in the [‘Create or edit Task’ Modal]({{ site.baseurl }}{% link getting-started/create-or-edit-task.md %}).
 
 ### Test the new statuses
