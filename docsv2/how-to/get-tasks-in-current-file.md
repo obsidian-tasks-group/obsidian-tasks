@@ -1,8 +1,5 @@
 ---
-layout: default
-title: How to get tasks in current file
-nav_order: 6
-parent: How Tos
+publish: true
 ---
 
 # How to get all tasks in the current file

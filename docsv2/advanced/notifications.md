@@ -1,9 +1,5 @@
 ---
-layout: default
-title: Notifications
-nav_order: 4
-parent: Advanced
-has_toc: false
+publish: true
 ---
 
 # Notifications

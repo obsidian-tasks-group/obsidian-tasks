@@ -1,9 +1,5 @@
 ---
-layout: default
-title: Editing a Status
-parent: Statuses
-grand_parent: Getting Started
-has_toc: false
+publish: true
 ---
 
 # Editing a Status

@@ -1,8 +1,5 @@
 ---
-layout: default
-title: Layout
-nav_order: 6
-parent: Queries
+publish: true
 ---
 
 # Layout commands

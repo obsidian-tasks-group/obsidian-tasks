@@ -32,13 +32,14 @@ Reminders of things to do.
 
 - [x] Maybe convert all `title:` YAML to `alias:`
   - It didn't fix the file names
-- [ ] Remove historical frontmatter that is not relevant in Obsidian
-  - [ ] nav_order
-  - [ ] layout
-  - [ ] parent
-  - [ ] has_toc
-  - [ ] has_children
-  - [ ] title (after it has been used to set the new file name)
+- [x] Remove historical frontmatter that is not relevant in Obsidian
+  - [x] nav_order
+  - [x] layout
+  - [x] parent
+  - [x] grand_parent
+  - [x] has_toc
+  - [x] has_children
+  - [x] title
 
 ### Callouts
 

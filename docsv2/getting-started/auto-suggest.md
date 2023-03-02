@@ -1,9 +1,5 @@
 ---
-layout: default
-title: Auto-Suggest
-nav_order: 7
-parent: Getting Started
-has_toc: false
+publish: true
 ---
 
 # Intelligent Auto-Suggest

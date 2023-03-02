@@ -1,9 +1,5 @@
 ---
-layout: default
-title: Explaining Queries
-nav_order: 9
-parent: Queries
-has_toc: false
+publish: true
 ---
 
 # Explaining Queries

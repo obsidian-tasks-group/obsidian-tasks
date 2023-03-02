@@ -1,8 +1,5 @@
 ---
-layout: default
-title: Grouping
-nav_order: 5
-parent: Queries
+publish: true
 ---
 
 # Grouping

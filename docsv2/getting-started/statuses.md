@@ -1,10 +1,5 @@
 ---
-layout: default
-title: Statuses
-nav_order: 2
-parent: Getting Started
-has_toc: false
-has_children: true
+publish: true
 ---
 
 # Statuses

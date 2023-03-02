@@ -1,9 +1,5 @@
 ---
-layout: default
-title: Global Filter
-nav_order: 1
-parent: Getting Started
-has_toc: false
+publish: true
 ---
 
 # Global Filter

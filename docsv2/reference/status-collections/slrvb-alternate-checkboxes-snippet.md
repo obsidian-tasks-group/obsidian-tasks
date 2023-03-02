@@ -1,9 +1,5 @@
 ---
-layout: default
-title: SlRvb's Alternate Checkboxes
-parent: Status Collections
-grand_parent: Reference
-has_toc: false
+publish: true
 ---
 
 # SlRvb's Alternate Checkboxes

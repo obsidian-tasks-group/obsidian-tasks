@@ -1,9 +1,5 @@
 ---
-layout: default
-title: ITS Theme
-parent: Status Collections
-grand_parent: Reference
-has_toc: false
+publish: true
 ---
 
 # ITS Theme

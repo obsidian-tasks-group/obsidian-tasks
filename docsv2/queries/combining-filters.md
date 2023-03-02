@@ -1,8 +1,5 @@
 ---
-layout: default
-title: Combining Filters
-nav_order: 3
-parent: Queries
+publish: true
 ---
 
 # Combining Filters

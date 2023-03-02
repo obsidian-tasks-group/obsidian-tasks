@@ -1,8 +1,5 @@
 ---
-layout: default
-title: Find tasks for coming 7 days
-nav_order: 4
-parent: How Tos
+publish: true
 ---
 
 # Find all tasks for the coming 7 days

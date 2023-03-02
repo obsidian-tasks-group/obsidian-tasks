@@ -1,8 +1,5 @@
 ---
-layout: default
-title: Filters
-nav_order: 1
-parent: Queries
+publish: true
 ---
 
 # Filters

@@ -1,8 +1,5 @@
 ---
-layout: default
-title: Quick Reference
-nav_order: 4
-has_toc: false
+publish: true
 ---
 
 # Quick Reference

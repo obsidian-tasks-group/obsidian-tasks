@@ -1,8 +1,5 @@
 ---
-layout: default
-title: Find tasks with invalid data
-nav_order: 5
-parent: How Tos
+publish: true
 ---
 
 # Find tasks with potentially invalid data

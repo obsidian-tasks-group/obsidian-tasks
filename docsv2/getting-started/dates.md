@@ -1,8 +1,5 @@
 ---
-layout: default
-title: Dates
-nav_order: 4
-parent: Getting Started
+publish: true
 ---
 
 # Dates

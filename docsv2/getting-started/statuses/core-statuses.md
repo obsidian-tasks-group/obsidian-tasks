@@ -1,9 +1,5 @@
 ---
-layout: default
-title: Core Statuses
-parent: Statuses
-grand_parent: Getting Started
-has_toc: false
+publish: true
 ---
 
 # Core Statuses

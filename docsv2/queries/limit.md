@@ -1,9 +1,5 @@
 ---
-layout: default
-title: Limiting
-nav_order: 7
-parent: Queries
-has_toc: false
+publish: true
 ---
 
 # Limiting

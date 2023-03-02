@@ -1,9 +1,5 @@
 ---
-layout: default
-title: Recurring Tasks
-nav_order: 5
-parent: Getting Started
-has_toc: false
+publish: true
 ---
 
 # Recurring Tasks (Repetition)

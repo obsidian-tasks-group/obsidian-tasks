@@ -1,10 +1,5 @@
 ---
-layout: default
-title: Status Collections
-nav_order: 1
-parent: Reference
-has_children: true
-has_toc: true
+publish: true
 ---
 
 # Status Collections

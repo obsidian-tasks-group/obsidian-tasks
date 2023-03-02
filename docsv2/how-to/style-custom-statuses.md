@@ -1,8 +1,5 @@
 ---
-layout: default
-title: Style custom statuses
-nav_order: 2
-parent: How Tos
+publish: true
 ---
 
 # Style custom statuses

@@ -1,8 +1,5 @@
 ---
-layout: default
-title: Queries
-nav_order: 4
-has_children: true
+publish: true
 ---
 
 # Queries

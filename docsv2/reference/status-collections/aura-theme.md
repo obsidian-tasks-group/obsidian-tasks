@@ -1,9 +1,5 @@
 ---
-layout: default
-title: Aura Theme (Dark mode only)
-parent: Status Collections
-grand_parent: Reference
-has_toc: false
+publish: true
 ---
 
 # Aura Theme (Dark mode only)

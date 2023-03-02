@@ -1,9 +1,5 @@
 ---
-layout: default
-title: Regular Expressions
-nav_order: 2
-parent: Queries
-has_toc: false
+publish: true
 ---
 
 # Regular Expressions

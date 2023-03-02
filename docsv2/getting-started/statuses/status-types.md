@@ -1,9 +1,5 @@
 ---
-layout: default
-title: Status Types
-parent: Statuses
-grand_parent: Getting Started
-has_toc: false
+publish: true
 ---
 
 # Status Types

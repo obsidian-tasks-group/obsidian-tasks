@@ -1,9 +1,5 @@
 ---
-layout: default
-title: AnuPpuccin Theme
-parent: Status Collections
-grand_parent: Reference
-has_toc: false
+publish: true
 ---
 
 # AnuPpuccin Theme

@@ -1,8 +1,5 @@
 ---
-layout: default
-title: Urgency
-nav_order: 3
-parent: Advanced
+publish: true
 ---
 
 # Urgency

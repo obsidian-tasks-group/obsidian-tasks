@@ -1,9 +1,5 @@
 ---
-layout: default
-title: Example Statuses
-parent: Statuses
-grand_parent: Getting Started
-has_toc: false
+publish: true
 ---
 
 # Example Statuses

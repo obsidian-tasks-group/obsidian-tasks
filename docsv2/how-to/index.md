@@ -1,8 +1,5 @@
 ---
-layout: default
-title: How Tos
-nav_order: 6
-has_children: true
+publish: true
 ---
 
 # How Tos

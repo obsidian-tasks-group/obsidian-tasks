@@ -1,9 +1,5 @@
 ---
-layout: default
-title: Priority
-nav_order: 3
-parent: Getting Started
-has_toc: false
+publish: true
 ---
 
 # Priority

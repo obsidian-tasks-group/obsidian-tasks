@@ -1,8 +1,5 @@
 ---
-layout: default
-title: Sorting
-nav_order: 4
-parent: Queries
+publish: true
 ---
 
 # Sorting

@@ -1,9 +1,5 @@
 ---
-layout: default
-title: Styling
-nav_order: 2
-parent: Advanced
-has_toc: false
+publish: true
 ---
 
 # Styling Tasks

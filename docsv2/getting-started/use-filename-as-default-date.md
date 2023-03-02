@@ -1,9 +1,5 @@
 ---
-layout: default
-title: Use Filename as Default Date
-nav_order: 6
-parent: Getting Started
-has_toc: false
+publish: true
 ---
 
 # Use Filename as Default Date
