@@ -6,18 +6,6 @@ parent: How Tos
 ---
 
 # How to get all tasks in the current file
-{: .no_toc }
-
-<details open markdown="block">
-  <summary>
-    Table of contents
-  </summary>
-  {: .text-delta }
-1. TOC
-{:toc}
-</details>
-
----
 
 ## Motivation and assumptions
 

@@ -6,16 +6,6 @@ parent: Getting Started
 ---
 
 # Dates
-{: .no_toc }
-
-<details open markdown="block">
-  <summary>
-    Table of contents
-  </summary>
-  {: .text-delta }
-1. TOC
-{:toc}
-</details>
 
 You don't have to use all available dates.
 Maybe due dates are sufficient for you.
