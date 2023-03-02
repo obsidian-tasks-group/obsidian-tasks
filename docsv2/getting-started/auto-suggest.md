@@ -10,7 +10,7 @@ has_toc: false
 
 ## Introduction
 
-{: .released }
+> [!success] Released
 Introduced in Tasks 1.9.0.
 
 The [Priorities]({{ site.baseurl }}{% link getting-started/priority.md %}), [Dates]({{ site.baseurl }}{% link getting-started/dates.md %}) and [Recurring Tasks]({{ site.baseurl }}{% link getting-started/recurring-tasks.md %}) pages show various emojis and special phrases that the Tasks plugin recognises, when searching for tasks.

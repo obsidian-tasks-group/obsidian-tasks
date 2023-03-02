@@ -96,7 +96,7 @@ Warning
 {: .label .label-yellow}
 Tasks can read tasks that are in **numbered lists**.
 
-{: .released }
+> [!success] Released
 Reading tasks inside numbered lists was introduced in Tasks 1.20.0.
 
 For example:
@@ -119,7 +119,7 @@ Warning
 {: .label .label-yellow}
 Tasks can read tasks that are inside **blockquotes** or [Obsidian's built-in callouts](https://help.obsidian.md/How+to/Use+callouts).
 
-{: .released }
+> [!success] Released
 Reading tasks inside callouts and blockquotes was introduced in Tasks 1.11.1
 
 However, under the following very specific circumstance, Tasks cannot add or remove completion dates or make the next copy of a recurring task:

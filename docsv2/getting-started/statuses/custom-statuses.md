@@ -10,7 +10,7 @@ has_toc: false
 
 ## Introduction
 
-{: .released }
+> [!success] Released
 Custom Statuses were introduced in Tasks 1.23.0.
 
 Custom statuses represent any non-standard markdown tasks.

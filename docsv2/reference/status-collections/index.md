@@ -11,7 +11,7 @@ has_toc: true
 
 ## Background
 
-{: .released }
+> [!success] Released
 Custom statuses were introduced in Tasks 1.23.0.
 
 You can control the behaviour of your tasks (such as what happens when you click on a checkbox), using Tasks' [Statuses]({{ site.baseurl }}{% link getting-started/statuses.md %}) feature.

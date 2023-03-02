@@ -10,7 +10,7 @@ has_toc: false
 
 ## Overview: the 'explain' instruction
 
-{: .released }
+> [!success] Released
 Introduced in Tasks 1.19.0.
 
 The `explain` instruction adds some extra output at the start of the search results, when tasks blocks are viewed in Live Preview and Reading modes.

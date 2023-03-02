@@ -10,7 +10,7 @@ has_toc: false
 
 ## Automatic scheduled date
 
-{: .released }
+> [!success] Released
 Introduced in Tasks 1.18.0.
 
 You can automatically set a scheduled date for tasks based on the name of their files. This feature can be enabled in the

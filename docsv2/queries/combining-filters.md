@@ -9,7 +9,7 @@ parent: Queries
 
 ## Summary
 
-{: .released }
+> [!success] Released
 Introduced in Tasks 1.9.0.
 
 The [individual filters]({{ site.baseurl }}{% link queries/filters.md %}) provided by Tasks can be combined together in powerful ways, by wrapping each of them in `(` and `)`,
