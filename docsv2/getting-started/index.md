@@ -14,7 +14,7 @@ The simplest way to create a new task is to create a new checklist item.
 The markdown syntax for checklist items is a list item that starts with spaced brackets: `- [ ] take out the trash`.
 Now Tasks tracks that you need to take out the trash!
 
-To list all open tasks in a markdown file, simply add a [query]({{ site.baseurl }}{% link queries/index.md %}) as a tasks code block like so:
+To list all open tasks in a markdown file, simply add a [[queries/index|query]] as a tasks code block like so:
 
 ````markdown
     ```tasks
@@ -26,7 +26,7 @@ To list all open tasks in a markdown file, simply add a [query]({{ site.baseurl 
 
 Now you have a list of all open tasks! This is enough to get started with tasks.
 You can _optionally_ start using one or more of the other features that Tasks offers.
-Like, for example, [priorities]({{ site.baseurl }}{% link getting-started/priority.md %}) or [dates]({{ site.baseurl }}{% link getting-started/dates.md %}#start-date).
+Like, for example, [[getting-started/dates#start-date|priorities]({{ site.baseurl }}{% link getting-started/priority.md %}) or [dates]].
 
 ## Easy editing of tasks
 
@@ -35,7 +35,7 @@ You can also bind a hotkey to the command.
 The command will parse what's on the current line in your editor and pre-populate a modal.
 In the modal, you can change the task's description, its due date, and a recurrence rule to have a repeating task.
 
-You can find out more in [‘Create or edit Task’ Modal]({{ site.baseurl }}{% link getting-started/create-or-edit-task.md %}).
+You can find out more in [[getting-started/create-or-edit-task|‘Create or edit Task’ Modal]].
 
 See other pages in 'Getting Started' for more details on due dates and recurrence, and many other features.
 
@@ -196,7 +196,7 @@ This means that you can only put **block links** (`^link-name`) and **tags** aft
 -   [ ] Task with block link _works_ 📅 2021-04-09 ^e5bebf
 ```
 
-If you are concerned that some values in a task are not being parsed as you intended, perhaps because a task is not being found by Tasks searches, you can view the task in the [‘Create or edit Task’ Modal]({{ site.baseurl }}{% link getting-started/create-or-edit-task.md %}).
+If you are concerned that some values in a task are not being parsed as you intended, perhaps because a task is not being found by Tasks searches, you can view the task in the [[getting-started/create-or-edit-task|‘Create or edit Task’ Modal]].
 
 If there are any **Tasks emojis visible in the Description field**, close the modal and delete or move to the left any unrecognised text.
 

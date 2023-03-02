@@ -17,7 +17,7 @@ You can automatically set a scheduled date for tasks based on the name of their 
 settings, via the option `Use filename as Scheduled date for undated tasks`. Changing this requires a restart of Obsidian.
 
 This allows you, for instance, to make all the tasks in your daily notes be considered as scheduled. You can then
-query them using the `scheduled` and `happens` [filters]({{ site.baseurl }}{% link queries/filters.md %}).
+query them using the `scheduled` and `happens` [[queries/filters|filters]].
 
 Example query :
 
@@ -35,7 +35,7 @@ Info
 The task is not visually modified in any Obsidian views: the scheduled date is only implied, and not displayed.
 
 It will however appear in the
-[edit dialog]({{ site.baseurl }}{% link getting-started/create-or-edit-task.md %}).
+[[getting-started/create-or-edit-task|edit dialog]].
 It can also be examined by using the `group by scheduled` instruction in a tasks block.
 </div>
 

@@ -9,7 +9,7 @@ parent: Queries
 
 ## Basics
 
-By default Tasks sorts tasks by [a calculated score we call "urgency"]({{ site.baseurl }}{% link advanced/urgency.md %}).
+By default Tasks sorts tasks by [[advanced/urgency|a calculated score we call "urgency"]].
 
 To sort the results of a query different from the default, you must add at least one `sort by` line to the query.
 
@@ -53,13 +53,13 @@ You can sort tasks by the following properties.
 > [!success] Released
 `sort by status.name` and `sort by status.type` were introduced in Tasks 1.23.0.
 
-For more information, including adding your own customised statuses, see [Statuses]({{ site.baseurl }}{% link getting-started/statuses.md %}).
+For more information, including adding your own customised statuses, see [[getting-started/statuses|Statuses]].
 
 ### Other task properties
 
 1. `description` (the description of the task)
-1. `priority` (priority of the task; "low" is below "none": [priorities]({{ site.baseurl }}{% link getting-started/priority.md %}))
-1. `urgency` ([urgency]({{ site.baseurl }}{% link advanced/urgency.md %}))
+1. `priority` (priority of the task; "low" is below "none": [[getting-started/priority|priorities]])
+1. `urgency` ([[advanced/urgency|urgency]])
 1. `tag` (the description of the task)
 
 ## Multiple sort criteria

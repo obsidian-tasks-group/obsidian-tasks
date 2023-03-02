@@ -73,7 +73,7 @@ In the following examples, we describe the `heading` filter, but these comments 
     - Regular expression (or ‘regex’) searching is a powerful but advanced feature.
     - It requires thorough knowledge in order to use successfully, and not miss intended search results.
     - It is easy to write a regular expression that looks correct, but which has a special character with a non-obvious meaning.
-    - Essential reading: [Regular Expression Searches]({{ site.baseurl }}{% link queries/regular-expressions.md %}).
+    - Essential reading: [[queries/regular-expressions|Regular Expression Searches]].
 
 ---
 
@@ -96,7 +96,7 @@ Within each line, you can use the boolean operators `NOT`, `AND`, `OR`, `AND NOT
     (path includes GitHub) AND NOT (tags include #todo)
     ```
 
-For full details of combining filters with boolean operators, see [Combining Filters]({{ site.baseurl }}{% link queries/combining-filters.md %}).
+For full details of combining filters with boolean operators, see [[queries/combining-filters|Combining Filters]].
 
 ---
 
@@ -148,7 +148,7 @@ For full details of combining filters with boolean operators, see [Combining Fil
 `has start date` was Introduced in Tasks 1.6.0.<br>
 `start date is invalid` was introduced in Tasks 1.16.0.
 
-When filtering queries by [start date]({{ site.baseurl }}{% link getting-started/dates.md %}#-start),
+When filtering queries by [[getting-started/dates#-start|start date]],
 the result will include tasks without a start date.
 This way, you can use the start date as a filter to filter out any tasks that you cannot yet work on.
 
@@ -188,7 +188,7 @@ because the tasks starts before tomorrow. Only one of the dates needs to match.
 > - a task with `[ ]` used to count as `not done`
 > - any other character than space used to count as `done`
 >
-> The new behaviour is more flexible and was required to introduce support for in-progress and cancelled tasks. If the original behaviour is preferred, you can change the status types of every symbol except `space` to `DONE`. See [How to set up your custom statuses]({{ site.baseurl }}{% link how-to/set-up-custom-statuses.md %}).
+> The new behaviour is more flexible and was required to introduce support for in-progress and cancelled tasks. If the original behaviour is preferred, you can change the status types of every symbol except `space` to `DONE`. See [[how-to/set-up-custom-statuses|How to set up your custom statuses]].
 
 ### Status Name
 
@@ -198,12 +198,12 @@ because the tasks starts before tomorrow. Only one of the dates needs to match.
   - Matches case-insensitive (disregards capitalization).
 - `status.name (regex matches|regex does not match) /<JavaScript-style Regex>/`
   - Does regular expression match (case-sensitive by default).
-  - Essential reading: [Regular Expression Searches]({{ site.baseurl }}{% link queries/regular-expressions.md %}).
+  - Essential reading: [[queries/regular-expressions|Regular Expression Searches]].
 
 > [!success] Released
 `status.name` text searching was introduced in Tasks 1.23.0.
 
-For more information, including adding your own customised statuses, see [Statuses]({{ site.baseurl }}{% link getting-started/statuses.md %}).
+For more information, including adding your own customised statuses, see [[getting-started/statuses|Statuses]].
 
 ### Status Type
 
@@ -217,7 +217,7 @@ For more information, including adding your own customised statuses, see [Status
 > [!success] Released
 `status.type` text searching was introduced in Tasks 1.23.0.
 
-For more information, including adding your own customised statuses, see [Statuses]({{ site.baseurl }}{% link getting-started/statuses.md %}).
+For more information, including adding your own customised statuses, see [[getting-started/statuses|Statuses]].
 
 ### Status Examples
 
@@ -239,7 +239,7 @@ As well as the date-related searches above, these filters search other propertie
   - Disregards the global filter when matching.
 - `description (regex matches|regex does not match) /<JavaScript-style Regex>/`
   - Does regular expression match (case-sensitive by default).
-  - Essential reading: [Regular Expression Searches]({{ site.baseurl }}{% link queries/regular-expressions.md %}).
+  - Essential reading: [[queries/regular-expressions|Regular Expression Searches]].
 
 > [!success] Released
 `regex matches` and `regex does not match` were introduced in Tasks 1.12.0.
@@ -270,7 +270,7 @@ The available priorities are (from high to low):
 3. use no signifier to indicate no priority (searched for with 'none')
 4. 🔽 for low priority
 
-For more information, see [Priorities]({{ site.baseurl }}{% link getting-started/priority.md %}) .
+For more information, see [[getting-started/priority|Priorities]] .
 
 #### Examples
 
@@ -298,7 +298,7 @@ For more information, see [Priorities]({{ site.baseurl }}{% link getting-started
   - The easiest way to see the standardised recurrence rule of your tasks is to use `group by recurrence`, and review the resulting group headings.
 - `recurrence (regex matches|regex does not match) /<JavaScript-style Regex>/`
   - Does regular expression match (case-sensitive by default).
-  - Essential reading: [Regular Expression Searches]({{ site.baseurl }}{% link queries/regular-expressions.md %}).
+  - Essential reading: [[queries/regular-expressions|Regular Expression Searches]].
 
 > [!success] Released
 `recurrence` text searching was introduced in Tasks 1.22.0.
@@ -323,7 +323,7 @@ Introduced in Tasks 1.6.0.
 - `tags (regex matches|regex does not match) /<JavaScript-style Regex>/` _or_
 - `tag (regex matches|regex does not match) /<JavaScript-style Regex>/`
   - Does regular expression match (case-sensitive by default).
-  - Essential reading: [Regular Expression Searches]({{ site.baseurl }}{% link queries/regular-expressions.md %}).
+  - Essential reading: [[queries/regular-expressions|Regular Expression Searches]].
   - This enables tag searches that avoid sub-tags, by putting a `$` character at the end of the regular expression. See examples below.
   - If searching for sub-tags, remember to escape the slashes in regular expressions: `\/`
 
@@ -352,7 +352,7 @@ Note that the path includes the `.md` extension.
   - Matches case-insensitive (disregards capitalization).
 - `path (regex matches|regex does not match) /<JavaScript-style Regex>/`
   - Does regular expression match (case-sensitive by default).
-  - Essential reading: [Regular Expression Searches]({{ site.baseurl }}{% link queries/regular-expressions.md %}).
+  - Essential reading: [[queries/regular-expressions|Regular Expression Searches]].
 
 > [!success] Released
 `regex matches` and `regex does not match` were introduced in Tasks 1.12.0.
@@ -368,7 +368,7 @@ Note that the file name includes the `.md` extension.
   - Matches case-insensitive (disregards capitalization).
 - `filename (regex matches|regex does not match) /<JavaScript-style Regex>/`
   - Does regular expression match (case-sensitive by default).
-  - Essential reading: [Regular Expression Searches]({{ site.baseurl }}{% link queries/regular-expressions.md %}).
+  - Essential reading: [[queries/regular-expressions|Regular Expression Searches]].
 
 ### Heading
 
@@ -381,7 +381,7 @@ Note that the file name includes the `.md` extension.
   - Whether or not the heading preceding the task includes the given regular expression (case-sensitive by default).
   - Always tries to match the closest heading above the task, regardless of heading level.
   - `regex does not match` will match a task that does not have a preceding heading in its file.
-  - Essential reading: [Regular Expression Searches]({{ site.baseurl }}{% link queries/regular-expressions.md %}).
+  - Essential reading: [[queries/regular-expressions|Regular Expression Searches]].
 
 > [!success] Released
 `regex matches` and `regex does not match` were introduced in Tasks 1.12.0.

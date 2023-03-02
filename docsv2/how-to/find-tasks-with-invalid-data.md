@@ -70,7 +70,7 @@ group by path
 ```
 ````
 
-Errors with invalid dates are not easily fixed using the [‘Create or edit Task’ Modal]({{ site.baseurl }}{% link getting-started/create-or-edit-task.md %}), as it shows any invalid dates with placeholder text, instead of showing the original values.
+Errors with invalid dates are not easily fixed using the [[getting-started/create-or-edit-task|‘Create or edit Task’ Modal]], as it shows any invalid dates with placeholder text, instead of showing the original values.
 
 So to fix any found tasks, use the backlink to navigate to the original line and fix the error there.
 
@@ -82,5 +82,5 @@ There is not currently a way to find any tasks with invalid recurrence rules.
 
 Relevant documentation sections:
 
-- [Limitations and warnings parsing tasks]({{ site.baseurl }}{% link getting-started/index.md %}#limitations-and-warnings)
-- [Finding Tasks with Invalid Dates]({{ site.baseurl }}{% link queries/filters.md %}#finding-tasks-with-invalid-dates).
+- [[getting-started/index#limitations-and-warnings|Limitations and warnings parsing tasks]]
+- [[queries/filters#finding-tasks-with-invalid-dates|Finding Tasks with Invalid Dates]].

@@ -86,5 +86,5 @@ With the above date, that search gives the desired result:
 
 Relevant documentation sections:
 
-- Some examples are written in the [Dates section of the Filters docs]({{ site.baseurl }}{% link queries/filters.md %}#dates).
-- And perhaps more useful are the date-based examples in the [Queries Examples page]({{ site.baseurl }}{% link queries/examples.md %}).
+- Some examples are written in the [[queries/filters#dates|Dates section of the Filters docs]].
+- And perhaps more useful are the date-based examples in the [[queries/examples|Queries Examples page]].

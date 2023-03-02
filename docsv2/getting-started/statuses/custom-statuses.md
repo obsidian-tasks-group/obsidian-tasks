@@ -61,16 +61,16 @@ And this is how you can use them:
 > Broad steps to understand and set up Statuses (or "Alternate Checkboxes"):
 >
 > - Understand what Statuses are:
->   - [Statuses]({{ site.baseurl }}{% link getting-started/statuses.md %})
->   - [Custom Statuses]({{ site.baseurl }}{% link getting-started/statuses/custom-statuses.md %})
+>   - [[getting-started/statuses|Statuses]]
+>   - [[getting-started/statuses/custom-statuses|Custom Statuses]]
 > - Choose your status styling scheme: this will determine the names and symbols for your custom statuses:
->   - Some common ones are shown in [Status Collections]({{ site.baseurl }}{% link reference/status-collections/index.md %})
+>   - Some common ones are shown in [[reference/status-collections/index|Status Collections]]
 > - Set up your status styling scheme
->   - [How to style custom statuses]({{ site.baseurl }}{% link how-to/style-custom-statuses.md %}).
+>   - [[how-to/style-custom-statuses|How to style custom statuses]].
 > - Configure Tasks to use your custom statuses
->   - [How to set up your custom statuses]({{ site.baseurl }}{% link how-to/set-up-custom-statuses.md %})
+>   - [[how-to/set-up-custom-statuses|How to set up your custom statuses]]
 > - Optionally, update your tasks searches to take advantage of the new flexibility
->   - [Filters for Task Statuses]({{ site.baseurl }}{% link queries/filters.md %}#filters-for-task-statuses)
+>   - [[queries/filters#filters-for-task-statuses|Filters for Task Statuses]]
 
 <!-- force a blank line --> <!-- endInclude -->
 
@@ -80,19 +80,19 @@ You can use any snippet or theme you wish. If you are already using a snippet or
 
 If, however, you are using the default theme, or a theme that doesn't know style "custom checkboxes", you will need to pick one.
 
-[Status Collections]({{ site.baseurl }}{% link reference/status-collections/index.md %}) has a list of the ones that Tasks already has one-click support for, to help you choose.
+[[reference/status-collections/index|Status Collections]] has a list of the ones that Tasks already has one-click support for, to help you choose.
 
 ### Install your styling scheme
 
-For example, you could follow [How to style custom statuses]({{ site.baseurl }}{% link how-to/style-custom-statuses.md %}).
+For example, you could follow [[how-to/style-custom-statuses|How to style custom statuses]].
 
 ### Editing custom statuses
 
 Your choice of styling facility will determine which letters and characters you wish to you in your custom statuses.
 
-Now you can follow [How to set up your custom statuses]({{ site.baseurl }}{% link how-to/set-up-custom-statuses.md %}).
+Now you can follow [[how-to/set-up-custom-statuses|How to set up your custom statuses]].
 
-Or you can read about [Status Settings]({{ site.baseurl }}{% link getting-started/statuses/status-settings.md %}), and see how to [edit a Status]({{ site.baseurl }}{% link getting-started/statuses/editing-a-status.md %}).
+Or you can read about [[getting-started/statuses/editing-a-status|Status Settings]({{ site.baseurl }}{% link getting-started/statuses/status-settings.md %}), and see how to [edit a Status]].
 
 > [!warning]
 Remember to set up your chosen CSS Snippet or Theme before setting up the custom statuses.

@@ -47,24 +47,24 @@ This setting takes immediate effect, and does not require restarting of Obsidian
 
 This is the text describing your task.
 
-If you have a [global filter]({{ site.baseurl }}{% link getting-started/global-filter.md %}) enabled, the dialog takes care of adding it automatically.
+If you have a [[getting-started/global-filter|global filter]] enabled, the dialog takes care of adding it automatically.
 
 ### Priority
 
-See [priority]({{ site.baseurl }}{% link getting-started/priority.md %}).
+See [[getting-started/priority|priority]].
 
 ### Recurrence
 
 Here you can make the task recur, so that when it is marked as done, a new task is created, with newer dates.
 
-See [recurring tasks (repetition)]({{ site.baseurl }}{% link getting-started/recurring-tasks.md %}).
+See [[getting-started/recurring-tasks|recurring tasks (repetition)]].
 
 ### Dates
 
 Here you can optionally give the task
-[due]({{ site.baseurl }}{% link getting-started/dates.md %}#-due),
-[scheduled]({{ site.baseurl }}{% link getting-started/dates.md %}#-scheduled) and
-[start]({{ site.baseurl }}{% link getting-started/dates.md %}#-start) dates.
+[[getting-started/dates#-due|due]],
+[[getting-started/dates#-scheduled|scheduled]] and
+[[getting-started/dates#-start|start]] dates.
 
 There is a lot of flexibility here. For example:
 
@@ -107,7 +107,7 @@ Use the Status dropdown to change the Status Symbol for the task.
 
 ![Task edit modal shows new statuses immediately](../images/modal-showing-new-statuses.png)
 
-For more information, including adding your own customised statuses, see [Statuses]({{ site.baseurl }}{% link getting-started/statuses.md %}).
+For more information, including adding your own customised statuses, see [[getting-started/statuses|Statuses]].
 
 > [!warning]
 > Editing the Status in the modal does not yet add, remove or update the Done date.

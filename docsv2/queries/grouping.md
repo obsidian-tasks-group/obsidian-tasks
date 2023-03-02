@@ -71,7 +71,7 @@ You can group by the following properties.
 > [!success] Released
 `group by status.name` and `group by status.type` were introduced in Tasks 1.23.0.
 
-For more information, including adding your own customised statuses, see [Statuses]({{ site.baseurl }}{% link getting-started/statuses.md %}).
+For more information, including adding your own customised statuses, see [[getting-started/statuses|Statuses]].
 
 ### Other task properties
 

@@ -10,7 +10,7 @@ has_toc: false
 
 ## Overview
 
-Once we know what a status is [Status]({{ site.baseurl }}{% link getting-started/statuses.md %}), what can we do with them?
+Once we know what a status is [[getting-started/statuses|Status]], what can we do with them?
 
 Here are some example scenarios, for inspiration.
 

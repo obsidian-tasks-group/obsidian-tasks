@@ -10,7 +10,7 @@ has_toc: false
 
 ## Introduction
 
-This theme offers the same checkboxes as [SlRvb's Alternate Checkboxes]({{ site.baseurl }}{% link reference/status-collections/slrvb-alternate-checkboxes-snippet.md %}), which works in combination with other themes too, so is more flexible.
+This theme offers the same checkboxes as [[reference/status-collections/slrvb-alternate-checkboxes-snippet|SlRvb's Alternate Checkboxes]], which works in combination with other themes too, so is more flexible.
 
 |                       Location | Link                                                                                                                                                        |
 | ------------------------------:|:----------------------------------------------------------------------------------------------------------------------------------------------------------- |

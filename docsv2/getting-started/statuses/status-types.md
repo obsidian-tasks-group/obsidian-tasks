@@ -10,7 +10,7 @@ has_toc: false
 
 ## Overview
 
-With the new ability to create a variety of [Custom Statuses]({{ site.baseurl }}{% link getting-started/statuses/custom-statuses.md %}), Tasks needs to know enough about each status that it can decide:
+With the new ability to create a variety of [[getting-started/statuses/custom-statuses|Custom Statuses]], Tasks needs to know enough about each status that it can decide:
 
 - how to treat tasks when searching,
 - and what to do when tasks with the status are toggled, both for adding or removing Done dates, and for creating new task recurrences.

@@ -9,11 +9,11 @@ parent: Advanced
 
 ## Introduction
 
-By default, Tasks [sorts]({{ site.baseurl }}{% link queries/sorting.md %}) query results by decreasing urgency.
+By default, Tasks [[queries/sorting|sorts]] query results by decreasing urgency.
 Tasks tries to calculate urgency based on what you should likely work on next.
 
 The urgency score isn't perfect, of course, as many more factors may influence the order on which you want to work on tasks.
-Urgency can only consider the parameters it knows: [dates]({{ site.baseurl }}{% link getting-started/dates.md %}) and [priorities]({{ site.baseurl }}{% link getting-started/priority.md %}).
+Urgency can only consider the parameters it knows: [[getting-started/priority|dates]({{ site.baseurl }}{% link getting-started/dates.md %}) and [priorities]].
 It is likely that the task you want to work on next is one of the tasks at the top of the list.
 
 The idea of Tasks' urgency is based on [Taskwarrior's](https://taskwarrior.org/) concept of [urgency](https://taskwarrior.org/docs/urgency.html).

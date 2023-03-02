@@ -31,8 +31,8 @@ The idea is that you can easily filter out unimportant tasks without needing to 
 Instead of adding the emoji manually, you can:
 
 - Use the `Tasks: Create or edit` command when creating or editing a task.
-  You will be able to select the priority from the options in the [‘Create or edit Task’ Modal]({{ site.baseurl }}{% link getting-started/create-or-edit-task.md %}).
-- Using [Intelligent Auto-Suggest]({{ site.baseurl }}{% link getting-started/auto-suggest.md %}),
+  You will be able to select the priority from the options in the [[getting-started/create-or-edit-task|‘Create or edit Task’ Modal]].
+- Using [[getting-started/auto-suggest|Intelligent Auto-Suggest]],
   start typing the first few characters of `high`, `medium` or `low`, and press <return> to accept the suggested signifier.
 
 ## Related Tasks Block Instructions
@@ -40,10 +40,10 @@ Instead of adding the emoji manually, you can:
 The following instructions use the priority signifiers in tasks.
 
 - `priority is (above, below)? (low, none, medium, high)`
-  - [Documentation]({{ site.baseurl }}{% link queries/filters.md %}#priority)
+  - [[queries/filters#priority|Documentation]]
 - `sort by priority`
-  - [Documentation]({{ site.baseurl }}{% link queries/sorting.md %}#basics)
+  - [[queries/sorting#basics|Documentation]]
 - `group by priority`
-  - [Documentation]({{ site.baseurl }}{% link queries/grouping.md %}#basics)
+  - [[queries/grouping#basics|Documentation]]
 - `hide priority`
-  - [Documentation]({{ site.baseurl }}{% link queries/layout.md %})
+  - [[queries/layout|Documentation]]

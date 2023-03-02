@@ -126,4 +126,4 @@ If you would like a more pleasing appearance for your Tasks results, you can put
 
 ## Related pages
 
-- [Dataview]({{ site.baseurl }}{% link other-plugins/dataview.md %})
+- [[other-plugins/dataview|Dataview]]

@@ -12,7 +12,7 @@ parent: Queries
 > [!success] Released
 Introduced in Tasks 1.9.0.
 
-The [individual filters]({{ site.baseurl }}{% link queries/filters.md %}) provided by Tasks can be combined together in powerful ways, by wrapping each of them in `(` and `)`,
+The [[queries/filters|individual filters]] provided by Tasks can be combined together in powerful ways, by wrapping each of them in `(` and `)`,
 and then joining them with boolean operators such as `AND`, `OR` and `NOT`.
 
 For example:
@@ -248,7 +248,7 @@ not done
 ```
 ````
 
-See [Daily Agenda]({{ site.baseurl }}{% link advanced/daily-agenda.md %}) for how to use templates
+See [[advanced/daily-agenda|Daily Agenda]] for how to use templates
 to embed dates in to daily notes.
 
 ### Combined GTD Contexts

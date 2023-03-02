@@ -10,7 +10,7 @@ has_toc: false
 
 ## Introduction
 
-This theme offers the same checkboxes as [ITS Theme]({{ site.baseurl }}{% link reference/status-collections/its-theme.md %}), but will work with other themes too, so is more flexible.
+This theme offers the same checkboxes as [[reference/status-collections/its-theme|ITS Theme]], but will work with other themes too, so is more flexible.
 
 |                       Location | Link                                                                                                                                                                                                    |
 | ------------------------------:|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |

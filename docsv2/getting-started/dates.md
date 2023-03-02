@@ -16,13 +16,13 @@ Info
 {: .label .label-blue }
 Instead of adding an emoji and a date manually, you can use the `Tasks: Create or edit` command when creating or editing a task.
 When you use the command, you can also set dates like "Monday", "tomorrow", or "next week" and Tasks will automatically save the date in the correct format.
-You can find out more in [‘Create or edit Task’ Modal]({{ site.baseurl }}{% link getting-started/create-or-edit-task.md %}).
+You can find out more in [[getting-started/create-or-edit-task|‘Create or edit Task’ Modal]].
 </div>
 
 <div class="code-example" markdown="1">
 Info
 {: .label .label-blue }
-If you prefer to type, it is now very easy to add emojis and other information for you tasks using [Intelligent Auto-Suggest]({{ site.baseurl }}{% link getting-started/auto-suggest.md %}).
+If you prefer to type, it is now very easy to add emojis and other information for you tasks using [[getting-started/auto-suggest|Intelligent Auto-Suggest]].
 </div>
 
 ---
@@ -51,7 +51,7 @@ Scheduled dates use an hourglass emoji instead of a calendar emoji.
 - [ ] take out the trash ⏳ 2021-04-09
 ```
 
-See [Use Filename as Default Date]({{ site.baseurl }}{% link getting-started/use-filename-as-default-date.md %}) for how to optionally make Tasks use any dates in file names as the scheduled date for all undated tasks in that file.
+See [[getting-started/use-filename-as-default-date|Use Filename as Default Date]] for how to optionally make Tasks use any dates in file names as the scheduled date for all undated tasks in that file.
 
 > [!success] Released
 'Use Filename as Default Date' was introduced in Tasks 1.18.0.
@@ -70,7 +70,7 @@ Start dates use a departing airplane emoji instead of a calendar emoji.
 - [ ] take out the trash 🛫 2021-04-09
 ```
 
-When [filtering]({{ site.baseurl }}{% link queries/filters.md %}#start-date) queries by start date,
+When [[queries/filters#start-date|filtering]] queries by start date,
 the result will include tasks without a start date.
 This way, you can use the start date as a filter to filter out any tasks that you cannot yet work on.
 
@@ -87,4 +87,4 @@ starts before tomorrow
 Tasks does not automatically report any problem tasks that have invalid dates, such as on the 32nd day of a month. These task will silently not be found by date-based searches.
 
 However, it is possible to search for any tasks with invalid dates in your vault: see
-[Finding Tasks with Invalid Dates]({{ site.baseurl }}{% link queries/filters.md %}#finding-tasks-with-invalid-dates).
+[[queries/filters#finding-tasks-with-invalid-dates|Finding Tasks with Invalid Dates]].

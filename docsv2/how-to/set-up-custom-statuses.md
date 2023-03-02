@@ -38,7 +38,7 @@ This is what you see in the Tasks settings when you first look at the Task Statu
 
 ![Initial Task Statuses Options](../images/settings-statuses-initial.png)
 
-You can read about it in [Status Settings]({{ site.baseurl }}{% link getting-started/statuses/status-settings.md %}).
+You can read about it in [[getting-started/statuses/status-settings|Status Settings]].
 
 ---
 
@@ -65,7 +65,7 @@ Suppose that you wanted to create a set of 3 statuses that cycle between each ot
     - This will create a new, empty status:
     - ![Settings after adding a new empty status](../images/settings-custom-statuses-added-1.png)
 1. Click on the pencil icon
-    - This will open the [status edit modal]({{ site.baseurl }}{% link getting-started/statuses/editing-a-status.md %}).
+    - This will open the [[getting-started/statuses/editing-a-status|status edit modal]].
     - Notice the red colouring, to indicate values which are not yet valid.
     - If you aren't sure why something is invalid, click on the Checkmark button and an explanatory notice will pop up for a few seconds.
     - ![The modal for editing statuses](../images/settings-custom-statuses-dialog-1.png)
@@ -85,11 +85,11 @@ Suppose that you wanted to create a set of 3 statuses that cycle between each ot
 > Once you are happy with your statuses, we recommend restarting Obsidian, to ensure that all tasks and query results use the correct settings.
 
 > [!warning]
-Tasks currently allows creation of more than one status with the same symbol. It silently ignores any duplicate symbols: only the first will be used. If in doubt, examine the available statuses in the status dropdown in the [‘Create or edit Task’ Modal]({{ site.baseurl }}{% link getting-started/create-or-edit-task.md %}).
+Tasks currently allows creation of more than one status with the same symbol. It silently ignores any duplicate symbols: only the first will be used. If in doubt, examine the available statuses in the status dropdown in the [[getting-started/create-or-edit-task|‘Create or edit Task’ Modal]].
 
 ### Test the new statuses
 
-Now you can create use the [‘Create or edit Task’ Modal]({{ site.baseurl }}{% link getting-started/create-or-edit-task.md %}) to create a new task and set its status:
+Now you can create use the [[getting-started/create-or-edit-task|‘Create or edit Task’ Modal]] to create a new task and set its status:
 
 ![Task edit modal shows new statuses immediately](../images/modal-showing-new-statuses.png)
 
@@ -121,7 +121,7 @@ Repeat again:
 
 ## Adding more statuses
 
-[Bulk-adding Statuses]({{ site.baseurl }}{% link getting-started/statuses/status-settings.md %}#bulk-adding-statuses) shows various ways of quickly adding large numbers of statuses in single steps.
+[[getting-started/statuses/status-settings#bulk-adding-statuses|Bulk-adding Statuses]] shows various ways of quickly adding large numbers of statuses in single steps.
 
 ## Related pages
 
@@ -131,15 +131,15 @@ Repeat again:
 > Broad steps to understand and set up Statuses (or "Alternate Checkboxes"):
 >
 > - Understand what Statuses are:
->   - [Statuses]({{ site.baseurl }}{% link getting-started/statuses.md %})
->   - [Custom Statuses]({{ site.baseurl }}{% link getting-started/statuses/custom-statuses.md %})
+>   - [[getting-started/statuses|Statuses]]
+>   - [[getting-started/statuses/custom-statuses|Custom Statuses]]
 > - Choose your status styling scheme: this will determine the names and symbols for your custom statuses:
->   - Some common ones are shown in [Status Collections]({{ site.baseurl }}{% link reference/status-collections/index.md %})
+>   - Some common ones are shown in [[reference/status-collections/index|Status Collections]]
 > - Set up your status styling scheme
->   - [How to style custom statuses]({{ site.baseurl }}{% link how-to/style-custom-statuses.md %}).
+>   - [[how-to/style-custom-statuses|How to style custom statuses]].
 > - Configure Tasks to use your custom statuses
->   - [How to set up your custom statuses]({{ site.baseurl }}{% link how-to/set-up-custom-statuses.md %})
+>   - [[how-to/set-up-custom-statuses|How to set up your custom statuses]]
 > - Optionally, update your tasks searches to take advantage of the new flexibility
->   - [Filters for Task Statuses]({{ site.baseurl }}{% link queries/filters.md %}#filters-for-task-statuses)
+>   - [[queries/filters#filters-for-task-statuses|Filters for Task Statuses]]
 
 <!-- force a blank line --> <!-- endInclude -->

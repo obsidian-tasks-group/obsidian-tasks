@@ -196,7 +196,7 @@ This is intentional. As well as matching what the user requested, it matches the
 
 ## Priority of Dates
 
-A task can have [various dates]({{ site.baseurl }}{% link getting-started/dates.md %}).
+A task can have [[getting-started/dates|various dates]].
 When a task has multiple dates, one of them is selected as reference date based on the following priorities:
 
 1. Due date
