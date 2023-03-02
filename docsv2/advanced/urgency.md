@@ -13,7 +13,7 @@ By default, Tasks [[queries/sorting|sorts]] query results by decreasing urgency.
 Tasks tries to calculate urgency based on what you should likely work on next.
 
 The urgency score isn't perfect, of course, as many more factors may influence the order on which you want to work on tasks.
-Urgency can only consider the parameters it knows: [[getting-started/priority|dates]({{ site.baseurl }}{% link getting-started/dates.md %}) and [priorities]].
+Urgency can only consider the parameters it knows: [[getting-started/dates|dates]] and [[getting-started/priority|priorities]].
 It is likely that the task you want to work on next is one of the tasks at the top of the list.
 
 The idea of Tasks' urgency is based on [Taskwarrior's](https://taskwarrior.org/) concept of [urgency](https://taskwarrior.org/docs/urgency.html).

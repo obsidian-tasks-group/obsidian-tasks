@@ -26,7 +26,7 @@ To list all open tasks in a markdown file, simply add a [[queries/index|query]] 
 
 Now you have a list of all open tasks! This is enough to get started with tasks.
 You can _optionally_ start using one or more of the other features that Tasks offers.
-Like, for example, [[getting-started/dates#start-date|priorities]({{ site.baseurl }}{% link getting-started/priority.md %}) or [dates]].
+Like, for example, [[getting-started/priority|priorities]] or [[getting-started/dates#start-date|dates]].
 
 ## Easy editing of tasks
 

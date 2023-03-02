@@ -13,7 +13,7 @@ has_toc: false
 > [!success] Released
 Introduced in Tasks 1.9.0.
 
-The [[getting-started/recurring-tasks|Priorities]({{ site.baseurl }}{% link getting-started/priority.md %}), [Dates]({{ site.baseurl }}{% link getting-started/dates.md %}) and [Recurring Tasks]] pages show various emojis and special phrases that the Tasks plugin recognises, when searching for tasks.
+The [[getting-started/priority|Priorities]], [[getting-started/dates|Dates]] and [[getting-started/recurring-tasks|Recurring Tasks]] pages show various emojis and special phrases that the Tasks plugin recognises, when searching for tasks.
 
 If you prefer to type your tasks, instead of using a dialog, there is now an intelligent auto-suggest completion mechanism that does a
 lot of the typing of emojis and dates for you.

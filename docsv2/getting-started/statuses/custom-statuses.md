@@ -92,7 +92,7 @@ Your choice of styling facility will determine which letters and characters you 
 
 Now you can follow [[how-to/set-up-custom-statuses|How to set up your custom statuses]].
 
-Or you can read about [[getting-started/statuses/editing-a-status|Status Settings]({{ site.baseurl }}{% link getting-started/statuses/status-settings.md %}), and see how to [edit a Status]].
+Or you can read about [[getting-started/statuses/status-settings|Status Settings]], and see how to [[getting-started/statuses/editing-a-status|edit a Status]].
 
 > [!warning]
 Remember to set up your chosen CSS Snippet or Theme before setting up the custom statuses.
