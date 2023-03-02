@@ -182,7 +182,7 @@ because the tasks starts before tomorrow. Only one of the dates needs to match.
 - `done` - matches tasks status types `DONE`, `CANCELLED` and `NON_TASK`
 - `not done` - matches status types with type `TODO` and `IN_PROGRESS`
 
-{: .info }
+> [!info]
 > Prior to Tasks 1.23.0, there was no concept of task status type, and so only the status symbol was used:
 >
 > - a task with `[ ]` used to count as `not done`

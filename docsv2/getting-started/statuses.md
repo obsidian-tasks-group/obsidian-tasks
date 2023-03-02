@@ -153,7 +153,7 @@ What Tasks's custom statuses allow you to do is to **also customise the behaviou
 
 <!-- force a blank line --> <!-- include: snippet-statuses-overview.md -->
 
-{: .info }
+> [!info]
 > Broad steps to understand and set up Statuses (or "Alternate Checkboxes"):
 >
 > - Understand what Statuses are:
@@ -180,7 +180,7 @@ The [‘Create or edit Task’ Modal]({{ site.baseurl }}{% link getting-started/
 
 ### Related commands
 
-{: .info }
+> [!info]
 There are not yet any new commands for applying custom statuses.
 We are tracking this in [issue #1486](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1486) .
 
@@ -199,7 +199,7 @@ We are tracking this in [issue #1486](https://github.com/obsidian-tasks-group/ob
 
 For details, see [Filters for Task Statuses]({{ site.baseurl }}{% link queries/filters.md %}#filters-for-task-statuses)
 
-{: .info }
+> [!info]
 We envisage adding `status.symbol`.
 
 ---

@@ -27,7 +27,7 @@ This is what the Core Statuses look like initially in Tasks' settings:
 
 Note that `Todo` is followed by `Done`, in order to preserve compatibility with earlier Tasks releases.
 
-{: .info }
+> [!info]
 You can edit the 'Todo' core status to make its Next Status Symbol be `/` and enable `Todo` -> `In Progress` -> `Done`, if you prefer.
 
 ## Editing core statuses

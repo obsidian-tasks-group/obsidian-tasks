@@ -57,7 +57,7 @@ And this is how you can use them:
 
 <!-- force a blank line --> <!-- include: snippet-statuses-overview.md -->
 
-{: .info }
+> [!info]
 > Broad steps to understand and set up Statuses (or "Alternate Checkboxes"):
 >
 > - Understand what Statuses are:

@@ -18,7 +18,7 @@ You can control the behaviour of your tasks (such as what happens when you click
 
 <!-- force a blank line --> <!-- include: snippet-statuses-overview.md -->
 
-{: .info }
+> [!info]
 > Broad steps to understand and set up Statuses (or "Alternate Checkboxes"):
 >
 > - Understand what Statuses are:

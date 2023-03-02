@@ -85,7 +85,7 @@ Now the above three tasks look more colourful, and tasks with `[x]` and `[X]` ar
 
 <!-- force a blank line --> <!-- include: snippet-statuses-overview.md -->
 
-{: .info }
+> [!info]
 > Broad steps to understand and set up Statuses (or "Alternate Checkboxes"):
 >
 > - Understand what Statuses are:

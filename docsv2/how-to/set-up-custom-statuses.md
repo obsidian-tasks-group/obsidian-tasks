@@ -77,7 +77,7 @@ Suppose that you wanted to create a set of 3 statuses that cycle between each ot
     - `[!]` -> `[D]` -> `[X]` -> `[!]`:
     - ![After adding the other two new statuses](../images/settings-custom-statuses-important-loop-added.png)
 
-{: .info }
+> [!info]
 > The status changes are applied to newly edited tasks and subsequently opened notes immediately.
 >
 > Whilst experimenting and setting up your statuses, you do not need to restart Obsidian, unless you want to make Tasks re-read all the tasks in your vault, for example so that searches are aware of the changed statuses.
@@ -127,7 +127,7 @@ Repeat again:
 
 <!-- force a blank line --> <!-- include: snippet-statuses-overview.md -->
 
-{: .info }
+> [!info]
 > Broad steps to understand and set up Statuses (or "Alternate Checkboxes"):
 >
 > - Understand what Statuses are:
