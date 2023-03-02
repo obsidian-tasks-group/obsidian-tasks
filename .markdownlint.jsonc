@@ -5,6 +5,7 @@
   "MD013": false, // Ignore the line length rule.
   "MD022": false, // Headers should be surrounded by blank lines - disabled so that {: .no_toc } is next to its heading
   "MD025": false, // Allow the title in the front matter and markdown heading one to match.
+  "MD028": false, // Allow 'Blank line inside blockquote', in order to allow adjacent callouts
   "MD033": false, // Allow Inline HTML.
   "MD046": false // Allow fenced code blocks, for syntax hughlighting.
 }
