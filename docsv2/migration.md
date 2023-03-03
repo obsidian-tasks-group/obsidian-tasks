@@ -4,18 +4,52 @@ Notes and reminders of things to do.
 
 ## Notes for testers of the new site
 
+### Goals
+
+> [!success] Goal of this migration
+> The goals of this migration:
+>
+> - **A direct translation of the existing Tasks users docs**:
+>   - from: Jekyll
+>   - to: Obsidian Publish
+> - Retaining all information and meaning
+> - Using a Python script, so that the migration can be repeated
+>   - when we are ready for the final conversion
+> - And creating idiomatic Obsidian markdown
+>   - **For ease of future editing of documentation content.**
+
+> [!failure] Non-goals of this migration
+>
+> - At this stage, we will not improve the structure of the site
+
+### Current Status
+
 > [!todo] Things still to be done, so known issues
 > The only known remaining problems/things to do:
 >
-> - TODO: **File and folder names** will be updated to be more readable
+> - TODO: **File and folder names** will be updated to match their naming in the old site
 >   - **This will make the left sidebar a lot more readable**
->   - Once this is done, the links will no longer need directories in them, which will make editing easier
+>   - Once this is done, the links will no longer need directories in them, as the filenames will be unique.
 > - TODO: Links to **headings/sections** inside pages will be fixed to match Obsidian-style
 > - TODO: Add some **styling**, for example to top-align all table cells
 
-> [!bug] Bugs that will likely not be fixed
+> [!bug] Bugs and annoyances that will likely not be fixed
 >
 > - Some images are a bit fuzzy at some window sizes, but the same applies to the Obsidian user docs, so I may not be able to do anything about it
+> - When loading pages, there is a short flicker before the page is shown
+>   - This happens on the Obsidian Help site, so is outside my control
+
+### Tips for reviewing
+
+> [!tip] Tips for reviewing the new documentation
+>
+> - You can view the new site at: [publish.obsidian.md/tasks](https://publish.obsidian.md/tasks)
+> - You can view the Markdown source in Obsidian:
+>   - download the Tasks repo on the [branch for this work](https://github.com/obsidian-tasks-group/obsidian-tasks/archive/refs/heads/port-user-guide-to-obs-publish-v2.zip):
+>   - expand `obsidian-tasks-port-user-guide-to-obs-publish-v2.zip`
+>   - open the `obsidian-tasks-port-user-guide-to-obs-publish-v2` folder
+>   - open the `docsv2` sub-folder in Obsidian
+>   - Click 'trust author and plugins'
 
 > [!tip] Tips - things I will probably put in a 'how to use the docs' page
 >
