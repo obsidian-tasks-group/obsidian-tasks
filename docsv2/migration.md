@@ -118,8 +118,11 @@ Folders with a comma (`,`) in their name are not supported.
 
 ## Useful Links
 
-- [Old Site](https://obsidian-tasks-group.github.io/obsidian-tasks/)
-- [New Site](https://publish.obsidian.md/tasks/index)
-- Conversion Script: [github.com/claremacrae/jekyll_to_obsidian_publish](https://github.com/claremacrae/jekyll_to_obsidian_publish)
+| What                                                               | Location of source                                                                                                                                                                                                                                                                          |
+| ------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [Old Docs](https://obsidian-tasks-group.github.io/obsidian-tasks/) | [docs](https://github.com/obsidian-tasks-group/obsidian-tasks/tree/main/docs) folder on the main branch                                                                                                                                                                                     |
+| [New Docs](https://publish.obsidian.md/tasks/index) live           | [docsv2/](https://github.com/obsidian-tasks-group/obsidian-tasks/tree/port-user-guide-to-obs-publish-v2/docsv2) folder on the<br>[port-user-guide-to-obs-publish-v2 branch](https://github.com/obsidian-tasks-group/obsidian-tasks/compare/main...port-user-guide-to-obs-publish-v2) branch |
+| Conversion script and tests                                        | [github.com/claremacrae/jekyll_to_obsidian_publish](https://github.com/claremacrae/jekyll_to_obsidian_publish)                                                                                                                                                                              |
+
 - [Obsidian Publish docs](https://help.obsidian.md/Obsidian+Publish/Introduction+to+Obsidian+Publish)
 - [Callouts docs](https://help.obsidian.md/Editing+and+formatting/Callouts#Supported+types)
