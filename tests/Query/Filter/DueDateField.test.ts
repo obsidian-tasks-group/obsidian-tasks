@@ -151,9 +151,18 @@ describe('due date before natural date range (Today is 2022-05-25)', () => {
         },
     );
 
-    it('should explain natural date range (week)', () => {
-        const filterOrMessage = new DueDateField().createFilterOrErrorMessage('due before this week');
-        expect(filterOrMessage).toHaveExplanation('due date is before 2022-05-23 (Monday 23rd May 2022)');
+    it('should explain natural date range', () => {
+        const filterW = new DueDateField().createFilterOrErrorMessage('due before this week');
+        expect(filterW).toHaveExplanation('due date is before 2022-05-23 (Monday 23rd May 2022)');
+
+        const filterM = new DueDateField().createFilterOrErrorMessage('due before this month');
+        expect(filterM).toHaveExplanation('due date is before 2022-05-01 (Sunday 1st May 2022)');
+
+        const filterQ = new DueDateField().createFilterOrErrorMessage('due before this quarter');
+        expect(filterQ).toHaveExplanation('due date is before 2022-04-01 (Friday 1st April 2022)');
+
+        const filterY = new DueDateField().createFilterOrErrorMessage('due before this year');
+        expect(filterY).toHaveExplanation('due date is before 2022-01-01 (Saturday 1st January 2022)');
     });
 });
 
@@ -261,6 +270,20 @@ describe('due date after natural date range (Today is 2021-11-01)', () => {
             testTaskFilterForTaskWithDueDate(filter, afterRange, true);
         },
     );
+
+    it('should explain natural date range', () => {
+        const filterW = new DueDateField().createFilterOrErrorMessage('due after this week');
+        expect(filterW).toHaveExplanation('due date is after 2021-11-07 (Sunday 7th November 2021)');
+
+        const filterM = new DueDateField().createFilterOrErrorMessage('due after this month');
+        expect(filterM).toHaveExplanation('due date is after 2021-11-30 (Tuesday 30th November 2021)');
+
+        const filterQ = new DueDateField().createFilterOrErrorMessage('due after this quarter');
+        expect(filterQ).toHaveExplanation('due date is after 2021-12-31 (Friday 31st December 2021)');
+
+        const filterY = new DueDateField().createFilterOrErrorMessage('due after this year');
+        expect(filterY).toHaveExplanation('due date is after 2021-12-31 (Friday 31st December 2021)');
+    });
 });
 
 describe('explain due date queries', () => {
