@@ -51,9 +51,9 @@ export class DateParser {
                 case 'week':
                     // This is only to avoid recasting String in unitOfTime.DurationConstructor accepted by Duration.add()
                     delta.add(1, range);
-                    dateRange = [moment(), moment()];
             }
 
+            dateRange = [moment(), moment()];
             switch (lastThisNext) {
                 case 'last':
                     dateRange.forEach((d) => d.subtract(delta));
