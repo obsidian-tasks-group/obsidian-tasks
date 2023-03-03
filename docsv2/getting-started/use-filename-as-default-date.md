@@ -6,7 +6,7 @@ publish: true
 
 ## Automatic scheduled date
 
-> [!success] Released
+> [!quote] Released
 Introduced in Tasks 1.18.0.
 
 You can automatically set a scheduled date for tasks based on the name of their files. This feature can be enabled in the

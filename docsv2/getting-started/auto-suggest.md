@@ -6,7 +6,7 @@ publish: true
 
 ## Introduction
 
-> [!success] Released
+> [!quote] Released
 Introduced in Tasks 1.9.0.
 
 The [[getting-started/priority|Priorities]], [[getting-started/dates|Dates]] and [[getting-started/recurring-tasks|Recurring Tasks]] pages show various emojis and special phrases that the Tasks plugin recognises, when searching for tasks.

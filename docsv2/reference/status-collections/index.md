@@ -6,7 +6,7 @@ publish: true
 
 ## Background
 
-> [!success] Released
+> [!quote] Released
 Custom statuses were introduced in Tasks 1.23.0.
 
 You can control the behaviour of your tasks (such as what happens when you click on a checkbox), using Tasks' [[getting-started/statuses|Statuses]] feature.

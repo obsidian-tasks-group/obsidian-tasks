@@ -46,7 +46,7 @@ Scheduled dates use an hourglass emoji instead of a calendar emoji.
 
 See [[getting-started/use-filename-as-default-date|Use Filename as Default Date]] for how to optionally make Tasks use any dates in file names as the scheduled date for all undated tasks in that file.
 
-> [!success] Released
+> [!quote] Released
 'Use Filename as Default Date' was introduced in Tasks 1.18.0.
 
 ---

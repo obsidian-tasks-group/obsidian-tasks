@@ -20,14 +20,14 @@ You can sort tasks by the following properties.
 1. `filename` (the filename of the file that contains the task, with its extension)
     - Note that tasks from different notes with the same file name will be sorter.
 
-> [!success] Released
+> [!quote] Released
 `sort by filename` was introduced in Tasks 1.21.0.
 
 ### File contents
 
 1. `sort by heading` (the heading preceding the task; files with empty headings sort before other tasks)
 
-> [!success] Released
+> [!quote] Released
 `sort by heading` was introduced in Tasks 1.21.0.
 
 ### Task date properties
@@ -38,7 +38,7 @@ You can sort tasks by the following properties.
 1. `done` (the date when the task was done)
 1. `happens` (the earliest of start date, scheduled date, and due date)
 
-> [!success] Released
+> [!quote] Released
 `sort by happens` was introduced in Tasks 1.21.0.
 
 ### Task statuses
@@ -47,7 +47,7 @@ You can sort tasks by the following properties.
 1. `status.name` (Done, Todo, Cancelled, In Progress, Unknown, My very important custom status, etc - sorted alphabetically)
 1. `status.type` (Sorted in the order `IN_PROGRESS`, `TODO`, `DONE`, `CANCELLED` then `NON_TASK`)
 
-> [!success] Released
+> [!quote] Released
 `sort by status.name` and `sort by status.type` were introduced in Tasks 1.23.0.
 
 For more information, including adding your own customised statuses, see [[getting-started/statuses|Statuses]].
@@ -96,7 +96,7 @@ For example, when you `sort by done reverse` and your query results contain task
 
 ## Tag sorting
 
-> [!success] Released
+> [!quote] Released
 Introduced in Tasks 1.6.0.
 
 If you want to sort by tags, by default it will sort by the first tag found in the description. If you want to sort by a tag that comes after that then you can specify the index at the end of the query. All tasks should have the same amount of tags for optimal sorting and the tags in the same order. The index starts from 1 which is also the default.

@@ -6,7 +6,7 @@ publish: true
 
 ## Introduction
 
-> [!success] Released
+> [!quote] Released
 Custom Statuses were introduced in Tasks 1.23.0.
 
 Custom statuses represent any non-standard markdown tasks.

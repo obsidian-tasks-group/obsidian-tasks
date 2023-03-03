@@ -6,7 +6,7 @@ publish: true
 
 ## Summary
 
-> [!success] Released
+> [!quote] Released
 Introduced in Tasks 1.9.0.
 
 The [[queries/filters|individual filters]] provided by Tasks can be combined together in powerful ways, by wrapping each of them in `(` and `)`,
