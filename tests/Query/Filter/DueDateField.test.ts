@@ -126,6 +126,16 @@ describe('due date with natural date ranges (Today is 2022-05-25)', () => {
         ['last month', '2022-03-31', '2022-04-01', '2022-04-30', '2022-05-01'],
         ['this month', '2022-04-30', '2022-05-01', '2022-05-31', '2022-06-01'],
         ['next month', '2022-05-31', '2022-06-01', '2022-06-30', '2022-07-01'],
+
+        // Quarter
+        ['last quarter', '2021-12-31', '2022-01-01', '2022-03-31', '2022-04-01'],
+        ['this quarter', '2022-03-31', '2022-04-01', '2022-06-30', '2022-07-01'],
+        ['next quarter', '2022-06-30', '2022-07-01', '2022-09-30', '2022-10-01'],
+
+        // Year
+        ['last year', '2020-12-31', '2021-01-01', '2021-12-31', '2022-01-01'],
+        ['this year', '2021-12-31', '2022-01-01', '2022-12-31', '2023-01-01'],
+        ['next year', '2022-12-31', '2023-01-01', '2023-12-31', '2024-01-01'],
     ])(
         'due before %s: task with due date on %s is included; %s, %s, %s are not',
         (range: string, beforeRange: string, rangeStart: string, rangeEnd: string, afterRange: string) => {
