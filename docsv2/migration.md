@@ -62,6 +62,18 @@ Notes and reminders of things to do.
 >   - Click the **icon** that shows up when you **hover** over a header in the note content, that will also **copy it to the clipboard**
 >     - So don't do it if you've got anything valuable on the clipboard and, you don't have clipboard history on your system
 
+## Useful Links
+
+| What                                                               | Location of source                                                                                                                                                                                                                                                                          |
+| ------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [Old Docs](https://obsidian-tasks-group.github.io/obsidian-tasks/) | [docs](https://github.com/obsidian-tasks-group/obsidian-tasks/tree/main/docs) folder on the main branch                                                                                                                                                                                     |
+| [New Docs](https://publish.obsidian.md/tasks/index) live           | [docsv2/](https://github.com/obsidian-tasks-group/obsidian-tasks/tree/port-user-guide-to-obs-publish-v2/docsv2) folder on the<br>[port-user-guide-to-obs-publish-v2 branch](https://github.com/obsidian-tasks-group/obsidian-tasks/compare/main...port-user-guide-to-obs-publish-v2) branch |
+| Conversion script and tests                                        | [github.com/claremacrae/jekyll_to_obsidian_publish](https://github.com/claremacrae/jekyll_to_obsidian_publish)                                                                                                                                                                              |
+| Issue tracking the work                                            | [#1706: # Migrate User Docs to Obsidian Publish, with current folder structure](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1706)                                                                                                                                         |
+
+- [Obsidian Publish docs](https://help.obsidian.md/Obsidian+Publish/Introduction+to+Obsidian+Publish)
+- [Callouts docs](https://help.obsidian.md/Editing+and+formatting/Callouts#Supported+types)
+
 ---
 
 The remainder is detailed notes on the conversion
@@ -149,14 +161,3 @@ Folders with a comma (`,`) in their name are not supported.
 
 - [ ] Update the links in `docs-snippets/snippet-statuses-overview.md`
 - [ ] Delete this `migration.md` file
-
-## Useful Links
-
-| What                                                               | Location of source                                                                                                                                                                                                                                                                          |
-| ------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [Old Docs](https://obsidian-tasks-group.github.io/obsidian-tasks/) | [docs](https://github.com/obsidian-tasks-group/obsidian-tasks/tree/main/docs) folder on the main branch                                                                                                                                                                                     |
-| [New Docs](https://publish.obsidian.md/tasks/index) live           | [docsv2/](https://github.com/obsidian-tasks-group/obsidian-tasks/tree/port-user-guide-to-obs-publish-v2/docsv2) folder on the<br>[port-user-guide-to-obs-publish-v2 branch](https://github.com/obsidian-tasks-group/obsidian-tasks/compare/main...port-user-guide-to-obs-publish-v2) branch |
-| Conversion script and tests                                        | [github.com/claremacrae/jekyll_to_obsidian_publish](https://github.com/claremacrae/jekyll_to_obsidian_publish)                                                                                                                                                                              |
-
-- [Obsidian Publish docs](https://help.obsidian.md/Obsidian+Publish/Introduction+to+Obsidian+Publish)
-- [Callouts docs](https://help.obsidian.md/Editing+and+formatting/Callouts#Supported+types)
