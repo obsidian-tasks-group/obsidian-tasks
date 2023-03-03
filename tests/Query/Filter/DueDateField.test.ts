@@ -95,7 +95,7 @@ describe('due date', () => {
 });
 
 describe('due date (error & corner cases)', () => {
-    it('due date is invalid', () => {
+    it('invalid due date', () => {
         // Arrange
         const filter = new DueDateField().createFilterOrErrorMessage('due date is invalid');
 
@@ -105,6 +105,60 @@ describe('due date (error & corner cases)', () => {
         testTaskFilterForTaskWithDueDate(filter, '2022-02-30', true); // 30 February is not valid
         testTaskFilterForTaskWithDueDate(filter, '2022-00-01', true); // month 0 not valid
         testTaskFilterForTaskWithDueDate(filter, '2022-13-01', true); // month 13 not valid
+    });
+
+    it('date range with invalid dates', () => {
+        // Arrange
+        const filter = new DueDateField().createFilterOrErrorMessage('due date 2023-13-01 2022-01-78');
+
+        // Act, Assert
+        expect(filter.filterFunction).toBeUndefined();
+        expect(filter.error).toBeDefined();
+    });
+
+    it('date range with invalid range', () => {
+        // Arrange
+        const filter = new DueDateField().createFilterOrErrorMessage('due thees week');
+
+        // Act, Assert
+        expect(filter.filterFunction).toBeUndefined();
+        expect(filter.error).toBeDefined();
+    });
+
+    it('before reversed range', () => {
+        // Arrange
+        const filter = new DueDateField().createFilterOrErrorMessage('due before 2022-04-24 2022-04-20');
+
+        // Act, Assert
+        testTaskFilterForTaskWithDueDate(filter, null, false);
+        testTaskFilterForTaskWithDueDate(filter, '2022-04-19', true);
+        testTaskFilterForTaskWithDueDate(filter, '2022-04-20', false);
+        testTaskFilterForTaskWithDueDate(filter, '2022-04-24', false);
+        testTaskFilterForTaskWithDueDate(filter, '2022-04-25', false);
+    });
+
+    it('in reversed range', () => {
+        // Arrange
+        const filter = new DueDateField().createFilterOrErrorMessage('due 2022-04-24 2022-04-20');
+
+        // Act, Assert
+        testTaskFilterForTaskWithDueDate(filter, null, false);
+        testTaskFilterForTaskWithDueDate(filter, '2022-04-19', false);
+        testTaskFilterForTaskWithDueDate(filter, '2022-04-20', true);
+        testTaskFilterForTaskWithDueDate(filter, '2022-04-24', true);
+        testTaskFilterForTaskWithDueDate(filter, '2022-04-25', false);
+    });
+
+    it('after reversed range', () => {
+        // Arrange
+        const filter = new DueDateField().createFilterOrErrorMessage('due after 2022-04-24 2022-04-20');
+
+        // Act, Assert
+        testTaskFilterForTaskWithDueDate(filter, null, false);
+        testTaskFilterForTaskWithDueDate(filter, '2022-04-19', false);
+        testTaskFilterForTaskWithDueDate(filter, '2022-04-20', false);
+        testTaskFilterForTaskWithDueDate(filter, '2022-04-24', false);
+        testTaskFilterForTaskWithDueDate(filter, '2022-04-25', true);
     });
 });
 
