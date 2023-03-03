@@ -162,40 +162,30 @@ describe('due date in natural date range (Today is 2022-05-25)', () => {
         jest.useRealTimers();
     });
 
-    it('by due date (on this month)', () => {
+    it('by due date (month)', () => {
         // Arrange
-        const filter = new DueDateField().createFilterOrErrorMessage('due on this month');
+        const filterOn = new DueDateField().createFilterOrErrorMessage('due on this month');
+        const filterIn = new DueDateField().createFilterOrErrorMessage('due in this month');
+        const filterEmpty = new DueDateField().createFilterOrErrorMessage('due this month');
 
         // Act, Assert
-        testTaskFilterForTaskWithDueDate(filter, null, false);
-        testTaskFilterForTaskWithDueDate(filter, '2022-04-30', false);
-        testTaskFilterForTaskWithDueDate(filter, '2022-05-01', true);
-        testTaskFilterForTaskWithDueDate(filter, '2022-05-31', true);
-        testTaskFilterForTaskWithDueDate(filter, '2022-06-01', false);
-    });
+        testTaskFilterForTaskWithDueDate(filterOn, null, false);
+        testTaskFilterForTaskWithDueDate(filterOn, '2022-04-30', false);
+        testTaskFilterForTaskWithDueDate(filterOn, '2022-05-01', true);
+        testTaskFilterForTaskWithDueDate(filterOn, '2022-05-31', true);
+        testTaskFilterForTaskWithDueDate(filterOn, '2022-06-01', false);
 
-    it('by due date (in this month)', () => {
-        // Arrange
-        const filter = new DueDateField().createFilterOrErrorMessage('due in this month');
+        testTaskFilterForTaskWithDueDate(filterIn, null, false);
+        testTaskFilterForTaskWithDueDate(filterIn, '2022-04-30', false);
+        testTaskFilterForTaskWithDueDate(filterIn, '2022-05-01', true);
+        testTaskFilterForTaskWithDueDate(filterIn, '2022-05-31', true);
+        testTaskFilterForTaskWithDueDate(filterIn, '2022-06-01', false);
 
-        // Act, Assert
-        testTaskFilterForTaskWithDueDate(filter, null, false);
-        testTaskFilterForTaskWithDueDate(filter, '2022-04-30', false);
-        testTaskFilterForTaskWithDueDate(filter, '2022-05-01', true);
-        testTaskFilterForTaskWithDueDate(filter, '2022-05-31', true);
-        testTaskFilterForTaskWithDueDate(filter, '2022-06-01', false);
-    });
-
-    it('by due date (this month)', () => {
-        // Arrange
-        const filter = new DueDateField().createFilterOrErrorMessage('due this month');
-
-        // Act, Assert
-        testTaskFilterForTaskWithDueDate(filter, null, false);
-        testTaskFilterForTaskWithDueDate(filter, '2022-04-30', false);
-        testTaskFilterForTaskWithDueDate(filter, '2022-05-01', true);
-        testTaskFilterForTaskWithDueDate(filter, '2022-05-31', true);
-        testTaskFilterForTaskWithDueDate(filter, '2022-06-01', false);
+        testTaskFilterForTaskWithDueDate(filterEmpty, null, false);
+        testTaskFilterForTaskWithDueDate(filterEmpty, '2022-04-30', false);
+        testTaskFilterForTaskWithDueDate(filterEmpty, '2022-05-01', true);
+        testTaskFilterForTaskWithDueDate(filterEmpty, '2022-05-31', true);
+        testTaskFilterForTaskWithDueDate(filterEmpty, '2022-06-01', false);
     });
 
     it('by due date (this quarter)', () => {
