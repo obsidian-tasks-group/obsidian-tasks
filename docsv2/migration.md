@@ -1,6 +1,36 @@
 # Migration to Publish
 
-Reminders of things to do.
+Notes and reminders of things to do.
+
+## Notes for testers of the new site
+
+> [!todo] Things still to be done, so known issues
+> The only known remaining problems/things to do:
+>
+> - TODO: **File and folder names** will be updated to be more readable
+>   - **This will make the left sidebar a lot more readable**
+>   - Once this is done, the links will no longer need directories in them, which will make editing easier
+> - TODO: Links to **headings/sections** inside pages will be fixed to match Obsidian-style
+> - TODO: Add some **styling**, for example to top-align all table cells
+
+> [!bug] Bugs that will likely not be fixed
+>
+> - Some images are a bit fuzzy at some window sizes, but the same applies to the Obsidian user docs, so I may not be able to do anything about it
+
+> [!tip] Tips - things I will probably put in a 'how to use the docs' page
+>
+> - **search** doesn't search everything
+>   - Just filenames (I think) and headings (definitely)
+> - **Finding related content**
+>   - scroll to the bottom of the page to see pages that link to your current one
+>   - click on tags to see related content
+> - how to get **URLs to sections**
+>   - Click the **icon** that shows up when you **hover** over a header in the note content, that will also **copy it to the clipboard**
+>     - So don't do it if you've got anything valuable on the clipboard and, you don't have clipboard history on your system
+
+---
+
+The remainder is detailed notes on the conversion
 
 ## Mechanics
 
@@ -55,12 +85,10 @@ Reminders of things to do.
 
 ### Callouts
 
-- [ ] Convert callouts to Obsidian style
-  - Some done. Some are missing their leading '>' on subsequent lines
-  - Info needs to be called Information
+- [x] Convert callouts to Obsidian style
 - [ ] Add CSS for custom callouts, like Released
-- [ ] Use grey for Released, instead of Green, so it is less intrusive when reading
-- [ ] Fix this style of "callout":
+- [x] Use grey for Released, instead of Green, so it is less intrusive when reading
+- [x] Fix this style of "callout":
 
 ```text
 <div class="code-example" markdown="1">
@@ -94,4 +122,4 @@ Folders with a comma (`,`) in their name are not supported.
 - [New Site](https://publish.obsidian.md/tasks/index)
 - Conversion Script: [github.com/claremacrae/jekyll_to_obsidian_publish](https://github.com/claremacrae/jekyll_to_obsidian_publish)
 - [Obsidian Publish docs](https://help.obsidian.md/Obsidian+Publish/Introduction+to+Obsidian+Publish)
-- [Callouts docs](https://help.obsidian.md/Editing+and+formatting/Callouts)
+- [Callouts docs](https://help.obsidian.md/Editing+and+formatting/Callouts#Supported+types)
