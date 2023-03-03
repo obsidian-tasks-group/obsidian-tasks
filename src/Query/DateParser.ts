@@ -48,13 +48,10 @@ export class DateParser {
                 case 'month':
                 case 'quarter':
                 case 'year':
-                    dateRange = [window.moment().startOf(range), window.moment().endOf(range)];
-                    delta.add(1, range);
-                    break;
                 case 'week':
-                    dateRange = [window.moment().startOf('isoWeek'), window.moment().endOf('isoWeek')];
+                    // This is only to avoid recasting String in unitOfTime.DurationConstructor accepted by Duration.add()
                     delta.add(1, range);
-                    break;
+                    dateRange = [moment(), moment()];
             }
 
             switch (lastThisNext) {
@@ -66,12 +63,15 @@ export class DateParser {
                     break;
             }
 
-            if (lastThisNext !== 'this') {
-                switch (range) {
-                    case 'month':
-                    case 'quarter':
-                        dateRange = [dateRange[0].startOf(range), dateRange[1].endOf(range)];
-                }
+            switch (range) {
+                case 'month':
+                case 'quarter':
+                case 'year':
+                    dateRange = [dateRange[0].startOf(range), dateRange[1].endOf(range)];
+                    break;
+                case 'week':
+                    dateRange = [dateRange[0].startOf('isoWeek'), dateRange[1].endOf('isoWeek')];
+                    break;
             }
         }
 
