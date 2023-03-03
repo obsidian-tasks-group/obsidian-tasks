@@ -152,7 +152,7 @@ describe('due date before natural date range (Today is 2022-05-25)', () => {
     );
 });
 
-describe('due date with natural date ranges (Today is 2022-05-25)', () => {
+describe('due date in natural date range (Today is 2022-05-25)', () => {
     beforeAll(() => {
         jest.useFakeTimers();
         jest.setSystemTime(new Date(2022, 4, 25)); // 2022-05-25
@@ -172,18 +172,6 @@ describe('due date with natural date ranges (Today is 2022-05-25)', () => {
         testTaskFilterForTaskWithDueDate(filter, '2022-05-01', true);
         testTaskFilterForTaskWithDueDate(filter, '2022-05-31', true);
         testTaskFilterForTaskWithDueDate(filter, '2022-06-01', false);
-    });
-
-    it('by due date (after this month)', () => {
-        // Arrange
-        const filter = new DueDateField().createFilterOrErrorMessage('due after this month');
-
-        // Act, Assert
-        testTaskFilterForTaskWithDueDate(filter, null, false);
-        testTaskFilterForTaskWithDueDate(filter, '2022-04-30', false);
-        testTaskFilterForTaskWithDueDate(filter, '2022-05-01', false);
-        testTaskFilterForTaskWithDueDate(filter, '2022-05-31', false);
-        testTaskFilterForTaskWithDueDate(filter, '2022-06-01', true);
     });
 
     it('by due date (in this month)', () => {
@@ -239,6 +227,29 @@ describe('due date with natural date ranges (Today is 2022-05-25)', () => {
         expect(filterOrMessage).toHaveExplanation(
             'due date is between 2022-05-23 (Monday 23rd May 2022) and 2022-05-29 (Sunday 29th May 2022) inclusive',
         );
+    });
+});
+
+describe('due date after natural date range (Today is 2022-05-25)', () => {
+    beforeAll(() => {
+        jest.useFakeTimers();
+        jest.setSystemTime(new Date(2022, 4, 25)); // 2022-05-25
+    });
+
+    afterAll(() => {
+        jest.useRealTimers();
+    });
+
+    it('by due date (after this month)', () => {
+        // Arrange
+        const filter = new DueDateField().createFilterOrErrorMessage('due after this month');
+
+        // Act, Assert
+        testTaskFilterForTaskWithDueDate(filter, null, false);
+        testTaskFilterForTaskWithDueDate(filter, '2022-04-30', false);
+        testTaskFilterForTaskWithDueDate(filter, '2022-05-01', false);
+        testTaskFilterForTaskWithDueDate(filter, '2022-05-31', false);
+        testTaskFilterForTaskWithDueDate(filter, '2022-06-01', true);
     });
 });
 
