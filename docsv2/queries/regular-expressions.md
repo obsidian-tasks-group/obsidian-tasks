@@ -13,10 +13,8 @@ Introduced in Tasks 1.12.0.
 
 ### Take Care
 
-Warning
-{: .label .label-yellow}
-
-Regular expression (or 'regex') searching is a powerful but advanced feature that requires thorough knowledge in order to use successfully, and not miss intended search results.
+> [!warning]
+> Regular expression (or 'regex') searching is a powerful but advanced feature that requires thorough knowledge in order to use successfully, and not miss intended search results.
 
 It is easy to write a regular expression that looks like it is correct, but which uses a special character that completely changes the meaning of the search string.
 

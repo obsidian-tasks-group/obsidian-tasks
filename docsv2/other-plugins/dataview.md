@@ -27,9 +27,8 @@ _Note: This is the Dataview settings page, not the Tasks settings page._
 
 ---
 
-Warning
-{: .label .label-yellow}
-Dataview does not understand recurring tasks. Checking off a recurring task from a Dataview TASK query will add a done date but will not generate a new instance of that recurring task.
+> [!warning]
+> Dataview does not understand recurring tasks. Checking off a recurring task from a Dataview TASK query will add a done date but will not generate a new instance of that recurring task.
 To get the correct behavior for recurring tasks from Dataview TASK query results, click the text of the task (not the checkbox) to go to the file where the task is written,
 and then use the "Tasks: Toggle Done" command or click the checkbox from there.
 

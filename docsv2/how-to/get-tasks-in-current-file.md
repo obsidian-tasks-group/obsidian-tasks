@@ -37,10 +37,8 @@ For example:
     path includes Obsidian/tasks/tasks user support/03 Done - tasks user support/1.11.0 release
     ```
 
-Warning
-{: .label .label-yellow}
-
-Using `path includes` to search for a particular file name or folder is error-prone, as if you rename the file,
+> [!warning]
+> Using `path includes` to search for a particular file name or folder is error-prone, as if you rename the file,
 you have to remember to manually update the location in the tasks block, and this is very error-prone.
 
 ## Using Dataview to generate Tasks blocks - safe and convenient

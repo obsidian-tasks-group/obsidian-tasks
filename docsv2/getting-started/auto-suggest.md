@@ -113,9 +113,8 @@ As part of the launch of auto-suggest, Tasks now allows tags to be mixed in the 
 
 As soon as it finds any unrecognised text, it stops reading, and ignores any emojis to the left of that unrecognised text.
 
-Warning
-{: .label .label-yellow}
-Mixing any descriptive text in amongst the emojis and their values **will cause emojis before the descriptive text to not be recognised by Tasks, and not be searchable**.
+> [!warning]
+> Mixing any descriptive text in amongst the emojis and their values **will cause emojis before the descriptive text to not be recognised by Tasks, and not be searchable**.
 
 See the next section for how to check your tasks, as you start using this powerful feature.
 

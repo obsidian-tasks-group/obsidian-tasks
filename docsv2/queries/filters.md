@@ -38,9 +38,8 @@ Any such mistakes can be found systematically with this search:
     (done date is invalid) OR (due date is invalid) OR (scheduled date is invalid) OR (start date is invalid)
     ```
 
-Warning
-{: .label .label-yellow }
-If the above search finds any tasks with invalid dates, they are best fixed by clicking on the backlink to navigate
+> [!warning]
+> If the above search finds any tasks with invalid dates, they are best fixed by clicking on the backlink to navigate
 to the incorrect line, and fixing it by directly typing in the new date.
 
 If you use the 'Create or edit Task' Modal, it will discard the broken date, and there will be no information about
