@@ -117,9 +117,15 @@ describe('due date with natural date ranges (Today is 2022-05-25)', () => {
     });
 
     it.each([
+        // Week
         ['last week', '2022-05-15', '2022-05-16', '2022-05-22', '2022-05-23'],
         ['this week', '2022-05-22', '2022-05-23', '2022-05-29', '2022-05-30'],
         ['next week', '2022-05-29', '2022-05-30', '2022-06-05', '2022-06-06'],
+
+        // Month
+        ['last month', '2022-03-31', '2022-04-01', '2022-04-30', '2022-05-01'],
+        ['this month', '2022-04-30', '2022-05-01', '2022-05-31', '2022-06-01'],
+        ['next month', '2022-05-31', '2022-06-01', '2022-06-30', '2022-07-01'],
     ])(
         'due before %s: task with due date on %s is included; %s, %s, %s are not',
         (range: string, beforeRange: string, rangeStart: string, rangeEnd: string, afterRange: string) => {
@@ -134,18 +140,6 @@ describe('due date with natural date ranges (Today is 2022-05-25)', () => {
             testTaskFilterForTaskWithDueDate(filter, afterRange, false);
         },
     );
-
-    it('by due date (before this month)', () => {
-        // Arrange
-        const filter = new DueDateField().createFilterOrErrorMessage('due before this month');
-
-        // Act, Assert
-        testTaskFilterForTaskWithDueDate(filter, null, false);
-        testTaskFilterForTaskWithDueDate(filter, '2022-04-30', true);
-        testTaskFilterForTaskWithDueDate(filter, '2022-05-01', false);
-        testTaskFilterForTaskWithDueDate(filter, '2022-05-31', false);
-        testTaskFilterForTaskWithDueDate(filter, '2022-06-01', false);
-    });
 
     it('by due date (on this month)', () => {
         // Arrange
