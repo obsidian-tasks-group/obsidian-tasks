@@ -73,6 +73,7 @@ Notes and reminders of things to do.
 
 - [Obsidian Publish docs](https://help.obsidian.md/Obsidian+Publish/Introduction+to+Obsidian+Publish)
 - [Callouts docs](https://help.obsidian.md/Editing+and+formatting/Callouts#Supported+types)
+- [Obsidian Style Guide](https://help.obsidian.md/Contributing+to+Obsidian/Style+guide)
 
 ---
 
