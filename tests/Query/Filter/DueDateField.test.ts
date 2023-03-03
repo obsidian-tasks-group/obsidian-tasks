@@ -106,7 +106,7 @@ describe('due date', () => {
     });
 });
 
-describe('due date with natural date ranges (Today is 2022-05-25)', () => {
+describe('due date before natural date range (Today is 2022-05-25)', () => {
     beforeAll(() => {
         jest.useFakeTimers();
         jest.setSystemTime(new Date(2022, 4, 25)); // 2022-05-25
@@ -150,6 +150,17 @@ describe('due date with natural date ranges (Today is 2022-05-25)', () => {
             testTaskFilterForTaskWithDueDate(filter, afterRange, false);
         },
     );
+});
+
+describe('due date with natural date ranges (Today is 2022-05-25)', () => {
+    beforeAll(() => {
+        jest.useFakeTimers();
+        jest.setSystemTime(new Date(2022, 4, 25)); // 2022-05-25
+    });
+
+    afterAll(() => {
+        jest.useRealTimers();
+    });
 
     it('by due date (on this month)', () => {
         // Arrange
