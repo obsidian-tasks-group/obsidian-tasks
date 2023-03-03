@@ -230,27 +230,50 @@ describe('due date in natural date range (Today is 2022-05-25)', () => {
     });
 });
 
-describe('due date after natural date range (Today is 2022-05-25)', () => {
+describe('due date after natural date range (Today is 2021-11-01)', () => {
     beforeAll(() => {
         jest.useFakeTimers();
-        jest.setSystemTime(new Date(2022, 4, 25)); // 2022-05-25
+        jest.setSystemTime(new Date(2021, 10, 1)); // 2021-11-01
     });
 
     afterAll(() => {
         jest.useRealTimers();
     });
 
-    it('by due date (after this month)', () => {
-        // Arrange
-        const filter = new DueDateField().createFilterOrErrorMessage('due after this month');
+    it.each([
+        // Week
+        ['last week', '2021-10-24', '2021-10-25', '2021-10-31', '2021-11-01'],
+        ['this week', '2021-10-31', '2021-11-01', '2021-11-07', '2021-11-08'],
+        ['next week', '2021-11-07', '2021-11-08', '2021-11-14', '2021-11-15'],
 
-        // Act, Assert
-        testTaskFilterForTaskWithDueDate(filter, null, false);
-        testTaskFilterForTaskWithDueDate(filter, '2022-04-30', false);
-        testTaskFilterForTaskWithDueDate(filter, '2022-05-01', false);
-        testTaskFilterForTaskWithDueDate(filter, '2022-05-31', false);
-        testTaskFilterForTaskWithDueDate(filter, '2022-06-01', true);
-    });
+        // Month
+        ['last month', '2021-09-30', '2021-10-01', '2021-10-30', '2021-11-01'],
+        ['this month', '2021-10-31', '2021-11-01', '2021-11-30', '2021-12-01'],
+        ['next month', '2021-11-30', '2021-12-01', '2021-12-31', '2022-01-01'],
+
+        // Quarter
+        ['last quarter', '2021-06-30', '2021-07-01', '2021-09-30', '2021-10-01'],
+        ['this quarter', '2021-09-30', '2021-10-01', '2021-12-31', '2022-01-01'],
+        ['next quarter', '2021-12-31', '2022-01-01', '2022-01-31', '2022-04-01'],
+
+        // Year
+        ['last year', '2019-12-31', '2020-01-01', '2020-12-31', '2021-01-01'],
+        ['this year', '2020-12-31', '2021-01-01', '2021-12-31', '2022-01-01'],
+        ['next year', '2021-12-31', '2022-01-01', '2022-12-31', '2023-01-01'],
+    ])(
+        'due after %s: task with due date %s, %s, %s are not incuded, %s is',
+        (range: string, beforeRange: string, rangeStart: string, rangeEnd: string, afterRange: string) => {
+            // Arrange
+            const filter = new DueDateField().createFilterOrErrorMessage(`due after ${range}`);
+
+            // Act, Assert
+            testTaskFilterForTaskWithDueDate(filter, null, false);
+            testTaskFilterForTaskWithDueDate(filter, beforeRange, false);
+            testTaskFilterForTaskWithDueDate(filter, rangeStart, false);
+            testTaskFilterForTaskWithDueDate(filter, rangeEnd, false);
+            testTaskFilterForTaskWithDueDate(filter, afterRange, true);
+        },
+    );
 });
 
 describe('explain due date queries', () => {
