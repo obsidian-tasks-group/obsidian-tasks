@@ -124,3 +124,23 @@ describe('DateParser - natural date ranges', () => {
         testParsingDateRange('next year', '2022-01-01', '2022-12-31');
     });
 });
+
+describe('Date Parser - correct delta for next & last month & quarter (Today is 2021-04-03)', () => {
+    beforeAll(() => {
+        jest.useFakeTimers();
+        jest.setSystemTime(new Date(2021, 3, 3)); // 2021-04-03
+    });
+
+    afterAll(() => {
+        jest.useRealTimers();
+    });
+
+    it('should return longer range even if the current range is shorter in days', () => {
+        testParsingDateRange('last month', '2021-03-01', '2021-03-31');
+        testParsingDateRange('next month', '2021-05-01', '2021-05-31');
+        testParsingDateRange('last quarter', '2021-01-01', '2021-03-31');
+        //testParsingDateRange('next quarter', '2021-07-01', '2021-09-30');
+        // The latest test case is not representative eg won't fail without the fix
+        // because the length of Q2 in days is same as Q3.
+    });
+});

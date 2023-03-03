@@ -65,6 +65,14 @@ export class DateParser {
                     dateRange.forEach((d) => d.add(delta));
                     break;
             }
+
+            if (lastThisNext !== 'this') {
+                switch (range) {
+                    case 'month':
+                    case 'quarter':
+                        dateRange = [dateRange[0].startOf(range), dateRange[1].endOf(range)];
+                }
+            }
         }
 
         // Dates shall be at midnight eg 00:00
