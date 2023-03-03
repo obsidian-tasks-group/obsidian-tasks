@@ -17,7 +17,18 @@ Reminders of things to do.
 ### File names and folders
 
 - [ ] Use file's `title` in Front Matter to rename it
-- [ ] Figure out how to manage the many `index.md` files - give them sensible names, and link to them correctly.
+  - This will take care of making sure all the `index.md` files have unique names
+  - I tried this, and the new names were great.
+  - But some of them changed only by capitalisation - [[grouping]] -> [[Grouping]], for example.
+  - And git on my Mac then sees these files as not changed
+  - I can work around it [Case-sensitive git in Mac OS X like a Pro](https://coderwall.com/p/mgi8ja/case-sensitive-git-in-mac-os-x-like-a-pro)
+  - But even if I do that, for people who have previously cloned the repo on Windows and Mac, will it still be a problem?
+  - A workaround is to move the docs to a new folder, but then we lose the original history
+- [ ] Need to figure out renaming folders too - probably by string manipulation
+  - `getting-started` becomes
+  - `Getting Started`
+- [ ] Figure out how to get git on Mac to recognise the renamed files and folders
+- [ ] Check programmatically that all filenames are unique
 
 ### Links
 
@@ -25,6 +36,7 @@ Reminders of things to do.
 - [ ] Update all links to section headings
   - Maybe convert hyphens in #.... (heading names) to spaces
   - Probably need to parse files and find their corresponding headings
+- [ ] If the filename and original title are the same, don't put in the `|alias`
 - [ ] Remove the need for paths to files in links
   - By making every filename unique
 
@@ -47,6 +59,7 @@ Reminders of things to do.
   - Some done. Some are missing their leading '>' on subsequent lines
   - Info needs to be called Information
 - [ ] Add CSS for custom callouts, like Released
+- [ ] Use grey for Released, instead of Green, so it is less intrusive when reading
 - [ ] Fix this style of "callout":
 
 ```text
