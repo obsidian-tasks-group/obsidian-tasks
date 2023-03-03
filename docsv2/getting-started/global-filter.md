@@ -23,11 +23,9 @@ If you don't have a global filter set, all regular checklist items will be consi
 - [ ] take out the trash
 ```
 
-<div class="code-example" markdown="1">
 Warning
 {: .label .label-yellow }
 If you use a tag such as `#task` as the global filter, you cannot add sub-tags to that tag.
-</div>
 
 ## Settings for the Global Filter
 

@@ -25,7 +25,6 @@ not done
 ```
 ````
 
-<div class="code-example" markdown="1">
 Info
 {: .label .label-blue }
 The task is not visually modified in any Obsidian views: the scheduled date is only implied, and not displayed.
@@ -33,7 +32,6 @@ The task is not visually modified in any Obsidian views: the scheduled date is o
 It will however appear in the
 [[getting-started/create-or-edit-task|edit dialog]].
 It can also be examined by using the `group by scheduled` instruction in a tasks block.
-</div>
 
 ## Rules
 
@@ -73,8 +71,6 @@ Examples:
 | `daily`           | `daily/2022-10-12.md`<br/>`daily/notes/2022-10-12.md`                                   | `20221022.md`<br/>`meetings/2022-10-12.md` |
 | `daily,prj/daily` | `daily/2022-10-12.md`<br/>`prj/daily/2022-10-12.md`<br/>`prj/daily/notes/2022-06-12.md` | `20221022.md`<br/>`meetings/2022-10-12.md` |
 
-<div class="code-example" markdown="1">
 Warning
 {: .label .label-yellow }
 Folders with a comma (`,`) in their name are not supported.
-</div>

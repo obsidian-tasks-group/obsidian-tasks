@@ -30,7 +30,6 @@ If you mark the above task "done", the file will now look like this:
 
 The next Sunday after 25 April 2021 is on 2 May.
 
-<div class="code-example" markdown="1">
 Important
 {: .label .label-yellow }
 
@@ -62,8 +61,6 @@ The next recurrence date of `2022-02-31` does not exist.
 In that case, Tasks moves the next occurrence **forwards** to the next valid date,
 skipping over recurrences with invalid dates.
 In this case, that would be `2022-03-31`.
-
-</div>
 
 In the editor there is no direct feedback to whether your recurrence rule is valid.
 You can validate that tasks understands your rule by using the `Tasks: Create or edit` command when creating or editing a task.

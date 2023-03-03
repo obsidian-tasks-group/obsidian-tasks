@@ -7,7 +7,6 @@ publish: true
 You can list tasks from your entire vault by querying them using a `tasks` code block. You can edit the tasks from the query results by clicking on the little pencil icon next to them.
 Tasks are by default sorted by status, due date, and then path. You can change the sorting (see query options below).
 
-<div class="code-example" markdown="1">
 Warning
 {: .label .label-yellow }
 The result list will list tasks unindented.
@@ -20,7 +19,6 @@ Warning
 {: .label .label-yellow }
 The result list will not contain any footnotes of the original task.
 The footnotes will *not* be carried over to documents with ```tasks blocks.
-</div>
 
 The simplest way to query tasks is this:
 

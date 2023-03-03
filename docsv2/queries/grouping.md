@@ -105,7 +105,6 @@ Each subsequent `group by` will generate a new heading-level within the existing
 
 See the [screenshots below](#screenshots) for how this looks in practice.
 
-<div class="code-example" markdown="1">
 Info
 {: .label .label-blue }
 Headings are displayed in case-sensitive alphabetical order, not the original order.
@@ -120,8 +119,6 @@ The order of operations ensures that grouping does not modify which tasks are di
 1. then any sorting instructions are run
 1. then any `limit` instructions are run
 1. then finally any grouping instructions are run
-
-</div>
 
 ---
 

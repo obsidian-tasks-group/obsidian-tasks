@@ -67,7 +67,6 @@ Each subsequent `sort` will sort within the existing sorting.
 
 ## Notes
 
-<div class="code-example" markdown="1">
 Info
 {: .label .label-blue }
 If you want tasks to be sorted the way they were sorted before urgency was introduced,
@@ -86,7 +85,6 @@ Info
 Sorting by description should take into account `[[Links]]` and `[Links with an|Alias]` (note pipe).
 It should also take into account `*italics*` and `==highlights==`.
 It sorts by the text that's visible in preview mode.
-</div>
 
 ## Reverse sorting
 

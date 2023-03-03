@@ -199,7 +199,6 @@ not done
 
 It will not show tasks with both `inbox` in the path and the tag `#inbox` in the task line.
 
-<div class="code-example" markdown="1">
 Warning
 {: .label .label-yellow}
 Do not combine more than two filters together with `XOR`, intending to request only one of them to be true.
@@ -207,8 +206,6 @@ It will not give the result you expect.
 
 `(filter a) XOR (filter b) XOR (filter c)` matches tasks that match only one
 of the filters, **and also tasks that match all three of the filters**.
-
-</div>
 
 ## Examples
 

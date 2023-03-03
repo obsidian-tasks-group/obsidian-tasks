@@ -13,8 +13,6 @@ Introduced in Tasks 1.12.0.
 
 ### Take Care
 
-<div class="code-example" markdown="1">
-
 Warning
 {: .label .label-yellow}
 
@@ -27,7 +25,6 @@ For example, `\d` does **not** match the **two** characters  `\d`, it matches an
 This documentation gives only a brief overview of the facility, with a few motivating examples, and then links to other resources, for thorough treatment.
 
 Having said that, regex searches are a valuable tool, used in many other tools, and time invested in learning about them can pay off well in future, in many other tools and scenarios.
-</div>
 
 ## Basics
 
