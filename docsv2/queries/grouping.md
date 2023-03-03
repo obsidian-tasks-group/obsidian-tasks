@@ -105,15 +105,13 @@ Each subsequent `group by` will generate a new heading-level within the existing
 
 See the [screenshots below](#screenshots) for how this looks in practice.
 
-Info
-{: .label .label-blue }
-Headings are displayed in case-sensitive alphabetical order, not the original order.
+> [!info]
+> Headings are displayed in case-sensitive alphabetical order, not the original order.
 
 ---
 
-Info
-{: .label .label-blue }
-The order of operations ensures that grouping does not modify which tasks are displayed, for example when the `limit` option is used:
+> [!info]
+> The order of operations ensures that grouping does not modify which tasks are displayed, for example when the `limit` option is used:
 
 1. all the filter instructions are run
 1. then any sorting instructions are run

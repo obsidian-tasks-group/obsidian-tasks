@@ -25,9 +25,8 @@ not done
 ```
 ````
 
-Info
-{: .label .label-blue }
-The task is not visually modified in any Obsidian views: the scheduled date is only implied, and not displayed.
+> [!info]
+> The task is not visually modified in any Obsidian views: the scheduled date is only implied, and not displayed.
 
 It will however appear in the
 [[getting-started/create-or-edit-task|edit dialog]].
