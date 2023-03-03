@@ -30,16 +30,12 @@ If you mark the above task "done", the file will now look like this:
 
 The next Sunday after 25 April 2021 is on 2 May.
 
-Important
-{: .label .label-yellow }
-
-A recurring task should have a due date. The due date and the recurrence rule must appear after the task's description.
+> [!important]
+> A recurring task should have a due date. The due date and the recurrence rule must appear after the task's description.
 
 <hr />
-Important
-{: .label .label-yellow }
-
-There are edge cases for tasks that recur monthly or yearly.
+> [!important]
+> There are edge cases for tasks that recur monthly or yearly.
 For example, a task may be due `2022-01-31` and recur `every 3 months`.
 The next recurrence date of `2022-04-31` does not exist.
 
@@ -50,10 +46,8 @@ From then on, the due date will be based on the 30th day of the month, unless ch
 So the next occurrence would happen on `2022-07-30`, even though July has 31 days.
 
 <hr />
-Important
-{: .label .label-yellow }
-
-With edge cases for tasks that recur monthly or yearly, **if the rule states the actual date of the next recurrence, Tasks will honour that instruction, skipping recurrence dates that do not exist**.
+> [!important]
+> With edge cases for tasks that recur monthly or yearly, **if the rule states the actual date of the next recurrence, Tasks will honour that instruction, skipping recurrence dates that do not exist**.
 
 For example, a task may be due `2022-01-31` and recur `every month on the 31st`.
 The next recurrence date of `2022-02-31` does not exist.
