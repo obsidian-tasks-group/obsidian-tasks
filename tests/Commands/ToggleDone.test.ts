@@ -95,7 +95,7 @@ describe('ToggleDone', () => {
         testToggleLine('|', '- |');
     });
 
-    it('box to hyphen and space', () => {
+    it('should add checkbox to hyphen and space', () => {
         testToggleLine('|- ', '- [ ] |');
         testToggleLine('- |', '- [ ] |');
 
