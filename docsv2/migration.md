@@ -153,6 +153,8 @@ Folders with a comma (`,`) in their name are not supported.
 ### Styling
 
 - [ ] Convert CSS from old site to new (for example, top-align all cells in tables)
+- [ ] I think that `text in backticks` does not stand out enough in the new site, compared to the old
+- [ ] Would really borders/key-lines around images
 
 ### Images
 
