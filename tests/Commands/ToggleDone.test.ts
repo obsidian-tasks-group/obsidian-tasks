@@ -34,9 +34,11 @@ function testToggleLine(inputWithCursorMark: string, expectedWithCursorMark: str
     expect(expected.length).toEqual(expectedWithCursorMark.length - 1);
 
     const cursorPosition = (s: string): EditorPosition => {
-        const beforeCursor = s.slice(0, s.indexOf(cursorMarker)).split('\n');
-        const line = beforeCursor.length - 1;
-        const ch = beforeCursor[line].length;
+        // Split input string on cursor marker, and make array of lines
+        const linesBeforeCursor = s.split(cursorMarker, 1)[0].split('\n');
+        // Cursor was positioned at the end of the last line
+        const line = linesBeforeCursor.length - 1;
+        const ch = linesBeforeCursor[line].length;
         return { line, ch };
     };
 
