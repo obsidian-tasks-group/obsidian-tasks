@@ -34,7 +34,7 @@ export const toggleDone = (checking: boolean, editor: Editor, view: View) => {
     const line = editor.getLine(lineNumber);
 
     const insertion = toggleLine(line, path);
-    editor.setLine(lineNumber, insertion.text.join('\n'));
+    editor.setLine(lineNumber, insertion.text);
 
     /* Cursor positions are 0-based for both "line" and "ch" offsets.
      * If "ch" offset bigger than the line length, will just continue to next line(s).
@@ -52,7 +52,7 @@ export const toggleDone = (checking: boolean, editor: Editor, view: View) => {
 /**
  * Represents text to be inserted into the editor
  *
- * {@link text} is an array of lines of text to insert. Should be joined with the appropriate line ending.
+ * {@link text} is the text to insert. May span over multiple lines.
  * {@link moveTo} is an {@link EditorPosition} that represents an absolute position within {@link text}
  *                that is a recommended to move the cursor to.
  *                Any combination of fields (or the whole thing) may be omitted. In that case, the caller
@@ -61,7 +61,7 @@ export const toggleDone = (checking: boolean, editor: Editor, view: View) => {
  * @interface EditorInsertion
  */
 interface EditorInsertion {
-    text: string[];
+    text: string;
     moveTo?: Partial<EditorPosition>;
 }
 
@@ -74,7 +74,7 @@ export const toggleLine = (line: string, path: string): EditorInsertion => {
     });
     if (task !== null) {
         const text = task.toggle().map((t) => t.toFileLineString());
-        return { text, moveTo: { line: text.length - 1 } };
+        return { text: text.join('\n'), moveTo: { line: text.length - 1 } };
     } else {
         // If the task is null this means that we have one of:
         // 1. a regular checklist item
@@ -89,15 +89,15 @@ export const toggleLine = (line: string, path: string): EditorInsertion => {
             const statusString = regexMatch[3];
             const status = StatusRegistry.getInstance().bySymbol(statusString);
             const newStatusString = status.nextStatusSymbol;
-            return { text: [line.replace(TaskRegularExpressions.taskRegex, `$1- [${newStatusString}] $4`)] };
+            return { text: line.replace(TaskRegularExpressions.taskRegex, `$1- [${newStatusString}] $4`) };
         } else if (TaskRegularExpressions.listItemRegex.test(line)) {
             // Convert the list item to a checklist item.
-            const text = [line.replace(TaskRegularExpressions.listItemRegex, '$1$2 [ ]')];
-            return { text, moveTo: { ch: text[0].length } };
+            const text = line.replace(TaskRegularExpressions.listItemRegex, '$1$2 [ ]');
+            return { text, moveTo: { ch: text.length } };
         } else {
             // Convert the line to a list item.
-            const text = [line.replace(TaskRegularExpressions.indentationRegex, '$1- ')];
-            return { text, moveTo: { ch: text[0].length } };
+            const text = line.replace(TaskRegularExpressions.indentationRegex, '$1- ');
+            return { text, moveTo: { ch: text.length } };
         }
     }
 };
@@ -116,6 +116,6 @@ export const getNewCursorPosition = (startPos: EditorPosition, insertion: Editor
     const newCh = insertion.moveTo?.ch ?? startPos.ch;
     return {
         line: startPos.line + line,
-        ch: Math.min(newCh, insertion.text[line].length), // This assumes that the inserted text is inserted at column 0
+        ch: Math.min(newCh, insertion.text.split('\n')[line].length), // This assumes that the inserted text is inserted at column 0
     };
 };
