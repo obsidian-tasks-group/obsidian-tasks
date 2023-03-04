@@ -114,9 +114,8 @@ export const toggleLine = (line: string, path: string): EditorInsertion => {
 export const getNewCursorPosition = (startPos: EditorPosition, insertion: EditorInsertion): EditorPosition => {
     const line = insertion.moveTo?.line ?? 0;
     const newCh = insertion.moveTo?.ch ?? startPos.ch;
-    const _min = (a: number, b: number) => (a < b ? a : b);
     return {
         line: startPos.line + line,
-        ch: _min(newCh, insertion.text[line].length), // This assumes that the inserted text is inserted at column 0
+        ch: Math.min(newCh, insertion.text[line].length), // This assumes that the inserted text is inserted at column 0
     };
 };
