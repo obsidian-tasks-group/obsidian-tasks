@@ -68,8 +68,8 @@ export const toggleLine = (line: string, path: string): EditorInsertion => {
         fallbackDate: null, // We don't need this to toggle it here in the editor.
     });
     if (task !== null) {
-        const text = task.toggle().map((t) => t.toFileLineString());
-        return { text: text.join('\n'), moveTo: { line: text.length - 1 } };
+        const lines = task.toggle().map((t) => t.toFileLineString());
+        return { text: lines.join('\n'), moveTo: { line: lines.length - 1 } };
     } else {
         // If the task is null this means that we have one of:
         // 1. a regular checklist item
