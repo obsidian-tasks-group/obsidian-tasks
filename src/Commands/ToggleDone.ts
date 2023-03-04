@@ -47,11 +47,15 @@ export const toggleDone = (checking: boolean, editor: Editor, view: View) => {
 /**
  * Represents text to be inserted into the editor
  *
- * {@link text} is the text to insert. May span over multiple lines.
- * {@link moveTo} is an {@link EditorPosition} that represents an absolute position within {@link text}
- *                that is a recommended to move the cursor to.
- *                Any combination of fields (or the whole thing) may be omitted. In that case, the caller
- *                can choose how to interpret the missing field(s).
+ * @property text The text to insert. May span over multiple lines.
+ * @property [moveTo] An {@link EditorPosition} that represents an absolute position within {@link EditorInsertion.text} that is
+ *    recommended to move the cursor to.
+ *
+ * Any combination of subfields (or the whole {@link EditorPosition}) may be omitted.
+ * Missing fields should preserve the corresponding cursor position. That is:
+ *     * A {@link EditorInsertion.moveTo} that is `undefined` directs the caller to keep the cursor where it is.
+ *     * A {@link EditorInsertion.moveTo} that is `{line: 1}` directs the caller of to jump to {@link EditorInsertion.text}'s
+ *       second line but stay in the same column.
  *
  * @interface EditorInsertion
  */
