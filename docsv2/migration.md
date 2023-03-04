@@ -32,6 +32,7 @@ Notes and reminders of things to do.
 >   - Once this is done, the links will no longer need directories in them, as the filenames will be unique.
 > - TODO: Links to **headings/sections** inside pages will be fixed to match Obsidian-style
 > - TODO: Add some **styling**, for example to top-align all table cells
+> - TODO: Broken table of values in the [[Urgency]] docs - see [this comment](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1706#issuecomment-1454284835)
 
 > [!bug] Bugs and annoyances that will likely not be fixed
 >
@@ -147,7 +148,7 @@ Folders with a comma (`,`) in their name are not supported.
 
 ### Formatting errors
 
-- [ ] Formatting of table of values in the Urgency docs - see [this comment](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1706#issuecomment-1454284835)
+- [ ] Formatting of table of values in the [[Urgency]] docs - see [this comment](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1706#issuecomment-1454284835)
 
 ### Styling
 
