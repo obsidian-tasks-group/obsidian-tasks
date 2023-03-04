@@ -145,6 +145,10 @@ Folders with a comma (`,`) in their name are not supported.
 </div>
 ```
 
+### Formatting errors
+
+- [ ] Formatting of table of values in the Urgency docs - see [this comment](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1706#issuecomment-1454284835)
+
 ### Styling
 
 - [ ] Convert CSS from old site to new (for example, top-align all cells in tables)
