@@ -27,12 +27,12 @@ Notes and reminders of things to do.
 > [!todo] Things still to be done, so known issues
 > The only known remaining problems/things to do:
 >
-> - TODO: **File and folder names** will be updated to match their naming in the old site
+> - **File and folder names** will be updated to match their naming in the old site
 >   - **This will make the left sidebar a lot more readable**
 >   - Once this is done, the links will no longer need directories in them, as the filenames will be unique.
-> - TODO: Links to **headings/sections** inside pages will be fixed to match Obsidian-style
-> - TODO: Add some **styling**, for example to top-align all table cells
-> - TODO: Broken table of values in the [[Urgency]] docs - see [this comment](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1706#issuecomment-1454284835)
+> - Links to **headings/sections** inside pages will be fixed to match Obsidian-style
+> - Add some **styling**, for example to top-align all table cells
+> - Broken table of values in the [[Urgency]] docs - see [this comment](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1706#issuecomment-1454284835)
 
 > [!bug] Bugs and annoyances that will likely not be fixed
 >
