@@ -40,11 +40,6 @@ export const toggleDone = (checking: boolean, editor: Editor, view: View) => {
      * If "ch" offset bigger than the line length, will just continue to next line(s).
      * By default "editor.setLine()" appears to either keep the cursor at the end of the line if it is already there,
      * ...or move it to the beginning if it is anywhere else. Licat explained this on Discord as "sticking" to one side or another.
-     * Previously, Tasks would reset+move-right the cursor if there was any text in the line, including something inside the checkbox,
-     * moving right by (toggledLine.length - line.length). (Supposedly, but it still moves right, just by less, if the toggledLine is shorter than the old).
-     * This missed the need to move right on the blank line to "- " case (issue #460).
-     * This also meant the cursor moved nonsensically if it was before any newly inserted text,
-     * such as a done date at the end of the line, or after the ">" when "> -" changed to "> - [ ]".
      */
     editor.setCursor(getNewCursorPosition(origCursorPos, insertion));
 };
