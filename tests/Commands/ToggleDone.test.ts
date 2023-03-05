@@ -91,20 +91,24 @@ describe('ToggleDone', () => {
 
     it('should add hyphen and space to empty line', () => {
         testToggleLine('|', '- |');
+        testToggleLine('foo|bar', '- foobar|');
 
         updateSettings({ globalFilter: '#task' });
 
         testToggleLine('|', '- |');
+        testToggleLine('foo|bar', '- foobar|');
     });
 
     it('should add checkbox to hyphen and space', () => {
         testToggleLine('|- ', '- [ ] |');
         testToggleLine('- |', '- [ ] |');
+        testToggleLine('- |foobar', '- [ ] foobar|');
 
         updateSettings({ globalFilter: '#task' });
 
         testToggleLine('|- ', '- [ ] |');
         testToggleLine('- |', '- [ ] |');
+        testToggleLine('- |foobar', '- [ ] foobar|');
     });
 
     it('should complete a task', () => {
