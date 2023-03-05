@@ -36,6 +36,7 @@ export const prioritySymbols = {
 
 export const recurrenceSymbol = '🔁';
 export const startDateSymbol = '🛫';
+export const createdDateSymbol = '➕';
 export const scheduledDateSymbol = '⏳';
 export const dueDateSymbol = '📅';
 export const doneDateSymbol = '✅';
@@ -92,6 +93,7 @@ export class TaskRegularExpressions {
     // removed from the end until none are left.
     public static readonly priorityRegex = /([⏫🔼🔽])$/u;
     public static readonly startDateRegex = /🛫 *(\d{4}-\d{2}-\d{2})$/u;
+    public static readonly createdDateRegex = /➕ *(\d{4}-\d{2}-\d{2})$/u;
     public static readonly scheduledDateRegex = /[⏳⌛] *(\d{4}-\d{2}-\d{2})$/u;
     public static readonly dueDateRegex = /[📅📆🗓] *(\d{4}-\d{2}-\d{2})$/u;
     public static readonly doneDateRegex = /✅ *(\d{4}-\d{2}-\d{2})$/u;
@@ -132,6 +134,7 @@ export class Task {
     public readonly scheduledDate: Moment | null;
     public readonly dueDate: Moment | null;
     public readonly doneDate: Moment | null;
+    public readonly createdDate: Moment | null;
 
     public readonly recurrence: Recurrence | null;
     /** The blockLink is a "^" annotation after the dates/recurrence rules. */
@@ -163,6 +166,7 @@ export class Task {
         tags,
         originalMarkdown,
         scheduledDateIsInferred,
+        createdDate,
     }: {
         status: Status;
         description: string;
@@ -179,6 +183,7 @@ export class Task {
         tags: string[] | [];
         originalMarkdown: string;
         scheduledDateIsInferred: boolean;
+        createdDate: moment.Moment | null;
     }) {
         this.status = status;
         this.description = description;
@@ -194,6 +199,7 @@ export class Task {
         this.scheduledDate = scheduledDate;
         this.dueDate = dueDate;
         this.doneDate = doneDate;
+        this.createdDate = createdDate;
 
         this.recurrence = recurrence;
         this.blockLink = blockLink;
@@ -264,6 +270,7 @@ export class Task {
         let scheduledDateIsInferred = false;
         let dueDate: Moment | null = null;
         let doneDate: Moment | null = null;
+        let createdDate: Moment | null = null;
         let recurrenceRule: string = '';
         let recurrence: Recurrence | null = null;
         let tags: any = [];
@@ -320,6 +327,13 @@ export class Task {
             if (startDateMatch !== null) {
                 startDate = window.moment(startDateMatch[1], TaskRegularExpressions.dateFormat);
                 description = description.replace(TaskRegularExpressions.startDateRegex, '').trim();
+                matched = true;
+            }
+
+            const createdDateMatch = description.match(TaskRegularExpressions.createdDateRegex);
+            if (createdDateMatch !== null) {
+                createdDate = window.moment(createdDateMatch[1], TaskRegularExpressions.dateFormat);
+                description = description.replace(TaskRegularExpressions.createdDateRegex, '').trim();
                 matched = true;
             }
 
@@ -394,6 +408,7 @@ export class Task {
             tags,
             originalMarkdown: line,
             scheduledDateIsInferred,
+            createdDate,
         });
     }
 
@@ -444,6 +459,11 @@ export class Task {
                 return layout.options.shortMode
                     ? ' ' + startDateSymbol
                     : ` ${startDateSymbol} ${this.startDate.format(TaskRegularExpressions.dateFormat)}`;
+            case 'createdDate':
+                if (!this.createdDate) return '';
+                return layout.options.shortMode
+                    ? ' ' + createdDateSymbol
+                    : ` ${createdDateSymbol} ${this.createdDate.format(TaskRegularExpressions.dateFormat)}`;
             case 'scheduledDate':
                 if (!this.scheduledDate || this.scheduledDateIsInferred) return '';
                 return layout.options.shortMode

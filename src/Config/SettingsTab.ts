@@ -126,6 +126,17 @@ export class SettingsTab extends PluginSettingTab {
             });
 
         new Setting(containerEl)
+            .setName('Set created date on every added task')
+            .setDesc('Enabling this will add a timestamp ➕ YYYY-MM-DD at the end when a task is created')
+            .addToggle((toggle) => {
+                const settings = getSettings();
+                toggle.setValue(settings.setCreatedDate).onChange(async (value) => {
+                    updateSettings({ setCreatedDate: value });
+                    await this.plugin.saveSettings();
+                });
+            });
+
+        new Setting(containerEl)
             .setName('Use filename as Scheduled date for undated tasks')
             .setDesc(
                 SettingsTab.createFragmentWithHTML(

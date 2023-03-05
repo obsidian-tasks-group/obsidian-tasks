@@ -38,6 +38,7 @@ export class TaskBuilder {
     private _scheduledDate: Moment | null = null;
     private _dueDate: Moment | null = null;
     private _doneDate: Moment | null = null;
+    private _createdDate: Moment | null = null;
 
     private _recurrence: Recurrence | null = null;
     private _blockLink: string = '';
@@ -83,6 +84,7 @@ export class TaskBuilder {
             tags: this._tags,
             originalMarkdown: '',
             scheduledDateIsInferred: this._scheduledDateIsInferred,
+            createdDate: this._createdDate,
         });
     }
 

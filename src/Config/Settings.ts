@@ -17,6 +17,7 @@ export interface Settings {
     globalFilter: string;
     removeGlobalFilter: boolean;
     setDoneDate: boolean;
+    setCreatedDate: boolean;
     autoSuggestInEditor: boolean;
     autoSuggestMinMatch: number;
     autoSuggestMaxItems: number;
@@ -43,6 +44,7 @@ const defaultSettings: Settings = {
     globalFilter: '',
     removeGlobalFilter: false,
     setDoneDate: true,
+    setCreatedDate: false,
     autoSuggestInEditor: true,
     autoSuggestMinMatch: 0,
     autoSuggestMaxItems: 6,
