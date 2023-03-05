@@ -102,10 +102,17 @@ export const toggleLine = (line: string, path: string): EditorInsertion => {
 };
 
 /**
- * Computes the new position of the cursor, given its current position and an
- * the suggested position within the inserted text.
+ * Computes the new absolute position of the cursor so that it is positioned within the inserted text as specified
+ * by {@link insertion}.moveTo.
  *
- * @note Assumes that the insertion occurs at column 0
+ * @note This function assumes that text was inserted at the beginning of the line, which is
+ *       the case when used together with {@link Editor.setLine}. This is a simplifying assumption,
+ *       but may result in incorrect behavior if used outside the intended context (i.e. not by {@link toggleDone}).
+ *
+ *       Example: Assume {@link insertion}=`{text: "Hello World", moveTo: {line: 0, ch: 6}}`, where {@link insertion}.text
+ *                had been appended to a line with content "------":  `------Hello World`.
+ *                The cursor will be offset to the left by the number of characters that were already on the line.
+ *                Resulting in the incorrect result `------|Hello World` instead of the intended `------Hello |World`.
  *
  * @param startPos The starting cursor position
  * @param insertion The inserted text and suggested cursor position within that text
