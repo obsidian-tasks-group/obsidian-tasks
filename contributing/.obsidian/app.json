@@ -6,5 +6,6 @@
   "alwaysUpdateLinks": true,
   "readableLineLength": false,
   "spellcheck": true,
-  "livePreview": false
+  "livePreview": false,
+  "newFileLocation": "current"
 }
