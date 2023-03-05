@@ -1,5 +1,7 @@
+import { DEFAULT_SYMBOLS } from '../TaskSerializer/DefaultTaskSerializer';
 import { StatusConfiguration } from '../StatusConfiguration';
 import { Status } from '../Status';
+import { DefaultTaskSerializer, type TaskSerializer } from '../TaskSerializer';
 import { DebugSettings } from './DebugSettings';
 import { StatusSettings } from './StatusSettings';
 import { Feature } from './Feature';
@@ -13,10 +15,22 @@ export type HeadingState = {
     [id: string]: boolean;
 };
 
+interface TaskFormat {
+    taskSerializer: TaskSerializer;
+}
+
+const TaskFormatMap = {
+    Default: { taskSerializer: new DefaultTaskSerializer(DEFAULT_SYMBOLS) },
+} as const;
+
+type TaskFormatMap = typeof TaskFormatMap;
+export const taskFormatKeys = Object.keys(TaskFormatMap) as (keyof TaskFormatMap)[];
+
 export interface Settings {
     globalFilter: string;
     removeGlobalFilter: boolean;
     setCreatedDate: boolean;
+    taskFormat: keyof TaskFormatMap;
     setDoneDate: boolean;
     autoSuggestInEditor: boolean;
     autoSuggestMinMatch: number;
@@ -44,6 +58,7 @@ const defaultSettings: Settings = {
     globalFilter: '',
     removeGlobalFilter: false,
     setCreatedDate: false,
+    taskFormat: 'Default',
     setDoneDate: true,
     autoSuggestInEditor: true,
     autoSuggestMinMatch: 0,
@@ -150,3 +165,16 @@ export const toggleFeature = (internalName: string, enabled: boolean): FeatureFl
     settings.features[internalName] = enabled;
     return settings.features;
 };
+
+/**
+ * Retrieves specified task format. If none provided, returns one specified by settings
+ *
+ * @export
+ * @param name The name of the TaskFormat
+ * @returns TaskFormat
+ */
+export function getTaskFormat(name?: undefined): TaskFormat;
+export function getTaskFormat<T extends keyof TaskFormatMap>(name: T): TaskFormatMap[T];
+export function getTaskFormat(name?: keyof TaskFormatMap): TaskFormat {
+    return TaskFormatMap[name || getSettings().taskFormat];
+}
