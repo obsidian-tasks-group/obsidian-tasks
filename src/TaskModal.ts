@@ -12,7 +12,9 @@ export class TaskModal extends Modal {
         super(app);
 
         this.task = task;
+        console.log(task);
         this.onSubmit = (updatedTasks: Task[]) => {
+            console.log(updatedTasks);
             updatedTasks.length && onSubmit(updatedTasks);
             this.close();
         };

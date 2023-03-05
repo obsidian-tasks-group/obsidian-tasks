@@ -293,6 +293,7 @@ describe('Query', () => {
                     tags: [],
                     originalMarkdown: '',
                     scheduledDateIsInferred: false,
+                    createdDate: null,
                 }),
                 new Task({
                     status: Status.TODO,
@@ -310,6 +311,7 @@ describe('Query', () => {
                     tags: [],
                     originalMarkdown: '',
                     scheduledDateIsInferred: false,
+                    createdDate: null,
                 }),
             ];
             const input = 'path includes ab/c d';
