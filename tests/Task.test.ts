@@ -116,6 +116,7 @@ describe('parsing', () => {
         expect(task!.status.symbol).toStrictEqual('D');
     });
 
+    // begin-snippet: example_basic_test
     it('allows signifier emojis as part of the description', () => {
         // Arrange
         const line = '- [x] this is a ✅ done task 🗓 2021-09-12 ✅ 2021-06-20';
@@ -134,6 +135,7 @@ describe('parsing', () => {
         expect(task!.doneDate).not.toBeNull();
         expect(task!.doneDate!.isSame(moment('2021-06-20', 'YYYY-MM-DD'))).toStrictEqual(true);
     });
+    // end-snippet
 
     it('also works with block links and trailing spaces', () => {
         // Arrange
