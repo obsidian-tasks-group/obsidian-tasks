@@ -118,10 +118,14 @@ export const toggleLine = (line: string, path: string): EditorInsertion => {
  * @param insertion The inserted text and suggested cursor position within that text
  */
 export const getNewCursorPosition = (startPos: EditorPosition, insertion: EditorInsertion): EditorPosition => {
-    const line = insertion.moveTo?.line ?? 0;
-    const newCh = insertion.moveTo?.ch ?? startPos.ch;
+    const defaultMoveTo = { line: 0, ch: startPos.ch };
+    // Fill in any missing moveTo values using the default
+    const moveTo = { ...defaultMoveTo, ...(insertion.moveTo ?? {}) };
+    // Find the length of the line we're moving the cursor to, so that cursor isn't moved out of bounds
+    const destinationLineLength = insertion.text.split('\n')[moveTo.line].length;
+
     return {
-        line: startPos.line + line,
-        ch: Math.min(newCh, insertion.text.split('\n')[line].length), // This assumes that the inserted text is inserted at column 0
+        line: startPos.line + moveTo.line,
+        ch: Math.min(moveTo.ch, destinationLineLength),
     };
 };
