@@ -101,8 +101,9 @@ async function taskToHtml(
 ) {
     let taskAsString = '';
     const taskLayout = new TaskLayout(renderDetails.layoutOptions);
+    const defaultSerializer = getTaskFormat('Default').taskSerializer;
     for (const component of taskLayout.layoutComponents) {
-        let componentString = task.componentToString(taskLayout, component);
+        let componentString = defaultSerializer.componentToString(task, taskLayout, component);
         if (componentString) {
             if (component === 'description') componentString = removeGlobalFilterIfNeeded(componentString);
             taskAsString += componentString;
