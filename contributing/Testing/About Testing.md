@@ -13,6 +13,7 @@ The [Expect](https://jestjs.io/docs/expect) page is a good reference for the man
 
 ## Writing automated tests
 
+- [[Introduction to running and writing Unit Tests]] - start here if you haven't written tests before, or are new to testing in TypeScript
 - [[Jest and the WebStorm IDE]]
 - [[Snapshot Tests]]
 - [[Approval Tests]]
