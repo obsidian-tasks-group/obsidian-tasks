@@ -1,6 +1,9 @@
+import type { Moment } from 'moment';
 import { TaskLayout } from '../TaskLayout';
 import type { TaskLayoutComponent } from '../TaskLayout';
+import { Recurrence } from '../Recurrence';
 import { Priority, type Task, TaskRegularExpressions } from '../Task';
+import { getSettings } from '../Config/Settings';
 import type { TaskDetails, TaskSerializer } from '.';
 
 /* Interface describing the symbols that {@link DefaultTaskSerializer}
@@ -154,7 +157,143 @@ export class DefaultTaskSerializer implements TaskSerializer {
      * @return TaskDetails if parsing was successful, null otherwise
      */
     public deserialize(line: string): TaskDetails | null {
-        line;
-        throw new Error('Not implemented');
+        const { prioritySymbols, TaskFormatRegularExpressions } = this.symbols;
+
+        // Keep matching and removing special strings from the end of the
+        // description in any order. The loop should only run once if the
+        // strings are in the expected order after the description.
+        let matched: boolean;
+        let priority: Priority = Priority.None;
+        let startDate: Moment | null = null;
+        let scheduledDate: Moment | null = null;
+        let dueDate: Moment | null = null;
+        let doneDate: Moment | null = null;
+        let createdDate: Moment | null = null;
+        let recurrenceRule: string = '';
+        let recurrence: Recurrence | null = null;
+        let tags: any = [];
+        // Tags that are removed from the end while parsing, but we want to add them back for being part of the description.
+        // In the original task description they are possibly mixed with other components
+        // (e.g. #tag1 <due date> #tag2), they do not have to all trail all task components,
+        // but eventually we want to paste them back to the task description at the end
+        let trailingTags = '';
+        // Add a "max runs" failsafe to never end in an endless loop:
+        const maxRuns = 20;
+        let runs = 0;
+        do {
+            matched = false;
+            const priorityMatch = line.match(TaskFormatRegularExpressions.priorityRegex);
+            if (priorityMatch !== null) {
+                switch (priorityMatch[1]) {
+                    case prioritySymbols.Low:
+                        priority = Priority.Low;
+                        break;
+                    case prioritySymbols.Medium:
+                        priority = Priority.Medium;
+                        break;
+                    case prioritySymbols.High:
+                        priority = Priority.High;
+                        break;
+                }
+
+                line = line.replace(TaskFormatRegularExpressions.priorityRegex, '').trim();
+                matched = true;
+            }
+
+            const doneDateMatch = line.match(TaskFormatRegularExpressions.doneDateRegex);
+            if (doneDateMatch !== null) {
+                doneDate = window.moment(doneDateMatch[1], TaskRegularExpressions.dateFormat);
+                line = line.replace(TaskFormatRegularExpressions.doneDateRegex, '').trim();
+                matched = true;
+            }
+
+            const dueDateMatch = line.match(TaskFormatRegularExpressions.dueDateRegex);
+            if (dueDateMatch !== null) {
+                dueDate = window.moment(dueDateMatch[1], TaskRegularExpressions.dateFormat);
+                line = line.replace(TaskFormatRegularExpressions.dueDateRegex, '').trim();
+                matched = true;
+            }
+
+            const scheduledDateMatch = line.match(TaskFormatRegularExpressions.scheduledDateRegex);
+            if (scheduledDateMatch !== null) {
+                scheduledDate = window.moment(scheduledDateMatch[1], TaskRegularExpressions.dateFormat);
+                line = line.replace(TaskFormatRegularExpressions.scheduledDateRegex, '').trim();
+                matched = true;
+            }
+
+            const startDateMatch = line.match(TaskFormatRegularExpressions.startDateRegex);
+            if (startDateMatch !== null) {
+                startDate = window.moment(startDateMatch[1], TaskRegularExpressions.dateFormat);
+                line = line.replace(TaskFormatRegularExpressions.startDateRegex, '').trim();
+                matched = true;
+            }
+
+            const createdDateMatch = line.match(TaskFormatRegularExpressions.createdDateRegex);
+            if (createdDateMatch !== null) {
+                createdDate = window.moment(createdDateMatch[1], TaskRegularExpressions.dateFormat);
+                line = line.replace(TaskFormatRegularExpressions.createdDateRegex, '').trim();
+                matched = true;
+            }
+
+            const recurrenceMatch = line.match(TaskFormatRegularExpressions.recurrenceRegex);
+            if (recurrenceMatch !== null) {
+                // Save the recurrence rule, but *do not parse it yet*.
+                // Creating the Recurrence object requires a reference date (e.g. a due date),
+                // and it might appear in the next (earlier in the line) tokens to parse
+                recurrenceRule = recurrenceMatch[1].trim();
+                line = line.replace(TaskFormatRegularExpressions.recurrenceRegex, '').trim();
+                matched = true;
+            }
+
+            // Match tags from the end to allow users to mix the various task components with
+            // tags. These tags will be added back to the description below
+            const tagsMatch = line.match(TaskRegularExpressions.hashTagsFromEnd);
+            if (tagsMatch != null) {
+                line = line.replace(TaskRegularExpressions.hashTagsFromEnd, '').trim();
+                matched = true;
+                const tagName = tagsMatch[0].trim();
+                // Adding to the left because the matching is done right-to-left
+                trailingTags = trailingTags.length > 0 ? [tagName, trailingTags].join(' ') : tagName;
+            }
+
+            runs++;
+        } while (matched && runs <= maxRuns);
+
+        // Now that we have all the task details, parse the recurrence rule if we found any
+        if (recurrenceRule.length > 0) {
+            recurrence = Recurrence.fromText({
+                recurrenceRuleText: recurrenceRule,
+                startDate,
+                scheduledDate,
+                dueDate,
+            });
+        }
+        // Add back any trailing tags to the description. We removed them so we can parse the rest of the
+        // components but now we want them back.
+        // The goal is for a task of them form 'Do something #tag1 (due) tomorrow #tag2 (start) today'
+        // to actually have the description 'Do something #tag1 #tag2'
+        if (trailingTags.length > 0) line += ' ' + trailingTags;
+
+        // Tags are found in the string and pulled out but not removed,
+        // so when returning the entire task it will match what the user
+        // entered.
+        // The global filter will be removed from the collection.
+        const hashTagMatch = line.match(TaskRegularExpressions.hashTags);
+        if (hashTagMatch !== null) {
+            const { globalFilter } = getSettings();
+            tags = hashTagMatch.filter((tag) => tag !== globalFilter).map((tag) => tag.trim());
+        }
+
+        return {
+            description: line,
+            priority,
+            startDate,
+            createdDate,
+            scheduledDate,
+            dueDate,
+            doneDate,
+            recurrence,
+            tags,
+        };
     }
 }
