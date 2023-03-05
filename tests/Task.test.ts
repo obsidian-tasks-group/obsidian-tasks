@@ -169,8 +169,8 @@ describe('parsing', () => {
         expect(task!.description).toEqual('this is a task due #inside_tag #some/tags_with_underscore');
         expect(task!.tags).toEqual(['#inside_tag', '#some/tags_with_underscore']);
         expect(task!.dueDate).not.toBeNull();
-        expect(task!.dueDate!.isSame(moment('2021-09-12', 'YYYY-MM-DD')));
-        expect(task!.priority == Priority.High);
+        expect(task!.dueDate!.isSame(moment('2021-09-12', 'YYYY-MM-DD'))).toEqual(true);
+        expect(task!.priority).toEqual(Priority.High);
     });
 
     it('supports parsing large number of values', () => {
@@ -186,11 +186,11 @@ describe('parsing', () => {
         // Assert
         expect(task).not.toBeNull();
         expect(task!.description).toEqual('Wobble #tag1 #tag2 #tag3 #tag4 #tag5 #tag6 #tag7 #tag8 #tag9 #tag10');
-        expect(task!.dueDate!.isSame(moment('022-07-02', 'YYYY-MM-DD')));
-        expect(task!.doneDate!.isSame(moment('022-07-02', 'YYYY-MM-DD')));
-        expect(task!.startDate!.isSame(moment('022-07-02', 'YYYY-MM-DD')));
-        expect(task!.scheduledDate!.isSame(moment('022-07-02', 'YYYY-MM-DD')));
-        expect(task!.priority == Priority.High);
+        expect(task!.dueDate!.isSame(moment('2022-07-02', 'YYYY-MM-DD'))).toEqual(true);
+        expect(task!.doneDate!.isSame(moment('2022-07-02', 'YYYY-MM-DD'))).toEqual(true);
+        expect(task!.startDate!.isSame(moment('2022-07-02', 'YYYY-MM-DD'))).toEqual(true);
+        expect(task!.scheduledDate!.isSame(moment('2022-07-02', 'YYYY-MM-DD'))).toEqual(true);
+        expect(task!.priority).toEqual(Priority.High);
         expect(task!.tags).toStrictEqual([
             '#tag1',
             '#tag2',
