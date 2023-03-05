@@ -24,3 +24,5 @@ export interface TaskSerializer {
     deserialize(line: string): TaskDetails | null;
     serialize(task: Task): string;
 }
+
+export { DefaultTaskSerializer } from './DefaultTaskSerializer';
