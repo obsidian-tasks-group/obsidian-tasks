@@ -1,6 +1,6 @@
 {
-  "collapse-filter": true,
-  "search": "",
+  "collapse-filter": false,
+  "search": "path:Testing/",
   "showTags": false,
   "showAttachments": false,
   "hideUnresolved": false,
