@@ -2,11 +2,9 @@
  * @jest-environment jsdom
  */
 import moment from 'moment';
-import { getSettings } from '../src/Config/Settings';
+import { getSettings, getTaskFormat } from '../src/Config/Settings';
 import { buildSuggestions } from '../src/Suggestor/Suggestor';
 import type { SuggestInfo } from '../src/Suggestor/Suggestor';
-
-import * as task from '../src/Task';
 
 window.moment = moment;
 
@@ -92,13 +90,15 @@ describe('auto-complete', () => {
         // const todaySpy = jest
         //     .spyOn(Date, 'now')
         //     .mockReturnValue(moment('2022-06-11').valueOf());
+        const { dueDateSymbol, scheduledDateSymbol, startDateSymbol, recurrenceSymbol } =
+            getTaskFormat('Default').taskSerializer.symbols;
 
         const lines = [
             '- [ ] some task',
-            '- [ ] some task 🔁 ',
-            `- [ ] some task ${task.dueDateSymbol} `,
-            `- [ ] some task ${task.scheduledDateSymbol} `,
-            `- [ ] some task ${task.startDateSymbol} `,
+            `- [ ] some task ${recurrenceSymbol} `,
+            `- [ ] some task ${dueDateSymbol} `,
+            `- [ ] some task ${scheduledDateSymbol} `,
+            `- [ ] some task ${startDateSymbol} `,
         ];
         const allSuggestions: string[] = [];
         for (const line of lines) {

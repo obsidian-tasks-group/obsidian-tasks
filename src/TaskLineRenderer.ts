@@ -5,7 +5,7 @@ import * as taskModule from './Task';
 import type { LayoutOptions, TaskLayoutComponent } from './TaskLayout';
 import { TaskLayout } from './TaskLayout';
 import { replaceTaskWithTasks } from './File';
-import { getSettings } from './Config/Settings';
+import { getSettings, getTaskFormat } from './Config/Settings';
 
 export type TaskLineRenderDetails = {
     parentUlElement: HTMLElement;
@@ -168,20 +168,23 @@ function addTooltip({
     element: HTMLElement;
     isFilenameUnique: boolean | undefined;
 }): void {
+    const { recurrenceSymbol, startDateSymbol, createdDateSymbol, scheduledDateSymbol, dueDateSymbol, doneDateSymbol } =
+        getTaskFormat('Default').taskSerializer.symbols;
+
     element.addEventListener('mouseenter', () => {
         const tooltip = element.createDiv();
         tooltip.addClasses(['tooltip', 'pop-up']);
 
         if (task.recurrence) {
             const recurrenceDiv = tooltip.createDiv();
-            recurrenceDiv.setText(`${taskModule.recurrenceSymbol} ${task.recurrence.toText()}`);
+            recurrenceDiv.setText(`${recurrenceSymbol} ${task.recurrence.toText()}`);
         }
 
         if (task.createdDate) {
             const createdDateDiv = tooltip.createDiv();
             createdDateDiv.setText(
                 toTooltipDate({
-                    signifier: taskModule.createdDateSymbol,
+                    signifier: createdDateSymbol,
                     date: task.createdDate,
                 }),
             );
@@ -191,7 +194,7 @@ function addTooltip({
             const startDateDiv = tooltip.createDiv();
             startDateDiv.setText(
                 toTooltipDate({
-                    signifier: taskModule.startDateSymbol,
+                    signifier: startDateSymbol,
                     date: task.startDate,
                 }),
             );
@@ -201,7 +204,7 @@ function addTooltip({
             const scheduledDateDiv = tooltip.createDiv();
             scheduledDateDiv.setText(
                 toTooltipDate({
-                    signifier: taskModule.scheduledDateSymbol,
+                    signifier: scheduledDateSymbol,
                     date: task.scheduledDate,
                 }),
             );
@@ -211,7 +214,7 @@ function addTooltip({
             const dueDateDiv = tooltip.createDiv();
             dueDateDiv.setText(
                 toTooltipDate({
-                    signifier: taskModule.dueDateSymbol,
+                    signifier: dueDateSymbol,
                     date: task.dueDate,
                 }),
             );
@@ -221,7 +224,7 @@ function addTooltip({
             const doneDateDiv = tooltip.createDiv();
             doneDateDiv.setText(
                 toTooltipDate({
-                    signifier: taskModule.doneDateSymbol,
+                    signifier: doneDateSymbol,
                     date: task.doneDate,
                 }),
             );
