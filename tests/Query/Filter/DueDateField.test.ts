@@ -107,13 +107,31 @@ describe('due date (error & corner cases)', () => {
         testTaskFilterForTaskWithDueDate(filter, '2022-13-01', true); // month 13 not valid
     });
 
-    it('date range with invalid dates', () => {
+    it('date range with both dates invalid', () => {
         // Arrange
         const filter = new DueDateField().createFilterOrErrorMessage('due date 2023-13-01 2022-01-78');
 
         // Act, Assert
         expect(filter.filterFunction).toBeUndefined();
         expect(filter.error).toBeDefined();
+    });
+
+    it('date range with first date invalid treated as a date', () => {
+        // Arrange
+        const filter = new DueDateField().createFilterOrErrorMessage('due date 2023-13-01 2022-01-07');
+
+        // Act, Assert
+        // Currently the invalid date is ignored and date range is treated as a date
+        expect(filter).toHaveExplanation('due date is on 2022-01-07 (Friday 7th January 2022)');
+    });
+
+    it('date range with second date invalid treated as a date', () => {
+        // Arrange
+        const filter = new DueDateField().createFilterOrErrorMessage('due date 2023-12-01 2022-01-78');
+
+        // Act, Assert
+        // Currently the invalid date is ignored and date range is treated as a date
+        expect(filter).toHaveExplanation('due date is on 2023-12-01 (Friday 1st December 2023)');
     });
 
     it('date range with invalid range', () => {
