@@ -3,7 +3,8 @@
  */
 
 import moment from 'moment';
-import { calculateCursorOffset, toggleLine } from '../../src/Commands/ToggleDone';
+import type { EditorPosition } from 'obsidian';
+import { getNewCursorPosition, toggleLine } from '../../src/Commands/ToggleDone';
 import { resetSettings, updateSettings } from '../../src/Config/Settings';
 import { StatusRegistry } from '../../src/StatusRegistry';
 import { Status } from '../../src/Status';
@@ -32,11 +33,20 @@ function testToggleLine(inputWithCursorMark: string, expectedWithCursorMark: str
     expect(input.length).toEqual(inputWithCursorMark.length - 1);
     expect(expected.length).toEqual(expectedWithCursorMark.length - 1);
 
+    const cursorPosition = (s: string): EditorPosition => {
+        // Split input string on cursor marker, and make array of lines
+        const linesBeforeCursor = s.split(cursorMarker, 1)[0].split('\n');
+        // Cursor was positioned at the end of the last line
+        const line = linesBeforeCursor.length - 1;
+        const ch = linesBeforeCursor[line].length;
+        return { line, ch };
+    };
+
     testToggleLineForOutOfRangeCursorPositions(
         input,
-        inputWithCursorMark.indexOf(cursorMarker),
+        cursorPosition(inputWithCursorMark),
         expected,
-        expectedWithCursorMark.indexOf(cursorMarker),
+        cursorPosition(expectedWithCursorMark),
     );
 }
 
@@ -56,13 +66,13 @@ function testToggleLine(inputWithCursorMark: string, expectedWithCursorMark: str
  */
 function testToggleLineForOutOfRangeCursorPositions(
     input: string,
-    initialCursorOffset: number,
+    initialCursorOffset: EditorPosition,
     expected: string,
-    expectedCursorOffset: number,
+    expectedCursorOffset: EditorPosition,
 ) {
     const result = toggleLine(input, 'x.md');
-    expect(result).toStrictEqual(expected);
-    const actualCursorOffset = calculateCursorOffset(initialCursorOffset, input, result);
+    expect(result.text).toStrictEqual(expected);
+    const actualCursorOffset = getNewCursorPosition(initialCursorOffset, result);
     expect(actualCursorOffset).toEqual(expectedCursorOffset);
 }
 
@@ -81,20 +91,24 @@ describe('ToggleDone', () => {
 
     it('should add hyphen and space to empty line', () => {
         testToggleLine('|', '- |');
+        testToggleLine('foo|bar', '- foobar|');
 
         updateSettings({ globalFilter: '#task' });
 
         testToggleLine('|', '- |');
+        testToggleLine('foo|bar', '- foobar|');
     });
 
     it('should add checkbox to hyphen and space', () => {
-        testToggleLine('|- ', '- [ |] ');
+        testToggleLine('|- ', '- [ ] |');
         testToggleLine('- |', '- [ ] |');
+        testToggleLine('- |foobar', '- [ ] foobar|');
 
         updateSettings({ globalFilter: '#task' });
 
-        testToggleLine('|- ', '- [ |] ');
+        testToggleLine('|- ', '- [ ] |');
         testToggleLine('- |', '- [ ] |');
+        testToggleLine('- |foobar', '- [ ] foobar|');
     });
 
     it('should complete a task', () => {
@@ -141,11 +155,11 @@ describe('ToggleDone', () => {
         );
 
         // With a trailing space at the end of the initial line, which is deleted
-        // when the task lines are regenerated, the cursor moves one character to the left:
+        // when the task lines are regenerated, the cursor does not move one character to the left:
         testToggleLine(
             '- [ ] I am a recurring task| 🔁 every day 📅 2022-09-04 ',
             `- [ ] I am a recurring task 🔁 every day 📅 2022-09-05
-- [x] I am a recurring tas|k 🔁 every day 📅 2022-09-04 ✅ 2022-09-04`,
+- [x] I am a recurring task| 🔁 every day 📅 2022-09-04 ✅ 2022-09-04`,
         );
 
         updateSettings({ globalFilter: '#task' });
@@ -179,10 +193,10 @@ describe('ToggleDone', () => {
             const line1 = '- [P] this is a task starting at Pro';
 
             // Assert
-            const line2 = toggleLine(line1, 'x.md');
+            const line2 = toggleLine(line1, 'x.md').text;
             expect(line2).toStrictEqual('- [C] this is a task starting at Pro');
 
-            const line3 = toggleLine(line2, 'x.md');
+            const line3 = toggleLine(line2, 'x.md').text;
             expect(line3).toStrictEqual('- [P] this is a task starting at Pro');
         });
 
@@ -192,10 +206,10 @@ describe('ToggleDone', () => {
             const line1 = '- [C] #task this is a task starting at Con';
 
             // Assert
-            const line2 = toggleLine(line1, 'x.md');
+            const line2 = toggleLine(line1, 'x.md').text;
             expect(line2).toStrictEqual('- [P] #task this is a task starting at Con');
 
-            const line3 = toggleLine(line2, 'x.md');
+            const line3 = toggleLine(line2, 'x.md').text;
             expect(line3).toStrictEqual('- [C] #task this is a task starting at Con');
         });
 
@@ -205,10 +219,10 @@ describe('ToggleDone', () => {
             const line1 = '- [P] this is a task starting at Pro, not matching the global filter';
 
             // Assert
-            const line2 = toggleLine(line1, 'x.md');
+            const line2 = toggleLine(line1, 'x.md').text;
             expect(line2).toStrictEqual('- [C] this is a task starting at Pro, not matching the global filter');
 
-            const line3 = toggleLine(line2, 'x.md');
+            const line3 = toggleLine(line2, 'x.md').text;
             expect(line3).toStrictEqual('- [P] this is a task starting at Pro, not matching the global filter');
         });
     });
