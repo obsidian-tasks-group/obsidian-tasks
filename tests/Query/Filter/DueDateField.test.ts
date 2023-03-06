@@ -22,6 +22,10 @@ function testTaskFilterForTaskWithDueDate(filter: FilterOrErrorMessage, dueDate:
 }
 
 describe('due date', () => {
+    afterAll(() => {
+        jest.useRealTimers();
+    });
+
     it('by due date (before)', () => {
         // Arrange
         const filter = new DueDateField().createFilterOrErrorMessage('due before 2022-04-20');
@@ -91,6 +95,14 @@ describe('due date', () => {
         testTaskFilterForTaskWithDueDate(filter, '2022-04-20', true);
         testTaskFilterForTaskWithDueDate(filter, '2022-04-24', true);
         testTaskFilterForTaskWithDueDate(filter, '2022-04-25', false);
+    });
+
+    it('due in two weeks', () => {
+        jest.useFakeTimers();
+        jest.setSystemTime(new Date(2023, 3 - 1, 6));
+
+        const filterOrMessage = new DueDateField().createFilterOrErrorMessage('due in two weeks');
+        expect(filterOrMessage).toHaveExplanation('due date is on 2023-03-20 (Monday 20th March 2023)');
     });
 });
 
