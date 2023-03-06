@@ -31,6 +31,8 @@ export type MockTogglingDataForTesting = {
  * @param originalTask
  * @param fileLines
  * @param listItemsCache
+ *
+ * @see saveMockDataForTesting
  */
 export function getMockDataForTesting(
     originalTask: Task,
@@ -59,4 +61,19 @@ export function getMockDataForTesting(
             listItemsCache: allDataFromListItemCache,
         },
     };
+}
+
+/**
+ * Write the supplied data to the console, so it can be saved for use in testing.
+ *
+ * @param originalTask
+ * @param fileLines
+ * @param listItemsCache
+ */
+export function saveMockDataForTesting(originalTask: Task, fileLines: string[], listItemsCache: ListItemCache[]) {
+    const everything = getMockDataForTesting(originalTask, fileLines, listItemsCache);
+    console.error(`Inconsistent lines: SAVE THE OUTPUT
+data:
+${JSON.stringify(everything)}
+`);
 }
