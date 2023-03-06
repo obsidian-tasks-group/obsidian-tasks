@@ -1,5 +1,4 @@
 import { MarkdownView, MetadataCache, Notice, TFile, Vault, Workspace } from 'obsidian';
-import type { ListItemCache } from 'obsidian';
 
 import { getSettings } from './Config/Settings';
 import type { Task } from './Task';
@@ -151,7 +150,7 @@ const tryRepetitive = async ({
     const fileLines = fileContent.split('\n');
 
     const { globalFilter } = getSettings();
-    let listItem: ListItemCache | undefined;
+    let taskLineNumber: number | undefined;
     let sectionIndex = 0;
     for (const listItemCache of listItemsCache) {
         if (listItemCache.position.start.line < originalTask.sectionStart) {
@@ -166,7 +165,7 @@ const tryRepetitive = async ({
         if (line.includes(globalFilter)) {
             if (sectionIndex === originalTask.sectionIndex) {
                 if (line === originalTask.originalMarkdown) {
-                    listItem = listItemCache;
+                    taskLineNumber = listItemCache.position.start.line;
                 } else {
                     errorAndNotice(
                         `Tasks: Unable to find task in file ${originalTask.path}.
@@ -183,15 +182,15 @@ ${line}`,
             sectionIndex++;
         }
     }
-    if (listItem === undefined) {
+    if (taskLineNumber === undefined) {
         errorAndNotice('Tasks: could not find task to toggle in the file.');
         return;
     }
 
     const updatedFileLines = [
-        ...fileLines.slice(0, listItem.position.start.line),
+        ...fileLines.slice(0, taskLineNumber),
         ...newTasks.map((task: Task) => task.toFileLineString()),
-        ...fileLines.slice(listItem.position.start.line + 1), // Only supports single-line tasks.
+        ...fileLines.slice(taskLineNumber + 1), // Only supports single-line tasks.
     ];
 
     await vault.modify(file, updatedFileLines.join('\n'));
