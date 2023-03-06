@@ -134,7 +134,7 @@ describe('due date (error & corner cases)', () => {
         expect(filter).toHaveExplanation('due date is on 2023-12-01 (Friday 1st December 2023)');
     });
 
-    it('date range with invalid range', () => {
+    it('date range with invalid natural date range', () => {
         // Arrange
         const filter = new DueDateField().createFilterOrErrorMessage('due thees week');
 
