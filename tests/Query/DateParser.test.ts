@@ -139,7 +139,7 @@ describe('Date Parser - correct delta for next & last month & quarter (Today is 
         testParsingDateRange('last month', '2021-03-01', '2021-03-31');
         testParsingDateRange('next month', '2021-05-01', '2021-05-31');
         testParsingDateRange('last quarter', '2021-01-01', '2021-03-31');
-        //testParsingDateRange('next quarter', '2021-07-01', '2021-09-30');
+        testParsingDateRange('next quarter', '2021-07-01', '2021-09-30');
         // The latest test case is not representative eg won't fail without the fix
         // because the length of Q2 in days is same as Q3.
     });
