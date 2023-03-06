@@ -1,6 +1,13 @@
 import type { ListItemCache, Pos } from 'obsidian';
 import type { Task } from '../Task';
-import type { TaskLocation } from '../TaskLocation';
+
+type MockTaskLocation = {
+    path: string;
+    lineNumber: number;
+    sectionStart: number;
+    sectionIndex: number;
+    precedingHeader: string | null;
+};
 
 /** a mock for {@link ListItemCache.task} */
 type MockListItemCacheTask = string | undefined;
@@ -15,7 +22,7 @@ type MockListItemCaches = MockListItemCache[];
 /** a mock for {@link Task} */
 export type MockTask = {
     originalMarkdown: string;
-    taskLocation: TaskLocation;
+    taskLocation: MockTaskLocation;
 };
 
 /** All the data required to call {@link findLineNumberOfTaskToToggle} */
@@ -49,10 +56,17 @@ export function getMockDataForTesting(
         };
         allDataFromListItemCache.push(dataFromListItemCache);
     }
+    const mockTaskLocation: MockTaskLocation = {
+        path: originalTask.taskLocation.path,
+        lineNumber: originalTask.taskLocation.lineNumber,
+        sectionStart: originalTask.taskLocation.sectionStart,
+        sectionIndex: originalTask.taskLocation.sectionIndex,
+        precedingHeader: originalTask.taskLocation.precedingHeader,
+    };
     return {
         taskData: {
             originalMarkdown: originalTask.originalMarkdown,
-            taskLocation: originalTask.taskLocation,
+            taskLocation: mockTaskLocation,
         },
         fileData: {
             fileLines: fileLines,
