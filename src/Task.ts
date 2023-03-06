@@ -1,5 +1,4 @@
 import type { Moment } from 'moment';
-import type { LayoutOptions } from './TaskLayout';
 import type { TaskLocation } from './TaskLocation';
 import { Recurrence } from './Recurrence';
 import { getSettings, getTaskFormat } from './Config/Settings';
@@ -421,12 +420,10 @@ export class Task {
 
     /**
      * Flatten the task as a string that includes all its components.
-     * @param {LayoutOptions} [layoutOptions]
      * @return {*}  {string}
      * @memberof Task
      */
-    public toString(layoutOptions?: LayoutOptions): string {
-        layoutOptions;
+    public toString(): string {
         return getTaskFormat().taskSerializer.serialize(this);
     }
 
