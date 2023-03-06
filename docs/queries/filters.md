@@ -19,12 +19,19 @@ parent: Queries
 
 ---
 
-## Dates
+## Searching for dates
 
-`<date>` filters can be given in natural language or in formal notation.
+### Specific dates
+
+`<date>` filters can be given in natural language or in formal notation (`YYYY-MM-DD`).
 The following are some examples of valid `<date>` filters as inspiration:
 
+Formal notation:
+
 - `2021-05-25`
+
+Natural language notation:
+
 - `yesterday`
 - `today`
 - `tomorrow`
@@ -37,6 +44,49 @@ Note that if it is Wednesday and you write `tuesday`, Tasks assumes you mean "ye
 Use `next tuesday` instead if you mean "next tuesday".
 
 When the day changes, relative dates like `due today` are re-evaluated so that the list stays up-to-date.
+
+### Date ranges
+
+`<date range>` can be given in 2 ways.
+
+{: .released }
+Date range searches were introduced in Tasks 1.26.0.
+
+#### Date ranges in formal notation
+
+`<date range>` may be specified as 2 valid dates in `YYYY-MM-DD` format. Dates on either end are included, that is it is an inclusive search.
+
+`before <date range>` will match before the earliest date of the range. `after <date range>` will match after the latest date of the range.
+
+Notes:
+
+- If one of the `YYYY-MM-DD` dates is invalid, then it is ignored and the filter will behave as `<date>` not `<date range>`
+- Date range cannot be specified by 2 natural language dates eg `next monday three weeks`
+- `in` and `on` can be omitted
+
+Example:
+
+- `2022-01-01 2023-02-01`
+
+#### Date ranges in natural language notation
+
+Tasks supports natural language date ranges as: `last|this|next week|month|quarter|year`. Tasks will process this range and convert it to formal notation (`YYYY-MM-DD`) internally.
+
+Notes:
+
+- Currently all weeks are defined as [ISO 8601](https://en.wikipedia.org/wiki/ISO_week_date) weeks starting on Monday and ending on Sunday. We will provide more flexibility in a future release
+- Natural language date ranges support only the keywords specified, for example `previous half of year` and `next semester` are not supported
+
+Examples:
+
+- `this week` (from this week's Monday to Sunday inclusive)
+- `after this month`
+- `next quarter`
+- `before next year`
+
+### Troubleshooting date searches
+
+Add `explain` in case of issue and double check that both dates are valid or the natural date range is correct and supported.
 
 ### Finding Tasks with Invalid Dates
 
