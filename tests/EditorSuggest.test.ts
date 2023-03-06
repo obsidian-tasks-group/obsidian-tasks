@@ -4,7 +4,7 @@
 import moment from 'moment';
 import { TASK_FORMATS, getSettings } from '../src/Config/Settings';
 import { buildSuggestions } from '../src/Suggestor/Suggestor';
-import type { SuggestInfo } from '../src/Suggestor/Suggestor';
+import type { SuggestInfo } from '../src/Suggestor';
 
 window.moment = moment;
 
