@@ -3,7 +3,6 @@ import { TaskLayout } from '../TaskLayout';
 import type { TaskLayoutComponent } from '../TaskLayout';
 import { Recurrence } from '../Recurrence';
 import { Priority, type Task, TaskRegularExpressions } from '../Task';
-import { getSettings } from '../Config/Settings';
 import type { TaskDetails, TaskSerializer } from '.';
 
 /* Interface describing the symbols that {@link DefaultTaskSerializer}
@@ -171,7 +170,6 @@ export class DefaultTaskSerializer implements TaskSerializer {
         let createdDate: Moment | null = null;
         let recurrenceRule: string = '';
         let recurrence: Recurrence | null = null;
-        let tags: any = [];
         // Tags that are removed from the end while parsing, but we want to add them back for being part of the description.
         // In the original task description they are possibly mixed with other components
         // (e.g. #tag1 <due date> #tag2), they do not have to all trail all task components,
@@ -274,16 +272,6 @@ export class DefaultTaskSerializer implements TaskSerializer {
         // to actually have the description 'Do something #tag1 #tag2'
         if (trailingTags.length > 0) line += ' ' + trailingTags;
 
-        // Tags are found in the string and pulled out but not removed,
-        // so when returning the entire task it will match what the user
-        // entered.
-        // The global filter will be removed from the collection.
-        const hashTagMatch = line.match(TaskRegularExpressions.hashTags);
-        if (hashTagMatch !== null) {
-            const { globalFilter } = getSettings();
-            tags = hashTagMatch.filter((tag) => tag !== globalFilter).map((tag) => tag.trim());
-        }
-
         return {
             description: line,
             priority,
@@ -293,7 +281,7 @@ export class DefaultTaskSerializer implements TaskSerializer {
             dueDate,
             doneDate,
             recurrence,
-            tags,
+            tags: undefined,
         };
     }
 }
