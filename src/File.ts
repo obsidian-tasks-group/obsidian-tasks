@@ -1,7 +1,7 @@
 import { type ListItemCache, MarkdownView, MetadataCache, Notice, TFile, Vault, Workspace } from 'obsidian';
 
 import { getSettings } from './Config/Settings';
-import { type MockListItemCache, type MockTask, getMockDataForTesting } from './lib/MockDataCreator';
+import { type MockListItemCache, type MockTask, saveMockDataForTesting } from './lib/MockDataCreator';
 import type { Task } from './Task';
 
 let metadataCache: MetadataCache | undefined;
@@ -161,11 +161,7 @@ const tryRepetitive = async ({
             // so write out to the console a representation of the data needed to reconstruct the above
             // findLineNumberOfTaskToToggle() call, so that the content can be saved
             // to a JSON file and then re-used in a 'unit' test.
-            const everything = getMockDataForTesting(originalTask, fileLines, listItemsCache);
-            console.error(`Inconsistent lines: SAVE THE OUTPUT
-data:
-${JSON.stringify(everything)}
-`);
+            saveMockDataForTesting(originalTask, fileLines, listItemsCache);
         }
         errorAndNotice('Tasks: could not find task to toggle in the file.');
         return;
