@@ -11,6 +11,8 @@ let workspace: Workspace | undefined;
 const supportedFileExtensions = ['md'];
 const supportedViewTypes = [MarkdownView];
 
+type ErrorLoggingFunction = (message: string) => void;
+
 export const initializeFile = ({
     metadataCache: newMetadataCache,
     vault: newVault,
@@ -149,7 +151,7 @@ const tryRepetitive = async ({
     const fileContent = await vault.read(file); // TODO: replace with vault.process.
     const fileLines = fileContent.split('\n');
 
-    const taskLineNumber = findLineNumberOfTaskToToggle(originalTask, fileLines, listItemsCache);
+    const taskLineNumber = findLineNumberOfTaskToToggle(originalTask, fileLines, listItemsCache, errorAndNotice);
 
     if (taskLineNumber === undefined) {
         errorAndNotice('Tasks: could not find task to toggle in the file.');
@@ -165,7 +167,22 @@ const tryRepetitive = async ({
     await vault.modify(file, updatedFileLines.join('\n'));
 };
 
-function findLineNumberOfTaskToToggle(originalTask: Task, fileLines: string[], listItemsCache: ListItemCache[]) {
+/**
+ * Try to find the line number of the originalTask
+ * @param originalTask - the {@link Task} line that the user clicked on
+ * @param fileLines - the lines read from the file.
+ * @param listItemsCache
+ * @param errorLoggingFunction - a function of type {@link ErrorLoggingFunction} - which will be called if the found
+ *                               line differs from the original markdown in {@link originalTask}.
+ *                               This parameter is provided to allow tests to be written for this code
+ *                               that do not display a popup warning, but instead capture the error message.
+ */
+function findLineNumberOfTaskToToggle(
+    originalTask: Task,
+    fileLines: string[],
+    listItemsCache: ListItemCache[],
+    errorLoggingFunction: ErrorLoggingFunction,
+) {
     const { globalFilter } = getSettings();
     let taskLineNumber: number | undefined;
     let sectionIndex = 0;
@@ -184,7 +201,7 @@ function findLineNumberOfTaskToToggle(originalTask: Task, fileLines: string[], l
                 if (line === originalTask.originalMarkdown) {
                     taskLineNumber = listItemCache.position.start.line;
                 } else {
-                    errorAndNotice(
+                    errorLoggingFunction(
                         `Tasks: Unable to find task in file ${originalTask.path}.
 Expected task:
 ${originalTask.toFileLineString()}
