@@ -1,4 +1,4 @@
-import { MarkdownView, MetadataCache, Notice, TFile, Vault, Workspace } from 'obsidian';
+import { type ListItemCache, MarkdownView, MetadataCache, Notice, TFile, Vault, Workspace } from 'obsidian';
 
 import { getSettings } from './Config/Settings';
 import type { Task } from './Task';
@@ -149,6 +149,23 @@ const tryRepetitive = async ({
     const fileContent = await vault.read(file); // TODO: replace with vault.process.
     const fileLines = fileContent.split('\n');
 
+    const taskLineNumber = findLineNumberOfTaskToToggle(originalTask, fileLines, listItemsCache);
+
+    if (taskLineNumber === undefined) {
+        errorAndNotice('Tasks: could not find task to toggle in the file.');
+        return;
+    }
+
+    const updatedFileLines = [
+        ...fileLines.slice(0, taskLineNumber),
+        ...newTasks.map((task: Task) => task.toFileLineString()),
+        ...fileLines.slice(taskLineNumber + 1), // Only supports single-line tasks.
+    ];
+
+    await vault.modify(file, updatedFileLines.join('\n'));
+};
+
+function findLineNumberOfTaskToToggle(originalTask: Task, fileLines: string[], listItemsCache: ListItemCache[]) {
     const { globalFilter } = getSettings();
     let taskLineNumber: number | undefined;
     let sectionIndex = 0;
@@ -182,16 +199,5 @@ ${line}`,
             sectionIndex++;
         }
     }
-    if (taskLineNumber === undefined) {
-        errorAndNotice('Tasks: could not find task to toggle in the file.');
-        return;
-    }
-
-    const updatedFileLines = [
-        ...fileLines.slice(0, taskLineNumber),
-        ...newTasks.map((task: Task) => task.toFileLineString()),
-        ...fileLines.slice(taskLineNumber + 1), // Only supports single-line tasks.
-    ];
-
-    await vault.modify(file, updatedFileLines.join('\n'));
-};
+    return taskLineNumber;
+}
