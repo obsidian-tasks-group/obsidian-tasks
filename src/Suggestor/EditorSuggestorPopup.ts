@@ -4,7 +4,7 @@ import type { EditorPosition, EditorSuggestContext, EditorSuggestTriggerInfo } f
 import type { Settings } from '../Config/Settings';
 import * as task from '../Task';
 import { buildSuggestions } from './Suggestor';
-import type { SuggestInfo } from './Suggestor';
+import type { SuggestInfo } from '.';
 
 export type SuggestInfoWithContext = SuggestInfo & {
     context: EditorSuggestContext;
