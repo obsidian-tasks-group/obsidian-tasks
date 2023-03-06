@@ -21,6 +21,7 @@ function testFindLineNumberOfTaskToToggle(
     let errorString: string | undefined;
     const captureError = (message: string) => {
         errorString = message;
+        console.log(errorString);
     };
 
     const result = findLineNumberOfTaskToToggle(

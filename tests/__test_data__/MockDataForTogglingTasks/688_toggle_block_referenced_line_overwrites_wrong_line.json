@@ -2,11 +2,11 @@
   "taskData": {
     "originalMarkdown": "- [ ] #task task2b ^ca47c7",
     "taskLocation": {
-      "_path": "Manual Testing/Task Toggling Scenarios/Embed Task in to Note.md",
-      "_lineNumber": 0,
-      "_sectionStart": 0,
-      "_sectionIndex": 0,
-      "_precedingHeader": null
+      "path": "Manual Testing/Task Toggling Scenarios/Embed Task in to Note.md",
+      "lineNumber": 0,
+      "sectionStart": 0,
+      "sectionIndex": 0,
+      "precedingHeader": null
     }
   },
   "fileData": {
