@@ -16,8 +16,8 @@ export type TaskDetails = Writeable<
         | 'dueDate'
         | 'doneDate'
         | 'recurrence'
-        | 'tags'
-    >
+    > &
+        Partial<Pick<Task, 'tags'>>
 >;
 
 export interface TaskSerializer {

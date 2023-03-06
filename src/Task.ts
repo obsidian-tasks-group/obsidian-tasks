@@ -270,8 +270,13 @@ export class Task {
             scheduledDateIsInferred = true;
         }
 
+        taskInfo.tags ??= Task.extractHashtags(taskInfo.description).filter((tag) => tag !== globalFilter);
+
         return new Task({
             ...taskInfo,
+            // Explicitly adding 'tags' wouldn't be necessary if Typescript could infer that `taskInfo.tags`
+            // is guaranteed to be non-nullable within the spread. Might be fixed in a later version (> 4.7.4) of Typescript
+            tags: taskInfo.tags,
             status,
             indentation,
             listMarker,
@@ -533,6 +538,17 @@ export class Task {
         }
 
         return true;
+    }
+
+    /**
+     * Returns an array of hashtags found in string
+     *
+     * @param description A task description that may contain hashtags
+     *
+     * @returns An array of hashTags found in the string
+     */
+    public static extractHashtags(description: string): string[] {
+        return description.match(TaskRegularExpressions.hashTags)?.map((tag) => tag.trim()) ?? [];
     }
 
     /**
