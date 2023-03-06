@@ -1,6 +1,7 @@
 import { type ListItemCache, MarkdownView, MetadataCache, Notice, TFile, Vault, Workspace } from 'obsidian';
 
 import { getSettings } from './Config/Settings';
+import { type MockListItemCache, type MockTask, getMockDataForTesting } from './lib/MockDataCreator';
 import type { Task } from './Task';
 
 let metadataCache: MetadataCache | undefined;
@@ -11,7 +12,7 @@ let workspace: Workspace | undefined;
 const supportedFileExtensions = ['md'];
 const supportedViewTypes = [MarkdownView];
 
-type ErrorLoggingFunction = (message: string) => void;
+export type ErrorLoggingFunction = (message: string) => void;
 
 export const initializeFile = ({
     metadataCache: newMetadataCache,
@@ -154,6 +155,18 @@ const tryRepetitive = async ({
     const taskLineNumber = findLineNumberOfTaskToToggle(originalTask, fileLines, listItemsCache, errorAndNotice);
 
     if (taskLineNumber === undefined) {
+        const logDataForMocking = true;
+        if (logDataForMocking) {
+            // There was an error finding the correct line to toggle,
+            // so write out to the console a representation of the data needed to reconstruct the above
+            // findLineNumberOfTaskToToggle() call, so that the content can be saved
+            // to a JSON file and then re-used in a 'unit' test.
+            const everything = getMockDataForTesting(originalTask, fileLines, listItemsCache);
+            console.error(`Inconsistent lines: SAVE THE OUTPUT
+data:
+${JSON.stringify(everything)}
+`);
+        }
         errorAndNotice('Tasks: could not find task to toggle in the file.');
         return;
     }
@@ -177,17 +190,17 @@ const tryRepetitive = async ({
  *                               This parameter is provided to allow tests to be written for this code
  *                               that do not display a popup warning, but instead capture the error message.
  */
-function findLineNumberOfTaskToToggle(
-    originalTask: Task,
+export function findLineNumberOfTaskToToggle(
+    originalTask: Task | MockTask,
     fileLines: string[],
-    listItemsCache: ListItemCache[],
+    listItemsCache: ListItemCache[] | MockListItemCache[],
     errorLoggingFunction: ErrorLoggingFunction,
 ) {
     const { globalFilter } = getSettings();
     let taskLineNumber: number | undefined;
     let sectionIndex = 0;
     for (const listItemCache of listItemsCache) {
-        if (listItemCache.position.start.line < originalTask.sectionStart) {
+        if (listItemCache.position.start.line < originalTask.taskLocation.sectionStart) {
             continue;
         }
 
@@ -197,14 +210,14 @@ function findLineNumberOfTaskToToggle(
 
         const line = fileLines[listItemCache.position.start.line];
         if (line.includes(globalFilter)) {
-            if (sectionIndex === originalTask.sectionIndex) {
+            if (sectionIndex === originalTask.taskLocation.sectionIndex) {
                 if (line === originalTask.originalMarkdown) {
                     taskLineNumber = listItemCache.position.start.line;
                 } else {
                     errorLoggingFunction(
-                        `Tasks: Unable to find task in file ${originalTask.path}.
+                        `Tasks: Unable to find task in file ${originalTask.taskLocation.path}.
 Expected task:
-${originalTask.toFileLineString()}
+${originalTask.originalMarkdown}
 Found task:
 ${line}`,
                     );
