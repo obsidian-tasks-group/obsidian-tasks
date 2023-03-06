@@ -25,20 +25,6 @@ export enum Priority {
     Low = '4',
 }
 
-export const prioritySymbols = {
-    High: '⏫',
-    Medium: '🔼',
-    Low: '🔽',
-    None: '',
-};
-
-export const recurrenceSymbol = '🔁';
-export const startDateSymbol = '🛫';
-export const createdDateSymbol = '➕';
-export const scheduledDateSymbol = '⏳';
-export const dueDateSymbol = '📅';
-export const doneDateSymbol = '✅';
-
 export class TaskRegularExpressions {
     public static readonly dateFormat = 'YYYY-MM-DD';
 
@@ -86,16 +72,6 @@ export class TaskRegularExpressions {
 
     // Match on block link at end.
     public static readonly blockLinkRegex = / \^[a-zA-Z0-9-]+$/u;
-
-    // The following regex's end with `$` because they will be matched and
-    // removed from the end until none are left.
-    public static readonly priorityRegex = /([⏫🔼🔽])$/u;
-    public static readonly startDateRegex = /🛫 *(\d{4}-\d{2}-\d{2})$/u;
-    public static readonly createdDateRegex = /➕ *(\d{4}-\d{2}-\d{2})$/u;
-    public static readonly scheduledDateRegex = /[⏳⌛] *(\d{4}-\d{2}-\d{2})$/u;
-    public static readonly dueDateRegex = /[📅📆🗓] *(\d{4}-\d{2}-\d{2})$/u;
-    public static readonly doneDateRegex = /✅ *(\d{4}-\d{2}-\d{2})$/u;
-    public static readonly recurrenceRegex = /🔁 ?([a-zA-Z0-9, !]+)$/iu;
 
     // Regex to match all hash tags, basically hash followed by anything but the characters in the negation.
     // To ensure URLs are not caught it is looking of beginning of string tag and any
