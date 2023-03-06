@@ -49,7 +49,7 @@ export class DateParser {
                 case 'quarter':
                 case 'year':
                 case 'week':
-                    // This is only to avoid recasting String in unitOfTime.DurationConstructor accepted by Duration.add()
+                    // This switch-case is only to avoid recasting String in unitOfTime.DurationConstructor accepted by Duration.add()
                     delta.add(1, range);
             }
 
