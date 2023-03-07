@@ -16,8 +16,8 @@ export type HeadingState = {
 export interface Settings {
     globalFilter: string;
     removeGlobalFilter: boolean;
-    setDoneDate: boolean;
     setCreatedDate: boolean;
+    setDoneDate: boolean;
     autoSuggestInEditor: boolean;
     autoSuggestMinMatch: number;
     autoSuggestMaxItems: number;
@@ -43,8 +43,8 @@ export interface Settings {
 const defaultSettings: Settings = {
     globalFilter: '',
     removeGlobalFilter: false,
-    setDoneDate: true,
     setCreatedDate: false,
+    setDoneDate: true,
     autoSuggestInEditor: true,
     autoSuggestMinMatch: 0,
     autoSuggestMaxItems: 6,
