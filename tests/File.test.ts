@@ -32,7 +32,7 @@ function testFindLineNumberOfTaskToToggle(
     );
 
     // Assert
-    verify(errorString);
+    verify(errorString ? errorString : 'Success. Line found OK. No error reported.');
 
     if (expectedLineNumber !== undefined) {
         expect(result).not.toBeUndefined();
@@ -46,6 +46,13 @@ function testFindLineNumberOfTaskToToggle(
 }
 
 describe('replaceTaskWithTasks', () => {
+    it('valid 2-task test', () => {
+        const jsonFileName = 'single_task_valid_data.json';
+        const taskLineToToggle = '- [ ] #task task 2';
+        const expectedLineNumber = 5;
+        testFindLineNumberOfTaskToToggle(jsonFileName, taskLineToToggle, expectedLineNumber);
+    });
+
     // --------------------------------------------------------------------------------
     // Issue 688
     describe('issue 688 - block referenced task', () => {
