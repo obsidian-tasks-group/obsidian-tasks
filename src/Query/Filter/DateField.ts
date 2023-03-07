@@ -76,7 +76,7 @@ export abstract class DateField extends Field {
     /**
      * Builds function that actually filters the tasks depending on the date
      * @param fieldKeyword relationship to be held with the date 'before', 'after'
-     * @param fieldDate the date to be used by the filter function
+     * @param fieldDates the date range to be used by the filter function
      * @returns the function that filters the tasks
      */
     protected buildFilterFunction(fieldKeyword: string, fieldDates: [moment.Moment, moment.Moment]): FilterFunction {
