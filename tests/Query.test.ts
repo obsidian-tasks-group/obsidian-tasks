@@ -211,6 +211,7 @@ describe('Query parsing', () => {
             '# Comment lines are ignored',
             'explain',
             'hide backlink',
+            'hide created date',
             'hide done date',
             'hide due date',
             'hide edit button',

@@ -25,7 +25,7 @@ export class Query implements IQuery {
         /^group by (backlink|done|due|filename|folder|happens|heading|path|priority|recurrence|recurring|root|scheduled|start|status|tags)/;
 
     private readonly hideOptionsRegexp =
-        /^(hide|show) (task count|backlink|priority|start date|scheduled date|done date|due date|recurrence rule|edit button|urgency)/;
+        /^(hide|show) (task count|backlink|priority|created date|start date|scheduled date|done date|due date|recurrence rule|edit button|urgency)/;
     private readonly shortModeRegexp = /^short/;
     private readonly explainQueryRegexp = /^explain/;
 
@@ -161,6 +161,9 @@ export class Query implements IQuery {
                     break;
                 case 'priority':
                     this._layoutOptions.hidePriority = hide;
+                    break;
+                case 'created date':
+                    this._layoutOptions.hideCreatedDate = hide;
                     break;
                 case 'start date':
                     this._layoutOptions.hideStartDate = hide;
