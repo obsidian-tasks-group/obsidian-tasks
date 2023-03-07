@@ -1,4 +1,5 @@
 import { readFileSync } from 'fs';
+import { verify } from 'approvals/lib/Providers/Jest/JestApprovals';
 import { findLineNumberOfTaskToToggle } from '../src/File';
 import type { MockTogglingDataForTesting } from '../src/lib/MockDataCreator';
 
@@ -21,7 +22,6 @@ function testFindLineNumberOfTaskToToggle(
     let errorString: string | undefined;
     const captureError = (message: string) => {
         errorString = message;
-        console.log(errorString);
     };
 
     const result = findLineNumberOfTaskToToggle(
@@ -30,9 +30,10 @@ function testFindLineNumberOfTaskToToggle(
         listItemsCache,
         captureError.bind(errorString),
     );
-    console.log(errorString);
 
     // Assert
+    verify(errorString);
+
     if (expectedLineNumber !== undefined) {
         expect(result).not.toBeUndefined();
         expect(result).toEqual(expectedLineNumber);
@@ -44,20 +45,20 @@ function testFindLineNumberOfTaskToToggle(
     }
 }
 
-describe('File findLineNumberOfTaskToToggle()', () => {
+describe('replaceTaskWithTasks', () => {
     // --------------------------------------------------------------------------------
     // Issue 688
-    describe('should find line for block referenced task - issue 688', () => {
+    describe('issue 688 - block referenced task', () => {
         const jsonFileName = '688_toggle_block_referenced_line_overwrites_wrong_line.json';
         const taskLineToToggle = '- [ ] #task task2b ^ca47c7';
 
-        it.failing('should show the intended behaviour', () => {
+        it.failing('correct behaviour', () => {
             // An incorrect line is currently found, so this test fails, due to bug 688
             const expectedLineNumber = 8;
             testFindLineNumberOfTaskToToggle(jsonFileName, taskLineToToggle, expectedLineNumber);
         });
 
-        it('current behaviour - wrong results', () => {
+        it('current incorrect behaviour', () => {
             // An incorrect line is currently found, due to bug 688.
             // It is recognised as an incorrect line, and so line number is returned as undefined.
             const expectedLineNumber = undefined;
