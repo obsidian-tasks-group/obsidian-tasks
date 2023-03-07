@@ -25,15 +25,18 @@ export class QueryRenderer {
     public addQueryRenderChild = this._addQueryRenderChild.bind(this);
 
     private async _addQueryRenderChild(source: string, element: HTMLElement, context: MarkdownPostProcessorContext) {
-        context.addChild(
-            new QueryRenderChild({
-                app: this.app,
-                events: this.events,
-                container: element,
-                source,
-                filePath: context.sourcePath,
-            }),
-        );
+        const child = new QueryRenderChild({
+            app: this.app,
+            events: this.events,
+            container: element,
+            source,
+            filePath: context.sourcePath,
+        });
+
+        context.addChild(child);
+
+        child.load();
+        child.onload();
     }
 }
 
