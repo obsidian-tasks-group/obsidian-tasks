@@ -19,7 +19,7 @@ window.moment = moment;
 describe('parsing', () => {
     it('parses a task from a line starting with hyphen', () => {
         // Arrange
-        const line = '- [x] this is a done task 🗓 2021-09-12 ✅ 2021-06-20';
+        const line = '- [x] this is a done task 🗓 2021-09-12 ✅ 2021-06-20 ➕ 2023-03-07';
 
         // Act
         const task = fromLine({
@@ -31,6 +31,8 @@ describe('parsing', () => {
         expect(task!.listMarker).toEqual('-');
         expect(task!.description).toEqual('this is a done task');
         expect(task!.status).toStrictEqual(Status.DONE);
+        expect(task!.createdDate).not.toBeNull();
+        expect(task!.createdDate!.isSame(moment('2023-03-07', 'YYYY-MM-DD'))).toStrictEqual(true);
         expect(task!.dueDate).not.toBeNull();
         expect(task!.dueDate!.isSame(moment('2021-09-12', 'YYYY-MM-DD'))).toStrictEqual(true);
         expect(task!.doneDate).not.toBeNull();
@@ -208,9 +210,10 @@ describe('parsing', () => {
     it('supports parsing of emojis with multiple spaces', () => {
         // Arrange
         const lines = [
-            '- [ ] Wobble ✅2022-07-01 📅2022-07-02 ⏳2022-07-03 🛫2022-07-04 🔁every day',
-            '- [ ] Wobble ✅ 2022-07-01 📅 2022-07-02 ⏳ 2022-07-03 🛫 2022-07-04 🔁 every day',
-            '- [ ] Wobble ✅  2022-07-01 📅  2022-07-02 ⏳  2022-07-03 🛫  2022-07-04 🔁  every day',
+            '- [ ] Wobble ✅2022-07-01 📅2022-07-02 ⏳2022-07-03 🛫2022-07-04 ➕2022-07-05 🔁every day',
+            '- [ ] Wobble ✅ 2022-07-01 📅 2022-07-02 ⏳ 2022-07-03 🛫 2022-07-04 ➕ 2022-07-05 🔁 every day',
+            '- [ ] Wobble ✅  2022-07-01 📅  2022-07-02 ⏳  2022-07-03 🛫  2022-07-04 ➕  2022-07-05 🔁  every day',
+            '- [ ] Wobble ✅  2022-07-01 📅  2022-07-02 ⏳  2022-07-03 🛫  2022-07-04 ➕   2022-07-05 🔁  every day',
         ];
         // Act
         for (const line of lines) {
@@ -226,6 +229,7 @@ describe('parsing', () => {
                 due: task.dueDate?.format('YYYY-MM-DD'),
                 scheduled: task.scheduledDate?.format('YYYY-MM-DD'),
                 start: task.startDate?.format('YYYY-MM-DD'),
+                created: task.createdDate?.format('YYYY-MM-DD'),
                 priority: task.priority,
                 recurrence: task.recurrence?.toText(),
             }).toMatchObject({
@@ -235,6 +239,7 @@ describe('parsing', () => {
                 due: '2022-07-02',
                 scheduled: '2022-07-03',
                 start: '2022-07-04',
+                created: '2022-07-05',
                 priority: '3',
                 recurrence: 'every day',
             });
