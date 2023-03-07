@@ -34,11 +34,11 @@ export class TaskBuilder {
     private _tags: string[] = [];
     private _priority: Priority = Priority.None;
 
+    private _createdDate: Moment | null = null;
     private _startDate: Moment | null = null;
     private _scheduledDate: Moment | null = null;
     private _dueDate: Moment | null = null;
     private _doneDate: Moment | null = null;
-    private _createdDate: Moment | null = null;
 
     private _recurrence: Recurrence | null = null;
     private _blockLink: string = '';
@@ -75,6 +75,7 @@ export class TaskBuilder {
             indentation: this._indentation,
             listMarker: this._listMarker,
             priority: this._priority,
+            createdDate: this._createdDate,
             startDate: this._startDate,
             scheduledDate: this._scheduledDate,
             dueDate: this._dueDate,
@@ -84,7 +85,6 @@ export class TaskBuilder {
             tags: this._tags,
             originalMarkdown: '',
             scheduledDateIsInferred: this._scheduledDateIsInferred,
-            createdDate: this._createdDate,
         });
     }
 
