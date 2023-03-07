@@ -130,11 +130,11 @@ export class Task {
 
     public readonly priority: Priority;
 
+    public readonly createdDate: Moment | null;
     public readonly startDate: Moment | null;
     public readonly scheduledDate: Moment | null;
     public readonly dueDate: Moment | null;
     public readonly doneDate: Moment | null;
-    public readonly createdDate: Moment | null;
 
     public readonly recurrence: Recurrence | null;
     /** The blockLink is a "^" annotation after the dates/recurrence rules. */
@@ -157,6 +157,7 @@ export class Task {
         indentation,
         listMarker,
         priority,
+        createdDate,
         startDate,
         scheduledDate,
         dueDate,
@@ -166,7 +167,6 @@ export class Task {
         tags,
         originalMarkdown,
         scheduledDateIsInferred,
-        createdDate,
     }: {
         status: Status;
         description: string;
@@ -174,6 +174,7 @@ export class Task {
         indentation: string;
         listMarker: string;
         priority: Priority;
+        createdDate: moment.Moment | null;
         startDate: moment.Moment | null;
         scheduledDate: moment.Moment | null;
         dueDate: moment.Moment | null;
@@ -183,7 +184,6 @@ export class Task {
         tags: string[] | [];
         originalMarkdown: string;
         scheduledDateIsInferred: boolean;
-        createdDate: moment.Moment | null;
     }) {
         this.status = status;
         this.description = description;
@@ -195,11 +195,11 @@ export class Task {
 
         this.priority = priority;
 
+        this.createdDate = createdDate;
         this.startDate = startDate;
         this.scheduledDate = scheduledDate;
         this.dueDate = dueDate;
         this.doneDate = doneDate;
-        this.createdDate = createdDate;
 
         this.recurrence = recurrence;
         this.blockLink = blockLink;
@@ -399,6 +399,7 @@ export class Task {
             listMarker,
             taskLocation: taskLocation,
             priority,
+            createdDate,
             startDate,
             scheduledDate,
             dueDate,
@@ -408,7 +409,6 @@ export class Task {
             tags,
             originalMarkdown: line,
             scheduledDateIsInferred,
-            createdDate,
         });
     }
 

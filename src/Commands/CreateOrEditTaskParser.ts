@@ -34,7 +34,6 @@ export const taskFromLine = ({ line, path }: { line: string; path: string }): Ta
     const { setCreatedDate } = getSettings();
     let createdDate: moment.Moment | null = null;
     if (setCreatedDate) {
-        console.dir(window.moment());
         createdDate = window.moment();
     }
 
@@ -53,6 +52,7 @@ export const taskFromLine = ({ line, path }: { line: string; path: string }): Ta
             indentation: '',
             listMarker: '-',
             priority: Priority.None,
+            createdDate,
             startDate: null,
             scheduledDate: null,
             dueDate: null,
@@ -62,7 +62,6 @@ export const taskFromLine = ({ line, path }: { line: string; path: string }): Ta
             tags: [],
             originalMarkdown: '',
             scheduledDateIsInferred: false,
-            createdDate,
         });
     }
 
@@ -89,6 +88,7 @@ export const taskFromLine = ({ line, path }: { line: string; path: string }): Ta
         listMarker,
         blockLink,
         priority: Priority.None,
+        createdDate,
         startDate: null,
         scheduledDate: null,
         dueDate: null,
@@ -98,6 +98,5 @@ export const taskFromLine = ({ line, path }: { line: string; path: string }): Ta
         originalMarkdown: '',
         // Not needed since the inferred status is always re-computed after submitting.
         scheduledDateIsInferred: false,
-        createdDate,
     });
 };
