@@ -542,6 +542,11 @@ export class Task {
         const newTasks: Task[] = [];
 
         if (nextOccurrence !== null) {
+            const { setCreatedDate } = getSettings();
+            let createdDate: moment.Moment | null = null;
+            if (setCreatedDate) {
+                createdDate = window.moment();
+            }
             const nextStatus = StatusRegistry.getInstance().getNextStatusOrCreate(newStatus);
             const nextTask = new Task({
                 ...this,
@@ -550,6 +555,8 @@ export class Task {
                 // New occurrences cannot have the same block link.
                 // And random block links don't help.
                 blockLink: '',
+                // add new createdDate on reccuring tasks
+                createdDate,
             });
             newTasks.push(nextTask);
         }
