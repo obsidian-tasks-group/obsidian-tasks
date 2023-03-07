@@ -699,7 +699,7 @@ export class Task {
         }
 
         // Compare Date fields
-        args = ['startDate', 'scheduledDate', 'dueDate', 'doneDate'];
+        args = ['createdDate', 'startDate', 'scheduledDate', 'dueDate', 'doneDate'];
         for (const el of args) {
             const date1 = this[el] as Moment | null;
             const date2 = other[el] as Moment | null;
