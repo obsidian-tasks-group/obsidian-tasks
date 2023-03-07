@@ -170,7 +170,7 @@ function addTooltip({
 }): void {
     element.addEventListener('mouseenter', () => {
         const tooltip = element.createDiv();
-        tooltip.addClasses(['tooltip', 'mod-right']);
+        tooltip.addClasses(['tooltip', 'pop-up']);
 
         if (task.recurrence) {
             const recurrenceDiv = tooltip.createDiv();
