@@ -1026,6 +1026,13 @@ describe('identicalTo', () => {
         expect(lhs).not.toBeIdenticalTo(new TaskBuilder().priority(Priority.None));
     });
 
+    it('should check createdDate', () => {
+        const lhs = new TaskBuilder().createdDate('2012-12-27');
+        expect(lhs).toBeIdenticalTo(new TaskBuilder().createdDate('2012-12-27'));
+        expect(lhs).not.toBeIdenticalTo(new TaskBuilder().createdDate(null));
+        expect(lhs).not.toBeIdenticalTo(new TaskBuilder().createdDate('2012-12-26'));
+    });
+
     it('should check startDate', () => {
         const lhs = new TaskBuilder().startDate('2012-12-27');
         expect(lhs).toBeIdenticalTo(new TaskBuilder().startDate('2012-12-27'));

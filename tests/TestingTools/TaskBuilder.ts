@@ -169,6 +169,11 @@ export class TaskBuilder {
         return this;
     }
 
+    public createdDate(createdDate: string | null): TaskBuilder {
+        this._createdDate = TaskBuilder.parseDate(createdDate);
+        return this;
+    }
+
     public startDate(startDate: string | null): TaskBuilder {
         this._startDate = TaskBuilder.parseDate(startDate);
         return this;
