@@ -127,6 +127,14 @@ describe('task line rendering', () => {
         );
     });
 
+    it('renders without created date', async () => {
+        await testLayoutOptions(
+            '- [ ] Full task ⏫ 📅 2022-07-02 ⏳ 2022-07-03 🛫 2022-07-04 ➕ 2022-07-05 🔁 every day',
+            { hideCreatedDate: true },
+            'Full task ⏫ 🔁 every day 🛫 2022-07-04 ⏳ 2022-07-03 📅 2022-07-02',
+        );
+    });
+
     it('renders without start date', async () => {
         await testLayoutOptions(
             '- [ ] Full task ⏫ 📅 2022-07-02 ⏳ 2022-07-03 🛫 2022-07-04 🔁 every day',
