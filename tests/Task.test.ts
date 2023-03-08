@@ -928,6 +928,110 @@ describe('toggle done', () => {
     });
 });
 
+describe('set correct created date on reccurence task', () => {
+    it('does not set created date with disabled setting', () => {
+        // Arrange
+        const line = '- [ ] this is a task 📅 2021-09-12 🔁 every day';
+        updateSettings({ setCreatedDate: false });
+
+        // Act
+        const task = fromLine({
+            line,
+        });
+
+        // Assert
+        expect(task).not.toBeNull();
+        expect(task!.createdDate).toBeNull();
+
+        const tasks = task!.toggle();
+        expect(tasks.length).toEqual(2);
+        const nextTask: Task = tasks[0];
+        expect(nextTask.createdDate).toBeNull();
+
+        // cleanup
+        resetSettings();
+    });
+
+    it('does not set created date with disabled setting when repeated has created date', () => {
+        // Arrange
+        const line = '- [ ] this is a task ➕ 2021-09-11 📅 2021-09-12 🔁 every day';
+        updateSettings({ setCreatedDate: false });
+
+        // Act
+        const task = fromLine({
+            line,
+        });
+
+        // Assert
+        expect(task).not.toBeNull();
+        expect(task!.createdDate).not.toBeNull();
+        expect(task!.createdDate!.isSame(moment('2021-09-11', 'YYYY-MM-DD'))).toStrictEqual(true);
+
+        const tasks = task!.toggle();
+        expect(tasks.length).toEqual(2);
+        const nextTask: Task = tasks[0];
+        expect(nextTask.createdDate).toBeNull();
+
+        // cleanup
+        resetSettings();
+    });
+
+    it('set created date with enabled setting', () => {
+        // Arrange
+        const today = '2023-03-08';
+        const todaySpy = jest.spyOn(Date, 'now').mockReturnValue(moment(today).valueOf());
+        const line = '- [ ] this is a task 📅 2021-09-12 🔁 every day';
+        updateSettings({ setCreatedDate: true });
+
+        // Act
+        const task = fromLine({
+            line,
+        });
+
+        // Assert
+        expect(task).not.toBeNull();
+        expect(task!.createdDate).toBeNull();
+
+        const tasks = task!.toggle();
+        expect(tasks.length).toEqual(2);
+        const nextTask: Task = tasks[0];
+        expect(nextTask.createdDate).not.toBeNull();
+        expect(nextTask!.createdDate!.isSame(moment(today, 'YYYY-MM-DD'))).toStrictEqual(true);
+
+        // cleanup
+        resetSettings();
+        todaySpy.mockClear();
+    });
+
+    it('set created date with enabled setting when repeated has created date', () => {
+        // Arrange
+        const today = '2023-03-08';
+        const todaySpy = jest.spyOn(Date, 'now').mockReturnValue(moment(today).valueOf());
+        const line = '- [ ] this is a task ➕ 2021-09-11 📅 2021-09-12 🔁 every day';
+        updateSettings({ setCreatedDate: true });
+
+        // Act
+        const task = fromLine({
+            line,
+        });
+
+        // Assert
+        expect(task).not.toBeNull();
+        expect(task!.createdDate).not.toBeNull();
+        expect(task!.createdDate!.isSame(moment('2021-09-11', 'YYYY-MM-DD'))).toStrictEqual(true);
+
+        const tasks = task!.toggle();
+        expect(tasks.length).toEqual(2);
+        const nextTask: Task = tasks[0];
+        expect(nextTask.createdDate).not.toBeNull();
+        expect(nextTask!.createdDate!.isSame(moment(today, 'YYYY-MM-DD'))).toStrictEqual(true);
+
+        // cleanup
+        resetSettings();
+        todaySpy.mockClear();
+    });
+});
+
 declare global {
     namespace jest {
         interface Matchers<R> {
