@@ -28,6 +28,7 @@ The following elements exist:
 - `backlink`
 - `urgency`
 - `priority`
+- `created date`
 - `start date`
 - `scheduled date`
 - `due date`

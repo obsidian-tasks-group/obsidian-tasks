@@ -115,6 +115,19 @@ export class SettingsTab extends PluginSettingTab {
         // ---------------------------------------------------------------------------
 
         new Setting(containerEl)
+            .setName('Set created date on every added task')
+            .setDesc(
+                "Enabling this will add a timestamp ➕ YYYY-MM-DD before other date values in a task is created with 'Create or edit task'",
+            )
+            .addToggle((toggle) => {
+                const settings = getSettings();
+                toggle.setValue(settings.setCreatedDate).onChange(async (value) => {
+                    updateSettings({ setCreatedDate: value });
+                    await this.plugin.saveSettings();
+                });
+            });
+
+        new Setting(containerEl)
             .setName('Set done date on every completed task')
             .setDesc('Enabling this will add a timestamp ✅ YYYY-MM-DD at the end when a task is toggled to done')
             .addToggle((toggle) => {
