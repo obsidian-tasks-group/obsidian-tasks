@@ -3,6 +3,7 @@ import { Priority, Task, TaskRegularExpressions } from '../Task';
 import { DateFallback } from '../DateFallback';
 import { StatusRegistry } from '../StatusRegistry';
 import { TaskLocation } from '../TaskLocation';
+import { getSettings } from '../Config/Settings';
 
 /**
  * Read any markdown line and treat it as a task, for the purposes of
@@ -30,12 +31,19 @@ export const taskFromLine = ({ line, path }: { line: string; path: string }): Ta
         return task;
     }
 
+    const { setCreatedDate } = getSettings();
+    let createdDate: moment.Moment | null = null;
+    if (setCreatedDate) {
+        createdDate = window.moment();
+    }
+
     // If we are not on a line of a task, we take what we have.
     // The non-task line can still be a checklist, for example if it is lacking the global filter.
     const nonTaskMatch = line.match(TaskRegularExpressions.nonTaskRegex);
     if (nonTaskMatch === null) {
         // Should never happen; everything in the regex is optional.
         console.error('Tasks: Cannot create task on line:', line);
+
         return new Task({
             status: Status.TODO,
             description: '',
@@ -44,6 +52,7 @@ export const taskFromLine = ({ line, path }: { line: string; path: string }): Ta
             indentation: '',
             listMarker: '-',
             priority: Priority.None,
+            createdDate,
             startDate: null,
             scheduledDate: null,
             dueDate: null,
@@ -79,6 +88,7 @@ export const taskFromLine = ({ line, path }: { line: string; path: string }): Ta
         listMarker,
         blockLink,
         priority: Priority.None,
+        createdDate,
         startDate: null,
         scheduledDate: null,
         dueDate: null,

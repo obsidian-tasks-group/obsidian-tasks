@@ -177,6 +177,16 @@ function addTooltip({
             recurrenceDiv.setText(`${taskModule.recurrenceSymbol} ${task.recurrence.toText()}`);
         }
 
+        if (task.createdDate) {
+            const createdDateDiv = tooltip.createDiv();
+            createdDateDiv.setText(
+                toTooltipDate({
+                    signifier: taskModule.createdDateSymbol,
+                    date: task.createdDate,
+                }),
+            );
+        }
+
         if (task.startDate) {
             const startDateDiv = tooltip.createDiv();
             startDateDiv.setText(
