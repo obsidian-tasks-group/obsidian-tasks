@@ -117,7 +117,7 @@ export class SettingsTab extends PluginSettingTab {
         new Setting(containerEl)
             .setName('Set created date on every added task')
             .setDesc(
-                "Enabling this will add a timestamp ➕ YYYY-MM-DD at the end when a task is created with 'Create or edit task'",
+                "Enabling this will add a timestamp ➕ YYYY-MM-DD before other date values in a task is created with 'Create or edit task'",
             )
             .addToggle((toggle) => {
                 const settings = getSettings();
