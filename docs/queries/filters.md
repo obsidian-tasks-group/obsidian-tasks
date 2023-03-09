@@ -170,6 +170,23 @@ Such filter could be:
     starts before tomorrow
     ```
 
+### Created Date
+
+- `no created date`
+- `has created date`
+- `created (before|after|on) <date>`
+- `created date is invalid`
+
+When filtering queries by [start date]({{ site.baseurl }}{% link getting-started/dates.md %}#-start),
+the result will include tasks without a start date.
+This way, you can use the start date as a filter to filter out any tasks that you cannot yet work on.
+
+Such filter could be:
+
+    ```tasks
+    created before tomorrow
+    ```
+
 ### Happens
 
 - `happens (before|after|on) <date>`
