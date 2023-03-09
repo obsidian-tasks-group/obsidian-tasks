@@ -16,6 +16,10 @@ describe('tag presence & absence', () => {
         // Act, Assert
         expect(filter.filterFunction).toBeDefined();
         expect(filter.error).toBeUndefined();
+
+        expect(filter).toMatchTaskFromLine('- [ ] stuff #one');
+        expect(filter).toMatchTaskFromLine('- [ ] stuff #one #two');
+        expect(filter).not.toMatchTaskFromLine('- [ ] no tag here');
     });
 });
 
