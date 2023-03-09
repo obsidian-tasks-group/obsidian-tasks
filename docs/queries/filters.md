@@ -19,12 +19,19 @@ parent: Queries
 
 ---
 
-## Dates
+## Searching for dates
 
-`<date>` filters can be given in natural language or in formal notation.
+### Specific dates
+
+`<date>` filters can be given in natural language or in formal notation (`YYYY-MM-DD`).
 The following are some examples of valid `<date>` filters as inspiration:
 
+Formal notation:
+
 - `2021-05-25`
+
+Natural language notation:
+
 - `yesterday`
 - `today`
 - `tomorrow`
@@ -37,6 +44,49 @@ Note that if it is Wednesday and you write `tuesday`, Tasks assumes you mean "ye
 Use `next tuesday` instead if you mean "next tuesday".
 
 When the day changes, relative dates like `due today` are re-evaluated so that the list stays up-to-date.
+
+### Date ranges
+
+`<date range>` can be given in 2 ways.
+
+{: .released }
+Date range searches were introduced in Tasks 1.26.0.
+
+#### Date ranges in formal notation
+
+`<date range>` may be specified as 2 valid dates in `YYYY-MM-DD` format. Dates on either end are included, that is it is an inclusive search.
+
+`before <date range>` will match before the earliest date of the range. `after <date range>` will match after the latest date of the range.
+
+Notes:
+
+- If one of the `YYYY-MM-DD` dates is invalid, then it is ignored and the filter will behave as `<date>` not `<date range>`
+- Date range cannot be specified by 2 natural language dates eg `next monday three weeks`
+- `in` and `on` can be omitted
+
+Example:
+
+- `2022-01-01 2023-02-01`
+
+#### Date ranges in natural language notation
+
+Tasks supports natural language date ranges as: `last|this|next week|month|quarter|year`. Tasks will process this range and convert it to formal notation (`YYYY-MM-DD`) internally.
+
+Notes:
+
+- Currently all weeks are defined as [ISO 8601](https://en.wikipedia.org/wiki/ISO_week_date) weeks starting on Monday and ending on Sunday. We will provide more flexibility in a future release
+- Natural language date ranges support only the keywords specified, for example `previous half of year` and `next semester` are not supported
+
+Examples:
+
+- `this week` (from this week's Monday to Sunday inclusive)
+- `after this month`
+- `next quarter`
+- `before next year`
+
+### Troubleshooting date searches
+
+Add `explain` in case of issue and double check that both dates are valid or the natural date range is correct and supported.
 
 ### Finding Tasks with Invalid Dates
 
@@ -121,44 +171,56 @@ For full details of combining filters with boolean operators, see [Combining Fil
 - `no done date`
 - `has done date`
 - `done (before|after|on) <date>`
+- `done (before|after|in) YYYY-MM-DD YYYY-MM-DD`
+- `done (before|after|in) (last|this|next) (week|month|quarter|year)`
 - `done date is invalid`
 
 {: .released }
 `no done date` and `has done date` were introduced in Tasks 1.7.0.<br>
-`done date is invalid` was introduced in Tasks 1.16.0.
+`done date is invalid` was introduced in Tasks 1.16.0.<br>
+`done (before|after|in) <date range>` searches were introduced in Tasks 1.26.0.
 
 ### Due Date
 
 - `no due date`
 - `has due date`
 - `due (before|after|on) <date>`
+- `due (before|after|in) YYYY-MM-DD YYYY-MM-DD`
+- `due (before|after|in) (last|this|next) (week|month|quarter|year)`
 - `due date is invalid`
 
 {: .released }
 `has due date` was introduced in Tasks 1.6.0.<br>
-`due date is invalid` was introduced in Tasks 1.16.0.
+`due date is invalid` was introduced in Tasks 1.16.0.<br>
+`due (before|after|in) <date range>` searches were introduced in Tasks 1.26.0.
 
 ### Scheduled Date
 
 - `no scheduled date`
 - `has scheduled date`
 - `scheduled (before|after|on) <date>`
+- `scheduled (before|after|in) YYYY-MM-DD YYYY-MM-DD`
+- `scheduled (before|after|in) (last|this|next) (week|month|quarter|year)`
 - `scheduled date is invalid`
 
 {: .released }
 `has scheduled date` was introduced in Tasks 1.6.0.<br>
-`scheduled date is invalid` was introduced in Tasks 1.16.0.
+`scheduled date is invalid` was introduced in Tasks 1.16.0.<br>
+`scheduled (before|after|in) <date range>` searches were introduced in Tasks 1.26.0.
 
 ### Start Date
 
 - `no start date`
 - `has start date`
 - `starts (before|after|on) <date>`
+- `starts (before|after|in) YYYY-MM-DD YYYY-MM-DD`
+- `starts (before|after|in) (last|this|next) (week|month|quarter|year)`
 - `start date is invalid`
 
 {: .released }
 `has start date` was Introduced in Tasks 1.6.0.<br>
-`start date is invalid` was introduced in Tasks 1.16.0.
+`start date is invalid` was introduced in Tasks 1.16.0.<br>
+`starts (before|after|in) <date range>` searches were introduced in Tasks 1.26.0.
 
 When filtering queries by [start date]({{ site.baseurl }}{% link getting-started/dates.md %}#-start),
 the result will include tasks without a start date.
@@ -173,6 +235,8 @@ Such filter could be:
 ### Happens
 
 - `happens (before|after|on) <date>`
+- `happens (before|after|in) YYYY-MM-DD YYYY-MM-DD`
+- `happens (before|after|in) (last|this|next) (week|month|quarter|year)`
 
 `happens` returns any task for a matching start date, scheduled date, _or_ due date.
 For example, `happens before tomorrow` will return all tasks that are starting, scheduled, or due earlier than tomorrow.
@@ -185,7 +249,8 @@ because the tasks starts before tomorrow. Only one of the dates needs to match.
   - Return tasks where _any_ of start date, scheduled date, _or_ due date are set.
 
 {: .released }
-`no happens date` and `has happens date` were introduced in Tasks 1.7.0.
+`no happens date` and `has happens date` were introduced in Tasks 1.7.0.<br>
+`happens (before|after|in) <date range>` searches were introduced in Tasks 1.26.0.
 
 ## Filters for Task Statuses
 
