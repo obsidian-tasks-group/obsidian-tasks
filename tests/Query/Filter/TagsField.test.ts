@@ -34,6 +34,32 @@ describe('tag presence & absence', () => {
         expect(filter).toMatchTaskFromLine('- [ ] stuff #one #two');
         expect(filter).not.toMatchTaskFromLine('- [ ] no tag here');
     });
+
+    it('should have "no tag" filter', () => {
+        // Arrange
+        const filter = new TagsField().createFilterOrErrorMessage('no tag');
+
+        // Act, Assert
+        expect(filter.filterFunction).toBeDefined();
+        expect(filter.error).toBeUndefined();
+
+        expect(filter).not.toMatchTaskFromLine('- [ ] stuff #one');
+        expect(filter).not.toMatchTaskFromLine('- [ ] stuff #one #two');
+        expect(filter).toMatchTaskFromLine('- [ ] no tag here');
+    });
+
+    it('should have "no tags" filter', () => {
+        // Arrange
+        const filter = new TagsField().createFilterOrErrorMessage('no tags');
+
+        // Act, Assert
+        expect(filter.filterFunction).toBeDefined();
+        expect(filter.error).toBeUndefined();
+
+        expect(filter).not.toMatchTaskFromLine('- [ ] stuff #one');
+        expect(filter).not.toMatchTaskFromLine('- [ ] stuff #one #two');
+        expect(filter).toMatchTaskFromLine('- [ ] no tag here');
+    });
 });
 
 describe('tag/tags', () => {

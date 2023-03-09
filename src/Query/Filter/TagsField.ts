@@ -21,6 +21,8 @@ export class TagsField extends MultiTextField {
         this.filterInstructions = new FilterInstructions();
         this.filterInstructions.add('has tag', (task: Task) => this.values(task).length > 0);
         this.filterInstructions.add('has tags', (task: Task) => this.values(task).length > 0);
+        this.filterInstructions.add('no tag', (task: Task) => this.values(task).length === 0);
+        this.filterInstructions.add('no tags', (task: Task) => this.values(task).length === 0);
     }
 
     public createFilterOrErrorMessage(line: string): FilterOrErrorMessage {
