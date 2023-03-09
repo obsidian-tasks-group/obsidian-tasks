@@ -32,9 +32,51 @@ export class DateParser {
         const endDate = result[1] && result[1].start ? result[1].start : startDate;
         const start = window.moment(startDate.date());
         const end = window.moment(endDate.date());
+
+        let dateRange: [moment.Moment, moment.Moment] = [start, end];
         if (end.isBefore(start)) {
-            return [end, start];
+            dateRange = [end, start];
         }
-        return [start, end];
+
+        const naturalDateRangeRegexp = /(last|this|next) (week|month|quarter|year)/;
+        const naturalDateRangeMatch = input.match(naturalDateRangeRegexp);
+        if (naturalDateRangeMatch && naturalDateRangeMatch.length === 3) {
+            const lastThisNext = naturalDateRangeMatch[1];
+            const delta = moment.duration();
+            const range = naturalDateRangeMatch[2];
+            switch (range) {
+                case 'month':
+                case 'quarter':
+                case 'year':
+                case 'week':
+                    // This switch-case is only to avoid recasting String in unitOfTime.DurationConstructor accepted by Duration.add()
+                    delta.add(1, range);
+            }
+
+            dateRange = [moment(), moment()];
+            switch (lastThisNext) {
+                case 'last':
+                    dateRange.forEach((d) => d.subtract(delta));
+                    break;
+                case 'next':
+                    dateRange.forEach((d) => d.add(delta));
+                    break;
+            }
+
+            switch (range) {
+                case 'month':
+                case 'quarter':
+                case 'year':
+                    dateRange = [dateRange[0].startOf(range), dateRange[1].endOf(range)];
+                    break;
+                case 'week':
+                    dateRange = [dateRange[0].startOf('isoWeek'), dateRange[1].endOf('isoWeek')];
+                    break;
+            }
+        }
+
+        // Dates shall be at midnight eg 00:00
+        dateRange.forEach((d) => d.startOf('day'));
+        return dateRange;
     }
 }
