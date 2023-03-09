@@ -8,6 +8,17 @@ import { Sort } from '../../../src/Query/Sort';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { expectTaskComparesAfter, expectTaskComparesBefore } from '../../CustomMatchers/CustomMatchersForSorting';
 
+describe('tag presence & absence', () => {
+    it('should have "has tags" filter', () => {
+        // Arrange
+        const filter = new TagsField().createFilterOrErrorMessage('has tags');
+
+        // Act, Assert
+        expect(filter.filterFunction).toBeDefined();
+        expect(filter.error).toBeUndefined();
+    });
+});
+
 describe('tag/tags', () => {
     it('should honour any # in query', () => {
         const filter = new TagsField().createFilterOrErrorMessage('tags include #home');

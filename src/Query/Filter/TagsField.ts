@@ -1,6 +1,8 @@
 import type { Task } from '../../Task';
 import type { Comparator } from '../Sorter';
 import { Sorter } from '../Sorter';
+import type { FilterOrErrorMessage } from './Filter';
+import { FilterInstructions } from './FilterInstructions';
 import { MultiTextField } from './MultiTextField';
 
 /**
@@ -12,6 +14,22 @@ export class TagsField extends MultiTextField {
     // -----------------------------------------------------------------------------------------------------------------
     // Filtering
     // -----------------------------------------------------------------------------------------------------------------
+    protected readonly filterInstructions: FilterInstructions;
+
+    constructor() {
+        super();
+        this.filterInstructions = new FilterInstructions();
+        this.filterInstructions.add('has tags', (task: Task) => this.values(task) !== null);
+    }
+
+    public createFilterOrErrorMessage(line: string): FilterOrErrorMessage {
+        const filterResult = this.filterInstructions.createFilterOrErrorMessage(line);
+        if (filterResult.filter !== undefined) {
+            return filterResult;
+        }
+
+        return super.createFilterOrErrorMessage(line);
+    }
 
     public fieldNameSingular(): string {
         return 'tag';
