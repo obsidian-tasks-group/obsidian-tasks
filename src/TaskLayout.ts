@@ -5,6 +5,7 @@ export class LayoutOptions {
     hideTaskCount: boolean = false;
     hideBacklinks: boolean = false;
     hidePriority: boolean = false;
+    hideCreatedDate: boolean = false;
     hideStartDate: boolean = false;
     hideScheduledDate: boolean = false;
     hideDoneDate: boolean = false;
@@ -20,6 +21,7 @@ export type TaskLayoutComponent =
     | 'description'
     | 'priority'
     | 'recurrenceRule'
+    | 'createdDate'
     | 'startDate'
     | 'scheduledDate'
     | 'dueDate'
@@ -36,6 +38,7 @@ export class TaskLayout {
         'description',
         'priority',
         'recurrenceRule',
+        'createdDate',
         'startDate',
         'scheduledDate',
         'dueDate',
@@ -81,6 +84,7 @@ export class TaskLayout {
         let newComponents = this.layoutComponents;
         newComponents = removeIf(newComponents, layoutOptions.hidePriority, 'priority');
         newComponents = removeIf(newComponents, layoutOptions.hideRecurrenceRule, 'recurrenceRule');
+        newComponents = removeIf(newComponents, layoutOptions.hideCreatedDate, 'createdDate');
         newComponents = removeIf(newComponents, layoutOptions.hideStartDate, 'startDate');
         newComponents = removeIf(newComponents, layoutOptions.hideScheduledDate, 'scheduledDate');
         newComponents = removeIf(newComponents, layoutOptions.hideDueDate, 'dueDate');
