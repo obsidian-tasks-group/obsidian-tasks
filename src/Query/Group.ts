@@ -101,7 +101,7 @@ export class Group {
     }
 
     private static groupByCreatedDate(task: Task): string[] {
-        return [Group.stringFromDate(task.startDate, 'created')];
+        return [Group.stringFromDate(task.createdDate, 'created')];
     }
 
     private static groupByStartDate(task: Task): string[] {
