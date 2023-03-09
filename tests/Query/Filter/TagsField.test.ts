@@ -9,9 +9,9 @@ import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { expectTaskComparesAfter, expectTaskComparesBefore } from '../../CustomMatchers/CustomMatchersForSorting';
 
 describe('tag presence & absence', () => {
-    it('should have "has tag" filter', () => {
+    it.each(['has tag', 'has tags'])('should have "%s" filtering', (filterLine: string) => {
         // Arrange
-        const filter = new TagsField().createFilterOrErrorMessage('has tag');
+        const filter = new TagsField().createFilterOrErrorMessage(filterLine);
 
         // Act, Assert
         expect(filter.filterFunction).toBeDefined();
@@ -22,35 +22,9 @@ describe('tag presence & absence', () => {
         expect(filter).not.toMatchTaskFromLine('- [ ] no tag here');
     });
 
-    it('should have "has tags" filter', () => {
+    it.each(['no tag', 'no tags'])('should have "%s" filtering', (filterLine: string) => {
         // Arrange
-        const filter = new TagsField().createFilterOrErrorMessage('has tags');
-
-        // Act, Assert
-        expect(filter.filterFunction).toBeDefined();
-        expect(filter.error).toBeUndefined();
-
-        expect(filter).toMatchTaskFromLine('- [ ] stuff #one');
-        expect(filter).toMatchTaskFromLine('- [ ] stuff #one #two');
-        expect(filter).not.toMatchTaskFromLine('- [ ] no tag here');
-    });
-
-    it('should have "no tag" filter', () => {
-        // Arrange
-        const filter = new TagsField().createFilterOrErrorMessage('no tag');
-
-        // Act, Assert
-        expect(filter.filterFunction).toBeDefined();
-        expect(filter.error).toBeUndefined();
-
-        expect(filter).not.toMatchTaskFromLine('- [ ] stuff #one');
-        expect(filter).not.toMatchTaskFromLine('- [ ] stuff #one #two');
-        expect(filter).toMatchTaskFromLine('- [ ] no tag here');
-    });
-
-    it('should have "no tags" filter', () => {
-        // Arrange
-        const filter = new TagsField().createFilterOrErrorMessage('no tags');
+        const filter = new TagsField().createFilterOrErrorMessage(filterLine);
 
         // Act, Assert
         expect(filter.filterFunction).toBeDefined();
