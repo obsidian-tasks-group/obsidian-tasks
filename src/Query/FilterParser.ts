@@ -1,4 +1,5 @@
 import { DescriptionField } from './Filter/DescriptionField';
+import { CreatedDateField } from './Filter/CreatedDateField';
 import { DoneDateField } from './Filter/DoneDateField';
 import { DueDateField } from './Filter/DueDateField';
 import { ExcludeSubItemsField } from './Filter/ExcludeSubItemsField';
@@ -29,6 +30,7 @@ const fieldCreators = [
     () => new RecurringField(),
     () => new PriorityField(),
     () => new HappensDateField(),
+    () => new CreatedDateField(),
     () => new StartDateField(),
     () => new ScheduledDateField(),
     () => new DueDateField(),

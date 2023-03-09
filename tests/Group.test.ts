@@ -536,6 +536,19 @@ describe('Group names', () => {
         },
 
         // -----------------------------------------------------------
+        // group by created
+        {
+            groupBy: 'created',
+            taskLine: '- [ ] a ➕ 1970-01-01',
+            expectedGroupNames: ['1970-01-01 Thursday'],
+        },
+        {
+            groupBy: 'created',
+            taskLine: '- [ ] a',
+            expectedGroupNames: ['No created date'],
+        },
+
+        // -----------------------------------------------------------
         // group by status
         {
             groupBy: 'status',
