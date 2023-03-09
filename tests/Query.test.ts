@@ -211,6 +211,7 @@ describe('Query parsing', () => {
             '# Comment lines are ignored',
             'explain',
             'hide backlink',
+            'hide created date',
             'hide done date',
             'hide due date',
             'hide edit button',
@@ -231,6 +232,7 @@ describe('Query parsing', () => {
             'show priority',
             'show recurrence rule',
             'show scheduled date',
+            'show created date',
             'show start date',
             'show task count',
             'show urgency',
@@ -293,6 +295,7 @@ describe('Query', () => {
                     tags: [],
                     originalMarkdown: '',
                     scheduledDateIsInferred: false,
+                    createdDate: null,
                 }),
                 new Task({
                     status: Status.TODO,
@@ -310,6 +313,7 @@ describe('Query', () => {
                     tags: [],
                     originalMarkdown: '',
                     scheduledDateIsInferred: false,
+                    createdDate: null,
                 }),
             ];
             const input = 'path includes ab/c d';
