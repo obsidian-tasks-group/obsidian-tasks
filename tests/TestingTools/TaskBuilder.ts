@@ -34,6 +34,7 @@ export class TaskBuilder {
     private _tags: string[] = [];
     private _priority: Priority = Priority.None;
 
+    private _createdDate: Moment | null = null;
     private _startDate: Moment | null = null;
     private _scheduledDate: Moment | null = null;
     private _dueDate: Moment | null = null;
@@ -74,6 +75,7 @@ export class TaskBuilder {
             indentation: this._indentation,
             listMarker: this._listMarker,
             priority: this._priority,
+            createdDate: this._createdDate,
             startDate: this._startDate,
             scheduledDate: this._scheduledDate,
             dueDate: this._dueDate,
@@ -164,6 +166,11 @@ export class TaskBuilder {
 
     public priority(priority: Priority): TaskBuilder {
         this._priority = priority;
+        return this;
+    }
+
+    public createdDate(createdDate: string | null): TaskBuilder {
+        this._createdDate = TaskBuilder.parseDate(createdDate);
         return this;
     }
 
