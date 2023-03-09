@@ -9,6 +9,19 @@ import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { expectTaskComparesAfter, expectTaskComparesBefore } from '../../CustomMatchers/CustomMatchersForSorting';
 
 describe('tag presence & absence', () => {
+    it('should have "has tag" filter', () => {
+        // Arrange
+        const filter = new TagsField().createFilterOrErrorMessage('has tag');
+
+        // Act, Assert
+        expect(filter.filterFunction).toBeDefined();
+        expect(filter.error).toBeUndefined();
+
+        expect(filter).toMatchTaskFromLine('- [ ] stuff #one');
+        expect(filter).toMatchTaskFromLine('- [ ] stuff #one #two');
+        expect(filter).not.toMatchTaskFromLine('- [ ] no tag here');
+    });
+
     it('should have "has tags" filter', () => {
         // Arrange
         const filter = new TagsField().createFilterOrErrorMessage('has tags');

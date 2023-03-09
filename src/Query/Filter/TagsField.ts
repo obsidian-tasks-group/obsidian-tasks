@@ -19,6 +19,7 @@ export class TagsField extends MultiTextField {
     constructor() {
         super();
         this.filterInstructions = new FilterInstructions();
+        this.filterInstructions.add('has tag', (task: Task) => this.values(task).length > 0);
         this.filterInstructions.add('has tags', (task: Task) => this.values(task).length > 0);
     }
 
