@@ -92,6 +92,19 @@ starts before tomorrow
 ```
 ````
 
+## ➕ Created
+
+It can happen that you want to log, when task was created.
+Obsidian tasks can automatically add created date for tasks created via 'Create or edit task', when settings 'Set created date on every added task' is enabled.
+
+Created dates use a heavy plus emoji.
+
+```markdown
+- [ ] take out the trash ➕ 2021-04-09
+```
+
+Filtering currently is not implemented for created field.
+
 ## Finding mistakes in dates
 
 Tasks does not automatically report any problem tasks that have invalid dates, such as on the 32nd day of a month. These task will silently not be found by date-based searches.

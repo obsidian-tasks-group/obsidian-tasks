@@ -36,6 +36,7 @@ export const prioritySymbols = {
 
 export const recurrenceSymbol = '🔁';
 export const startDateSymbol = '🛫';
+export const createdDateSymbol = '➕';
 export const scheduledDateSymbol = '⏳';
 export const dueDateSymbol = '📅';
 export const doneDateSymbol = '✅';
@@ -92,6 +93,7 @@ export class TaskRegularExpressions {
     // removed from the end until none are left.
     public static readonly priorityRegex = /([⏫🔼🔽])$/u;
     public static readonly startDateRegex = /🛫 *(\d{4}-\d{2}-\d{2})$/u;
+    public static readonly createdDateRegex = /➕ *(\d{4}-\d{2}-\d{2})$/u;
     public static readonly scheduledDateRegex = /[⏳⌛] *(\d{4}-\d{2}-\d{2})$/u;
     public static readonly dueDateRegex = /[📅📆🗓] *(\d{4}-\d{2}-\d{2})$/u;
     public static readonly doneDateRegex = /✅ *(\d{4}-\d{2}-\d{2})$/u;
@@ -128,6 +130,7 @@ export class Task {
 
     public readonly priority: Priority;
 
+    public readonly createdDate: Moment | null;
     public readonly startDate: Moment | null;
     public readonly scheduledDate: Moment | null;
     public readonly dueDate: Moment | null;
@@ -154,6 +157,7 @@ export class Task {
         indentation,
         listMarker,
         priority,
+        createdDate,
         startDate,
         scheduledDate,
         dueDate,
@@ -170,6 +174,7 @@ export class Task {
         indentation: string;
         listMarker: string;
         priority: Priority;
+        createdDate: moment.Moment | null;
         startDate: moment.Moment | null;
         scheduledDate: moment.Moment | null;
         dueDate: moment.Moment | null;
@@ -190,6 +195,7 @@ export class Task {
 
         this.priority = priority;
 
+        this.createdDate = createdDate;
         this.startDate = startDate;
         this.scheduledDate = scheduledDate;
         this.dueDate = dueDate;
@@ -264,6 +270,7 @@ export class Task {
         let scheduledDateIsInferred = false;
         let dueDate: Moment | null = null;
         let doneDate: Moment | null = null;
+        let createdDate: Moment | null = null;
         let recurrenceRule: string = '';
         let recurrence: Recurrence | null = null;
         let tags: any = [];
@@ -320,6 +327,13 @@ export class Task {
             if (startDateMatch !== null) {
                 startDate = window.moment(startDateMatch[1], TaskRegularExpressions.dateFormat);
                 description = description.replace(TaskRegularExpressions.startDateRegex, '').trim();
+                matched = true;
+            }
+
+            const createdDateMatch = description.match(TaskRegularExpressions.createdDateRegex);
+            if (createdDateMatch !== null) {
+                createdDate = window.moment(createdDateMatch[1], TaskRegularExpressions.dateFormat);
+                description = description.replace(TaskRegularExpressions.createdDateRegex, '').trim();
                 matched = true;
             }
 
@@ -385,6 +399,7 @@ export class Task {
             listMarker,
             taskLocation: taskLocation,
             priority,
+            createdDate,
             startDate,
             scheduledDate,
             dueDate,
@@ -444,6 +459,11 @@ export class Task {
                 return layout.options.shortMode
                     ? ' ' + startDateSymbol
                     : ` ${startDateSymbol} ${this.startDate.format(TaskRegularExpressions.dateFormat)}`;
+            case 'createdDate':
+                if (!this.createdDate) return '';
+                return layout.options.shortMode
+                    ? ' ' + createdDateSymbol
+                    : ` ${createdDateSymbol} ${this.createdDate.format(TaskRegularExpressions.dateFormat)}`;
             case 'scheduledDate':
                 if (!this.scheduledDate || this.scheduledDateIsInferred) return '';
                 return layout.options.shortMode
@@ -522,6 +542,11 @@ export class Task {
         const newTasks: Task[] = [];
 
         if (nextOccurrence !== null) {
+            const { setCreatedDate } = getSettings();
+            let createdDate: moment.Moment | null = null;
+            if (setCreatedDate) {
+                createdDate = window.moment();
+            }
             const nextStatus = StatusRegistry.getInstance().getNextStatusOrCreate(newStatus);
             const nextTask = new Task({
                 ...this,
@@ -530,6 +555,8 @@ export class Task {
                 // New occurrences cannot have the same block link.
                 // And random block links don't help.
                 blockLink: '',
+                // add new createdDate on reccuring tasks
+                createdDate,
             });
             newTasks.push(nextTask);
         }
@@ -679,7 +706,7 @@ export class Task {
         }
 
         // Compare Date fields
-        args = ['startDate', 'scheduledDate', 'dueDate', 'doneDate'];
+        args = ['createdDate', 'startDate', 'scheduledDate', 'dueDate', 'doneDate'];
         for (const el of args) {
             const date1 = this[el] as Moment | null;
             const date2 = other[el] as Moment | null;
