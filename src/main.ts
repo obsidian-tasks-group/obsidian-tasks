@@ -13,15 +13,15 @@ import { StatusRegistry } from './StatusRegistry';
 import { EditorSuggestor } from './Suggestor/EditorSuggestorPopup';
 import { StatusSettings } from './Config/StatusSettings';
 import type { Task } from './Task';
-import { TasksApi } from './TasksApi';
+import { tasksApiV1 } from './api';
 
 export default class TasksPlugin extends Plugin {
     private cache: Cache | undefined;
     public inlineRenderer: InlineRenderer | undefined;
     public queryRenderer: QueryRenderer | undefined;
 
-    get api(): ReturnType<typeof TasksApi.GetApi> {
-        return TasksApi.GetApi(app);
+    get apiV1() {
+        return tasksApiV1(app);
     }
 
     async onload() {
