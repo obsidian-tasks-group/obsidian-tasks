@@ -25,6 +25,7 @@
         status: Status;
         priority: 'none' | 'low' | 'medium' | 'high';
         recurrenceRule: string;
+        createdDate: string;
         startDate: string;
         scheduledDate: string;
         dueDate: string;
@@ -35,6 +36,7 @@
         status: Status.TODO,
         priority: 'none',
         recurrenceRule: '',
+        createdDate: '',
         startDate: '',
         scheduledDate: '',
         dueDate: '',
@@ -42,6 +44,7 @@
         forwardOnly: true
     };
 
+    let parsedCreated: string = '';
     let parsedStartDate: string = '';
     let isStartDateValid: boolean = true;
     let parsedScheduledDate: string = '';
@@ -103,7 +106,7 @@
      * @returns the parsed date string. Includes "invalid" if {@code typedDate} was invalid.
      */
     function parseTypedDateForDisplay(
-        fieldName: 'start' | 'scheduled' | 'due' | 'done',
+        fieldName: 'created' | 'start' | 'scheduled' | 'due' | 'done',
         typedDate: string,
         forwardDate: Date | undefined = undefined,
     ): string {
@@ -192,6 +195,7 @@
     }
 
     $: {
+        parsedCreated = parseTypedDateForDisplay('created', editableTask.createdDate);
         parsedDone = parseTypedDateForDisplay('done', editableTask.doneDate);
     }
 
@@ -220,6 +224,9 @@
             status: task.status,
             priority,
             recurrenceRule: task.recurrence ? task.recurrence.toText() : '',
+            createdDate: task.createdDate
+                ? task.createdDate.format('YYYY-MM-DD')
+                : '',
             startDate: task.startDate
                 ? task.startDate.format('YYYY-MM-DD')
                 : '',
@@ -459,6 +466,13 @@
                 />
             </div>
 
+            <!-- --------------------------------------------------------------------------- -->
+            <!--  Created on  -->
+            <!-- --------------------------------------------------------------------------- -->
+            <div>
+                <span>Created on:</span>
+                <code>{@html parsedCreated}</code>
+            </div>
             <!-- --------------------------------------------------------------------------- -->
             <!--  Done on  -->
             <!-- --------------------------------------------------------------------------- -->
