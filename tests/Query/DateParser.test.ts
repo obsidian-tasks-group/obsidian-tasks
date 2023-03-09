@@ -35,6 +35,12 @@ describe('DateParser - single dates', () => {
     it('should recognise an invalid date correctly', () => {
         testParsingeSingleDate('2021-13-17', 'Invalid date');
     });
+
+    it('should return date at midnight', () => {
+        const dateToParse = '2023-07-08';
+        const parsedDate = DateParser.parseDate(dateToParse);
+        expect(parsedDate.format('YYYY-MM-DD HH:mm')).toStrictEqual('2023-07-08 00:00');
+    });
 });
 
 describe('DateParser - date ranges', () => {
@@ -67,5 +73,74 @@ describe('DateParser - date ranges', () => {
 
     it('should return 2 invalid dates when both dates are invalid', () => {
         testParsingDateRange('2015-99-29 2015-99-29', 'Invalid date', 'Invalid date');
+    });
+
+    it('should return date ranges at midnight', () => {
+        const dateRangeToParse = '2023-09-28 2023-10-01';
+        const parsedDateRange = DateParser.parseDateRange(dateRangeToParse);
+        expect(parsedDateRange[0].format('YYYY-MM-DD HH:mm')).toStrictEqual('2023-09-28 00:00');
+        expect(parsedDateRange[1].format('YYYY-MM-DD HH:mm')).toStrictEqual('2023-10-01 00:00');
+    });
+});
+
+describe('DateParser - natural date ranges', () => {
+    beforeAll(() => {
+        jest.useFakeTimers();
+        jest.setSystemTime(new Date(2021, 9, 6)); // 2021-10-06
+    });
+
+    afterAll(() => {
+        jest.useRealTimers();
+    });
+
+    it('should return natural date range at midnight (week)', () => {
+        const dateRangeToParse = 'this week';
+        const parsedDateRange = DateParser.parseDateRange(dateRangeToParse);
+        expect(parsedDateRange[0].format('YYYY-MM-DD HH:mm')).toStrictEqual('2021-10-04 00:00');
+        expect(parsedDateRange[1].format('YYYY-MM-DD HH:mm')).toStrictEqual('2021-10-10 00:00');
+    });
+
+    it('should return natural date range (week)', () => {
+        testParsingDateRange('last week', '2021-09-27', '2021-10-03');
+        testParsingDateRange('this week', '2021-10-04', '2021-10-10');
+        testParsingDateRange('next week', '2021-10-11', '2021-10-17');
+    });
+
+    it('should return natural date range (month)', () => {
+        testParsingDateRange('last month', '2021-09-01', '2021-09-30');
+        testParsingDateRange('this month', '2021-10-01', '2021-10-31');
+        testParsingDateRange('next month', '2021-11-01', '2021-11-30');
+    });
+
+    it('should return natural date range (quarter)', () => {
+        testParsingDateRange('last quarter', '2021-07-01', '2021-09-30');
+        testParsingDateRange('this quarter', '2021-10-01', '2021-12-31');
+        testParsingDateRange('next quarter', '2022-01-01', '2022-03-31');
+    });
+
+    it('should return natural date range (year)', () => {
+        testParsingDateRange('last year', '2020-01-01', '2020-12-31');
+        testParsingDateRange('this year', '2021-01-01', '2021-12-31');
+        testParsingDateRange('next year', '2022-01-01', '2022-12-31');
+    });
+});
+
+describe('Date Parser - correct delta for next & last month & quarter (Today is 2021-04-03)', () => {
+    beforeAll(() => {
+        jest.useFakeTimers();
+        jest.setSystemTime(new Date(2021, 3, 3)); // 2021-04-03
+    });
+
+    afterAll(() => {
+        jest.useRealTimers();
+    });
+
+    it('should return longer range even if the current range is shorter in days', () => {
+        testParsingDateRange('last month', '2021-03-01', '2021-03-31');
+        testParsingDateRange('next month', '2021-05-01', '2021-05-31');
+        testParsingDateRange('last quarter', '2021-01-01', '2021-03-31');
+        testParsingDateRange('next quarter', '2021-07-01', '2021-09-30');
+        // The latest test case is not representative eg won't fail without the fix
+        // because the length of Q2 in days is same as Q3.
     });
 });
