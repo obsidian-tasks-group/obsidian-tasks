@@ -100,7 +100,7 @@ Such tasks look like they have a date, but that date will never be found. When v
 Any such mistakes can be found systematically with this search:
 
     ```tasks
-    (done date is invalid) OR (due date is invalid) OR (scheduled date is invalid) OR (start date is invalid)
+    (created date is invalid) OR (done date is invalid) OR (due date is invalid) OR (scheduled date is invalid) OR (start date is invalid)
     ```
 
 <div class="code-example" markdown="1">

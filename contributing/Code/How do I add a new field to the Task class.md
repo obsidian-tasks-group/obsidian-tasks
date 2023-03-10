@@ -14,3 +14,11 @@
   - Update the `build()` method.
 - In [tests/TestingTools/TaskBuilder.test.ts](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/TestingTools/TaskBuilder.test.ts):
   - If the code in TaskBuild will be non-trivial, first add a failing test for it.
+
+## Extra steps for fields storing dates
+
+- Documentation
+  - Update `dates.md`
+- Handling invalid dates
+  - Add the new field to all sections of [resources/sample_vaults/Tasks-Demo/Manual Testing/Invalid Dates.md](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/resources/sample_vaults/Tasks-Demo/Manual%20Testing/Invalid%20Dates.md)
+  - Update the query in the 'invalid dates' section of [docs/queries/filters.md](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/docs/queries/filters.md)
