@@ -154,4 +154,9 @@ describe('DateParser - specific date ranges', () => {
         testParsingDateRange('1996', '1996-01-01', '1996-12-31');
         testParsingDateRange('2022', '2022-01-01', '2022-12-31');
     });
+
+    it('should return invalid dates for erroneous specific ranges', () => {
+        testParsingDateRange('2017-13', 'Invalid date', 'Invalid date');
+        testParsingDateRange('2023-14', 'Invalid date', 'Invalid date');
+    });
 });
