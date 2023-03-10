@@ -67,4 +67,4 @@ return await this.app.plugins.plugins['obsidian-tasks-plugin'].apiV1.createTaskL
 For details refer to [QuickAdd - Inline scripts](https://quickadd.obsidian.guide/docs/InlineScripts).
 
 Screenshot of QuickAdd capture settings (example)
-![Screenshot - QuickAdd capture example](../images/api-create-taskline-modal-quickadd-capture-example.png)
+![Screenshot - QuickAdd capture example](../../images/api-create-taskline-modal-quickadd-capture-example.png)
