@@ -13,11 +13,16 @@ import { StatusRegistry } from './StatusRegistry';
 import { EditorSuggestor } from './Suggestor/EditorSuggestorPopup';
 import { StatusSettings } from './Config/StatusSettings';
 import type { Task } from './Task';
+import { tasksApiV1 } from './Api';
 
 export default class TasksPlugin extends Plugin {
     private cache: Cache | undefined;
     public inlineRenderer: InlineRenderer | undefined;
     public queryRenderer: QueryRenderer | undefined;
+
+    get apiV1() {
+        return tasksApiV1(app);
+    }
 
     async onload() {
         console.log('loading plugin "tasks"');
