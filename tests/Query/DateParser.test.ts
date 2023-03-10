@@ -147,6 +147,7 @@ describe('Date Parser - correct delta for next & last month & quarter (Today is 
 
 describe('DateParser - specific date ranges', () => {
     it('should return dates for specific ranges', () => {
+        testParsingDateRange('1996', '1996-01-01', '1996-12-31');
         testParsingDateRange('2022', '2022-01-01', '2022-12-31');
     });
 });

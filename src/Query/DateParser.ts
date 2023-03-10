@@ -25,8 +25,9 @@ export class DateParser {
         });
 
         if (result.length === 0) {
-            if (input === '2022') {
-                return [moment('2022-01-01'), moment('2022-12-31')];
+            const yearMatch = input.match(/[0-9].../);
+            if (yearMatch && yearMatch.length === 1 && yearMatch[0] === input) {
+                return [moment(`${yearMatch[0]}-01-01`), moment(`${yearMatch[0]}-12-31`)];
             }
 
             return [moment.invalid(), moment.invalid()];
