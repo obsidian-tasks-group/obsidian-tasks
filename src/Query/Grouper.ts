@@ -7,6 +7,7 @@ export type GrouperFunction = (task: Task) => string[];
 
 export type GroupingProperty =
     | 'backlink'
+    | 'created'
     | 'done'
     | 'due'
     | 'filename'

@@ -50,8 +50,10 @@ You can group by the following properties.
 
 ### Task date properties
 
+1. `created`
+    - The created date of the task, including the week-day, or `No created date`.
 1. `start`
-   - The start date of the task, including the week-day, or `No start date`.
+    - The start date of the task, including the week-day, or `No start date`.
 1. `scheduled`
     - The scheduled date of the task, including the week-day, or `No scheduled date`.
 1. `due`
