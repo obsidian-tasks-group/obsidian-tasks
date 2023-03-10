@@ -59,7 +59,7 @@ For this you need to enter the following code as capture format:
 <!-- markdownlint-disable code-fence-style -->
 ~~~markdown
 ```js quickadd
-return await this.app.plugins.plugins['obsidian-tasks-plugin'].api.createTaskLineModal();
+return await this.app.plugins.plugins['obsidian-tasks-plugin'].apiV1.createTaskLineModal();
 ```
 ~~~
 <!-- markdownlint-enable code-fence-style -->

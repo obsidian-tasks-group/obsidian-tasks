@@ -1,8 +1,8 @@
 import type { App } from 'obsidian';
 import type { Task } from '../../src/Task';
 import { taskFromLine } from '../../src/Commands/CreateOrEditTaskParser';
-import { createTaskLineModal } from '../../src/api/createTaskLineModal';
-import type { ITaskModal, taskModalFactory } from '../../src/api/createTaskLineModal';
+import { createTaskLineModal } from '../../src/Api/createTaskLineModal';
+import type { ITaskModal, taskModalFactory } from '../../src/Api/createTaskLineModal';
 
 const app = {} as App;
 
@@ -56,7 +56,7 @@ describe('APIv1 - createTaskLineModal', () => {
         expect(modalMock.openWasCalled).toBeTruthy();
     });
 
-    it('should return the Markdown for a task', async () => {
+    it('should return the Markdown for a task if submitted', async () => {
         const taskLinePromise = createTaskLineModal(app, modalFactory);
         const expected = '- [ ] test';
 
@@ -67,7 +67,7 @@ describe('APIv1 - createTaskLineModal', () => {
         expect(result).toEqual(expected);
     });
 
-    it('should return an empty string', async () => {
+    it('should return an empty string if cancelled', async () => {
         const taskLinePromise = createTaskLineModal(app, mockModalFactory(modalMock));
         const expected = '';
 
