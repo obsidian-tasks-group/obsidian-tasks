@@ -147,6 +147,13 @@ describe('Date Parser - correct delta for next & last month & quarter (Today is 
 
 describe('DateParser - specific date ranges', () => {
     it('should return dates for specific ranges', () => {
+        // Weeks (53 in a year)
+        testParsingDateRange('2020-W53', '2020-12-28', '2021-01-03');
+        testParsingDateRange('2021-W01', '2021-01-04', '2021-01-10');
+
+        // Weeks (52 in a year)
+        testParsingDateRange('2018-W52', '2018-12-24', '2018-12-30');
+        testParsingDateRange('2019-W01', '2018-12-31', '2019-01-06');
         testParsingDateRange('2019-W02', '2019-01-07', '2019-01-13');
 
         testParsingDateRange('2002-02', '2002-02-01', '2002-02-28');
