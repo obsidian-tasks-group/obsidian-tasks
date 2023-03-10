@@ -147,25 +147,28 @@ describe('Date Parser - correct delta for next & last month & quarter (Today is 
 
 describe('DateParser - specific date ranges', () => {
     it('should return dates for specific ranges', () => {
-        // Weeks (53 in a year)
+        // Week (53 in a year)
         testParsingDateRange('2020-W53', '2020-12-28', '2021-01-03');
         testParsingDateRange('2021-W01', '2021-01-04', '2021-01-10');
 
-        // Weeks (52 in a year)
+        // Week (52 in a year)
         testParsingDateRange('2018-W52', '2018-12-24', '2018-12-30');
         testParsingDateRange('2019-W01', '2018-12-31', '2019-01-06');
         testParsingDateRange('2019-W02', '2019-01-07', '2019-01-13');
 
+        // Month
         testParsingDateRange('2002-02', '2002-02-01', '2002-02-28');
         testParsingDateRange('2013-06', '2013-06-01', '2013-06-30');
         testParsingDateRange('2017-12', '2017-12-01', '2017-12-31');
         testParsingDateRange('2024-02', '2024-02-01', '2024-02-29');
 
+        // Year
         testParsingDateRange('1996', '1996-01-01', '1996-12-31');
         testParsingDateRange('2022', '2022-01-01', '2022-12-31');
     });
 
     it('should return invalid dates for erroneous specific ranges', () => {
+        // Month
         testParsingDateRange('2017-13', 'Invalid date', 'Invalid date');
         testParsingDateRange('2023-14', 'Invalid date', 'Invalid date');
     });
