@@ -17,6 +17,12 @@ window.moment = moment;
 describe('Query parsing', () => {
     // In alphabetical order, please
     const filters = [
+        'created after 2021-12-27',
+        'created before 2021-12-27',
+        'created date is invalid',
+        'created in 2021-12-27 2021-12-29',
+        'created on 2021-12-27',
+        'created this week',
         'description does not include wibble',
         'description includes AND', // Verify Query doesn't confuse this with a boolean query
         'description includes wibble',
@@ -40,6 +46,7 @@ describe('Query parsing', () => {
         'happens in 2021-12-27 2021-12-29',
         'happens on 2021-12-27',
         'happens this week',
+        'has created date',
         'has done date',
         'has due date',
         'has happens date',
@@ -50,7 +57,8 @@ describe('Query parsing', () => {
         'heading includes wibble',
         'is not recurring',
         'is recurring',
-        'no done date',
+        'no created date',
+        'no due date',
         'no due date',
         'no happens date',
         'no scheduled date',
@@ -141,6 +149,8 @@ describe('Query parsing', () => {
     describe('should recognise every sort instruction', () => {
         // In alphabetical order, please
         const filters = [
+            'sort by created reverse',
+            'sort by created',
             'sort by description reverse',
             'sort by description',
             'sort by done reverse',
@@ -185,6 +195,7 @@ describe('Query parsing', () => {
     describe('should recognise every group instruction', () => {
         // In alphabetical order, please
         const filters = [
+            'group by created',
             'group by backlink',
             'group by done',
             'group by due',
