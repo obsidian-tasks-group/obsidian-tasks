@@ -128,9 +128,26 @@ For more information, including adding your own customised statuses, see [Status
 >
 > For now, you should still complete tasks via command or by clicking on task checkboxes.
 
-### Completed and Done on
+## Display values
 
 These values cannot currently be edited in this modal.
+
+### Completed
+
+A read-only checkbox, showing whether the task is completed.
+
+### Created on
+
+{: .released }
+Created date was introduced in Tasks 1.26.0.
+
+A read-only display of the task's [created date]({{ site.baseurl }}{% link getting-started/dates.md %}#-created), if any.
+
+If you have enabled ‘Set created date on every added task’ in Tasks settings (and restarted Obsidian), when you create a new Task via this modal, today's date will be added automatically.
+
+### Done on
+
+A read-only display of the task's [done date]({{ site.baseurl }}{% link getting-started/dates.md %}#-done), if any.
 
 ## Finishing off
 
