@@ -432,6 +432,8 @@ Introduced in Tasks 1.6.0.
 #### Tag Query Examples
 {: .no_toc }
 
+- `has tags`
+- `no tags`
 - `tags include #todo`
 - `tags do not include #todo`
 - `tag regex matches /#t$/`
@@ -439,6 +441,9 @@ Introduced in Tasks 1.6.0.
 - `tag regex matches /#book$/i`
   - The trailing `i` means case-insensitive.
   - Searches for tags such as `#book`,  `#Book`, `#BOOK` and the `$` prevents matching of `#books`,  `#book/literature`, etc.
+
+{: .released }
+`regex matches` and `regex does not match` were introduced in Tasks 1.X.0.
 
 ## Filters for File Properties
 
