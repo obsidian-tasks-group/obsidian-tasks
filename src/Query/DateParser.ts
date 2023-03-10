@@ -27,7 +27,7 @@ export class DateParser {
         if (result.length === 0) {
             const yearMatch = input.match(/[0-9].../);
             if (yearMatch && yearMatch.length === 1 && yearMatch[0] === input) {
-                return [moment(`${yearMatch[0]}-01-01`), moment(`${yearMatch[0]}-12-31`)];
+                return [moment(yearMatch[0]).startOf('year'), moment(yearMatch[0]).endOf('year')];
             }
 
             const quarterMatch = input.match(/[0-9]...-Q[1-4]/);
