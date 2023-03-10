@@ -170,6 +170,20 @@ describe('DateParser - specific date ranges', () => {
         testParsingDateRange('2022', '2022-01-01', '2022-12-31');
     });
 
+    it.each([
+        ['2018-W38', '2018-09-17', '2018-09-23'],
+        ['2010-11', '2010-11-01', '2010-11-30'],
+        ['2019-Q3', '2019-07-01', '2019-09-30'],
+        ['2007', '2007-01-01', '2007-12-31'],
+    ])(
+        'specific range %s: should return %s and %s at midnight',
+        (range: string, rangeStart: string, rangeEnd: string) => {
+            const parsedDateRange = DateParser.parseDateRange(range);
+            expect(parsedDateRange[0].format('YYYY-MM-DD HH:mm')).toStrictEqual(`${rangeStart} 00:00`);
+            expect(parsedDateRange[1].format('YYYY-MM-DD HH:mm')).toStrictEqual(`${rangeEnd} 00:00`);
+        },
+    );
+
     it('should return invalid dates for erroneous specific ranges', () => {
         // Week (53 & 52 in a year)
         testParsingDateRange('2020-W54', 'Invalid date', 'Invalid date');

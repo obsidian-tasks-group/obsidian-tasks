@@ -31,25 +31,34 @@ export class DateParser {
 
             const yearMatch = input.match(/[0-9].../);
             if (yearMatch && yearMatch.length === 1 && yearMatch[0] === input) {
-                specificDateRange = [moment(yearMatch[0]).startOf('year'), moment(yearMatch[0]).endOf('year')];
+                specificDateRange = [
+                    moment(yearMatch[0]).startOf('year').startOf('day'),
+                    moment(yearMatch[0]).endOf('year').startOf('day'),
+                ];
             }
 
             const quarterMatch = input.match(/[0-9]...-Q[1-4]/);
             if (quarterMatch && quarterMatch.length === 1 && quarterMatch[0] === input) {
                 specificDateRange = [
-                    moment(quarterMatch[0], 'YYYY-Q').startOf('quarter'),
-                    moment(quarterMatch[0], 'YYYY-Q').endOf('quarter'),
+                    moment(quarterMatch[0], 'YYYY-Q').startOf('quarter').startOf('day'),
+                    moment(quarterMatch[0], 'YYYY-Q').endOf('quarter').startOf('day'),
                 ];
             }
 
             const monthMatch = input.match(/[0-9]...-[0-9]./);
             if (monthMatch && monthMatch.length === 1 && monthMatch[0] === input) {
-                specificDateRange = [moment(monthMatch[0]).startOf('month'), moment(monthMatch[0]).endOf('month')];
+                specificDateRange = [
+                    moment(monthMatch[0]).startOf('month').startOf('day'),
+                    moment(monthMatch[0]).endOf('month').startOf('day'),
+                ];
             }
 
             const weekMatch = input.match(/[0-9]...-W[0-9]./);
             if (weekMatch && weekMatch.length === 1 && weekMatch[0] === input) {
-                specificDateRange = [moment(weekMatch[0]).startOf('isoWeek'), moment(weekMatch[0]).endOf('isoWeek')];
+                specificDateRange = [
+                    moment(weekMatch[0]).startOf('isoWeek').startOf('day'),
+                    moment(weekMatch[0]).endOf('isoWeek').startOf('day'),
+                ];
             }
 
             return specificDateRange;
