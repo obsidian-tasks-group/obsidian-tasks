@@ -64,6 +64,7 @@ describe('Query parsing', () => {
         'no happens date',
         'no scheduled date',
         'no start date',
+        'no tag',
         'not done',
         'path does not include some/path',
         'path includes AND', // Verify Query doesn't confuse this with a boolean query
