@@ -162,6 +162,9 @@ describe('DateParser - specific date ranges', () => {
         testParsingDateRange('2017-12', '2017-12-01', '2017-12-31');
         testParsingDateRange('2024-02', '2024-02-01', '2024-02-29');
 
+        // Quarter
+        testParsingDateRange('2007-Q1', '2007-01-01', '2007-03-31');
+
         // Year
         testParsingDateRange('1996', '1996-01-01', '1996-12-31');
         testParsingDateRange('2022', '2022-01-01', '2022-12-31');
@@ -175,6 +178,10 @@ describe('DateParser - specific date ranges', () => {
         // Week (Wrong number)
         testParsingDateRange('2021-W0', 'Invalid date', 'Invalid date');
         testParsingDateRange('2021-W00', 'Invalid date', 'Invalid date');
+
+        // Quarter
+        testParsingDateRange('2023-Q0', 'Invalid date', 'Invalid date');
+        testParsingDateRange('2023-Q5', 'Invalid date', 'Invalid date');
 
         // Month
         testParsingDateRange('2017-13', 'Invalid date', 'Invalid date');

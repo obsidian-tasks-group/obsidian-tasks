@@ -30,6 +30,14 @@ export class DateParser {
                 return [moment(`${yearMatch[0]}-01-01`), moment(`${yearMatch[0]}-12-31`)];
             }
 
+            const quarterMatch = input.match(/[0-9]...-Q[1-4]/);
+            if (quarterMatch && quarterMatch.length === 1 && quarterMatch[0] === input) {
+                return [
+                    moment(quarterMatch[0], 'YYYY-Q').startOf('quarter'),
+                    moment(quarterMatch[0], 'YYYY-Q').endOf('quarter'),
+                ];
+            }
+
             const monthMatch = input.match(/[0-9]...-[0-9]./);
             if (monthMatch && monthMatch.length === 1 && monthMatch[0] === input) {
                 return [moment(monthMatch[0]).startOf('month'), moment(monthMatch[0]).endOf('month')];
