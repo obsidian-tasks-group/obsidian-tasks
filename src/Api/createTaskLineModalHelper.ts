@@ -5,14 +5,14 @@ import { TaskModal } from '../TaskModal';
 import type { ITaskModal, taskModalFactory } from './createTaskLineModal';
 
 /**
- * Factory method to create a new {TaskModal}.
+ * Factory method to create a new {@link TaskModal}.
  *
  * The current setup of Jest does not work with Svelte, therefore it is necessary to remove
- * all code referencing {EditTask} from the file {createTaskLineModal} lives in, to make it testable.
- * Once Jest is configured to work with Svelte, this can be moved in the same file as {createTaskLineModal}.
+ * all code referencing {@link EditTask} from the file {@link createTaskLineModal} lives in, to make it testable.
+ * Once Jest is configured to work with Svelte, this can be moved in the same file as {@link createTaskLineModal}.
  *
  * @param app - The Obsidian App
- * @param onSubmit - Callback to be run when the {EditTask} form is submitted to retrieve the edited task.
+ * @param onSubmit - Callback to be run when the {@link EditTask} form is submitted to retrieve the edited task.
  */
 export const defaultTaskModalFactory: taskModalFactory = (
     app: App,

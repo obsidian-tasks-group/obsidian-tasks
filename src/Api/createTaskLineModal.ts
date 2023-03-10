@@ -11,8 +11,8 @@ export interface ITaskModal {
 }
 
 /**
- * Signature of the factory method for {TaskModal}.
- * This is necessary to make {createTaskLineModal} testable.
+ * Signature of the factory method for {@link TaskModal}.
+ * This is necessary to make {@link createTaskLineModal} testable.
  * Once Jest is configured to work with Svelte, this can be removed.
  */
 export type taskModalFactory = {
@@ -23,7 +23,7 @@ export type taskModalFactory = {
  * Opens the Tasks UI and returns the Markdown string for the task entered.
  *
  * @param app - The Obsidian App
- * @param taskModalFactory - Factory method to instantiate {TaskModal}. Default value is {defaultTaskModalFactory}.
+ * @param taskModalFactory - Factory method to instantiate {@link TaskModal}. Default value is {@link defaultTaskModalFactory}.
  *                           Used only for testing.
  *
  * @returns {Promise<string>} A promise that contains the Markdown string for the task entered or
