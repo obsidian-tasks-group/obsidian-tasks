@@ -64,7 +64,8 @@ You can group by the following properties.
     - The earliest of start date, scheduled date, and due date, including the week-day, or `No happens date` if none of those are set.
 
 {: .released }
-`happens` grouping option was introduced in Tasks 1.11.0.
+`happens` grouping option was introduced in Tasks 1.11.0.<br>
+`created` grouping option was introduced in Tasks 1.26.0.
 
 ### Task statuses
 

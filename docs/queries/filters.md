@@ -91,7 +91,8 @@ Add `explain` in case of issue and double check that both dates are valid or the
 ### Finding Tasks with Invalid Dates
 
 {: .released }
-Validation of dates was introduced in Tasks 1.16.0.
+Validation of dates was introduced in Tasks 1.16.0.<br>
+`created date is invalid` was introduced in Tasks 1.26.0.
 
 It is possible to accidentally use a non-existent date on a task signifier, such as `📅 2022-02-30`. February has at most 29 days.
 
@@ -100,7 +101,7 @@ Such tasks look like they have a date, but that date will never be found. When v
 Any such mistakes can be found systematically with this search:
 
     ```tasks
-    (done date is invalid) OR (due date is invalid) OR (scheduled date is invalid) OR (start date is invalid)
+    (created date is invalid) OR (done date is invalid) OR (due date is invalid) OR (scheduled date is invalid) OR (start date is invalid)
     ```
 
 <div class="code-example" markdown="1">
@@ -234,16 +235,19 @@ Such filter could be:
 
 ### Created Date
 
+{: .released }
+Created date was introduced in Tasks 1.26.0.
+
+See [created date]({{ site.baseurl }}{% link getting-started/dates.md %}#-created) for how to make Tasks record the created date on any task lines that it creates.
+
 - `no created date`
 - `has created date`
 - `created (before|after|on) <date>`
+- `created (before|after|in) YYYY-MM-DD YYYY-MM-DD`
+- `created (before|after|in) (last|this|next) (week|month|quarter|year)`
 - `created date is invalid`
 
-When filtering queries by [start date]({{ site.baseurl }}{% link getting-started/dates.md %}#-start),
-the result will include tasks without a start date.
-This way, you can use the start date as a filter to filter out any tasks that you cannot yet work on.
-
-Such filter could be:
+Such a filter could be:
 
     ```tasks
     created before tomorrow
