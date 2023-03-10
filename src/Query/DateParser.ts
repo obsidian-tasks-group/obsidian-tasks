@@ -35,6 +35,11 @@ export class DateParser {
                 return [moment(monthMatch[0]).startOf('month'), moment(monthMatch[0]).endOf('month')];
             }
 
+            const weekMatch = input.match(/[0-9]...-W[0-9]./);
+            if (weekMatch && weekMatch.length === 1 && weekMatch[0] === input) {
+                return [moment(weekMatch[0]).startOf('isoWeek'), moment(weekMatch[0]).endOf('isoWeek')];
+            }
+
             return [moment.invalid(), moment.invalid()];
         }
 
