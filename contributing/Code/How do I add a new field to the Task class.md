@@ -1,5 +1,7 @@
 # How do I add a new field to the Task class?
 
+## Storing the field and testing it
+
 - In [tests/Task.test.ts](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/Task.test.ts):
   - Add a new failing block to the `'identicalTo'` section.
   - Here is an existing example: ['should check path'](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/5b0831c36a80c4cde2d64a6cd281bb4b51e9a142/tests/Task.test.ts#L834-L840).
@@ -14,6 +16,15 @@
   - Update the `build()` method.
 - In [tests/TestingTools/TaskBuilder.test.ts](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/TestingTools/TaskBuilder.test.ts):
   - If the code in TaskBuild will be non-trivial, first add a failing test for it.
+
+## Other code areas
+
+- Add filter(s)
+- Add to sorting
+- Add to grouping
+- Add to layout - show/hide
+- Add the field to Create or edit Task dialog
+- Add the field to Auto Suggest, if appropriate
 
 ## Extra steps for fields storing dates
 
