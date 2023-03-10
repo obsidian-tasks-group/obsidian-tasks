@@ -175,3 +175,7 @@ Tap on the screen and drag down, and you will see a scrollbar appear temporarily
 More importantly, the scrolling does then work fine.
 
 We are tracking the iPhone scrollbar issue in [issue #1238](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1238).
+
+## Use this modal in scripts and other plugins
+
+The [Tasks API Interface](../advanced/api.md) allows this modal to be used outside of the Tasks plugin, for example in QuickAdd scripts, and by other plugins.
