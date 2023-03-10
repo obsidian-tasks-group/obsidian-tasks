@@ -32,8 +32,8 @@ export class DateParser {
             const yearMatch = input.match(/[0-9].../);
             if (yearMatch && yearMatch.length === 1 && yearMatch[0] === input) {
                 specificDateRange = [
-                    moment(yearMatch[0]).startOf('year').startOf('day'),
-                    moment(yearMatch[0]).endOf('year').startOf('day'),
+                    moment(yearMatch[0], 'YYYY').startOf('year').startOf('day'),
+                    moment(yearMatch[0], 'YYYY').endOf('year').startOf('day'),
                 ];
             }
 
@@ -48,16 +48,16 @@ export class DateParser {
             const monthMatch = input.match(/[0-9]...-[0-9]./);
             if (monthMatch && monthMatch.length === 1 && monthMatch[0] === input) {
                 specificDateRange = [
-                    moment(monthMatch[0]).startOf('month').startOf('day'),
-                    moment(monthMatch[0]).endOf('month').startOf('day'),
+                    moment(monthMatch[0], 'YYYY-MM').startOf('month').startOf('day'),
+                    moment(monthMatch[0], 'YYYY-MM').endOf('month').startOf('day'),
                 ];
             }
 
             const weekMatch = input.match(/[0-9]...-W[0-9]./);
             if (weekMatch && weekMatch.length === 1 && weekMatch[0] === input) {
                 specificDateRange = [
-                    moment(weekMatch[0]).startOf('isoWeek').startOf('day'),
-                    moment(weekMatch[0]).endOf('isoWeek').startOf('day'),
+                    moment(weekMatch[0], 'YYYY-WW').startOf('isoWeek').startOf('day'),
+                    moment(weekMatch[0], 'YYYY-WW').endOf('isoWeek').startOf('day'),
                 ];
             }
 
