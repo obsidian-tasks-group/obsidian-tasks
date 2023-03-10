@@ -25,14 +25,18 @@ export class DateParser {
         });
 
         if (result.length === 0) {
+            // If chorono couldn't parse the date it could be a specific date range
+            // Or a user error
+            let specificDateRange: [moment.Moment, moment.Moment] = [moment.invalid(), moment.invalid()];
+
             const yearMatch = input.match(/[0-9].../);
             if (yearMatch && yearMatch.length === 1 && yearMatch[0] === input) {
-                return [moment(yearMatch[0]).startOf('year'), moment(yearMatch[0]).endOf('year')];
+                specificDateRange = [moment(yearMatch[0]).startOf('year'), moment(yearMatch[0]).endOf('year')];
             }
 
             const quarterMatch = input.match(/[0-9]...-Q[1-4]/);
             if (quarterMatch && quarterMatch.length === 1 && quarterMatch[0] === input) {
-                return [
+                specificDateRange = [
                     moment(quarterMatch[0], 'YYYY-Q').startOf('quarter'),
                     moment(quarterMatch[0], 'YYYY-Q').endOf('quarter'),
                 ];
@@ -40,15 +44,15 @@ export class DateParser {
 
             const monthMatch = input.match(/[0-9]...-[0-9]./);
             if (monthMatch && monthMatch.length === 1 && monthMatch[0] === input) {
-                return [moment(monthMatch[0]).startOf('month'), moment(monthMatch[0]).endOf('month')];
+                specificDateRange = [moment(monthMatch[0]).startOf('month'), moment(monthMatch[0]).endOf('month')];
             }
 
             const weekMatch = input.match(/[0-9]...-W[0-9]./);
             if (weekMatch && weekMatch.length === 1 && weekMatch[0] === input) {
-                return [moment(weekMatch[0]).startOf('isoWeek'), moment(weekMatch[0]).endOf('isoWeek')];
+                specificDateRange = [moment(weekMatch[0]).startOf('isoWeek'), moment(weekMatch[0]).endOf('isoWeek')];
             }
 
-            return [moment.invalid(), moment.invalid()];
+            return specificDateRange;
         }
 
         const startDate = result[0].start;
