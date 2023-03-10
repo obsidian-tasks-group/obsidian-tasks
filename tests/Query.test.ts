@@ -52,6 +52,7 @@ describe('Query parsing', () => {
         'has happens date',
         'has scheduled date',
         'has start date',
+        'has tag',
         'heading does not include wibble',
         'heading includes AND', // Verify Query doesn't confuse this with a boolean query
         'heading includes wibble',

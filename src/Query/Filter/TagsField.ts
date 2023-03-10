@@ -34,6 +34,14 @@ export class TagsField extends MultiTextField {
         return super.createFilterOrErrorMessage(line);
     }
 
+    public canCreateFilterForLine(line: string): boolean {
+        if (line === 'has tag' || line === 'has tags' || line === 'no tag' || line === 'no tags') {
+            return true;
+        }
+
+        return super.canCreateFilterForLine(line);
+    }
+
     public fieldNameSingular(): string {
         return 'tag';
     }
