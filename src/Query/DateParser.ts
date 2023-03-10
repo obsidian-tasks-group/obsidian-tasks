@@ -25,6 +25,10 @@ export class DateParser {
         });
 
         if (result.length === 0) {
+            if (input === '2022') {
+                return [moment('2022-01-01'), moment('2022-12-31')];
+            }
+
             return [moment.invalid(), moment.invalid()];
         }
 

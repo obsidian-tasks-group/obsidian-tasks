@@ -144,3 +144,9 @@ describe('Date Parser - correct delta for next & last month & quarter (Today is 
         // because the length of Q2 in days is same as Q3.
     });
 });
+
+describe('DateParser - specific date ranges', () => {
+    it('should return dates for specific ranges', () => {
+        testParsingDateRange('2022', '2022-01-01', '2022-12-31');
+    });
+});
