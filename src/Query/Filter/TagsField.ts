@@ -14,7 +14,7 @@ export class TagsField extends MultiTextField {
     // -----------------------------------------------------------------------------------------------------------------
     // Filtering
     // -----------------------------------------------------------------------------------------------------------------
-    protected readonly filterInstructions: FilterInstructions;
+    private readonly filterInstructions: FilterInstructions;
 
     constructor() {
         super();
