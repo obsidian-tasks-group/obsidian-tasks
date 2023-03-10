@@ -29,35 +29,47 @@ export class DateParser {
             // Or a user error
             let specificDateRange: [moment.Moment, moment.Moment] = [moment.invalid(), moment.invalid()];
 
-            const yearMatch = input.match(/[0-9].../);
+            const yearRegex = /[0-9].../;
+            const yearMatch = input.match(yearRegex);
+            const yearFormat = 'YYYY';
+            const yearUnit = 'year';
             if (yearMatch && yearMatch.length === 1 && yearMatch[0] === input) {
                 specificDateRange = [
-                    moment(yearMatch[0], 'YYYY').startOf('year').startOf('day'),
-                    moment(yearMatch[0], 'YYYY').endOf('year').startOf('day'),
+                    moment(yearMatch[0], yearFormat).startOf(yearUnit).startOf('day'),
+                    moment(yearMatch[0], yearFormat).endOf(yearUnit).startOf('day'),
                 ];
             }
 
-            const quarterMatch = input.match(/[0-9]...-Q[1-4]/);
+            const quarterRegex = /[0-9]...-Q[1-4]/;
+            const quarterMatch = input.match(quarterRegex);
+            const quarterFormat = 'YYYY-Q';
+            const quarterUnit = 'quarter';
             if (quarterMatch && quarterMatch.length === 1 && quarterMatch[0] === input) {
                 specificDateRange = [
-                    moment(quarterMatch[0], 'YYYY-Q').startOf('quarter').startOf('day'),
-                    moment(quarterMatch[0], 'YYYY-Q').endOf('quarter').startOf('day'),
+                    moment(quarterMatch[0], quarterFormat).startOf(quarterUnit).startOf('day'),
+                    moment(quarterMatch[0], quarterFormat).endOf(quarterUnit).startOf('day'),
                 ];
             }
 
-            const monthMatch = input.match(/[0-9]...-[0-9]./);
+            const monthRegex = /[0-9]...-[0-9]./;
+            const monthMatch = input.match(monthRegex);
+            const monthFormat = 'YYYY-MM';
+            const monthUnit = 'month';
             if (monthMatch && monthMatch.length === 1 && monthMatch[0] === input) {
                 specificDateRange = [
-                    moment(monthMatch[0], 'YYYY-MM').startOf('month').startOf('day'),
-                    moment(monthMatch[0], 'YYYY-MM').endOf('month').startOf('day'),
+                    moment(monthMatch[0], monthFormat).startOf(monthUnit).startOf('day'),
+                    moment(monthMatch[0], monthFormat).endOf(monthUnit).startOf('day'),
                 ];
             }
 
-            const weekMatch = input.match(/[0-9]...-W[0-9]./);
+            const weekRegex = /[0-9]...-W[0-9]./;
+            const weekMatch = input.match(weekRegex);
+            const weekFormat = 'YYYY-WW';
+            const weekUnit = 'isoWeek';
             if (weekMatch && weekMatch.length === 1 && weekMatch[0] === input) {
                 specificDateRange = [
-                    moment(weekMatch[0], 'YYYY-WW').startOf('isoWeek').startOf('day'),
-                    moment(weekMatch[0], 'YYYY-WW').endOf('isoWeek').startOf('day'),
+                    moment(weekMatch[0], weekFormat).startOf(weekUnit).startOf('day'),
+                    moment(weekMatch[0], weekFormat).endOf(weekUnit).startOf('day'),
                 ];
             }
 
