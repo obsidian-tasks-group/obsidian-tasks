@@ -30,6 +30,11 @@ export class DateParser {
                 return [moment(`${yearMatch[0]}-01-01`), moment(`${yearMatch[0]}-12-31`)];
             }
 
+            const monthMatch = input.match(/[0-9]...-[0-9]./);
+            if (monthMatch && monthMatch.length === 1 && monthMatch[0] === input) {
+                return [moment(`${monthMatch[0]}-01`), moment(`${monthMatch[0]}-28`)];
+            }
+
             return [moment.invalid(), moment.invalid()];
         }
 
