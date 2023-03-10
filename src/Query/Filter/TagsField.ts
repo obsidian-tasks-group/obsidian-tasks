@@ -35,7 +35,7 @@ export class TagsField extends MultiTextField {
     }
 
     public canCreateFilterForLine(line: string): boolean {
-        if (line === 'has tag' || line === 'has tags' || line === 'no tag' || line === 'no tags') {
+        if (this.filterInstructions.canCreateFilterForLine(line)) {
             return true;
         }
 
