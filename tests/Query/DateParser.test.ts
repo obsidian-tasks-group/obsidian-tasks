@@ -168,6 +168,14 @@ describe('DateParser - specific date ranges', () => {
     });
 
     it('should return invalid dates for erroneous specific ranges', () => {
+        // Week (53 & 52 in a year)
+        testParsingDateRange('2020-W54', 'Invalid date', 'Invalid date');
+        testParsingDateRange('2018-W53', 'Invalid date', 'Invalid date');
+
+        // Week (Wrong number)
+        testParsingDateRange('2021-W0', 'Invalid date', 'Invalid date');
+        testParsingDateRange('2021-W00', 'Invalid date', 'Invalid date');
+
         // Month
         testParsingDateRange('2017-13', 'Invalid date', 'Invalid date');
         testParsingDateRange('2023-14', 'Invalid date', 'Invalid date');
