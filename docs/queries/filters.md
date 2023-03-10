@@ -443,7 +443,7 @@ Introduced in Tasks 1.6.0.
   - Searches for tags such as `#book`,  `#Book`, `#BOOK` and the `$` prevents matching of `#books`,  `#book/literature`, etc.
 
 {: .released }
-`regex matches` and `regex does not match` were introduced in Tasks 1.X.0.
+`has tags` and `no` were introduced in Tasks 1.26.0.
 
 ## Filters for File Properties
 
