@@ -30,9 +30,9 @@ export class DateParser {
             let specificDateRange: [moment.Moment, moment.Moment] = [moment.invalid(), moment.invalid()];
 
             const yearRegex = /[0-9].../;
-            const yearMatch = input.match(yearRegex);
             const yearFormat = 'YYYY';
             const yearUnit = 'year';
+            const yearMatch = input.match(yearRegex);
             if (yearMatch && yearMatch.length === 1 && yearMatch[0] === input) {
                 specificDateRange = [
                     moment(yearMatch[0], yearFormat).startOf(yearUnit).startOf('day'),
@@ -41,9 +41,9 @@ export class DateParser {
             }
 
             const quarterRegex = /[0-9]...-Q[1-4]/;
-            const quarterMatch = input.match(quarterRegex);
             const quarterFormat = 'YYYY-Q';
             const quarterUnit = 'quarter';
+            const quarterMatch = input.match(quarterRegex);
             if (quarterMatch && quarterMatch.length === 1 && quarterMatch[0] === input) {
                 specificDateRange = [
                     moment(quarterMatch[0], quarterFormat).startOf(quarterUnit).startOf('day'),
@@ -52,9 +52,9 @@ export class DateParser {
             }
 
             const monthRegex = /[0-9]...-[0-9]./;
-            const monthMatch = input.match(monthRegex);
             const monthFormat = 'YYYY-MM';
             const monthUnit = 'month';
+            const monthMatch = input.match(monthRegex);
             if (monthMatch && monthMatch.length === 1 && monthMatch[0] === input) {
                 specificDateRange = [
                     moment(monthMatch[0], monthFormat).startOf(monthUnit).startOf('day'),
@@ -63,9 +63,9 @@ export class DateParser {
             }
 
             const weekRegex = /[0-9]...-W[0-9]./;
-            const weekMatch = input.match(weekRegex);
             const weekFormat = 'YYYY-WW';
             const weekUnit = 'isoWeek';
+            const weekMatch = input.match(weekRegex);
             if (weekMatch && weekMatch.length === 1 && weekMatch[0] === input) {
                 specificDateRange = [
                     moment(weekMatch[0], weekFormat).startOf(weekUnit).startOf('day'),
