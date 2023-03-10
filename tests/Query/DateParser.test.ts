@@ -186,5 +186,8 @@ describe('DateParser - specific date ranges', () => {
         // Month
         testParsingDateRange('2017-13', 'Invalid date', 'Invalid date');
         testParsingDateRange('2023-14', 'Invalid date', 'Invalid date');
+
+        // Year
+        testParsingDateRange('20167', 'Invalid date', 'Invalid date');
     });
 });
