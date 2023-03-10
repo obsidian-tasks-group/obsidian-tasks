@@ -19,10 +19,10 @@ export class TagsField extends MultiTextField {
     constructor() {
         super();
         this.filterInstructions = new FilterInstructions();
-        this.filterInstructions.add('has tag', (task: Task) => this.values(task).length > 0);
-        this.filterInstructions.add('has tags', (task: Task) => this.values(task).length > 0);
-        this.filterInstructions.add('no tag', (task: Task) => this.values(task).length === 0);
-        this.filterInstructions.add('no tags', (task: Task) => this.values(task).length === 0);
+        this.filterInstructions.add(`has ${this.fieldNameSingular()}`, (task: Task) => this.values(task).length > 0);
+        this.filterInstructions.add(`has ${this.fieldNamePlural()}`, (task: Task) => this.values(task).length > 0);
+        this.filterInstructions.add(`no ${this.fieldNameSingular()}`, (task: Task) => this.values(task).length === 0);
+        this.filterInstructions.add(`no ${this.fieldNamePlural()}`, (task: Task) => this.values(task).length === 0);
     }
 
     public createFilterOrErrorMessage(line: string): FilterOrErrorMessage {
