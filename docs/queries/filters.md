@@ -21,16 +21,30 @@ parent: Queries
 
 ## Searching for dates
 
-### Specific dates
+In Tasks query blocks, Tasks allows a lot of flexibility in the interpreting of dates.
 
-`<date>` filters can be given in natural language or in formal notation (`YYYY-MM-DD`).
-The following are some examples of valid `<date>` filters as inspiration:
+### Absolute dates
 
-Formal notation:
+`<date>` filters can be given with 'absolute' dates, whose preferred format is `YYYY-MM-DD`.
+
+Absolute dates specify a **particular date in a calendar**. They represent the same day, regardless of today's date.
+
+Example absolute dates:
 
 - `2021-05-25`
+- `25th May 2023`
+  - The [chrono](https://github.com/wanasit/chrono) library reads dates very flexibly, so you can use free text for absolute dates in your filters.
+  - The `YYYY-MM-DD` format is somewhat safer, though, as there is no chance of ambiguity in reading your text.
 
-Natural language notation:
+### Relative dates
+
+`<date>` filters can be given with `relative` dates.
+
+Relative dates are **calculated from today's date**.
+
+When the day changes, relative dates like `due today` are re-evaluated so that the list stays up-to-date (so long as your computer was not hibernating at midnight - see [#1289](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1289)).
+
+Example valid relative `<date>` filters as inspiration:
 
 - `yesterday`
 - `today`
@@ -39,54 +53,75 @@ Natural language notation:
 - `last friday`
 - `14 days ago`
 - `in two weeks`
+- `14 October` (the current year will be used)
+- `May` (1st May in the current year will be used)
 
 Note that if it is Wednesday and you write `tuesday`, Tasks assumes you mean "yesterday", as that is the closest Tuesday.
 Use `next tuesday` instead if you mean "next tuesday".
 
-When the day changes, relative dates like `due today` are re-evaluated so that the list stays up-to-date.
-
-### Date ranges
-
-`<date range>` can be given in 2 ways.
+### Searching date ranges
 
 {: .released }
 Date range searches were introduced in Tasks 1.26.0.
 
-#### Date ranges in formal notation
+Tasks allows date searches to specify a pair of dates, `<date range>` .
 
-`<date range>` may be specified as 2 valid dates in `YYYY-MM-DD` format. Dates on either end are included, that is it is an inclusive search.
+These searches are inclusive: the dates at either end are found by the search.
 
-`before <date range>` will match before the earliest date of the range. `after <date range>` will match after the latest date of the range.
+### Absolute date ranges
+
+`<date range>` may be specified as 2 valid dates in `YYYY-MM-DD` format.
+
+Dates on either end are included, that is, it is an inclusive search.
+
+- `before <date range>` will match before the earliest date of the range.
+- `after <date range>` will match after the latest date of the range.
 
 Notes:
 
-- If one of the `YYYY-MM-DD` dates is invalid, then it is ignored and the filter will behave as `<date>` not `<date range>`
-- Date range cannot be specified by 2 natural language dates eg `next monday three weeks`
-- `in` and `on` can be omitted
+- `in` and `on` may be omitted.
+- If one of the `YYYY-MM-DD` dates is invalid, then it is ignored and the filter will behave as `<date>` not `<date range>`.
+- Date range cannot be specified by 2 relative dates eg `next monday three weeks`.
+- We do not recommend this, but it is technically possible to specify absolute dates in words, such as `25th May 2023`.
+  - We have found that using two such dates can lead to ambiguity and unintended results when the [chrono](https://github.com/wanasit/chrono) library parses the dates in your filter.
 
-Example:
+Example absolute date ranges:
 
 - `2022-01-01 2023-02-01`
 
-#### Date ranges in natural language notation
+### Relative date ranges
 
-Tasks supports natural language date ranges as: `last|this|next week|month|quarter|year`. Tasks will process this range and convert it to formal notation (`YYYY-MM-DD`) internally.
+Tasks supports a very specific set of relative `<date range>` values: `last|this|next week|month|quarter|year`. The pipe (`|`) character means 'or'.
+
+Tasks will process these ranges, based on today's date, and convert them to absolute date ranges (`YYYY-MM-DD YYYY-MM-DD`) internally.
+
+Dates on either end are included, that is, it is an inclusive search.
 
 Notes:
 
-- Currently all weeks are defined as [ISO 8601](https://en.wikipedia.org/wiki/ISO_week_date) weeks starting on Monday and ending on Sunday. We will provide more flexibility in a future release
-- Natural language date ranges support only the keywords specified, for example `previous half of year` and `next semester` are not supported
+- Currently all weeks are defined as [ISO 8601](https://en.wikipedia.org/wiki/ISO_week_date) weeks **starting on Monday** and **ending on Sunday**.
+  - We will provide more flexibility in a future release.
+  - We are tracking this in [issue #1751](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1751)
+- Relative date ranges support only the exact keywords specified above.
+  - So, for example, `previous half of year` and `next semester` are not supported.
 
-Examples:
+Example relative date ranges:
 
-- `this week` (from this week's Monday to Sunday inclusive)
+- `in this week` (from this week's Monday to Sunday inclusive)
 - `after this month`
 - `next quarter`
 - `before next year`
 
 ### Troubleshooting date searches
 
-Add `explain` in case of issue and double check that both dates are valid or the natural date range is correct and supported.
+If your date searches are giving unexpected results, add an [`explain`]({{ site.baseurl }}{% link queries/explaining-queries.md %}) line to your query.
+
+This will help you identify common mistakes such as:
+
+- Accidentally using an invalid absolute date in a filter.
+- Using unsupported keywords in relative date ranges.
+
+If relative dates in queries do not update from the previous day, and your computer was sleeping at midnight, this is likely caused by a known Chrome bug and you will need to re-open the note. See [#1289](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1289).
 
 ### Finding Tasks with Invalid Dates
 
