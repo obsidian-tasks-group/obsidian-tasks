@@ -34,10 +34,7 @@ export class DateParser {
             const yearUnit = 'year';
             const yearMatch = input.match(yearRegex);
             if (yearMatch && yearMatch.length === 1 && yearMatch[0] === input) {
-                specificDateRange = [
-                    moment(yearMatch[0], yearFormat).startOf(yearUnit).startOf('day'),
-                    moment(yearMatch[0], yearFormat).endOf(yearUnit).startOf('day'),
-                ];
+                specificDateRange = buildSpecificDateRange(yearMatch, yearFormat, yearUnit);
             }
 
             const quarterRegex = /[0-9]...-Q[1-4]/;
@@ -126,5 +123,16 @@ export class DateParser {
         // Dates shall be at midnight eg 00:00
         dateRange.forEach((d) => d.startOf('day'));
         return dateRange;
+
+        function buildSpecificDateRange(
+            yearMatch: RegExpMatchArray,
+            yearFormat: string,
+            yearUnit: moment.unitOfTime.Base,
+        ): [moment.Moment, moment.Moment] {
+            return [
+                moment(yearMatch[0], yearFormat).startOf(yearUnit).startOf('day'),
+                moment(yearMatch[0], yearFormat).endOf(yearUnit).startOf('day'),
+            ];
+        }
     }
 }
