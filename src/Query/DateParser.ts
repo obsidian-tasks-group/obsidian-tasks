@@ -20,10 +20,10 @@ export class DateParser {
      * @return - A Tuple of dates. If both input dates are invalid, then both ouput dates will be invalid.
      */
     public static parseDateRange(input: string): [moment.Moment, moment.Moment] {
-        const specRangeFormatYear = 'YYYY';
-        const specRangeFormatQuarter = 'YYYY-Q';
-        const specRangeFormatMonth = 'YYYY-MM';
-        const specRangeFormatWeek = 'YYYY-WW';
+        const specificYearFormat = 'YYYY';
+        const specificQuarterFormat = 'YYYY-Q';
+        const specificMonthFormat = 'YYYY-MM';
+        const specificWeekFormat = 'YYYY-WW';
 
         const result = chrono.parse(input, undefined, {
             forwardDate: true,
@@ -37,25 +37,25 @@ export class DateParser {
             const yearRegex = /[0-9].../;
             const yearMatch = input.match(yearRegex);
             if (yearMatch && yearMatch.length === 1 && yearMatch[0] === input) {
-                specificDateRange = buildSpecificDateRange(yearMatch[0], specRangeFormatYear);
+                specificDateRange = buildSpecificDateRange(yearMatch[0], specificYearFormat);
             }
 
             const quarterRegex = /[0-9]...-Q[1-4]/;
             const quarterMatch = input.match(quarterRegex);
             if (quarterMatch && quarterMatch.length === 1 && quarterMatch[0] === input) {
-                specificDateRange = buildSpecificDateRange(quarterMatch[0], specRangeFormatQuarter);
+                specificDateRange = buildSpecificDateRange(quarterMatch[0], specificQuarterFormat);
             }
 
             const monthRegex = /[0-9]...-[0-9]./;
             const monthMatch = input.match(monthRegex);
             if (monthMatch && monthMatch.length === 1 && monthMatch[0] === input) {
-                specificDateRange = buildSpecificDateRange(monthMatch[0], specRangeFormatMonth);
+                specificDateRange = buildSpecificDateRange(monthMatch[0], specificMonthFormat);
             }
 
             const weekRegex = /[0-9]...-W[0-9]./;
             const weekMatch = input.match(weekRegex);
             if (weekMatch && weekMatch.length === 1 && weekMatch[0] === input) {
-                specificDateRange = buildSpecificDateRange(weekMatch[0], specRangeFormatWeek);
+                specificDateRange = buildSpecificDateRange(weekMatch[0], specificWeekFormat);
             }
 
             return specificDateRange;
@@ -115,16 +115,16 @@ export class DateParser {
         function buildSpecificDateRange(range: string, format: string): [moment.Moment, moment.Moment] {
             let unit: moment.unitOfTime.Base | moment.unitOfTime._quarter | moment.unitOfTime._isoWeek = 'second';
             switch (format) {
-                case specRangeFormatYear:
+                case specificYearFormat:
                     unit = 'year';
                     break;
-                case specRangeFormatQuarter:
+                case specificQuarterFormat:
                     unit = 'quarter';
                     break;
-                case specRangeFormatMonth:
+                case specificMonthFormat:
                     unit = 'month';
                     break;
-                case specRangeFormatWeek:
+                case specificWeekFormat:
                     unit = 'isoWeek';
                     break;
             }
