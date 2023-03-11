@@ -38,12 +38,12 @@ export class DateParser {
             dateRange = [end, start];
         }
 
-        const naturalDateRangeRegexp = /(last|this|next) (week|month|quarter|year)/;
-        const naturalDateRangeMatch = input.match(naturalDateRangeRegexp);
-        if (naturalDateRangeMatch && naturalDateRangeMatch.length === 3) {
-            const lastThisNext = naturalDateRangeMatch[1];
+        const relativeDateRangeRegexp = /(last|this|next) (week|month|quarter|year)/;
+        const relativeDateRangeMatch = input.match(relativeDateRangeRegexp);
+        if (relativeDateRangeMatch && relativeDateRangeMatch.length === 3) {
+            const lastThisNext = relativeDateRangeMatch[1];
             const delta = moment.duration();
-            const range = naturalDateRangeMatch[2];
+            const range = relativeDateRangeMatch[2];
             switch (range) {
                 case 'month':
                 case 'quarter':
