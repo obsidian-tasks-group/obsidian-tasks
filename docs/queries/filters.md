@@ -412,6 +412,8 @@ For more information, see [Priorities]({{ site.baseurl }}{% link getting-started
 {: .released }
 Introduced in Tasks 1.6.0.
 
+- `no tags`
+- `has tags`
 - `tags (include|do not include) <tag>` _or_
 - `tag (includes|does not include) <tag>`
   - Matches case-insensitive (disregards capitalization).
@@ -427,13 +429,12 @@ Introduced in Tasks 1.6.0.
   - If searching for sub-tags, remember to escape the slashes in regular expressions: `\/`
 
 {: .released }
-`regex matches` and `regex does not match` were introduced in Tasks 1.13.0.
+`regex matches` and `regex does not match` were introduced in Tasks 1.13.0.<br>
+`no tags` and `has tags` were introduced in Tasks 1.26.0.
 
 #### Tag Query Examples
 {: .no_toc }
 
-- `has tags`
-- `no tags`
 - `tags include #todo`
 - `tags do not include #todo`
 - `tag regex matches /#t$/`
@@ -441,9 +442,6 @@ Introduced in Tasks 1.6.0.
 - `tag regex matches /#book$/i`
   - The trailing `i` means case-insensitive.
   - Searches for tags such as `#book`,  `#Book`, `#BOOK` and the `$` prevents matching of `#books`,  `#book/literature`, etc.
-
-{: .released }
-`has tags` and `no tags` were introduced in Tasks 1.26.0.
 
 ## Filters for File Properties
 
