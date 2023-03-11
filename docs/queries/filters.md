@@ -21,7 +21,7 @@ parent: Queries
 
 ## Searching for dates
 
-In Tasks query blocks, Tasks allows a lot of flexibility in the interpreting of dates.
+Tasks allows a lot of flexibility in the dates inside query blocks.
 
 ### Absolute dates
 
@@ -29,7 +29,7 @@ In Tasks query blocks, Tasks allows a lot of flexibility in the interpreting of 
 
 Absolute dates specify a **particular date in a calendar**. They represent the same day, regardless of today's date.
 
-Example absolute dates:
+Examples:
 
 - `2021-05-25`
 - `25th May 2023`
@@ -44,7 +44,7 @@ Relative dates are **calculated from today's date**.
 
 When the day changes, relative dates like `due today` are re-evaluated so that the list stays up-to-date (so long as your computer was not hibernating at midnight - see [#1289](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1289)).
 
-Example valid relative `<date>` filters as inspiration:
+Examples for inspiration:
 
 - `yesterday`
 - `today`
@@ -82,8 +82,9 @@ Notes:
 - `in` and `on` may be omitted.
 - If one of the `YYYY-MM-DD` dates is invalid, then it is ignored and the filter will behave as `<date>` not `<date range>`.
 - Date range cannot be specified by 2 relative dates eg `next monday three weeks`.
-- We do not recommend this, but it is technically possible to specify absolute dates in words, such as `25th May 2023`.
-  - We have found that using two such dates can lead to ambiguity and unintended results when the [chrono](https://github.com/wanasit/chrono) library parses the dates in your filter.
+- It is technically possible to specify absolute dates in words, such as `25th May 2023`.
+  - However, we do not recommend using words for specifying the two dates in ranges.
+  - This is because we have found that using two adjacent non-numeric dates can lead to ambiguity and unintended results when the [chrono](https://github.com/wanasit/chrono) library parses the dates in your `<date range>` filter.
 
 Example absolute date ranges:
 
