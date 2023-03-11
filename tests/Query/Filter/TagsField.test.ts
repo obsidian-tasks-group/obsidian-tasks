@@ -34,6 +34,23 @@ describe('tag presence & absence', () => {
         expect(filter).not.toMatchTaskFromLine('- [ ] stuff #one #two');
         expect(filter).toMatchTaskFromLine('- [ ] no tag here');
     });
+
+    it('should filter together with the global filter ("has tags")', () => {
+        updateSettings({ globalFilter: '#task' });
+
+        // Arrange
+        const filter = new TagsField().createFilterOrErrorMessage('has tags');
+
+        // Act, Assert
+        expect(filter.filterFunction).toBeDefined();
+        expect(filter.error).toBeUndefined();
+
+        expect(filter).toMatchTaskFromLine('- [ ] stuff #one #task');
+        expect(filter).toMatchTaskFromLine('- [ ] stuff #one #two #task');
+        expect(filter).toMatchTaskFromLine('- [ ] global filter is tag too #task');
+
+        resetSettings();
+    });
 });
 
 describe('tag/tags', () => {
