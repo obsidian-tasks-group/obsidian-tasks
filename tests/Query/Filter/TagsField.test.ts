@@ -45,9 +45,26 @@ describe('tag presence & absence', () => {
         expect(filter.filterFunction).toBeDefined();
         expect(filter.error).toBeUndefined();
 
-        expect(filter).toMatchTaskFromLine('- [ ] stuff #one #task');
-        expect(filter).toMatchTaskFromLine('- [ ] stuff #one #two #task');
-        expect(filter).toMatchTaskFromLine('- [ ] global filter is tag too #task');
+        expect(filter).toMatchTaskFromLine('- [ ] #task stuff #one ');
+        expect(filter).toMatchTaskFromLine('- [ ] #task stuff #one #two ');
+        expect(filter).not.toMatchTaskFromLine('- [ ] #task global filter is not a tag');
+
+        resetSettings();
+    });
+
+    it('should filter together with the global filter ("no tags")', () => {
+        updateSettings({ globalFilter: '#task' });
+
+        // Arrange
+        const filter = new TagsField().createFilterOrErrorMessage('no tags');
+
+        // Act, Assert
+        expect(filter.filterFunction).toBeDefined();
+        expect(filter.error).toBeUndefined();
+
+        expect(filter).not.toMatchTaskFromLine('- [ ] #task stuff #one ');
+        expect(filter).not.toMatchTaskFromLine('- [ ] #task stuff #one #two ');
+        expect(filter).toMatchTaskFromLine('- [ ] #task global filter is not a tag');
 
         resetSettings();
     });
