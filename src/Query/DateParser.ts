@@ -125,13 +125,13 @@ export class DateParser {
         return dateRange;
 
         function buildSpecificDateRange(
-            yearMatch: string,
-            yearFormat: string,
-            yearUnit: moment.unitOfTime.Base,
+            range: string,
+            format: string,
+            unit: moment.unitOfTime.Base,
         ): [moment.Moment, moment.Moment] {
             return [
-                moment(yearMatch, yearFormat).startOf(yearUnit).startOf('day'),
-                moment(yearMatch, yearFormat).endOf(yearUnit).startOf('day'),
+                moment(range, format).startOf(unit).startOf('day'),
+                moment(range, format).endOf(unit).startOf('day'),
             ];
         }
     }
