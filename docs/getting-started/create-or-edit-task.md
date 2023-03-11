@@ -178,4 +178,4 @@ We are tracking the iPhone scrollbar issue in [issue #1238](https://github.com/o
 
 ## Use this modal in scripts and other plugins
 
-The [Tasks API Interface](../advanced/api.md) allows this modal to be used outside of the Tasks plugin, for example in QuickAdd scripts, and by other plugins.
+The [Tasks API Interface]({{ site.baseurl }}{% link advanced/api.md %}) allows this modal to be used outside of the Tasks plugin, for example in QuickAdd scripts, and by other plugins.
