@@ -30,35 +30,27 @@ export class DateParser {
             let specificDateRange: [moment.Moment, moment.Moment] = [moment.invalid(), moment.invalid()];
 
             const yearRegex = /[0-9].../;
-            const yearFormat = 'YYYY';
-            const yearUnit = 'year';
             const yearMatch = input.match(yearRegex);
             if (yearMatch && yearMatch.length === 1 && yearMatch[0] === input) {
-                specificDateRange = buildSpecificDateRange(yearMatch[0], yearFormat, yearUnit);
+                specificDateRange = buildSpecificDateRange(yearMatch[0], 'YYYY', 'year');
             }
 
             const quarterRegex = /[0-9]...-Q[1-4]/;
-            const quarterFormat = 'YYYY-Q';
-            const quarterUnit = 'quarter';
             const quarterMatch = input.match(quarterRegex);
             if (quarterMatch && quarterMatch.length === 1 && quarterMatch[0] === input) {
-                specificDateRange = buildSpecificDateRange(quarterMatch[0], quarterFormat, quarterUnit);
+                specificDateRange = buildSpecificDateRange(quarterMatch[0], 'YYYY-Q', 'quarter');
             }
 
             const monthRegex = /[0-9]...-[0-9]./;
-            const monthFormat = 'YYYY-MM';
-            const monthUnit = 'month';
             const monthMatch = input.match(monthRegex);
             if (monthMatch && monthMatch.length === 1 && monthMatch[0] === input) {
-                specificDateRange = buildSpecificDateRange(monthMatch[0], monthFormat, monthUnit);
+                specificDateRange = buildSpecificDateRange(monthMatch[0], 'YYYY-MM', 'month');
             }
 
             const weekRegex = /[0-9]...-W[0-9]./;
-            const weekFormat = 'YYYY-WW';
-            const weekUnit = 'isoWeek';
             const weekMatch = input.match(weekRegex);
             if (weekMatch && weekMatch.length === 1 && weekMatch[0] === input) {
-                specificDateRange = buildSpecificDateRange(weekMatch[0], weekFormat, weekUnit);
+                specificDateRange = buildSpecificDateRange(weekMatch[0], 'YYYY-WW', 'isoWeek');
             }
 
             return specificDateRange;
