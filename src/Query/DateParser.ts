@@ -42,10 +42,7 @@ export class DateParser {
             const quarterUnit = 'quarter';
             const quarterMatch = input.match(quarterRegex);
             if (quarterMatch && quarterMatch.length === 1 && quarterMatch[0] === input) {
-                specificDateRange = [
-                    moment(quarterMatch[0], quarterFormat).startOf(quarterUnit).startOf('day'),
-                    moment(quarterMatch[0], quarterFormat).endOf(quarterUnit).startOf('day'),
-                ];
+                specificDateRange = buildSpecificDateRange(quarterMatch[0], quarterFormat, quarterUnit);
             }
 
             const monthRegex = /[0-9]...-[0-9]./;
@@ -127,7 +124,7 @@ export class DateParser {
         function buildSpecificDateRange(
             range: string,
             format: string,
-            unit: moment.unitOfTime.Base,
+            unit: moment.unitOfTime.Base | moment.unitOfTime._quarter,
         ): [moment.Moment, moment.Moment] {
             return [
                 moment(range, format).startOf(unit).startOf('day'),
