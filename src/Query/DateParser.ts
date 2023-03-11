@@ -32,25 +32,25 @@ export class DateParser {
             const yearRegex = /[0-9].../;
             const yearMatch = input.match(yearRegex);
             if (yearMatch && yearMatch.length === 1 && yearMatch[0] === input) {
-                specificDateRange = buildSpecificDateRange(yearMatch[0], 'YYYY', 'year');
+                specificDateRange = buildSpecificDateRange(yearMatch[0], 'YYYY');
             }
 
             const quarterRegex = /[0-9]...-Q[1-4]/;
             const quarterMatch = input.match(quarterRegex);
             if (quarterMatch && quarterMatch.length === 1 && quarterMatch[0] === input) {
-                specificDateRange = buildSpecificDateRange(quarterMatch[0], 'YYYY-Q', 'quarter');
+                specificDateRange = buildSpecificDateRange(quarterMatch[0], 'YYYY-Q');
             }
 
             const monthRegex = /[0-9]...-[0-9]./;
             const monthMatch = input.match(monthRegex);
             if (monthMatch && monthMatch.length === 1 && monthMatch[0] === input) {
-                specificDateRange = buildSpecificDateRange(monthMatch[0], 'YYYY-MM', 'month');
+                specificDateRange = buildSpecificDateRange(monthMatch[0], 'YYYY-MM');
             }
 
             const weekRegex = /[0-9]...-W[0-9]./;
             const weekMatch = input.match(weekRegex);
             if (weekMatch && weekMatch.length === 1 && weekMatch[0] === input) {
-                specificDateRange = buildSpecificDateRange(weekMatch[0], 'YYYY-WW', 'isoWeek');
+                specificDateRange = buildSpecificDateRange(weekMatch[0], 'YYYY-WW');
             }
 
             return specificDateRange;
@@ -107,11 +107,23 @@ export class DateParser {
         dateRange.forEach((d) => d.startOf('day'));
         return dateRange;
 
-        function buildSpecificDateRange(
-            range: string,
-            format: string,
-            unit: moment.unitOfTime.Base | moment.unitOfTime._quarter | moment.unitOfTime._isoWeek,
-        ): [moment.Moment, moment.Moment] {
+        function buildSpecificDateRange(range: string, format: string): [moment.Moment, moment.Moment] {
+            let unit: moment.unitOfTime.Base | moment.unitOfTime._quarter | moment.unitOfTime._isoWeek = 'second';
+            switch (format) {
+                case 'YYYY':
+                    unit = 'year';
+                    break;
+                case 'YYYY-Q':
+                    unit = 'quarter';
+                    break;
+                case 'YYYY-MM':
+                    unit = 'month';
+                    break;
+                case 'YYYY-WW':
+                    unit = 'isoWeek';
+                    break;
+            }
+
             return [
                 moment(range, format).startOf(unit).startOf('day'),
                 moment(range, format).endOf(unit).startOf('day'),
