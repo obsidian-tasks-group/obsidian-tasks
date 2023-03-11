@@ -1,6 +1,8 @@
 import type { Task } from '../../Task';
 import type { Comparator } from '../Sorter';
 import { Sorter } from '../Sorter';
+import type { FilterOrErrorMessage } from './Filter';
+import { FilterInstructions } from './FilterInstructions';
 import { MultiTextField } from './MultiTextField';
 
 /**
@@ -12,6 +14,33 @@ export class TagsField extends MultiTextField {
     // -----------------------------------------------------------------------------------------------------------------
     // Filtering
     // -----------------------------------------------------------------------------------------------------------------
+    private readonly filterInstructions: FilterInstructions;
+
+    constructor() {
+        super();
+        this.filterInstructions = new FilterInstructions();
+        this.filterInstructions.add(`has ${this.fieldNameSingular()}`, (task: Task) => this.values(task).length > 0);
+        this.filterInstructions.add(`has ${this.fieldNamePlural()}`, (task: Task) => this.values(task).length > 0);
+        this.filterInstructions.add(`no ${this.fieldNameSingular()}`, (task: Task) => this.values(task).length === 0);
+        this.filterInstructions.add(`no ${this.fieldNamePlural()}`, (task: Task) => this.values(task).length === 0);
+    }
+
+    public createFilterOrErrorMessage(line: string): FilterOrErrorMessage {
+        const filterResult = this.filterInstructions.createFilterOrErrorMessage(line);
+        if (filterResult.filter !== undefined) {
+            return filterResult;
+        }
+
+        return super.createFilterOrErrorMessage(line);
+    }
+
+    public canCreateFilterForLine(line: string): boolean {
+        if (this.filterInstructions.canCreateFilterForLine(line)) {
+            return true;
+        }
+
+        return super.canCreateFilterForLine(line);
+    }
 
     public fieldNameSingular(): string {
         return 'tag';

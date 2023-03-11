@@ -8,6 +8,68 @@ import { Sort } from '../../../src/Query/Sort';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { expectTaskComparesAfter, expectTaskComparesBefore } from '../../CustomMatchers/CustomMatchersForSorting';
 
+describe('tag presence & absence', () => {
+    it.each(['has tag', 'has tags'])('should have "%s" filtering', (filterLine: string) => {
+        // Arrange
+        const filter = new TagsField().createFilterOrErrorMessage(filterLine);
+
+        // Act, Assert
+        expect(filter.filterFunction).toBeDefined();
+        expect(filter.error).toBeUndefined();
+
+        expect(filter).toMatchTaskFromLine('- [ ] stuff #one');
+        expect(filter).toMatchTaskFromLine('- [ ] stuff #one #two');
+        expect(filter).not.toMatchTaskFromLine('- [ ] no tag here');
+    });
+
+    it.each(['no tag', 'no tags'])('should have "%s" filtering', (filterLine: string) => {
+        // Arrange
+        const filter = new TagsField().createFilterOrErrorMessage(filterLine);
+
+        // Act, Assert
+        expect(filter.filterFunction).toBeDefined();
+        expect(filter.error).toBeUndefined();
+
+        expect(filter).not.toMatchTaskFromLine('- [ ] stuff #one');
+        expect(filter).not.toMatchTaskFromLine('- [ ] stuff #one #two');
+        expect(filter).toMatchTaskFromLine('- [ ] no tag here');
+    });
+
+    it('should filter together with the global filter ("has tags")', () => {
+        updateSettings({ globalFilter: '#task' });
+
+        // Arrange
+        const filter = new TagsField().createFilterOrErrorMessage('has tags');
+
+        // Act, Assert
+        expect(filter.filterFunction).toBeDefined();
+        expect(filter.error).toBeUndefined();
+
+        expect(filter).toMatchTaskFromLine('- [ ] #task stuff #one ');
+        expect(filter).toMatchTaskFromLine('- [ ] #task stuff #one #two ');
+        expect(filter).not.toMatchTaskFromLine('- [ ] #task global filter is not a tag');
+
+        resetSettings();
+    });
+
+    it('should filter together with the global filter ("no tags")', () => {
+        updateSettings({ globalFilter: '#task' });
+
+        // Arrange
+        const filter = new TagsField().createFilterOrErrorMessage('no tags');
+
+        // Act, Assert
+        expect(filter.filterFunction).toBeDefined();
+        expect(filter.error).toBeUndefined();
+
+        expect(filter).not.toMatchTaskFromLine('- [ ] #task stuff #one ');
+        expect(filter).not.toMatchTaskFromLine('- [ ] #task stuff #one #two ');
+        expect(filter).toMatchTaskFromLine('- [ ] #task global filter is not a tag');
+
+        resetSettings();
+    });
+});
+
 describe('tag/tags', () => {
     it('should honour any # in query', () => {
         const filter = new TagsField().createFilterOrErrorMessage('tags include #home');
