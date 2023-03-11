@@ -412,6 +412,8 @@ For more information, see [Priorities]({{ site.baseurl }}{% link getting-started
 {: .released }
 Introduced in Tasks 1.6.0.
 
+- `no tags`
+- `has tags`
 - `tags (include|do not include) <tag>` _or_
 - `tag (includes|does not include) <tag>`
   - Matches case-insensitive (disregards capitalization).
@@ -427,7 +429,8 @@ Introduced in Tasks 1.6.0.
   - If searching for sub-tags, remember to escape the slashes in regular expressions: `\/`
 
 {: .released }
-`regex matches` and `regex does not match` were introduced in Tasks 1.13.0.
+`regex matches` and `regex does not match` were introduced in Tasks 1.13.0.<br>
+`no tags` and `has tags` were introduced in Tasks 1.26.0.
 
 #### Tag Query Examples
 {: .no_toc }
