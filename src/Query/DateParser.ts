@@ -50,10 +50,7 @@ export class DateParser {
             const monthUnit = 'month';
             const monthMatch = input.match(monthRegex);
             if (monthMatch && monthMatch.length === 1 && monthMatch[0] === input) {
-                specificDateRange = [
-                    moment(monthMatch[0], monthFormat).startOf(monthUnit).startOf('day'),
-                    moment(monthMatch[0], monthFormat).endOf(monthUnit).startOf('day'),
-                ];
+                specificDateRange = buildSpecificDateRange(monthMatch[0], monthFormat, monthUnit);
             }
 
             const weekRegex = /[0-9]...-W[0-9]./;
@@ -61,10 +58,7 @@ export class DateParser {
             const weekUnit = 'isoWeek';
             const weekMatch = input.match(weekRegex);
             if (weekMatch && weekMatch.length === 1 && weekMatch[0] === input) {
-                specificDateRange = [
-                    moment(weekMatch[0], weekFormat).startOf(weekUnit).startOf('day'),
-                    moment(weekMatch[0], weekFormat).endOf(weekUnit).startOf('day'),
-                ];
+                specificDateRange = buildSpecificDateRange(weekMatch[0], weekFormat, weekUnit);
             }
 
             return specificDateRange;
@@ -124,7 +118,7 @@ export class DateParser {
         function buildSpecificDateRange(
             range: string,
             format: string,
-            unit: moment.unitOfTime.Base | moment.unitOfTime._quarter,
+            unit: moment.unitOfTime.Base | moment.unitOfTime._quarter | moment.unitOfTime._isoWeek,
         ): [moment.Moment, moment.Moment] {
             return [
                 moment(range, format).startOf(unit).startOf('day'),
