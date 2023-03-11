@@ -34,7 +34,7 @@ export class DateParser {
             const yearUnit = 'year';
             const yearMatch = input.match(yearRegex);
             if (yearMatch && yearMatch.length === 1 && yearMatch[0] === input) {
-                specificDateRange = buildSpecificDateRange(yearMatch, yearFormat, yearUnit);
+                specificDateRange = buildSpecificDateRange(yearMatch[0], yearFormat, yearUnit);
             }
 
             const quarterRegex = /[0-9]...-Q[1-4]/;
@@ -125,13 +125,13 @@ export class DateParser {
         return dateRange;
 
         function buildSpecificDateRange(
-            yearMatch: RegExpMatchArray,
+            yearMatch: string,
             yearFormat: string,
             yearUnit: moment.unitOfTime.Base,
         ): [moment.Moment, moment.Moment] {
             return [
-                moment(yearMatch[0], yearFormat).startOf(yearUnit).startOf('day'),
-                moment(yearMatch[0], yearFormat).endOf(yearUnit).startOf('day'),
+                moment(yearMatch, yearFormat).startOf(yearUnit).startOf('day'),
+                moment(yearMatch, yearFormat).endOf(yearUnit).startOf('day'),
             ];
         }
     }
