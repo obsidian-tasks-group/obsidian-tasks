@@ -20,6 +20,10 @@ export class DateParser {
      * @return - A Tuple of dates. If both input dates are invalid, then both ouput dates will be invalid.
      */
     public static parseDateRange(input: string): [moment.Moment, moment.Moment] {
+        const specificYearRegex = /[0-9].../;
+        const specificQuarterRegex = /[0-9]...-Q[1-4]/;
+        const specificMonthRegex = /[0-9]...-[0-9]./;
+        const specificWeekRegex = /[0-9]...-W[0-9]./;
         const specificYearFormat = 'YYYY';
         const specificQuarterFormat = 'YYYY-Q';
         const specificMonthFormat = 'YYYY-MM';
@@ -34,26 +38,22 @@ export class DateParser {
             // Or a user error
             let specificDateRange: [moment.Moment, moment.Moment] = [moment.invalid(), moment.invalid()];
 
-            const yearRegex = /[0-9].../;
-            const yearMatch = input.match(yearRegex);
+            const yearMatch = input.match(specificYearRegex);
             if (yearMatch && yearMatch.length === 1 && yearMatch[0] === input) {
                 specificDateRange = buildSpecificDateRange(yearMatch[0], specificYearFormat);
             }
 
-            const quarterRegex = /[0-9]...-Q[1-4]/;
-            const quarterMatch = input.match(quarterRegex);
+            const quarterMatch = input.match(specificQuarterRegex);
             if (quarterMatch && quarterMatch.length === 1 && quarterMatch[0] === input) {
                 specificDateRange = buildSpecificDateRange(quarterMatch[0], specificQuarterFormat);
             }
 
-            const monthRegex = /[0-9]...-[0-9]./;
-            const monthMatch = input.match(monthRegex);
+            const monthMatch = input.match(specificMonthRegex);
             if (monthMatch && monthMatch.length === 1 && monthMatch[0] === input) {
                 specificDateRange = buildSpecificDateRange(monthMatch[0], specificMonthFormat);
             }
 
-            const weekRegex = /[0-9]...-W[0-9]./;
-            const weekMatch = input.match(weekRegex);
+            const weekMatch = input.match(specificWeekRegex);
             if (weekMatch && weekMatch.length === 1 && weekMatch[0] === input) {
                 specificDateRange = buildSpecificDateRange(weekMatch[0], specificWeekFormat);
             }
