@@ -7,11 +7,6 @@ type Writeable<T> = { -readonly [P in keyof T]: T[P] };
  * description of that Task.
  *
  * All fields are writeable for convenience.
- *
- * Some previously non-nullable fields are marked nullable so that they
- *    can optionally share a common code path for parsing.
- *    example: {@link TaskDetails.tags} can be left nullable by {@link TaskSerializer.deserialize})
- *             so that {@link Task.fromLine} parses tags from the description.
  */
 export type TaskDetails = Writeable<
     Pick<
@@ -24,8 +19,8 @@ export type TaskDetails = Writeable<
         | 'dueDate'
         | 'doneDate'
         | 'recurrence'
-    > &
-        Partial<Pick<Task, 'tags'>>
+        | 'tags'
+    >
 >;
 
 /**
