@@ -246,13 +246,12 @@ export class Task {
             scheduledDateIsInferred = true;
         }
 
-        taskInfo.tags ??= Task.extractHashtags(taskInfo.description).filter((tag) => tag !== globalFilter);
+        if (globalFilter) {
+            taskInfo.tags = taskInfo.tags.filter((tag) => tag !== globalFilter);
+        }
 
         return new Task({
             ...taskInfo,
-            // Explicitly adding 'tags' wouldn't be necessary if Typescript could infer that `taskInfo.tags`
-            // is guaranteed to be non-nullable within the spread. Might be fixed in a later version (> 4.7.4) of Typescript
-            tags: taskInfo.tags,
             status,
             indentation,
             listMarker,

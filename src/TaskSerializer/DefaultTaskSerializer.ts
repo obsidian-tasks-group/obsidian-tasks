@@ -2,7 +2,7 @@ import type { Moment } from 'moment';
 import { TaskLayout } from '../TaskLayout';
 import type { TaskLayoutComponent } from '../TaskLayout';
 import { Recurrence } from '../Recurrence';
-import { Priority, type Task, TaskRegularExpressions } from '../Task';
+import { Priority, Task, TaskRegularExpressions } from '../Task';
 import type { TaskDetails, TaskSerializer } from '.';
 
 /* Interface describing the symbols that {@link DefaultTaskSerializer}
@@ -281,7 +281,7 @@ export class DefaultTaskSerializer implements TaskSerializer {
             dueDate,
             doneDate,
             recurrence,
-            tags: undefined,
+            tags: Task.extractHashtags(line),
         };
     }
 }
