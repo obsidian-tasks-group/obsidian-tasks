@@ -1,9 +1,8 @@
 import type { Moment } from 'moment';
-import { LayoutOptions, TaskLayout } from './TaskLayout';
-import type { TaskLayoutComponent } from './TaskLayout';
+import type { LayoutOptions } from './TaskLayout';
 import type { TaskLocation } from './TaskLocation';
 import { Recurrence } from './Recurrence';
-import { getSettings } from './Config/Settings';
+import { getSettings, getTaskFormat } from './Config/Settings';
 import { StatusRegistry } from './StatusRegistry';
 import type { Status } from './Status';
 import { Urgency } from './Urgency';
@@ -427,68 +426,8 @@ export class Task {
      * @memberof Task
      */
     public toString(layoutOptions?: LayoutOptions): string {
-        const taskLayout = new TaskLayout(layoutOptions);
-        let taskString = '';
-        for (const component of taskLayout.layoutComponents) {
-            taskString += this.componentToString(taskLayout, component);
-        }
-        return taskString;
-    }
-
-    /**
-     * Renders a specific TaskLayoutComponent of the task (its description, priority, etc) as a string.
-     */
-    public componentToString(layout: TaskLayout, component: TaskLayoutComponent) {
-        switch (component) {
-            case 'description':
-                return this.description;
-            case 'priority': {
-                let priority: string = '';
-
-                if (this.priority === Priority.High) {
-                    priority = ' ' + prioritySymbols.High;
-                } else if (this.priority === Priority.Medium) {
-                    priority = ' ' + prioritySymbols.Medium;
-                } else if (this.priority === Priority.Low) {
-                    priority = ' ' + prioritySymbols.Low;
-                }
-                return priority;
-            }
-            case 'startDate':
-                if (!this.startDate) return '';
-                return layout.options.shortMode
-                    ? ' ' + startDateSymbol
-                    : ` ${startDateSymbol} ${this.startDate.format(TaskRegularExpressions.dateFormat)}`;
-            case 'createdDate':
-                if (!this.createdDate) return '';
-                return layout.options.shortMode
-                    ? ' ' + createdDateSymbol
-                    : ` ${createdDateSymbol} ${this.createdDate.format(TaskRegularExpressions.dateFormat)}`;
-            case 'scheduledDate':
-                if (!this.scheduledDate || this.scheduledDateIsInferred) return '';
-                return layout.options.shortMode
-                    ? ' ' + scheduledDateSymbol
-                    : ` ${scheduledDateSymbol} ${this.scheduledDate.format(TaskRegularExpressions.dateFormat)}`;
-            case 'doneDate':
-                if (!this.doneDate) return '';
-                return layout.options.shortMode
-                    ? ' ' + doneDateSymbol
-                    : ` ${doneDateSymbol} ${this.doneDate.format(TaskRegularExpressions.dateFormat)}`;
-            case 'dueDate':
-                if (!this.dueDate) return '';
-                return layout.options.shortMode
-                    ? ' ' + dueDateSymbol
-                    : ` ${dueDateSymbol} ${this.dueDate.format(TaskRegularExpressions.dateFormat)}`;
-            case 'recurrenceRule':
-                if (!this.recurrence) return '';
-                return layout.options.shortMode
-                    ? ' ' + recurrenceSymbol
-                    : ` ${recurrenceSymbol} ${this.recurrence.toText()}`;
-            case 'blockLink':
-                return this.blockLink ?? '';
-            default:
-                throw new Error(`Don't know how to render task component of type '${component}'`);
-        }
+        layoutOptions;
+        return getTaskFormat().taskSerializer.serialize(this);
     }
 
     /**
