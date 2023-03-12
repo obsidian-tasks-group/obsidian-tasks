@@ -37,7 +37,7 @@ All open tasks that are due within the next two weeks, and either have the #inbo
 
 ---
 
-All open tasks due next month but not scheduled:
+All open tasks due during the next calendar month but not scheduled:
 
     ```tasks
     not done
@@ -56,10 +56,10 @@ All done tasks that are anywhere in the vault under a `tasks` heading (e.g. `## 
 
 ---
 
-All tasks done this month but that were due or scheduled the month before:
+All tasks done this calendar month but that were due or scheduled on the month before:
 
     ```tasks
-    (due before this month) OR (scheduled before this month)
+    (due last month) OR (scheduled last month)
     done this month
     ```
 
