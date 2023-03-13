@@ -11,6 +11,8 @@ import {
     toMatchTaskWithStatus,
 } from './CustomMatchersForFilters';
 
+import { toMatchTaskDetails } from './CustomMatchersForTaskSerializer';
+
 expect.extend({
     toBeValid,
     toHaveExplanation,
@@ -19,4 +21,5 @@ expect.extend({
     toMatchTaskWithHeading,
     toMatchTaskWithPath,
     toMatchTaskWithStatus,
+    toMatchTaskDetails,
 });
