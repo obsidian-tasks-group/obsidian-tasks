@@ -126,6 +126,12 @@
     width: 100%;
 }
 
+.tasks-modal textarea {
+    width: 100%;
+    min-height: calc(var(--input-height) * 2);
+    resize: vertical;
+}
+
 .tasks-modal-priorities {
     display: grid;
     grid-template-columns: 4em 5em 5em 7em 5em;
