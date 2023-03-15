@@ -263,7 +263,7 @@
     const _onDescriptionKeyDown = (e: KeyboardEvent) => {
         if (e.key === 'Enter') {
             e.preventDefault();
-            _onSubmit();
+            if (formIsValid) _onSubmit();
         }
     }
 
