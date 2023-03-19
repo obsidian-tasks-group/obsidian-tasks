@@ -263,6 +263,7 @@ export class Task {
     }
     /**
      * Create an HTML rendered List Item element (LI) for the current task.
+     * @note Output is based on the {@link DefaultTaskSerializer}'s format, with default (emoji) symbols
      * @param {renderTails}
      */
     public async toLi(renderDetails: TaskLineRenderDetails): Promise<HTMLLIElement> {
@@ -271,6 +272,8 @@ export class Task {
 
     /**
      * Flatten the task as a string that includes all its components.
+     *
+     * @note Output depends on {@link Settings.taskFormat}
      * @return {*}  {string}
      * @memberof Task
      */
@@ -281,6 +284,7 @@ export class Task {
     /**
      * Returns the Task as a list item with a checkbox.
      *
+     * @note Output depends on {@link Settings.taskFormat}
      * @return {*}  {string}
      * @memberof Task
      */
