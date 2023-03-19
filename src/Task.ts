@@ -243,6 +243,9 @@ export class Task {
             scheduledDateIsInferred = true;
         }
 
+        // Ensure that whitespace is removed around tags
+        taskInfo.tags = taskInfo.tags.map((tag) => tag.trim());
+
         if (globalFilter) {
             taskInfo.tags = taskInfo.tags.filter((tag) => tag !== globalFilter);
         }
