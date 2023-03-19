@@ -1,7 +1,7 @@
 import type { Moment } from 'moment';
 import type { TaskLocation } from './TaskLocation';
 import type { Recurrence } from './Recurrence';
-import { getSettings, getTaskFormat } from './Config/Settings';
+import { getSettings, getUserSelectedTaskFormat } from './Config/Settings';
 import { StatusRegistry } from './StatusRegistry';
 import type { Status } from './Status';
 import { Urgency } from './Urgency';
@@ -233,7 +233,7 @@ export class Task {
         if (blockLink !== '') {
             description = description.replace(TaskRegularExpressions.blockLinkRegex, '').trim();
         }
-        const { taskSerializer } = getTaskFormat();
+        const { taskSerializer } = getUserSelectedTaskFormat();
         const taskInfo = taskSerializer.deserialize(description);
 
         let scheduledDateIsInferred = false;
@@ -278,7 +278,7 @@ export class Task {
      * @memberof Task
      */
     public toString(): string {
-        return getTaskFormat().taskSerializer.serialize(this);
+        return getUserSelectedTaskFormat().taskSerializer.serialize(this);
     }
 
     /**

@@ -19,18 +19,17 @@ interface TaskFormat {
     taskSerializer: TaskSerializer;
 }
 
-const TaskFormatMap = {
-    Default: { taskSerializer: new DefaultTaskSerializer(DEFAULT_SYMBOLS) },
+export const TASK_FORMATS = {
+    tasksPluginEmoji: { taskSerializer: new DefaultTaskSerializer(DEFAULT_SYMBOLS) },
 } as const;
 
-type TaskFormatMap = typeof TaskFormatMap;
-export const taskFormatKeys = Object.keys(TaskFormatMap) as (keyof TaskFormatMap)[];
+export type TASK_FORMATS = typeof TASK_FORMATS; // For convenience to make some typing easier
 
 export interface Settings {
     globalFilter: string;
     removeGlobalFilter: boolean;
     setCreatedDate: boolean;
-    taskFormat: keyof TaskFormatMap;
+    taskFormat: keyof TASK_FORMATS;
     setDoneDate: boolean;
     autoSuggestInEditor: boolean;
     autoSuggestMinMatch: number;
@@ -58,7 +57,7 @@ const defaultSettings: Settings = {
     globalFilter: '',
     removeGlobalFilter: false,
     setCreatedDate: false,
-    taskFormat: 'Default',
+    taskFormat: 'tasksPluginEmoji',
     setDoneDate: true,
     autoSuggestInEditor: true,
     autoSuggestMinMatch: 0,
@@ -167,14 +166,11 @@ export const toggleFeature = (internalName: string, enabled: boolean): FeatureFl
 };
 
 /**
- * Retrieves specified task format. If none provided, returns one specified by settings
+ * Retrieves the {@link TaskFormat} that corresponds to user's selection ({@link Settings.taskFormat})
  *
- * @export
- * @param name The name of the TaskFormat
- * @returns TaskFormat
+ * @exports
+ * @returns {TaskFormat}
  */
-export function getTaskFormat(name?: undefined): TaskFormat;
-export function getTaskFormat<T extends keyof TaskFormatMap>(name: T): TaskFormatMap[T];
-export function getTaskFormat(name?: keyof TaskFormatMap): TaskFormat {
-    return TaskFormatMap[name || getSettings().taskFormat];
+export function getUserSelectedTaskFormat(): TaskFormat {
+    return TASK_FORMATS[getSettings().taskFormat];
 }

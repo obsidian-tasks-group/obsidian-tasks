@@ -2,7 +2,7 @@
     import * as chrono from 'chrono-node';
     import { onMount } from 'svelte';
     import { Recurrence } from '../Recurrence';
-    import { getSettings, getTaskFormat } from '../Config/Settings';
+    import { getSettings, TASK_FORMATS } from '../Config/Settings';
     import { Status } from '../Status';
     import { Priority, Task } from '../Task';
     import { doAutocomplete } from '../DateAbbreviations';
@@ -18,7 +18,7 @@
         startDateSymbol,
         scheduledDateSymbol,
         dueDateSymbol,
-    } = getTaskFormat('Default').taskSerializer.symbols;
+    } = TASK_FORMATS.tasksPluginEmoji.taskSerializer.symbols;
 
     let descriptionInput: HTMLInputElement;
     let editableTask: {
