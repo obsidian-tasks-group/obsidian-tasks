@@ -33,6 +33,10 @@ export type TaskDetails = Writeable<
  *        - [ ] This is a task description
  *              ~~~~~~~~~~~~~~~~~~~~~~~~~~
  *
+ * {@link TaskSerializer} is not responsible for:
+ *
+ *        - Retrieving and setting a fallback scheduled date (done in {@link Task.fromLine})
+ *
  * @exports
  * @interface TaskSerializer
  */
