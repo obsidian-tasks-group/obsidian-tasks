@@ -5,7 +5,7 @@ import * as taskModule from './Task';
 import type { LayoutOptions, TaskLayoutComponent } from './TaskLayout';
 import { TaskLayout } from './TaskLayout';
 import { replaceTaskWithTasks } from './File';
-import { getSettings, getTaskFormat } from './Config/Settings';
+import { TASK_FORMATS, getSettings } from './Config/Settings';
 
 export type TaskLineRenderDetails = {
     parentUlElement: HTMLElement;
@@ -101,9 +101,9 @@ async function taskToHtml(
 ) {
     let taskAsString = '';
     const taskLayout = new TaskLayout(renderDetails.layoutOptions);
-    const defaultSerializer = getTaskFormat('Default').taskSerializer;
+    const emojiSerializer = TASK_FORMATS.tasksPluginEmoji.taskSerializer;
     for (const component of taskLayout.layoutComponents) {
-        let componentString = defaultSerializer.componentToString(task, taskLayout, component);
+        let componentString = emojiSerializer.componentToString(task, taskLayout, component);
         if (componentString) {
             if (component === 'description') componentString = removeGlobalFilterIfNeeded(componentString);
             taskAsString += componentString;
@@ -170,7 +170,7 @@ function addTooltip({
     isFilenameUnique: boolean | undefined;
 }): void {
     const { recurrenceSymbol, startDateSymbol, createdDateSymbol, scheduledDateSymbol, dueDateSymbol, doneDateSymbol } =
-        getTaskFormat('Default').taskSerializer.symbols;
+        TASK_FORMATS.tasksPluginEmoji.taskSerializer.symbols;
 
     element.addEventListener('mouseenter', () => {
         const tooltip = element.createDiv();

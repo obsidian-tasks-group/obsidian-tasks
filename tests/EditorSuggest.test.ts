@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 import moment from 'moment';
-import { getSettings, getTaskFormat } from '../src/Config/Settings';
+import { TASK_FORMATS, getSettings } from '../src/Config/Settings';
 import { buildSuggestions } from '../src/Suggestor/Suggestor';
 import type { SuggestInfo } from '../src/Suggestor/Suggestor';
 
@@ -82,6 +82,8 @@ describe('auto-complete', () => {
     // See suggestions in https://github.com/obsidian-tasks-group/obsidian-tasks/issues/861#issuecomment-1180788860
     it.skip('show all suggested text', () => {
         // Arrange
+        const { dueDateSymbol, scheduledDateSymbol, startDateSymbol, recurrenceSymbol } =
+            TASK_FORMATS.tasksPluginEmoji.taskSerializer.symbols;
         const originalSettings = getSettings();
         originalSettings.autoSuggestMaxItems = 200;
 
@@ -90,8 +92,6 @@ describe('auto-complete', () => {
         // const todaySpy = jest
         //     .spyOn(Date, 'now')
         //     .mockReturnValue(moment('2022-06-11').valueOf());
-        const { dueDateSymbol, scheduledDateSymbol, startDateSymbol, recurrenceSymbol } =
-            getTaskFormat('Default').taskSerializer.symbols;
 
         const lines = [
             '- [ ] some task',

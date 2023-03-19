@@ -1,10 +1,10 @@
 import type { Settings } from '../Config/Settings';
-import { getTaskFormat } from '../Config/Settings';
+import { TASK_FORMATS } from '../Config/Settings';
 import { DateParser } from '../Query/DateParser';
 import { doAutocomplete } from '../DateAbbreviations';
 import { Recurrence } from '../Recurrence';
 import { TaskRegularExpressions } from '../Task';
-const symbols = getTaskFormat('Default').taskSerializer.symbols;
+const { symbols } = TASK_FORMATS.tasksPluginEmoji.taskSerializer;
 const datePrefixCharacters = `${symbols.startDateSymbol}${symbols.scheduledDateSymbol}${symbols.dueDateSymbol}`;
 
 /*
