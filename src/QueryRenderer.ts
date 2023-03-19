@@ -190,8 +190,8 @@ class QueryRenderChild extends MarkdownRenderChild {
         const taskList = content.createEl('ul');
         taskList.addClasses(['contains-task-list', 'plugin-tasks-query-result']);
         taskList.addClasses(layout.specificClasses);
-        // TODO TEMP add tests
-        taskList.addClasses(this.getGroupingClasses());
+        const groupingAttribute = this.getGroupingAttribute();
+        if (groupingAttribute && groupingAttribute.length > 0) taskList.dataset.taskGroupBy = groupingAttribute;
         for (let i = 0; i < tasksCount; i++) {
             const task = tasks[i];
             const isFilenameUnique = this.isFilenameUnique({ task });
@@ -359,12 +359,11 @@ class QueryRenderChild extends MarkdownRenderChild {
         return allFilesWithSameName.length < 2;
     }
 
-    private getGroupingClasses() {
-        const classes: string[] = [];
+    private getGroupingAttribute() {
+        const groupingRules: string[] = [];
         for (const group of this.query.grouping) {
-            const className = `tasks-group-by-${group.property}`;
-            classes.push(className);
+            groupingRules.push(group.property);
         }
-        return classes;
+        return groupingRules.join(',');
     }
 }

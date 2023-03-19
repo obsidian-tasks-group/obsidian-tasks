@@ -1,10 +1,11 @@
-import { App, Editor, MarkdownView, View } from 'obsidian';
+import { App, Editor, MarkdownView } from 'obsidian';
+import type { MarkdownFileInfo } from 'obsidian';
 import { TaskModal } from '../TaskModal';
 import type { Task } from '../Task';
 import { DateFallback } from '../DateFallback';
 import { taskFromLine } from './CreateOrEditTaskParser';
 
-export const createOrEdit = (checking: boolean, editor: Editor, view: View, app: App) => {
+export const createOrEdit = (checking: boolean, editor: Editor, view: MarkdownView | MarkdownFileInfo, app: App) => {
     if (checking) {
         return view instanceof MarkdownView;
     }
