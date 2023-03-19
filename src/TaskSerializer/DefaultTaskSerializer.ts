@@ -149,13 +149,13 @@ export class DefaultTaskSerializer implements TaskSerializer {
         }
     }
 
-    /* Try to parse Task Details from a string
+    /* Parse TaskDetails from the textual description of a {@link Task}
      *
      * @param line The string to parse
      *
-     * @return TaskDetails if parsing was successful, null otherwise
+     * @return {TaskDetails}
      */
-    public deserialize(line: string): TaskDetails | null {
+    public deserialize(line: string): TaskDetails {
         const { prioritySymbols, TaskFormatRegularExpressions } = this.symbols;
 
         // Keep matching and removing special strings from the end of the

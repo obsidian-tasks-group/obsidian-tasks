@@ -235,9 +235,6 @@ export class Task {
         }
         const { taskSerializer } = getTaskFormat();
         const taskInfo = taskSerializer.deserialize(description);
-        if (taskInfo == null) {
-            return null;
-        }
 
         let scheduledDateIsInferred = false;
         // Infer the scheduled date from the file name if not set explicitly
