@@ -15,11 +15,18 @@ export type HeadingState = {
     [id: string]: boolean;
 };
 
+/**
+ * Interface encapsulating how a Task is written to and read from text
+ *
+ */
 interface TaskFormat {
+    /** User facing name of the {@link TaskFormat} */
     displayName: string;
+    /** {@link TaskSerializer} responsible for reading Tasks from text and writing them back into text */
     taskSerializer: TaskSerializer;
 }
 
+/** Map of all defined {@link TaskFormat}s */
 export const TASK_FORMATS = {
     tasksPluginEmoji: { displayName: 'Default', taskSerializer: new DefaultTaskSerializer(DEFAULT_SYMBOLS) },
 } as const;
