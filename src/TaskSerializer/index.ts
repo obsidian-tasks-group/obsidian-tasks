@@ -41,9 +41,9 @@ export interface TaskSerializer {
      * Parses task details from the string representation of a task
      *
      * @param line The single line of text to parse
-     * @returns The parsed {@link TaskDetails}, or null the string could not be parsed
+     * @returns {TaskDetails} Details parsed from {@link line}
      */
-    deserialize(line: string): TaskDetails | null;
+    deserialize(line: string): TaskDetails;
 
     /**
      * Creates the string representation of a {@link Task}
