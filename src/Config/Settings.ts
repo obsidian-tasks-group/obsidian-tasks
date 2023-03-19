@@ -16,11 +16,12 @@ export type HeadingState = {
 };
 
 interface TaskFormat {
+    displayName: string;
     taskSerializer: TaskSerializer;
 }
 
 export const TASK_FORMATS = {
-    tasksPluginEmoji: { taskSerializer: new DefaultTaskSerializer(DEFAULT_SYMBOLS) },
+    tasksPluginEmoji: { displayName: 'Default', taskSerializer: new DefaultTaskSerializer(DEFAULT_SYMBOLS) },
 } as const;
 
 export type TASK_FORMATS = typeof TASK_FORMATS; // For convenience to make some typing easier
