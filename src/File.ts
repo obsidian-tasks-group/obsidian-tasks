@@ -155,7 +155,7 @@ const tryRepetitive = async ({
     const taskLineNumber = findLineNumberOfTaskToToggle(originalTask, fileLines, listItemsCache, errorAndNotice);
 
     if (taskLineNumber === undefined) {
-        const logDataForMocking = true;
+        const logDataForMocking = false;
         if (logDataForMocking) {
             // There was an error finding the correct line to toggle,
             // so write out to the console a representation of the data needed to reconstruct the above
