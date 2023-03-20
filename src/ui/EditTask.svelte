@@ -20,7 +20,7 @@
         dueDateSymbol,
     } = TASK_FORMATS.tasksPluginEmoji.taskSerializer.symbols;
 
-    let descriptionInput: HTMLInputElement;
+    let descriptionInput: HTMLTextAreaElement;
     let editableTask: {
         description: string;
         status: Status;
@@ -45,6 +45,7 @@
         forwardOnly: true
     };
 
+    let isDescriptionValid: boolean = true;
     let parsedCreated: string = '';
     let parsedStartDate: string = '';
     let isStartDateValid: boolean = true;
@@ -57,6 +58,7 @@
     let parsedDone: string = '';
     let addGlobalFilterOnSave: boolean = false;
     let withAccessKeys: boolean = true;
+    let formIsValid: boolean = true;
 
     // 'weekend' abbreviation ommitted due to lack of space.
     let datePlaceholder =
@@ -155,6 +157,8 @@
     }
 
     $: accesskey = (key: string) => withAccessKeys ? key : null;
+    $: formIsValid = isDueDateValid && isRecurrenceValid && isScheduledDateValid && isStartDateValid && isDescriptionValid;
+    $: isDescriptionValid = editableTask.description.trim() !== '';
 
     $: {
         editableTask.startDate = doAutocomplete(editableTask.startDate);
@@ -257,6 +261,20 @@
         onSubmit([]);
     }
 
+    const _onDescriptionKeyDown = (e: KeyboardEvent) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            if (formIsValid) _onSubmit();
+        }
+    }
+
+    // this is called, when text is pasted or dropped into
+    // the description field, to remove any linebreaks
+    const _removeLinebreaksFromDescription = () => {
+        // wrapped into a timer to run after the paste/drop event
+        setTimeout(() => { editableTask.description = editableTask.description.replace(/[\r\n]+/g, ' ')}, 0);
+    }
+
     const _onSubmit = () => {
         const { globalFilter } = getSettings();
         let description = editableTask.description.trim();
@@ -323,7 +341,7 @@
         <div class="tasks-modal-section">
             <label for="description">Descrip<span class="accesskey">t</span>ion</label>
             <!-- svelte-ignore a11y-accesskey -->
-            <input
+            <textarea
                 bind:value={editableTask.description}
                 bind:this={descriptionInput}
                 id="description"
@@ -331,6 +349,9 @@
                 class="tasks-modal-description"
                 placeholder="Take out the trash"
                 accesskey={accesskey("t")}
+                on:keydown={_onDescriptionKeyDown}
+                on:paste={_removeLinebreaksFromDescription}
+                on:drop={_removeLinebreaksFromDescription}
             />
         </div>
 
@@ -444,8 +465,12 @@
         <!--  Status  -->
         <!-- --------------------------------------------------------------------------- -->
         <div class="tasks-modal-section">
-            <label for="status">Status </label>
-            <select bind:value={editableTask.status} id="status-type" class="dropdown">
+            <label for="status">Stat<span class="accesskey">u</span>s</label>
+            <!-- svelte-ignore a11y-accesskey -->
+            <select bind:value={editableTask.status}
+                    id="status-type"
+                    class="dropdown"
+                    accesskey={accesskey('u')}>
                 {#each statusOptions as status}
                     <option value={status}>{status.name} [{status.symbol}]</option>
                 {/each}
@@ -483,8 +508,7 @@
             </div>
         </div>
         <div class="tasks-modal-section tasks-modal-buttons">
-            <button disabled={!(isDueDateValid && isRecurrenceValid && isScheduledDateValid && isStartDateValid)}
-                type="submit" class="mod-cta">Apply
+            <button disabled={!formIsValid} type="submit" class="mod-cta">Apply
             </button>
             <button type="button" on:click={_onClose}>Cancel</button>
         </div>
