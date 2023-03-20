@@ -141,6 +141,7 @@ const tryRepetitive = async ({
     }
 
     // before reading the file, save all open views which may contain dirty data not yet saved to filesys.
+    console.debug(`File auto-saving for:\n${file.path}`);
     // TODO: future opt is save only if some dirty bit is set.
     const promises: Promise<void>[] = [];
     workspace.iterateAllLeaves((leaf) => {
