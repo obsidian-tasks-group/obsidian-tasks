@@ -225,6 +225,21 @@ export function findLineNumberOfTaskToToggle(
         }
     }
 
+    // If the line only appears once in the file, use that line number.
+    // This could go wrong if:
+    //    - the user had commented out the original task line, and the section had not yet been redrawn
+    const matchingLineNumbers = [];
+    for (let i = 0; i < fileLines.length; i++) {
+        if (fileLines[i] === originalTask.originalMarkdown) {
+            matchingLineNumbers.push(i);
+        }
+    }
+    if (matchingLineNumbers.length === 1) {
+        // There is only one instance of the line in the file, so it must be the
+        // line we are looking for.
+        return matchingLineNumbers[0];
+    }
+
     const { globalFilter } = getSettings();
     let taskLineNumber: number | undefined;
     let sectionIndex = 0;
