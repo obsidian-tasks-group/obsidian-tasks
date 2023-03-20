@@ -2,11 +2,9 @@
  * @jest-environment jsdom
  */
 import moment from 'moment';
-import { getSettings } from '../src/Config/Settings';
+import { TASK_FORMATS, getSettings } from '../src/Config/Settings';
 import { buildSuggestions } from '../src/Suggestor/Suggestor';
 import type { SuggestInfo } from '../src/Suggestor/Suggestor';
-
-import * as task from '../src/Task';
 
 window.moment = moment;
 
@@ -84,6 +82,8 @@ describe('auto-complete', () => {
     // See suggestions in https://github.com/obsidian-tasks-group/obsidian-tasks/issues/861#issuecomment-1180788860
     it.skip('show all suggested text', () => {
         // Arrange
+        const { dueDateSymbol, scheduledDateSymbol, startDateSymbol, recurrenceSymbol } =
+            TASK_FORMATS.tasksPluginEmoji.taskSerializer.symbols;
         const originalSettings = getSettings();
         originalSettings.autoSuggestMaxItems = 200;
 
@@ -95,10 +95,10 @@ describe('auto-complete', () => {
 
         const lines = [
             '- [ ] some task',
-            '- [ ] some task 🔁 ',
-            `- [ ] some task ${task.dueDateSymbol} `,
-            `- [ ] some task ${task.scheduledDateSymbol} `,
-            `- [ ] some task ${task.startDateSymbol} `,
+            `- [ ] some task ${recurrenceSymbol} `,
+            `- [ ] some task ${dueDateSymbol} `,
+            `- [ ] some task ${scheduledDateSymbol} `,
+            `- [ ] some task ${startDateSymbol} `,
         ];
         const allSuggestions: string[] = [];
         for (const line of lines) {
