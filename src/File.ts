@@ -191,6 +191,10 @@ const tryRepetitive = async ({
     await vault.modify(file, updatedFileLines.join('\n'));
 };
 
+function isValidLineNumber(listItemLineNumber: number, fileLines: string[]) {
+    return listItemLineNumber < fileLines.length;
+}
+
 /**
  * Try to find the line number of the originalTask
  * @param originalTask - the {@link Task} line that the user clicked on
@@ -207,13 +211,12 @@ export function findLineNumberOfTaskToToggle(
     listItemsCache: ListItemCache[] | MockListItemCache[],
     errorLoggingFunction: ErrorLoggingFunction,
 ) {
-    const fileLinesCount = fileLines.length;
     const { globalFilter } = getSettings();
     let taskLineNumber: number | undefined;
     let sectionIndex = 0;
     for (const listItemCache of listItemsCache) {
         const listItemLineNumber = listItemCache.position.start.line;
-        if (listItemLineNumber >= fileLinesCount) {
+        if (!isValidLineNumber(listItemLineNumber, fileLines)) {
             // One or more lines has been deleted since the cache was populated,
             // so there is at least one list item in the cache that is beyond
             // the end of the actual file on disk.
