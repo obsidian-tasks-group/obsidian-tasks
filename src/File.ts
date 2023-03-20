@@ -3,6 +3,7 @@ import { type ListItemCache, MarkdownView, MetadataCache, Notice, TFile, Vault, 
 import { getSettings } from './Config/Settings';
 import { type MockListItemCache, type MockTask, saveMockDataForTesting } from './lib/MockDataCreator';
 import type { Task } from './Task';
+import { logging } from './lib/logging';
 
 let metadataCache: MetadataCache | undefined;
 let vault: Vault | undefined;
@@ -11,6 +12,8 @@ let workspace: Workspace | undefined;
 /** the two lists below must be maintained together. */
 const supportedFileExtensions = ['md'];
 const supportedViewTypes = [MarkdownView];
+
+const logger = logging.getLogger('tasks');
 
 export type ErrorLoggingFunction = (message: string) => void;
 
@@ -55,7 +58,7 @@ export const replaceTaskWithTasks = async ({
         newTasks = [newTasks];
     }
 
-    console.log(`\n\nreplaceTaskWithTasks entered.\n${originalTask.path}`);
+    logger.debug(`replaceTaskWithTasks entered. ${originalTask.path}`);
 
     tryRepetitive({
         originalTask,
@@ -77,7 +80,9 @@ function warnAndNotice(message: string) {
     new Notice(message, 10000);
 }
 
-function doNothing(_: string) {}
+function doNothing(message: string) {
+    logger.debug(message);
+}
 
 /**
  * This is a workaround to re-try when the returned file cache is `undefined`.
@@ -99,7 +104,7 @@ const tryRepetitive = async ({
     workspace: Workspace;
     previousTries: number;
 }): Promise<void> => {
-    console.debug(`tryRepetitive after ${previousTries} previous tries`);
+    logger.debug(`tryRepetitive after ${previousTries} previous tries`);
     const retry = () => {
         if (previousTries > 10) {
             errorAndNotice('Tasks: Too many retries. File update not possible ...');
@@ -107,6 +112,7 @@ const tryRepetitive = async ({
         }
 
         const timeout = Math.min(Math.pow(10, previousTries), 100); // 1, 10, 100, 100, 100, ...
+        logger.debug(`timeout = ${timeout}`);
         setTimeout(() => {
             tryRepetitive({
                 originalTask,
@@ -144,7 +150,7 @@ const tryRepetitive = async ({
 
     // before reading the file, save all open views which may contain dirty data not yet saved to filesys.
     if (previousTries === 0) {
-        console.debug(`File auto-saving for:\n${file.path}`);
+        logger.debug(`File auto-saving for: ${file.path}`);
         // TODO: future opt is save only if some dirty bit is set.
         const promises: Promise<void>[] = [];
         workspace.iterateAllLeaves((leaf) => {
