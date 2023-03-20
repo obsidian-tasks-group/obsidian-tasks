@@ -220,9 +220,10 @@ export class Cache {
         }
 
         if (this.getState() == State.Warm) {
-            console.debug(
-                `At least one task, its line number or its heading has changed in ${file.path}: triggering a refresh of all active Tasks blocks in Live Preview and Reading mode views.`,
-            );
+            console.debug(`---------- Cache read:\n${file.path}`);
+            // console.debug(
+            //     `At least one task, its line number or its heading has changed in ${file.path}: triggering a refresh of all active Tasks blocks in Live Preview and Reading mode views.`,
+            // );
         }
 
         // Remove all tasks from this file from the cache before
