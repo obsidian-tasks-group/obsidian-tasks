@@ -55,6 +55,8 @@ export const replaceTaskWithTasks = async ({
         newTasks = [newTasks];
     }
 
+    console.log(`\n\nreplaceTaskWithTasks entered.\n${originalTask.path}`);
+
     tryRepetitive({
         originalTask,
         newTasks,
@@ -95,6 +97,7 @@ const tryRepetitive = async ({
     workspace: Workspace;
     previousTries: number;
 }): Promise<void> => {
+    console.debug(`tryRepetitive after ${previousTries} previous tries`);
     const retry = () => {
         if (previousTries > 10) {
             errorAndNotice('Tasks: Too many retries. File update not possible ...');
