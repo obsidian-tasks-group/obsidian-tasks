@@ -200,7 +200,7 @@ export function findLineNumberOfTaskToToggle(
         const listItemLineNumber = listItemCache.position.start.line;
         if (listItemLineNumber >= fileLinesCount) {
             // One or more lines has been deleted since the cache was populated,
-            // so there is at least one list item in the cache that is beyoned
+            // so there is at least one list item in the cache that is beyond
             // the end of the actual file on disk.
             return undefined;
         }
