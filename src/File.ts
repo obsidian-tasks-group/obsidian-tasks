@@ -1,4 +1,4 @@
-import { type ListItemCache, MarkdownView, MetadataCache, Notice, TFile, Vault, Workspace } from 'obsidian';
+import { type ListItemCache, MetadataCache, Notice, TFile, Vault, Workspace } from 'obsidian';
 
 import { getSettings } from './Config/Settings';
 import { type MockListItemCache, type MockTask, saveMockDataForTesting } from './lib/MockDataCreator';
@@ -11,7 +11,6 @@ let workspace: Workspace | undefined;
 
 /** the two lists below must be maintained together. */
 const supportedFileExtensions = ['md'];
-const supportedViewTypes = [MarkdownView];
 
 const logger = logging.getLogger('tasks');
 
@@ -147,21 +146,6 @@ const tryRepetitive = async ({
     if (listItemsCache === undefined || listItemsCache.length === 0) {
         warnAndNotice(`Tasks: No list items found in file cache of ${file.path}. Retrying ...`);
         return retry();
-    }
-
-    // before reading the file, save all open views which may contain dirty data not yet saved to filesys.
-    if (previousTries === 0) {
-        logger.debug(`File auto-saving for: ${file.path}`);
-        // TODO: future opt is save only if some dirty bit is set.
-        const promises: Promise<void>[] = [];
-        workspace.iterateAllLeaves((leaf) => {
-            supportedViewTypes.forEach((viewType) => {
-                if (leaf.view instanceof viewType && leaf.view.file.path === file.path) {
-                    promises.push(leaf.view.save());
-                }
-            });
-        });
-        await Promise.all(promises);
     }
 
     const fileContent = await vault.read(file); // TODO: replace with vault.process.
