@@ -41,10 +41,7 @@ export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
             getUserSelectedTaskFormat().buildSuggestions?.(line, currentCursor.ch, this.settings) ?? [];
 
         // Add the editor context to all the suggestions
-        const suggestionsWithContext: SuggestInfoWithContext[] = [];
-        for (const suggestion of suggestions) suggestionsWithContext.push({ ...suggestion, context: context });
-
-        return suggestionsWithContext;
+        return suggestions.map((s) => ({ ...s, context }));
     }
 
     renderSuggestion(value: SuggestInfoWithContext, el: HTMLElement) {
