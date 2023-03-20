@@ -1,0 +1,106 @@
+{
+  "taskData": {
+    "originalMarkdown": "- [ ] #task task2b ^ca47c7",
+    "taskLocation": {
+      "path": "Manual Testing/Task Toggling Scenarios/Embed Task in to Note.md",
+      "lineNumber": 0,
+      "sectionStart": 0,
+      "sectionIndex": 0,
+      "precedingHeader": null
+    }
+  },
+  "fileData": {
+    "fileLines": [
+      "## Category 1",
+      "",
+      "- [ ] #task task1a",
+      "- [ ] #task task1b",
+      "",
+      "## Category 2",
+      "",
+      "- [ ] #task task2a",
+      "- [ ] #task task2b ^ca47c7",
+      "",
+      "- ref task2 ![[#^ca47c7]]",
+      ""
+    ]
+  },
+  "cacheData": {
+    "listItemsCache": [
+      {
+        "position": {
+          "start": {
+            "line": 2,
+            "col": 0,
+            "offset": 15
+          },
+          "end": {
+            "line": 2,
+            "col": 18,
+            "offset": 33
+          }
+        },
+        "task": " "
+      },
+      {
+        "position": {
+          "start": {
+            "line": 3,
+            "col": 0,
+            "offset": 34
+          },
+          "end": {
+            "line": 3,
+            "col": 18,
+            "offset": 52
+          }
+        },
+        "task": " "
+      },
+      {
+        "position": {
+          "start": {
+            "line": 7,
+            "col": 0,
+            "offset": 69
+          },
+          "end": {
+            "line": 7,
+            "col": 18,
+            "offset": 87
+          }
+        },
+        "task": " "
+      },
+      {
+        "position": {
+          "start": {
+            "line": 8,
+            "col": 0,
+            "offset": 88
+          },
+          "end": {
+            "line": 9,
+            "col": 0,
+            "offset": 115
+          }
+        },
+        "task": " "
+      },
+      {
+        "position": {
+          "start": {
+            "line": 10,
+            "col": 0,
+            "offset": 116
+          },
+          "end": {
+            "line": 10,
+            "col": 25,
+            "offset": 141
+          }
+        }
+      }
+    ]
+  }
+}

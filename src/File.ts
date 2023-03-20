@@ -1,7 +1,7 @@
-import { MarkdownView, MetadataCache, Notice, TFile, Vault, Workspace } from 'obsidian';
-import type { ListItemCache } from 'obsidian';
+import { type ListItemCache, MarkdownView, MetadataCache, Notice, TFile, Vault, Workspace } from 'obsidian';
 
 import { getSettings } from './Config/Settings';
+import { type MockListItemCache, type MockTask, saveMockDataForTesting } from './lib/MockDataCreator';
 import type { Task } from './Task';
 
 let metadataCache: MetadataCache | undefined;
@@ -11,6 +11,8 @@ let workspace: Workspace | undefined;
 /** the two lists below must be maintained together. */
 const supportedFileExtensions = ['md'];
 const supportedViewTypes = [MarkdownView];
+
+export type ErrorLoggingFunction = (message: string) => void;
 
 export const initializeFile = ({
     metadataCache: newMetadataCache,
@@ -150,11 +152,51 @@ const tryRepetitive = async ({
     const fileContent = await vault.read(file); // TODO: replace with vault.process.
     const fileLines = fileContent.split('\n');
 
+    const taskLineNumber = findLineNumberOfTaskToToggle(originalTask, fileLines, listItemsCache, errorAndNotice);
+
+    if (taskLineNumber === undefined) {
+        const logDataForMocking = false;
+        if (logDataForMocking) {
+            // There was an error finding the correct line to toggle,
+            // so write out to the console a representation of the data needed to reconstruct the above
+            // findLineNumberOfTaskToToggle() call, so that the content can be saved
+            // to a JSON file and then re-used in a 'unit' test.
+            saveMockDataForTesting(originalTask, fileLines, listItemsCache);
+        }
+        errorAndNotice('Tasks: could not find task to toggle in the file.');
+        return;
+    }
+
+    const updatedFileLines = [
+        ...fileLines.slice(0, taskLineNumber),
+        ...newTasks.map((task: Task) => task.toFileLineString()),
+        ...fileLines.slice(taskLineNumber + 1), // Only supports single-line tasks.
+    ];
+
+    await vault.modify(file, updatedFileLines.join('\n'));
+};
+
+/**
+ * Try to find the line number of the originalTask
+ * @param originalTask - the {@link Task} line that the user clicked on
+ * @param fileLines - the lines read from the file.
+ * @param listItemsCache
+ * @param errorLoggingFunction - a function of type {@link ErrorLoggingFunction} - which will be called if the found
+ *                               line differs from the original markdown in {@link originalTask}.
+ *                               This parameter is provided to allow tests to be written for this code
+ *                               that do not display a popup warning, but instead capture the error message.
+ */
+export function findLineNumberOfTaskToToggle(
+    originalTask: Task | MockTask,
+    fileLines: string[],
+    listItemsCache: ListItemCache[] | MockListItemCache[],
+    errorLoggingFunction: ErrorLoggingFunction,
+) {
     const { globalFilter } = getSettings();
-    let listItem: ListItemCache | undefined;
+    let taskLineNumber: number | undefined;
     let sectionIndex = 0;
     for (const listItemCache of listItemsCache) {
-        if (listItemCache.position.start.line < originalTask.sectionStart) {
+        if (listItemCache.position.start.line < originalTask.taskLocation.sectionStart) {
             continue;
         }
 
@@ -164,14 +206,14 @@ const tryRepetitive = async ({
 
         const line = fileLines[listItemCache.position.start.line];
         if (line.includes(globalFilter)) {
-            if (sectionIndex === originalTask.sectionIndex) {
+            if (sectionIndex === originalTask.taskLocation.sectionIndex) {
                 if (line === originalTask.originalMarkdown) {
-                    listItem = listItemCache;
+                    taskLineNumber = listItemCache.position.start.line;
                 } else {
-                    errorAndNotice(
-                        `Tasks: Unable to find task in file ${originalTask.path}.
+                    errorLoggingFunction(
+                        `Tasks: Unable to find task in file ${originalTask.taskLocation.path}.
 Expected task:
-${originalTask.toFileLineString()}
+${originalTask.originalMarkdown}
 Found task:
 ${line}`,
                     );
@@ -183,16 +225,5 @@ ${line}`,
             sectionIndex++;
         }
     }
-    if (listItem === undefined) {
-        errorAndNotice('Tasks: could not find task to toggle in the file.');
-        return;
-    }
-
-    const updatedFileLines = [
-        ...fileLines.slice(0, listItem.position.start.line),
-        ...newTasks.map((task: Task) => task.toFileLineString()),
-        ...fileLines.slice(listItem.position.start.line + 1), // Only supports single-line tasks.
-    ];
-
-    await vault.modify(file, updatedFileLines.join('\n'));
-};
+    return taskLineNumber;
+}
