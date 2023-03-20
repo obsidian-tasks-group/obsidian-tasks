@@ -1,0 +1,91 @@
+{
+  "taskData": {
+    "originalMarkdown": "- [ ] #task Section 2/Task 2",
+    "taskLocation": {
+      "path": "Manual Testing/Task Toggling Scenarios/1680 - Reading Mode line numbers not updated on editing.md",
+      "lineNumber": 14,
+      "sectionStart": 13,
+      "sectionIndex": 1,
+      "precedingHeader": null
+    }
+  },
+  "fileData": {
+    "fileLines": [
+      "## Test Data",
+      "",
+      "### Tasks Section 1",
+      "- [ ] #task Section 1/Task 1",
+      "- [ ] #task Section 1/Task 2",
+      "",
+      "### Tasks Section 2",
+      "",
+      "- [ ] #task Section 2/Task 1",
+      "- [ ] #task Section 2/Task 2",
+      ""
+    ]
+  },
+  "cacheData": {
+    "listItemsCache": [
+      {
+        "position": {
+          "start": {
+            "line": 8,
+            "col": 0,
+            "offset": 39
+          },
+          "end": {
+            "line": 8,
+            "col": 28,
+            "offset": 67
+          }
+        },
+        "task": " "
+      },
+      {
+        "position": {
+          "start": {
+            "line": 9,
+            "col": 0,
+            "offset": 68
+          },
+          "end": {
+            "line": 9,
+            "col": 28,
+            "offset": 96
+          }
+        },
+        "task": " "
+      },
+      {
+        "position": {
+          "start": {
+            "line": 13,
+            "col": 0,
+            "offset": 119
+          },
+          "end": {
+            "line": 13,
+            "col": 28,
+            "offset": 147
+          }
+        },
+        "task": " "
+      },
+      {
+        "position": {
+          "start": {
+            "line": 14,
+            "col": 0,
+            "offset": 148
+          },
+          "end": {
+            "line": 14,
+            "col": 28,
+            "offset": 176
+          }
+        },
+        "task": " "
+      }
+    ]
+  }
+}
