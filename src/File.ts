@@ -77,6 +77,8 @@ function warnAndNotice(message: string) {
     new Notice(message, 10000);
 }
 
+function doNothing(_: string) {}
+
 /**
  * This is a workaround to re-try when the returned file cache is `undefined`.
  * Retrying after a while may return a valid file cache.
@@ -158,7 +160,7 @@ const tryRepetitive = async ({
     const fileContent = await vault.read(file); // TODO: replace with vault.process.
     const fileLines = fileContent.split('\n');
 
-    const taskLineNumber = findLineNumberOfTaskToToggle(originalTask, fileLines, listItemsCache, errorAndNotice);
+    const taskLineNumber = findLineNumberOfTaskToToggle(originalTask, fileLines, listItemsCache, doNothing);
 
     if (taskLineNumber === undefined) {
         const logDataForMocking = false;
@@ -169,7 +171,7 @@ const tryRepetitive = async ({
             // to a JSON file and then re-used in a 'unit' test.
             saveMockDataForTesting(originalTask, fileLines, listItemsCache);
         }
-        errorAndNotice('Tasks: could not find task to toggle in the file.');
+        // errorAndNotice('Tasks: could not find task to toggle in the file.');
         return retry();
     }
 
