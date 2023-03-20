@@ -3,6 +3,29 @@ import { verify } from 'approvals/lib/Providers/Jest/JestApprovals';
 import { findLineNumberOfTaskToToggle } from '../src/File';
 import type { MockTogglingDataForTesting } from '../src/lib/MockDataCreator';
 
+/**
+ * A function to help test File.findLineNumberOfTaskToToggle()
+ *
+ * It uses mock data to simulate user behaviour.
+ *
+ * This is a fragile method of testing, but right now is better than no automated
+ * testing at all.
+ *
+ * Input files for {@link jsonFileName} are in `tests/__test_data__/MockDataForTogglingTasks`
+ * They are created by:
+ *   1. setting logDataForMocking to true in File.ts.
+ *   2. Running a local build on the plugin
+ *   3. Showing the console
+ *   4. Setting up a small markdown file with the scenario to test
+ *   5. Working the steps required to make the toggle operation fail
+ *   6. Grabbing the console output
+ *   7. Pasting it in to a new JSON file in `tests/__test_data__/MockDataForTogglingTasks`
+ *   8. Auto-formatting the JSON so that it is readable.
+ * @param jsonFileName
+ * @param taskLineToToggle
+ * @param expectedLineNumber
+ * @param actualIncorrectLineFound - optional, only needed if the wrong line would be toggled.
+ */
 function testFindLineNumberOfTaskToToggle(
     jsonFileName: string,
     taskLineToToggle: string,
