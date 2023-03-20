@@ -51,7 +51,7 @@
     "Custom Statuses": true
   },
   "debugSettings": {
-    "ignoreSortInstructions": false,
-    "showTaskHiddenData": false
+    "ignoreSortInstructions": true,
+    "showTaskHiddenData": true
   }
 }
