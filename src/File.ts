@@ -168,7 +168,7 @@ const tryRepetitive = async ({
             saveMockDataForTesting(originalTask, fileLines, listItemsCache);
         }
         errorAndNotice('Tasks: could not find task to toggle in the file.');
-        return;
+        return retry();
     }
 
     const updatedFileLines = [
