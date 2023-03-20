@@ -141,17 +141,19 @@ const tryRepetitive = async ({
     }
 
     // before reading the file, save all open views which may contain dirty data not yet saved to filesys.
-    console.debug(`File auto-saving for:\n${file.path}`);
-    // TODO: future opt is save only if some dirty bit is set.
-    const promises: Promise<void>[] = [];
-    workspace.iterateAllLeaves((leaf) => {
-        supportedViewTypes.forEach((viewType) => {
-            if (leaf.view instanceof viewType && leaf.view.file.path === file.path) {
-                promises.push(leaf.view.save());
-            }
+    if (previousTries === 0) {
+        console.debug(`File auto-saving for:\n${file.path}`);
+        // TODO: future opt is save only if some dirty bit is set.
+        const promises: Promise<void>[] = [];
+        workspace.iterateAllLeaves((leaf) => {
+            supportedViewTypes.forEach((viewType) => {
+                if (leaf.view instanceof viewType && leaf.view.file.path === file.path) {
+                    promises.push(leaf.view.save());
+                }
+            });
         });
-    });
-    await Promise.all(promises);
+        await Promise.all(promises);
+    }
 
     const fileContent = await vault.read(file); // TODO: replace with vault.process.
     const fileLines = fileContent.split('\n');
