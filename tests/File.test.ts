@@ -55,7 +55,15 @@ function testFindLineNumberOfTaskToToggle(
     );
 
     // Assert
-    verify(errorString ? errorString : 'Success. Line found OK. No error reported.');
+    let descriptionOfOutcome = '';
+    if (errorString !== undefined) {
+        descriptionOfOutcome = errorString;
+    } else if (result === undefined) {
+        descriptionOfOutcome = 'Could not find line for task';
+    } else {
+        descriptionOfOutcome = 'Success. Line found OK. No error reported.';
+    }
+    verify(descriptionOfOutcome);
 
     if (expectedLineNumber !== undefined) {
         expect(result).not.toBeUndefined();
@@ -93,6 +101,26 @@ describe('replaceTaskWithTasks', () => {
             // It is recognised as an incorrect line, and so line number is returned as undefined.
             const expectedLineNumber = undefined;
             // const actualIncorrectLineFound = '- [ ] #task task1a';
+            testFindLineNumberOfTaskToToggle(jsonFileName, taskLineToToggle, expectedLineNumber);
+        });
+    });
+
+    // --------------------------------------------------------------------------------
+    // Issue 1680
+    describe('issue 1680 - Cannot read properties of undefined', () => {
+        const jsonFileName = '1680_task_line_number_past_end_of_file.json';
+        const taskLineToToggle = '- [ ] #task Section 2/Task 2';
+
+        it.failing('correct behaviour', () => {
+            // An incorrect line is currently found, so this test fails, due to bug 1680
+            const expectedLineNumber = 9;
+            testFindLineNumberOfTaskToToggle(jsonFileName, taskLineToToggle, expectedLineNumber);
+        });
+
+        it('current incorrect behaviour', () => {
+            // An incorrect line is currently found, due to bug 688.
+            // It is recognised as an incorrect line, and so line number is returned as undefined.
+            const expectedLineNumber = undefined;
             testFindLineNumberOfTaskToToggle(jsonFileName, taskLineToToggle, expectedLineNumber);
         });
     });
