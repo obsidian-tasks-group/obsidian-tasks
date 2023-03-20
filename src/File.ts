@@ -192,11 +192,20 @@ export function findLineNumberOfTaskToToggle(
     listItemsCache: ListItemCache[] | MockListItemCache[],
     errorLoggingFunction: ErrorLoggingFunction,
 ) {
+    const fileLinesCount = fileLines.length;
     const { globalFilter } = getSettings();
     let taskLineNumber: number | undefined;
     let sectionIndex = 0;
     for (const listItemCache of listItemsCache) {
-        if (listItemCache.position.start.line < originalTask.taskLocation.sectionStart) {
+        const listItemLineNumber = listItemCache.position.start.line;
+        if (listItemLineNumber >= fileLinesCount) {
+            // One or more lines has been deleted since the cache was populated,
+            // so there is at least one list item in the cache that is beyond
+            // the end of the actual file on disk.
+            return undefined;
+        }
+
+        if (listItemLineNumber < originalTask.taskLocation.sectionStart) {
             continue;
         }
 
@@ -204,11 +213,11 @@ export function findLineNumberOfTaskToToggle(
             continue;
         }
 
-        const line = fileLines[listItemCache.position.start.line];
+        const line = fileLines[listItemLineNumber];
         if (line.includes(globalFilter)) {
             if (sectionIndex === originalTask.taskLocation.sectionIndex) {
                 if (line === originalTask.originalMarkdown) {
-                    taskLineNumber = listItemCache.position.start.line;
+                    taskLineNumber = listItemLineNumber;
                 } else {
                     errorLoggingFunction(
                         `Tasks: Unable to find task in file ${originalTask.taskLocation.path}.
