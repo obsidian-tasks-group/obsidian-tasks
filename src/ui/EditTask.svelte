@@ -2,22 +2,23 @@
     import * as chrono from 'chrono-node';
     import { onMount } from 'svelte';
     import { Recurrence } from '../Recurrence';
-    import { getSettings } from '../Config/Settings';
+    import { getSettings, TASK_FORMATS } from '../Config/Settings';
     import { Status } from '../Status';
     import { Priority, Task } from '../Task';
-    import {
-        prioritySymbols,
-        recurrenceSymbol,
-        startDateSymbol,
-        scheduledDateSymbol,
-        dueDateSymbol,
-    } from '../Task';
     import { doAutocomplete } from '../DateAbbreviations';
 
     // These exported variables are passed in as props by TaskModal.onOpen():
     export let task: Task;
     export let onSubmit: (updatedTasks: Task[]) => void | Promise<void>;
     export let statusOptions: Status[];
+
+    const {
+        prioritySymbols,
+        recurrenceSymbol,
+        startDateSymbol,
+        scheduledDateSymbol,
+        dueDateSymbol,
+    } = TASK_FORMATS.tasksPluginEmoji.taskSerializer.symbols;
 
     let descriptionInput: HTMLInputElement;
     let editableTask: {
