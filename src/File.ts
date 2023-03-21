@@ -178,56 +178,6 @@ function isValidLineNumber(listItemLineNumber: number, fileLines: string[]) {
     return listItemLineNumber < fileLines.length;
 }
 
-function tryFindingLineNumberFromTaskSectionInfo(
-    originalTask: Task | MockTask,
-    fileLines: string[],
-    listItemsCache: ListItemCache[] | MockListItemCache[],
-    errorLoggingFunction: ErrorLoggingFunction,
-) {
-    const { globalFilter } = getSettings();
-    let taskLineNumber: number | undefined;
-    let sectionIndex = 0;
-    for (const listItemCache of listItemsCache) {
-        const listItemLineNumber = listItemCache.position.start.line;
-        if (!isValidLineNumber(listItemLineNumber, fileLines)) {
-            // One or more lines has been deleted since the cache was populated,
-            // so there is at least one list item in the cache that is beyond
-            // the end of the actual file on disk.
-            return undefined;
-        }
-
-        if (listItemLineNumber < originalTask.taskLocation.sectionStart) {
-            continue;
-        }
-
-        if (listItemCache.task === undefined) {
-            continue;
-        }
-
-        const line = fileLines[listItemLineNumber];
-        if (line.includes(globalFilter)) {
-            if (sectionIndex === originalTask.taskLocation.sectionIndex) {
-                if (line === originalTask.originalMarkdown) {
-                    taskLineNumber = listItemLineNumber;
-                } else {
-                    errorLoggingFunction(
-                        `Tasks: Unable to find task in file ${originalTask.taskLocation.path}.
-Expected task:
-${originalTask.originalMarkdown}
-Found task:
-${line}`,
-                    );
-                    return;
-                }
-                break;
-            }
-
-            sectionIndex++;
-        }
-    }
-    return taskLineNumber;
-}
-
 /**
  * Try to find the line number of the originalTask
  * @param originalTask - the {@link Task} line that the user clicked on
@@ -290,4 +240,54 @@ function tryFindingIdenticalUniqueMarkdownLineInFile(originalTask: Task | MockTa
         return matchingLineNumbers[0];
     }
     return undefined;
+}
+
+function tryFindingLineNumberFromTaskSectionInfo(
+    originalTask: Task | MockTask,
+    fileLines: string[],
+    listItemsCache: ListItemCache[] | MockListItemCache[],
+    errorLoggingFunction: ErrorLoggingFunction,
+) {
+    const { globalFilter } = getSettings();
+    let taskLineNumber: number | undefined;
+    let sectionIndex = 0;
+    for (const listItemCache of listItemsCache) {
+        const listItemLineNumber = listItemCache.position.start.line;
+        if (!isValidLineNumber(listItemLineNumber, fileLines)) {
+            // One or more lines has been deleted since the cache was populated,
+            // so there is at least one list item in the cache that is beyond
+            // the end of the actual file on disk.
+            return undefined;
+        }
+
+        if (listItemLineNumber < originalTask.taskLocation.sectionStart) {
+            continue;
+        }
+
+        if (listItemCache.task === undefined) {
+            continue;
+        }
+
+        const line = fileLines[listItemLineNumber];
+        if (line.includes(globalFilter)) {
+            if (sectionIndex === originalTask.taskLocation.sectionIndex) {
+                if (line === originalTask.originalMarkdown) {
+                    taskLineNumber = listItemLineNumber;
+                } else {
+                    errorLoggingFunction(
+                        `Tasks: Unable to find task in file ${originalTask.taskLocation.path}.
+Expected task:
+${originalTask.originalMarkdown}
+Found task:
+${line}`,
+                    );
+                    return;
+                }
+                break;
+            }
+
+            sectionIndex++;
+        }
+    }
+    return taskLineNumber;
 }
