@@ -94,11 +94,6 @@ describe('replaceTaskWithTasks', () => {
             const expectedLineNumber = 8;
             testFindLineNumberOfTaskToToggle(jsonFileName, taskLineToToggle, expectedLineNumber);
         });
-
-        it('current incorrect behaviour', () => {
-            const expectedLineNumber = 8;
-            testFindLineNumberOfTaskToToggle(jsonFileName, taskLineToToggle, expectedLineNumber);
-        });
     });
 
     // --------------------------------------------------------------------------------
@@ -109,11 +104,6 @@ describe('replaceTaskWithTasks', () => {
 
         it('correct behaviour', () => {
             // An incorrect line is currently found, so this test fails, due to bug 1680
-            const expectedLineNumber = 9;
-            testFindLineNumberOfTaskToToggle(jsonFileName, taskLineToToggle, expectedLineNumber);
-        });
-
-        it('current incorrect behaviour', () => {
             const expectedLineNumber = 9;
             testFindLineNumberOfTaskToToggle(jsonFileName, taskLineToToggle, expectedLineNumber);
         });
