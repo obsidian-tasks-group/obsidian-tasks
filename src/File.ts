@@ -9,7 +9,6 @@ let metadataCache: MetadataCache | undefined;
 let vault: Vault | undefined;
 let workspace: Workspace | undefined;
 
-/** the two lists below must be maintained together. */
 const supportedFileExtensions = ['md'];
 
 const logger = logging.getLogger('tasks');
@@ -181,7 +180,6 @@ Recommendations:
             // to a JSON file and then re-used in a 'unit' test.
             saveMockDataForTesting(originalTask, fileLines, listItemsCache);
         }
-        // errorAndNotice('Tasks: could not find task to toggle in the file.');
         return retry();
     }
 
