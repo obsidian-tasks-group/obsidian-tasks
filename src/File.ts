@@ -124,6 +124,9 @@ const tryRepetitive = async ({
         }, timeout);
     };
 
+    // Validate our inputs.
+    // For permanent failures, return nothing.
+    // For failures that might be fixed if we wait for a little while, return retry().
     const file = vault.getAbstractFileByPath(originalTask.path);
     if (!(file instanceof TFile)) {
         warnAndNotice(`Tasks: No file found for task ${originalTask.description}. Retrying ...`);
@@ -147,9 +150,10 @@ const tryRepetitive = async ({
         return retry();
     }
 
+    // We can now try and find which line in the file currently contains originalTask,
+    // so that we know which line to update.
     const fileContent = await vault.read(file); // TODO: replace with vault.process.
     const fileLines = fileContent.split('\n');
-
     const taskLineNumber = findLineNumberOfTaskToToggle(originalTask, fileLines, listItemsCache, debugLog);
 
     if (taskLineNumber === undefined) {
@@ -165,6 +169,7 @@ const tryRepetitive = async ({
         return retry();
     }
 
+    // Finally, we can insert 1 or more lines over the original task line:
     const updatedFileLines = [
         ...fileLines.slice(0, taskLineNumber),
         ...newTasks.map((task: Task) => task.toFileLineString()),
@@ -207,13 +212,19 @@ export function findLineNumberOfTaskToToggle(
     return tryFindingLineNumberFromTaskSectionInfo(originalTask, fileLines, listItemsCache, errorLoggingFunction);
 }
 
+/**
+ *  If the line at line number in originalTask matches original markdown,
+ *  treat that as the correct answer.
+ *
+ *  This could go wrong if:
+ *     - Some lines have been added since originalTask was rendered in Reading view,
+ *       and an identical task line was added, that happened by coincidence to be in the same
+ *       line number as the original task.
+ *
+ * @param originalTask
+ * @param fileLines
+ */
 function tryFindingExactMatchAtOriginalLineNumber(originalTask: Task | MockTask, fileLines: string[]) {
-    // If the line at line number in originalTask matches original markdown,
-    // treat that as the correct answer.
-    // This could go wrong if:
-    //    - Some lines have been added since originalTask was rendered in Reading view,
-    //      and an identical task line was added, that happened by coincidence to be in the same
-    //      line number as the original task.
     const originalTaskLineNumber = originalTask.taskLocation.lineNumber;
     if (isValidLineNumber(originalTaskLineNumber, fileLines)) {
         if (fileLines[originalTaskLineNumber] === originalTask.originalMarkdown) {
@@ -224,10 +235,15 @@ function tryFindingExactMatchAtOriginalLineNumber(originalTask: Task | MockTask,
     return undefined;
 }
 
+/**
+ * If the line only appears once in the file, use that line number.
+ *
+ * This could go wrong if:
+ *    - the user had commented out the original task line, and the section had not yet been redrawn
+ * @param originalTask
+ * @param fileLines
+ */
 function tryFindingIdenticalUniqueMarkdownLineInFile(originalTask: Task | MockTask, fileLines: string[]) {
-    // If the line only appears once in the file, use that line number.
-    // This could go wrong if:
-    //    - the user had commented out the original task line, and the section had not yet been redrawn
     const matchingLineNumbers = [];
     for (let i = 0; i < fileLines.length; i++) {
         if (fileLines[i] === originalTask.originalMarkdown) {
@@ -242,6 +258,14 @@ function tryFindingIdenticalUniqueMarkdownLineInFile(originalTask: Task | MockTa
     return undefined;
 }
 
+/**
+ * Fall back on the original algorithm, which uses the section information inside the task's {@link TaskLocation}.
+ *
+ * @param originalTask
+ * @param fileLines
+ * @param listItemsCache
+ * @param errorLoggingFunction
+ */
 function tryFindingLineNumberFromTaskSectionInfo(
     originalTask: Task | MockTask,
     fileLines: string[],
