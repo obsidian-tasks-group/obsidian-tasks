@@ -86,43 +86,22 @@ describe('replaceTaskWithTasks', () => {
 
     // --------------------------------------------------------------------------------
     // Issue 688
-    describe('issue 688 - block referenced task', () => {
+    it('issue 688 - block referenced task', () => {
         const jsonFileName = '688_toggle_block_referenced_line_overwrites_wrong_line.json';
         const taskLineToToggle = '- [ ] #task task2b ^ca47c7';
 
-        it.failing('correct behaviour', () => {
-            // An incorrect line is currently found, so this test fails, due to bug 688
-            const expectedLineNumber = 8;
-            testFindLineNumberOfTaskToToggle(jsonFileName, taskLineToToggle, expectedLineNumber);
-        });
-
-        it('current incorrect behaviour', () => {
-            // An incorrect line is currently found, due to bug 688.
-            // It is recognised as an incorrect line, and so line number is returned as undefined.
-            const expectedLineNumber = undefined;
-            // const actualIncorrectLineFound = '- [ ] #task task1a';
-            testFindLineNumberOfTaskToToggle(jsonFileName, taskLineToToggle, expectedLineNumber);
-        });
+        const expectedLineNumber = 8;
+        testFindLineNumberOfTaskToToggle(jsonFileName, taskLineToToggle, expectedLineNumber);
     });
 
     // --------------------------------------------------------------------------------
     // Issue 1680
-    describe('issue 1680 - Cannot read properties of undefined', () => {
+    it('issue 1680 - Cannot read properties of undefined', () => {
         const jsonFileName = '1680_task_line_number_past_end_of_file.json';
         const taskLineToToggle = '- [ ] #task Section 2/Task 2';
 
-        it.failing('correct behaviour', () => {
-            // An incorrect line is currently found, so this test fails, due to bug 1680
-            const expectedLineNumber = 9;
-            testFindLineNumberOfTaskToToggle(jsonFileName, taskLineToToggle, expectedLineNumber);
-        });
-
-        it('current incorrect behaviour', () => {
-            // An incorrect line is currently found, due to bug 688.
-            // It is recognised as an incorrect line, and so line number is returned as undefined.
-            const expectedLineNumber = undefined;
-            testFindLineNumberOfTaskToToggle(jsonFileName, taskLineToToggle, expectedLineNumber);
-        });
+        const expectedLineNumber = 9;
+        testFindLineNumberOfTaskToToggle(jsonFileName, taskLineToToggle, expectedLineNumber);
     });
 
     // --------------------------------------------------------------------------------
