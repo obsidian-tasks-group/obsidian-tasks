@@ -193,7 +193,9 @@ export function findLineNumberOfTaskToToggle(
     fileLines: string[],
     listItemsCache: ListItemCache[] | MockListItemCache[],
     errorLoggingFunction: ErrorLoggingFunction,
-) {
+): number | undefined {
+    let result: number | undefined;
+
     // If the line at line number in originalTask matches original markdown,
     // treat that as the correct answer.
     // This could go wrong if:
@@ -204,8 +206,11 @@ export function findLineNumberOfTaskToToggle(
     if (isValidLineNumber(originalTaskLineNumber, fileLines)) {
         if (fileLines[originalTaskLineNumber] === originalTask.originalMarkdown) {
             logger.debug(`Found original markdown at original line number ${originalTaskLineNumber}`);
-            return originalTaskLineNumber;
+            result = originalTaskLineNumber;
         }
+    }
+    if (result !== undefined) {
+        return result;
     }
 
     // If the line only appears once in the file, use that line number.
