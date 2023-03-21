@@ -79,7 +79,7 @@ function warnAndNotice(message: string) {
     new Notice(message, 10000);
 }
 
-function doNothing(message: string) {
+function debugLog(message: string) {
     logger.debug(message);
 }
 
@@ -150,7 +150,7 @@ const tryRepetitive = async ({
     const fileContent = await vault.read(file); // TODO: replace with vault.process.
     const fileLines = fileContent.split('\n');
 
-    const taskLineNumber = findLineNumberOfTaskToToggle(originalTask, fileLines, listItemsCache, doNothing);
+    const taskLineNumber = findLineNumberOfTaskToToggle(originalTask, fileLines, listItemsCache, debugLog);
 
     if (taskLineNumber === undefined) {
         const logDataForMocking = false;
