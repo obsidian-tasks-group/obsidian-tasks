@@ -1,0 +1,4 @@
+/* Top-align all table cells, for readability */
+table td {
+    vertical-align: top;
+}
