@@ -26,8 +26,9 @@ Changes visible to users:
 - [ ] **Bug fix** (prefix: `fix` - non-breaking change which fixes an issue)
 - [ ] **New feature** (prefix: `feat` - non-breaking change which adds functionality)
 - [ ] **Breaking change** (prefix: `feat!!` or `fix!!` - fix or feature that would cause existing functionality to not work as expected)
-- [ ] **Documentation** (prefix: `docs` - improvements to any documentation content)
+- [ ] **Documentation** (prefix: `docs` - improvements to any documentation content **for users**)
 - [ ] **Sample vault** (prefix: `vault` - improvements to the [Tasks-Demo sample vault](https://github.com/obsidian-tasks-group/obsidian-tasks/tree/main/resources/sample_vaults/Tasks-Demo))
+- [ ] **Contributing Guidelines** (prefix: `contrib` - any improvements to documentation content **for contributors** - see [Contributing to Tasks](https://publish.obsidian.md/tasks-contributing/))
 
 Internal changes:
 
