@@ -194,24 +194,14 @@ export function findLineNumberOfTaskToToggle(
     listItemsCache: ListItemCache[] | MockListItemCache[],
     errorLoggingFunction: ErrorLoggingFunction,
 ): number | undefined {
-    const result: number | undefined = tryFindingExactMatchAtOriginalLineNumber(originalTask, fileLines);
+    let result: number | undefined = tryFindingExactMatchAtOriginalLineNumber(originalTask, fileLines);
     if (result !== undefined) {
         return result;
     }
 
-    // If the line only appears once in the file, use that line number.
-    // This could go wrong if:
-    //    - the user had commented out the original task line, and the section had not yet been redrawn
-    const matchingLineNumbers = [];
-    for (let i = 0; i < fileLines.length; i++) {
-        if (fileLines[i] === originalTask.originalMarkdown) {
-            matchingLineNumbers.push(i);
-        }
-    }
-    if (matchingLineNumbers.length === 1) {
-        // There is only one instance of the line in the file, so it must be the
-        // line we are looking for.
-        return matchingLineNumbers[0];
+    result = tryFindingIdenticalUniqueMarkdownLineInFile(originalTask, fileLines);
+    if (result !== undefined) {
+        return result;
     }
 
     const { globalFilter } = getSettings();
@@ -271,6 +261,24 @@ function tryFindingExactMatchAtOriginalLineNumber(originalTask: Task | MockTask,
             logger.debug(`Found original markdown at original line number ${originalTaskLineNumber}`);
             return originalTaskLineNumber;
         }
+    }
+    return undefined;
+}
+
+function tryFindingIdenticalUniqueMarkdownLineInFile(originalTask: Task | MockTask, fileLines: string[]) {
+    // If the line only appears once in the file, use that line number.
+    // This could go wrong if:
+    //    - the user had commented out the original task line, and the section had not yet been redrawn
+    const matchingLineNumbers = [];
+    for (let i = 0; i < fileLines.length; i++) {
+        if (fileLines[i] === originalTask.originalMarkdown) {
+            matchingLineNumbers.push(i);
+        }
+    }
+    if (matchingLineNumbers.length === 1) {
+        // There is only one instance of the line in the file, so it must be the
+        // line we are looking for.
+        return matchingLineNumbers[0];
     }
     return undefined;
 }
