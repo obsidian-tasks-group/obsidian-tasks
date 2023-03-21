@@ -62,6 +62,20 @@ Some more random tasks:
 
 ## Log of actual results - newest first
 
+Actual result in Tasks 1.26.0
+
+> [!Success]
+>
+> - `Section 2/Task 1` is marked as Done
+> - `Section 2/Task 2` is marked as Done
+
+Note that:
+
+> [!Info]
+> Tasks may write out a harmless message:
+>
+> > "Manual Testing/Task Toggling Scenarios/1680 - Reading Mode line numbers not updated on editing.md" has been modified externally, merging changes automatically.
+
 ### Actual result in `5649417`, PR #1702, 2023-02-27
 
 <https://github.com/obsidian-tasks-group/obsidian-tasks/commit/5649417006a5ccf80cdaaaeb2bc404db5c6f6a86>
