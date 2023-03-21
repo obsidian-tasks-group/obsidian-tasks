@@ -71,7 +71,7 @@ export const replaceTaskWithTasks = async ({
 
 function errorAndNotice(message: string) {
     console.error(message);
-    new Notice(message, 10000);
+    new Notice(message, 15000);
 }
 
 function warnAndNotice(message: string) {
@@ -106,7 +106,23 @@ const tryRepetitive = async ({
     logger.debug(`tryRepetitive after ${previousTries} previous tries`);
     const retry = () => {
         if (previousTries > 10) {
-            errorAndNotice('Tasks: Too many retries. File update not possible ...');
+            const message = `Tasks: Could not find the correct task line to update.
+
+The task line not updated is:
+${originalTask.originalMarkdown}
+
+In this markdown file:
+"${originalTask.taskLocation.path}"
+
+Note: further clicks on this checkbox will usually now be ignored until the file is opened (or certain, specific edits are made - it's complicated).
+
+Recommendations:
+
+1. Close all panes that have the above file open, and then re-open the file.
+
+2. Check for exactly identical copies of the task line, in this file, and see if you can make them different.
+`;
+            errorAndNotice(message);
             return;
         }
 
