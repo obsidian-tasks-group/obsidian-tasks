@@ -61,6 +61,11 @@ This is the text describing your task.
 
 If you have a [global filter]({{ site.baseurl }}{% link getting-started/global-filter.md %}) enabled, the dialog takes care of adding it automatically.
 
+The description box can be enlarged by dragging its corner. Multi-line text can be pasted in, or dragged-and-dropped in, and Tasks will remove the end-of-line characters automatically.
+
+{: .released }
+Description field became resizable in Tasks 1.26.0.
+
 ### Priority
 
 See [priority]({{ site.baseurl }}{% link getting-started/priority.md %}).
