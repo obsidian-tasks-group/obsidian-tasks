@@ -178,32 +178,12 @@ function isValidLineNumber(listItemLineNumber: number, fileLines: string[]) {
     return listItemLineNumber < fileLines.length;
 }
 
-/**
- * Try to find the line number of the originalTask
- * @param originalTask - the {@link Task} line that the user clicked on
- * @param fileLines - the lines read from the file.
- * @param listItemsCache
- * @param errorLoggingFunction - a function of type {@link ErrorLoggingFunction} - which will be called if the found
- *                               line differs from the original markdown in {@link originalTask}.
- *                               This parameter is provided to allow tests to be written for this code
- *                               that do not display a popup warning, but instead capture the error message.
- */
-export function findLineNumberOfTaskToToggle(
+function tryFindingLineNumberFromTaskSectionInfo(
     originalTask: Task | MockTask,
     fileLines: string[],
     listItemsCache: ListItemCache[] | MockListItemCache[],
     errorLoggingFunction: ErrorLoggingFunction,
-): number | undefined {
-    let result: number | undefined = tryFindingExactMatchAtOriginalLineNumber(originalTask, fileLines);
-    if (result !== undefined) {
-        return result;
-    }
-
-    result = tryFindingIdenticalUniqueMarkdownLineInFile(originalTask, fileLines);
-    if (result !== undefined) {
-        return result;
-    }
-
+) {
     const { globalFilter } = getSettings();
     let taskLineNumber: number | undefined;
     let sectionIndex = 0;
@@ -246,6 +226,35 @@ ${line}`,
         }
     }
     return taskLineNumber;
+}
+
+/**
+ * Try to find the line number of the originalTask
+ * @param originalTask - the {@link Task} line that the user clicked on
+ * @param fileLines - the lines read from the file.
+ * @param listItemsCache
+ * @param errorLoggingFunction - a function of type {@link ErrorLoggingFunction} - which will be called if the found
+ *                               line differs from the original markdown in {@link originalTask}.
+ *                               This parameter is provided to allow tests to be written for this code
+ *                               that do not display a popup warning, but instead capture the error message.
+ */
+export function findLineNumberOfTaskToToggle(
+    originalTask: Task | MockTask,
+    fileLines: string[],
+    listItemsCache: ListItemCache[] | MockListItemCache[],
+    errorLoggingFunction: ErrorLoggingFunction,
+): number | undefined {
+    let result: number | undefined = tryFindingExactMatchAtOriginalLineNumber(originalTask, fileLines);
+    if (result !== undefined) {
+        return result;
+    }
+
+    result = tryFindingIdenticalUniqueMarkdownLineInFile(originalTask, fileLines);
+    if (result !== undefined) {
+        return result;
+    }
+
+    return tryFindingLineNumberFromTaskSectionInfo(originalTask, fileLines, listItemsCache, errorLoggingFunction);
 }
 
 function tryFindingExactMatchAtOriginalLineNumber(originalTask: Task | MockTask, fileLines: string[]) {
