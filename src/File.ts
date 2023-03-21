@@ -194,21 +194,7 @@ export function findLineNumberOfTaskToToggle(
     listItemsCache: ListItemCache[] | MockListItemCache[],
     errorLoggingFunction: ErrorLoggingFunction,
 ): number | undefined {
-    let result: number | undefined;
-
-    // If the line at line number in originalTask matches original markdown,
-    // treat that as the correct answer.
-    // This could go wrong if:
-    //    - Some lines have been added since originalTask was rendered in Reading view,
-    //      and an identical task line was added, that happened by coincidence to be in the same
-    //      line number as the original task.
-    const originalTaskLineNumber = originalTask.taskLocation.lineNumber;
-    if (isValidLineNumber(originalTaskLineNumber, fileLines)) {
-        if (fileLines[originalTaskLineNumber] === originalTask.originalMarkdown) {
-            logger.debug(`Found original markdown at original line number ${originalTaskLineNumber}`);
-            result = originalTaskLineNumber;
-        }
-    }
+    const result: number | undefined = tryFindingExactMatchAtOriginalLineNumber(originalTask, fileLines);
     if (result !== undefined) {
         return result;
     }
@@ -270,4 +256,21 @@ ${line}`,
         }
     }
     return taskLineNumber;
+}
+
+function tryFindingExactMatchAtOriginalLineNumber(originalTask: Task | MockTask, fileLines: string[]) {
+    // If the line at line number in originalTask matches original markdown,
+    // treat that as the correct answer.
+    // This could go wrong if:
+    //    - Some lines have been added since originalTask was rendered in Reading view,
+    //      and an identical task line was added, that happened by coincidence to be in the same
+    //      line number as the original task.
+    const originalTaskLineNumber = originalTask.taskLocation.lineNumber;
+    if (isValidLineNumber(originalTaskLineNumber, fileLines)) {
+        if (fileLines[originalTaskLineNumber] === originalTask.originalMarkdown) {
+            logger.debug(`Found original markdown at original line number ${originalTaskLineNumber}`);
+            return originalTaskLineNumber;
+        }
+    }
+    return undefined;
 }
