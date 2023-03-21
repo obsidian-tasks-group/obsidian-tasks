@@ -71,7 +71,7 @@ export class LogManager extends EventEmitter2 {
     private options: LogOptions = {
         minLevels: {
             '': 'info',
-            tasks: 'debug',
+            tasks: 'info',
         },
     };
 
