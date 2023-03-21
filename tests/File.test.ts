@@ -86,27 +86,22 @@ describe('replaceTaskWithTasks', () => {
 
     // --------------------------------------------------------------------------------
     // Issue 688
-    describe('issue 688 - block referenced task', () => {
+    it('issue 688 - block referenced task', () => {
         const jsonFileName = '688_toggle_block_referenced_line_overwrites_wrong_line.json';
         const taskLineToToggle = '- [ ] #task task2b ^ca47c7';
 
-        it('correct behaviour', () => {
-            const expectedLineNumber = 8;
-            testFindLineNumberOfTaskToToggle(jsonFileName, taskLineToToggle, expectedLineNumber);
-        });
+        const expectedLineNumber = 8;
+        testFindLineNumberOfTaskToToggle(jsonFileName, taskLineToToggle, expectedLineNumber);
     });
 
     // --------------------------------------------------------------------------------
     // Issue 1680
-    describe('issue 1680 - Cannot read properties of undefined', () => {
+    it('issue 1680 - Cannot read properties of undefined', () => {
         const jsonFileName = '1680_task_line_number_past_end_of_file.json';
         const taskLineToToggle = '- [ ] #task Section 2/Task 2';
 
-        it('correct behaviour', () => {
-            // An incorrect line is currently found, so this test fails, due to bug 1680
-            const expectedLineNumber = 9;
-            testFindLineNumberOfTaskToToggle(jsonFileName, taskLineToToggle, expectedLineNumber);
-        });
+        const expectedLineNumber = 9;
+        testFindLineNumberOfTaskToToggle(jsonFileName, taskLineToToggle, expectedLineNumber);
     });
 
     // --------------------------------------------------------------------------------
