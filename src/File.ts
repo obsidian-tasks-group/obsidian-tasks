@@ -57,8 +57,7 @@ export const replaceTaskWithTasks = async ({
         newTasks = [newTasks];
     }
 
-    logger.info(`replaceTaskWithTasks entered. ${originalTask.path}`);
-    logger.debug('>>>>>>>>>>>>>>>>>>>>>>>>');
+    logger.debug(`replaceTaskWithTasks entered. ${originalTask.path}`);
 
     tryRepetitive({
         originalTask,
