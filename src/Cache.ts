@@ -9,7 +9,7 @@ import { DateFallback } from './DateFallback';
 import { getSettings } from './Config/Settings';
 import { Lazy } from './lib/Lazy';
 import { TaskLocation } from './TaskLocation';
-import { logging } from './lib/logging';
+// import { logging } from './lib/logging';
 
 export enum State {
     Cold = 'Cold',
@@ -17,7 +17,7 @@ export enum State {
     Warm = 'Warm',
 }
 
-const logger = logging.getLogger('tasks');
+// const logger = logging.getLogger('tasks');
 
 export class Cache {
     private readonly metadataCache: MetadataCache;
@@ -223,10 +223,10 @@ export class Cache {
         }
 
         if (this.getState() == State.Warm) {
-            logger.debug(`Cache read: ${file.path}`);
-            // console.debug(
-            //     `At least one task, its line number or its heading has changed in ${file.path}: triggering a refresh of all active Tasks blocks in Live Preview and Reading mode views.`,
-            // );
+            // logger.debug(`Cache read: ${file.path}`);
+            console.debug(
+                `At least one task, its line number or its heading has changed in ${file.path}: triggering a refresh of all active Tasks blocks in Live Preview and Reading mode views.`,
+            );
         }
 
         // Remove all tasks from this file from the cache before
