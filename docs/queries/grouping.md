@@ -65,7 +65,7 @@ You can group by the following properties.
 
 {: .released }
 `happens` grouping option was introduced in Tasks 1.11.0.<br>
-`created` grouping option was introduced in Tasks 1.26.0.
+`created` grouping option was introduced in Tasks 2.0.0.
 
 ### Task statuses
 
