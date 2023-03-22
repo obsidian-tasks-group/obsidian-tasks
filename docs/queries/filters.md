@@ -90,6 +90,10 @@ Example absolute date ranges:
 
 - `2022-01-01 2023-02-01`
 
+{: .warning }
+Prior to Tasks 1.26.0, the second date in absolute date ranges was ignored.
+See the tables in the [Appendix below]({{ site.baseurl }}{% link queries/filters.md %}#appendix-tasks-1260-improvements-to-date-filters) to understand the changes in results, and whether you need to update any of your searches.
+
 ### Relative date ranges
 
 Tasks supports a very specific set of relative `<date range>` values: `last|this|next week|month|quarter|year`. The pipe (`|`) character means 'or'.
@@ -112,6 +116,10 @@ Example relative date ranges:
 - `after this month`
 - `next quarter`
 - `before next year`
+
+{: .warning }
+Prior to Tasks 1.26.0, the interpretation of relative date ranges was confusing, and not what most users naturally expected.
+See the tables in the [Appendix below]({{ site.baseurl }}{% link queries/filters.md %}#appendix-tasks-1260-improvements-to-date-filters) to understand the changes in results, and whether you need to update any of your searches.
 
 ### Troubleshooting date searches
 
@@ -527,9 +535,15 @@ Note that the file name includes the `.md` extension.
 
 ## Appendix: Tasks 1.26.0 improvements to date filters
 
+Tasks 1.26.0 introduced the concept of filtering for date ranges.
+
+In all cases, this new feature improves the results of Tasks date filters.
+
+This Appendix shows how the results of various searches have changes, to enable you to decide whether any existing searches need to be updated.
+
 ### due (before|on|in||after) absolute date: results unchanged
 
-Unchanged interpretation of various **absolute** due date filters:
+Unchanged interpretation of various [**absolute** due date]({{ site.baseurl }}{% link queries/filters.md %}#absolute-dates) filters:
 
 | keyword     | Tasks 1.25.0 and earlier                                                                          | Tasks 1.26.0 onwards                                                                              |
 | ----------- | ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
@@ -542,7 +556,7 @@ Unchanged interpretation of various **absolute** due date filters:
 
 ### due (before|on|in||after) absolute date range: results improved
 
-Differences in interpretation of various **absolute** due date **range** filters:
+Differences in interpretation of various [**absolute** due date **range**]({{ site.baseurl }}{% link queries/filters.md %}#absolute-date-ranges) filters:
 
 | keyword     | Tasks 1.25.0 and earlier                                                                                    | Tasks 1.26.0 onwards                                                                                                                                               |
 | ----------- | ----------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -555,7 +569,7 @@ Differences in interpretation of various **absolute** due date **range** filters
 
 ### due (before|on|in||after) last week: results improved
 
-Differences in interpretation of various **relative** due date filters, when run on `2023-02-10` (Friday 10th February 2023):
+Differences in interpretation of various [**relative** due date **range**]({{ site.baseurl }}{% link queries/filters.md %}#relative-date-ranges) filters, when run on `2023-02-10` (Friday 10th February 2023):
 
 | keyword     | Tasks 1.25.0 and earlier                                                                       | Tasks 1.26.0 onwards                                                                                                                               |
 | ----------- | ---------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -568,7 +582,7 @@ Differences in interpretation of various **relative** due date filters, when run
 
 ### due (before|on|in||after) this week: results improved
 
-Differences in interpretation of various **relative** due date filters, when run on `2023-02-10` (Friday 10th February 2023):
+Differences in interpretation of various [**relative** due date **range**]({{ site.baseurl }}{% link queries/filters.md %}#relative-date-ranges) filters, when run on `2023-02-10` (Friday 10th February 2023):
 
 | keyword     | Tasks 1.25.0 and earlier                                                                       | Tasks 1.26.0 onwards                                                                                                                                |
 | ----------- | ---------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -581,7 +595,7 @@ Differences in interpretation of various **relative** due date filters, when run
 
 ### due (before|on|in||after) next week: results improved
 
-Differences in interpretation of various **relative** due date filters, when run on `2023-02-10` (Friday 10th February 2023):
+Differences in interpretation of various [**relative** due date **range**]({{ site.baseurl }}{% link queries/filters.md %}#relative-date-ranges) filters, when run on `2023-02-10` (Friday 10th February 2023):
 
 | keyword     | Tasks 1.25.0 and earlier                                                                        | Tasks 1.26.0 onwards                                                                                                                                 |
 | ----------- | ----------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
