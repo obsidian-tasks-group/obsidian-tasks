@@ -9,7 +9,7 @@
 
 **When** I view the tasks in Reading mode with debug enabled
 
-**Then** I see that the blockquote seems to start a new section line, but the backlinks show the actual ordinary heading name.
+**Then** I see that the callout seems to start a new section line, but the backlinks show the actual ordinary heading name.
 
 ## Section 1
 
