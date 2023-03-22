@@ -64,7 +64,7 @@ If you have a [global filter]({{ site.baseurl }}{% link getting-started/global-f
 The description box can be enlarged by dragging its corner. Multi-line text can be pasted in, or dragged-and-dropped in, and Tasks will remove the end-of-line characters automatically.
 
 {: .released }
-Description field became resizable in Tasks 1.26.0.
+Description field became resizable in Tasks 2.0.0.
 
 ### Priority
 
@@ -144,7 +144,7 @@ A read-only checkbox, showing whether the task is completed.
 ### Created on
 
 {: .released }
-Created date was introduced in Tasks 1.26.0.
+Created date was introduced in Tasks 2.0.0.
 
 A read-only display of the task's [created date]({{ site.baseurl }}{% link getting-started/dates.md %}#-created), if any.
 
