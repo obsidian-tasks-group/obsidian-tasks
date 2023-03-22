@@ -1,6 +1,8 @@
 {
   "globalFilter": "#task",
   "removeGlobalFilter": true,
+  "taskFormat": "tasksPluginEmoji",
+  "setCreatedDate": false,
   "setDoneDate": true,
   "autoSuggestInEditor": true,
   "autoSuggestMinMatch": 0,
@@ -49,5 +51,9 @@
   "headingOpened": {
     "Core Statuses": true,
     "Custom Statuses": true
+  },
+  "debugSettings": {
+    "ignoreSortInstructions": false,
+    "showTaskHiddenData": false
   }
 }

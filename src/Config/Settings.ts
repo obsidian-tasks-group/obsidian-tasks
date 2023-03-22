@@ -1,5 +1,8 @@
+import { DEFAULT_SYMBOLS } from '../TaskSerializer/DefaultTaskSerializer';
 import { StatusConfiguration } from '../StatusConfiguration';
 import { Status } from '../Status';
+import { DefaultTaskSerializer, type TaskSerializer } from '../TaskSerializer';
+import { DebugSettings } from './DebugSettings';
 import { StatusSettings } from './StatusSettings';
 import { Feature } from './Feature';
 import type { FeatureFlag } from './Feature';
@@ -12,9 +15,29 @@ export type HeadingState = {
     [id: string]: boolean;
 };
 
+/**
+ * Interface encapsulating how a Task is written to and read from text
+ *
+ */
+interface TaskFormat {
+    /** User facing name of the {@link TaskFormat} */
+    displayName: string;
+    /** {@link TaskSerializer} responsible for reading Tasks from text and writing them back into text */
+    taskSerializer: TaskSerializer;
+}
+
+/** Map of all defined {@link TaskFormat}s */
+export const TASK_FORMATS = {
+    tasksPluginEmoji: { displayName: 'Default', taskSerializer: new DefaultTaskSerializer(DEFAULT_SYMBOLS) },
+} as const;
+
+export type TASK_FORMATS = typeof TASK_FORMATS; // For convenience to make some typing easier
+
 export interface Settings {
     globalFilter: string;
     removeGlobalFilter: boolean;
+    taskFormat: keyof TASK_FORMATS;
+    setCreatedDate: boolean;
     setDoneDate: boolean;
     autoSuggestInEditor: boolean;
     autoSuggestMinMatch: number;
@@ -35,11 +58,14 @@ export interface Settings {
 
     // Tracks the stage of the headings in the settings UI.
     headingOpened: HeadingState;
+    debugSettings: DebugSettings;
 }
 
 const defaultSettings: Settings = {
     globalFilter: '',
     removeGlobalFilter: false,
+    taskFormat: 'tasksPluginEmoji',
+    setCreatedDate: false,
     setDoneDate: true,
     autoSuggestInEditor: true,
     autoSuggestMinMatch: 0,
@@ -59,6 +85,7 @@ const defaultSettings: Settings = {
         // setDoneDate: true,
     },
     headingOpened: {},
+    debugSettings: new DebugSettings(),
 };
 
 let settings: Settings = { ...defaultSettings };
@@ -145,3 +172,13 @@ export const toggleFeature = (internalName: string, enabled: boolean): FeatureFl
     settings.features[internalName] = enabled;
     return settings.features;
 };
+
+/**
+ * Retrieves the {@link TaskFormat} that corresponds to user's selection ({@link Settings.taskFormat})
+ *
+ * @exports
+ * @returns {TaskFormat}
+ */
+export function getUserSelectedTaskFormat(): TaskFormat {
+    return TASK_FORMATS[getSettings().taskFormat];
+}

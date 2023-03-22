@@ -42,6 +42,7 @@ export class Group {
 
     private static groupers: Record<GroupingProperty, GrouperFunction> = {
         backlink: Group.groupByBacklink,
+        created: Group.groupByCreatedDate,
         done: Group.groupByDoneDate,
         due: Group.groupByDueDate,
         filename: Group.groupByFileName,
@@ -97,6 +98,10 @@ export class Group {
         } else {
             return ['Not Recurring'];
         }
+    }
+
+    private static groupByCreatedDate(task: Task): string[] {
+        return [Group.stringFromDate(task.createdDate, 'created')];
     }
 
     private static groupByStartDate(task: Task): string[] {

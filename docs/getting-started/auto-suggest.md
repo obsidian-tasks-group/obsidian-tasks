@@ -114,6 +114,10 @@ There are some things that might be improved in future releases:
     - This phrase still needs to be typed manually.
 - It currently pops up when editing completed tasks. This may be changed in future.
 
+## Limitations
+
+- Auto-suggest does not yet support the [created date]({{ site.baseurl }}{% link getting-started/dates.md %}#-created) field. We are tracking this in [issue #1743](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1743).
+
 ## Common Questions
 
 ### What do I need to know about the order of items in a task?

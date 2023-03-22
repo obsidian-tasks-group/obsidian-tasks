@@ -1,0 +1,79 @@
+{
+  "collapse-filter": false,
+  "search": "",
+  "showTags": false,
+  "showAttachments": false,
+  "hideUnresolved": false,
+  "showOrphans": true,
+  "collapse-color-groups": false,
+  "colorGroups": [
+    {
+      "query": "path:Building/",
+      "color": {
+        "a": 1,
+        "rgb": 14048348
+      }
+    },
+    {
+      "query": "path:Contributing/",
+      "color": {
+        "a": 1,
+        "rgb": 14069084
+      }
+    },
+    {
+      "query": "path:Debugging/",
+      "color": {
+        "a": 1,
+        "rgb": 16771584
+      }
+    },
+    {
+      "query": "path:Dependencies/",
+      "color": {
+        "a": 1,
+        "rgb": 5943130
+      }
+    },
+    {
+      "query": "path:FAQs/",
+      "color": {
+        "a": 1,
+        "rgb": 10417624
+      }
+    },
+    {
+      "query": "path:Releases/",
+      "color": {
+        "a": 1,
+        "rgb": 6073814
+      }
+    },
+    {
+      "query": "path:Testing/",
+      "color": {
+        "a": 1,
+        "rgb": 6053078
+      }
+    },
+    {
+      "query": "path:Documentation/",
+      "color": {
+        "a": 1,
+        "rgb": 11361494
+      }
+    }
+  ],
+  "collapse-display": false,
+  "showArrow": true,
+  "textFadeMultiplier": -3,
+  "nodeSizeMultiplier": 1,
+  "lineSizeMultiplier": 2.3215087890625,
+  "collapse-forces": false,
+  "centerStrength": 0.555745442708333,
+  "repelStrength": 19.4970703125,
+  "linkStrength": 1,
+  "linkDistance": 490,
+  "scale": 0.5478683072897571,
+  "close": false
+}

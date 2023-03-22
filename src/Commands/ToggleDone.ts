@@ -1,7 +1,8 @@
-import { Editor, MarkdownView, View } from 'obsidian';
+import { Editor, type EditorPosition, MarkdownView, View } from 'obsidian';
 import { StatusRegistry } from '../StatusRegistry';
 
 import { Task, TaskRegularExpressions } from '../Task';
+import { TaskLocation } from '../TaskLocation';
 
 export const toggleDone = (checking: boolean, editor: Editor, view: View) => {
     if (checking) {
@@ -32,40 +33,47 @@ export const toggleDone = (checking: boolean, editor: Editor, view: View) => {
     const lineNumber = origCursorPos.line;
     const line = editor.getLine(lineNumber);
 
-    const toggledLine = toggleLine(line, path);
-    editor.setLine(lineNumber, toggledLine);
+    const insertion = toggleLine(line, path);
+    editor.setLine(lineNumber, insertion.text);
 
     /* Cursor positions are 0-based for both "line" and "ch" offsets.
      * If "ch" offset bigger than the line length, will just continue to next line(s).
      * By default "editor.setLine()" appears to either keep the cursor at the end of the line if it is already there,
      * ...or move it to the beginning if it is anywhere else. Licat explained this on Discord as "sticking" to one side or another.
-     * Previously, Tasks would reset+move-right the cursor if there was any text in the line, including something inside the checkbox,
-     * moving right by (toggledLine.length - line.length). (Supposedly, but it still moves right, just by less, if the toggledLine is shorter than the old).
-     * This missed the need to move right on the blank line to "- " case (issue #460).
-     * This also meant the cursor moved nonsensically if it was before any newly inserted text,
-     * such as a done date at the end of the line, or after the ">" when "> -" changed to "> - [ ]".
      */
-    // Reset the cursor. Use the difference in line lengths and original cursor position to determine behavior
-    editor.setCursor({
-        line: origCursorPos.line,
-        ch: calculateCursorOffset(origCursorPos.ch, line, toggledLine),
-    });
+    editor.setCursor(getNewCursorPosition(origCursorPos, insertion));
 };
 
-export const toggleLine = (line: string, path: string) => {
-    let toggledLine = line;
+/**
+ * Represents text to be inserted into the editor
+ *
+ * @property text The text to insert. May span over multiple lines.
+ * @property [moveTo] An {@link EditorPosition} that represents an absolute position within {@link EditorInsertion.text} that is
+ *    recommended to move the cursor to.
+ *
+ * Any combination of subfields (or the whole {@link EditorPosition}) may be omitted.
+ * Missing fields should preserve the corresponding cursor position. That is:
+ *     * A {@link EditorInsertion.moveTo} that is `undefined` directs the caller to keep the cursor where it is.
+ *     * A {@link EditorInsertion.moveTo} that is `{line: 1}` directs the caller of to jump to {@link EditorInsertion.text}'s
+ *       second line but stay in the same column.
+ *
+ * @interface EditorInsertion
+ */
+interface EditorInsertion {
+    text: string;
+    moveTo?: Partial<EditorPosition>;
+}
 
+export const toggleLine = (line: string, path: string): EditorInsertion => {
     const task = Task.fromLine({
         // Why are we using Task.fromLine instead of the Cache here?
         line,
-        path,
-        sectionStart: 0, // We don't need this to toggle it here in the editor.
-        sectionIndex: 0, // We don't need this to toggle it here in the editor.
-        precedingHeader: null, // We don't need this to toggle it here in the editor.
+        taskLocation: TaskLocation.fromUnknownPosition(path), // We don't need precise location to toggle it here in the editor.
         fallbackDate: null, // We don't need this to toggle it here in the editor.
     });
     if (task !== null) {
-        toggledLine = toggleTask(task);
+        const lines = task.toggle().map((t) => t.toFileLineString());
+        return { text: lines.join('\n'), moveTo: { line: lines.length - 1 } };
     } else {
         // If the task is null this means that we have one of:
         // 1. a regular checklist item
@@ -80,61 +88,44 @@ export const toggleLine = (line: string, path: string) => {
             const statusString = regexMatch[3];
             const status = StatusRegistry.getInstance().bySymbol(statusString);
             const newStatusString = status.nextStatusSymbol;
-            toggledLine = line.replace(TaskRegularExpressions.taskRegex, `$1- [${newStatusString}] $4`);
+            return { text: line.replace(TaskRegularExpressions.taskRegex, `$1- [${newStatusString}] $4`) };
         } else if (TaskRegularExpressions.listItemRegex.test(line)) {
             // Convert the list item to a checklist item.
-            toggledLine = line.replace(TaskRegularExpressions.listItemRegex, '$1$2 [ ]');
+            const text = line.replace(TaskRegularExpressions.listItemRegex, '$1$2 [ ]');
+            return { text, moveTo: { ch: text.length } };
         } else {
             // Convert the line to a list item.
-            toggledLine = line.replace(TaskRegularExpressions.indentationRegex, '$1- ');
+            const text = line.replace(TaskRegularExpressions.indentationRegex, '$1- ');
+            return { text, moveTo: { ch: text.length } };
         }
     }
-
-    return toggledLine;
 };
 
-const toggleTask = (task: Task): string => {
-    // Toggling a recurring task will produce two Tasks
-    const toggledTasks = task.toggle();
-    return toggledTasks.map((task: Task) => task.toFileLineString()).join('\n');
-};
+/**
+ * Computes the new absolute position of the cursor so that it is positioned within the inserted text as specified
+ * by {@link insertion}.moveTo.
+ *
+ * @note This function assumes that text was inserted at the beginning of the line, which is
+ *       the case when used together with {@link Editor.setLine}. This is a simplifying assumption,
+ *       but may result in incorrect behavior if used outside the intended context (i.e. not by {@link toggleDone}).
+ *
+ *       Example: Assume {@link insertion}=`{text: "Hello World", moveTo: {line: 0, ch: 6}}`, where {@link insertion}.text
+ *                had been appended to a line with content "------":  `------Hello World`.
+ *                The cursor will be offset to the left by the number of characters that were already on the line.
+ *                Resulting in the incorrect result `------|Hello World` instead of the intended `------Hello |World`.
+ *
+ * @param startPos The starting cursor position
+ * @param insertion The inserted text and suggested cursor position within that text
+ */
+export const getNewCursorPosition = (startPos: EditorPosition, insertion: EditorInsertion): EditorPosition => {
+    const defaultMoveTo = { line: 0, ch: startPos.ch };
+    // Fill in any missing moveTo values using the default
+    const moveTo = { ...defaultMoveTo, ...(insertion.moveTo ?? {}) };
+    // Find the length of the line we're moving the cursor to, so that cursor isn't moved out of bounds
+    const destinationLineLength = insertion.text.split('\n')[moveTo.line].length;
 
-/* Cases (another way):
-0) Line got shorter: done date removed from end of task, cursor should reset or be moved to new end if reset position is too long.
-1) Line stayed the same length: Checking & unchecking textbox that is not a task - cursor should reset.
-2) Line got longer:
-    a) List marker could have been added. Find it in new text: if cursor was at or right of where it was added, move the cursor right.
-    b) Empty checkbox could have been added. If cursor was after the list marker (in old or new), it should move right.
-    c) Done emoji and date could have been added to the end. Cursor should reset if 0, and stay end of line otherwise.
-    d) Recurring task could have been added to the beginning and done emoji and date added to the end. Current behavior adds so much to the offset to make this right.
-
-So cursor should be reset if 0, which includes being moved to new end if got shorter. Then might need to move right 2 or 3.
-*/
-export const calculateCursorOffset = (origCursorCh: number, line: string, toggledLine: string) => {
-    let newLineLen = toggledLine.length;
-    if (newLineLen <= line.length) {
-        // Line got shorter or stayed same length. Reset cursor to original position, capped at end of line.
-        return origCursorCh >= toggledLine.length ? newLineLen : origCursorCh;
-    }
-
-    // Special-case for done-date append, fixes #449
-    const doneDateLength = ' ✅ YYYY-MM-DD'.length;
-    if (toggledLine.match(TaskRegularExpressions.doneDateRegex) && newLineLen - line.length >= doneDateLength) {
-        newLineLen -= doneDateLength;
-    }
-
-    // Handle recurring tasks: entire line plus newline prepended. Fix for #449 above means appended done date treated correctly.
-    if (newLineLen >= 2 * line.length && toggledLine.search('.+\n.+') !== -1) {
-        return origCursorCh + newLineLen - line.length;
-    }
-
-    /* Line got longer, not a recurring task. Were the added characters before or after the cursor?
-     * At this point the line is at least a list item. Find the first list marker. */
-    const firstListItemChar = toggledLine.search(/[-*]/);
-    if (origCursorCh < firstListItemChar) {
-        // Cursor was in indentation. Reset to where it was.
-        return origCursorCh;
-    }
-
-    return origCursorCh + newLineLen - line.length;
+    return {
+        line: startPos.line + moveTo.line,
+        ch: Math.min(moveTo.ch, destinationLineLength),
+    };
 };

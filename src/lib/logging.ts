@@ -135,7 +135,7 @@ export class LogManager extends EventEmitter2 {
         if (this.consoleLoggerRegistered) return this;
 
         this.onLogEntry((logEntry) => {
-            let msg = `[${moment().format('YYYYMMDDHHmmss')}][${logEntry.level}][${logEntry.module}]`;
+            let msg = `[${moment().format('YYYY-MM-DD-HH:mm:ss.SSS')}][${logEntry.level}][${logEntry.module}]`;
 
             if (logEntry.traceId) {
                 msg += `[${logEntry.traceId}]`;

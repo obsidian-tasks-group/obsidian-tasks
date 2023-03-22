@@ -5,6 +5,7 @@ import { Priority, Task } from '../../src/Task';
 import type { Recurrence } from '../../src/Recurrence';
 import { DateParser } from '../../src/Query/DateParser';
 import { StatusConfiguration, StatusType } from '../../src/StatusConfiguration';
+import { TaskLocation } from '../../src/TaskLocation';
 
 /**
  * A fluent class for creating tasks for tests.
@@ -25,6 +26,7 @@ export class TaskBuilder {
     private _indentation: string = '';
     private _listMarker: string = '-';
 
+    private _lineNumber: number = 0;
     private _sectionStart: number = 0;
     private _sectionIndex: number = 0;
 
@@ -32,6 +34,7 @@ export class TaskBuilder {
     private _tags: string[] = [];
     private _priority: Priority = Priority.None;
 
+    private _createdDate: Moment | null = null;
     private _startDate: Moment | null = null;
     private _scheduledDate: Moment | null = null;
     private _dueDate: Moment | null = null;
@@ -62,13 +65,17 @@ export class TaskBuilder {
         return new Task({
             status: this._status,
             description: description,
-            path: this._path,
+            taskLocation: new TaskLocation(
+                this._path,
+                this._lineNumber,
+                this._sectionStart,
+                this._sectionIndex,
+                this._precedingHeader,
+            ),
             indentation: this._indentation,
             listMarker: this._listMarker,
-            sectionStart: this._sectionStart,
-            sectionIndex: this._sectionIndex,
-            precedingHeader: this._precedingHeader,
             priority: this._priority,
+            createdDate: this._createdDate,
             startDate: this._startDate,
             scheduledDate: this._scheduledDate,
             dueDate: this._dueDate,
@@ -132,6 +139,11 @@ export class TaskBuilder {
         return this;
     }
 
+    public lineNumber(lineNumber: number): TaskBuilder {
+        this._lineNumber = lineNumber;
+        return this;
+    }
+
     public sectionStart(sectionStart: number): TaskBuilder {
         this._sectionStart = sectionStart;
         return this;
@@ -154,6 +166,11 @@ export class TaskBuilder {
 
     public priority(priority: Priority): TaskBuilder {
         this._priority = priority;
+        return this;
+    }
+
+    public createdDate(createdDate: string | null): TaskBuilder {
+        this._createdDate = TaskBuilder.parseDate(createdDate);
         return this;
     }
 

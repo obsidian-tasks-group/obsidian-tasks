@@ -2,7 +2,6 @@ import { PathField } from '../../../src/Query/Filter/PathField';
 import type { FilterOrErrorMessage } from '../../../src/Query/Filter/Filter';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { testFilter } from '../../TestingTools/FilterTestHelpers';
-import { toBeValid, toMatchTaskWithPath } from '../../CustomMatchers/CustomMatchersForFilters';
 import {
     expectTaskComparesAfter,
     expectTaskComparesBefore,
@@ -14,14 +13,6 @@ function testTaskFilterForTaskWithPath(filter: FilterOrErrorMessage, path: strin
     const builder = new TaskBuilder();
     testFilter(filter, builder.path(path), expected);
 }
-
-expect.extend({
-    toMatchTaskWithPath,
-});
-
-expect.extend({
-    toBeValid,
-});
 
 describe('path', () => {
     it('by path (includes)', () => {

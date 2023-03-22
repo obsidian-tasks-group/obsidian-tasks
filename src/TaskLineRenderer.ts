@@ -5,7 +5,7 @@ import * as taskModule from './Task';
 import type { LayoutOptions, TaskLayoutComponent } from './TaskLayout';
 import { TaskLayout } from './TaskLayout';
 import { replaceTaskWithTasks } from './File';
-import { getSettings } from './Config/Settings';
+import { TASK_FORMATS, getSettings } from './Config/Settings';
 
 export type TaskLineRenderDetails = {
     parentUlElement: HTMLElement;
@@ -21,6 +21,7 @@ export const LayoutClasses: { [c in TaskLayoutComponent]: string } = {
     priority: 'task-priority',
     dueDate: 'task-due',
     startDate: 'task-start',
+    createdDate: 'task-created',
     scheduledDate: 'task-scheduled',
     doneDate: 'task-done',
     recurrenceRule: 'task-recurring',
@@ -115,10 +116,11 @@ async function taskToHtml(
     textRenderer: TextRenderer,
 ): Promise<AttributesDictionary> {
     let allAttributes: AttributesDictionary = {};
-    const taskLayout = renderDetails.taskLayout ?? new TaskLayout(renderDetails.layoutOptions);
+    const taskLayout = new TaskLayout(renderDetails.layoutOptions);
+    const emojiSerializer = TASK_FORMATS.tasksPluginEmoji.taskSerializer;
     // Render and build classes for all the task's visible components
     for (const component of taskLayout.layoutComponents) {
-        let componentString = task.componentToString(taskLayout, component);
+        let componentString = emojiSerializer.componentToString(task, taskLayout, component);
         if (componentString) {
             if (component === 'description') componentString = removeGlobalFilterIfNeeded(componentString);
             // Create the text span that will hold the rendered component
@@ -163,6 +165,11 @@ async function renderComponentText(
     textRenderer: TextRenderer,
 ) {
     if (component === 'description') {
+        const { debugSettings } = getSettings();
+        if (debugSettings.showTaskHiddenData) {
+            // Add some debug output to enable hidden information in the task to be inspected.
+            componentString += `<br>🐛 <b>${task.lineNumber}</b> . ${task.sectionStart} . ${task.sectionIndex} . '<code>${task.originalMarkdown}</code>'<br>'<code>${task.path}</code>' > '<code>${task.precedingHeader}</code>'<br>`;
+        }
         await textRenderer(componentString, span, task.path);
 
         // If the task is a block quote, the block quote wraps the p-tag that contains the content.
@@ -224,6 +231,14 @@ function getComponentClassesAndData(component: TaskLayoutComponent, task: Task):
             else priorityValue = 'none';
             dataAttributes['taskPriority'] = priorityValue;
             genericClasses.push(LayoutClasses.priority);
+            break;
+        }
+        case 'createdDate': {
+            const date = task.createdDate;
+            if (date) {
+                genericClasses.push(LayoutClasses.createdDate);
+                setDateAttribute(date, 'taskCreated');
+            }
             break;
         }
         case 'dueDate': {
@@ -332,20 +347,33 @@ function addTooltip({
     element: HTMLElement;
     isFilenameUnique: boolean | undefined;
 }): void {
+    const { recurrenceSymbol, startDateSymbol, createdDateSymbol, scheduledDateSymbol, dueDateSymbol, doneDateSymbol } =
+        TASK_FORMATS.tasksPluginEmoji.taskSerializer.symbols;
+
     element.addEventListener('mouseenter', () => {
         const tooltip = element.createDiv();
-        tooltip.addClasses(['tooltip', 'mod-right']);
+        tooltip.addClasses(['tooltip', 'pop-up']);
 
         if (task.recurrence) {
             const recurrenceDiv = tooltip.createDiv();
-            recurrenceDiv.setText(`${taskModule.recurrenceSymbol} ${task.recurrence.toText()}`);
+            recurrenceDiv.setText(`${recurrenceSymbol} ${task.recurrence.toText()}`);
+        }
+
+        if (task.createdDate) {
+            const createdDateDiv = tooltip.createDiv();
+            createdDateDiv.setText(
+                toTooltipDate({
+                    signifier: createdDateSymbol,
+                    date: task.createdDate,
+                }),
+            );
         }
 
         if (task.startDate) {
             const startDateDiv = tooltip.createDiv();
             startDateDiv.setText(
                 toTooltipDate({
-                    signifier: taskModule.startDateSymbol,
+                    signifier: startDateSymbol,
                     date: task.startDate,
                 }),
             );
@@ -355,7 +383,7 @@ function addTooltip({
             const scheduledDateDiv = tooltip.createDiv();
             scheduledDateDiv.setText(
                 toTooltipDate({
-                    signifier: taskModule.scheduledDateSymbol,
+                    signifier: scheduledDateSymbol,
                     date: task.scheduledDate,
                 }),
             );
@@ -365,7 +393,7 @@ function addTooltip({
             const dueDateDiv = tooltip.createDiv();
             dueDateDiv.setText(
                 toTooltipDate({
-                    signifier: taskModule.dueDateSymbol,
+                    signifier: dueDateSymbol,
                     date: task.dueDate,
                 }),
             );
@@ -375,7 +403,7 @@ function addTooltip({
             const doneDateDiv = tooltip.createDiv();
             doneDateDiv.setText(
                 toTooltipDate({
-                    signifier: taskModule.doneDateSymbol,
+                    signifier: doneDateSymbol,
                     date: task.doneDate,
                 }),
             );

@@ -37,11 +37,30 @@ All open tasks that are due within the next two weeks, and either have the #inbo
 
 ---
 
+All open tasks due during the next calendar month but not scheduled:
+
+    ```tasks
+    not done
+    due next month
+    not scheduled
+    ```
+
+---
+
 All done tasks that are anywhere in the vault under a `tasks` heading (e.g. `## Tasks`):
 
     ```tasks
     done
     heading includes tasks
+    ```
+
+---
+
+All tasks done this calendar month but that were due or scheduled on the month before:
+
+    ```tasks
+    (due last month) OR (scheduled last month)
+    done this month
     ```
 
 ---
@@ -56,12 +75,11 @@ Show all tasks that aren't done, are due on the 9th of April 2021, and where the
 
 ---
 
-Show all open tasks that are due within two weeks and hide the due date and edit button:
+Show all open tasks that are due in a two week range inclusively, hide the due date and edit button:
 
     ```tasks
     not done
-    due after 2021-04-30
-    due before 2021-05-15
+    due 2021-05-01 2021-05-14
     hide due date
     hide edit button
     ```
@@ -72,6 +90,15 @@ Show all tasks that were done before the 1st of December 2020:
 
     ```tasks
     done before 2020-12-01
+    ```
+
+---
+
+Show all tasks scheduled for this quarter and that have a tag:
+
+    ```tasks
+    scheduled this quarter
+    has tags
     ```
 
 ---

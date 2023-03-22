@@ -2,6 +2,7 @@ import { getSettings } from 'Config/Settings';
 
 import type { MarkdownPostProcessorContext, Plugin } from 'obsidian';
 import { Task } from './Task';
+import { TaskLocation } from './TaskLocation';
 
 export class InlineRenderer {
     constructor({ plugin }: { plugin: Plugin }) {
@@ -68,12 +69,10 @@ export class InlineRenderer {
                 continue;
             }
 
+            const precedingHeader = null; // We don't need the preceding header for in-line rendering.
             const task = Task.fromLine({
                 line,
-                path,
-                sectionStart: section.lineStart,
-                sectionIndex,
-                precedingHeader: null, // We don't need the preceding header for in-line rendering.
+                taskLocation: new TaskLocation(path, lineNumber, section.lineStart, sectionIndex, precedingHeader),
                 fallbackDate: null, // We don't need the fallback date for in-line rendering
             });
             if (task !== null) {

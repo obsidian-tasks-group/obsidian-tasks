@@ -6,6 +6,7 @@ import { StatusRegistry } from '../src/StatusRegistry';
 import { Status } from '../src/Status';
 import { StatusConfiguration, StatusType } from '../src/StatusConfiguration';
 import { Task } from '../src/Task';
+import { TaskLocation } from '../src/TaskLocation';
 import * as TestHelpers from './TestHelpers';
 
 jest.mock('obsidian');
@@ -152,15 +153,13 @@ describe('StatusRegistry', () => {
             // in beforeEach() above.
             const line = '- [ ] this is a task starting at A';
             const path = 'file.md';
+            const lineNumber = 3456;
             const sectionStart = 1337;
             const sectionIndex = 1209;
             const precedingHeader = 'Eloquent Section';
             const task = Task.fromLine({
                 line,
-                path,
-                sectionStart,
-                sectionIndex,
-                precedingHeader,
+                taskLocation: new TaskLocation(path, lineNumber, sectionStart, sectionIndex, precedingHeader),
                 fallbackDate: null,
             });
 
@@ -183,15 +182,13 @@ describe('StatusRegistry', () => {
             // in beforeEach() above.
             const line = '- [-] This is a cancelled task';
             const path = 'file.md';
+            const lineNumber = 3456;
             const sectionStart = 1337;
             const sectionIndex = 1209;
             const precedingHeader = 'Eloquent Section';
             const task = Task.fromLine({
                 line,
-                path,
-                sectionStart,
-                sectionIndex,
-                precedingHeader,
+                taskLocation: new TaskLocation(path, lineNumber, sectionStart, sectionIndex, precedingHeader),
                 fallbackDate: null,
             });
 
@@ -220,15 +217,13 @@ describe('StatusRegistry', () => {
             globalStatusRegistry.add(statusD);
             const line = '- [a] this is a task starting at A';
             const path = 'file.md';
+            const lineNumber = 3456;
             const sectionStart = 1337;
             const sectionIndex = 1209;
             const precedingHeader = 'Eloquent Section';
             const task = Task.fromLine({
                 line,
-                path,
-                sectionStart,
-                sectionIndex,
-                precedingHeader,
+                taskLocation: new TaskLocation(path, lineNumber, sectionStart, sectionIndex, precedingHeader),
                 fallbackDate: null,
             });
 

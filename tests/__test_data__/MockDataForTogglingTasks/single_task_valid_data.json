@@ -1,0 +1,57 @@
+{
+  "taskData": {
+    "originalMarkdown": "- [ ] #task task 2",
+    "taskLocation": {
+      "path": "Manual Testing/Task Toggling Scenarios/2 Tasks.md",
+      "lineNumber": 5,
+      "sectionStart": 4,
+      "sectionIndex": 1,
+      "precedingHeader": null
+    }
+  },
+  "fileData": {
+    "fileLines": [
+      "# Toggle 2nd of two tasks",
+      "",
+      "## Heading 2",
+      "",
+      "- [ ] #task task 1",
+      "- [ ] #task task 2",
+      ""
+    ]
+  },
+  "cacheData": {
+    "listItemsCache": [
+      {
+        "position": {
+          "start": {
+            "line": 4,
+            "col": 0,
+            "offset": 41
+          },
+          "end": {
+            "line": 4,
+            "col": 18,
+            "offset": 59
+          }
+        },
+        "task": " "
+      },
+      {
+        "position": {
+          "start": {
+            "line": 5,
+            "col": 0,
+            "offset": 60
+          },
+          "end": {
+            "line": 5,
+            "col": 18,
+            "offset": 78
+          }
+        },
+        "task": " "
+      }
+    ]
+  }
+}

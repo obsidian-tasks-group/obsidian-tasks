@@ -1,0 +1,11 @@
+{
+  "showInlineTitle": false,
+  "showLineNumber": true,
+  "strictLineBreaks": true,
+  "promptDelete": false,
+  "alwaysUpdateLinks": true,
+  "readableLineLength": false,
+  "spellcheck": true,
+  "livePreview": false,
+  "newFileLocation": "current"
+}

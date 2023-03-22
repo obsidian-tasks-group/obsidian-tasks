@@ -31,15 +31,15 @@ The Tasks plugin renders a task in the following structure (this refers to query
           - Internal span
         - Task recurrence rule (span class="task-recurring")
           - Internal span
-        - Task start date (span class="task-start" + data-task-start attribute)
+        - Task created date (span class="task-created" + data-task-created attribute)
           - Internal span
-        - ... scheduled date, due date and done date in this order
+        - ... start date, scheduled date, due date and done date in this order
       - Task extras (link, edit button) (span class="task-extras")
   - Tasks count (div class="tasks-count")
 ```
 
 As can be seen above, the basic task `li` contains a checkbox and a content span.
-The content span contains a list of **component** spans: description, priority, recurrence, start date, scheduled date, due date and done date in this order.
+The content span contains a list of **component** spans: description, priority, recurrence, created date, start date, scheduled date, due date and done date in this order.
 
 Each component span is marked with a **generic class**, which denotes the type of the component, and in some cases a **data attributes** that represents the component's content itself.
 
@@ -57,6 +57,7 @@ The generic classes are:
 - `task-description`
 - `task-priority`
 - `task-due`
+- `task-created`
 - `task-start`
 - `task-scheduled`
 - `task-done`
@@ -66,8 +67,8 @@ In addition to the generic classes, there are [**data attributes**](https://deve
 
 A **priority data attributes** named `data-task-priority` represents the specific priority of a class. It can be `high`, `medium`, `low` or `none`.
 
-A **date attribute** represents a due, start, scheduled or done date in a format relative to the current date.
-The date attributes are `data-task-due`, `data-task-start`, `data-task-scheduled` and `data-task-done` and are populated with a relative expression that denotes the number of days this field represents compared to today:
+A **date attribute** represents a due, created, start, scheduled or done date in a format relative to the current date.
+The date attributes are `data-task-due`, `data-task-created`, `data-task-start`, `data-task-scheduled` and `data-task-done` and are populated with a relative expression that denotes the number of days this field represents compared to today:
 
 - `data-task-due="today"` (or `data-task-start="today"`, `data-task-start="today"` etc) represents today.
 - `data-task-due="future-1d"` (or `data-task-start="future-1d"`) represents 1 day in the future, i.e. tomorrow.

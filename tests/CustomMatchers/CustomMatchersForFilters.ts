@@ -32,11 +32,8 @@ import { Status } from '../../src/Status';
  @example
 
  // Setup:
- import { toMatchTaskFromLine } from '<relative-path>/CustomMatchersForFilters';
 
- expect.extend({
-    toMatchTaskFromLine,
-});
+ Imports are done automatically in tests/CustomMatchers/jest.custom_matchers.setup.ts
 
  // Inside it() and describe() blocks:
  it('works negating regexes', () => {
@@ -56,6 +53,13 @@ import { Status } from '../../src/Status';
 
  */
 
+/* MAINTENANCE NOTE:
+        Please add any newly added matchers to this file:
+            tests/CustomMatchers/jest.custom_matchers.setup.ts
+        so that tests can find them automatically, without needing
+        to write imports, and complex 'expect.extend(...)' lines.
+        Thank you.
+ */
 declare global {
     namespace jest {
         interface Matchers<R> {

@@ -1,6 +1,5 @@
 import { StatusTypeField } from '../../../src/Query/Filter/StatusTypeField';
 import * as TestHelpers from '../../TestHelpers';
-import { toBeValid, toMatchTask, toMatchTaskFromLine } from '../../CustomMatchers/CustomMatchersForFilters';
 import {
     expectTaskComparesAfter,
     expectTaskComparesBefore,
@@ -10,12 +9,6 @@ import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { StatusType } from '../../../src/StatusConfiguration';
 import { Status } from '../../../src/Status';
 import * as FilterParser from '../../../src/Query/FilterParser';
-
-expect.extend({
-    toBeValid,
-    toMatchTask,
-    toMatchTaskFromLine,
-});
 
 // Abbreviated names so that the markdown text is aligned
 const todoTask = TestHelpers.fromLine({ line: '- [ ] Todo' });
