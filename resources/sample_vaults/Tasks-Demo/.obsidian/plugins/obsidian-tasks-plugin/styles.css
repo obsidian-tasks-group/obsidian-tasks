@@ -18,6 +18,29 @@
     padding-left: 20px;
 }
 
+/* Tooltip pop up above the description in short mode */
+.tooltip.pop-up {
+    animation: pop-up-animation 200ms forwards ease-in-out;
+}
+@keyframes pop-up-animation {
+  0% {
+    opacity: 0;
+    transform: translateY(-100%) scale(1);
+  }
+  20% {
+    opacity: 0.7;
+    transform: translateY(-100%) scale(1.02);
+  }
+  40% {
+    opacity: 1;
+    transform: translateY(-100%) scale(1.05);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(-100%) scale(1);
+  }
+}
+
 /* Pencil icon. */
 .tasks-edit {
     background-color: var(--text-faint);
@@ -101,6 +124,12 @@
 
 .tasks-modal input[type="text"] {
     width: 100%;
+}
+
+.tasks-modal textarea {
+    width: 100%;
+    min-height: calc(var(--input-height) * 2);
+    resize: vertical;
 }
 
 .tasks-modal-priorities {
