@@ -23,7 +23,7 @@ has_toc: false
 ## Tasks API Interface
 
 {: .released }
-The Tasks API Interface was introduced in Tasks 1.26.0.
+The Tasks API Interface was introduced in Tasks 2.0.0.
 
 Tasks exposes an API that can be used to integrate Tasks in other Plugins, scripts or
 dynamic code blocks.
@@ -52,7 +52,7 @@ export interface TasksApiV1 {
 ## `createTaskLineModal(): Promise<string>;`
 
 {: .released }
-This method was introduced in Tasks 1.26.0.
+This method was introduced in Tasks 2.0.0.
 
 This method opens the Tasks [Create or edit task UI]({{ site.baseurl }}{% link getting-started/create-or-edit-task.md %}) and returns the Markdown for the task entered.
 If data entry is cancelled, an empty string is returned.

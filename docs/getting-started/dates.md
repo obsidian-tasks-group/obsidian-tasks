@@ -113,7 +113,7 @@ Image of the default settings for tracking task histories.
 ### ➕ Created
 
 {: .released }
-Created date was introduced in Tasks 1.26.0.
+Created date was introduced in Tasks 2.0.0.
 
 If you enable 'Set created date on every added task' in settings (and restart Obsidian), the Tasks plugin will help you track when your tasks were created.
 
