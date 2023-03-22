@@ -36,8 +36,8 @@ export type TASK_FORMATS = typeof TASK_FORMATS; // For convenience to make some 
 export interface Settings {
     globalFilter: string;
     removeGlobalFilter: boolean;
-    setCreatedDate: boolean;
     taskFormat: keyof TASK_FORMATS;
+    setCreatedDate: boolean;
     setDoneDate: boolean;
     autoSuggestInEditor: boolean;
     autoSuggestMinMatch: number;
@@ -64,8 +64,8 @@ export interface Settings {
 const defaultSettings: Settings = {
     globalFilter: '',
     removeGlobalFilter: false,
-    setCreatedDate: false,
     taskFormat: 'tasksPluginEmoji',
+    setCreatedDate: false,
     setDoneDate: true,
     autoSuggestInEditor: true,
     autoSuggestMinMatch: 0,

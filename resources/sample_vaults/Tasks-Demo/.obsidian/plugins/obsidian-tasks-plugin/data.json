@@ -1,6 +1,8 @@
 {
   "globalFilter": "#task",
   "removeGlobalFilter": true,
+  "taskFormat": "tasksPluginEmoji",
+  "setCreatedDate": false,
   "setDoneDate": true,
   "autoSuggestInEditor": true,
   "autoSuggestMinMatch": 0,
