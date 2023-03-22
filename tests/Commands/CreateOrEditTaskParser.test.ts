@@ -1,5 +1,5 @@
 import { taskFromLine } from '../../src/Commands/CreateOrEditTaskParser';
-import { resetSettings, updateSettings } from '../../src/Config/Settings';
+import { GlobalFilter, resetSettings, updateSettings } from '../../src/Config/Settings';
 
 describe('CreateOrEditTaskParser - testing edited task if line is saved unchanged', () => {
     afterEach(() => {
@@ -55,7 +55,7 @@ describe('CreateOrEditTaskParser - testing edited task if line is saved unchange
     ])(
         'line loaded into "Create or edit task" command: "%s"',
         (line: string, expectedResult: string, globalFilter: string) => {
-            updateSettings({ globalFilter: globalFilter });
+            updateSettings({ globalFilter: new GlobalFilter(globalFilter) });
             const path = 'a/b/c.md';
             const task = taskFromLine({ line, path });
             expect(task.toFileLineString()).toStrictEqual(expectedResult);

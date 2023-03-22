@@ -5,7 +5,7 @@ import moment from 'moment';
 import type { Moment } from 'moment';
 import { Status } from '../src/Status';
 import { Priority, Task } from '../src/Task';
-import { resetSettings, updateSettings } from '../src/Config/Settings';
+import { GlobalFilter, resetSettings, updateSettings } from '../src/Config/Settings';
 import type { StatusCollection } from '../src/StatusCollection';
 import { StatusRegistry } from '../src/StatusRegistry';
 import { TaskLocation } from '../src/TaskLocation';
@@ -92,7 +92,7 @@ describe('parsing', () => {
 
     it('returns null when task does not have global filter', () => {
         // Arrange
-        updateSettings({ globalFilter: '#task' });
+        updateSettings({ globalFilter: new GlobalFilter('#task') });
         const line = '- [x] this is a done task 🗓 2021-09-12 ✅ 2021-06-20';
 
         // Act
@@ -399,7 +399,7 @@ describe('parsing tags', () => {
         ({ markdownTask, expectedDescription, extractedTags, globalFilter }) => {
             // Arrange
             if (globalFilter != '') {
-                updateSettings({ globalFilter: globalFilter });
+                updateSettings({ globalFilter: new GlobalFilter(globalFilter) });
             }
 
             // Act
@@ -1290,7 +1290,7 @@ describe('check removal of the global filter', () => {
         ({ globalFilter, markdownTask, expectedDescription }) => {
             // Arrange
             if (globalFilter != '') {
-                updateSettings({ globalFilter: globalFilter });
+                updateSettings({ globalFilter: new GlobalFilter(globalFilter) });
             }
 
             // Act
@@ -1396,7 +1396,7 @@ describe('check removal of the global filter exhaustively', () => {
     ])('should parse global filter "$globalFilter" edge cases correctly', ({ globalFilter }) => {
         // Arrange
         if (globalFilter != '') {
-            updateSettings({ globalFilter: globalFilter });
+            updateSettings({ globalFilter: new GlobalFilter(globalFilter) });
         }
 
         // Act

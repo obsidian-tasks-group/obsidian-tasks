@@ -3,7 +3,7 @@
  */
 import moment from 'moment';
 import { DescriptionField } from '../../../src/Query/Filter/DescriptionField';
-import { resetSettings, updateSettings } from '../../../src/Config/Settings';
+import { GlobalFilter, resetSettings, updateSettings } from '../../../src/Config/Settings';
 import { testTaskFilter } from '../../TestingTools/FilterTestHelpers';
 import { fromLine } from '../../TestHelpers';
 import type { FilterOrErrorMessage } from '../../../src/Query/Filter/Filter';
@@ -43,7 +43,7 @@ describe('description should strip signifiers, some duplicate spaces and trailin
 
     it('with tag as global filter - all tags included', () => {
         // Arrange
-        updateSettings({ globalFilter: '#task' });
+        updateSettings({ globalFilter: new GlobalFilter('#task') });
 
         const task = fromLine({
             line: '- [ ] #task Initial  description  ⏫  #tag1 ✅ 2022-08-12 #tag2/sub-tag ',
@@ -59,7 +59,7 @@ describe('description should strip signifiers, some duplicate spaces and trailin
 
     it('with non-tag as global filter - all tags included', () => {
         // Arrange
-        updateSettings({ globalFilter: 'global-filter' });
+        updateSettings({ globalFilter: new GlobalFilter('global-filter') });
 
         const task = fromLine({
             line: '- [ ] global-filter Initial  description  ⏫  #tag1 ✅ 2022-08-12 #tag2/sub-tag ',
@@ -77,7 +77,7 @@ describe('description should strip signifiers, some duplicate spaces and trailin
 describe('description', () => {
     it('ignores the global filter when filtering', () => {
         // Arrange
-        updateSettings({ globalFilter: '#task' });
+        updateSettings({ globalFilter: new GlobalFilter('#task') });
         const filter = new DescriptionField().createFilterOrErrorMessage('description includes task');
 
         // Act, Assert
@@ -95,7 +95,7 @@ describe('description', () => {
 
     it('works without a global filter', () => {
         // Arrange
-        updateSettings({ globalFilter: '' });
+        updateSettings({ globalFilter: new GlobalFilter('') });
         const filter = new DescriptionField().createFilterOrErrorMessage('description includes task');
 
         // Act, Assert

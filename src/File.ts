@@ -307,7 +307,7 @@ function tryFindingLineNumberFromTaskSectionInfo(
         }
 
         const line = fileLines[listItemLineNumber];
-        if (line.includes(globalFilter)) {
+        if (globalFilter.matches(line)) {
             if (sectionIndex === originalTask.taskLocation.sectionIndex) {
                 if (line === originalTask.originalMarkdown) {
                     taskLineNumber = listItemLineNumber;

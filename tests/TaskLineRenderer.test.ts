@@ -4,7 +4,7 @@
 import moment from 'moment';
 import { DebugSettings } from '../src/Config/DebugSettings';
 import { renderTaskLine } from '../src/TaskLineRenderer';
-import { resetSettings, updateSettings } from '../src/Config/Settings';
+import { GlobalFilter, resetSettings, updateSettings } from '../src/Config/Settings';
 import { LayoutOptions } from '../src/TaskLayout';
 import type { Task } from '../src/Task';
 import { fromLine } from './TestHelpers';
@@ -89,7 +89,7 @@ describe('task line rendering', () => {
         const descriptionWithFilter = await getDescriptionTest();
         expect(descriptionWithFilter).toEqual('This is a simple task with a #global filter');
 
-        updateSettings({ globalFilter: '#global', removeGlobalFilter: true });
+        updateSettings({ globalFilter: new GlobalFilter('#global'), removeGlobalFilter: true });
         const descriptionWithoutFilter = await getDescriptionTest();
         expect(descriptionWithoutFilter).toEqual('This is a simple task with a  filter');
         resetSettings();

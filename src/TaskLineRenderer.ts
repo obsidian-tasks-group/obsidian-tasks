@@ -252,7 +252,7 @@ function toTooltipDate({ signifier, date }: { signifier: string; date: Moment })
 function removeGlobalFilterIfNeeded(description: string) {
     const { globalFilter, removeGlobalFilter } = getSettings();
     if (removeGlobalFilter) {
-        return description.replace(globalFilter, '').trim();
+        return description.replace(globalFilter.value, '').trim();
     }
     return description;
 }

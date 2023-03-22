@@ -26,7 +26,7 @@ export class DescriptionField extends TextField {
         // This is necessary to match only on the content of the task, not
         // the global filter.
         const globalFilter = getSettings().globalFilter;
-        return task.description.replace(globalFilter, '').trim();
+        return globalFilter.removeFromDescription(task.description);
     }
 
     public supportsSorting(): boolean {
@@ -57,7 +57,7 @@ export class DescriptionField extends TextField {
      */
     public static cleanDescription(description: string): string {
         const globalFilter = getSettings().globalFilter;
-        description = description.replace(globalFilter, '').trim();
+        description = globalFilter.removeFromDescription(description);
 
         const startsWithLinkRegex = /^\[\[?([^\]]*)]]?/;
         const linkRegexMatch = description.match(startsWithLinkRegex);

@@ -33,8 +33,26 @@ export const TASK_FORMATS = {
 
 export type TASK_FORMATS = typeof TASK_FORMATS; // For convenience to make some typing easier
 
+export class GlobalFilter {
+    value: string;
+    length: number;
+
+    constructor(value: string) {
+        this.value = value;
+        this.length = value.length;
+    }
+
+    matches(searchIn: string): boolean {
+        return searchIn.includes(this.value);
+    }
+
+    removeFromDescription(description: string): string {
+        return description.replace(this.value, '').trim();
+    }
+}
+
 export interface Settings {
-    globalFilter: string;
+    globalFilter: GlobalFilter;
     removeGlobalFilter: boolean;
     taskFormat: keyof TASK_FORMATS;
     setCreatedDate: boolean;
@@ -62,7 +80,7 @@ export interface Settings {
 }
 
 const defaultSettings: Settings = {
-    globalFilter: '',
+    globalFilter: new GlobalFilter(''),
     removeGlobalFilter: false,
     taskFormat: 'tasksPluginEmoji',
     setCreatedDate: false,

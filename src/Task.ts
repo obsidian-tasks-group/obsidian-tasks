@@ -213,7 +213,7 @@ export class Task {
         // return if task does not have the global filter. Do this before processing
         // rest of match to improve performance.
         const { globalFilter } = getSettings();
-        if (!body.includes(globalFilter)) {
+        if (!globalFilter.matches(body)) {
             return null;
         }
 
@@ -247,7 +247,7 @@ export class Task {
         taskInfo.tags = taskInfo.tags.map((tag) => tag.trim());
 
         if (globalFilter) {
-            taskInfo.tags = taskInfo.tags.filter((tag) => tag !== globalFilter);
+            taskInfo.tags = taskInfo.tags.filter((tag) => tag !== globalFilter.value);
         }
 
         return new Task({
@@ -541,7 +541,7 @@ export class Task {
         let description = this.description;
         if (globalFilter.length === 0) return description;
         // This matches the global filter (after escaping it) only when it's a complete word
-        const globalFilterRegex = RegExp('(^|\\s)' + RegExpTools.escapeRegExp(globalFilter) + '($|\\s)', 'ug');
+        const globalFilterRegex = RegExp('(^|\\s)' + RegExpTools.escapeRegExp(globalFilter.value) + '($|\\s)', 'ug');
         if (this.description.search(globalFilterRegex) > -1) {
             description = description.replace(globalFilterRegex, '$1$2').replace('  ', ' ').trim();
         }

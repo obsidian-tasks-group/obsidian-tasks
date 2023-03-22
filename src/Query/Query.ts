@@ -81,7 +81,7 @@ export class Query implements IQuery {
 
         const { globalFilter } = getSettings();
         if (globalFilter.length !== 0) {
-            result += `Only tasks containing the global filter '${globalFilter}'.\n\n`;
+            result += `Only tasks containing the global filter '${globalFilter.value}'.\n\n`;
         }
 
         const numberOfFilters = this.filters.length;
