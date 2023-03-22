@@ -151,6 +151,16 @@ async function taskToHtml(
         allAttributes = { ...allAttributes, ...dataAttributes };
     }
 
+    // If a task has no priority field set, its priority will not be rendered as part of the loop above and
+    // it will not be set a priority data attribute.
+    // In such a case we want the upper task LI element to mark the task has a 'normal' priority.
+    // So if the priority was not rendered, force it through the pipe of getting the component data for the
+    // priority field.
+    if (allAttributes.taskPriority === undefined) {
+        const [_, dataAttributes] = getComponentClassesAndData('priority', task);
+        allAttributes = { ...allAttributes, ...dataAttributes };
+    }
+
     return allAttributes;
 }
 
@@ -228,7 +238,7 @@ function getComponentClassesAndData(component: TaskLayoutComponent, task: Task):
             if (task.priority === taskModule.Priority.High) priorityValue = 'high';
             else if (task.priority === taskModule.Priority.Medium) priorityValue = 'medium';
             else if (task.priority === taskModule.Priority.Low) priorityValue = 'low';
-            else priorityValue = 'none';
+            else priorityValue = 'normal';
             dataAttributes['taskPriority'] = priorityValue;
             genericClasses.push(LayoutClasses.priority);
             break;

@@ -65,7 +65,8 @@ The generic classes are:
 
 In addition to the generic classes, there are [**data attributes**](https://developer.mozilla.org/en-US/docs/Learn/HTML/Howto/Use_data_attributes) that represent the content of the various task components.
 
-A **priority data attributes** named `data-task-priority` represents the specific priority of a class. It can be `high`, `medium`, `low` or `none`.
+A **priority data attributes** named `data-task-priority` represents the specific priority of a class. It can be `high`, `medium`, `low` or `normal`.
+The `normal` value is special: it is added as a default to a task's upper `task-list-item` even if there is no priority field set for that task.
 
 A **date attribute** represents a due, created, start, scheduled or done date in a format relative to the current date.
 The date attributes are `data-task-due`, `data-task-created`, `data-task-start`, `data-task-scheduled` and `data-task-done` and are populated with a relative expression that denotes the number of days this field represents compared to today:
