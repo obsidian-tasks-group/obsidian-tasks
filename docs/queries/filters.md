@@ -62,7 +62,7 @@ Use `next tuesday` instead if you mean "next tuesday".
 ### Searching date ranges
 
 {: .released }
-Date range searches were introduced in Tasks 1.26.0.
+Date range searches were introduced in Tasks 2.0.0.
 
 Tasks allows date searches to specify a pair of dates, `<date range>` .
 
@@ -91,8 +91,8 @@ Example absolute date ranges:
 - `2022-01-01 2023-02-01`
 
 {: .warning }
-Prior to Tasks 1.26.0, the second date in absolute date ranges was ignored.
-See the tables in the [Appendix below]({{ site.baseurl }}{% link queries/filters.md %}#appendix-tasks-1260-improvements-to-date-filters) to understand the changes in results, and whether you need to update any of your searches.
+Prior to Tasks 2.0.0, the second date in absolute date ranges was ignored.
+See the tables in the [Appendix below]({{ site.baseurl }}{% link queries/filters.md %}#appendix-tasks-200-improvements-to-date-filters) to understand the changes in results, and whether you need to update any of your searches.
 
 ### Relative date ranges
 
@@ -118,8 +118,8 @@ Example relative date ranges:
 - `before next year`
 
 {: .warning }
-Prior to Tasks 1.26.0, the interpretation of relative date ranges was confusing, and not what most users naturally expected.
-See the tables in the [Appendix below]({{ site.baseurl }}{% link queries/filters.md %}#appendix-tasks-1260-improvements-to-date-filters) to understand the changes in results, and whether you need to update any of your searches.
+Prior to Tasks 2.0.0, the interpretation of relative date ranges was confusing, and not what most users naturally expected.
+See the tables in the [Appendix below]({{ site.baseurl }}{% link queries/filters.md %}#appendix-tasks-200-improvements-to-date-filters) to understand the changes in results, and whether you need to update any of your searches.
 
 ### Troubleshooting date searches
 
@@ -136,7 +136,7 @@ If relative dates in queries do not update from the previous day, and your compu
 
 {: .released }
 Validation of dates was introduced in Tasks 1.16.0.<br>
-`created date is invalid` was introduced in Tasks 1.26.0.
+`created date is invalid` was introduced in Tasks 2.0.0.
 
 It is possible to accidentally use a non-existent date on a task signifier, such as `📅 2022-02-30`. February has at most 29 days.
 
@@ -223,7 +223,7 @@ For full details of combining filters with boolean operators, see [Combining Fil
 {: .released }
 `no done date` and `has done date` were introduced in Tasks 1.7.0.<br>
 `done date is invalid` was introduced in Tasks 1.16.0.<br>
-`done (before|after|in) <date range>` searches were introduced in Tasks 1.26.0.
+`done (before|after|in) <date range>` searches were introduced in Tasks 2.0.0.
 
 ### Due Date
 
@@ -237,7 +237,7 @@ For full details of combining filters with boolean operators, see [Combining Fil
 {: .released }
 `has due date` was introduced in Tasks 1.6.0.<br>
 `due date is invalid` was introduced in Tasks 1.16.0.<br>
-`due (before|after|in) <date range>` searches were introduced in Tasks 1.26.0.
+`due (before|after|in) <date range>` searches were introduced in Tasks 2.0.0.
 
 ### Scheduled Date
 
@@ -251,7 +251,7 @@ For full details of combining filters with boolean operators, see [Combining Fil
 {: .released }
 `has scheduled date` was introduced in Tasks 1.6.0.<br>
 `scheduled date is invalid` was introduced in Tasks 1.16.0.<br>
-`scheduled (before|after|in) <date range>` searches were introduced in Tasks 1.26.0.
+`scheduled (before|after|in) <date range>` searches were introduced in Tasks 2.0.0.
 
 ### Start Date
 
@@ -265,7 +265,7 @@ For full details of combining filters with boolean operators, see [Combining Fil
 {: .released }
 `has start date` was Introduced in Tasks 1.6.0.<br>
 `start date is invalid` was introduced in Tasks 1.16.0.<br>
-`starts (before|after|in) <date range>` searches were introduced in Tasks 1.26.0.
+`starts (before|after|in) <date range>` searches were introduced in Tasks 2.0.0.
 
 When filtering queries by [start date]({{ site.baseurl }}{% link getting-started/dates.md %}#-start),
 the result will include tasks without a start date.
@@ -280,7 +280,7 @@ Such filter could be:
 ### Created Date
 
 {: .released }
-Created date was introduced in Tasks 1.26.0.
+Created date was introduced in Tasks 2.0.0.
 
 See [created date]({{ site.baseurl }}{% link getting-started/dates.md %}#-created) for how to make Tasks record the created date on any task lines that it creates.
 
@@ -315,7 +315,7 @@ because the tasks starts before tomorrow. Only one of the dates needs to match.
 
 {: .released }
 `no happens date` and `has happens date` were introduced in Tasks 1.7.0.<br>
-`happens (before|after|in) <date range>` searches were introduced in Tasks 1.26.0.
+`happens (before|after|in) <date range>` searches were introduced in Tasks 2.0.0.
 
 ## Filters for Task Statuses
 
@@ -474,7 +474,7 @@ Introduced in Tasks 1.6.0.
 
 {: .released }
 `regex matches` and `regex does not match` were introduced in Tasks 1.13.0.<br>
-`no tags` and `has tags` were introduced in Tasks 1.26.0.
+`no tags` and `has tags` were introduced in Tasks 2.0.0.
 
 #### Tag Query Examples
 {: .no_toc }
@@ -533,9 +533,9 @@ Note that the file name includes the `.md` extension.
 {: .released }
 `regex matches` and `regex does not match` were introduced in Tasks 1.12.0.
 
-## Appendix: Tasks 1.26.0 improvements to date filters
+## Appendix: Tasks 2.0.0 improvements to date filters
 
-Tasks 1.26.0 introduced the concept of filtering for date ranges.
+Tasks 2.0.0 introduced the concept of filtering for date ranges.
 
 In all cases, this new feature improves the results of Tasks date filters.
 
@@ -545,7 +545,7 @@ This Appendix shows how the results of various searches have changes, to enable 
 
 Unchanged interpretation of various [**absolute** due date]({{ site.baseurl }}{% link queries/filters.md %}#absolute-dates) filters:
 
-| keyword     | Tasks 1.25.0 and earlier                                                                          | Tasks 1.26.0 onwards                                                                              |
+| keyword     | Tasks 1.25.0 and earlier                                                                          | Tasks 2.0.0 onwards                                                                              |
 | ----------- | ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
 | **Summary** | All searches behave logically, using the correct date.                                            | Identical behaviour to previous releases.                                                         |
 | `before`    | `due before 2023-02-09` =><br>  due date is before<br>2023-02-09 (Thursday 9th February 2023)<br> | `due before 2023-02-09` =><br>  due date is before<br>2023-02-09 (Thursday 9th February 2023)<br> |
@@ -558,7 +558,7 @@ Unchanged interpretation of various [**absolute** due date]({{ site.baseurl }}{%
 
 Differences in interpretation of various [**absolute** due date **range**]({{ site.baseurl }}{% link queries/filters.md %}#absolute-date-ranges) filters:
 
-| keyword     | Tasks 1.25.0 and earlier                                                                                    | Tasks 1.26.0 onwards                                                                                                                                               |
+| keyword     | Tasks 1.25.0 and earlier                                                                                    | Tasks 2.0.0 onwards                                                                                                                                               |
 | ----------- | ----------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | **Summary** | The second date is ignored: only the first date is used.                                                    | The values are interpreted as a date range.<br>`after` takes the end date in to account.                                                                                                                                                                   |
 | `before`    | `due before 2023-02-07 2023-02-11` =><br>  due date is before<br>2023-02-07 (Tuesday 7th February 2023)<br> | `due before 2023-02-07 2023-02-11` =><br>  due date is before<br>2023-02-07 (Tuesday 7th February 2023)<br>                                                        |
@@ -571,7 +571,7 @@ Differences in interpretation of various [**absolute** due date **range**]({{ si
 
 Differences in interpretation of various [**relative** due date **range**]({{ site.baseurl }}{% link queries/filters.md %}#relative-date-ranges) filters, when run on `2023-02-10` (Friday 10th February 2023):
 
-| keyword     | Tasks 1.25.0 and earlier                                                                       | Tasks 1.26.0 onwards                                                                                                                               |
+| keyword     | Tasks 1.25.0 and earlier                                                                       | Tasks 2.0.0 onwards                                                                                                                               |
 | ----------- | ---------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Summary** | `last week` is interpreted as a single date:<br> `7 days before the current date`.             | `last week` is interpreted as a date range:<br>the previous `Monday to Sunday`.<br>`after` takes the end date in to account.                       |
 | `before`    | `due before last week` =><br>  due date is before<br>2023-02-03 (Friday 3rd February 2023)<br> | `due before last week` =><br>  due date is before<br>2023-01-30 (Monday 30th January 2023)<br>                                                     |
@@ -584,7 +584,7 @@ Differences in interpretation of various [**relative** due date **range**]({{ si
 
 Differences in interpretation of various [**relative** due date **range**]({{ site.baseurl }}{% link queries/filters.md %}#relative-date-ranges) filters, when run on `2023-02-10` (Friday 10th February 2023):
 
-| keyword     | Tasks 1.25.0 and earlier                                                                       | Tasks 1.26.0 onwards                                                                                                                                |
+| keyword     | Tasks 1.25.0 and earlier                                                                       | Tasks 2.0.0 onwards                                                                                                                                |
 | ----------- | ---------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Summary** | `this week` is interpreted as a single date:<br>`the sunday before the current date`           | `this week` is interpreted as a date range:<br>the `Monday to Sunday containing the current day`.<br>`after` takes the end date in to account.      |
 | `before`    | `due before this week` =><br>  due date is before<br>2023-02-05 (Sunday 5th February 2023)<br> | `due before this week` =><br>  due date is before<br>2023-02-06 (Monday 6th February 2023)<br>                                                      |
@@ -597,7 +597,7 @@ Differences in interpretation of various [**relative** due date **range**]({{ si
 
 Differences in interpretation of various [**relative** due date **range**]({{ site.baseurl }}{% link queries/filters.md %}#relative-date-ranges) filters, when run on `2023-02-10` (Friday 10th February 2023):
 
-| keyword     | Tasks 1.25.0 and earlier                                                                        | Tasks 1.26.0 onwards                                                                                                                                 |
+| keyword     | Tasks 1.25.0 and earlier                                                                        | Tasks 2.0.0 onwards                                                                                                                                 |
 | ----------- | ----------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Summary** | `next week` is interpreted as a single date:<br> `7 days after the current date`.               | `next week` is interpreted as a date range:<br>the next `Monday to Sunday`.<br>`after` takes the end date in to account.                             |
 | `before`    | `due before next week` =><br>  due date is before<br>2023-02-17 (Friday 17th February 2023)<br> | `due before next week` =><br>  due date is before<br>2023-02-13 (Monday 13th February 2023)<br>                                                      |

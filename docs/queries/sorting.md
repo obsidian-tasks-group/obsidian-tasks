@@ -56,7 +56,7 @@ You can sort tasks by the following properties.
 
 {: .released }
 `sort by happens` was introduced in Tasks 1.21.0.<br>
-`sort by created` was introduced in Tasks 1.26.0.
+`sort by created` was introduced in Tasks 2.0.0.
 
 ### Task statuses
 
