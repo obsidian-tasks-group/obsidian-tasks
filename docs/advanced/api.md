@@ -41,35 +41,58 @@ This is the interface the API exposes:
 export interface TasksApiV1 {
     /**
      * Opens the Tasks UI and returns the Markdown string for the task entered.
+     * If the optional Markdown string for a task is passed, the form will be
+     * populated with that task's properties.
      *
-     * @returns {Promise<string>} A promise that contains the Markdown string for the task entered or
+     * @param taskLine - Optional Markdown string of the task to edit.
+     *
+     * @returns {Promise<string>} A promise that contains the Markdown string for the task or
      * an empty string, if data entry was cancelled.
      */
-    createTaskLineModal(): Promise<string>;
+    createOrEditTaskLineModal(taskLine?: string): Promise<string>;
 }
 ```
 
-## `createTaskLineModal(): Promise<string>;`
+## `createOrEditTaskLineModal(): Promise<string>;`
 
 {: .released }
 This method was introduced in Tasks 1.26.0.
 
-This method opens the Tasks [Create or edit task UI]({{ site.baseurl }}{% link getting-started/create-or-edit-task.md %}) and returns the Markdown for the task entered.
+This method opens the Tasks [Create or edit task UI]({{ site.baseurl }}{% link getting-started/create-or-edit-task.md %})
+and returns the Markdown for the task entered.
+
+If the optional parameter `taskLine` is provided, it will be parsed and the [Create or edit task UI]({{ site.baseurl }}{% link getting-started/create-or-edit-task.md %})
+is populated with the values of the parsed task.
+
 If data entry is cancelled, an empty string is returned.
+
+{: .warning }
+> This function is returns a `Promise` - always `await` the result!
 
 ### Basic usage
 
 ```javascript
 const tasksApi = this.app.plugins.plugins['obsidian-tasks-plugin'].apiV1;
-let taskLine = await tasksApi.createTaskLineModal();
+const taskLine = await tasksApi.createOrEditTaskLineModal();
 
 // Do whatever you want with the returned value.
 // It's just a string containing the Markdown for the task.
 console.log(taskLine);
 ```
 
-{: .warning }
-> This function is returns a `Promise` - always `await` the result!
+### Editing an existing task
+
+```javascript
+const tasksApi = this.app.plugins.plugins['obsidian-tasks-plugin'].apiV1;
+const existingTaskLine = '- [ ] some task 🛫 2023-03-22'
+
+// this opens the UI populated with the values for the given taskLine
+let taskLine = await tasksApi.createOrEditTaskLineModal(existingTaskLine);
+
+// Do whatever you want with the returned value.
+// It's just a string containing the Markdown for the task.
+console.log(taskLine);
+```
 
 ### Usage with QuickAdd
 One of the most common usage scenarios is probably in combination with the [QuickAdd](https://github.com/chhoumann/quickadd) plugin
@@ -80,7 +103,7 @@ For this you need to enter the following code as the Capture format:
 <!-- markdownlint-disable code-fence-style -->
 ~~~markdown
 ```js quickadd
-return await this.app.plugins.plugins['obsidian-tasks-plugin'].apiV1.createTaskLineModal();
+return await this.app.plugins.plugins['obsidian-tasks-plugin'].apiV1.createOrEditTaskLineModal();
 ```
 ~~~
 <!-- markdownlint-enable code-fence-style -->
