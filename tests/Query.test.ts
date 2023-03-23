@@ -960,4 +960,12 @@ describe('Global Filter tests', () => {
         expect(globalFilter).toBeDefined();
         expect(globalFilter.value).toEqual('');
     });
+
+    it('Should provide Global Filter value & length after constructor', () => {
+        const testValue = 'newGlobalFilter';
+        const globalFilter = new GlobalFilter(testValue);
+        expect(globalFilter).toBeDefined();
+        expect(globalFilter.value).toEqual(testValue);
+        expect(globalFilter.length).toEqual(testValue.length);
+    });
 });
