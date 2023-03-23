@@ -1,4 +1,3 @@
-import { resetSettings } from '../../../src/Config/Settings';
 import { GlobalFilter } from '../../../src/Config/GlobalFilter';
 import type { FilteringCase } from '../../TestingTools/FilterTestHelpers';
 import { shouldSupportFiltering } from '../../TestingTools/FilterTestHelpers';
@@ -50,7 +49,7 @@ describe('tag presence & absence', () => {
         expect(filter).toMatchTaskFromLine('- [ ] #task stuff #one #two ');
         expect(filter).not.toMatchTaskFromLine('- [ ] #task global filter is not a tag');
 
-        resetSettings();
+        GlobalFilter.reset();
     });
 
     it('should filter together with the global filter ("no tags")', () => {
@@ -67,7 +66,7 @@ describe('tag presence & absence', () => {
         expect(filter).not.toMatchTaskFromLine('- [ ] #task stuff #one #two ');
         expect(filter).toMatchTaskFromLine('- [ ] #task global filter is not a tag');
 
-        resetSettings();
+        GlobalFilter.reset();
     });
 });
 
@@ -240,7 +239,7 @@ describe('tag/tags', () => {
                 shouldSupportFiltering(filters, allTaskLines, expectedResult);
 
                 // Cleanup
-                resetSettings();
+                GlobalFilter.reset();
             },
         );
 
@@ -282,7 +281,7 @@ describe('tag/tags', () => {
             shouldSupportFiltering(filters, defaultTasksWithTags, []);
 
             // Cleanup
-            resetSettings();
+            GlobalFilter.reset();
         });
     });
 
@@ -506,7 +505,7 @@ describe('Sort by tags', () => {
         ).toEqual(expectedOrder);
 
         // Cleanup
-        resetSettings();
+        GlobalFilter.reset();
     });
 
     it('should sort correctly reversed by tag defaulting to first with global filter', () => {
@@ -538,7 +537,7 @@ describe('Sort by tags', () => {
         ).toEqual(expectedOrder);
 
         // Cleanup
-        resetSettings();
+        GlobalFilter.reset();
     });
 
     it('should sort correctly by second tag with global filter', () => {
@@ -562,7 +561,7 @@ describe('Sort by tags', () => {
         expect(result).toEqual(expectedOrder);
 
         // Cleanup
-        resetSettings();
+        GlobalFilter.reset();
     });
 
     it('should sort correctly reversed by second tag with global filter', () => {
@@ -589,7 +588,7 @@ describe('Sort by tags', () => {
         expect(result).toEqual(expectedOrder);
 
         // Cleanup
-        resetSettings();
+        GlobalFilter.reset();
     });
 
     // Issue #1407 - Multiple 'sort by tag' lines ignored all but last one

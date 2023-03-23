@@ -3,7 +3,7 @@ import { GlobalFilter } from '../src/Config/GlobalFilter';
 
 describe('Global Filter tests', () => {
     afterEach(() => {
-        resetSettings();
+        GlobalFilter.reset();
     });
 
     it('Should provide Global Filter with the default value with get()', () => {
@@ -113,5 +113,8 @@ describe('Global Filter tests', () => {
 
         // Assert
         expect(GlobalFilter.removeFromDependingOnSettings(testStringBefore)).toEqual(testStringAfter);
+
+        // Cleanup
+        resetSettings();
     });
 });

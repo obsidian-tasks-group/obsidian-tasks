@@ -3,7 +3,6 @@
  */
 import moment from 'moment';
 import { DescriptionField } from '../../../src/Query/Filter/DescriptionField';
-import { resetSettings } from '../../../src/Config/Settings';
 import { GlobalFilter } from '../../../src/Config/GlobalFilter';
 import { testTaskFilter } from '../../TestingTools/FilterTestHelpers';
 import { fromLine } from '../../TestHelpers';
@@ -55,7 +54,7 @@ describe('description should strip signifiers, some duplicate spaces and trailin
         expect(field.value(task)).toStrictEqual('Initial  description #tag1 #tag2/sub-tag');
 
         // Cleanup
-        resetSettings();
+        GlobalFilter.reset();
     });
 
     it('with non-tag as global filter - all tags included', () => {
@@ -71,7 +70,7 @@ describe('description should strip signifiers, some duplicate spaces and trailin
         expect(field.value(task)).toStrictEqual('Initial  description #tag1 #tag2/sub-tag');
 
         // Cleanup
-        resetSettings();
+        GlobalFilter.reset();
     });
 });
 
@@ -91,7 +90,7 @@ describe('description', () => {
         testDescriptionFilter(filter, '- [ ] #task this does: task', true);
 
         // Cleanup
-        resetSettings();
+        GlobalFilter.reset();
     });
 
     it('works without a global filter', () => {
@@ -107,7 +106,7 @@ describe('description', () => {
         testDescriptionFilter(filter, '- [ ] #task this does: task', true);
 
         // Cleanup
-        resetSettings();
+        GlobalFilter.reset();
     });
 
     it('works with regex', () => {

@@ -105,7 +105,7 @@ describe('parsing', () => {
         expect(task).toBeNull();
 
         // Cleanup
-        resetSettings();
+        GlobalFilter.reset();
     });
 
     it('supports capitalised status characters', () => {
@@ -413,7 +413,7 @@ describe('parsing tags', () => {
 
             // Cleanup
             if (globalFilter != '') {
-                resetSettings();
+                GlobalFilter.reset();
             }
         },
     );
@@ -1303,7 +1303,7 @@ describe('check removal of the global filter', () => {
 
             // Cleanup
             if (globalFilter != '') {
-                resetSettings();
+                GlobalFilter.reset();
             }
         },
     );
@@ -1420,7 +1420,7 @@ describe('check removal of the global filter exhaustively', () => {
 
         // Cleanup
         if (globalFilter != '') {
-            resetSettings();
+            GlobalFilter.reset();
         }
     });
 });

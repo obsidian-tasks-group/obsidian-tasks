@@ -5,7 +5,6 @@ import moment from 'moment';
 import { Query } from '../src/Query/Query';
 import { Status } from '../src/Status';
 import { Priority, Task } from '../src/Task';
-import { resetSettings } from '../src/Config/Settings';
 import { GlobalFilter } from '../src/Config/GlobalFilter';
 import { TaskLocation } from '../src/TaskLocation';
 import { createTasksFromMarkdown, fromLine } from './TestHelpers';
@@ -791,7 +790,7 @@ describe('Query', () => {
 
     describe('explanations', () => {
         afterEach(() => {
-            resetSettings();
+            GlobalFilter.reset();
         });
 
         it('should explain 0 filters', () => {
