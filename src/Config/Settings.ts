@@ -63,7 +63,7 @@ export interface Settings {
 }
 
 const defaultSettings: Settings = {
-    globalFilter: GlobalFilter.default,
+    globalFilter: GlobalFilter.empty,
     removeGlobalFilter: false,
     taskFormat: 'tasksPluginEmoji',
     setCreatedDate: false,
