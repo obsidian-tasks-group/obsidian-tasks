@@ -8,22 +8,30 @@ describe('Global Filter tests', () => {
 
     it('Should provide Global Filter with the default value with get()', () => {
         // Arrange
-        const globalFilter = GlobalFilter.get();
+        const defaultValue = '';
 
         // Assert
-        expect(globalFilter).toBeDefined();
-        expect(globalFilter).toEqual('');
+        expect(GlobalFilter.get()).toEqual(defaultValue);
     });
 
-    it('Should provide Global Filter with get() after set()', () => {
+    it('Should set new Global Filter', () => {
         // Arrange
         const testValue = 'newGlobalFilter';
         GlobalFilter.set(testValue);
-        const globalFilter = GlobalFilter.get();
 
         // Assert
-        expect(globalFilter).toBeDefined();
-        expect(globalFilter).toEqual(testValue);
+        expect(GlobalFilter.get()).toEqual(testValue);
+    });
+
+    it('Should reset the Global Filter', () => {
+        // Arrange
+        const testValue = 'newGlobalFilter';
+        const defaultValue = '';
+        GlobalFilter.set(testValue);
+        GlobalFilter.reset();
+
+        // Assert
+        expect(GlobalFilter.get()).toEqual(defaultValue);
     });
 
     it('Should match a string with Global Filter', () => {
@@ -91,24 +99,5 @@ describe('Global Filter tests', () => {
 
         // Assert
         expect(GlobalFilter.removeFromDependingOnSettings(testStringBefore)).toEqual(testStringAfter);
-    });
-
-    it('Should set new Global Filter', () => {
-        const testValue = 'newGlobalFilter';
-        GlobalFilter.set(testValue);
-
-        expect(GlobalFilter.get()).toBeDefined();
-        expect(GlobalFilter.get()).toEqual(testValue);
-    });
-
-    it('Should reset the Global Filter', () => {
-        // Arrange
-        const testValue = 'newGlobalFilter';
-        GlobalFilter.set(testValue);
-        GlobalFilter.reset();
-
-        // Assert
-        expect(GlobalFilter.get()).toBeDefined();
-        expect(GlobalFilter.get()).toEqual('');
     });
 });
