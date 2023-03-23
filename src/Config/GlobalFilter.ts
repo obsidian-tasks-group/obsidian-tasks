@@ -1,8 +1,14 @@
 import { getSettings, updateSettings } from './Settings';
 
 export class GlobalFilter {
+    static default = '';
+
     static set(value: string) {
         updateSettings({ globalFilter: value });
+    }
+
+    static reset() {
+        updateSettings({ globalFilter: GlobalFilter.default });
     }
 
     static get(): string {

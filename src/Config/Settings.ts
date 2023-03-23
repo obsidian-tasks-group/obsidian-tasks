@@ -6,6 +6,7 @@ import { DebugSettings } from './DebugSettings';
 import { StatusSettings } from './StatusSettings';
 import { Feature } from './Feature';
 import type { FeatureFlag } from './Feature';
+import { GlobalFilter } from './GlobalFilter';
 
 interface SettingsMap {
     [key: string]: string | boolean;
@@ -62,7 +63,7 @@ export interface Settings {
 }
 
 const defaultSettings: Settings = {
-    globalFilter: '',
+    globalFilter: GlobalFilter.default,
     removeGlobalFilter: false,
     taskFormat: 'tasksPluginEmoji',
     setCreatedDate: false,
