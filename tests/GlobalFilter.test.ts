@@ -55,7 +55,7 @@ describe('Global Filter tests', () => {
         GlobalFilter.set(testValue);
 
         // Assert
-        expect(GlobalFilter.matches(testString)).toEqual(true);
+        expect(GlobalFilter.includes(testString)).toEqual(true);
     });
 
     it('Should not match a string without Global Filter', () => {
@@ -65,7 +65,7 @@ describe('Global Filter tests', () => {
         GlobalFilter.set(testValue);
 
         // Assert
-        expect(GlobalFilter.matches(testString)).toEqual(false);
+        expect(GlobalFilter.includes(testString)).toEqual(false);
     });
 
     it('Should remove Global Filter from the beginning of a string', () => {

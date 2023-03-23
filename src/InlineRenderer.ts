@@ -36,7 +36,7 @@ export class InlineRenderer {
                 return false;
             }
 
-            return GlobalFilter.matches(firstLineText);
+            return GlobalFilter.includes(firstLineText);
         });
         if (renderedElements.length === 0) {
             // No tasks means nothing to do.

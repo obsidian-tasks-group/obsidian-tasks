@@ -22,7 +22,7 @@ export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
     onTrigger(cursor: EditorPosition, editor: Editor, _file: TFile): EditorSuggestTriggerInfo | null {
         if (!this.settings.autoSuggestInEditor) return null;
         const line = editor.getLine(cursor.line);
-        if (GlobalFilter.matches(line) && line.match(task.TaskRegularExpressions.taskRegex)) {
+        if (GlobalFilter.includes(line) && line.match(task.TaskRegularExpressions.taskRegex)) {
             return {
                 start: { line: cursor.line, ch: 0 },
                 end: {

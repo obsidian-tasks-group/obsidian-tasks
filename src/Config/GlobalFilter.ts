@@ -20,7 +20,7 @@ export class GlobalFilter {
         return GlobalFilter.get() === GlobalFilter.empty;
     }
 
-    static matches(searchIn: string): boolean {
+    static includes(searchIn: string): boolean {
         const globalFilter = GlobalFilter.get();
         return searchIn.includes(globalFilter);
     }
