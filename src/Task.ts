@@ -2,7 +2,7 @@ import type { Moment } from 'moment';
 import type { TaskLocation } from './TaskLocation';
 import type { Recurrence } from './Recurrence';
 import { getSettings, getUserSelectedTaskFormat } from './Config/Settings';
-import { getGlobalFilter } from './Config/GlobalFilter';
+import { GlobalFilter } from './Config/GlobalFilter';
 import { StatusRegistry } from './StatusRegistry';
 import type { Status } from './Status';
 import { Urgency } from './Urgency';
@@ -213,8 +213,7 @@ export class Task {
 
         // return if task does not have the global filter. Do this before processing
         // rest of match to improve performance.
-        const globalFilter = getGlobalFilter();
-        if (!globalFilter.matches(body)) {
+        if (!GlobalFilter.matches(body)) {
             return null;
         }
 
@@ -247,9 +246,8 @@ export class Task {
         // Ensure that whitespace is removed around tags
         taskInfo.tags = taskInfo.tags.map((tag) => tag.trim());
 
-        if (globalFilter) {
-            taskInfo.tags = taskInfo.tags.filter((tag) => tag !== globalFilter.value);
-        }
+        // Remove the Global Filter if it is there
+        taskInfo.tags = taskInfo.tags.filter((tag) => tag !== GlobalFilter.get());
 
         return new Task({
             ...taskInfo,
@@ -538,11 +536,11 @@ export class Task {
      * If the global filter exists as part of a nested tag, we keep it untouched.
      */
     public getDescriptionWithoutGlobalFilter() {
-        const globalFilter = getGlobalFilter();
+        const globalFilter = GlobalFilter.get();
         let description = this.description;
         if (globalFilter.length === 0) return description;
         // This matches the global filter (after escaping it) only when it's a complete word
-        const globalFilterRegex = RegExp('(^|\\s)' + RegExpTools.escapeRegExp(globalFilter.value) + '($|\\s)', 'ug');
+        const globalFilterRegex = RegExp('(^|\\s)' + RegExpTools.escapeRegExp(globalFilter) + '($|\\s)', 'ug');
         if (this.description.search(globalFilterRegex) > -1) {
             description = description.replace(globalFilterRegex, '$1$2').replace('  ', ' ').trim();
         }

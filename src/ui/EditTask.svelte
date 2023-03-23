@@ -3,7 +3,7 @@
     import { onMount } from 'svelte';
     import { Recurrence } from '../Recurrence';
     import { getSettings, TASK_FORMATS } from '../Config/Settings';
-    import { getGlobalFilter } from '../Config/GlobalFilter';
+    import { GlobalFilter } from '../Config/GlobalFilter';
     import { Status } from '../Status';
     import { Priority, Task } from '../Task';
     import { doAutocomplete } from '../DateAbbreviations';
@@ -206,7 +206,7 @@
     }
 
     onMount(() => {
-        const { globalFilter, provideAccessKeys } = getSettings();
+        const { provideAccessKeys } = getSettings();
         withAccessKeys = provideAccessKeys;
         const description = task.getDescriptionWithoutGlobalFilter();
         // If we're displaying to the user the description without the global filter (i.e. it was removed in the method
@@ -214,7 +214,7 @@
         // when saving the task.
         // Another special case is when the global filter is empty: in this case there's an "empty" match in the `indexOf`
         // (it returns 0), and thus we *don't* set addGlobalFilterOnSave.
-        if (description != task.description || description.indexOf(globalFilter.value) == -1)
+        if (description != task.description || description.indexOf(GlobalFilter.get()) == -1)
             addGlobalFilterOnSave = true;
         let priority: typeof editableTask.priority = 'none';
         if (task.priority === Priority.Low) {
@@ -277,10 +277,9 @@
     }
 
     const _onSubmit = () => {
-        const globalFilter = getGlobalFilter();
         let description = editableTask.description.trim();
         if (addGlobalFilterOnSave) {
-            description = globalFilter + ' ' + description;
+            description = GlobalFilter.get() + ' ' + description;
         }
 
         const startDate = parseTypedDateForSaving(editableTask.startDate);

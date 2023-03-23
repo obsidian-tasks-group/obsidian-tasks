@@ -1,32 +1,30 @@
-import { getSettings } from './Settings';
+import { getSettings, updateSettings } from './Settings';
 
 export class GlobalFilter {
-    value: string;
-    length: number;
-
-    constructor(value: string) {
-        this.value = value;
-        this.length = value.length;
+    static set(value: string) {
+        updateSettings({ globalFilter: value });
     }
 
-    matches(searchIn: string): boolean {
-        return searchIn.includes(this.value);
+    static get(): string {
+        const { globalFilter } = getSettings();
+        return globalFilter;
     }
 
-    removeFrom(aString: string): string {
-        return aString.replace(this.value, '').trim();
+    static matches(searchIn: string): boolean {
+        const globalFilter = GlobalFilter.get();
+        return searchIn.includes(globalFilter);
     }
 
-    removeFromDependingOnSettings(aString: string): string {
+    static removeFrom(aString: string): string {
+        const globalFilter = GlobalFilter.get();
+        return aString.replace(globalFilter, '').trim();
+    }
+
+    static removeFromDependingOnSettings(aString: string): string {
         const { removeGlobalFilter } = getSettings();
         if (removeGlobalFilter) {
-            return this.removeFrom(aString);
+            return GlobalFilter.removeFrom(aString);
         }
         return aString;
     }
 }
-
-export const getGlobalFilter = (): GlobalFilter => {
-    const { globalFilter } = getSettings();
-    return globalFilter;
-};

@@ -90,7 +90,8 @@ describe('task line rendering', () => {
         const descriptionWithFilter = await getDescriptionTest();
         expect(descriptionWithFilter).toEqual('This is a simple task with a #global filter');
 
-        updateSettings({ globalFilter: new GlobalFilter('#global'), removeGlobalFilter: true });
+        updateSettings({ removeGlobalFilter: true });
+        GlobalFilter.set('#global');
         const descriptionWithoutFilter = await getDescriptionTest();
         expect(descriptionWithoutFilter).toEqual('This is a simple task with a  filter');
         resetSettings();

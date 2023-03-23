@@ -6,7 +6,7 @@ import type { LayoutOptions, TaskLayoutComponent } from './TaskLayout';
 import { TaskLayout } from './TaskLayout';
 import { replaceTaskWithTasks } from './File';
 import { TASK_FORMATS, getSettings } from './Config/Settings';
-import { getGlobalFilter } from './Config/GlobalFilter';
+import { GlobalFilter } from './Config/GlobalFilter';
 
 export type TaskLineRenderDetails = {
     parentUlElement: HTMLElement;
@@ -107,8 +107,7 @@ async function taskToHtml(
         let componentString = emojiSerializer.componentToString(task, taskLayout, component);
         if (componentString) {
             if (component === 'description') {
-                const globalFilter = getGlobalFilter();
-                componentString = globalFilter.removeFromDependingOnSettings(componentString);
+                componentString = GlobalFilter.removeFromDependingOnSettings(componentString);
             }
             taskAsString += componentString;
         }

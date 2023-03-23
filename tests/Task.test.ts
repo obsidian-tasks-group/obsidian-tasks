@@ -93,7 +93,7 @@ describe('parsing', () => {
 
     it('returns null when task does not have global filter', () => {
         // Arrange
-        updateSettings({ globalFilter: new GlobalFilter('#task') });
+        GlobalFilter.set('#task');
         const line = '- [x] this is a done task 🗓 2021-09-12 ✅ 2021-06-20';
 
         // Act
@@ -400,7 +400,7 @@ describe('parsing tags', () => {
         ({ markdownTask, expectedDescription, extractedTags, globalFilter }) => {
             // Arrange
             if (globalFilter != '') {
-                updateSettings({ globalFilter: new GlobalFilter(globalFilter) });
+                GlobalFilter.set(globalFilter);
             }
 
             // Act
@@ -1291,7 +1291,7 @@ describe('check removal of the global filter', () => {
         ({ globalFilter, markdownTask, expectedDescription }) => {
             // Arrange
             if (globalFilter != '') {
-                updateSettings({ globalFilter: new GlobalFilter(globalFilter) });
+                GlobalFilter.set(globalFilter);
             }
 
             // Act
@@ -1397,7 +1397,7 @@ describe('check removal of the global filter exhaustively', () => {
     ])('should parse global filter "$globalFilter" edge cases correctly', ({ globalFilter }) => {
         // Arrange
         if (globalFilter != '') {
-            updateSettings({ globalFilter: new GlobalFilter(globalFilter) });
+            GlobalFilter.set(globalFilter);
         }
 
         // Act

@@ -3,7 +3,7 @@
  */
 import moment from 'moment';
 import { DescriptionField } from '../../../src/Query/Filter/DescriptionField';
-import { resetSettings, updateSettings } from '../../../src/Config/Settings';
+import { resetSettings } from '../../../src/Config/Settings';
 import { GlobalFilter } from '../../../src/Config/GlobalFilter';
 import { testTaskFilter } from '../../TestingTools/FilterTestHelpers';
 import { fromLine } from '../../TestHelpers';
@@ -44,7 +44,7 @@ describe('description should strip signifiers, some duplicate spaces and trailin
 
     it('with tag as global filter - all tags included', () => {
         // Arrange
-        updateSettings({ globalFilter: new GlobalFilter('#task') });
+        GlobalFilter.set('#task');
 
         const task = fromLine({
             line: '- [ ] #task Initial  description  ⏫  #tag1 ✅ 2022-08-12 #tag2/sub-tag ',
@@ -60,7 +60,7 @@ describe('description should strip signifiers, some duplicate spaces and trailin
 
     it('with non-tag as global filter - all tags included', () => {
         // Arrange
-        updateSettings({ globalFilter: new GlobalFilter('global-filter') });
+        GlobalFilter.set('global-filter');
 
         const task = fromLine({
             line: '- [ ] global-filter Initial  description  ⏫  #tag1 ✅ 2022-08-12 #tag2/sub-tag ',
@@ -78,7 +78,7 @@ describe('description should strip signifiers, some duplicate spaces and trailin
 describe('description', () => {
     it('ignores the global filter when filtering', () => {
         // Arrange
-        updateSettings({ globalFilter: new GlobalFilter('#task') });
+        GlobalFilter.set('#task');
         const filter = new DescriptionField().createFilterOrErrorMessage('description includes task');
 
         // Act, Assert
@@ -96,7 +96,7 @@ describe('description', () => {
 
     it('works without a global filter', () => {
         // Arrange
-        updateSettings({ globalFilter: new GlobalFilter('') });
+        GlobalFilter.set('');
         const filter = new DescriptionField().createFilterOrErrorMessage('description includes task');
 
         // Act, Assert

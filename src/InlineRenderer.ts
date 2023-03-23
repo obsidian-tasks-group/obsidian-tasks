@@ -1,5 +1,5 @@
 import type { MarkdownPostProcessorContext, Plugin } from 'obsidian';
-import { getGlobalFilter } from './Config/GlobalFilter';
+import { GlobalFilter } from './Config/GlobalFilter';
 import { Task } from './Task';
 import { TaskLocation } from './TaskLocation';
 
@@ -11,7 +11,6 @@ export class InlineRenderer {
     public markdownPostProcessor = this._markdownPostProcessor.bind(this);
 
     private async _markdownPostProcessor(element: HTMLElement, context: MarkdownPostProcessorContext): Promise<void> {
-        const globalFilter = getGlobalFilter();
         const renderedElements = element.findAll('.task-list-item').filter((taskItem) => {
             const linesText = taskItem.textContent?.split('\n');
             if (linesText === undefined) {
@@ -37,7 +36,7 @@ export class InlineRenderer {
                 return false;
             }
 
-            return globalFilter.matches(firstLineText);
+            return GlobalFilter.matches(firstLineText);
         });
         if (renderedElements.length === 0) {
             // No tasks means nothing to do.

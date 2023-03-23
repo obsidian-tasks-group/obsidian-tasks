@@ -2,7 +2,7 @@ import { LayoutOptions } from '../TaskLayout';
 import type { Task } from '../Task';
 import type { IQuery } from '../IQuery';
 import { getSettings } from '../Config/Settings';
-import { getGlobalFilter } from '../Config/GlobalFilter';
+import { GlobalFilter } from '../Config/GlobalFilter';
 import { Sort } from './Sort';
 import type { Sorter } from './Sorter';
 import type { TaskGroups } from './TaskGroups';
@@ -80,9 +80,9 @@ export class Query implements IQuery {
     public explainQueryWithoutIntroduction(): string {
         let result = '';
 
-        const globalFilter = getGlobalFilter();
-        if (globalFilter.length !== 0) {
-            result += `Only tasks containing the global filter '${globalFilter.value}'.\n\n`;
+        const globaFilter = GlobalFilter.get();
+        if (globaFilter.length !== 0) {
+            result += `Only tasks containing the global filter '${globaFilter}'.\n\n`;
         }
 
         const numberOfFilters = this.filters.length;
