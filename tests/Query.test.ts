@@ -955,6 +955,10 @@ At most 0 tasks.
 });
 
 describe('Global Filter tests', () => {
+    afterEach(() => {
+        resetSettings();
+    });
+
     it('Should provide Global Filter object with the default value', () => {
         const globalFilter = getGlobalFilter();
         expect(globalFilter).toBeDefined();
@@ -1001,4 +1005,24 @@ describe('Global Filter tests', () => {
 
     // it('Should remove Global Filter from the middle of a string', () => {});
     // Not supported
+
+    it('Should set new Global Filter in Settings', () => {
+        const testValue = 'newGlobalFilter';
+        updateSettings({ globalFilter: new GlobalFilter(testValue) });
+
+        const globalFilter = getGlobalFilter();
+        expect(globalFilter).toBeDefined();
+        expect(globalFilter.value).toEqual(testValue);
+    });
+
+    it('Should reset the Global Filter in Settings', () => {
+        const testValue = 'newGlobalFilter';
+        updateSettings({ globalFilter: new GlobalFilter(testValue) });
+
+        resetSettings();
+
+        const globalFilter = getGlobalFilter();
+        expect(globalFilter).toBeDefined();
+        expect(globalFilter.value).toEqual('');
+    });
 });
