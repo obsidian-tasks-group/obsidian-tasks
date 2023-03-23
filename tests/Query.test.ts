@@ -5,7 +5,7 @@ import moment from 'moment';
 import { Query } from '../src/Query/Query';
 import { Status } from '../src/Status';
 import { Priority, Task } from '../src/Task';
-import { GlobalFilter, resetSettings, updateSettings } from '../src/Config/Settings';
+import { GlobalFilter, getGlobalFilter, resetSettings, updateSettings } from '../src/Config/Settings';
 import { TaskLocation } from '../src/TaskLocation';
 import { createTasksFromMarkdown, fromLine } from './TestHelpers';
 import { shouldSupportFiltering } from './TestingTools/FilterTestHelpers';
@@ -951,5 +951,13 @@ At most 0 tasks.
 `;
             expect('\n' + soleTaskGroup.tasksAsStringOfLines()).toStrictEqual(expectedTasks);
         });
+    });
+});
+
+describe('Global Filter tests', () => {
+    it('Should provide Global Filter object with the default value', () => {
+        const globalFilter = getGlobalFilter();
+        expect(globalFilter).toBeDefined();
+        expect(globalFilter.value).toEqual('');
     });
 });
