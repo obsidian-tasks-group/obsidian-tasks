@@ -29,36 +29,36 @@ export class GlobalFilter {
         return description.indexOf(GlobalFilter.get());
     }
 
-    static includes(searchIn: string): boolean {
+    static includedIn(description: string): boolean {
         const globalFilter = GlobalFilter.get();
-        return searchIn.includes(globalFilter);
+        return description.includes(globalFilter);
     }
 
-    static removeAsWordFrom(aString: string): string {
+    static removeAsWordFrom(description: string): string {
         if (GlobalFilter.isEmpty()) {
-            return aString;
+            return description;
         }
 
         // This matches the global filter (after escaping it) only when it's a complete word
         const theRegExp = RegExp('(^|\\s)' + RegExpTools.escapeRegExp(GlobalFilter.get()) + '($|\\s)', 'ug');
 
-        if (aString.search(theRegExp) > -1) {
-            aString = aString.replace(theRegExp, '$1$2').replace('  ', ' ').trim();
+        if (description.search(theRegExp) > -1) {
+            description = description.replace(theRegExp, '$1$2').replace('  ', ' ').trim();
         }
 
-        return aString;
+        return description;
     }
 
-    static removeFrom(aString: string): string {
+    static removeFrom(description: string): string {
         const globalFilter = GlobalFilter.get();
-        return aString.replace(globalFilter, '').trim();
+        return description.replace(globalFilter, '').trim();
     }
 
-    static removeFromDependingOnSettings(aString: string): string {
+    static removeFromDependingOnSettings(description: string): string {
         const { removeGlobalFilter } = getSettings();
         if (removeGlobalFilter) {
-            return GlobalFilter.removeFrom(aString);
+            return GlobalFilter.removeFrom(description);
         }
-        return aString;
+        return description;
     }
 }

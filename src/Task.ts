@@ -212,7 +212,7 @@ export class Task {
 
         // return if task does not have the global filter. Do this before processing
         // rest of match to improve performance.
-        if (!GlobalFilter.includes(body)) {
+        if (!GlobalFilter.includedIn(body)) {
             return null;
         }
 
