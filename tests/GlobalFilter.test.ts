@@ -34,6 +34,20 @@ describe('Global Filter tests', () => {
         expect(GlobalFilter.get()).toEqual(defaultValue);
     });
 
+    it('Should indicate empty Global Filter by default', () => {
+        // Assert
+        expect(GlobalFilter.isEmpty()).toEqual(true);
+    });
+
+    it('Should indicate non-empty Global Filter after setting one', () => {
+        // Arrange
+        const testValue = 'newGlobalFilter';
+        GlobalFilter.set(testValue);
+
+        // Assert
+        expect(GlobalFilter.isEmpty()).toEqual(false);
+    });
+
     it('Should match a string with Global Filter', () => {
         // Arrange
         const testValue = 'newGlobalFilter';

@@ -16,6 +16,10 @@ export class GlobalFilter {
         updateSettings({ globalFilter: GlobalFilter.empty });
     }
 
+    static isEmpty(): boolean {
+        return GlobalFilter.get() === GlobalFilter.empty;
+    }
+
     static matches(searchIn: string): boolean {
         const globalFilter = GlobalFilter.get();
         return searchIn.includes(globalFilter);

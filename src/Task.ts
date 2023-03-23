@@ -536,11 +536,10 @@ export class Task {
      * If the global filter exists as part of a nested tag, we keep it untouched.
      */
     public getDescriptionWithoutGlobalFilter() {
-        const globalFilter = GlobalFilter.get();
         let description = this.description;
-        if (globalFilter.length === 0) return description;
+        if (GlobalFilter.isEmpty()) return description;
         // This matches the global filter (after escaping it) only when it's a complete word
-        const globalFilterRegex = RegExp('(^|\\s)' + RegExpTools.escapeRegExp(globalFilter) + '($|\\s)', 'ug');
+        const globalFilterRegex = RegExp('(^|\\s)' + RegExpTools.escapeRegExp(GlobalFilter.get()) + '($|\\s)', 'ug');
         if (this.description.search(globalFilterRegex) > -1) {
             description = description.replace(globalFilterRegex, '$1$2').replace('  ', ' ').trim();
         }

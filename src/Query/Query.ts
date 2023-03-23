@@ -80,9 +80,8 @@ export class Query implements IQuery {
     public explainQueryWithoutIntroduction(): string {
         let result = '';
 
-        const globaFilter = GlobalFilter.get();
-        if (globaFilter.length !== 0) {
-            result += `Only tasks containing the global filter '${globaFilter}'.\n\n`;
+        if (!GlobalFilter.isEmpty()) {
+            result += `Only tasks containing the global filter '${GlobalFilter.get()}'.\n\n`;
         }
 
         const numberOfFilters = this.filters.length;
