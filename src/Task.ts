@@ -1,7 +1,7 @@
 import type { Moment } from 'moment';
 import type { TaskLocation } from './TaskLocation';
 import type { Recurrence } from './Recurrence';
-import { getSettings, getUserSelectedTaskFormat } from './Config/Settings';
+import { getGlobalFilter, getSettings, getUserSelectedTaskFormat } from './Config/Settings';
 import { StatusRegistry } from './StatusRegistry';
 import type { Status } from './Status';
 import { Urgency } from './Urgency';
@@ -212,7 +212,7 @@ export class Task {
 
         // return if task does not have the global filter. Do this before processing
         // rest of match to improve performance.
-        const { globalFilter } = getSettings();
+        const globalFilter = getGlobalFilter();
         if (!globalFilter.matches(body)) {
             return null;
         }
@@ -537,7 +537,7 @@ export class Task {
      * If the global filter exists as part of a nested tag, we keep it untouched.
      */
     public getDescriptionWithoutGlobalFilter() {
-        const { globalFilter } = getSettings();
+        const globalFilter = getGlobalFilter();
         let description = this.description;
         if (globalFilter.length === 0) return description;
         // This matches the global filter (after escaping it) only when it's a complete word

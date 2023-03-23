@@ -51,6 +51,11 @@ export class GlobalFilter {
     }
 }
 
+export const getGlobalFilter = (): GlobalFilter => {
+    const { globalFilter } = getSettings();
+    return globalFilter;
+};
+
 export interface Settings {
     globalFilter: GlobalFilter;
     removeGlobalFilter: boolean;

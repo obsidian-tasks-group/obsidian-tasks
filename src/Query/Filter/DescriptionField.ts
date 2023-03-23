@@ -1,4 +1,4 @@
-import { getSettings } from '../../Config/Settings';
+import { getGlobalFilter, getSettings } from '../../Config/Settings';
 import type { Task } from '../../Task';
 import type { Comparator } from '../Sorter';
 import { TextField } from './TextField';
@@ -25,7 +25,7 @@ export class DescriptionField extends TextField {
         // Remove global filter from description match if present.
         // This is necessary to match only on the content of the task, not
         // the global filter.
-        const globalFilter = getSettings().globalFilter;
+        const globalFilter = getGlobalFilter();
         return globalFilter.removeFromDescription(task.description);
     }
 

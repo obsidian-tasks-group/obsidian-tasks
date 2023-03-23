@@ -1,7 +1,7 @@
 import { LayoutOptions } from '../TaskLayout';
 import type { Task } from '../Task';
 import type { IQuery } from '../IQuery';
-import { getSettings } from '../Config/Settings';
+import { getGlobalFilter, getSettings } from '../Config/Settings';
 import { Sort } from './Sort';
 import type { Sorter } from './Sorter';
 import type { TaskGroups } from './TaskGroups';
@@ -79,7 +79,7 @@ export class Query implements IQuery {
     public explainQueryWithoutIntroduction(): string {
         let result = '';
 
-        const { globalFilter } = getSettings();
+        const globalFilter = getGlobalFilter();
         if (globalFilter.length !== 0) {
             result += `Only tasks containing the global filter '${globalFilter.value}'.\n\n`;
         }

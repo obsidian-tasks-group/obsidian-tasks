@@ -2,7 +2,7 @@
     import * as chrono from 'chrono-node';
     import { onMount } from 'svelte';
     import { Recurrence } from '../Recurrence';
-    import { getSettings, TASK_FORMATS } from '../Config/Settings';
+    import { getGlobalFilter, getSettings, TASK_FORMATS } from '../Config/Settings';
     import { Status } from '../Status';
     import { Priority, Task } from '../Task';
     import { doAutocomplete } from '../DateAbbreviations';
@@ -276,7 +276,7 @@
     }
 
     const _onSubmit = () => {
-        const { globalFilter } = getSettings();
+        const globalFilter = getGlobalFilter();
         let description = editableTask.description.trim();
         if (addGlobalFilterOnSave) {
             description = globalFilter + ' ' + description;
