@@ -26,9 +26,19 @@ export class GlobalFilter {
         return searchIn.includes(globalFilter);
     }
 
-    static regExp(): RegExp {
+    static removeAsWordFrom(aString: string): string {
+        if (GlobalFilter.isEmpty()) {
+            return aString;
+        }
+
         // This matches the global filter (after escaping it) only when it's a complete word
-        return RegExp('(^|\\s)' + RegExpTools.escapeRegExp(GlobalFilter.get()) + '($|\\s)', 'ug');
+        const theRegExp = RegExp('(^|\\s)' + RegExpTools.escapeRegExp(GlobalFilter.get()) + '($|\\s)', 'ug');
+
+        if (aString.search(theRegExp) > -1) {
+            aString = aString.replace(theRegExp, '$1$2').replace('  ', ' ').trim();
+        }
+
+        return aString;
     }
 
     static removeFrom(aString: string): string {

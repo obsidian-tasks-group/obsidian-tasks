@@ -535,11 +535,6 @@ export class Task {
      * If the global filter exists as part of a nested tag, we keep it untouched.
      */
     public getDescriptionWithoutGlobalFilter() {
-        let description = this.description;
-        if (GlobalFilter.isEmpty()) return description;
-        if (this.description.search(GlobalFilter.regExp()) > -1) {
-            description = description.replace(GlobalFilter.regExp(), '$1$2').replace('  ', ' ').trim();
-        }
-        return description;
+        return GlobalFilter.removeAsWordFrom(this.description);
     }
 }
