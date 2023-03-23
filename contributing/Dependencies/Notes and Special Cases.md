@@ -11,6 +11,8 @@ Note that yarn's `upgrade` and `upgrade-interactive` commands will respect the p
 `yarn outdated` gives a better indication of what upgrades are available.
 
 To upgrade major version numbers or a dependency where a fixed version is used, you must
-manually edit the `package.json` file. **Note**: Remember `yarn` after any edits to `package.json` to ensure the `yarn.lock` file is updated.
+manually edit the `package.json` file.
+
+**Note**: Remember `yarn` after any edits to `package.json` to ensure the `yarn.lock` file is updated.
 
 Updates to the `obsidian` package may require additional changes to [manifest.json](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/manifest.json) and [versions.json](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/versions.json) and should be handled with care so that Tasks users who are not on the latest version of Obsidian have time to update.
