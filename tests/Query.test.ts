@@ -998,4 +998,7 @@ describe('Global Filter tests', () => {
         const globalFilter = new GlobalFilter(testValue);
         expect(globalFilter.removeFromDescription(testStringBefore)).toEqual(testStringAfter);
     });
+
+    // it('Should remove Global Filter from the middle of a string', () => {});
+    // Not supported
 });
