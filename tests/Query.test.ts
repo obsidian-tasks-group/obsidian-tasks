@@ -968,4 +968,18 @@ describe('Global Filter tests', () => {
         expect(globalFilter.value).toEqual(testValue);
         expect(globalFilter.length).toEqual(testValue.length);
     });
+
+    it('Should match a string with Global Filter', () => {
+        const testValue = 'newGlobalFilter';
+        const testString = 'This is a string with newGlobalFilter inside';
+        const globalFilter = new GlobalFilter(testValue);
+        expect(globalFilter.matches(testString)).toEqual(true);
+    });
+
+    it('Should not match a string without Global Filter', () => {
+        const testValue = 'newGlobalFilter';
+        const testString = 'This is a string without Global Filter';
+        const globalFilter = new GlobalFilter(testValue);
+        expect(globalFilter.matches(testString)).toEqual(false);
+    });
 });
