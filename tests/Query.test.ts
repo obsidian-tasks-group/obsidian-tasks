@@ -988,7 +988,7 @@ describe('Global Filter tests', () => {
         const testStringBefore = 'This is a string with GF at the end newGlobalFilter';
         const testStringAfter = 'This is a string with GF at the end';
         const globalFilter = new GlobalFilter(testValue);
-        expect(globalFilter.removeFromDescription(testStringBefore)).toEqual(testStringAfter);
+        expect(globalFilter.removeFrom(testStringBefore)).toEqual(testStringAfter);
     });
 
     it('Should remove Global Filter from the end of a string', () => {
@@ -996,7 +996,7 @@ describe('Global Filter tests', () => {
         const testStringBefore = 'newGlobalFilter This is a string with GF at the beginning';
         const testStringAfter = 'This is a string with GF at the beginning';
         const globalFilter = new GlobalFilter(testValue);
-        expect(globalFilter.removeFromDescription(testStringBefore)).toEqual(testStringAfter);
+        expect(globalFilter.removeFrom(testStringBefore)).toEqual(testStringAfter);
     });
 
     // it('Should remove Global Filter from the middle of a string', () => {});

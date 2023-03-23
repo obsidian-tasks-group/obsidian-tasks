@@ -46,8 +46,8 @@ export class GlobalFilter {
         return searchIn.includes(this.value);
     }
 
-    removeFromDescription(description: string): string {
-        return description.replace(this.value, '').trim();
+    removeFrom(aString: string): string {
+        return aString.replace(this.value, '').trim();
     }
 }
 
