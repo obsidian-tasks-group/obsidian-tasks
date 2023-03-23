@@ -1,5 +1,6 @@
 import { taskFromLine } from '../../src/Commands/CreateOrEditTaskParser';
-import { GlobalFilter, resetSettings, updateSettings } from '../../src/Config/Settings';
+import { resetSettings, updateSettings } from '../../src/Config/Settings';
+import { GlobalFilter } from '../../src/Config/GlobalFilter';
 
 describe('CreateOrEditTaskParser - testing edited task if line is saved unchanged', () => {
     afterEach(() => {

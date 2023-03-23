@@ -6,6 +6,7 @@ import { DebugSettings } from './DebugSettings';
 import { StatusSettings } from './StatusSettings';
 import { Feature } from './Feature';
 import type { FeatureFlag } from './Feature';
+import { GlobalFilter } from './GlobalFilter';
 
 interface SettingsMap {
     [key: string]: string | boolean;
@@ -32,29 +33,6 @@ export const TASK_FORMATS = {
 } as const;
 
 export type TASK_FORMATS = typeof TASK_FORMATS; // For convenience to make some typing easier
-
-export class GlobalFilter {
-    value: string;
-    length: number;
-
-    constructor(value: string) {
-        this.value = value;
-        this.length = value.length;
-    }
-
-    matches(searchIn: string): boolean {
-        return searchIn.includes(this.value);
-    }
-
-    removeFrom(aString: string): string {
-        return aString.replace(this.value, '').trim();
-    }
-}
-
-export const getGlobalFilter = (): GlobalFilter => {
-    const { globalFilter } = getSettings();
-    return globalFilter;
-};
 
 export interface Settings {
     globalFilter: GlobalFilter;

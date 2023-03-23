@@ -1,7 +1,8 @@
 import type { Moment } from 'moment';
 import type { TaskLocation } from './TaskLocation';
 import type { Recurrence } from './Recurrence';
-import { getGlobalFilter, getSettings, getUserSelectedTaskFormat } from './Config/Settings';
+import { getSettings, getUserSelectedTaskFormat } from './Config/Settings';
+import { getGlobalFilter } from './Config/GlobalFilter';
 import { StatusRegistry } from './StatusRegistry';
 import type { Status } from './Status';
 import { Urgency } from './Urgency';

@@ -5,7 +5,8 @@
 import moment from 'moment';
 import type { EditorPosition } from 'obsidian';
 import { getNewCursorPosition, toggleLine } from '../../src/Commands/ToggleDone';
-import { GlobalFilter, resetSettings, updateSettings } from '../../src/Config/Settings';
+import { resetSettings, updateSettings } from '../../src/Config/Settings';
+import { GlobalFilter } from '../../src/Config/GlobalFilter';
 import { StatusRegistry } from '../../src/StatusRegistry';
 import { Status } from '../../src/Status';
 import { StatusConfiguration } from '../../src/StatusConfiguration';

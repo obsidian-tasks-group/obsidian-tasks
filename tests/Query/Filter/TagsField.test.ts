@@ -1,4 +1,5 @@
-import { GlobalFilter, resetSettings, updateSettings } from '../../../src/Config/Settings';
+import { resetSettings, updateSettings } from '../../../src/Config/Settings';
+import { GlobalFilter } from '../../../src/Config/GlobalFilter';
 import type { FilteringCase } from '../../TestingTools/FilterTestHelpers';
 import { shouldSupportFiltering } from '../../TestingTools/FilterTestHelpers';
 import { TagsField } from '../../../src/Query/Filter/TagsField';

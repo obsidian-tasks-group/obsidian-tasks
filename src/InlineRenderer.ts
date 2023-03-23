@@ -1,6 +1,5 @@
-import { getGlobalFilter } from 'Config/Settings';
-
 import type { MarkdownPostProcessorContext, Plugin } from 'obsidian';
+import { getGlobalFilter } from './Config/GlobalFilter';
 import { Task } from './Task';
 import { TaskLocation } from './TaskLocation';
 

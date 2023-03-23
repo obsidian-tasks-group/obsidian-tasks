@@ -1,4 +1,5 @@
-import { getGlobalFilter, getSettings } from '../../Config/Settings';
+import { getSettings } from '../../Config/Settings';
+import { getGlobalFilter } from '../../Config/GlobalFilter';
 import type { Task } from '../../Task';
 import type { Comparator } from '../Sorter';
 import { TextField } from './TextField';

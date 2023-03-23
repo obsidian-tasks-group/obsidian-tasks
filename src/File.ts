@@ -1,6 +1,6 @@
 import { type ListItemCache, MetadataCache, Notice, TFile, Vault, Workspace } from 'obsidian';
 
-import { getGlobalFilter } from './Config/Settings';
+import { getGlobalFilter } from './Config/GlobalFilter';
 import { type MockListItemCache, type MockTask, saveMockDataForTesting } from './lib/MockDataCreator';
 import type { Task } from './Task';
 import { logging } from './lib/logging';

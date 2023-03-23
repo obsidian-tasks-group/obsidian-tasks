@@ -5,8 +5,9 @@ import { StatusRegistry } from '../StatusRegistry';
 import { Status } from '../Status';
 import type { StatusCollection } from '../StatusCollection';
 import * as Themes from './Themes';
-import { GlobalFilter, type HeadingState } from './Settings';
+import type { HeadingState } from './Settings';
 import { getSettings, isFeatureEnabled, updateGeneralSetting, updateSettings } from './Settings';
+import { GlobalFilter } from './GlobalFilter';
 import { StatusSettings } from './StatusSettings';
 import settingsJson from './settingsConfiguration.json';
 

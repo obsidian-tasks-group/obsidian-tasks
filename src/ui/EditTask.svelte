@@ -2,7 +2,8 @@
     import * as chrono from 'chrono-node';
     import { onMount } from 'svelte';
     import { Recurrence } from '../Recurrence';
-    import { getGlobalFilter, getSettings, TASK_FORMATS } from '../Config/Settings';
+    import { getSettings, TASK_FORMATS } from '../Config/Settings';
+    import { getGlobalFilter } from '../Config/GlobalFilter';
     import { Status } from '../Status';
     import { Priority, Task } from '../Task';
     import { doAutocomplete } from '../DateAbbreviations';

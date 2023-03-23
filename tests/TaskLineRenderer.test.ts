@@ -4,7 +4,8 @@
 import moment from 'moment';
 import { DebugSettings } from '../src/Config/DebugSettings';
 import { renderTaskLine } from '../src/TaskLineRenderer';
-import { GlobalFilter, resetSettings, updateSettings } from '../src/Config/Settings';
+import { resetSettings, updateSettings } from '../src/Config/Settings';
+import { GlobalFilter } from '../src/Config/GlobalFilter';
 import { LayoutOptions } from '../src/TaskLayout';
 import type { Task } from '../src/Task';
 import { fromLine } from './TestHelpers';

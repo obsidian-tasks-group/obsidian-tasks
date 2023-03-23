@@ -1,7 +1,8 @@
 import { LayoutOptions } from '../TaskLayout';
 import type { Task } from '../Task';
 import type { IQuery } from '../IQuery';
-import { getGlobalFilter, getSettings } from '../Config/Settings';
+import { getSettings } from '../Config/Settings';
+import { getGlobalFilter } from '../Config/GlobalFilter';
 import { Sort } from './Sort';
 import type { Sorter } from './Sorter';
 import type { TaskGroups } from './TaskGroups';
