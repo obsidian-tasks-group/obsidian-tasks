@@ -16,6 +16,14 @@ export class GlobalFilter {
     removeFrom(aString: string): string {
         return aString.replace(this.value, '').trim();
     }
+
+    removeFromDependingOnSettings(aString: string): string {
+        const { removeGlobalFilter } = getSettings();
+        if (removeGlobalFilter) {
+            return this.removeFrom(aString);
+        }
+        return aString;
+    }
 }
 
 export const getGlobalFilter = (): GlobalFilter => {

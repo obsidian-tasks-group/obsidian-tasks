@@ -52,6 +52,23 @@ describe('Global Filter tests', () => {
 
     // it('Should remove Global Filter from the middle of a string', () => {});
     // Not supported
+
+    it('Should not remove Global Filter from a string with default settings', () => {
+        const testValue = 'newGlobalFilter';
+        const testStringBefore = 'This is a string with GF at the end newGlobalFilter';
+        const globalFilter = new GlobalFilter(testValue);
+        expect(globalFilter.removeFromDependingOnSettings(testStringBefore)).toEqual(testStringBefore);
+    });
+
+    it('Should not remove Global Filter from a string with default settings', () => {
+        const testValue = 'newGlobalFilter';
+        const testStringBefore = 'This is a string with GF at the end newGlobalFilter';
+        const testStringAfter = 'This is a string with GF at the end';
+        const globalFilter = new GlobalFilter(testValue);
+        updateSettings({ removeGlobalFilter: true });
+        expect(globalFilter.removeFromDependingOnSettings(testStringBefore)).toEqual(testStringAfter);
+    });
+
     it('Should set new Global Filter in Settings', () => {
         const testValue = 'newGlobalFilter';
         updateSettings({ globalFilter: new GlobalFilter(testValue) });

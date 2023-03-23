@@ -6,6 +6,7 @@ import type { LayoutOptions, TaskLayoutComponent } from './TaskLayout';
 import { TaskLayout } from './TaskLayout';
 import { replaceTaskWithTasks } from './File';
 import { TASK_FORMATS, getSettings } from './Config/Settings';
+import { getGlobalFilter } from './Config/GlobalFilter';
 
 export type TaskLineRenderDetails = {
     parentUlElement: HTMLElement;
@@ -105,7 +106,10 @@ async function taskToHtml(
     for (const component of taskLayout.layoutComponents) {
         let componentString = emojiSerializer.componentToString(task, taskLayout, component);
         if (componentString) {
-            if (component === 'description') componentString = removeGlobalFilterIfNeeded(componentString);
+            if (component === 'description') {
+                const globalFilter = getGlobalFilter();
+                componentString = globalFilter.removeFromDependingOnSettings(componentString);
+            }
             taskAsString += componentString;
         }
     }
@@ -247,12 +251,4 @@ function toTooltipDate({ signifier, date }: { signifier: string; date: Moment })
     return `${signifier} ${date.format(taskModule.TaskRegularExpressions.dateFormat)} (${date.from(
         window.moment().startOf('day'),
     )})`;
-}
-
-function removeGlobalFilterIfNeeded(description: string) {
-    const { globalFilter, removeGlobalFilter } = getSettings();
-    if (removeGlobalFilter) {
-        return description.replace(globalFilter.value, '').trim();
-    }
-    return description;
 }
