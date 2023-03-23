@@ -9,7 +9,6 @@ import { Urgency } from './Urgency';
 import { renderTaskLine } from './TaskLineRenderer';
 import type { TaskLineRenderDetails } from './TaskLineRenderer';
 import { DateFallback } from './DateFallback';
-import * as RegExpTools from './lib/RegExpTools';
 import { compareByDate } from './lib/DateTools';
 
 /**
@@ -538,10 +537,8 @@ export class Task {
     public getDescriptionWithoutGlobalFilter() {
         let description = this.description;
         if (GlobalFilter.isEmpty()) return description;
-        // This matches the global filter (after escaping it) only when it's a complete word
-        const globalFilterRegex = RegExp('(^|\\s)' + RegExpTools.escapeRegExp(GlobalFilter.get()) + '($|\\s)', 'ug');
-        if (this.description.search(globalFilterRegex) > -1) {
-            description = description.replace(globalFilterRegex, '$1$2').replace('  ', ' ').trim();
+        if (this.description.search(GlobalFilter.regExp()) > -1) {
+            description = description.replace(GlobalFilter.regExp(), '$1$2').replace('  ', ' ').trim();
         }
         return description;
     }

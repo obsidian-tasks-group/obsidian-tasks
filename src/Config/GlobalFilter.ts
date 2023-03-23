@@ -1,3 +1,4 @@
+import * as RegExpTools from '../lib/RegExpTools';
 import { getSettings, updateSettings } from './Settings';
 
 export class GlobalFilter {
@@ -23,6 +24,11 @@ export class GlobalFilter {
     static includes(searchIn: string): boolean {
         const globalFilter = GlobalFilter.get();
         return searchIn.includes(globalFilter);
+    }
+
+    static regExp(): RegExp {
+        // This matches the global filter (after escaping it) only when it's a complete word
+        return RegExp('(^|\\s)' + RegExpTools.escapeRegExp(GlobalFilter.get()) + '($|\\s)', 'ug');
     }
 
     static removeFrom(aString: string): string {
