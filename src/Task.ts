@@ -246,7 +246,7 @@ export class Task {
         taskInfo.tags = taskInfo.tags.map((tag) => tag.trim());
 
         // Remove the Global Filter if it is there
-        taskInfo.tags = taskInfo.tags.filter((tag) => tag !== GlobalFilter.get());
+        taskInfo.tags = taskInfo.tags.filter((tag) => !GlobalFilter.equals(tag));
 
         return new Task({
             ...taskInfo,

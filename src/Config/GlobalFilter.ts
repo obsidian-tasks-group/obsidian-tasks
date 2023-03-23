@@ -21,6 +21,14 @@ export class GlobalFilter {
         return GlobalFilter.get() === GlobalFilter.empty;
     }
 
+    static equals(tag: string): boolean {
+        return GlobalFilter.get() === tag;
+    }
+
+    static indexIn(description: string): number {
+        return description.indexOf(GlobalFilter.get());
+    }
+
     static includes(searchIn: string): boolean {
         const globalFilter = GlobalFilter.get();
         return searchIn.includes(globalFilter);

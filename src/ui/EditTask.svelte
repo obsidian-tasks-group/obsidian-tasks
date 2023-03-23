@@ -214,7 +214,7 @@
         // when saving the task.
         // Another special case is when the global filter is empty: in this case there's an "empty" match in the `indexOf`
         // (it returns 0), and thus we *don't* set addGlobalFilterOnSave.
-        if (description != task.description || description.indexOf(GlobalFilter.get()) == -1)
+        if (description != task.description || GlobalFilter.indexIn(description) == -1)
             addGlobalFilterOnSave = true;
         let priority: typeof editableTask.priority = 'none';
         if (task.priority === Priority.Low) {
