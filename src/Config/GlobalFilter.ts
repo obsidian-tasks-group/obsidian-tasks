@@ -3,17 +3,17 @@ import { getSettings, updateSettings } from './Settings';
 export class GlobalFilter {
     static empty = '';
 
+    static get(): string {
+        const { globalFilter } = getSettings();
+        return globalFilter;
+    }
+
     static set(value: string) {
         updateSettings({ globalFilter: value });
     }
 
     static reset() {
         updateSettings({ globalFilter: GlobalFilter.empty });
-    }
-
-    static get(): string {
-        const { globalFilter } = getSettings();
-        return globalFilter;
     }
 
     static matches(searchIn: string): boolean {
