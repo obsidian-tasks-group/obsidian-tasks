@@ -107,7 +107,7 @@ async function taskToHtml(
         let componentString = emojiSerializer.componentToString(task, taskLayout, component);
         if (componentString) {
             if (component === 'description') {
-                componentString = GlobalFilter.removeFromDependingOnSettings(componentString);
+                componentString = GlobalFilter.removeAsSubstringFromDependingOnSettings(componentString);
             }
             taskAsString += componentString;
         }

@@ -49,15 +49,15 @@ export class GlobalFilter {
         return description;
     }
 
-    static removeFrom(description: string): string {
+    static removeAsSubstringFrom(description: string): string {
         const globalFilter = GlobalFilter.get();
         return description.replace(globalFilter, '').trim();
     }
 
-    static removeFromDependingOnSettings(description: string): string {
+    static removeAsSubstringFromDependingOnSettings(description: string): string {
         const { removeGlobalFilter } = getSettings();
         if (removeGlobalFilter) {
-            return GlobalFilter.removeFrom(description);
+            return GlobalFilter.removeAsSubstringFrom(description);
         }
         return description;
     }
