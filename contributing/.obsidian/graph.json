@@ -1,6 +1,6 @@
 {
   "collapse-filter": false,
-  "search": "",
+  "search": "-file:About",
   "showTags": false,
   "showAttachments": false,
   "hideUnresolved": false,
