@@ -126,7 +126,7 @@ There is also the ability to use numbered date ranges that are independent of th
 > Numbered date ranges were introduced in Tasks 3.1.0.
 
 {: .released }
-Changing the first day of the week was introduced in Tasks 2.X.Y
+Changing the first day of the week was introduced in Tasks X.Y.Z.
 
 ### Troubleshooting date searches
 
