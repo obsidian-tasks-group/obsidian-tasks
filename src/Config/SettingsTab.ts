@@ -180,6 +180,26 @@ export class SettingsTab extends PluginSettingTab {
             });
 
         new Setting(containerEl)
+            .setName('First day of the week')
+            .setDesc('For relative date range seaches with weeks')
+            .addDropdown(async (dropdown) => {
+                const { firstDayOfTheWeek } = getSettings();
+                dropdown
+                    .addOption('0', 'Monday')
+                    .addOption('1', 'Tuesday')
+                    .addOption('2', 'Wednesday')
+                    .addOption('3', 'Thursday')
+                    .addOption('4', 'Friday')
+                    .addOption('5', 'Saturday')
+                    .addOption('6', 'Sunday')
+                    .setValue(firstDayOfTheWeek.toString())
+                    .onChange(async (value) => {
+                        updateSettings({ firstDayOfTheWeek: +value });
+                        await this.plugin.saveSettings();
+                    });
+            });
+
+        new Setting(containerEl)
             .setName('Folders with default Scheduled dates')
             .setDesc(
                 'Leave empty if you want to use default Scheduled dates everywhere, or enter a comma-separated list of folders.',
