@@ -1,6 +1,7 @@
 /**
  * @jest-environment jsdom
  */
+import { resetSettings, updateSettings } from '../../src/Config/Settings';
 import { DateParser } from '../../src/Query/DateParser';
 import { TaskRegularExpressions } from '../../src/Task';
 
@@ -161,5 +162,57 @@ describe('DateParser - numbered date ranges', () => {
 
         // Year
         testParsingDateRange('20167', 'Invalid date', 'Invalid date');
+    });
+});
+
+describe('Date Parser - weeks in relative date ranges start any day', () => {
+    beforeAll(() => {
+        jest.useFakeTimers();
+        jest.setSystemTime(new Date(2023, 3 - 1, 24)); // 2023-03-24
+    });
+
+    afterAll(() => {
+        jest.useRealTimers();
+        resetSettings();
+    });
+
+    it('should start on Monday by default', () => {
+        testParsingDateRange('this week', '2023-03-20', '2023-03-26');
+    });
+
+    it('should shift by 0 days', () => {
+        updateSettings({ firstDayOfTheWeek: 0 });
+        testParsingDateRange('this week', '2023-03-20', '2023-03-26');
+    });
+
+    it('should shift by 1 day', () => {
+        updateSettings({ firstDayOfTheWeek: 1 });
+        testParsingDateRange('this week', '2023-03-21', '2023-03-27');
+    });
+});
+
+describe('Date Parser - weeks in relative date ranges start any day', () => {
+    beforeAll(() => {
+        jest.useFakeTimers();
+        jest.setSystemTime(new Date(2023, 3 - 1, 24)); // 2023-03-24
+    });
+
+    afterAll(() => {
+        jest.useRealTimers();
+        resetSettings();
+    });
+
+    it('should start on Monday by default', () => {
+        testParsingDateRange('this week', '2023-03-20', '2023-03-26');
+    });
+
+    it('should shift by 0 days', () => {
+        updateSettings({ firstDayOfTheWeek: 0 });
+        testParsingDateRange('this week', '2023-03-20', '2023-03-26');
+    });
+
+    it('should shift by 1 day', () => {
+        updateSettings({ firstDayOfTheWeek: 1 });
+        testParsingDateRange('this week', '2023-03-21', '2023-03-27');
     });
 });
