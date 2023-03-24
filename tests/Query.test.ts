@@ -801,18 +801,6 @@ describe('Query', () => {
             expect(query.explainQuery()).toEqual(expectedDisplayText);
         });
 
-        //         it('should explain 0 filters with global filter', () => {
-        //             GlobalFilter.set('#task');
-
-        //             const input = '';
-        //             const query = new Query({ source: input });
-
-        //             const expectedDisplayText = `Only tasks containing the global filter '#task'.
-
-        // No filters supplied. All tasks will match the query.`;
-        //             expect(query.explainQuery()).toEqual(expectedDisplayText);
-        //         });
-
         it('should explain 1 filter', () => {
             const input = 'description includes hello';
             const query = new Query({ source: input });
@@ -821,19 +809,6 @@ describe('Query', () => {
 `;
             expect(query.explainQuery()).toEqual(expectedDisplayText);
         });
-
-        //         it('should explain 1 filter', () => {
-        //             GlobalFilter.set('#task');
-
-        //             const input = 'description includes hello';
-        //             const query = new Query({ source: input });
-
-        //             const expectedDisplayText = `Only tasks containing the global filter '#task'.
-
-        // description includes hello
-        // `;
-        //             expect(query.explainQuery()).toEqual(expectedDisplayText);
-        //         });
 
         it('should explain 2 filters', () => {
             const input = 'description includes hello\ndue 2012-01-23';
