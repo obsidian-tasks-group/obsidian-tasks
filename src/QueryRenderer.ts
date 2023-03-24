@@ -11,6 +11,7 @@ import type { TasksEvents } from './TasksEvents';
 import type { Task } from './Task';
 import { DateFallback } from './DateFallback';
 import { TaskLayout } from './TaskLayout';
+import { explainResults } from './lib/QueryRenderer';
 
 export class QueryRenderer {
     private readonly app: App;
@@ -169,7 +170,7 @@ class QueryRenderChild extends MarkdownRenderChild {
 
     // Use the 'explain' instruction to enable this
     private createExplanation(content: HTMLDivElement) {
-        const explanationAsString = this.query.explainQuery();
+        const explanationAsString = explainResults(this.source);
 
         const explanationsBlock = content.createEl('pre');
         explanationsBlock.addClasses(['plugin-tasks-query-explanation']);

@@ -506,7 +506,7 @@ describe('due date', () => {
                 const query = new Query({ source: `due ${keyword}${date}` });
                 expect(query.error).toBeUndefined();
 
-                newRow.push(query.explainQueryWithoutIntroduction().replace(/(\n)/g, '<br>'));
+                newRow.push(query.explainQuery().replace(/(\n)/g, '<br>'));
             });
 
             table.addRow(newRow);
