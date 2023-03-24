@@ -1,6 +1,7 @@
 import * as chrono from 'chrono-node';
 import moment from 'moment';
 import { DateRange } from './DateRange';
+import { getSettings } from '../Config/Settings';
 
 export class DateParser {
     public static parseDate(input: string, forwardDate: boolean = false): moment.Moment {
@@ -80,7 +81,7 @@ export class DateParser {
 
             // In case weeks starts on a different day, shift the range accordingly
             if (range === 'week') {
-                const firstDayOfTheWeek = 0;
+                const { firstDayOfTheWeek } = getSettings();
                 dateRange.start.add(firstDayOfTheWeek, 'day');
                 dateRange.end.add(firstDayOfTheWeek, 'day');
             }

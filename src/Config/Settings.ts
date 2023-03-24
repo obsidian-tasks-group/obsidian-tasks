@@ -75,6 +75,9 @@ export interface Settings {
     // Tracks the stage of the headings in the settings UI.
     headingOpened: HeadingState;
     debugSettings: DebugSettings;
+
+    // 0 - Monday, 6 - Sunday
+    firstDayOfTheWeek: number;
 }
 
 const defaultSettings: Settings = {
@@ -102,6 +105,7 @@ const defaultSettings: Settings = {
     },
     headingOpened: {},
     debugSettings: new DebugSettings(),
+    firstDayOfTheWeek: 0,
 };
 
 let settings: Settings = { ...defaultSettings };
