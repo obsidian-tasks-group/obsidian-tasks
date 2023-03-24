@@ -65,8 +65,10 @@ export class DateParser {
             const lastThisNext = relativeDateRangeMatch[1];
             const range = relativeDateRangeMatch[2];
 
+            // Build the range from today
             const dateRange = DateRange.buildRelative(range as moment.unitOfTime.StartOf);
 
+            // In case of last or next move one range in given direction
             switch (lastThisNext) {
                 case 'last':
                     dateRange.moveToPrevious(range as moment.unitOfTime.DurationConstructor);
@@ -74,6 +76,13 @@ export class DateParser {
                 case 'next':
                     dateRange.moveToNext(range as moment.unitOfTime.DurationConstructor);
                     break;
+            }
+
+            // In case weeks starts on a different day, shift the range accordingly
+            if (range === 'week') {
+                const firstDayOfTheWeek = 0;
+                dateRange.start.add(firstDayOfTheWeek, 'day');
+                dateRange.end.add(firstDayOfTheWeek, 'day');
             }
 
             return dateRange;
