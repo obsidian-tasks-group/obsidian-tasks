@@ -47,6 +47,7 @@ You can sort tasks by the following properties.
 
 ### Task date properties
 
+1. `created` (the date when the task was created)
 1. `start` (the date when the task starts)
 1. `scheduled` (the date when the task is scheduled)
 1. `due` (the date when the task is due)
@@ -54,7 +55,8 @@ You can sort tasks by the following properties.
 1. `happens` (the earliest of start date, scheduled date, and due date)
 
 {: .released }
-`sort by happens` was introduced in Tasks 1.21.0.
+`sort by happens` was introduced in Tasks 1.21.0.<br>
+`sort by created` was introduced in Tasks 2.0.0.
 
 ### Task statuses
 

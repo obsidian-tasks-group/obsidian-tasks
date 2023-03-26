@@ -61,6 +61,11 @@ This is the text describing your task.
 
 If you have a [global filter]({{ site.baseurl }}{% link getting-started/global-filter.md %}) enabled, the dialog takes care of adding it automatically.
 
+The description box can be enlarged by dragging its corner. Multi-line text can be pasted in, or dragged-and-dropped in, and Tasks will remove the end-of-line characters automatically.
+
+{: .released }
+Description field became resizable in Tasks 2.0.0.
+
 ### Priority
 
 See [priority]({{ site.baseurl }}{% link getting-started/priority.md %}).
@@ -128,9 +133,26 @@ For more information, including adding your own customised statuses, see [Status
 >
 > For now, you should still complete tasks via command or by clicking on task checkboxes.
 
-### Completed and Done on
+## Display values
 
 These values cannot currently be edited in this modal.
+
+### Completed
+
+A read-only checkbox, showing whether the task is completed.
+
+### Created on
+
+{: .released }
+Created date was introduced in Tasks 2.0.0.
+
+A read-only display of the task's [created date]({{ site.baseurl }}{% link getting-started/dates.md %}#-created), if any.
+
+If you have enabled ‘Set created date on every added task’ in Tasks settings (and restarted Obsidian), when you create a new Task via this modal, today's date will be added automatically.
+
+### Done on
+
+A read-only display of the task's [done date]({{ site.baseurl }}{% link getting-started/dates.md %}#-done), if any.
 
 ## Finishing off
 
@@ -158,3 +180,7 @@ Tap on the screen and drag down, and you will see a scrollbar appear temporarily
 More importantly, the scrolling does then work fine.
 
 We are tracking the iPhone scrollbar issue in [issue #1238](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1238).
+
+## Use this modal in scripts and other plugins
+
+The [Tasks API Interface]({{ site.baseurl }}{% link advanced/api.md %}) allows this modal to be used outside of the Tasks plugin, for example in QuickAdd scripts, and by other plugins.

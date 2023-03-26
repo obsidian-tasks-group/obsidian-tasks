@@ -13,6 +13,8 @@ indent_size = 2
 
 [*.json]
 indent_size = 2
+# Stop IDEs adding newlines to end of Obsidian .json config files:
+insert_final_newline = false
 
 [*.{yml,yaml}]
 indent_size = 2

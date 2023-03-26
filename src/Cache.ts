@@ -8,12 +8,16 @@ import type { TasksEvents } from './TasksEvents';
 import { DateFallback } from './DateFallback';
 import { getSettings } from './Config/Settings';
 import { Lazy } from './lib/Lazy';
+import { TaskLocation } from './TaskLocation';
+// import { logging } from './lib/logging';
 
 export enum State {
     Cold = 'Cold',
     Initializing = 'Initializing',
     Warm = 'Warm',
 }
+
+// const logger = logging.getLogger('tasks');
 
 export class Cache {
     private readonly metadataCache: MetadataCache;
@@ -147,7 +151,10 @@ export class Cache {
                 this.tasks = this.tasks.map((task: Task): Task => {
                     if (task.path === oldPath) {
                         if (!useFilenameAsScheduledDate) {
-                            return new Task({ ...task, path: file.path });
+                            return new Task({
+                                ...task,
+                                taskLocation: task.taskLocation.fromRenamedFile(file.path),
+                            });
                         } else {
                             return DateFallback.updateTaskPath(task, file.path, fallbackDate.value);
                         }
@@ -216,6 +223,7 @@ export class Cache {
         }
 
         if (this.getState() == State.Warm) {
+            // logger.debug(`Cache read: ${file.path}`);
             console.debug(
                 `At least one task, its line number or its heading has changed in ${file.path}: triggering a refresh of all active Tasks blocks in Live Preview and Reading mode views.`,
             );
@@ -294,10 +302,13 @@ export class Cache {
                 try {
                     task = Task.fromLine({
                         line,
-                        path: file.path,
-                        sectionStart: currentSection.position.start.line,
-                        sectionIndex,
-                        precedingHeader: Cache.getPrecedingHeader(lineNumber, fileCache.headings),
+                        taskLocation: new TaskLocation(
+                            file.path,
+                            lineNumber,
+                            currentSection.position.start.line,
+                            sectionIndex,
+                            Cache.getPrecedingHeader(lineNumber, fileCache.headings),
+                        ),
                         fallbackDate: dateFromFileName.value,
                     });
                 } catch (e) {

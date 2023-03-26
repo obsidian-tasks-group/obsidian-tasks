@@ -1,11 +1,11 @@
 import type { Settings } from '../Config/Settings';
+import { TASK_FORMATS } from '../Config/Settings';
 import { DateParser } from '../Query/DateParser';
 import { doAutocomplete } from '../DateAbbreviations';
 import { Recurrence } from '../Recurrence';
-
-import * as task from '../Task';
-
-const datePrefixCharacters = `${task.startDateSymbol}${task.scheduledDateSymbol}${task.dueDateSymbol}`;
+import { TaskRegularExpressions } from '../Task';
+const { symbols } = TASK_FORMATS.tasksPluginEmoji.taskSerializer;
+const datePrefixCharacters = `${symbols.startDateSymbol}${symbols.scheduledDateSymbol}${symbols.dueDateSymbol}`;
 
 /*
  * A suggestion presented to the user and some metadata about it.
@@ -84,7 +84,7 @@ export function buildSuggestions(line: string, cursorPos: number, settings: Sett
 }
 
 function hasPriority(line: string) {
-    if (Object.values(task.prioritySymbols).some((value) => value.length > 0 && line.includes(value))) return true;
+    if (Object.values(symbols.prioritySymbols).some((value) => value.length > 0 && line.includes(value))) return true;
 }
 
 /*
@@ -93,39 +93,39 @@ function hasPriority(line: string) {
 function getPossibleComponentSuggestions(line: string, _settings: Settings): SuggestInfo[] {
     const suggestions: SuggestInfo[] = [];
 
-    if (!line.includes(task.dueDateSymbol))
+    if (!line.includes(symbols.dueDateSymbol))
         suggestions.push({
-            displayText: `${task.dueDateSymbol} due date`,
-            appendText: `${task.dueDateSymbol} `,
+            displayText: `${symbols.dueDateSymbol} due date`,
+            appendText: `${symbols.dueDateSymbol} `,
         });
-    if (!line.includes(task.startDateSymbol))
+    if (!line.includes(symbols.startDateSymbol))
         suggestions.push({
-            displayText: `${task.startDateSymbol} start date`,
-            appendText: `${task.startDateSymbol} `,
+            displayText: `${symbols.startDateSymbol} start date`,
+            appendText: `${symbols.startDateSymbol} `,
         });
-    if (!line.includes(task.scheduledDateSymbol))
+    if (!line.includes(symbols.scheduledDateSymbol))
         suggestions.push({
-            displayText: `${task.scheduledDateSymbol} scheduled date`,
-            appendText: `${task.scheduledDateSymbol} `,
+            displayText: `${symbols.scheduledDateSymbol} scheduled date`,
+            appendText: `${symbols.scheduledDateSymbol} `,
         });
     if (!hasPriority(line)) {
         suggestions.push({
-            displayText: `${task.prioritySymbols.High} high priority`,
-            appendText: `${task.prioritySymbols.High} `,
+            displayText: `${symbols.prioritySymbols.High} high priority`,
+            appendText: `${symbols.prioritySymbols.High} `,
         });
         suggestions.push({
-            displayText: `${task.prioritySymbols.Medium} medium priority`,
-            appendText: `${task.prioritySymbols.Medium} `,
+            displayText: `${symbols.prioritySymbols.Medium} medium priority`,
+            appendText: `${symbols.prioritySymbols.Medium} `,
         });
         suggestions.push({
-            displayText: `${task.prioritySymbols.Low} low priority`,
-            appendText: `${task.prioritySymbols.Low} `,
+            displayText: `${symbols.prioritySymbols.Low} low priority`,
+            appendText: `${symbols.prioritySymbols.Low} `,
         });
     }
-    if (!line.includes(task.recurrenceSymbol))
+    if (!line.includes(symbols.recurrenceSymbol))
         suggestions.push({
-            displayText: `${task.recurrenceSymbol} recurring (repeat)`,
-            appendText: `${task.recurrenceSymbol} `,
+            displayText: `${symbols.recurrenceSymbol} recurring (repeat)`,
+            appendText: `${symbols.recurrenceSymbol} `,
         });
 
     return suggestions;
@@ -174,8 +174,8 @@ function addDatesSuggestions(line: string, cursorPos: number, settings: Settings
             // Seems like the text that the user typed can be parsed as a valid date.
             // Present its completed form as a 1st suggestion
             results.push({
-                displayText: `${possibleDate.format(task.TaskRegularExpressions.dateFormat)}`,
-                appendText: `${datePrefix} ${possibleDate.format(task.TaskRegularExpressions.dateFormat)} `,
+                displayText: `${possibleDate.format(TaskRegularExpressions.dateFormat)}`,
+                appendText: `${datePrefix} ${possibleDate.format(TaskRegularExpressions.dateFormat)} `,
                 insertAt: dateMatch.index,
                 insertSkip: dateMatch[0].length,
             });
@@ -203,7 +203,7 @@ function addDatesSuggestions(line: string, cursorPos: number, settings: Settings
         }
         for (const match of genericMatches) {
             const parsedDate = DateParser.parseDate(match, true);
-            const formattedDate = `${parsedDate.format(task.TaskRegularExpressions.dateFormat)}`;
+            const formattedDate = `${parsedDate.format(TaskRegularExpressions.dateFormat)}`;
             results.push({
                 suggestionType: 'match',
                 displayText: `${match} (${formattedDate})`,
@@ -242,7 +242,7 @@ function addRecurrenceSuggestions(line: string, cursorPos: number, settings: Set
     ];
 
     const results: SuggestInfo[] = [];
-    const recurrenceRegex = new RegExp(`(${task.recurrenceSymbol})\\s*([0-9a-zA-Z ]*)`, 'ug');
+    const recurrenceRegex = new RegExp(`(${symbols.recurrenceSymbol})\\s*([0-9a-zA-Z ]*)`, 'ug');
     const recurrenceMatch = matchByPosition(line, recurrenceRegex, cursorPos);
     if (recurrenceMatch && recurrenceMatch.length >= 2) {
         const recurrencePrefix = recurrenceMatch[1];

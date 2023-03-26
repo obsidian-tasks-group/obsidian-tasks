@@ -31,6 +31,8 @@ When you toggle the status of a recurring task to anything but "todo" (i.e. "don
 In addition, _a new task will be put one line above the original task._
 The new task will have updated dates based off the original task.
 
+### Basic Example
+
 Take as an example the following task:
 
 ```markdown
@@ -40,11 +42,20 @@ Take as an example the following task:
 If you mark the above task "done", the file will now look like this:
 
 ```markdown
--   [ ] take out the trash 🔁 every Sunday 📅 2021-05-02
--   [x] take out the trash 🔁 every Sunday 📅 2021-04-25 ✅ 2021-04-24
+- [ ] take out the trash 🔁 every Sunday 📅 2021-05-02
+- [x] take out the trash 🔁 every Sunday 📅 2021-04-25 ✅ 2021-04-24
 ```
 
 The next Sunday after 25 April 2021 is on 2 May.
+
+Alternatively, if you have enabled addition of [created dates]({{ site.baseurl }}{% link getting-started/dates.md %}#-created), the file will instead now look like this, showing the date that the new task was created:
+
+```markdown
+- [ ] take out the trash 🔁 every Sunday ➕ 2023-03-10 📅 2021-05-02
+- [x] take out the trash 🔁 every Sunday 📅 2021-04-25 ✅ 2023-03-10
+```
+
+### Limitations of Recurring Tasks
 
 <div class="code-example" markdown="1">
 Important

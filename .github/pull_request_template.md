@@ -26,8 +26,9 @@ Changes visible to users:
 - [ ] **Bug fix** (prefix: `fix` - non-breaking change which fixes an issue)
 - [ ] **New feature** (prefix: `feat` - non-breaking change which adds functionality)
 - [ ] **Breaking change** (prefix: `feat!!` or `fix!!` - fix or feature that would cause existing functionality to not work as expected)
-- [ ] **Documentation** (prefix: `docs` - improvements to any documentation content)
+- [ ] **Documentation** (prefix: `docs` - improvements to any documentation content **for users**)
 - [ ] **Sample vault** (prefix: `vault` - improvements to the [Tasks-Demo sample vault](https://github.com/obsidian-tasks-group/obsidian-tasks/tree/main/resources/sample_vaults/Tasks-Demo))
+- [ ] **Contributing Guidelines** (prefix: `contrib` - any improvements to documentation content **for contributors** - see [Contributing to Tasks](https://publish.obsidian.md/tasks-contributing/))
 
 Internal changes:
 
@@ -42,17 +43,17 @@ Internal changes:
 
 - [ ] My code follows the code style of this project and passes `yarn run lint`.
 - [ ] My change requires a change to the documentation.
-- [ ] I have [updated the documentation](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/CONTRIBUTING.md#updating-documentation) accordingly.
-- [ ] My change has adequate [Unit Test coverage](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/CONTRIBUTING.md#maintaining-the-tests).
+- [ ] I have [updated the documentation](https://publish.obsidian.md/tasks-contributing/Documentation/About+Documentation) accordingly.
+- [ ] My change has adequate [Unit Test coverage](https://publish.obsidian.md/tasks-contributing/Testing/About+Testing).
 
 ## Terms
 
 <!--
 By submitting this pull request, you must agree to follow our
-[contributing guide](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/CONTRIBUTING.md) and
+[contributing guide](https://publish.obsidian.md/tasks-contributing) and
 [Code of Conduct](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/CODE_OF_CONDUCT.md).
 Put an x in the boxes to confirm you agree.
 -->
 
-- [ ] My contribution follow this project's [contributing guide](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/CONTRIBUTING.md)
+- [ ] My contribution follow this project's [contributing guide](https://publish.obsidian.md/tasks-contributing)
 - [ ] I agree to follow this project's [Code of Conduct](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/CODE_OF_CONDUCT.md)

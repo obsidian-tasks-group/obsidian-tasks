@@ -6,14 +6,9 @@ import { DoneDateField } from '../../../src/Query/Filter/DoneDateField';
 import type { FilterOrErrorMessage } from '../../../src/Query/Filter/Filter';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { testFilter } from '../../TestingTools/FilterTestHelpers';
-import { toHaveExplanation } from '../../CustomMatchers/CustomMatchersForFilters';
 import { expectTaskComparesAfter, expectTaskComparesBefore } from '../../CustomMatchers/CustomMatchersForSorting';
 
 window.moment = moment;
-
-expect.extend({
-    toHaveExplanation,
-});
 
 function testTaskFilterForTaskWithDoneDate(filter: FilterOrErrorMessage, doneDate: string | null, expected: boolean) {
     const builder = new TaskBuilder();

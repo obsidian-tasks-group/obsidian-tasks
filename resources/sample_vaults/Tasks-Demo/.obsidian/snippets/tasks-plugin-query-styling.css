@@ -1,4 +1,4 @@
-.block-language-tasks:has(ul.plugin-tasks-query-result.tasks-group-by-priority) .tasks-group-heading {
+.block-language-tasks:has(ul.plugin-tasks-query-result[data-task-group-by="priority"]) .tasks-group-heading {
     color: red;
 }
 

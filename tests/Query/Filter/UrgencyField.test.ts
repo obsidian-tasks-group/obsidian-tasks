@@ -6,8 +6,6 @@ import { Priority } from '../../../src/Task';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { UrgencyField } from '../../../src/Query/Filter/UrgencyField';
 
-import { toBeValid, toHaveExplanation } from '../../CustomMatchers/CustomMatchersForFilters';
-
 import {
     expectTaskComparesAfter,
     expectTaskComparesBefore,
@@ -15,11 +13,6 @@ import {
 } from '../../CustomMatchers/CustomMatchersForSorting';
 
 window.moment = moment;
-
-expect.extend({
-    toBeValid,
-    toHaveExplanation,
-});
 
 describe('urgency', () => {
     it('should not yet be implemented', () => {

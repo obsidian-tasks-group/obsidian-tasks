@@ -50,8 +50,10 @@ You can group by the following properties.
 
 ### Task date properties
 
+1. `created`
+    - The created date of the task, including the week-day, or `No created date`.
 1. `start`
-   - The start date of the task, including the week-day, or `No start date`.
+    - The start date of the task, including the week-day, or `No start date`.
 1. `scheduled`
     - The scheduled date of the task, including the week-day, or `No scheduled date`.
 1. `due`
@@ -62,7 +64,8 @@ You can group by the following properties.
     - The earliest of start date, scheduled date, and due date, including the week-day, or `No happens date` if none of those are set.
 
 {: .released }
-`happens` grouping option was introduced in Tasks 1.11.0.
+`happens` grouping option was introduced in Tasks 1.11.0.<br>
+`created` grouping option was introduced in Tasks 2.0.0.
 
 ### Task statuses
 

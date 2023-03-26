@@ -8,7 +8,6 @@ import { testTaskFilter } from '../../TestingTools/FilterTestHelpers';
 import { fromLine } from '../../TestHelpers';
 import type { FilterOrErrorMessage } from '../../../src/Query/Filter/Filter';
 import { BooleanField } from '../../../src/Query/Filter/BooleanField';
-import { toMatchTaskFromLine } from '../../CustomMatchers/CustomMatchersForFilters';
 import { Sort } from '../../../src/Query/Sort';
 import {
     expectTaskComparesAfter,
@@ -25,10 +24,6 @@ function testDescriptionFilter(filter: FilterOrErrorMessage, line: string, expec
     });
     testTaskFilter(filter, task, expected);
 }
-
-expect.extend({
-    toMatchTaskFromLine,
-});
 
 describe('description should strip signifiers, some duplicate spaces and trailing spaces', () => {
     const field = new DescriptionField();
@@ -133,6 +128,7 @@ describe('description', () => {
     });
 });
 
+// begin-snippet: example_test_of_filters
 describe('search description for time stamps', () => {
     it('should find a time stamp in the description - simple version', () => {
         // Arrange
@@ -158,6 +154,7 @@ describe('search description for time stamps', () => {
         expect(filter).not.toMatchTaskFromLine('- [ ] Do me at 99:99');
     });
 });
+// end-snippet
 
 describe('search description for short tags, excluding sub-tags', () => {
     // Note that the following were written before tag searches supported regex.

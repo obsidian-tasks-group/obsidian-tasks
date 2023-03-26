@@ -1,8 +1,7 @@
 import type { Moment } from 'moment';
-import { LayoutOptions, TaskLayout } from './TaskLayout';
-import type { TaskLayoutComponent } from './TaskLayout';
-import { Recurrence } from './Recurrence';
-import { getSettings } from './Config/Settings';
+import type { TaskLocation } from './TaskLocation';
+import type { Recurrence } from './Recurrence';
+import { getSettings, getUserSelectedTaskFormat } from './Config/Settings';
 import { StatusRegistry } from './StatusRegistry';
 import type { Status } from './Status';
 import { Urgency } from './Urgency';
@@ -25,19 +24,6 @@ export enum Priority {
     None = '3',
     Low = '4',
 }
-
-export const prioritySymbols = {
-    High: '⏫',
-    Medium: '🔼',
-    Low: '🔽',
-    None: '',
-};
-
-export const recurrenceSymbol = '🔁';
-export const startDateSymbol = '🛫';
-export const scheduledDateSymbol = '⏳';
-export const dueDateSymbol = '📅';
-export const doneDateSymbol = '✅';
 
 export class TaskRegularExpressions {
     public static readonly dateFormat = 'YYYY-MM-DD';
@@ -87,15 +73,6 @@ export class TaskRegularExpressions {
     // Match on block link at end.
     public static readonly blockLinkRegex = / \^[a-zA-Z0-9-]+$/u;
 
-    // The following regex's end with `$` because they will be matched and
-    // removed from the end until none are left.
-    public static readonly priorityRegex = /([⏫🔼🔽])$/u;
-    public static readonly startDateRegex = /🛫 *(\d{4}-\d{2}-\d{2})$/u;
-    public static readonly scheduledDateRegex = /[⏳⌛] *(\d{4}-\d{2}-\d{2})$/u;
-    public static readonly dueDateRegex = /[📅📆🗓] *(\d{4}-\d{2}-\d{2})$/u;
-    public static readonly doneDateRegex = /✅ *(\d{4}-\d{2}-\d{2})$/u;
-    public static readonly recurrenceRegex = /🔁 ?([a-zA-Z0-9, !]+)$/iu;
-
     // Regex to match all hash tags, basically hash followed by anything but the characters in the negation.
     // To ensure URLs are not caught it is looking of beginning of string tag and any
     // tag that has a space in front of it. Any # that has a character in front
@@ -118,19 +95,16 @@ export class TaskRegularExpressions {
 export class Task {
     public readonly status: Status;
     public readonly description: string;
-    public readonly path: string;
     public readonly indentation: string;
     public readonly listMarker: string;
-    /** Line number where the section starts that contains this task. */
-    public readonly sectionStart: number;
-    /** The index of the nth task in its section. */
-    public readonly sectionIndex: number;
-    public readonly precedingHeader: string | null;
+
+    public readonly taskLocation: TaskLocation;
 
     public readonly tags: string[];
 
     public readonly priority: Priority;
 
+    public readonly createdDate: Moment | null;
     public readonly startDate: Moment | null;
     public readonly scheduledDate: Moment | null;
     public readonly dueDate: Moment | null;
@@ -153,13 +127,11 @@ export class Task {
     constructor({
         status,
         description,
-        path,
+        taskLocation,
         indentation,
         listMarker,
-        sectionStart,
-        sectionIndex,
-        precedingHeader,
         priority,
+        createdDate,
         startDate,
         scheduledDate,
         dueDate,
@@ -172,13 +144,11 @@ export class Task {
     }: {
         status: Status;
         description: string;
-        path: string;
+        taskLocation: TaskLocation;
         indentation: string;
         listMarker: string;
-        sectionStart: number;
-        sectionIndex: number;
-        precedingHeader: string | null;
         priority: Priority;
+        createdDate: moment.Moment | null;
         startDate: moment.Moment | null;
         scheduledDate: moment.Moment | null;
         dueDate: moment.Moment | null;
@@ -191,17 +161,15 @@ export class Task {
     }) {
         this.status = status;
         this.description = description;
-        this.path = path;
         this.indentation = indentation;
         this.listMarker = listMarker;
-        this.sectionStart = sectionStart;
-        this.sectionIndex = sectionIndex;
-        this.precedingHeader = precedingHeader;
+        this.taskLocation = taskLocation;
 
         this.tags = tags;
 
         this.priority = priority;
 
+        this.createdDate = createdDate;
         this.startDate = startDate;
         this.scheduledDate = scheduledDate;
         this.dueDate = dueDate;
@@ -219,27 +187,18 @@ export class Task {
      *
      * @static
      * @param {string} line - The full line in the note to parse.
-     * @param {string} path - Path to the note in obsidian.
-     * @param {number} sectionStart - Line number where the section starts that contains this task.
-     * @param {number} sectionIndex - The index of the nth task in its section.
-     * @param {(string | null)} precedingHeader - The header before this task.
+     * @param {TaskLocation} taskLocation - The location of the task line
      * @param {(Moment | null)} fallbackDate - The date to use as the scheduled date if no other date is set
      * @return {*}  {(Task | null)}
      * @memberof Task
      */
     public static fromLine({
         line,
-        path,
-        sectionStart,
-        sectionIndex,
-        precedingHeader,
+        taskLocation,
         fallbackDate,
     }: {
         line: string;
-        path: string;
-        sectionStart: number;
-        sectionIndex: number;
-        precedingHeader: string | null;
+        taskLocation: TaskLocation;
         fallbackDate: Moment | null;
     }): Task | null {
         // Check the line to see if it is a markdown task.
@@ -274,155 +233,37 @@ export class Task {
         if (blockLink !== '') {
             description = description.replace(TaskRegularExpressions.blockLinkRegex, '').trim();
         }
+        const { taskSerializer } = getUserSelectedTaskFormat();
+        const taskInfo = taskSerializer.deserialize(description);
 
-        // Keep matching and removing special strings from the end of the
-        // description in any order. The loop should only run once if the
-        // strings are in the expected order after the description.
-        let matched: boolean;
-        let priority: Priority = Priority.None;
-        let startDate: Moment | null = null;
-        let scheduledDate: Moment | null = null;
         let scheduledDateIsInferred = false;
-        let dueDate: Moment | null = null;
-        let doneDate: Moment | null = null;
-        let recurrenceRule: string = '';
-        let recurrence: Recurrence | null = null;
-        let tags: any = [];
-        // Tags that are removed from the end while parsing, but we want to add them back for being part of the description.
-        // In the original task description they are possibly mixed with other components
-        // (e.g. #tag1 <due date> #tag2), they do not have to all trail all task components,
-        // but eventually we want to paste them back to the task description at the end
-        let trailingTags = '';
-        // Add a "max runs" failsafe to never end in an endless loop:
-        const maxRuns = 20;
-        let runs = 0;
-        do {
-            matched = false;
-            const priorityMatch = description.match(TaskRegularExpressions.priorityRegex);
-            if (priorityMatch !== null) {
-                switch (priorityMatch[1]) {
-                    case prioritySymbols.Low:
-                        priority = Priority.Low;
-                        break;
-                    case prioritySymbols.Medium:
-                        priority = Priority.Medium;
-                        break;
-                    case prioritySymbols.High:
-                        priority = Priority.High;
-                        break;
-                }
-
-                description = description.replace(TaskRegularExpressions.priorityRegex, '').trim();
-                matched = true;
-            }
-
-            const doneDateMatch = description.match(TaskRegularExpressions.doneDateRegex);
-            if (doneDateMatch !== null) {
-                doneDate = window.moment(doneDateMatch[1], TaskRegularExpressions.dateFormat);
-                description = description.replace(TaskRegularExpressions.doneDateRegex, '').trim();
-                matched = true;
-            }
-
-            const dueDateMatch = description.match(TaskRegularExpressions.dueDateRegex);
-            if (dueDateMatch !== null) {
-                dueDate = window.moment(dueDateMatch[1], TaskRegularExpressions.dateFormat);
-                description = description.replace(TaskRegularExpressions.dueDateRegex, '').trim();
-                matched = true;
-            }
-
-            const scheduledDateMatch = description.match(TaskRegularExpressions.scheduledDateRegex);
-            if (scheduledDateMatch !== null) {
-                scheduledDate = window.moment(scheduledDateMatch[1], TaskRegularExpressions.dateFormat);
-                description = description.replace(TaskRegularExpressions.scheduledDateRegex, '').trim();
-                matched = true;
-            }
-
-            const startDateMatch = description.match(TaskRegularExpressions.startDateRegex);
-            if (startDateMatch !== null) {
-                startDate = window.moment(startDateMatch[1], TaskRegularExpressions.dateFormat);
-                description = description.replace(TaskRegularExpressions.startDateRegex, '').trim();
-                matched = true;
-            }
-
-            const recurrenceMatch = description.match(TaskRegularExpressions.recurrenceRegex);
-            if (recurrenceMatch !== null) {
-                // Save the recurrence rule, but *do not parse it yet*.
-                // Creating the Recurrence object requires a reference date (e.g. a due date),
-                // and it might appear in the next (earlier in the line) tokens to parse
-                recurrenceRule = recurrenceMatch[1].trim();
-                description = description.replace(TaskRegularExpressions.recurrenceRegex, '').trim();
-                matched = true;
-            }
-
-            // Match tags from the end to allow users to mix the various task components with
-            // tags. These tags will be added back to the description below
-            const tagsMatch = description.match(TaskRegularExpressions.hashTagsFromEnd);
-            if (tagsMatch != null) {
-                description = description.replace(TaskRegularExpressions.hashTagsFromEnd, '').trim();
-                matched = true;
-                const tagName = tagsMatch[0].trim();
-                // Adding to the left because the matching is done right-to-left
-                trailingTags = trailingTags.length > 0 ? [tagName, trailingTags].join(' ') : tagName;
-            }
-
-            runs++;
-        } while (matched && runs <= maxRuns);
-
-        // Now that we have all the task details, parse the recurrence rule if we found any
-        if (recurrenceRule.length > 0) {
-            recurrence = Recurrence.fromText({
-                recurrenceRuleText: recurrenceRule,
-                startDate,
-                scheduledDate,
-                dueDate,
-            });
-        }
-
         // Infer the scheduled date from the file name if not set explicitly
-        if (DateFallback.canApplyFallback({ startDate, scheduledDate, dueDate }) && fallbackDate !== null) {
-            scheduledDate = fallbackDate;
+        if (DateFallback.canApplyFallback(taskInfo) && fallbackDate !== null) {
+            taskInfo.scheduledDate = fallbackDate;
             scheduledDateIsInferred = true;
         }
 
-        // Add back any trailing tags to the description. We removed them so we can parse the rest of the
-        // components but now we want them back.
-        // The goal is for a task of them form 'Do something #tag1 (due) tomorrow #tag2 (start) today'
-        // to actually have the description 'Do something #tag1 #tag2'
-        if (trailingTags.length > 0) description += ' ' + trailingTags;
+        // Ensure that whitespace is removed around tags
+        taskInfo.tags = taskInfo.tags.map((tag) => tag.trim());
 
-        // Tags are found in the string and pulled out but not removed,
-        // so when returning the entire task it will match what the user
-        // entered.
-        // The global filter will be removed from the collection.
-        const hashTagMatch = description.match(TaskRegularExpressions.hashTags);
-        if (hashTagMatch !== null) {
-            tags = hashTagMatch.filter((tag) => tag !== globalFilter).map((tag) => tag.trim());
+        if (globalFilter) {
+            taskInfo.tags = taskInfo.tags.filter((tag) => tag !== globalFilter);
         }
 
         return new Task({
+            ...taskInfo,
             status,
-            description,
-            path,
             indentation,
             listMarker,
-            sectionStart,
-            sectionIndex,
-            precedingHeader,
-            priority,
-            startDate,
-            scheduledDate,
-            dueDate,
-            doneDate,
-            recurrence,
+            taskLocation: taskLocation,
             blockLink,
-            tags,
             originalMarkdown: line,
             scheduledDateIsInferred,
         });
     }
-
     /**
      * Create an HTML rendered List Item element (LI) for the current task.
+     * @note Output is based on the {@link DefaultTaskSerializer}'s format, with default (emoji) symbols
      * @param {renderTails}
      */
     public async toLi(renderDetails: TaskLineRenderDetails): Promise<HTMLLIElement> {
@@ -431,73 +272,19 @@ export class Task {
 
     /**
      * Flatten the task as a string that includes all its components.
-     * @param {LayoutOptions} [layoutOptions]
+     *
+     * @note Output depends on {@link Settings.taskFormat}
      * @return {*}  {string}
      * @memberof Task
      */
-    public toString(layoutOptions?: LayoutOptions): string {
-        const taskLayout = new TaskLayout(layoutOptions);
-        let taskString = '';
-        for (const component of taskLayout.layoutComponents) {
-            taskString += this.componentToString(taskLayout, component);
-        }
-        return taskString;
-    }
-
-    /**
-     * Renders a specific TaskLayoutComponent of the task (its description, priority, etc) as a string.
-     */
-    public componentToString(layout: TaskLayout, component: TaskLayoutComponent) {
-        switch (component) {
-            case 'description':
-                return this.description;
-            case 'priority': {
-                let priority: string = '';
-
-                if (this.priority === Priority.High) {
-                    priority = ' ' + prioritySymbols.High;
-                } else if (this.priority === Priority.Medium) {
-                    priority = ' ' + prioritySymbols.Medium;
-                } else if (this.priority === Priority.Low) {
-                    priority = ' ' + prioritySymbols.Low;
-                }
-                return priority;
-            }
-            case 'startDate':
-                if (!this.startDate) return '';
-                return layout.options.shortMode
-                    ? ' ' + startDateSymbol
-                    : ` ${startDateSymbol} ${this.startDate.format(TaskRegularExpressions.dateFormat)}`;
-            case 'scheduledDate':
-                if (!this.scheduledDate || this.scheduledDateIsInferred) return '';
-                return layout.options.shortMode
-                    ? ' ' + scheduledDateSymbol
-                    : ` ${scheduledDateSymbol} ${this.scheduledDate.format(TaskRegularExpressions.dateFormat)}`;
-            case 'doneDate':
-                if (!this.doneDate) return '';
-                return layout.options.shortMode
-                    ? ' ' + doneDateSymbol
-                    : ` ${doneDateSymbol} ${this.doneDate.format(TaskRegularExpressions.dateFormat)}`;
-            case 'dueDate':
-                if (!this.dueDate) return '';
-                return layout.options.shortMode
-                    ? ' ' + dueDateSymbol
-                    : ` ${dueDateSymbol} ${this.dueDate.format(TaskRegularExpressions.dateFormat)}`;
-            case 'recurrenceRule':
-                if (!this.recurrence) return '';
-                return layout.options.shortMode
-                    ? ' ' + recurrenceSymbol
-                    : ` ${recurrenceSymbol} ${this.recurrence.toText()}`;
-            case 'blockLink':
-                return this.blockLink ?? '';
-            default:
-                throw new Error(`Don't know how to render task component of type '${component}'`);
-        }
+    public toString(): string {
+        return getUserSelectedTaskFormat().taskSerializer.serialize(this);
     }
 
     /**
      * Returns the Task as a list item with a checkbox.
      *
+     * @note Output depends on {@link Settings.taskFormat}
      * @return {*}  {string}
      * @memberof Task
      */
@@ -546,6 +333,11 @@ export class Task {
         const newTasks: Task[] = [];
 
         if (nextOccurrence !== null) {
+            const { setCreatedDate } = getSettings();
+            let createdDate: moment.Moment | null = null;
+            if (setCreatedDate) {
+                createdDate = window.moment();
+            }
             const nextStatus = StatusRegistry.getInstance().getNextStatusOrCreate(newStatus);
             const nextTask = new Task({
                 ...this,
@@ -554,6 +346,8 @@ export class Task {
                 // New occurrences cannot have the same block link.
                 // And random block links don't help.
                 blockLink: '',
+                // add new createdDate on reccuring tasks
+                createdDate,
             });
             newTasks.push(nextTask);
         }
@@ -572,6 +366,10 @@ export class Task {
         return this._urgency;
     }
 
+    public get path(): string {
+        return this.taskLocation.path;
+    }
+
     /**
      * Return the name of the file containing the task, with the .md extension removed.
      */
@@ -582,6 +380,22 @@ export class Task {
         } else {
             return null;
         }
+    }
+
+    get lineNumber(): number {
+        return this.taskLocation.lineNumber;
+    }
+
+    get sectionStart(): number {
+        return this.taskLocation.sectionStart;
+    }
+
+    get sectionIndex(): number {
+        return this.taskLocation.sectionIndex;
+    }
+
+    public get precedingHeader(): string | null {
+        return this.taskLocation.precedingHeader;
     }
 
     /**
@@ -657,6 +471,7 @@ export class Task {
             'path',
             'indentation',
             'listMarker',
+            'lineNumber',
             'sectionStart',
             'sectionIndex',
             'precedingHeader',
@@ -682,7 +497,7 @@ export class Task {
         }
 
         // Compare Date fields
-        args = ['startDate', 'scheduledDate', 'dueDate', 'doneDate'];
+        args = ['createdDate', 'startDate', 'scheduledDate', 'dueDate', 'doneDate'];
         for (const el of args) {
             const date1 = this[el] as Moment | null;
             const date2 = other[el] as Moment | null;
@@ -702,6 +517,17 @@ export class Task {
         }
 
         return true;
+    }
+
+    /**
+     * Returns an array of hashtags found in string
+     *
+     * @param description A task description that may contain hashtags
+     *
+     * @returns An array of hashTags found in the string
+     */
+    public static extractHashtags(description: string): string[] {
+        return description.match(TaskRegularExpressions.hashTags)?.map((tag) => tag.trim()) ?? [];
     }
 
     /**

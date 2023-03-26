@@ -2,21 +2,12 @@ import { HeadingField } from '../../../src/Query/Filter/HeadingField';
 import type { FilterOrErrorMessage } from '../../../src/Query/Filter/Filter';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { testFilter } from '../../TestingTools/FilterTestHelpers';
-import { toBeValid, toMatchTaskWithHeading } from '../../CustomMatchers/CustomMatchersForFilters';
 import * as CustomMatchersForSorting from '../../CustomMatchers/CustomMatchersForSorting';
 
 function testTaskFilterForHeading(filter: FilterOrErrorMessage, precedingHeader: string | null, expected: boolean) {
     const builder = new TaskBuilder();
     testFilter(filter, builder.precedingHeader(precedingHeader), expected);
 }
-
-expect.extend({
-    toBeValid,
-});
-
-expect.extend({
-    toMatchTaskWithHeading,
-});
 
 describe('heading', () => {
     it('by heading (includes)', () => {

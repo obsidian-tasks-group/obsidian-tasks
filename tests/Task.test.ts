@@ -8,6 +8,7 @@ import { Priority, Task } from '../src/Task';
 import { resetSettings, updateSettings } from '../src/Config/Settings';
 import type { StatusCollection } from '../src/StatusCollection';
 import { StatusRegistry } from '../src/StatusRegistry';
+import { TaskLocation } from '../src/TaskLocation';
 import { fromLine } from './TestHelpers';
 import { TaskBuilder } from './TestingTools/TaskBuilder';
 import { RecurrenceBuilder } from './TestingTools/RecurrenceBuilder';
@@ -18,7 +19,7 @@ window.moment = moment;
 describe('parsing', () => {
     it('parses a task from a line starting with hyphen', () => {
         // Arrange
-        const line = '- [x] this is a done task 🗓 2021-09-12 ✅ 2021-06-20';
+        const line = '- [x] this is a done task 🗓 2021-09-12 ✅ 2021-06-20 ➕ 2023-03-07';
 
         // Act
         const task = fromLine({
@@ -30,11 +31,14 @@ describe('parsing', () => {
         expect(task!.listMarker).toEqual('-');
         expect(task!.description).toEqual('this is a done task');
         expect(task!.status).toStrictEqual(Status.DONE);
+        expect(task!.createdDate).not.toBeNull();
+        expect(task!.createdDate!.isSame(moment('2023-03-07', 'YYYY-MM-DD'))).toStrictEqual(true);
         expect(task!.dueDate).not.toBeNull();
         expect(task!.dueDate!.isSame(moment('2021-09-12', 'YYYY-MM-DD'))).toStrictEqual(true);
         expect(task!.doneDate).not.toBeNull();
         expect(task!.doneDate!.isSame(moment('2021-06-20', 'YYYY-MM-DD'))).toStrictEqual(true);
         expect(task!.originalMarkdown).toStrictEqual(line);
+        expect(task!.lineNumber).toEqual(0);
     });
 
     it('parses a task from a line starting with asterisk', () => {
@@ -114,6 +118,7 @@ describe('parsing', () => {
         expect(task!.status.symbol).toStrictEqual('D');
     });
 
+    // begin-snippet: example_basic_test
     it('allows signifier emojis as part of the description', () => {
         // Arrange
         const line = '- [x] this is a ✅ done task 🗓 2021-09-12 ✅ 2021-06-20';
@@ -132,6 +137,7 @@ describe('parsing', () => {
         expect(task!.doneDate).not.toBeNull();
         expect(task!.doneDate!.isSame(moment('2021-06-20', 'YYYY-MM-DD'))).toStrictEqual(true);
     });
+    // end-snippet
 
     it('also works with block links and trailing spaces', () => {
         // Arrange
@@ -167,8 +173,8 @@ describe('parsing', () => {
         expect(task!.description).toEqual('this is a task due #inside_tag #some/tags_with_underscore');
         expect(task!.tags).toEqual(['#inside_tag', '#some/tags_with_underscore']);
         expect(task!.dueDate).not.toBeNull();
-        expect(task!.dueDate!.isSame(moment('2021-09-12', 'YYYY-MM-DD')));
-        expect(task!.priority == Priority.High);
+        expect(task!.dueDate!.isSame(moment('2021-09-12', 'YYYY-MM-DD'))).toEqual(true);
+        expect(task!.priority).toEqual(Priority.High);
     });
 
     it('supports parsing large number of values', () => {
@@ -184,11 +190,11 @@ describe('parsing', () => {
         // Assert
         expect(task).not.toBeNull();
         expect(task!.description).toEqual('Wobble #tag1 #tag2 #tag3 #tag4 #tag5 #tag6 #tag7 #tag8 #tag9 #tag10');
-        expect(task!.dueDate!.isSame(moment('022-07-02', 'YYYY-MM-DD')));
-        expect(task!.doneDate!.isSame(moment('022-07-02', 'YYYY-MM-DD')));
-        expect(task!.startDate!.isSame(moment('022-07-02', 'YYYY-MM-DD')));
-        expect(task!.scheduledDate!.isSame(moment('022-07-02', 'YYYY-MM-DD')));
-        expect(task!.priority == Priority.High);
+        expect(task!.dueDate!.isSame(moment('2022-07-02', 'YYYY-MM-DD'))).toEqual(true);
+        expect(task!.doneDate!.isSame(moment('2022-07-02', 'YYYY-MM-DD'))).toEqual(true);
+        expect(task!.startDate!.isSame(moment('2022-07-02', 'YYYY-MM-DD'))).toEqual(true);
+        expect(task!.scheduledDate!.isSame(moment('2022-07-02', 'YYYY-MM-DD'))).toEqual(true);
+        expect(task!.priority).toEqual(Priority.High);
         expect(task!.tags).toStrictEqual([
             '#tag1',
             '#tag2',
@@ -206,9 +212,10 @@ describe('parsing', () => {
     it('supports parsing of emojis with multiple spaces', () => {
         // Arrange
         const lines = [
-            '- [ ] Wobble ✅2022-07-01 📅2022-07-02 ⏳2022-07-03 🛫2022-07-04 🔁every day',
-            '- [ ] Wobble ✅ 2022-07-01 📅 2022-07-02 ⏳ 2022-07-03 🛫 2022-07-04 🔁 every day',
-            '- [ ] Wobble ✅  2022-07-01 📅  2022-07-02 ⏳  2022-07-03 🛫  2022-07-04 🔁  every day',
+            '- [ ] Wobble ✅2022-07-01 📅2022-07-02 ⏳2022-07-03 🛫2022-07-04 ➕2022-07-05 🔁every day',
+            '- [ ] Wobble ✅ 2022-07-01 📅 2022-07-02 ⏳ 2022-07-03 🛫 2022-07-04 ➕ 2022-07-05 🔁 every day',
+            '- [ ] Wobble ✅  2022-07-01 📅  2022-07-02 ⏳  2022-07-03 🛫  2022-07-04 ➕  2022-07-05 🔁  every day',
+            '- [ ] Wobble ✅  2022-07-01 📅  2022-07-02 ⏳  2022-07-03 🛫  2022-07-04 ➕   2022-07-05 🔁  every day',
         ];
         // Act
         for (const line of lines) {
@@ -224,6 +231,7 @@ describe('parsing', () => {
                 due: task.dueDate?.format('YYYY-MM-DD'),
                 scheduled: task.scheduledDate?.format('YYYY-MM-DD'),
                 start: task.startDate?.format('YYYY-MM-DD'),
+                created: task.createdDate?.format('YYYY-MM-DD'),
                 priority: task.priority,
                 recurrence: task.recurrence?.toText(),
             }).toMatchObject({
@@ -233,6 +241,7 @@ describe('parsing', () => {
                 due: '2022-07-02',
                 scheduled: '2022-07-03',
                 start: '2022-07-04',
+                created: '2022-07-05',
                 priority: '3',
                 recurrence: 'every day',
             });
@@ -279,10 +288,7 @@ type TagParsingExpectations = {
 function constructTaskFromLine(line: string, path: string = 'file.md', fallbackDate: Moment | null = null) {
     return Task.fromLine({
         line,
-        path: path,
-        sectionStart: 0,
-        sectionIndex: 0,
-        precedingHeader: '',
+        taskLocation: TaskLocation.fromUnknownPosition(path),
         fallbackDate,
     });
 }
@@ -940,6 +946,110 @@ describe('toggle done', () => {
     });
 });
 
+describe('set correct created date on reccurence task', () => {
+    it('does not set created date with disabled setting', () => {
+        // Arrange
+        const line = '- [ ] this is a task 📅 2021-09-12 🔁 every day';
+        updateSettings({ setCreatedDate: false });
+
+        // Act
+        const task = fromLine({
+            line,
+        });
+
+        // Assert
+        expect(task).not.toBeNull();
+        expect(task!.createdDate).toBeNull();
+
+        const tasks = task!.toggle();
+        expect(tasks.length).toEqual(2);
+        const nextTask: Task = tasks[0];
+        expect(nextTask.createdDate).toBeNull();
+
+        // cleanup
+        resetSettings();
+    });
+
+    it('does not set created date with disabled setting when repeated has created date', () => {
+        // Arrange
+        const line = '- [ ] this is a task ➕ 2021-09-11 📅 2021-09-12 🔁 every day';
+        updateSettings({ setCreatedDate: false });
+
+        // Act
+        const task = fromLine({
+            line,
+        });
+
+        // Assert
+        expect(task).not.toBeNull();
+        expect(task!.createdDate).not.toBeNull();
+        expect(task!.createdDate!.isSame(moment('2021-09-11', 'YYYY-MM-DD'))).toStrictEqual(true);
+
+        const tasks = task!.toggle();
+        expect(tasks.length).toEqual(2);
+        const nextTask: Task = tasks[0];
+        expect(nextTask.createdDate).toBeNull();
+
+        // cleanup
+        resetSettings();
+    });
+
+    it('set created date with enabled setting', () => {
+        // Arrange
+        const today = '2023-03-08';
+        const todaySpy = jest.spyOn(Date, 'now').mockReturnValue(moment(today).valueOf());
+        const line = '- [ ] this is a task 📅 2021-09-12 🔁 every day';
+        updateSettings({ setCreatedDate: true });
+
+        // Act
+        const task = fromLine({
+            line,
+        });
+
+        // Assert
+        expect(task).not.toBeNull();
+        expect(task!.createdDate).toBeNull();
+
+        const tasks = task!.toggle();
+        expect(tasks.length).toEqual(2);
+        const nextTask: Task = tasks[0];
+        expect(nextTask.createdDate).not.toBeNull();
+        expect(nextTask!.createdDate!.isSame(moment(today, 'YYYY-MM-DD'))).toStrictEqual(true);
+
+        // cleanup
+        resetSettings();
+        todaySpy.mockClear();
+    });
+
+    it('set created date with enabled setting when repeated has created date', () => {
+        // Arrange
+        const today = '2023-03-08';
+        const todaySpy = jest.spyOn(Date, 'now').mockReturnValue(moment(today).valueOf());
+        const line = '- [ ] this is a task ➕ 2021-09-11 📅 2021-09-12 🔁 every day';
+        updateSettings({ setCreatedDate: true });
+
+        // Act
+        const task = fromLine({
+            line,
+        });
+
+        // Assert
+        expect(task).not.toBeNull();
+        expect(task!.createdDate).not.toBeNull();
+        expect(task!.createdDate!.isSame(moment('2021-09-11', 'YYYY-MM-DD'))).toStrictEqual(true);
+
+        const tasks = task!.toggle();
+        expect(tasks.length).toEqual(2);
+        const nextTask: Task = tasks[0];
+        expect(nextTask.createdDate).not.toBeNull();
+        expect(nextTask!.createdDate!.isSame(moment(today, 'YYYY-MM-DD'))).toStrictEqual(true);
+
+        // cleanup
+        resetSettings();
+        todaySpy.mockClear();
+    });
+});
+
 declare global {
     namespace jest {
         interface Matchers<R> {
@@ -1012,6 +1122,12 @@ describe('identicalTo', () => {
         expect(lhs).not.toBeIdenticalTo(new TaskBuilder().listMarker('-'));
     });
 
+    it('should check lineNumber', () => {
+        const lhs = new TaskBuilder().lineNumber(0);
+        expect(lhs).toBeIdenticalTo(new TaskBuilder().lineNumber(0));
+        expect(lhs).not.toBeIdenticalTo(new TaskBuilder().lineNumber(2));
+    });
+
     it('should check sectionStart', () => {
         const lhs = new TaskBuilder().sectionStart(0);
         expect(lhs).toBeIdenticalTo(new TaskBuilder().sectionStart(0));
@@ -1035,6 +1151,13 @@ describe('identicalTo', () => {
         const lhs = new TaskBuilder().priority(Priority.Medium);
         expect(lhs).toBeIdenticalTo(new TaskBuilder().priority(Priority.Medium));
         expect(lhs).not.toBeIdenticalTo(new TaskBuilder().priority(Priority.None));
+    });
+
+    it('should check createdDate', () => {
+        const lhs = new TaskBuilder().createdDate('2012-12-27');
+        expect(lhs).toBeIdenticalTo(new TaskBuilder().createdDate('2012-12-27'));
+        expect(lhs).not.toBeIdenticalTo(new TaskBuilder().createdDate(null));
+        expect(lhs).not.toBeIdenticalTo(new TaskBuilder().createdDate('2012-12-26'));
     });
 
     it('should check startDate', () => {

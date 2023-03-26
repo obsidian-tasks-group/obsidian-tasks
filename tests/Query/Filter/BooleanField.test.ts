@@ -7,13 +7,7 @@ import type { FilterOrErrorMessage } from '../../../src/Query/Filter/Filter';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { testFilter } from '../../TestingTools/FilterTestHelpers';
 
-import { toHaveExplanation } from '../../CustomMatchers/CustomMatchersForFilters';
-
 window.moment = moment;
-
-expect.extend({
-    toHaveExplanation,
-});
 
 function testWithDescription(filter: FilterOrErrorMessage, description: string, expected: boolean) {
     const builder = new TaskBuilder();

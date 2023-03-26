@@ -5,7 +5,7 @@ import * as taskModule from './Task';
 import type { LayoutOptions, TaskLayoutComponent } from './TaskLayout';
 import { TaskLayout } from './TaskLayout';
 import { replaceTaskWithTasks } from './File';
-import { getSettings } from './Config/Settings';
+import { TASK_FORMATS, getSettings } from './Config/Settings';
 
 export type TaskLineRenderDetails = {
     parentUlElement: HTMLElement;
@@ -21,14 +21,15 @@ export const LayoutClasses: { [c in TaskLayoutComponent]: string } = {
     priority: 'task-priority',
     dueDate: 'task-due',
     startDate: 'task-start',
+    createdDate: 'task-created',
     scheduledDate: 'task-scheduled',
     doneDate: 'task-done',
     recurrenceRule: 'task-recurring',
     blockLink: '',
 };
 
-const MAX_DAY_CLASS_RANGE = 7;
-const DAY_CLASS_OVER_RANGE_POSTFIX = 'far';
+const MAX_DAY_VALUE_RANGE = 7;
+const DAY_VALUE_OVER_RANGE_POSTFIX = 'far';
 
 /**
  * The function used to render a Markdown task line into an existing HTML element.
@@ -65,8 +66,8 @@ export async function renderTaskLine(
     const textSpan = document.createElement('span');
     li.appendChild(textSpan);
     textSpan.classList.add('tasks-list-text');
-    const classes = await taskToHtml(task, renderDetails, textSpan, textRenderer);
-    li.classList.add(...classes);
+    const attributes = await taskToHtml(task, renderDetails, textSpan, textRenderer);
+    for (const key in attributes) li.dataset[key] = attributes[key];
 
     // NOTE: this area is mentioned in `CONTRIBUTING.md` under "How does Tasks handle status changes". When
     // moving the code, remember to update that reference too.
@@ -113,12 +114,13 @@ async function taskToHtml(
     renderDetails: TaskLineRenderDetails,
     parentElement: HTMLElement,
     textRenderer: TextRenderer,
-) {
-    const allSpecificClasses: string[] = [];
-    const taskLayout = renderDetails.taskLayout ?? new TaskLayout(renderDetails.layoutOptions);
+): Promise<AttributesDictionary> {
+    let allAttributes: AttributesDictionary = {};
+    const taskLayout = new TaskLayout(renderDetails.layoutOptions);
+    const emojiSerializer = TASK_FORMATS.tasksPluginEmoji.taskSerializer;
     // Render and build classes for all the task's visible components
     for (const component of taskLayout.layoutComponents) {
-        let componentString = task.componentToString(taskLayout, component);
+        let componentString = emojiSerializer.componentToString(task, taskLayout, component);
         if (componentString) {
             if (component === 'description') componentString = removeGlobalFilterIfNeeded(componentString);
             // Create the text span that will hold the rendered component
@@ -132,25 +134,34 @@ async function taskToHtml(
                 const internalSpan = document.createElement('span');
                 span.appendChild(internalSpan);
                 await renderComponentText(internalSpan, componentString, component, task, textRenderer);
-                const [genericClasses, specificClasses] = getComponentClasses(component, task);
+                const [genericClasses, dataAttributes] = getComponentClassesAndData(component, task);
                 addInternalClasses(component, internalSpan);
                 // Add the generic classes that apply to what this component is (priority, due date etc)
                 span.classList.add(...genericClasses);
-                // Add the specific classes that describe the content of the component
-                // (task-priority-medium, task-due-past-1d etc).
-                span.classList.add(...specificClasses);
-                allSpecificClasses.push(...specificClasses);
+                // Add the attributes to the component ('priority-medium', 'due-past-1d' etc)
+                for (const key in dataAttributes) span.dataset[key] = dataAttributes[key];
+                allAttributes = { ...allAttributes, ...dataAttributes };
             }
         }
     }
 
     // Now build classes for the hidden task components without rendering them
     for (const component of taskLayout.hiddenComponents) {
-        const [_, specificClasses] = getComponentClasses(component, task);
-        allSpecificClasses.push(...specificClasses);
+        const [_, dataAttributes] = getComponentClassesAndData(component, task);
+        allAttributes = { ...allAttributes, ...dataAttributes };
     }
 
-    return allSpecificClasses;
+    // If a task has no priority field set, its priority will not be rendered as part of the loop above and
+    // it will not be set a priority data attribute.
+    // In such a case we want the upper task LI element to mark the task has a 'normal' priority.
+    // So if the priority was not rendered, force it through the pipe of getting the component data for the
+    // priority field.
+    if (allAttributes.taskPriority === undefined) {
+        const [_, dataAttributes] = getComponentClassesAndData('priority', task);
+        allAttributes = { ...allAttributes, ...dataAttributes };
+    }
+
+    return allAttributes;
 }
 
 /*
@@ -164,6 +175,11 @@ async function renderComponentText(
     textRenderer: TextRenderer,
 ) {
     if (component === 'description') {
+        const { debugSettings } = getSettings();
+        if (debugSettings.showTaskHiddenData) {
+            // Add some debug output to enable hidden information in the task to be inspected.
+            componentString += `<br>🐛 <b>${task.lineNumber}</b> . ${task.sectionStart} . ${task.sectionIndex} . '<code>${task.originalMarkdown}</code>'<br>'<code>${task.path}</code>' > '<code>${task.precedingHeader}</code>'<br>`;
+        }
         await textRenderer(componentString, span, task.path);
 
         // If the task is a block quote, the block quote wraps the p-tag that contains the content.
@@ -197,41 +213,49 @@ async function renderComponentText(
     }
 }
 
+export type AttributesDictionary = { [key: string]: string };
+
 /**
- * This function returns two lists of tags -- genericClasses and specificClasses -- that describe the
+ * This function returns two lists -- genericClasses and dataAttributes -- that describe the
  * given component.
  * The genericClasses describe what the component is, e.g. a due date or a priority, and are one of the
  * options in LayoutClasses.
- * The specificClasses describe the content of the component translated to a CSS class,
- * e.g. task-priority-medium, task-due-past-1d etc.
+ * The dataAttributes describe the content of the component, e.g. `data-task-priority="medium"`, `data-task-due="past-1d"` etc.
  */
-function getComponentClasses(component: TaskLayoutComponent, task: Task) {
+function getComponentClassesAndData(component: TaskLayoutComponent, task: Task): [string[], AttributesDictionary] {
     const genericClasses: string[] = [];
-    const specificClasses: string[] = [];
+    const dataAttributes: AttributesDictionary = {};
+    const setDateAttribute = (date: Moment, attributeName: string) => {
+        const dateValue = dateToAttribute(date);
+        if (dateValue) dataAttributes[attributeName] = dateValue;
+    };
     switch (component) {
         case 'description':
             genericClasses.push(LayoutClasses.description);
-            for (const tag of task.tags) {
-                const className = tagToClassName(tag);
-                if (className) specificClasses.push(className);
-            }
             break;
         case 'priority': {
-            let priorityClass = null;
-            if (task.priority === taskModule.Priority.High) priorityClass = 'task-priority-high';
-            else if (task.priority === taskModule.Priority.Medium) priorityClass = 'task-priority-medium';
-            else if (task.priority === taskModule.Priority.Low) priorityClass = 'task-priority-low';
-            else priorityClass = 'task-priority-none';
+            let priorityValue = null;
+            if (task.priority === taskModule.Priority.High) priorityValue = 'high';
+            else if (task.priority === taskModule.Priority.Medium) priorityValue = 'medium';
+            else if (task.priority === taskModule.Priority.Low) priorityValue = 'low';
+            else priorityValue = 'normal';
+            dataAttributes['taskPriority'] = priorityValue;
             genericClasses.push(LayoutClasses.priority);
-            specificClasses.push(priorityClass);
+            break;
+        }
+        case 'createdDate': {
+            const date = task.createdDate;
+            if (date) {
+                genericClasses.push(LayoutClasses.createdDate);
+                setDateAttribute(date, 'taskCreated');
+            }
             break;
         }
         case 'dueDate': {
             const date = task.dueDate;
             if (date) {
                 genericClasses.push(LayoutClasses.dueDate);
-                const dateClass = dateToClassName(date);
-                if (dateClass) specificClasses.push('task-due-' + dateClass);
+                setDateAttribute(date, 'taskDue');
             }
             break;
         }
@@ -239,8 +263,7 @@ function getComponentClasses(component: TaskLayoutComponent, task: Task) {
             const date = task.startDate;
             if (date) {
                 genericClasses.push(LayoutClasses.startDate);
-                const dateClass = dateToClassName(date);
-                if (dateClass) specificClasses.push('task-start-' + dateClass);
+                setDateAttribute(date, 'taskStart');
             }
             break;
         }
@@ -248,8 +271,7 @@ function getComponentClasses(component: TaskLayoutComponent, task: Task) {
             const date = task.scheduledDate;
             if (date) {
                 genericClasses.push(LayoutClasses.scheduledDate);
-                const dateClass = dateToClassName(date);
-                if (dateClass) specificClasses.push('task-scheduled-' + dateClass);
+                setDateAttribute(date, 'taskScheduled');
             }
             break;
         }
@@ -257,8 +279,7 @@ function getComponentClasses(component: TaskLayoutComponent, task: Task) {
             const date = task.doneDate;
             if (date) {
                 genericClasses.push(LayoutClasses.doneDate);
-                const dateClass = dateToClassName(date);
-                if (dateClass) specificClasses.push('task-done-' + dateClass);
+                setDateAttribute(date, 'taskDone');
             }
             break;
         }
@@ -267,7 +288,7 @@ function getComponentClasses(component: TaskLayoutComponent, task: Task) {
             break;
         }
     }
-    return [genericClasses, specificClasses];
+    return [genericClasses, dataAttributes];
 }
 
 /*
@@ -283,8 +304,9 @@ function addInternalClasses(component: TaskLayoutComponent, renderedComponent: H
         for (let i = 0; i < tags.length; i++) {
             const tagName = tags[i].textContent;
             if (tagName) {
-                const className = tagToClassName(tagName);
-                if (className) tags[i].classList.add(className);
+                const className = tagToAttributeValue(tagName);
+                const element = tags[i] as HTMLElement;
+                if (className) element.dataset.tagName = className;
             }
         }
     }
@@ -293,10 +315,10 @@ function addInternalClasses(component: TaskLayoutComponent, renderedComponent: H
 /**
  * Translate a relative date to a CSS class: 'today', 'future-1d' (for tomorrow), 'past-1d' (for yesterday)
  * etc.
- * A cutoff (in days) is defined in MAX_DAY_CLASS_RANGE, from beyond that a generic 'far' postfix will be added.
+ * A cutoff (in days) is defined in MAX_DAY_VALUE_RANGE, from beyond that a generic 'far' postfix will be added.
  * (the cutoff exists because we don't want to flood the DOM with potentially hundreds of unique classes.)
  */
-function dateToClassName(date: Moment) {
+function dateToAttribute(date: Moment) {
     const today = window.moment().startOf('day');
     let result = '';
     const diffDays = today.diff(date, 'days');
@@ -304,25 +326,25 @@ function dateToClassName(date: Moment) {
     if (diffDays === 0) return 'today';
     else if (diffDays > 0) result += 'past-';
     else if (diffDays < 0) result += 'future-';
-    if (Math.abs(diffDays) <= MAX_DAY_CLASS_RANGE) {
+    if (Math.abs(diffDays) <= MAX_DAY_VALUE_RANGE) {
         result += Math.abs(diffDays).toString() + 'd';
     } else {
-        result += DAY_CLASS_OVER_RANGE_POSTFIX;
+        result += DAY_VALUE_OVER_RANGE_POSTFIX;
     }
     return result;
 }
 
 /*
- * Convert a tag name to a name that can be used as a CSS class, sanitizing them according to CSS class
- * name rules.
- * Taken from here: https://stackoverflow.com/questions/448981/which-characters-are-valid-in-css-class-names-selectors
+ * Sanitize tag names so they will be valid attribute values according to the HTML spec:
+ * https://html.spec.whatwg.org/multipage/parsing.html#attribute-value-(double-quoted)-state
  */
-function tagToClassName(tag: string) {
-    const illegalCssClassChars = /[^_a-zA-Z0-9-]/g;
-    let sanitizedTag = tag.replace(illegalCssClassChars, '-');
+function tagToAttributeValue(tag: string) {
+    // eslint-disable-next-line no-control-regex
+    const illegalChars = /["&\x00\r\n]/g;
+    let sanitizedTag = tag.replace(illegalChars, '-');
     // And if after sanitazation the name starts with dashes or underscores, remove them.
     sanitizedTag = sanitizedTag.replace(/^[-_]+/, '');
-    if (sanitizedTag.length > 0) return `task-tag-${sanitizedTag}`;
+    if (sanitizedTag.length > 0) return sanitizedTag;
     else return null;
 }
 
@@ -335,20 +357,33 @@ function addTooltip({
     element: HTMLElement;
     isFilenameUnique: boolean | undefined;
 }): void {
+    const { recurrenceSymbol, startDateSymbol, createdDateSymbol, scheduledDateSymbol, dueDateSymbol, doneDateSymbol } =
+        TASK_FORMATS.tasksPluginEmoji.taskSerializer.symbols;
+
     element.addEventListener('mouseenter', () => {
         const tooltip = element.createDiv();
-        tooltip.addClasses(['tooltip', 'mod-right']);
+        tooltip.addClasses(['tooltip', 'pop-up']);
 
         if (task.recurrence) {
             const recurrenceDiv = tooltip.createDiv();
-            recurrenceDiv.setText(`${taskModule.recurrenceSymbol} ${task.recurrence.toText()}`);
+            recurrenceDiv.setText(`${recurrenceSymbol} ${task.recurrence.toText()}`);
+        }
+
+        if (task.createdDate) {
+            const createdDateDiv = tooltip.createDiv();
+            createdDateDiv.setText(
+                toTooltipDate({
+                    signifier: createdDateSymbol,
+                    date: task.createdDate,
+                }),
+            );
         }
 
         if (task.startDate) {
             const startDateDiv = tooltip.createDiv();
             startDateDiv.setText(
                 toTooltipDate({
-                    signifier: taskModule.startDateSymbol,
+                    signifier: startDateSymbol,
                     date: task.startDate,
                 }),
             );
@@ -358,7 +393,7 @@ function addTooltip({
             const scheduledDateDiv = tooltip.createDiv();
             scheduledDateDiv.setText(
                 toTooltipDate({
-                    signifier: taskModule.scheduledDateSymbol,
+                    signifier: scheduledDateSymbol,
                     date: task.scheduledDate,
                 }),
             );
@@ -368,7 +403,7 @@ function addTooltip({
             const dueDateDiv = tooltip.createDiv();
             dueDateDiv.setText(
                 toTooltipDate({
-                    signifier: taskModule.dueDateSymbol,
+                    signifier: dueDateSymbol,
                     date: task.dueDate,
                 }),
             );
@@ -378,7 +413,7 @@ function addTooltip({
             const doneDateDiv = tooltip.createDiv();
             doneDateDiv.setText(
                 toTooltipDate({
-                    signifier: taskModule.doneDateSymbol,
+                    signifier: doneDateSymbol,
                     date: task.doneDate,
                 }),
             );

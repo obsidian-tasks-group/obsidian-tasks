@@ -6,6 +6,7 @@ import { Query } from '../src/Query/Query';
 import { Status } from '../src/Status';
 import { Priority, Task } from '../src/Task';
 import { resetSettings, updateSettings } from '../src/Config/Settings';
+import { TaskLocation } from '../src/TaskLocation';
 import { createTasksFromMarkdown, fromLine } from './TestHelpers';
 import { shouldSupportFiltering } from './TestingTools/FilterTestHelpers';
 import type { FilteringCase } from './TestingTools/FilterTestHelpers';
@@ -16,38 +17,56 @@ window.moment = moment;
 describe('Query parsing', () => {
     // In alphabetical order, please
     const filters = [
+        'created after 2021-12-27',
+        'created before 2021-12-27',
+        'created date is invalid',
+        'created in 2021-12-27 2021-12-29',
+        'created on 2021-12-27',
+        'created this week',
         'description does not include wibble',
         'description includes AND', // Verify Query doesn't confuse this with a boolean query
         'description includes wibble',
         'done after 2021-12-27',
         'done before 2021-12-27',
         'done date is invalid',
+        'done in 2021-12-27 2021-12-29',
         'done on 2021-12-27',
+        'done this week',
         'done',
         'due after 2021-12-27',
         'due before 2021-12-27',
         'due date is invalid',
+        'due in 2021-12-27 2021-12-29',
         'due on 2021-12-27',
+        'due this week',
         'exclude sub-items',
         'filename includes wibble',
         'happens after 2021-12-27',
         'happens before 2021-12-27',
+        'happens in 2021-12-27 2021-12-29',
         'happens on 2021-12-27',
+        'happens this week',
+        'has created date',
         'has done date',
         'has due date',
         'has happens date',
         'has scheduled date',
         'has start date',
+        'has tags',
+        'has tag',
         'heading does not include wibble',
         'heading includes AND', // Verify Query doesn't confuse this with a boolean query
         'heading includes wibble',
         'is not recurring',
         'is recurring',
-        'no done date',
+        'no created date',
+        'no due date',
         'no due date',
         'no happens date',
         'no scheduled date',
         'no start date',
+        'no tags',
+        'no tag',
         'not done',
         'path does not include some/path',
         'path includes AND', // Verify Query doesn't confuse this with a boolean query
@@ -63,11 +82,15 @@ describe('Query parsing', () => {
         'scheduled after 2021-12-27',
         'scheduled before 2021-12-27',
         'scheduled date is invalid',
+        'scheduled in 2021-12-27 2021-12-29',
         'scheduled on 2021-12-27',
+        'scheduled this week',
         'start date is invalid',
         'starts after 2021-12-27',
         'starts before 2021-12-27',
+        'starts in 2021-12-27 2021-12-29',
         'starts on 2021-12-27',
+        'starts this week',
         'status.name includes cancelled',
         'status.type is IN_PROGRESS',
         'tag does not include #sometag',
@@ -130,6 +153,8 @@ describe('Query parsing', () => {
     describe('should recognise every sort instruction', () => {
         // In alphabetical order, please
         const filters = [
+            'sort by created reverse',
+            'sort by created',
             'sort by description reverse',
             'sort by description',
             'sort by done reverse',
@@ -174,6 +199,7 @@ describe('Query parsing', () => {
     describe('should recognise every group instruction', () => {
         // In alphabetical order, please
         const filters = [
+            'group by created',
             'group by backlink',
             'group by done',
             'group by due',
@@ -210,6 +236,7 @@ describe('Query parsing', () => {
             '# Comment lines are ignored',
             'explain',
             'hide backlink',
+            'hide created date',
             'hide done date',
             'hide due date',
             'hide edit button',
@@ -230,6 +257,7 @@ describe('Query parsing', () => {
             'show priority',
             'show recurrence rule',
             'show scheduled date',
+            'show created date',
             'show start date',
             'show task count',
             'show urgency',
@@ -279,12 +307,9 @@ describe('Query', () => {
                 new Task({
                     status: Status.TODO,
                     description: 'description',
-                    path: 'Ab/C D',
+                    taskLocation: TaskLocation.fromUnknownPosition('Ab/C D'),
                     indentation: '',
                     listMarker: '-',
-                    sectionStart: 0,
-                    sectionIndex: 0,
-                    precedingHeader: null,
                     priority: Priority.None,
                     startDate: null,
                     scheduledDate: null,
@@ -295,16 +320,14 @@ describe('Query', () => {
                     tags: [],
                     originalMarkdown: '',
                     scheduledDateIsInferred: false,
+                    createdDate: null,
                 }),
                 new Task({
                     status: Status.TODO,
                     description: 'description',
-                    path: 'FF/C D',
+                    taskLocation: TaskLocation.fromUnknownPosition('FF/C D'),
                     indentation: '',
                     listMarker: '-',
-                    sectionStart: 0,
-                    sectionIndex: 0,
-                    precedingHeader: null,
                     priority: Priority.None,
                     startDate: null,
                     scheduledDate: null,
@@ -315,6 +338,7 @@ describe('Query', () => {
                     tags: [],
                     originalMarkdown: '',
                     scheduledDateIsInferred: false,
+                    createdDate: null,
                 }),
             ];
             const input = 'path includes ab/c d';

@@ -8,8 +8,8 @@ has_toc: false
 
 # Styling Tasks
 
-In rendered queries and Reading View, the Tasks plugin adds detailed CSS classes that represent many of each task's content, to allow for very extensive styling options via CSS.
-Not only each component in a rendered task line is tagged with classes to differentiate it, many components also add classes that represent the actual content of the task, so CSS rules can refer to data such as the relative due date of a task or its specific priority.
+In rendered queries and Reading View, the Tasks plugin adds detailed CSS classes and data attributes that represent many of each task's content, to allow for very extensive styling options via CSS.
+Not only each component in a rendered task line is tagged with classes to differentiate it, many components also add classes and data attributes that represent the actual content of the task, so CSS rules can refer to data such as the relative due date of a task or its specific priority.
 
 ## Basic Task Structure
 
@@ -21,35 +21,35 @@ The Tasks plugin renders a task in the following structure (this refers to query
 ```markdown
 - Obsidian code block (div class="block-language-tasks")
   - Results list (ul class="plugin-tasks-query-result") OR Reading View list (ul class="contains-task-list")
-    - Task (li class="task-list-item" + specific classes like "tasks-tag-atHome tasks-priority-medium tasks-due-past-1d" + data-task="[custom_status]" + data+line="[line]")
+    - Task (li class="task-list-item" + attributes like data-task-priority="medium" data-task-due="past-1d" + data-task="[custom_status]" + data-line="[line]")
       - Task checkbox (li class="task-list-item-checkbox")
       - Task content (span class="tasks-list-text")
-        - Task description and tags (span class="task-description" + tag specific classes)
+        - Task description and tags (span class="task-description")
           - Internal span
-            - Each tag in the description is wrapped in <a href class="tag" + tag specific classes>
-        - Task priority (span class="task-priority" + priority specific classes)
+            - Each tag in the description is wrapped in <a href class="tag" data-tag-name="[tag-name]">
+        - Task priority (span class="task-priority" + data-task-priority attribute)
           - Internal span
         - Task recurrence rule (span class="task-recurring")
           - Internal span
-        - Task start date (span class="task-start" + date specific classes)
+        - Task created date (span class="task-created" + data-task-created attribute)
           - Internal span
-        - ... scheduled date, due date and done date in this order
+        - ... start date, scheduled date, due date and done date in this order
       - Task extras (link, edit button) (span class="task-extras")
   - Tasks count (div class="tasks-count")
 ```
 
 As can be seen above, the basic task `li` contains a checkbox and a content span.
-The content span contains a list of **component** spans: description, priority, recurrence, start date, scheduled date, due date and done date in this order.
+The content span contains a list of **component** spans: description, priority, recurrence, created date, start date, scheduled date, due date and done date in this order.
 
-Each component span is marked with a **generic class**, which denotes the type of the component, and in some cases a **specific class** that represents the component's content itself.
+Each component span is marked with a **generic class**, which denotes the type of the component, and in some cases a **data attributes** that represents the component's content itself.
 
 Within each component span there is an additional "internal" span, which is the one holding the actual component text.
 The reason for this additional internal span is that it allows CSS styles that closely wrap the text itself, rather than its container box, e.g. for the purpose of drawing a highlight or a box that is exactly in the size of the text.
 
-## Generic and Specific Classes
+## Generic Classes and Data Attributes
 
 {: .released }
-Specific classes were introduced in Tasks X.Y.Z.
+Data attributes were introduced in Tasks X.Y.Z.
 
 Each rendered task component (description, priority, recurrence rule etc) includes a **generic class** that denotes this type of component.
 The generic classes are:
@@ -57,54 +57,45 @@ The generic classes are:
 - `task-description`
 - `task-priority`
 - `task-due`
+- `task-created`
 - `task-start`
 - `task-scheduled`
 - `task-done`
 - `task-recurring`
 
-In addition to the generic classes, there are **specific classes** that represent the content of the various task components.
+In addition to the generic classes, there are [**data attributes**](https://developer.mozilla.org/en-US/docs/Learn/HTML/Howto/Use_data_attributes) that represent the content of the various task components.
 
-A **priority specific class** represents the specific priority of a class. It can be one of the following:
+A **priority data attributes** named `data-task-priority` represents the specific priority of a class. It can be `high`, `medium`, `low` or `normal`.
+The `normal` value is special: it is added as a default to a task's upper `task-list-item` even if there is no priority field set for that task.
 
-- `task-priority-high`
-- `task-priority-medium`
-- `task-priority-low`
-- `task-priority-none`
+A **date attribute** represents a due, created, start, scheduled or done date in a format relative to the current date.
+The date attributes are `data-task-due`, `data-task-created`, `data-task-start`, `data-task-scheduled` and `data-task-done` and are populated with a relative expression that denotes the number of days this field represents compared to today:
 
-A **date specific class** represents a due, start, scheduled or done date in a format relative to the current date.
-It starts with `task-due-`, `task-start-`, `task-scheduled-` or `task-done-` followed by a relative expression that denotes the number of days this field represents compared to today:
+- `data-task-due="today"` (or `data-task-start="today"`, `data-task-start="today"` etc) represents today.
+- `data-task-due="future-1d"` (or `data-task-start="future-1d"`) represents 1 day in the future, i.e. tomorrow.
+- `data-task-due="past-1d"` (or `data-task-start="past-1d"`) represents 1 day in the past, i.e. yesterday.
+- These attributes are added up to 7 days in the future or past, e.g. `data-task-scheduled="future-7d"` or `data-task-due="past-7d"`.
+- Dates that are further than 7 days in the future or past are given a `far` postfix, e.g. `data-task-scheduled="future-far"` or `data-task-due="past-far"`.
 
-- `task-due-today` (or `task-start-today`, `task-done-today` etc) represents today.
-- `task-due-future-1d` (or `task-start-future-1d`) represents 1 day in the future, i.e. tomorrow.
-- `task-due-past-1d` (or `task-start-past-1d`) represents 1 day in the past, i.e. yesterday.
-- These specific classes are added up to 7 days in the future or past, e.g. `task-scheduled-future-7d` or `task-due-past-7d`.
-- Dates that are further than 7 days in the future or past are given a `far` postfix, e.g. `task-scheduled-future-far` or `task-due-past-far`.
+A **tag data attribute** repeats each tag's content as a data attribute, for the purpose of applying formatting according to specific tags.
+The tag `<a>` elements are added a `data-tag-name` attribute with a *sanitized* version of the tag name, which basically means that characters that are illegal to use in HTML attributes (e.g. `&`, `"`) are replaced with dashes.
 
-A **tag specific class** translates each task tag into a CSS class, for the purpose of applying formatting according to specific tags.
-It starts with `task-tag-` followed by a *sanitized* version of the tag name, which basically means that characters that are illegal to use in CSS class names are replaced by dashes.
-(CSS class names allow only alphanumeric characters, a dash and an underscore.)
-Examples:
+Data attributes are added to both their corresponding components (e.g. to the due date component) and also to the complete task `li`, to make it easy for a CSS rule to style a complete task according to some property (e.g. color differently the complete task if it's due today, color a task according to a tag) or just one relevant component.
 
-- A task with the tag `#phone` will be added with the specific class `task-tag-phone`.
-- A task with the tag `#t/easy` will be added with the specific class `task-tag-t-easy`.
-- A task with the tag `#task/atHome` will be added the specific class `task-tag-task-atHome`.
+An exception is the tag data attribute which is added only to the tag's `<a>` element within the rendered description -- however you can still use a CSS `:has` selector to format an entire task's description according to a tag, as demonstrated in the examples below.
 
-Note that tag specific classes are also added to the tag `<a>` element within the rendered description.
-
-Specific classes are added to both their corresponding components (e.g. to the due date component) and also to the complete task `li`, to make it easy for a CSS rule to style a complete task according to some property (e.g. color differently the complete task if it's due today, color a task according to a tag) or just one relevant component.
-
-**Tip:** [CSS wildcard selectors](https://www.geeksforgeeks.org/wildcard-selectors-and-in-css-for-classes/) are a good way to select all past dates or future dates at once -- just use `[class*="past-"] .task-due ...` to address all overdue tasks, for example.
+**Tip:** [CSS wildcard selectors](https://www.geeksforgeeks.org/wildcard-selectors-and-in-css-for-classes/) are a good way to select all past dates or future dates at once -- just use `.task-due[data-task-due^="past-"]` to address all overdue tasks, for example. Examples that utilize this can be found below.
 
 ## Hidden Components, Groups & Short Mode
 
 **Hidden components**, e.g. a `hide priority` line in a query, will generate the following:
 
 - The query container (`class="plugin-tasks-query-result"`) will include a `tasks-layout-hide...` class, e.g. `tasks-layout-hide-priority`.
-- Although the priority will not be rendered in the query, the upper task element (`li class="task-list-item"`) will still be added the specific class of hidden components, e.g. `task-priority-high`.
+- Although the priority will not be rendered in the query, the upper task element (`li class="task-list-item"`) will still be added the attribute of hidden components, e.g. `data-task-priority="high"`.
 
 **Short mode** will add a `tasks-layout-short-mode` class to the query container.
 
-**Grouping rules** will add `tasks-group-by...` classes to the query container, e.g. `tasks-group-by-due`.
+**Grouping rules** will add a `data-task-group-by` attribute to the query container, e.g. `data-task-group-by="due,scheduled"`.
 
 ## More Classes
 
@@ -149,15 +140,15 @@ Making tags, internal links and the recurrence rules of tasks to appear in gray:
 The following rules remove the Tasks priority emoticon and render the tasks' checkboxes in red, blue and orange according to the tasks' priority:
 
 ```css
-.task-priority-high input[type=checkbox] {
+.task-list-item[data-task-priority="high"] input[type=checkbox] {
  box-shadow: 0px 0px 2px 2px var(--color-red);
  border-color: var(--color-red);
 }
-.task-priority-low input[type=checkbox] {
+.task-list-item[data-task-priority="low"] input[type=checkbox] {
  box-shadow: 0px 0px 2px 2px var(--color-blue);
  border-color: var(--color-blue);
 }
-.task-priority-medium input[type=checkbox] {
+.task-list-item[data-task-priority="medium"] input[type=checkbox] {
  box-shadow: 0px 0px 2px 2px var(--color-orange);
  border-color: var(--color-orange);
 }
@@ -173,13 +164,13 @@ The following rules mark 'today' due dates as blue and past due dates as red:
 
 ```css
 /* A special color for the 'due' component if it's for today */
-.task-due.task-due-today span {
+.task-due[data-task-due="today"] span {
  background: var(--code-property);
  border-radius: 10px;
  padding: 2px 8px;
 }
 /* A special color for overdue due dates */
-.task-due[class*="past-"] span {
+.task-due[data-task-due^="past-"] span {
  background: var(--color-pink);
  border-radius: 10px;
  padding: 2px 8px;
@@ -191,8 +182,18 @@ The following rules mark 'today' due dates as blue and past due dates as red:
 The following rule adds a green glow around `#task/atHome` tags inside the description:
 
 ```css
-a.tag.task-tag-task-atHome {
+a.tag[data-tag-name="#task/atHome"] {
     box-shadow: 0 0 5px green;
+}
+```
+
+The following rule adds a rounded red background to the description of a task if it contains the tag `#task/strategic`:
+
+```css
+.task-description span:has(.tag[data-tag-name="#task/strategic"]) {
+ background: #ffbfcc;
+ border-radius: 10px;
+ padding: 2px 8px;
 }
 ```
 
@@ -286,15 +287,15 @@ span.tasks-list-text {
 }
 
 /* Represent tasks' priority with colorful round checkboxes instead of the priority emoticons */
-.task-priority-high input[type=checkbox] {
+.task-list-item[data-task-priority="high"] input[type=checkbox] {
  box-shadow: 0px 0px 2px 2px var(--color-red);
  border-color: var(--color-red);
 }
-.task-priority-low input[type=checkbox] {
+.task-list-item[data-task-priority="low"] input[type=checkbox] {
  box-shadow: 0px 0px 2px 2px var(--color-blue);
  border-color: var(--color-blue);
 }
-.task-priority-medium input[type=checkbox] {
+.task-list-item[data-task-priority="medium"] input[type=checkbox] {
  box-shadow: 0px 0px 2px 2px var(--color-orange);
  border-color: var(--color-orange);
 }
@@ -304,13 +305,13 @@ span.task-priority {
 }
 
 /* A special color for the 'due' component if it's for today */
-.task-due.task-due-today span {
+.task-due[data-task-due="today"] span {
  background: var(--code-property);
  border-radius: 10px;
  padding: 2px 8px;
 }
 /* A special color for overdue due dates */
-.task-due[class*="past-"] span {
+.task-due[data-task-due^="past-"] span {
  background: var(--color-pink);
  border-radius: 10px;
  padding: 2px 8px;

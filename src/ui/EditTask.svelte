@@ -2,16 +2,9 @@
     import * as chrono from 'chrono-node';
     import { onMount } from 'svelte';
     import { Recurrence } from '../Recurrence';
-    import { getSettings } from '../Config/Settings';
+    import { getSettings, TASK_FORMATS } from '../Config/Settings';
     import { Status } from '../Status';
     import { Priority, Task } from '../Task';
-    import {
-        prioritySymbols,
-        recurrenceSymbol,
-        startDateSymbol,
-        scheduledDateSymbol,
-        dueDateSymbol,
-    } from '../Task';
     import { doAutocomplete } from '../DateAbbreviations';
 
     // These exported variables are passed in as props by TaskModal.onOpen():
@@ -19,12 +12,21 @@
     export let onSubmit: (updatedTasks: Task[]) => void | Promise<void>;
     export let statusOptions: Status[];
 
-    let descriptionInput: HTMLInputElement;
+    const {
+        prioritySymbols,
+        recurrenceSymbol,
+        startDateSymbol,
+        scheduledDateSymbol,
+        dueDateSymbol,
+    } = TASK_FORMATS.tasksPluginEmoji.taskSerializer.symbols;
+
+    let descriptionInput: HTMLTextAreaElement;
     let editableTask: {
         description: string;
         status: Status;
         priority: 'none' | 'low' | 'medium' | 'high';
         recurrenceRule: string;
+        createdDate: string;
         startDate: string;
         scheduledDate: string;
         dueDate: string;
@@ -35,6 +37,7 @@
         status: Status.TODO,
         priority: 'none',
         recurrenceRule: '',
+        createdDate: '',
         startDate: '',
         scheduledDate: '',
         dueDate: '',
@@ -42,13 +45,20 @@
         forwardOnly: true
     };
 
+    let isDescriptionValid: boolean = true;
+    let parsedCreated: string = '';
     let parsedStartDate: string = '';
+    let isStartDateValid: boolean = true;
     let parsedScheduledDate: string = '';
+    let isScheduledDateValid: boolean = true;
     let parsedDueDate: string = '';
+    let isDueDateValid: boolean = true;
     let parsedRecurrence: string = '';
+    let isRecurrenceValid: boolean = true;
     let parsedDone: string = '';
     let addGlobalFilterOnSave: boolean = false;
     let withAccessKeys: boolean = true;
+    let formIsValid: boolean = true;
 
     // 'weekend' abbreviation ommitted due to lack of space.
     let datePlaceholder =
@@ -92,14 +102,14 @@
      */
 
     /**
-     * Read the entered value for a date field, and return the text to be displayed,
-     * to explain how the date string was interpreted.
+     * Parse and return the entered value for a date field.
      * @param fieldName
      * @param typedDate - what the user has entered, such as '2023-01-23' or 'tomorrow'
      * @param forwardDate
+     * @returns the parsed date string. Includes "invalid" if {@code typedDate} was invalid.
      */
     function parseTypedDateForDisplay(
-        fieldName: 'start' | 'scheduled' | 'due' | 'done',
+        fieldName: 'created' | 'start' | 'scheduled' | 'due' | 'done',
         typedDate: string,
         forwardDate: Date | undefined = undefined,
     ): string {
@@ -119,6 +129,7 @@
      * Like {@link parseTypedDateForDisplay} but also accounts for the 'Only future dates' setting.
      * @param fieldName
      * @param typedDate - what the user has entered, such as '2023-01-23' or 'tomorrow'
+     * @returns the parsed date string. Includes "invalid" if {@code typedDate} was invalid.
      */
     function parseTypedDateForDisplayUsingFutureDate(fieldName: 'start' | 'scheduled' | 'due' | 'done', typedDate: string): string {
         return parseTypedDateForDisplay(
@@ -146,38 +157,50 @@
     }
 
     $: accesskey = (key: string) => withAccessKeys ? key : null;
+    $: formIsValid = isDueDateValid && isRecurrenceValid && isScheduledDateValid && isStartDateValid && isDescriptionValid;
+    $: isDescriptionValid = editableTask.description.trim() !== '';
 
     $: {
         editableTask.startDate = doAutocomplete(editableTask.startDate);
         parsedStartDate = parseTypedDateForDisplayUsingFutureDate('start', editableTask.startDate);
+        isStartDateValid = !parsedStartDate.includes('invalid');
     }
 
     $: {
         editableTask.scheduledDate = doAutocomplete(editableTask.scheduledDate);
         parsedScheduledDate = parseTypedDateForDisplayUsingFutureDate('scheduled', editableTask.scheduledDate);
+        isScheduledDateValid = !parsedScheduledDate.includes('invalid');
     }
 
     $: {
         editableTask.dueDate = doAutocomplete(editableTask.dueDate);
         parsedDueDate = parseTypedDateForDisplayUsingFutureDate('due', editableTask.dueDate);
+        isDueDateValid = !parsedDueDate.includes('invalid');
     }
 
     $: {
+        isRecurrenceValid = true;
         if (!editableTask.recurrenceRule) {
             parsedRecurrence = '<i>not recurring</>';
         } else {
-            parsedRecurrence =
-                Recurrence.fromText({
+            const recurrenceFromText = Recurrence.fromText({
                     recurrenceRuleText: editableTask.recurrenceRule,
                     // Only for representation in the modal, no dates required.
                     startDate: null,
                     scheduledDate: null,
                     dueDate: null,
-                })?.toText() ?? '<i>invalid recurrence rule</i>';
+                })?.toText();
+            if (!recurrenceFromText) {
+                parsedRecurrence = '<i>invalid recurrence rule</i>';
+                isRecurrenceValid = false;
+            } else {
+                parsedRecurrence = recurrenceFromText;
+            }
         }
     }
 
     $: {
+        parsedCreated = parseTypedDateForDisplay('created', editableTask.createdDate);
         parsedDone = parseTypedDateForDisplay('done', editableTask.doneDate);
     }
 
@@ -206,6 +229,9 @@
             status: task.status,
             priority,
             recurrenceRule: task.recurrence ? task.recurrence.toText() : '',
+            createdDate: task.createdDate
+                ? task.createdDate.format('YYYY-MM-DD')
+                : '',
             startDate: task.startDate
                 ? task.startDate.format('YYYY-MM-DD')
                 : '',
@@ -233,6 +259,20 @@
 
     const _onClose = () => {
         onSubmit([]);
+    }
+
+    const _onDescriptionKeyDown = (e: KeyboardEvent) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            if (formIsValid) _onSubmit();
+        }
+    }
+
+    // this is called, when text is pasted or dropped into
+    // the description field, to remove any linebreaks
+    const _removeLinebreaksFromDescription = () => {
+        // wrapped into a timer to run after the paste/drop event
+        setTimeout(() => { editableTask.description = editableTask.description.replace(/[\r\n]+/g, ' ')}, 0);
     }
 
     const _onSubmit = () => {
@@ -301,7 +341,7 @@
         <div class="tasks-modal-section">
             <label for="description">Descrip<span class="accesskey">t</span>ion</label>
             <!-- svelte-ignore a11y-accesskey -->
-            <input
+            <textarea
                 bind:value={editableTask.description}
                 bind:this={descriptionInput}
                 id="description"
@@ -309,6 +349,9 @@
                 class="tasks-modal-description"
                 placeholder="Take out the trash"
                 accesskey={accesskey("t")}
+                on:keydown={_onDescriptionKeyDown}
+                on:paste={_removeLinebreaksFromDescription}
+                on:drop={_removeLinebreaksFromDescription}
             />
         </div>
 
@@ -350,6 +393,7 @@
                 bind:value={editableTask.recurrenceRule}
                 id="recurrence"
                 type="text"
+                class:tasks-modal-error={!isRecurrenceValid}
                 placeholder="Try 'every 2 weeks on Thursday'."
                 accesskey={accesskey("r")}
             />
@@ -364,6 +408,7 @@
                 bind:value={editableTask.dueDate}
                 id="due"
                 type="text"
+                class:tasks-modal-error={!isDueDateValid}
                 placeholder={datePlaceholder}
                 accesskey={accesskey("d")}
             />
@@ -378,6 +423,7 @@
                 bind:value={editableTask.scheduledDate}
                 id="scheduled"
                 type="text"
+                class:tasks-modal-error={!isScheduledDateValid}
                 placeholder={datePlaceholder}
                 accesskey={accesskey("s")}
             />
@@ -392,6 +438,7 @@
                 bind:value={editableTask.startDate}
                 id="start"
                 type="text"
+                class:tasks-modal-error={!isStartDateValid}
                 placeholder={datePlaceholder}
                 accesskey={accesskey("a")}
             />
@@ -418,8 +465,12 @@
         <!--  Status  -->
         <!-- --------------------------------------------------------------------------- -->
         <div class="tasks-modal-section">
-            <label for="status">Status </label>
-            <select bind:value={editableTask.status} id="status-type" class="dropdown">
+            <label for="status">Stat<span class="accesskey">u</span>s</label>
+            <!-- svelte-ignore a11y-accesskey -->
+            <select bind:value={editableTask.status}
+                    id="status-type"
+                    class="dropdown"
+                    accesskey={accesskey('u')}>
                 {#each statusOptions as status}
                     <option value={status}>{status.name} [{status.symbol}]</option>
                 {/each}
@@ -442,6 +493,13 @@
             </div>
 
             <!-- --------------------------------------------------------------------------- -->
+            <!--  Created on  -->
+            <!-- --------------------------------------------------------------------------- -->
+            <div>
+                <span>Created on:</span>
+                <code>{@html parsedCreated}</code>
+            </div>
+            <!-- --------------------------------------------------------------------------- -->
             <!--  Done on  -->
             <!-- --------------------------------------------------------------------------- -->
             <div>
@@ -450,7 +508,8 @@
             </div>
         </div>
         <div class="tasks-modal-section tasks-modal-buttons">
-            <button type="submit" class="mod-cta">Apply</button>
+            <button disabled={!formIsValid} type="submit" class="mod-cta">Apply
+            </button>
             <button type="button" on:click={_onClose}>Cancel</button>
         </div>
     </form>

@@ -10,16 +10,23 @@ import { QueryRenderer } from './QueryRenderer';
 import { getSettings, updateSettings } from './Config/Settings';
 import { SettingsTab } from './Config/SettingsTab';
 import { StatusRegistry } from './StatusRegistry';
+import { logging } from './lib/logging';
 import { EditorSuggestor } from './Suggestor/EditorSuggestorPopup';
 import { StatusSettings } from './Config/StatusSettings';
 import type { Task } from './Task';
+import { tasksApiV1 } from './Api';
 
 export default class TasksPlugin extends Plugin {
     private cache: Cache | undefined;
     public inlineRenderer: InlineRenderer | undefined;
     public queryRenderer: QueryRenderer | undefined;
 
+    get apiV1() {
+        return tasksApiV1(app);
+    }
+
     async onload() {
+        logging.registerConsoleLogger();
         console.log('loading plugin "tasks"');
 
         await this.loadSettings();
@@ -28,6 +35,7 @@ export default class TasksPlugin extends Plugin {
         initializeFile({
             metadataCache: this.app.metadataCache,
             vault: this.app.vault,
+            workspace: this.app.workspace,
         });
 
         // Load configured status types.
