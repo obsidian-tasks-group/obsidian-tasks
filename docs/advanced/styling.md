@@ -84,6 +84,9 @@ Data attributes are added to both their corresponding components (e.g. to the du
 
 An exception is the tag data attribute which is added only to the tag's `<a>` element within the rendered description -- however you can still use a CSS `:has` selector to format an entire task's description according to a tag, as demonstrated in the examples below.
 
+{: .warning }
+The CSS `:has` selector is available with Obsidian installer version 1.1.9 and newer. You can run the Obsidian command `Show debug info` to see your current installer version.
+
 **Tip:** [CSS wildcard selectors](https://www.geeksforgeeks.org/wildcard-selectors-and-in-css-for-classes/) are a good way to select all past dates or future dates at once -- just use `.task-due[data-task-due^="past-"]` to address all overdue tasks, for example. Examples that utilize this can be found below.
 
 ## Hidden Components, Groups & Short Mode
