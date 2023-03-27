@@ -1229,6 +1229,10 @@ describe('checking if task lists are identical', () => {
 });
 
 describe('check removal of the global filter', () => {
+    afterEach(() => {
+        GlobalFilter.reset();
+    });
+
     type GlobalFilterRemovalExpectation = {
         globalFilter: string;
         markdownTask: string;
@@ -1290,9 +1294,7 @@ describe('check removal of the global filter', () => {
         'should parse "$markdownTask" and extract "$expectedDescription"',
         ({ globalFilter, markdownTask, expectedDescription }) => {
             // Arrange
-            if (globalFilter != '') {
-                GlobalFilter.set(globalFilter);
-            }
+            GlobalFilter.set(globalFilter);
 
             // Act
             const task = constructTaskFromLine(markdownTask);
@@ -1300,16 +1302,15 @@ describe('check removal of the global filter', () => {
             // Assert
             expect(task).not.toBeNull();
             expect(GlobalFilter.removeAsWordFrom(task!.description)).toEqual(expectedDescription);
-
-            // Cleanup
-            if (globalFilter != '') {
-                GlobalFilter.reset();
-            }
         },
     );
 });
 
 describe('check removal of the global filter exhaustively', () => {
+    afterEach(() => {
+        GlobalFilter.reset();
+    });
+
     type GlobalFilterRemoval = {
         globalFilter: string;
     };
@@ -1396,9 +1397,7 @@ describe('check removal of the global filter exhaustively', () => {
         },
     ])('should parse global filter "$globalFilter" edge cases correctly', ({ globalFilter }) => {
         // Arrange
-        if (globalFilter != '') {
-            GlobalFilter.set(globalFilter);
-        }
+        GlobalFilter.set(globalFilter);
 
         // Act
 
@@ -1417,10 +1416,5 @@ describe('check removal of the global filter exhaustively', () => {
         markdownLine = `- [ ] ${globalFilter}/x 1 x${globalFilter} ${globalFilter}/x 2 ${globalFilter} ${globalFilter}/x`;
         expectedDescription = `${globalFilter}/x 1 x${globalFilter} ${globalFilter}/x 2 ${globalFilter}/x`;
         checkDescription(markdownLine, expectedDescription);
-
-        // Cleanup
-        if (globalFilter != '') {
-            GlobalFilter.reset();
-        }
     });
 });
