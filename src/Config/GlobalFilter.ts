@@ -25,10 +25,6 @@ export class GlobalFilter {
         return GlobalFilter.get() === tag;
     }
 
-    static indexIn(description: string): number {
-        return description.indexOf(GlobalFilter.get());
-    }
-
     static includedIn(description: string): boolean {
         const globalFilter = GlobalFilter.get();
         return description.includes(globalFilter);
