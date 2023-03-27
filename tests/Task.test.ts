@@ -1299,7 +1299,7 @@ describe('check removal of the global filter', () => {
 
             // Assert
             expect(task).not.toBeNull();
-            expect(task!.getDescriptionWithoutGlobalFilter()).toEqual(expectedDescription);
+            expect(GlobalFilter.removeAsWordFrom(task!.description)).toEqual(expectedDescription);
 
             // Cleanup
             if (globalFilter != '') {
@@ -1319,7 +1319,7 @@ describe('check removal of the global filter exhaustively', () => {
 
         // Assert
         expect(task).not.toBeNull();
-        expect(task!.getDescriptionWithoutGlobalFilter()).toEqual(expectedDescription);
+        expect(GlobalFilter.removeAsWordFrom(task!.description)).toEqual(expectedDescription);
     }
 
     test.each<GlobalFilterRemoval>([

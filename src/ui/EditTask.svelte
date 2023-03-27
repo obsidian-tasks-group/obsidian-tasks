@@ -208,7 +208,7 @@
     onMount(() => {
         const { provideAccessKeys } = getSettings();
         withAccessKeys = provideAccessKeys;
-        const description = task.getDescriptionWithoutGlobalFilter();
+        const description = GlobalFilter.removeAsWordFrom(task.description);
         // If we're displaying to the user the description without the global filter (i.e. it was removed in the method
         // above), or if the description did not include a global filter in the first place, we'll add the global filter
         // when saving the task.

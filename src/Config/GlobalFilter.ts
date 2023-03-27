@@ -34,6 +34,12 @@ export class GlobalFilter {
         return description.includes(globalFilter);
     }
 
+    /**
+     * Search for the global filter for the purpose of removing it from the description, but do so only
+     * if it is a separate word (preceding the beginning of line or a space and followed by the end of line
+     * or a space), because we don't want to cut-off nested tags like #task/subtag.
+     * If the global filter exists as part of a nested tag, we keep it untouched.
+     */
     static removeAsWordFrom(description: string): string {
         if (GlobalFilter.isEmpty()) {
             return description;
