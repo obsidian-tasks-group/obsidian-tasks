@@ -20,10 +20,10 @@ export class DateParser {
      * @return - A Tuple of dates. If both input dates are invalid, then both ouput dates will be invalid.
      */
     public static parseDateRange(input: string): [moment.Moment, moment.Moment] {
-        const specificYearRegex = /[0-9].../;
-        const specificQuarterRegex = /[0-9]...-Q[1-4]/;
-        const specificMonthRegex = /[0-9]...-[0-9]./;
-        const specificWeekRegex = /[0-9]...-W[0-9]./;
+        const specificYearRegex = /[0-9]{4}/;
+        const specificQuarterRegex = /[0-9]{4}-Q[1-4]/;
+        const specificMonthRegex = /[0-9]{4}-[0-9]{2}/;
+        const specificWeekRegex = /[0-9]{4}-W[0-9]{2}/;
         const specificYearFormat = 'YYYY';
         const specificQuarterFormat = 'YYYY-Q';
         const specificMonthFormat = 'YYYY-MM';
