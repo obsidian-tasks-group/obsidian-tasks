@@ -51,7 +51,7 @@ describe('Global Filter tests', () => {
     it('Should match a string with Global Filter', () => {
         // Arrange
         const testValue = 'newGlobalFilter';
-        const testString = 'This is a string with newGlobalFilter inside';
+        const testString = 'newGlobalFilter inside';
         GlobalFilter.set(testValue);
 
         // Assert
@@ -61,7 +61,7 @@ describe('Global Filter tests', () => {
     it('Should not match a string without Global Filter', () => {
         // Arrange
         const testValue = 'newGlobalFilter';
-        const testString = 'This is a string without Global Filter';
+        const testString = 'Without Global Filter';
         GlobalFilter.set(testValue);
 
         // Assert
@@ -71,8 +71,8 @@ describe('Global Filter tests', () => {
     it('Should remove Global Filter from the beginning of a string', () => {
         // Arrange
         const testValue = 'newGlobalFilter';
-        const testStringBefore = 'This is a string with GF at the end newGlobalFilter';
-        const testStringAfter = 'This is a string with GF at the end';
+        const testStringBefore = 'GF at the end newGlobalFilter';
+        const testStringAfter = 'GF at the end';
         GlobalFilter.set(testValue);
 
         // Assert
@@ -82,8 +82,8 @@ describe('Global Filter tests', () => {
     it('Should remove Global Filter from the end of a string', () => {
         // Arrange
         const testValue = 'newGlobalFilter';
-        const testStringBefore = 'newGlobalFilter This is a string with GF at the beginning';
-        const testStringAfter = 'This is a string with GF at the beginning';
+        const testStringBefore = 'newGlobalFilter GF at the beginning';
+        const testStringAfter = 'GF at the beginning';
         GlobalFilter.set(testValue);
 
         // Assert
@@ -93,9 +93,9 @@ describe('Global Filter tests', () => {
     it('Should remove Global Filter in the middle of a string', () => {
         // Arrange
         const testValue = 'newGlobalFilter';
-        const testStringBefore = 'This is a string with newGlobalFilter GF in the middle';
+        const testStringBefore = 'GF newGlobalFilter in the middle';
         // Note the 2 spaces where the 'newGlobalFilter' was
-        const testStringAfter = 'This is a string with  GF in the middle';
+        const testStringAfter = 'GF  in the middle';
         GlobalFilter.set(testValue);
 
         // Assert
@@ -112,7 +112,7 @@ describe('Global Filter tests with Remove Global Filter Setting', () => {
     it('Should remove Global Filter from a string when Setting is set to false', () => {
         // Arrange
         const testValue = 'newGlobalFilter';
-        const testStringBefore = 'This is a string with GF at the end newGlobalFilter';
+        const testStringBefore = 'GF at the end newGlobalFilter';
         GlobalFilter.set(testValue);
         updateSettings({ removeGlobalFilter: false });
 
@@ -123,8 +123,8 @@ describe('Global Filter tests with Remove Global Filter Setting', () => {
     it('Should remove Global Filter from a string when Setting is set to true', () => {
         // Arrange
         const testValue = 'newGlobalFilter';
-        const testStringBefore = 'This is a string with GF at the end newGlobalFilter';
-        const testStringAfter = 'This is a string with GF at the end';
+        const testStringBefore = 'GF at the end newGlobalFilter';
+        const testStringAfter = 'GF at the end';
         GlobalFilter.set(testValue);
         updateSettings({ removeGlobalFilter: true });
 
