@@ -7,11 +7,7 @@ describe('Global Filter tests', () => {
     });
 
     it('Should provide Global Filter with the default value with get()', () => {
-        // Arrange
-        const defaultValue = '';
-
-        // Assert
-        expect(GlobalFilter.get()).toEqual(defaultValue);
+        expect(GlobalFilter.get()).toEqual('');
     });
 
     it('Should set new Global Filter', () => {
@@ -26,12 +22,11 @@ describe('Global Filter tests', () => {
     it('Should reset the Global Filter', () => {
         // Arrange
         const testValue = 'newGlobalFilter';
-        const defaultValue = '';
         GlobalFilter.set(testValue);
         GlobalFilter.reset();
 
         // Assert
-        expect(GlobalFilter.get()).toEqual(defaultValue);
+        expect(GlobalFilter.get()).toEqual('');
     });
 
     it('Should indicate empty Global Filter by default', () => {
@@ -41,8 +36,7 @@ describe('Global Filter tests', () => {
 
     it('Should indicate non-empty Global Filter after setting one', () => {
         // Arrange
-        const testValue = 'newGlobalFilter';
-        GlobalFilter.set(testValue);
+        GlobalFilter.set('newGlobalFilter');
 
         // Assert
         expect(GlobalFilter.isEmpty()).toEqual(false);
@@ -50,22 +44,18 @@ describe('Global Filter tests', () => {
 
     it('Should match a string with Global Filter', () => {
         // Arrange
-        const testValue = 'newGlobalFilter';
-        const testString = 'newGlobalFilter inside';
-        GlobalFilter.set(testValue);
+        GlobalFilter.set('newGlobalFilter');
 
         // Assert
-        expect(GlobalFilter.includedIn(testString)).toEqual(true);
+        expect(GlobalFilter.includedIn('newGlobalFilter inside')).toEqual(true);
     });
 
     it('Should not match a string without Global Filter', () => {
         // Arrange
-        const testValue = 'newGlobalFilter';
-        const testString = 'Without Global Filter';
-        GlobalFilter.set(testValue);
+        GlobalFilter.set('testValue');
 
         // Assert
-        expect(GlobalFilter.includedIn(testString)).toEqual(false);
+        expect(GlobalFilter.includedIn('Without Global Filter')).toEqual(false);
     });
 
     it('Should remove Global Filter from the beginning of a string', () => {
