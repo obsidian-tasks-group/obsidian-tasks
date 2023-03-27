@@ -211,7 +211,11 @@ ul > li.plugin-tasks-list-item .task-list-item-checkbox {
 
 ### Grid Layout
 
-The following organizes the task structure into a 3-line grid, on which the description is in the first line and the various components are on the 2nd:
+The following organizes the task structure into a 3-line grid, on which:
+
+- the description is in the first line,
+- and the various components are on the second,
+- the urgency, backlink and edit button are, if displayed, on the third.
 
 ```css
 ul > li.plugin-tasks-list-item {
