@@ -90,8 +90,17 @@ describe('Global Filter tests', () => {
         expect(GlobalFilter.removeAsSubstringFrom(testStringBefore)).toEqual(testStringAfter);
     });
 
-    // it('Should remove Global Filter from the middle of a string', () => {});
-    // Not supported
+    it('Should remove Global Filter in the middle of a string', () => {
+        // Arrange
+        const testValue = 'newGlobalFilter';
+        const testStringBefore = 'This is a string with newGlobalFilter GF in the middle';
+        // Note the 2 spaces where the 'newGlobalFilter' was
+        const testStringAfter = 'This is a string with  GF in the middle';
+        GlobalFilter.set(testValue);
+
+        // Assert
+        expect(GlobalFilter.removeAsSubstringFrom(testStringBefore)).toEqual(testStringAfter);
+    });
 
     it('Should not remove Global Filter from a string with default settings', () => {
         // Arrange
