@@ -57,7 +57,7 @@
   },
   "dependencies": {
     "boon-js": "^2.0.3",
-    "chrono-node": "2.3.9",
+    "chrono-node": "2.6.2",
     "eventemitter2": "^6.4.5",
     "rrule": "^2.7.1"
   }
