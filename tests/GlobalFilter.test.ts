@@ -102,17 +102,21 @@ describe('Global Filter tests', () => {
         expect(GlobalFilter.removeAsSubstringFrom(testStringBefore)).toEqual(testStringAfter);
     });
 
-    it('Should not remove Global Filter from a string with default settings', () => {
+    it('Should remove Global Filter from a string when Setting is set to false', () => {
         // Arrange
         const testValue = 'newGlobalFilter';
         const testStringBefore = 'This is a string with GF at the end newGlobalFilter';
         GlobalFilter.set(testValue);
+        updateSettings({ removeGlobalFilter: false });
 
         // Assert
         expect(GlobalFilter.removeAsSubstringFromDependingOnSettings(testStringBefore)).toEqual(testStringBefore);
+
+        // Cleanup
+        resetSettings();
     });
 
-    it('Should not remove Global Filter from a string with default settings', () => {
+    it('Should remove Global Filter from a string when Setting is set to true', () => {
         // Arrange
         const testValue = 'newGlobalFilter';
         const testStringBefore = 'This is a string with GF at the end newGlobalFilter';
