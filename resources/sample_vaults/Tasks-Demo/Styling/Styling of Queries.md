@@ -1,5 +1,11 @@
 # Styling of Queries
 
+> [!Warning]
+> These tests require the `.has` selector.
+> The CSS `:has` selector is available with **Obsidian installer version 1.1.9 and newer**. You can run the Obsidian command `Show debug info` to see your current installer version.
+
+---
+
 To test styling of queries, follow this:
 
 - [ ] **1. Open the Obsidian settings of the Demo vault and under Appearance | CSS Snippets, turn on `tasks-plugin-query-styling`.**
