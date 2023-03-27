@@ -21,7 +21,7 @@ describe('Global Filter tests', () => {
 
     it('Should reset the Global Filter', () => {
         // Arrange
-        const testValue = 'newGlobalFilter';
+        const testValue = '#important';
         GlobalFilter.set(testValue);
         GlobalFilter.reset();
 
@@ -44,10 +44,10 @@ describe('Global Filter tests', () => {
 
     it('Should match a string with Global Filter', () => {
         // Arrange
-        GlobalFilter.set('newGlobalFilter');
+        GlobalFilter.set('#task');
 
         // Assert
-        expect(GlobalFilter.includedIn('newGlobalFilter inside')).toEqual(true);
+        expect(GlobalFilter.includedIn('Important #task inside')).toEqual(true);
     });
 
     it('Should not match a string without Global Filter', () => {
@@ -60,9 +60,9 @@ describe('Global Filter tests', () => {
 
     it('Should remove Global Filter from the beginning of a string', () => {
         // Arrange
-        const testValue = 'newGlobalFilter';
-        const testStringBefore = 'GF at the end newGlobalFilter';
-        const testStringAfter = 'GF at the end';
+        const testValue = '#end';
+        const testStringBefore = 'Important thing to do #end';
+        const testStringAfter = 'Important thing to do';
         GlobalFilter.set(testValue);
 
         // Assert
@@ -71,9 +71,9 @@ describe('Global Filter tests', () => {
 
     it('Should remove Global Filter from the end of a string', () => {
         // Arrange
-        const testValue = 'newGlobalFilter';
-        const testStringBefore = 'newGlobalFilter GF at the beginning';
-        const testStringAfter = 'GF at the beginning';
+        const testValue = '#beginning';
+        const testStringBefore = '#beginning another important thing';
+        const testStringAfter = 'another important thing';
         GlobalFilter.set(testValue);
 
         // Assert
@@ -82,10 +82,10 @@ describe('Global Filter tests', () => {
 
     it('Should remove Global Filter in the middle of a string', () => {
         // Arrange
-        const testValue = 'newGlobalFilter';
-        const testStringBefore = 'GF newGlobalFilter in the middle';
+        const testValue = '#middle';
+        const testStringBefore = 'With the GF in the #middle of the string';
         // Note the 2 spaces where the 'newGlobalFilter' was
-        const testStringAfter = 'GF  in the middle';
+        const testStringAfter = 'With the GF in the  of the string';
         GlobalFilter.set(testValue);
 
         // Assert
@@ -101,24 +101,23 @@ describe('Global Filter tests with Remove Global Filter Setting', () => {
 
     it('Should remove Global Filter from a string when Setting is set to false', () => {
         // Arrange
-        const testValue = 'newGlobalFilter';
-        const testStringBefore = 'GF at the end newGlobalFilter';
-        GlobalFilter.set(testValue);
+        GlobalFilter.set('todo');
         updateSettings({ removeGlobalFilter: false });
 
         // Assert
-        expect(GlobalFilter.removeAsSubstringFromDependingOnSettings(testStringBefore)).toEqual(testStringBefore);
+        expect(GlobalFilter.removeAsSubstringFromDependingOnSettings('This is absolutely todo')).toEqual(
+            'This is absolutely todo',
+        );
     });
 
     it('Should remove Global Filter from a string when Setting is set to true', () => {
         // Arrange
-        const testValue = 'newGlobalFilter';
-        const testStringBefore = 'GF at the end newGlobalFilter';
-        const testStringAfter = 'GF at the end';
-        GlobalFilter.set(testValue);
+        GlobalFilter.set('todo');
         updateSettings({ removeGlobalFilter: true });
 
         // Assert
-        expect(GlobalFilter.removeAsSubstringFromDependingOnSettings(testStringBefore)).toEqual(testStringAfter);
+        expect(GlobalFilter.removeAsSubstringFromDependingOnSettings('This is absolutely todo')).toEqual(
+            'This is absolutely',
+        );
     });
 });
