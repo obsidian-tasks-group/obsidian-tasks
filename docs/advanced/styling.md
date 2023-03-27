@@ -137,20 +137,24 @@ Making tags, internal links and the recurrence rules of tasks to appear in gray:
 
 ### Priority as a Checkbox Color
 
-The following rules remove the Tasks priority emoticon and render the tasks' checkboxes in red, blue and orange according to the tasks' priority:
+The following rules remove the Tasks priority emoticon and render the tasks' checkboxes in red, orange, blue and cyan according to the tasks' priority:
 
 ```css
 .task-list-item[data-task-priority="high"] input[type=checkbox] {
  box-shadow: 0px 0px 2px 2px var(--color-red);
  border-color: var(--color-red);
 }
-.task-list-item[data-task-priority="low"] input[type=checkbox] {
+.task-list-item[data-task-priority="medium"] input[type=checkbox] {
+    box-shadow: 0px 0px 2px 2px var(--color-orange);
+    border-color: var(--color-orange);
+}
+.task-list-item[data-task-priority="normal"] input[type=checkbox] {
  box-shadow: 0px 0px 2px 2px var(--color-blue);
  border-color: var(--color-blue);
 }
-.task-list-item[data-task-priority="medium"] input[type=checkbox] {
- box-shadow: 0px 0px 2px 2px var(--color-orange);
- border-color: var(--color-orange);
+.task-list-item[data-task-priority="low"] input[type=checkbox] {
+ box-shadow: 0px 0px 2px 2px var(--color-cyan);
+ border-color: var(--color-cyan);
 }
 /* This part removes the regular priority emoticon */
 span.task-priority {
