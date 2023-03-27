@@ -89,7 +89,7 @@ Dates on either end are included, that is, it is an inclusive search.
 
 Notes:
 
-- Currently all weeks are defined as [ISO 8601](https://en.wikipedia.org/wiki/ISO_week_date) weeks **starting on Monday** and **ending on Sunday**.
+- By default all weeks are defined as [ISO 8601](https://en.wikipedia.org/wiki/ISO_week_date) weeks **starting on Monday** and **ending on Sunday**.
   - You may shift the start of the week to another day in `First day of the week` dropdown in Settings.
 - Relative date ranges support only the exact keywords specified above.
   - So, for example, `previous half of year` and `next semester` are not supported.
