@@ -30,7 +30,7 @@ Not only each component in a rendered task line is tagged with classes to differ
 {: .released }
 The following description relates to a restructuring of the rendered tasks that was introduced in Tasks X.Y.Z.
 
-The Tasks plugin renders a task in the following structure (this refers to query results, but the Reading View is the same exact the top-most containers):
+The Tasks plugin renders a task in the following structure (this refers to query results, but the Reading View is the same except the top-most containers):
 
 ```markdown
 - Obsidian code block (div class="block-language-tasks")
