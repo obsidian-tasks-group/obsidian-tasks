@@ -40,22 +40,25 @@ export class DateParser {
 
             const yearMatch = input.match(DateParser.specificYearRegex);
             if (yearMatch && yearMatch.length === 1 && yearMatch[0] === input) {
-                specificDateRange = buildSpecificDateRange(yearMatch[0], DateParser.specificYearFormat);
+                specificDateRange = DateParser.buildSpecificDateRange(yearMatch[0], DateParser.specificYearFormat);
             }
 
             const quarterMatch = input.match(DateParser.specificQuarterRegex);
             if (quarterMatch && quarterMatch.length === 1 && quarterMatch[0] === input) {
-                specificDateRange = buildSpecificDateRange(quarterMatch[0], DateParser.specificQuarterFormat);
+                specificDateRange = DateParser.buildSpecificDateRange(
+                    quarterMatch[0],
+                    DateParser.specificQuarterFormat,
+                );
             }
 
             const monthMatch = input.match(DateParser.specificMonthRegex);
             if (monthMatch && monthMatch.length === 1 && monthMatch[0] === input) {
-                specificDateRange = buildSpecificDateRange(monthMatch[0], DateParser.specificMonthFormat);
+                specificDateRange = DateParser.buildSpecificDateRange(monthMatch[0], DateParser.specificMonthFormat);
             }
 
             const weekMatch = input.match(DateParser.specificWeekRegex);
             if (weekMatch && weekMatch.length === 1 && weekMatch[0] === input) {
-                specificDateRange = buildSpecificDateRange(weekMatch[0], DateParser.specificWeekFormat);
+                specificDateRange = DateParser.buildSpecificDateRange(weekMatch[0], DateParser.specificWeekFormat);
             }
 
             return specificDateRange;
@@ -111,28 +114,25 @@ export class DateParser {
         // Dates shall be at midnight eg 00:00
         dateRange.forEach((d) => d.startOf('day'));
         return dateRange;
+    }
 
-        function buildSpecificDateRange(range: string, format: string): [moment.Moment, moment.Moment] {
-            let unit: moment.unitOfTime.Base | moment.unitOfTime._quarter | moment.unitOfTime._isoWeek = 'second';
-            switch (format) {
-                case DateParser.specificYearFormat:
-                    unit = 'year';
-                    break;
-                case DateParser.specificQuarterFormat:
-                    unit = 'quarter';
-                    break;
-                case DateParser.specificMonthFormat:
-                    unit = 'month';
-                    break;
-                case DateParser.specificWeekFormat:
-                    unit = 'isoWeek';
-                    break;
-            }
-
-            return [
-                moment(range, format).startOf(unit).startOf('day'),
-                moment(range, format).endOf(unit).startOf('day'),
-            ];
+    private static buildSpecificDateRange(range: string, format: string): [moment.Moment, moment.Moment] {
+        let unit: moment.unitOfTime.Base | moment.unitOfTime._quarter | moment.unitOfTime._isoWeek = 'second';
+        switch (format) {
+            case DateParser.specificYearFormat:
+                unit = 'year';
+                break;
+            case DateParser.specificQuarterFormat:
+                unit = 'quarter';
+                break;
+            case DateParser.specificMonthFormat:
+                unit = 'month';
+                break;
+            case DateParser.specificWeekFormat:
+                unit = 'isoWeek';
+                break;
         }
+
+        return [moment(range, format).startOf(unit).startOf('day'), moment(range, format).endOf(unit).startOf('day')];
     }
 }
