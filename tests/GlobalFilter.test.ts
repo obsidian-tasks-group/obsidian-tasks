@@ -1,6 +1,3 @@
-import type { Moment } from 'moment';
-import { Task } from '../src/Task';
-import { TaskLocation } from '../src/TaskLocation';
 import { GlobalFilter } from '../src/Config/GlobalFilter';
 import { resetSettings, updateSettings } from '../src/Config/Settings';
 
@@ -125,14 +122,6 @@ describe('Global Filter tests with Remove Global Filter Setting', () => {
     });
 });
 
-function constructTaskFromLine(line: string, path: string = 'file.md', fallbackDate: Moment | null = null) {
-    return Task.fromLine({
-        line,
-        taskLocation: TaskLocation.fromUnknownPosition(path),
-        fallbackDate,
-    });
-}
-
 describe('check removal of the global filter', () => {
     afterEach(() => {
         GlobalFilter.reset();
@@ -140,73 +129,69 @@ describe('check removal of the global filter', () => {
 
     type GlobalFilterRemovalExpectation = {
         globalFilter: string;
-        markdownTask: string;
+        inputDescription: string;
         expectedDescription: string;
     };
 
     test.each<GlobalFilterRemovalExpectation>([
         {
             globalFilter: '#task',
-            markdownTask: '- [ ] #task this is a very simple task',
+            inputDescription: '#task this is a very simple task',
             expectedDescription: 'this is a very simple task',
         },
         {
             globalFilter: '',
-            markdownTask: '- [ ] #task this is a very simple task',
+            inputDescription: '#task this is a very simple task',
             expectedDescription: '#task this is a very simple task',
         },
         {
             globalFilter: '🞋',
-            markdownTask: '- [ ] task with emoji 🞋 global filter',
+            inputDescription: 'task with emoji 🞋 global filter',
             expectedDescription: 'task with emoji global filter',
         },
         {
             globalFilter: '#t',
-            markdownTask: '- [ ] task with #t global filter in the middle',
+            inputDescription: 'task with #t global filter in the middle',
             expectedDescription: 'task with global filter in the middle',
         },
         {
             globalFilter: '#t',
-            markdownTask: '- [ ] task with global filter in the end #t',
+            inputDescription: 'task with global filter in the end #t',
             expectedDescription: 'task with global filter in the end',
         },
         {
             globalFilter: '#t',
-            markdownTask: '- [ ] task with global filter in the end and some spaces  #t  ',
+            inputDescription: 'task with global filter in the end and some spaces  #t  ',
             expectedDescription: 'task with global filter in the end and some spaces',
         },
         {
             globalFilter: '#complex/global/filter',
-            markdownTask: '- [ ] task with #complex/global/filter in the middle',
+            inputDescription: 'task with #complex/global/filter in the middle',
             expectedDescription: 'task with in the middle',
         },
         {
             globalFilter: '#task',
-            markdownTask: '- [ ] task with an extension of the global filter #task/with/extension',
+            inputDescription: 'task with an extension of the global filter #task/with/extension',
             expectedDescription: 'task with an extension of the global filter #task/with/extension',
         },
         {
             globalFilter: '#t',
-            markdownTask: '- [ ] task with #t multiple global filters #t',
+            inputDescription: 'task with #t multiple global filters #t',
             expectedDescription: 'task with multiple global filters',
         },
         {
             globalFilter: '#t',
-            markdownTask: '- [ ] #t', // confirm behaviour when the description is empty
+            inputDescription: '#t', // confirm behaviour when the description is empty
             expectedDescription: '',
         },
     ])(
         'should parse "$markdownTask" and extract "$expectedDescription"',
-        ({ globalFilter, markdownTask, expectedDescription }) => {
+        ({ globalFilter, inputDescription, expectedDescription }) => {
             // Arrange
             GlobalFilter.set(globalFilter);
 
-            // Act
-            const task = constructTaskFromLine(markdownTask);
-
             // Assert
-            expect(task).not.toBeNull();
-            expect(GlobalFilter.removeAsWordFrom(task!.description)).toEqual(expectedDescription);
+            expect(GlobalFilter.removeAsWordFrom(inputDescription)).toEqual(expectedDescription);
         },
     );
 });
@@ -220,12 +205,9 @@ describe('check removal of the global filter exhaustively', () => {
         globalFilter: string;
     };
 
-    function checkDescription(markdownLine: string, expectedDescription: string) {
-        const task = constructTaskFromLine(markdownLine);
-
+    function checkDescription(inputDescription: string, expectedDescription: string) {
         // Assert
-        expect(task).not.toBeNull();
-        expect(GlobalFilter.removeAsWordFrom(task!.description)).toEqual(expectedDescription);
+        expect(GlobalFilter.removeAsWordFrom(inputDescription)).toEqual(expectedDescription);
     }
 
     test.each<GlobalFilterRemoval>([
@@ -307,18 +289,18 @@ describe('check removal of the global filter exhaustively', () => {
         // Act
 
         // global filter removed at beginning, middle and end
-        let markdownLine = `- [ ] ${globalFilter} 1 ${globalFilter} 2 ${globalFilter}`;
+        let markdownLine = `${globalFilter} 1 ${globalFilter} 2 ${globalFilter}`;
         let expectedDescription = '1 2';
         checkDescription(markdownLine, expectedDescription);
 
         // global filter not removed if non-empty non-tag characters before or after it
-        markdownLine = `- [ ] ${globalFilter}x 1 x${globalFilter} ${globalFilter}x 2 x${globalFilter}`;
+        markdownLine = `${globalFilter}x 1 x${globalFilter} ${globalFilter}x 2 x${globalFilter}`;
         expectedDescription = `${globalFilter}x 1 x${globalFilter} ${globalFilter}x 2 x${globalFilter}`;
         checkDescription(markdownLine, expectedDescription);
 
         // global filter not removed if non-empty sub-tag characters after it.
         // Include at least one occurrence of global filter, so we don't pass by luck.
-        markdownLine = `- [ ] ${globalFilter}/x 1 x${globalFilter} ${globalFilter}/x 2 ${globalFilter} ${globalFilter}/x`;
+        markdownLine = `${globalFilter}/x 1 x${globalFilter} ${globalFilter}/x 2 ${globalFilter} ${globalFilter}/x`;
         expectedDescription = `${globalFilter}/x 1 x${globalFilter} ${globalFilter}/x 2 ${globalFilter}/x`;
         checkDescription(markdownLine, expectedDescription);
     });
