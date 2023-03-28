@@ -2,6 +2,15 @@ import * as chrono from 'chrono-node';
 import moment from 'moment';
 
 export class DateParser {
+    private static specificYearRegex = /[0-9]{4}/;
+    private static specificQuarterRegex = /[0-9]{4}-Q[1-4]/;
+    private static specificMonthRegex = /[0-9]{4}-[0-9]{2}/;
+    private static specificWeekRegex = /[0-9]{4}-W[0-9]{2}/;
+    private static specificYearFormat = 'YYYY';
+    private static specificQuarterFormat = 'YYYY-Q';
+    private static specificMonthFormat = 'YYYY-MM';
+    private static specificWeekFormat = 'YYYY-WW';
+
     public static parseDate(input: string, forwardDate: boolean = false): moment.Moment {
         // Using start of day to correctly match on comparison with other dates (like equality).
         return window
@@ -20,15 +29,6 @@ export class DateParser {
      * @return - A Tuple of dates. If both input dates are invalid, then both ouput dates will be invalid.
      */
     public static parseDateRange(input: string): [moment.Moment, moment.Moment] {
-        const specificYearRegex = /[0-9]{4}/;
-        const specificQuarterRegex = /[0-9]{4}-Q[1-4]/;
-        const specificMonthRegex = /[0-9]{4}-[0-9]{2}/;
-        const specificWeekRegex = /[0-9]{4}-W[0-9]{2}/;
-        const specificYearFormat = 'YYYY';
-        const specificQuarterFormat = 'YYYY-Q';
-        const specificMonthFormat = 'YYYY-MM';
-        const specificWeekFormat = 'YYYY-WW';
-
         const result = chrono.parse(input, undefined, {
             forwardDate: true,
         });
@@ -38,24 +38,24 @@ export class DateParser {
             // Or a user error
             let specificDateRange: [moment.Moment, moment.Moment] = [moment.invalid(), moment.invalid()];
 
-            const yearMatch = input.match(specificYearRegex);
+            const yearMatch = input.match(DateParser.specificYearRegex);
             if (yearMatch && yearMatch.length === 1 && yearMatch[0] === input) {
-                specificDateRange = buildSpecificDateRange(yearMatch[0], specificYearFormat);
+                specificDateRange = buildSpecificDateRange(yearMatch[0], DateParser.specificYearFormat);
             }
 
-            const quarterMatch = input.match(specificQuarterRegex);
+            const quarterMatch = input.match(DateParser.specificQuarterRegex);
             if (quarterMatch && quarterMatch.length === 1 && quarterMatch[0] === input) {
-                specificDateRange = buildSpecificDateRange(quarterMatch[0], specificQuarterFormat);
+                specificDateRange = buildSpecificDateRange(quarterMatch[0], DateParser.specificQuarterFormat);
             }
 
-            const monthMatch = input.match(specificMonthRegex);
+            const monthMatch = input.match(DateParser.specificMonthRegex);
             if (monthMatch && monthMatch.length === 1 && monthMatch[0] === input) {
-                specificDateRange = buildSpecificDateRange(monthMatch[0], specificMonthFormat);
+                specificDateRange = buildSpecificDateRange(monthMatch[0], DateParser.specificMonthFormat);
             }
 
-            const weekMatch = input.match(specificWeekRegex);
+            const weekMatch = input.match(DateParser.specificWeekRegex);
             if (weekMatch && weekMatch.length === 1 && weekMatch[0] === input) {
-                specificDateRange = buildSpecificDateRange(weekMatch[0], specificWeekFormat);
+                specificDateRange = buildSpecificDateRange(weekMatch[0], DateParser.specificWeekFormat);
             }
 
             return specificDateRange;
@@ -115,16 +115,16 @@ export class DateParser {
         function buildSpecificDateRange(range: string, format: string): [moment.Moment, moment.Moment] {
             let unit: moment.unitOfTime.Base | moment.unitOfTime._quarter | moment.unitOfTime._isoWeek = 'second';
             switch (format) {
-                case specificYearFormat:
+                case DateParser.specificYearFormat:
                     unit = 'year';
                     break;
-                case specificQuarterFormat:
+                case DateParser.specificQuarterFormat:
                     unit = 'quarter';
                     break;
-                case specificMonthFormat:
+                case DateParser.specificMonthFormat:
                     unit = 'month';
                     break;
-                case specificWeekFormat:
+                case DateParser.specificWeekFormat:
                     unit = 'isoWeek';
                     break;
             }
