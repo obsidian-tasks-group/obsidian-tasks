@@ -205,11 +205,6 @@ describe('check removal of the global filter exhaustively', () => {
         globalFilter: string;
     };
 
-    function checkDescription(inputDescription: string, expectedDescription: string) {
-        // Assert
-        expect(GlobalFilter.removeAsWordFrom(inputDescription)).toEqual(expectedDescription);
-    }
-
     test.each<GlobalFilterRemoval>([
         {
             globalFilter: '#t',
@@ -286,22 +281,20 @@ describe('check removal of the global filter exhaustively', () => {
         // Arrange
         GlobalFilter.set(globalFilter);
 
-        // Act
-
         // global filter removed at beginning, middle and end
-        let markdownLine = `${globalFilter} 1 ${globalFilter} 2 ${globalFilter}`;
+        let inputDescription = `${globalFilter} 1 ${globalFilter} 2 ${globalFilter}`;
         let expectedDescription = '1 2';
-        checkDescription(markdownLine, expectedDescription);
+        expect(GlobalFilter.removeAsWordFrom(inputDescription)).toEqual(expectedDescription);
 
         // global filter not removed if non-empty non-tag characters before or after it
-        markdownLine = `${globalFilter}x 1 x${globalFilter} ${globalFilter}x 2 x${globalFilter}`;
+        inputDescription = `${globalFilter}x 1 x${globalFilter} ${globalFilter}x 2 x${globalFilter}`;
         expectedDescription = `${globalFilter}x 1 x${globalFilter} ${globalFilter}x 2 x${globalFilter}`;
-        checkDescription(markdownLine, expectedDescription);
+        expect(GlobalFilter.removeAsWordFrom(inputDescription)).toEqual(expectedDescription);
 
         // global filter not removed if non-empty sub-tag characters after it.
         // Include at least one occurrence of global filter, so we don't pass by luck.
-        markdownLine = `${globalFilter}/x 1 x${globalFilter} ${globalFilter}/x 2 ${globalFilter} ${globalFilter}/x`;
+        inputDescription = `${globalFilter}/x 1 x${globalFilter} ${globalFilter}/x 2 ${globalFilter} ${globalFilter}/x`;
         expectedDescription = `${globalFilter}/x 1 x${globalFilter} ${globalFilter}/x 2 ${globalFilter}/x`;
-        checkDescription(markdownLine, expectedDescription);
+        expect(GlobalFilter.removeAsWordFrom(inputDescription)).toEqual(expectedDescription);
     });
 });
