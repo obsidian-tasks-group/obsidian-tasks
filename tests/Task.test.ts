@@ -2,7 +2,6 @@
  * @jest-environment jsdom
  */
 import moment from 'moment';
-import type { Moment } from 'moment';
 import { Status } from '../src/Status';
 import { Priority, Task } from '../src/Task';
 import { resetSettings, updateSettings } from '../src/Config/Settings';
@@ -286,14 +285,6 @@ type TagParsingExpectations = {
     globalFilter: string;
 };
 
-function constructTaskFromLine(line: string, path: string = 'file.md', fallbackDate: Moment | null = null) {
-    return Task.fromLine({
-        line,
-        taskLocation: TaskLocation.fromUnknownPosition(path),
-        fallbackDate,
-    });
-}
-
 describe('parsing tags', () => {
     test.each<TagParsingExpectations>([
         {
@@ -404,7 +395,11 @@ describe('parsing tags', () => {
             }
 
             // Act
-            const task = constructTaskFromLine(markdownTask);
+            const task = Task.fromLine({
+                line: markdownTask,
+                taskLocation: TaskLocation.fromUnknownPosition('file.md'),
+                fallbackDate: null,
+            });
 
             // Assert
             expect(task).not.toBeNull();
