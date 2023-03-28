@@ -201,83 +201,41 @@ describe('check removal of the global filter exhaustively', () => {
         GlobalFilter.reset();
     });
 
-    type GlobalFilterRemoval = {
-        globalFilter: string;
-    };
-
-    test.each<GlobalFilterRemoval>([
-        {
-            globalFilter: '#t',
-        },
+    test.each<string>([
+        '#t',
         // The characters listed below are the ones that are - or were - escaped by
         // Task.escapeRegExp().
         // See the developer.mozilla.org reference in that method.
         // This test validates the escaping of each of those characters.
-        {
-            globalFilter: '.',
-        },
-        {
-            globalFilter: '*',
-        },
-        {
-            globalFilter: '+',
-        },
-        {
-            globalFilter: '?',
-        },
-        {
-            globalFilter: '^',
-        },
-        {
-            // Failed attempt at creating a failing test for when = was not escaped.
-            // When I make Task.escapeRegExp() escape =, I get:
-            // Invalid regular expression: /(^|\s)hello\=world($|\s)/: Invalid escape
-            globalFilter: 'hello=world',
-        },
-        {
-            // Failed attempt at creating a failing test for when ! was not escaped.
-            // When I make Task.escapeRegExp() escape !, I get:
-            // Invalid regular expression: /(^|\s)hello\!world($|\s)/: Invalid escape
-            globalFilter: 'hello!world',
-        },
-        {
-            // Failed attempt at creating a failing test for when : was not escaped.
-            // When I make Task.escapeRegExp() escape :, I get:
-            // Invalid regular expression: /(^|\s)hello\:world($|\s)/: Invalid escape
-            globalFilter: 'hello:world',
-        },
-        {
-            globalFilter: '$',
-        },
-        {
-            globalFilter: '{',
-        },
-        {
-            globalFilter: '}',
-        },
-        {
-            globalFilter: '(',
-        },
-        {
-            globalFilter: ')',
-        },
-        {
-            globalFilter: '|',
-        },
-        {
-            globalFilter: '[',
-        },
-        {
-            globalFilter: ']',
-        },
-        {
-            // Failed attempt at creating a failing test for when / was not escaped
-            globalFilter: '///',
-        },
-        {
-            globalFilter: '\\',
-        },
-    ])('should parse global filter "$globalFilter" edge cases correctly', ({ globalFilter }) => {
+        '.',
+        '*',
+        '+',
+        '?',
+        '^',
+        // Failed attempt at creating a failing test for when = was not escaped.
+        // When I make Task.escapeRegExp() escape =, I get:
+        // Invalid regular expression: /(^|\s)hello\=world($|\s)/: Invalid escape
+        'hello=world',
+        // Failed attempt at creating a failing test for when ! was not escaped.
+        // When I make Task.escapeRegExp() escape !, I get:
+        // Invalid regular expression: /(^|\s)hello\!world($|\s)/: Invalid escape
+        'hello!world',
+        // Failed attempt at creating a failing test for when : was not escaped.
+        // When I make Task.escapeRegExp() escape :, I get:
+        // Invalid regular expression: /(^|\s)hello\:world($|\s)/: Invalid escape
+        'hello:world',
+        '$',
+        '{',
+        '}',
+        '(',
+        ')',
+        '|',
+        '[',
+        ']',
+        // Failed attempt at creating a failing test for when / was not escaped
+        '///',
+        '\\',
+    ])('should parse global filter "$globalFilter" edge cases correctly', (globalFilter) => {
         // Arrange
         GlobalFilter.set(globalFilter);
 
