@@ -194,22 +194,22 @@ describe('Grouping tasks', () => {
         // Assert
         expect(groups.toString()).toMatchInlineSnapshot(`
             "
-            Group names: [folder\\_a/folder\\_b/,[[file\\_c]]]
+            Group names: [folder\\_a/folder\\_b/,[[file_c]]]
             #### folder\\_a/folder\\_b/
-            ##### [[file\\_c]]
+            ##### [[file_c]]
             - [ ] Task 3 - but path is 1st, alphabetically
 
             ---
 
-            Group names: [folder\\_b/folder\\_c/,[[file\\_c]]]
+            Group names: [folder\\_b/folder\\_c/,[[file_c]]]
             #### folder\\_b/folder\\_c/
-            ##### [[file\\_c]]
+            ##### [[file_c]]
             - [ ] Task 1 - but path is 2nd, alphabetically
 
             ---
 
-            Group names: [folder\\_b/folder\\_c/,[[file\\_d]]]
-            ##### [[file\\_d]]
+            Group names: [folder\\_b/folder\\_c/,[[file_d]]]
+            ##### [[file_d]]
             - [ ] Task 2 - but path is 2nd, alphabetically
 
             ---
@@ -307,7 +307,7 @@ describe('Group names', () => {
         {
             groupBy: 'filename',
             taskLine: '- [ ] a',
-            expectedGroupNames: ['[[\\_c\\_]]'], // underscores in file names are escaped
+            expectedGroupNames: ['[[_c_]]'], // underscores in links shall not be escaped
             path: 'a/b/_c_.md',
         },
 
