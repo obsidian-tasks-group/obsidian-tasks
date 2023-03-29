@@ -6,7 +6,7 @@
 
 ---
 
-To test styling of queries, follow this:
+To test styling of queries, follow these steps, viewing this file either in **Reading** Mode or **Live Preview** Mode:
 
 - [ ] **1. Open the Obsidian settings of the Demo vault and under Appearance | CSS Snippets, turn on `tasks-plugin-smoke-test-query-styling`.**
 

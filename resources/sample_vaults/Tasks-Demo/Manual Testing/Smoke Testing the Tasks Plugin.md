@@ -91,7 +91,6 @@ Steps to do:
 - [ ] #task View this file in **Reading view** and confirm that the tasks in this section are listed
 - [ ] #task View this file in **Live Preview** and confirm that the tasks in this section are listed
 - [ ] #task **check**: Checked all above steps for **viewing task blocks** worked
-- [ ] #task **check**: Open the file [[Styling of Queries]] and follow the steps there
 
 ---
 
@@ -101,6 +100,12 @@ Tasks block to check - should list all the tasks in this section, regardless of 
 path includes Smoke Testing the Tasks Plugin
 heading includes Rendering of Task Blocks
 ```
+
+---
+
+### Styling of Rendered Task Blocks
+
+- [ ] #task **check**: Open the file [[Styling of Queries]] and follow the steps there
 
 ---
 
