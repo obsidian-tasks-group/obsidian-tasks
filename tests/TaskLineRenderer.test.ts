@@ -77,25 +77,32 @@ describe('task line rendering', () => {
         // Check what we have one child, which is the rendered child
         expect(parentRender.children.length).toEqual(1);
         const li = parentRender.children[0];
+
         // Check that it's an element of type LI
         expect(li.nodeName).toEqual('LI');
+
         // Check that it has two children: a checkbox and a text span
         expect(li.children.length).toEqual(2);
+
         const checkbox = li.children[0];
         expect(checkbox.nodeName).toEqual('INPUT');
         expect(checkbox.classList.contains('task-list-item-checkbox')).toBeTruthy();
+
         const textSpan = li.children[1];
         expect(textSpan.nodeName).toEqual('SPAN');
         expect(textSpan.classList.contains('tasks-list-text')).toBeTruthy();
+
         // Check that the text span contains a single description span
         expect(textSpan.children.length).toEqual(1);
         const descriptionSpan = textSpan.children[0];
         expect(descriptionSpan.nodeName).toEqual('SPAN');
         expect(descriptionSpan.className).toEqual('task-description');
+
         // Check that the description span contains an internal span (see taskToHtml for an explanation why it's there)
         expect(descriptionSpan.children.length).toEqual(1);
         const internalDescriptionSpan = descriptionSpan.children[0];
         expect(internalDescriptionSpan.nodeName).toEqual('SPAN');
+
         // Check that eventually the correct text was rendered
         expect((internalDescriptionSpan as HTMLSpanElement).innerText).toEqual('This is a simple task');
     });
