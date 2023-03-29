@@ -10,6 +10,7 @@ import { TaskModal } from './TaskModal';
 import type { TasksEvents } from './TasksEvents';
 import type { Task } from './Task';
 import { DateFallback } from './DateFallback';
+import { TaskLayout } from './TaskLayout';
 
 export class QueryRenderer {
     private readonly app: App;
@@ -185,8 +186,12 @@ class QueryRenderChild extends MarkdownRenderChild {
     }): Promise<{ taskList: HTMLUListElement; tasksCount: number }> {
         const tasksCount = tasks.length;
 
+        const layout = new TaskLayout(this.query.layoutOptions);
         const taskList = content.createEl('ul');
         taskList.addClasses(['contains-task-list', 'plugin-tasks-query-result']);
+        taskList.addClasses(layout.specificClasses);
+        const groupingAttribute = this.getGroupingAttribute();
+        if (groupingAttribute && groupingAttribute.length > 0) taskList.dataset.taskGroupBy = groupingAttribute;
         for (let i = 0; i < tasksCount; i++) {
             const task = tasks[i];
             const isFilenameUnique = this.isFilenameUnique({ task });
@@ -196,6 +201,7 @@ class QueryRenderChild extends MarkdownRenderChild {
                 listIndex: i,
                 layoutOptions: this.query.layoutOptions,
                 isFilenameUnique,
+                taskLayout: layout,
             });
 
             // Remove all footnotes. They don't re-appear in another document.
@@ -204,16 +210,18 @@ class QueryRenderChild extends MarkdownRenderChild {
 
             const shortMode = this.query.layoutOptions.shortMode;
 
+            const extrasSpan = listItem.createSpan('task-extras');
+
             if (!this.query.layoutOptions.hideUrgency) {
-                this.addUrgency(listItem, task);
+                this.addUrgency(extrasSpan, task);
             }
 
             if (!this.query.layoutOptions.hideBacklinks) {
-                this.addBacklinks(listItem, task, shortMode, isFilenameUnique);
+                this.addBacklinks(extrasSpan, task, shortMode, isFilenameUnique);
             }
 
             if (!this.query.layoutOptions.hideEditButton) {
-                this.addEditButton(listItem, task);
+                this.addEditButton(extrasSpan, task);
             }
 
             taskList.appendChild(listItem);
@@ -349,5 +357,13 @@ class QueryRenderChild extends MarkdownRenderChild {
         });
 
         return allFilesWithSameName.length < 2;
+    }
+
+    private getGroupingAttribute() {
+        const groupingRules: string[] = [];
+        for (const group of this.query.grouping) {
+            groupingRules.push(group.property);
+        }
+        return groupingRules.join(',');
     }
 }

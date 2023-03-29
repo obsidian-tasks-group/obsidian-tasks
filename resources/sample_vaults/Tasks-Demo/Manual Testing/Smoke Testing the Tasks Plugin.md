@@ -103,6 +103,12 @@ heading includes Rendering of Task Blocks
 
 ---
 
+### Styling of Rendered Task Blocks
+
+- [ ] #task **check**: Open the file [[Styling of Queries]] and follow the steps there
+
+---
+
 ### Create or edit Task modal
 
 - This text should copied in to the task Description, after following steps below

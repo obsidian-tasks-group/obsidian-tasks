@@ -464,6 +464,22 @@ describe('to string', () => {
         const expectedLine = '- [x] this is a done task #tagone #journal/daily 📅 2021-09-12 ✅ 2021-06-20';
         expect(task.toFileLineString()).toStrictEqual(expectedLine);
     });
+
+    it('retains the global filter', () => {
+        // Arrange
+        const line = '- [ ] This is a task with #t as a global filter and also #t/some tags';
+
+        updateSettings({ globalFilter: '#t' });
+        // Act
+        const task: Task = fromLine({
+            line,
+        }) as Task;
+
+        // Assert
+        const expectedLine = 'This is a task with #t as a global filter and also #t/some tags';
+        expect(task.toString()).toStrictEqual(expectedLine);
+        resetSettings();
+    });
 });
 
 describe('toggle done', () => {
