@@ -87,15 +87,18 @@ describe('task line rendering', () => {
         const textSpan = li.children[1];
         expect(textSpan.nodeName).toEqual('SPAN');
         expect(textSpan.classList.contains('tasks-list-text')).toBeTruthy();
+
         // Check that the text span contains a single description span
         expect(textSpan.children.length).toEqual(1);
         const descriptionSpan = textSpan.children[0];
         expect(descriptionSpan.nodeName).toEqual('SPAN');
         expect(descriptionSpan.className).toEqual('task-description');
+
         // Check that the description span contains an internal span (see taskToHtml for an explanation why it's there)
         expect(descriptionSpan.children.length).toEqual(1);
         const internalDescriptionSpan = descriptionSpan.children[0];
         expect(internalDescriptionSpan.nodeName).toEqual('SPAN');
+
         // Check that eventually the correct text was rendered
         expect((internalDescriptionSpan as HTMLSpanElement).innerText).toEqual('This is a simple task');
     });

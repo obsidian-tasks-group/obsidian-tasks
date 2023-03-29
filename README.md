@@ -102,8 +102,12 @@ Then see [the Contributing Guide](https://publish.obsidian.md/tasks-contributing
 
 ## Donations
 
-The plugin is completely free to use. If you love it very much and want to pay it forward, please consider donating to an organization of your choice.
-Two example organizations that you could consider donating to are the Wikimedia Foundation and the Electronic Frontiers Foundation:
+The plugin is completely free to use, and very willingly developed and supported by Clare Macrae since May 2022.
 
-1. [Support the Wikimedia Foundation](https://wikimediafoundation.org/support/)
-2. [Support EFF](https://supporters.eff.org/donate/join-eff-today)
+If you have particularly been helped by the Tasks plugin and wish to support it, please see the following link.
+
+- <https://github.com/sponsors/claremacrae>
+
+Donations will go towards my computing costs and licenses for development tools that I use for productivity.
+
+Thank you 🙏.

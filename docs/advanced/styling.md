@@ -7,6 +7,20 @@ has_toc: false
 ---
 
 # Styling Tasks
+{: .no_toc }
+
+<details open markdown="block">
+  <summary>
+    Table of contents
+  </summary>
+  {: .text-delta }
+1. TOC
+{:toc}
+</details>
+
+---
+
+## Introduction
 
 In rendered queries and Reading View, the Tasks plugin adds detailed CSS classes and data attributes that represent many of each task's content, to allow for very extensive styling options via CSS.
 Not only each component in a rendered task line is tagged with classes to differentiate it, many components also add classes and data attributes that represent the actual content of the task, so CSS rules can refer to data such as the relative due date of a task or its specific priority.
@@ -16,7 +30,7 @@ Not only each component in a rendered task line is tagged with classes to differ
 {: .released }
 The following description relates to a restructuring of the rendered tasks that was introduced in Tasks X.Y.Z.
 
-The Tasks plugin renders a task in the following structure (this refers to query results, but the Reading View is the same exact the top-most containers):
+The Tasks plugin renders a task in the following structure (this refers to query results, but the Reading View is the same except the top-most containers):
 
 ```markdown
 - Obsidian code block (div class="block-language-tasks")
@@ -41,7 +55,7 @@ The Tasks plugin renders a task in the following structure (this refers to query
 As can be seen above, the basic task `li` contains a checkbox and a content span.
 The content span contains a list of **component** spans: description, priority, recurrence, created date, start date, scheduled date, due date and done date in this order.
 
-Each component span is marked with a **generic class**, which denotes the type of the component, and in some cases a **data attributes** that represents the component's content itself.
+Each component span is marked with a **generic class**, which denotes the type of the component, and in some cases a **data attribute** that represents the component's content itself.
 
 Within each component span there is an additional "internal" span, which is the one holding the actual component text.
 The reason for this additional internal span is that it allows CSS styles that closely wrap the text itself, rather than its container box, e.g. for the purpose of drawing a highlight or a box that is exactly in the size of the text.
@@ -83,6 +97,9 @@ The tag `<a>` elements are added a `data-tag-name` attribute with a *sanitized* 
 Data attributes are added to both their corresponding components (e.g. to the due date component) and also to the complete task `li`, to make it easy for a CSS rule to style a complete task according to some property (e.g. color differently the complete task if it's due today, color a task according to a tag) or just one relevant component.
 
 An exception is the tag data attribute which is added only to the tag's `<a>` element within the rendered description -- however you can still use a CSS `:has` selector to format an entire task's description according to a tag, as demonstrated in the examples below.
+
+{: .warning }
+The CSS `:has` selector is available with Obsidian installer version 1.1.9 and newer. You can run the Obsidian command `Show debug info` to see your current installer version.
 
 **Tip:** [CSS wildcard selectors](https://www.geeksforgeeks.org/wildcard-selectors-and-in-css-for-classes/) are a good way to select all past dates or future dates at once -- just use `.task-due[data-task-due^="past-"]` to address all overdue tasks, for example. Examples that utilize this can be found below.
 
@@ -137,24 +154,38 @@ Making tags, internal links and the recurrence rules of tasks to appear in gray:
 
 ### Priority as a Checkbox Color
 
-The following rules remove the Tasks priority emoticon and render the tasks' checkboxes in red, blue and orange according to the tasks' priority:
+The following rules remove the Tasks priority emoticon and render the tasks' checkboxes in red, orange, blue and cyan according to the tasks' priority:
 
 ```css
 .task-list-item[data-task-priority="high"] input[type=checkbox] {
  box-shadow: 0px 0px 2px 2px var(--color-red);
  border-color: var(--color-red);
 }
-.task-list-item[data-task-priority="low"] input[type=checkbox] {
+.task-list-item[data-task-priority="medium"] input[type=checkbox] {
+    box-shadow: 0px 0px 2px 2px var(--color-orange);
+    border-color: var(--color-orange);
+}
+.task-list-item[data-task-priority="normal"] input[type=checkbox] {
  box-shadow: 0px 0px 2px 2px var(--color-blue);
  border-color: var(--color-blue);
 }
-.task-list-item[data-task-priority="medium"] input[type=checkbox] {
- box-shadow: 0px 0px 2px 2px var(--color-orange);
- border-color: var(--color-orange);
+.task-list-item[data-task-priority="low"] input[type=checkbox] {
+ box-shadow: 0px 0px 2px 2px var(--color-cyan);
+ border-color: var(--color-cyan);
 }
 /* This part removes the regular priority emoticon */
 span.task-priority {
  display: none;
+}
+```
+
+### Styling Tasks with Custom Statuses
+
+To create a green halo around the checkbox of tasks with a `/` custom status, add the following CSS snippet:
+
+```css
+li.task-list-item[data-task="/"] .task-list-item-checkbox {
+        box-shadow: 0 0 10px green;
 }
 ```
 
@@ -211,7 +242,11 @@ ul > li.plugin-tasks-list-item .task-list-item-checkbox {
 
 ### Grid Layout
 
-The following organizes the task structure into a 3-line grid, on which the description is in the first line and the various components are on the 2nd:
+The following organizes the task structure into a 3-line grid, on which:
+
+- the description is in the first line,
+- and the various components are on the second,
+- the urgency, backlink and edit button are, if displayed, on the third.
 
 ```css
 ul > li.plugin-tasks-list-item {

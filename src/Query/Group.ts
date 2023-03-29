@@ -156,7 +156,7 @@ export class Group {
         if (filename === null) {
             return ['Unknown Location'];
         }
-        return ['[[' + Group.escapeMarkdownCharacters(filename) + ']]'];
+        return ['[[' + filename + ']]'];
     }
 
     private static groupByRoot(task: Task): string[] {
