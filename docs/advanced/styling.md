@@ -30,6 +30,10 @@ Not only each component in a rendered task line is tagged with classes to differ
 {: .released }
 The following description relates to a restructuring of the rendered tasks that was introduced in Tasks X.Y.Z.
 
+{: .warning }
+If you find any existing Tasks CSS snippets stopped working with Tasks X.Y.Z, follow the advice in
+[Appendix: Fixing CSS pre-existing snippets for Tasks X.Y.Z]({{ site.baseurl }}{% link advanced/styling.md %}#appendix-fixing-css-pre-existing-snippets-for-tasks-xyz) below.
+
 The Tasks plugin renders a task in the following structure (this refers to query results, but the Reading View is the same except the top-most containers):
 
 ```markdown
@@ -140,105 +144,126 @@ The following examples can be used as [Obsidian CSS snippets](https://help.obsid
 
 Making tags, internal links and the recurrence rules of tasks to appear in gray:
 
+<!-- snippet: resources/sample_vaults/Tasks-Demo/.obsidian/snippets/tasks-plugin-tags-links-recurrence-gray.css -->
 ```css
 .tasks-list-text a.tag {
- color: var(--list-marker-color);
+    color: var(--list-marker-color);
 }
+
 .tasks-backlink a.internal-link {
- color: var(--list-marker-color);
+    color: var(--list-marker-color);
 }
+
 .task-recurring {
- color: var(--list-marker-color);
+    color: var(--list-marker-color);
 }
 ```
+<!-- endSnippet -->
 
 ### Priority as a Checkbox Color
 
 The following rules remove the Tasks priority emoticon and render the tasks' checkboxes in red, orange, blue and cyan according to the tasks' priority:
 
+<!-- snippet: resources/sample_vaults/Tasks-Demo/.obsidian/snippets/tasks-plugin-priority-as-checkbox-color.css -->
 ```css
 .task-list-item[data-task-priority="high"] input[type=checkbox] {
- box-shadow: 0px 0px 2px 2px var(--color-red);
- border-color: var(--color-red);
+    box-shadow: 0px 0px 2px 2px var(--color-red);
+    border-color: var(--color-red);
 }
+
 .task-list-item[data-task-priority="medium"] input[type=checkbox] {
     box-shadow: 0px 0px 2px 2px var(--color-orange);
     border-color: var(--color-orange);
 }
+
 .task-list-item[data-task-priority="normal"] input[type=checkbox] {
- box-shadow: 0px 0px 2px 2px var(--color-blue);
- border-color: var(--color-blue);
+    box-shadow: 0px 0px 2px 2px var(--color-blue);
+    border-color: var(--color-blue);
 }
+
 .task-list-item[data-task-priority="low"] input[type=checkbox] {
- box-shadow: 0px 0px 2px 2px var(--color-cyan);
- border-color: var(--color-cyan);
+    box-shadow: 0px 0px 2px 2px var(--color-cyan);
+    border-color: var(--color-cyan);
 }
+
 /* This part removes the regular priority emoticon */
 span.task-priority {
- display: none;
+    display: none;
 }
 ```
+<!-- endSnippet -->
 
 ### Styling Tasks with Custom Statuses
 
 To create a green halo around the checkbox of tasks with a `/` custom status, add the following CSS snippet:
 
+<!-- snippet: resources/sample_vaults/Tasks-Demo/.obsidian/snippets/tasks-plugin-style-custom-statuses.css -->
 ```css
 li.task-list-item[data-task="/"] .task-list-item-checkbox {
-        box-shadow: 0 0 10px green;
+    box-shadow: 0 0 10px green;
 }
 ```
+<!-- endSnippet -->
 
 ### Colors for Due Today and Overdue
 
 The following rules mark 'today' due dates as blue and past due dates as red:
 
+<!-- snippet: resources/sample_vaults/Tasks-Demo/.obsidian/snippets/tasks-plugin-color-due-today-and-overdue.css -->
 ```css
 /* A special color for the 'due' component if it's for today */
 .task-due[data-task-due="today"] span {
- background: var(--code-property);
- border-radius: 10px;
- padding: 2px 8px;
+    background: var(--code-property);
+    border-radius: 10px;
+    padding: 2px 8px;
 }
+
 /* A special color for overdue due dates */
 .task-due[data-task-due^="past-"] span {
- background: var(--color-pink);
- border-radius: 10px;
- padding: 2px 8px;
+    background: var(--color-pink);
+    border-radius: 10px;
+    padding: 2px 8px;
 }
 ```
+<!-- endSnippet -->
 
 ### Highlight for a Specific Tag
 
 The following rule adds a green glow around `#task/atHome` tags inside the description:
 
+<!-- snippet: resources/sample_vaults/Tasks-Demo/.obsidian/snippets/tasks-plugin-highlight-specific-tag-green-glow.css -->
 ```css
 a.tag[data-tag-name="#task/atHome"] {
     box-shadow: 0 0 5px green;
 }
 ```
+<!-- endSnippet -->
 
 The following rule adds a rounded red background to the description of a task if it contains the tag `#task/strategic`:
 
+<!-- snippet: resources/sample_vaults/Tasks-Demo/.obsidian/snippets/tasks-plugin-highlight-specific-tag-round-red-description.css -->
 ```css
 .task-description span:has(.tag[data-tag-name="#task/strategic"]) {
- background: #ffbfcc;
- border-radius: 10px;
- padding: 2px 8px;
+    background: #ffbfcc;
+    border-radius: 10px;
+    padding: 2px 8px;
 }
 ```
+<!-- endSnippet -->
 
 ### Circle Checkboxes
 
 The following renders checkboxes as circles instead of squares:
 
+<!-- snippet: resources/sample_vaults/Tasks-Demo/.obsidian/snippets/tasks-plugin-circular-checkboxes.css -->
 ```css
 ul > li.plugin-tasks-list-item .task-list-item-checkbox {
-     margin-inline-start: 0;
-  margin: 5px 2px;
-  border-radius: 50%;
+    margin-inline-start: 0;
+    margin: 5px 2px;
+    border-radius: 50%;
 }
 ```
+<!-- endSnippet -->
 
 ### Grid Layout
 
@@ -248,67 +273,77 @@ The following organizes the task structure into a 3-line grid, on which:
 - and the various components are on the second,
 - the urgency, backlink and edit button are, if displayed, on the third.
 
+<!-- snippet: resources/sample_vaults/Tasks-Demo/.obsidian/snippets/tasks-plugin-grid-layout.css -->
 ```css
 ul > li.plugin-tasks-list-item {
     grid-template-columns: 25px auto;
     display: grid;
     align-items: top;
 }
+
 span.task-description {
     grid-row: 1;
- grid-column: 1/10;
+    grid-column: 1/10;
 }
+
 span.tasks-backlink {
     grid-row: 2;
     grid-column: 2;
- font-size: small;
+    font-size: small;
 }
+
 span.task-recurring {
     grid-row: 2;
- font-size: small;
- width: max-content;
+    font-size: small;
+    width: max-content;
 }
+
 span.task-due {
     grid-row: 2;
- font-size: small;
- width: max-content;
+    font-size: small;
+    width: max-content;
 }
+
 span.task-done {
     grid-row: 2;
- font-size: small;
- width: max-content;
+    font-size: small;
+    width: max-content;
 }
+
 .tasks-list-text {
     position: relative;
     display: inline-grid;
- width: max-content;
- grid-column-gap: 10px;
+    width: max-content;
+    grid-column-gap: 10px;
 }
+
 span.task-extras {
     grid-row: 2;
     grid-column: 2;
- font-size: small;
+    font-size: small;
 }
 ```
+<!-- endSnippet -->
 
 ### Complete Example
 
 The following can be used as a base for a full CSS snippet:
 
+<!-- snippet: resources/sample_vaults/Tasks-Demo/.obsidian/snippets/tasks-plugin-complete-example.css -->
 ```css
 /* I like tags to appear in gray so they won't grab too much attention */
 .tasks-list-text a.tag {
- color: var(--list-marker-color);
+    color: var(--list-marker-color);
 }
 
 /* Set internal links to gray too instead of Obsidian's default */
 .tasks-backlink a.internal-link {
- color: var(--list-marker-color);
+    color: var(--list-marker-color);
 }
 
 /* Paint the recurrence rule in gray so it will be less distracting */
 .task-recurring {
- color: var(--list-marker-color);
+    color: var(--list-marker-color);
 }
 
 /* List indentation values that seem to work well for me */
@@ -318,45 +353,49 @@ ul.contains-task-list.plugin-tasks-query-result {
 
 /* This seems to be needed for the task description to word-wrap correctly if they're too long */
 span.tasks-list-text {
- width: auto;
+    width: auto;
 }
 
 /* Represent tasks' priority with colorful round checkboxes instead of the priority emoticons */
 .task-list-item[data-task-priority="high"] input[type=checkbox] {
- box-shadow: 0px 0px 2px 2px var(--color-red);
- border-color: var(--color-red);
+    box-shadow: 0px 0px 2px 2px var(--color-red);
+    border-color: var(--color-red);
 }
+
 .task-list-item[data-task-priority="low"] input[type=checkbox] {
- box-shadow: 0px 0px 2px 2px var(--color-blue);
- border-color: var(--color-blue);
+    box-shadow: 0px 0px 2px 2px var(--color-blue);
+    border-color: var(--color-blue);
 }
+
 .task-list-item[data-task-priority="medium"] input[type=checkbox] {
- box-shadow: 0px 0px 2px 2px var(--color-orange);
- border-color: var(--color-orange);
+    box-shadow: 0px 0px 2px 2px var(--color-orange);
+    border-color: var(--color-orange);
 }
+
 /* This part removes the regular priority emoticon */
 span.task-priority {
- display: none;
+    display: none;
 }
 
 /* A special color for the 'due' component if it's for today */
 .task-due[data-task-due="today"] span {
- background: var(--code-property);
- border-radius: 10px;
- padding: 2px 8px;
+    background: var(--code-property);
+    border-radius: 10px;
+    padding: 2px 8px;
 }
+
 /* A special color for overdue due dates */
 .task-due[data-task-due^="past-"] span {
- background: var(--color-pink);
- border-radius: 10px;
- padding: 2px 8px;
+    background: var(--color-pink);
+    border-radius: 10px;
+    padding: 2px 8px;
 }
 
 /* Make checkboxes a circle instead of a square */
 ul > li.plugin-tasks-list-item .task-list-item-checkbox {
-     margin-inline-start: 0;
-  margin: 5px 2px;
-  border-radius: 50%;
+    margin-inline-start: 0;
+    margin: 5px 2px;
+    border-radius: 50%;
 }
 
 /* The following section organizes the task components in a grid, so the description will be on the first row
@@ -366,39 +405,72 @@ ul > li.plugin-tasks-list-item {
     display: grid;
     align-items: top;
 }
+
 span.task-description {
     grid-row: 1;
- grid-column: 1/10;
+    grid-column: 1/10;
 }
+
 span.tasks-backlink {
     grid-row: 2;
     grid-column: 2;
- font-size: small;
+    font-size: small;
 }
+
 span.task-recurring {
     grid-row: 2;
- font-size: small;
- width: max-content;
+    font-size: small;
+    width: max-content;
 }
+
 span.task-due {
     grid-row: 2;
- font-size: small;
- width: max-content;
+    font-size: small;
+    width: max-content;
 }
+
 span.task-done {
     grid-row: 2;
- font-size: small;
- width: max-content;
+    font-size: small;
+    width: max-content;
 }
+
 .tasks-list-text {
     position: relative;
     display: inline-grid;
- width: max-content;
- grid-column-gap: 10px;
+    width: max-content;
+    grid-column-gap: 10px;
 }
+
 span.task-extras {
     grid-row: 2;
     grid-column: 2;
- font-size: small;
+    font-size: small;
 }
 ```
+<!-- endSnippet -->
+
+---
+
+## Appendix: Fixing CSS pre-existing snippets for Tasks X.Y.Z
+
+This sections explains what to do if any CSS snippets for Tasks stopped working after updating to X.Y.Z.
+
+### Summary
+
+Try removing any `>` from your CSS selectors, as shown in this before-and-after `diff` output:
+
+```diff
+- li.plugin-tasks-list-item > span.tasks-backlink > a {
++ li.plugin-tasks-list-item   span.tasks-backlink > a {
+```
+
+### Explanation
+
+The major CSS improvements documented above resulted in a tiny breaking change to the CSS classes generated by Tasks to display query blocks.
+
+The `>` in the `diff` output above means 'direct child', whereas the space means 'general child'.
+
+Since Tasks X.Y.Z, the `tasks-backlink` span is now inside another span (`tasks-extras`) and not directly below `plugin-tasks-list-item`.
+
+So if you find that any CSS blocks for Tasks stopped working in Tasks X.Y.Z, check for any `>` and change them to spaces.
