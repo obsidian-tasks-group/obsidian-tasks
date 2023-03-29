@@ -77,13 +77,17 @@ describe('task line rendering', () => {
         // Check what we have one child, which is the rendered child
         expect(parentRender.children.length).toEqual(1);
         const li = parentRender.children[0];
+
         // Check that it's an element of type LI
         expect(li.nodeName).toEqual('LI');
+
         // Check that it has two children: a checkbox and a text span
         expect(li.children.length).toEqual(2);
+
         const checkbox = li.children[0];
         expect(checkbox.nodeName).toEqual('INPUT');
         expect(checkbox.classList.contains('task-list-item-checkbox')).toBeTruthy();
+
         const textSpan = li.children[1];
         expect(textSpan.nodeName).toEqual('SPAN');
         expect(textSpan.classList.contains('tasks-list-text')).toBeTruthy();

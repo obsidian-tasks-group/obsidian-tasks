@@ -82,7 +82,8 @@ function debugLog(message: string) {
     logger.debug(message);
 }
 
-// TODO document
+// When this exception is thrown, it is meant to indicate that the caller should consider to try the operation
+// again soon
 class WarningWorthRetrying extends Error {}
 
 /**
