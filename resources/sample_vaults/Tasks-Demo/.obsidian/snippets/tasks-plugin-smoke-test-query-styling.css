@@ -1,0 +1,13 @@
+/* This file is only for use in smoke-testing the Tasks plugin, and not intended for use by users. */
+
+.block-language-tasks:has(ul.plugin-tasks-query-result[data-task-group-by="priority"]) .tasks-group-heading {
+    color: red;
+}
+
+.block-language-tasks .tasks-layout-short-mode {
+    background-color: aqua;
+}
+
+ul.contains-task-list.tasks-layout-hide-priority {
+    color: red;
+}
