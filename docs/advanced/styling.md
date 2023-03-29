@@ -55,7 +55,7 @@ The Tasks plugin renders a task in the following structure (this refers to query
 As can be seen above, the basic task `li` contains a checkbox and a content span.
 The content span contains a list of **component** spans: description, priority, recurrence, created date, start date, scheduled date, due date and done date in this order.
 
-Each component span is marked with a **generic class**, which denotes the type of the component, and in some cases a **data attributes** that represents the component's content itself.
+Each component span is marked with a **generic class**, which denotes the type of the component, and in some cases a **data attribute** that represents the component's content itself.
 
 Within each component span there is an additional "internal" span, which is the one holding the actual component text.
 The reason for this additional internal span is that it allows CSS styles that closely wrap the text itself, rather than its container box, e.g. for the purpose of drawing a highlight or a box that is exactly in the size of the text.
