@@ -1,0 +1,13 @@
+/* A special color for the 'due' component if it's for today */
+.task-due[data-task-due="today"] span {
+    background: var(--code-property);
+    border-radius: 10px;
+    padding: 2px 8px;
+}
+
+/* A special color for overdue due dates */
+.task-due[data-task-due^="past-"] span {
+    background: var(--color-pink);
+    border-radius: 10px;
+    padding: 2px 8px;
+}
