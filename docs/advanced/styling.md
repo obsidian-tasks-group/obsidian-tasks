@@ -179,6 +179,16 @@ span.task-priority {
 }
 ```
 
+### Styling Tasks with Custom Statuses
+
+To create a green halo around the checkbox of tasks with a `/` custom status, add the following CSS snippet:
+
+```css
+li.task-list-item[data-task="/"] .task-list-item-checkbox {
+        box-shadow: 0 0 10px green;
+}
+```
+
 ### Colors for Due Today and Overdue
 
 The following rules mark 'today' due dates as blue and past due dates as red:
