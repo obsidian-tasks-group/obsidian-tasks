@@ -1,0 +1,5 @@
+.task-description span:has(.tag[data-tag-name="#task/strategic"]) {
+    background: #ffbfcc;
+    border-radius: 10px;
+    padding: 2px 8px;
+}

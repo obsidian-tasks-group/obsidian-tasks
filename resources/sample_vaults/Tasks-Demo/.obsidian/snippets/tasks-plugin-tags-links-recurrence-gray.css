@@ -1,0 +1,11 @@
+.tasks-list-text a.tag {
+    color: var(--list-marker-color);
+}
+
+.tasks-backlink a.internal-link {
+    color: var(--list-marker-color);
+}
+
+.task-recurring {
+    color: var(--list-marker-color);
+}
