@@ -11,7 +11,6 @@ import type { TasksEvents } from './TasksEvents';
 import type { Task } from './Task';
 import { DateFallback } from './DateFallback';
 import { TaskLayout } from './TaskLayout';
-import { getSettings } from './Config/Settings';
 
 export class QueryRenderer {
     private readonly app: App;
@@ -320,44 +319,32 @@ class QueryRenderChild extends MarkdownRenderChild {
 
         link.setText(linkText);
 
-        const { backlinkBehavior } = getSettings();
-        if (backlinkBehavior === 'taskHeading') {
-            // Go to the heading the task is defined at
-            link.href = task.path;
-            link.setAttribute('data-href', task.path);
-            if (task.precedingHeader !== null) {
-                const sanitisedHeading = task.precedingHeader.replace(/#/g, '');
-                link.href = link.href + '#' + sanitisedHeading;
-                link.setAttribute('data-href', link.getAttribute('data-href') + '#' + sanitisedHeading);
+        // Go to the line the task is defined at
+        const vault = this.app.vault;
+        link.addEventListener('click', async () => {
+            const result = await getTaskLineAndFile(task, vault);
+            if (result) {
+                const [line, file] = result;
+                const leaf = this.app.workspace.getLeaf();
+                await leaf.openFile(file, { eState: { line: line } });
             }
-        } else if (backlinkBehavior === 'taskLine') {
-            const vault = this.app.vault;
-            // Go to the line the task is defined at
-            link.addEventListener('click', async () => {
+        });
+
+        link.addEventListener('mousedown', async (ev: MouseEvent) => {
+            // Open in a new tab on middle-click.
+            // This distinction is not available in the 'click' event, so we handle the 'mousedown' event
+            // solely for this.
+            // (for regular left-click we prefer the 'click' event, and not to just do everything here, because
+            // the 'click' event is more generic for touch devices etc.)
+            if (ev.button === 1) {
                 const result = await getTaskLineAndFile(task, vault);
                 if (result) {
                     const [line, file] = result;
-                    const leaf = this.app.workspace.getLeaf();
+                    const leaf = this.app.workspace.getLeaf('tab');
                     await leaf.openFile(file, { eState: { line: line } });
                 }
-            });
-
-            link.addEventListener('mousedown', async (ev: MouseEvent) => {
-                // Open in a new tab on middle-click.
-                // This distinction is not available in the 'click' event, so we handle the 'mousedown' event
-                // solely for this.
-                // (for regular left-click we prefer the 'click' event, and not to just do everything here, because
-                // the 'click' event is more generic for touch devices etc.)
-                if (ev.button === 1) {
-                    const result = await getTaskLineAndFile(task, vault);
-                    if (result) {
-                        const [line, file] = result;
-                        const leaf = this.app.workspace.getLeaf('tab');
-                        await leaf.openFile(file, { eState: { line: line } });
-                    }
-                }
-            });
-        }
+            }
+        });
 
         if (!shortMode) {
             backLink.append(')');

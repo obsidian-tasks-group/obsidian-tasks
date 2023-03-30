@@ -85,6 +85,8 @@ function debugLog(message: string) {
 // When this exception is thrown, it is meant to indicate that the caller should consider to try the operation
 // again soon
 class WarningWorthRetrying extends Error {}
+// Same as above, but be silent about it
+class RetryWithoutWarning extends Error {}
 
 /**
  * This is a workaround to re-try when the returned file cache is `undefined`.
@@ -157,6 +159,8 @@ Recommendations:
         if (e instanceof WarningWorthRetrying) {
             if (e.message) warnAndNotice(e.message);
             return retry();
+        } else if (e instanceof RetryWithoutWarning) {
+            return retry();
         } else if (e instanceof Error) {
             errorAndNotice(e.message);
         }
@@ -208,7 +212,7 @@ async function getTaskAndFileLines(task: Task, vault: Vault): Promise<[number, T
             // to a JSON file and then re-used in a 'unit' test.
             saveMockDataForTesting(task, fileLines, listItemsCache);
         }
-        throw new WarningWorthRetrying();
+        throw new RetryWithoutWarning();
     }
     return [taskLineNumber, file, fileLines];
 }

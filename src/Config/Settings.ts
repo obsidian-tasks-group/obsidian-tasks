@@ -17,8 +17,6 @@ export type HeadingState = {
     [id: string]: boolean;
 };
 
-export type GotoTaskType = 'taskHeading' | 'taskLine';
-
 /**
  * Interface encapsulating how a Task is written to and read from text
  *
@@ -69,8 +67,6 @@ export interface Settings {
     // Tracks the stage of the headings in the settings UI.
     headingOpened: HeadingState;
 
-    // What to do when clicking the task backlink -- open the heading that includes the task or go to the line the task is defined at
-    backlinkBehavior: GotoTaskType;
     debugSettings: DebugSettings;
 }
 
@@ -99,7 +95,6 @@ const defaultSettings: Settings = {
     },
     headingOpened: {},
     debugSettings: new DebugSettings(),
-    backlinkBehavior: 'taskLine',
 };
 
 let settings: Settings = { ...defaultSettings };

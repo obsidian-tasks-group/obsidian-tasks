@@ -1,11 +1,11 @@
-import { DropdownComponent, Notice, PluginSettingTab, Setting, debounce } from 'obsidian';
+import { Notice, PluginSettingTab, Setting, debounce } from 'obsidian';
 import { StatusConfiguration, StatusType } from '../StatusConfiguration';
 import type TasksPlugin from '../main';
 import { StatusRegistry } from '../StatusRegistry';
 import { Status } from '../Status';
 import type { StatusCollection } from '../StatusCollection';
 import * as Themes from './Themes';
-import type { GotoTaskType, HeadingState } from './Settings';
+import type { HeadingState } from './Settings';
 import { getSettings, isFeatureEnabled, updateGeneralSetting, updateSettings } from './Settings';
 import { StatusSettings } from './StatusSettings';
 import settingsJson from './settingsConfiguration.json';
@@ -53,20 +53,6 @@ export class SettingsTab extends PluginSettingTab {
             cls: 'tasks-setting-important',
             text: 'Changing any settings requires a restart of obsidian.',
         });
-
-        new Setting(containerEl)
-            .setName('Task backlink behavior')
-            .setDesc("Decide what happens when clicking on a task's backlink.")
-            .addDropdown((drop: DropdownComponent) => {
-                const settings = getSettings();
-                drop.addOption('taskHeading', "Go to task's heading");
-                drop.addOption('taskLine', "Go to task's line");
-                drop.setValue(settings.backlinkBehavior);
-                drop.onChange(async (value) => {
-                    updateSettings({ backlinkBehavior: value as GotoTaskType });
-                    await this.plugin.saveSettings();
-                });
-            });
 
         // ---------------------------------------------------------------------------
         containerEl.createEl('h4', { text: 'Global filter Settings' });
