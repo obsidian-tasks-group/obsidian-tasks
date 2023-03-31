@@ -78,7 +78,7 @@ describe('Task editing (UI) vs Global Filter', () => {
         GlobalFilter.reset();
     });
 
-    function testDescriptionInUI(taskLine: string, expectedDescription: string) {
+    function testDescriptionRender(taskLine: string, expectedDescription: string) {
         const task = taskFromLine({ line: taskLine, path: '' });
         const { container } = render(EditTask, { task, statusOptions, onSubmit });
         expect(() => container).toBeTruthy();
@@ -89,7 +89,7 @@ describe('Task editing (UI) vs Global Filter', () => {
 
     it('task description should be displayed (empty Global Filter)', () => {
         GlobalFilter.set('');
-        testDescriptionInUI('- [ ] important thing', 'important thing');
+        testDescriptionRender('- [ ] important thing', 'important thing');
     });
 
     it.each([
@@ -107,7 +107,7 @@ describe('Task editing (UI) vs Global Filter', () => {
         'task description should be displayed (non-tag Global Filter)',
         (globalFilter: string, taskLine: string, expectedDescription: string) => {
             GlobalFilter.set(globalFilter);
-            testDescriptionInUI(taskLine, expectedDescription);
+            testDescriptionRender(taskLine, expectedDescription);
         },
     );
 
@@ -134,7 +134,7 @@ describe('Task editing (UI) vs Global Filter', () => {
         'task description should be displayed (tag-like Global Filter)',
         (globalFilter: string, taskLine: string, expectedDescription: string) => {
             GlobalFilter.set(globalFilter);
-            testDescriptionInUI(taskLine, expectedDescription);
+            testDescriptionRender(taskLine, expectedDescription);
         },
     );
 });
