@@ -165,13 +165,7 @@ describe('Task editing vs Global Filter', () => {
         GlobalFilter.reset();
     });
 
-    it('task description should be updated', async () => {
-        GlobalFilter.set('#remember');
-
-        const taskLine = '- [ ] simple task #remember';
-        const newTaskLine = 'task edited';
-        const editedTaskLine = '- [ ] #remember task edited';
-
+    async function testDescriptionEdit(taskLine: string, newTaskLine: string, editedTaskLine: string) {
         const task = taskFromLine({ line: taskLine, path: '' });
         const result = render(EditTask, { task, statusOptions, onSubmit });
         const { container } = result;
@@ -186,5 +180,15 @@ describe('Task editing vs Global Filter', () => {
         submit.click();
         const editedTask = await waitForClose;
         expect(editedTask).toEqual(editedTaskLine);
+    }
+
+    it('task description should be updated', async () => {
+        GlobalFilter.set('#remember');
+
+        const taskLine = '- [ ] simple task #remember';
+        const newTaskLine = 'task edited';
+        const editedTaskLine = '- [ ] #remember task edited';
+
+        await testDescriptionEdit(taskLine, newTaskLine, editedTaskLine);
     });
 });
