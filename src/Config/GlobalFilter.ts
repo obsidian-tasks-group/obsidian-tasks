@@ -30,6 +30,10 @@ export class GlobalFilter {
         return description.includes(globalFilter);
     }
 
+    static prependTo(description: string): string {
+        return GlobalFilter.get() + ' ' + description;
+    }
+
     /**
      * Search for the global filter for the purpose of removing it from the description, but do so only
      * if it is a separate word (preceding the beginning of line or a space and followed by the end of line

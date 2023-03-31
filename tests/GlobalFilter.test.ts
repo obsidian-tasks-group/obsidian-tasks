@@ -256,3 +256,23 @@ describe('check removal of the global filter exhaustively', () => {
         expect(GlobalFilter.removeAsWordFrom(inputDescription)).toEqual(expectedDescription);
     });
 });
+
+describe('GlobalFilter.prepend() tests', () => {
+    afterEach(() => {
+        GlobalFilter.reset();
+    });
+
+    it('Should prepend Global Filter', () => {
+        const globalFilter = 'awesome';
+        const description = 'blossom';
+
+        GlobalFilter.set(globalFilter);
+        expect(GlobalFilter.prependTo(description)).toEqual(`${globalFilter} ${description}`);
+    });
+
+    it('Should prepend not prepend empty Global Filter', () => {
+        // Note that an empty space is currently prepended in case the Global Filter is empty
+        // Not fixing this for now in a refactoring PR
+        expect(GlobalFilter.prependTo('description')).toEqual(' description');
+    });
+});

@@ -278,7 +278,7 @@
     const _onSubmit = () => {
         let description = editableTask.description.trim();
         if (addGlobalFilterOnSave) {
-            description = GlobalFilter.get() + ' ' + description;
+            description = GlobalFilter.prependTo(description);
         }
 
         const startDate = parseTypedDateForSaving(editableTask.startDate);
