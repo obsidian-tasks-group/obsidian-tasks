@@ -78,14 +78,17 @@ describe('Task editing (UI) vs Global Filter', () => {
         GlobalFilter.reset();
     });
 
-    it('task description should be displayed (empty Global Filter)', () => {
-        GlobalFilter.set('');
-
-        const task = taskFromLine({ line: '- [ ] important thing', path: '' });
+    function testDescriptionInUI(taskLine: string, expectedDescription: string) {
+        const task = taskFromLine({ line: taskLine, path: '' });
         const { container } = render(EditTask, { task, statusOptions, onSubmit });
         expect(() => container).toBeTruthy();
         const description = container.ownerDocument.getElementById('description') as HTMLInputElement;
         expect(() => description).toBeTruthy();
-        expect(description!.value).toEqual('important thing');
+        expect(description!.value).toEqual(expectedDescription);
+    }
+
+    it('task description should be displayed (empty Global Filter)', () => {
+        GlobalFilter.set('');
+        testDescriptionInUI('- [ ] important thing', 'important thing');
     });
 });
