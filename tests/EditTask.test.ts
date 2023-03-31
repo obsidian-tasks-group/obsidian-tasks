@@ -101,10 +101,14 @@ describe('Task editing (UI) vs Global Filter', () => {
         // Corner cases
         ['filter', '- [ ]', ''],
         ['filter', '- [ ] filter', ''],
+        // In case the filter is present several time it is not filtered still...
+        ['filter', '- [ ] filter filter', 'filter'],
+        ['filter', '- [ ] filter filter filter ', 'filter'],
+        ['filter', '- [ ] filter filter filter filter filter', 'filter filter'],
         ['filter', '- [ ] filterandsomething', 'filterandsomething'],
         ['filter', '- [ ] filter/somethingelse', 'filter/somethingelse'],
     ])(
-        'task description should be displayed (non-tag Global Filter)',
+        'task description should be displayed (non-tag Global Filter: "%s", task: "%s")',
         (globalFilter: string, taskLine: string, expectedDescription: string) => {
             GlobalFilter.set(globalFilter);
             testDescriptionRender(taskLine, expectedDescription);
@@ -127,11 +131,16 @@ describe('Task editing (UI) vs Global Filter', () => {
         // Corner cases
         ['#todo', '- [ ]', ''],
         ['#todo', '- [ ] #todo', ''],
+        // In case the filter is present several time it is not filtered still...
+        ['#todo', '- [ ] #todo #todo', '#todo'],
+        ['#todo', '- [ ] #todo #todo #todo ', '#todo'],
+        // Note the extra space between the 2 in the result. Different from non-tag filter
+        ['#todo', '- [ ] #todo #todo #todo #todo #todo', '#todo  #todo'],
         //  Somehow there is a trailing space at the beggining in both tests below
         ['#todo', '- [ ] #todoandsomething', ' #todoandsomething'],
         ['#todo', '- [ ] #todo/somethingelse', ' #todo/somethingelse'],
     ])(
-        'task description should be displayed (tag-like Global Filter)',
+        'task description should be displayed (tag-like Global Filter: "%s", task: "%s"))',
         (globalFilter: string, taskLine: string, expectedDescription: string) => {
             GlobalFilter.set(globalFilter);
             testDescriptionRender(taskLine, expectedDescription);
