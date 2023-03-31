@@ -92,19 +92,27 @@ describe('Task editing (UI) vs Global Filter', () => {
         testDescriptionInUI('- [ ] important thing', 'important thing');
     });
 
-    it('task description should be displayed (non-tag Global Filter)', () => {
-        const globalFilter = 'filter';
-        GlobalFilter.set(globalFilter);
-        testDescriptionInUI(`- [ ] ${globalFilter} important thing`, 'important thing');
-        testDescriptionInUI(`- [ ] important ${globalFilter} thing`, 'important thing');
-        testDescriptionInUI(`- [ ] important thing ${globalFilter}`, 'important thing');
-    });
+    it.each([
+        ['filter', '- [ ] filter important thing', 'important thing'],
+        ['filter', '- [ ] important filter thing', 'important thing'],
+        ['filter', '- [ ] important thing filter', 'important thing'],
+    ])(
+        'task description should be displayed (non-tag Global Filter)',
+        (globalFilter: string, taskLine: string, expectedDescription: string) => {
+            GlobalFilter.set(globalFilter);
+            testDescriptionInUI(taskLine, expectedDescription);
+        },
+    );
 
-    it('task description should be displayed (tag-like Global Filter)', () => {
-        const globalFilter = '#todo';
-        GlobalFilter.set(globalFilter);
-        testDescriptionInUI(`- [ ] ${globalFilter} important thing`, 'important thing');
-        testDescriptionInUI(`- [ ] important ${globalFilter} thing`, 'important thing');
-        testDescriptionInUI(`- [ ] important thing ${globalFilter}`, 'important thing');
-    });
+    it.each([
+        ['#todo', '- [ ] #todo another plan', 'another plan'],
+        ['#todo', '- [ ] another #todo plan', 'another plan'],
+        ['#todo', '- [ ] another plan #todo', 'another plan'],
+    ])(
+        'task description should be displayed (tag-like Global Filter)',
+        (globalFilter: string, taskLine: string, expectedDescription: string) => {
+            GlobalFilter.set(globalFilter);
+            testDescriptionInUI(taskLine, expectedDescription);
+        },
+    );
 });
