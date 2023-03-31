@@ -74,37 +74,36 @@ describe('Task rendering vs Global Filter', () => {
         GlobalFilter.reset();
     });
 
-    function testDescriptionRender(taskLine: string, expectedDescription: string) {
-        const task = taskFromLine({ line: taskLine, path: '' });
+    function testDescriptionRender(taskDescription: string, expectedDescription: string) {
+        const task = taskFromLine({ line: `- [ ] ${taskDescription}`, path: '' });
         const { container } = render(EditTask, { task, statusOptions, onSubmit });
         expect(() => container).toBeTruthy();
-        const description = container.ownerDocument.getElementById('description') as HTMLInputElement;
-        expect(() => description).toBeTruthy();
-        expect(description!.value).toEqual(expectedDescription);
+        const renderedDescription = container.ownerDocument.getElementById('description') as HTMLInputElement;
+        expect(() => renderedDescription).toBeTruthy();
+        expect(renderedDescription!.value).toEqual(expectedDescription);
     }
 
-    it('task description should be displayed (empty Global Filter)', () => {
+    it('should display task description (empty Global Filter)', () => {
         GlobalFilter.set('');
-        testDescriptionRender('- [ ] important thing', 'important thing');
+        testDescriptionRender('important thing', 'important thing');
     });
 
     it.each([
         // Nominal cases
-        ['filter', '- [ ] filter important thing', 'important thing'],
-        ['filter', '- [ ] important filter thing', 'important thing'],
-        ['filter', '- [ ] important thing filter', 'important thing'],
+        ['filter', 'filter important thing', 'important thing'],
+        ['filter', 'important filter thing', 'important thing'],
+        ['filter', 'important thing filter', 'important thing'],
 
         // Corner cases
-        ['filter', '- [ ]', ''],
-        ['filter', '- [ ] filter', ''],
+        ['filter', 'filter', ''],
         // In case the filter is present several time it is not filtered still...
-        ['filter', '- [ ] filter filter', 'filter'],
-        ['filter', '- [ ] filter filter filter ', 'filter'],
-        ['filter', '- [ ] filter filter filter filter filter', 'filter filter'],
-        ['filter', '- [ ] filterandsomething', 'filterandsomething'],
-        ['filter', '- [ ] filter/somethingelse', 'filter/somethingelse'],
+        ['filter', 'filter filter', 'filter'],
+        ['filter', 'filter filter filter ', 'filter'],
+        ['filter', 'filter filter filter filter filter', 'filter filter'],
+        ['filter', 'filterandsomething', 'filterandsomething'],
+        ['filter', 'filter/somethingelse', 'filter/somethingelse'],
     ])(
-        'task description should be displayed (non-tag Global Filter: "%s", task: "%s")',
+        'should display task description (non-tag Global Filter: "%s", task: "%s")',
         (globalFilter: string, taskLine: string, expectedDescription: string) => {
             GlobalFilter.set(globalFilter);
             testDescriptionRender(taskLine, expectedDescription);
@@ -113,30 +112,29 @@ describe('Task rendering vs Global Filter', () => {
 
     it.each([
         // Nominal cases
-        ['#todo', '- [ ] #todo another plan', 'another plan'],
-        ['#todo', '- [ ] another #todo plan', 'another plan'],
-        ['#todo', '- [ ] another plan #todo', 'another plan'],
+        ['#todo', '#todo another plan', 'another plan'],
+        ['#todo', 'another #todo plan', 'another plan'],
+        ['#todo', 'another plan #todo', 'another plan'],
 
         // Multiple tags
-        ['#todo', '- [ ] remember this #urgent', 'remember this #urgent'],
-        ['#todo', '- [ ] #todo remember this #urgent', 'remember this #urgent'],
-        ['#todo', '- [ ] remember #todo this #urgent', 'remember this #urgent'],
-        ['#todo', '- [ ] remember this #todo #urgent', 'remember this #urgent'],
-        ['#todo', '- [ ] remember this #urgent #todo', 'remember this #urgent'],
+        ['#todo', 'remember this #urgent', 'remember this #urgent'],
+        ['#todo', '#todo remember this #urgent', 'remember this #urgent'],
+        ['#todo', 'remember #todo this #urgent', 'remember this #urgent'],
+        ['#todo', 'remember this #todo #urgent', 'remember this #urgent'],
+        ['#todo', 'remember this #urgent #todo', 'remember this #urgent'],
 
         // Corner cases
-        ['#todo', '- [ ]', ''],
-        ['#todo', '- [ ] #todo', ''],
+        ['#todo', '#todo', ''],
         // In case the filter is present several time it is not filtered still...
-        ['#todo', '- [ ] #todo #todo', '#todo'],
-        ['#todo', '- [ ] #todo #todo #todo ', '#todo'],
+        ['#todo', '#todo #todo', '#todo'],
+        ['#todo', '#todo #todo #todo ', '#todo'],
         // Note the extra space between the 2 in the result. Different from non-tag filter
-        ['#todo', '- [ ] #todo #todo #todo #todo #todo', '#todo  #todo'],
+        ['#todo', '#todo #todo #todo #todo #todo', '#todo  #todo'],
         //  Somehow there is a trailing space at the beggining in both tests below
-        ['#todo', '- [ ] #todoandsomething', ' #todoandsomething'],
-        ['#todo', '- [ ] #todo/somethingelse', ' #todo/somethingelse'],
+        ['#todo', '#todoandsomething', ' #todoandsomething'],
+        ['#todo', '#todo/somethingelse', ' #todo/somethingelse'],
     ])(
-        'task description should be displayed (tag-like Global Filter: "%s", task: "%s"))',
+        'should display task description (tag-like Global Filter: "%s", task: "%s", display: "%s"))',
         (globalFilter: string, taskLine: string, expectedDescription: string) => {
             GlobalFilter.set(globalFilter);
             testDescriptionRender(taskLine, expectedDescription);
@@ -165,8 +163,8 @@ describe('Task editing vs Global Filter', () => {
         GlobalFilter.reset();
     });
 
-    async function testDescriptionEdit(taskLine: string, newTaskLine: string, editedTaskLine: string) {
-        const task = taskFromLine({ line: taskLine, path: '' });
+    async function testDescriptionEdit(taskDescription: string, newDescription: string, expectedDescription: string) {
+        const task = taskFromLine({ line: `- [ ] ${taskDescription}`, path: '' });
         const result = render(EditTask, { task, statusOptions, onSubmit });
         const { container } = result;
         expect(() => container).toBeTruthy();
@@ -176,17 +174,17 @@ describe('Task editing vs Global Filter', () => {
         const submit = result.getByText('Apply') as HTMLButtonElement;
         expect(submit).toBeTruthy();
 
-        await fireEvent.input(description, { target: { value: newTaskLine } });
+        await fireEvent.input(description, { target: { value: newDescription } });
         submit.click();
         const editedTask = await waitForClose;
-        expect(editedTask).toEqual(editedTaskLine);
+        expect(editedTask).toEqual(`- [ ] ${expectedDescription}`);
     }
 
-    it.each([['#remember', '- [ ] simple task #remember', 'task edited', '- [ ] #remember task edited']])(
-        'task description should be updated (Global Filter: "%s", task line: "%s", new task line: "%s", edited task: "%s")',
-        async (globalFilter: string, taskLine: string, newTaskLine: string, editedTaskLine: string) => {
+    it.each([['#remember', 'simple task #remember', 'task edited', '#remember task edited']])(
+        'should edit task description (Global Filter: "%s", original description: "%s", new: "%s", set: "%s")',
+        async (globalFilter: string, taskDescription: string, newDescription: string, expectedDescription: string) => {
             GlobalFilter.set(globalFilter);
-            await testDescriptionEdit(taskLine, newTaskLine, editedTaskLine);
+            await testDescriptionEdit(taskDescription, newDescription, expectedDescription);
         },
     );
 });
