@@ -183,12 +183,12 @@ describe('Task editing vs Global Filter', () => {
     }
 
     it('task description should be updated', async () => {
-        GlobalFilter.set('#remember');
-
         const taskLine = '- [ ] simple task #remember';
         const newTaskLine = 'task edited';
         const editedTaskLine = '- [ ] #remember task edited';
+        const globalFilter = '#remember';
 
+        GlobalFilter.set(globalFilter);
         await testDescriptionEdit(taskLine, newTaskLine, editedTaskLine);
     });
 });
