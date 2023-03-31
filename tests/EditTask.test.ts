@@ -182,13 +182,11 @@ describe('Task editing vs Global Filter', () => {
         expect(editedTask).toEqual(editedTaskLine);
     }
 
-    it('task description should be updated', async () => {
-        const taskLine = '- [ ] simple task #remember';
-        const newTaskLine = 'task edited';
-        const editedTaskLine = '- [ ] #remember task edited';
-        const globalFilter = '#remember';
-
-        GlobalFilter.set(globalFilter);
-        await testDescriptionEdit(taskLine, newTaskLine, editedTaskLine);
-    });
+    it.each([['#remember', '- [ ] simple task #remember', 'task edited', '- [ ] #remember task edited']])(
+        'task description should be updated (Global Filter: "%s", task line: "%s", new task line: "%s", edited task: "%s")',
+        async (globalFilter: string, taskLine: string, newTaskLine: string, editedTaskLine: string) => {
+            GlobalFilter.set(globalFilter);
+            await testDescriptionEdit(taskLine, newTaskLine, editedTaskLine);
+        },
+    );
 });
