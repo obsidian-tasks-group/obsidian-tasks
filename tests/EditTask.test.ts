@@ -9,6 +9,7 @@ import type { Task } from '../src/Task';
 import EditTask from '../src/ui/EditTask.svelte';
 import { Status } from '../src/Status';
 import { DateFallback } from '../src/DateFallback';
+import { GlobalFilter } from '../src/Config/GlobalFilter';
 
 window.moment = moment;
 const task = taskFromLine({ line: '- [X] test task 1', path: '' });
@@ -53,5 +54,38 @@ describe('Task editing (UI)', () => {
         submit.click();
         const editedTask = await waitForClose;
         expect(editedTask).toEqual('- [X] task edited');
+    });
+});
+
+describe('Task editing (UI) vs Global Filter', () => {
+    let resolvePromise: (input: string) => void;
+    //let waitForClose: Promise<string>;
+    let onSubmit: (updatedTasks: Task[]) => void;
+
+    beforeEach(() => {
+        /*waitForClose = new Promise<string>((resolve, _) => {
+            resolvePromise = resolve;
+        });*/
+        onSubmit = (updatedTasks: Task[]): void => {
+            const serializedTask = DateFallback.removeInferredStatusIfNeeded(task, updatedTasks)
+                .map((task: Task) => task.toFileLineString())
+                .join('\n');
+            resolvePromise(serializedTask);
+        };
+    });
+
+    afterEach(() => {
+        GlobalFilter.reset();
+    });
+
+    it('task description should be displayed (empty Global Filter)', () => {
+        GlobalFilter.set('');
+
+        const task = taskFromLine({ line: '- [ ] important thing', path: '' });
+        const { container } = render(EditTask, { task, statusOptions, onSubmit });
+        expect(() => container).toBeTruthy();
+        const description = container.ownerDocument.getElementById('description') as HTMLInputElement;
+        expect(() => description).toBeTruthy();
+        expect(description!.value).toEqual('important thing');
     });
 });
