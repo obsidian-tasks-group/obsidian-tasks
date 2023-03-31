@@ -185,7 +185,7 @@ describe('check removal of the global filter', () => {
             expectedDescription: '',
         },
     ])(
-        'should parse "$markdownTask" and extract "$expectedDescription"',
+        'should parse "$inputDescription" and extract "$expectedDescription"',
         ({ globalFilter, inputDescription, expectedDescription }) => {
             // Arrange
             GlobalFilter.set(globalFilter);
@@ -235,7 +235,7 @@ describe('check removal of the global filter exhaustively', () => {
         // Failed attempt at creating a failing test for when / was not escaped
         '///',
         '\\',
-    ])('should parse global filter "$globalFilter" edge cases correctly', (globalFilter) => {
+    ])('should parse global filter "%s" edge cases correctly', (globalFilter) => {
         // Arrange
         GlobalFilter.set(globalFilter);
 
