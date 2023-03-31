@@ -161,6 +161,12 @@ describe('check removal of the global filter', () => {
         },
         {
             globalFilter: '#t',
+            inputDescription: 'task #t with #t several global #t filters #t',
+            // Trailing spaces present after the first removal
+            expectedDescription: 'task with  several global  filters',
+        },
+        {
+            globalFilter: '#t',
             inputDescription: 'task with global filter in the end and some spaces  #t  ',
             expectedDescription: 'task with global filter in the end and some spaces',
         },
@@ -183,6 +189,59 @@ describe('check removal of the global filter', () => {
             globalFilter: '#t',
             inputDescription: '#t', // confirm behaviour when the description is empty
             expectedDescription: '',
+        },
+        {
+            globalFilter: '#t',
+            inputDescription: '#t #t',
+            // Wrong behaviour - the expected should be empty
+            expectedDescription: '#t',
+        },
+        {
+            globalFilter: '#t',
+            inputDescription: '#t #t #t',
+            // Wrong behaviour - the expected should be empty
+            expectedDescription: '#t',
+        },
+        {
+            globalFilter: '#t',
+            inputDescription: '#t #t #t #t',
+            // Wrong behaviour - the expected should be empty
+            expectedDescription: '#t #t',
+        },
+        {
+            globalFilter: '#t',
+            inputDescription: '#t #t #t #t #t',
+            // Wrong behaviour - the expected should be empty
+            expectedDescription: '#t #t',
+        },
+        {
+            globalFilter: 'some',
+            inputDescription: 'some', // confirm behaviour when the description is empty
+            expectedDescription: '',
+        },
+        {
+            globalFilter: 'some',
+            inputDescription: 'some some',
+            // Wrong behaviour - the expected should be empty
+            expectedDescription: 'some',
+        },
+        {
+            globalFilter: 'some',
+            inputDescription: 'some some some',
+            // Wrong behaviour - the expected should be empty
+            expectedDescription: 'some',
+        },
+        {
+            globalFilter: 'some',
+            inputDescription: 'some some some some',
+            // Wrong behaviour - the expected should be empty
+            expectedDescription: 'some some',
+        },
+        {
+            globalFilter: 'some',
+            inputDescription: 'some some some some some',
+            // Wrong behaviour - the expected should be empty
+            expectedDescription: 'some some',
         },
     ])(
         'should parse "$inputDescription" and extract "$expectedDescription"',
