@@ -39,9 +39,21 @@ describe('Task rendering', () => {
         testDescriptionRender('filter important thing', 'important thing');
     });
 
+    it('should display task description with complex non-tag Global Filter)', () => {
+        GlobalFilter.set('filter');
+        // This behavior is incosistent with Obsidian's tag definition which includes nested tags
+        testDescriptionRender('filter/important thing', 'filter/important thing');
+    });
+
     it('should display task description without tag-like Global Filter', () => {
         GlobalFilter.set('#todo');
         testDescriptionRender('#todo another plan', 'another plan');
+    });
+
+    it('should display task description with complex tag-like Global Filter', () => {
+        GlobalFilter.set('#todo');
+        // This behavior is incosistent with Obsidian's tag definition which includes nested tags
+        testDescriptionRender('#todo/important another plan', '#todo/important another plan');
     });
 });
 
