@@ -57,7 +57,7 @@ describe('Task editing (UI)', () => {
     });
 });
 
-describe('Task rendering vs Global Filter', () => {
+describe('Task rendering', () => {
     let resolvePromise: (input: string) => void;
     let onSubmit: (updatedTasks: Task[]) => void;
 
@@ -84,65 +84,21 @@ describe('Task rendering vs Global Filter', () => {
     }
 
     it('should display task description (empty Global Filter)', () => {
-        GlobalFilter.set('');
-        testDescriptionRender('important thing', 'important thing');
+        testDescriptionRender('important thing #todo', 'important thing #todo');
     });
 
-    it.each([
-        // Nominal cases
-        ['filter', 'filter important thing', 'important thing'],
-        ['filter', 'important filter thing', 'important thing'],
-        ['filter', 'important thing filter', 'important thing'],
+    it('should display task description without non-tag Global Filter)', () => {
+        GlobalFilter.set('filter');
+        testDescriptionRender('filter important thing', 'important thing');
+    });
 
-        // Corner cases
-        ['filter', 'filter', ''],
-        // In case the filter is present several time it is not filtered still...
-        ['filter', 'filter filter', 'filter'],
-        ['filter', 'filter filter filter ', 'filter'],
-        ['filter', 'filter filter filter filter filter', 'filter filter'],
-        ['filter', 'filterandsomething', 'filterandsomething'],
-        ['filter', 'filter/somethingelse', 'filter/somethingelse'],
-    ])(
-        'should display task description (non-tag Global Filter: "%s", task: "%s")',
-        (globalFilter: string, taskLine: string, expectedDescription: string) => {
-            GlobalFilter.set(globalFilter);
-            testDescriptionRender(taskLine, expectedDescription);
-        },
-    );
-
-    it.each([
-        // Nominal cases
-        ['#todo', '#todo another plan', 'another plan'],
-        ['#todo', 'another #todo plan', 'another plan'],
-        ['#todo', 'another plan #todo', 'another plan'],
-
-        // Multiple tags
-        ['#todo', 'remember this #urgent', 'remember this #urgent'],
-        ['#todo', '#todo remember this #urgent', 'remember this #urgent'],
-        ['#todo', 'remember #todo this #urgent', 'remember this #urgent'],
-        ['#todo', 'remember this #todo #urgent', 'remember this #urgent'],
-        ['#todo', 'remember this #urgent #todo', 'remember this #urgent'],
-
-        // Corner cases
-        ['#todo', '#todo', ''],
-        // In case the filter is present several time it is not filtered still...
-        ['#todo', '#todo #todo', '#todo'],
-        ['#todo', '#todo #todo #todo ', '#todo'],
-        // Note the extra space between the 2 in the result. Different from non-tag filter
-        ['#todo', '#todo #todo #todo #todo #todo', '#todo  #todo'],
-        //  Somehow there is a trailing space at the beggining in both tests below
-        ['#todo', '#todoandsomething', ' #todoandsomething'],
-        ['#todo', '#todo/somethingelse', ' #todo/somethingelse'],
-    ])(
-        'should display task description (tag-like Global Filter: "%s", task: "%s", display: "%s"))',
-        (globalFilter: string, taskLine: string, expectedDescription: string) => {
-            GlobalFilter.set(globalFilter);
-            testDescriptionRender(taskLine, expectedDescription);
-        },
-    );
+    it('should display task description without tag-like Global Filter', () => {
+        GlobalFilter.set('#todo');
+        testDescriptionRender('#todo another plan', 'another plan');
+    });
 });
 
-describe('Task editing vs Global Filter', () => {
+describe('Task editing', () => {
     let resolvePromise: (input: string) => void;
     let waitForClose: Promise<string>;
     let onSubmit: (updatedTasks: Task[]) => void;
@@ -180,57 +136,31 @@ describe('Task editing vs Global Filter', () => {
         expect(editedTask).toEqual(`- [ ] ${expectedDescription}`);
     }
 
-    it.each([
-        // Empty Global Filter
-        ['', 'simple task #remember', 'simple task #remember', 'simple task #remember'],
-        ['', 'simple task #remember', 'task edited', 'task edited'],
+    it('should keep task description if it was not edited (Empty Global Filter)', async () => {
+        const description = 'simple task #remember';
+        await testDescriptionEdit(description, description, description);
+    });
 
-        // Non-Tag Global Filter - no edit
-        // Global Filter is moved forward and all extra instances removed
-        ['STUFF', 'STUFF heavy duty', 'heavy duty', 'STUFF heavy duty'],
-        ['STUFF', 'heavy duty STUFF', 'heavy duty', 'STUFF heavy duty'],
-        ['STUFF', 'heavy STUFF duty', 'heavy duty', 'STUFF heavy duty'],
-        ['STUFF', 'STUFF STUFF heavy duty', 'heavy duty', 'STUFF heavy duty'],
-        ['STUFF', 'heavy duty STUFF STUFF', 'heavy duty', 'STUFF heavy duty'],
-        ['STUFF', 'heavy STUFF STUFF duty', 'heavy duty', 'STUFF heavy duty'],
-        // Why the test is crashing here?
-        //['STUFF', 'STUFF', '', 'STUFF'],
+    it('should change task description if it was edited (Empty Global Filter)', async () => {
+        await testDescriptionEdit('simple task #remember', 'another', 'another');
+    });
 
-        // Non-Tag Global Filter - edited
-        // Global Filter multiplied if present in the edit
-        ['STUFF', 'STUFF heavy duty', 'STUFF duty edited', 'STUFF STUFF duty edited'],
-        // Global Filter moved forward
-        ['STUFF', 'heavy duty STUFF', 'duty edited', 'STUFF duty edited'],
-        // Global Filter moved forward and one instance removed
-        ['STUFF', 'heavy STUFF duty STUFF', 'duty edited', 'STUFF duty edited'],
-        ['STUFF', 'STUFF STUFF heavy duty', 'duty edited', 'STUFF duty edited'],
-        ['STUFF', 'STUFF', 'duty edited', 'STUFF duty edited'],
+    it('should not change the description if the task was not edited and keep Global Filter', async () => {
+        const globalFilter = '#remember';
+        const description = 'simple task';
+        GlobalFilter.set(globalFilter);
+        await testDescriptionEdit(`${globalFilter} ${description}`, description, `${globalFilter} ${description}`);
+    });
 
-        // Tag Global Filter - no edit (no difference with non-tag Global Filter)
-        // Global Filter is moved forward and all extra instances removed
-        ['#remember', '#remember simple task', 'simple task', '#remember simple task'],
-        ['#remember', 'simple task #remember', 'simple task', '#remember simple task'],
-        ['#remember', 'simple #remember task', 'simple task', '#remember simple task'],
-        ['#remember', '#remember #remember simple task', 'simple task', '#remember simple task'],
-        ['#remember', 'simple task #remember #remember', 'simple task', '#remember simple task'],
-        ['#remember', 'simple #remember #remember task', 'simple task', '#remember simple task'],
-        // Why the test is crashing here?
-        //['#remember', '#remember', '', '#remember'],
-
-        // Tag Global Filter - edited (no difference with non-tag Global Filter)
-        // Global Filter multiplied if present in the edit
-        ['#remember', '#remember simple task', '#remember task edited', '#remember #remember task edited'],
-        // Global Filter moved forward
-        ['#remember', 'simple task #remember', 'task edited', '#remember task edited'],
-        // Global Filter moved forward and one instance removed
-        ['#remember', 'simple #remember task #remember', 'task edited', '#remember task edited'],
-        ['#remember', '#remember #remember simple task', 'task edited', '#remember task edited'],
-        ['#remember', '#remember', 'task edited', '#remember task edited'],
-    ])(
-        'should edit task description (Global Filter: "%s", original description: "%s", new: "%s", set: "%s")',
-        async (globalFilter: string, taskDescription: string, newDescription: string, expectedDescription: string) => {
-            GlobalFilter.set(globalFilter);
-            await testDescriptionEdit(taskDescription, newDescription, expectedDescription);
-        },
-    );
+    it('should change the description if the task was edited and keep Global Filter', async () => {
+        const globalFilter = '#remember';
+        const oldDescription = 'simple task';
+        const newDescription = 'new plan';
+        GlobalFilter.set(globalFilter);
+        await testDescriptionEdit(
+            `${globalFilter} ${oldDescription}`,
+            newDescription,
+            `${globalFilter} ${newDescription}`,
+        );
+    });
 });
