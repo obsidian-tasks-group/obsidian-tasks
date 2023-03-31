@@ -91,4 +91,20 @@ describe('Task editing (UI) vs Global Filter', () => {
         GlobalFilter.set('');
         testDescriptionInUI('- [ ] important thing', 'important thing');
     });
+
+    it('task description should be displayed (non-tag Global Filter)', () => {
+        const globalFilter = 'filter';
+        GlobalFilter.set(globalFilter);
+        testDescriptionInUI(`- [ ] ${globalFilter} important thing`, 'important thing');
+        testDescriptionInUI(`- [ ] important ${globalFilter} thing`, 'important thing');
+        testDescriptionInUI(`- [ ] important thing ${globalFilter}`, 'important thing');
+    });
+
+    it('task description should be displayed (tag-like Global Filter)', () => {
+        const globalFilter = '#todo';
+        GlobalFilter.set(globalFilter);
+        testDescriptionInUI(`- [ ] ${globalFilter} important thing`, 'important thing');
+        testDescriptionInUI(`- [ ] important ${globalFilter} thing`, 'important thing');
+        testDescriptionInUI(`- [ ] important thing ${globalFilter}`, 'important thing');
+    });
 });
