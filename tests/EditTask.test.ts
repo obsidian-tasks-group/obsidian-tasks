@@ -93,9 +93,16 @@ describe('Task editing (UI) vs Global Filter', () => {
     });
 
     it.each([
+        // Nominal cases
         ['filter', '- [ ] filter important thing', 'important thing'],
         ['filter', '- [ ] important filter thing', 'important thing'],
         ['filter', '- [ ] important thing filter', 'important thing'],
+
+        // Corner cases
+        ['filter', '- [ ]', ''],
+        ['filter', '- [ ] filter', ''],
+        ['filter', '- [ ] filterandsomething', 'filterandsomething'],
+        ['filter', '- [ ] filter/somethingelse', 'filter/somethingelse'],
     ])(
         'task description should be displayed (non-tag Global Filter)',
         (globalFilter: string, taskLine: string, expectedDescription: string) => {
@@ -105,9 +112,17 @@ describe('Task editing (UI) vs Global Filter', () => {
     );
 
     it.each([
+        // Nominal cases
         ['#todo', '- [ ] #todo another plan', 'another plan'],
         ['#todo', '- [ ] another #todo plan', 'another plan'],
         ['#todo', '- [ ] another plan #todo', 'another plan'],
+
+        // Corner cases
+        ['#todo', '- [ ]', ''],
+        ['#todo', '- [ ] #todo', ''],
+        //  Somehow there is a trailing space at the beggining in both tests below
+        ['#todo', '- [ ] #todoandsomething', ' #todoandsomething'],
+        ['#todo', '- [ ] #todo/somethingelse', ' #todo/somethingelse'],
     ])(
         'task description should be displayed (tag-like Global Filter)',
         (globalFilter: string, taskLine: string, expectedDescription: string) => {
