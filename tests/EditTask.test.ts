@@ -117,6 +117,13 @@ describe('Task editing (UI) vs Global Filter', () => {
         ['#todo', '- [ ] another #todo plan', 'another plan'],
         ['#todo', '- [ ] another plan #todo', 'another plan'],
 
+        // Multiple tags
+        ['#todo', '- [ ] remember this #urgent', 'remember this #urgent'],
+        ['#todo', '- [ ] #todo remember this #urgent', 'remember this #urgent'],
+        ['#todo', '- [ ] remember #todo this #urgent', 'remember this #urgent'],
+        ['#todo', '- [ ] remember this #todo #urgent', 'remember this #urgent'],
+        ['#todo', '- [ ] remember this #urgent #todo', 'remember this #urgent'],
+
         // Corner cases
         ['#todo', '- [ ]', ''],
         ['#todo', '- [ ] #todo', ''],
