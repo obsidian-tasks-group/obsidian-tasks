@@ -57,15 +57,11 @@ describe('Task editing (UI)', () => {
     });
 });
 
-describe('Task editing (UI) vs Global Filter', () => {
+describe('Task rendering vs Global Filter', () => {
     let resolvePromise: (input: string) => void;
-    //let waitForClose: Promise<string>;
     let onSubmit: (updatedTasks: Task[]) => void;
 
     beforeEach(() => {
-        /*waitForClose = new Promise<string>((resolve, _) => {
-            resolvePromise = resolve;
-        });*/
         onSubmit = (updatedTasks: Task[]): void => {
             const serializedTask = DateFallback.removeInferredStatusIfNeeded(task, updatedTasks)
                 .map((task: Task) => task.toFileLineString())
@@ -146,4 +142,45 @@ describe('Task editing (UI) vs Global Filter', () => {
             testDescriptionRender(taskLine, expectedDescription);
         },
     );
+});
+
+describe('Task editing vs Global Filter', () => {
+    let resolvePromise: (input: string) => void;
+    let waitForClose: Promise<string>;
+    let onSubmit: (updatedTasks: Task[]) => void;
+
+    beforeEach(() => {
+        waitForClose = new Promise<string>((resolve, _) => {
+            resolvePromise = resolve;
+        });
+        onSubmit = (updatedTasks: Task[]): void => {
+            const serializedTask = DateFallback.removeInferredStatusIfNeeded(task, updatedTasks)
+                .map((task: Task) => task.toFileLineString())
+                .join('\n');
+            resolvePromise(serializedTask);
+        };
+    });
+
+    afterEach(() => {
+        GlobalFilter.reset();
+    });
+
+    it('task description should be updated', async () => {
+        GlobalFilter.set('#remember');
+        const taskLine = '- [ ] simple task #remember';
+        const task = taskFromLine({ line: taskLine, path: '' });
+        const result = render(EditTask, { task, statusOptions, onSubmit });
+        const { container } = result;
+        expect(() => container).toBeTruthy();
+
+        const description = container.ownerDocument.getElementById('description') as HTMLInputElement;
+        expect(description).toBeTruthy();
+        const submit = result.getByText('Apply') as HTMLButtonElement;
+        expect(submit).toBeTruthy();
+
+        await fireEvent.input(description, { target: { value: 'task edited' } });
+        submit.click();
+        const editedTask = await waitForClose;
+        expect(editedTask).toEqual('- [ ] #remember task edited');
+    });
 });
