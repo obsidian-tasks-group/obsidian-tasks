@@ -118,6 +118,16 @@ The CSS `:has` selector is available with Obsidian installer version 1.1.9 and n
 
 **Grouping rules** will add a `data-task-group-by` attribute to the query container, e.g. `data-task-group-by="due,scheduled"`.
 
+## Custom Statuses
+
+Task statuses are represented by a few data attributes, all set on the `task-list-item` `LI` element:
+
+- `data-task` contains the *status symbol*, e.g. "" for a regular TODO, "x" for a regular DONE, or any other symbols that you use.
+- `data-task-status-type` contains the *status type*, e.g. "TODO", "DONE", "IN_PROGRESS".
+- `data-task-status-name` contains the *status name*, e.g. "Todo", "Done", "In Progress".
+
+These attributes can be used to style tasks according to their status, with the status type being the preferred selector in most cases.
+
 ## More Classes
 
 The following additional components have the following classes:
@@ -204,6 +214,14 @@ li.task-list-item[data-task="/"] .task-list-item-checkbox {
 }
 ```
 <!-- endSnippet -->
+
+Alternatively, you can use the status type to write rules that are independent of the status symbol:
+
+```css
+li.task-list-item[data-task-status-type="IN_PROGRESS"] .task-list-item-checkbox {
+        box-shadow: 0 0 10px green;
+}
+```
 
 ### Colors for Due Today and Overdue
 

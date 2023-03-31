@@ -559,4 +559,27 @@ describe('task line rendering', () => {
         expect(tagSpan.classList[0]).toEqual('tag');
         expect(tagSpan.dataset.tagName).toEqual('#illegal-data-attribute');
     });
+
+    it('creates data attributes for custom statuses', async () => {
+        await testLiAttributes(
+            '- [ ] An incomplete task',
+            {},
+            { task: '', taskStatusName: 'Todo', taskStatusType: 'TODO' },
+        );
+        await testLiAttributes(
+            '- [x] A complete task',
+            {},
+            { task: 'x', taskStatusName: 'Done', taskStatusType: 'DONE' },
+        );
+        await testLiAttributes(
+            '- [/] In-progress task',
+            {},
+            { task: '/', taskStatusName: 'In Progress', taskStatusType: 'IN_PROGRESS' },
+        );
+        await testLiAttributes(
+            '- [-] In-progress task',
+            {},
+            { task: '-', taskStatusName: 'Cancelled', taskStatusType: 'CANCELLED' },
+        );
+    });
 });

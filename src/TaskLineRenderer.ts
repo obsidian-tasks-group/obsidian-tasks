@@ -100,6 +100,8 @@ export async function renderTaskLine(
     // Set these to be compatible with stock obsidian lists:
     li.setAttribute('data-task', task.status.symbol.trim()); // Trim to ensure empty attribute for space. Same way as obsidian.
     li.setAttribute('data-line', renderDetails.listIndex.toString());
+    li.setAttribute('data-task-status-name', task.status.name);
+    li.setAttribute('data-task-status-type', task.status.type);
     checkbox.setAttribute('data-line', renderDetails.listIndex.toString());
 
     if (renderDetails.layoutOptions?.shortMode) {
