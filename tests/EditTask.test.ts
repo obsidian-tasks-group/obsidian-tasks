@@ -180,7 +180,53 @@ describe('Task editing vs Global Filter', () => {
         expect(editedTask).toEqual(`- [ ] ${expectedDescription}`);
     }
 
-    it.each([['#remember', 'simple task #remember', 'task edited', '#remember task edited']])(
+    it.each([
+        // Empty Global Filter
+        ['', 'simple task #remember', 'simple task #remember', 'simple task #remember'],
+        ['', 'simple task #remember', 'task edited', 'task edited'],
+
+        // Non-Tag Global Filter - no edit
+        // Global Filter is moved forward and all extra instances removed
+        ['STUFF', 'STUFF heavy duty', 'heavy duty', 'STUFF heavy duty'],
+        ['STUFF', 'heavy duty STUFF', 'heavy duty', 'STUFF heavy duty'],
+        ['STUFF', 'heavy STUFF duty', 'heavy duty', 'STUFF heavy duty'],
+        ['STUFF', 'STUFF STUFF heavy duty', 'heavy duty', 'STUFF heavy duty'],
+        ['STUFF', 'heavy duty STUFF STUFF', 'heavy duty', 'STUFF heavy duty'],
+        ['STUFF', 'heavy STUFF STUFF duty', 'heavy duty', 'STUFF heavy duty'],
+        // Why the test is crashing here?
+        //['STUFF', 'STUFF', '', 'STUFF'],
+
+        // Non-Tag Global Filter - edited
+        // Global Filter multiplied if present in the edit
+        ['STUFF', 'STUFF heavy duty', 'STUFF duty edited', 'STUFF STUFF duty edited'],
+        // Global Filter moved forward
+        ['STUFF', 'heavy duty STUFF', 'duty edited', 'STUFF duty edited'],
+        // Global Filter moved forward and one instance removed
+        ['STUFF', 'heavy STUFF duty STUFF', 'duty edited', 'STUFF duty edited'],
+        ['STUFF', 'STUFF STUFF heavy duty', 'duty edited', 'STUFF duty edited'],
+        ['STUFF', 'STUFF', 'duty edited', 'STUFF duty edited'],
+
+        // Tag Global Filter - no edit (no difference with non-tag Global Filter)
+        // Global Filter is moved forward and all extra instances removed
+        ['#remember', '#remember simple task', 'simple task', '#remember simple task'],
+        ['#remember', 'simple task #remember', 'simple task', '#remember simple task'],
+        ['#remember', 'simple #remember task', 'simple task', '#remember simple task'],
+        ['#remember', '#remember #remember simple task', 'simple task', '#remember simple task'],
+        ['#remember', 'simple task #remember #remember', 'simple task', '#remember simple task'],
+        ['#remember', 'simple #remember #remember task', 'simple task', '#remember simple task'],
+        // Why the test is crashing here?
+        //['#remember', '#remember', '', '#remember'],
+
+        // Tag Global Filter - edited (no difference with non-tag Global Filter)
+        // Global Filter multiplied if present in the edit
+        ['#remember', '#remember simple task', '#remember task edited', '#remember #remember task edited'],
+        // Global Filter moved forward
+        ['#remember', 'simple task #remember', 'task edited', '#remember task edited'],
+        // Global Filter moved forward and one instance removed
+        ['#remember', 'simple #remember task #remember', 'task edited', '#remember task edited'],
+        ['#remember', '#remember #remember simple task', 'task edited', '#remember task edited'],
+        ['#remember', '#remember', 'task edited', '#remember task edited'],
+    ])(
         'should edit task description (Global Filter: "%s", original description: "%s", new: "%s", set: "%s")',
         async (globalFilter: string, taskDescription: string, newDescription: string, expectedDescription: string) => {
             GlobalFilter.set(globalFilter);
