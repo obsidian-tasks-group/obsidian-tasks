@@ -167,7 +167,11 @@ describe('Task editing vs Global Filter', () => {
 
     it('task description should be updated', async () => {
         GlobalFilter.set('#remember');
+
         const taskLine = '- [ ] simple task #remember';
+        const newTaskLine = 'task edited';
+        const editedTaskLine = '- [ ] #remember task edited';
+
         const task = taskFromLine({ line: taskLine, path: '' });
         const result = render(EditTask, { task, statusOptions, onSubmit });
         const { container } = result;
@@ -178,9 +182,9 @@ describe('Task editing vs Global Filter', () => {
         const submit = result.getByText('Apply') as HTMLButtonElement;
         expect(submit).toBeTruthy();
 
-        await fireEvent.input(description, { target: { value: 'task edited' } });
+        await fireEvent.input(description, { target: { value: newTaskLine } });
         submit.click();
         const editedTask = await waitForClose;
-        expect(editedTask).toEqual('- [ ] #remember task edited');
+        expect(editedTask).toEqual(editedTaskLine);
     });
 });
