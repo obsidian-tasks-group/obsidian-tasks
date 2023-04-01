@@ -25,6 +25,12 @@ has_toc: false
 In rendered queries and Reading View, the Tasks plugin adds detailed CSS classes and data attributes that represent many of each task's content, to allow for very extensive styling options via CSS.
 Not only each component in a rendered task line is tagged with classes to differentiate it, many components also add classes and data attributes that represent the actual content of the task, so CSS rules can refer to data such as the relative due date of a task or its specific priority.
 
+## Please share your styles online
+
+We invite Tasks users who create their own Obsidian CSS snippets to share them in the ["Show and tell" Discussions category](https://github.com/obsidian-tasks-group/obsidian-tasks/discussions/categories/show-and-tell) - to inspire others and allow them to use and learn from your CSS and design skills.
+
+Thank you in advance!
+
 ## Basic Task Structure
 
 {: .released }
@@ -128,6 +134,10 @@ Task statuses are represented by a few data attributes, all set on the `task-lis
 
 These attributes can be used to style tasks according to their status, with the status type being the preferred selector in most cases.
 
+## Limitations of styling
+
+- It is not currently possible for styles to access any automatic scheduled date that is created if the [Use Filename as Default Date]({{ site.baseurl }}{% link getting-started/use-filename-as-default-date.md %})  option is enabled.
+
 ## More Classes
 
 The following additional components have the following classes:
@@ -146,9 +156,24 @@ The following additional components have the following classes:
 
 ## Examples
 
+### About these examples
+
 The following examples can be used as [Obsidian CSS snippets](https://help.obsidian.md/How+to/Add+custom+styles#Use+Themes+and+or+CSS+snippets).
 
 **Tip:** the following examples use CSS variables (`--var(...)`) provided by Obsidian instead of concrete color codes to maximize the chance that the result will be in-line with your chosen theme. You may of course use specific colors if so you choose.
+
+{: .warning }
+> These examples are provided only for explanation: we make no claims that these examples are useful, good design, or perfect CSS!
+>
+> They are provided purely to demonstrate use of the CSS selectors provided by the Tasks plugin.
+
+#### More examples available online
+
+We are inviting Tasks users who create their own Obsidian CSS snippets to share them with others in the ["Show and tell" Discussions category](https://github.com/obsidian-tasks-group/obsidian-tasks/discussions/categories/show-and-tell).
+
+Once the Tasks X.Y.Z release has been out few a few days, we expect there to be a growing number of snippets to be available at the above link.
+
+Feel free to add your own too!
 
 ### General Formatting
 
@@ -169,6 +194,10 @@ Making tags, internal links and the recurrence rules of tasks to appear in gray:
 }
 ```
 <!-- endSnippet -->
+
+For example:
+
+![Example of tasks-plugin-tags-links-recurrence-gray.css snippet](../../images/tasks-plugin-tags-links-recurrence-gray-snippet.png)
 
 ### Priority as a Checkbox Color
 
@@ -203,47 +232,79 @@ span.task-priority {
 ```
 <!-- endSnippet -->
 
+For example:
+
+![Example of tasks-plugin-priority-as-checkbox-color.css snippet](../../images/tasks-plugin-priority-as-checkbox-color-snippet.png)
+
 ### Styling Tasks with Custom Statuses
 
-To create a green halo around the checkbox of tasks with a `/` custom status, add the following CSS snippet:
+#### Status Symbols
 
-<!-- snippet: resources/sample_vaults/Tasks-Demo/.obsidian/snippets/tasks-plugin-style-custom-statuses.css -->
+To create a green halo around the checkbox of tasks with a `/` status symbol, add the following CSS snippet:
+
+<!-- snippet: resources/sample_vaults/Tasks-Demo/.obsidian/snippets/tasks-plugin-style-status-symbols.css -->
 ```css
 li.task-list-item[data-task="/"] .task-list-item-checkbox {
-    box-shadow: 0 0 10px green;
+    box-shadow: 0 0 10px green !important;
 }
 ```
 <!-- endSnippet -->
 
-Alternatively, you can use the status type to write rules that are independent of the status symbol:
+For example, in Reading mode:
 
+![Example of tasks-plugin-style-status-symbols.css snippet](../../images/tasks-plugin-style-status-symbols-snippet.png)
+
+This screenshot was taken with the Prism theme selected, to style the checkboxes. The `!important` [flag](https://developer.mozilla.org/en-US/docs/Web/CSS/important) is needed to override the theme's opinion about shadows.
+
+#### Status Types
+
+Alternatively, you can use the status type to write rules that are independent of the status symbol.
+Here, we put a green halo around all actionable tasks:
+
+<!-- snippet: resources/sample_vaults/Tasks-Demo/.obsidian/snippets/tasks-plugin-style-status-types.css -->
 ```css
+li.task-list-item[data-task-status-type="TODO"] .task-list-item-checkbox,
 li.task-list-item[data-task-status-type="IN_PROGRESS"] .task-list-item-checkbox {
-        box-shadow: 0 0 10px green;
+    box-shadow: 0 0 10px green !important;
 }
 ```
+<!-- endSnippet -->
+
+For example, in Reading mode:
+
+![Example of tasks-plugin-style-status-types.css snippet](../../images/tasks-plugin-style-status-types-snippet.png)
+
+Again, the screenshot was taken with the Prism theme and the `!important` [flag](https://developer.mozilla.org/en-US/docs/Web/CSS/important) is needed to override the theme's opinion about shadows.
 
 ### Colors for Due Today and Overdue
 
-The following rules mark 'today' due dates as blue and past due dates as red:
+The following rules mark 'today' due dates as cyan and past due dates as red:
 
 <!-- snippet: resources/sample_vaults/Tasks-Demo/.obsidian/snippets/tasks-plugin-color-due-today-and-overdue.css -->
 ```css
 /* A special color for the 'due' component if it's for today */
-.task-due[data-task-due="today"] span {
-    background: var(--code-property);
+.task-list-item[data-task-status-type="TODO"] .task-due[data-task-due="today"] span,
+.task-list-item[data-task-status-type="IN_PROGRESS"] .task-due[data-task-due="today"] span {
+    background: var(--color-cyan);
     border-radius: 10px;
     padding: 2px 8px;
 }
 
 /* A special color for overdue due dates */
-.task-due[data-task-due^="past-"] span {
+.task-list-item[data-task-status-type="TODO"] .task-due[data-task-due^="past-"] span,
+.task-list-item[data-task-status-type="IN_PROGRESS"] .task-due[data-task-due^="past-"] span {
     background: var(--color-pink);
     border-radius: 10px;
     padding: 2px 8px;
 }
 ```
 <!-- endSnippet -->
+
+For example:
+
+![Example of tasks-plugin-color-due-today-and-overdue.css snippet](../../images/tasks-plugin-color-due-today-and-overdue-snippet.png)
+
+Note that we only include the status type in the selector, to avoid highlighting dates in tasks with DONE, CANCELLED and NON_TASK status types.
 
 ### Highlight for a Specific Tag
 
@@ -257,6 +318,10 @@ a.tag[data-tag-name="#task/atHome"] {
 ```
 <!-- endSnippet -->
 
+For example:
+
+![Example of tasks-plugin-highlight-specific-tag-green-glow.css snippet](../../images/tasks-plugin-highlight-specific-tag-green-glow-snippet.png)
+
 The following rule adds a rounded red background to the description of a task if it contains the tag `#task/strategic`:
 
 <!-- snippet: resources/sample_vaults/Tasks-Demo/.obsidian/snippets/tasks-plugin-highlight-specific-tag-round-red-description.css -->
@@ -268,6 +333,10 @@ The following rule adds a rounded red background to the description of a task if
 }
 ```
 <!-- endSnippet -->
+
+For example:
+
+![Example of tasks-plugin-highlight-specific-tag-round-red-description.css snippet](../../images/tasks-plugin-highlight-specific-tag-round-red-description-snippet.png)
 
 ### Circle Checkboxes
 
@@ -282,6 +351,10 @@ ul > li.plugin-tasks-list-item .task-list-item-checkbox {
 }
 ```
 <!-- endSnippet -->
+
+For example:
+
+![Example of tasks-plugin-circular-checkboxes.css snippet](../../images/tasks-plugin-circular-checkboxes-snippet.png)
 
 ### Grid Layout
 
@@ -342,6 +415,14 @@ span.task-extras {
 }
 ```
 <!-- endSnippet -->
+
+For example, in Reading view:
+
+![Example of tasks-plugin-grid-layout.css snippet in Reading view](../../images/tasks-plugin-grid-layout-snippet-reading.png)
+
+And in a Tasks query block:
+
+![Example of tasks-plugin-grid-layout.css snippet in Tasks query block](../../images/tasks-plugin-grid-layout-snippet-query.png)
 
 ### Complete Example
 
@@ -467,6 +548,10 @@ span.task-extras {
 }
 ```
 <!-- endSnippet -->
+
+For example:
+
+![Example of tasks-plugin-complete-example.css snippet](../../images/tasks-plugin-complete-example-snippet.png)
 
 ---
 
