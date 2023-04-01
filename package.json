@@ -46,7 +46,7 @@
     "moment": "^2.29.4",
     "obsidian": "0.14.6",
     "prettier": "^2.2.1",
-    "prettier-plugin-svelte": "^2.7.0",
+    "prettier-plugin-svelte": "^2.10.0",
     "svelte": "^3.48.0",
     "svelte-check": "^2.10.3",
     "svelte-jester": "^2.3.2",
