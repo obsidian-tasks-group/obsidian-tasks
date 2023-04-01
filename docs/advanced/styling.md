@@ -150,9 +150,16 @@ The following additional components have the following classes:
 
 ## Examples
 
+### About these examples
+
 The following examples can be used as [Obsidian CSS snippets](https://help.obsidian.md/How+to/Add+custom+styles#Use+Themes+and+or+CSS+snippets).
 
 **Tip:** the following examples use CSS variables (`--var(...)`) provided by Obsidian instead of concrete color codes to maximize the chance that the result will be in-line with your chosen theme. You may of course use specific colors if so you choose.
+
+{: .warning }
+> These examples are provided only for explanation: we make no claims that these examples are useful, good design, or perfect CSS!
+>
+> They are provided purely to demonstrate use of the CSS selectors provided by the Tasks plugin.
 
 ### General Formatting
 
