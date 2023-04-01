@@ -1,0 +1,4 @@
+li.task-list-item[data-task-status-type="TODO"] .task-list-item-checkbox,
+li.task-list-item[data-task-status-type="IN_PROGRESS"] .task-list-item-checkbox {
+    box-shadow: 0 0 10px green !important;
+}
