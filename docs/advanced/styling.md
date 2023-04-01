@@ -210,7 +210,7 @@ To create a green halo around the checkbox of tasks with a `/` status symbol, ad
 <!-- snippet: resources/sample_vaults/Tasks-Demo/.obsidian/snippets/tasks-plugin-style-status-symbols.css -->
 ```css
 li.task-list-item[data-task="/"] .task-list-item-checkbox {
-    box-shadow: 0 0 10px green;
+    box-shadow: 0 0 10px green !important;
 }
 ```
 <!-- endSnippet -->
@@ -222,7 +222,7 @@ Here, we put a green halo around all actionable tasks:
 ```css
 li.task-list-item[data-task-status-type="TODO"] .task-list-item-checkbox,
 li.task-list-item[data-task-status-type="IN_PROGRESS"] .task-list-item-checkbox {
-    box-shadow: 0 0 10px green;
+    box-shadow: 0 0 10px green !important;
 }
 ```
 <!-- endSnippet -->
@@ -234,14 +234,16 @@ The following rules mark 'today' due dates as blue and past due dates as red:
 <!-- snippet: resources/sample_vaults/Tasks-Demo/.obsidian/snippets/tasks-plugin-color-due-today-and-overdue.css -->
 ```css
 /* A special color for the 'due' component if it's for today */
-.task-due[data-task-due="today"] span {
-    background: var(--code-property);
+.task-list-item[data-task-status-type="TODO"] .task-due[data-task-due="today"] span,
+.task-list-item[data-task-status-type="IN_PROGRESS"] .task-due[data-task-due="today"] span {
+    background: var(--color-cyan);
     border-radius: 10px;
     padding: 2px 8px;
 }
 
 /* A special color for overdue due dates */
-.task-due[data-task-due^="past-"] span {
+.task-list-item[data-task-status-type="TODO"] .task-due[data-task-due^="past-"] span,
+.task-list-item[data-task-status-type="IN_PROGRESS"] .task-due[data-task-due^="past-"] span {
     background: var(--color-pink);
     border-radius: 10px;
     padding: 2px 8px;
