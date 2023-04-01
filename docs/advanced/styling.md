@@ -217,11 +217,13 @@ li.task-list-item[data-task="/"] .task-list-item-checkbox {
 
 Alternatively, you can use the status type to write rules that are independent of the status symbol:
 
+<!-- snippet: resources/sample_vaults/Tasks-Demo/.obsidian/snippets/tasks-plugin-style-custom-status-types.css -->
 ```css
 li.task-list-item[data-task-status-type="IN_PROGRESS"] .task-list-item-checkbox {
-        box-shadow: 0 0 10px green;
+    box-shadow: 0 0 10px green;
 }
 ```
+<!-- endSnippet -->
 
 ### Colors for Due Today and Overdue
 
