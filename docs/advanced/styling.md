@@ -170,6 +170,10 @@ Making tags, internal links and the recurrence rules of tasks to appear in gray:
 ```
 <!-- endSnippet -->
 
+For example:
+
+![Example of tasks-plugin-tags-links-recurrence-gray.css snippet](../../images/tasks-plugin-tags-links-recurrence-gray-snippet.png)
+
 ### Priority as a Checkbox Color
 
 The following rules remove the Tasks priority emoticon and render the tasks' checkboxes in red, orange, blue and cyan according to the tasks' priority:
@@ -203,7 +207,13 @@ span.task-priority {
 ```
 <!-- endSnippet -->
 
+For example:
+
+![Example of tasks-plugin-priority-as-checkbox-color.css snippet](../../images/tasks-plugin-priority-as-checkbox-color-snippet.png)
+
 ### Styling Tasks with Custom Statuses
+
+#### Status Symbols
 
 To create a green halo around the checkbox of tasks with a `/` status symbol, add the following CSS snippet:
 
@@ -214,6 +224,14 @@ li.task-list-item[data-task="/"] .task-list-item-checkbox {
 }
 ```
 <!-- endSnippet -->
+
+For example, in Reading mode:
+
+![Example of tasks-plugin-style-status-symbols.css snippet](../../images/tasks-plugin-style-status-symbols-snippet.png)
+
+This screenshot was taken with the Prism theme selected, to style the checkboxes. The `!important` [flag](https://developer.mozilla.org/en-US/docs/Web/CSS/important) is needed to override the theme's opinion about shadows.
+
+#### Status Types
 
 Alternatively, you can use the status type to write rules that are independent of the status symbol.
 Here, we put a green halo around all actionable tasks:
@@ -227,9 +245,15 @@ li.task-list-item[data-task-status-type="IN_PROGRESS"] .task-list-item-checkbox 
 ```
 <!-- endSnippet -->
 
+For example, in Reading mode:
+
+![Example of tasks-plugin-style-status-types.css snippet](../../images/tasks-plugin-style-status-types-snippet.png)
+
+Again, the screenshot was taken with the Prism theme and the `!important` [flag](https://developer.mozilla.org/en-US/docs/Web/CSS/important) is needed to override the theme's opinion about shadows.
+
 ### Colors for Due Today and Overdue
 
-The following rules mark 'today' due dates as blue and past due dates as red:
+The following rules mark 'today' due dates as cyan and past due dates as red:
 
 <!-- snippet: resources/sample_vaults/Tasks-Demo/.obsidian/snippets/tasks-plugin-color-due-today-and-overdue.css -->
 ```css
@@ -251,6 +275,12 @@ The following rules mark 'today' due dates as blue and past due dates as red:
 ```
 <!-- endSnippet -->
 
+For example:
+
+![Example of tasks-plugin-color-due-today-and-overdue.css snippet](../../images/tasks-plugin-color-due-today-and-overdue-snippet.png)
+
+Note that we only include the status type in the selector, to avoid highlighting dates in tasks with DONE, CANCELLED and NON_TASK status types.
+
 ### Highlight for a Specific Tag
 
 The following rule adds a green glow around `#task/atHome` tags inside the description:
@@ -263,6 +293,10 @@ a.tag[data-tag-name="#task/atHome"] {
 ```
 <!-- endSnippet -->
 
+For example:
+
+![Example of tasks-plugin-highlight-specific-tag-green-glow.css snippet](../../images/tasks-plugin-highlight-specific-tag-green-glow-snippet.png)
+
 The following rule adds a rounded red background to the description of a task if it contains the tag `#task/strategic`:
 
 <!-- snippet: resources/sample_vaults/Tasks-Demo/.obsidian/snippets/tasks-plugin-highlight-specific-tag-round-red-description.css -->
@@ -274,6 +308,10 @@ The following rule adds a rounded red background to the description of a task if
 }
 ```
 <!-- endSnippet -->
+
+For example:
+
+![Example of tasks-plugin-highlight-specific-tag-round-red-description.css snippet](../../images/tasks-plugin-highlight-specific-tag-round-red-description-snippet.png)
 
 ### Circle Checkboxes
 
@@ -288,6 +326,10 @@ ul > li.plugin-tasks-list-item .task-list-item-checkbox {
 }
 ```
 <!-- endSnippet -->
+
+For example:
+
+![Example of tasks-plugin-circular-checkboxes.css snippet](../../images/tasks-plugin-circular-checkboxes-snippet.png)
 
 ### Grid Layout
 
@@ -348,6 +390,14 @@ span.task-extras {
 }
 ```
 <!-- endSnippet -->
+
+For example, in Reading view:
+
+![Example of tasks-plugin-grid-layout.css snippet in Reading view](../../images/tasks-plugin-grid-layout-snippet-reading.png)
+
+And in a Tasks query block:
+
+![Example of tasks-plugin-grid-layout.css snippet in Tasks query block](../../images/tasks-plugin-grid-layout-snippet-query.png)
 
 ### Complete Example
 
@@ -473,6 +523,10 @@ span.task-extras {
 }
 ```
 <!-- endSnippet -->
+
+For example:
+
+![Example of tasks-plugin-complete-example.css snippet](../../images/tasks-plugin-complete-example-snippet.png)
 
 ---
 
