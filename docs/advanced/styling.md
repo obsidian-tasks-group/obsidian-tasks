@@ -128,6 +128,10 @@ Task statuses are represented by a few data attributes, all set on the `task-lis
 
 These attributes can be used to style tasks according to their status, with the status type being the preferred selector in most cases.
 
+## Limitations of styling
+
+- It is not currently possible for styles to access any automatic scheduled date that is created if the [Use Filename as Default Date]({{ site.baseurl }}{% link getting-started/use-filename-as-default-date.md %})  option is enabled.
+
 ## More Classes
 
 The following additional components have the following classes:
