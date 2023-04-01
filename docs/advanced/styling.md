@@ -207,7 +207,7 @@ span.task-priority {
 
 To create a green halo around the checkbox of tasks with a `/` status symbol, add the following CSS snippet:
 
-<!-- snippet: resources/sample_vaults/Tasks-Demo/.obsidian/snippets/tasks-plugin-style-custom-statuses.css -->
+<!-- snippet: resources/sample_vaults/Tasks-Demo/.obsidian/snippets/tasks-plugin-style-status-symbols.css -->
 ```css
 li.task-list-item[data-task="/"] .task-list-item-checkbox {
     box-shadow: 0 0 10px green;
@@ -218,7 +218,7 @@ li.task-list-item[data-task="/"] .task-list-item-checkbox {
 Alternatively, you can use the status type to write rules that are independent of the status symbol.
 Here, we put a green halo around all actionable tasks:
 
-<!-- snippet: resources/sample_vaults/Tasks-Demo/.obsidian/snippets/tasks-plugin-style-custom-status-types.css -->
+<!-- snippet: resources/sample_vaults/Tasks-Demo/.obsidian/snippets/tasks-plugin-style-status-types.css -->
 ```css
 li.task-list-item[data-task-status-type="TODO"] .task-list-item-checkbox,
 li.task-list-item[data-task-status-type="IN_PROGRESS"] .task-list-item-checkbox {
