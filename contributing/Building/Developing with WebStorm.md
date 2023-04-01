@@ -10,8 +10,8 @@ The solution is to tell WebStorm to ignore all the directories that contain code
 
 The following directories contain code we don't want WebStorm to index:
 
-- `contributing/.obsidian`
-- `docs/.obsidian`
+- `contributing/.obsidian/plugins`
+- `docs/.obsidian/plugins`
 - `node_modules`
   - after [[Setting up build environment]]
 - `coverage`
