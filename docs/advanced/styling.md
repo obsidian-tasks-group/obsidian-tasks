@@ -25,6 +25,12 @@ has_toc: false
 In rendered queries and Reading View, the Tasks plugin adds detailed CSS classes and data attributes that represent many of each task's content, to allow for very extensive styling options via CSS.
 Not only each component in a rendered task line is tagged with classes to differentiate it, many components also add classes and data attributes that represent the actual content of the task, so CSS rules can refer to data such as the relative due date of a task or its specific priority.
 
+## Please share your styles online
+
+We invite Tasks users who create their own Obsidian CSS snippets to share them in the ["Show and tell" Discussions category](https://github.com/obsidian-tasks-group/obsidian-tasks/discussions/categories/show-and-tell) - to inspire others and allow them to use and learn from your CSS and design skills.
+
+Thank you in advance!
+
 ## Basic Task Structure
 
 {: .released }
@@ -160,6 +166,14 @@ The following examples can be used as [Obsidian CSS snippets](https://help.obsid
 > These examples are provided only for explanation: we make no claims that these examples are useful, good design, or perfect CSS!
 >
 > They are provided purely to demonstrate use of the CSS selectors provided by the Tasks plugin.
+
+#### More examples available online
+
+We are inviting Tasks users who create their own Obsidian CSS snippets to share them with others in the ["Show and tell" Discussions category](https://github.com/obsidian-tasks-group/obsidian-tasks/discussions/categories/show-and-tell).
+
+Once the Tasks X.Y.Z release has been out few a few days, we expect there to be a growing number of snippets to be available at the above link.
+
+Feel free to add your own too!
 
 ### General Formatting
 
