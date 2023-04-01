@@ -1,6 +1,6 @@
 # Developing with JetBrains WebStorm
 
-Some tips for anyone using the JetBrains WebStorm IDE
+Some tips for anyone using the JetBrains WebStorm IDE.
 
 ## Make WebStorm ignore non-code directories
 
