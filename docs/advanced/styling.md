@@ -467,14 +467,19 @@ span.tasks-list-text {
     border-color: var(--color-red);
 }
 
-.task-list-item[data-task-priority="low"] input[type=checkbox] {
+.task-list-item[data-task-priority="medium"] input[type=checkbox] {
+    box-shadow: 0px 0px 2px 2px var(--color-orange);
+    border-color: var(--color-orange);
+}
+
+.task-list-item[data-task-priority="normal"] input[type=checkbox] {
     box-shadow: 0px 0px 2px 2px var(--color-blue);
     border-color: var(--color-blue);
 }
 
-.task-list-item[data-task-priority="medium"] input[type=checkbox] {
-    box-shadow: 0px 0px 2px 2px var(--color-orange);
-    border-color: var(--color-orange);
+.task-list-item[data-task-priority="low"] input[type=checkbox] {
+    box-shadow: 0px 0px 2px 2px var(--color-cyan);
+    border-color: var(--color-cyan);
 }
 
 /* This part removes the regular priority emoticon */
@@ -482,15 +487,17 @@ span.task-priority {
     display: none;
 }
 
-/* A special color for the 'due' component if it's for today */
-.task-due[data-task-due="today"] span {
-    background: var(--code-property);
+/* A special color for the 'due' component if it's for today, and still needs work on */
+.task-list-item[data-task-status-type="TODO"] .task-due[data-task-due="today"] span,
+.task-list-item[data-task-status-type="IN_PROGRESS"] .task-due[data-task-due="today"] span {
+    background: var(--color-cyan);
     border-radius: 10px;
     padding: 2px 8px;
 }
 
-/* A special color for overdue due dates */
-.task-due[data-task-due^="past-"] span {
+/* A special color for overdue due dates, for tasks that still need work on */
+.task-list-item[data-task-status-type="TODO"] .task-due[data-task-due^="past-"] span,
+.task-list-item[data-task-status-type="IN_PROGRESS"] .task-due[data-task-due^="past-"] span {
     background: var(--color-pink);
     border-radius: 10px;
     padding: 2px 8px;
