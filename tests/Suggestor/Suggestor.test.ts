@@ -6,7 +6,7 @@ import * as chrono from 'chrono-node';
 import { getSettings } from '../../src/Config/Settings';
 import type { SuggestInfo } from '../../src/Suggestor';
 import { makeDefaultSuggestionBuilder } from '../../src/Suggestor/Suggestor';
-import { DEFAULT_SYMBOLS } from '../../src/TaskSerializer/DefaultTaskSerializer';
+import { DEFAULT_SYMBOLS, PLAINTEXT_SYMBOLS } from '../../src/TaskSerializer/DefaultTaskSerializer';
 
 window.moment = moment;
 
@@ -17,7 +17,10 @@ jest.spyOn(chrono, 'parseDate').mockImplementation(
     (text, _, options) => chrono.en.casual.parseDate(text, mockDate, options)!,
 );
 
-describe.each([{ name: 'emoji', symbols: DEFAULT_SYMBOLS }])("auto-complete with '$name' symbols", ({ symbols }) => {
+describe.each([
+    { name: 'emoji', symbols: DEFAULT_SYMBOLS },
+    { name: 'plaintext', symbols: PLAINTEXT_SYMBOLS },
+])("auto-complete with '$name' symbols", ({ symbols }) => {
     const buildSuggestions = makeDefaultSuggestionBuilder(symbols);
     const {
         dueDateSymbol,
