@@ -413,6 +413,12 @@ span.task-extras {
     grid-column: 2;
     font-size: small;
 }
+
+/* Make sure nested bullets in Reading mode get the whole width of the grid */
+li.task-list-item ul.has-list-bullet {
+ grid-row: 3;
+ grid-column: 1/10;
+}
 ```
 <!-- endSnippet -->
 
@@ -545,6 +551,12 @@ span.task-extras {
     grid-row: 2;
     grid-column: 2;
     font-size: small;
+}
+
+/* Make sure nested bullets in Reading mode get the whole width of the grid */
+li.task-list-item ul.has-list-bullet {
+ grid-row: 3;
+ grid-column: 1/10;
 }
 ```
 <!-- endSnippet -->
