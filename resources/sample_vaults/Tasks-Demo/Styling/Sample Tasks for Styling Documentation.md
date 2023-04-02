@@ -27,10 +27,10 @@ group by heading
 
 ## Due Dates
 
-- [ ] #task Something I should have done yesterday 📅 2023-03-31
-- [-] #task A task I meant to do yesterday then cancelled, with a `-` symbol 📅 2023-03-31
-- [ ] #task A task I should do today 📅 2023-04-01
-- [x] #task Something I did already today 📅 2023-04-01 ✅ 2023-04-01
+- [ ] #task Something I should have done yesterday 📅 2023-04-01
+- [-] #task A task I meant to do yesterday then cancelled, with a `-` symbol 📅 2023-04-01
+- [ ] #task A task I should do today 📅 2023-04-02
+- [x] #task Something I did already today 📅 2023-04-02 ✅ 2023-04-02
 
 ## Tags
 
