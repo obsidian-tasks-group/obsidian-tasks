@@ -65,6 +65,33 @@ export const DEFAULT_SYMBOLS: DefaultTaskSerializerSymbols = {
     },
 } as const;
 
+/**
+ * A symbol map for a plaintext version of obsidian-task's default task style.
+ */
+export const PLAINTEXT_SYMBOLS: DefaultTaskSerializerSymbols = {
+    prioritySymbols: {
+        High: 'P!!',
+        Medium: 'P!',
+        Low: 'P-',
+        None: '',
+    },
+    startDateSymbol: 'start::',
+    createdDateSymbol: 'created::',
+    scheduledDateSymbol: 'scheduled::',
+    dueDateSymbol: 'due::',
+    doneDateSymbol: 'done::',
+    recurrenceSymbol: 'recur::',
+    TaskFormatRegularExpressions: {
+        priorityRegex: /(?<=\s|^)(P(-|!|!!))(?=\s|$)/u,
+        startDateRegex: /start:: *(\d{4}-\d{2}-\d{2})$/,
+        createdDateRegex: /created:: *(\d{4}-\d{2}-\d{2})$/,
+        scheduledDateRegex: /scheduled:: *(\d{4}-\d{2}-\d{2})$/,
+        dueDateRegex: /due:: *(\d{4}-\d{2}-\d{2})$/,
+        doneDateRegex: /done:: *(\d{4}-\d{2}-\d{2})$/,
+        recurrenceRegex: /recur:: ?([a-zA-Z0-9, !]+)$/i,
+    },
+} as const;
+
 export class DefaultTaskSerializer implements TaskSerializer {
     constructor(public readonly symbols: DefaultTaskSerializerSymbols) {}
 
