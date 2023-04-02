@@ -139,7 +139,11 @@ These attributes can be used to style tasks according to their status, with the 
 
 ## Limitations of styling
 
-- It is not currently possible for styles to access any automatic scheduled date that is created if the [Use Filename as Default Date]({{ site.baseurl }}{% link getting-started/use-filename-as-default-date.md %})  option is enabled.
+- The CSS classes and data attributes described here are **not available for markdown in Source and Live Preview modes**.
+- Specifically. the CSS classes described here are applied to:
+  - Reading mode,
+  - Tasks query blocks in Reading and Live Preview modes.
+- Styles **cannot access any automatic scheduled date** that is created if the [Use Filename as Default Date]({{ site.baseurl }}{% link getting-started/use-filename-as-default-date.md %})  option is enabled.
 
 ## More Classes
 
