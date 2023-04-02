@@ -87,9 +87,9 @@ Or we can replace the backlink text with an icon, with [this CSS snippet](https:
       licensed under the CC-BY 4.0
    2. SVG encoded for embedding here with https://yoksel.github.io/url-encoder/
 
-Tasks X.Y.Z compatibility note.
+Tasks 3.0.0 compatibility note.
 
-    Prior to Tasks X.Y.Z, the first CSS line below was the following, with a '>'
+    Prior to Tasks 3.0.0, the first CSS line below was the following, with a '>'
     separator.
 
 li.plugin-tasks-list-item > span.tasks-backlink > a {
