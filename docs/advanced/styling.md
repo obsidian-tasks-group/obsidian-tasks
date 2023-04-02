@@ -25,10 +25,6 @@ has_toc: false
 {: .released }
 Almost all the features below were introduced in Tasks 3.0.0.
 
-{: .warning }
-If you find any existing Tasks CSS snippets stopped working with Tasks 3.0.0, follow the advice in
-[Appendix: Fixing CSS pre-existing snippets for Tasks 3.0.0]({{ site.baseurl }}{% link advanced/styling.md %}#appendix-fixing-css-pre-existing-snippets-for-tasks-300) below.
-
 In rendered queries and Reading View, the Tasks plugin adds detailed CSS classes and data attributes that represent many of each task's content, to allow for very extensive styling options via CSS.
 Not only each component in a rendered task line is tagged with classes to differentiate it, many components also add classes and data attributes that represent the actual content of the task, so CSS rules can refer to data such as the relative due date of a task or its specific priority.
 
@@ -37,6 +33,12 @@ Not only each component in a rendered task line is tagged with classes to differ
 We invite Tasks users who create their own Obsidian CSS snippets to share them in the ["Show and tell" Discussions category](https://github.com/obsidian-tasks-group/obsidian-tasks/discussions/categories/show-and-tell) - to inspire others and allow them to use and learn from your CSS and design skills.
 
 Thank you in advance!
+
+### Backwards compatibility and CSS snippets
+
+{: .warning }
+If you find any existing Tasks CSS snippets stopped working with Tasks 3.0.0, follow the advice in
+[Appendix: Fixing CSS pre-existing snippets for Tasks 3.0.0]({{ site.baseurl }}{% link advanced/styling.md %}#appendix-fixing-css-pre-existing-snippets-for-tasks-300) below.
 
 ## Basic Task Structure
 
