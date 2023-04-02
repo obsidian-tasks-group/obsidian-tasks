@@ -22,10 +22,17 @@ has_toc: false
 
 ## Introduction
 
+{: .released }
+Almost all the features below were introduced in Tasks 3.0.0.
+
+{: .warning }
+If you find any existing Tasks CSS snippets stopped working with Tasks 3.0.0, follow the advice in
+[Appendix: Fixing CSS pre-existing snippets for Tasks 3.0.0]({{ site.baseurl }}{% link advanced/styling.md %}#appendix-fixing-css-pre-existing-snippets-for-tasks-300) below.
+
 In rendered queries and Reading View, the Tasks plugin adds detailed CSS classes and data attributes that represent many of each task's content, to allow for very extensive styling options via CSS.
 Not only each component in a rendered task line is tagged with classes to differentiate it, many components also add classes and data attributes that represent the actual content of the task, so CSS rules can refer to data such as the relative due date of a task or its specific priority.
 
-## Please share your styles online
+### Please share your styles online
 
 We invite Tasks users who create their own Obsidian CSS snippets to share them in the ["Show and tell" Discussions category](https://github.com/obsidian-tasks-group/obsidian-tasks/discussions/categories/show-and-tell) - to inspire others and allow them to use and learn from your CSS and design skills.
 
@@ -35,10 +42,6 @@ Thank you in advance!
 
 {: .released }
 The following description relates to a restructuring of the rendered tasks that was introduced in Tasks 3.0.0.
-
-{: .warning }
-If you find any existing Tasks CSS snippets stopped working with Tasks 3.0.0, follow the advice in
-[Appendix: Fixing CSS pre-existing snippets for Tasks 3.0.0]({{ site.baseurl }}{% link advanced/styling.md %}#appendix-fixing-css-pre-existing-snippets-for-tasks-300) below.
 
 The Tasks plugin renders a task in the following structure (this refers to query results, but the Reading View is the same except the top-most containers):
 
@@ -154,7 +157,7 @@ The following additional components have the following classes:
 `tasks-group-heading` was introduced in Tasks 1.6.0.<br>
 `plugin-tasks-query-explanation` was introduced in Tasks 1.19.0.
 
-## Examples
+## CSS Examples
 
 ### About these examples
 
