@@ -23,6 +23,9 @@ export class DateRangeParser {
             const unitOfTime = range === 'week' ? 'isoWeek' : (range as moment.unitOfTime.DurationConstructor);
             dateRange = [dateRange[0].startOf(unitOfTime), dateRange[1].endOf(unitOfTime)];
 
+            // Dates shall be at midnight eg 00:00
+            dateRange.forEach((d) => d.startOf('day'));
+
             return dateRange;
         }
 

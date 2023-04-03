@@ -24,8 +24,6 @@ export class DateParser {
         const parser = new DateRangeParser();
         const relativeDateRange = parser.parseRelativeDateRange(input);
         if (relativeDateRange !== undefined) {
-            // Dates shall be at midnight eg 00:00
-            relativeDateRange.forEach((d) => d.startOf('day'));
             return relativeDateRange;
         }
 
