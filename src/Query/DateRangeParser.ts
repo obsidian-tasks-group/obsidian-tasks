@@ -8,8 +8,7 @@ export class DateRangeParser {
             const lastThisNext = relativeDateRangeMatch[1];
             const range = relativeDateRangeMatch[2];
 
-            const delta = moment.duration();
-            delta.add(1, range as moment.unitOfTime.DurationConstructor);
+            const delta = moment.duration(1, range as moment.unitOfTime.DurationConstructor);
             
             let dateRange: [moment.Moment, moment.Moment] = [moment(), moment()];
             switch (lastThisNext) {
