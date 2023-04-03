@@ -120,8 +120,6 @@ export class DateParser {
             if (matched && matched.length === 1 && matched[0] === input) {
                 parsedRange = DateParser.buildSpecificDateRange(matched[0], sauce[1]);
             }
-            
-            return parsedRange;
         });
 
         return parsedRange;
