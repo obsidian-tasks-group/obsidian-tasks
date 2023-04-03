@@ -29,12 +29,19 @@ export class DateParser {
      * @return - A Tuple of dates. If both input dates are invalid, then both ouput dates will be invalid.
      */
     public static parseDateRange(input: string): [moment.Moment, moment.Moment] {
+        // Try parsing a relative date range like 'current month'
         const relativeDateRange = DateParser.parseRelativeDateRange(input);
         if (relativeDateRange !== undefined) {
             return relativeDateRange;
         }
 
-        // If relative date range was not parsed, fallback on absolute date range with chrono
+        // Try '2022-W10' otherwise
+        const specificDateRange = DateParser.parseSpecificDateRange(input);
+        if (specificDateRange !== undefined) {
+            return specificDateRange;
+        }
+
+        // If previous failed, fallback on absolute date range with chrono
         return DateParser.parseAbsoluteDateRange(input);
     }
 
@@ -44,13 +51,6 @@ export class DateParser {
         });
 
         if (result.length === 0) {
-            // If chorono couldn't parse the date it could be a specific date range
-            // Or a user error
-            const specificDateRange = DateParser.parseSpecificDateRange(input);
-            if (specificDateRange !== undefined) {
-                return specificDateRange;
-            }
-
             return [moment.invalid(), moment.invalid()];
         }
 
