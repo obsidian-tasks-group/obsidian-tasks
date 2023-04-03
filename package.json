@@ -1,6 +1,6 @@
 {
   "name": "obsidian-tasks",
-  "version": "2.0.1",
+  "version": "3.0.0",
   "description": "Task management for the Obsidian knowledge base",
   "main": "main.js",
   "scripts": {
@@ -32,7 +32,7 @@
     "@typescript-eslint/eslint-plugin": "^5.36.1",
     "@typescript-eslint/parser": "^5.36.1",
     "approvals": "^4.1.1",
-    "async-mutex": "^0.3.1",
+    "async-mutex": "^0.4.0",
     "builtin-modules": "^3.3.0",
     "esbuild": "0.15.6",
     "esbuild-svelte": "^0.7.1",
@@ -46,7 +46,7 @@
     "moment": "^2.29.4",
     "obsidian": "0.14.6",
     "prettier": "^2.2.1",
-    "prettier-plugin-svelte": "^2.7.0",
+    "prettier-plugin-svelte": "^2.10.0",
     "svelte": "^3.48.0",
     "svelte-check": "^2.10.3",
     "svelte-jester": "^2.3.2",

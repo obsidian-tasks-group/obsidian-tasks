@@ -5,7 +5,7 @@ import moment from 'moment';
 import { Query } from '../src/Query/Query';
 import { Status } from '../src/Status';
 import { Priority, Task } from '../src/Task';
-import { resetSettings, updateSettings } from '../src/Config/Settings';
+import { GlobalFilter } from '../src/Config/GlobalFilter';
 import { TaskLocation } from '../src/TaskLocation';
 import { createTasksFromMarkdown, fromLine } from './TestHelpers';
 import { shouldSupportFiltering } from './TestingTools/FilterTestHelpers';
@@ -790,7 +790,7 @@ describe('Query', () => {
 
     describe('explanations', () => {
         afterEach(() => {
-            resetSettings();
+            GlobalFilter.reset();
         });
 
         it('should explain 0 filters', () => {
@@ -802,7 +802,7 @@ describe('Query', () => {
         });
 
         it('should explain 0 filters with global filter', () => {
-            updateSettings({ globalFilter: '#task' });
+            GlobalFilter.set('#task');
 
             const input = '';
             const query = new Query({ source: input });
@@ -823,7 +823,7 @@ No filters supplied. All tasks will match the query.`;
         });
 
         it('should explain 1 filter', () => {
-            updateSettings({ globalFilter: '#task' });
+            GlobalFilter.set('#task');
 
             const input = 'description includes hello';
             const query = new Query({ source: input });

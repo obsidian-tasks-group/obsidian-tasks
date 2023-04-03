@@ -6,6 +6,7 @@ import { LayoutClasses, renderTaskLine } from '../src/TaskLineRenderer';
 import type { AttributesDictionary, TextRenderer } from '../src/TaskLineRenderer';
 import { DebugSettings } from '../src/Config/DebugSettings';
 import { resetSettings, updateSettings } from '../src/Config/Settings';
+import { GlobalFilter } from '../src/Config/GlobalFilter';
 import { LayoutOptions } from '../src/TaskLayout';
 import type { Task } from '../src/Task';
 import { TaskRegularExpressions } from '../src/Task';
@@ -120,7 +121,8 @@ describe('task line rendering', () => {
         const descriptionWithFilter = await getDescriptionTest();
         expect(descriptionWithFilter).toEqual('This is a simple task with a #global filter');
 
-        updateSettings({ globalFilter: '#global', removeGlobalFilter: true });
+        updateSettings({ removeGlobalFilter: true });
+        GlobalFilter.set('#global');
         const descriptionWithoutFilter = await getDescriptionTest();
         expect(descriptionWithoutFilter).toEqual('This is a simple task with a  filter');
         resetSettings();
@@ -558,5 +560,28 @@ describe('task line rendering', () => {
         expect(tagSpan.textContent).toEqual('#illegal"data&attribute');
         expect(tagSpan.classList[0]).toEqual('tag');
         expect(tagSpan.dataset.tagName).toEqual('#illegal-data-attribute');
+    });
+
+    it('creates data attributes for custom statuses', async () => {
+        await testLiAttributes(
+            '- [ ] An incomplete task',
+            {},
+            { task: '', taskStatusName: 'Todo', taskStatusType: 'TODO' },
+        );
+        await testLiAttributes(
+            '- [x] A complete task',
+            {},
+            { task: 'x', taskStatusName: 'Done', taskStatusType: 'DONE' },
+        );
+        await testLiAttributes(
+            '- [/] In-progress task',
+            {},
+            { task: '/', taskStatusName: 'In Progress', taskStatusType: 'IN_PROGRESS' },
+        );
+        await testLiAttributes(
+            '- [-] In-progress task',
+            {},
+            { task: '-', taskStatusName: 'Cancelled', taskStatusType: 'CANCELLED' },
+        );
     });
 });

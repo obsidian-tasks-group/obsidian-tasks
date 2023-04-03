@@ -7,6 +7,7 @@ import type { StatusCollection } from '../StatusCollection';
 import * as Themes from './Themes';
 import type { HeadingState } from './Settings';
 import { getSettings, isFeatureEnabled, updateGeneralSetting, updateSettings } from './Settings';
+import { GlobalFilter } from './GlobalFilter';
 import { StatusSettings } from './StatusSettings';
 import settingsJson from './settingsConfiguration.json';
 
@@ -71,16 +72,13 @@ export class SettingsTab extends PluginSettingTab {
                 ),
             )
             .addText((text) => {
-                const settings = getSettings();
-
                 // I wanted to make this say 'for example, #task or TODO'
                 // but wasn't able to figure out how to make the text box
                 // wide enough for the whole string to be visible.
                 text.setPlaceholder('e.g. #task or TODO')
-                    .setValue(settings.globalFilter)
+                    .setValue(GlobalFilter.get())
                     .onChange(async (value) => {
-                        updateSettings({ globalFilter: value });
-
+                        GlobalFilter.set(value);
                         await this.plugin.saveSettings();
                     });
             });

@@ -6,6 +6,7 @@ import type { LayoutOptions, TaskLayoutComponent } from './TaskLayout';
 import { TaskLayout } from './TaskLayout';
 import { replaceTaskWithTasks } from './File';
 import { TASK_FORMATS, getSettings } from './Config/Settings';
+import { GlobalFilter } from './Config/GlobalFilter';
 
 export type TaskLineRenderDetails = {
     parentUlElement: HTMLElement;
@@ -100,6 +101,8 @@ export async function renderTaskLine(
     // Set these to be compatible with stock obsidian lists:
     li.setAttribute('data-task', task.status.symbol.trim()); // Trim to ensure empty attribute for space. Same way as obsidian.
     li.setAttribute('data-line', renderDetails.listIndex.toString());
+    li.setAttribute('data-task-status-name', task.status.name);
+    li.setAttribute('data-task-status-type', task.status.type);
     checkbox.setAttribute('data-line', renderDetails.listIndex.toString());
 
     if (renderDetails.layoutOptions?.shortMode) {
@@ -122,7 +125,9 @@ async function taskToHtml(
     for (const component of taskLayout.layoutComponents) {
         let componentString = emojiSerializer.componentToString(task, taskLayout, component);
         if (componentString) {
-            if (component === 'description') componentString = removeGlobalFilterIfNeeded(componentString);
+            if (component === 'description') {
+                componentString = GlobalFilter.removeAsSubstringFromDependingOnSettings(componentString);
+            }
             // Create the text span that will hold the rendered component
             const span = document.createElement('span');
             parentElement.appendChild(span);
@@ -435,12 +440,4 @@ function toTooltipDate({ signifier, date }: { signifier: string; date: Moment })
     return `${signifier} ${date.format(taskModule.TaskRegularExpressions.dateFormat)} (${date.from(
         window.moment().startOf('day'),
     )})`;
-}
-
-function removeGlobalFilterIfNeeded(description: string) {
-    const { globalFilter, removeGlobalFilter } = getSettings();
-    if (removeGlobalFilter) {
-        return description.replace(globalFilter, '').trim();
-    }
-    return description;
 }

@@ -1,6 +1,5 @@
 import { type ListItemCache, MetadataCache, Notice, TFile, Vault, Workspace } from 'obsidian';
-
-import { getSettings } from './Config/Settings';
+import { GlobalFilter } from './Config/GlobalFilter';
 import { type MockListItemCache, type MockTask, saveMockDataForTesting } from './lib/MockDataCreator';
 import type { Task } from './Task';
 import { logging } from './lib/logging';
@@ -286,7 +285,6 @@ function tryFindingLineNumberFromTaskSectionInfo(
     listItemsCache: ListItemCache[] | MockListItemCache[],
     errorLoggingFunction: ErrorLoggingFunction,
 ) {
-    const { globalFilter } = getSettings();
     let taskLineNumber: number | undefined;
     let sectionIndex = 0;
     for (const listItemCache of listItemsCache) {
@@ -307,7 +305,7 @@ function tryFindingLineNumberFromTaskSectionInfo(
         }
 
         const line = fileLines[listItemLineNumber];
-        if (line.includes(globalFilter)) {
+        if (GlobalFilter.includedIn(line)) {
             if (sectionIndex === originalTask.taskLocation.sectionIndex) {
                 if (line === originalTask.originalMarkdown) {
                     taskLineNumber = listItemLineNumber;
