@@ -96,23 +96,14 @@ export class DateParser {
         return undefined;
     }
 
-    private static specificYearRegex = /[0-9]{4}/;
-    private static specificQuarterRegex = /[0-9]{4}-Q[1-4]/;
-    private static specificMonthRegex = /[0-9]{4}-[0-9]{2}/;
-    private static specificWeekRegex = /[0-9]{4}-W[0-9]{2}/;
-    private static specificYearFormat = 'YYYY';
-    private static specificQuarterFormat = 'YYYY-Q';
-    private static specificMonthFormat = 'YYYY-MM';
-    private static specificWeekFormat = 'YYYY-WW';
-
     private static parseSpecificDateRange(input: string): [moment.Moment, moment.Moment] | undefined {
         let parsedRange: [moment.Moment, moment.Moment] | undefined = undefined;
 
         const appleSauce: [RegExp, string, moment.unitOfTime.StartOf][] = [
-            [DateParser.specificYearRegex, DateParser.specificYearFormat, 'year'],
-            [DateParser.specificQuarterRegex, DateParser.specificQuarterFormat, 'quarter'],
-            [DateParser.specificMonthRegex, DateParser.specificMonthFormat, 'month'],
-            [DateParser.specificWeekRegex, DateParser.specificWeekFormat, 'isoWeek'],
+            [/[0-9]{4}/, 'YYYY', 'year'],
+            [/[0-9]{4}-Q[1-4]/, 'YYYY-Q', 'quarter'],
+            [/[0-9]{4}-[0-9]{2}/, 'YYYY-MM', 'month'],
+            [/[0-9]{4}-W[0-9]{2}/, 'YYYY-WW', 'isoWeek'],
         ];
 
         appleSauce.forEach((sauce) => {
