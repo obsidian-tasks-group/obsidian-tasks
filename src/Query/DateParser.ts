@@ -51,13 +51,13 @@ export class DateParser {
         return [moment.invalid(), moment.invalid()];
     }
 
-    private static parseAbsoluteDateRange(input: string): [moment.Moment, moment.Moment] {
+    private static parseAbsoluteDateRange(input: string): [moment.Moment, moment.Moment] | undefined {
         const result = chrono.parse(input, undefined, {
             forwardDate: true,
         });
 
         if (result.length === 0) {
-            return [moment.invalid(), moment.invalid()];
+            return undefined;
         }
 
         const startDate = result[0].start;
