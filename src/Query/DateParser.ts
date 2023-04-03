@@ -95,30 +95,28 @@ export class DateParser {
         return undefined;
     }
 
-    private static parseSpecificDateRange(input: string) {
-        let specificDateRange: [moment.Moment, moment.Moment] = [moment.invalid(), moment.invalid()];
-
+    private static parseSpecificDateRange(input: string): [moment.Moment, moment.Moment] {
         const yearMatch = input.match(DateParser.specificYearRegex);
         if (yearMatch && yearMatch.length === 1 && yearMatch[0] === input) {
-            specificDateRange = DateParser.buildSpecificDateRange(yearMatch[0], DateParser.specificYearFormat);
+            return DateParser.buildSpecificDateRange(yearMatch[0], DateParser.specificYearFormat);
         }
 
         const quarterMatch = input.match(DateParser.specificQuarterRegex);
         if (quarterMatch && quarterMatch.length === 1 && quarterMatch[0] === input) {
-            specificDateRange = DateParser.buildSpecificDateRange(quarterMatch[0], DateParser.specificQuarterFormat);
+            return DateParser.buildSpecificDateRange(quarterMatch[0], DateParser.specificQuarterFormat);
         }
 
         const monthMatch = input.match(DateParser.specificMonthRegex);
         if (monthMatch && monthMatch.length === 1 && monthMatch[0] === input) {
-            specificDateRange = DateParser.buildSpecificDateRange(monthMatch[0], DateParser.specificMonthFormat);
+            return DateParser.buildSpecificDateRange(monthMatch[0], DateParser.specificMonthFormat);
         }
 
         const weekMatch = input.match(DateParser.specificWeekRegex);
         if (weekMatch && weekMatch.length === 1 && weekMatch[0] === input) {
-            specificDateRange = DateParser.buildSpecificDateRange(weekMatch[0], DateParser.specificWeekFormat);
+            return DateParser.buildSpecificDateRange(weekMatch[0], DateParser.specificWeekFormat);
         }
 
-        return specificDateRange;
+        return [moment.invalid(), moment.invalid()];
     }
 
     private static buildSpecificDateRange(range: string, format: string): [moment.Moment, moment.Moment] {
