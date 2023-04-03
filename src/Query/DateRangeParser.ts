@@ -6,16 +6,10 @@ export class DateRangeParser {
         const relativeDateRangeMatch = input.match(relativeDateRangeRegexp);
         if (relativeDateRangeMatch && relativeDateRangeMatch.length === 3) {
             const lastThisNext = relativeDateRangeMatch[1];
-            const delta = moment.duration();
             const range = relativeDateRangeMatch[2];
-            switch (range) {
-                case 'month':
-                case 'quarter':
-                case 'year':
-                case 'week':
-                // This switch-case is only to avoid recasting String in unitOfTime.DurationConstructor accepted by Duration.add()
-                delta.add(1, range);
-            }
+
+            const delta = moment.duration();
+            delta.add(1, range as moment.unitOfTime.DurationConstructor);
             
             let dateRange: [moment.Moment, moment.Moment] = [moment(), moment()];
             switch (lastThisNext) {
