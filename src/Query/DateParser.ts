@@ -23,7 +23,7 @@ export class DateParser {
     public static parseDateRange(input: string): [moment.Moment, moment.Moment] {
         const parser = new DateRangeParser();
         const dateRange2 = parser.parseRelativeDateRange(input);
-        if(dateRange2 !== undefined) {
+        if (dateRange2 !== undefined) {
             // Dates shall be at midnight eg 00:00
             dateRange2.forEach((d) => d.startOf('day'));
             return dateRange2;
