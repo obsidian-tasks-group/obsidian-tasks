@@ -2,13 +2,13 @@ import type { Moment } from 'moment';
 import type { TaskLocation } from './TaskLocation';
 import type { Recurrence } from './Recurrence';
 import { getSettings, getUserSelectedTaskFormat } from './Config/Settings';
+import { GlobalFilter } from './Config/GlobalFilter';
 import { StatusRegistry } from './StatusRegistry';
 import type { Status } from './Status';
 import { Urgency } from './Urgency';
 import { renderTaskLine } from './TaskLineRenderer';
 import type { TaskLineRenderDetails } from './TaskLineRenderer';
 import { DateFallback } from './DateFallback';
-import * as RegExpTools from './lib/RegExpTools';
 import { compareByDate } from './lib/DateTools';
 
 /**
@@ -212,8 +212,7 @@ export class Task {
 
         // return if task does not have the global filter. Do this before processing
         // rest of match to improve performance.
-        const { globalFilter } = getSettings();
-        if (!body.includes(globalFilter)) {
+        if (!GlobalFilter.includedIn(body)) {
             return null;
         }
 
@@ -246,9 +245,8 @@ export class Task {
         // Ensure that whitespace is removed around tags
         taskInfo.tags = taskInfo.tags.map((tag) => tag.trim());
 
-        if (globalFilter) {
-            taskInfo.tags = taskInfo.tags.filter((tag) => tag !== globalFilter);
-        }
+        // Remove the Global Filter if it is there
+        taskInfo.tags = taskInfo.tags.filter((tag) => !GlobalFilter.equals(tag));
 
         return new Task({
             ...taskInfo,
@@ -528,23 +526,5 @@ export class Task {
      */
     public static extractHashtags(description: string): string[] {
         return description.match(TaskRegularExpressions.hashTags)?.map((tag) => tag.trim()) ?? [];
-    }
-
-    /**
-     * Search for the global filter for the purpose of removing it from the description, but do so only
-     * if it is a separate word (preceding the beginning of line or a space and followed by the end of line
-     * or a space), because we don't want to cut-off nested tags like #task/subtag.
-     * If the global filter exists as part of a nested tag, we keep it untouched.
-     */
-    public getDescriptionWithoutGlobalFilter() {
-        const { globalFilter } = getSettings();
-        let description = this.description;
-        if (globalFilter.length === 0) return description;
-        // This matches the global filter (after escaping it) only when it's a complete word
-        const globalFilterRegex = RegExp('(^|\\s)' + RegExpTools.escapeRegExp(globalFilter) + '($|\\s)', 'ug');
-        if (this.description.search(globalFilterRegex) > -1) {
-            description = description.replace(globalFilterRegex, '$1$2').replace('  ', ' ').trim();
-        }
-        return description;
     }
 }

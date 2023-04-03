@@ -1,4 +1,4 @@
-import { getSettings } from '../../Config/Settings';
+import { GlobalFilter } from '../../Config/GlobalFilter';
 import type { Task } from '../../Task';
 import type { Comparator } from '../Sorter';
 import { TextField } from './TextField';
@@ -25,8 +25,7 @@ export class DescriptionField extends TextField {
         // Remove global filter from description match if present.
         // This is necessary to match only on the content of the task, not
         // the global filter.
-        const globalFilter = getSettings().globalFilter;
-        return task.description.replace(globalFilter, '').trim();
+        return GlobalFilter.removeAsSubstringFrom(task.description);
     }
 
     public supportsSorting(): boolean {
@@ -56,8 +55,7 @@ export class DescriptionField extends TextField {
      * Properly reads links [[like this|one]] (note pipe).
      */
     public static cleanDescription(description: string): string {
-        const globalFilter = getSettings().globalFilter;
-        description = description.replace(globalFilter, '').trim();
+        description = GlobalFilter.removeAsSubstringFrom(description);
 
         const startsWithLinkRegex = /^\[\[?([^\]]*)]]?/;
         const linkRegexMatch = description.match(startsWithLinkRegex);
