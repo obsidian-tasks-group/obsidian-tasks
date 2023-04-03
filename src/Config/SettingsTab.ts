@@ -69,6 +69,7 @@ export class SettingsTab extends PluginSettingTab {
 
                 dropdown.setValue(getSettings().taskFormat).onChange(async (value) => {
                     updateSettings({ taskFormat: value as keyof TASK_FORMATS });
+                    await this.plugin.saveSettings();
                 });
             });
 
