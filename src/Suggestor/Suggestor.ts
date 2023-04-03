@@ -1,96 +1,86 @@
 import type { Settings } from '../Config/Settings';
-import { TASK_FORMATS } from '../Config/Settings';
 import { DateParser } from '../Query/DateParser';
 import { doAutocomplete } from '../DateAbbreviations';
 import { Recurrence } from '../Recurrence';
+import type { DefaultTaskSerializerSymbols } from '../TaskSerializer/DefaultTaskSerializer';
 import { TaskRegularExpressions } from '../Task';
-const { symbols } = TASK_FORMATS.tasksPluginEmoji.taskSerializer;
-const datePrefixCharacters = `${symbols.startDateSymbol}${symbols.scheduledDateSymbol}${symbols.dueDateSymbol}`;
+import type { SuggestInfo, SuggestionBuilder } from '.';
 
-/*
- * A suggestion presented to the user and some metadata about it.
- */
-export type SuggestInfo = {
-    suggestionType?: 'match' | 'default' | 'empty';
-    // What to display to the user
-    displayText: string;
-    // What to append to the note
-    appendText: string;
-    // At what index in the line to do the insertion (if not specified, the cursor location is used)
-    insertAt?: number;
-    // How many characters to skip from the original line (e.g. if replacing existing text)
-    insertSkip?: number;
-};
+export function makeDefaultSuggestionBuilder(symbols: DefaultTaskSerializerSymbols): SuggestionBuilder {
+    const datePrefixCharacters = `${symbols.startDateSymbol}${symbols.scheduledDateSymbol}${symbols.dueDateSymbol}`;
+    /*
+     * Return a list of suggestions, either generic or more fine-grained to the words at the cursor.
+     */
+    return (line: string, cursorPos: number, settings: Settings): SuggestInfo[] => {
+        let suggestions: SuggestInfo[] = [];
 
-/*
- * Return a list of suggestions, either generic or more fine-grained to the words at the cursor.
- */
-export function buildSuggestions(line: string, cursorPos: number, settings: Settings): SuggestInfo[] {
-    let suggestions: SuggestInfo[] = [];
+        // Step 1: add date suggestions if relevant
+        suggestions = suggestions.concat(addDatesSuggestions(line, cursorPos, settings, datePrefixCharacters));
 
-    // Step 1: add date suggestions if relevant
-    suggestions = suggestions.concat(addDatesSuggestions(line, cursorPos, settings));
+        // Step 2: add recurrence suggestions if relevant
+        suggestions = suggestions.concat(addRecurrenceSuggestions(line, cursorPos, settings, symbols.recurrenceSymbol));
 
-    // Step 2: add recurrence suggestions if relevant
-    suggestions = suggestions.concat(addRecurrenceSuggestions(line, cursorPos, settings));
-
-    // Step 3: add more general suggestions ('due', 'recurrence' etc)
-    const morePossibleSuggestions = getPossibleComponentSuggestions(line, settings);
-    // We now filter the general suggestions according to the word at the cursor. If there's
-    // something to match, we filter the suggestions accordingly, so the user can get more specific
-    // results according to what she's typing.
-    // If there's no good match, present the suggestions as they are
-    const wordMatch = matchByPosition(line, /([a-zA-Z'_-]*)/g, cursorPos);
-    let addedSuggestions = false;
-    if (wordMatch && wordMatch.length > 0) {
-        const wordUnderCursor = wordMatch[0];
-        if (wordUnderCursor.length >= Math.max(1, settings.autoSuggestMinMatch)) {
-            const filteredSuggestions = morePossibleSuggestions.filter((suggestInfo) =>
-                suggestInfo.displayText.toLowerCase().includes(wordUnderCursor.toLowerCase()),
-            );
-            for (const filtered of filteredSuggestions) {
-                suggestions.push({
-                    suggestionType: 'match',
-                    displayText: filtered.displayText,
-                    appendText: filtered.appendText,
-                    insertAt: wordMatch.index,
-                    insertSkip: wordUnderCursor.length,
-                });
-                addedSuggestions = true;
+        // Step 3: add more general suggestions ('due', 'recurrence' etc)
+        const morePossibleSuggestions = getPossibleComponentSuggestions(line, settings, symbols);
+        // We now filter the general suggestions according to the word at the cursor. If there's
+        // something to match, we filter the suggestions accordingly, so the user can get more specific
+        // results according to what she's typing.
+        // If there's no good match, present the suggestions as they are
+        const wordMatch = matchByPosition(line, /([a-zA-Z'_-]*)/g, cursorPos);
+        let addedSuggestions = false;
+        if (wordMatch && wordMatch.length > 0) {
+            const wordUnderCursor = wordMatch[0];
+            if (wordUnderCursor.length >= Math.max(1, settings.autoSuggestMinMatch)) {
+                const filteredSuggestions = morePossibleSuggestions.filter((suggestInfo) =>
+                    suggestInfo.displayText.toLowerCase().includes(wordUnderCursor.toLowerCase()),
+                );
+                for (const filtered of filteredSuggestions) {
+                    suggestions.push({
+                        suggestionType: 'match',
+                        displayText: filtered.displayText,
+                        appendText: filtered.appendText,
+                        insertAt: wordMatch.index,
+                        insertSkip: wordUnderCursor.length,
+                    });
+                    addedSuggestions = true;
+                }
             }
         }
-    }
-    // That's where we're adding all the suggestions in case there's nothing specific to match
-    // (and we're allowed by the settings to bring back a zero-sized match)
-    if (!addedSuggestions && settings.autoSuggestMinMatch === 0)
-        suggestions = suggestions.concat(morePossibleSuggestions);
+        // That's where we're adding all the suggestions in case there's nothing specific to match
+        // (and we're allowed by the settings to bring back a zero-sized match)
+        if (!addedSuggestions && settings.autoSuggestMinMatch === 0)
+            suggestions = suggestions.concat(morePossibleSuggestions);
 
-    // Unless we have a suggestion that is a match for something the user is currently typing, add
-    // an 'Enter' entry in the beginning of the menu, so an Enter press will move to the next line
-    // rather than insert a suggestion
-    if (suggestions.length > 0 && !suggestions.some((value) => value.suggestionType === 'match')) {
-        // No actual match, only default ones
-        suggestions.unshift({
-            suggestionType: 'empty',
-            displayText: '⏎',
-            appendText: '\n',
-        });
-    }
+        // Unless we have a suggestion that is a match for something the user is currently typing, add
+        // an 'Enter' entry in the beginning of the menu, so an Enter press will move to the next line
+        // rather than insert a suggestion
+        if (suggestions.length > 0 && !suggestions.some((value) => value.suggestionType === 'match')) {
+            // No actual match, only default ones
+            suggestions.unshift({
+                suggestionType: 'empty',
+                displayText: '⏎',
+                appendText: '\n',
+            });
+        }
 
-    // Either way, after all the aggregations above, never suggest more than the max items
-    suggestions = suggestions.slice(0, settings.autoSuggestMaxItems);
+        // Either way, after all the aggregations above, never suggest more than the max items
+        suggestions = suggestions.slice(0, settings.autoSuggestMaxItems);
 
-    return suggestions;
-}
-
-function hasPriority(line: string) {
-    if (Object.values(symbols.prioritySymbols).some((value) => value.length > 0 && line.includes(value))) return true;
+        return suggestions;
+    };
 }
 
 /*
  * Get suggestions for generic task components, e.g. a priority or a 'due' symbol
  */
-function getPossibleComponentSuggestions(line: string, _settings: Settings): SuggestInfo[] {
+function getPossibleComponentSuggestions(
+    line: string,
+    _settings: Settings,
+    symbols: DefaultTaskSerializerSymbols,
+): SuggestInfo[] {
+    const hasPriority = (line: string) =>
+        Object.values(symbols.prioritySymbols).some((value) => value.length > 0 && line.includes(value));
+
     const suggestions: SuggestInfo[] = [];
 
     if (!line.includes(symbols.dueDateSymbol))
@@ -139,7 +129,12 @@ function getPossibleComponentSuggestions(line: string, _settings: Settings): Sug
  * Generic predefined suggestions, in turn, also have two options: either filtered (if the user started typing
  * something where a date is expected) or unfiltered
  */
-function addDatesSuggestions(line: string, cursorPos: number, settings: Settings): SuggestInfo[] {
+function addDatesSuggestions(
+    line: string,
+    cursorPos: number,
+    settings: Settings,
+    datePrefixCharacters: string,
+): SuggestInfo[] {
     const genericSuggestions = [
         'today',
         'tomorrow',
@@ -224,7 +219,7 @@ function addDatesSuggestions(line: string, cursorPos: number, settings: Settings
  * Generic predefined suggestions, in turn, also have two options: either filtered (if the user started typing
  * something where a recurrence is expected) or unfiltered
  */
-function addRecurrenceSuggestions(line: string, cursorPos: number, settings: Settings) {
+function addRecurrenceSuggestions(line: string, cursorPos: number, settings: Settings, recurrenceSymbol: string) {
     const genericSuggestions = [
         'every',
         'every day',
@@ -242,7 +237,7 @@ function addRecurrenceSuggestions(line: string, cursorPos: number, settings: Set
     ];
 
     const results: SuggestInfo[] = [];
-    const recurrenceRegex = new RegExp(`(${symbols.recurrenceSymbol})\\s*([0-9a-zA-Z ]*)`, 'ug');
+    const recurrenceRegex = new RegExp(`(${recurrenceSymbol})\\s*([0-9a-zA-Z ]*)`, 'ug');
     const recurrenceMatch = matchByPosition(line, recurrenceRegex, cursorPos);
     if (recurrenceMatch && recurrenceMatch.length >= 2) {
         const recurrencePrefix = recurrenceMatch[1];

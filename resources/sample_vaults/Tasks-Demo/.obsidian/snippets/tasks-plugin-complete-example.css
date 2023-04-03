@@ -1,0 +1,129 @@
+/* I like tags to appear in gray so they won't grab too much attention */
+.tasks-list-text a.tag {
+    color: var(--list-marker-color);
+}
+
+/* Set internal links to gray too instead of Obsidian's default */
+.tasks-backlink a.internal-link {
+    color: var(--list-marker-color);
+}
+
+/* Paint the recurrence rule in gray so it will be less distracting */
+.task-recurring {
+    color: var(--list-marker-color);
+}
+
+/* List indentation values that seem to work well for me */
+ul.contains-task-list.plugin-tasks-query-result {
+    padding: 0 10px;
+}
+
+/* This seems to be needed for the task description to word-wrap correctly if they're too long */
+span.tasks-list-text {
+    width: auto;
+}
+
+/* Represent tasks' priority with colorful round checkboxes instead of the priority emoticons */
+.task-list-item[data-task-priority="high"] input[type=checkbox] {
+    box-shadow: 0px 0px 2px 2px var(--color-red);
+    border-color: var(--color-red);
+}
+
+.task-list-item[data-task-priority="medium"] input[type=checkbox] {
+    box-shadow: 0px 0px 2px 2px var(--color-orange);
+    border-color: var(--color-orange);
+}
+
+.task-list-item[data-task-priority="normal"] input[type=checkbox] {
+    box-shadow: 0px 0px 2px 2px var(--color-blue);
+    border-color: var(--color-blue);
+}
+
+.task-list-item[data-task-priority="low"] input[type=checkbox] {
+    box-shadow: 0px 0px 2px 2px var(--color-cyan);
+    border-color: var(--color-cyan);
+}
+
+/* This part removes the regular priority emoticon */
+span.task-priority {
+    display: none;
+}
+
+/* A special color for the 'due' component if it's for today, and still needs work on */
+.task-list-item[data-task-status-type="TODO"] .task-due[data-task-due="today"] span,
+.task-list-item[data-task-status-type="IN_PROGRESS"] .task-due[data-task-due="today"] span {
+    background: var(--color-cyan);
+    border-radius: 10px;
+    padding: 2px 8px;
+}
+
+/* A special color for overdue due dates, for tasks that still need work on */
+.task-list-item[data-task-status-type="TODO"] .task-due[data-task-due^="past-"] span,
+.task-list-item[data-task-status-type="IN_PROGRESS"] .task-due[data-task-due^="past-"] span {
+    background: var(--color-pink);
+    border-radius: 10px;
+    padding: 2px 8px;
+}
+
+/* Make checkboxes a circle instead of a square */
+ul > li.plugin-tasks-list-item .task-list-item-checkbox {
+    margin-inline-start: 0;
+    margin: 5px 2px;
+    border-radius: 50%;
+}
+
+/* The following section organizes the task components in a grid, so the description will be on the first row
+ * of each item and most components will be in the 2nd row. */
+ul > li.plugin-tasks-list-item {
+    grid-template-columns: 25px auto;
+    display: grid;
+    align-items: top;
+}
+
+span.task-description {
+    grid-row: 1;
+    grid-column: 1/10;
+}
+
+span.tasks-backlink {
+    grid-row: 2;
+    grid-column: 2;
+    font-size: small;
+}
+
+span.task-recurring {
+    grid-row: 2;
+    font-size: small;
+    width: max-content;
+}
+
+span.task-due {
+    grid-row: 2;
+    font-size: small;
+    width: max-content;
+}
+
+span.task-done {
+    grid-row: 2;
+    font-size: small;
+    width: max-content;
+}
+
+.tasks-list-text {
+    position: relative;
+    display: inline-grid;
+    width: max-content;
+    grid-column-gap: 10px;
+}
+
+span.task-extras {
+    grid-row: 2;
+    grid-column: 2;
+    font-size: small;
+}
+
+/* Make sure nested bullets in Reading mode get the whole width of the grid */
+li.task-list-item ul.has-list-bullet {
+	grid-row: 3;
+	grid-column: 1/10;
+}

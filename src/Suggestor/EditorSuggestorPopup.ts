@@ -2,10 +2,9 @@ import { App, Editor, EditorSuggest, TFile } from 'obsidian';
 import type { EditorPosition, EditorSuggestContext, EditorSuggestTriggerInfo } from 'obsidian';
 
 import { GlobalFilter } from '../Config/GlobalFilter';
-import type { Settings } from '../Config/Settings';
+import { type Settings, getUserSelectedTaskFormat } from '../Config/Settings';
 import * as task from '../Task';
-import { buildSuggestions } from './Suggestor';
-import type { SuggestInfo } from './Suggestor';
+import type { SuggestInfo } from '.';
 
 export type SuggestInfoWithContext = SuggestInfo & {
     context: EditorSuggestContext;
@@ -39,13 +38,11 @@ export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
         const line = context.query;
         const currentCursor = context.editor.getCursor();
 
-        const suggestions: SuggestInfo[] = buildSuggestions(line, currentCursor.ch, this.settings);
+        const suggestions: SuggestInfo[] =
+            getUserSelectedTaskFormat().buildSuggestions?.(line, currentCursor.ch, this.settings) ?? [];
 
         // Add the editor context to all the suggestions
-        const suggestionsWithContext: SuggestInfoWithContext[] = [];
-        for (const suggestion of suggestions) suggestionsWithContext.push({ ...suggestion, context: context });
-
-        return suggestionsWithContext;
+        return suggestions.map((s) => ({ ...s, context }));
     }
 
     renderSuggestion(value: SuggestInfoWithContext, el: HTMLElement) {
