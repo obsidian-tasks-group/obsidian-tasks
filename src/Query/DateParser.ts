@@ -56,6 +56,7 @@ export class DateParser {
             forwardDate: true,
         });
 
+        // Check chrono parsing
         if (result.length === 0) {
             return undefined;
         }
@@ -64,6 +65,11 @@ export class DateParser {
         const endDate = result[1] && result[1].start ? result[1].start : startDate;
         const start = window.moment(startDate.date());
         const end = window.moment(endDate.date());
+
+        // Check momentjs parsing
+        if (!start.isValid() || !end.isValid()) {
+            return undefined;
+        }
 
         let absoluteDateRange: [moment.Moment, moment.Moment] = [start, end];
         if (end.isBefore(start)) {
