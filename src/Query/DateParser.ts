@@ -97,23 +97,20 @@ export class DateParser {
     }
 
     private static parseSpecificDateRange(input: string): [moment.Moment, moment.Moment] | undefined {
-        const parsingVectors: [RegExp, string, moment.unitOfTime.StartOf][] = [
-            [/[0-9]{4}/, 'YYYY', 'year'],
-            [/[0-9]{4}-Q[1-4]/, 'YYYY-Q', 'quarter'],
-            [/[0-9]{4}-[0-9]{2}/, 'YYYY-MM', 'month'],
-            [/[0-9]{4}-W[0-9]{2}/, 'YYYY-WW', 'isoWeek'],
+        const parsingVectors = [
+            { regexp: /[0-9]{4}/, format: 'YYYY', unit: 'year' },
+            { regexp: /[0-9]{4}-Q[1-4]/, format: 'YYYY-Q', unit: 'quarter' },
+            { regexp: /[0-9]{4}-[0-9]{2}/, format: 'YYYY-MM', unit: 'month' },
+            { regexp: /[0-9]{4}-W[0-9]{2}/, format: 'YYYY-WW', unit: 'isoWeek' },
         ];
 
         for (const vector of parsingVectors) {
-            const regexp = vector[0];
-            const format = vector[1];
-            const unit = vector[2];
-            const matched = input.match(regexp);
+            const matched = input.match(vector.regexp);
             if (matched && matched.length === 1 && matched[0] === input) {
                 const range = matched[0];
                 const parsedRange: [moment.Moment, moment.Moment] = [
-                    moment(range, format).startOf(unit),
-                    moment(range, format).endOf(unit),
+                    moment(range, vector.format).startOf(vector.unit as moment.unitOfTime.StartOf),
+                    moment(range, vector.format).endOf(vector.unit as moment.unitOfTime.StartOf),
                 ];
                 return DateParser.setDateRangeToStartOfDay(parsedRange);
             }
