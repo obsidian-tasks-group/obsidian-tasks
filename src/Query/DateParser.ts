@@ -106,7 +106,7 @@ export class DateParser {
             [/[0-9]{4}-W[0-9]{2}/, 'YYYY-WW', 'isoWeek'],
         ];
 
-        parsingVectors.every((vector) => {
+        for (const vector of parsingVectors) {
             const regexp = vector[0];
             const format = vector[1];
             const unit = vector[2];
@@ -114,11 +114,9 @@ export class DateParser {
             if (matched && matched.length === 1 && matched[0] === input) {
                 const range = matched[0];
                 parsedRange = [moment(range, format).startOf(unit), moment(range, format).endOf(unit)];
-                parsedRange = DateParser.setDateRangeToStartOfDay(parsedRange);
-                return false;
+                return DateParser.setDateRangeToStartOfDay(parsedRange);
             }
-            return true;
-        });
+        }
 
         return parsedRange;
     }
