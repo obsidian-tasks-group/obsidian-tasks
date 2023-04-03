@@ -97,8 +97,6 @@ export class DateParser {
     }
 
     private static parseSpecificDateRange(input: string): [moment.Moment, moment.Moment] | undefined {
-        let parsedRange: [moment.Moment, moment.Moment] | undefined = undefined;
-
         const parsingVectors: [RegExp, string, moment.unitOfTime.StartOf][] = [
             [/[0-9]{4}/, 'YYYY', 'year'],
             [/[0-9]{4}-Q[1-4]/, 'YYYY-Q', 'quarter'],
@@ -113,12 +111,15 @@ export class DateParser {
             const matched = input.match(regexp);
             if (matched && matched.length === 1 && matched[0] === input) {
                 const range = matched[0];
-                parsedRange = [moment(range, format).startOf(unit), moment(range, format).endOf(unit)];
+                const parsedRange: [moment.Moment, moment.Moment] = [
+                    moment(range, format).startOf(unit),
+                    moment(range, format).endOf(unit),
+                ];
                 return DateParser.setDateRangeToStartOfDay(parsedRange);
             }
         }
 
-        return parsedRange;
+        return undefined;
     }
 
     private static setDateRangeToStartOfDay(dateRange: [moment.Moment, moment.Moment]): [moment.Moment, moment.Moment] {
