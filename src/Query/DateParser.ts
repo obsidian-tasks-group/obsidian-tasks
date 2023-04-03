@@ -1,6 +1,5 @@
 import * as chrono from 'chrono-node';
 import moment from 'moment';
-import { DateRangeParser } from './DateRangeParser';
 
 export class DateParser {
     public static parseDate(input: string, forwardDate: boolean = false): moment.Moment {
@@ -21,8 +20,7 @@ export class DateParser {
      * @return - A Tuple of dates. If both input dates are invalid, then both ouput dates will be invalid.
      */
     public static parseDateRange(input: string): [moment.Moment, moment.Moment] {
-        const parser = new DateRangeParser();
-        const relativeDateRange = parser.parseRelativeDateRange(input);
+        const relativeDateRange = DateParser.parseRelativeDateRange(input);
         if (relativeDateRange !== undefined) {
             return relativeDateRange;
         }
@@ -53,5 +51,36 @@ export class DateParser {
         // Dates shall be at midnight eg 00:00
         absoluteDateRange.forEach((d) => d.startOf('day'));
         return absoluteDateRange;
+    }
+
+    private static parseRelativeDateRange(input: string): [moment.Moment, moment.Moment] | undefined {
+        const relativeDateRangeRegexp = /(last|this|next) (week|month|quarter|year)/;
+        const relativeDateRangeMatch = input.match(relativeDateRangeRegexp);
+        if (relativeDateRangeMatch && relativeDateRangeMatch.length === 3) {
+            const lastThisNext = relativeDateRangeMatch[1];
+            const range = relativeDateRangeMatch[2];
+
+            const delta = moment.duration(1, range as moment.unitOfTime.DurationConstructor);
+
+            let dateRange: [moment.Moment, moment.Moment] = [moment(), moment()];
+            switch (lastThisNext) {
+                case 'last':
+                    dateRange.forEach((d) => d.subtract(delta));
+                    break;
+                case 'next':
+                    dateRange.forEach((d) => d.add(delta));
+                    break;
+            }
+
+            const unitOfTime = range === 'week' ? 'isoWeek' : (range as moment.unitOfTime.DurationConstructor);
+            dateRange = [dateRange[0].startOf(unitOfTime), dateRange[1].endOf(unitOfTime)];
+
+            // Dates shall be at midnight eg 00:00
+            dateRange.forEach((d) => d.startOf('day'));
+
+            return dateRange;
+        }
+
+        return undefined;
     }
 }
