@@ -106,24 +106,18 @@ export class DateParser {
     private static specificWeekFormat = 'YYYY-WW';
 
     private static parseSpecificDateRange(input: string): [moment.Moment, moment.Moment] | undefined {
-        let parsedRange = undefined;
+        let parsedRange: [moment.Moment, moment.Moment] | undefined = undefined;
 
-        parsedRange = DateParser.foo(input, parsedRange, DateParser.specificYearRegex, DateParser.specificYearFormat);
+        const appleSauce: [RegExp, string][] =[
+            [DateParser.specificYearRegex, DateParser.specificYearFormat],
+            [DateParser.specificQuarterRegex, DateParser.specificQuarterFormat],
+            [DateParser.specificMonthRegex, DateParser.specificMonthFormat],
+            [DateParser.specificWeekRegex, DateParser.specificWeekFormat],
+        ];
 
-        const quarterMatch = input.match(DateParser.specificQuarterRegex);
-        if (quarterMatch && quarterMatch.length === 1 && quarterMatch[0] === input) {
-            parsedRange = DateParser.buildSpecificDateRange(quarterMatch[0], DateParser.specificQuarterFormat);
-        }
-
-        const monthMatch = input.match(DateParser.specificMonthRegex);
-        if (monthMatch && monthMatch.length === 1 && monthMatch[0] === input) {
-            parsedRange = DateParser.buildSpecificDateRange(monthMatch[0], DateParser.specificMonthFormat);
-        }
-
-        const weekMatch = input.match(DateParser.specificWeekRegex);
-        if (weekMatch && weekMatch.length === 1 && weekMatch[0] === input) {
-            parsedRange = DateParser.buildSpecificDateRange(weekMatch[0], DateParser.specificWeekFormat);
-        }
+        appleSauce.forEach(sauce => {
+            parsedRange = DateParser.foo(input, parsedRange, sauce[0], sauce[1]);
+        });
 
         return parsedRange;
     }
