@@ -21,6 +21,15 @@ export class DateParser {
      * @return - A Tuple of dates. If both input dates are invalid, then both ouput dates will be invalid.
      */
     public static parseDateRange(input: string): [moment.Moment, moment.Moment] {
+        const parser = new DateRangeParser();
+        const dateRange2 = parser.parseRelativeDateRange(input);
+        if(dateRange2 !== undefined) {
+            // Dates shall be at midnight eg 00:00
+            dateRange2.forEach((d) => d.startOf('day'));
+            return dateRange2;
+        }
+
+        // If relative date range was not parsed, fallback on absolute date range with chrono
         const result = chrono.parse(input, undefined, {
             forwardDate: true,
         });
@@ -39,17 +48,8 @@ export class DateParser {
             dateRange1 = [end, start];
         }
 
-        const parser = new DateRangeParser();
-        const dateRange2 = parser.parseRelativeDateRange(input);
-
-        let dateRange;
-        if(dateRange2 === undefined) {
-            dateRange = dateRange1;
-        } else {
-            dateRange = dateRange2;
-        }
         // Dates shall be at midnight eg 00:00
-        dateRange.forEach((d) => d.startOf('day'));
-        return dateRange;
+        dateRange1.forEach((d) => d.startOf('day'));
+        return dateRange1;
     }
 }
