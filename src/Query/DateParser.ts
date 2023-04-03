@@ -108,40 +108,32 @@ export class DateParser {
     private static parseSpecificDateRange(input: string): [moment.Moment, moment.Moment] | undefined {
         let parsedRange: [moment.Moment, moment.Moment] | undefined = undefined;
 
-        const appleSauce: [RegExp, string][] =[
-            [DateParser.specificYearRegex, DateParser.specificYearFormat],
-            [DateParser.specificQuarterRegex, DateParser.specificQuarterFormat],
-            [DateParser.specificMonthRegex, DateParser.specificMonthFormat],
-            [DateParser.specificWeekRegex, DateParser.specificWeekFormat],
+        const appleSauce: [
+            RegExp,
+            string,
+            moment.unitOfTime.Base | moment.unitOfTime._quarter | moment.unitOfTime._isoWeek,
+        ][] = [
+            [DateParser.specificYearRegex, DateParser.specificYearFormat, 'year'],
+            [DateParser.specificQuarterRegex, DateParser.specificQuarterFormat, 'quarter'],
+            [DateParser.specificMonthRegex, DateParser.specificMonthFormat, 'month'],
+            [DateParser.specificWeekRegex, DateParser.specificWeekFormat, 'isoWeek'],
         ];
 
         appleSauce.forEach(sauce => {
             const matched = input.match(sauce[0]);
             if (matched && matched.length === 1 && matched[0] === input) {
-                parsedRange = DateParser.buildSpecificDateRange(matched[0], sauce[1]);
+                parsedRange = DateParser.buildSpecificDateRange(matched[0], sauce[1], sauce[2]);
             }
         });
 
         return parsedRange;
     }
 
-    private static buildSpecificDateRange(range: string, format: string): [moment.Moment, moment.Moment] {
-        let unit: moment.unitOfTime.Base | moment.unitOfTime._quarter | moment.unitOfTime._isoWeek = 'second';
-        switch (format) {
-            case DateParser.specificYearFormat:
-                unit = 'year';
-                break;
-            case DateParser.specificQuarterFormat:
-                unit = 'quarter';
-                break;
-            case DateParser.specificMonthFormat:
-                unit = 'month';
-                break;
-            case DateParser.specificWeekFormat:
-                unit = 'isoWeek';
-                break;
-        }
-
+    private static buildSpecificDateRange(
+        range: string,
+        format: string,
+        unit: moment.unitOfTime.Base | moment.unitOfTime._quarter | moment.unitOfTime._isoWeek,
+    ): [moment.Moment, moment.Moment] {
         const dateRange: [moment.Moment, moment.Moment] = [
             moment(range, format).startOf(unit),
             moment(range, format).endOf(unit),
