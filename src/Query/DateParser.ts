@@ -34,14 +34,20 @@ export class DateParser {
         const start = window.moment(startDate.date());
         const end = window.moment(endDate.date());
 
-        let dateRange: [moment.Moment, moment.Moment] = [start, end];
+        let dateRange1: [moment.Moment, moment.Moment] = [start, end];
         if (end.isBefore(start)) {
-            dateRange = [end, start];
+            dateRange1 = [end, start];
         }
 
         const parser = new DateRangeParser();
-        dateRange = parser.parseRelativeDateRange(input, dateRange);
+        const dateRange2 = parser.parseRelativeDateRange(input);
 
+        let dateRange;
+        if(dateRange2 === undefined) {
+            dateRange = dateRange1;
+        } else {
+            dateRange = dateRange2;
+        }
         // Dates shall be at midnight eg 00:00
         dateRange.forEach((d) => d.startOf('day'));
         return dateRange;
