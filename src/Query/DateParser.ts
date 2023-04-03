@@ -22,11 +22,11 @@ export class DateParser {
      */
     public static parseDateRange(input: string): [moment.Moment, moment.Moment] {
         const parser = new DateRangeParser();
-        const dateRange2 = parser.parseRelativeDateRange(input);
-        if (dateRange2 !== undefined) {
+        const relativeDateRange = parser.parseRelativeDateRange(input);
+        if (relativeDateRange !== undefined) {
             // Dates shall be at midnight eg 00:00
-            dateRange2.forEach((d) => d.startOf('day'));
-            return dateRange2;
+            relativeDateRange.forEach((d) => d.startOf('day'));
+            return relativeDateRange;
         }
 
         // If relative date range was not parsed, fallback on absolute date range with chrono
@@ -43,13 +43,13 @@ export class DateParser {
         const start = window.moment(startDate.date());
         const end = window.moment(endDate.date());
 
-        let dateRange1: [moment.Moment, moment.Moment] = [start, end];
+        let absoluteDateRange: [moment.Moment, moment.Moment] = [start, end];
         if (end.isBefore(start)) {
-            dateRange1 = [end, start];
+            absoluteDateRange = [end, start];
         }
 
         // Dates shall be at midnight eg 00:00
-        dateRange1.forEach((d) => d.startOf('day'));
-        return dateRange1;
+        absoluteDateRange.forEach((d) => d.startOf('day'));
+        return absoluteDateRange;
     }
 }
