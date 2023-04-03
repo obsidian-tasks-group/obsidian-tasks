@@ -20,6 +20,16 @@ export class DateParser {
      * @return - A Tuple of dates. If both input dates are invalid, then both ouput dates will be invalid.
      */
     public static parseDateRange(input: string): [moment.Moment, moment.Moment] {
+        const relativeDateRange = DateParser.parseRelativeDateRange(input);
+        if (relativeDateRange !== undefined) {
+            return relativeDateRange;
+        }
+
+        // If relative date range was not parsed, fallback on absolute date range with chrono
+        return DateParser.parseAbsoluteDateRange(input);
+    }
+
+    private static parseAbsoluteDateRange(input: string): [moment.Moment, moment.Moment] {
         const result = chrono.parse(input, undefined, {
             forwardDate: true,
         });
@@ -33,27 +43,26 @@ export class DateParser {
         const start = window.moment(startDate.date());
         const end = window.moment(endDate.date());
 
-        let dateRange: [moment.Moment, moment.Moment] = [start, end];
+        let absoluteDateRange: [moment.Moment, moment.Moment] = [start, end];
         if (end.isBefore(start)) {
-            dateRange = [end, start];
+            absoluteDateRange = [end, start];
         }
 
+        // Dates shall be at midnight eg 00:00
+        absoluteDateRange.forEach((d) => d.startOf('day'));
+        return absoluteDateRange;
+    }
+
+    private static parseRelativeDateRange(input: string): [moment.Moment, moment.Moment] | undefined {
         const relativeDateRangeRegexp = /(last|this|next) (week|month|quarter|year)/;
         const relativeDateRangeMatch = input.match(relativeDateRangeRegexp);
         if (relativeDateRangeMatch && relativeDateRangeMatch.length === 3) {
             const lastThisNext = relativeDateRangeMatch[1];
-            const delta = moment.duration();
             const range = relativeDateRangeMatch[2];
-            switch (range) {
-                case 'month':
-                case 'quarter':
-                case 'year':
-                case 'week':
-                    // This switch-case is only to avoid recasting String in unitOfTime.DurationConstructor accepted by Duration.add()
-                    delta.add(1, range);
-            }
 
-            dateRange = [moment(), moment()];
+            const delta = moment.duration(1, range as moment.unitOfTime.DurationConstructor);
+
+            let dateRange: [moment.Moment, moment.Moment] = [moment(), moment()];
             switch (lastThisNext) {
                 case 'last':
                     dateRange.forEach((d) => d.subtract(delta));
@@ -63,20 +72,15 @@ export class DateParser {
                     break;
             }
 
-            switch (range) {
-                case 'month':
-                case 'quarter':
-                case 'year':
-                    dateRange = [dateRange[0].startOf(range), dateRange[1].endOf(range)];
-                    break;
-                case 'week':
-                    dateRange = [dateRange[0].startOf('isoWeek'), dateRange[1].endOf('isoWeek')];
-                    break;
-            }
+            const unitOfTime = range === 'week' ? 'isoWeek' : (range as moment.unitOfTime.DurationConstructor);
+            dateRange = [dateRange[0].startOf(unitOfTime), dateRange[1].endOf(unitOfTime)];
+
+            // Dates shall be at midnight eg 00:00
+            dateRange.forEach((d) => d.startOf('day'));
+
+            return dateRange;
         }
 
-        // Dates shall be at midnight eg 00:00
-        dateRange.forEach((d) => d.startOf('day'));
-        return dateRange;
+        return undefined;
     }
 }
