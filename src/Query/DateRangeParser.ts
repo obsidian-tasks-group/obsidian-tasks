@@ -13,22 +13,22 @@ export class DateRangeParser {
             let dateRange: [moment.Moment, moment.Moment] = [moment(), moment()];
             switch (lastThisNext) {
                 case 'last':
-                dateRange.forEach((d) => d.subtract(delta));
-                break;
+                    dateRange.forEach((d) => d.subtract(delta));
+                    break;
                 case 'next':
-                dateRange.forEach((d) => d.add(delta));
-                break;
+                    dateRange.forEach((d) => d.add(delta));
+                    break;
             }
             
             switch (range) {
                 case 'month':
                 case 'quarter':
                 case 'year':
-                dateRange = [dateRange[0].startOf(range), dateRange[1].endOf(range)];
-                break;
+                    dateRange = [dateRange[0].startOf(range), dateRange[1].endOf(range)];
+                    break;
                 case 'week':
-                dateRange = [dateRange[0].startOf('isoWeek'), dateRange[1].endOf('isoWeek')];
-                break;
+                    dateRange = [dateRange[0].startOf('isoWeek'), dateRange[1].endOf('isoWeek')];
+                    break;
             }
 
             return dateRange;
