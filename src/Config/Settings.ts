@@ -1,5 +1,5 @@
 import { makeDefaultSuggestionBuilder } from '../Suggestor/Suggestor';
-import { DEFAULT_SYMBOLS, PLAINTEXT_SYMBOLS } from '../TaskSerializer/DefaultTaskSerializer';
+import { DATAVIEW_SYMBOLS, DEFAULT_SYMBOLS } from '../TaskSerializer/DefaultTaskSerializer';
 import { StatusConfiguration } from '../StatusConfiguration';
 import { Status } from '../Status';
 import { DefaultTaskSerializer, type TaskSerializer } from '../TaskSerializer';
@@ -38,10 +38,10 @@ export const TASK_FORMATS = {
         taskSerializer: new DefaultTaskSerializer(DEFAULT_SYMBOLS),
         buildSuggestions: makeDefaultSuggestionBuilder(DEFAULT_SYMBOLS),
     },
-    tasksPluginPlaintext: {
-        displayName: 'Default (Plaintext)',
-        taskSerializer: new DefaultTaskSerializer(PLAINTEXT_SYMBOLS),
-        buildSuggestions: makeDefaultSuggestionBuilder(PLAINTEXT_SYMBOLS),
+    dataview: {
+        displayName: 'Dataview',
+        taskSerializer: new DefaultTaskSerializer(DATAVIEW_SYMBOLS),
+        buildSuggestions: makeDefaultSuggestionBuilder(DATAVIEW_SYMBOLS),
     },
 } as const;
 

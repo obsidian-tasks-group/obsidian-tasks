@@ -66,9 +66,10 @@ export const DEFAULT_SYMBOLS: DefaultTaskSerializerSymbols = {
 } as const;
 
 /**
- * A symbol map for a plaintext version of obsidian-task's default task style.
+ * A symbol map that corresponds to a task format that strives to be compatible with
+ *   [Dataview]{@link https://github.com/blacksmithgu/obsidian-dataview}
  */
-export const PLAINTEXT_SYMBOLS: DefaultTaskSerializerSymbols = {
+export const DATAVIEW_SYMBOLS: DefaultTaskSerializerSymbols = {
     prioritySymbols: {
         High: 'P!!',
         Medium: 'P!',

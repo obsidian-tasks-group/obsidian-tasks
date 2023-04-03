@@ -7,9 +7,9 @@ import type { Settings } from '../../src/Config/Settings';
 import { DefaultTaskSerializer } from '../../src/TaskSerializer';
 import { RecurrenceBuilder } from '../TestingTools/RecurrenceBuilder';
 import {
+    DATAVIEW_SYMBOLS,
     DEFAULT_SYMBOLS,
     type DefaultTaskSerializerSymbols,
-    PLAINTEXT_SYMBOLS,
 } from '../../src/TaskSerializer/DefaultTaskSerializer';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 
@@ -23,7 +23,7 @@ type DefaultTaskSerializeSymbolMap = readonly {
 // A map that facilitates parameterizing the tests over symbols
 const symbolMap: DefaultTaskSerializeSymbolMap = [
     { taskFormat: 'tasksPluginEmoji', symbols: DEFAULT_SYMBOLS },
-    { taskFormat: 'tasksPluginPlaintext', symbols: PLAINTEXT_SYMBOLS },
+    { taskFormat: 'dataview', symbols: DATAVIEW_SYMBOLS },
 ];
 
 describe.each(symbolMap)("DefaultTaskSerializer with '$taskFormat' symbols", ({ symbols }) => {
