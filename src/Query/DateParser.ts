@@ -67,8 +67,7 @@ export class DateParser {
             absoluteDateRange = [end, start];
         }
 
-        DateParser.setDateRangeToStartOfDay(absoluteDateRange);
-        return absoluteDateRange;
+        return DateParser.setDateRangeToStartOfDay(absoluteDateRange);
     }
 
     private static parseRelativeDateRange(input: string): [moment.Moment, moment.Moment] | undefined {
@@ -93,9 +92,7 @@ export class DateParser {
             const unitOfTime = range === 'week' ? 'isoWeek' : (range as moment.unitOfTime.DurationConstructor);
             dateRange = [dateRange[0].startOf(unitOfTime), dateRange[1].endOf(unitOfTime)];
 
-            DateParser.setDateRangeToStartOfDay(dateRange);
-
-            return dateRange;
+            return DateParser.setDateRangeToStartOfDay(dateRange);
         }
 
         return undefined;
@@ -155,12 +152,13 @@ export class DateParser {
             moment(range, format).startOf(unit),
             moment(range, format).endOf(unit),
         ];
-        DateParser.setDateRangeToStartOfDay(dateRange);
-        return dateRange;
+
+        return DateParser.setDateRangeToStartOfDay(dateRange);
     }
 
-    private static setDateRangeToStartOfDay(dateRange: [moment.Moment, moment.Moment]) {
+    private static setDateRangeToStartOfDay(dateRange: [moment.Moment, moment.Moment]): [moment.Moment, moment.Moment] {
         // Dates shall be at midnight eg 00:00
         dateRange.forEach((d) => d.startOf('day'));
+        return dateRange;
     }
 }
