@@ -129,9 +129,9 @@ export class DateParser {
     }
 
     private static foo(input: string, parsedRange: any) {
-        const yearMatch = input.match(DateParser.specificYearRegex);
-        if (yearMatch && yearMatch.length === 1 && yearMatch[0] === input) {
-            parsedRange = DateParser.buildSpecificDateRange(yearMatch[0], DateParser.specificYearFormat);
+        const matched = input.match(DateParser.specificYearRegex);
+        if (matched && matched.length === 1 && matched[0] === input) {
+            parsedRange = DateParser.buildSpecificDateRange(matched[0], DateParser.specificYearFormat);
         }
         return parsedRange;
     }
