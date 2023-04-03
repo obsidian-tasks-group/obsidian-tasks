@@ -99,17 +99,17 @@ export class DateParser {
     private static parseSpecificDateRange(input: string): [moment.Moment, moment.Moment] | undefined {
         let parsedRange: [moment.Moment, moment.Moment] | undefined = undefined;
 
-        const appleSauce: [RegExp, string, moment.unitOfTime.StartOf][] = [
+        const parsingVectors: [RegExp, string, moment.unitOfTime.StartOf][] = [
             [/[0-9]{4}/, 'YYYY', 'year'],
             [/[0-9]{4}-Q[1-4]/, 'YYYY-Q', 'quarter'],
             [/[0-9]{4}-[0-9]{2}/, 'YYYY-MM', 'month'],
             [/[0-9]{4}-W[0-9]{2}/, 'YYYY-WW', 'isoWeek'],
         ];
 
-        appleSauce.forEach((sauce) => {
-            const regexp = sauce[0];
-            const format = sauce[1];
-            const unit = sauce[2];
+        parsingVectors.forEach((vector) => {
+            const regexp = vector[0];
+            const format = vector[1];
+            const unit = vector[2];
             const matched = input.match(regexp);
             if (matched && matched.length === 1 && matched[0] === input) {
                 const range = matched[0];
