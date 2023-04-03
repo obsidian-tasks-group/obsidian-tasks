@@ -42,7 +42,13 @@ export class DateParser {
         }
 
         // If previous failed, fallback on absolute date range with chrono
-        return DateParser.parseAbsoluteDateRange(input);
+        const absoluteDateRange = DateParser.parseAbsoluteDateRange(input);
+        if (absoluteDateRange !== undefined) {
+            return absoluteDateRange;
+        }
+
+        // If nothing worked return and invalid date range
+        return [moment.invalid(), moment.invalid()];
     }
 
     private static parseAbsoluteDateRange(input: string): [moment.Moment, moment.Moment] {
