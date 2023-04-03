@@ -119,7 +119,7 @@ export class DateParser {
             [DateParser.specificWeekRegex, DateParser.specificWeekFormat, 'isoWeek'],
         ];
 
-        appleSauce.forEach(sauce => {
+        appleSauce.forEach((sauce) => {
             const matched = input.match(sauce[0]);
             if (matched && matched.length === 1 && matched[0] === input) {
                 parsedRange = DateParser.buildSpecificDateRange(matched[0], sauce[1], sauce[2]);
