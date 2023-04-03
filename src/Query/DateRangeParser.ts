@@ -20,16 +20,11 @@ export class DateRangeParser {
                     break;
             }
             
-            switch (range) {
-                case 'month':
-                case 'quarter':
-                case 'year':
-                    dateRange = [dateRange[0].startOf(range), dateRange[1].endOf(range)];
-                    break;
-                case 'week':
-                    dateRange = [dateRange[0].startOf('isoWeek'), dateRange[1].endOf('isoWeek')];
-                    break;
-            }
+            const unitOfTime = range === 'week' ? 'isoWeek' : range;
+            dateRange = [
+                dateRange[0].startOf(unitOfTime as moment.unitOfTime.DurationConstructor),
+                dateRange[1].endOf(unitOfTime as moment.unitOfTime.DurationConstructor)
+            ];
 
             return dateRange;
         }
