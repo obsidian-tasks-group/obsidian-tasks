@@ -20,22 +20,20 @@ export class DateParser {
      * @return - A Tuple of dates. If both input dates are invalid, then both ouput dates will be invalid.
      */
     public static parseDateRange(input: string): [moment.Moment, moment.Moment] {
-        // Try parsing a relative date range like 'current month'
-        const relativeDateRange = DateParser.parseRelativeDateRange(input);
-        if (relativeDateRange !== undefined) {
-            return relativeDateRange;
-        }
+        const dateRangeParsers = [
+            // Try parsing a relative date range like 'current month'
+            DateParser.parseRelativeDateRange,
+            // Try '2022-W10' otherwise
+            DateParser.parseSpecificDateRange,
+            // If previous failed, fallback on absolute date range with chrono
+            DateParser.parseAbsoluteDateRange,
+        ];
 
-        // Try '2022-W10' otherwise
-        const specificDateRange = DateParser.parseSpecificDateRange(input);
-        if (specificDateRange !== undefined) {
-            return specificDateRange;
-        }
-
-        // If previous failed, fallback on absolute date range with chrono
-        const absoluteDateRange = DateParser.parseAbsoluteDateRange(input);
-        if (absoluteDateRange !== undefined) {
-            return absoluteDateRange;
+        for (const parser of dateRangeParsers) {
+            const parsedDateRange = parser(input);
+            if (parsedDateRange !== undefined) {
+                return parsedDateRange;
+            }
         }
 
         // If nothing worked return and invalid date range
