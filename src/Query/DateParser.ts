@@ -46,7 +46,12 @@ export class DateParser {
         if (result.length === 0) {
             // If chorono couldn't parse the date it could be a specific date range
             // Or a user error
-            return DateParser.parseSpecificDateRange(input);
+            const specificDateRange = DateParser.parseSpecificDateRange(input);
+            if (specificDateRange !== undefined) {
+                return specificDateRange;
+            }
+
+            return [moment.invalid(), moment.invalid()];
         }
 
         const startDate = result[0].start;
