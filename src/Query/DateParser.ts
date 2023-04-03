@@ -108,11 +108,7 @@ export class DateParser {
     private static parseSpecificDateRange(input: string): [moment.Moment, moment.Moment] | undefined {
         let parsedRange: [moment.Moment, moment.Moment] | undefined = undefined;
 
-        const appleSauce: [
-            RegExp,
-            string,
-            moment.unitOfTime.Base | moment.unitOfTime._quarter | moment.unitOfTime._isoWeek,
-        ][] = [
+        const appleSauce: [RegExp, string, moment.unitOfTime.StartOf][] = [
             [DateParser.specificYearRegex, DateParser.specificYearFormat, 'year'],
             [DateParser.specificQuarterRegex, DateParser.specificQuarterFormat, 'quarter'],
             [DateParser.specificMonthRegex, DateParser.specificMonthFormat, 'month'],
@@ -132,7 +128,7 @@ export class DateParser {
     private static buildSpecificDateRange(
         range: string,
         format: string,
-        unit: moment.unitOfTime.Base | moment.unitOfTime._quarter | moment.unitOfTime._isoWeek,
+        unit: moment.unitOfTime.StartOf,
     ): [moment.Moment, moment.Moment] {
         const dateRange: [moment.Moment, moment.Moment] = [
             moment(range, format).startOf(unit),
