@@ -80,7 +80,7 @@ export const DATAVIEW_SYMBOLS: DefaultTaskSerializerSymbols = {
     createdDateSymbol: 'created::',
     scheduledDateSymbol: 'scheduled::',
     dueDateSymbol: 'due::',
-    doneDateSymbol: 'done::',
+    doneDateSymbol: 'completion::',
     recurrenceSymbol: 'recur::',
     TaskFormatRegularExpressions: {
         priorityRegex: /(?<=\s|^)(P(-|!|!!))(?=\s|$)/u,
@@ -88,7 +88,7 @@ export const DATAVIEW_SYMBOLS: DefaultTaskSerializerSymbols = {
         createdDateRegex: /created:: *(\d{4}-\d{2}-\d{2})$/,
         scheduledDateRegex: /scheduled:: *(\d{4}-\d{2}-\d{2})$/,
         dueDateRegex: /due:: *(\d{4}-\d{2}-\d{2})$/,
-        doneDateRegex: /done:: *(\d{4}-\d{2}-\d{2})$/,
+        doneDateRegex: /completion:: *(\d{4}-\d{2}-\d{2})$/,
         recurrenceRegex: /recur:: ?([a-zA-Z0-9, !]+)$/i,
     },
 } as const;
