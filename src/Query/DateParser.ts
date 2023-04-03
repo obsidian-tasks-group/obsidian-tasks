@@ -116,17 +116,14 @@ export class DateParser {
         ];
 
         appleSauce.forEach(sauce => {
-            parsedRange = DateParser.foo(input, parsedRange, sauce[0], sauce[1]);
+            const matched = input.match(sauce[0]);
+            if (matched && matched.length === 1 && matched[0] === input) {
+                parsedRange = DateParser.buildSpecificDateRange(matched[0], sauce[1]);
+            }
+            
+            return parsedRange;
         });
 
-        return parsedRange;
-    }
-
-    private static foo(input: string, parsedRange: any, regexp: RegExp, rangeFormat: string) {
-        const matched = input.match(regexp);
-        if (matched && matched.length === 1 && matched[0] === input) {
-            parsedRange = DateParser.buildSpecificDateRange(matched[0], rangeFormat);
-        }
         return parsedRange;
     }
 
