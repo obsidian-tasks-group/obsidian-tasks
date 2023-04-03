@@ -122,24 +122,12 @@ export class DateParser {
             const matched = input.match(regexp);
             if (matched && matched.length === 1 && matched[0] === input) {
                 const range = matched[0];
-                parsedRange = DateParser.buildSpecificDateRange(range, format, unit);
+                parsedRange = [moment(range, format).startOf(unit), moment(range, format).endOf(unit)];
+                parsedRange = DateParser.setDateRangeToStartOfDay(parsedRange);
             }
         });
 
         return parsedRange;
-    }
-
-    private static buildSpecificDateRange(
-        range: string,
-        format: string,
-        unit: moment.unitOfTime.StartOf,
-    ): [moment.Moment, moment.Moment] {
-        const dateRange: [moment.Moment, moment.Moment] = [
-            moment(range, format).startOf(unit),
-            moment(range, format).endOf(unit),
-        ];
-
-        return DateParser.setDateRangeToStartOfDay(dateRange);
     }
 
     private static setDateRangeToStartOfDay(dateRange: [moment.Moment, moment.Moment]): [moment.Moment, moment.Moment] {
