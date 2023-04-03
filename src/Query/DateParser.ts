@@ -1,6 +1,6 @@
 import * as chrono from 'chrono-node';
 import moment from 'moment';
-import { parseRelativeDateRange } from './DateRangeParser';
+import { DateRangeParser } from './DateRangeParser';
 
 export class DateParser {
     public static parseDate(input: string, forwardDate: boolean = false): moment.Moment {
@@ -39,7 +39,8 @@ export class DateParser {
             dateRange = [end, start];
         }
 
-        dateRange = parseRelativeDateRange(input, dateRange);
+        const parser = new DateRangeParser();
+        dateRange = parser.parseRelativeDateRange(input, dateRange);
 
         // Dates shall be at midnight eg 00:00
         dateRange.forEach((d) => d.startOf('day'));
