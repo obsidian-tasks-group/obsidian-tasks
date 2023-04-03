@@ -20,10 +20,10 @@ export class DateRangeParser {
                     break;
             }
             
-            const unitOfTime = range === 'week' ? 'isoWeek' : range;
+            const unitOfTime = range === 'week' ? 'isoWeek' : range as moment.unitOfTime.DurationConstructor;
             dateRange = [
-                dateRange[0].startOf(unitOfTime as moment.unitOfTime.DurationConstructor),
-                dateRange[1].endOf(unitOfTime as moment.unitOfTime.DurationConstructor)
+                dateRange[0].startOf(unitOfTime),
+                dateRange[1].endOf(unitOfTime)
             ];
 
             return dateRange;
