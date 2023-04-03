@@ -55,11 +55,6 @@ export class DateParser {
         const start = window.moment(startDate.date());
         const end = window.moment(endDate.date());
 
-        // Check momentjs parsing
-        if (!start.isValid() || !end.isValid()) {
-            return undefined;
-        }
-
         let absoluteDateRange: [moment.Moment, moment.Moment] = [start, end];
         if (end.isBefore(start)) {
             absoluteDateRange = [end, start];
