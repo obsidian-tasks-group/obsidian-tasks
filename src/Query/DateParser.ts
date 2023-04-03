@@ -2,15 +2,6 @@ import * as chrono from 'chrono-node';
 import moment from 'moment';
 
 export class DateParser {
-    private static specificYearRegex = /[0-9]{4}/;
-    private static specificQuarterRegex = /[0-9]{4}-Q[1-4]/;
-    private static specificMonthRegex = /[0-9]{4}-[0-9]{2}/;
-    private static specificWeekRegex = /[0-9]{4}-W[0-9]{2}/;
-    private static specificYearFormat = 'YYYY';
-    private static specificQuarterFormat = 'YYYY-Q';
-    private static specificMonthFormat = 'YYYY-MM';
-    private static specificWeekFormat = 'YYYY-WW';
-
     public static parseDate(input: string, forwardDate: boolean = false): moment.Moment {
         // Using start of day to correctly match on comparison with other dates (like equality).
         return window
@@ -109,6 +100,15 @@ export class DateParser {
 
         return undefined;
     }
+
+    private static specificYearRegex = /[0-9]{4}/;
+    private static specificQuarterRegex = /[0-9]{4}-Q[1-4]/;
+    private static specificMonthRegex = /[0-9]{4}-[0-9]{2}/;
+    private static specificWeekRegex = /[0-9]{4}-W[0-9]{2}/;
+    private static specificYearFormat = 'YYYY';
+    private static specificQuarterFormat = 'YYYY-Q';
+    private static specificMonthFormat = 'YYYY-MM';
+    private static specificWeekFormat = 'YYYY-WW';
 
     private static parseSpecificDateRange(input: string): [moment.Moment, moment.Moment] | undefined {
         const yearMatch = input.match(DateParser.specificYearRegex);
