@@ -30,6 +30,10 @@ export class DateParser {
         }
 
         // If relative date range was not parsed, fallback on absolute date range with chrono
+        return DateParser.parseAbsoluteDateRange(input);
+    }
+
+    private static parseAbsoluteDateRange(input: string): [moment.Moment, moment.Moment] {
         const result = chrono.parse(input, undefined, {
             forwardDate: true,
         });
