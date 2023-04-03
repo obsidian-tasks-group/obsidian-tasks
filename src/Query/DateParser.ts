@@ -108,10 +108,7 @@ export class DateParser {
     private static parseSpecificDateRange(input: string): [moment.Moment, moment.Moment] | undefined {
         let parsedRange = undefined;
 
-        const yearMatch = input.match(DateParser.specificYearRegex);
-        if (yearMatch && yearMatch.length === 1 && yearMatch[0] === input) {
-            parsedRange = DateParser.buildSpecificDateRange(yearMatch[0], DateParser.specificYearFormat);
-        }
+        parsedRange = DateParser.foo(input, parsedRange);
 
         const quarterMatch = input.match(DateParser.specificQuarterRegex);
         if (quarterMatch && quarterMatch.length === 1 && quarterMatch[0] === input) {
@@ -128,6 +125,14 @@ export class DateParser {
             parsedRange = DateParser.buildSpecificDateRange(weekMatch[0], DateParser.specificWeekFormat);
         }
 
+        return parsedRange;
+    }
+
+    private static foo(input: string, parsedRange: any) {
+        const yearMatch = input.match(DateParser.specificYearRegex);
+        if (yearMatch && yearMatch.length === 1 && yearMatch[0] === input) {
+            parsedRange = DateParser.buildSpecificDateRange(yearMatch[0], DateParser.specificYearFormat);
+        }
         return parsedRange;
     }
 
