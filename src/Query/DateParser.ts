@@ -100,7 +100,7 @@ export class DateParser {
         return undefined;
     }
 
-    private static parseSpecificDateRange(input: string): [moment.Moment, moment.Moment] {
+    private static parseSpecificDateRange(input: string): [moment.Moment, moment.Moment] | undefined {
         const yearMatch = input.match(DateParser.specificYearRegex);
         if (yearMatch && yearMatch.length === 1 && yearMatch[0] === input) {
             return DateParser.buildSpecificDateRange(yearMatch[0], DateParser.specificYearFormat);
@@ -121,7 +121,7 @@ export class DateParser {
             return DateParser.buildSpecificDateRange(weekMatch[0], DateParser.specificWeekFormat);
         }
 
-        return [moment.invalid(), moment.invalid()];
+        return undefined;
     }
 
     private static buildSpecificDateRange(range: string, format: string): [moment.Moment, moment.Moment] {
