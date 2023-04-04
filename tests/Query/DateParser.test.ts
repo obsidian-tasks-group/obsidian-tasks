@@ -185,7 +185,10 @@ describe('DateParser - specific date ranges', () => {
     );
 
     it('should return invalid dates for erroneous specific ranges', () => {
-        // Week (53 & 52 in a year)
+        // Week
+        // Each 4 years a year has 53 weeks (2020). For 2020 the week 54 should be invalid then.
+        // For the others it is the week 53 that should be invalid.
+        // The correct last week of a year is tested in a previous test
         testParsingDateRange('2020-W54', 'Invalid date', 'Invalid date');
         testParsingDateRange('2018-W53', 'Invalid date', 'Invalid date');
 
