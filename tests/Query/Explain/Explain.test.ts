@@ -59,4 +59,21 @@ describe('Explain', () => {
     x2 includes D`;
         expect(and.asString()).toEqual(expected);
     });
+
+    it('Explains a nested non-boolean combination (Indent only depending on children)', () => {
+        const firstLine = 'Things that happen when you write code:';
+        const bottomLevelExplanation = new Explanation('or foobar sauce');
+        const nestedExplanations = [
+            new Explanation('you eat apple sauce', [bottomLevelExplanation]),
+            new Explanation('you enjoy bar'),
+            new Explanation('you love foo'),
+        ];
+        const explanation = new Explanation(firstLine, nestedExplanations);
+        const expected = `Things that happen when you write code:
+  you eat apple sauce
+    or foobar sauce
+  you enjoy bar
+  you love foo`;
+        expect(explanation.asString()).toEqual(expected);
+    });
 });
