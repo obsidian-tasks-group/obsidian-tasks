@@ -93,16 +93,17 @@ export class DateParser {
 
     private static parseSpecificDateRange(input: string): [moment.Moment, moment.Moment] | undefined {
         const parsingVectors: [RegExp, string, moment.unitOfTime.StartOf][] = [
-            [/^[0-9]{4}$/, 'YYYY', 'year'],
-            [/^[0-9]{4}-Q[1-4]$/, 'YYYY-Q', 'quarter'],
-            [/^[0-9]{4}-[0-9]{2}$/, 'YYYY-MM', 'month'],
-            [/^[0-9]{4}-W[0-9]{2}$/, 'YYYY-WW', 'isoWeek'],
+            [/^\s*[0-9]{4}\s*$/, 'YYYY', 'year'],
+            [/^\s*[0-9]{4}-Q[1-4]\s*$/, 'YYYY-Q', 'quarter'],
+            [/^\s*[0-9]{4}-[0-9]{2}\s*$/, 'YYYY-MM', 'month'],
+            [/^\s*[0-9]{4}-W[0-9]{2}\s*$/, 'YYYY-WW', 'isoWeek'],
         ];
 
         for (const [regexp, format, unit] of parsingVectors) {
             const matched = input.match(regexp);
             if (matched) {
-                const range = matched[0];
+                // RegExps allow spaces (\s*), remove them before calling moment()
+                const range = matched[0].trim();
                 const parsedRange: [moment.Moment, moment.Moment] = [
                     moment(range, format).startOf(unit),
                     moment(range, format).endOf(unit),

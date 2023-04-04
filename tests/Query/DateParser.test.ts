@@ -170,6 +170,13 @@ describe('DateParser - specific date ranges', () => {
         testParsingDateRange('2022', '2022-01-01', '2022-12-31');
     });
 
+    it('should allow the range text to be padded with spaces', () => {
+        testParsingDateRange('2022 ', '2022-01-01', '2022-12-31');
+        testParsingDateRange(' 2023-Q3', '2023-07-01', '2023-09-30');
+        testParsingDateRange('  2021-W30', '2021-07-26', '2021-08-01');
+        testParsingDateRange('  2020-03        ', '2020-03-01', '2020-03-31');
+    });
+
     it.each([
         ['2018-W38', '2018-09-17', '2018-09-23'],
         ['2010-11', '2010-11-01', '2010-11-30'],
