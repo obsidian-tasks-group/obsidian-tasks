@@ -65,7 +65,7 @@ export abstract class DateField extends Field {
                     this.filterResultIfFieldMissing(),
                     fieldDates,
                 );
-                result.filter = new Filter(line, filterFunction, new Explanation(explanation));
+                result.filter = new Filter(line, filterFunction, explanation);
             }
         } else {
             result.error = 'do not understand query filter (' + this.fieldName() + ' date)';
@@ -119,7 +119,7 @@ export abstract class DateField extends Field {
     public abstract date(task: Task): Moment | null;
 
     /**
-     * Construct a string used to explain a date-based filter
+     * Constructs an Explanation for a date-based filter
      * @param fieldName - for example, 'due'
      * @param fieldKeyword - one of the keywords like 'before' or 'after'
      * @param filterResultIfFieldMissing - whether the search matches tasks without the requested date value
@@ -130,7 +130,7 @@ export abstract class DateField extends Field {
         fieldKeyword: string,
         filterResultIfFieldMissing: boolean,
         filterDates: [moment.Moment, moment.Moment],
-    ): string {
+    ): Explanation {
         let relationship;
         // Example of formatted date: '2024-01-02 (Tuesday 2nd January 2024)'
         const dateFormat = 'YYYY-MM-DD (dddd Do MMMM YYYY)';
@@ -149,19 +149,31 @@ export abstract class DateField extends Field {
                     relationship = 'on';
                     explanationDates = filterDates[0].format(dateFormat);
                 } else {
-                    relationship = 'between';
-                    explanationDates = `${filterDates[0].format(dateFormat)} and ${filterDates[1].format(
-                        dateFormat,
-                    )} inclusive`;
+                    // This is a special case where a multi-line explanation has to be built
+                    // All other cases need only one line
+                    const firstLine = `${fieldName} date is between:`;
+
+                    // Consecutive lines
+                    const subExplanations = [
+                        new Explanation(`${filterDates[0].format(dateFormat)} and`),
+                        new Explanation(`${filterDates[1].format(dateFormat)} inclusive`),
+                    ];
+
+                    // Optional line for StartDateField (so far)
+                    if (filterResultIfFieldMissing) {
+                        subExplanations.push(new Explanation(`OR no ${fieldName} date`));
+                    }
+
+                    return new Explanation(firstLine, subExplanations);
                 }
                 break;
         }
 
-        let result = `${fieldName} date is ${relationship} ${explanationDates}`;
+        let oneLineExplanation = `${fieldName} date is ${relationship} ${explanationDates}`;
         if (filterResultIfFieldMissing) {
-            result += ` OR no ${fieldName} date`;
+            oneLineExplanation += ` OR no ${fieldName} date`;
         }
-        return result;
+        return new Explanation(oneLineExplanation);
     }
 
     protected fieldNameForExplanation() {
