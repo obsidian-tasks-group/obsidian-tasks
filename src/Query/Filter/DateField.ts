@@ -55,7 +55,7 @@ export abstract class DateField extends Field {
             const fieldKeyword = fieldNameKeywordDate[1];
             const fieldDateString = fieldNameKeywordDate[2];
             const fieldDates = DateParser.parseDateRange(fieldDateString);
-            if (!fieldDates.start.isValid() || !fieldDates.end.isValid()) {
+            if (!fieldDates.isValid()) {
                 result.error = 'do not understand ' + this.fieldName() + ' date';
             } else {
                 const filterFunction = this.buildFilterFunction(fieldKeyword, fieldDates);

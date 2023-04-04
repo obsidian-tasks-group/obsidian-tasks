@@ -32,23 +32,23 @@ export class DateParser {
 
         for (const parser of dateRangeParsers) {
             const parsedDateRange = parser(input);
-            if (parsedDateRange !== undefined) {
+            if (parsedDateRange.isValid()) {
                 return parsedDateRange;
             }
         }
 
         // If nothing worked return and invalid date range
-        return new DateRange(moment.invalid(), moment.invalid());
+        return DateRange.buildInvalid();
     }
 
-    private static parseAbsoluteDateRange(input: string): DateRange | undefined {
+    private static parseAbsoluteDateRange(input: string): DateRange {
         const result = chrono.parse(input, undefined, {
             forwardDate: true,
         });
 
         // Check chrono parsing
         if (result.length === 0) {
-            return undefined;
+            return DateRange.buildInvalid();
         }
 
         const startDate = result[0].start;
@@ -59,7 +59,7 @@ export class DateParser {
         return new DateRange(start, end);
     }
 
-    private static parseRelativeDateRange(input: string): DateRange | undefined {
+    private static parseRelativeDateRange(input: string): DateRange {
         const relativeDateRangeRegexp = /(last|this|next) (week|month|quarter|year)/;
         const relativeDateRangeMatch = input.match(relativeDateRangeRegexp);
         if (relativeDateRangeMatch && relativeDateRangeMatch.length === 3) {
@@ -80,10 +80,10 @@ export class DateParser {
             return dateRange;
         }
 
-        return undefined;
+        return DateRange.buildInvalid();
     }
 
-    private static parseSpecificDateRange(input: string): DateRange | undefined {
+    private static parseSpecificDateRange(input: string): DateRange {
         const parsingVectors: [RegExp, string, moment.unitOfTime.StartOf][] = [
             [/^\s*[0-9]{4}\s*$/, 'YYYY', 'year'],
             [/^\s*[0-9]{4}-Q[1-4]\s*$/, 'YYYY-Q', 'quarter'],
@@ -100,6 +100,6 @@ export class DateParser {
             }
         }
 
-        return undefined;
+        return DateRange.buildInvalid();
     }
 }

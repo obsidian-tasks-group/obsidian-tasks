@@ -47,4 +47,12 @@ export class DateRange {
 
         return new DateRange(moment().startOf(unitOfTime).startOf('day'), moment().endOf(unitOfTime).startOf('day'));
     }
+
+    public static buildInvalid(): DateRange {
+        return new DateRange(moment.invalid(), moment.invalid());
+    }
+
+    public isValid(): boolean {
+        return this.start.isValid() && this.end.isValid();
+    }
 }
