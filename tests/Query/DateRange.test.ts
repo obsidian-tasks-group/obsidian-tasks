@@ -28,7 +28,7 @@ describe('DateRange - absolute date ranges', () => {
     });
 });
 
-describe('DateParser - relative date ranges', () => {
+describe('DateRange - relative date ranges', () => {
     beforeAll(() => {
         jest.useFakeTimers();
         jest.setSystemTime(new Date(2021, 9, 6)); // 2021-10-06
@@ -39,10 +39,27 @@ describe('DateParser - relative date ranges', () => {
     });
 
     it('should return relative date range at midnight (week)', () => {
-        const dateRangeToParse = 'this week';
-        const parsedDateRange = DateParser.parseDateRange(dateRangeToParse);
-        expect(parsedDateRange.start.format('YYYY-MM-DD HH:mm')).toStrictEqual('2021-10-04 00:00');
-        expect(parsedDateRange.end.format('YYYY-MM-DD HH:mm')).toStrictEqual('2021-10-10 00:00');
+        const dateRange = DateRange.buildRelative('week');
+        expect(dateRange.start.format('YYYY-MM-DD HH:mm')).toStrictEqual('2021-10-04 00:00');
+        expect(dateRange.end.format('YYYY-MM-DD HH:mm')).toStrictEqual('2021-10-10 00:00');
+    });
+
+    it('should return relative date range at midnight (month)', () => {
+        const dateRange = DateRange.buildRelative('month');
+        expect(dateRange.start.format('YYYY-MM-DD HH:mm')).toStrictEqual('2021-10-01 00:00');
+        expect(dateRange.end.format('YYYY-MM-DD HH:mm')).toStrictEqual('2021-10-31 00:00');
+    });
+
+    it('should return relative date range at midnight (quarter)', () => {
+        const dateRange = DateRange.buildRelative('quarter');
+        expect(dateRange.start.format('YYYY-MM-DD HH:mm')).toStrictEqual('2021-10-01 00:00');
+        expect(dateRange.end.format('YYYY-MM-DD HH:mm')).toStrictEqual('2021-12-31 00:00');
+    });
+
+    it('should return relative date range at year (year)', () => {
+        const dateRange = DateRange.buildRelative('year');
+        expect(dateRange.start.format('YYYY-MM-DD HH:mm')).toStrictEqual('2021-01-01 00:00');
+        expect(dateRange.end.format('YYYY-MM-DD HH:mm')).toStrictEqual('2021-12-31 00:00');
     });
 });
 
