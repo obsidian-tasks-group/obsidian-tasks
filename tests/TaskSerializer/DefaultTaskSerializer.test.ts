@@ -6,12 +6,9 @@ import { Priority } from '../../src/Task';
 import type { Settings } from '../../src/Config/Settings';
 import { DefaultTaskSerializer } from '../../src/TaskSerializer';
 import { RecurrenceBuilder } from '../TestingTools/RecurrenceBuilder';
-import {
-    DATAVIEW_SYMBOLS,
-    DEFAULT_SYMBOLS,
-    type DefaultTaskSerializerSymbols,
-} from '../../src/TaskSerializer/DefaultTaskSerializer';
+import { DEFAULT_SYMBOLS, type DefaultTaskSerializerSymbols } from '../../src/TaskSerializer/DefaultTaskSerializer';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
+import { DATAVIEW_SYMBOLS } from '../../src/TaskSerializer/DataviewTaskSerializer';
 
 jest.mock('obsidian');
 window.moment = moment;

@@ -6,7 +6,8 @@ import * as chrono from 'chrono-node';
 import { getSettings } from '../../src/Config/Settings';
 import type { SuggestInfo } from '../../src/Suggestor';
 import { makeDefaultSuggestionBuilder } from '../../src/Suggestor/Suggestor';
-import { DATAVIEW_SYMBOLS, DEFAULT_SYMBOLS } from '../../src/TaskSerializer/DefaultTaskSerializer';
+import { DEFAULT_SYMBOLS } from '../../src/TaskSerializer/DefaultTaskSerializer';
+import { DATAVIEW_SYMBOLS } from '../../src/TaskSerializer/DataviewTaskSerializer';
 
 window.moment = moment;
 
