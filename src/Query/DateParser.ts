@@ -67,6 +67,8 @@ export class DateParser {
             const range = relativeDateRangeMatch[2] as moment.unitOfTime.DurationConstructor;
             const dateRange = new DateRange(moment(), moment());
 
+            dateRange.expandTo(range);
+
             switch (lastThisNext) {
                 case 'last':
                     dateRange.subtract(range);
@@ -75,8 +77,6 @@ export class DateParser {
                     dateRange.add(range);
                     break;
             }
-
-            dateRange.expandTo(range);
 
             return dateRange;
         }

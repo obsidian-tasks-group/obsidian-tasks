@@ -25,12 +25,24 @@ export class DateRange {
         const delta = moment.duration(1, duration);
         this.start.subtract(delta);
         this.end.subtract(delta);
+
+        if (duration === 'month' || duration === 'quarter') {
+            // Month and quarter durations in days may differ (28/30/31 days).
+            // We will need to adjust the end.
+            this.end = this.end.endOf(duration);
+        }
     }
 
     public add(duration: moment.unitOfTime.DurationConstructor) {
         const delta = moment.duration(1, duration);
         this.start.add(delta);
         this.end.add(delta);
+
+        if (duration === 'month' || duration === 'quarter') {
+            // Month and quarter durations in days may differ (28/30/31 days).
+            // We will need to adjust the end.
+            this.end = this.end.endOf(duration);
+        }
     }
 
     public expandTo(range: moment.unitOfTime.StartOf) {
