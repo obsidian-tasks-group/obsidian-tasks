@@ -151,7 +151,7 @@ export abstract class DateField extends Field {
                 } else {
                     // This is a special case where a multi-line explanation has to be built
                     // All other cases need only one line
-                    const firstLine = `${fieldName} date is between`;
+                    const firstLine = `${fieldName} date is between:`;
 
                     // Consecutive lines
                     const subExplanations = [
