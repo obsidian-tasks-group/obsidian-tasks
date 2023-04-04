@@ -20,22 +20,34 @@ export class DateParser {
      * @return - A Tuple of dates. If both input dates are invalid, then both ouput dates will be invalid.
      */
     public static parseDateRange(input: string): [moment.Moment, moment.Moment] {
-        const relativeDateRange = DateParser.parseRelativeDateRange(input);
-        if (relativeDateRange !== undefined) {
-            return relativeDateRange;
+        const dateRangeParsers = [
+            // Try parsing a relative date range like 'current month'
+            DateParser.parseRelativeDateRange,
+            // Try '2022-W10' otherwise
+            DateParser.parseSpecificDateRange,
+            // If previous failed, fallback on absolute date range with chrono
+            DateParser.parseAbsoluteDateRange,
+        ];
+
+        for (const parser of dateRangeParsers) {
+            const parsedDateRange = parser(input);
+            if (parsedDateRange !== undefined) {
+                return parsedDateRange;
+            }
         }
 
-        // If relative date range was not parsed, fallback on absolute date range with chrono
-        return DateParser.parseAbsoluteDateRange(input);
+        // If nothing worked return and invalid date range
+        return [moment.invalid(), moment.invalid()];
     }
 
-    private static parseAbsoluteDateRange(input: string): [moment.Moment, moment.Moment] {
+    private static parseAbsoluteDateRange(input: string): [moment.Moment, moment.Moment] | undefined {
         const result = chrono.parse(input, undefined, {
             forwardDate: true,
         });
 
+        // Check chrono parsing
         if (result.length === 0) {
-            return [moment.invalid(), moment.invalid()];
+            return undefined;
         }
 
         const startDate = result[0].start;
@@ -48,9 +60,7 @@ export class DateParser {
             absoluteDateRange = [end, start];
         }
 
-        // Dates shall be at midnight eg 00:00
-        absoluteDateRange.forEach((d) => d.startOf('day'));
-        return absoluteDateRange;
+        return DateParser.setDateRangeToStartOfDay(absoluteDateRange);
     }
 
     private static parseRelativeDateRange(input: string): [moment.Moment, moment.Moment] | undefined {
@@ -75,12 +85,39 @@ export class DateParser {
             const unitOfTime = range === 'week' ? 'isoWeek' : (range as moment.unitOfTime.DurationConstructor);
             dateRange = [dateRange[0].startOf(unitOfTime), dateRange[1].endOf(unitOfTime)];
 
-            // Dates shall be at midnight eg 00:00
-            dateRange.forEach((d) => d.startOf('day'));
-
-            return dateRange;
+            return DateParser.setDateRangeToStartOfDay(dateRange);
         }
 
         return undefined;
+    }
+
+    private static parseSpecificDateRange(input: string): [moment.Moment, moment.Moment] | undefined {
+        const parsingVectors: [RegExp, string, moment.unitOfTime.StartOf][] = [
+            [/^\s*[0-9]{4}\s*$/, 'YYYY', 'year'],
+            [/^\s*[0-9]{4}-Q[1-4]\s*$/, 'YYYY-Q', 'quarter'],
+            [/^\s*[0-9]{4}-[0-9]{2}\s*$/, 'YYYY-MM', 'month'],
+            [/^\s*[0-9]{4}-W[0-9]{2}\s*$/, 'YYYY-WW', 'isoWeek'],
+        ];
+
+        for (const [regexp, format, unit] of parsingVectors) {
+            const matched = input.match(regexp);
+            if (matched) {
+                // RegExps allow spaces (\s*), remove them before calling moment()
+                const range = matched[0].trim();
+                const parsedRange: [moment.Moment, moment.Moment] = [
+                    moment(range, format).startOf(unit),
+                    moment(range, format).endOf(unit),
+                ];
+                return DateParser.setDateRangeToStartOfDay(parsedRange);
+            }
+        }
+
+        return undefined;
+    }
+
+    private static setDateRangeToStartOfDay(dateRange: [moment.Moment, moment.Moment]): [moment.Moment, moment.Moment] {
+        // Dates shall be at midnight eg 00:00
+        dateRange.forEach((d) => d.startOf('day'));
+        return dateRange;
     }
 }
