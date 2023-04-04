@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export class DateRange {
     start: moment.Moment;
     end: moment.Moment;
@@ -17,5 +19,17 @@ export class DateRange {
 
     public wrap(): [moment.Moment, moment.Moment] {
         return [this.start, this.end];
+    }
+
+    public subtract(duration: moment.unitOfTime.DurationConstructor) {
+        const delta = moment.duration(1, duration);
+        this.start.subtract(delta);
+        this.end.subtract(delta);
+    }
+
+    public add(duration: moment.unitOfTime.DurationConstructor) {
+        const delta = moment.duration(1, duration);
+        this.start.add(delta);
+        this.end.add(delta);
     }
 }
