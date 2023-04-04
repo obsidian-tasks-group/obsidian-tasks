@@ -106,6 +106,56 @@ describe('due date', () => {
     });
 });
 
+describe('due date (specific ranges)', () => {
+    it('due in specific range (year)', () => {
+        // Arrange
+        const filter = new DueDateField().createFilterOrErrorMessage('due 2022');
+
+        // Act, Assert
+        testTaskFilterForTaskWithDueDate(filter, null, false);
+        testTaskFilterForTaskWithDueDate(filter, '2021-12-31', false);
+        testTaskFilterForTaskWithDueDate(filter, '2022-01-01', true);
+        testTaskFilterForTaskWithDueDate(filter, '2022-12-31', true);
+        testTaskFilterForTaskWithDueDate(filter, '2023-01-01', false);
+    });
+
+    it('due in specific range (quarter)', () => {
+        // Arrange
+        const filter = new DueDateField().createFilterOrErrorMessage('due 2017-Q3');
+
+        // Act, Assert
+        testTaskFilterForTaskWithDueDate(filter, null, false);
+        testTaskFilterForTaskWithDueDate(filter, '2017-06-30', false);
+        testTaskFilterForTaskWithDueDate(filter, '2017-07-01', true);
+        testTaskFilterForTaskWithDueDate(filter, '2017-09-30', true);
+        testTaskFilterForTaskWithDueDate(filter, '2017-10-01', false);
+    });
+
+    it('due in specific range (month)', () => {
+        // Arrange
+        const filter = new DueDateField().createFilterOrErrorMessage('due 2020-03');
+
+        // Act, Assert
+        testTaskFilterForTaskWithDueDate(filter, null, false);
+        testTaskFilterForTaskWithDueDate(filter, '2020-02-28', false);
+        testTaskFilterForTaskWithDueDate(filter, '2020-03-01', true);
+        testTaskFilterForTaskWithDueDate(filter, '2020-03-31', true);
+        testTaskFilterForTaskWithDueDate(filter, '2020-04-01', false);
+    });
+
+    it('due in specific range (week)', () => {
+        // Arrange
+        const filter = new DueDateField().createFilterOrErrorMessage('due 2023-W09');
+
+        // Act, Assert
+        testTaskFilterForTaskWithDueDate(filter, null, false);
+        testTaskFilterForTaskWithDueDate(filter, '2023-02-26', false);
+        testTaskFilterForTaskWithDueDate(filter, '2023-02-27', true);
+        testTaskFilterForTaskWithDueDate(filter, '2023-03-05', true);
+        testTaskFilterForTaskWithDueDate(filter, '2023-03-06', false);
+    });
+});
+
 describe('due date (error & corner cases)', () => {
     it('invalid due date', () => {
         // Arrange
