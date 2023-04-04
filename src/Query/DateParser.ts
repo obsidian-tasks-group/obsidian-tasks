@@ -56,12 +56,7 @@ export class DateParser {
         const start = window.moment(startDate.date());
         const end = window.moment(endDate.date());
 
-        let absoluteDateRange: [moment.Moment, moment.Moment] = [start, end];
-        if (end.isBefore(start)) {
-            absoluteDateRange = [end, start];
-        }
-
-        return new DateRange(absoluteDateRange[0], absoluteDateRange[1]);
+        return new DateRange(start, end);
     }
 
     private static parseRelativeDateRange(input: string): DateRange | undefined {
