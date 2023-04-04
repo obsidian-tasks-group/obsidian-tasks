@@ -149,13 +149,17 @@ export abstract class DateField extends Field {
                     relationship = 'on';
                     explanationDates = filterDates[0].format(dateFormat);
                 } else {
+                    // This is a special case where a multi-line explanation has to be built
+                    // All other cases need only one line
                     const firstLine = `${fieldName} date is between`;
 
+                    // Consecutive lines
                     const subExplanations = [
                         new Explanation(`${filterDates[0].format(dateFormat)} and`),
                         new Explanation(`${filterDates[1].format(dateFormat)} inclusive`),
                     ];
 
+                    // Optional line for StartDateField (so far)
                     if (filterResultIfFieldMissing) {
                         subExplanations.push(new Explanation(`OR no ${fieldName} date`));
                     }
