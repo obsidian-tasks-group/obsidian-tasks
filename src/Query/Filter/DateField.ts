@@ -65,7 +65,7 @@ export abstract class DateField extends Field {
                     this.filterResultIfFieldMissing(),
                     fieldDates,
                 );
-                result.filter = new Filter(line, filterFunction, new Explanation(explanation));
+                result.filter = new Filter(line, filterFunction, explanation);
             }
         } else {
             result.error = 'do not understand query filter (' + this.fieldName() + ' date)';
@@ -119,7 +119,7 @@ export abstract class DateField extends Field {
     public abstract date(task: Task): Moment | null;
 
     /**
-     * Construct a string used to explain a date-based filter
+     * Constructs an Explanation for a date-based filter
      * @param fieldName - for example, 'due'
      * @param fieldKeyword - one of the keywords like 'before' or 'after'
      * @param filterResultIfFieldMissing - whether the search matches tasks without the requested date value
@@ -130,7 +130,7 @@ export abstract class DateField extends Field {
         fieldKeyword: string,
         filterResultIfFieldMissing: boolean,
         filterDates: [moment.Moment, moment.Moment],
-    ): string {
+    ): Explanation {
         let relationship;
         // Example of formatted date: '2024-01-02 (Tuesday 2nd January 2024)'
         const dateFormat = 'YYYY-MM-DD (dddd Do MMMM YYYY)';
@@ -161,7 +161,7 @@ export abstract class DateField extends Field {
         if (filterResultIfFieldMissing) {
             result += ` OR no ${fieldName} date`;
         }
-        return result;
+        return new Explanation(result);
     }
 
     protected fieldNameForExplanation() {
