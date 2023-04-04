@@ -66,7 +66,7 @@ export class DateParser {
             const lastThisNext = relativeDateRangeMatch[1];
             const range = relativeDateRangeMatch[2];
 
-            const dateRange = DateRange.buildRelativeDateRange(range as moment.unitOfTime.StartOf);
+            const dateRange = DateRange.buildRelative(range as moment.unitOfTime.StartOf);
 
             switch (lastThisNext) {
                 case 'last':

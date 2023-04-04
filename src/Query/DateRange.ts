@@ -41,7 +41,7 @@ export class DateRange {
         }
     }
 
-    public static buildRelativeDateRange(range: moment.unitOfTime.StartOf) {
+    public static buildRelative(range: moment.unitOfTime.StartOf) {
         // Treat all weeks as ISO 8601 weeks
         const unitOfTime = range === 'week' ? 'isoWeek' : range;
 
