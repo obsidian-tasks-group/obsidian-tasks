@@ -1,3 +1,5 @@
+import moment from 'moment';
+import { DateRange } from '../../src/Query/DateRange';
 import { DateParser } from '../../src/Query/DateParser';
 import { TaskRegularExpressions } from '../../src/Task';
 
@@ -13,12 +15,16 @@ function testParsingDateRange(input: string, expectedStart: string, expectedEnd:
     expect([startFmt, endFmt]).toStrictEqual([expectedStart, expectedEnd]);
 }
 
-describe('DateParser - date ranges', () => {
+describe('DateRange - absolute date ranges', () => {
     it('should return date ranges at midnight', () => {
-        const dateRangeToParse = '2023-09-28 2023-10-01';
-        const parsedDateRange = DateParser.parseDateRange(dateRangeToParse);
-        expect(parsedDateRange.start.format('YYYY-MM-DD HH:mm')).toStrictEqual('2023-09-28 00:00');
-        expect(parsedDateRange.end.format('YYYY-MM-DD HH:mm')).toStrictEqual('2023-10-01 00:00');
+        // Act
+        const result = new DateRange(moment('2023-09-28'), moment('2023-10-01'));
+
+        // Assert
+        expect(result.start).toBeDefined();
+        expect(result.end).toBeDefined();
+        expect(result.start.format('YYYY-MM-DD HH:mm')).toStrictEqual('2023-09-28 00:00');
+        expect(result.end.format('YYYY-MM-DD HH:mm')).toStrictEqual('2023-10-01 00:00');
     });
 });
 
