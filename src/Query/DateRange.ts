@@ -25,7 +25,7 @@ export class DateRange {
         if (duration === 'month' || duration === 'quarter') {
             // Month and quarter durations in days may differ (28/30/31 days).
             // We will need to adjust the end.
-            this.end = this.end.endOf(duration);
+            this.end = this.end.endOf(duration).startOf('day');
         }
     }
 
@@ -37,7 +37,7 @@ export class DateRange {
         if (duration === 'month' || duration === 'quarter') {
             // Month and quarter durations in days may differ (28/30/31 days).
             // We will need to adjust the end.
-            this.end = this.end.endOf(duration);
+            this.end = this.end.endOf(duration).startOf('day');
         }
     }
 
