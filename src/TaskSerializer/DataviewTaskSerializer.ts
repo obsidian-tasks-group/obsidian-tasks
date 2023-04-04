@@ -1,3 +1,5 @@
+import type { TaskLayout, TaskLayoutComponent } from '../TaskLayout';
+import type { Task } from '../Task';
 import { DefaultTaskSerializer, type DefaultTaskSerializerSymbols } from './DefaultTaskSerializer';
 
 /**
@@ -85,5 +87,12 @@ export const DATAVIEW_SYMBOLS: DefaultTaskSerializerSymbols = {
 export class DataviewTaskSerializer extends DefaultTaskSerializer {
     constructor() {
         super(DATAVIEW_SYMBOLS);
+    }
+
+    public componentToString(task: Task, layout: TaskLayout, component: TaskLayoutComponent) {
+        const stringComponent = super.componentToString(task, layout, component);
+        const notInlineFieldComponents: TaskLayoutComponent[] = ['blockLink', 'description'];
+        const shouldMakeInlineField = stringComponent !== '' && !notInlineFieldComponents.includes(component);
+        return shouldMakeInlineField ? ` [${stringComponent.trim()}]` : stringComponent;
     }
 }
