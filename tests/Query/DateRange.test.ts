@@ -1,6 +1,5 @@
 import moment from 'moment';
 import { DateRange } from '../../src/Query/DateRange';
-import { DateParser } from '../../src/Query/DateParser';
 
 function testDateRange(dateRange: DateRange, start: string, end: string) {
     expect(dateRange.start).toBeDefined();
@@ -90,18 +89,17 @@ describe('Date Parser - correct delta for next & last month & quarter (Today is 
     });
 });
 
-describe('DateParser - specific date ranges', () => {
+describe('DateRange - specific date ranges', () => {
     it.each([
-        ['2018-W38', '2018-09-17', '2018-09-23'],
-        ['2010-11', '2010-11-01', '2010-11-30'],
-        ['2019-Q3', '2019-07-01', '2019-09-30'],
-        ['2007', '2007-01-01', '2007-12-31'],
+        ['2018-W38', 'YYYY-WW', 'isoWeek', '2018-09-17', '2018-09-23'],
+        ['2010-11', 'YYYY-MM', 'month', '2010-11-01', '2010-11-30'],
+        ['2019-Q3', 'YYYY-QQ', 'quarter', '2019-07-01', '2019-09-30'],
+        ['2007', 'YYYY', 'year', '2007-01-01', '2007-12-31'],
     ])(
         'specific range %s: should return %s and %s at midnight',
-        (range: string, rangeStart: string, rangeEnd: string) => {
-            const parsedDateRange = DateParser.parseDateRange(range);
-            expect(parsedDateRange.start.format('YYYY-MM-DD HH:mm')).toStrictEqual(`${rangeStart} 00:00`);
-            expect(parsedDateRange.end.format('YYYY-MM-DD HH:mm')).toStrictEqual(`${rangeEnd} 00:00`);
+        (date: string, format: string, range: string, rangeStart: string, rangeEnd: string) => {
+            const dateRange = DateRange.buildSpecific(date, format, range as moment.unitOfTime.StartOf);
+            testDateRange(dateRange, rangeStart, rangeEnd);
         },
     );
 });

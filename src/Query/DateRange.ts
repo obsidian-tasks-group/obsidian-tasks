@@ -48,6 +48,10 @@ export class DateRange {
         return new DateRange(moment().startOf(unitOfTime).startOf('day'), moment().endOf(unitOfTime).startOf('day'));
     }
 
+    public static buildSpecific(date: string, dateFormat: string, range: moment.unitOfTime.StartOf | null): DateRange {
+        return new DateRange(moment(date, dateFormat).startOf(range), moment(date, dateFormat).endOf(range));
+    }
+
     public static buildInvalid(): DateRange {
         return new DateRange(moment.invalid(), moment.invalid());
     }
