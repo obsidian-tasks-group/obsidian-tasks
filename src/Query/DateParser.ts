@@ -66,21 +66,20 @@ export class DateParser {
             const lastThisNext = relativeDateRangeMatch[1];
             const range = relativeDateRangeMatch[2];
 
-            const unitOfTime = range === 'week' ? 'isoWeek' : (range as moment.unitOfTime.DurationConstructor);            
+            const unitOfTime = range === 'week' ? 'isoWeek' : (range as moment.unitOfTime.DurationConstructor);
 
-            const dateRange: [moment.Moment, moment.Moment] = [moment(), moment()];
+            const dateRange = new DateRange(moment(), moment());
 
-            const delta = moment.duration(1, range as moment.unitOfTime.DurationConstructor);
             switch (lastThisNext) {
                 case 'last':
-                    dateRange.forEach((d) => d.subtract(delta));
+                    dateRange.subtract(range as moment.unitOfTime.DurationConstructor);
                     break;
                 case 'next':
-                    dateRange.forEach((d) => d.add(delta));
+                    dateRange.add(range as moment.unitOfTime.DurationConstructor);
                     break;
             }
 
-            return new DateRange(dateRange[0].startOf(unitOfTime), dateRange[1].endOf(unitOfTime));
+            return new DateRange(dateRange.start.startOf(unitOfTime), dateRange.end.endOf(unitOfTime));
         }
 
         return undefined;
