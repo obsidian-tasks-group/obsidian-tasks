@@ -150,10 +150,11 @@ export abstract class DateField extends Field {
                     explanationDates = filterDates[0].format(dateFormat);
                 } else {
                     const firstLine = `${fieldName} date is between`;
-                    const tastySauce = `${filterDates[0].format(dateFormat)} and`;
-                    const bitterSauce = `${filterDates[1].format(dateFormat)} inclusive`;
 
-                    const subExplanations = [new Explanation(tastySauce), new Explanation(bitterSauce)];
+                    const subExplanations = [
+                        new Explanation(`${filterDates[0].format(dateFormat)} and`),
+                        new Explanation(`${filterDates[1].format(dateFormat)} inclusive`),
+                    ];
 
                     if (filterResultIfFieldMissing) {
                         subExplanations.push(new Explanation(`OR no ${fieldName} date`));
