@@ -3,6 +3,7 @@ export class DateRange {
     end: moment.Moment;
 
     constructor(start: moment.Moment, end: moment.Moment) {
+        // Dates shall be at midnight eg 00:00
         this.start = start.startOf('day');
         this.end = end.startOf('day');
     }
