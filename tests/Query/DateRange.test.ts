@@ -109,3 +109,42 @@ describe('DateRange - specific date ranges', () => {
         },
     );
 });
+
+describe('DateRange - range validity', () => {
+    it('should build a valid date range', () => {
+        const dateRange = new DateRange(moment('0000-01-01'), moment('2023-12-31'));
+        expect(dateRange.start).toBeDefined();
+        expect(dateRange.end).toBeDefined();
+        expect(dateRange.start.isValid()).toEqual(true);
+        expect(dateRange.end.isValid()).toEqual(true);
+        expect(dateRange.isValid()).toEqual(true);
+    });
+
+    it('should build an invalid range', () => {
+        // Both moments are invalid
+        const dateRange = DateRange.buildInvalid();
+        expect(dateRange.start).toBeDefined();
+        expect(dateRange.end).toBeDefined();
+        expect(dateRange.start.isValid()).toEqual(false);
+        expect(dateRange.end.isValid()).toEqual(false);
+        expect(dateRange.isValid()).toEqual(false);
+    });
+    it('should detect an invalid range', () => {
+        // At least one the dates is invalid
+        const dateRange1 = new DateRange(moment(), moment());
+        dateRange1.start = moment.invalid();
+        expect(dateRange1.start).toBeDefined();
+        expect(dateRange1.end).toBeDefined();
+        expect(dateRange1.start.isValid()).toEqual(false);
+        expect(dateRange1.end.isValid()).toEqual(true);
+        expect(dateRange1.isValid()).toEqual(false);
+
+        const dateRange2 = new DateRange(moment(), moment());
+        dateRange2.end = moment.invalid();
+        expect(dateRange2.start).toBeDefined();
+        expect(dateRange2.end).toBeDefined();
+        expect(dateRange2.start.isValid()).toEqual(true);
+        expect(dateRange2.end.isValid()).toEqual(false);
+        expect(dateRange2.isValid()).toEqual(false);
+    });
+});
