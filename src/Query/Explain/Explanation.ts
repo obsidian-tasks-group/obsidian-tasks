@@ -63,8 +63,10 @@ export class Explanation {
 
         let result = currentIndentation;
 
-        // If the symbol was not set just indent
-        if (this.symbol !== '') {
+        // If the symbol was not set, add the description and just indent
+        if (this.symbol === '') {
+            result += this.description;
+        } else {
             result += `${this.symbol}`;
 
             // We have children, so concatenate them together
