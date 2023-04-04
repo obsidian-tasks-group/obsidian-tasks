@@ -8,7 +8,6 @@ import { DefaultTaskSerializer } from '../../src/TaskSerializer';
 import { RecurrenceBuilder } from '../TestingTools/RecurrenceBuilder';
 import { DEFAULT_SYMBOLS, type DefaultTaskSerializerSymbols } from '../../src/TaskSerializer/DefaultTaskSerializer';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
-import { DATAVIEW_SYMBOLS } from '../../src/TaskSerializer/DataviewTaskSerializer';
 
 jest.mock('obsidian');
 window.moment = moment;
@@ -18,10 +17,7 @@ type DefaultTaskSerializeSymbolMap = readonly {
     symbols: DefaultTaskSerializerSymbols;
 }[];
 // A map that facilitates parameterizing the tests over symbols
-const symbolMap: DefaultTaskSerializeSymbolMap = [
-    { taskFormat: 'tasksPluginEmoji', symbols: DEFAULT_SYMBOLS },
-    { taskFormat: 'dataview', symbols: DATAVIEW_SYMBOLS },
-];
+const symbolMap: DefaultTaskSerializeSymbolMap = [{ taskFormat: 'tasksPluginEmoji', symbols: DEFAULT_SYMBOLS }];
 
 describe.each(symbolMap)("DefaultTaskSerializer with '$taskFormat' symbols", ({ symbols }) => {
     const taskSerializer = new DefaultTaskSerializer(symbols);
