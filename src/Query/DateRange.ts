@@ -34,7 +34,8 @@ export class DateRange {
     }
 
     public expandTo(range: moment.unitOfTime.StartOf) {
-        this.start = this.start.startOf(range).startOf('day');
-        this.end = this.end.endOf(range).startOf('day');
+        const unitOfTime = range === 'week' ? 'isoWeek' : range;
+        this.start = this.start.startOf(unitOfTime).startOf('day');
+        this.end = this.end.endOf(unitOfTime).startOf('day');
     }
 }

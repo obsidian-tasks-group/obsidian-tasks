@@ -65,9 +65,6 @@ export class DateParser {
         if (relativeDateRangeMatch && relativeDateRangeMatch.length === 3) {
             const lastThisNext = relativeDateRangeMatch[1];
             const range = relativeDateRangeMatch[2] as moment.unitOfTime.DurationConstructor;
-
-            const unitOfTime = range === 'week' ? 'isoWeek' : range;
-
             const dateRange = new DateRange(moment(), moment());
 
             switch (lastThisNext) {
@@ -79,7 +76,7 @@ export class DateParser {
                     break;
             }
 
-            dateRange.expandTo(unitOfTime);
+            dateRange.expandTo(range);
 
             return dateRange;
         }
