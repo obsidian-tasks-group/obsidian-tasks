@@ -91,12 +91,12 @@ export class DateParser {
             [/^\s*[0-9]{4}-W[0-9]{2}\s*$/, 'YYYY-WW', 'isoWeek'],
         ];
 
-        for (const [regexp, format, unit] of parsingVectors) {
+        for (const [regexp, dateFormat, range] of parsingVectors) {
             const matched = input.match(regexp);
             if (matched) {
                 // RegExps allow spaces (\s*), remove them before calling moment()
-                const range = matched[0].trim();
-                return new DateRange(moment(range, format).startOf(unit), moment(range, format).endOf(unit));
+                const date = matched[0].trim();
+                return new DateRange(moment(date, dateFormat).startOf(range), moment(date, dateFormat).endOf(range));
             }
         }
 
