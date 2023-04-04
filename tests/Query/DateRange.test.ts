@@ -15,16 +15,17 @@ function testParsingDateRange(input: string, expectedStart: string, expectedEnd:
     expect([startFmt, endFmt]).toStrictEqual([expectedStart, expectedEnd]);
 }
 
-describe('DateRange - absolute date ranges', () => {
-    it('should return date ranges at midnight', () => {
-        // Act
-        const result = new DateRange(moment('2023-09-28'), moment('2023-10-01'));
+function testDateRange(dateRange: DateRange, start: string, end: string) {
+    expect(dateRange.start).toBeDefined();
+    expect(dateRange.end).toBeDefined();
+    expect(dateRange.start.format('YYYY-MM-DD HH:mm')).toStrictEqual(`${start} 00:00`);
+    expect(dateRange.end.format('YYYY-MM-DD HH:mm')).toStrictEqual(`${end} 00:00`);
+}
 
-        // Assert
-        expect(result.start).toBeDefined();
-        expect(result.end).toBeDefined();
-        expect(result.start.format('YYYY-MM-DD HH:mm')).toStrictEqual('2023-09-28 00:00');
-        expect(result.end.format('YYYY-MM-DD HH:mm')).toStrictEqual('2023-10-01 00:00');
+describe('DateRange - absolute date ranges', () => {
+    it('should return date range', () => {
+        const dateRange = new DateRange(moment('2023-09-28'), moment('2023-10-01'));
+        testDateRange(dateRange, '2023-09-28', '2023-10-01');
     });
 });
 
@@ -45,8 +46,7 @@ describe('DateRange - relative date ranges', () => {
         ['year', '2021-01-01', '2021-12-31'],
     ])('should build relative date range ("%s")', (range, start, end) => {
         const dateRange = DateRange.buildRelative(range as moment.unitOfTime.StartOf);
-        expect(dateRange.start.format('YYYY-MM-DD HH:mm')).toStrictEqual(`${start} 00:00`);
-        expect(dateRange.end.format('YYYY-MM-DD HH:mm')).toStrictEqual(`${end} 00:00`);
+        testDateRange(dateRange, start, end);
     });
 });
 
