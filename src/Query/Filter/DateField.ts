@@ -149,7 +149,7 @@ export abstract class DateField extends Field {
                     relationship = 'on';
                     explanationDates = filterDates[0].format(dateFormat);
                 } else {
-                    const appleSauce = `${fieldName} date is between`;
+                    const firstLine = `${fieldName} date is between`;
                     const tastySauce = `${filterDates[0].format(dateFormat)} and`;
                     let bitterSauce = `${filterDates[1].format(dateFormat)} inclusive`;
                     if (filterResultIfFieldMissing) {
@@ -157,7 +157,7 @@ export abstract class DateField extends Field {
                     }
                     const subExplanations = [new Explanation(tastySauce), new Explanation(bitterSauce)];
 
-                    return new Explanation(appleSauce, subExplanations);
+                    return new Explanation(firstLine, subExplanations);
                 }
                 break;
         }
