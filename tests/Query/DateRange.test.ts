@@ -10,9 +10,14 @@ function testDateRange(dateRange: DateRange, start: string, end: string) {
 }
 
 describe('DateRange - absolute date ranges', () => {
-    it('should return date range', () => {
+    it('should build date range', () => {
         const dateRange = new DateRange(moment('2023-09-28'), moment('2023-10-01'));
         testDateRange(dateRange, '2023-09-28', '2023-10-01');
+    });
+
+    it('should return date range even if dates are reversed', () => {
+        const dateRange = new DateRange(moment('2023-08-02'), moment('2017-11-02'));
+        testDateRange(dateRange, '2017-11-02', '2023-08-02');
     });
 });
 
