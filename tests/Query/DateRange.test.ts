@@ -38,28 +38,15 @@ describe('DateRange - relative date ranges', () => {
         jest.useRealTimers();
     });
 
-    it('should return relative date range at midnight (week)', () => {
-        const dateRange = DateRange.buildRelative('week');
-        expect(dateRange.start.format('YYYY-MM-DD HH:mm')).toStrictEqual('2021-10-04 00:00');
-        expect(dateRange.end.format('YYYY-MM-DD HH:mm')).toStrictEqual('2021-10-10 00:00');
-    });
-
-    it('should return relative date range at midnight (month)', () => {
-        const dateRange = DateRange.buildRelative('month');
-        expect(dateRange.start.format('YYYY-MM-DD HH:mm')).toStrictEqual('2021-10-01 00:00');
-        expect(dateRange.end.format('YYYY-MM-DD HH:mm')).toStrictEqual('2021-10-31 00:00');
-    });
-
-    it('should return relative date range at midnight (quarter)', () => {
-        const dateRange = DateRange.buildRelative('quarter');
-        expect(dateRange.start.format('YYYY-MM-DD HH:mm')).toStrictEqual('2021-10-01 00:00');
-        expect(dateRange.end.format('YYYY-MM-DD HH:mm')).toStrictEqual('2021-12-31 00:00');
-    });
-
-    it('should return relative date range at year (year)', () => {
-        const dateRange = DateRange.buildRelative('year');
-        expect(dateRange.start.format('YYYY-MM-DD HH:mm')).toStrictEqual('2021-01-01 00:00');
-        expect(dateRange.end.format('YYYY-MM-DD HH:mm')).toStrictEqual('2021-12-31 00:00');
+    it.each([
+        ['week', '2021-10-04', '2021-10-10'],
+        ['month', '2021-10-01', '2021-10-31'],
+        ['quarter', '2021-10-01', '2021-12-31'],
+        ['year', '2021-01-01', '2021-12-31'],
+    ])('should build relative date range ("%s")', (range, start, end) => {
+        const dateRange = DateRange.buildRelative(range as moment.unitOfTime.StartOf);
+        expect(dateRange.start.format('YYYY-MM-DD HH:mm')).toStrictEqual(`${start} 00:00`);
+        expect(dateRange.end.format('YYYY-MM-DD HH:mm')).toStrictEqual(`${end} 00:00`);
     });
 });
 
