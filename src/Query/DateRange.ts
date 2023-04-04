@@ -17,10 +17,6 @@ export class DateRange {
         this.end = this.end.startOf('day');
     }
 
-    public wrap(): [moment.Moment, moment.Moment] {
-        return [this.start, this.end];
-    }
-
     public subtract(duration: moment.unitOfTime.DurationConstructor) {
         const delta = moment.duration(1, duration);
         this.start.subtract(delta);

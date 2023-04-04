@@ -17,12 +17,10 @@ function testParsingDateRange(input: string, expectedStart: string, expectedEnd:
     const result = DateParser.parseDateRange(input);
 
     // Assert
-    const start = result[0];
-    const end = result[1];
-    expect(start).toBeDefined();
-    expect(end).toBeDefined();
-    const startFmt = start.format(TaskRegularExpressions.dateFormat);
-    const endFmt = end.format(TaskRegularExpressions.dateFormat);
+    expect(result.start).toBeDefined();
+    expect(result.end).toBeDefined();
+    const startFmt = result.start.format(TaskRegularExpressions.dateFormat);
+    const endFmt = result.end.format(TaskRegularExpressions.dateFormat);
     expect([startFmt, endFmt]).toStrictEqual([expectedStart, expectedEnd]);
 }
 
@@ -78,8 +76,8 @@ describe('DateParser - date ranges', () => {
     it('should return date ranges at midnight', () => {
         const dateRangeToParse = '2023-09-28 2023-10-01';
         const parsedDateRange = DateParser.parseDateRange(dateRangeToParse);
-        expect(parsedDateRange[0].format('YYYY-MM-DD HH:mm')).toStrictEqual('2023-09-28 00:00');
-        expect(parsedDateRange[1].format('YYYY-MM-DD HH:mm')).toStrictEqual('2023-10-01 00:00');
+        expect(parsedDateRange.start.format('YYYY-MM-DD HH:mm')).toStrictEqual('2023-09-28 00:00');
+        expect(parsedDateRange.end.format('YYYY-MM-DD HH:mm')).toStrictEqual('2023-10-01 00:00');
     });
 });
 
@@ -96,8 +94,8 @@ describe('DateParser - relative date ranges', () => {
     it('should return relative date range at midnight (week)', () => {
         const dateRangeToParse = 'this week';
         const parsedDateRange = DateParser.parseDateRange(dateRangeToParse);
-        expect(parsedDateRange[0].format('YYYY-MM-DD HH:mm')).toStrictEqual('2021-10-04 00:00');
-        expect(parsedDateRange[1].format('YYYY-MM-DD HH:mm')).toStrictEqual('2021-10-10 00:00');
+        expect(parsedDateRange.start.format('YYYY-MM-DD HH:mm')).toStrictEqual('2021-10-04 00:00');
+        expect(parsedDateRange.end.format('YYYY-MM-DD HH:mm')).toStrictEqual('2021-10-10 00:00');
     });
 
     it('should return relative date range (week)', () => {
@@ -186,8 +184,8 @@ describe('DateParser - specific date ranges', () => {
         'specific range %s: should return %s and %s at midnight',
         (range: string, rangeStart: string, rangeEnd: string) => {
             const parsedDateRange = DateParser.parseDateRange(range);
-            expect(parsedDateRange[0].format('YYYY-MM-DD HH:mm')).toStrictEqual(`${rangeStart} 00:00`);
-            expect(parsedDateRange[1].format('YYYY-MM-DD HH:mm')).toStrictEqual(`${rangeEnd} 00:00`);
+            expect(parsedDateRange.start.format('YYYY-MM-DD HH:mm')).toStrictEqual(`${rangeStart} 00:00`);
+            expect(parsedDateRange.end.format('YYYY-MM-DD HH:mm')).toStrictEqual(`${rangeEnd} 00:00`);
         },
     );
 

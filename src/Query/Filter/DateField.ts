@@ -1,4 +1,5 @@
 import type { Moment } from 'moment';
+import type { DateRange } from '../DateRange';
 import type { Task } from '../../Task';
 import { DateParser } from '../DateParser';
 import { Explanation } from '../Explain/Explanation';
@@ -53,8 +54,8 @@ export abstract class DateField extends Field {
         if (fieldNameKeywordDate !== null) {
             const fieldKeyword = fieldNameKeywordDate[1];
             const fieldDateString = fieldNameKeywordDate[2];
-            const fieldDates: [moment.Moment, moment.Moment] = DateParser.parseDateRange(fieldDateString);
-            if (!fieldDates[0].isValid() || !fieldDates[1].isValid()) {
+            const fieldDates = DateParser.parseDateRange(fieldDateString);
+            if (!fieldDates.start.isValid() || !fieldDates.end.isValid()) {
                 result.error = 'do not understand ' + this.fieldName() + ' date';
             } else {
                 const filterFunction = this.buildFilterFunction(fieldKeyword, fieldDates);
@@ -79,16 +80,16 @@ export abstract class DateField extends Field {
      * @param fieldDates the date range to be used by the filter function
      * @returns the function that filters the tasks
      */
-    protected buildFilterFunction(fieldKeyword: string, fieldDates: [moment.Moment, moment.Moment]): FilterFunction {
+    protected buildFilterFunction(fieldKeyword: string, fieldDates: DateRange): FilterFunction {
         let dateFilter: DateFilterFunction;
         if (fieldKeyword === 'before') {
-            dateFilter = (date) => (date ? date.isBefore(fieldDates[0]) : this.filterResultIfFieldMissing());
+            dateFilter = (date) => (date ? date.isBefore(fieldDates.start) : this.filterResultIfFieldMissing());
         } else if (fieldKeyword === 'after') {
-            dateFilter = (date) => (date ? date.isAfter(fieldDates[1]) : this.filterResultIfFieldMissing());
+            dateFilter = (date) => (date ? date.isAfter(fieldDates.end) : this.filterResultIfFieldMissing());
         } else {
             dateFilter = (date) =>
                 date
-                    ? date.isSameOrAfter(fieldDates[0]) && date.isSameOrBefore(fieldDates[1])
+                    ? date.isSameOrAfter(fieldDates.start) && date.isSameOrBefore(fieldDates.end)
                     : this.filterResultIfFieldMissing();
         }
         return this.getFilter(dateFilter);
@@ -129,7 +130,7 @@ export abstract class DateField extends Field {
         fieldName: string,
         fieldKeyword: string,
         filterResultIfFieldMissing: boolean,
-        filterDates: [moment.Moment, moment.Moment],
+        filterDates: DateRange,
     ): Explanation {
         let relationship;
         // Example of formatted date: '2024-01-02 (Tuesday 2nd January 2024)'
@@ -138,16 +139,16 @@ export abstract class DateField extends Field {
         switch (fieldKeyword) {
             case 'before':
                 relationship = fieldKeyword;
-                explanationDates = filterDates[0].format(dateFormat);
+                explanationDates = filterDates.start.format(dateFormat);
                 break;
             case 'after':
                 relationship = fieldKeyword;
-                explanationDates = filterDates[1].format(dateFormat);
+                explanationDates = filterDates.end.format(dateFormat);
                 break;
             default:
-                if (filterDates[0].isSame(filterDates[1])) {
+                if (filterDates.start.isSame(filterDates.end)) {
                     relationship = 'on';
-                    explanationDates = filterDates[0].format(dateFormat);
+                    explanationDates = filterDates.start.format(dateFormat);
                 } else {
                     // This is a special case where a multi-line explanation has to be built
                     // All other cases need only one line
@@ -155,8 +156,8 @@ export abstract class DateField extends Field {
 
                     // Consecutive lines
                     const subExplanations = [
-                        new Explanation(`${filterDates[0].format(dateFormat)} and`),
-                        new Explanation(`${filterDates[1].format(dateFormat)} inclusive`),
+                        new Explanation(`${filterDates.start.format(dateFormat)} and`),
+                        new Explanation(`${filterDates.end.format(dateFormat)} inclusive`),
                     ];
 
                     // Optional line for StartDateField (so far)
