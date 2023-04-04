@@ -23,7 +23,8 @@ describe('explain start date queries', () => {
         expect(filterOrMessage).toHaveExplanation(
             `start date is between
   2023-03-01 (Wednesday 1st March 2023) and
-  2023-03-03 (Friday 3rd March 2023) inclusive OR no start date`,
+  2023-03-03 (Friday 3rd March 2023) inclusive
+  OR no start date`,
         );
     });
 
