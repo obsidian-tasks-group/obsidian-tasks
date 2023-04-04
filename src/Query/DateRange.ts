@@ -12,9 +12,29 @@ export class DateRange {
             this.start = end;
             this.end = start;
         }
+
         // Dates shall be at midnight eg 00:00
         this.start = this.start.startOf('day');
         this.end = this.end.startOf('day');
+    }
+
+    public static buildRelative(range: moment.unitOfTime.StartOf) {
+        // Treat all weeks as ISO 8601 weeks
+        const unitOfTime = range === 'week' ? 'isoWeek' : range;
+
+        return new DateRange(moment().startOf(unitOfTime).startOf('day'), moment().endOf(unitOfTime).startOf('day'));
+    }
+
+    public static buildSpecific(date: string, dateFormat: string, range: moment.unitOfTime.StartOf | null): DateRange {
+        return new DateRange(moment(date, dateFormat).startOf(range), moment(date, dateFormat).endOf(range));
+    }
+
+    public static buildInvalid(): DateRange {
+        return new DateRange(moment.invalid(), moment.invalid());
+    }
+
+    public isValid(): boolean {
+        return this.start.isValid() && this.end.isValid();
     }
 
     public subtract(duration: moment.unitOfTime.DurationConstructor) {
@@ -39,24 +59,5 @@ export class DateRange {
             // We will need to adjust the end.
             this.end = this.end.endOf(duration).startOf('day');
         }
-    }
-
-    public static buildRelative(range: moment.unitOfTime.StartOf) {
-        // Treat all weeks as ISO 8601 weeks
-        const unitOfTime = range === 'week' ? 'isoWeek' : range;
-
-        return new DateRange(moment().startOf(unitOfTime).startOf('day'), moment().endOf(unitOfTime).startOf('day'));
-    }
-
-    public static buildSpecific(date: string, dateFormat: string, range: moment.unitOfTime.StartOf | null): DateRange {
-        return new DateRange(moment(date, dateFormat).startOf(range), moment(date, dateFormat).endOf(range));
-    }
-
-    public static buildInvalid(): DateRange {
-        return new DateRange(moment.invalid(), moment.invalid());
-    }
-
-    public isValid(): boolean {
-        return this.start.isValid() && this.end.isValid();
     }
 }
