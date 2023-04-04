@@ -53,6 +53,38 @@ describe('DataviewTaskSerializer', () => {
             const taskDetails = deserialize(description);
             expect(taskDetails).toMatchTaskDetails({ tags: ['#hello', '#world', '#task'], description });
         });
+
+        it('should recognize inline fields surrounded by square brackets', () => {
+            const taskDetails = deserialize('Some task that is [due::2021-08-22] [priority:: high]');
+            expect(taskDetails).toMatchTaskDetails({
+                priority: Priority.High,
+                dueDate: moment('2021-08-22', 'YYYY-MM-DD'),
+                description: 'Some task that is',
+            });
+        });
+
+        it('should recognize inline fields surrounded by parens', () => {
+            const taskDetails = deserialize('Some task that is (due::2021-08-22) (priority:: high)');
+            expect(taskDetails).toMatchTaskDetails({
+                priority: Priority.High,
+                dueDate: moment('2021-08-22', 'YYYY-MM-DD'),
+                description: 'Some task that is',
+            });
+        });
+
+        it('should not recognize inline fields with mismatched surrounding pair', () => {
+            const taskDetails = deserialize('Some task that is [due::2021-08-22) (priority:: high]');
+            expect(taskDetails).toMatchTaskDetails({
+                description: 'Some task that is [due::2021-08-22) (priority:: high]',
+            });
+        });
+
+        it('should not recognize unbracketed fields', () => {
+            const taskDetails = deserialize('Some task - due value not found by dataview - due:: 2021-08-22');
+            expect(taskDetails).toMatchTaskDetails({
+                description: 'Some task - due value not found by dataview - due:: 2021-08-22',
+            });
+        });
     });
 
     describe('serialize', () => {
