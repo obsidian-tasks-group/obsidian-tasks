@@ -6,4 +6,8 @@ export class DateRange {
         this.start = start;
         this.end = end;
     }
+
+    public wrap(): [moment.Moment, moment.Moment] {
+        return [this.start, this.end];
+    }
 }
