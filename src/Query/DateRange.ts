@@ -45,9 +45,8 @@ export class DateRange {
         }
     }
 
-    public expandTo(range: moment.unitOfTime.StartOf) {
+    public static buildRelativeDateRange(range: moment.unitOfTime.StartOf) {
         const unitOfTime = range === 'week' ? 'isoWeek' : range;
-        this.start = this.start.startOf(unitOfTime).startOf('day');
-        this.end = this.end.endOf(unitOfTime).startOf('day');
+        return new DateRange(moment().startOf(unitOfTime).startOf('day'), moment().endOf(unitOfTime).startOf('day'));
     }
 }

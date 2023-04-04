@@ -65,9 +65,8 @@ export class DateParser {
         if (relativeDateRangeMatch && relativeDateRangeMatch.length === 3) {
             const lastThisNext = relativeDateRangeMatch[1];
             const range = relativeDateRangeMatch[2] as moment.unitOfTime.DurationConstructor;
-            const dateRange = new DateRange(moment(), moment());
 
-            dateRange.expandTo(range);
+            const dateRange = DateRange.buildRelativeDateRange(range);
 
             switch (lastThisNext) {
                 case 'last':
