@@ -153,6 +153,12 @@ export abstract class DateField extends Field {
                     explanationDates = `${filterDates[0].format(dateFormat)} and ${filterDates[1].format(
                         dateFormat,
                     )} inclusive`;
+
+                    let appleSauce = `${fieldName} date is ${relationship} ${explanationDates}`;
+                    if (filterResultIfFieldMissing) {
+                        appleSauce += ` OR no ${fieldName} date`;
+                    }
+                    return new Explanation(appleSauce);
                 }
                 break;
         }
