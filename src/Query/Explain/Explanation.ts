@@ -61,8 +61,11 @@ export class Explanation {
             return currentIndentation + this.description;
         }
 
+        let result = currentIndentation;
+
+        result += `${this.symbol}`;
+
         // We have children, so concatenate them together
-        let result = currentIndentation + `${this.symbol}`;
         if (this.children.length > 1) {
             // The descriptions like 'All of', 'None of' are one really meaningful
             // if there is more than one filter. Otherwise, they are just confusing.
