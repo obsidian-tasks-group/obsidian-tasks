@@ -32,4 +32,9 @@ export class DateRange {
         this.start.add(delta);
         this.end.add(delta);
     }
+
+    public expandTo(range: moment.unitOfTime.StartOf) {
+        this.start = this.start.startOf(range).startOf('day');
+        this.end = this.end.endOf(range).startOf('day');
+    }
 }

@@ -79,7 +79,9 @@ export class DateParser {
                     break;
             }
 
-            return new DateRange(dateRange.start.startOf(unitOfTime), dateRange.end.endOf(unitOfTime));
+            dateRange.expandTo(unitOfTime);
+
+            return dateRange;
         }
 
         return undefined;
