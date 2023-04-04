@@ -317,9 +317,13 @@ describe('due date in relative date range (Today is 2023-02-28)', () => {
         const filterIn = new DueDateField().createFilterOrErrorMessage(`due in this ${range}`);
         const filterEmpty = new DueDateField().createFilterOrErrorMessage(`due this ${range}`);
 
-        expect(filterOn).toHaveExplanation(`due date is between ${dateStart} and ${dateEnd} inclusive`);
-        expect(filterIn).toHaveExplanation(`due date is between ${dateStart} and ${dateEnd} inclusive`);
-        expect(filterEmpty).toHaveExplanation(`due date is between ${dateStart} and ${dateEnd} inclusive`);
+        const expectedExplanation = `due date is between
+  ${dateStart} and
+  ${dateEnd} inclusive`;
+
+        expect(filterOn).toHaveExplanation(expectedExplanation);
+        expect(filterIn).toHaveExplanation(expectedExplanation);
+        expect(filterEmpty).toHaveExplanation(expectedExplanation);
     });
 });
 
@@ -393,7 +397,9 @@ describe('explain due date queries', () => {
     it('should explain date range', () => {
         const filterOrMessage = new DueDateField().createFilterOrErrorMessage('due 2022-11-25 2023-01-17');
         expect(filterOrMessage).toHaveExplanation(
-            'due date is between 2022-11-25 (Friday 25th November 2022) and 2023-01-17 (Tuesday 17th January 2023) inclusive',
+            `due date is between
+  2022-11-25 (Friday 25th November 2022) and
+  2023-01-17 (Tuesday 17th January 2023) inclusive`,
         );
     });
 });

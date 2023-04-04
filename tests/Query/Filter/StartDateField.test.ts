@@ -21,7 +21,9 @@ describe('explain start date queries', () => {
         // Full date range testing done in DueDateField
         // But StartDateField is so far the only Field with 'OR no start date' in explanation
         expect(filterOrMessage).toHaveExplanation(
-            'start date is between 2023-03-01 (Wednesday 1st March 2023) and 2023-03-03 (Friday 3rd March 2023) inclusive OR no start date',
+            `start date is between
+  2023-03-01 (Wednesday 1st March 2023) and
+  2023-03-03 (Friday 3rd March 2023) inclusive OR no start date`,
         );
     });
 
