@@ -63,15 +63,19 @@ export class Explanation {
 
         let result = currentIndentation;
 
-        result += `${this.symbol}`;
+        // If the symbol was not set just indent
+        if (this.symbol !== '') {
+            result += `${this.symbol}`;
 
-        // We have children, so concatenate them together
-        if (this.children.length > 1) {
-            // The descriptions like 'All of', 'None of' are one really meaningful
-            // if there is more than one filter. Otherwise, they are just confusing.
-            result += ` (${this.description})`;
+            // We have children, so concatenate them together
+            if (this.children.length > 1) {
+                // The descriptions like 'All of', 'None of' are one really meaningful
+                // if there is more than one filter. Otherwise, they are just confusing.
+                result += ` (${this.description})`;
+            }
+            result += ':';
         }
-        result += ':';
+
         const newIndentation = currentIndentation + '  ';
         for (let i = 0; i < this.children.length; i++) {
             result += `\n${this.children[i].asString(newIndentation)}`;
