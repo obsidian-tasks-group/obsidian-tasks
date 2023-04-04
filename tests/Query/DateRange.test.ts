@@ -4,6 +4,7 @@ import { DateRange } from '../../src/Query/DateRange';
 function testDateRange(dateRange: DateRange, start: string, end: string) {
     expect(dateRange.start).toBeDefined();
     expect(dateRange.end).toBeDefined();
+    expect(dateRange.isValid()).toEqual(true);
     expect(dateRange.start.format('YYYY-MM-DD HH:mm')).toStrictEqual(`${start} 00:00`);
     expect(dateRange.end.format('YYYY-MM-DD HH:mm')).toStrictEqual(`${end} 00:00`);
 }
