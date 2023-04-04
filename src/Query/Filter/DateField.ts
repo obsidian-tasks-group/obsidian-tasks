@@ -155,7 +155,9 @@ export abstract class DateField extends Field {
                     if (filterResultIfFieldMissing) {
                         bitterSauce += ` OR no ${fieldName} date`;
                     }
-                    return new Explanation(appleSauce, [new Explanation(tastySauce), new Explanation(bitterSauce)]);
+                    const subExplanations = [new Explanation(tastySauce), new Explanation(bitterSauce)];
+
+                    return new Explanation(appleSauce, subExplanations);
                 }
                 break;
         }
