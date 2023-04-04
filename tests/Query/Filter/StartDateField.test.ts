@@ -16,6 +16,18 @@ describe('explain start date queries', () => {
         );
     });
 
+    it('should explain absolute date range', () => {
+        const filterOrMessage = new StartDateField().createFilterOrErrorMessage('starts 2023-03-01 2023-03-03');
+        // Full date range testing done in DueDateField
+        // But StartDateField is so far the only Field with 'OR no start date' in explanation
+        expect(filterOrMessage).toHaveExplanation(
+            `start date is between:
+  2023-03-01 (Wednesday 1st March 2023) and
+  2023-03-03 (Friday 3rd March 2023) inclusive
+  OR no start date`,
+        );
+    });
+
     it('implicit "on" gets added to explanation, and it is clear that start date is optional', () => {
         const filterOrMessage = new StartDateField().createFilterOrErrorMessage('starts 2023-01-02');
         expect(filterOrMessage).toHaveExplanation(
