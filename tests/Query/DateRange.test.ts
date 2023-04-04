@@ -40,14 +40,25 @@ describe('DateRange - relative date ranges', () => {
 describe('Date Parser - correct delta for next & last month & quarter (Today is 2021-04-03)', () => {
     beforeAll(() => {
         jest.useFakeTimers();
-        jest.setSystemTime(new Date(2021, 3, 3)); // 2021-04-03
+        jest.setSystemTime(new Date(2021, 4 - 1, 3)); // 2021-04-03
     });
 
     afterAll(() => {
         jest.useRealTimers();
     });
 
-    it('should return longer range even if the current range is shorter in days', () => {
+    it('should have correct date range after going to next or previous range', () => {
+        // The purpose of this test to make adding and subtracting ranges intelligent
+        // Subtracting weeks is simple, because their length is always 7 day
+        const lastWeek = DateRange.buildRelative('week');
+        lastWeek.subtract('week');
+        testDateRange(lastWeek, '2021-03-22', '2021-03-28');
+
+        const nextWeek = DateRange.buildRelative('week');
+        nextWeek.add('week');
+        testDateRange(nextWeek, '2021-04-05', '2021-04-11');
+
+        // Months' lengths in days differ (28/30/31)
         const lastMonth = DateRange.buildRelative('month');
         lastMonth.subtract('month');
         testDateRange(lastMonth, '2021-03-01', '2021-03-31');
@@ -56,15 +67,26 @@ describe('Date Parser - correct delta for next & last month & quarter (Today is 
         nextMonth.add('month');
         testDateRange(nextMonth, '2021-05-01', '2021-05-31');
 
+        // Q1 and Q2 && Q3 and Q4 lengths differ because of the months
         const lastQuarter = DateRange.buildRelative('quarter');
         lastQuarter.subtract('quarter');
         testDateRange(lastQuarter, '2021-01-01', '2021-03-31');
 
-        // This test case is not representative eg won't fail without the fix
-        // because the length of Q2 in days is same as Q3.
+        // Q2 and Q3 have same length in days
         const nextQuarter = DateRange.buildRelative('quarter');
         nextQuarter.add('quarter');
         testDateRange(nextQuarter, '2021-07-01', '2021-09-30');
+
+        // Leap year - 366 days, lengths differ
+        // Leap year happens every 4 years
+        const lastYear = DateRange.buildRelative('year');
+        lastYear.subtract('year');
+        testDateRange(lastYear, '2020-01-01', '2020-12-31');
+
+        // Normal year - 365 days
+        const nextYear = DateRange.buildRelative('year');
+        nextYear.add('year');
+        testDateRange(nextYear, '2022-01-01', '2022-12-31');
     });
 });
 
