@@ -157,11 +157,11 @@ export abstract class DateField extends Field {
                 break;
         }
 
-        let result = `${fieldName} date is ${relationship} ${explanationDates}`;
+        let oneLineExplanation = `${fieldName} date is ${relationship} ${explanationDates}`;
         if (filterResultIfFieldMissing) {
-            result += ` OR no ${fieldName} date`;
+            oneLineExplanation += ` OR no ${fieldName} date`;
         }
-        return new Explanation(result);
+        return new Explanation(oneLineExplanation);
     }
 
     protected fieldNameForExplanation() {
