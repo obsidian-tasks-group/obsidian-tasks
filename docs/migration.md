@@ -33,14 +33,11 @@ Notes and reminders of things to do.
 > [!todo] Things still to be done, so known issues
 > The only known remaining problems/things to do:
 >
-> - **File and folder names** will be updated to match their naming in the old site
->   - **This will make the left sidebar a lot more readable**
->   - Once this is done, the links will no longer need directories in them, as the filenames will be unique.
-> - Links to **headings/sections** inside pages will be fixed to match Obsidian-style
-> - Add some **styling**, for example to top-align all table cells
 > - On the front page [[Introduction]], there is some raw markdown visible in the '`ON THIS PAGE`' section:
 >   - `Task management for the [Obsidian](https://obsidian.md/) knowledge base`
 >   - see [this comment](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1706#issuecomment-1454848203)
+> - Need to make it clearer, in each folder, what the starting page is
+>   - And update the URLs in Python conversion code to what the new location is
 >
 > If you notice any other problems, please give us the **url** and a **screenshot** in [#1706](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1706#issuecomment-1454284835). Thank you.
 
@@ -117,9 +114,10 @@ The remainder is detailed notes on the conversion
 ### Links
 
 - [x] Update all internal links to use `[[ ]]` format - filenames only
-- [ ] Update all links to section headings
-  - Maybe convert hyphens in #.... (heading names) to spaces
-  - Probably need to parse files and find their corresponding headings
+- [x] Update all links to section headings
+  - ~~Maybe convert hyphens in #.... (heading names) to spaces~~
+  - ~~Probably need to parse files and find their corresponding headings~~
+  - Done by hand
 - [x] If the filename and original title are the same, don't put in the `|alias`
 - [x] Remove the need for paths to files in links
   - By making every filename unique
