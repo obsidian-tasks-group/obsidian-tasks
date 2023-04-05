@@ -46,7 +46,7 @@ Use `next tuesday` instead if you mean "next tuesday".
 
 ### Searching date ranges
 
-> [!quote] Released
+> [!released]
 Date range searches were introduced in Tasks 2.0.0.
 
 Tasks allows date searches to specify a pair of dates, `<date range>` .
@@ -119,7 +119,7 @@ If relative dates in queries do not update from the previous day, and your compu
 
 ### Finding Tasks with Invalid Dates
 
-> [!quote] Released
+> [!released]
 Validation of dates was introduced in Tasks 1.16.0.<br>
 `created date is invalid` was introduced in Tasks 2.0.0.
 
@@ -168,7 +168,7 @@ In the following examples, we describe the `heading` filter, but these comments 
 
 ## Matching multiple filters
 
-> [!quote] Released
+> [!released]
 Boolean combinations were introduced in Tasks 1.9.0
 
 Each line of a query has to match in order for a task to be listed.
@@ -202,7 +202,7 @@ For full details of combining filters with boolean operators, see [[Combining Fi
 - `done (before|after|in) (last|this|next) (week|month|quarter|year)`
 - `done date is invalid`
 
-> [!quote] Released
+> [!released]
 `no done date` and `has done date` were introduced in Tasks 1.7.0.<br>
 `done date is invalid` was introduced in Tasks 1.16.0.<br>
 `done (before|after|in) <date range>` searches were introduced in Tasks 2.0.0.
@@ -216,7 +216,7 @@ For full details of combining filters with boolean operators, see [[Combining Fi
 - `due (before|after|in) (last|this|next) (week|month|quarter|year)`
 - `due date is invalid`
 
-> [!quote] Released
+> [!released]
 `has due date` was introduced in Tasks 1.6.0.<br>
 `due date is invalid` was introduced in Tasks 1.16.0.<br>
 `due (before|after|in) <date range>` searches were introduced in Tasks 2.0.0.
@@ -230,7 +230,7 @@ For full details of combining filters with boolean operators, see [[Combining Fi
 - `scheduled (before|after|in) (last|this|next) (week|month|quarter|year)`
 - `scheduled date is invalid`
 
-> [!quote] Released
+> [!released]
 `has scheduled date` was introduced in Tasks 1.6.0.<br>
 `scheduled date is invalid` was introduced in Tasks 1.16.0.<br>
 `scheduled (before|after|in) <date range>` searches were introduced in Tasks 2.0.0.
@@ -244,7 +244,7 @@ For full details of combining filters with boolean operators, see [[Combining Fi
 - `starts (before|after|in) (last|this|next) (week|month|quarter|year)`
 - `start date is invalid`
 
-> [!quote] Released
+> [!released]
 `has start date` was Introduced in Tasks 1.6.0.<br>
 `start date is invalid` was introduced in Tasks 1.16.0.<br>
 `starts (before|after|in) <date range>` searches were introduced in Tasks 2.0.0.
@@ -261,7 +261,7 @@ Such filter could be:
 
 ### Created Date
 
-> [!quote] Released
+> [!released]
 Created date was introduced in Tasks 2.0.0.
 
 See [[Dates#➕ Created|created date]] for how to make Tasks record the created date on any task lines that it creates.
@@ -295,7 +295,7 @@ because the tasks starts before tomorrow. Only one of the dates needs to match.
 - `has happens date`
   - Return tasks where _any_ of start date, scheduled date, _or_ due date are set.
 
-> [!quote] Released
+> [!released]
 `no happens date` and `has happens date` were introduced in Tasks 1.7.0.<br>
 `happens (before|after|in) <date range>` searches were introduced in Tasks 2.0.0.
 
@@ -324,7 +324,7 @@ because the tasks starts before tomorrow. Only one of the dates needs to match.
   - Does regular expression match (case-sensitive by default).
   - Essential reading: [[Regular Expressions|Regular Expression Searches]].
 
-> [!quote] Released
+> [!released]
 `status.name` text searching was introduced in Tasks 1.23.0.
 
 For more information, including adding your own customised statuses, see [[Statuses]].
@@ -338,7 +338,7 @@ For more information, including adding your own customised statuses, see [[Statu
 - To exclude multiple values, you can use multiple `status.type is not` lines.
 - To allow multiple values, use a boolean combination, for example: `( status.type is TODO ) OR ( status.type is IN_PROGRESS )`.
 
-> [!quote] Released
+> [!released]
 `status.type` text searching was introduced in Tasks 1.23.0.
 
 For more information, including adding your own customised statuses, see [[Statuses]].
@@ -365,7 +365,7 @@ As well as the date-related searches above, these filters search other propertie
   - Does regular expression match (case-sensitive by default).
   - Essential reading: [[Regular Expressions|Regular Expression Searches]].
 
-> [!quote] Released
+> [!released]
 `regex matches` and `regex does not match` were introduced in Tasks 1.12.0.
 
 For precise searches, it may help to know that `description`:
@@ -424,7 +424,7 @@ For more information, see [[Priority|Priorities]] .
   - Does regular expression match (case-sensitive by default).
   - Essential reading: [[Regular Expressions|Regular Expression Searches]].
 
-> [!quote] Released
+> [!released]
 `recurrence` text searching was introduced in Tasks 1.22.0.
 
 ### Sub-Items
@@ -434,7 +434,7 @@ For more information, see [[Priority|Priorities]] .
 
 ### Tags
 
-> [!quote] Released
+> [!released]
 Introduced in Tasks 1.6.0.
 
 - `no tags`
@@ -453,7 +453,7 @@ Introduced in Tasks 1.6.0.
   - This enables tag searches that avoid sub-tags, by putting a `$` character at the end of the regular expression. See examples below.
   - If searching for sub-tags, remember to escape the slashes in regular expressions: `\/`
 
-> [!quote] Released
+> [!released]
 `regex matches` and `regex does not match` were introduced in Tasks 1.13.0.<br>
 `no tags` and `has tags` were introduced in Tasks 2.0.0.
 
@@ -481,12 +481,12 @@ Note that the path includes the `.md` extension.
   - Does regular expression match (case-sensitive by default).
   - Essential reading: [[Regular Expressions|Regular Expression Searches]].
 
-> [!quote] Released
+> [!released]
 `regex matches` and `regex does not match` were introduced in Tasks 1.12.0.
 
 ### File Name
 
-> [!quote] Released
+> [!released]
 Introduced in Tasks 1.13.0.
 
 Note that the file name includes the `.md` extension.
@@ -510,7 +510,7 @@ Note that the file name includes the `.md` extension.
   - `regex does not match` will match a task that does not have a preceding heading in its file.
   - Essential reading: [[Regular Expressions|Regular Expression Searches]].
 
-> [!quote] Released
+> [!released]
 `regex matches` and `regex does not match` were introduced in Tasks 1.12.0.
 
 ## Appendix: Tasks 2.0.0 improvements to date filters

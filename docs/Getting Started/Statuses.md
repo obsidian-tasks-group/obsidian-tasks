@@ -6,7 +6,7 @@ publish: true
 
 ## Introduction
 
-> [!quote] Released
+> [!released]
 Custom Statuses were introduced in Tasks 1.23.0.
 
 This page provides an overview of using Tasks with **Custom Statuses**, which some people refer to as Custom Checkboxes or Alternative/Alternate Checkboxes.

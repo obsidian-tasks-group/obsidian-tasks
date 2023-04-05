@@ -18,7 +18,7 @@ Use the command 'Tasks: Create or edit task' to launch the modal.
 
 ## Keyboard shortcuts
 
-> [!quote] Released
+> [!released]
 Introduced in Tasks 1.17.0.
 
 All the fields of the form have "access keys", that is, keyboard shortcuts. The access keys are displayed as the underlined letters in the labels.
@@ -28,7 +28,7 @@ All the fields of the form have "access keys", that is, keyboard shortcuts. The 
 
 ### Turning off keyboard shortcuts
 
-> [!quote] Released
+> [!released]
 Introduced in Tasks 1.17.0.
 
 If the access keys (keyboard shortcuts) for any field conflicts with system keyboard shortcuts or interferes with assistive technology functionality that is important for you, you may want to turn them off in the Tasks plugin's settings:
@@ -47,7 +47,7 @@ If you have a [[Global Filter|global filter]] enabled, the dialog takes care of 
 
 The description box can be enlarged by dragging its corner. Multi-line text can be pasted in, or dragged-and-dropped in, and Tasks will remove the end-of-line characters automatically.
 
-> [!quote] Released
+> [!released]
 Description field became resizable in Tasks 2.0.0.
 
 ### Priority
@@ -75,12 +75,12 @@ There is a lot of flexibility here. For example:
 
 Note that relative dates will be always interpreted as being in the future, because that is usually what you want. You can change this behavior by unchecking "Only future dates" if you want to enter an overdue task or experiment with the way how relative dates in the past would be interpreted in queries.
 
-> [!quote] Released
+> [!released]
 `Only future dates` was introduced in Tasks 1.15.0.
 
 ### Date abbreviations
 
-> [!quote] Released
+> [!released]
 Introduced in Tasks 1.8.0.
 
 The modal also has a few abbreviations of its own, to speed up entering of common values in the date fields.
@@ -101,7 +101,7 @@ Supported abbreviations:
 
 ### Status
 
-> [!quote] Released
+> [!released]
 Introduced in Tasks 1.23.0.
 
 Use the Status dropdown to change the Status Symbol for the task.
@@ -127,7 +127,7 @@ A read-only checkbox, showing whether the task is completed.
 
 ### Created on
 
-> [!quote] Released
+> [!released]
 Created date was introduced in Tasks 2.0.0.
 
 A read-only display of the task's [[Dates#➕ Created|created date]], if any.

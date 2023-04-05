@@ -23,14 +23,14 @@ The following elements exist:
 - `recurrence rule`
 - `task count`
 
-> [!quote] Released
+> [!released]
 `urgency` was introduced in Tasks 1.14.0.<br>
 `created date` was introduced in Tasks 2.0.0.
 
 All of these elements except `urgency` are shown by default, so you will use the command `hide`
 if you do not want to show any of them, or the command `show` to show the urgency score.
 
-> [!quote] Released
+> [!released]
 The `show` commands were introduced in Tasks 1.14.0.
 
 Example:

@@ -32,3 +32,8 @@ img {
 .callout[data-callout="warning"] {
     --callout-color: 255, 23, 68;
 }
+
+.callout[data-callout="released"] {
+    --callout-color: 0, 200, 83;
+    --callout-icon: lucide-rocket;
+}

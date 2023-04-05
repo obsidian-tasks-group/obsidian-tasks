@@ -6,7 +6,7 @@ publish: true
 
 ## Overview: the 'explain' instruction
 
-> [!quote] Released
+> [!released]
 Introduced in Tasks 1.19.0.
 
 The `explain` instruction adds some extra output at the start of the search results, when tasks blocks are viewed in Live Preview and Reading modes.
