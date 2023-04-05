@@ -166,7 +166,7 @@ Folders with a comma (`,`) in their name are not supported.
 
 ### Images
 
-- [ ] Image quality of some, such as [Create or Edit dialog](https://publish.obsidian.md/tasks/getting-started/create-or-edit-task) is very poor
+- [-] Image quality of some, such as [Create or Edit dialog](https://publish.obsidian.md/tasks/getting-started/create-or-edit-task) is very poor
   - It may depend on the window size
 
 ### Codeblocks
@@ -196,8 +196,8 @@ Actually doing the conversion
 - [x] Update the links in `docs-snippets/snippet-statuses-overview.md`
   - Probably by running the conversion script on it.
 - [x] Commit the changes, ~~being sure to 'force' commit, so all the pure 'file renamings for capitalisation' are preserved~~.
-- [ ] Push the changes
-- [ ] Publish!!!
+- [x] Push the changes
+- [x] Publish!!!
 
 ## Next steps
 
