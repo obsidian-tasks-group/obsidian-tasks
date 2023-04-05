@@ -38,7 +38,7 @@ Notes and reminders of things to do.
 >   - Once this is done, the links will no longer need directories in them, as the filenames will be unique.
 > - Links to **headings/sections** inside pages will be fixed to match Obsidian-style
 > - Add some **styling**, for example to top-align all table cells
-> - On the front page [[index]], there is some raw markdown visible in the '`ON THIS PAGE`' section:
+> - On the front page [[Introduction]], there is some raw markdown visible in the '`ON THIS PAGE`' section:
 >   - `Task management for the [Obsidian](https://obsidian.md/) knowledge base`
 >   - see [this comment](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1706#issuecomment-1454848203)
 >
@@ -56,12 +56,6 @@ Notes and reminders of things to do.
 >
 > - You can view the new site at: [publish.obsidian.md/tasks](https://publish.obsidian.md/tasks)
 >   - At the end of each page, there is a **handy link** to the equivalent page on the old site.
-> - You can view the Markdown source in Obsidian:
->   - download the Tasks repo on the [branch for this work](https://github.com/obsidian-tasks-group/obsidian-tasks/archive/refs/heads/port-user-guide-to-obs-publish-v2.zip):
->   - expand `obsidian-tasks-port-user-guide-to-obs-publish-v2.zip`
->   - open the `obsidian-tasks-port-user-guide-to-obs-publish-v2` folder
->   - open the `docsv2` sub-folder in Obsidian
->   - Click 'trust author and plugins'
 
 > [!tip] Tips - things I will probably put in a 'how to use the docs' page
 >
@@ -79,7 +73,7 @@ Notes and reminders of things to do.
 | What                                                               | Location of source                                                                                                                                                                                                                                                                          |
 | ------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [Old Docs](https://obsidian-tasks-group.github.io/obsidian-tasks/) | [docs](https://github.com/obsidian-tasks-group/obsidian-tasks/tree/main/docs) folder on the main branch                                                                                                                                                                                     |
-| [New Docs](https://publish.obsidian.md/tasks/index) live           | [docsv2/](https://github.com/obsidian-tasks-group/obsidian-tasks/tree/port-user-guide-to-obs-publish-v2/docsv2) folder on the<br>[port-user-guide-to-obs-publish-v2 branch](https://github.com/obsidian-tasks-group/obsidian-tasks/compare/main...port-user-guide-to-obs-publish-v2) branch |
+| [New Docs](https://publish.obsidian.md/tasks/index) live           | [docs/](https://github.com/obsidian-tasks-group/obsidian-tasks/tree/port-user-guide-to-obs-publish-v3/docs) folder on the<br>[port-user-guide-to-obs-publish-v3 branch](https://github.com/obsidian-tasks-group/obsidian-tasks/compare/main...port-user-guide-to-obs-publish-v3) branch |
 | Conversion script and tests                                        | [github.com/claremacrae/jekyll_to_obsidian_publish](https://github.com/claremacrae/jekyll_to_obsidian_publish)                                                                                                                                                                              |
 | Issue tracking the work                                            | [#1706: # Migrate User Docs to Obsidian Publish, with current folder structure](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1706)                                                                                                                                         |
 
@@ -113,9 +107,10 @@ The remainder is detailed notes on the conversion
   - I can work around it [Case-sensitive git in Mac OS X like a Pro](https://coderwall.com/p/mgi8ja/case-sensitive-git-in-mac-os-x-like-a-pro)
   - But even if I do that, for people who have previously cloned the repo on Windows and Mac, will it still be a problem?
   - A workaround is to move the docs to a new folder, but then we lose the original history
-- [ ] Need to figure out renaming folders too - probably by string manipulation
+- [x] Need to figure out renaming folders too - probably by string manipulation
   - `getting-started` becomes
   - `Getting Started`
+  - I ended up writing a script that wrote out the 'git mv' instructions, and executing them by hand, to check the status of each one.
 - [x] Figure out how to get git on Mac to recognise the renamed files and folders
 - [x] ABANDONED - Check programmatically that all filenames are unique
 
@@ -190,13 +185,13 @@ Folders with a comma (`,`) in their name are not supported.
 
 Changes in the conversion script before final conversion:
 
-- [ ] Remove the 'about this site' banner at top of front page
-- [ ] Remove the `View this page on the old documentation site` section and callouts from the script
-- [ ] Rework the script so that it renames and overwrites the original content in 'docs/' (instead of saving in new 'docsv2/')
+- [x] Remove the 'about this site' banner at top of front page
+- [x] Remove the `View this page on the old documentation site` section and callouts from the script
+- [x] Rework the script so that it renames and overwrites the original content in 'docs/' (instead of saving in new 'docs/')
 
 Actually doing the conversion
 
-- [ ] Create a new branch for the final conversion
+- [x] Create a new branch for the final conversion
 - [ ] Run the conversion script
 - [ ] Update the links in `docs-snippets/snippet-statuses-overview.md`
   - Probably by running the conversion script on it.
@@ -206,7 +201,7 @@ Actually doing the conversion
 
 ## Next steps
 
-- [ ] Save this `migration.md` file from branch `port-user-guide-to-obs-publish-v2` somewhere - probably attached to the PR
+- [ ] Save this `migration.md` file from branch `port-user-guide-to-obs-publish-v3` somewhere - probably attached to the PR
 - [ ] Write a script to use for when renaming files and folders in the docs
   - Add original path as alias, to enable redirects.
 
@@ -218,5 +213,5 @@ Things to mention
 
 - How to enable redirects when renaming files and folders (the script and aliases)
 - When editing the CSS to improve styling, change it in two places, for consistent appearances in Obsidian and the published site:
-  - Add and enable a snippet in `docsv2/.obsidian/snippets/`
-  - Add to `docsv2/publish.css`
+  - Add and enable a snippet in `docs/.obsidian/snippets/`
+  - Add to `docs/publish.css`
