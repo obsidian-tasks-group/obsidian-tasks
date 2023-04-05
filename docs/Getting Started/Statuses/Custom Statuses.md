@@ -66,7 +66,7 @@ And this is how you can use them:
 > - Configure Tasks to use your custom statuses
 >   - [[Set up custom statuses|How to set up your custom statuses]]
 > - Optionally, update your tasks searches to take advantage of the new flexibility
->   - [[Filters#filters-for-task-statuses|Filters for Task Statuses]]
+>   - [[Filters#Filters for Task Statuses|Filters for Task Statuses]]
 
 <!-- force a blank line --> <!-- endInclude -->
 

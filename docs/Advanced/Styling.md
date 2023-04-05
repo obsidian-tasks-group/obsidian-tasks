@@ -22,7 +22,7 @@ Thank you in advance!
 
 > [!warning]
 If you find any existing Tasks CSS snippets stopped working with Tasks 3.0.0, follow the advice in
-[[Styling#appendix-fixing-css-pre-existing-snippets-for-tasks-300|Appendix: Fixing CSS pre-existing snippets for Tasks 3.0.0]] below.
+[[Styling#Appendix: Fixing CSS pre-existing snippets for Tasks 3.0.0|Appendix: Fixing CSS pre-existing snippets for Tasks 3.0.0]] below.
 
 ## Basic Task Structure
 

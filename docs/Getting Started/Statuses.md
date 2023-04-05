@@ -161,7 +161,7 @@ What Tasks's custom statuses allow you to do is to **also customise the behaviou
 > - Configure Tasks to use your custom statuses
 >   - [[Set up custom statuses|How to set up your custom statuses]]
 > - Optionally, update your tasks searches to take advantage of the new flexibility
->   - [[Filters#filters-for-task-statuses|Filters for Task Statuses]]
+>   - [[Filters#Filters for Task Statuses|Filters for Task Statuses]]
 
 <!-- force a blank line --> <!-- endInclude -->
 
@@ -171,7 +171,7 @@ What Tasks's custom statuses allow you to do is to **also customise the behaviou
 
 ### Editing your tasks
 
-The [[Create or edit Task#status-and-done-on|‘Create or edit Task’ Modal]] allows you to change the status of a task.
+The [[Create or edit Task#Status|‘Create or edit Task’ Modal]] allows you to change the status of a task.
 
 ### Related commands
 
@@ -192,7 +192,7 @@ We are tracking this in [issue #1486](https://github.com/obsidian-tasks-group/ob
   - `sort by status.type`
   - `group by status.type`
 
-For details, see [[Filters#filters-for-task-statuses|Filters for Task Statuses]]
+For details, see [[Filters#Filters for Task Statuses|Filters for Task Statuses]]
 
 > [!info]
 We envisage adding `status.symbol`.

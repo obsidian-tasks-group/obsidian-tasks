@@ -65,7 +65,7 @@ Start dates use a departing airplane emoji instead of a calendar emoji.
 - [ ] take out the trash 🛫 2021-04-09
 ```
 
-When [[Filters#start-date|filtering]] queries by start date,
+When [[Filters#Start Date|filtering]] queries by start date,
 the result will include tasks without a start date.
 This way, you can use the start date as a filter to filter out any tasks that you cannot yet work on.
 
@@ -133,7 +133,7 @@ Done dates use a white check-mark emoji.
 Tasks does not automatically report any problem tasks that have invalid dates, such as on the 32nd day of a month. These task will silently not be found by date-based searches.
 
 However, it is possible to search for any tasks with invalid dates in your vault: see
-[[Filters#finding-tasks-with-invalid-dates|Finding Tasks with Invalid Dates]].
+[[Filters#Finding Tasks with Invalid Dates|Finding Tasks with Invalid Dates]].
 
 > [!warning]
 The date values on task lines must be calendar or absolute dates, referring to a specific year, month and day. Text such as `📅 today` is not understood by the Tasks plugin, and will not be found in searches.

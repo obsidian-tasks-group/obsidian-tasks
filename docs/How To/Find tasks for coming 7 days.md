@@ -83,5 +83,5 @@ With the above date, that search gives the desired result:
 
 Relevant documentation sections:
 
-- Some examples are written in the [[Filters#dates|Dates section of the Filters docs]].
+- Some examples are written in the [[Filters#Searching for dates|Dates section of the Filters docs]].
 - And perhaps more useful are the date-based examples in the [[Examples|Queries Examples page]].
