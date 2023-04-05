@@ -79,5 +79,5 @@ There is not currently a way to find any tasks with invalid recurrence rules.
 
 Relevant documentation sections:
 
-- [[Getting Started#limitations-and-warnings|Limitations and warnings parsing tasks]]
-- [[Filters#finding-tasks-with-invalid-dates|Finding Tasks with Invalid Dates]].
+- [[Getting Started#Limitations and warnings|Limitations and warnings parsing tasks]]
+- [[Filters#Finding Tasks with Invalid Dates|Finding Tasks with Invalid Dates]].

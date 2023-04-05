@@ -77,7 +77,7 @@ Example absolute date ranges:
 
 > [!warning]
 Prior to Tasks 2.0.0, the second date in absolute date ranges was ignored.
-See the tables in the [[Filters#appendix-tasks-200-improvements-to-date-filters|Appendix below]] to understand the changes in results, and whether you need to update any of your searches.
+See the tables in the [[Filters#Appendix: Tasks 2.0.0 improvements to date filters|Appendix below]] to understand the changes in results, and whether you need to update any of your searches.
 
 ### Relative date ranges
 
@@ -104,7 +104,7 @@ Example relative date ranges:
 
 > [!warning]
 Prior to Tasks 2.0.0, the interpretation of relative date ranges was confusing, and not what most users naturally expected.
-See the tables in the [[Filters#appendix-tasks-200-improvements-to-date-filters|Appendix below]] to understand the changes in results, and whether you need to update any of your searches.
+See the tables in the [[Filters#Appendix: Tasks 2.0.0 improvements to date filters|Appendix below]] to understand the changes in results, and whether you need to update any of your searches.
 
 ### Troubleshooting date searches
 
@@ -249,7 +249,7 @@ For full details of combining filters with boolean operators, see [[Combining Fi
 `start date is invalid` was introduced in Tasks 1.16.0.<br>
 `starts (before|after|in) <date range>` searches were introduced in Tasks 2.0.0.
 
-When filtering queries by [[Dates#-start|start date]],
+When filtering queries by [[Dates#🛫 Start|start date]],
 the result will include tasks without a start date.
 This way, you can use the start date as a filter to filter out any tasks that you cannot yet work on.
 
@@ -264,7 +264,7 @@ Such filter could be:
 > [!quote] Released
 Created date was introduced in Tasks 2.0.0.
 
-See [[Dates#-created|created date]] for how to make Tasks record the created date on any task lines that it creates.
+See [[Dates#➕ Created|created date]] for how to make Tasks record the created date on any task lines that it creates.
 
 - `no created date`
 - `has created date`
@@ -523,7 +523,7 @@ This Appendix shows how the results of various searches have changes, to enable 
 
 ### due (before|on|in||after) absolute date: results unchanged
 
-Unchanged interpretation of various [[Filters#absolute-dates|**absolute** due date]] filters:
+Unchanged interpretation of various **[[Filters#Absolute dates|absolute due date]]** filters:
 
 | keyword     | Tasks 1.25.0 and earlier                                                                          | Tasks 2.0.0 onwards                                                                              |
 | ----------- | ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
@@ -536,7 +536,7 @@ Unchanged interpretation of various [[Filters#absolute-dates|**absolute** due da
 
 ### due (before|on|in||after) absolute date range: results improved
 
-Differences in interpretation of various [[Filters#absolute-date-ranges|**absolute** due date **range**]] filters:
+Differences in interpretation of various **[[Filters#Absolute date ranges|absolute due date range]]** filters:
 
 | keyword     | Tasks 1.25.0 and earlier                                                                                    | Tasks 2.0.0 onwards                                                                                                                                               |
 | ----------- | ----------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -549,7 +549,7 @@ Differences in interpretation of various [[Filters#absolute-date-ranges|**absolu
 
 ### due (before|on|in||after) last week: results improved
 
-Differences in interpretation of various [[Filters#relative-date-ranges|**relative** due date **range**]] filters, when run on `2023-02-10` (Friday 10th February 2023):
+Differences in interpretation of various **[[Filters#Relative date ranges|relative due date range]]** filters, when run on `2023-02-10` (Friday 10th February 2023):
 
 | keyword     | Tasks 1.25.0 and earlier                                                                       | Tasks 2.0.0 onwards                                                                                                                               |
 | ----------- | ---------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -562,7 +562,7 @@ Differences in interpretation of various [[Filters#relative-date-ranges|**relati
 
 ### due (before|on|in||after) this week: results improved
 
-Differences in interpretation of various [[Filters#relative-date-ranges|**relative** due date **range**]] filters, when run on `2023-02-10` (Friday 10th February 2023):
+Differences in interpretation of various **[[Filters#Relative date ranges|relative due date range]]** filters, when run on `2023-02-10` (Friday 10th February 2023):
 
 | keyword     | Tasks 1.25.0 and earlier                                                                       | Tasks 2.0.0 onwards                                                                                                                                |
 | ----------- | ---------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -575,7 +575,7 @@ Differences in interpretation of various [[Filters#relative-date-ranges|**relati
 
 ### due (before|on|in||after) next week: results improved
 
-Differences in interpretation of various [[Filters#relative-date-ranges|**relative** due date **range**]] filters, when run on `2023-02-10` (Friday 10th February 2023):
+Differences in interpretation of various **[[Filters#Relative date ranges|relative due date range]]** filters, when run on `2023-02-10` (Friday 10th February 2023):
 
 | keyword     | Tasks 1.25.0 and earlier                                                                        | Tasks 2.0.0 onwards                                                                                                                                 |
 | ----------- | ----------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |

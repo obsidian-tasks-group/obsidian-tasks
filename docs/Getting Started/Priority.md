@@ -36,10 +36,10 @@ Instead of adding the emoji manually, you can:
 The following instructions use the priority signifiers in tasks.
 
 - `priority is (above, below)? (low, none, medium, high)`
-  - [[Filters#priority|Documentation]]
+  - [[Filters#Priority|Documentation]]
 - `sort by priority`
-  - [[Sorting#basics|Documentation]]
+  - [[Sorting#Basics|Documentation]]
 - `group by priority`
-  - [[Grouping#basics|Documentation]]
+  - [[Grouping#Basics|Documentation]]
 - `hide priority`
   - [[Layout|Documentation]]

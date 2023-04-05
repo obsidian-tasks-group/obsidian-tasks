@@ -100,7 +100,7 @@ There are some things that might be improved in future releases:
 
 ## Limitations
 
-- Auto-suggest does not yet support the [[Dates#-created|created date]] field. We are tracking this in [issue #1743](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1743).
+- Auto-suggest does not yet support the [[Dates#➕ Created|created date]] field. We are tracking this in [issue #1743](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1743).
 
 ## Common Questions
 
