@@ -4,9 +4,9 @@ publish: true
 
 # Introduction
 
-## Task management for the [Obsidian](https://obsidian.md/) knowledge base
+## Task management for the Obsdiain knowledge base
 
-Track tasks across your entire vault.
+Track tasks across your entire [Obsidian](https://obsidian.md/) vault.
 Query them and mark them as done wherever you want.
 Supports due dates, recurring tasks (repetition), done dates, sub-set of checklist items, and filtering.
 
