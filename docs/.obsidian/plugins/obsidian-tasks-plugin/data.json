@@ -1,0 +1,59 @@
+{
+  "globalFilter": "",
+  "removeGlobalFilter": false,
+  "taskFormat": "tasksPluginEmoji",
+  "setCreatedDate": false,
+  "setDoneDate": false,
+  "autoSuggestInEditor": true,
+  "autoSuggestMinMatch": 0,
+  "autoSuggestMaxItems": 6,
+  "provideAccessKeys": true,
+  "useFilenameAsScheduledDate": false,
+  "filenameAsDateFolders": [],
+  "statusSettings": {
+    "coreStatuses": [
+      {
+        "symbol": " ",
+        "name": "Todo",
+        "nextStatusSymbol": "x",
+        "availableAsCommand": true,
+        "type": "TODO"
+      },
+      {
+        "symbol": "x",
+        "name": "Done",
+        "nextStatusSymbol": " ",
+        "availableAsCommand": true,
+        "type": "DONE"
+      }
+    ],
+    "customStatuses": [
+      {
+        "symbol": "/",
+        "name": "In Progress",
+        "nextStatusSymbol": "x",
+        "availableAsCommand": true,
+        "type": "IN_PROGRESS"
+      },
+      {
+        "symbol": "-",
+        "name": "Cancelled",
+        "nextStatusSymbol": " ",
+        "availableAsCommand": true,
+        "type": "CANCELLED"
+      }
+    ]
+  },
+  "features": {
+    "INTERNAL_TESTING_ENABLED_BY_DEFAULT": true
+  },
+  "generalSettings": {},
+  "headingOpened": {
+    "Core Statuses": true,
+    "Custom Statuses": true
+  },
+  "debugSettings": {
+    "ignoreSortInstructions": false,
+    "showTaskHiddenData": false
+  }
+}
