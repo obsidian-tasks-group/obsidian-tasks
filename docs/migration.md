@@ -215,3 +215,13 @@ Things to mention
 - When editing the CSS to improve styling, change it in two places, for consistent appearances in Obsidian and the published site:
   - Add and enable a snippet in `docs/.obsidian/snippets/`
   - Add to `docs/publish.css`
+
+---
+
+## Remaining steps
+
+```tasks
+not done
+
+group by heading
+```
