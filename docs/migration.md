@@ -87,7 +87,7 @@ The remainder is detailed notes on the conversion
 
 ## Mechanics
 
-- [ ] Write a Python script to do the following
+- [x] Write a Python script to do the following
   - See [github.com/claremacrae/jekyll_to_obsidian_publish](https://github.com/claremacrae/jekyll_to_obsidian_publish)
 
 ## Basics
@@ -192,18 +192,19 @@ Changes in the conversion script before final conversion:
 Actually doing the conversion
 
 - [x] Create a new branch for the final conversion
-- [ ] Run the conversion script
-- [ ] Update the links in `docs-snippets/snippet-statuses-overview.md`
+- [x] Run the conversion script
+- [x] Update the links in `docs-snippets/snippet-statuses-overview.md`
   - Probably by running the conversion script on it.
-- [ ] Commit the changes, being sure to 'force' commit, so all the pure 'file renamings for capitalisation' are preserved.
+- [x] Commit the changes, ~~being sure to 'force' commit, so all the pure 'file renamings for capitalisation' are preserved~~.
 - [ ] Push the changes
 - [ ] Publish!!!
 
 ## Next steps
 
-- [ ] Save this `migration.md` file from branch `port-user-guide-to-obs-publish-v3` somewhere - probably attached to the PR
-- [ ] Write a script to use for when renaming files and folders in the docs
-  - Add original path as alias, to enable redirects.
+- [x] Save this `migration.md` file from branch `port-user-guide-to-obs-publish-v3` somewhere - probably attached to the PR - actually I just committed it on the branch `port-user-guide-to-obs-publish-v3` for now
+- [-] Write a script to use for when renaming files and folders in the docs
+  - ~~Add original path as alias, to enable redirects.~~
+  - I decide this was too much clutter
 
 ## Contributing guide additions
 
