@@ -1,21 +1,8 @@
 ---
-layout: default
-title: Layout
-nav_order: 6
-parent: Queries
+publish: true
 ---
 
 # Layout commands
-{: .no_toc }
-
-<details open markdown="block">
-  <summary>
-    Table of contents
-  </summary>
-  {: .text-delta }
-1. TOC
-{:toc}
-</details>
 
 ## Hiding/Showing Elements
 
@@ -36,14 +23,14 @@ The following elements exist:
 - `recurrence rule`
 - `task count`
 
-{: .released }
+> [!quote] Released
 `urgency` was introduced in Tasks 1.14.0.<br>
 `created date` was introduced in Tasks 2.0.0.
 
 All of these elements except `urgency` are shown by default, so you will use the command `hide`
 if you do not want to show any of them, or the command `show` to show the urgency score.
 
-{: .released }
+> [!quote] Released
 The `show` commands were introduced in Tasks 1.14.0.
 
 Example:

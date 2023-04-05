@@ -1,27 +1,12 @@
 ---
-layout: default
-title: Grouping
-nav_order: 5
-parent: Queries
+publish: true
 ---
 
 # Grouping
-{: .no_toc }
-
-<details open markdown="block">
-  <summary>
-    Table of contents
-  </summary>
-  {: .text-delta }
-1. TOC
-{:toc}
-</details>
-
----
 
 ## Basics
 
-{: .released }
+> [!quote] Released
 Introduced in Tasks 1.6.0.
 
 By default, Tasks displays tasks in a single list.
@@ -40,7 +25,7 @@ You can group by the following properties.
 1. `filename` (the link to the file that contains the task, without the `.md` extension)
     - Note that tasks from different notes with the same file name will be grouped together in the same group.
 
-{: .released }
+> [!quote] Released
 `root` grouping option was introduced in Tasks 1.11.0.
 
 ### File contents
@@ -63,7 +48,7 @@ You can group by the following properties.
 1. `happens`
     - The earliest of start date, scheduled date, and due date, including the week-day, or `No happens date` if none of those are set.
 
-{: .released }
+> [!quote] Released
 `happens` grouping option was introduced in Tasks 1.11.0.<br>
 `created` grouping option was introduced in Tasks 2.0.0.
 
@@ -83,10 +68,10 @@ You can group by the following properties.
         - `4 CANCELLED`
         - `5 NON_TASK`
 
-{: .released }
+> [!quote] Released
 `group by status.name` and `group by status.type` were introduced in Tasks 1.23.0.
 
-For more information, including adding your own customised statuses, see [Statuses]({{ site.baseurl }}{% link getting-started/statuses.md %}).
+For more information, including adding your own customised statuses, see [[Statuses]].
 
 ### Other task properties
 
@@ -104,7 +89,7 @@ For more information, including adding your own customised statuses, see [Status
 1. `tags`
     - The tags of the tasks or `(No tags)`. If the task has multiple tags, it will show up under every tag.
 
-{: .released }
+> [!quote] Released
 `start`, `scheduled`, `due` and `done` grouping options were introduced in Tasks 1.7.0.<br>
 `tags` grouping option was introduced in Tasks 1.10.0.<br>
 `priority`, `recurring` and `recurrence` grouping options were introduced in Tasks 1.11.0.
@@ -123,23 +108,18 @@ Each subsequent `group by` will generate a new heading-level within the existing
 
 See the [screenshots below](#screenshots) for how this looks in practice.
 
-<div class="code-example" markdown="1">
-Info
-{: .label .label-blue }
-Headings are displayed in case-sensitive alphabetical order, not the original order.
+> [!info]
+> Headings are displayed in case-sensitive alphabetical order, not the original order.
 
 ---
 
-Info
-{: .label .label-blue }
-The order of operations ensures that grouping does not modify which tasks are displayed, for example when the `limit` option is used:
+> [!info]
+> The order of operations ensures that grouping does not modify which tasks are displayed, for example when the `limit` option is used:
 
 1. all the filter instructions are run
 1. then any sorting instructions are run
 1. then any `limit` instructions are run
 1. then finally any grouping instructions are run
-
-</div>
 
 ---
 

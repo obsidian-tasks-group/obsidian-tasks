@@ -1,29 +1,16 @@
 ---
-layout: default
-title: Urgency
-nav_order: 3
-parent: Advanced
+publish: true
 ---
 
 # Urgency
-{: .no_toc }
-
-<details open markdown="block">
-  <summary>
-    Table of contents
-  </summary>
-  {: .text-delta }
-1. TOC
-{:toc}
-</details>
 
 ## Introduction
 
-By default, Tasks [sorts]({{ site.baseurl }}{% link queries/sorting.md %}) query results by decreasing urgency.
+By default, Tasks [[Sorting|sorts]] query results by decreasing urgency.
 Tasks tries to calculate urgency based on what you should likely work on next.
 
 The urgency score isn't perfect, of course, as many more factors may influence the order on which you want to work on tasks.
-Urgency can only consider the parameters it knows: [dates]({{ site.baseurl }}{% link getting-started/dates.md %}) and [priorities]({{ site.baseurl }}{% link getting-started/priority.md %}).
+Urgency can only consider the parameters it knows: [[Dates|dates]] and [[Priority|priorities]].
 It is likely that the task you want to work on next is one of the tasks at the top of the list.
 
 The idea of Tasks' urgency is based on [Taskwarrior's](https://taskwarrior.org/) concept of [urgency](https://taskwarrior.org/docs/urgency.html).
@@ -70,7 +57,6 @@ The scores are as follows:
     <td>None</td>
     <td><code>0.0</code></td>
   </tr>
-
   <tr>
     <td rowspan="4">Priority</td>
     <td>High</td>
@@ -88,7 +74,6 @@ The scores are as follows:
     <td>Low</td>
     <td><code>0.0</code></td>
   </tr>
-
   <tr>
     <td rowspan="3">Scheduled</td>
     <td>Today or earlier</td>
@@ -102,7 +87,6 @@ The scores are as follows:
     <td>None</td>
     <td><code>0.0</code></td>
   </tr>
-
   <tr>
     <td rowspan="3">Starts</td>
     <td>Today or earlier</td>

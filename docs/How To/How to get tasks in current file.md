@@ -1,23 +1,8 @@
 ---
-layout: default
-title: How to get tasks in current file
-nav_order: 6
-parent: How Tos
+publish: true
 ---
 
 # How to get all tasks in the current file
-{: .no_toc }
-
-<details open markdown="block">
-  <summary>
-    Table of contents
-  </summary>
-  {: .text-delta }
-1. TOC
-{:toc}
-</details>
-
----
 
 ## Motivation and assumptions
 
@@ -52,14 +37,9 @@ For example:
     path includes Obsidian/tasks/tasks user support/03 Done - tasks user support/1.11.0 release
     ```
 
-<div class="code-example" markdown="1">
-
-Warning
-{: .label .label-yellow}
-
-Using `path includes` to search for a particular file name or folder is error-prone, as if you rename the file,
+> [!warning]
+> Using `path includes` to search for a particular file name or folder is error-prone, as if you rename the file,
 you have to remember to manually update the location in the tasks block, and this is very error-prone.
-</div>
 
 ## Using Dataview to generate Tasks blocks - safe and convenient
 
@@ -138,4 +118,4 @@ If you would like a more pleasing appearance for your Tasks results, you can put
 
 ## Related pages
 
-- [Dataview]({{ site.baseurl }}{% link other-plugins/dataview.md %})
+- [[Dataview]]

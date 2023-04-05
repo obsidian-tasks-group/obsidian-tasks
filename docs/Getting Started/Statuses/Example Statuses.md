@@ -1,28 +1,12 @@
 ---
-layout: default
-title: Example Statuses
-parent: Statuses
-grand_parent: Getting Started
-has_toc: false
+publish: true
 ---
 
 # Example Statuses
-{: .no_toc }
-
-<details open markdown="block">
-  <summary>
-    Table of contents
-  </summary>
-  {: .text-delta }
-1. TOC
-{:toc}
-</details>
-
----
 
 ## Overview
 
-Once we know what a status is [Status]({{ site.baseurl }}{% link getting-started/statuses.md %}), what can we do with them?
+Once we know what a status is [[Statuses|Status]], what can we do with them?
 
 Here are some example scenarios, for inspiration.
 

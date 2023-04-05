@@ -1,21 +1,8 @@
 ---
-layout: default
-title: Dates
-nav_order: 4
-parent: Getting Started
+publish: true
 ---
 
 # Dates
-{: .no_toc }
-
-<details open markdown="block">
-  <summary>
-    Table of contents
-  </summary>
-  {: .text-delta }
-1. TOC
-{:toc}
-</details>
 
 ## When to work on a task
 
@@ -25,19 +12,13 @@ You don't have to use all available dates.
 Maybe due dates are sufficient for you.
 Don't over-engineer your task management.
 
-<div class="code-example" markdown="1">
-Info
-{: .label .label-blue }
-Instead of adding an emoji and a date manually, you can use the `Tasks: Create or edit` command when creating or editing a task.
+> [!info]
+> Instead of adding an emoji and a date manually, you can use the `Tasks: Create or edit` command when creating or editing a task.
 When you use the command, you can also set dates like "Monday", "tomorrow", or "next week" and Tasks will automatically save the date in the correct format.
-You can find out more in [‘Create or edit Task’ Modal]({{ site.baseurl }}{% link getting-started/create-or-edit-task.md %}).
-</div>
+You can find out more in [[Create or edit Task|‘Create or edit Task’ Modal]].
 
-<div class="code-example" markdown="1">
-Info
-{: .label .label-blue }
-If you prefer to type, it is now very easy to add emojis and other information for you tasks using [Intelligent Auto-Suggest]({{ site.baseurl }}{% link getting-started/auto-suggest.md %}).
-</div>
+> [!info]
+> If you prefer to type, it is now very easy to add emojis and other information for you tasks using [[Auto-Suggest|Intelligent Auto-Suggest]].
 
 ---
 
@@ -65,9 +46,9 @@ Scheduled dates use an hourglass emoji instead of a calendar emoji.
 - [ ] take out the trash ⏳ 2021-04-09
 ```
 
-See [Use Filename as Default Date]({{ site.baseurl }}{% link getting-started/use-filename-as-default-date.md %}) for how to optionally make Tasks use any dates in file names as the scheduled date for all undated tasks in that file.
+See [[Use Filename as Default Date]] for how to optionally make Tasks use any dates in file names as the scheduled date for all undated tasks in that file.
 
-{: .released }
+> [!quote] Released
 'Use Filename as Default Date' was introduced in Tasks 1.18.0.
 
 ---
@@ -84,7 +65,7 @@ Start dates use a departing airplane emoji instead of a calendar emoji.
 - [ ] take out the trash 🛫 2021-04-09
 ```
 
-When [filtering]({{ site.baseurl }}{% link queries/filters.md %}#start-date) queries by start date,
+When [[Filters#start-date|filtering]] queries by start date,
 the result will include tasks without a start date.
 This way, you can use the start date as a filter to filter out any tasks that you cannot yet work on.
 
@@ -112,7 +93,7 @@ Image of the default settings for tracking task histories.
 
 ### ➕ Created
 
-{: .released }
+> [!quote] Released
 Created date was introduced in Tasks 2.0.0.
 
 If you enable 'Set created date on every added task' in settings (and restart Obsidian), the Tasks plugin will help you track when your tasks were created.
@@ -121,8 +102,8 @@ See the screenshot above.
 
 The following Tasks facilities automatically add created dates to tasks (if the setting is enabled):
 
-- [‘Create or edit Task’ Modal]({{ site.baseurl }}{% link getting-started/create-or-edit-task.md %}), when it creates a brand new task
-- When you complete a [recurring task]({{ site.baseurl }}{% link getting-started/recurring-tasks.md %}), the new task's created date will show the date it was added.
+- [[Create or edit Task|‘Create or edit Task’ Modal]], when it creates a brand new task
+- When you complete a [[Recurring Tasks|recurring task]], the new task's created date will show the date it was added.
 
 Created dates use a heavy plus emoji.
 
@@ -130,8 +111,8 @@ Created dates use a heavy plus emoji.
 - [ ] take out the trash ➕ 2021-04-09
 ```
 
-{: .info }
-[Auto-Suggest]({{ site.baseurl }}{% link getting-started/auto-suggest.md %}) does not yet support the created date field. We are tracking this in [issue #1743](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1743).
+> [!info]
+[[Auto-Suggest]] does not yet support the created date field. We are tracking this in [issue #1743](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1743).
 
 ### ✅ Done
 
@@ -152,7 +133,7 @@ Done dates use a white check-mark emoji.
 Tasks does not automatically report any problem tasks that have invalid dates, such as on the 32nd day of a month. These task will silently not be found by date-based searches.
 
 However, it is possible to search for any tasks with invalid dates in your vault: see
-[Finding Tasks with Invalid Dates]({{ site.baseurl }}{% link queries/filters.md %}#finding-tasks-with-invalid-dates).
+[[Filters#finding-tasks-with-invalid-dates|Finding Tasks with Invalid Dates]].
 
-{: .warning }
+> [!warning]
 The date values on task lines must be calendar or absolute dates, referring to a specific year, month and day. Text such as `📅 today` is not understood by the Tasks plugin, and will not be found in searches.

@@ -1,24 +1,8 @@
 ---
-layout: default
-title: Things Theme
-parent: Status Collections
-grand_parent: Reference
-has_toc: false
+publish: true
 ---
 
 # Things Theme
-{: .no_toc }
-
-<details open markdown="block">
-  <summary>
-    Table of contents
-  </summary>
-  {: .text-delta }
-1. TOC
-{:toc}
-</details>
-
----
 
 ## Introduction
 

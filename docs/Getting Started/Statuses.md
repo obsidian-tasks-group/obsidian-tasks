@@ -1,29 +1,12 @@
 ---
-layout: default
-title: Statuses
-nav_order: 2
-parent: Getting Started
-has_toc: false
-has_children: true
+publish: true
 ---
 
 # Statuses
-{: .no_toc }
-
-<details open markdown="block">
-  <summary>
-    Table of contents
-  </summary>
-  {: .text-delta }
-1. TOC
-{:toc}
-</details>
-
----
 
 ## Introduction
 
-{: .released }
+> [!quote] Released
 Custom Statuses were introduced in Tasks 1.23.0.
 
 This page provides an overview of using Tasks with **Custom Statuses**, which some people refer to as Custom Checkboxes or Alternative/Alternate Checkboxes.
@@ -36,9 +19,9 @@ Here's the kind of thing that you can do:
 
 Once you're comfortable with the background information in this page, further information is available in the following related pages.
 
-- [How to style custom statuses]({{ site.baseurl }}{% link how-to/style-custom-statuses.md %}).
-- [How to set up your custom statuses]({{ site.baseurl }}{% link how-to/set-up-custom-statuses.md %}).
-- [Status Collections]({{ site.baseurl }}{% link reference/status-collections/index.md %}).
+- [[Style custom statuses|How to style custom statuses]].
+- [[Set up custom statuses|How to set up your custom statuses]].
+- [[Status Collections]].
 
 ---
 
@@ -85,7 +68,7 @@ Here is some more detail.
   - Also available:
     - `sort by status.type`
     - `group by status.type`
-  - For more information, see [Status Types]({{ site.baseurl }}{% link getting-started/statuses/status-types.md %})
+  - For more information, see [[Status Types]]
 
 ### Unknown Statuses
 
@@ -119,7 +102,7 @@ Now we have seen what is in a Status, what can we do with them?
 
 We can use them to control what Tasks does when a task's checkbox is clicked, or toggled.
 
-The [Example Statuses]({{ site.baseurl }}{% link getting-started/statuses/example-statuses.md %}) page has a variety of examples, for inspiration.
+The [[Example Statuses]] page has a variety of examples, for inspiration.
 
 ---
 
@@ -138,7 +121,7 @@ They don't require any custom CSS styling or theming on order to display correct
 
 Before Tasks 1.23.0, these were the only statuses that Tasks knew about.
 
-See [Core Statuses]({{ site.baseurl }}{% link getting-started/statuses/core-statuses.md %}) to find out more.
+See [[Core Statuses]] to find out more.
 
 ### Custom Statuses
 
@@ -165,20 +148,20 @@ What Tasks's custom statuses allow you to do is to **also customise the behaviou
 
 <!-- force a blank line --> <!-- include: snippet-statuses-overview.md -->
 
-{: .info }
+> [!info]
 > Broad steps to understand and set up Statuses (or "Alternate Checkboxes"):
 >
 > - Understand what Statuses are:
->   - [Statuses]({{ site.baseurl }}{% link getting-started/statuses.md %})
->   - [Custom Statuses]({{ site.baseurl }}{% link getting-started/statuses/custom-statuses.md %})
+>   - [[Statuses]]
+>   - [[Custom Statuses]]
 > - Choose your status styling scheme: this will determine the names and symbols for your custom statuses:
->   - Some common ones are shown in [Status Collections]({{ site.baseurl }}{% link reference/status-collections/index.md %})
+>   - Some common ones are shown in [[Status Collections]]
 > - Set up your status styling scheme
->   - [How to style custom statuses]({{ site.baseurl }}{% link how-to/style-custom-statuses.md %}).
+>   - [[Style custom statuses|How to style custom statuses]].
 > - Configure Tasks to use your custom statuses
->   - [How to set up your custom statuses]({{ site.baseurl }}{% link how-to/set-up-custom-statuses.md %})
+>   - [[Set up custom statuses|How to set up your custom statuses]]
 > - Optionally, update your tasks searches to take advantage of the new flexibility
->   - [Filters for Task Statuses]({{ site.baseurl }}{% link queries/filters.md %}#filters-for-task-statuses)
+>   - [[Filters#filters-for-task-statuses|Filters for Task Statuses]]
 
 <!-- force a blank line --> <!-- endInclude -->
 
@@ -188,11 +171,11 @@ What Tasks's custom statuses allow you to do is to **also customise the behaviou
 
 ### Editing your tasks
 
-The [‘Create or edit Task’ Modal]({{ site.baseurl }}{% link getting-started/create-or-edit-task.md %}#status-and-done-on) allows you to change the status of a task.
+The [[Create or edit Task#status-and-done-on|‘Create or edit Task’ Modal]] allows you to change the status of a task.
 
 ### Related commands
 
-{: .info }
+> [!info]
 There are not yet any new commands for applying custom statuses.
 We are tracking this in [issue #1486](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1486) .
 
@@ -209,9 +192,9 @@ We are tracking this in [issue #1486](https://github.com/obsidian-tasks-group/ob
   - `sort by status.type`
   - `group by status.type`
 
-For details, see [Filters for Task Statuses]({{ site.baseurl }}{% link queries/filters.md %}#filters-for-task-statuses)
+For details, see [[Filters#filters-for-task-statuses|Filters for Task Statuses]]
 
-{: .info }
+> [!info]
 We envisage adding `status.symbol`.
 
 ---

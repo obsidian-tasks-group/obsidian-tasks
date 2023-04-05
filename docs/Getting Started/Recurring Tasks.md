@@ -1,24 +1,8 @@
 ---
-layout: default
-title: Recurring Tasks
-nav_order: 5
-parent: Getting Started
-has_toc: false
+publish: true
 ---
 
 # Recurring Tasks (Repetition)
-{: .no_toc }
-
-<details open markdown="block">
-  <summary>
-    Table of contents
-  </summary>
-  {: .text-delta }
-1. TOC
-{:toc}
-</details>
-
----
 
 ## Usage
 
@@ -48,7 +32,7 @@ If you mark the above task "done", the file will now look like this:
 
 The next Sunday after 25 April 2021 is on 2 May.
 
-Alternatively, if you have enabled addition of [created dates]({{ site.baseurl }}{% link getting-started/dates.md %}#-created), the file will instead now look like this, showing the date that the new task was created:
+Alternatively, if you have enabled addition of [[Dates#-created|created dates]], the file will instead now look like this, showing the date that the new task was created:
 
 ```markdown
 - [ ] take out the trash 🔁 every Sunday ➕ 2023-03-10 📅 2021-05-02
@@ -57,17 +41,11 @@ Alternatively, if you have enabled addition of [created dates]({{ site.baseurl }
 
 ### Limitations of Recurring Tasks
 
-<div class="code-example" markdown="1">
-Important
-{: .label .label-yellow }
+> [!important]
+> A recurring task should have a due date. The due date and the recurrence rule must appear after the task's description.
 
-A recurring task should have a due date. The due date and the recurrence rule must appear after the task's description.
-
-<hr />
-Important
-{: .label .label-yellow }
-
-There are edge cases for tasks that recur monthly or yearly.
+> [!important]
+> There are edge cases for tasks that recur monthly or yearly.
 For example, a task may be due `2022-01-31` and recur `every 3 months`.
 The next recurrence date of `2022-04-31` does not exist.
 
@@ -77,11 +55,8 @@ In this case, that would be `2022-04-30`.
 From then on, the due date will be based on the 30th day of the month, unless changed manually.
 So the next occurrence would happen on `2022-07-30`, even though July has 31 days.
 
-<hr />
-Important
-{: .label .label-yellow }
-
-With edge cases for tasks that recur monthly or yearly, **if the rule states the actual date of the next recurrence, Tasks will honour that instruction, skipping recurrence dates that do not exist**.
+> [!important]
+> With edge cases for tasks that recur monthly or yearly, **if the rule states the actual date of the next recurrence, Tasks will honour that instruction, skipping recurrence dates that do not exist**.
 
 For example, a task may be due `2022-01-31` and recur `every month on the 31st`.
 The next recurrence date of `2022-02-31` does not exist.
@@ -89,8 +64,6 @@ The next recurrence date of `2022-02-31` does not exist.
 In that case, Tasks moves the next occurrence **forwards** to the next valid date,
 skipping over recurrences with invalid dates.
 In this case, that would be `2022-03-31`.
-
-</div>
 
 In the editor there is no direct feedback to whether your recurrence rule is valid.
 You can validate that tasks understands your rule by using the `Tasks: Create or edit` command when creating or editing a task.
@@ -219,7 +192,7 @@ This is intentional. As well as matching what the user requested, it matches the
 
 ## Priority of Dates
 
-A task can have [various dates]({{ site.baseurl }}{% link getting-started/dates.md %}).
+A task can have [[Dates|various dates]].
 When a task has multiple dates, one of them is selected as reference date based on the following priorities:
 
 1. Due date

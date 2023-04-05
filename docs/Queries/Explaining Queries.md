@@ -1,28 +1,12 @@
 ---
-layout: default
-title: Explaining Queries
-nav_order: 9
-parent: Queries
-has_toc: false
+publish: true
 ---
 
 # Explaining Queries
-{: .no_toc }
-
-<details open markdown="block">
-  <summary>
-    Table of contents
-  </summary>
-  {: .text-delta }
-1. TOC
-{:toc}
-</details>
-
----
 
 ## Overview: the 'explain' instruction
 
-{: .released }
+> [!quote] Released
 Introduced in Tasks 1.19.0.
 
 The `explain` instruction adds some extra output at the start of the search results, when tasks blocks are viewed in Live Preview and Reading modes.
@@ -33,7 +17,7 @@ This has a number of benefits:
   - Any dates in filters are expanded, to show the actual dates used in the search.
 - Boolean query logic is clearer.
   - Combinations of queries (via `AND`, `OR`, `NOT` etc)  can be seen more clearly.
-- If there is a [global filter]({{ site.baseurl }}{% link getting-started/global-filter.md %}) enabled, it is included in the explanation.
+- If there is a [[Global Filter|global filter]] enabled, it is included in the explanation.
   - This often explains why tasks are missing from results.
 
 ## Examples

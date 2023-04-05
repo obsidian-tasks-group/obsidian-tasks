@@ -1,22 +1,8 @@
 ---
-layout: default
-title: Global Filter
-nav_order: 1
-parent: Getting Started
-has_toc: false
+publish: true
 ---
 
 # Global Filter
-{: .no_toc }
-
-<details open markdown="block">
-  <summary>
-    Table of contents
-  </summary>
-  {: .text-delta }
-1. TOC
-{:toc}
-</details>
 
 ## Optional Global Filter
 
@@ -37,11 +23,8 @@ If you don't have a global filter set, all regular checklist items will be consi
 - [ ] take out the trash
 ```
 
-<div class="code-example" markdown="1">
-Warning
-{: .label .label-yellow }
-If you use a tag such as `#task` as the global filter, you cannot add sub-tags to that tag.
-</div>
+> [!warning]
+> If you use a tag such as `#task` as the global filter, you cannot add sub-tags to that tag.
 
 ## Settings for the Global Filter
 

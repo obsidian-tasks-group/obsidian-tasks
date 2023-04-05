@@ -1,8 +1,5 @@
 ---
-layout: default
-title: Show tasks in a calendar
-nav_order: 8
-parent: How Tos
+publish: true
 ---
 
 # How to show tasks in a calendar

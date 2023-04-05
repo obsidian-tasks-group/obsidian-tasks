@@ -1,40 +1,20 @@
 ---
-layout: default
-title: Regular Expressions
-nav_order: 2
-parent: Queries
-has_toc: false
+publish: true
 ---
 
 # Regular Expressions
-{: .no_toc }
-
-<details open markdown="block">
-  <summary>
-    Table of contents
-  </summary>
-  {: .text-delta }
-1. TOC
-{:toc}
-</details>
-
----
 
 ## Introduction
 
-{: .released }
+> [!quote] Released
 Introduced in Tasks 1.12.0.
 
 [Regular expression](https://en.wikipedia.org/wiki/Regular_expression)  ("regex") searches are a powerful alternative to the simple `includes` and  `does not include` searches.
 
 ### Take Care
 
-<div class="code-example" markdown="1">
-
-Warning
-{: .label .label-yellow}
-
-Regular expression (or 'regex') searching is a powerful but advanced feature that requires thorough knowledge in order to use successfully, and not miss intended search results.
+> [!warning]
+> Regular expression (or 'regex') searching is a powerful but advanced feature that requires thorough knowledge in order to use successfully, and not miss intended search results.
 
 It is easy to write a regular expression that looks like it is correct, but which uses a special character that completely changes the meaning of the search string.
 
@@ -43,7 +23,6 @@ For example, `\d` does **not** match the **two** characters  `\d`, it matches an
 This documentation gives only a brief overview of the facility, with a few motivating examples, and then links to other resources, for thorough treatment.
 
 Having said that, regex searches are a valuable tool, used in many other tools, and time invested in learning about them can pay off well in future, in many other tools and scenarios.
-</div>
 
 ## Basics
 

@@ -1,23 +1,8 @@
 ---
-layout: default
-title: How to style backlinks
-nav_order: 7
-parent: How Tos
+publish: true
 ---
 
 # How to style backlinks
-{: .no_toc }
-
-<details open markdown="block">
-  <summary>
-    Table of contents
-  </summary>
-  {: .text-delta }
-1. TOC
-{:toc}
-</details>
-
----
 
 ## Motivation and assumptions
 

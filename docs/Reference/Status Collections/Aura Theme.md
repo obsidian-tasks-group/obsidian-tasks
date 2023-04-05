@@ -1,24 +1,8 @@
 ---
-layout: default
-title: Aura Theme (Dark mode only)
-parent: Status Collections
-grand_parent: Reference
-has_toc: false
+publish: true
 ---
 
 # Aura Theme (Dark mode only)
-{: .no_toc }
-
-<details open markdown="block">
-  <summary>
-    Table of contents
-  </summary>
-  {: .text-delta }
-1. TOC
-{:toc}
-</details>
-
----
 
 ## Introduction
 

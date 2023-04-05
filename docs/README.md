@@ -1,3 +1,7 @@
+---
+publish: false
+---
+
 # Documentation for Obsidian Tasks
 
 ## Extensive guides for documentors
