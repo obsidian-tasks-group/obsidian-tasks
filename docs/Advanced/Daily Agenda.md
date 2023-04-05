@@ -1,9 +1,5 @@
 ---
-layout: default
-title: Daily Agenda
-nav_order: 1
-parent: Advanced
-has_toc: false
+publish: true
 ---
 
 # Daily Agenda

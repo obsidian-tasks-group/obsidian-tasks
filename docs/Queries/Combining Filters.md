@@ -1,30 +1,15 @@
 ---
-layout: default
-title: Combining Filters
-nav_order: 3
-parent: Queries
+publish: true
 ---
 
 # Combining Filters
-{: .no_toc }
-
-<details open markdown="block">
-  <summary>
-    Table of contents
-  </summary>
-  {: .text-delta }
-1. TOC
-{:toc}
-</details>
-
----
 
 ## Summary
 
-{: .released }
+> [!quote] Released
 Introduced in Tasks 1.9.0.
 
-The [individual filters]({{ site.baseurl }}{% link queries/filters.md %}) provided by Tasks can be combined together in powerful ways, by wrapping each of them in `(` and `)`,
+The [[Filters|individual filters]] provided by Tasks can be combined together in powerful ways, by wrapping each of them in `(` and `)`,
 and then joining them with boolean operators such as `AND`, `OR` and `NOT`.
 
 For example:
@@ -214,16 +199,12 @@ not done
 
 It will not show tasks with both `inbox` in the path and the tag `#inbox` in the task line.
 
-<div class="code-example" markdown="1">
-Warning
-{: .label .label-yellow}
-Do not combine more than two filters together with `XOR`, intending to request only one of them to be true.
+> [!warning]
+> Do not combine more than two filters together with `XOR`, intending to request only one of them to be true.
 It will not give the result you expect.
 
 `(filter a) XOR (filter b) XOR (filter c)` matches tasks that match only one
 of the filters, **and also tasks that match all three of the filters**.
-
-</div>
 
 ## Examples
 
@@ -260,7 +241,7 @@ not done
 ```
 ````
 
-See [Daily Agenda]({{ site.baseurl }}{% link advanced/daily-agenda.md %}) for how to use templates
+See [[Daily Agenda]] for how to use templates
 to embed dates in to daily notes.
 
 ### Combined GTD Contexts

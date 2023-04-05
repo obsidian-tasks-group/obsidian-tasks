@@ -1,24 +1,8 @@
 ---
-layout: default
-title: Core Statuses
-parent: Statuses
-grand_parent: Getting Started
-has_toc: false
+publish: true
 ---
 
 # Core Statuses
-{: .no_toc }
-
-<details open markdown="block">
-  <summary>
-    Table of contents
-  </summary>
-  {: .text-delta }
-1. TOC
-{:toc}
-</details>
-
----
 
 ## Overview
 
@@ -39,7 +23,7 @@ This is what the Core Statuses look like initially in Tasks' settings:
 
 Note that `Todo` is followed by `Done`, in order to preserve compatibility with earlier Tasks releases.
 
-{: .info }
+> [!info]
 You can edit the 'Todo' core status to make its Next Status Symbol be `/` and enable `Todo` -> `In Progress` -> `Done`, if you prefer.
 
 ## Editing core statuses

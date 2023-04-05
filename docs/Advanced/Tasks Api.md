@@ -1,28 +1,12 @@
 ---
-layout: default
-title: Tasks Api
-nav_order: 6
-parent: Advanced
-has_toc: false
+publish: true
 ---
 
 # Tasks API
-{: .no_toc }
-
-<details open markdown="block">
-  <summary>
-    Table of contents
-  </summary>
-  {: .text-delta }
-1. TOC
-{:toc}
-</details>
-
----
 
 ## Tasks API Interface
 
-{: .released }
+> [!quote] Released
 The Tasks API Interface was introduced in Tasks 2.0.0.
 
 Tasks exposes an API that can be used to integrate Tasks in other Plugins, scripts or
@@ -51,10 +35,10 @@ export interface TasksApiV1 {
 
 ## `createTaskLineModal(): Promise<string>;`
 
-{: .released }
+> [!quote] Released
 This method was introduced in Tasks 2.0.0.
 
-This method opens the Tasks [Create or edit task UI]({{ site.baseurl }}{% link getting-started/create-or-edit-task.md %}) and returns the Markdown for the task entered.
+This method opens the Tasks [[Create or edit Task|Create or edit task UI]] and returns the Markdown for the task entered.
 If data entry is cancelled, an empty string is returned.
 
 ### Basic usage
@@ -68,7 +52,7 @@ let taskLine = await tasksApi.createTaskLineModal();
 console.log(taskLine);
 ```
 
-{: .warning }
+> [!warning]
 > This function is returns a `Promise` - always `await` the result!
 
 ### Usage with QuickAdd

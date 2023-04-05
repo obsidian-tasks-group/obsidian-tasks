@@ -1,27 +1,12 @@
 ---
-layout: default
-title: Sorting
-nav_order: 4
-parent: Queries
+publish: true
 ---
 
 # Sorting
-{: .no_toc }
-
-<details open markdown="block">
-  <summary>
-    Table of contents
-  </summary>
-  {: .text-delta }
-1. TOC
-{:toc}
-</details>
-
----
 
 ## Basics
 
-By default Tasks sorts tasks by [a calculated score we call "urgency"]({{ site.baseurl }}{% link advanced/urgency.md %}).
+By default Tasks sorts tasks by [[Urgency|a calculated score we call "urgency"]].
 
 To sort the results of a query different from the default, you must add at least one `sort by` line to the query.
 
@@ -35,14 +20,14 @@ You can sort tasks by the following properties.
 1. `filename` (the filename of the file that contains the task, with its extension)
     - Note that tasks from different notes with the same file name will be sorter.
 
-{: .released }
+> [!quote] Released
 `sort by filename` was introduced in Tasks 1.21.0.
 
 ### File contents
 
 1. `sort by heading` (the heading preceding the task; files with empty headings sort before other tasks)
 
-{: .released }
+> [!quote] Released
 `sort by heading` was introduced in Tasks 1.21.0.
 
 ### Task date properties
@@ -54,7 +39,7 @@ You can sort tasks by the following properties.
 1. `done` (the date when the task was done)
 1. `happens` (the earliest of start date, scheduled date, and due date)
 
-{: .released }
+> [!quote] Released
 `sort by happens` was introduced in Tasks 1.21.0.<br>
 `sort by created` was introduced in Tasks 2.0.0.
 
@@ -64,16 +49,16 @@ You can sort tasks by the following properties.
 1. `status.name` (Done, Todo, Cancelled, In Progress, Unknown, My very important custom status, etc - sorted alphabetically)
 1. `status.type` (Sorted in the order `IN_PROGRESS`, `TODO`, `DONE`, `CANCELLED` then `NON_TASK`)
 
-{: .released }
+> [!quote] Released
 `sort by status.name` and `sort by status.type` were introduced in Tasks 1.23.0.
 
-For more information, including adding your own customised statuses, see [Statuses]({{ site.baseurl }}{% link getting-started/statuses.md %}).
+For more information, including adding your own customised statuses, see [[Statuses]].
 
 ### Other task properties
 
 1. `description` (the description of the task)
-1. `priority` (priority of the task; "low" is below "none": [priorities]({{ site.baseurl }}{% link getting-started/priority.md %}))
-1. `urgency` ([urgency]({{ site.baseurl }}{% link advanced/urgency.md %}))
+1. `priority` (priority of the task; "low" is below "none": [[Priority|priorities]])
+1. `urgency` ([[Urgency|urgency]])
 1. `tag` (the description of the task)
 
 ## Multiple sort criteria
@@ -84,10 +69,8 @@ Each subsequent `sort` will sort within the existing sorting.
 
 ## Notes
 
-<div class="code-example" markdown="1">
-Info
-{: .label .label-blue }
-If you want tasks to be sorted the way they were sorted before urgency was introduced,
+> [!info]
+> If you want tasks to be sorted the way they were sorted before urgency was introduced,
 add the following `sort` expressions to your queries:
 
     ```tasks
@@ -98,12 +81,10 @@ add the following `sort` expressions to your queries:
 
 ---
 
-Info
-{: .label .label-blue }
-Sorting by description should take into account `[[Links]]` and `[Links with an|Alias]` (note pipe).
+> [!info]
+> Sorting by description should take into account `[[Links]]` and `[Links with an|Alias]` (note pipe).
 It should also take into account `*italics*` and `==highlights==`.
 It sorts by the text that's visible in preview mode.
-</div>
 
 ## Reverse sorting
 
@@ -115,7 +96,7 @@ For example, when you `sort by done reverse` and your query results contain task
 
 ## Tag sorting
 
-{: .released }
+> [!quote] Released
 Introduced in Tasks 1.6.0.
 
 If you want to sort by tags, by default it will sort by the first tag found in the description. If you want to sort by a tag that comes after that then you can specify the index at the end of the query. All tasks should have the same amount of tags for optimal sorting and the tags in the same order. The index starts from 1 which is also the default.

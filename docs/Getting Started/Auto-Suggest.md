@@ -1,31 +1,15 @@
 ---
-layout: default
-title: Auto-Suggest
-nav_order: 7
-parent: Getting Started
-has_toc: false
+publish: true
 ---
 
 # Intelligent Auto-Suggest
-{: .no_toc }
-
-<details open markdown="block">
-  <summary>
-    Table of contents
-  </summary>
-  {: .text-delta }
-1. TOC
-{:toc}
-</details>
-
----
 
 ## Introduction
 
-{: .released }
+> [!quote] Released
 Introduced in Tasks 1.9.0.
 
-The [Priorities]({{ site.baseurl }}{% link getting-started/priority.md %}), [Dates]({{ site.baseurl }}{% link getting-started/dates.md %}) and [Recurring Tasks]({{ site.baseurl }}{% link getting-started/recurring-tasks.md %}) pages show various emojis and special phrases that the Tasks plugin recognises, when searching for tasks.
+The [[Priority|Priorities]], [[Dates]] and [[Recurring Tasks]] pages show various emojis and special phrases that the Tasks plugin recognises, when searching for tasks.
 
 If you prefer to type your tasks, instead of using a dialog, there is now an intelligent auto-suggest completion mechanism that does a
 lot of the typing of emojis and dates for you.
@@ -116,7 +100,7 @@ There are some things that might be improved in future releases:
 
 ## Limitations
 
-- Auto-suggest does not yet support the [created date]({{ site.baseurl }}{% link getting-started/dates.md %}#-created) field. We are tracking this in [issue #1743](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1743).
+- Auto-suggest does not yet support the [[Dates#-created|created date]] field. We are tracking this in [issue #1743](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1743).
 
 ## Common Questions
 
@@ -133,11 +117,8 @@ As part of the launch of auto-suggest, Tasks now allows tags to be mixed in the 
 
 As soon as it finds any unrecognised text, it stops reading, and ignores any emojis to the left of that unrecognised text.
 
-<div class="code-example" markdown="1">
-Warning
-{: .label .label-yellow}
-Mixing any descriptive text in amongst the emojis and their values **will cause emojis before the descriptive text to not be recognised by Tasks, and not be searchable**.
-</div>
+> [!warning]
+> Mixing any descriptive text in amongst the emojis and their values **will cause emojis before the descriptive text to not be recognised by Tasks, and not be searchable**.
 
 See the next section for how to check your tasks, as you start using this powerful feature.
 
@@ -162,7 +143,7 @@ In the first task, the recurrence and due date appear at the end of the line, in
 
 However, in the second task, only the recurrence is at the end of the line. This is because the due date has not been recognised, due to the unrecognised word **for** mixed after the due date emoji, causing that property not to be recognised by tasks.
 
-If you are concerned that a task is being missed out of searches, or you just want to check it, you can click on its line and open the [‘Create or edit Task’ Modal]({{ site.baseurl }}{% link getting-started/create-or-edit-task.md %}) and check that there are no unwanted emojis in the description field.
+If you are concerned that a task is being missed out of searches, or you just want to check it, you can click on its line and open the [[Create or edit Task|‘Create or edit Task’ Modal]] and check that there are no unwanted emojis in the description field.
 
 Our second task looks like this. Note that the due date is shown in the Description box, and there is 'no due date':
 

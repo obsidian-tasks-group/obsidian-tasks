@@ -1,23 +1,8 @@
 ---
-layout: default
-title: Find tasks with invalid data
-nav_order: 5
-parent: How Tos
+publish: true
 ---
 
 # Find tasks with potentially invalid data
-{: .no_toc }
-
-<details open markdown="block">
-  <summary>
-    Table of contents
-  </summary>
-  {: .text-delta }
-1. TOC
-{:toc}
-</details>
-
----
 
 ## Motivation
 
@@ -82,7 +67,7 @@ group by path
 ```
 ````
 
-Errors with invalid dates are not easily fixed using the [‘Create or edit Task’ Modal]({{ site.baseurl }}{% link getting-started/create-or-edit-task.md %}), as it shows any invalid dates with placeholder text, instead of showing the original values.
+Errors with invalid dates are not easily fixed using the [[Create or edit Task|‘Create or edit Task’ Modal]], as it shows any invalid dates with placeholder text, instead of showing the original values.
 
 So to fix any found tasks, use the backlink to navigate to the original line and fix the error there.
 
@@ -94,5 +79,5 @@ There is not currently a way to find any tasks with invalid recurrence rules.
 
 Relevant documentation sections:
 
-- [Limitations and warnings parsing tasks]({{ site.baseurl }}{% link getting-started/index.md %}#limitations-and-warnings)
-- [Finding Tasks with Invalid Dates]({{ site.baseurl }}{% link queries/filters.md %}#finding-tasks-with-invalid-dates).
+- [[Getting Started#limitations-and-warnings|Limitations and warnings parsing tasks]]
+- [[Filters#finding-tasks-with-invalid-dates|Finding Tasks with Invalid Dates]].

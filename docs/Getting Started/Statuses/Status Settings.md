@@ -1,24 +1,8 @@
 ---
-layout: default
-title: Status Settings
-parent: Statuses
-grand_parent: Getting Started
-has_toc: false
+publish: true
 ---
 
 # Status Settings
-{: .no_toc }
-
-<details open markdown="block">
-  <summary>
-    Table of contents
-  </summary>
-  {: .text-delta }
-1. TOC
-{:toc}
-</details>
-
----
 
 ## Overview
 
@@ -67,7 +51,7 @@ You may wish to delete the default custom statuses first, so that you only see t
 ![The first few statuses supported by Minimal](../../images/settings-custom-statuses-minimal-theme-first-few.png)<br>
 *The first few statuses supported by Minimal*
 
-The [Minimal Theme]({{ site.baseurl }}{% link reference/status-collections/minimal-theme.md %}) page shows the full list statuses that will be added, and what they look like in that theme.
+The [[Minimal Theme]] page shows the full list statuses that will be added, and what they look like in that theme.
 
 ### ITS Theme & SlRvb Checkboxes
 
@@ -78,14 +62,14 @@ This button populates the Custom Statuses list with all the statuses supported b
 
 You can see screenshots, and the statuses that will be added:
 
-- [SlRvb’s Alternate Checkboxes]({{ site.baseurl }}{% link reference/status-collections/slrvb-alternate-checkboxes-snippet.md %})
-- [ITS Theme]({{ site.baseurl }}{% link reference/status-collections/its-theme.md %})
+- [[SlRvb's Alternate Checkboxes|SlRvb’s Alternate Checkboxes]]
+- [[ITS Theme]]
 
 ### Other supported themes
 
 Tasks knows about a growing list of custom checkboxes in Themes and CSS Snippets.
 
-You can find a full list, with screenshots and complete details of the supported checkboxes, in [Status Collections]({{ site.baseurl }}{% link reference/status-collections/index.md %}).
+You can find a full list, with screenshots and complete details of the supported checkboxes, in [[Status Collections]].
 
 ### Add All Unknown Status Types
 

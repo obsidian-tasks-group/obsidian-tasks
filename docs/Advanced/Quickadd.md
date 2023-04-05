@@ -1,9 +1,5 @@
 ---
-layout: default
-title: Quickadd
-nav_order: 5
-parent: Advanced
-has_toc: false
+publish: true
 ---
 
 # Quickadd

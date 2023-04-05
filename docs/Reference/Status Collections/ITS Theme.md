@@ -1,28 +1,12 @@
 ---
-layout: default
-title: ITS Theme
-parent: Status Collections
-grand_parent: Reference
-has_toc: false
+publish: true
 ---
 
 # ITS Theme
-{: .no_toc }
-
-<details open markdown="block">
-  <summary>
-    Table of contents
-  </summary>
-  {: .text-delta }
-1. TOC
-{:toc}
-</details>
-
----
 
 ## Introduction
 
-This theme offers the same checkboxes as [SlRvb's Alternate Checkboxes]({{ site.baseurl }}{% link reference/status-collections/slrvb-alternate-checkboxes-snippet.md %}), which works in combination with other themes too, so is more flexible.
+This theme offers the same checkboxes as [[SlRvb's Alternate Checkboxes]], which works in combination with other themes too, so is more flexible.
 
 |                       Location | Link                                                                                                                                                        |
 | ------------------------------:|:----------------------------------------------------------------------------------------------------------------------------------------------------------- |

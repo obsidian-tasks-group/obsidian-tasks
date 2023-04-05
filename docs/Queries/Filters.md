@@ -1,23 +1,8 @@
 ---
-layout: default
-title: Filters
-nav_order: 1
-parent: Queries
+publish: true
 ---
 
 # Filters
-{: .no_toc }
-
-<details open markdown="block">
-  <summary>
-    Table of contents
-  </summary>
-  {: .text-delta }
-1. TOC
-{:toc}
-</details>
-
----
 
 ## Searching for dates
 
@@ -61,7 +46,7 @@ Use `next tuesday` instead if you mean "next tuesday".
 
 ### Searching date ranges
 
-{: .released }
+> [!quote] Released
 Date range searches were introduced in Tasks 2.0.0.
 
 Tasks allows date searches to specify a pair of dates, `<date range>` .
@@ -90,9 +75,9 @@ Example absolute date ranges:
 
 - `2022-01-01 2023-02-01`
 
-{: .warning }
+> [!warning]
 Prior to Tasks 2.0.0, the second date in absolute date ranges was ignored.
-See the tables in the [Appendix below]({{ site.baseurl }}{% link queries/filters.md %}#appendix-tasks-200-improvements-to-date-filters) to understand the changes in results, and whether you need to update any of your searches.
+See the tables in the [[Filters#appendix-tasks-200-improvements-to-date-filters|Appendix below]] to understand the changes in results, and whether you need to update any of your searches.
 
 ### Relative date ranges
 
@@ -117,13 +102,13 @@ Example relative date ranges:
 - `next quarter`
 - `before next year`
 
-{: .warning }
+> [!warning]
 Prior to Tasks 2.0.0, the interpretation of relative date ranges was confusing, and not what most users naturally expected.
-See the tables in the [Appendix below]({{ site.baseurl }}{% link queries/filters.md %}#appendix-tasks-200-improvements-to-date-filters) to understand the changes in results, and whether you need to update any of your searches.
+See the tables in the [[Filters#appendix-tasks-200-improvements-to-date-filters|Appendix below]] to understand the changes in results, and whether you need to update any of your searches.
 
 ### Troubleshooting date searches
 
-If your date searches are giving unexpected results, add an [`explain`]({{ site.baseurl }}{% link queries/explaining-queries.md %}) line to your query.
+If your date searches are giving unexpected results, add an [[Explaining Queries|`explain`]] line to your query.
 
 This will help you identify common mistakes such as:
 
@@ -134,7 +119,7 @@ If relative dates in queries do not update from the previous day, and your compu
 
 ### Finding Tasks with Invalid Dates
 
-{: .released }
+> [!quote] Released
 Validation of dates was introduced in Tasks 1.16.0.<br>
 `created date is invalid` was introduced in Tasks 2.0.0.
 
@@ -148,15 +133,12 @@ Any such mistakes can be found systematically with this search:
     (created date is invalid) OR (done date is invalid) OR (due date is invalid) OR (scheduled date is invalid) OR (start date is invalid)
     ```
 
-<div class="code-example" markdown="1">
-Warning
-{: .label .label-yellow }
-If the above search finds any tasks with invalid dates, they are best fixed by clicking on the backlink to navigate
+> [!warning]
+> If the above search finds any tasks with invalid dates, they are best fixed by clicking on the backlink to navigate
 to the incorrect line, and fixing it by directly typing in the new date.
 
 If you use the 'Create or edit Task' Modal, it will discard the broken date, and there will be no information about
 the original, incorrect value.
-</div>
 
 ---
 
@@ -180,13 +162,13 @@ In the following examples, we describe the `heading` filter, but these comments 
     - Regular expression (or ‘regex’) searching is a powerful but advanced feature.
     - It requires thorough knowledge in order to use successfully, and not miss intended search results.
     - It is easy to write a regular expression that looks correct, but which has a special character with a non-obvious meaning.
-    - Essential reading: [Regular Expression Searches]({{ site.baseurl }}{% link queries/regular-expressions.md %}).
+    - Essential reading: [[Regular Expressions|Regular Expression Searches]].
 
 ---
 
 ## Matching multiple filters
 
-{: .released }
+> [!quote] Released
 Boolean combinations were introduced in Tasks 1.9.0
 
 Each line of a query has to match in order for a task to be listed.
@@ -203,7 +185,7 @@ Within each line, you can use the boolean operators `NOT`, `AND`, `OR`, `AND NOT
     (path includes GitHub) AND NOT (tags include #todo)
     ```
 
-For full details of combining filters with boolean operators, see [Combining Filters]({{ site.baseurl }}{% link queries/combining-filters.md %}).
+For full details of combining filters with boolean operators, see [[Combining Filters]].
 
 ---
 
@@ -220,7 +202,7 @@ For full details of combining filters with boolean operators, see [Combining Fil
 - `done (before|after|in) (last|this|next) (week|month|quarter|year)`
 - `done date is invalid`
 
-{: .released }
+> [!quote] Released
 `no done date` and `has done date` were introduced in Tasks 1.7.0.<br>
 `done date is invalid` was introduced in Tasks 1.16.0.<br>
 `done (before|after|in) <date range>` searches were introduced in Tasks 2.0.0.
@@ -234,7 +216,7 @@ For full details of combining filters with boolean operators, see [Combining Fil
 - `due (before|after|in) (last|this|next) (week|month|quarter|year)`
 - `due date is invalid`
 
-{: .released }
+> [!quote] Released
 `has due date` was introduced in Tasks 1.6.0.<br>
 `due date is invalid` was introduced in Tasks 1.16.0.<br>
 `due (before|after|in) <date range>` searches were introduced in Tasks 2.0.0.
@@ -248,7 +230,7 @@ For full details of combining filters with boolean operators, see [Combining Fil
 - `scheduled (before|after|in) (last|this|next) (week|month|quarter|year)`
 - `scheduled date is invalid`
 
-{: .released }
+> [!quote] Released
 `has scheduled date` was introduced in Tasks 1.6.0.<br>
 `scheduled date is invalid` was introduced in Tasks 1.16.0.<br>
 `scheduled (before|after|in) <date range>` searches were introduced in Tasks 2.0.0.
@@ -262,12 +244,12 @@ For full details of combining filters with boolean operators, see [Combining Fil
 - `starts (before|after|in) (last|this|next) (week|month|quarter|year)`
 - `start date is invalid`
 
-{: .released }
+> [!quote] Released
 `has start date` was Introduced in Tasks 1.6.0.<br>
 `start date is invalid` was introduced in Tasks 1.16.0.<br>
 `starts (before|after|in) <date range>` searches were introduced in Tasks 2.0.0.
 
-When filtering queries by [start date]({{ site.baseurl }}{% link getting-started/dates.md %}#-start),
+When filtering queries by [[Dates#-start|start date]],
 the result will include tasks without a start date.
 This way, you can use the start date as a filter to filter out any tasks that you cannot yet work on.
 
@@ -279,10 +261,10 @@ Such filter could be:
 
 ### Created Date
 
-{: .released }
+> [!quote] Released
 Created date was introduced in Tasks 2.0.0.
 
-See [created date]({{ site.baseurl }}{% link getting-started/dates.md %}#-created) for how to make Tasks record the created date on any task lines that it creates.
+See [[Dates#-created|created date]] for how to make Tasks record the created date on any task lines that it creates.
 
 - `no created date`
 - `has created date`
@@ -313,7 +295,7 @@ because the tasks starts before tomorrow. Only one of the dates needs to match.
 - `has happens date`
   - Return tasks where _any_ of start date, scheduled date, _or_ due date are set.
 
-{: .released }
+> [!quote] Released
 `no happens date` and `has happens date` were introduced in Tasks 1.7.0.<br>
 `happens (before|after|in) <date range>` searches were introduced in Tasks 2.0.0.
 
@@ -324,13 +306,13 @@ because the tasks starts before tomorrow. Only one of the dates needs to match.
 - `done` - matches tasks status types `DONE`, `CANCELLED` and `NON_TASK`
 - `not done` - matches status types with type `TODO` and `IN_PROGRESS`
 
-{: .info }
+> [!info]
 > Prior to Tasks 1.23.0, there was no concept of task status type, and so only the status symbol was used:
 >
 > - a task with `[ ]` used to count as `not done`
 > - any other character than space used to count as `done`
 >
-> The new behaviour is more flexible and was required to introduce support for in-progress and cancelled tasks. If the original behaviour is preferred, you can change the status types of every symbol except `space` to `DONE`. See [How to set up your custom statuses]({{ site.baseurl }}{% link how-to/set-up-custom-statuses.md %}).
+> The new behaviour is more flexible and was required to introduce support for in-progress and cancelled tasks. If the original behaviour is preferred, you can change the status types of every symbol except `space` to `DONE`. See [[Set up custom statuses|How to set up your custom statuses]].
 
 ### Status Name
 
@@ -340,12 +322,12 @@ because the tasks starts before tomorrow. Only one of the dates needs to match.
   - Matches case-insensitive (disregards capitalization).
 - `status.name (regex matches|regex does not match) /<JavaScript-style Regex>/`
   - Does regular expression match (case-sensitive by default).
-  - Essential reading: [Regular Expression Searches]({{ site.baseurl }}{% link queries/regular-expressions.md %}).
+  - Essential reading: [[Regular Expressions|Regular Expression Searches]].
 
-{: .released }
+> [!quote] Released
 `status.name` text searching was introduced in Tasks 1.23.0.
 
-For more information, including adding your own customised statuses, see [Statuses]({{ site.baseurl }}{% link getting-started/statuses.md %}).
+For more information, including adding your own customised statuses, see [[Statuses]].
 
 ### Status Type
 
@@ -356,10 +338,10 @@ For more information, including adding your own customised statuses, see [Status
 - To exclude multiple values, you can use multiple `status.type is not` lines.
 - To allow multiple values, use a boolean combination, for example: `( status.type is TODO ) OR ( status.type is IN_PROGRESS )`.
 
-{: .released }
+> [!quote] Released
 `status.type` text searching was introduced in Tasks 1.23.0.
 
-For more information, including adding your own customised statuses, see [Statuses]({{ site.baseurl }}{% link getting-started/statuses.md %}).
+For more information, including adding your own customised statuses, see [[Statuses]].
 
 ### Status Examples
 
@@ -381,9 +363,9 @@ As well as the date-related searches above, these filters search other propertie
   - Disregards the global filter when matching.
 - `description (regex matches|regex does not match) /<JavaScript-style Regex>/`
   - Does regular expression match (case-sensitive by default).
-  - Essential reading: [Regular Expression Searches]({{ site.baseurl }}{% link queries/regular-expressions.md %}).
+  - Essential reading: [[Regular Expressions|Regular Expression Searches]].
 
-{: .released }
+> [!quote] Released
 `regex matches` and `regex does not match` were introduced in Tasks 1.12.0.
 
 For precise searches, it may help to know that `description`:
@@ -412,10 +394,9 @@ The available priorities are (from high to low):
 3. use no signifier to indicate no priority (searched for with 'none')
 4. 🔽 for low priority
 
-For more information, see [Priorities]({{ site.baseurl }}{% link getting-started/priority.md %}) .
+For more information, see [[Priority|Priorities]] .
 
 #### Examples
-{: .no_toc }
 
     ```tasks
     not done
@@ -441,9 +422,9 @@ For more information, see [Priorities]({{ site.baseurl }}{% link getting-started
   - The easiest way to see the standardised recurrence rule of your tasks is to use `group by recurrence`, and review the resulting group headings.
 - `recurrence (regex matches|regex does not match) /<JavaScript-style Regex>/`
   - Does regular expression match (case-sensitive by default).
-  - Essential reading: [Regular Expression Searches]({{ site.baseurl }}{% link queries/regular-expressions.md %}).
+  - Essential reading: [[Regular Expressions|Regular Expression Searches]].
 
-{: .released }
+> [!quote] Released
 `recurrence` text searching was introduced in Tasks 1.22.0.
 
 ### Sub-Items
@@ -453,7 +434,7 @@ For more information, see [Priorities]({{ site.baseurl }}{% link getting-started
 
 ### Tags
 
-{: .released }
+> [!quote] Released
 Introduced in Tasks 1.6.0.
 
 - `no tags`
@@ -468,16 +449,15 @@ Introduced in Tasks 1.6.0.
 - `tags (regex matches|regex does not match) /<JavaScript-style Regex>/` _or_
 - `tag (regex matches|regex does not match) /<JavaScript-style Regex>/`
   - Does regular expression match (case-sensitive by default).
-  - Essential reading: [Regular Expression Searches]({{ site.baseurl }}{% link queries/regular-expressions.md %}).
+  - Essential reading: [[Regular Expressions|Regular Expression Searches]].
   - This enables tag searches that avoid sub-tags, by putting a `$` character at the end of the regular expression. See examples below.
   - If searching for sub-tags, remember to escape the slashes in regular expressions: `\/`
 
-{: .released }
+> [!quote] Released
 `regex matches` and `regex does not match` were introduced in Tasks 1.13.0.<br>
 `no tags` and `has tags` were introduced in Tasks 2.0.0.
 
 #### Tag Query Examples
-{: .no_toc }
 
 - `tags include #todo`
 - `tags do not include #todo`
@@ -499,14 +479,14 @@ Note that the path includes the `.md` extension.
   - Matches case-insensitive (disregards capitalization).
 - `path (regex matches|regex does not match) /<JavaScript-style Regex>/`
   - Does regular expression match (case-sensitive by default).
-  - Essential reading: [Regular Expression Searches]({{ site.baseurl }}{% link queries/regular-expressions.md %}).
+  - Essential reading: [[Regular Expressions|Regular Expression Searches]].
 
-{: .released }
+> [!quote] Released
 `regex matches` and `regex does not match` were introduced in Tasks 1.12.0.
 
 ### File Name
 
-{: .released }
+> [!quote] Released
 Introduced in Tasks 1.13.0.
 
 Note that the file name includes the `.md` extension.
@@ -515,7 +495,7 @@ Note that the file name includes the `.md` extension.
   - Matches case-insensitive (disregards capitalization).
 - `filename (regex matches|regex does not match) /<JavaScript-style Regex>/`
   - Does regular expression match (case-sensitive by default).
-  - Essential reading: [Regular Expression Searches]({{ site.baseurl }}{% link queries/regular-expressions.md %}).
+  - Essential reading: [[Regular Expressions|Regular Expression Searches]].
 
 ### Heading
 
@@ -528,9 +508,9 @@ Note that the file name includes the `.md` extension.
   - Whether or not the heading preceding the task includes the given regular expression (case-sensitive by default).
   - Always tries to match the closest heading above the task, regardless of heading level.
   - `regex does not match` will match a task that does not have a preceding heading in its file.
-  - Essential reading: [Regular Expression Searches]({{ site.baseurl }}{% link queries/regular-expressions.md %}).
+  - Essential reading: [[Regular Expressions|Regular Expression Searches]].
 
-{: .released }
+> [!quote] Released
 `regex matches` and `regex does not match` were introduced in Tasks 1.12.0.
 
 ## Appendix: Tasks 2.0.0 improvements to date filters
@@ -543,7 +523,7 @@ This Appendix shows how the results of various searches have changes, to enable 
 
 ### due (before|on|in||after) absolute date: results unchanged
 
-Unchanged interpretation of various [**absolute** due date]({{ site.baseurl }}{% link queries/filters.md %}#absolute-dates) filters:
+Unchanged interpretation of various [[Filters#absolute-dates|**absolute** due date]] filters:
 
 | keyword     | Tasks 1.25.0 and earlier                                                                          | Tasks 2.0.0 onwards                                                                              |
 | ----------- | ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
@@ -556,7 +536,7 @@ Unchanged interpretation of various [**absolute** due date]({{ site.baseurl }}{%
 
 ### due (before|on|in||after) absolute date range: results improved
 
-Differences in interpretation of various [**absolute** due date **range**]({{ site.baseurl }}{% link queries/filters.md %}#absolute-date-ranges) filters:
+Differences in interpretation of various [[Filters#absolute-date-ranges|**absolute** due date **range**]] filters:
 
 | keyword     | Tasks 1.25.0 and earlier                                                                                    | Tasks 2.0.0 onwards                                                                                                                                               |
 | ----------- | ----------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -569,7 +549,7 @@ Differences in interpretation of various [**absolute** due date **range**]({{ si
 
 ### due (before|on|in||after) last week: results improved
 
-Differences in interpretation of various [**relative** due date **range**]({{ site.baseurl }}{% link queries/filters.md %}#relative-date-ranges) filters, when run on `2023-02-10` (Friday 10th February 2023):
+Differences in interpretation of various [[Filters#relative-date-ranges|**relative** due date **range**]] filters, when run on `2023-02-10` (Friday 10th February 2023):
 
 | keyword     | Tasks 1.25.0 and earlier                                                                       | Tasks 2.0.0 onwards                                                                                                                               |
 | ----------- | ---------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -582,7 +562,7 @@ Differences in interpretation of various [**relative** due date **range**]({{ si
 
 ### due (before|on|in||after) this week: results improved
 
-Differences in interpretation of various [**relative** due date **range**]({{ site.baseurl }}{% link queries/filters.md %}#relative-date-ranges) filters, when run on `2023-02-10` (Friday 10th February 2023):
+Differences in interpretation of various [[Filters#relative-date-ranges|**relative** due date **range**]] filters, when run on `2023-02-10` (Friday 10th February 2023):
 
 | keyword     | Tasks 1.25.0 and earlier                                                                       | Tasks 2.0.0 onwards                                                                                                                                |
 | ----------- | ---------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -595,7 +575,7 @@ Differences in interpretation of various [**relative** due date **range**]({{ si
 
 ### due (before|on|in||after) next week: results improved
 
-Differences in interpretation of various [**relative** due date **range**]({{ site.baseurl }}{% link queries/filters.md %}#relative-date-ranges) filters, when run on `2023-02-10` (Friday 10th February 2023):
+Differences in interpretation of various [[Filters#relative-date-ranges|**relative** due date **range**]] filters, when run on `2023-02-10` (Friday 10th February 2023):
 
 | keyword     | Tasks 1.25.0 and earlier                                                                        | Tasks 2.0.0 onwards                                                                                                                                 |
 | ----------- | ----------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |

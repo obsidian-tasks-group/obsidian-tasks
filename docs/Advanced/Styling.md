@@ -1,28 +1,12 @@
 ---
-layout: default
-title: Styling
-nav_order: 2
-parent: Advanced
-has_toc: false
+publish: true
 ---
 
 # Styling Tasks
-{: .no_toc }
-
-<details open markdown="block">
-  <summary>
-    Table of contents
-  </summary>
-  {: .text-delta }
-1. TOC
-{:toc}
-</details>
-
----
 
 ## Introduction
 
-{: .released }
+> [!quote] Released
 Almost all the features below were introduced in Tasks 3.0.0.
 
 In rendered queries and Reading View, the Tasks plugin adds detailed CSS classes and data attributes that represent many of each task's content, to allow for very extensive styling options via CSS.
@@ -36,13 +20,13 @@ Thank you in advance!
 
 ### Backwards compatibility and CSS snippets
 
-{: .warning }
+> [!warning]
 If you find any existing Tasks CSS snippets stopped working with Tasks 3.0.0, follow the advice in
-[Appendix: Fixing CSS pre-existing snippets for Tasks 3.0.0]({{ site.baseurl }}{% link advanced/styling.md %}#appendix-fixing-css-pre-existing-snippets-for-tasks-300) below.
+[[Styling#appendix-fixing-css-pre-existing-snippets-for-tasks-300|Appendix: Fixing CSS pre-existing snippets for Tasks 3.0.0]] below.
 
 ## Basic Task Structure
 
-{: .released }
+> [!quote] Released
 The following description relates to a restructuring of the rendered tasks that was introduced in Tasks 3.0.0.
 
 The Tasks plugin renders a task in the following structure (this refers to query results, but the Reading View is the same except the top-most containers):
@@ -77,7 +61,7 @@ The reason for this additional internal span is that it allows CSS styles that c
 
 ## Generic Classes and Data Attributes
 
-{: .released }
+> [!quote] Released
 Data attributes were introduced in Tasks 3.0.0.
 
 Each rendered task component (description, priority, recurrence rule etc) includes a **generic class** that denotes this type of component.
@@ -113,7 +97,7 @@ Data attributes are added to both their corresponding components (e.g. to the du
 
 An exception is the tag data attribute which is added only to the tag's `<a>` element within the rendered description -- however you can still use a CSS `:has` selector to format an entire task's description according to a tag, as demonstrated in the examples below.
 
-{: .warning }
+> [!warning]
 The CSS `:has` selector is available with Obsidian installer version 1.1.9 and newer. You can run the Obsidian command `Show debug info` to see your current installer version.
 
 **Tip:** [CSS wildcard selectors](https://www.geeksforgeeks.org/wildcard-selectors-and-in-css-for-classes/) are a good way to select all past dates or future dates at once -- just use `.task-due[data-task-due^="past-"]` to address all overdue tasks, for example. Examples that utilize this can be found below.
@@ -145,7 +129,7 @@ These attributes can be used to style tasks according to their status, with the 
 - Specifically. the CSS classes described here are applied to:
   - Reading mode,
   - Tasks query blocks in Reading and Live Preview modes.
-- Styles **cannot access any automatic scheduled date** that is created if the [Use Filename as Default Date]({{ site.baseurl }}{% link getting-started/use-filename-as-default-date.md %})  option is enabled.
+- Styles **cannot access any automatic scheduled date** that is created if the [[Use Filename as Default Date]]  option is enabled.
 
 ## More Classes
 
@@ -159,7 +143,7 @@ The following additional components have the following classes:
 | tasks-urgency                  | This is applied to the SPAN that wraps the urgency score if displayed on the task.                              |
 | tasks-group-heading            | This is applied to H4, H5 and H6 group headings                                                                 |
 
-{: .released }
+> [!quote] Released
 `tasks-group-heading` was introduced in Tasks 1.6.0.<br>
 `plugin-tasks-query-explanation` was introduced in Tasks 1.19.0.
 
@@ -171,7 +155,7 @@ The following examples can be used as [Obsidian CSS snippets](https://help.obsid
 
 **Tip:** the following examples use CSS variables (`--var(...)`) provided by Obsidian instead of concrete color codes to maximize the chance that the result will be in-line with your chosen theme. You may of course use specific colors if so you choose.
 
-{: .warning }
+> [!warning]
 > These examples are provided only for explanation: we make no claims that these examples are useful, good design, or perfect CSS!
 >
 > They are provided purely to demonstrate use of the CSS selectors provided by the Tasks plugin.

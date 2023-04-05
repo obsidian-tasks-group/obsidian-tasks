@@ -1,24 +1,8 @@
 ---
-layout: default
-title: Priority
-nav_order: 3
-parent: Getting Started
-has_toc: false
+publish: true
 ---
 
 # Priority
-{: .no_toc }
-
-<details open markdown="block">
-  <summary>
-    Table of contents
-  </summary>
-  {: .text-delta }
-1. TOC
-{:toc}
-</details>
-
----
 
 ## Priorities and Order
 
@@ -43,8 +27,8 @@ The idea is that you can easily filter out unimportant tasks without needing to 
 Instead of adding the emoji manually, you can:
 
 - Use the `Tasks: Create or edit` command when creating or editing a task.
-  You will be able to select the priority from the options in the [‘Create or edit Task’ Modal]({{ site.baseurl }}{% link getting-started/create-or-edit-task.md %}).
-- Using [Intelligent Auto-Suggest]({{ site.baseurl }}{% link getting-started/auto-suggest.md %}),
+  You will be able to select the priority from the options in the [[Create or edit Task|‘Create or edit Task’ Modal]].
+- Using [[Auto-Suggest|Intelligent Auto-Suggest]],
   start typing the first few characters of `high`, `medium` or `low`, and press <return> to accept the suggested signifier.
 
 ## Related Tasks Block Instructions
@@ -52,10 +36,10 @@ Instead of adding the emoji manually, you can:
 The following instructions use the priority signifiers in tasks.
 
 - `priority is (above, below)? (low, none, medium, high)`
-  - [Documentation]({{ site.baseurl }}{% link queries/filters.md %}#priority)
+  - [[Filters#priority|Documentation]]
 - `sort by priority`
-  - [Documentation]({{ site.baseurl }}{% link queries/sorting.md %}#basics)
+  - [[Sorting#basics|Documentation]]
 - `group by priority`
-  - [Documentation]({{ site.baseurl }}{% link queries/grouping.md %}#basics)
+  - [[Grouping#basics|Documentation]]
 - `hide priority`
-  - [Documentation]({{ site.baseurl }}{% link queries/layout.md %})
+  - [[Layout|Documentation]]

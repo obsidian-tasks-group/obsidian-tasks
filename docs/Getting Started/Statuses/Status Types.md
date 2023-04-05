@@ -1,28 +1,12 @@
 ---
-layout: default
-title: Status Types
-parent: Statuses
-grand_parent: Getting Started
-has_toc: false
+publish: true
 ---
 
 # Status Types
-{: .no_toc }
-
-<details open markdown="block">
-  <summary>
-    Table of contents
-  </summary>
-  {: .text-delta }
-1. TOC
-{:toc}
-</details>
-
----
 
 ## Overview
 
-With the new ability to create a variety of [Custom Statuses]({{ site.baseurl }}{% link getting-started/statuses/custom-statuses.md %}), Tasks needs to know enough about each status that it can decide:
+With the new ability to create a variety of [[Custom Statuses]], Tasks needs to know enough about each status that it can decide:
 
 - how to treat tasks when searching,
 - and what to do when tasks with the status are toggled, both for adding or removing Done dates, and for creating new task recurrences.
@@ -118,5 +102,5 @@ The tasks shown are purely examples for context. The `~` column is just an arbit
 
 <!-- placeholder to force blank line after included text --> <!-- endInclude -->
 
-{: .warning }
+> [!warning]
 The `group by status.type` results of the above table are subject to change.

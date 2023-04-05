@@ -1,23 +1,8 @@
 ---
-layout: default
-title: Find tasks for coming 7 days
-nav_order: 4
-parent: How Tos
+publish: true
 ---
 
 # Find all tasks for the coming 7 days
-{: .no_toc }
-
-<details open markdown="block">
-  <summary>
-    Table of contents
-  </summary>
-  {: .text-delta }
-1. TOC
-{:toc}
-</details>
-
----
 
 ## Motivation
 
@@ -98,5 +83,5 @@ With the above date, that search gives the desired result:
 
 Relevant documentation sections:
 
-- Some examples are written in the [Dates section of the Filters docs]({{ site.baseurl }}{% link queries/filters.md %}#dates).
-- And perhaps more useful are the date-based examples in the [Queries Examples page]({{ site.baseurl }}{% link queries/examples.md %}).
+- Some examples are written in the [[Filters#dates|Dates section of the Filters docs]].
+- And perhaps more useful are the date-based examples in the [[Examples|Queries Examples page]].
