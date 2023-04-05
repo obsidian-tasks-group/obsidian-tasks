@@ -6,7 +6,7 @@ publish: true
 
 ## Introduction
 
-> [!quote] Released
+> [!released]
 Almost all the features below were introduced in Tasks 3.0.0.
 
 In rendered queries and Reading View, the Tasks plugin adds detailed CSS classes and data attributes that represent many of each task's content, to allow for very extensive styling options via CSS.
@@ -26,7 +26,7 @@ If you find any existing Tasks CSS snippets stopped working with Tasks 3.0.0, fo
 
 ## Basic Task Structure
 
-> [!quote] Released
+> [!released]
 The following description relates to a restructuring of the rendered tasks that was introduced in Tasks 3.0.0.
 
 The Tasks plugin renders a task in the following structure (this refers to query results, but the Reading View is the same except the top-most containers):
@@ -61,7 +61,7 @@ The reason for this additional internal span is that it allows CSS styles that c
 
 ## Generic Classes and Data Attributes
 
-> [!quote] Released
+> [!released]
 Data attributes were introduced in Tasks 3.0.0.
 
 Each rendered task component (description, priority, recurrence rule etc) includes a **generic class** that denotes this type of component.
@@ -143,7 +143,7 @@ The following additional components have the following classes:
 | tasks-urgency                  | This is applied to the SPAN that wraps the urgency score if displayed on the task.                              |
 | tasks-group-heading            | This is applied to H4, H5 and H6 group headings                                                                 |
 
-> [!quote] Released
+> [!released]
 `tasks-group-heading` was introduced in Tasks 1.6.0.<br>
 `plugin-tasks-query-explanation` was introduced in Tasks 1.19.0.
 

@@ -6,7 +6,7 @@ publish: true
 
 ## Basics
 
-> [!quote] Released
+> [!released]
 Introduced in Tasks 1.6.0.
 
 By default, Tasks displays tasks in a single list.
@@ -25,7 +25,7 @@ You can group by the following properties.
 1. `filename` (the link to the file that contains the task, without the `.md` extension)
     - Note that tasks from different notes with the same file name will be grouped together in the same group.
 
-> [!quote] Released
+> [!released]
 `root` grouping option was introduced in Tasks 1.11.0.
 
 ### File contents
@@ -48,7 +48,7 @@ You can group by the following properties.
 1. `happens`
     - The earliest of start date, scheduled date, and due date, including the week-day, or `No happens date` if none of those are set.
 
-> [!quote] Released
+> [!released]
 `happens` grouping option was introduced in Tasks 1.11.0.<br>
 `created` grouping option was introduced in Tasks 2.0.0.
 
@@ -68,7 +68,7 @@ You can group by the following properties.
         - `4 CANCELLED`
         - `5 NON_TASK`
 
-> [!quote] Released
+> [!released]
 `group by status.name` and `group by status.type` were introduced in Tasks 1.23.0.
 
 For more information, including adding your own customised statuses, see [[Statuses]].
@@ -89,7 +89,7 @@ For more information, including adding your own customised statuses, see [[Statu
 1. `tags`
     - The tags of the tasks or `(No tags)`. If the task has multiple tags, it will show up under every tag.
 
-> [!quote] Released
+> [!released]
 `start`, `scheduled`, `due` and `done` grouping options were introduced in Tasks 1.7.0.<br>
 `tags` grouping option was introduced in Tasks 1.10.0.<br>
 `priority`, `recurring` and `recurrence` grouping options were introduced in Tasks 1.11.0.

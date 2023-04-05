@@ -89,7 +89,7 @@ The following _does not work:_
 > [!warning]
 > Tasks can read tasks that are in **numbered lists**.
 
-> [!quote] Released
+> [!released]
 Reading tasks inside numbered lists was introduced in Tasks 1.20.0.
 
 For example:
@@ -111,7 +111,7 @@ This is because they will usually be displayed in a completely different order t
 > [!warning]
 > Tasks can read tasks that are inside **blockquotes** or [Obsidian's built-in callouts](https://help.obsidian.md/How+to/Use+callouts).
 
-> [!quote] Released
+> [!released]
 Reading tasks inside callouts and blockquotes was introduced in Tasks 1.11.1
 
 However, under the following very specific circumstance, Tasks cannot add or remove completion dates or make the next copy of a recurring task:

@@ -6,7 +6,7 @@ publish: true
 
 ## Tasks API Interface
 
-> [!quote] Released
+> [!released]
 The Tasks API Interface was introduced in Tasks 2.0.0.
 
 Tasks exposes an API that can be used to integrate Tasks in other Plugins, scripts or
@@ -35,7 +35,7 @@ export interface TasksApiV1 {
 
 ## `createTaskLineModal(): Promise<string>;`
 
-> [!quote] Released
+> [!released]
 This method was introduced in Tasks 2.0.0.
 
 This method opens the Tasks [[Create or edit Task|Create or edit task UI]] and returns the Markdown for the task entered.

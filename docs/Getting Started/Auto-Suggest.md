@@ -6,7 +6,7 @@ publish: true
 
 ## Introduction
 
-> [!quote] Released
+> [!released]
 Introduced in Tasks 1.9.0.
 
 The [[Priority|Priorities]], [[Dates]] and [[Recurring Tasks]] pages show various emojis and special phrases that the Tasks plugin recognises, when searching for tasks.

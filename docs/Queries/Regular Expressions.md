@@ -6,7 +6,7 @@ publish: true
 
 ## Introduction
 
-> [!quote] Released
+> [!released]
 Introduced in Tasks 1.12.0.
 
 [Regular expression](https://en.wikipedia.org/wiki/Regular_expression)  ("regex") searches are a powerful alternative to the simple `includes` and  `does not include` searches.

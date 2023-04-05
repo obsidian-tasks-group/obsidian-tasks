@@ -48,7 +48,7 @@ Scheduled dates use an hourglass emoji instead of a calendar emoji.
 
 See [[Use Filename as Default Date]] for how to optionally make Tasks use any dates in file names as the scheduled date for all undated tasks in that file.
 
-> [!quote] Released
+> [!released]
 'Use Filename as Default Date' was introduced in Tasks 1.18.0.
 
 ---
@@ -93,7 +93,7 @@ Image of the default settings for tracking task histories.
 
 ### ➕ Created
 
-> [!quote] Released
+> [!released]
 Created date was introduced in Tasks 2.0.0.
 
 If you enable 'Set created date on every added task' in settings (and restart Obsidian), the Tasks plugin will help you track when your tasks were created.
