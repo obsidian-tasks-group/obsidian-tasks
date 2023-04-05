@@ -1,0 +1,10 @@
+{
+	"id": "copy-publish-url",
+	"name": "Publish and GitHub URL",
+	"version": "0.4.4",
+	"minAppVersion": "0.12.15",
+	"description": "Copy or open the URL of the corresponding note on your Publish site. You can also open its Git commit history on GitHub.",
+	"author": "kometenstaub",
+	"authorUrl": "https://github.com/kometenstaub",
+	"isDesktopOnly": false
+}

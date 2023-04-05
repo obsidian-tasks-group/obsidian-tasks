@@ -1,0 +1,9 @@
+{
+  "homeNote": "Introduction",
+  "publishPath": "https://publish.obsidian.md/tasks/",
+  "enableContext": true,
+  "enableOpenUrl": true,
+  "enableGithub": false,
+  "remoteUrl": "/",
+  "branch": ""
+}
