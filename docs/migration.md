@@ -33,9 +33,6 @@ Notes and reminders of things to do.
 > [!todo] Things still to be done, so known issues
 > The only known remaining problems/things to do:
 >
-> - On the front page [[Introduction]], there is some raw markdown visible in the '`ON THIS PAGE`' section:
->   - `Task management for the [Obsidian](https://obsidian.md/) knowledge base`
->   - see [this comment](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1706#issuecomment-1454848203)
 > - Need to make it clearer, in each folder, what the starting page is
 >   - And update the URLs in Python conversion code to what the new location is
 >
@@ -138,7 +135,7 @@ The remainder is detailed notes on the conversion
 ### Callouts
 
 - [x] Convert callouts to Obsidian style
-- [ ] Add CSS for custom callouts, like Released
+- [x] Add CSS for custom callouts, like Released
 - [x] Use grey for Released, instead of Green, so it is less intrusive when reading
 - [x] Fix this style of "callout":
 
