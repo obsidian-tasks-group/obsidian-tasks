@@ -1,1 +1,11 @@
-{}
+{
+  "livePreview": false,
+  "readableLineLength": false,
+  "strictLineBreaks": true,
+  "showLineNumber": true,
+  "spellcheck": true,
+  "newFileLocation": "current",
+  "attachmentFolderPath": "images",
+  "useTab": false,
+  "promptDelete": false
+}
