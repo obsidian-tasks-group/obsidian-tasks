@@ -1,3 +1,15 @@
+/* MAINTENANCE NOTE
+These two files should always have the same CSS content, please,
+so that the styling in the Obsidian app and the published docs
+is consistent:
+
+- docs/.obsidian/snippets/publish-simulation.css
+- docs/publish.css
+
+If you make any changes in one of those files, please copy
+them to the other one. Thank you.
+*/
+
 /* Top-align all table cells, for readability */
 table td, th {
     vertical-align: top;
