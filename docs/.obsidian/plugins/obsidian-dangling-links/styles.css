@@ -1,0 +1,19 @@
+.settings-div > .setting-item {
+    align-content: center;
+    justify-content: center;
+}
+
+.div > .setting-item {
+    border-top: none !important;
+    align-self: center;
+}
+
+.div > .setting-item > .setting-item-control {
+    justify-content: space-around;
+    padding: 0;
+    width: 100%;
+}
+
+.templatedivr_div > .setting-item > .setting-item-control > .setting-editor-extra-setting-button {
+    align-self: center;
+}
