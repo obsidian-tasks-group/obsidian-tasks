@@ -11,6 +11,7 @@ In the simplest case, you can update the existing markdown file and create a pul
 
 ## Writing and improving the documentation
 
+- [[How the documentation is generated]]
 - [[Linking to other pages in the docs]]
 - [[Screenshots in documentation]]
 - [[Callouts]]
@@ -19,13 +20,11 @@ In the simplest case, you can update the existing markdown file and create a pul
 - [[Omitting a heading from the page's Table of Contents]]
 - [[Embedding code and data in documentation]]
 - [[Documentation and branches]]
+- [[Redirects - Testing old links still work]]
 
-## Seeing the documentation locally
+## Old Jekyll-based docs
 
-- [[How the documentation is generated]]
-- [[Overview of Jekyll-based docs]]
-- [[Test documentation locally with Jekyll]]
-- [[Dependency Management and Updates for the Docs]]
+- [[About Old Jekyll-based docs]]
 
 ## Migrating User Documentation with Obsidian Publish
 
