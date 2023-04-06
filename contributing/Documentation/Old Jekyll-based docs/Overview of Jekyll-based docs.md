@@ -1,3 +1,8 @@
+---
+aliases:
+- Documentation/Overview of Jekyll-based docs
+---
+
 # Overview of Jekyll-based docs
 
 > [!Note]
