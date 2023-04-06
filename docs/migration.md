@@ -33,8 +33,15 @@ Notes and reminders of things to do.
 > [!todo] Things still to be done, so known issues
 > The only known remaining problems/things to do:
 >
-> - **Need to make it clearer, in each folder, what the starting page is**
+> - [ ] **Need to make it clearer, in each folder, what the starting page is**
 >   - And update the URLs in Python conversion code to what the new location is
+> - [ ] In [[Daily Agenda]] and [[Quick Reference]], table does not not scroll to right on iPhone, in Safari and Chrome
+>   - Possibly useful links:
+>     - <https://forum.obsidian.md/t/css-horizontal-scrolling-tables/26581>
+>     - <https://stackoverflow.com/questions/41539803/html-table-wont-scroll-horizontal>
+> - [ ] In [[Styling#Complete Example]] (and other sections) the comments are not visible in Safari on iPhone, iOS 15.6.1
+>   - They do show up on Chrome on iPhone
+>   - When I "reload without content blockers" in Safari, the comments do show up
 > - In [[Set up custom statuses#Adding more statuses]], **the link** [[Status Settings#Bulk-adding Statuses|Bulk-adding Statuses]] **does not jump to the correct heading**, either in Obsidian or in Publish
 >   - The Bulk adding link *does work here*
 >   - But the "adding more statuses" one *doesn't* work here :-(
@@ -175,7 +182,7 @@ Folders with a comma (`,`) in their name are not supported.
   - `Old URL` -> `New URL`
 - [ ] Test out using Aliases to point browsers to the new location of renamed files. See [Discord](https://discord.com/channels/686053708261228577/1078726185590194196/1081998454739439707).
 - [ ] Set up redirects on the old site to point to the new locations
-- [ ] Stop `release.sh` merging to `gh-pages` branch.
+- [x] Stop `release.sh` merging to `gh-pages` branch.
 
 ## Finally
 
