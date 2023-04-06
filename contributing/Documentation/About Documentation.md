@@ -16,8 +16,6 @@ In the simplest case, you can update the existing markdown file and create a pul
 - [[Screenshots in documentation]]
 - [[Callouts]]
 - [[Version numbers in documentation]]
-- [[Adding Tables of Contents to rendered docs]]
-- [[Omitting a heading from the page's Table of Contents]]
 - [[Embedding code and data in documentation]]
 - [[Documentation and branches]]
 - [[Redirects - Testing old links still work]]
