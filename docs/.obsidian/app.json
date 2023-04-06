@@ -8,5 +8,7 @@
   "attachmentFolderPath": "images",
   "useTab": false,
   "promptDelete": false,
-  "showInlineTitle": false
+  "showInlineTitle": false,
+  "alwaysUpdateLinks": true,
+  "useMarkdownLinks": false
 }
