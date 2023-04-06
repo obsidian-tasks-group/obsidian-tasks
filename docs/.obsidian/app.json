@@ -7,5 +7,6 @@
   "newFileLocation": "current",
   "attachmentFolderPath": "images",
   "useTab": false,
-  "promptDelete": false
+  "promptDelete": false,
+  "showInlineTitle": false
 }
