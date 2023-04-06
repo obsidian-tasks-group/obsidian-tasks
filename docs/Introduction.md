@@ -4,7 +4,7 @@ publish: true
 
 # Introduction
 
-## Task management for the Obsdiain knowledge base
+## Task management for the Obsidian knowledge base
 
 Track tasks across your entire [Obsidian](https://obsidian.md/) vault.
 Query them and mark them as done wherever you want.
