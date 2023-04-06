@@ -1,8 +1,5 @@
 # Updating documentation
 
-> [!Note]
-> This section is mostly about the original user documentation setup, published using #jekyll on #github-pages.
-
 ## Introduction
 
 The documentation resides under the [docs](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/docs) directory.
@@ -11,7 +8,9 @@ In the simplest case, you can update the existing markdown file and create a pul
 
 ## Writing and improving the documentation
 
-- [[How the documentation is generated]]
+This section is for anyone contributing to Tasks and improving the documentation.
+
+- [[How the documentation is generated]] - how to edit the Tasks documentation
 - [[Linking to other pages in the docs]]
 - [[Screenshots in documentation]]
 - [[Callouts]]
@@ -19,6 +18,12 @@ In the simplest case, you can update the existing markdown file and create a pul
 - [[Embedding code and data in documentation]]
 - [[Documentation and branches]]
 - [[Redirects - Testing old links still work]]
+
+## For Tasks maintainers
+
+This section is for maintainers of the Tasks plugin.
+
+- [[Publishing with Obsidian Publish]]
 
 ## Old Jekyll-based docs
 
