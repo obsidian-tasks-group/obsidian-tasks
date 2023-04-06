@@ -21,7 +21,7 @@ Full documentation is available: see [Regular Expressions](https://publish.obsid
 - [ ] #task Lower case task
 
 ## Simple searches
-b
+
 ### Case sensitivity: add `i` after closing `/` to make case-insensitive
 
 Finds 2 tasks:
