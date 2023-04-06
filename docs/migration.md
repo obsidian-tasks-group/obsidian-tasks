@@ -33,8 +33,13 @@ Notes and reminders of things to do.
 > [!todo] Things still to be done, so known issues
 > The only known remaining problems/things to do:
 >
-> - Need to make it clearer, in each folder, what the starting page is
+> - **Need to make it clearer, in each folder, what the starting page is**
 >   - And update the URLs in Python conversion code to what the new location is
+> - In [[Set up custom statuses#Adding more statuses]], **the link** [[Status Settings#Bulk-adding Statuses|Bulk-adding Statuses]] **does not jump to the correct heading**, either in Obsidian or in Publish
+>   - The Bulk adding link *does work here*
+>   - But the "adding more statuses" one *doesn't* work here :-(
+>   - Later: now they both work everywhere
+>   - Most of the time
 >
 > If you notice any other problems, please give us the **url** and a **screenshot** in [#1706](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1706#issuecomment-1454284835). Thank you.
 
@@ -45,11 +50,6 @@ Notes and reminders of things to do.
 >   - This happens on the Obsidian Help site, so is outside my control
 
 ### Tips for reviewing
-
-> [!tip] Tips for reviewing the new documentation
->
-> - You can view the new site at: [publish.obsidian.md/tasks](https://publish.obsidian.md/tasks)
->   - At the end of each page, there is a **handy link** to the equivalent page on the old site.
 
 > [!tip] Tips - things I will probably put in a 'how to use the docs' page
 >
@@ -163,6 +163,7 @@ Folders with a comma (`,`) in their name are not supported.
 
 - [-] Image quality of some, such as [Create or Edit dialog](https://publish.obsidian.md/tasks/getting-started/create-or-edit-task) is very poor
   - It may depend on the window size
+- [ ] Change images so that they are simple embeds, `![[]]`
 
 ### Codeblocks
 
