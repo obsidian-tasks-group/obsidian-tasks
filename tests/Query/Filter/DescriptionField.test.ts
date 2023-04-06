@@ -235,7 +235,7 @@ describe('search description for Alternation (OR)', () => {
     it('should search for one of several spellings of waiting', () => {
         // Regex equivalent of:
         //      (description includes waiting) OR (description includes waits) OR (description includes wartet)
-        // See https://obsidian-tasks-group.github.io/obsidian-tasks/queries/combining-filters/#finding-tasks-that-are-waiting
+        // See https://publish.obsidian.md/tasks/Queries/Combining+Filters#Finding+tasks+that+are+waiting
 
         // Arrange
         const filter = new DescriptionField().createFilterOrErrorMessage(

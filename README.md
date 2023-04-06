@@ -2,7 +2,7 @@
 
 <p align="center">Task management for the <a href="https://obsidian.md/">Obsidian</a> knowledge base.</p>
 
-<p align="center"><a href="https://obsidian-tasks-group.github.io/obsidian-tasks/">Documentation</a></p>
+<p align="center"><a href="https://publish.obsidian.md/tasks/">Documentation</a></p>
 
 Track tasks across your entire vault. Query them and mark them as done wherever you want. Supports due dates, recurring tasks (repetition), done dates, sub-set of checklist items, and filtering.
 
@@ -16,7 +16,7 @@ For changes in each release, please check the releases page: <https://github.com
 
 ## Screenshots
 
-- _All screenshots assume the [global filter](https://obsidian-tasks-group.github.io/obsidian-tasks/getting-started/global-filter/) `#task` which is not set by default (see also [installation](https://obsidian-tasks-group.github.io/obsidian-tasks/installation/))._
+- _All screenshots assume the [global filter](https://publish.obsidian.md/tasks/Getting+Started/Global+Filter) `#task` which is not set by default (see also [installation](https://publish.obsidian.md/tasks/Installation/Installation))._
 - _The theme is default Obsidian theme._
 
 ![ACME Tasks](https://github.com/obsidian-tasks-group/obsidian-tasks/raw/gh-pages/docs/images/acme.png)
@@ -53,7 +53,7 @@ Create a few tasks in a Markdown note in your vault. For example:
 - [ ] Send Kate a birthday card - with a scheduled date 🔁 every January on the 4th ⏳ 2023-01-04
 ```
 
-Find out more in [Getting Started](https://obsidian-tasks-group.github.io/obsidian-tasks/getting-started/), and its sub-sections.
+Find out more in [Getting Started](https://publish.obsidian.md/tasks/Getting+Started/Getting+Started), and its sub-sections.
 
 ### Create your first Tasks search
 
@@ -88,11 +88,11 @@ explain
 ```
 ````
 
-Find out more in [Queries](https://obsidian-tasks-group.github.io/obsidian-tasks/queries/), and its sub-sections.
+Find out more in [Queries](https://publish.obsidian.md/tasks/Queries/Queries), and its sub-sections.
 
 ## Documentation
 
-For user documentation, please check [https://obsidian-tasks-group.github.io/obsidian-tasks/](https://obsidian-tasks-group.github.io/obsidian-tasks/).
+For user documentation, please check [https://publish.obsidian.md/tasks/](https://publish.obsidian.md/tasks/).
 
 ## Development
 

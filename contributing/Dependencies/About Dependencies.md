@@ -11,7 +11,7 @@ If you see a warning from `yarn` about a **missing peer dependency that mentions
 Code changes that also involve dependency changes may require additional testing and review.
 Please only change [package.json](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/package.json) if necessary for your contribution.
 
-Package management for the documentation site is handled separately; see the [[Dependency Management and Updates for the Docs]] for details on that.
+Package management for the old Jekyll-based documentation site is handled separately; see the [[Dependency Management and Updates for the Docs]] for details on that.
 
 The rest of this section is most useful for maintainers of the repository and not necessary for typical documentation, code, or test contributions.
 

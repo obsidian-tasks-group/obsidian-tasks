@@ -1,3 +1,8 @@
+---
+aliases:
+- Documentation/Dependency Management and Updates for the Docs
+---
+
 # Dependency Management and Updates for the Docs
 
 > [!Note]

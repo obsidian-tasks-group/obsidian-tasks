@@ -68,7 +68,7 @@ export class SettingsTab extends PluginSettingTab {
                         'a checklist item must include the specified string in its description in order to be considered a task.<p>' +
                         '<p>For example, if you set the global filter to <code>#task</code>, the Tasks plugin will only handle checklist items tagged with <code>#task</code>.</br>' +
                         'Other checklist items will remain normal checklist items and not appear in queries or get a done date set.</p>' +
-                        '<p>See the <a href="https://obsidian-tasks-group.github.io/obsidian-tasks/getting-started/global-filter/">documentation</a>.</p>',
+                        '<p>See the <a href="https://publish.obsidian.md/tasks/Getting+Started/Global+Filter">documentation</a>.</p>',
                 ),
             )
             .addText((text) => {
@@ -144,7 +144,7 @@ export class SettingsTab extends PluginSettingTab {
                         'If this option is enabled, any undated tasks will be given a default Scheduled date extracted from their file name.</br>' +
                         'The date in the file name must be in one of <code>YYYY-MM-DD</code> or <code>YYYYMMDD</code> formats.</br>' +
                         'Undated tasks have none of Due (📅 ), Scheduled (⏳) and Start (🛫) dates.</br>' +
-                        '<p>See the <a href="https://obsidian-tasks-group.github.io/obsidian-tasks/getting-started/use-filename-as-default-date/">documentation</a>.</p>',
+                        '<p>See the <a href="https://publish.obsidian.md/tasks/Getting+Started/Use+Filename+as+Default+Date">documentation</a>.</p>',
                 ),
             )
             .addToggle((toggle) => {

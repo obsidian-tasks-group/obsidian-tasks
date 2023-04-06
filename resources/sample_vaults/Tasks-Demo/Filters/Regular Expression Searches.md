@@ -8,7 +8,7 @@ tags:
 This file contains a few examples that were useful when testing
 the feature to search for text using regular expressions.
 
-Full documentation is available: see [Regular Expressions](https://obsidian-tasks-group.github.io/obsidian-tasks/queries/regular-expressions/).
+Full documentation is available: see [Regular Expressions](https://publish.obsidian.md/tasks/Queries/Regular+Expressions).
 
 ## Sample Tasks
 
@@ -21,7 +21,7 @@ Full documentation is available: see [Regular Expressions](https://obsidian-task
 - [ ] #task Lower case task
 
 ## Simple searches
-
+b
 ### Case sensitivity: add `i` after closing `/` to make case-insensitive
 
 Finds 2 tasks:

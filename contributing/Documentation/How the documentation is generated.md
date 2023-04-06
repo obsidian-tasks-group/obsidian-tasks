@@ -1,10 +1,8 @@
 # How the documentation is generated
 
-> [!Note]
-> This page is about the original user documentation setup, published using #jekyll on #github-pages.
+We use [Obsidian Publish](https://obsidian.md/publish) for our documentation.
+You can read more about it at the [Obsidian Help](https://help.obsidian.md/Obsidian+Publish/Introduction+to+Obsidian+Publish).
 
-We use [GitHub pages](https://pages.github.com/) for our documentation.
-You can read more about it at their [official documentation](https://docs.github.com/en/pages).
+The `docs/` folder contains a properly configured Obsidian vault.
 
-To generate the documentation site on your machine,
-see [[Test documentation locally with Jekyll]].
+- To view and edit the Tasks help pages, **open `docs/` as a folder in Obsidian** on your machine.

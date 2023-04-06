@@ -448,7 +448,7 @@ describe('Query', () => {
                         '- [ ] task 4 🛫 2022-04-25',
                     ],
                     expectedResult: [
-                        '- [ ] task 1', // reference: https://obsidian-tasks-group.github.io/obsidian-tasks/queries/filters/#start-date
+                        '- [ ] task 1', // reference: https://publish.obsidian.md/tasks/Queries/Filters#Start+Date
                         '- [ ] task 2 🛫 2022-04-15',
                     ],
                 },
