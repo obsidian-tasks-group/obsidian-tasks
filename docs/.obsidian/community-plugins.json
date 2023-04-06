@@ -3,5 +3,6 @@
   "copy-publish-url",
   "cmdr",
   "obsidian-dangling-links",
-  "obsidian-tasks-plugin"
+  "obsidian-tasks-plugin",
+  "reveal-active-file-button"
 ]
