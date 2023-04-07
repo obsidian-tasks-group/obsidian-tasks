@@ -4,6 +4,8 @@ publish: true
 
 # Styling Tasks
 
+Related pages: #css
+
 ## Introduction
 
 > [!released]

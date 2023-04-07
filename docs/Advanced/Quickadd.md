@@ -4,6 +4,8 @@ publish: true
 
 # Quickadd
 
+Related pages: #plugin/quickadd
+
 The [quickadd](https://github.com/chhoumann/quickadd) plugin can help when creating tasks.
 Additional to the official command to create a task, you can use a quickadd command with a custom capture format.
 

@@ -4,6 +4,8 @@ publish: true
 
 # Tasks API
 
+Related pages: #plugin/quickadd
+
 ## Tasks API Interface
 
 > [!released]
