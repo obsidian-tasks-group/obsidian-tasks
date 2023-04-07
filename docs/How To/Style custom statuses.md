@@ -4,6 +4,8 @@ publish: true
 
 # Style custom statuses
 
+Related pages: #css
+
 ## Summary
 
 If you plan to use [[Custom Statuses]] in Tasks, you will need to install and enable **one of** the following, in order for your tasks to look good:

@@ -23,7 +23,7 @@ All open tasks that are due within the next two weeks, but are not overdue (due 
 
 ---
 
-All open tasks that are due within the next two weeks, and either have the #inbox tag, or are in an Inbox note:
+All open tasks that are due within the next two weeks, and either have the `#inbox` tag, or are in an Inbox note:
 
     ```tasks
     not done
