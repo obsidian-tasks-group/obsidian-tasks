@@ -44,19 +44,6 @@ export class DateRange {
     }
 
     /**
-     * Builds a date range containing a numbered week/month/quarter/year.
-     * @example <caption> construct a date range containing week 5 of 2021.</caption>
-     * const week5in2021 = DateRange.buildnNumbered('2021-W05', 'YYYY-WW', 'week');
-     * @param date in a format according to https://momentjs.com/docs/#/parsing/string-format/
-     * @param dateFormat recognised by momentjs
-     * @param range one of 'week', 'month', 'quarter', 'year'
-     * @returns
-     */
-    public static buildNumbered(date: string, dateFormat: string, range: moment.unitOfTime.StartOf | null): DateRange {
-        return new DateRange(moment(date, dateFormat).startOf(range), moment(date, dateFormat).endOf(range));
-    }
-
-    /**
      * Builds an invalid date range with invalid momentks objects (https://momentjscom.readthedocs.io/en/latest/moment/09-utilities/02-invalid/).
      * For example if the parsing has gone wrong.
      * @returns

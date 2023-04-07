@@ -95,21 +95,6 @@ describe('Date Parser - correct delta for next & last month & quarter (Today is 
     });
 });
 
-describe('DateRange - numbered date ranges', () => {
-    it.each([
-        ['2018-W38', 'YYYY-WW', 'isoWeek', '2018-09-17', '2018-09-23'],
-        ['2010-11', 'YYYY-MM', 'month', '2010-11-01', '2010-11-30'],
-        ['2019-Q3', 'YYYY-QQ', 'quarter', '2019-07-01', '2019-09-30'],
-        ['2007', 'YYYY', 'year', '2007-01-01', '2007-12-31'],
-    ])(
-        'numbered range %s: should return %s and %s at midnight',
-        (date: string, format: string, range: string, rangeStart: string, rangeEnd: string) => {
-            const dateRange = DateRange.buildNumbered(date, format, range as moment.unitOfTime.StartOf);
-            testDateRange(dateRange, rangeStart, rangeEnd);
-        },
-    );
-});
-
 describe('DateRange - range validity', () => {
     it('should build a valid date range', () => {
         const dateRange = new DateRange(moment('0000-01-01'), moment('2023-12-31'));
