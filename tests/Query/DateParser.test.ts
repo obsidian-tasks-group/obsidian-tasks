@@ -106,8 +106,8 @@ describe('DateParser - relative date ranges', () => {
     });
 });
 
-describe('DateParser - specific date ranges', () => {
-    it('should return dates for specific ranges', () => {
+describe('DateParser - numbered date ranges', () => {
+    it('should return dates for numbered ranges', () => {
         // Week (53 in a year)
         testParsingDateRange('2020-W53', '2020-12-28', '2021-01-03');
         testParsingDateRange('2021-W01', '2021-01-04', '2021-01-10');
@@ -138,7 +138,7 @@ describe('DateParser - specific date ranges', () => {
         testParsingDateRange('  2020-03        ', '2020-03-01', '2020-03-31');
     });
 
-    it('should return invalid dates for erroneous specific ranges', () => {
+    it('should return invalid dates for erroneous numbered ranges', () => {
         // Week
         // Each 4 years a year has 53 weeks (2020). For 2020 the week 54 should be invalid then.
         // For the others it is the week 53 that should be invalid.

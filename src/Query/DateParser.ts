@@ -23,7 +23,7 @@ export class DateParser {
             // Try parsing a relative date range like 'current month'
             DateParser.parseRelativeDateRange,
             // Try '2022-W10' otherwise
-            DateParser.parseSpecificDateRange,
+            DateParser.parseNumberedDateRange,
             // If previous failed, fallback on absolute date range with chrono
             DateParser.parseAbsoluteDateRange,
         ];
@@ -81,7 +81,7 @@ export class DateParser {
         return DateRange.buildInvalid();
     }
 
-    private static parseSpecificDateRange(input: string): DateRange {
+    private static parseNumberedDateRange(input: string): DateRange {
         const parsingVectors: [RegExp, string, moment.unitOfTime.StartOf][] = [
             [/^\s*[0-9]{4}\s*$/, 'YYYY', 'year'],
             [/^\s*[0-9]{4}-Q[1-4]\s*$/, 'YYYY-Q', 'quarter'],
@@ -94,7 +94,7 @@ export class DateParser {
             if (matched) {
                 // RegExps allow spaces (\s*), remove them before calling moment()
                 const date = matched[0].trim();
-                return DateRange.buildSpecific(date, dateFormat, range);
+                return DateRange.buildNumbered(date, dateFormat, range);
             }
         }
 
