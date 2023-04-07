@@ -1,23 +1,23 @@
 # Linking to other pages in the docs
 
-## Linking to other notes directly
+## Link to other notes directly
 
-We use ordinary Obsidian wikilinks, which are most easily created in Obsidian itself.
+We use ordinary Obsidian wikilinks, which are most easily created in Obsidian itself by dragging a file from the navigator in to the document being edited.
 
 For example:
 
 - Linking to a file:
   - `[[Filters]]`
-- Linking to a file, using an alias:
-  - `[[Filters#Appendix: Tasks 2.0.0 improvements to date filters|Appendix below]]`
+- Linking to a file, using custom display text:
+  - `[[Filters|search filters]]`
 - Linking to a heading in a file:
   - `[[Filters#Appendix: Tasks 2.0.0 improvements to date filters|Appendix below]]`
 
 See [Link notes](https://help.obsidian.md/Getting+started/Link+notes) in the Obsidian documentation.
 
-## Linking to a category of related pages via tags
+## Link to a category of related pages via tags
 
-We are starting to tags to link together pages that refer to the same topic.
+We are starting to use tags to link together pages that refer to the same topic.
 
 Example topics tags:
 
