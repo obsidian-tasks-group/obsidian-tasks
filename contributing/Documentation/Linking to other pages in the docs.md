@@ -21,9 +21,9 @@ We are starting to use tags to link together pages that refer to the same topic.
 
 Example topics tags:
 
-- `css`
-- `plugin/dataview`
-- `plugin/quickadd`
+- `#css`
+- `#plugin/dataview`
+- `#plugin/quickadd`
 
 These tags should be placed immediately after the first H1 Heading (`# ....`) in the file, and written like this:
 
