@@ -4,7 +4,7 @@ publish: true
 
 # How to show tasks in a calendar
 
-Related pages: #plugin/dataview
+<span class="related-pages">#plugin/dataview</span>
 
 ## No Calendar view in Tasks Plugin
 

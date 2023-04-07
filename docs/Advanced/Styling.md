@@ -4,7 +4,7 @@ publish: true
 
 # Styling Tasks
 
-Related pages: #css
+<span class="related-pages">#css</span>
 
 ## Introduction
 

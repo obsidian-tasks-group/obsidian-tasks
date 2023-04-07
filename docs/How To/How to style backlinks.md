@@ -4,7 +4,7 @@ publish: true
 
 # How to style backlinks
 
-Related pages: #css
+<span class="related-pages">#css</span>
 
 ## Motivation and assumptions
 

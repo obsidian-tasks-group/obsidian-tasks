@@ -4,7 +4,7 @@ publish: true
 
 # Daily Agenda
 
-Related pages: #plugin/calendar #plugin/periodic-notes
+<span class="related-pages">#plugin/calendar #plugin/periodic-notes</span>
 
 Using the default `Daily-notes` plugin, **templates** with syntax like
 {% raw %}`{{date+14d:YYYY-MM-DD}}`{% endraw %} won't load dates properly. Nevertheless, **Liam Cain**,

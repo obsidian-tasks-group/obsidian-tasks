@@ -4,7 +4,7 @@ publish: true
 
 # How to get all tasks in the current file
 
-Related pages: #plugin/dataview
+<span class="related-pages">#plugin/dataview</span>
 
 ## Motivation and assumptions
 
