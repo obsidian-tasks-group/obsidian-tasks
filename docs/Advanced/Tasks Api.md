@@ -4,7 +4,7 @@ publish: true
 
 # Tasks API
 
-Related pages: #plugin/quickadd
+<span class="related-pages">#plugin/quickadd</span>
 
 ## Tasks API Interface
 
