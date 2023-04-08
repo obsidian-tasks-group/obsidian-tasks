@@ -105,6 +105,9 @@ Example relative date ranges:
 Prior to Tasks 2.0.0, the interpretation of relative date ranges was confusing, and not what most users naturally expected.
 See the tables in the [[Filters#Appendix: Tasks 2.0.0 improvements to date filters|Appendix below]] to understand the changes in results, and whether you need to update any of your searches.
 
+> [!released]
+> Changing the first day of the week was introduced in Tasks X.Y.Z.
+
 #### Numbered date ranges
 
 There is also the ability to use numbered date ranges that are independent of the current date. These numbered date range types are supported:
@@ -124,9 +127,6 @@ There is also the ability to use numbered date ranges that are independent of th
 
 > [!released]
 > Numbered date ranges were introduced in Tasks 3.1.0.
-
-{: .released }
-Changing the first day of the week was introduced in Tasks X.Y.Z.
 
 ### Troubleshooting date searches
 
