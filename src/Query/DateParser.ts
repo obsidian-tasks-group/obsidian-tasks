@@ -1,7 +1,7 @@
 import * as chrono from 'chrono-node';
 import moment from 'moment';
-import { DateRange } from './DateRange';
 import { getSettings } from '../Config/Settings';
+import { DateRange } from './DateRange';
 
 export class DateParser {
     public static parseDate(input: string, forwardDate: boolean = false): moment.Moment {
