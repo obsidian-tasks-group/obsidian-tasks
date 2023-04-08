@@ -65,7 +65,7 @@ export class DateRange {
      * Make sure that the duration in the parameters matches the range size, for example subtracting a month from a week long range was not tested.
      * @param duration one of 'week'/'month'/'quarter'/'year'
      */
-    public subtract(duration: moment.unitOfTime.DurationConstructor) {
+    public moveToPrevious(duration: moment.unitOfTime.DurationConstructor) {
         const delta = moment.duration(1, duration);
         this.start.subtract(delta);
         this.end.subtract(delta);
@@ -82,7 +82,7 @@ export class DateRange {
      * Make sure that the duration in the parameters matches the range size, for example subtracting a month from a week long range was not tested.
      * @param duration one of 'week'/'month'/'quarter'/'year'
      */
-    public add(duration: moment.unitOfTime.DurationConstructor) {
+    public moveToNext(duration: moment.unitOfTime.DurationConstructor) {
         const delta = moment.duration(1, duration);
         this.start.add(delta);
         this.end.add(delta);

@@ -56,41 +56,41 @@ describe('Date Parser - correct delta for next & last month & quarter (Today is 
         // The purpose of this test to make adding and subtracting ranges intelligent
         // Subtracting weeks is simple, because their length is always 7 day
         const lastWeek = DateRange.buildRelative('week');
-        lastWeek.subtract('week');
+        lastWeek.moveToPrevious('week');
         testDateRange(lastWeek, '2021-03-22', '2021-03-28');
 
         const nextWeek = DateRange.buildRelative('week');
-        nextWeek.add('week');
+        nextWeek.moveToNext('week');
         testDateRange(nextWeek, '2021-04-05', '2021-04-11');
 
         // Months' lengths in days differ (28/30/31)
         const lastMonth = DateRange.buildRelative('month');
-        lastMonth.subtract('month');
+        lastMonth.moveToPrevious('month');
         testDateRange(lastMonth, '2021-03-01', '2021-03-31');
 
         const nextMonth = DateRange.buildRelative('month');
-        nextMonth.add('month');
+        nextMonth.moveToNext('month');
         testDateRange(nextMonth, '2021-05-01', '2021-05-31');
 
         // Q1 and Q2 && Q3 and Q4 lengths differ because of the months
         const lastQuarter = DateRange.buildRelative('quarter');
-        lastQuarter.subtract('quarter');
+        lastQuarter.moveToPrevious('quarter');
         testDateRange(lastQuarter, '2021-01-01', '2021-03-31');
 
         // Q2 and Q3 have same length in days
         const nextQuarter = DateRange.buildRelative('quarter');
-        nextQuarter.add('quarter');
+        nextQuarter.moveToNext('quarter');
         testDateRange(nextQuarter, '2021-07-01', '2021-09-30');
 
         // Leap year - 366 days, lengths differ
         // Leap year happens every 4 years
         const lastYear = DateRange.buildRelative('year');
-        lastYear.subtract('year');
+        lastYear.moveToPrevious('year');
         testDateRange(lastYear, '2020-01-01', '2020-12-31');
 
         // Normal year - 365 days
         const nextYear = DateRange.buildRelative('year');
-        nextYear.add('year');
+        nextYear.moveToNext('year');
         testDateRange(nextYear, '2022-01-01', '2022-12-31');
     });
 });

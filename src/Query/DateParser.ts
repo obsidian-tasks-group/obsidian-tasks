@@ -68,10 +68,10 @@ export class DateParser {
 
             switch (lastThisNext) {
                 case 'last':
-                    dateRange.subtract(range as moment.unitOfTime.DurationConstructor);
+                    dateRange.moveToPrevious(range as moment.unitOfTime.DurationConstructor);
                     break;
                 case 'next':
-                    dateRange.add(range as moment.unitOfTime.DurationConstructor);
+                    dateRange.moveToNext(range as moment.unitOfTime.DurationConstructor);
                     break;
             }
 
