@@ -124,7 +124,7 @@ There is also the ability to use numbered date ranges that are independent of th
   - Example: `2023`
 
 > [!released]
-> Numbered date ranges were introduced in Tasks X.Y.Z.
+> Numbered date ranges were introduced in Tasks 3.1.0.
 
 ### Troubleshooting date searches
 
@@ -230,7 +230,7 @@ For full details of combining filters with boolean operators, see [[Combining Fi
 > - `no done date` and `has done date` were introduced in Tasks 1.7.0.
 > - `done date is invalid` was introduced in Tasks 1.16.0.
 > - `done (before|after|in) <date range>` searches were introduced in Tasks 2.0.0.
-> - `done (before|after|in) (YYYY-Www|YYYY-mm|YYYY-Qq|YYYY)` searches were introduced in Tasks X.Y.Z.
+> - `done (before|after|in) (YYYY-Www|YYYY-mm|YYYY-Qq|YYYY)` searches were introduced in Tasks 3.1.0.
 
 ### Due Date
 
@@ -248,7 +248,7 @@ For full details of combining filters with boolean operators, see [[Combining Fi
 > - `has due date` was introduced in Tasks 1.6.0.
 > - `due date is invalid` was introduced in Tasks 1.16.0.
 > - `due (before|after|in) <date range>` searches were introduced in Tasks 2.0.0.
-> - `due (before|after|in) (YYYY-Www|YYYY-mm|YYYY-Qq|YYYY)` searches were introduced in Tasks X.Y.Z.
+> - `due (before|after|in) (YYYY-Www|YYYY-mm|YYYY-Qq|YYYY)` searches were introduced in Tasks 3.1.0.
 
 ### Scheduled Date
 
@@ -266,7 +266,7 @@ For full details of combining filters with boolean operators, see [[Combining Fi
 > - `has scheduled date` was introduced in Tasks 1.6.0.
 > - `scheduled date is invalid` was introduced in Tasks 1.16.0.
 > - `scheduled (before|after|in) <date range>` searches were introduced in Tasks 2.0.0.
-> - `scheduled (before|after|in) (YYYY-Www|YYYY-mm|YYYY-Qq|YYYY)` searches were introduced in Tasks X.Y.Z.
+> - `scheduled (before|after|in) (YYYY-Www|YYYY-mm|YYYY-Qq|YYYY)` searches were introduced in Tasks 3.1.0.
 
 ### Start Date
 
@@ -284,7 +284,7 @@ For full details of combining filters with boolean operators, see [[Combining Fi
 > - `has start date` was Introduced in Tasks 1.6.0.
 > - `start date is invalid` was introduced in Tasks 1.16.0.
 > - `starts (before|after|in) <date range>` searches were introduced in Tasks 2.0.0.
-> - `starts (before|after|in) (YYYY-Www|YYYY-mm|YYYY-Qq|YYYY)` searches were introduced in Tasks X.Y.Z.
+> - `starts (before|after|in) (YYYY-Www|YYYY-mm|YYYY-Qq|YYYY)` searches were introduced in Tasks 3.1.0.
 
 When filtering queries by [[Dates#🛫 Start|start date]],
 the result will include tasks without a start date.
@@ -318,7 +318,7 @@ Such a filter could be:
 > [!released]
 >
 > - Created date was introduced in Tasks 2.0.0.
-> - `created (before|after|in) (YYYY-Www|YYYY-mm|YYYY-Qq|YYYY)` searches were introduced in Tasks X.Y.Z.
+> - `created (before|after|in) (YYYY-Www|YYYY-mm|YYYY-Qq|YYYY)` searches were introduced in Tasks 3.1.0.
 
 ### Happens
 
@@ -342,7 +342,7 @@ because the tasks starts before tomorrow. Only one of the dates needs to match.
 >
 > - `no happens date` and `has happens date` were introduced in Tasks 1.7.0.
 > - `happens (before|after|in) <date range>` searches were introduced in Tasks 2.0.0.
-> - `happens (before|after|in) (YYYY-Www|YYYY-mm|YYYY-Qq|YYYY)` searches were introduced in Tasks X.Y.Z.
+> - `happens (before|after|in) (YYYY-Www|YYYY-mm|YYYY-Qq|YYYY)` searches were introduced in Tasks 3.1.0.
 
 ## Filters for Task Statuses
 
