@@ -10,7 +10,7 @@ import { QueryRenderer } from './QueryRenderer';
 import { getSettings, updateSettings } from './Config/Settings';
 import { SettingsTab } from './Config/SettingsTab';
 import { StatusRegistry } from './StatusRegistry';
-import { logging } from './lib/logging';
+import { log, logging } from './lib/logging';
 import { EditorSuggestor } from './Suggestor/EditorSuggestorPopup';
 import { StatusSettings } from './Config/StatusSettings';
 import type { Task } from './Task';
@@ -27,7 +27,7 @@ export default class TasksPlugin extends Plugin {
 
     async onload() {
         logging.registerConsoleLogger();
-        console.log('loading plugin "tasks"');
+        log('info', `loading plugin "${this.manifest.name}" v${this.manifest.version}`);
 
         await this.loadSettings();
         this.addSettingTab(new SettingsTab({ plugin: this }));
@@ -61,7 +61,7 @@ export default class TasksPlugin extends Plugin {
     }
 
     onunload() {
-        console.log('unloading plugin "tasks"');
+        log('info', `unloading plugin "${this.manifest.name}" v${this.manifest.version}`);
         this.cache?.unload();
     }
 

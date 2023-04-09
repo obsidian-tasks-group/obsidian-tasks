@@ -37,6 +37,15 @@ export class TaskGroups {
     }
 
     /**
+     * Set the task groups to be displayed to the user.
+     *
+     * @memberof TaskGroups
+     */
+    public set groups(value: TaskGroup[]) {
+        this._groups = value;
+    }
+
+    /**
      * The total number of tasks matching the query.
      */
     public totalTasksCount() {

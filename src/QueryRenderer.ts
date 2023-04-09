@@ -5,6 +5,7 @@ import type { IQuery } from './IQuery';
 import { State } from './Cache';
 import { replaceTaskWithTasks } from './File';
 import { Query } from './Query/Query';
+import { QuerySql } from './QuerySql/QuerySql';
 import type { GroupHeading } from './Query/GroupHeading';
 import { TaskModal } from './TaskModal';
 import type { TasksEvents } from './TasksEvents';
@@ -21,6 +22,9 @@ export class QueryRenderer {
         this.events = events;
 
         plugin.registerMarkdownCodeBlockProcessor('tasks', this._addQueryRenderChild.bind(this));
+
+        // Support code blocks with the SQL based queries.
+        plugin.registerMarkdownCodeBlockProcessor('tasks-sql', this._addQueryRenderChild.bind(this));
     }
 
     public addQueryRenderChild = this._addQueryRenderChild.bind(this);
@@ -33,6 +37,7 @@ export class QueryRenderer {
                 container: element,
                 source,
                 filePath: context.sourcePath,
+                frontmatter: context.frontmatter, // Enable front matter to be taken into account when quering/rendering tasks.
             }),
         );
     }
@@ -55,12 +60,14 @@ class QueryRenderChild extends MarkdownRenderChild {
         container,
         source,
         filePath,
+        frontmatter,
     }: {
         app: App;
         events: TasksEvents;
         container: HTMLElement;
         source: string;
         filePath: string;
+        frontmatter: any;
     }) {
         super(container);
 
@@ -76,6 +83,11 @@ class QueryRenderChild extends MarkdownRenderChild {
             case 'block-language-tasks':
                 this.query = new Query({ source });
                 this.queryType = 'tasks';
+                break;
+
+            case 'block-language-tasks-sql':
+                this.query = new QuerySql({ source, sourcePath: filePath, frontmatter });
+                this.queryType = 'tasks-sql';
                 break;
 
             default:
