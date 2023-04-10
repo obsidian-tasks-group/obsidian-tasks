@@ -11,6 +11,8 @@ Please understand that Tasks is mostly maintained by a single person in their fr
 
 Please follow the steps in this page **fully** to report a bug, to save your time and ours. Thank you.
 
+---
+
 ## Before reporting a bug
 
 Don't waste your time crafting a careful bug report for something we already knew about!
@@ -34,6 +36,8 @@ Don't waste your time crafting a careful bug report for something we already kne
   - Install and enable Tasks.
   - Confirm that you can reproduce the problem there.
   - Make a note of every individual step you needed to do, to reproduce the problem.
+
+---
 
 ## Report the bug
 
@@ -96,28 +100,44 @@ This is the level of detail required for a developer to be able to reproduce a b
 > 8. Repeat the editing steps above in **Live Preview** mode
 >     - The same thing happens: the edited date is not applied to the task line
 
-### Text representation
+### Give us text to copy
 
 It's crucial that we receive a **text representation** of your files in order to be able to investigate issues.
-Trying to reproduce an issue based on a description or screenshot is time-intensive and error-prone.
-Especially since there exists a plethora of themes and CSS-snippets which change how your tasks and checkboxes look.
+Trying to reproduce an issue based on a description or screenshot is time-intensive and error-prone,
+especially since there exists a plethora of themes and CSS-snippets which change how your tasks and checkboxes look.
 
-Please understand that we don't have the time to chase after details when a text representation of the vault already includes everything we need.
+---
 
-Here is how you can send us a useful text representation:
+## Bug involving another plugin
 
-1. Find all the files that are required to reproduce the issue
-2. Find Tasks' settings file in your vault under `.obsidian/plugins/obsidian-tasks-plugin/data.json`
-    - The `.obsidian` directory is in the `/` root of your vault.
-    - Note that, on most operating systems, the directory `.obsidian` is hidden by default. Please check your operating system's help to find out how to make it show up in your file browser.
-    - `data.json` holds all settings of Obsidian Tasks.
-3. Make sure none of the files contain confidential or private information.
-4. Create a `.zip` file that contains the files identified above, including `data.json`.
+> [!warning]
+> We do not generally work on problems of Tasks interacting with other plugins **unless the author of that plugin is willing to work jointly** on the problem.
 
-> [!Info]
-> It's understandable if you don't want to share your private data.
-> In these cases, we kindly request that you create a new vault where you create a minimal example that highlights your issue (including Tasks' settings).
+Spending time getting familiar another plugin's settings, behaviour and code would take time away from improving Tasks.
 
-> [!Tip]
-> If it is **very** easy to reproduce your issue, you may send only the `data.json` file.
-> Instead of adding the content files to the zip archive, simply put the text to reproduce your issue directly into the GitHub issue.
+> [!important]
+> If you choose to still report a bug with another plugin, you **must give us a minimal zipped vault**, with:
+>
+> - just Tasks and the other plugin installed,
+> - one or two notes that demonstrate the problem.
+
+### Before reporting a Tasks bug involving another plugin
+
+1. Create a new Obsidian vault
+1. Install Tasks
+    - Update the Tasks settings if necessary
+1. Install the other plugin
+    - Update the other plugin's settings if necessary
+1. Set up a new note with **the simplest possible content to demonstrate the problem**
+1. Confirm that you can reproduce the problem there.
+1. Make a note of every individual step you needed to do to reproduce the problem.
+
+### Give us your minimal vault
+
+Once you have figured out the steps to reproduce the vault:
+
+1. Quit Obsidian
+2. Create a .zip file containing the minimal vault
+3. Create a bug report
+4. Follow the advice above, including listing the detailed steps to reproduce the bug
+5. Attach the zip file to the bug report
