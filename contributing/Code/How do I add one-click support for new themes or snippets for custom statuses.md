@@ -26,7 +26,7 @@
 - Create a sample note for users to test
 - Embed the approved file showing the tasks with supported statuses in it
   - for an example, see [resources/sample_vaults/Tasks-Demo/Styling](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/resources/sample_vaults/Tasks-Demo/Styling) for `Theme - Minimal Theme.md`
-    - `include:` then `DocsSamplesForStatuses.test.Theme_Things Tasks.approved.md`
+    - `include:` then `DocsSamplesForStatuses.test.Theme_Things_Tasks.approved.md`
 
 ## Update doc/
 
@@ -35,7 +35,7 @@
   - Best to copy and paste an existing one
   - Embed the 2 blocks of text in it, for example:
     - `snippet:` then `DocsSamplesForStatuses.test.Theme_Minimal Text.approved.txt`
-    - `include:` then `DocsSamplesForStatuses.test.Theme_Minimal Table.approved.md`
+    - `include:` then `DocsSamplesForStatuses.test.Theme_Minimal_Table.approved.md`
 - Save a screenshot of the supported checkboxes, displayed with just the theme or snippet enabled
 - Add the theme-specific screenshot to the reference documentation
 - Update any images in the screenshots that show all the available 'One Click' buttons
