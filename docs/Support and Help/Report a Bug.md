@@ -187,5 +187,5 @@ Once you have figured out the steps to reproduce the vault:
 1. Quit Obsidian
 2. Create a .zip file containing the minimal vault
 3. Create a bug report
-4. Follow the advice above, including listing the detailed steps to reproduce the bug
-5. Attach the zip file to the bug report
+4. Make sure you [[#Give steps to reproduce the bug]]
+5. Attach the zip file to the bug report, by dragging the file from your file browser into the bug report form
