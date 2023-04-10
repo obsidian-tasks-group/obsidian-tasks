@@ -34,7 +34,7 @@
   - for example: [docs/reference/status-collections/minimal-theme.md](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/docs/reference/status-collections/minimal-theme.md)
   - Best to copy and paste an existing one
   - Embed the 2 blocks of text in it, for example:
-    - `snippet:` then `DocsSamplesForStatuses.test.Theme_Minimal Text.approved.txt`
+    - `snippet:` then `DocsSamplesForStatuses.test.Theme_Minimal_Text.approved.txt`
     - `include:` then `DocsSamplesForStatuses.test.Theme_Minimal_Table.approved.md`
 - Save a screenshot of the supported checkboxes, displayed with just the theme or snippet enabled
 - Add the theme-specific screenshot to the reference documentation
