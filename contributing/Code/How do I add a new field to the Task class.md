@@ -1,6 +1,18 @@
 # How do I add a new field to the Task class?
 
+## Dividing up the work
+
+The many steps below can be split over several PRs, to make work - and code review - manageable.
+
+## Releasing a partial implementation
+
+For example, It's fine to have a first release of a feature without `sort by` and `group by`. In this case, add a feature request issue for the missing capabilities, and note in the documentation, for example:
+
+"Sorting and grouping by blah is not yet supported. We are tracking this in [issue #nnnn](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/nnn)."
+
 ## Storing the field and testing it
+
+This section will need to be updated once dataview support is added (April 2023).
 
 - In [tests/Task.test.ts](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/Task.test.ts):
   - Add a new failing block to the `'identicalTo'` section.
@@ -19,7 +31,8 @@
 
 ## Other code areas
 
-- Add filter(s)
+- Add filter(s) - see [[How do I add a new task filter]]
+- Add to CSS
 - Add to sorting
 - Add to grouping
 - Add to layout - show/hide
@@ -28,6 +41,7 @@
 
 ## Extra steps for fields storing dates
 
+- Add to [recurrence](https://publish.obsidian.md/tasks/Getting+Started/Recurring+Tasks), if appropriate
 - Documentation
   - Update `dates.md`
 - Handling invalid dates
