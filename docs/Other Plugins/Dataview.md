@@ -6,7 +6,7 @@ publish: true
 
 <span class="related-pages">#plugin/dataview</span>
 
-The [Dataview](https://github.com/blacksmithgu/dataview) plugin provides many data analysis features for Obsidian vaults, including queries about tasks.
+The [Dataview](https://github.com/blacksmithgu/obsidian-dataview) plugin provides many data analysis features for Obsidian vaults, including queries about tasks.
 This page only describes settings to maximize compatibility between Dataview and Tasks; for all other information on Dataview, including Dataview's names for the task emoji fields,
 please see its [documentation](https://blacksmithgu.github.io/obsidian-dataview/data-annotation/#tasks).
 
