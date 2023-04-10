@@ -8,6 +8,7 @@ body:
         ## Before you start
         Please **make sure you are on the latest version of Tasks.**
         If you encountered the issue after you installed, updated, or reloaded the Tasks plugin, **please try restarting obsidian before reporting the bug**.
+        Also, please make sure you **read and understand the [guide for good bug reports](https://publish.obsidian.md/tasks/bug-reports)**.
 
   - type: checkboxes
     id: no-duplicate-issues
