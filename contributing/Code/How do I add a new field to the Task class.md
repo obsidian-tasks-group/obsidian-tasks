@@ -12,7 +12,15 @@ For example, It's fine to have a first release of a feature without `sort by` an
 
 ## Storing the field and testing it
 
-This section will need to be updated once dataview support is added (April 2023).
+### Store the field
+
+- Add the field to [src/Task.ts](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/src/Task.ts)
+
+### Read and write the field
+
+- Update all supported formats in [src/TaskSerializer/](https://github.com/obsidian-tasks-group/obsidian-tasks/tree/main/src/TaskSerializer)
+
+### Detect edits to field value
 
 - In [tests/Task.test.ts](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/Task.test.ts):
   - Add a new failing block to the `'identicalTo'` section.
@@ -22,6 +30,10 @@ This section will need to be updated once dataview support is added (April 2023)
   - This important method is used to detect whether any edits of any kind have been made to a task, to detect whether task block results need to be updated.
   - Here is the code for the method as of 2022-11-12:
     - [Task.identicalTo() in 5b0831c36a80c4cde2d64a6cd281bb4b51e9a142](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/5b0831c36a80c4cde2d64a6cd281bb4b51e9a142/src/Task.ts#L732-L802)
+
+### Updating testing mechanisms
+
+- Review the files in [tests/CustomMatchers](https://github.com/obsidian-tasks-group/obsidian-tasks/tree/main/tests/CustomMatchers/) and update any that list fields to test
 - In [tests/TestingTools/TaskBuilder.ts](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/TestingTools/TaskBuilder.ts):
   - Add the new field and a corresponding method.
   - Keep the same field order as in the `Task` class.
