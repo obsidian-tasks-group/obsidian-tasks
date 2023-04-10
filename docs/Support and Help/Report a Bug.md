@@ -37,6 +37,67 @@ Don't waste your time crafting a careful bug report for something we already kne
 
 ## Report the bug
 
+### Give steps to reproduce the bug
+
+> [!Important]
+> If we cannot reproduce the bug, we cannot fix it, and your bug-reporting efforts will have been wasted.
+>
+> We do not have time to spend chasing up incomplete bug reports.
+
+The bug report form has a section **'steps to reproduce'**.
+
+Here, we need an **exact, complete, numbered** list of steps to perform, to reproduce the problem.
+
+And these steps need to work in a vault that **has Tasks as the only enabled plugin**. (See below for what to do if another plugin is involved.)
+
+### Example 'Steps to reproduce'
+
+This is the level of detail required for a developer to be able to reproduce a bug, taken from [issue #1300](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1300#issuecomment-1306829403):
+
+> [!Example] Example steps to reproduce a particular bug
+> Steps to reproduce:
+>
+> 1. Turn on "Use filename as scheduled date" in Tasks settings and restart Obsidian
+> 2. Create a file called `delete me - issue 1300 - 2022-11-02`.
+>     - **Note:** The file name matters, as it will be used in the query below
+> 3. Paste in to it the following content.
+>     - **Note:** You may need to hold down the shift key whilst pasting, to make sure the text is pasted in as raw text.
+>
+>         ````text
+>         # delete me - issue 1300 - 2022-11-02
+>
+>         ## Tasks
+>
+>         - [ ] Do stuff
+>
+>         ## Tasks in This File
+>
+>         The group heading indicates whether or not the task has a scheduled date:
+>
+>         ```tasks
+>         not done
+>         path includes delete me - issue 1300
+>         group by scheduled
+>         ```
+>         ````
+>
+> 4. View in **Reading Mode**:
+>    - Confirm that the group heading in the tasks code block is `2022-11-02 Wednesday`, matching the date in the file name (as opposed to `No scheduled date`, which would mean that the setting has not enabled)
+> 5. Click on the Pencil icon to the right of the task in the tasks code block
+> 6. Change the scheduled date to `2023-01-13`
+> 7. Click Apply
+>     - **Actual behaviour**
+>         - Nothing changes, as the new scheduled date is not saved.
+>     - **Expected behaviour:**
+>         - The original task line has `⏳ 2023-01-13`
+>         - In the tasks code block:
+>           - The group heading changes to `⏳ 2023-01-13 Friday`
+>           - The task contains `⏳ 2023-01-13`
+> 8. Repeat the editing steps above in **Live Preview** mode
+>     - The same thing happens: the edited date is not applied to the task line
+
+### Text representation
+
 It's crucial that we receive a **text representation** of your files in order to be able to investigate issues.
 Trying to reproduce an issue based on a description or screenshot is time-intensive and error-prone.
 Especially since there exists a plethora of themes and CSS-snippets which change how your tasks and checkboxes look.
