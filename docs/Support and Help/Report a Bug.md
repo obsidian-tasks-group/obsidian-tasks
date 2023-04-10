@@ -42,6 +42,10 @@ Please follow the steps in this page **fully** when reporting a bug, to save you
 
 ## Report the bug
 
+There is a [form to guide you through submitting a bug report](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/new/choose).
+
+The rest of this section guides you through giving enough information for the bug to be investigated.
+
 ### Give us text to copy
 
 It's crucial that we receive a **text representation** of your files in order to be able to investigate issues.
@@ -186,6 +190,6 @@ Once you have figured out the steps to reproduce the vault:
 
 1. Quit Obsidian
 2. Create a .zip file containing the minimal vault
-3. Create a bug report
+3. Create a [bug report](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/new/choose)
 4. Make sure you [[#Give steps to reproduce the bug]]
 5. Attach the zip file to the bug report, by dragging the file from your file browser into the bug report form
