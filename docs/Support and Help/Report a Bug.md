@@ -1,7 +1,4 @@
-# Reporting Issues
-
-> [!Important]
-> Change the link in `.github/ISSUE_TEMPLATE/bug-report.yaml` once you change/move the filename.
+# Report a Bug
 
 If you require support with a bug, you can help us help you.
 Please understand that Tasks is mostly maintained by a single person in her free time.
