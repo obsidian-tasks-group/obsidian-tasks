@@ -12,7 +12,7 @@ Supports due dates, recurring tasks (repetition), done dates, sub-set of checkli
 
 You can toggle the task status in any view or query and it will update the source file.
 
-> Please submit bugs using the [Bug Report form](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/new?assignees=&labels=type%3A+bug&template=bug-report.yaml).
+> Please submit bugs using [[Report a Bug]].
 >
 > Please submit ideas using the [Feature Request form](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/new?assignees=&labels=type%3A+enhancement&template=feature-request.yaml).
 >
