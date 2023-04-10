@@ -41,6 +41,56 @@ Don't waste your time crafting a careful bug report for something we already kne
 
 ## Report the bug
 
+### Give us text to copy
+
+It's crucial that we receive a **text representation** of your files in order to be able to investigate issues.
+
+> [!Important]
+> Trying to reproduce an issue based on a description or screenshot is time-intensive and error-prone,
+> especially since there exists a plethora of themes and CSS-snippets which change how your tasks and checkboxes look.
+
+#### Format tasks
+
+To enable us to copy the raw text of your task, you need to put the task between two lines containing just `~~~`.
+
+For example:
+
+````text
+~~~
+- [ ] My lovely task with 📅 2023-04-10 that Tasks search does not find
+~~~
+````
+
+This will display as:
+
+````text
+- [ ] My lovely task with 📅 2023-04-10 that Tasks search does not find
+````
+
+#### Format Tasks query blocks
+
+Again, to enable us to copy the raw text of your tasks query, you need to put the block between two lines containing just `~~~`.
+
+For example:
+
+````text
+~~~
+```tasks
+not done
+due today
+```
+~~~
+````
+
+This will display as:
+
+````text
+```tasks
+not done
+due today
+```
+````
+
 ### Give steps to reproduce the bug
 
 > [!Important]
@@ -54,7 +104,7 @@ Here, we need an **exact, complete, numbered** list of steps to perform, to repr
 
 And these steps need to work in a vault that **has Tasks as the only enabled plugin**. (See below for what to do if another plugin is involved.)
 
-### Example 'Steps to reproduce'
+#### Example 'Steps to reproduce'
 
 This is the level of detail required for a developer to be able to reproduce a bug, taken from [issue #1300](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1300#issuecomment-1306829403):
 
@@ -99,12 +149,6 @@ This is the level of detail required for a developer to be able to reproduce a b
 >           - The task contains `⏳ 2023-01-13`
 > 8. Repeat the editing steps above in **Live Preview** mode
 >     - The same thing happens: the edited date is not applied to the task line
-
-### Give us text to copy
-
-It's crucial that we receive a **text representation** of your files in order to be able to investigate issues.
-Trying to reproduce an issue based on a description or screenshot is time-intensive and error-prone,
-especially since there exists a plethora of themes and CSS-snippets which change how your tasks and checkboxes look.
 
 ---
 
