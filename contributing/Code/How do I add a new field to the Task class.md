@@ -43,12 +43,21 @@ For example, It's fine to have a first release of a feature without `sort by` an
 
 ## Other code areas
 
-- Add filter(s) - see [[How do I add a new task filter]]
-- Add to CSS
-- Add to sorting
-- Add to grouping
-- Add to layout - show/hide
+In rough order of priority:
+
+Necessary for a first release
+
 - Add the field to Create or edit Task dialog
+- Add to layout - show/hide
+- Add to CSS
+- Add filter(s) - see [[How do I add a new task filter]]
+
+Can be added in later releases
+
+- Add to sorting
+  - May have been done for free when adding the new `Field` class for the filter
+- Add to grouping
+  - May have been done for free when adding the new `Field` class for the filter
 - Add the field to Auto Suggest, if appropriate
 
 ## Extra steps for fields storing dates
