@@ -121,6 +121,9 @@ describe('Query parsing', () => {
             // Arrange
             const query = new QuerySql({ source: filter, sourcePath: '', frontmatter: {} });
 
+            // Act
+            // const filteredTasksTasks = query.applyQueryToTasks(tasks).groups[0].tasks;
+
             // Assert
             expect(query.error).toBeUndefined();
         });
@@ -302,6 +305,56 @@ describe('Query', () => {
                     expectedResult: ['- [ ] I am done before filter, and should pass ✅ 2022-12-01'],
                 },
             ],
+            [
+                'after created date',
+                {
+                    filters: ["WHERE moment(createdDate)->[format]('YYYY-MM-DD') > '2021-12-27'"],
+                    tasks: [
+                        '- [ ] Task after ➕ 2022-12-01',
+                        '- [ ] Task after ➕ 2022-01-01',
+                        '- [ ] Task after ➕ 2022-12-03',
+                        '- [ ] Task after ➕ 2022-12-02',
+                        '- [ ] Task after ➕ 2022-12-05',
+                        '- [ ] Task before ➕ 2020-12-01',
+                        '- [ ] Task before ➕ 2020-01-01',
+                        '- [ ] Task before ➕ 2020-12-03',
+                        '- [ ] Task before ➕ 2020-12-02',
+                        '- [ ] Task before ➕ 2020-12-05',
+                    ],
+                    expectedResult: [
+                        '- [ ] Task after ➕ 2022-12-01',
+                        '- [ ] Task after ➕ 2022-01-01',
+                        '- [ ] Task after ➕ 2022-12-03',
+                        '- [ ] Task after ➕ 2022-12-02',
+                        '- [ ] Task after ➕ 2022-12-05',
+                    ],
+                },
+            ],
+            [
+                'after created date no moment',
+                {
+                    filters: ["WHERE createdDate > DATE('2021-12-27')"],
+                    tasks: [
+                        '- [ ] Task after ➕ 2022-12-01',
+                        '- [ ] Task after ➕ 2022-01-01',
+                        '- [ ] Task after ➕ 2022-12-03',
+                        '- [ ] Task after ➕ 2022-12-02',
+                        '- [ ] Task after ➕ 2022-12-05',
+                        '- [ ] Task before ➕ 2020-12-01',
+                        '- [ ] Task before ➕ 2020-01-01',
+                        '- [ ] Task before ➕ 2020-12-03',
+                        '- [ ] Task before ➕ 2020-12-02',
+                        '- [ ] Task before ➕ 2020-12-05',
+                    ],
+                    expectedResult: [
+                        '- [ ] Task after ➕ 2022-12-01',
+                        '- [ ] Task after ➕ 2022-01-01',
+                        '- [ ] Task after ➕ 2022-12-03',
+                        '- [ ] Task after ➕ 2022-12-02',
+                        '- [ ] Task after ➕ 2022-12-05',
+                    ],
+                },
+            ],
         ])('should support filtering %s', (_, { tasks: allTaskLines, filters, expectedResult }) => {
             const query = new QuerySql({ source: filters.join('\n'), sourcePath: '', frontmatter: {} });
 
@@ -319,7 +372,12 @@ describe('Query', () => {
             filteredTasks = query.queryTasks(filteredTasks);
 
             // Assert
-            const filteredTaskLines = filteredTasks.map((task) => `- [ ] ${task.toString()}`);
+            let filteredTaskLines = filteredTasks.map((task) => `- [ ] ${task.toString()}`);
+            expect(filteredTaskLines).toMatchObject(expectedResult);
+
+            query.enableDirectTaskQueries = true;
+            filteredTasks = query.queryTasks(filteredTasks) as Task[];
+            filteredTaskLines = filteredTasks.map((task) => `- [ ] ${task.toString()}`);
             expect(filteredTaskLines).toMatchObject(expectedResult);
 
             //shouldSupportFiltering(filters, allTaskLines, expectedResult);

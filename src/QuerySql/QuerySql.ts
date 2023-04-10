@@ -67,7 +67,7 @@ export class QuerySql implements IQuery {
     private _groupByFields: [string, string][] = [];
     private _rawMode: boolean = false;
     private _rawWithTasksMode: boolean = false;
-    logger = logging.getLogger('taskssql.QuerySql');
+    logger = logging.getLogger('tasks.QuerySql');
 
     private _commentReplacementRegexp = /(^#.*$(\r\n|\r|\n)?)/gm;
     private _commentRegexp = /^#.*/;
@@ -82,6 +82,8 @@ export class QuerySql implements IQuery {
     private _customTemplate: string = '';
 
     private _queryId: string = '';
+
+    private _enableDirectTaskQueries: boolean = true;
 
     constructor({
         source,
@@ -170,12 +172,12 @@ export class QuerySql implements IQuery {
             this._groupingPossible = true;
         }
 
-        this.logger.infoWithId(this._queryId, 'Grouping Possible', this._groupingPossible);
+        this.logger.debugWithId(this._queryId, 'Grouping Possible', this._groupingPossible);
 
         if (/^SELECT/gim.test(this.source)) {
             // User has entered a full query. Clean up.
             this.source = this.source.replace(/(^|\s)FROM Tasks*/gim, ' FROM ?');
-            this.logger.infoWithId(this._queryId, 'Source Query after clean from full', this.source);
+            this.logger.debugWithId(this._queryId, 'Source Query after clean from full', this.source);
         } else {
             if (this._groupingPossible && sqlTokens !== null) {
                 try {
@@ -224,6 +226,14 @@ export class QuerySql implements IQuery {
         return this._layoutOptions;
     }
 
+    public get enableDirectTaskQueries(): boolean {
+        return this._enableDirectTaskQueries;
+    }
+
+    public set enableDirectTaskQueries(value: boolean) {
+        this._enableDirectTaskQueries = value;
+    }
+
     // public applyQueryToTasks(tasks: Task[]): TaskGroups {
     // }
 
@@ -237,7 +247,6 @@ export class QuerySql implements IQuery {
      */
     public queryTasks(tasks: Task[]): Task[] | any {
         this.logger.infoWithId(this._queryId, `Executing query: [${this.source}]`);
-        const records: TaskRecord[] = this.convertToTaskRecords(tasks);
 
         /*
          * As we are using alaSQL we can take advantage of a in memory cache. The pagedata
@@ -312,29 +321,55 @@ export class QuerySql implements IQuery {
             return new Array<Task>();
         }
 
-        let queryResult: TaskRecord[];
-        try {
-            queryResult = alasql(this.source, [records]);
-        } catch (error) {
-            queryResult = new Array<TaskRecord>();
-            this.logger.debugWithId(this._queryId, 'Error with query', error);
-        }
-        this.logger.debugWithId(this._queryId, `queryResult: ${queryResult.length}`, queryResult);
+        // Direct tasks uses the Task object and not TaskRecord so less conversion/overhead.
+        // This does make the object slightly more complex than the flattened version, updates
+        // to the Task object to expose get properties would help here and possibly in the
+        // filters for consistency.
+        // Further perf options are to have a database in memory with all the tasks in it and
+        // then update the db on a change event like the current cache with references to the
+        // tasks.
+        // By default direct should be used as it is faster.
+        if (this._enableDirectTaskQueries) {
+            let queryResult: Task[];
 
-        // If the '# raw tasks' command is added to the query then we will return the raw
-        // results in the console and the tasks back to the group renderer.
-        if (this._rawMode && this._rawWithTasksMode) {
-            this.logger.infoWithId(this._queryId, 'RAW Data result from AlaSQL query', queryResult);
-        }
-
-        if (this._groupingPossible) {
-            return queryResult;
-        } else {
-            const foundTasks: Task[] = queryResult.map((task) => {
-                return QuerySql.fromTaskRecord(task);
+            try {
+                queryResult = alasql(this.source, [tasks]);
+            } catch (error) {
+                queryResult = new Array<Task>();
+                this.logger.errorWithId(this._queryId, 'Error with query', error);
+            }
+            this.logger.debugWithId(this._queryId, `queryResult: ${queryResult.length}`, queryResult);
+            // If the '# raw tasks' command is added to the query then we will return the raw
+            // results in the console and the tasks back to the group renderer.
+            if (this._rawMode && this._rawWithTasksMode) {
+                this.logger.infoWithId(this._queryId, 'RAW Data result from AlaSQL query', queryResult);
+            }
+            return queryResult.map((task) => {
+                return new Task({ ...task });
             });
+        } else {
+            const records: TaskRecord[] = this.convertToTaskRecords(tasks);
+            let queryResult: TaskRecord[];
+            try {
+                queryResult = alasql(this.source, [records]);
+            } catch (error) {
+                queryResult = new Array<TaskRecord>();
+                this.logger.errorWithId(this._queryId, 'Error with query', error);
+            }
+            this.logger.debugWithId(this._queryId, `queryResult: ${queryResult.length}`, queryResult);
+            // If the '# raw tasks' command is added to the query then we will return the raw
+            // results in the console and the tasks back to the group renderer.
+            if (this._rawMode && this._rawWithTasksMode) {
+                this.logger.infoWithId(this._queryId, 'RAW Data result from AlaSQL query', queryResult);
+            }
 
-            return foundTasks;
+            if (this._groupingPossible) {
+                return queryResult;
+            } else {
+                return queryResult.map((task) => {
+                    return QuerySql.fromTaskRecord(task);
+                });
+            }
         }
     }
 
@@ -368,22 +403,35 @@ export class QuerySql implements IQuery {
             //     tasks: Array<User>;
             //   }
             const parentGroups: any[] = queryResult;
-
             const renderedGroups: TaskGroup[] = new Array<TaskGroup>();
 
             for (const group of parentGroups) {
                 const currentGroup: [string, any][] = group;
                 const groupByFieldName = <string>Object.entries(currentGroup)[0][0];
                 const groupByFieldValue = <string>Object.entries(currentGroup)[0][1];
-                const groupByFieldTasks = <TaskRecord[]>Object.entries(currentGroup)[1][1];
-                this.logger.infoWithId(
-                    this._queryId,
-                    `groupByFieldName: ${groupByFieldName} groupByFieldValue: ${groupByFieldValue} groupByFieldTasks ${groupByFieldTasks}`,
-                    queryResult,
-                );
-                const foundTasks: Task[] = groupByFieldTasks.map((task) => {
-                    return QuerySql.fromTaskRecord(task);
-                });
+                let foundTasks: Task[];
+
+                if (this._enableDirectTaskQueries) {
+                    const groupByFieldTasks = <Task[]>Object.entries(currentGroup)[1][1];
+                    this.logger.infoWithId(
+                        this._queryId,
+                        `groupByFieldName: ${groupByFieldName} groupByFieldValue: ${groupByFieldValue} groupByFieldTasks ${groupByFieldTasks}`,
+                        queryResult,
+                    );
+                    foundTasks = groupByFieldTasks.map((task) => {
+                        return new Task({ ...task });
+                    });
+                } else {
+                    const groupByFieldTasks = <TaskRecord[]>Object.entries(currentGroup)[1][1];
+                    this.logger.infoWithId(
+                        this._queryId,
+                        `groupByFieldName: ${groupByFieldName} groupByFieldValue: ${groupByFieldValue} groupByFieldTasks ${groupByFieldTasks}`,
+                        queryResult,
+                    );
+                    foundTasks = groupByFieldTasks.map((task) => {
+                        return QuerySql.fromTaskRecord(task);
+                    });
+                }
 
                 renderedGroups.push(
                     new TaskGroup([groupByFieldName], [new GroupHeading(1, groupByFieldValue)], foundTasks),
