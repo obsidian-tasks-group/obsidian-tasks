@@ -10,7 +10,7 @@ This offers the same checkboxes as [[Theme - ITS Theme]].
 
 File name of downloaded snippet: S - Checkboxes.css
 
-<!-- placeholder to force blank line before included text --> <!-- include: DocsSamplesForStatuses.test.Theme_ITS Tasks.approved.md -->
+<!-- placeholder to force blank line before included text --> <!-- include: DocsSamplesForStatuses.test.Theme_ITS_Tasks.approved.md -->
 
 - [ ] #task `space` Unchecked
 - [x] #task `x` Regular

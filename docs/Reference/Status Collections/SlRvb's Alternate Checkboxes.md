@@ -20,7 +20,7 @@ This theme offers the same checkboxes as [[ITS Theme]], but will work with other
 
 ## Supported statuses
 
-<!-- snippet: DocsSamplesForStatuses.test.Theme_ITS Text.approved.txt -->
+<!-- snippet: DocsSamplesForStatuses.test.Theme_ITS_Text.approved.txt -->
 ```txt
 - [ ] #task `space` Unchecked
 - [x] #task `x` Regular
@@ -66,7 +66,7 @@ This theme offers the same checkboxes as [[ITS Theme]], but will work with other
 
 Tasks' setting pane has a one-click button to add the following information, representing the custom checkboxes in this plugin.
 
-<!-- placeholder to force blank line before included text --> <!-- include: DocsSamplesForStatuses.test.Theme_ITS Table.approved.md -->
+<!-- placeholder to force blank line before included text --> <!-- include: DocsSamplesForStatuses.test.Theme_ITS_Table.approved.md -->
 
 | Status Symbol | Next Status Symbol | Status Name<br>`status.name includes...`<br>`sort by status.name`<br>`group by status.name` | Status Type<br>`status.type is...`<br>`sort by status.type`<br>`group by status.type` | Needs Custom Styling |
 | ----- | ----- | ----- | ----- | ----- |

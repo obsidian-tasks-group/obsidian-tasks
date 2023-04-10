@@ -4,7 +4,7 @@
 
 Available checkbox icons: <https://minimal.guide/Block+types/Checklists>
 
-<!-- placeholder to force blank line before included text --> <!-- include: DocsSamplesForStatuses.test.Theme_Minimal Tasks.approved.md -->
+<!-- placeholder to force blank line before included text --> <!-- include: DocsSamplesForStatuses.test.Theme_Minimal_Tasks.approved.md -->
 
 - [ ] #task `space` to-do
 - [/] #task `/` incomplete
