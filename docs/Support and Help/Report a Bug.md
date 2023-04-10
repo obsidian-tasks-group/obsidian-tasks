@@ -9,13 +9,14 @@ Please understand that Tasks is mostly maintained by a single person in their fr
 - our spending **time dealing with incomplete bug reports means** ...
 - ... us spending **less time improving the plugin**.
 
-Please follow the steps in this page **fully** to report a bug, to save your time and ours. Thank you.
+Please follow the steps in this page **fully** when reporting a bug, to save your time and ours. Thank you.
 
 ---
 
 ## Before reporting a bug
 
-Don't waste your time crafting a careful bug report for something we already knew about!
+> [!important]
+> Don't waste your time crafting a careful bug report for something we already know about!
 
 - Is it the intended behaviour - or a documented limitation?
   - Read the [User Guide](https://publish.obsidian.md/tasks/Introduction) for the problem feature.
@@ -102,7 +103,10 @@ The bug report form has a section **'steps to reproduce'**.
 
 Here, we need an **exact, complete, numbered** list of steps to perform, to reproduce the problem.
 
-And these steps need to work in a vault that **has Tasks as the only enabled plugin**. (See below for what to do if another plugin is involved.)
+And these steps need to work in a vault that **has Tasks as the only enabled plugin**.
+
+> [!info]
+> See [[#Bug involving another plugin]] below for what to do if another plugin is involved.
 
 #### Example 'Steps to reproduce'
 
