@@ -2,7 +2,7 @@
 
 <https://github.com/ebullient/obsidian-theme-ebullientworks>
 
-<!-- placeholder to force blank line before included text --> <!-- include: DocsSamplesForStatuses.test.Theme_Ebullientworks Tasks.approved.md -->
+<!-- placeholder to force blank line before included text --> <!-- include: DocsSamplesForStatuses.test.Theme_Ebullientworks_Tasks.approved.md -->
 
 - [ ] #task `space` Unchecked
 - [x] #task `x` Checked
