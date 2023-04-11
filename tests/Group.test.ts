@@ -308,47 +308,6 @@ describe('Group names', () => {
         },
 
         // -----------------------------------------------------------
-        // group by happens
-        {
-            groupBy: 'happens',
-            taskLine: '- [ ] a',
-            expectedGroupNames: ['No happens date'],
-        },
-        {
-            groupBy: 'happens',
-            taskLine: '- [ ] due is only date 📅 1970-01-01',
-            expectedGroupNames: ['1970-01-01 Thursday'],
-        },
-        {
-            groupBy: 'happens',
-            taskLine: '- [ ] scheduled is only date ⏳ 1970-01-02',
-            expectedGroupNames: ['1970-01-02 Friday'],
-        },
-        {
-            groupBy: 'happens',
-            taskLine: '- [ ] start is only date 🛫 1970-01-03',
-            expectedGroupNames: ['1970-01-03 Saturday'],
-        },
-        {
-            // Check that earliest date is prioritised: due
-            groupBy: 'happens',
-            taskLine: '- [ ] due is earliest date 🛫 1970-01-03 ⏳ 1970-01-02 📅 1970-01-01',
-            expectedGroupNames: ['1970-01-01 Thursday'],
-        },
-        {
-            // Check that earliest date is prioritised: scheduled
-            groupBy: 'happens',
-            taskLine: '- [ ] scheduled is earliest date 🛫 1970-01-03 ⏳ 1970-01-01 📅 1970-01-02',
-            expectedGroupNames: ['1970-01-01 Thursday'],
-        },
-        {
-            // Check that earliest date is prioritised: start
-            groupBy: 'happens',
-            taskLine: '- [ ] start is earliest date 🛫 1970-01-01 ⏳ 1970-01-02 📅 1970-01-03',
-            expectedGroupNames: ['1970-01-01 Thursday'],
-        },
-
-        // -----------------------------------------------------------
         // group by heading
         {
             groupBy: 'heading',

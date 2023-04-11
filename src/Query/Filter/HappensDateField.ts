@@ -1,6 +1,7 @@
 import type { Moment } from 'moment';
 import type { Task } from '../../Task';
 import { compareByDate } from '../../lib/DateTools';
+import type { GrouperFunction } from '../Grouper';
 import type { FilterFunction } from './Filter';
 import { FilterInstructions } from './FilterInstructions';
 import type { DateFilterFunction } from './DateField';
@@ -64,7 +65,17 @@ export class HappensDateField extends DateField {
         };
     }
 
-    public supportsGrouping(): boolean {
-        return false;
+    public grouper(): GrouperFunction {
+        return (task: Task) => {
+            const earliestDateIfAny = new HappensDateField().earliestDate(task);
+            return [HappensDateField.stringFromDate(earliestDateIfAny, 'happens')];
+        };
+    }
+
+    private static stringFromDate(date: moment.Moment | null, field: string): string {
+        if (date === null) {
+            return 'No ' + field + ' date';
+        }
+        return date.format('YYYY-MM-DD dddd');
     }
 }
