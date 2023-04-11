@@ -45,6 +45,12 @@ img {
     border-radius:4px
 }
 
+/* Put a pale border around PRE code samples, to make them stand out */
+pre {
+    border: 1px solid var(--color-base-30);
+    border-radius:4px
+}
+
 /* Make Warning callouts red rather than a rather ugly orange */
 .callout[data-callout="warning"] {
     --callout-color: 255, 23, 68;
