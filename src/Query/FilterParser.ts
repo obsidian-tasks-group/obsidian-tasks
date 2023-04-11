@@ -92,6 +92,11 @@ export function parseGrouper(line: string): Grouper | null {
                 return field.createGrouper();
             }
         }
+
+        // Temporary workaround for TagsField. Query is done on plural 'tagS'
+        if (line === 'group by tags' && field instanceof TagsField) {
+            return field.createGrouper();
+        }
     }
     return null;
 }

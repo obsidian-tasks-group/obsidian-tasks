@@ -23,7 +23,7 @@ export class Query implements IQuery {
     private _grouping: Grouper[] = [];
 
     private readonly groupByRegexp =
-        /^group by (backlink|filename|folder|heading|path|priority|recurrence|recurring|root|status|tags)/;
+        /^group by (backlink|filename|folder|heading|path|priority|recurrence|recurring|root|status)/;
 
     private readonly hideOptionsRegexp =
         /^(hide|show) (task count|backlink|priority|created date|start date|scheduled date|done date|due date|recurrence rule|edit button|urgency)/;

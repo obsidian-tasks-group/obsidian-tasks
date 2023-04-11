@@ -627,3 +627,22 @@ describe('Sort by tags', () => {
         ).toEqual(correctExpectedOrder);
     });
 });
+
+describe('grouping by tag', () => {
+    it('supports grouping methods correctly', () => {
+        const field = new TagsField();
+        expect(field.supportsGrouping()).toEqual(true);
+    });
+
+    it.each([
+        ['- [ ] a #tag1', ['#tag1']],
+        ['- [ ] a #tag1 #tag2', ['#tag1', '#tag2']],
+        ['- [x] a', ['(No tags)']],
+    ])('task "%s" should have groups: %s', (taskLine: string, expectedResult: string[]) => {
+        // Arrange
+        const grouper = new TagsField().createGrouper();
+
+        // Assert
+        expect(grouper.grouper(fromLine({ line: taskLine }))).toEqual(expectedResult);
+    });
+});

@@ -15,8 +15,7 @@ export type GroupingProperty =
     | 'recurrence'
     | 'recurring'
     | 'root'
-    | 'status'
-    | 'tags';
+    | 'status';
 
 export class Grouper {
     public readonly property: string;

@@ -48,7 +48,6 @@ export class Group {
         recurring: Group.groupByRecurring,
         root: Group.groupByRoot,
         status: Group.groupByStatus,
-        tags: Group.groupByTags,
     };
 
     private static escapeMarkdownCharacters(filename: string) {
@@ -170,12 +169,5 @@ export class Group {
             return ['(No heading)'];
         }
         return [task.precedingHeader];
-    }
-
-    private static groupByTags(task: Task): string[] {
-        if (task.tags.length == 0) {
-            return ['(No tags)'];
-        }
-        return task.tags;
     }
 }
