@@ -262,7 +262,7 @@ export class QuerySql implements IQuery {
             alasql(`INSERT INTO pagedata VALUES ('sourcePath${this._queryId}','${this._sourcePath}')`);
         }
 
-        // Set moment() function available to AlaSQL
+        // Set moment() function available to AlaSQL.
         alasql.fn.moment = moment;
 
         alasql.fn.pageProperty = function (field) {
