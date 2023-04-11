@@ -68,13 +68,13 @@ export class HappensDateField extends DateField {
     public grouper(): GrouperFunction {
         return (task: Task) => {
             const earliestDateIfAny = new HappensDateField().earliestDate(task);
-            return [HappensDateField.stringFromDate(earliestDateIfAny, 'happens')];
+            return [this.stringFromDate(earliestDateIfAny)];
         };
     }
 
-    private static stringFromDate(date: moment.Moment | null, field: string): string {
+    private stringFromDate(date: moment.Moment | null): string {
         if (date === null) {
-            return 'No ' + field + ' date';
+            return `No ${this.fieldName()} date`;
         }
         return date.format(DateField.groupDateFormat);
     }
