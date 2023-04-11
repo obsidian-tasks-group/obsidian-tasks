@@ -87,11 +87,11 @@ describe('grouping by recurrence', () => {
         ['- [ ] a 🔁 every Sunday', ['every week on Sunday']],
         ['- [ ] a 🔁 every Sunday when done', ['every week on Sunday when done']],
         ['- [ ] a 🔁 every 6 months on the 2nd Wednesday', ['every 6 months on the 2nd Wednesday']],
-    ])('task "%s" should have groups: %s', (taskLine: string, expectedResult: string[]) => {
+    ])('task "%s" should have groups: %s', (taskLine: string, groups: string[]) => {
         // Arrange
-        const grouper = new RecurrenceField().createGrouper();
+        const grouper = new RecurrenceField().createGrouper().grouper;
 
         // Assert
-        expect(grouper.grouper(fromLine({ line: taskLine }))).toEqual(expectedResult);
+        expect(grouper(fromLine({ line: taskLine }))).toEqual(groups);
     });
 });

@@ -168,11 +168,11 @@ describe('grouping by priority', () => {
         ['- [ ] a 🔼', ['Priority 2: Medium']],
         ['- [ ] a', ['Priority 3: None']],
         ['- [ ] a 🔽', ['Priority 4: Low']],
-    ])('task "%s" should have groups: %s', (taskLine: string, expectedResult: string[]) => {
+    ])('task "%s" should have groups: %s', (taskLine: string, groups: string[]) => {
         // Arrange
-        const grouper = new PriorityField().createGrouper();
+        const grouper = new PriorityField().createGrouper().grouper;
 
         // Assert
-        expect(grouper.grouper(fromLine({ line: taskLine }))).toEqual(expectedResult);
+        expect(grouper(fromLine({ line: taskLine }))).toEqual(groups);
     });
 });

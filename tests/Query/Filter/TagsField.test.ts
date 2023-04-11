@@ -638,11 +638,11 @@ describe('grouping by tag', () => {
         ['- [ ] a #tag1', ['#tag1']],
         ['- [ ] a #tag1 #tag2', ['#tag1', '#tag2']],
         ['- [x] a', ['(No tags)']],
-    ])('task "%s" should have groups: %s', (taskLine: string, expectedResult: string[]) => {
+    ])('task "%s" should have groups: %s', (taskLine: string, groups: string[]) => {
         // Arrange
-        const grouper = new TagsField().createGrouper();
+        const grouper = new TagsField().createGrouper().grouper;
 
         // Assert
-        expect(grouper.grouper(fromLine({ line: taskLine }))).toEqual(expectedResult);
+        expect(grouper(fromLine({ line: taskLine }))).toEqual(groups);
     });
 });

@@ -103,12 +103,12 @@ describe('grouping by heading', () => {
         ['- [ ] xxx', 'heading _italic text_', ['heading _italic text_']],
     ])(
         'task "%s" with header "%s" should have groups: %s',
-        (taskLine: string, header: string | null, expectedResult: string[]) => {
+        (taskLine: string, header: string | null, groups: string[]) => {
             // Arrange
-            const grouper = new HeadingField().createGrouper();
+            const grouper = new HeadingField().createGrouper().grouper;
 
             // Assert
-            expect(grouper.grouper(fromLine({ line: taskLine, precedingHeader: header }))).toEqual(expectedResult);
+            expect(grouper(fromLine({ line: taskLine, precedingHeader: header }))).toEqual(groups);
         },
     );
 });
