@@ -205,13 +205,15 @@ export abstract class DateField extends Field {
         return true;
     }
 
+    protected static readonly groupDateFormat = 'YYYY-MM-DD dddd';
+
     public grouper(): GrouperFunction {
         return (task: Task) => {
             const date = this.date(task);
             if (date === null) {
                 return ['No ' + this.fieldName() + ' date'];
             }
-            return [date.format('YYYY-MM-DD dddd')];
+            return [date.format(DateField.groupDateFormat)];
         };
     }
 }

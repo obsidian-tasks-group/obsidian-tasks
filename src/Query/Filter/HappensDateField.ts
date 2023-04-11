@@ -76,6 +76,6 @@ export class HappensDateField extends DateField {
         if (date === null) {
             return 'No ' + field + ' date';
         }
-        return date.format('YYYY-MM-DD dddd');
+        return date.format(DateField.groupDateFormat);
     }
 }
