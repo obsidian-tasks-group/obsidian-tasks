@@ -98,6 +98,14 @@ function getPossibleComponentSuggestions(
             displayText: `${symbols.scheduledDateSymbol} scheduled date`,
             appendText: `${symbols.scheduledDateSymbol} `,
         });
+    if (!line.includes(symbols.createdDateSymbol)) {
+        const parsedDate = DateParser.parseDate('today', true);
+        const formattedDate = parsedDate.format(TaskRegularExpressions.dateFormat);
+        suggestions.push({
+            displayText: `${symbols.createdDateSymbol} created today (${formattedDate})`,
+            appendText: `${symbols.createdDateSymbol} ${formattedDate} `,
+        });
+    }
     if (!hasPriority(line)) {
         suggestions.push({
             displayText: `${symbols.prioritySymbols.High} high priority`,
@@ -183,7 +191,7 @@ function addDatesSuggestions(
         // a max number. We want the max number to be around half the total allowed matches, to also allow
         // some global generic matches (e.g. task components) to find their way to the menu
         const minMatch = 1;
-        const maxGenericSuggestions = 5;
+        const maxGenericSuggestions = settings.autoSuggestMaxItems - 1;
         let genericMatches = genericSuggestions
             .filter(
                 (value) =>
