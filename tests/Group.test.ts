@@ -8,6 +8,7 @@ import type { Grouper } from '../src/Query/Grouper';
 import type { GroupingProperty } from '../src/Query/Grouper';
 import type { Task } from '../src/Task';
 import { PathField } from '../src/Query/Filter/PathField';
+import { TagsField } from '../src/Query/Filter/TagsField';
 import { fromLine } from './TestHelpers';
 
 window.moment = moment;
@@ -42,6 +43,41 @@ describe('Grouping tasks', () => {
             Group names: [file2]
             #### file2
             - [ ] a
+
+            ---
+
+            3 tasks
+            "
+        `);
+    });
+
+    it('handles tasks matching multiple groups correctly', () => {
+        const a = fromLine({
+            line: '- [ ] Task 1 #group1',
+        });
+        const b = fromLine({
+            line: '- [ ] Task 2 #group2 #group1',
+        });
+        const c = fromLine({
+            line: '- [ ] Task 3 #group2',
+        });
+        const inputs = [a, b, c];
+
+        const grouping = [new TagsField().createGrouper()];
+        const groups = Group.by(grouping, inputs);
+        expect(groups.toString()).toMatchInlineSnapshot(`
+            "
+            Group names: [#group1]
+            #### #group1
+            - [ ] Task 1 #group1
+            - [ ] Task 2 #group2 #group1
+
+            ---
+
+            Group names: [#group2]
+            #### #group2
+            - [ ] Task 2 #group2 #group1
+            - [ ] Task 3 #group2
 
             ---
 
