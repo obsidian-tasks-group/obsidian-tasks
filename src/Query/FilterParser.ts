@@ -24,6 +24,7 @@ import type { Sorter } from './Sorter';
 import type { Grouper } from './Grouper';
 import { MultiTextField } from './Filter/MultiTextField';
 import { FolderField } from './Filter/FolderField';
+import { RootField } from './Filter/RootField';
 
 const fieldCreators = [
     () => new StatusNameField(), // status.name is before status, to avoid ambiguity
@@ -47,6 +48,7 @@ const fieldCreators = [
     () => new UrgencyField(),
     () => new RecurrenceField(),
     () => new FolderField(),
+    () => new RootField(),
 ];
 
 export function parseFilter(filterString: string): FilterOrErrorMessage | null {

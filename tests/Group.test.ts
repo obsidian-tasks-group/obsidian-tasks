@@ -269,35 +269,6 @@ describe('Group names', () => {
             path: 'a/b/_c_.md',
             precedingHeading: 'heading _italic text_',
         },
-
-        // -----------------------------------------------------------
-        // group by root
-        {
-            groupBy: 'root',
-            taskLine: '- [ ] a',
-            expectedGroupNames: ['a/'],
-            path: 'a/b/c.md',
-        },
-        {
-            groupBy: 'root',
-            taskLine: '- [ ] a',
-            expectedGroupNames: ['\\_g\\_/'], // underscores in root folder names are escaped
-            path: '_g_/h/i.md',
-        },
-        {
-            groupBy: 'root',
-            taskLine: '- [ ] a',
-            expectedGroupNames: ['a/'],
-            path: 'a\\b\\c.md', // Windows path
-        },
-        {
-            // file in root of vault:
-            groupBy: 'root',
-            taskLine: '- [ ] a',
-            expectedGroupNames: ['/'],
-            path: 'a.md',
-        },
-        // -----------------------------------------------------------
     ];
 
     test.concurrent.each<GroupNameCase>(groupNameCases)(
