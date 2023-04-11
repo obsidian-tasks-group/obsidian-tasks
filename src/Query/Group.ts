@@ -1,7 +1,6 @@
 import type { Task } from '../Task';
 import { Priority } from '../Task';
 import { TaskGroups } from './TaskGroups';
-import { HappensDateField } from './Filter/HappensDateField';
 import { Grouper } from './Grouper';
 import type { GrouperFunction, GroupingProperty } from './Grouper';
 
@@ -9,8 +8,6 @@ import type { GrouperFunction, GroupingProperty } from './Grouper';
  * Implementation of the 'group by' instruction.
  */
 export class Group {
-    private static readonly groupDateFormat = 'YYYY-MM-DD dddd';
-
     public static fromGroupingProperty(property: GroupingProperty): Grouper {
         return new Grouper(property, Group.grouperForProperty(property));
     }
@@ -44,7 +41,6 @@ export class Group {
         backlink: Group.groupByBacklink,
         filename: Group.groupByFileName,
         folder: Group.groupByFolder,
-        happens: Group.groupByHappensDate,
         heading: Group.groupByHeading,
         path: Group.groupByPath,
         priority: Group.groupByPriority,
@@ -93,18 +89,6 @@ export class Group {
         } else {
             return ['Not Recurring'];
         }
-    }
-
-    private static groupByHappensDate(task: Task): string[] {
-        const earliestDateIfAny = new HappensDateField().earliestDate(task);
-        return [Group.stringFromDate(earliestDateIfAny, 'happens')];
-    }
-
-    private static stringFromDate(date: moment.Moment | null, field: string): string {
-        if (date === null) {
-            return 'No ' + field + ' date';
-        }
-        return date.format(Group.groupDateFormat);
     }
 
     private static groupByPath(task: Task): string[] {

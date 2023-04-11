@@ -9,7 +9,6 @@ export type GroupingProperty =
     | 'backlink'
     | 'filename'
     | 'folder'
-    | 'happens'
     | 'heading'
     | 'path'
     | 'priority'
