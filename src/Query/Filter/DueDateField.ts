@@ -1,6 +1,5 @@
 import type { Moment } from 'moment';
 import type { Task } from '../../Task';
-import type { GrouperFunction } from '../Grouper';
 import { DateField } from './DateField';
 
 /**
@@ -15,19 +14,5 @@ export class DueDateField extends DateField {
     }
     protected filterResultIfFieldMissing() {
         return false;
-    }
-
-    public supportsGrouping(): boolean {
-        return true;
-    }
-
-    public grouper(): GrouperFunction {
-        return (task: Task) => {
-            const date = this.date(task);
-            if (date === null) {
-                return ['No ' + this.fieldName() + ' date'];
-            }
-            return [date.format('YYYY-MM-DD dddd')];
-        };
     }
 }

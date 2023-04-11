@@ -63,4 +63,8 @@ export class HappensDateField extends DateField {
             return this.dates(task).some((date) => dateFilterFunction(date));
         };
     }
+
+    public supportsGrouping(): boolean {
+        return false;
+    }
 }

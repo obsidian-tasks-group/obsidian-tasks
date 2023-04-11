@@ -133,3 +133,10 @@ describe('sorting by happens', () => {
         CustomMatchersForSorting.expectTaskComparesAfter(new HappensDateField().createReverseSorter(), date1, date2);
     });
 });
+
+describe('grouping by happens date is not supported', () => {
+    it('supports Field grouping methods correctly', () => {
+        const field = new HappensDateField();
+        expect(field.supportsGrouping()).toEqual(false);
+    });
+});
