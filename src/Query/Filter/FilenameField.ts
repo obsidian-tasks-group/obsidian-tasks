@@ -34,8 +34,6 @@ export class FilenameField extends TextField {
         return true;
     }
 
-    protected static readonly groupDateFormat = 'YYYY-MM-DD dddd';
-
     public grouper(): GrouperFunction {
         return (task: Task) => {
             // Note current limitation: Tasks from different notes with the
