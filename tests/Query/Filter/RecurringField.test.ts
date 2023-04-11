@@ -40,3 +40,21 @@ describe('recurring', () => {
         testRecurringFilter(filter, invalid, true);
     });
 });
+
+describe('grouping by recurring', () => {
+    it('supports grouping methods correctly', () => {
+        const field = new RecurringField();
+        expect(field.supportsGrouping()).toEqual(true);
+    });
+
+    it.each([
+        ['- [ ] a', ['Not Recurring']],
+        ['- [ ] a 🔁 every Sunday', ['Recurring']],
+    ])('task "%s" should have groups: %s', (taskLine: string, expectedResult: string[]) => {
+        // Arrange
+        const grouper = new RecurringField().createGrouper();
+
+        // Assert
+        expect(grouper.grouper(fromLine({ line: taskLine }))).toEqual(expectedResult);
+    });
+});

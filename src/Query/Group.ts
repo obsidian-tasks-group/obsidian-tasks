@@ -40,7 +40,6 @@ export class Group {
     private static groupers: Record<GroupingProperty, GrouperFunction> = {
         backlink: Group.groupByBacklink,
         folder: Group.groupByFolder,
-        recurring: Group.groupByRecurring,
         root: Group.groupByRoot,
         status: Group.groupByStatus,
     };
@@ -48,14 +47,6 @@ export class Group {
     public static escapeMarkdownCharacters(filename: string) {
         // https://wilsonmar.github.io/markdown-text-for-github-from-html/#special-characters
         return filename.replace(/\\/g, '\\\\').replace(/_/g, '\\_');
-    }
-
-    private static groupByRecurring(task: Task): string[] {
-        if (task.recurrence !== null) {
-            return ['Recurring'];
-        } else {
-            return ['Not Recurring'];
-        }
     }
 
     private static groupByFolder(task: Task): string[] {

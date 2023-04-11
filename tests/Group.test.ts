@@ -256,19 +256,6 @@ describe('Group names', () => {
         },
 
         // -----------------------------------------------------------
-        // group by recurring
-        {
-            groupBy: 'recurring',
-            taskLine: '- [ ] a',
-            expectedGroupNames: ['Not Recurring'],
-        },
-        {
-            groupBy: 'recurring',
-            taskLine: '- [ ] a 🔁 every Sunday',
-            expectedGroupNames: ['Recurring'],
-        },
-
-        // -----------------------------------------------------------
         // group by root
         {
             groupBy: 'root',
