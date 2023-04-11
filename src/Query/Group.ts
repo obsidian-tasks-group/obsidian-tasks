@@ -85,8 +85,8 @@ export class Group {
         }
 
         // Markdown characters in the heading must NOT be escaped.
-        const headingGrouper = new HeadingField().createGrouper();
-        const headingComponent = headingGrouper.grouper(task)[0];
+        const headingGrouper = new HeadingField().createGrouper().grouper;
+        const headingComponent = headingGrouper(task)[0];
 
         if (filenameComponent === headingComponent) {
             return [filenameComponent];
