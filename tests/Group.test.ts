@@ -2,6 +2,7 @@
  * @jest-environment jsdom
  */
 import moment from 'moment';
+import { FilenameField } from '../src/Query/Filter/FilenameField';
 import { Group } from '../src/Query/Group';
 import type { Grouper } from '../src/Query/Grouper';
 import type { GroupingProperty } from '../src/Query/Grouper';
@@ -150,7 +151,7 @@ describe('Grouping tasks', () => {
         });
         const tasks = [t1, t2, t3];
 
-        const grouping: Grouper[] = [Group.fromGroupingProperty('folder'), Group.fromGroupingProperty('filename')];
+        const grouping: Grouper[] = [Group.fromGroupingProperty('folder'), new FilenameField().createGrouper()];
 
         // Act
         const groups = Group.by(grouping, tasks);
@@ -232,21 +233,6 @@ describe('Group names', () => {
             expectedGroupNames: ['\\_c\\_ > heading _italic text_'],
             path: 'a/b/_c_.md',
             precedingHeading: 'heading _italic text_',
-        },
-
-        // -----------------------------------------------------------
-        // group by filename
-        {
-            groupBy: 'filename',
-            taskLine: '- [ ] a',
-            expectedGroupNames: ['[[c]]'],
-            path: 'a/b/c.md',
-        },
-        {
-            groupBy: 'filename',
-            taskLine: '- [ ] a',
-            expectedGroupNames: ['[[_c_]]'], // underscores in links shall not be escaped
-            path: 'a/b/_c_.md',
         },
 
         // -----------------------------------------------------------
