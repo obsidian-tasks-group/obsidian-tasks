@@ -51,41 +51,6 @@ describe('Grouping tasks', () => {
         `);
     });
 
-    it('handles tasks matching multiple groups correctly', () => {
-        const a = fromLine({
-            line: '- [ ] Task 1 #group1',
-        });
-        const b = fromLine({
-            line: '- [ ] Task 2 #group2 #group1',
-        });
-        const c = fromLine({
-            line: '- [ ] Task 3 #group2',
-        });
-        const inputs = [a, b, c];
-
-        const grouping = [new TagsField().createGrouper()];
-        const groups = Group.by(grouping, inputs);
-        expect(groups.toString()).toMatchInlineSnapshot(`
-            "
-            Group names: [#group1]
-            #### #group1
-            - [ ] Task 1 #group1
-            - [ ] Task 2 #group2 #group1
-
-            ---
-
-            Group names: [#group2]
-            #### #group2
-            - [ ] Task 2 #group2 #group1
-            - [ ] Task 3 #group2
-
-            ---
-
-            3 tasks
-            "
-        `);
-    });
-
     it('groups correctly by default grouping', () => {
         // Arrange
         const a = fromLine({ line: '- [ ] a 📅 1970-01-01', path: '2.md' });
@@ -161,6 +126,41 @@ describe('Grouping tasks', () => {
             Group names: [d/e/f]
             #### d/e/f
             - [ ] third file path
+
+            ---
+
+            3 tasks
+            "
+        `);
+    });
+
+    it('handles tasks matching multiple groups correctly', () => {
+        const a = fromLine({
+            line: '- [ ] Task 1 #group1',
+        });
+        const b = fromLine({
+            line: '- [ ] Task 2 #group2 #group1',
+        });
+        const c = fromLine({
+            line: '- [ ] Task 3 #group2',
+        });
+        const inputs = [a, b, c];
+
+        const grouping = [new TagsField().createGrouper()];
+        const groups = Group.by(grouping, inputs);
+        expect(groups.toString()).toMatchInlineSnapshot(`
+            "
+            Group names: [#group1]
+            #### #group1
+            - [ ] Task 1 #group1
+            - [ ] Task 2 #group2 #group1
+
+            ---
+
+            Group names: [#group2]
+            #### #group2
+            - [ ] Task 2 #group2 #group1
+            - [ ] Task 3 #group2
 
             ---
 
