@@ -282,39 +282,6 @@ describe('Group names', () => {
             expectedGroupNames: ['/'],
             path: 'a.md',
         },
-
-        // -----------------------------------------------------------
-        // group by status
-        {
-            groupBy: 'status',
-            taskLine: '- [ ] a',
-            expectedGroupNames: ['Todo'],
-        },
-        {
-            groupBy: 'status',
-            taskLine: '- [x] a',
-            expectedGroupNames: ['Done'],
-        },
-        {
-            groupBy: 'status',
-            taskLine: '- [X] a',
-            expectedGroupNames: ['Done'],
-        },
-        {
-            groupBy: 'status',
-            taskLine: '- [/] a',
-            expectedGroupNames: ['Done'],
-        },
-        {
-            groupBy: 'status',
-            taskLine: '- [-] a',
-            expectedGroupNames: ['Done'],
-        },
-        {
-            groupBy: 'status',
-            taskLine: '- [!] a',
-            expectedGroupNames: ['Done'],
-        },
         // -----------------------------------------------------------
     ];
 

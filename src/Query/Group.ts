@@ -41,7 +41,6 @@ export class Group {
         backlink: Group.groupByBacklink,
         folder: Group.groupByFolder,
         root: Group.groupByRoot,
-        status: Group.groupByStatus,
     };
 
     public static escapeMarkdownCharacters(filename: string) {
@@ -93,17 +92,6 @@ export class Group {
             return [filenameComponent];
         } else {
             return [`${filenameComponent} > ${headingComponent}`];
-        }
-    }
-
-    private static groupByStatus(task: Task): string[] {
-        // Backwards-compatibility note: In Tasks 1.22.0 and earlier, the only
-        // names used by 'group by status' were 'Todo' and 'Done' - and
-        // any character other than a space was considered to be 'Done'.
-        if (task.status.symbol === ' ') {
-            return ['Todo'];
-        } else {
-            return ['Done'];
         }
     }
 }
