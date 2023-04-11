@@ -93,7 +93,8 @@ export function parseGrouper(line: string): Grouper | null {
             }
         }
 
-        // Temporary workaround for TagsField. Query is done on plural 'tagS'
+        // Temporary workaround for TagsField: query is done on plural 'tagS',
+        // but field.fieldNameSingular() returns 'tag'
         if (line === 'group by tags' && field instanceof TagsField) {
             return field.createGrouper();
         }
