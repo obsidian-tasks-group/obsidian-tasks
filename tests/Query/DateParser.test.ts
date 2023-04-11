@@ -1,6 +1,7 @@
 /**
  * @jest-environment jsdom
  */
+import { verifyAllCombinations3 } from 'approvals/lib/Providers/Jest/CombinationApprovals';
 import { resetSettings, updateSettings } from '../../src/Config/Settings';
 import { DateParser } from '../../src/Query/DateParser';
 import { TaskRegularExpressions } from '../../src/Task';
@@ -191,5 +192,47 @@ describe('Date Parser - weeks in relative date ranges start any day', () => {
     ])('should shift by %s days', (shift: number, rangeStart: string, rangeEnd: string) => {
         updateSettings({ firstDayOfTheWeek: shift });
         testParsingDateRange('this week', rangeStart, rangeEnd);
+    });
+
+    it('should return correct start of the week', () => {
+        const startsOfWeek = [0, 1, 2, 3, 4, 5, 6];
+        const queries = ['this week', 'next week', '2023-W12'];
+        const todays = [
+            '2023-04-03', // Monday
+            '2023-04-04',
+            '2023-04-05',
+            '2023-04-06',
+            '2023-04-07',
+            '2023-04-08',
+            '2023-04-09',
+            '2023-04-10', // Monday
+            '2023-04-11',
+            '2023-04-12',
+            '2023-04-13',
+            '2023-04-14',
+            '2023-04-15',
+            '2023-04-16',
+        ];
+
+        verifyAllCombinations3(
+            (query, startOfWeek, today) => {
+                const dateToday = new Date(today);
+
+                jest.useFakeTimers();
+                jest.setSystemTime(dateToday);
+
+                updateSettings({ firstDayOfTheWeek: startOfWeek });
+                const dateRange = DateParser.parseDateRange(query);
+                resetSettings();
+
+                return `
+    Today: ${today}. "${query}": ${dateRange.start.format('ddd YYYY-MM-DD')} - ${dateRange.end.format(
+                    'ddd YYYY-MM-DD',
+                )}`;
+            },
+            queries,
+            startsOfWeek,
+            todays,
+        );
     });
 });
