@@ -284,19 +284,6 @@ describe('Group names', () => {
         },
 
         // -----------------------------------------------------------
-        // group by due
-        {
-            groupBy: 'due',
-            taskLine: '- [ ] a 📅 1970-01-01',
-            expectedGroupNames: ['1970-01-01 Thursday'],
-        },
-        {
-            groupBy: 'due',
-            taskLine: '- [ ] a',
-            expectedGroupNames: ['No due date'],
-        },
-
-        // -----------------------------------------------------------
         // group by filename
         {
             groupBy: 'filename',
