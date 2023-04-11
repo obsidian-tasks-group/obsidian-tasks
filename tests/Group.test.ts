@@ -271,19 +271,6 @@ describe('Group names', () => {
         },
 
         // -----------------------------------------------------------
-        // group by done
-        {
-            groupBy: 'done',
-            taskLine: '- [ ] a ✅ 1970-01-01',
-            expectedGroupNames: ['1970-01-01 Thursday'],
-        },
-        {
-            groupBy: 'done',
-            taskLine: '- [ ] a',
-            expectedGroupNames: ['No done date'],
-        },
-
-        // -----------------------------------------------------------
         // group by filename
         {
             groupBy: 'filename',
@@ -494,45 +481,6 @@ describe('Group names', () => {
             taskLine: '- [ ] a',
             expectedGroupNames: ['/'],
             path: 'a.md',
-        },
-
-        // -----------------------------------------------------------
-        // group by scheduled
-        {
-            groupBy: 'scheduled',
-            taskLine: '- [ ] a ⏳ 1970-01-01',
-            expectedGroupNames: ['1970-01-01 Thursday'],
-        },
-        {
-            groupBy: 'scheduled',
-            taskLine: '- [ ] a',
-            expectedGroupNames: ['No scheduled date'],
-        },
-
-        // -----------------------------------------------------------
-        // group by start
-        {
-            groupBy: 'start',
-            taskLine: '- [ ] a 🛫 1970-01-01',
-            expectedGroupNames: ['1970-01-01 Thursday'],
-        },
-        {
-            groupBy: 'start',
-            taskLine: '- [ ] a',
-            expectedGroupNames: ['No start date'],
-        },
-
-        // -----------------------------------------------------------
-        // group by created
-        {
-            groupBy: 'created',
-            taskLine: '- [ ] a ➕ 1970-01-01',
-            expectedGroupNames: ['1970-01-01 Thursday'],
-        },
-        {
-            groupBy: 'created',
-            taskLine: '- [ ] a',
-            expectedGroupNames: ['No created date'],
         },
 
         // -----------------------------------------------------------

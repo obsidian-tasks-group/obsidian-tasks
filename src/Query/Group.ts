@@ -42,8 +42,6 @@ export class Group {
 
     private static groupers: Record<GroupingProperty, GrouperFunction> = {
         backlink: Group.groupByBacklink,
-        created: Group.groupByCreatedDate,
-        done: Group.groupByDoneDate,
         filename: Group.groupByFileName,
         folder: Group.groupByFolder,
         happens: Group.groupByHappensDate,
@@ -53,8 +51,6 @@ export class Group {
         recurrence: Group.groupByRecurrence,
         recurring: Group.groupByRecurring,
         root: Group.groupByRoot,
-        scheduled: Group.groupByScheduledDate,
-        start: Group.groupByStartDate,
         status: Group.groupByStatus,
         tags: Group.groupByTags,
     };
@@ -97,22 +93,6 @@ export class Group {
         } else {
             return ['Not Recurring'];
         }
-    }
-
-    private static groupByCreatedDate(task: Task): string[] {
-        return [Group.stringFromDate(task.createdDate, 'created')];
-    }
-
-    private static groupByStartDate(task: Task): string[] {
-        return [Group.stringFromDate(task.startDate, 'start')];
-    }
-
-    private static groupByScheduledDate(task: Task): string[] {
-        return [Group.stringFromDate(task.scheduledDate, 'scheduled')];
-    }
-
-    private static groupByDoneDate(task: Task): string[] {
-        return [Group.stringFromDate(task.doneDate, 'done')];
     }
 
     private static groupByHappensDate(task: Task): string[] {

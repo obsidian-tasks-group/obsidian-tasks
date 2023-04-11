@@ -7,8 +7,6 @@ export type GrouperFunction = (task: Task) => string[];
 
 export type GroupingProperty =
     | 'backlink'
-    | 'created'
-    | 'done'
     | 'filename'
     | 'folder'
     | 'happens'
@@ -18,8 +16,6 @@ export type GroupingProperty =
     | 'recurrence'
     | 'recurring'
     | 'root'
-    | 'scheduled'
-    | 'start'
     | 'status'
     | 'tags';
 
