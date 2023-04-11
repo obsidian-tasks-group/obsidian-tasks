@@ -59,7 +59,7 @@ Here is a more detailed walk through of the creation of a new task, which can be
 
 7. Now our task is complete:
 
-    ![auto-suggest-menu-after-due-emoji](../images/auto-suggest-menu-after-due-emoji.png)
+    ![auto-suggest-menu-after-due-emoji](../images/auto-suggest-menu-after-due-date.png)
 
 ## Details
 
@@ -97,10 +97,6 @@ There are some things that might be improved in future releases:
   - It does not yet offer `when done`.
     - This phrase still needs to be typed manually.
 - It currently pops up when editing completed tasks. This may be changed in future.
-
-## Limitations
-
-- Auto-suggest does not yet support the [[Dates#➕ Created|created date]] field. We are tracking this in [issue #1743](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1743).
 
 ## Common Questions
 
@@ -172,41 +168,42 @@ As you type, the options are filtered. For example, if you haven't yet added any
 
 Similarly, you can type some fraction of the word `start` (of whatever length is needed by the 'Minimum match length' setting) and you will get a suggestion to turn it into the emoji. Pressing `<enter>` then immediately adds the start emoji: 🛫.
 
-| Searchable Text         | Text that is added         |
-| ----------------------- | -------------------------- |
-| ⏎                       | \<new line>                |
-| ⏫ high priority        | ⏫                         |
-| 🔼 medium priority      | 🔼                         |
-| 🔽 low priority         | 🔽                         |
-| 🔁 recurring (repeat)   | 🔁                         |
-| every                   | 🔁 every                   |
-| every day               | 🔁 every day               |
-| every week              | 🔁 every week              |
-| every month             | 🔁 every month             |
-| every month on the      | 🔁 every month on the      |
-| every year              | 🔁 every year              |
-| every week on Sunday    | 🔁 every week on Sunday    |
-| every week on Monday    | 🔁 every week on Monday    |
-| every week on Tuesday   | 🔁 every week on Tuesday   |
-| every week on Wednesday | 🔁 every week on Wednesday |
-| every week on Thursday  | 🔁 every week on Thursday  |
-| every week on Friday    | 🔁 every week on Friday    |
-| every week on Saturday  | 🔁 every week on Saturday  |
-| 📅 due date             | 📅                         |
-| ⏳ scheduled date       | ⏳                         |
-| 🛫 start date           | 🛫                         |
-| today (2022-07-11)      | 2022-07-11                 |
-| tomorrow (2022-07-12)   | 2022-07-12                 |
-| Sunday (2022-07-17)     | 2022-07-17                 |
-| Monday (2022-07-11)     | 2022-07-11                 |
-| Tuesday (2022-07-12)    | 2022-07-12                 |
-| Wednesday (2022-07-13)  | 2022-07-13                 |
-| Thursday (2022-07-14)   | 2022-07-14                 |
-| Friday (2022-07-15)     | 2022-07-15                 |
-| Saturday (2022-07-16)   | 2022-07-16                 |
-| next week (2022-07-18)  | 2022-07-18                 |
-| next month (2022-08-11) | 2022-08-11                 |
-| next year (2023-07-11)  | 2023-07-11                 |
+| Searchable Text               | Text that is added         |
+| ----------------------------- | -------------------------- |
+| ⏎                             | \<new line>                |
+| ⏫ high priority              | ⏫                         |
+| 🔼 medium priority            | 🔼                         |
+| 🔽 low priority               | 🔽                         |
+| 🔁 recurring (repeat)         | 🔁                         |
+| every                         | 🔁 every                   |
+| every day                     | 🔁 every day               |
+| every week                    | 🔁 every week              |
+| every month                   | 🔁 every month             |
+| every month on the            | 🔁 every month on the      |
+| every year                    | 🔁 every year              |
+| every week on Sunday          | 🔁 every week on Sunday    |
+| every week on Monday          | 🔁 every week on Monday    |
+| every week on Tuesday         | 🔁 every week on Tuesday   |
+| every week on Wednesday       | 🔁 every week on Wednesday |
+| every week on Thursday        | 🔁 every week on Thursday  |
+| every week on Friday          | 🔁 every week on Friday    |
+| every week on Saturday        | 🔁 every week on Saturday  |
+| 📅 due date                   | 📅                         |
+| ⏳ scheduled date             | ⏳                         |
+| 🛫 start date                 | 🛫                         |
+| ➕ created today (2022-07-11) | ➕ 2022-07-11              |
+| today (2022-07-11)            | 2022-07-11                 |
+| tomorrow (2022-07-12)         | 2022-07-12                 |
+| Sunday (2022-07-17)           | 2022-07-17                 |
+| Monday (2022-07-11)           | 2022-07-11                 |
+| Tuesday (2022-07-12)          | 2022-07-12                 |
+| Wednesday (2022-07-13)        | 2022-07-13                 |
+| Thursday (2022-07-14)         | 2022-07-14                 |
+| Friday (2022-07-15)           | 2022-07-15                 |
+| Saturday (2022-07-16)         | 2022-07-16                 |
+| next week (2022-07-18)        | 2022-07-18                 |
+| next month (2022-08-11)       | 2022-08-11                 |
+| next year (2023-07-11)        | 2023-07-11                 |
 
 ### How can I use auto-suggest features from other plugins together with the Tasks auto-suggest?
 
