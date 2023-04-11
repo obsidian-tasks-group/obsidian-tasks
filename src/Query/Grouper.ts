@@ -9,7 +9,6 @@ export type GroupingProperty =
     | 'backlink'
     | 'created'
     | 'done'
-    | 'due'
     | 'filename'
     | 'folder'
     | 'happens'

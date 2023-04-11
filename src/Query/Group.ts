@@ -44,7 +44,6 @@ export class Group {
         backlink: Group.groupByBacklink,
         created: Group.groupByCreatedDate,
         done: Group.groupByDoneDate,
-        due: Group.groupByDueDate,
         filename: Group.groupByFileName,
         folder: Group.groupByFolder,
         happens: Group.groupByHappensDate,
@@ -110,10 +109,6 @@ export class Group {
 
     private static groupByScheduledDate(task: Task): string[] {
         return [Group.stringFromDate(task.scheduledDate, 'scheduled')];
-    }
-
-    private static groupByDueDate(task: Task): string[] {
-        return [Group.stringFromDate(task.dueDate, 'due')];
     }
 
     private static groupByDoneDate(task: Task): string[] {
