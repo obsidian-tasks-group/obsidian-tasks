@@ -22,7 +22,7 @@ You can find out more in [[Create or edit Task|‘Create or edit Task’ Modal]]
 
 ---
 
-### 📅 Due
+### Due date: 📅
 
 Tasks can have dates by when they must be done: due dates.
 In order to specify the due date of a task, you must append the "due date signifier 📅" followed by the date it is due to the end of the task.
@@ -35,7 +35,7 @@ For example: `📅 2021-04-09` means the task is due on the 9th of April, 2021.
 
 ---
 
-### ⏳ Scheduled
+### Scheduled date: ⏳
 
 Tasks can have dates on which you plan to work on them: scheduled dates.
 Scheduled dates are different from due dates as you can schedule to finish a task before it is due.
@@ -53,7 +53,7 @@ See [[Use Filename as Default Date]] for how to optionally make Tasks use any da
 
 ---
 
-### 🛫 Start
+### Start date: 🛫
 
 It can happen that you cannot work on a task before a certain date.
 Or you want to hide a task until a certain date.
@@ -91,7 +91,7 @@ The date types in this section are optional.
 
 Image of the default settings for tracking task histories.
 
-### ➕ Created
+### Created date: ➕
 
 > [!released]
 Created date was introduced in Tasks 2.0.0.
@@ -114,7 +114,7 @@ Created dates use a heavy plus emoji.
 > [!info]
 [[Auto-Suggest]] does not yet support the created date field. We are tracking this in [issue #1743](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1743).
 
-### ✅ Done
+### Done date: ✅
 
 Unless you disable 'Set done date on every completed task' in settings (and restart Obsidian), the Tasks plugin will help you track when your tasks were completed.
 
