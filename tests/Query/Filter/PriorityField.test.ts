@@ -168,7 +168,7 @@ describe('grouping by priority', () => {
         ['- [ ] a 🔼', ['Priority 2: Medium']],
         ['- [ ] a', ['Priority 3: None']],
         ['- [ ] a 🔽', ['Priority 4: Low']],
-    ])('task "%s" and path "%s" should have groups: %s', (taskLine: string, expectedResult: string[]) => {
+    ])('task "%s" should have groups: %s', (taskLine: string, expectedResult: string[]) => {
         // Arrange
         const grouper = new PriorityField().createGrouper();
 

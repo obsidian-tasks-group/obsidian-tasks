@@ -157,11 +157,14 @@ describe('grouping by path', () => {
         ['- [ ] a', '_a_/b/_c_.md', ['\\_a\\_/b/\\_c\\_']],
         // backslashes are escaped. (this artificial example is to test escaping)
         ['- [ ] a', 'a\\b\\c.md', ['a\\\\b\\\\c']],
-    ])('task "%s" and path "%s" should have groups: %s', (taskLine: string, path: string, expectedResult: string[]) => {
-        // Arrange
-        const grouper = new PathField().createGrouper();
+    ])(
+        'task "%s" with path "%s" should have groups: %s',
+        (taskLine: string, path: string, expectedResult: string[]) => {
+            // Arrange
+            const grouper = new PathField().createGrouper();
 
-        // Assert
-        expect(grouper.grouper(fromLine({ line: taskLine, path: path }))).toEqual(expectedResult);
-    });
+            // Assert
+            expect(grouper.grouper(fromLine({ line: taskLine, path: path }))).toEqual(expectedResult);
+        },
+    );
 });
