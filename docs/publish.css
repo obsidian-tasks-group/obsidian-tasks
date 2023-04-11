@@ -3,6 +3,8 @@ These two files should always have the same CSS content, please,
 so that the styling in the Obsidian app and the published docs
 is consistent:
 
+- contributing/publish.css
+- contributing/.obsidian/snippets/publish-simulation.css
 - docs/.obsidian/snippets/publish-simulation.css
 - docs/publish.css
 
