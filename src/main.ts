@@ -1,5 +1,6 @@
 import { Plugin } from 'obsidian';
 
+import { TaskNotification } from './reminder-testing-folder/notification';
 import { Cache } from './Cache';
 import { Commands } from './Commands';
 import { TasksEvents } from './TasksEvents';
@@ -20,6 +21,7 @@ export default class TasksPlugin extends Plugin {
     private cache: Cache | undefined;
     public inlineRenderer: InlineRenderer | undefined;
     public queryRenderer: QueryRenderer | undefined;
+    private taskNotification: TaskNotification | undefined;
 
     get apiV1() {
         return tasksApiV1(app);
@@ -28,6 +30,9 @@ export default class TasksPlugin extends Plugin {
     async onload() {
         logging.registerConsoleLogger();
         console.log('loading plugin "tasks"');
+        console.log('Trigger notification');
+        this.taskNotification = new TaskNotification();
+        this.taskNotification.show();
 
         await this.loadSettings();
         this.addSettingTab(new SettingsTab({ plugin: this }));

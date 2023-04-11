@@ -34,3 +34,10 @@ yarn-error.log
 
 # Backup files.
 *.bak
+.vscode/settings.json
+.vscode/settings.json
+src/.vscode/settings.json
+.vscode/settings.json
+src/.vscode/settings.json
+.vscode/settings.json
+src/.vscode/settings.json
