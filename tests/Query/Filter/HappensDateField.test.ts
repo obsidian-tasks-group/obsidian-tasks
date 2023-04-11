@@ -149,14 +149,11 @@ describe('grouping by happens date', () => {
         ['- [ ] due is earliest date 🛫 1970-01-03 ⏳ 1970-01-02 📅 1970-01-01', ['1970-01-01 Thursday']],
         ['- [ ] scheduled is earliest date 🛫 1970-01-03 ⏳ 1970-01-01 📅 1970-01-02', ['1970-01-01 Thursday']],
         ['- [ ] start is earliest date 🛫 1970-01-01 ⏳ 1970-01-02 📅 1970-01-03', ['1970-01-01 Thursday']],
-    ])(
-        'group by happens date: task with due date on %s is included; %s, %s, %s are not',
-        (taskLine: string, expectedResult: string[]) => {
-            // Arrange
-            const grouper = new HappensDateField().createGrouper();
+    ])('group by happens date: task "%s" should have groups %s', (taskLine: string, expectedResult: string[]) => {
+        // Arrange
+        const grouper = new HappensDateField().createGrouper();
 
-            // Assert
-            expect(grouper.grouper(fromLine({ line: taskLine }))).toEqual(expectedResult);
-        },
-    );
+        // Assert
+        expect(grouper.grouper(fromLine({ line: taskLine }))).toEqual(expectedResult);
+    });
 });
