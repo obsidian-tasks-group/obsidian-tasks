@@ -82,7 +82,7 @@ describe('sorting by status', () => {
     });
 });
 
-describe('grouping by path', () => {
+describe('grouping by status', () => {
     it('supports grouping methods correctly', () => {
         const field = new StatusField();
         expect(field.supportsGrouping()).toEqual(true);
@@ -95,11 +95,11 @@ describe('grouping by path', () => {
         ['- [/] a', ['Done']],
         ['- [-] a', ['Done']],
         ['- [!] a', ['Done']],
-    ])('task "%s" should have groups: %s', (taskLine: string, expectedResult: string[]) => {
+    ])('task "%s" should have groups: %s', (taskLine: string, groups: string[]) => {
         // Arrange
-        const grouper = new StatusField().createGrouper();
+        const grouper = new StatusField().createGrouper().grouper;
 
         // Assert
-        expect(grouper.grouper(fromLine({ line: taskLine }))).toEqual(expectedResult);
+        expect(grouper(fromLine({ line: taskLine }))).toEqual(groups);
     });
 });
