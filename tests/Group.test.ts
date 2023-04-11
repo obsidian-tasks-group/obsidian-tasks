@@ -7,6 +7,7 @@ import { Group } from '../src/Query/Group';
 import type { Grouper } from '../src/Query/Grouper';
 import type { GroupingProperty } from '../src/Query/Grouper';
 import type { Task } from '../src/Task';
+import { PathField } from '../src/Query/Filter/PathField';
 import { fromLine } from './TestHelpers';
 
 window.moment = moment;
@@ -25,8 +26,7 @@ describe('Grouping tasks', () => {
         const inputs = [a, b, c];
 
         // Act
-        const groupBy: GroupingProperty = 'path';
-        const grouping = [Group.fromGroupingProperty(groupBy)];
+        const grouping = [new PathField().createGrouper()];
         const groups = Group.by(grouping, inputs);
 
         // Assert
@@ -80,8 +80,7 @@ describe('Grouping tasks', () => {
     it('groups empty task list correctly', () => {
         // Arrange
         const inputs: Task[] = [];
-        const group_by: GroupingProperty = 'path';
-        const grouping = [Group.fromGroupingProperty(group_by)];
+        const grouping = [new PathField().createGrouper()];
 
         // Act
         const groups = Group.by(grouping, inputs);
@@ -107,8 +106,7 @@ describe('Grouping tasks', () => {
         });
         const inputs = [a, b, c];
 
-        const group_by: GroupingProperty = 'path';
-        const grouping = [Group.fromGroupingProperty(group_by)];
+        const grouping = [new PathField().createGrouper()];
         const groups = Group.by(grouping, inputs);
         expect(groups.toString()).toMatchInlineSnapshot(`
             "
@@ -255,27 +253,6 @@ describe('Group names', () => {
             taskLine: '- [ ] a',
             expectedGroupNames: ['/'],
             path: 'a.md',
-        },
-
-        // -----------------------------------------------------------
-        // group by path
-        {
-            groupBy: 'path',
-            taskLine: '- [ ] a',
-            path: 'a/b/c.md',
-            expectedGroupNames: ['a/b/c'], // the file extension is removed
-        },
-        {
-            groupBy: 'path',
-            taskLine: '- [ ] a',
-            path: '_a_/b/_c_.md',
-            expectedGroupNames: ['\\_a\\_/b/\\_c\\_'], // underscores in paths are escaped
-        },
-        {
-            groupBy: 'path',
-            taskLine: '- [ ] a',
-            path: 'a\\b\\c.md',
-            expectedGroupNames: ['a\\\\b\\\\c'], // backslashes are escaped. (this artificial example is to test escaping)
         },
 
         // -----------------------------------------------------------

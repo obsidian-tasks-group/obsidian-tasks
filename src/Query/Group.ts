@@ -41,7 +41,6 @@ export class Group {
     private static groupers: Record<GroupingProperty, GrouperFunction> = {
         backlink: Group.groupByBacklink,
         folder: Group.groupByFolder,
-        path: Group.groupByPath,
         priority: Group.groupByPriority,
         recurrence: Group.groupByRecurrence,
         recurring: Group.groupByRecurring,
@@ -49,7 +48,7 @@ export class Group {
         status: Group.groupByStatus,
     };
 
-    private static escapeMarkdownCharacters(filename: string) {
+    public static escapeMarkdownCharacters(filename: string) {
         // https://wilsonmar.github.io/markdown-text-for-github-from-html/#special-characters
         return filename.replace(/\\/g, '\\\\').replace(/_/g, '\\_');
     }
@@ -87,12 +86,6 @@ export class Group {
         } else {
             return ['Not Recurring'];
         }
-    }
-
-    private static groupByPath(task: Task): string[] {
-        // Does this need to be made stricter?
-        // Is there a better way of getting the file name?
-        return [Group.escapeMarkdownCharacters(task.path.replace('.md', ''))];
     }
 
     private static groupByFolder(task: Task): string[] {
