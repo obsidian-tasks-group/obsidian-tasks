@@ -89,3 +89,21 @@ describe('sorting by created', () => {
         expectTaskComparesEqual(sorter, date2, date2);
     });
 });
+
+describe('grouping by created date', () => {
+    it('supports Field grouping methods correctly', () => {
+        const field = new CreatedDateField();
+        expect(field.supportsGrouping()).toEqual(true);
+    });
+
+    it('group by created date', () => {
+        // Arrange
+        const grouper = new CreatedDateField().createGrouper();
+        const taskWithDate = new TaskBuilder().createdDate('1970-01-01').build();
+        const taskWithoutDate = new TaskBuilder().build();
+
+        // Assert
+        expect(grouper.grouper(taskWithDate)).toEqual(['1970-01-01 Thursday']);
+        expect(grouper.grouper(taskWithoutDate)).toEqual(['No created date']);
+    });
+});

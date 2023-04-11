@@ -515,3 +515,21 @@ describe('due date', () => {
         table.verify();
     });
 });
+
+describe('grouping by due date', () => {
+    it('supports Field grouping methods correctly', () => {
+        const field = new DueDateField();
+        expect(field.supportsGrouping()).toEqual(true);
+    });
+
+    it('group by due date', () => {
+        // Arrange
+        const grouper = new DueDateField().createGrouper();
+        const taskWithDate = new TaskBuilder().dueDate('1970-01-01').build();
+        const taskWithoutDate = new TaskBuilder().build();
+
+        // Assert
+        expect(grouper.grouper(taskWithDate)).toEqual(['1970-01-01 Thursday']);
+        expect(grouper.grouper(taskWithoutDate)).toEqual(['No due date']);
+    });
+});
