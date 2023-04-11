@@ -272,33 +272,6 @@ describe('Group names', () => {
         },
 
         // -----------------------------------------------------------
-        // group by heading
-        {
-            groupBy: 'heading',
-            taskLine: '- [ ] xxx',
-            expectedGroupNames: ['(No heading)'],
-            precedingHeading: null,
-        },
-        {
-            groupBy: 'heading',
-            taskLine: '- [ ] xxx',
-            expectedGroupNames: ['(No heading)'],
-            precedingHeading: '',
-        },
-        {
-            groupBy: 'heading',
-            taskLine: '- [ ] xxx',
-            expectedGroupNames: ['heading'],
-            precedingHeading: 'heading',
-        },
-        {
-            groupBy: 'heading',
-            taskLine: '- [ ] xxx',
-            expectedGroupNames: ['heading _italic text_'], // underscores in headings are NOT escaped - will be rendered
-            precedingHeading: 'heading _italic text_',
-        },
-
-        // -----------------------------------------------------------
         // group by path
         {
             groupBy: 'path',

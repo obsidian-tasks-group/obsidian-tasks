@@ -3,6 +3,7 @@ import { Priority } from '../Task';
 import { TaskGroups } from './TaskGroups';
 import { Grouper } from './Grouper';
 import type { GrouperFunction, GroupingProperty } from './Grouper';
+import { HeadingField } from './Filter/HeadingField';
 
 /**
  * Implementation of the 'group by' instruction.
@@ -41,7 +42,6 @@ export class Group {
         backlink: Group.groupByBacklink,
         filename: Group.groupByFileName,
         folder: Group.groupByFolder,
-        heading: Group.groupByHeading,
         path: Group.groupByPath,
         priority: Group.groupByPriority,
         recurrence: Group.groupByRecurrence,
@@ -144,7 +144,8 @@ export class Group {
         }
 
         // Markdown characters in the heading must NOT be escaped.
-        const headingComponent = Group.groupByHeading(task)[0];
+        const headingGrouper = new HeadingField().createGrouper();
+        const headingComponent = headingGrouper.grouper(task)[0];
 
         if (filenameComponent === headingComponent) {
             return [filenameComponent];
@@ -162,12 +163,5 @@ export class Group {
         } else {
             return ['Done'];
         }
-    }
-
-    private static groupByHeading(task: Task): string[] {
-        if (task.precedingHeader === null || task.precedingHeader.length === 0) {
-            return ['(No heading)'];
-        }
-        return [task.precedingHeader];
     }
 }
