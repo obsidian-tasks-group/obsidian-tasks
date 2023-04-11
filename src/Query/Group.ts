@@ -39,23 +39,12 @@ export class Group {
 
     private static groupers: Record<GroupingProperty, GrouperFunction> = {
         backlink: Group.groupByBacklink,
-        folder: Group.groupByFolder,
         root: Group.groupByRoot,
     };
 
     public static escapeMarkdownCharacters(filename: string) {
         // https://wilsonmar.github.io/markdown-text-for-github-from-html/#special-characters
         return filename.replace(/\\/g, '\\\\').replace(/_/g, '\\_');
-    }
-
-    private static groupByFolder(task: Task): string[] {
-        const path = task.path;
-        const fileNameWithExtension = task.filename + '.md';
-        const folder = path.substring(0, path.lastIndexOf(fileNameWithExtension));
-        if (folder === '') {
-            return ['/'];
-        }
-        return [Group.escapeMarkdownCharacters(folder)];
     }
 
     private static groupByRoot(task: Task): string[] {

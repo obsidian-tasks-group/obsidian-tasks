@@ -23,6 +23,7 @@ import type { FilterOrErrorMessage } from './Filter/Filter';
 import type { Sorter } from './Sorter';
 import type { Grouper } from './Grouper';
 import { MultiTextField } from './Filter/MultiTextField';
+import { FolderField } from './Filter/FolderField';
 
 const fieldCreators = [
     () => new StatusNameField(), // status.name is before status, to avoid ambiguity
@@ -45,6 +46,7 @@ const fieldCreators = [
     () => new FilenameField(),
     () => new UrgencyField(),
     () => new RecurrenceField(),
+    () => new FolderField(),
 ];
 
 export function parseFilter(filterString: string): FilterOrErrorMessage | null {

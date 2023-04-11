@@ -9,6 +9,7 @@ import type { GroupingProperty } from '../src/Query/Grouper';
 import type { Task } from '../src/Task';
 import { PathField } from '../src/Query/Filter/PathField';
 import { TagsField } from '../src/Query/Filter/TagsField';
+import { FolderField } from '../src/Query/Filter/FolderField';
 import { fromLine } from './TestHelpers';
 
 window.moment = moment;
@@ -185,7 +186,7 @@ describe('Grouping tasks', () => {
         });
         const tasks = [t1, t2, t3];
 
-        const grouping: Grouper[] = [Group.fromGroupingProperty('folder'), new FilenameField().createGrouper()];
+        const grouping: Grouper[] = [new FolderField().createGrouper(), new FilenameField().createGrouper()];
 
         // Act
         const groups = Group.by(grouping, tasks);
@@ -267,28 +268,6 @@ describe('Group names', () => {
             expectedGroupNames: ['\\_c\\_ > heading _italic text_'],
             path: 'a/b/_c_.md',
             precedingHeading: 'heading _italic text_',
-        },
-
-        // -----------------------------------------------------------
-        // group by folder
-        {
-            groupBy: 'folder',
-            taskLine: '- [ ] a',
-            expectedGroupNames: ['a/b/'],
-            path: 'a/b/c.md',
-        },
-        {
-            groupBy: 'folder',
-            taskLine: '- [ ] a',
-            expectedGroupNames: ['a/\\_b\\_/'], // underscores in folder names are escaped
-            path: 'a/_b_/c.md',
-        },
-        {
-            // file in root of vault:
-            groupBy: 'folder',
-            taskLine: '- [ ] a',
-            expectedGroupNames: ['/'],
-            path: 'a.md',
         },
 
         // -----------------------------------------------------------
