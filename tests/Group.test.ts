@@ -5,7 +5,6 @@ import moment from 'moment';
 import { FilenameField } from '../src/Query/Filter/FilenameField';
 import { Group } from '../src/Query/Group';
 import type { Grouper } from '../src/Query/Grouper';
-import type { GroupingProperty } from '../src/Query/Grouper';
 import type { Task } from '../src/Task';
 import { PathField } from '../src/Query/Filter/PathField';
 import { TagsField } from '../src/Query/Filter/TagsField';
@@ -13,11 +12,6 @@ import { FolderField } from '../src/Query/Filter/FolderField';
 import { fromLine } from './TestHelpers';
 
 window.moment = moment;
-
-function checkGroupNamesOfTask(task: Task, property: GroupingProperty, expectedGroupNames: string[]) {
-    const group = Group.getGroupNamesForTask(Group.fromGroupingProperty(property), task);
-    expect(group).toEqual(expectedGroupNames);
-}
 
 describe('Grouping tasks', () => {
     it('groups correctly by path', () => {
@@ -218,68 +212,4 @@ describe('Grouping tasks', () => {
             "
         `);
     });
-});
-
-describe('Group names', () => {
-    type GroupNameCase = {
-        groupBy: GroupingProperty;
-        taskLine: string;
-        expectedGroupNames: string[];
-        path?: string;
-        precedingHeading?: string | null;
-    };
-
-    const groupNameCases: Array<GroupNameCase> = [
-        // Maintenance Note: tests are in alphabetical order of 'groupBy' name
-
-        // -----------------------------------------------------------
-        // group by backlink
-        {
-            groupBy: 'backlink',
-            taskLine: '- [ ] xxx', // no location supplied
-            expectedGroupNames: ['Unknown Location'],
-            precedingHeading: 'heading',
-        },
-        {
-            groupBy: 'backlink',
-            taskLine: '- [ ] xxx', // no heading supplied
-            expectedGroupNames: ['c'],
-            path: 'a/b/c.md',
-        },
-        {
-            groupBy: 'backlink',
-            taskLine: '- [ ] xxx',
-            expectedGroupNames: ['c > heading'],
-            path: 'a/b/c.md',
-            precedingHeading: 'heading',
-        },
-        {
-            groupBy: 'backlink',
-            taskLine: '- [ ] xxx',
-            expectedGroupNames: ['c'], // If file name and heading are identical, avoid duplication ('c > c')
-            path: 'a/b/c.md',
-            precedingHeading: 'c',
-        },
-        {
-            groupBy: 'backlink',
-            taskLine: '- [ ] xxx',
-            // underscores in file name component are escaped
-            // but underscores in the heading component are not
-            expectedGroupNames: ['\\_c\\_ > heading _italic text_'],
-            path: 'a/b/_c_.md',
-            precedingHeading: 'heading _italic text_',
-        },
-    ];
-
-    test.concurrent.each<GroupNameCase>(groupNameCases)(
-        'assigns correct group name (%j)',
-        ({ groupBy, taskLine, path, expectedGroupNames, precedingHeading }) => {
-            const task = fromLine({
-                line: taskLine,
-                path: path ? path : '',
-                precedingHeader: precedingHeading,
-            });
-            checkGroupNamesOfTask(task, groupBy, expectedGroupNames);
-        },
-    );
 });

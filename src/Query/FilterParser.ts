@@ -25,6 +25,7 @@ import type { Grouper } from './Grouper';
 import { MultiTextField } from './Filter/MultiTextField';
 import { FolderField } from './Filter/FolderField';
 import { RootField } from './Filter/RootField';
+import { BacklinkField } from './Filter/BacklinkField';
 
 const fieldCreators = [
     () => new StatusNameField(), // status.name is before status, to avoid ambiguity
@@ -49,6 +50,7 @@ const fieldCreators = [
     () => new RecurrenceField(),
     () => new FolderField(),
     () => new RootField(),
+    () => new BacklinkField(),
 ];
 
 export function parseFilter(filterString: string): FilterOrErrorMessage | null {
