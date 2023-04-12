@@ -5,9 +5,8 @@ import { getSettings } from '../Config/Settings';
 import { GlobalFilter } from '../Config/GlobalFilter';
 import { Sort } from './Sort';
 import type { Sorter } from './Sorter';
-import type { TaskGroups } from './TaskGroups';
+import { TaskGroups } from './TaskGroups';
 import * as FilterParser from './FilterParser';
-import { Group } from './Group';
 import type { Grouper } from './Grouper';
 import type { Filter } from './Filter/Filter';
 
@@ -136,7 +135,7 @@ export class Query implements IQuery {
         const { debugSettings } = getSettings();
         const tasksSorted = debugSettings.ignoreSortInstructions ? tasks : Sort.by(this.sorting, tasks);
         const tasksSortedLimited = tasksSorted.slice(0, this.limit);
-        return Group.by(this.grouping, tasksSortedLimited);
+        return new TaskGroups(this.grouping, tasksSortedLimited);
     }
 
     private parseHideOptions({ line }: { line: string }): void {
