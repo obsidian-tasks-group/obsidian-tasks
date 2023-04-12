@@ -1,5 +1,6 @@
 import type { Task } from '../../Task';
 import type { IStringMatcher } from '../Matchers/IStringMatcher';
+import { Grouper } from '../Grouper';
 import { TextField } from './TextField';
 import type { FilterFunction } from './Filter';
 
@@ -57,5 +58,12 @@ export abstract class MultiTextField extends TextField {
             const match = matcher!.matchesAnyOf(this.values(task));
             return negate ? !match : match;
         };
+    }
+
+    /**
+     * This overloads {@link Field.createGrouper} to put a plural field name in the {@link Grouper.property}.
+     */
+    public createGrouper(): Grouper {
+        return new Grouper(this.fieldNamePlural(), this.grouper());
     }
 }
