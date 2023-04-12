@@ -1,11 +1,11 @@
 import { verify } from 'approvals/lib/Providers/Jest/JestApprovals';
 
+import { StatusField } from '../src/Query/Filter/StatusField';
 import { Status } from '../src/Status';
 import type { Task } from '../src/Task';
 import { StatusConfiguration, StatusType } from '../src/StatusConfiguration';
 import type { FilterOrErrorMessage } from '../src/Query/Filter/Filter';
 import * as FilterParser from '../src/Query/FilterParser';
-import { Group } from '../src/Query/Group';
 import { StatusNameField } from '../src/Query/Filter/StatusNameField';
 import { StatusTypeField } from '../src/Query/Filter/StatusTypeField';
 import type { StatusCollection, StatusCollectionEntry } from '../src/StatusCollection';
@@ -203,7 +203,7 @@ function verifyTransitionsAsMarkdownTable(statuses: Status[]) {
         table.addRow(cells);
     }
 
-    showGroupNamesForAllTasks('status', Group.grouperForProperty('status'));
+    showGroupNamesForAllTasks('status', new StatusField().createGrouper().grouper);
     showGroupNamesForAllTasks('status.type', new StatusTypeField().createGrouper().grouper);
     showGroupNamesForAllTasks('status.name', new StatusNameField().createGrouper().grouper);
 

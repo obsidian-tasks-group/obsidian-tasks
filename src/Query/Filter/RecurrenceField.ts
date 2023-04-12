@@ -1,4 +1,5 @@
 import type { Task } from '../../Task';
+import type { GrouperFunction } from '../Grouper';
 import { TextField } from './TextField';
 
 export class RecurrenceField extends TextField {
@@ -12,5 +13,19 @@ export class RecurrenceField extends TextField {
         } else {
             return '';
         }
+    }
+
+    public supportsGrouping(): boolean {
+        return true;
+    }
+
+    public grouper(): GrouperFunction {
+        return (task: Task) => {
+            if (task.recurrence !== null) {
+                return [task.recurrence!.toText()];
+            } else {
+                return ['None'];
+            }
+        };
     }
 }

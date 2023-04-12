@@ -2,10 +2,13 @@
  * @jest-environment jsdom
  */
 import moment from 'moment';
+import { FilenameField } from '../src/Query/Filter/FilenameField';
 import { Group } from '../src/Query/Group';
 import type { Grouper } from '../src/Query/Grouper';
 import type { GroupingProperty } from '../src/Query/Grouper';
 import type { Task } from '../src/Task';
+import { PathField } from '../src/Query/Filter/PathField';
+import { TagsField } from '../src/Query/Filter/TagsField';
 import { fromLine } from './TestHelpers';
 
 window.moment = moment;
@@ -24,8 +27,7 @@ describe('Grouping tasks', () => {
         const inputs = [a, b, c];
 
         // Act
-        const groupBy: GroupingProperty = 'path';
-        const grouping = [Group.fromGroupingProperty(groupBy)];
+        const grouping = [new PathField().createGrouper()];
         const groups = Group.by(grouping, inputs);
 
         // Assert
@@ -79,8 +81,7 @@ describe('Grouping tasks', () => {
     it('groups empty task list correctly', () => {
         // Arrange
         const inputs: Task[] = [];
-        const group_by: GroupingProperty = 'path';
-        const grouping = [Group.fromGroupingProperty(group_by)];
+        const grouping = [new PathField().createGrouper()];
 
         // Act
         const groups = Group.by(grouping, inputs);
@@ -106,8 +107,7 @@ describe('Grouping tasks', () => {
         });
         const inputs = [a, b, c];
 
-        const group_by: GroupingProperty = 'path';
-        const grouping = [Group.fromGroupingProperty(group_by)];
+        const grouping = [new PathField().createGrouper()];
         const groups = Group.by(grouping, inputs);
         expect(groups.toString()).toMatchInlineSnapshot(`
             "
@@ -146,8 +146,7 @@ describe('Grouping tasks', () => {
         });
         const inputs = [a, b, c];
 
-        const group_by: GroupingProperty = 'tags';
-        const grouping = [Group.fromGroupingProperty(group_by)];
+        const grouping = [new TagsField().createGrouper()];
         const groups = Group.by(grouping, inputs);
         expect(groups.toString()).toMatchInlineSnapshot(`
             "
@@ -186,7 +185,7 @@ describe('Grouping tasks', () => {
         });
         const tasks = [t1, t2, t3];
 
-        const grouping: Grouper[] = [Group.fromGroupingProperty('folder'), Group.fromGroupingProperty('filename')];
+        const grouping: Grouper[] = [Group.fromGroupingProperty('folder'), new FilenameField().createGrouper()];
 
         // Act
         const groups = Group.by(grouping, tasks);
@@ -271,21 +270,6 @@ describe('Group names', () => {
         },
 
         // -----------------------------------------------------------
-        // group by filename
-        {
-            groupBy: 'filename',
-            taskLine: '- [ ] a',
-            expectedGroupNames: ['[[c]]'],
-            path: 'a/b/c.md',
-        },
-        {
-            groupBy: 'filename',
-            taskLine: '- [ ] a',
-            expectedGroupNames: ['[[_c_]]'], // underscores in links shall not be escaped
-            path: 'a/b/_c_.md',
-        },
-
-        // -----------------------------------------------------------
         // group by folder
         {
             groupBy: 'folder',
@@ -305,113 +289,6 @@ describe('Group names', () => {
             taskLine: '- [ ] a',
             expectedGroupNames: ['/'],
             path: 'a.md',
-        },
-
-        // -----------------------------------------------------------
-        // group by heading
-        {
-            groupBy: 'heading',
-            taskLine: '- [ ] xxx',
-            expectedGroupNames: ['(No heading)'],
-            precedingHeading: null,
-        },
-        {
-            groupBy: 'heading',
-            taskLine: '- [ ] xxx',
-            expectedGroupNames: ['(No heading)'],
-            precedingHeading: '',
-        },
-        {
-            groupBy: 'heading',
-            taskLine: '- [ ] xxx',
-            expectedGroupNames: ['heading'],
-            precedingHeading: 'heading',
-        },
-        {
-            groupBy: 'heading',
-            taskLine: '- [ ] xxx',
-            expectedGroupNames: ['heading _italic text_'], // underscores in headings are NOT escaped - will be rendered
-            precedingHeading: 'heading _italic text_',
-        },
-
-        // -----------------------------------------------------------
-        // group by path
-        {
-            groupBy: 'path',
-            taskLine: '- [ ] a',
-            path: 'a/b/c.md',
-            expectedGroupNames: ['a/b/c'], // the file extension is removed
-        },
-        {
-            groupBy: 'path',
-            taskLine: '- [ ] a',
-            path: '_a_/b/_c_.md',
-            expectedGroupNames: ['\\_a\\_/b/\\_c\\_'], // underscores in paths are escaped
-        },
-        {
-            groupBy: 'path',
-            taskLine: '- [ ] a',
-            path: 'a\\b\\c.md',
-            expectedGroupNames: ['a\\\\b\\\\c'], // backslashes are escaped. (this artificial example is to test escaping)
-        },
-
-        // -----------------------------------------------------------
-        // group by priority
-        {
-            groupBy: 'priority',
-            taskLine: '- [ ] a ⏫',
-            expectedGroupNames: ['Priority 1: High'],
-        },
-        {
-            groupBy: 'priority',
-            taskLine: '- [ ] a 🔼',
-            expectedGroupNames: ['Priority 2: Medium'],
-        },
-        {
-            groupBy: 'priority',
-            taskLine: '- [ ] a',
-            expectedGroupNames: ['Priority 3: None'],
-        },
-        {
-            groupBy: 'priority',
-            taskLine: '- [ ] a 🔽',
-            expectedGroupNames: ['Priority 4: Low'],
-        },
-
-        // -----------------------------------------------------------
-        // group by recurrence
-        {
-            groupBy: 'recurrence',
-            taskLine: '- [ ] a',
-            expectedGroupNames: ['None'],
-        },
-        {
-            groupBy: 'recurrence',
-            taskLine: '- [ ] a 🔁 every Sunday',
-            expectedGroupNames: ['every week on Sunday'],
-        },
-        {
-            groupBy: 'recurrence',
-            taskLine: '- [ ] a 🔁 every Sunday when done',
-            expectedGroupNames: ['every week on Sunday when done'],
-        },
-        {
-            groupBy: 'recurrence',
-            taskLine: '- [ ] a 🔁 every 6 months on the 2nd Wednesday',
-            expectedGroupNames: ['every 6 months on the 2nd Wednesday'],
-        },
-
-        // -----------------------------------------------------------
-        // group by recurring
-        {
-            groupBy: 'recurring',
-            taskLine: '- [ ] a',
-            expectedGroupNames: ['Not Recurring'],
-        },
-        {
-            groupBy: 'recurring',
-            taskLine: '- [ ] a 🔁 every Sunday',
-            expectedGroupNames: ['Recurring'],
         },
 
         // -----------------------------------------------------------
@@ -441,58 +318,6 @@ describe('Group names', () => {
             expectedGroupNames: ['/'],
             path: 'a.md',
         },
-
-        // -----------------------------------------------------------
-        // group by status
-        {
-            groupBy: 'status',
-            taskLine: '- [ ] a',
-            expectedGroupNames: ['Todo'],
-        },
-        {
-            groupBy: 'status',
-            taskLine: '- [x] a',
-            expectedGroupNames: ['Done'],
-        },
-        {
-            groupBy: 'status',
-            taskLine: '- [X] a',
-            expectedGroupNames: ['Done'],
-        },
-        {
-            groupBy: 'status',
-            taskLine: '- [/] a',
-            expectedGroupNames: ['Done'],
-        },
-        {
-            groupBy: 'status',
-            taskLine: '- [-] a',
-            expectedGroupNames: ['Done'],
-        },
-        {
-            groupBy: 'status',
-            taskLine: '- [!] a',
-            expectedGroupNames: ['Done'],
-        },
-
-        // -----------------------------------------------------------
-        // group by tags
-        {
-            groupBy: 'tags',
-            taskLine: '- [ ] a #tag1',
-            expectedGroupNames: ['#tag1'],
-        },
-        {
-            groupBy: 'tags',
-            taskLine: '- [ ] a #tag1 #tag2',
-            expectedGroupNames: ['#tag1', '#tag2'],
-        },
-        {
-            groupBy: 'tags',
-            taskLine: '- [x] a',
-            expectedGroupNames: ['(No tags)'],
-        },
-
         // -----------------------------------------------------------
     ];
 

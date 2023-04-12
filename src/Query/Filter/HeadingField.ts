@@ -1,3 +1,4 @@
+import type { GrouperFunction } from '../Grouper';
 import type { Task } from '../../Task';
 import { TextField } from './TextField';
 
@@ -24,5 +25,18 @@ export class HeadingField extends TextField {
 
     supportsSorting(): boolean {
         return true;
+    }
+
+    public supportsGrouping(): boolean {
+        return true;
+    }
+
+    public grouper(): GrouperFunction {
+        return (task: Task) => {
+            if (task.precedingHeader === null || task.precedingHeader.length === 0) {
+                return ['(No heading)'];
+            }
+            return [task.precedingHeader];
+        };
     }
 }

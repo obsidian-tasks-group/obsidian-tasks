@@ -1,6 +1,7 @@
 import type { Task } from '../../Task';
 import type { Comparator } from '../Sorter';
 import { Sorter } from '../Sorter';
+import type { GrouperFunction } from '../Grouper';
 import type { FilterOrErrorMessage } from './Filter';
 import { FilterInstructions } from './FilterInstructions';
 import { MultiTextField } from './MultiTextField';
@@ -119,6 +120,23 @@ export class TagsField extends MultiTextField {
             const tagA = a.tags[tagInstanceToSortBy];
             const tagB = b.tags[tagInstanceToSortBy];
             return tagA.localeCompare(tagB, undefined, { numeric: true });
+        };
+    }
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // Grouping
+    // -----------------------------------------------------------------------------------------------------------------
+
+    public supportsGrouping(): boolean {
+        return true;
+    }
+
+    public grouper(): GrouperFunction {
+        return (task: Task) => {
+            if (task.tags.length == 0) {
+                return ['(No tags)'];
+            }
+            return task.tags;
         };
     }
 }

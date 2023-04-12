@@ -1,6 +1,7 @@
 import type { Task } from '../../Task';
 import type { Comparator } from '../Sorter';
 import { StatusType } from '../../StatusConfiguration';
+import type { GrouperFunction } from '../Grouper';
 import { FilterInstructionsBasedField } from './FilterInstructionsBasedField';
 
 export class StatusField extends FilterInstructionsBasedField {
@@ -63,5 +64,18 @@ export class StatusField extends FilterInstructionsBasedField {
         } else {
             return 'Done';
         }
+    }
+
+    public supportsGrouping(): boolean {
+        return true;
+    }
+
+    public grouper(): GrouperFunction {
+        return (task: Task) => {
+            // Backwards-compatibility note: In Tasks 1.22.0 and earlier, the only
+            // names used by 'group by status' were 'Todo' and 'Done' - and
+            // any character other than a space was considered to be 'Done'.
+            return [StatusField.oldStatusName(task)];
+        };
     }
 }

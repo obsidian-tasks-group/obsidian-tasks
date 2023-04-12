@@ -1,6 +1,7 @@
 import { Priority, Task } from '../../Task';
 import { Explanation } from '../Explain/Explanation';
 import type { Comparator } from '../Sorter';
+import type { GrouperFunction } from '../Grouper';
 import { Field } from './Field';
 import { Filter, FilterOrErrorMessage } from './Filter';
 
@@ -77,6 +78,31 @@ export class PriorityField extends Field {
     public comparator(): Comparator {
         return (a: Task, b: Task) => {
             return a.priority.localeCompare(b.priority);
+        };
+    }
+
+    public supportsGrouping(): boolean {
+        return true;
+    }
+
+    public grouper(): GrouperFunction {
+        return (task: Task) => {
+            let priorityName = 'ERROR';
+            switch (task.priority) {
+                case Priority.High:
+                    priorityName = 'High';
+                    break;
+                case Priority.Medium:
+                    priorityName = 'Medium';
+                    break;
+                case Priority.None:
+                    priorityName = 'None';
+                    break;
+                case Priority.Low:
+                    priorityName = 'Low';
+                    break;
+            }
+            return [`Priority ${task.priority}: ${priorityName}`];
         };
     }
 }
