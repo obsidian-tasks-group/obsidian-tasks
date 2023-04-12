@@ -15,18 +15,6 @@ export class Group {
         return new TaskGroups(grouping, tasks);
     }
 
-    /**
-     * Return the properties of a single task for the passed grouping property
-     *
-     * The returned string will be rendered, so any special Markdown characters will be escaped
-     *
-     * @param grouping
-     * @param task
-     */
-    public static getGroupNamesForTask(grouping: Grouper, task: Task): string[] {
-        return grouping.grouper(task);
-    }
-
     public static escapeMarkdownCharacters(filename: string) {
         // https://wilsonmar.github.io/markdown-text-for-github-from-html/#special-characters
         return filename.replace(/\\/g, '\\\\').replace(/_/g, '\\_');
