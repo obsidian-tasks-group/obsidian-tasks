@@ -1,4 +1,4 @@
-<script lang="typescript">
+<script lang="ts">
     import { Component, MarkdownRenderer } from "obsidian";
     import { afterUpdate } from "svelte";
     export let component: Component;

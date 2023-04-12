@@ -1,18 +1,11 @@
-<script lang="typescript">
+<script lang="ts">
   import type { Component } from "obsidian";
   import Icon from "./Icon.svelte";
   import Markdown from "./Markdown.svelte";
 
-  export let reminder= {
-    title: "Reminder Title",
-    file: "path/to/file.md",
-    time: new Date(),
-    rowNumber: 1,
-    done: false
-  };
-
+  export let reminder: any;
   export let component: Component;
-  // export let onRemindMeLater: (time: DateTime) => void;
+  export let onRemindMeLater: (time: any) => void;
   export let onDone: () => void;
   export let onOpenFile: () => void;
   export let onMute: () => void;
@@ -26,7 +19,7 @@
     if (selected == null) {
       return;
     }
-    // onRemindMeLater(selected.later());
+    onRemindMeLater(selected); // selected.later
   }
 </script>
 

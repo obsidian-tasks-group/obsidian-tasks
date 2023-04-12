@@ -31,7 +31,7 @@ export default class TasksPlugin extends Plugin {
         logging.registerConsoleLogger();
         console.log('loading plugin "tasks"');
         console.log('Trigger notification');
-        this.taskNotification = new TaskNotification();
+        this.taskNotification = new TaskNotification(this.app);
         this.taskNotification.show();
 
         await this.loadSettings();

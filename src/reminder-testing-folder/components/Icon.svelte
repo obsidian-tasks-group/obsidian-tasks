@@ -1,4 +1,4 @@
-<script lang="typescript">
+<script lang="ts">
     import { setIcon } from "obsidian";
     import { onMount } from "svelte";
     export let icon = "";

@@ -1,0 +1,27 @@
+/* fakecss:/Users/erikhandeland/Documents/Developer/obsidian-tasks/src/reminder-testing-folder/components/Icon.esbuild-svelte-fake-css */
+.icon.svelte-1gcidq0 {
+  vertical-align: middle;
+}
+
+/* fakecss:/Users/erikhandeland/Documents/Developer/obsidian-tasks/src/reminder-testing-folder/components/Reminder.esbuild-svelte-fake-css */
+main.svelte-yfmg28 {
+  padding: 1em;
+  margin: 0 auto;
+}
+.reminder-actions.svelte-yfmg28 {
+  margin-top: 1rem;
+  display: flex;
+  gap: 0.5rem;
+}
+.reminder-file.svelte-yfmg28 {
+  color: var(--text-muted);
+  cursor: pointer;
+}
+.reminder-file.svelte-yfmg28:hover {
+  color: var(--text-normal);
+  text-decoration: underline;
+}
+.later-select.svelte-yfmg28 {
+  font-size: 14px;
+}
+/*# sourceMappingURL=data:application/json;base64,ewogICJ2ZXJzaW9uIjogMywKICAic291cmNlcyI6IFsiSWNvbi5zdmVsdGUiLCAiUmVtaW5kZXIuc3ZlbHRlIl0sCiAgInNvdXJjZXNDb250ZW50IjogW251bGwsIG51bGxdLAogICJtYXBwaW5ncyI6ICI7QUFlSTtBQUNJOzs7O0FDNENOO0FBQ0U7QUFDQTs7QUFHRjtBQUNFO0FBQ0E7QUFDQTs7QUFHRjtBQUNFO0FBQ0E7O0FBR0Y7QUFDRTtBQUNBOztBQUdGO0FBQ0U7OyIsCiAgIm5hbWVzIjogW10KfQo= */
