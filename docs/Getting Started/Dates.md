@@ -113,9 +113,6 @@ Created dates use a heavy plus emoji: ➕.
 - [ ] take out the trash ➕ 2021-04-09
 ```
 
-> [!info]
-[[Auto-Suggest]] does not yet support the created date field. We are tracking this in [issue #1743](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1743).
-
 ### Done date
 
 Unless you disable 'Set done date on every completed task' in settings (and restart Obsidian), the Tasks plugin will help you track when your tasks were completed.
