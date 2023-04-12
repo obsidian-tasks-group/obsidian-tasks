@@ -5,6 +5,7 @@ import { DateParser } from '../DateParser';
 import { Explanation } from '../Explain/Explanation';
 import type { Comparator } from '../Sorter';
 import { compareByDate } from '../../lib/DateTools';
+import type { GrouperFunction } from '../Grouper';
 import { Field } from './Field';
 import { Filter, type FilterFunction, FilterOrErrorMessage } from './Filter';
 import { FilterInstructions } from './FilterInstructions';
@@ -197,6 +198,20 @@ export abstract class DateField extends Field {
     public comparator(): Comparator {
         return (a: Task, b: Task) => {
             return compareByDate(this.date(a), this.date(b));
+        };
+    }
+
+    public supportsGrouping(): boolean {
+        return true;
+    }
+
+    public grouper(): GrouperFunction {
+        return (task: Task) => {
+            const date = this.date(task);
+            if (date === null) {
+                return ['No ' + this.fieldName() + ' date'];
+            }
+            return [date.format('YYYY-MM-DD dddd')];
         };
     }
 }

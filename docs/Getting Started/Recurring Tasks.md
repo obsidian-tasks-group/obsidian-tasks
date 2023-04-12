@@ -32,7 +32,7 @@ If you mark the above task "done", the file will now look like this:
 
 The next Sunday after 25 April 2021 is on 2 May.
 
-Alternatively, if you have enabled addition of [[Dates#➕ Created|created dates]], the file will instead now look like this, showing the date that the new task was created:
+Alternatively, if you have enabled addition of [[Dates#Created date|created dates]], the file will instead now look like this, showing the date that the new task was created:
 
 ```markdown
 - [ ] take out the trash 🔁 every Sunday ➕ 2023-03-10 📅 2021-05-02

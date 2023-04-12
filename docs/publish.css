@@ -3,6 +3,8 @@ These two files should always have the same CSS content, please,
 so that the styling in the Obsidian app and the published docs
 is consistent:
 
+- contributing/publish.css
+- contributing/.obsidian/snippets/publish-simulation.css
 - docs/.obsidian/snippets/publish-simulation.css
 - docs/publish.css
 
@@ -41,6 +43,12 @@ img {
 
 /* Put a pale border around inline code samples, to make them stand out */
 :not(pre, figure) > code {
+    border: 1px solid var(--color-base-30);
+    border-radius:4px
+}
+
+/* Put a pale border around PRE code samples, to make them stand out */
+pre {
     border: 1px solid var(--color-base-30);
     border-radius:4px
 }
