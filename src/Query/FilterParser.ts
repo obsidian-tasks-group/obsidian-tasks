@@ -93,10 +93,10 @@ export function parseGrouper(line: string): Grouper | null {
                 return field.createGrouper();
             }
 
-            // MultiTextField is written as a plural
+            // MultiTextField is written as a plural ('group by tags')
             // See also MultiTextField.createGrouper()
             if (field instanceof MultiTextField) {
-                if (line === `group by ${fieldName}s`) {
+                if (line === `group by ${field.fieldNamePlural()}`) {
                     return field.createGrouper();
                 }
             }

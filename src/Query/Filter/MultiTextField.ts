@@ -19,7 +19,7 @@ export abstract class MultiTextField extends TextField {
      * Returns the plural form of the field's name.
      * If not overridden, returns the singular form appended with an "s".
      */
-    protected fieldNamePlural(): string {
+    public fieldNamePlural(): string {
         return this.fieldNameSingular() + 's';
     }
 
