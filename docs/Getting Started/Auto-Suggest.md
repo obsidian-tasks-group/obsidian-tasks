@@ -59,7 +59,7 @@ Here is a more detailed walk through of the creation of a new task, which can be
 
 7. Now our task is complete:
 
-    ![auto-suggest-menu-after-due-emoji](../images/auto-suggest-menu-after-due-date.png)
+    ![auto-suggest-menu-after-due-date](../images/auto-suggest-menu-after-due-date.png)
 
 ## Details
 
