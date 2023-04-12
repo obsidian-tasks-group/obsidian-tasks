@@ -1,4 +1,3 @@
-import { Group } from '../Group';
 import type { Task } from '../../Task';
 import type { GrouperFunction } from '../Grouper';
 import { TextField } from './TextField';
@@ -28,7 +27,7 @@ export class RootField extends TextField {
 
     public grouper(): GrouperFunction {
         return (task: Task) => {
-            return [Group.escapeMarkdownCharacters(this.value(task))];
+            return [TextField.escapeMarkdownCharacters(this.value(task))];
         };
     }
 }

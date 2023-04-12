@@ -113,4 +113,9 @@ export abstract class TextField extends Field {
             return [this.value(task)];
         };
     }
+
+    public static escapeMarkdownCharacters(filename: string) {
+        // https://wilsonmar.github.io/markdown-text-for-github-from-html/#special-characters
+        return filename.replace(/\\/g, '\\\\').replace(/_/g, '\\_');
+    }
 }

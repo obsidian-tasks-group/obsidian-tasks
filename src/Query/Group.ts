@@ -14,9 +14,4 @@ export class Group {
     public static by(grouping: Grouper[], tasks: Task[]): TaskGroups {
         return new TaskGroups(grouping, tasks);
     }
-
-    public static escapeMarkdownCharacters(filename: string) {
-        // https://wilsonmar.github.io/markdown-text-for-github-from-html/#special-characters
-        return filename.replace(/\\/g, '\\\\').replace(/_/g, '\\_');
-    }
 }
