@@ -22,6 +22,7 @@ import { RecurrenceField } from './Filter/RecurrenceField';
 import type { FilterOrErrorMessage } from './Filter/Filter';
 import type { Sorter } from './Sorter';
 import type { Grouper } from './Grouper';
+import { MultiTextField } from './Filter/MultiTextField';
 
 const fieldCreators = [
     () => new StatusNameField(), // status.name is before status, to avoid ambiguity
@@ -87,16 +88,18 @@ export function parseGrouper(line: string): Grouper | null {
     for (const creator of fieldCreators) {
         const field = creator();
         const fieldName = field.fieldNameSingular();
-        if (line === `group by ${fieldName}`) {
-            if (field.supportsGrouping()) {
+        if (field.supportsGrouping()) {
+            if (line === `group by ${fieldName}`) {
                 return field.createGrouper();
             }
-        }
 
-        // Temporary workaround for TagsField: query is done on plural 'tagS',
-        // but field.fieldNameSingular() returns 'tag'
-        if (line === 'group by tags' && field instanceof TagsField) {
-            return field.createGrouper();
+            // MultiTextField is written as a plural
+            // See also MultiTextField.createGrouper()
+            if (field instanceof MultiTextField) {
+                if (line === `group by ${fieldName}s`) {
+                    return field.createGrouper();
+                }
+            }
         }
     }
     return null;
