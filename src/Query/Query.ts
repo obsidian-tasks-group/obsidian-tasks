@@ -50,7 +50,7 @@ export class Query implements IQuery {
                         break;
                     case this.parseSortBy({ line }):
                         break;
-                    case this.parseGroupBy2({ line }):
+                    case this.parseGroupBy({ line }):
                         break;
                     case this.hideOptionsRegexp.test(line):
                         this.parseHideOptions({ line });
@@ -215,15 +215,13 @@ export class Query implements IQuery {
     }
 
     /**
-     * New-style parsing of `group by` lines, for grouping that is implemented in the {@link Field}
+     * Parsing of `group by` lines, for grouping that is implemented in the {@link Field}
      * classes.
      *
-     * Once the original {@link parseGroupBy} has been removed, rename this to parseGroupBy()
      * @param line
      * @private
-     * @see parseGroupBy
      */
-    private parseGroupBy2({ line }: { line: string }): boolean {
+    private parseGroupBy({ line }: { line: string }): boolean {
         const groupingMaybe = FilterParser.parseGrouper(line);
         if (groupingMaybe) {
             this._grouping.push(groupingMaybe);
