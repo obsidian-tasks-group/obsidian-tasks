@@ -84,6 +84,13 @@ export class DateParser {
                 const { firstDayOfTheWeek } = getSettings();
                 dateRange.start.add(firstDayOfTheWeek, 'day');
                 dateRange.end.add(firstDayOfTheWeek, 'day');
+
+                // We may have shifted out the current week,
+                // so go one week before
+                // format('E') is the ISO8601 weekday (Mon/1...Sun...7)
+                if (firstDayOfTheWeek + 1 > +moment().format('E')) {
+                    dateRange.moveToPrevious('week');
+                }
             }
 
             return dateRange;

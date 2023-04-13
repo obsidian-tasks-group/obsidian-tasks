@@ -187,8 +187,8 @@ describe('Date Parser - weeks in relative date ranges start any day', () => {
         [2, '2023-03-22', '2023-03-28'],
         [3, '2023-03-23', '2023-03-29'],
         [4, '2023-03-24', '2023-03-30'],
-        [5, '2023-03-25', '2023-03-31'],
-        [6, '2023-03-26', '2023-04-01'],
+        [5, '2023-03-18', '2023-03-24'],
+        [6, '2023-03-19', '2023-03-25'],
     ])('should shift by %s days', (shift: number, rangeStart: string, rangeEnd: string) => {
         updateSettings({ firstDayOfTheWeek: shift });
         testParsingDateRange('this week', rangeStart, rangeEnd);
