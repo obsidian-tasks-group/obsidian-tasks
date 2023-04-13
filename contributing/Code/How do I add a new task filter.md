@@ -35,7 +35,13 @@ For help on editing the documentation, see [[About Documentation]]
 
 - Document the new instruction(s) in [docs/Queries/Filters.md](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/docs/Queries/Filters.md)
   - Add the placeholder to indicate which version the feature will be released in: see [[Version numbers in documentation]]
-- Add the new instruction(s) to [docs/Quick Reference/Quick Reference.md](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/docs/Quick%20Reference/Quick%20Reference.md)
+- Add the new instruction(s) to the big table in [docs/Quick Reference/Quick Reference.md](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/docs/Quick%20Reference/Quick%20Reference.md)
+
+> [!tip]
+>
+> - The [Advanced Tables](https://github.com/tgrosinger/advanced-tables-obsidian#readme) plugin is installed in the `docs/` vault to aid editing tables.
+> - So there is a command to insert a new row.
+> - And you can hit `Tab` to align the columns.
 
 ## Examples Pull Requests
 
