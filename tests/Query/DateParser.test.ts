@@ -181,19 +181,6 @@ describe('Date Parser - weeks in relative date ranges start any day', () => {
         testParsingDateRange('this week', '2023-03-20', '2023-03-26');
     });
 
-    it.each([
-        [0, '2023-03-20', '2023-03-26'],
-        [1, '2023-03-21', '2023-03-27'],
-        [2, '2023-03-22', '2023-03-28'],
-        [3, '2023-03-23', '2023-03-29'],
-        [4, '2023-03-24', '2023-03-30'],
-        [5, '2023-03-18', '2023-03-24'],
-        [6, '2023-03-19', '2023-03-25'],
-    ])('should shift by %s days', (shift: number, rangeStart: string, rangeEnd: string) => {
-        updateSettings({ firstDayOfTheWeek: shift });
-        testParsingDateRange('this week', rangeStart, rangeEnd);
-    });
-
     it('should return correct start of the week', () => {
         const startsOfWeek = [0, 1, 2, 3, 4, 5, 6];
         const queries = ['this week', 'next week', '2023-W12'];
