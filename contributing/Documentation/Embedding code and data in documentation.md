@@ -176,9 +176,9 @@ The following test source file exists purely to write out files for embedding in
 
 For the ITS theme, the above tests generate these `*.approved.*` files, using [[Approval Tests]]:
 
-- [tests/DocsSamplesForStatuses.test.Theme_ITS Table.approved.md](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/DocsSamplesForStatuses.test.Theme_ITS%20Table.approved.md)
-- [tests/DocsSamplesForStatuses.test.Theme_ITS Tasks.approved.md](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/DocsSamplesForStatuses.test.Theme_ITS%20Tasks.approved.md)
-- [tests/DocsSamplesForStatuses.test.Theme_ITS Text.approved.txt](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/DocsSamplesForStatuses.test.Theme_ITS%20Text.approved.txt)
+- [tests/DocsSamplesForStatuses.test.Theme_ITS_Table.approved.md](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/DocsSamplesForStatuses.test.Theme_ITS_Table.approved.md)
+- [tests/DocsSamplesForStatuses.test.Theme_ITS_Tasks.approved.md](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/DocsSamplesForStatuses.test.Theme_ITS_Tasks.approved.md)
+- [tests/DocsSamplesForStatuses.test.Theme_ITS_Text.approved.txt](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/DocsSamplesForStatuses.test.Theme_ITS_Text.approved.txt)
 
 And mdsnippets then embeds the above `*.approved.*` in to the source file.
 

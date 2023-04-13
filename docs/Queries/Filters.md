@@ -286,7 +286,7 @@ For full details of combining filters with boolean operators, see [[Combining Fi
 > - `starts (before|after|in) <date range>` searches were introduced in Tasks 2.0.0.
 > - `starts (before|after|in) (YYYY-Www|YYYY-mm|YYYY-Qq|YYYY)` searches were introduced in Tasks 3.1.0.
 
-When filtering queries by [[Dates#🛫 Start|start date]],
+When filtering queries by [[Dates#Start date|start date]],
 the result will include tasks without a start date.
 This way, you can use the start date as a filter to filter out any tasks that you cannot yet work on.
 
@@ -298,7 +298,7 @@ Such filter could be:
 
 ### Created Date
 
-See [[Dates#➕ Created|created date]] for how to make Tasks record the created date on any task lines that it creates.
+See [[Dates#Created date|created date]] for how to make Tasks record the created date on any task lines that it creates.
 
 - `no created date`
 - `has created date`
