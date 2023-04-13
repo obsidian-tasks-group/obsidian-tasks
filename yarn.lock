@@ -576,10 +576,10 @@
     minimatch "^3.1.2"
     strip-json-comments "^3.1.1"
 
-"@evilmartians/lefthook@^1.1.1":
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/@evilmartians/lefthook/-/lefthook-1.1.1.tgz#26e0de9ca3df1c8d2d97840f187a52cd95bb5f59"
-  integrity sha512-5C/AD937A6jz4mdBLAKXIeYVkxvLmPWxlv1YWfuHcIwZ2wp4W3z1Htjjtp+7gtO41CoCycIJcaxLfwaAsbS6qA==
+"@evilmartians/lefthook@^1.3.9":
+  version "1.3.9"
+  resolved "https://registry.yarnpkg.com/@evilmartians/lefthook/-/lefthook-1.3.9.tgz#3425f170c2f205d0441c1a90ef554b0d7847db66"
+  integrity sha512-qR2Q0NLKOOx7eNrW99y3IK2eVKWPmhstTUXOulFxWhzQYIpo4W08D+GDUzWC8cTcqI0Ai6f6MM9dY801lyWlHg==
 
 "@humanwhocodes/config-array@^0.10.4":
   version "0.10.4"
