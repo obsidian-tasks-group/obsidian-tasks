@@ -112,7 +112,7 @@ See the tables in the [[Filters#Appendix: Tasks 2.0.0 improvements to date filte
 
 There is also the ability to use numbered date ranges that are independent of the current date. These numbered date range types are supported:
 
-- Week
+- Week ([ISO 8601](https://en.wikipedia.org/wiki/ISO_week_date))
   - Format: `YYYY-Www` (`ww` is the week number, always in 2 digits)
   - Example: `2022-W14`
 - Month
