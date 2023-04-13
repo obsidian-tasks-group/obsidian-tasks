@@ -4,7 +4,7 @@ publish: true
 
 # SQL Queries
 
-<span class="related-pages">#css</span>
+<span class="related-pages">#advanced/sql-search</span>
 
 The SQL query version is more complex but provides more powerful ways to filter your tasks. There are a couple of key differences:
 
@@ -12,6 +12,8 @@ The SQL query version is more complex but provides more powerful ways to filter 
 - If you want to make a fully custom query you need to select all the columns `*` at the moment unless you are grouping by. Selection of individual fields to generate a table is a future feature.
 
 By default you should only need the conditions of the SQL query, that is everything after the `WHERE` clause including the `WHERE` for example `WHERE status->symbol != "x" AND path LIKE '%Journal%' LIMIT 10` which will return 10 tasks not completed (`x`) with `Journal` in the path.
+
+If you want to add comments to your queries you can use the `#` symbol followed by the comment, it will be ignored when processed by the query engine.
 
 ## General Queries
 

@@ -3,32 +3,41 @@ publish: true
 ---
 
 # Operators
-<span class="related-pages">#css</span>
+
+<span class="related-pages">#advanced/sql-search</span>
 
 The following operators can be used in the SQL based queries.
 
 Number
 
-    +,-,*,/
+```text
++,-,*,/
+```
 
 String
 
-    +
+```text
++
+```
 
 Logic
 
-    AND, OR, NOT
-    =, !=, <>, >, >=, <, <=
+```text
+AND, OR, NOT
+=, !=, <>, >, >=, <, <=
+```
 
 ## Complex operators
 
 SQL related
 
-    WHERE v BETWEEN a AND b
-    WHERE v NOT BETWEEN a AND b
-    WHERE v IN (10,20,30)
-    WHERE v NOT IN (SELECT status->symbol FROM tasks WHERE)
-    WHERE v >= ANY (20,30,40)
+```text
+WHERE v BETWEEN a AND b
+WHERE v NOT BETWEEN a AND b
+WHERE v IN (10,20,30)
+WHERE v NOT IN (SELECT status->symbol FROM tasks WHERE)
+WHERE v >= ANY (20,30,40)
+```
 
 Access a child property
 
@@ -60,8 +69,12 @@ Functions
 
 Array members
 
-    WHERE tags->(0) = "work"
+```text
+WHERE tags->(0) = "work"
+```
 
 JavaScript string functions can also be used
 
-    WHERE description->length > 10
+```text
+WHERE description->length > 10
+```

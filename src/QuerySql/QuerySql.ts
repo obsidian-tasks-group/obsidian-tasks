@@ -1,5 +1,4 @@
 import alasql from 'alasql';
-import moment from 'moment';
 import { rrulestr } from 'rrule';
 
 import { TaskLocation } from '../TaskLocation';
@@ -201,6 +200,7 @@ export class QuerySql implements IQuery {
                         this.source = `${queryPrefix} ${this.source}`;
                     }
                 } catch (error) {
+                    this._error = `Unable to parse group statement from ${this.source}`;
                     this.logger.errorWithId(this._queryId, 'Unable to parse group statement.', this.source);
                 }
             } else {
@@ -263,7 +263,7 @@ export class QuerySql implements IQuery {
         }
 
         // Set moment() function available to AlaSQL.
-        alasql.fn.moment = moment;
+        alasql.fn.moment = window.moment;
 
         alasql.fn.pageProperty = function (field) {
             return field;
@@ -336,6 +336,8 @@ export class QuerySql implements IQuery {
                 queryResult = alasql(this.source, [tasks]);
             } catch (error) {
                 queryResult = new Array<Task>();
+                this._error = `Error with query ${error}`;
+
                 this.logger.errorWithId(this._queryId, 'Error with query', error);
             }
             this.logger.debugWithId(this._queryId, `queryResult: ${queryResult.length}`, queryResult);
@@ -354,6 +356,8 @@ export class QuerySql implements IQuery {
                 queryResult = alasql(this.source, [records]);
             } catch (error) {
                 queryResult = new Array<TaskRecord>();
+                this._error = `Error with query ${error}`;
+
                 this.logger.errorWithId(this._queryId, 'Error with query', error);
             }
             this.logger.debugWithId(this._queryId, `queryResult: ${queryResult.length}`, queryResult);
@@ -511,11 +515,11 @@ export class QuerySql implements IQuery {
             indentation: record.indentation,
             listMarker: record.listMarker,
             priority: record.priority,
-            createdDate: record.createdDate !== null ? moment(record.createdDate) : null, // !== null ? new CreatedDateProperty(record.createdDate) : null,
-            startDate: record.startDate !== null ? moment(record.startDate) : null,
-            scheduledDate: record.scheduledDate !== null ? moment(record.scheduledDate) : null,
-            dueDate: record.dueDate !== null ? moment(record.dueDate) : null,
-            doneDate: record.doneDate !== null ? moment(record.doneDate) : null,
+            createdDate: record.createdDate !== null ? window.moment(record.createdDate) : null, // !== null ? new CreatedDateProperty(record.createdDate) : null,
+            startDate: record.startDate !== null ? window.moment(record.startDate) : null,
+            scheduledDate: record.scheduledDate !== null ? window.moment(record.scheduledDate) : null,
+            dueDate: record.dueDate !== null ? window.moment(record.dueDate) : null,
+            doneDate: record.doneDate !== null ? window.moment(record.doneDate) : null,
             recurrence: record.recurrence ? QuerySql.fromRecurrenceRecord(record.recurrence) : null,
             blockLink: record.blockLink,
             tags: record.tags,
