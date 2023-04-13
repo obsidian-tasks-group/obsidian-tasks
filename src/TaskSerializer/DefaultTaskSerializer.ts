@@ -1,4 +1,5 @@
 import type { Moment } from 'moment';
+import { Reminder } from '../reminders/Reminder';
 import { TaskLayout } from '../TaskLayout';
 import type { TaskLayoutComponent } from '../TaskLayout';
 import { Recurrence } from '../Recurrence';
@@ -24,6 +25,7 @@ export interface DefaultTaskSerializerSymbols {
     readonly dueDateSymbol: string;
     readonly doneDateSymbol: string;
     readonly recurrenceSymbol: string;
+    readonly reminderDateSymbol: string;
     readonly TaskFormatRegularExpressions: {
         priorityRegex: RegExp;
         startDateRegex: RegExp;
@@ -32,6 +34,7 @@ export interface DefaultTaskSerializerSymbols {
         dueDateRegex: RegExp;
         doneDateRegex: RegExp;
         recurrenceRegex: RegExp;
+        reminderDateRegex: RegExp;
     };
 }
 
@@ -52,6 +55,7 @@ export const DEFAULT_SYMBOLS: DefaultTaskSerializerSymbols = {
     dueDateSymbol: '📅',
     doneDateSymbol: '✅',
     recurrenceSymbol: '🔁',
+    reminderDateSymbol: '⏲️',
     TaskFormatRegularExpressions: {
         // The following regex's end with `$` because they will be matched and
         // removed from the end until none are left.
@@ -62,6 +66,7 @@ export const DEFAULT_SYMBOLS: DefaultTaskSerializerSymbols = {
         dueDateRegex: /[📅📆🗓] *(\d{4}-\d{2}-\d{2})$/u,
         doneDateRegex: /✅ *(\d{4}-\d{2}-\d{2})$/u,
         recurrenceRegex: /🔁 ?([a-zA-Z0-9, !]+)$/iu,
+        reminderDateRegex: /⏲️ *(\d{4}-\d{2}-\d{2})$/u,
     },
 } as const;
 
@@ -95,6 +100,7 @@ export class DefaultTaskSerializer implements TaskSerializer {
             doneDateSymbol,
             recurrenceSymbol,
             dueDateSymbol,
+            reminderDateSymbol,
         } = this.symbols;
 
         switch (component) {
@@ -137,6 +143,11 @@ export class DefaultTaskSerializer implements TaskSerializer {
                 return layout.options.shortMode
                     ? ' ' + dueDateSymbol
                     : ` ${dueDateSymbol} ${task.dueDate.format(TaskRegularExpressions.dateFormat)}`;
+            case 'reminderDate':
+                if (task.reminders.length <= 0 || task.reminders[0].date === null) return '';
+                return layout.options.shortMode
+                    ? ' ' + reminderDateSymbol
+                    : ` ${reminderDateSymbol} ${task.reminders[0].date.format(TaskRegularExpressions.dateFormat)}`;
             case 'recurrenceRule':
                 if (!task.recurrence) return '';
                 return layout.options.shortMode
@@ -167,6 +178,7 @@ export class DefaultTaskSerializer implements TaskSerializer {
         let scheduledDate: Moment | null = null;
         let dueDate: Moment | null = null;
         let doneDate: Moment | null = null;
+        const reminderDate: Reminder[] = [];
         let createdDate: Moment | null = null;
         let recurrenceRule: string = '';
         let recurrence: Recurrence | null = null;
@@ -254,6 +266,14 @@ export class DefaultTaskSerializer implements TaskSerializer {
                 trailingTags = trailingTags.length > 0 ? [tagName, trailingTags].join(' ') : tagName;
             }
 
+            const reminderDateRegex = line.match(TaskFormatRegularExpressions.reminderDateRegex);
+            if (reminderDateRegex !== null) {
+                reminderDate.push(new Reminder(window.moment(reminderDateRegex[1], TaskRegularExpressions.dateFormat)));
+                line = line.replace(TaskFormatRegularExpressions.reminderDateRegex, '').trim();
+                matched = true;
+                console.log(reminderDate.length);
+            }
+
             runs++;
         } while (matched && runs <= maxRuns);
 
@@ -282,6 +302,7 @@ export class DefaultTaskSerializer implements TaskSerializer {
             doneDate,
             recurrence,
             tags: Task.extractHashtags(line),
+            reminders: reminderDate,
         };
     }
 }

@@ -29,7 +29,7 @@ describe.each(symbolMap)("DefaultTaskSerializer with '$taskFormat' symbols", ({ 
     describe('deserialize', () => {
         it('should parse an empty string', () => {
             const taskDetails = deserialize('');
-            expect(taskDetails).toMatchTaskDetails({});
+            expect(taskDetails).toMatchTaskDetails({ reminders: [] });
         });
 
         it.each([
@@ -40,7 +40,7 @@ describe.each(symbolMap)("DefaultTaskSerializer with '$taskFormat' symbols", ({ 
             { what: 'doneDate', symbol: doneDateSymbol },
         ] as const)('should parse a $what', ({ what, symbol }) => {
             const taskDetails = deserialize(`${symbol} 2021-06-20`);
-            expect(taskDetails).toMatchTaskDetails({ [what]: moment('2021-06-20', 'YYYY-MM-DD') });
+            expect(taskDetails).toMatchTaskDetails({ [what]: moment('2021-06-20', 'YYYY-MM-DD'), reminders: [] });
         });
 
         it('should parse a priority', () => {
@@ -51,7 +51,7 @@ describe.each(symbolMap)("DefaultTaskSerializer with '$taskFormat' symbols", ({ 
 
                 const taskDetails = deserialize(`${prioritySymbol}`);
 
-                expect(taskDetails).toMatchTaskDetails({ priority });
+                expect(taskDetails).toMatchTaskDetails({ priority, reminders: [] });
             }
         });
 
@@ -59,13 +59,18 @@ describe.each(symbolMap)("DefaultTaskSerializer with '$taskFormat' symbols", ({ 
             const taskDetails = deserialize(`${recurrenceSymbol} every day`);
             expect(taskDetails).toMatchTaskDetails({
                 recurrence: new RecurrenceBuilder().rule('every day').build(),
+                reminders: [],
             });
         });
 
         it('should parse tags', () => {
             const description = ' #hello #world #task';
             const taskDetails = deserialize(description);
-            expect(taskDetails).toMatchTaskDetails({ tags: ['#hello', '#world', '#task'], description });
+            expect(taskDetails).toMatchTaskDetails({
+                tags: ['#hello', '#world', '#task'],
+                description,
+                reminders: [],
+            });
         });
     });
 

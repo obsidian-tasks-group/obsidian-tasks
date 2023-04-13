@@ -10,6 +10,7 @@ import { renderTaskLine } from './TaskLineRenderer';
 import type { TaskLineRenderDetails } from './TaskLineRenderer';
 import { DateFallback } from './DateFallback';
 import { compareByDate } from './lib/DateTools';
+import type { Reminder } from './reminders/Reminder';
 
 /**
  * When sorting, make sure low always comes after none. This way any tasks with low will be below any exiting
@@ -101,6 +102,9 @@ export class Task {
     public readonly taskLocation: TaskLocation;
 
     public readonly tags: string[];
+    // setup as an array of objects to allow for multiple reminders in the future
+    // i.e remind on due or start date, currently only used for an explicit Reminder
+    public readonly reminders: Reminder[];
 
     public readonly priority: Priority;
 
@@ -139,6 +143,7 @@ export class Task {
         recurrence,
         blockLink,
         tags,
+        reminders,
         originalMarkdown,
         scheduledDateIsInferred,
     }: {
@@ -156,6 +161,7 @@ export class Task {
         recurrence: Recurrence | null;
         blockLink: string;
         tags: string[] | [];
+        reminders: Reminder[] | [];
         originalMarkdown: string;
         scheduledDateIsInferred: boolean;
     }) {
@@ -166,6 +172,7 @@ export class Task {
         this.taskLocation = taskLocation;
 
         this.tags = tags;
+        this.reminders = reminders;
 
         this.priority = priority;
 
@@ -247,6 +254,8 @@ export class Task {
 
         // Remove the Global Filter if it is there
         taskInfo.tags = taskInfo.tags.filter((tag) => !GlobalFilter.equals(tag));
+
+        taskInfo.reminders = [];
 
         return new Task({
             ...taskInfo,
@@ -494,6 +503,12 @@ export class Task {
             return false;
         }
 
+        // compare reminders
+        if (this.reminders.length !== other.reminders.length) {
+            return false;
+        }
+        // TODO check that date has changed
+
         // Compare Date fields
         args = ['createdDate', 'startDate', 'scheduledDate', 'dueDate', 'doneDate'];
         for (const el of args) {
@@ -525,6 +540,17 @@ export class Task {
      * @returns An array of hashTags found in the string
      */
     public static extractHashtags(description: string): string[] {
+        return description.match(TaskRegularExpressions.hashTags)?.map((tag) => tag.trim()) ?? [];
+    }
+
+    /**
+     * Returns an array of reminders found in string
+     *
+     * @param description A task description that may contain reminders
+     *
+     * @returns An array of reminders found in the string
+     */
+    public static extractReminders(description: string): string[] {
         return description.match(TaskRegularExpressions.hashTags)?.map((tag) => tag.trim()) ?? [];
     }
 }

@@ -2,6 +2,7 @@
  * Various rendering options for a query.
  */
 export class LayoutOptions {
+    // TODO: hideReminderDate
     hideTaskCount: boolean = false;
     hideBacklinks: boolean = false;
     hidePriority: boolean = false;
@@ -25,6 +26,7 @@ export type TaskLayoutComponent =
     | 'startDate'
     | 'scheduledDate'
     | 'dueDate'
+    | 'reminderDate'
     | 'doneDate'
     | 'blockLink';
 
@@ -42,6 +44,7 @@ export class TaskLayout {
         'startDate',
         'scheduledDate',
         'dueDate',
+        'reminderDate',
         'doneDate',
         'blockLink',
     ];

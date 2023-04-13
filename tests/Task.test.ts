@@ -2,6 +2,7 @@
  * @jest-environment jsdom
  */
 import moment from 'moment';
+import { Reminder } from '../src/reminders/Reminder';
 import { Status } from '../src/Status';
 import { Priority, Task } from '../src/Task';
 import { resetSettings, updateSettings } from '../src/Config/Settings';
@@ -1210,6 +1211,14 @@ describe('identicalTo', () => {
         const lhs = new TaskBuilder().tags([]);
         expect(lhs).toBeIdenticalTo(new TaskBuilder().tags([]));
         expect(lhs).not.toBeIdenticalTo(new TaskBuilder().tags(['#stuff']));
+    });
+
+    it('should check reminders', () => {
+        const lhs = new TaskBuilder().reminders([]);
+        expect(lhs).toBeIdenticalTo(new TaskBuilder().reminders([]));
+        expect(lhs).not.toBeIdenticalTo(
+            new TaskBuilder().reminders([new Reminder(moment('2023-03-07', 'YYYY-MM-DD'))]),
+        );
     });
 });
 

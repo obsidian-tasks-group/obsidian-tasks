@@ -61,6 +61,7 @@ describe('TaskSerializer Example', () => {
             return {
                 description,
                 tags: Task.extractHashtags(description),
+                reminders: [],
                 dueDate,
                 priority,
                 startDate: null,
@@ -83,16 +84,17 @@ describe('TaskSerializer Example', () => {
 
     describe('deserialize', () => {
         it('should parse the empty string', () => {
-            expect(ts.deserialize('')).toMatchTaskDetails({});
+            expect(ts.deserialize('')).toMatchTaskDetails({ reminders: [] });
         });
 
         it('should parse just a priority', () => {
-            expect(ts.deserialize('1')).toMatchTaskDetails({ priority: Priority.High });
+            expect(ts.deserialize('1')).toMatchTaskDetails({ priority: Priority.High, reminders: [] });
         });
 
         it('should parse just a description', () => {
             expect(ts.deserialize('Hello World, this is a task description')).toMatchTaskDetails({
                 description: 'Hello World, this is a task description',
+                reminders: [],
             });
         });
 
@@ -100,11 +102,16 @@ describe('TaskSerializer Example', () => {
             expect(ts.deserialize('1 1978-09-21')).toMatchTaskDetails({
                 priority: Priority.High,
                 dueDate: moment('1978-09-21', 'YYYY-MM-DD'),
+                reminders: [],
             });
         });
 
         it('should parse a priority and description', () => {
-            expect(ts.deserialize('1 Wobble')).toMatchTaskDetails({ priority: Priority.High, description: 'Wobble' });
+            expect(ts.deserialize('1 Wobble')).toMatchTaskDetails({
+                priority: Priority.High,
+                description: 'Wobble',
+                reminders: [],
+            });
         });
 
         it('should parse a full task', () => {
@@ -112,6 +119,7 @@ describe('TaskSerializer Example', () => {
                 priority: Priority.High,
                 description: 'Wobble',
                 dueDate: moment('1978-09-21', 'YYYY-MM-DD'),
+                reminders: [],
             });
         });
     });

@@ -1,6 +1,6 @@
 import { Plugin } from 'obsidian';
 
-import { TaskNotification } from './reminder-testing-folder/notification';
+import { TaskNotification } from './reminders/notification';
 import { Cache } from './Cache';
 import { Commands } from './Commands';
 import { TasksEvents } from './TasksEvents';
