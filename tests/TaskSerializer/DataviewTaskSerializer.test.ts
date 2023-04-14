@@ -234,5 +234,31 @@ describe('DataviewTaskSerializer', () => {
             const serialized = serialize(task);
             expect(serialized).toEqual(' #hello #world #task');
         });
+
+        it('should serialize a task with multiple fields and tags', () => {
+            const task = new TaskBuilder()
+                .description('Wobble')
+                .dueDate('2022-07-02')
+                .doneDate('2022-07-02')
+                .startDate('2022-07-02')
+                .scheduledDate('2022-07-02')
+                .priority(Priority.High)
+                .recurrence(
+                    new RecurrenceBuilder()
+                        .rule('every day')
+                        .dueDate('2022-07-02')
+                        .scheduledDate('2022-07-02')
+                        .startDate('2022-07-02')
+                        .build(),
+                )
+                // TaskBuilder appends tasks to the description automatically
+                .tags(['#tag1', '#tag2', '#tag3', '#tag4', '#tag5', '#tag6', '#tag7', '#tag8', '#tag9', '#tag10'])
+                .build();
+
+            const serialized = serialize(task);
+            expect(serialized).toEqual(
+                'Wobble #tag1 #tag2 #tag3 #tag4 #tag5 #tag6 #tag7 #tag8 #tag9 #tag10 [priority:: high] [repeat:: every day] [start:: 2022-07-02] [scheduled:: 2022-07-02] [due:: 2022-07-02] [completion:: 2022-07-02]',
+            );
+        });
     });
 });
