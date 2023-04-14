@@ -102,7 +102,17 @@ export class DateParser {
             if (matched) {
                 // RegExps allow spaces (\s*), remove them before calling moment()
                 const date = matched[0].trim();
-                return new DateRange(moment(date, dateFormat).startOf(range), moment(date, dateFormat).endOf(range));
+
+                const dateRange = new DateRange(
+                    moment(date, dateFormat).startOf(range),
+                    moment(date, dateFormat).endOf(range),
+                );
+
+                if (range === 'isoWeek') {
+                    dateRange.adjustAccordingToWeekStartSettings();
+                }
+
+                return dateRange;
             }
         }
 
