@@ -1,7 +1,7 @@
 import type { TaskLayout, TaskLayoutComponent } from '../TaskLayout';
 import type { Task } from '../Task';
-import { DefaultTaskSerializer, type DefaultTaskSerializerSymbols } from './DefaultTaskSerializer';
 import { Priority } from '../Task';
+import { DefaultTaskSerializer } from './DefaultTaskSerializer';
 
 /**
  * Takes a regex of the form 'key:: value' and turns it into a regex that can parse
@@ -57,7 +57,7 @@ function toInlineFieldRegex(innerFieldRegex: RegExp): RegExp {
  * A symbol map that corresponds to a task format that strives to be compatible with
  *   [Dataview]{@link https://github.com/blacksmithgu/obsidian-dataview}
  */
-export const DATAVIEW_SYMBOLS: DefaultTaskSerializerSymbols = {
+export const DATAVIEW_SYMBOLS = {
     prioritySymbols: {
         High: 'priority:: high',
         Medium: 'priority:: medium',
