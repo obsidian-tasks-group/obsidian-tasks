@@ -41,11 +41,11 @@ WHERE v >= ANY (20,30,40)
 
 Access a child property
 
-The `->` operator is used to access nested data and functions.
+The `->` operator is used to access nested data and functions.
 
-- `property->text` equals `property["text"]` in JavaScript
-- `property->number` equals `property[number]` in JavaScript
-- `property->functionName(args)` equals `property["functionName"](args)` in JavaScript
+- `property->text` equals `property["text"]` in JavaScript
+- `property->number` equals `property[number]` in JavaScript
+- `property->functionName(args)` equals `property["functionName"](args)` in JavaScript
 
 Object property
 

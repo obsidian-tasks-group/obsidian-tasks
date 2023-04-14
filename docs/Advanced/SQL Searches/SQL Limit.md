@@ -11,7 +11,7 @@ To limit the results the LIMIT clause is used, it is possible to use TOP but tha
 The following query will list 3 tasks due from today.
 
 ````text
-```task-sql
+```tasks-sql
 WHERE status->symbol = 'x'
   AND moment(dueDate)->isAfter(moment()->startOf('day'))
 LIMIT 3

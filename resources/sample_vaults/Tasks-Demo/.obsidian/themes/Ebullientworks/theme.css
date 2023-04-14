@@ -951,7 +951,7 @@ h1,
 .print h4::before,
 .print h5::before,
 .print h6::before {
-  content: "§ ";
+  content: "§ ";
   font-size: 0.5em;
   font-weight: 200;
   position: relative;

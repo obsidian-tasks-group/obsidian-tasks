@@ -8,7 +8,7 @@ publish: true
 
 ## Operators in The WHERE Clause
 
-The following basic operators can be used in the `WHERE` clause. More can be found on the [SQL Operators](./SQL Operators) page.
+The following basic operators can be used in the `WHERE` clause. More can be found on the [SQL Operators](./SQL Operators) page.
 
 | Operator | Description                                                                 | Example |
 | -------- | --------------------------------------------------------------------------- | ------- |
@@ -24,21 +24,21 @@ The following basic operators can be used in the `WHERE` clause. More can be f
 
 ## The SQL AND, OR and NOT Operators
 
-The `WHERE` clause can be combined with `AND`, `OR`, and `NOT` operators.
+The `WHERE` clause can be combined with `AND`, `OR`, and `NOT` operators.
 
-The `AND` and `OR` operators are used to filter records based on more than one condition:
+The `AND` and `OR` operators are used to filter records based on more than one condition:
 
-- The `AND` operator displays a record if all the conditions separated by `AND` are TRUE.
-- The `OR` operator displays a record if any of the conditions separated by `OR` is TRUE.
+- The `AND` operator displays a record if all the conditions separated by `AND` are TRUE.
+- The `OR` operator displays a record if any of the conditions separated by `OR` is TRUE.
 
-The `NOT` operator displays a record if the condition(s) is NOT TRUE.
+The `NOT` operator displays a record if the condition(s) is NOT TRUE.
 
-You can also combine the `AND`, `OR` and `NOT` operators.
+You can also combine the `AND`, `OR` and `NOT` operators.
 
 The following SQL statement selects all tasks where priority is "2" AND indicator must be "!" OR "?" (use parenthesis to form complex expressions)
 
 ````text
-```task-sql
-WHERE priority = '2' AND (status->symbol='!' OR status->symbol='?')
+```tasks-sql
+WHERE priority = '2' AND (status->symbol='!' OR status->symbol='?')
 ```
 ````
