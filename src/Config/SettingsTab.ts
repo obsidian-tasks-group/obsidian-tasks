@@ -61,7 +61,7 @@ export class SettingsTab extends PluginSettingTab {
 
         new Setting(containerEl)
             .setName('Task Format')
-            .setDesc('Format used to write tasks.')
+            .setDesc('The format that Tasks uses to read and write tasks.')
             .addDropdown((dropdown) => {
                 for (const key of Object.keys(TASK_FORMATS) as (keyof TASK_FORMATS)[]) {
                     dropdown.addOption(key, TASK_FORMATS[key].displayName);
