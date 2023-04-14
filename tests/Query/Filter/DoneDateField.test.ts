@@ -91,6 +91,9 @@ describe('grouping by done date', () => {
     it('supports Field grouping methods correctly', () => {
         const field = new DoneDateField();
         expect(field.supportsGrouping()).toEqual(true);
+
+        const fieldGrouper = field.createGrouper();
+        expect(fieldGrouper.property).toEqual('done');
     });
 
     it('group by done date', () => {

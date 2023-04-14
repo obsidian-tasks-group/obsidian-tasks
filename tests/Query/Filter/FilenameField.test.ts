@@ -107,6 +107,9 @@ describe('grouping by filename', () => {
     it('supports grouping methods correctly', () => {
         const field = new FilenameField();
         expect(field.supportsGrouping()).toEqual(true);
+
+        const fieldGrouper = field.createGrouper();
+        expect(fieldGrouper.property).toEqual('filename');
     });
 
     it.each([

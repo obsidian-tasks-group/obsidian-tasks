@@ -93,6 +93,9 @@ describe('grouping by heading', () => {
     it('supports grouping methods correctly', () => {
         const field = new HeadingField();
         expect(field.supportsGrouping()).toEqual(true);
+
+        const fieldGrouper = field.createGrouper();
+        expect(fieldGrouper.property).toEqual('heading');
     });
 
     it.each([

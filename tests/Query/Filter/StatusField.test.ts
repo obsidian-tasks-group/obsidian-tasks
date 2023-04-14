@@ -86,6 +86,9 @@ describe('grouping by status', () => {
     it('supports grouping methods correctly', () => {
         const field = new StatusField();
         expect(field.supportsGrouping()).toEqual(true);
+
+        const fieldGrouper = field.createGrouper();
+        expect(fieldGrouper.property).toEqual('status');
     });
 
     it.each([

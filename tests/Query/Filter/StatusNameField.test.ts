@@ -88,6 +88,9 @@ describe('grouping by status.name', () => {
     it('supports Field grouping methods correctly', () => {
         const field = new StatusNameField();
         expect(field.supportsGrouping()).toEqual(true);
+
+        const fieldGrouper = field.createGrouper();
+        expect(fieldGrouper.property).toEqual('status.name');
     });
 
     it('group by status.name', () => {

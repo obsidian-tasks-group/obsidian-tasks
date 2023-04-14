@@ -94,6 +94,9 @@ describe('grouping by created date', () => {
     it('supports Field grouping methods correctly', () => {
         const field = new CreatedDateField();
         expect(field.supportsGrouping()).toEqual(true);
+
+        const fieldGrouper = field.createGrouper();
+        expect(fieldGrouper.property).toEqual('created');
     });
 
     it('group by created date', () => {
