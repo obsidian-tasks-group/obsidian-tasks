@@ -1,6 +1,7 @@
 import type { TaskLayout, TaskLayoutComponent } from '../TaskLayout';
 import type { Task } from '../Task';
 import { DefaultTaskSerializer, type DefaultTaskSerializerSymbols } from './DefaultTaskSerializer';
+import { Priority } from '../Task';
 
 /**
  * Takes a regex of the form 'key:: value' and turns it into a regex that can parse
@@ -70,7 +71,7 @@ export const DATAVIEW_SYMBOLS: DefaultTaskSerializerSymbols = {
     doneDateSymbol: 'completion::',
     recurrenceSymbol: 'repeat::',
     TaskFormatRegularExpressions: {
-        priorityRegex: toInlineFieldRegex(/(priority:: *(?:high|medium|low))/),
+        priorityRegex: toInlineFieldRegex(/priority:: *(high|medium|low)/),
         startDateRegex: toInlineFieldRegex(/start:: *(\d{4}-\d{2}-\d{2})/),
         createdDateRegex: toInlineFieldRegex(/created:: *(\d{4}-\d{2}-\d{2})/),
         scheduledDateRegex: toInlineFieldRegex(/scheduled:: *(\d{4}-\d{2}-\d{2})/),
@@ -87,6 +88,19 @@ export const DATAVIEW_SYMBOLS: DefaultTaskSerializerSymbols = {
 export class DataviewTaskSerializer extends DefaultTaskSerializer {
     constructor() {
         super(DATAVIEW_SYMBOLS);
+    }
+
+    protected parsePriority(p: string): Priority {
+        switch (p) {
+            case 'high':
+                return Priority.High;
+            case 'medium':
+                return Priority.Medium;
+            case 'low':
+                return Priority.Low;
+            default:
+                return Priority.None;
+        }
     }
 
     public componentToString(task: Task, layout: TaskLayout, component: TaskLayoutComponent) {
