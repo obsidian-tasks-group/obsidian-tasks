@@ -23,6 +23,9 @@ describe('grouping by backlink', () => {
     it('supports grouping methods correctly', () => {
         const field = new BacklinkField();
         expect(field.supportsGrouping()).toEqual(true);
+
+        const fieldGrouper = field.createGrouper();
+        expect(fieldGrouper.property).toEqual('backlink');
     });
 
     it.each([

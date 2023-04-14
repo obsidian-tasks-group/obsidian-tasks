@@ -19,6 +19,9 @@ describe('grouping by folder', () => {
     it('supports grouping methods correctly', () => {
         const field = new FolderField();
         expect(field.supportsGrouping()).toEqual(true);
+
+        const fieldGrouper = field.createGrouper();
+        expect(fieldGrouper.property).toEqual('folder');
     });
 
     it.each([

@@ -15,6 +15,9 @@ describe('grouping by root', () => {
     it('supports grouping methods correctly', () => {
         const field = new RootField();
         expect(field.supportsGrouping()).toEqual(true);
+
+        const fieldGrouper = field.createGrouper();
+        expect(fieldGrouper.property).toEqual('root');
     });
 
     it.each([
