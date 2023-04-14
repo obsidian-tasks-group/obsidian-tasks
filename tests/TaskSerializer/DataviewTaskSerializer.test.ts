@@ -50,6 +50,28 @@ describe('DataviewTaskSerializer', () => {
             });
         });
 
+        it('should parse a task with multiple fields and tags', () => {
+            const taskDetails = deserialize(
+                'Wobble [priority::high] #tag1 [completion::2022-07-02] #tag2  [due::2022-07-02] #tag3 [scheduled::2022-07-02] #tag4 [start::2022-07-02] #tag5  [repeat::every day]  #tag6 #tag7 #tag8 #tag9 #tag10',
+            );
+
+            expect(taskDetails).toMatchTaskDetails({
+                description: 'Wobble #tag1 #tag2 #tag3 #tag4 #tag5 #tag6 #tag7 #tag8 #tag9 #tag10',
+                dueDate: moment('2022-07-02', 'YYYY-MM-DD'),
+                doneDate: moment('2022-07-02', 'YYYY-MM-DD'),
+                startDate: moment('2022-07-02', 'YYYY-MM-DD'),
+                scheduledDate: moment('2022-07-02', 'YYYY-MM-DD'),
+                priority: Priority.High,
+                recurrence: new RecurrenceBuilder()
+                    .rule('every day')
+                    .dueDate('2022-07-02')
+                    .scheduledDate('2022-07-02')
+                    .startDate('2022-07-02')
+                    .build(),
+                tags: ['#tag1', '#tag2', '#tag3', '#tag4', '#tag5', '#tag6', '#tag7', '#tag8', '#tag9', '#tag10'],
+            });
+        });
+
         describe('whitespace within an inline field', () => {
             type OnlyStringKeys<T> = { [K in keyof T as K]: T[K] extends string ? T[K] : never };
             type DataviewFieldsWithoutPriority = OnlyStringKeys<typeof DATAVIEW_SYMBOLS>[keyof OnlyStringKeys<
