@@ -1,6 +1,5 @@
 import * as chrono from 'chrono-node';
 import moment from 'moment';
-import { getSettings } from '../Config/Settings';
 import { DateRange } from './DateRange';
 
 export class DateParser {
@@ -81,16 +80,7 @@ export class DateParser {
 
             // In case weeks starts on a different day, shift the range accordingly
             if (range === 'week') {
-                const { firstDayOfTheWeek } = getSettings();
-                dateRange.start.add(firstDayOfTheWeek, 'day');
-                dateRange.end.add(firstDayOfTheWeek, 'day');
-
-                // We may have shifted out the current week,
-                // so go one week before
-                // format('E') is the ISO8601 weekday (Mon/1...Sun...7)
-                if (firstDayOfTheWeek + 1 > +moment().format('E')) {
-                    dateRange.moveToPrevious('week');
-                }
+                dateRange.adjustAccordingToWeekStartSettings();
             }
 
             return dateRange;

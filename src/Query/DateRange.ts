@@ -1,4 +1,5 @@
 import moment from 'moment';
+import { getSettings } from '../Config/Settings';
 
 /**
  * Represent an inclusive span of time between two days at 00:00 local time.
@@ -91,6 +92,22 @@ export class DateRange {
             // Month and quarter durations in days may differ (28/30/31 days).
             // We will need to adjust the end.
             this.end = this.end.endOf(duration).startOf('day');
+        }
+    }
+
+    /**
+     * For weekly ranges set the start and the end date according with the value in {@link Settings}
+     */
+    public adjustAccordingToWeekStartSettings() {
+        const { firstDayOfTheWeek } = getSettings();
+        this.start.add(firstDayOfTheWeek, 'day');
+        this.end.add(firstDayOfTheWeek, 'day');
+
+        // We may have shifted out the current week,
+        // so go one week before
+        // format('E') is the ISO8601 weekday (Mon/1...Sun...7)
+        if (firstDayOfTheWeek + 1 > +moment().format('E')) {
+            this.moveToPrevious('week');
         }
     }
 }
