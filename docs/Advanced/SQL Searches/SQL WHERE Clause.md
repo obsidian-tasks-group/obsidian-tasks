@@ -8,19 +8,19 @@ publish: true
 
 ## Operators in The WHERE Clause
 
-The following basic operators can be used in the `WHERE` clause. More can be found on the [SQL Operators](./SQL Operators) page.
+The following basic operators can be used in the `WHERE` clause. More can be found on the [[SQL Operators]] page.
 
-| Operator | Description                                                                 | Example |
-| -------- | --------------------------------------------------------------------------- | ------- |
-| =        | Equal                                                                       |         |
-| >        | Greater than                                                                |         |
-| <        | Less than                                                                   |         |
-| >=       | Greater than or equal                                                       |         |
-| <=       | Less than or equal                                                          |         |
-| <>       | Not equal. Note: In some versions of SQL this operator may be written as != |         |
-| BETWEEN  | Between a certain range                                                     |         |
-| LIKE     | Search for a pattern                                                        |         |
-| IN       | To specify multiple possible values for a column                            |         |
+| Operator | Description                                                                 |
+| -------- | --------------------------------------------------------------------------- |
+| =        | Equal                                                                       |
+| >        | Greater than                                                                |
+| <        | Less than                                                                   |
+| >=       | Greater than or equal                                                       |
+| <=       | Less than or equal                                                          |
+| <>       | Not equal. Note: In some versions of SQL this operator may be written as != |
+| BETWEEN  | Between a certain range                                                     |
+| LIKE     | Search for a pattern                                                        |
+| IN       | To specify multiple possible values for a column                            |
 
 ## The SQL AND, OR and NOT Operators
 
