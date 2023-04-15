@@ -444,8 +444,8 @@ export class SettingsTab extends PluginSettingTab {
             ['Ebullientworks Theme', Themes.ebullientworksSupportedStatuses()],
             ['ITS Theme & SlRvb Checkboxes', Themes.itsSupportedStatuses()],
             ['Minimal Theme', Themes.minimalSupportedStatuses()],
-            // Dark only themes - alphabetical order
             ['Things Theme', Themes.thingsSupportedStatuses()],
+            // Dark only themes - alphabetical order
             ['LYT Mode Theme (Dark mode only)', Themes.lytModeSupportedStatuses()],
         ];
         for (const [name, collection] of themes) {
