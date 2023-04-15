@@ -446,6 +446,7 @@ export class SettingsTab extends PluginSettingTab {
             ['Things Theme', Themes.thingsSupportedStatuses()],
             // Dark only themes - alphabetical order
             ['Aura Theme (Dark mode only)', Themes.auraSupportedStatuses()],
+            ['LYT Mode Theme (Dark mode only)', Themes.lytModeSupportedStatuses()],
         ];
         for (const [name, collection] of themes) {
             const addStatusesSupportedByThisTheme = new Setting(containerEl).addButton((button) => {
