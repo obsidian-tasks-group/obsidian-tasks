@@ -218,6 +218,10 @@ export class QuerySql implements IQuery {
         return this._error;
     }
 
+    public get queryId(): string | undefined {
+        return this._queryId;
+    }
+
     public get template(): string | undefined {
         return this._customTemplate;
     }
@@ -304,9 +308,10 @@ export class QuerySql implements IQuery {
         //     };
         // };
 
+        const currentQuery = this;
         // Return the ID of this query used for degugging as needed.
         alasql.fn.queryId = function () {
-            return this._queryId;
+            return currentQuery._queryId;
         };
 
         alasql.options.nocount = true; // Disable row count for queries.
@@ -318,7 +323,7 @@ export class QuerySql implements IQuery {
         if (this._rawMode && !this._rawWithTasksMode) {
             const rawResult = alasql(this.source);
             this.logger.infoWithId(this._queryId, 'RAW Data result from AlaSQL query', rawResult);
-            return new Array<Task>();
+            return rawResult;
         }
 
         // Direct tasks uses the Task object and not TaskRecord so less conversion/overhead.
