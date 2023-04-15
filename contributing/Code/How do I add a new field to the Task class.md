@@ -10,6 +10,8 @@ For example, It's fine to have a first release of a feature without `sort by` an
 
 "Sorting and grouping by blah is not yet supported. We are tracking this in [issue #nnnn](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/nnn)."
 
+As soon as the field is added to the Task the SQL engine will be able to use it for filtering, sorting, grouping, etc. If you can add an example to the docs it will allow people to start to use and test its functionality.  
+
 ## Storing the field and testing it
 
 ### Store the field

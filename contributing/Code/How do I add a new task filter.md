@@ -13,6 +13,8 @@ All the following steps would be done in the same branch, for inclusion in the s
     - [FilterInstructionsBasedField.ts](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/src/Query/Filter/FilterInstructionsBasedField.ts)
 - Add the new class to [src/Query/FilterParser.ts](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/src/Query/FilterParser.ts)
 
+- Nothing needs to be done for the SQL engine. Any property of the Task class that is public is available to be queried.
+
 ## Update tests/
 
 Write tests as you go.
@@ -27,6 +29,8 @@ For help on writing and running the tests, see [[About Testing]]
 - Add the new instruction(s) to  'Query parsing' test in  [tests/Query.test.ts](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/Query.test.ts)
   - This verifies that the new filter instruction has been correctly wired in to the Query class.
 
+- To help ensure consistency each query test that is added or updated should have a similar query added that will work against the SQL query engine. A entry should be added to [test/QuerySql.test.ts](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/QuerySql.test.ts), there is no need to make special filter queries as the SQL engine already has that covered generically.
+
 ## Update doc/
 
 It can be worth writing the documentation first, to ensure that you can explain the new feature clearly before implementing it.
@@ -35,6 +39,7 @@ For help on editing the documentation, see [[About Documentation]]
 
 - Document the new instruction(s) in [docs/queries/filters.md](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/docs/queries/filters.md)
   - Add the placeholder to indicate which version the feature will be released in: see [[Version numbers in documentation]]
+- Document the new query in [docs/Advanced/SQL Searches/SQL Examples.md](<https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/docs/Advanced/SQL> Searches/SQL Examples.md) as an example.
 - Add the new instruction(s) to [docs/quick-reference/index.md](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/docs/quick-reference/index.md)
 
 ## Examples Pull Requests
