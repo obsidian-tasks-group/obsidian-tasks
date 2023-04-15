@@ -44,8 +44,9 @@ body:
       description: |
         Which exact steps can a developer take to reproduce the issue?
         The more detail you provide, the easier it will be to narrow down and fix the bug.
-        Please paste in any relevant text, such as example tasks and/or queries.
-        See [Give us text to copy](https://publish.obsidian.md/tasks/Support+and+Help/Report+a+Bug#Give+us+text+to+copy) for how to format your pasted text, and **why don't accept bug reports that require volunteer contributors to re-type text from screenshots or descriptive text**.
+        Please paste in tasks and/or queries **as text, not screenshots**.
+        See [Give us text to copy](https://publish.obsidian.md/tasks/Support+and+Help/Report+a+Bug#Give+us+text+to+copy) for how to format your pasted text, and
+        why we **cannot accept bug reports that require** anyone to **re-type text from screenshots or descriptive text**.
     validations:
       required: true
 
