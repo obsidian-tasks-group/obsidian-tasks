@@ -440,12 +440,12 @@ export class SettingsTab extends PluginSettingTab {
         const themes: NamedTheme[] = [
             // Light and Dark themes - alphabetical order
             ['AnuPpuccin Theme', Themes.anuppuccinSupportedStatuses()],
+            ['Aura Theme', Themes.auraSupportedStatuses()],
             ['Ebullientworks Theme', Themes.ebullientworksSupportedStatuses()],
             ['ITS Theme & SlRvb Checkboxes', Themes.itsSupportedStatuses()],
             ['Minimal Theme', Themes.minimalSupportedStatuses()],
             ['Things Theme', Themes.thingsSupportedStatuses()],
             // Dark only themes - alphabetical order
-            ['Aura Theme (Dark mode only)', Themes.auraSupportedStatuses()],
             ['LYT Mode Theme (Dark mode only)', Themes.lytModeSupportedStatuses()],
         ];
         for (const [name, collection] of themes) {
