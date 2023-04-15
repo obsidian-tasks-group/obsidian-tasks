@@ -127,6 +127,7 @@ describe('Theme', () => {
         ['Aura', Themes.auraSupportedStatuses()],
         ['Ebullientworks', Themes.ebullientworksSupportedStatuses()],
         ['ITS', Themes.itsSupportedStatuses()],
+        ['LYT Mode', Themes.lytModeSupportedStatuses()],
         ['Minimal', Themes.minimalSupportedStatuses()],
         ['Things', Themes.thingsSupportedStatuses()],
     ];
