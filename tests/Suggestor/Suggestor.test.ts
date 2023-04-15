@@ -37,11 +37,8 @@ describe.each([{ name: 'emoji', symbols: DEFAULT_SYMBOLS }])("auto-complete with
             { displayText: `${dueDateSymbol} due date`, appendText: `${dueDateSymbol} ` },
             { displayText: `${startDateSymbol} start date`, appendText: `${startDateSymbol} ` },
             { displayText: `${scheduledDateSymbol} scheduled date`, appendText: `${scheduledDateSymbol} ` },
-            {
-                displayText: `${createdDateSymbol} created today (2022-07-11)`,
-                appendText: `${createdDateSymbol} 2022-07-11 `,
-            },
             { displayText: `${prioritySymbols.High} high priority`, appendText: `${prioritySymbols.High} ` },
+            { displayText: `${prioritySymbols.Medium} medium priority`, appendText: `${prioritySymbols.Medium} ` },
         ]);
     });
 
@@ -138,11 +135,11 @@ describe.each([{ name: 'emoji', symbols: DEFAULT_SYMBOLS }])("auto-complete with
             | ${dueDateSymbol} due date | ${dueDateSymbol}  |
             | ${startDateSymbol} start date | ${startDateSymbol}  |
             | ${scheduledDateSymbol} scheduled date | ${scheduledDateSymbol}  |
-            | ${createdDateSymbol} created today (2022-07-11) | ${createdDateSymbol} 2022-07-11  |
             | ${prioritySymbols.High} high priority | ${prioritySymbols.High}  |
             | ${prioritySymbols.Medium} medium priority | ${prioritySymbols.Medium}  |
             | ${prioritySymbols.Low} low priority | ${prioritySymbols.Low}  |
             | ${recurrenceSymbol} recurring (repeat) | ${recurrenceSymbol}  |
+            | ${createdDateSymbol} created today (2022-07-11) | ${createdDateSymbol} 2022-07-11  |
             | every | ${recurrenceSymbol} every  |
             | every day | ${recurrenceSymbol} every day  |
             | every week | ${recurrenceSymbol} every week  |
