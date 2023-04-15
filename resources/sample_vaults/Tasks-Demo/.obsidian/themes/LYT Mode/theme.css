@@ -1,35 +1,17 @@
 /*
-
-L Y T  M O D E
-
+LYT MODE
 Obsidian Theme v1.5
+by Nick Milo (evolved from Cybertron)
 
-by Cecilia May (commissioned by Nick Milo)
-
-────────────────────────────────────
-
-LYT Mode is for "Linking Your Thinking".
+LYT Mode is for "Linking Your Thinking". 
 It invokes sensemaking and lateral thinking.
-
-It was designed by Cecilia May (https://github.com/ceciliamay)
-on commission from Nick Milo for
-the purpose of evolving his Cybertron theme.
-
-Note from Nick:
-This is where I do my sensemaking: in LYT Mode.
-That stands for: "Linking Your Thinking" Mode.
-LYT Mode is meant to encourage sensemaking and lateral thinking.
-I do both my creative and analytical work in LYT Mode.
-
-────────────────────────────────────
-
-Support
-Cecilia's Work: https://ko-fi.com/ceciliamay
+This is where I do my sensemaking: in LYT Mode. 
+LYT actually stands for: "Linking Your Thinking" Mode.
+It's meant to encourage sensemaking % lateral thinking. 
+I do both my creative and my analytical work in LYT Mode.
 
 README: https://github.com/nickmilo/LYT-Mode
-
 License: MIT License
-
 Icons: Boxicons
 
 ────────────────────────────────────
@@ -132,6 +114,7 @@ Icons
     --color-gray-20: hsl(224, 37%, 80%); /* SB Common Text & Icons on Hover */
     --color-gray-30: hsl(224, 26%, 70%);
     --color-gray-40: hsl(224, 17%, 68%); /* Metadata Text */
+    --color-gray-48: hsl(225, 15%, 61%); /* Completed checkboxes */
     --color-gray-50: hsl(226, 10%, 47%); /* Graph Lines & Lighter Borders */
     --color-gray-60: hsl(225, 14%, 55%); /* SB Common Icons & Status Bar Text */
     --color-gray-70: hsl(225, 11%, 36%); /* SB Disabled Text & Titlebar */
@@ -169,8 +152,11 @@ Icons
     --color-cyan-500: hsl(192, 46%, 68%);
     --color-cyan-510: hsl(191, 65%, 59%); /* Nick's BrighterCyberCyan */
     --color-cyan-520: hsl(191, 57%, 59%); /* Nick's CyberCyan */
-    --color-cyan-530: hsl(191, 54%, 64%); /* Nick's FadedCyberCyan */
+    --color-cyan-530: hsl(191, 54%, 64%); /* BODY TEXT!! Nick's FadedCyberCyan */
+    --color-cyan-533: hsl(191, 90%, 50%); /* An Alt for H3 */
     --color-cyan-540: hsl(194, 69%, 54%);
+    --color-cyan-555: hsl(175, 85%, 75%); /* An Alt for Bold Text */
+    --color-cyan-577: hsl(13, 52%, 80%); /* An Alt for Italic Text */
     --color-cyan-700: hsl(194, 50%, 47%);
     --color-cyan-900: hsl(196, 27%, 41%);
     --color-cyan-gradient-1:
@@ -200,11 +186,18 @@ Icons
         #ef7dbe, #ea77be, #e472be, #dd6ebe); /* 500 -> 900 */
 
     --color-orange-300: hsl(28, 93%, 66%);
+    --color-orange-310: hsl(28, 63%, 66%);
     --color-orange-500: hsl(28, 43%, 47%);
+
+    --color-red-300: hsl(3, 93%, 66%);
+    --color-red-500: hsl(3, 43%, 47%);
 
     --color-yellow-300: hsl(61, 100%, 75%);
     --color-yellow-310: hsl(61, 46%, 69%);
+    --color-yellow-355: hsl(61, 55%, 69%); /*An Alt for Bold Text*/
+    --color-yellowish-355: hsl(51, 55%, 69%); /*An Alt for Bold Text*/
     --color-yellow-500: hsl(59, 71%, 68%);
+    --color-yellow-510: hsl(59, 51%, 68%);
     --color-yellow-700: hsl(58, 86%, 66%);
     --color-yellow-900: hsl(59, 81%, 47%);
     --color-yellow-gradient-1:
@@ -215,6 +208,11 @@ Icons
         linear-gradient(-90deg,
         #f3ee5e, #f1ec50, #f0eb41, #eee933, 
         #ece725, #eae516, #dbd815, #ccc914); /* 700 -> 900 */
+
+    --color-h3-orange: hsl(38, 60%, 63%); /* Deletable */
+    --color-h3-green: hsl(148, 47%, 51%); /* Deletable */
+    --color-h3-alt: hsl(226, 95%, 76%);
+    --color-h4-alt: hsl(151, 60%, 55%);
 
     --color-green-300: hsl(151, 100%, 81%);
     --color-green-500: hsl(124, 54%, 75%);
@@ -233,7 +231,10 @@ Icons
         #59e692, #4ae299, #3bdda3, #2cd8b0); /* 500 -> 900 */
 
     --color-purple-300: hsl(255, 49%, 76%);
+    --color-purple-333: hsl(245, 37%, 80%); /* H4 test splitting purple-500 and h5 --color-slate-500 */
     --color-purple-500: hsl(255, 100%, 86%);
+    --color-purple-555: hsl(255, 100%, 86%); /* An Alt for Bold Text */
+    --color-purple-577: hsl(255, 100%, 86%); /* An Alt for Italic Text */
     --color-purple-700: hsl(260, 100%, 79%);
     --color-purple-900: hsl(263, 46%, 61%);
     --color-purple-910: hsl(263, 37%, 69%);
@@ -296,7 +297,7 @@ body.theme-dark {
 
     /* Bold */
     --bold-weight: var(--font-bold);
-    --bold-color: var(--color-yellow-500);
+    --bold-color: var(--color-yellowish-355);
 
     /* Bold and Italic */
     --bold-italic-color: var(--color-gray-10);
@@ -323,8 +324,8 @@ body.theme-dark {
     --checkbox-color-hover: transparent;
     --checkbox-border-color: var(--border-900);
     --checkbox-border-color-hover: var(--border-900);
-    --checklist-done-decoration: line-through;
-    --checklist-done-color: var(--text-muted);
+    --checklist-done-decoration: none; /* used to be: line-through*/
+    --checklist-done-color: var(--text-faintly-muted);
 
     /* Code */
     --code-size: var(--font-smaller);
@@ -426,8 +427,8 @@ body.theme-dark {
     --heading-formatting: inherit;
     --h1-color: var(--color-yellow-900);
     --h2-color: var(--color-purple-700);
-    --h3-color: var(--color-cyan-540);
-    --h4-color: var(--color-green-700);
+    --h3-color: var(--color-cyan-533); /*  --color-yellow-310 */
+    --h4-color: var(--color-green-710);
     --h5-color: var(--color-slate-500);
     --h6-color: var(--color-slate-700);
     --h1-font: inherit;
@@ -512,7 +513,7 @@ body.theme-dark {
     --input-radius: 2px;
 
     /* Italic */
-    --italic-color: var(--color-purple-500);
+    --italic-color: var(--color-purple-577);
 
     /* Z-index */
     --layer-cover: 5;
@@ -770,6 +771,7 @@ body.theme-dark {
     /* Text */
     --text-normal: var(--color-gray-20);
     --text-muted: var(--color-gray-40);
+    --text-faintly-muted: var(--color-gray-48);
     --text-faint: var(--color-gray-60);
     --text-on-accent: var(--color-white);
     --text-error: var(--color-magenta-910);
@@ -1169,7 +1171,7 @@ Content / Active Note / Opened Notes
 
 .theme-dark .markdown-source-view,
 .theme-dark .markdown-preview-view {
-    color: var(--color-cyan-530);
+    color: var(--color-cyan-530); /* THIS IS THE BODY TEXT COLOR!!!!!!!!!!!!!!!!!!!!! */
 }
 
 /* Header Colors */
