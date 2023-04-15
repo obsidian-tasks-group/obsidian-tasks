@@ -2,6 +2,7 @@
  * @jest-environment jsdom
  */
 import moment from 'moment';
+import * as chrono from 'chrono-node';
 import { getSettings } from '../../src/Config/Settings';
 import type { SuggestInfo } from '../../src/Suggestor';
 import { makeDefaultSuggestionBuilder } from '../../src/Suggestor/Suggestor';
@@ -9,9 +10,23 @@ import { DEFAULT_SYMBOLS } from '../../src/TaskSerializer/DefaultTaskSerializer'
 
 window.moment = moment;
 
+// Set predictable date for all tests in this file
+const mockDate = new Date(moment('2022-07-11 15:00').valueOf());
+
+jest.spyOn(chrono, 'parseDate').mockImplementation(
+    (text, _, options) => chrono.en.casual.parseDate(text, mockDate, options)!,
+);
+
 describe.each([{ name: 'emoji', symbols: DEFAULT_SYMBOLS }])("auto-complete with '$name' symbols", ({ symbols }) => {
     const buildSuggestions = makeDefaultSuggestionBuilder(symbols);
-    const { dueDateSymbol, scheduledDateSymbol, startDateSymbol, recurrenceSymbol, prioritySymbols } = symbols;
+    const {
+        dueDateSymbol,
+        scheduledDateSymbol,
+        startDateSymbol,
+        createdDateSymbol,
+        recurrenceSymbol,
+        prioritySymbols,
+    } = symbols;
     it('offers basic completion options for an empty task', () => {
         // Arrange
         const originalSettings = getSettings();
@@ -79,20 +94,12 @@ describe.each([{ name: 'emoji', symbols: DEFAULT_SYMBOLS }])("auto-complete with
         expect(suggestions[1].displayText).toEqual('every day');
     });
 
-    // Test disabled until I can figure out:
-    // 1. how to set the date.
-    // 2. how to set maxGenericSuggestions in Suggestor.ts to higher than 5.
-    // See suggestions in https://github.com/obsidian-tasks-group/obsidian-tasks/issues/861#issuecomment-1180788860
+    // Until the maximum date suggestion number is no longer hardcoded,
+    // it's not possible to output all dates. Skipping for now.
     it.skip('show all suggested text', () => {
         // Arrange
         const originalSettings = getSettings();
         originalSettings.autoSuggestMaxItems = 200;
-
-        // This does not change the date used in the suggestions below.
-        // It was a failed attempt at allowing this test to be independent of date of the run.
-        // const todaySpy = jest
-        //     .spyOn(Date, 'now')
-        //     .mockReturnValue(moment('2022-06-11').valueOf());
 
         const lines = [
             '- [ ] some task',
@@ -134,6 +141,7 @@ describe.each([{ name: 'emoji', symbols: DEFAULT_SYMBOLS }])("auto-complete with
             | ${prioritySymbols.Medium} medium priority | ${prioritySymbols.Medium}  |
             | ${prioritySymbols.Low} low priority | ${prioritySymbols.Low}  |
             | ${recurrenceSymbol} recurring (repeat) | ${recurrenceSymbol}  |
+            | ${createdDateSymbol} created today (2022-07-11) | ${createdDateSymbol} 2022-07-11  |
             | every | ${recurrenceSymbol} every  |
             | every day | ${recurrenceSymbol} every day  |
             | every week | ${recurrenceSymbol} every week  |

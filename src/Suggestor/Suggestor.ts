@@ -117,6 +117,14 @@ function getPossibleComponentSuggestions(
             displayText: `${symbols.recurrenceSymbol} recurring (repeat)`,
             appendText: `${symbols.recurrenceSymbol} `,
         });
+    if (!line.includes(symbols.createdDateSymbol)) {
+        const parsedDate = DateParser.parseDate('today', true);
+        const formattedDate = parsedDate.format(TaskRegularExpressions.dateFormat);
+        suggestions.push({
+            displayText: `${symbols.createdDateSymbol} created today (${formattedDate})`,
+            appendText: `${symbols.createdDateSymbol} ${formattedDate} `,
+        });
+    }
 
     return suggestions;
 }
