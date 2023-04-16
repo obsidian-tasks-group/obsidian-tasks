@@ -52,21 +52,21 @@ describe('DataviewTaskSerializer', () => {
 
         it('should parse a task with multiple fields and tags', () => {
             const taskDetails = deserialize(
-                'Wobble [priority::high] #tag1 [completion::2022-07-02] #tag2  [due::2022-07-02] #tag3 [scheduled::2022-07-02] #tag4 [start::2022-07-02] #tag5  [repeat::every day]  #tag6 #tag7 #tag8 #tag9 #tag10',
+                'Wobble [priority::high] #tag1 [completion:: 2024-09-04] #tag2  [due::2025-10-05] #tag3 [scheduled::2022-07-02] #tag4 [start::2023-08-03] #tag5  [repeat::every day]  #tag6 #tag7 #tag8 #tag9 #tag10',
             );
 
             expect(taskDetails).toMatchTaskDetails({
                 description: 'Wobble #tag1 #tag2 #tag3 #tag4 #tag5 #tag6 #tag7 #tag8 #tag9 #tag10',
-                dueDate: moment('2022-07-02', 'YYYY-MM-DD'),
-                doneDate: moment('2022-07-02', 'YYYY-MM-DD'),
-                startDate: moment('2022-07-02', 'YYYY-MM-DD'),
+                dueDate: moment('2025-10-05', 'YYYY-MM-DD'),
+                doneDate: moment('2024-09-04', 'YYYY-MM-DD'),
+                startDate: moment('2023-08-03', 'YYYY-MM-DD'),
                 scheduledDate: moment('2022-07-02', 'YYYY-MM-DD'),
                 priority: Priority.High,
                 recurrence: new RecurrenceBuilder()
                     .rule('every day')
-                    .dueDate('2022-07-02')
+                    .dueDate('2025-10-05')
                     .scheduledDate('2022-07-02')
-                    .startDate('2022-07-02')
+                    .startDate('2023-08-03')
                     .build(),
                 tags: ['#tag1', '#tag2', '#tag3', '#tag4', '#tag5', '#tag6', '#tag7', '#tag8', '#tag9', '#tag10'],
             });
@@ -250,17 +250,17 @@ describe('DataviewTaskSerializer', () => {
         it('should serialize a task with multiple fields and tags', () => {
             const task = new TaskBuilder()
                 .description('Wobble')
-                .dueDate('2022-07-02')
-                .doneDate('2022-07-02')
-                .startDate('2022-07-02')
+                .dueDate('2025-10-05')
+                .doneDate('2024-09-04')
+                .startDate('2023-08-03')
                 .scheduledDate('2022-07-02')
                 .priority(Priority.High)
                 .recurrence(
                     new RecurrenceBuilder()
                         .rule('every day')
-                        .dueDate('2022-07-02')
+                        .dueDate('2025-10-05')
+                        .startDate('2023-08-03')
                         .scheduledDate('2022-07-02')
-                        .startDate('2022-07-02')
                         .build(),
                 )
                 // TaskBuilder appends tasks to the description automatically
@@ -269,7 +269,7 @@ describe('DataviewTaskSerializer', () => {
 
             const serialized = serialize(task);
             expect(serialized).toEqual(
-                'Wobble #tag1 #tag2 #tag3 #tag4 #tag5 #tag6 #tag7 #tag8 #tag9 #tag10 [priority:: high] [repeat:: every day] [start:: 2022-07-02] [scheduled:: 2022-07-02] [due:: 2022-07-02] [completion:: 2022-07-02]',
+                'Wobble #tag1 #tag2 #tag3 #tag4 #tag5 #tag6 #tag7 #tag8 #tag9 #tag10 [priority:: high] [repeat:: every day] [start:: 2023-08-03] [scheduled:: 2022-07-02] [due:: 2025-10-05] [completion:: 2024-09-04]',
             );
         });
     });
