@@ -106,6 +106,56 @@ describe('due date', () => {
     });
 });
 
+describe('due date (specific ranges)', () => {
+    it('due in specific range (year)', () => {
+        // Arrange
+        const filter = new DueDateField().createFilterOrErrorMessage('due 2022');
+
+        // Act, Assert
+        testTaskFilterForTaskWithDueDate(filter, null, false);
+        testTaskFilterForTaskWithDueDate(filter, '2021-12-31', false);
+        testTaskFilterForTaskWithDueDate(filter, '2022-01-01', true);
+        testTaskFilterForTaskWithDueDate(filter, '2022-12-31', true);
+        testTaskFilterForTaskWithDueDate(filter, '2023-01-01', false);
+    });
+
+    it('due in specific range (quarter)', () => {
+        // Arrange
+        const filter = new DueDateField().createFilterOrErrorMessage('due 2017-Q3');
+
+        // Act, Assert
+        testTaskFilterForTaskWithDueDate(filter, null, false);
+        testTaskFilterForTaskWithDueDate(filter, '2017-06-30', false);
+        testTaskFilterForTaskWithDueDate(filter, '2017-07-01', true);
+        testTaskFilterForTaskWithDueDate(filter, '2017-09-30', true);
+        testTaskFilterForTaskWithDueDate(filter, '2017-10-01', false);
+    });
+
+    it('due in specific range (month)', () => {
+        // Arrange
+        const filter = new DueDateField().createFilterOrErrorMessage('due 2020-03');
+
+        // Act, Assert
+        testTaskFilterForTaskWithDueDate(filter, null, false);
+        testTaskFilterForTaskWithDueDate(filter, '2020-02-28', false);
+        testTaskFilterForTaskWithDueDate(filter, '2020-03-01', true);
+        testTaskFilterForTaskWithDueDate(filter, '2020-03-31', true);
+        testTaskFilterForTaskWithDueDate(filter, '2020-04-01', false);
+    });
+
+    it('due in specific range (week)', () => {
+        // Arrange
+        const filter = new DueDateField().createFilterOrErrorMessage('due 2023-W09');
+
+        // Act, Assert
+        testTaskFilterForTaskWithDueDate(filter, null, false);
+        testTaskFilterForTaskWithDueDate(filter, '2023-02-26', false);
+        testTaskFilterForTaskWithDueDate(filter, '2023-02-27', true);
+        testTaskFilterForTaskWithDueDate(filter, '2023-03-05', true);
+        testTaskFilterForTaskWithDueDate(filter, '2023-03-06', false);
+    });
+});
+
 describe('due date (error & corner cases)', () => {
     it('invalid due date', () => {
         // Arrange
@@ -317,9 +367,13 @@ describe('due date in relative date range (Today is 2023-02-28)', () => {
         const filterIn = new DueDateField().createFilterOrErrorMessage(`due in this ${range}`);
         const filterEmpty = new DueDateField().createFilterOrErrorMessage(`due this ${range}`);
 
-        expect(filterOn).toHaveExplanation(`due date is between ${dateStart} and ${dateEnd} inclusive`);
-        expect(filterIn).toHaveExplanation(`due date is between ${dateStart} and ${dateEnd} inclusive`);
-        expect(filterEmpty).toHaveExplanation(`due date is between ${dateStart} and ${dateEnd} inclusive`);
+        const expectedExplanation = `due date is between:
+  ${dateStart} and
+  ${dateEnd} inclusive`;
+
+        expect(filterOn).toHaveExplanation(expectedExplanation);
+        expect(filterIn).toHaveExplanation(expectedExplanation);
+        expect(filterEmpty).toHaveExplanation(expectedExplanation);
     });
 });
 
@@ -393,7 +447,9 @@ describe('explain due date queries', () => {
     it('should explain date range', () => {
         const filterOrMessage = new DueDateField().createFilterOrErrorMessage('due 2022-11-25 2023-01-17');
         expect(filterOrMessage).toHaveExplanation(
-            'due date is between 2022-11-25 (Friday 25th November 2022) and 2023-01-17 (Tuesday 17th January 2023) inclusive',
+            `due date is between:
+  2022-11-25 (Friday 25th November 2022) and
+  2023-01-17 (Tuesday 17th January 2023) inclusive`,
         );
     });
 });
@@ -457,5 +513,23 @@ describe('due date', () => {
         });
 
         table.verify();
+    });
+});
+
+describe('grouping by due date', () => {
+    it('supports Field grouping methods correctly', () => {
+        const field = new DueDateField();
+        expect(field.supportsGrouping()).toEqual(true);
+    });
+
+    it('group by due date', () => {
+        // Arrange
+        const grouper = new DueDateField().createGrouper();
+        const taskWithDate = new TaskBuilder().dueDate('1970-01-01').build();
+        const taskWithoutDate = new TaskBuilder().build();
+
+        // Assert
+        expect(grouper.grouper(taskWithDate)).toEqual(['1970-01-01 Thursday']);
+        expect(grouper.grouper(taskWithoutDate)).toEqual(['No due date']);
     });
 });

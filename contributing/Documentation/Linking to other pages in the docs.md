@@ -1,27 +1,33 @@
 # Linking to other pages in the docs
 
-> [!Note]
-> This page is about the original user documentation setup, published using #jekyll on #github-pages.
+## Link to other notes directly
 
-Linking to other pages in the documentation is non-obvious and a bit tedious.
+We use ordinary Obsidian wikilinks, which are most easily created in Obsidian itself by dragging a file from the navigator in to the document being edited.
 
-Here are some examples to copy-and-paste:
+For example:
 
-To pages:
+- Linking to a file:
+  - `[[Filters]]`
+- Linking to a file, using custom display text:
+  - `[[Filters|search filters]]`
+- Linking to a heading in a file:
+  - `[[Filters#Appendix: Tasks 2.0.0 improvements to date filters|Appendix below]]`
 
-```text
-[‘Create or edit Task’ Modal]({{ site.baseurl }}{% link getting-started/create-or-edit-task.md %})
-[Dates]({{ site.baseurl }}{% link getting-started/dates.md %})
-[Filters]({{ site.baseurl }}{% link queries/filters.md %})
-[Global Filter]({{ site.baseurl }}{% link getting-started/global-filter.md %})
-[Priorities]({{ site.baseurl }}{% link getting-started/priority.md %})
-[Recurring Tasks]({{ site.baseurl }}{% link getting-started/recurring-tasks.md %})
-```
+See [Link notes](https://help.obsidian.md/Getting+started/Link+notes) in the Obsidian documentation.
 
-To sections:
+## Link to a category of related pages via tags
 
-```text
-[due]({{ site.baseurl }}{% link getting-started/dates.md %}#-due)
-[scheduled]({{ site.baseurl }}{% link getting-started/dates.md %}#-scheduled)
-[start]({{ site.baseurl }}{% link getting-started/dates.md %}#-start)
+We are starting to use tags to link together pages that refer to the same topic.
+
+Example topics tags:
+
+- `#css`
+- `#plugin/dataview`
+- `#plugin/quickadd`
+
+These tags should be placed immediately after the first H1 Heading (`# ....`) in the file, and written like this:
+
+```html
+<span class="related-pages">#plugin/calendar #plugin/periodic-notes</span>
+
 ```

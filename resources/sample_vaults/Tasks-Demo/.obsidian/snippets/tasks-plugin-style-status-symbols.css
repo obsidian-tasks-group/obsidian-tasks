@@ -1,0 +1,3 @@
+li.task-list-item[data-task="/"] .task-list-item-checkbox {
+    box-shadow: 0 0 10px green !important;
+}

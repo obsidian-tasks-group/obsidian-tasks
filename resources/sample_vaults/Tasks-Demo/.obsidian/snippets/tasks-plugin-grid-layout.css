@@ -1,0 +1,53 @@
+ul > li.plugin-tasks-list-item {
+    grid-template-columns: 25px auto;
+    display: grid;
+    align-items: top;
+}
+
+span.task-description {
+    grid-row: 1;
+    grid-column: 1/10;
+}
+
+span.tasks-backlink {
+    grid-row: 2;
+    grid-column: 2;
+    font-size: small;
+}
+
+span.task-recurring {
+    grid-row: 2;
+    font-size: small;
+    width: max-content;
+}
+
+span.task-due {
+    grid-row: 2;
+    font-size: small;
+    width: max-content;
+}
+
+span.task-done {
+    grid-row: 2;
+    font-size: small;
+    width: max-content;
+}
+
+.tasks-list-text {
+    position: relative;
+    display: inline-grid;
+    width: max-content;
+    grid-column-gap: 10px;
+}
+
+span.task-extras {
+    grid-row: 2;
+    grid-column: 2;
+    font-size: small;
+}
+
+/* Make sure nested bullets in Reading mode get the whole width of the grid */
+li.task-list-item ul.has-list-bullet {
+	grid-row: 3;
+	grid-column: 1/10;
+}

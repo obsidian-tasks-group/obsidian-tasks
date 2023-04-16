@@ -5,24 +5,7 @@ import type { Task } from '../Task';
  */
 export type GrouperFunction = (task: Task) => string[];
 
-export type GroupingProperty =
-    | 'backlink'
-    | 'created'
-    | 'done'
-    | 'due'
-    | 'filename'
-    | 'folder'
-    | 'happens'
-    | 'heading'
-    | 'path'
-    | 'priority'
-    | 'recurrence'
-    | 'recurring'
-    | 'root'
-    | 'scheduled'
-    | 'start'
-    | 'status'
-    | 'tags';
+export type GroupingProperty = 'backlink' | 'folder' | 'root';
 
 export class Grouper {
     public readonly property: string;

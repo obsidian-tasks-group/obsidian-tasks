@@ -17,10 +17,15 @@
     - On the release page, GitHub provides a button to auto-generate release notes which works nicely as a good starting point.
 9. When you are happy with the release notes, hit the Publish button.
     - At this point, GitHub will send an email automatically to everyone who is subscribed to Tasks releases.
-10. Optional: Post to
-    - Obsidian Discord
-        - Add a post in the `#updates` channel, with detail about the release
-        - Add a one-liner in the `#task-management` channel, linking to the first post
-    - r/ObsidianMD on Reddit
-    - Obsidian Forum Share & Showcase section
-    - etc.
+10. If the documentation has changed, publish it: see [[Publishing with Obsidian Publish]].
+
+## Publicity
+
+Optional: Post to:
+
+- Obsidian Discord
+  - Add a post in the `#updates` channel, with detail about the release
+  - Add a one-liner in the `#task-management` channel, linking to the first post
+- r/ObsidianMD on Reddit
+- Obsidian Forum Share & Showcase section
+- etc.

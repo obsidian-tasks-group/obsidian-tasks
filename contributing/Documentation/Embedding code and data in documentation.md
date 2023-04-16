@@ -164,7 +164,7 @@ The HTML comments contain enough information for mdsnippets to be able to find t
 
 This page in the Tasks docs is almost entirely generated from content embedded with mdsnippets:
 
-- [ITS Theme](https://obsidian-tasks-group.github.io/obsidian-tasks/reference/status-collections/its-theme/).
+- [ITS Theme](https://publish.obsidian.md/tasks/Reference/Status+Collections/ITS+Theme).
 
 Maintaining that amount of information, for multiple themes, would be an error-prone nightmare.
 
@@ -176,16 +176,16 @@ The following test source file exists purely to write out files for embedding in
 
 For the ITS theme, the above tests generate these `*.approved.*` files, using [[Approval Tests]]:
 
-- [tests/DocsSamplesForStatuses.test.Theme_ITS Table.approved.md](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/DocsSamplesForStatuses.test.Theme_ITS%20Table.approved.md)
-- [tests/DocsSamplesForStatuses.test.Theme_ITS Tasks.approved.md](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/DocsSamplesForStatuses.test.Theme_ITS%20Tasks.approved.md)
-- [tests/DocsSamplesForStatuses.test.Theme_ITS Text.approved.txt](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/DocsSamplesForStatuses.test.Theme_ITS%20Text.approved.txt)
+- [tests/DocsSamplesForStatuses.test.Theme_ITS_Table.approved.md](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/DocsSamplesForStatuses.test.Theme_ITS_Table.approved.md)
+- [tests/DocsSamplesForStatuses.test.Theme_ITS_Tasks.approved.md](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/DocsSamplesForStatuses.test.Theme_ITS_Tasks.approved.md)
+- [tests/DocsSamplesForStatuses.test.Theme_ITS_Text.approved.txt](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/DocsSamplesForStatuses.test.Theme_ITS_Text.approved.txt)
 
 And mdsnippets then embeds the above `*.approved.*` in to the source file.
 
 ### The documentation file
 
-The source file for the [ITS Theme](https://obsidian-tasks-group.github.io/obsidian-tasks/reference/status-collections/its-theme/) page is:
+The source file for the [ITS Theme](https://publish.obsidian.md/tasks/Reference/Status+Collections/ITS+Theme) page is:
 
-- [slrvb-alternate-checkboxes-snippet.md](https://raw.githubusercontent.com/obsidian-tasks-group/obsidian-tasks/main/docs/reference/status-collections/slrvb-alternate-checkboxes-snippet.md)
+- [SlRvb's Alternate Checkboxes.md](https://raw.githubusercontent.com/obsidian-tasks-group/obsidian-tasks/main/docs/Reference/Status%20Collections/SlRvb's%20Alternate%20Checkboxes.md)
 
 Notice the `<!-- snippet:` and `<!-- include:` sections.

@@ -1,5 +1,11 @@
 # Useful Links
 
+## More Tasks resources
+
+- [Contributing Guide](https://publish.obsidian.md/tasks-contributing/) (this vault)
+- [User Guide](https://publish.obsidian.md/tasks/)
+  - Original, [Jekyll-based User Guide](https://obsidian-tasks-group.github.io/obsidian-tasks/)
+
 ## GitHub Links
 
 - Tasks plugin [GitHub repository](https://github.com/obsidian-tasks-group/obsidian-tasks)
@@ -9,11 +15,6 @@
   - [Pull Requests](https://github.com/obsidian-tasks-group/obsidian-tasks/pulls)
 - [Releases](https://github.com/obsidian-tasks-group/obsidian-tasks/releases)
 - [GitHub Actions](https://github.com/obsidian-tasks-group/obsidian-tasks/actions)
-
-## More Tasks resources
-
-- [Contributing Guide](https://publish.obsidian.md/tasks-contributing/)
-- [User Guide](https://obsidian-tasks-group.github.io/obsidian-tasks/)
 
 ## Other links
 

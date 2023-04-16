@@ -1,5 +1,6 @@
 import type { Task } from '../../Task';
 import type { IStringMatcher } from '../Matchers/IStringMatcher';
+import { Grouper } from '../Grouper';
 import { TextField } from './TextField';
 import type { FilterFunction } from './Filter';
 
@@ -18,7 +19,7 @@ export abstract class MultiTextField extends TextField {
      * Returns the plural form of the field's name.
      * If not overridden, returns the singular form appended with an "s".
      */
-    protected fieldNamePlural(): string {
+    public fieldNamePlural(): string {
         return this.fieldNameSingular() + 's';
     }
 
@@ -57,5 +58,12 @@ export abstract class MultiTextField extends TextField {
             const match = matcher!.matchesAnyOf(this.values(task));
             return negate ? !match : match;
         };
+    }
+
+    /**
+     * This overloads {@link Field.createGrouper} to put a plural field name in the {@link Grouper.property}.
+     */
+    public createGrouper(): Grouper {
+        return new Grouper(this.fieldNamePlural(), this.grouper());
     }
 }

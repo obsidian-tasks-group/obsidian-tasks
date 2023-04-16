@@ -8,6 +8,7 @@ body:
         ## Before you start
         Please **make sure you are on the latest version of Tasks.**
         If you encountered the issue after you installed, updated, or reloaded the Tasks plugin, **please try restarting obsidian before reporting the bug**.
+        Also, please make sure you **read and understand the [guide for good bug reports](https://publish.obsidian.md/tasks/Support+and+Help/Report+a+Bug)**.
 
   - type: checkboxes
     id: no-duplicate-issues
@@ -43,7 +44,19 @@ body:
       description: |
         Which exact steps can a developer take to reproduce the issue?
         The more detail you provide, the easier it will be to narrow down and fix the bug.
-        Please paste in any relevant text, such as example tasks and/or queries.
+        Please paste in tasks and/or queries **as text, not screenshots**.
+        See [Give us text to copy](https://publish.obsidian.md/tasks/Support+and+Help/Report+a+Bug#Give+us+text+to+copy) for how to format your pasted text, and
+        **why we cannot accept bug reports that require anyone to re-type text from screenshots or descriptive text**.
+      placeholder: |
+        Example of the level of detail needed to reproduce any bugs efficiently and reliably.
+        1. Launch Obsidian Sandbox via the `Open Sandbox Vault` command.
+        2. Install the Tasks plugin.
+        3. Change the global filter to...
+        4. Create a new note called `Demo problem`.
+        5. Paste in a task with the text `- [x] Some special problem text`.
+        6. Switch to Reading mode.
+        7. etc
+        (Mac users: a Safari bug strips newlines from this text.)
     validations:
       required: true
 

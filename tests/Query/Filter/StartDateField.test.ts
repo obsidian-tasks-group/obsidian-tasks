@@ -16,6 +16,18 @@ describe('explain start date queries', () => {
         );
     });
 
+    it('should explain absolute date range', () => {
+        const filterOrMessage = new StartDateField().createFilterOrErrorMessage('starts 2023-03-01 2023-03-03');
+        // Full date range testing done in DueDateField
+        // But StartDateField is so far the only Field with 'OR no start date' in explanation
+        expect(filterOrMessage).toHaveExplanation(
+            `start date is between:
+  2023-03-01 (Wednesday 1st March 2023) and
+  2023-03-03 (Friday 3rd March 2023) inclusive
+  OR no start date`,
+        );
+    });
+
     it('implicit "on" gets added to explanation, and it is clear that start date is optional', () => {
         const filterOrMessage = new StartDateField().createFilterOrErrorMessage('starts 2023-01-02');
         expect(filterOrMessage).toHaveExplanation(
@@ -42,5 +54,23 @@ describe('sorting by start', () => {
 
     it('sort by start reverse', () => {
         expectTaskComparesAfter(new StartDateField().createReverseSorter(), date1, date2);
+    });
+});
+
+describe('grouping by start date', () => {
+    it('supports Field grouping methods correctly', () => {
+        const field = new StartDateField();
+        expect(field.supportsGrouping()).toEqual(true);
+    });
+
+    it('group by start date', () => {
+        // Arrange
+        const grouper = new StartDateField().createGrouper();
+        const taskWithDate = new TaskBuilder().startDate('1970-01-01').build();
+        const taskWithoutDate = new TaskBuilder().build();
+
+        // Assert
+        expect(grouper.grouper(taskWithDate)).toEqual(['1970-01-01 Thursday']);
+        expect(grouper.grouper(taskWithoutDate)).toEqual(['No start date']);
     });
 });

@@ -8,7 +8,7 @@ tags:
 This file contains a few examples that were useful when testing
 the feature to search for text using regular expressions.
 
-Full documentation is available: see [Regular Expressions](https://obsidian-tasks-group.github.io/obsidian-tasks/queries/regular-expressions/).
+Full documentation is available: see [Regular Expressions](https://publish.obsidian.md/tasks/Queries/Regular+Expressions).
 
 ## Sample Tasks
 
