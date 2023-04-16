@@ -16,6 +16,9 @@ lot of the typing of emojis and dates for you.
 
 It is particularly powerful when creating and editing tasks on mobile phones.
 
+> [!released]
+`➕ created today` was introduced in Tasks 3.2.0.
+
 ### Video Demo
 
 It is perhaps best understood by watching a [video of it in action](https://user-images.githubusercontent.com/10722656/175102574-78b0f851-cc48-4255-a40e-d3036bec5bb6.gif).
