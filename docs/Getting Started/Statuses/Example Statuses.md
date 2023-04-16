@@ -6,7 +6,7 @@ publish: true
 
 ## Overview
 
-Once we know what a status is [[Statuses|Status]], what can we do with them?
+Once we know what [[Statuses]] are, what can we do with them?
 
 Here are some example scenarios, for inspiration.
 
