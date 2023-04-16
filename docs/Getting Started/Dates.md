@@ -100,12 +100,7 @@ Created date was introduced in Tasks 2.0.0.
 
 If you enable 'Set created date on every added task' in settings (and restart Obsidian), the Tasks plugin will help you track when your tasks were created.
 
-See the screenshot above.
-
-The following Tasks facilities automatically add created dates to tasks (if the setting is enabled):
-
-- [[Create or edit Task|‘Create or edit Task’ Modal]], when it creates a brand new task
-- When you complete a [[Recurring Tasks|recurring task]], the new task's created date will show the date it was added.
+See the [[#Date-tracking settings|screenshot]] above.
 
 Created dates use a heavy plus emoji: ➕.
 
@@ -113,11 +108,25 @@ Created dates use a heavy plus emoji: ➕.
 - [ ] take out the trash ➕ 2021-04-09
 ```
 
+#### Adding Created date to tasks
+
+The following Tasks facilities add created dates to tasks...
+
+... automatically, if created date is enabled:
+
+- [[Create or edit Task|‘Create or edit Task’ Modal]], when it creates a brand new task
+- When you complete a [[Recurring Tasks|recurring task]], the new task's created date will show the date it was added.
+
+... upon request, and always enabled:
+
+- Via the `➕ created today` option in [[Auto-Suggest]].
+  - Note that this is a long way down the list of suggestions, so you may need to start typing a couple of characters from `created` or `today` to see it.
+
 ### Done date
 
 Unless you disable 'Set done date on every completed task' in settings (and restart Obsidian), the Tasks plugin will help you track when your tasks were completed.
 
-See the screenshot above.
+See the [[#Date-tracking settings|screenshot]] above.
 
 Done dates use a white check-mark emoji: ✅.
 
