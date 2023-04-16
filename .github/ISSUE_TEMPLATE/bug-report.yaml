@@ -46,7 +46,7 @@ body:
         The more detail you provide, the easier it will be to narrow down and fix the bug.
         Please paste in tasks and/or queries **as text, not screenshots**.
         See [Give us text to copy](https://publish.obsidian.md/tasks/Support+and+Help/Report+a+Bug#Give+us+text+to+copy) for how to format your pasted text, and
-        why we **cannot accept bug reports that require** anyone to **re-type text from screenshots or descriptive text**.
+        **why we cannot accept bug reports that require anyone to re-type text from screenshots or descriptive text**.
     validations:
       required: true
 
