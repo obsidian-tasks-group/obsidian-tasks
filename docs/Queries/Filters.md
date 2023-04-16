@@ -362,7 +362,7 @@ because the tasks starts before tomorrow. Only one of the dates needs to match.
 ### Status Name
 
 - This searches the names given to your custom statuses.
-- For example, perhaps you might have named `[!]` as `Important`, and so this field would search then text `Important` for all tasks with that status symbol.
+- For example, perhaps you might have named `[!]` as `Important`, and so this field would search the text `Important` for all tasks with that status symbol.
 - `status.name (includes|does not include) <string>`
   - Matches case-insensitive (disregards capitalization).
 - `status.name (regex matches|regex does not match) /<JavaScript-style Regex>/`
