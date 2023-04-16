@@ -7,6 +7,7 @@ import { getSettings } from '../../src/Config/Settings';
 import type { SuggestInfo } from '../../src/Suggestor';
 import { makeDefaultSuggestionBuilder } from '../../src/Suggestor/Suggestor';
 import { DEFAULT_SYMBOLS } from '../../src/TaskSerializer/DefaultTaskSerializer';
+import { DATAVIEW_SYMBOLS } from '../../src/TaskSerializer/DataviewTaskSerializer';
 
 window.moment = moment;
 
@@ -17,7 +18,10 @@ jest.spyOn(chrono, 'parseDate').mockImplementation(
     (text, _, options) => chrono.en.casual.parseDate(text, mockDate, options)!,
 );
 
-describe.each([{ name: 'emoji', symbols: DEFAULT_SYMBOLS }])("auto-complete with '$name' symbols", ({ symbols }) => {
+describe.each([
+    { name: 'emoji', symbols: DEFAULT_SYMBOLS },
+    { name: 'dataview', symbols: DATAVIEW_SYMBOLS },
+])("auto-complete with '$name' symbols", ({ symbols }) => {
     const buildSuggestions = makeDefaultSuggestionBuilder(symbols);
     const {
         dueDateSymbol,
