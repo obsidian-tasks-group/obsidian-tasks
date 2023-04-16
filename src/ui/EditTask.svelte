@@ -7,6 +7,7 @@
     import { Status } from '../Status';
     import { Priority, Task } from '../Task';
     import { doAutocomplete } from '../DateAbbreviations';
+    import { Reminder } from '../reminders/Reminder';
 
     // These exported variables are passed in as props by TaskModal.onOpen():
     export let task: Task;
@@ -19,6 +20,7 @@
         startDateSymbol,
         scheduledDateSymbol,
         dueDateSymbol,
+        reminderDateSymbol,
     } = TASK_FORMATS.tasksPluginEmoji.taskSerializer.symbols;
 
     let descriptionInput: HTMLTextAreaElement;
@@ -32,6 +34,7 @@
         scheduledDate: string;
         dueDate: string;
         doneDate: string;
+        reminderDate: string;
         forwardOnly: boolean;
     } = {
         description: '',
@@ -43,6 +46,7 @@
         scheduledDate: '',
         dueDate: '',
         doneDate: '',
+        reminderDate: '',
         forwardOnly: true
     };
 
@@ -54,6 +58,8 @@
     let isScheduledDateValid: boolean = true;
     let parsedDueDate: string = '';
     let isDueDateValid: boolean = true;
+    let parsedReminderDate: string = '';
+    let isReminderDateValid: boolean = true;
     let parsedRecurrence: string = '';
     let isRecurrenceValid: boolean = true;
     let parsedDone: string = '';
@@ -110,7 +116,7 @@
      * @returns the parsed date string. Includes "invalid" if {@code typedDate} was invalid.
      */
     function parseTypedDateForDisplay(
-        fieldName: 'created' | 'start' | 'scheduled' | 'due' | 'done',
+        fieldName: 'created' | 'start' | 'scheduled' | 'due' | 'reminder' | 'done',
         typedDate: string,
         forwardDate: Date | undefined = undefined,
     ): string {
@@ -132,7 +138,7 @@
      * @param typedDate - what the user has entered, such as '2023-01-23' or 'tomorrow'
      * @returns the parsed date string. Includes "invalid" if {@code typedDate} was invalid.
      */
-    function parseTypedDateForDisplayUsingFutureDate(fieldName: 'start' | 'scheduled' | 'due' | 'done', typedDate: string): string {
+    function parseTypedDateForDisplayUsingFutureDate(fieldName: 'start' | 'scheduled' | 'due' | 'done' | 'reminder', typedDate: string): string {
         return parseTypedDateForDisplay(
             fieldName,
             typedDate,
@@ -158,7 +164,7 @@
     }
 
     $: accesskey = (key: string) => withAccessKeys ? key : null;
-    $: formIsValid = isDueDateValid && isRecurrenceValid && isScheduledDateValid && isStartDateValid && isDescriptionValid;
+    $: formIsValid = isDueDateValid && isRecurrenceValid && isScheduledDateValid && isStartDateValid && isReminderDateValid && isDescriptionValid;
     $: isDescriptionValid = editableTask.description.trim() !== '';
 
     $: {
@@ -180,6 +186,12 @@
     }
 
     $: {
+        editableTask.reminderDate = doAutocomplete(editableTask.reminderDate);
+        parsedReminderDate = parseTypedDateForDisplayUsingFutureDate('reminder', editableTask.reminderDate);
+        isReminderDateValid = !parsedReminderDate.includes('invalid');
+    }
+
+    $: {
         isRecurrenceValid = true;
         if (!editableTask.recurrenceRule) {
             parsedRecurrence = '<i>not recurring</>';
@@ -190,6 +202,7 @@
                     startDate: null,
                     scheduledDate: null,
                     dueDate: null,
+                    reminderDate: null,
                 })?.toText();
             if (!recurrenceFromText) {
                 parsedRecurrence = '<i>invalid recurrence rule</i>';
@@ -239,6 +252,7 @@
                 ? task.scheduledDate.format('YYYY-MM-DD')
                 : '',
             dueDate: task.dueDate ? task.dueDate.format('YYYY-MM-DD') : '',
+            reminderDate: task.reminders[0] ? task.reminders[0].date!.format('YYYY-MM-DD') : '', // todo update to remove !
             doneDate: task.doneDate ? task.doneDate.format('YYYY-MM-DD') : '',
             forwardOnly: true,
         };
@@ -287,6 +301,8 @@
 
         const dueDate = parseTypedDateForSaving(editableTask.dueDate);
 
+        const reminderDate = parseTypedDateForSaving(editableTask.reminderDate);
+
         let recurrence: Recurrence | null = null;
         if (editableTask.recurrenceRule) {
             recurrence = Recurrence.fromText({
@@ -294,6 +310,7 @@
                 startDate,
                 scheduledDate,
                 dueDate,
+                reminderDate,
             });
         }
 
@@ -321,6 +338,7 @@
             startDate,
             scheduledDate,
             dueDate,
+            reminders: reminderDate ? [new Reminder(reminderDate)] : [],
             doneDate: window
                 .moment(editableTask.doneDate, 'YYYY-MM-DD')
                 .isValid()
@@ -442,6 +460,21 @@
                 accesskey={accesskey("a")}
             />
             <code>{startDateSymbol} {@html parsedStartDate}</code>
+
+            <!-- --------------------------------------------------------------------------- -->
+            <!--  Reminder Date  -->
+            <!-- --------------------------------------------------------------------------- -->
+            <label for="reminder"><span class="accesskey">R</span>eminder</label>
+            <!-- svelte-ignore a11y-accesskey -->
+            <input
+                bind:value={editableTask.reminderDate}
+                id="reminder"
+                type="text"
+                class:tasks-modal-error={!isReminderDateValid}
+                placeholder={datePlaceholder}
+                accesskey={accesskey("a")}
+            />
+            <code>{reminderDateSymbol} {@html parsedReminderDate}</code>
 
             <!-- --------------------------------------------------------------------------- -->
             <!--  Only future dates  -->

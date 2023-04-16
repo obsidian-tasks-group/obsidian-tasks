@@ -9,6 +9,10 @@ export class Reminder {
         this.isAck = false;
     }
 
+    public toString(): string {
+        return `${this.date?.format('YYYY-MM-DD')}`;
+    }
+
     public getDate(): Moment | null {
         return this.date;
     }

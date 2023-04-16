@@ -178,7 +178,7 @@ export class DefaultTaskSerializer implements TaskSerializer {
         let scheduledDate: Moment | null = null;
         let dueDate: Moment | null = null;
         let doneDate: Moment | null = null;
-        const reminderDate: Reminder[] = [];
+        let reminderDate: Moment | null = null;
         let createdDate: Moment | null = null;
         let recurrenceRule: string = '';
         let recurrence: Recurrence | null = null;
@@ -268,10 +268,9 @@ export class DefaultTaskSerializer implements TaskSerializer {
 
             const reminderDateRegex = line.match(TaskFormatRegularExpressions.reminderDateRegex);
             if (reminderDateRegex !== null) {
-                reminderDate.push(new Reminder(window.moment(reminderDateRegex[1], TaskRegularExpressions.dateFormat)));
+                reminderDate = window.moment(reminderDateRegex[1], TaskRegularExpressions.dateFormat);
                 line = line.replace(TaskFormatRegularExpressions.reminderDateRegex, '').trim();
                 matched = true;
-                console.log(reminderDate.length);
             }
 
             runs++;
@@ -284,6 +283,7 @@ export class DefaultTaskSerializer implements TaskSerializer {
                 startDate,
                 scheduledDate,
                 dueDate,
+                reminderDate,
             });
         }
         // Add back any trailing tags to the description. We removed them so we can parse the rest of the
@@ -302,7 +302,7 @@ export class DefaultTaskSerializer implements TaskSerializer {
             doneDate,
             recurrence,
             tags: Task.extractHashtags(line),
-            reminders: reminderDate,
+            reminders: reminderDate ? [new Reminder(reminderDate)] : [],
         };
     }
 }

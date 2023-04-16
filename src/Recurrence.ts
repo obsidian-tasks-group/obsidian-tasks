@@ -8,6 +8,7 @@ export class Recurrence {
     private readonly startDate: Moment | null;
     private readonly scheduledDate: Moment | null;
     private readonly dueDate: Moment | null;
+    private readonly reminderDate: Moment | null;
 
     /**
      * The reference date is used to calculate future occurrences.
@@ -31,6 +32,7 @@ export class Recurrence {
         startDate,
         scheduledDate,
         dueDate,
+        reminderDate,
     }: {
         rrule: RRule;
         baseOnToday: boolean;
@@ -38,6 +40,7 @@ export class Recurrence {
         startDate: Moment | null;
         scheduledDate: Moment | null;
         dueDate: Moment | null;
+        reminderDate: Moment | null;
     }) {
         this.rrule = rrule;
         this.baseOnToday = baseOnToday;
@@ -45,6 +48,7 @@ export class Recurrence {
         this.startDate = startDate;
         this.scheduledDate = scheduledDate;
         this.dueDate = dueDate;
+        this.reminderDate = reminderDate;
     }
 
     public static fromText({
@@ -52,11 +56,13 @@ export class Recurrence {
         startDate,
         scheduledDate,
         dueDate,
+        reminderDate,
     }: {
         recurrenceRuleText: string;
         startDate: Moment | null;
         scheduledDate: Moment | null;
         dueDate: Moment | null;
+        reminderDate: Moment | null;
     }): Recurrence | null {
         try {
             const match = recurrenceRuleText.match(/^([a-zA-Z0-9, !]+?)( when done)?$/i);
@@ -79,6 +85,8 @@ export class Recurrence {
                     referenceDate = window.moment(scheduledDate);
                 } else if (startDate) {
                     referenceDate = window.moment(startDate);
+                } else if (reminderDate) {
+                    referenceDate = window.moment(reminderDate);
                 }
 
                 if (!baseOnToday && referenceDate !== null) {
@@ -95,6 +103,7 @@ export class Recurrence {
                     startDate,
                     scheduledDate,
                     dueDate,
+                    reminderDate,
                 });
             }
         } catch (error) {
@@ -120,6 +129,7 @@ export class Recurrence {
         startDate: Moment | null;
         scheduledDate: Moment | null;
         dueDate: Moment | null;
+        reminderDate: Moment | null;
     } | null {
         let next: Date;
         if (this.baseOnToday) {
@@ -149,6 +159,7 @@ export class Recurrence {
             let startDate: Moment | null = null;
             let scheduledDate: Moment | null = null;
             let dueDate: Moment | null = null;
+            let reminderDate: Moment | null = null;
 
             // Only if a reference date is given. A reference date will exist if at
             // least one of the other dates is set.
@@ -177,12 +188,22 @@ export class Recurrence {
                     // Rounding days to handle cross daylight-savings-time recurrences.
                     dueDate.add(Math.round(originalDifference.asDays()), 'days');
                 }
+                //TODO - copliot review this
+                if (this.reminderDate) {
+                    const originalDifference = window.moment.duration(this.reminderDate.diff(this.referenceDate));
+
+                    // Cloning so that original won't be manipulated:
+                    reminderDate = window.moment(next);
+                    // Rounding days to handle cross daylight-savings-time recurrences.
+                    reminderDate.add(Math.round(originalDifference.asDays()), 'days');
+                }
             }
 
             return {
                 startDate,
                 scheduledDate,
                 dueDate,
+                reminderDate,
             };
         }
 
@@ -202,6 +223,9 @@ export class Recurrence {
             return false;
         }
         if (compareByDate(this.dueDate, other.dueDate) !== 0) {
+            return false;
+        }
+        if (compareByDate(this.reminderDate, other.reminderDate) !== 0) {
             return false;
         }
 

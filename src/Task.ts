@@ -242,6 +242,8 @@ export class Task {
         const { taskSerializer } = getUserSelectedTaskFormat();
         const taskInfo = taskSerializer.deserialize(description);
 
+        console.log(taskInfo);
+
         let scheduledDateIsInferred = false;
         // Infer the scheduled date from the file name if not set explicitly
         if (DateFallback.canApplyFallback(taskInfo) && fallbackDate !== null) {
@@ -254,8 +256,6 @@ export class Task {
 
         // Remove the Global Filter if it is there
         taskInfo.tags = taskInfo.tags.filter((tag) => !GlobalFilter.equals(tag));
-
-        taskInfo.reminders = [];
 
         return new Task({
             ...taskInfo,
