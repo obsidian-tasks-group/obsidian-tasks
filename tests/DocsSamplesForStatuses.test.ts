@@ -73,6 +73,10 @@ function constructStatuses(importedStatuses: StatusCollection) {
 describe('DefaultStatuses', () => {
     // These "test" write out a markdown representation of the default task statuses,
     // for embedding in the user docs.
+    // TODO There are hand-created Mermaid diagrams of some of this in 'Example Statuses'.
+    //      If ever the statuses are changed here, or new examples added, spend a few
+    //      minutes to write out the Mermaid diagrams automatically, and embed the
+    //      generated mermaid files inside the docs, replacing the hand-crafted ones.
     it('core-statuses', () => {
         verifyStatusesAsMarkdownTable([Status.makeTodo(), Status.makeDone()], true);
     });
