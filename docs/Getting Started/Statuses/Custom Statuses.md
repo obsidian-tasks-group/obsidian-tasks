@@ -30,7 +30,7 @@ Here's the kind of thing that you can do with custom statuses and styling:
 
 People have been using themes and CSS snippets to style custom checkboxes in Obsidian all along.
 
-What Tasks's custom statuses allow you to do is to **also customise the behaviour of your tasks**.
+What Tasks' custom statuses allow you to do is to **also customise the behaviour of your tasks**.
 
 ## Default custom statuses
 
@@ -84,7 +84,7 @@ For example, you could follow [[Style custom statuses|How to style custom status
 
 ### Editing custom statuses
 
-Your choice of styling facility will determine which letters and characters you wish to you in your custom statuses.
+Your choice of styling facility will determine which letters and characters you wish to use in your custom statuses.
 
 Now you can follow [[Set up custom statuses|How to set up your custom statuses]].
 
