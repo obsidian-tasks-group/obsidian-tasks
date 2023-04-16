@@ -1,4 +1,4 @@
-import { App, MarkdownRenderChild, MarkdownRenderer, Plugin, TFile } from 'obsidian';
+import { App, Keymap, MarkdownRenderChild, MarkdownRenderer, Plugin, TFile } from 'obsidian';
 import type { EventRef, MarkdownPostProcessorContext } from 'obsidian';
 
 import type { IQuery } from './IQuery';
@@ -321,11 +321,17 @@ class QueryRenderChild extends MarkdownRenderChild {
 
         // Go to the line the task is defined at
         const vault = this.app.vault;
-        link.addEventListener('click', async () => {
+        link.addEventListener('click', async (ev: MouseEvent) => {
             const result = await getTaskLineAndFile(task, vault);
             if (result) {
                 const [line, file] = result;
-                const leaf = this.app.workspace.getLeaf();
+                const leaf = this.app.workspace.getLeaf(Keymap.isModEvent(ev));
+                // This opens the file with the required line highlighted.
+                // It works for Edit and Reading mode, however, for some reason (maybe an Obsidian bug),
+                // when used in Reading mode, switching the result to Edit does not sync the scroll.
+                // A patch suggested over Discord to use leaf.setEphemeralState({scroll: line}) does not seem
+                // to make a difference.
+                // The issue is tracked here: https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1879
                 await leaf.openFile(file, { eState: { line: line } });
             }
         });
