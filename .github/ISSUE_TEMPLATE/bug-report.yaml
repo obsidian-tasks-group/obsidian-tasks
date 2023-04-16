@@ -47,6 +47,14 @@ body:
         Please paste in tasks and/or queries **as text, not screenshots**.
         See [Give us text to copy](https://publish.obsidian.md/tasks/Support+and+Help/Report+a+Bug#Give+us+text+to+copy) for how to format your pasted text, and
         **why we cannot accept bug reports that require anyone to re-type text from screenshots or descriptive text**.
+      placeholder: |
+        Example steps: this is the kind of level of detail needed....
+        1. Launch Obsidian Sandbox via the `Open Sandbox Vault` command
+        2. Install the Tasks plugin
+        3. Create a new note called `Demo problem`
+        4. Paste in a task with the text `- [x] Some special problem text`
+        5. Switch to Reading mode
+        6. etc
     validations:
       required: true
 
