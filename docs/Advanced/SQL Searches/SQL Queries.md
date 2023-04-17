@@ -16,20 +16,6 @@ By default you should only need the conditions of the SQL query, that is everyth
 
 ## General Queries
 
-### Queries using file
-
-basename is the name of the page
-
-`WHERE status->symbol = '!' AND file->basename = '2021-10-13'`
-
-%%
-Update if TFile becomes available on the Task object.
-You can also now query based on the creation date of the note the task is in.
-
-`WHERE status->symbol = ' ' AND moment(file->stat->ctime)->month() = 3`
-
-you can use `mtime` to access the modified time.
-%%
 ### Object Properties & Functions
 
 Object property
@@ -57,17 +43,3 @@ Functions
 JavaScript string functions can also be used, for example all tasks with only one tag.
 
 `WHERE tags->length = 1`
-
-## Grouping Internals
-
-To group you need to specify the field and then `ARRAY(_) AS tasks` this will be more flexible over time but to get parity with the existing Tasks plugin it is constrained to a single group. The query is generated in the background correctly for this and the data is grouped specially.
-
-```SQL
-GROUP BY status->symbol
-```
-
-becomes this internally where the ARRAY is the tasks in the status group.
-
-```SQL
-SELECT status, ARRAY(_) AS tasks FROM Tasks GROUP BY status
-```
