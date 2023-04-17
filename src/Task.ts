@@ -242,8 +242,6 @@ export class Task {
         const { taskSerializer } = getUserSelectedTaskFormat();
         const taskInfo = taskSerializer.deserialize(description);
 
-        console.log(taskInfo);
-
         let scheduledDateIsInferred = false;
         // Infer the scheduled date from the file name if not set explicitly
         if (DateFallback.canApplyFallback(taskInfo) && fallbackDate !== null) {

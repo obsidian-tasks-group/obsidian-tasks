@@ -30,9 +30,8 @@ export default class TasksPlugin extends Plugin {
     async onload() {
         logging.registerConsoleLogger();
         console.log('loading plugin "tasks"');
-        console.log('Trigger notification');
         this.taskNotification = new TaskNotification(this.app);
-        this.taskNotification.show();
+        // this.taskNotification.show();
 
         await this.loadSettings();
         this.addSettingTab(new SettingsTab({ plugin: this }));
@@ -58,6 +57,14 @@ export default class TasksPlugin extends Plugin {
         this.registerEditorExtension(newLivePreviewExtension());
         this.registerEditorSuggest(new EditorSuggestor(this.app, getSettings()));
         new Commands({ plugin: this });
+
+        // Register the watcher for reminders.
+        this.app.workspace.onLayoutReady(async () => {
+            const tasks = this.getTasks();
+            if (this.taskNotification && tasks) {
+                this.registerInterval(this.taskNotification.watcher(tasks)!);
+            }
+        });
     }
 
     async loadTaskStatuses() {

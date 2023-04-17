@@ -1,7 +1,11 @@
 import { App, Modal } from 'obsidian';
+import type { Task } from '../Task';
+import { Query } from '../Query/Query';
 import ReminderView from './components/Reminder.svelte';
 const electron = require('electron');
 const Notification = electron.remote.Notification;
+//  Platform.isDesktopApp, // Platform.isMobileApp,
+//  import { Platform } from 'obsidian';
 
 export class TaskNotification {
     constructor(private app: App) {} //private app: App
@@ -53,6 +57,53 @@ export class TaskNotification {
             // Show obsidian modal notification for mobile users
             // Must be in app for this to trigger
             this.showBuiltinReminder(reminder);
+        }
+    }
+
+    public watcher(tasks: Task[]): number | undefined {
+        let intervalTaskRunning = true;
+        // Force the view to refresh as soon as possible.
+        this.reminderEvent(tasks).finally(() => {
+            intervalTaskRunning = false;
+        });
+
+        // Set up the recurring check for reminders.
+        return window.setInterval(() => {
+            if (intervalTaskRunning) {
+                console.log('Skip reminder interval task because task is already running.');
+                return;
+            }
+            intervalTaskRunning = true;
+            this.reminderEvent(tasks).finally(() => {
+                intervalTaskRunning = false;
+            });
+        }, 1000);
+    }
+
+    private async reminderEvent(tasks: Task[]): Promise<void> {
+        if (!tasks?.length) {
+            return; // No tasks, nothing to do.
+        }
+        const input = 'has reminder date';
+        const query = new Query({ source: input });
+
+        // Get list of tasks with reminders
+        let reminderTasks = [...tasks];
+        query.filters.forEach((filter) => {
+            reminderTasks = reminderTasks.filter(filter.filterFunction);
+        });
+
+        for (const rTask of reminderTasks) {
+            const now = window.moment();
+            const daily = window.moment().startOf('day'); // match on moments that have no time set
+            // Might want to adjust this offset to be based on the setInterval + ~1 second
+            if (rTask.reminders[0].date?.isBetween(now.subtract(30, 'seconds'), now.add(30, 'seconds'))) {
+                console.log('Show Notification');
+            } else if (rTask.reminders[0].date?.isSame(daily)) {
+                // Add check for if {{9am}}
+                console.log('Daily Notification');
+                //this.show();
+            }
         }
     }
 

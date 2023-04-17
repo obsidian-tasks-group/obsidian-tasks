@@ -24,4 +24,18 @@ export class Reminder {
     public complete(): void {
         this.isAck = true;
     }
+
+    //   public getExpiredReminders(defaultTime: Time): Array<Reminder> {
+    //     const now = new Date().getTime();
+    //     const result: Array<Reminder> = [];
+    //     for (let i = 0; i < this.reminders.length; i++) {
+    //       const reminder = this.reminders[i]!;
+    //       if (reminder.time.getTimeInMillis(defaultTime) <= now) {
+    //         result.push(reminder);
+    //       } else {
+    //         break;
+    //       }
+    //     }
+    //     return result;
+    //   }
 }

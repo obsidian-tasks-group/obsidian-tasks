@@ -11,7 +11,7 @@ export class ReminderDateField extends DateField {
     }
 
     public date(task: Task): Moment | null {
-        if (task.reminders.length > 0) {
+        if (task && task.reminders.length > 0) {
             return task.reminders[0].getDate();
         } else {
             return null;
