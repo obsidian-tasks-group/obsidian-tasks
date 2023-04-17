@@ -5,7 +5,7 @@ import { StatusRegistry } from '../StatusRegistry';
 import { Status } from '../Status';
 import type { StatusCollection } from '../StatusCollection';
 import * as Themes from './Themes';
-import type { HeadingState } from './Settings';
+import { type HeadingState, TASK_FORMATS } from './Settings';
 import { getSettings, isFeatureEnabled, updateGeneralSetting, updateSettings } from './Settings';
 import { GlobalFilter } from './GlobalFilter';
 import { StatusSettings } from './StatusSettings';
@@ -54,6 +54,24 @@ export class SettingsTab extends PluginSettingTab {
             cls: 'tasks-setting-important',
             text: 'Changing any settings requires a restart of obsidian.',
         });
+
+        // ---------------------------------------------------------------------------
+        containerEl.createEl('h4', { text: 'Task Format Settings' });
+        // ---------------------------------------------------------------------------
+
+        new Setting(containerEl)
+            .setName('Task Format')
+            .setDesc('The format that Tasks uses to read and write tasks.')
+            .addDropdown((dropdown) => {
+                for (const key of Object.keys(TASK_FORMATS) as (keyof TASK_FORMATS)[]) {
+                    dropdown.addOption(key, TASK_FORMATS[key].displayName);
+                }
+
+                dropdown.setValue(getSettings().taskFormat).onChange(async (value) => {
+                    updateSettings({ taskFormat: value as keyof TASK_FORMATS });
+                    await this.plugin.saveSettings();
+                });
+            });
 
         // ---------------------------------------------------------------------------
         containerEl.createEl('h4', { text: 'Global filter Settings' });
@@ -440,12 +458,13 @@ export class SettingsTab extends PluginSettingTab {
         const themes: NamedTheme[] = [
             // Light and Dark themes - alphabetical order
             ['AnuPpuccin Theme', Themes.anuppuccinSupportedStatuses()],
+            ['Aura Theme', Themes.auraSupportedStatuses()],
             ['Ebullientworks Theme', Themes.ebullientworksSupportedStatuses()],
             ['ITS Theme & SlRvb Checkboxes', Themes.itsSupportedStatuses()],
             ['Minimal Theme', Themes.minimalSupportedStatuses()],
             ['Things Theme', Themes.thingsSupportedStatuses()],
             // Dark only themes - alphabetical order
-            ['Aura Theme (Dark mode only)', Themes.auraSupportedStatuses()],
+            ['LYT Mode Theme (Dark mode only)', Themes.lytModeSupportedStatuses()],
         ];
         for (const [name, collection] of themes) {
             const addStatusesSupportedByThisTheme = new Setting(containerEl).addButton((button) => {

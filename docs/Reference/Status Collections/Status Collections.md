@@ -57,12 +57,6 @@ The very widely used [[SlRvb's Alternate Checkboxes|SlRvb’s Alternate Checkbox
 
 However, you can also browse through the pages in this section, to see the other options that Tasks is aware of.
 
-## Coming soon
-
-We plan to add one-click support for these themes in a future release:
-
-- [LYT Mode](https://publish.obsidian.md/hub/02+-+Community+Expansions/02.05+All+Community+Expansions/Themes/LYT+Mode)
-
 ## Supported CSS Snippets and Themes
 
 See the table of contents below.

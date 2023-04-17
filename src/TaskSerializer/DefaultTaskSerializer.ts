@@ -149,6 +149,28 @@ export class DefaultTaskSerializer implements TaskSerializer {
         }
     }
 
+    /**
+     * Given the string captured in the first capture group of
+     *    {@link DefaultTaskSerializerSymbols.TaskFormatRegularExpressions.priorityRegex},
+     *    returns the corresponding Priority level.
+     *
+     * @param p String captured by priorityRegex
+     * @returns Corresponding priority if parsing was successful, otherwise {@link Priority.None}
+     */
+    protected parsePriority(p: string): Priority {
+        const { prioritySymbols } = this.symbols;
+        switch (p) {
+            case prioritySymbols.Low:
+                return Priority.Low;
+            case prioritySymbols.Medium:
+                return Priority.Medium;
+            case prioritySymbols.High:
+                return Priority.High;
+            default:
+                return Priority.None;
+        }
+    }
+
     /* Parse TaskDetails from the textual description of a {@link Task}
      *
      * @param line The string to parse
@@ -156,7 +178,7 @@ export class DefaultTaskSerializer implements TaskSerializer {
      * @return {TaskDetails}
      */
     public deserialize(line: string): TaskDetails {
-        const { prioritySymbols, TaskFormatRegularExpressions } = this.symbols;
+        const { TaskFormatRegularExpressions } = this.symbols;
 
         // Keep matching and removing special strings from the end of the
         // description in any order. The loop should only run once if the
@@ -182,18 +204,7 @@ export class DefaultTaskSerializer implements TaskSerializer {
             matched = false;
             const priorityMatch = line.match(TaskFormatRegularExpressions.priorityRegex);
             if (priorityMatch !== null) {
-                switch (priorityMatch[1]) {
-                    case prioritySymbols.Low:
-                        priority = Priority.Low;
-                        break;
-                    case prioritySymbols.Medium:
-                        priority = Priority.Medium;
-                        break;
-                    case prioritySymbols.High:
-                        priority = Priority.High;
-                        break;
-                }
-
+                priority = this.parsePriority(priorityMatch[1]);
                 line = line.replace(TaskFormatRegularExpressions.priorityRegex, '').trim();
                 matched = true;
             }

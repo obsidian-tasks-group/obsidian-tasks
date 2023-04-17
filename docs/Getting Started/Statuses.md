@@ -142,7 +142,7 @@ They **require custom CSS styling or theming** on order to display correctly in 
 
 People have been using themes and CSS snippets to style custom checkboxes in Obsidian all along.
 
-What Tasks's custom statuses allow you to do is to **also customise the behaviour of your tasks**.
+What Tasks' custom statuses allow you to do is to **also customise the behaviour of your tasks**.
 
 ### Setting up Custom Statuses
 
@@ -195,7 +195,7 @@ We are tracking this in [issue #1486](https://github.com/obsidian-tasks-group/ob
 For details, see [[Filters#Filters for Task Statuses|Filters for Task Statuses]]
 
 > [!info]
-We envisage adding `status.symbol`.
+We envisage adding `status.symbol`. We are tracking this in [issue #1630](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1630).
 
 ---
 
@@ -203,7 +203,7 @@ We envisage adding `status.symbol`.
 
 This plugin's implementation of reading, searching and editing custom statuses was entirely made possible by the work of [Sytone](https://github.com/sytone) and his fork of Tasks called ['Tasks SQL Powered'](https://github.com/sytone/obsidian-tasks-x). [^task-x-version]
 
-Where code in Tasks has been copied from 'Tasks SQL Powered', Sytone has been specifically credited as a co-author, that is, joint author, and these commits can be seen on the GitHub site: [Commits "Co-Authored-By: Sytone"](https://github.com/search?q=repo%3Aobsidian-tasks-group%2Fobsidian-tasks+%22Co-Authored-By%3A+Sytone%22&type=commits).
+Where code in Tasks has been copied from 'Tasks SQL Powered', Sytone has been specifically credited as a co-author, that is, joint author, and these commits can be seen on the GitHub site: [Commits "Co-Authored-By: Sytone"](https://github.com/search?q=repo%3Aobsidian-tasks-group%2Fobsidian-tasks+%22Co-Authored-By%3A+Sytone%22&type=commits&s=committer-date&o=desc).
 
 Subsequently, the custom statuses implementation in Tasks has diverged from the 'Tasks SQL Powered' significantly. However, none of the new features and fixes would have been possible without Sytone's foundation work, for which we are very grateful.
 

@@ -1,10 +1,12 @@
 import { makeDefaultSuggestionBuilder } from '../Suggestor/Suggestor';
 import { DEFAULT_SYMBOLS } from '../TaskSerializer/DefaultTaskSerializer';
+import { DATAVIEW_SYMBOLS } from '../TaskSerializer/DataviewTaskSerializer';
 import { StatusConfiguration } from '../StatusConfiguration';
 import { Status } from '../Status';
 import { DefaultTaskSerializer, type TaskSerializer } from '../TaskSerializer';
 import type { SuggestionBuilder } from '../Suggestor';
 import type { LogOptions } from '../lib/logging';
+import { DataviewTaskSerializer } from '../TaskSerializer/DataviewTaskSerializer';
 import { DebugSettings } from './DebugSettings';
 import { StatusSettings } from './StatusSettings';
 import { Feature } from './Feature';
@@ -38,6 +40,11 @@ export const TASK_FORMATS = {
         displayName: 'Default',
         taskSerializer: new DefaultTaskSerializer(DEFAULT_SYMBOLS),
         buildSuggestions: makeDefaultSuggestionBuilder(DEFAULT_SYMBOLS),
+    },
+    dataview: {
+        displayName: 'Dataview',
+        taskSerializer: new DataviewTaskSerializer(),
+        buildSuggestions: makeDefaultSuggestionBuilder(DATAVIEW_SYMBOLS),
     },
 } as const;
 
@@ -99,7 +106,7 @@ const defaultSettings: Settings = {
     headingOpened: {},
     debugSettings: new DebugSettings(),
 
-    /* 
+    /*
     `loggingOptions` is a property in the `Settings` interface that defines the logging options for
     the application. It is an object that contains a `minLevels` property, which is a map of logger
     names to their minimum logging levels. This allows the application to control the amount of

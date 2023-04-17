@@ -6,7 +6,7 @@ publish: true
 
 ## Overview
 
-Once we know what a status is [[Statuses|Status]], what can we do with them?
+Once we know what [[Statuses]] are, what can we do with them?
 
 Here are some example scenarios, for inspiration.
 
@@ -15,6 +15,11 @@ Here are some example scenarios, for inspiration.
 You can tweak Tasks' `Todo` status so that it toggles to 'In Progress', which then toggles to 'Done'.
 
 This might be useful if you have a few slightly more time-consuming tasks to keep an eye on. Perhaps you would like to prioritise finishing things that are in progress before starting something new?
+
+```mermaid
+flowchart LR
+1[Todo] --> 2[In Progress] --> 3[Done] --> 1
+```
 
 <!-- placeholder to force blank line before included text --> <!-- include: DocsSamplesForStatuses.test.DefaultStatuses_todo-in_progress-done.approved.md -->
 
@@ -31,6 +36,11 @@ This might be useful if you have a few slightly more time-consuming tasks to kee
 Sometimes I have a few really important tasks that I wish to stand out from the crowd, and several Themes make `!` tasks stand out visually, so I find this works really well.
 
 By using non-standard symbols for the `IN_PROGRESS` and `DONE` statuses, if I decide to later re-open one of these completed tasks, it automatically goes on to `!` again.
+
+```mermaid
+flowchart LR
+1[Important] --> 2[Doing - Important] --> 3[Done - Important] --> 1
+```
 
 <!-- placeholder to force blank line before included text --> <!-- include: DocsSamplesForStatuses.test.DefaultStatuses_important-cycle.approved.md -->
 
@@ -50,6 +60,11 @@ Happily, some themes use `P` and `C` for these. Others use `p` and `c`.
 
 Either way, I can make them toggle to each other, and by giving them the type `NON_TASK`, I can exclude them from my Tasks searches, as I don't see them as actionable.
 
+```mermaid
+flowchart LR
+1[Pro] --> 2[Con] --> 1
+```
+
 <!-- placeholder to force blank line before included text --> <!-- include: DocsSamplesForStatuses.test.DefaultStatuses_pro-con-cycle.approved.md -->
 
 | Status Symbol | Next Status Symbol | Status Name | Status Type | Needs Custom Styling |
@@ -66,6 +81,15 @@ Suppose you have some statuses which are purely for display purposes: they will 
 There is a nice property that statuses with the same Status Symbol and Next Status Symbol - and a type other than `DONE` - do nothing when they are toggled.
 
 Here are some statuses from the ITS Theme where this behaviour might be useful.
+
+```mermaid
+flowchart TD
+1[Bookmark] --> 1
+2[Example] --> 2
+3[Information] --> 3
+4[Paraphrase] --> 4
+5[Quote] --> 5
+```
 
 <!-- placeholder to force blank line before included text --> <!-- include: DocsSamplesForStatuses.test.DefaultStatuses_toggle-does-nothing.approved.md -->
 

@@ -2,7 +2,7 @@
 publish: true
 ---
 
-# Aura Theme (Dark mode only)
+# Aura Theme
 
 ## Introduction
 
@@ -11,7 +11,7 @@ publish: true
 |                        GitHub: | <https://github.com/ashwinjadhav818/obsidian-aura>                                                                                                            |
 |                  Obsidian Hub: | [Aura Theme](https://publish.obsidian.md/hub/02+-+Community+Expansions/02.05+All+Community+Expansions/Themes/Aura)                                            |
 | Test note in Tasks-Demo vault: | [Theme - Aura Theme](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/resources/sample_vaults/Tasks-Demo/Styling/Theme%20-%20Aura%20Theme.md) |
-|                         Notes: | **Dark mode only**                                                                                                                                            |
+|                         Notes: |                                                                                                                                                               |
 
 ## Screenshot
 
