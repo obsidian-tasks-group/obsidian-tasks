@@ -25,6 +25,6 @@ Task SQL Query Version
 
 ```tasks-sql
 WHERE path LIKE '%Smoke Testing the Tasks Plugin%'
-# group by heading
-# short view
+#commented out group by heading
+#commented out short view
 ```
