@@ -33,8 +33,16 @@ Thanks to check:
 >
 > ```tasks
 > path includes Markdown in group _non-italic filename_
-> 
+>
 > group by backlink
 > group by filename
 > group by heading
+> ```
+
+> [!todo]
+>
+> Task SQL Query Version
+>
+> ```tasks-sql
+> WHERE path LIKE '%Markdown in group _non-italic filename_%'
 > ```

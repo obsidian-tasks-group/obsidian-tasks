@@ -10,6 +10,13 @@
 > sort by description
 > ```
 
+> Task SQL Query Version
+> Group By functionality is pending.
+>
+> ```tasks-sql
+> WHERE path LIKE '%Callouts and Block Quotes%' ORDER BY description
+> ```
+
 ---
 
 ## 1.2 Vanilla

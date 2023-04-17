@@ -8,3 +8,9 @@ It shows that the the backlink (the file and heading names) can quite dominate t
 not done
 description includes trash
 ```
+
+Task SQL Query Version
+
+```tasks-sql
+WHERE status->symbol = ' ' AND description LIKE '%trash%'
+```

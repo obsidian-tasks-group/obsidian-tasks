@@ -17,11 +17,23 @@ path includes Styling of Queries
 group by priority
 ```
 
+Task SQL Query Version
+
+```tasks-sql
+WHERE path LIKE '%Styling of Queries%'
+```
+
 - [ ] **3. Test 'group by' classes #2** - the following should have a **black** heading named 'No due date':
 
 ```tasks
 path includes Styling of Queries
 group by due
+```
+
+Task SQL Query Version
+
+```tasks-sql
+WHERE path LIKE '%Styling of Queries%'
 ```
 
 - [ ] **4. Test short mode classes** - the following should have an aqua background:
@@ -31,11 +43,25 @@ path includes Styling of Queries
 short mode
 ```
 
+Task SQL Query Version
+
+```tasks-sql
+WHERE path LIKE '%Styling of Queries%'
+#short mode
+```
+
 - [ ] **5. Test 'hidden' query classes** - the following lines (except the backlinks) should be colored **red**:
 
 ```tasks
 path includes Styling of Queries
 hide priority
+```
+
+Task SQL Query Version
+
+```tasks-sql
+WHERE path LIKE '%Styling of Queries%'
+#hide priority
 ```
 
 - [ ] 6. Open the Obsidian settings of the Demo vault and under Appearance | CSS Snippets, turn **off** `tasks-plugin-smoke-test-query-styling`.

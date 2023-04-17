@@ -33,6 +33,12 @@ group by status
 sort by description
 ```
 
+Task SQL Query Version
+
+```tasks-sql
+WHERE path LIKE '%Custom Task Statuses%'
+```
+
 ---
 
 ## sort by status
@@ -41,6 +47,14 @@ sort by description
 path includes Custom Task Statuses
 sort by status
 sort by description
+```
+
+Task SQL Query Version
+
+When the tasks query is run it only sorts status by Done and Todo, the SQL engine will sort by the actual status as it stand today as there is no need for backwards compatibility.
+
+```tasks-sql
+WHERE path LIKE '%Custom Task Statuses%' ORDER BY status->symbol, description
 ```
 
 ---
@@ -53,6 +67,22 @@ done
 sort by description
 ```
 
+Task SQL Query Version
+
+SQL will filter by the exact state of the task and not assume any character between the square braces is 'Done' like the existing tasks query engine.
+
+Just tasks that are 'Done' == 'x'
+
+```tasks-sql
+WHERE status->symbol = 'x' AND path LIKE '%Custom Task Statuses%' ORDER BY description
+```
+
+Just tasks that are 'Cancelled' == '-'
+
+```tasks-sql
+WHERE status->symbol = '-' AND path LIKE '%Custom Task Statuses%' ORDER BY description
+```
+
 ---
 
 ## Not Done
@@ -61,4 +91,18 @@ sort by description
 path includes Custom Task Statuses
 not done
 sort by description
+```
+
+Task SQL Query Version
+
+SQL will filter by the exact state of the task and not assume any character not set to 'x' is not done.
+
+```tasks-sql
+WHERE status->symbol = ' ' AND path LIKE '%Custom Task Statuses%' ORDER BY description
+```
+
+All Tasks that have a status that is not 'x'
+
+```tasks-sql
+WHERE status->symbol <> 'x' AND path LIKE '%Custom Task Statuses%' ORDER BY description
 ```

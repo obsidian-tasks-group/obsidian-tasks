@@ -29,11 +29,23 @@ not done
 (tags includes #XX) AND (tags includes #YY)
 ```
 
+Task SQL Query Version
+
+```tasks-sql
+WHERE status->symbol = ' ' AND '#XX' IN tags and '#YY' IN tags
+```
+
 ### AND - XX and YY and ZZ
 
 ```tasks
 not done
 (tags includes #XX) AND (tags includes #YY) AND (tags includes #ZZ)
+```
+
+Task SQL Query Version
+
+```tasks-sql
+WHERE status->symbol = ' ' AND '#XX' IN tags AND '#YY' IN tags AND '#ZZ' IN tags
 ```
 
 ## Examples with OR
@@ -43,6 +55,12 @@ not done
 ```tasks
 not done
 (tags includes #XX) OR (tags includes #YY)
+```
+
+Task SQL Query Version
+
+```tasks-sql
+WHERE status->symbol = ' ' AND '#XX' IN tags OR '#YY' IN tags
 ```
 
 ## (Advanced) Examples with XOR
@@ -56,6 +74,12 @@ not done
 (tags includes #XX) XOR (tags includes #YY)
 ```
 
+Task SQL Query Version
+
+```tasks-sql
+WHERE status->symbol = ' ' AND ('#XX' IN tags) <> ('#YY' IN tags)
+```
+
 ### XOR Then XOR
 
 Note the inclusion of 'task 7'. Combining multiple `XOR` does not give the expected result.
@@ -64,6 +88,12 @@ See [this question and its answers](https://electronics.stackexchange.com/questi
 ```tasks
 not done
 (tags includes #XX) XOR (tags includes #YY) XOR (tags includes #ZZ)
+```
+
+Task SQL Query Version
+
+```tasks-sql
+WHERE status->symbol = ' ' AND ('#XX' IN tags) <> ('#YY' IN tags) <> ('#ZZ' IN tags)
 ```
 
 ### XOR Then XOR workarounds
@@ -75,10 +105,27 @@ not done
 ( (tags includes #XX) AND (tags does not include #YY) AND (tags does not include #ZZ) ) OR ( (tags includes #YY) AND (tags does not include #XX) AND (tags does not include #ZZ) ) OR ( (tags includes #ZZ) AND (tags does not include #XX) AND (tags does not include #YY) )
 ```
 
+Task SQL Query Version
+
+```tasks-sql
+WHERE status->symbol = ' ' AND
+  ('#XX' IN tags AND '#YY' NOT IN tags AND '#ZZ' NOT IN tags) OR
+  ('#YY' IN tags AND '#XX' NOT IN tags AND '#ZZ' NOT IN tags) OR
+  ('#ZZ' IN tags AND '#XX' NOT IN tags AND '#YY' NOT IN tags)
+```
+
 Matching only one of 3 filters - version 2:
 
 ```tasks
 not done
 (tags includes #XX) XOR (tags includes #YY) XOR (tags includes #ZZ)
 NOT ( (tags includes #XX) AND (tags includes #YY) AND (tags includes #ZZ) )
+```
+
+Task SQL Query Version
+
+```tasks-sql
+WHERE status->symbol = ' ' AND
+  ('#XX' IN tags) <> ('#YY' IN tags) <> ('#ZZ' IN tags) AND NOT
+  ('#YY' IN tags AND '#XX' IN tags AND '#ZZ' IN tags)
 ```

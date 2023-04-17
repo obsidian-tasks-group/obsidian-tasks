@@ -1,5 +1,5 @@
 ---
-publish: true
+publish: false
 ---
 
 # SQL Debugging
@@ -10,11 +10,11 @@ To help with debugging you can access the raw output of a query. The raw mode of
 
 ## Query with the Tasks in your Vault to query against
 
-This example runs the SQL query with the tasks from this Vault. By placing `tasks` after the `#raw` command all the tasks in your vault that the tasks plugin knows about wil be used as the query target. When this query is run it will return one tasks matching the `WHERE` clause. The data returned is the `description`, `MomentDate` which is the start of the day today and if a `dueDate` is set its current value as a string.
+This example runs the SQL query with the tasks from this Vault. By placing `tasks` after the `#raw` command all the tasks in your vault that the tasks plugin knows about wil be used as the query target. When this query is run it will return one tasks matching the `WHERE` clause.
 
 ````text
 ```tasks-sql
-SELECT description, moment()->startOf('day') AS MomentDate, dueDate->format() AS DateDay
+SELECT *
 FROM ?
 WHERE status->symbol = ' ' 
 LIMIT 1

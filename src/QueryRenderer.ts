@@ -37,7 +37,7 @@ export class QueryRenderer {
                 container: element,
                 source,
                 filePath: context.sourcePath,
-                frontmatter: context.frontmatter, // Enable front matter to be taken into account when quering/rendering tasks.
+                frontmatter: context.frontmatter, // Enable front matter to be taken into account when querying/rendering tasks.
             }),
         );
     }

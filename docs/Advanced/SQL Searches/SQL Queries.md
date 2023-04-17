@@ -9,7 +9,8 @@ publish: true
 The SQL query version is more complex but provides more powerful ways to filter your tasks. There are a couple of key differences:
 
 - The language is SQL based, if you know SQL you can use pretty much any query you can use in SQL.
-- If you want to make a fully custom query you need to select all the columns `*` at the moment unless you are grouping by. Selection of individual fields to generate a table is a future feature.
+- You do not need to specify the `SELECT` part of the query, you can start with `WHERE`
+- The `GROUP BY` statement is not currently supported, support will be added at a later time.
 
 By default you should only need the conditions of the SQL query, that is everything after the `WHERE` clause including the `WHERE` for example `WHERE status->symbol != "x" AND path LIKE '%Journal%' LIMIT 10` which will return 10 tasks not completed (`x`) with `Journal` in the path.
 

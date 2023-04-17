@@ -2,6 +2,7 @@
  * @jest-environment jsdom
  */
 import moment from 'moment';
+import { GlobalFilter } from '../../src/Config/GlobalFilter';
 import { QuerySql } from '../../src/QuerySql/QuerySql';
 import { Status } from '../../src/Status';
 import { Priority, Task } from '../../src/Task';
@@ -40,7 +41,11 @@ describe('Query parsing', () => {
             query.applyQueryToTasks([]);
 
             // Assert
-            expect(query.error).toBeUndefined();
+            if (query.rawResults === undefined) {
+                expect(query.error).toBeUndefined();
+            } else {
+                expect(query.error).toBe('To view results please open the console.');
+            }
         });
     });
 
@@ -60,11 +65,11 @@ describe('Query parsing', () => {
             });
 
             // Act
-            const result = query.queryTasks([]);
-            const selectResult = result[0].QueryID;
+            query.queryTasks([]);
+            const selectResult = query.rawResults[0].QueryID;
 
             // Assert
-            expect(query.error).toBeUndefined();
+            expect(query.error).toBe('To view results please open the console.');
             expect(selectResult).toBe(query.queryId);
         });
         it('should run inline function', () => {
@@ -92,6 +97,45 @@ describe('Query parsing', () => {
             expect(query.error).toBeUndefined();
             expect(result).toHaveLength(1);
             expect(result[0].dueDate?.format('YYYY-MM-DD')).toBe(moment().subtract(3, 'days').format('YYYY-MM-DD'));
+        });
+
+        // Added to vaildate scenario raised in PR.
+        // Link: https://github.com/obsidian-tasks-group/obsidian-tasks/pull/1851#discussion_r1167989504
+        it('should strip markdown from field', () => {
+            // Arrange
+            GlobalFilter.set('#task');
+            const query = new QuerySql({
+                source: ['ORDER BY removeMarkdown(description)'].join('\n'),
+                sourcePath: '',
+                frontmatter: {},
+            });
+
+            const tasksToTest = [
+                createTaskFromLine('- [ ] #task Take out the trash 🔁 every week on Monday 📅 2021-11-22'),
+                createTaskFromLine(
+                    '- [x] #task Take out the trash 🔁 every week on Monday 📅 2021-11-15 ✅ 2021-11-15',
+                ),
+                createTaskFromLine('- [ ] #task **?** 📅 2021-11-22'),
+                createTaskFromLine('- [ ] #task ==Profit== 📅 2021-11-22'),
+                createTaskFromLine('- [ ] #task Cook dinner ⏫ ⏳ 2021-11-23'),
+                createTaskFromLine('- [ ] #task Bake a cake 🔼 🛫 2021-11-25'),
+                createTaskFromLine('- [ ] #task Feed the baby 🔽 📅 2021-11-21'),
+            ];
+
+            // Act
+            const result = query.queryTasks(tasksToTest) as Task[];
+
+            // Assert
+            expect(query.error).toBeUndefined();
+            expect(result).toHaveLength(7);
+            // Check is order matches how tasks query engine works.
+            expect(result[0].description).toBe(tasksToTest[2].description);
+            expect(result[1].description).toBe(tasksToTest[5].description);
+            expect(result[2].description).toBe(tasksToTest[4].description);
+            expect(result[3].description).toBe(tasksToTest[6].description);
+            expect(result[4].description).toBe(tasksToTest[3].description);
+            expect(result[5].description).toBe(tasksToTest[0].description);
+            expect(result[6].description).toBe(tasksToTest[1].description);
         });
     });
 });

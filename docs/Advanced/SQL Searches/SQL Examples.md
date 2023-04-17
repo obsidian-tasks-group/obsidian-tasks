@@ -6,6 +6,14 @@ publish: true
 
 <span class="related-pages">#advanced/sql-search</span>
 
+## Tasks that have due date, start date or scheduled date after the beginning of the year
+
+````text
+```tasks-sql
+WHERE dueDate->isAfter(moment()->startOf('year')) OR startDate->isAfter(moment()->startOf('year')) OR scheduled->isAfter(moment()->startOf('year'))
+```
+````
+
 ## Filtering on Tags
 
 This will return all the tasks with `#wf` in the tags.

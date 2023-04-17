@@ -20,3 +20,11 @@ path includes Smoke Testing the Tasks Plugin
 # group by heading
 # short view
 ```
+
+Task SQL Query Version
+
+```tasks-sql
+WHERE path LIKE '%Smoke Testing the Tasks Plugin%'
+# group by heading
+# short view
+```

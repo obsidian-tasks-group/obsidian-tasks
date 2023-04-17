@@ -27,3 +27,9 @@ Some random tasks
 path includes Reading Mode line numbers in blockquotes
 sort by description
 ```
+
+Task SQL Query Version
+
+```tasks-sql
+WHERE path LIKE '%Reading Mode line numbers in blockquotes%' ORDER BY description
+```

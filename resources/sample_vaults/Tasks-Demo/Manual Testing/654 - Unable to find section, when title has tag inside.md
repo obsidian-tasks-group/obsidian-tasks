@@ -17,6 +17,10 @@ path includes 654
 sort by description
 ```
 
+```tasks-sql
+WHERE path LIKE '%654%' ORDER BY description
+```
+
 ### Correct behaviour
 
 Clicking on `Section with tag in #example-tag` in the task results block above should:

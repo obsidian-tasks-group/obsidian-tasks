@@ -52,6 +52,17 @@ Work through all the tasks below, until zero tasks remain in this query:
 > short display
 > ```
 
+> [!Todo] Remaining groups of tests
+>
+> Task SQL Query Version
+>
+> ```tasks-sql
+> WHERE status->symbol = ' ' AND
+> path LIKE '%Smoke Testing the Tasks Plugin%' AND
+> description LIKE '%**check**%'
+> #short display
+> ```
+
 ---
 
 ## The Smoke Tests
@@ -99,6 +110,13 @@ Tasks block to check - should list all the tasks in this section, regardless of 
 ```tasks
 path includes Smoke Testing the Tasks Plugin
 heading includes Rendering of Task Blocks
+```
+
+Task SQL Query Version
+
+```tasks-sql
+WHERE path LIKE '%Smoke Testing the Tasks Plugin%' AND
+    precedingHeader LIKE '%Rendering of Task Blocks%'
 ```
 
 ---

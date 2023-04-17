@@ -1,5 +1,5 @@
 ---
-publish: true
+publish: false
 ---
 
 # SQL Grouping

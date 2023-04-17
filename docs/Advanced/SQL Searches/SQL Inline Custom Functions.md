@@ -1,3 +1,6 @@
+---
+publish: true
+---
 # SQL Inline Custom Functions
 
 To extend the logic of the queries you can use custom functions. This is an alternative to using CustomJS which is currently not enabled.

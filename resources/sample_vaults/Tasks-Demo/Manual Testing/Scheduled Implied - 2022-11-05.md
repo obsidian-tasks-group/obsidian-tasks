@@ -10,3 +10,9 @@
 path includes Scheduled Implied
 group by scheduled
 ```
+
+Task SQL Query Version
+
+```tasks-sql
+WHERE path LIKE '%Scheduled Implied%'
+```

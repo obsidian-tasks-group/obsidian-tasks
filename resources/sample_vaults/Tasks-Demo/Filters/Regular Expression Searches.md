@@ -36,6 +36,12 @@ description includes case
 description includes case
 ```
 
+Task SQL Query Version
+
+```tasks-sql
+WHERE description LIKE '%case%'
+```
+
 Only finds the task with lower-case `case`:
 
 ````text
@@ -48,6 +54,12 @@ description regex matches /case/
 description regex matches /case/
 ```
 
+Task SQL Query Version
+
+```tasks-sql
+WHERE REGEXP_LIKE(description, 'case')
+```
+
 Adding trailing `i` to the pattern makes the search case-insensitive:
 
 ````text
@@ -58,6 +70,12 @@ description regex matches /case/i
 
 ```tasks
 description regex matches /case/i
+```
+
+Task SQL Query Version
+
+```tasks-sql
+WHERE REGEXP_LIKE(description, 'case', 'i')
 ```
 
 ### Use pipe (|) to separate one of a number of alternatives
@@ -74,6 +92,12 @@ Old-style boolean combination:
 (description includes pc_abigail) OR (description includes pc_edwina) OR (description includes at_work)
 ```
 
+Task SQL Query Version
+
+```tasks-sql
+WHERE description LIKE '%pc_abigail%' OR description LIKE '%pc_edwina%' OR description LIKE '%at_work%'
+```
+
 Regular expression equivalent. `|` allows you to search for alternative words:
 
 ````text
@@ -84,6 +108,12 @@ description regex matches /pc_abigail|pc_edwina|at_work/
 
 ```tasks
 description regex matches /pc_abigail|pc_edwina|at_work/
+```
+
+Task SQL Query Version
+
+```tasks-sql
+WHERE REGEXP_LIKE(description, 'pc_abigail|pc_edwina|at_work')
 ```
 
 ### Be careful of special characters
@@ -100,6 +130,14 @@ description regex matches /#context/pc_abigail/
 description regex matches /#context/pc_abigail/
 ```
 
+Task SQL Query Version
+
+If using the RegEx command in the SQL query the `/` will not be seen as the end of pattern and will be in the RegEx.
+
+```tasks-sql
+WHERE REGEXP_LIKE(description, '#context/pc_abigail')
+```
+
 Instead, `/` characters in the middle of the expression must be 'escaped' with a `\`:
 
 ````text
@@ -110,6 +148,12 @@ description regex matches /#context\/pc_abigail/
 
 ```tasks
 description regex matches /#context\/pc_abigail/
+```
+
+Task SQL Query Version
+
+```tasks-sql
+WHERE REGEXP_LIKE(description, '#context\/pc_abigail')
 ```
 
 ### Tasks that to not match a regular expression
@@ -124,6 +168,12 @@ limit 5
 ```tasks
 description regex does not match /pc_abigail|pc_edwina|at_work/
 limit 5
+```
+
+Task SQL Query Version
+
+```tasks-sql
+WHERE NOT REGEXP_LIKE(description, 'pc_abigail|pc_edwina|at_work') LIMIT 5
 ```
 
 ## Special characters
@@ -146,6 +196,13 @@ limit 5
 short mode
 ```
 
+Task SQL Query Version
+
+```tasks-sql
+WHERE REGEXP_LIKE(description, '\d') LIMIT 5
+#short mode
+```
+
 ### No digits in the description
 
 ````text
@@ -164,6 +221,13 @@ limit 10
 short mode
 ```
 
+Task SQL Query Version
+
+```tasks-sql
+WHERE REGEXP_LIKE(description, '^\D+$') LIMIT 10
+#short mode
+```
+
 ## Invalid regex searches
 
 ### Extra slashes truncate the query
@@ -178,6 +242,14 @@ path regex matches /Filters/Regular Expression Searches/
 path regex matches /Filters/Regular Expression Searches/
 ```
 
+Task SQL Query Version
+
+The slash is handled in the string so will not impact like the tasks query.
+
+```tasks-sql
+WHERE REGEXP_LIKE(path, 'Filters/Regular Expression Searches')
+```
+
 Should give an error. Intention was to only match tasks in this file - but it matches all in this file.
 
 This is how to do the above search correctly, adding a `\` before each `/` inside the pattern:
@@ -190,6 +262,12 @@ path regex matches /Filters\/Regular Expression Searches/
 
 ```tasks
 path regex matches /Filters\/Regular Expression Searches/
+```
+
+Task SQL Query Version
+
+```tasks-sql
+WHERE REGEXP_LIKE(path, 'Filters\/Regular Expression Searches')
 ```
 
 ### Missing `/`
@@ -207,6 +285,14 @@ description regex matches CASE
 Gives:
 `Tasks query: cannot parse regex (description); check your leading and trailing slashes for your query`
 
+Task SQL Query Version
+
+As the RegEx is in the string the slashes are not needed at beginning and end.
+
+```tasks-sql
+WHERE REGEXP_LIKE(description, 'CASE')
+```
+
 ### Invalid flag
 
 ````text
@@ -221,6 +307,14 @@ description regex matches /CASE/&
 
 Works. Should complain about invalid flag.
 
+Task SQL Query Version
+
+The SQL query will return a error as `&` is invalid.
+
+```tasks-sql
+WHERE REGEXP_LIKE(description, 'CASE', '&')
+```
+
 ### Mismatched square brackets
 
 ````text
@@ -231,6 +325,12 @@ description regex matches /[123/
 
 ```tasks
 description regex matches /[123/
+```
+
+Task SQL Query Version
+
+```tasks-sql
+WHERE REGEXP_LIKE(description, '[123')
 ```
 
 Gives:

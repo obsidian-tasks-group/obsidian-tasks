@@ -1,19 +1,16 @@
 import alasql from 'alasql';
-import { rrulestr } from 'rrule';
 
-import { TaskLocation } from '../TaskLocation';
-import { Recurrence } from '../Recurrence';
-import { Priority, Task } from '../Task';
+import { Task } from '../Task';
 import type { IQuery } from '../IQuery';
-import { TaskGroups } from '../Query/TaskGroups';
 import { Group } from '../Query/Group';
-import { TaskGroup } from '../Query/TaskGroup';
-import { GroupHeading } from '../Query/GroupHeading';
 import { logging } from '../lib/logging';
 import { isFeatureEnabled } from '../Config/Settings';
 import type { Grouper } from '../Query/Grouper';
 import { LayoutOptions } from '../TaskLayout';
+import type { TaskGroups } from '../Query/TaskGroups';
+import { GlobalFilter } from '../Config/GlobalFilter';
 import type { Status } from '../Status';
+import { StatusType } from '../StatusConfiguration';
 
 export type GroupingProperty = 'backlink' | 'filename' | 'folder' | 'heading' | 'path' | 'status';
 export type Grouping = { property: GroupingProperty };
@@ -30,11 +27,12 @@ export class QuerySql implements IQuery {
     private _layoutOptions: LayoutOptions = new LayoutOptions();
 
     private _error: string | undefined = undefined;
-    private _groupingPossible: boolean = false;
-    private _groupByFields: [string, string][] = [];
+    // private _groupingPossible: boolean = false;
+    // private _groupByFields: [string, string][] = [];
     private _rawMode: boolean = false;
     private _rawWithTasksMode: boolean = false;
     private _multilineQueryMode: boolean = false;
+    private _rawResults: any;
 
     logger = logging.getLogger('tasks.QuerySql');
 
@@ -94,6 +92,9 @@ export class QuerySql implements IQuery {
 
         this._sourcePath = sourcePath;
         this._frontmatter = frontmatter;
+        this.logger.debugWithId(this._queryId, 'Source Path', this._sourcePath);
+        this.logger.debugWithId(this._queryId, 'Source Front Matter', this._frontmatter);
+
         // Pending a future PR to enable Custom JS again.
         this._customJsClasses = [];
 
@@ -121,16 +122,16 @@ export class QuerySql implements IQuery {
 
         // If there is a group by clause, then we can do grouping later on, no need to
         // use the existing filters in current grouping classes.
-        if (/(^|\s)GROUP BY*/gim.test(this.source)) {
-            this._groupingPossible = true;
-        }
-        this.logger.debugWithId(this._queryId, 'Grouping Possible', this._groupingPossible);
+        // if (/(^|\s)GROUP BY*/gim.test(this.source)) {
+        //     this._groupingPossible = true;
+        // }
+        // this.logger.debugWithId(this._queryId, 'Grouping Possible', this._groupingPossible);
 
-        const sqlTokens = this.source.match(/[^\s,;]+|;/gi);
+        // const sqlTokens = this.source.match(/[^\s,;]+|;/gi);
 
-        if (this._groupingPossible && sqlTokens !== null) {
-            this.parseGroupingDetails(sqlTokens);
-        }
+        // if (this._groupingPossible && sqlTokens !== null) {
+        //     this.parseGroupingDetails(sqlTokens);
+        // }
     }
 
     /**
@@ -190,6 +191,17 @@ export class QuerySql implements IQuery {
     }
 
     /**
+     * Contains the raw results of query if #raw empty is used.
+     *
+     * @readonly
+     * @type {*}
+     * @memberof QuerySql
+     */
+    public get rawResults(): any {
+        return this._rawResults;
+    }
+
+    /**
      * Returns true if using 'Task' as the data source
      *
      * @type {boolean}
@@ -216,8 +228,9 @@ export class QuerySql implements IQuery {
      * @return {*}  {Task[]}
      * @memberof QuerySql
      */
-    public queryTasks(tasks: Task[]): Task[] | any {
+    public queryTasks(tasks: Task[]): Task[] {
         this.logger.infoWithId(this._queryId, `Executing query: [${this.source}]`);
+        const currentQuery = this;
 
         /*
          * As we are using alaSQL we can take advantage of a in memory cache. The pagedata
@@ -225,18 +238,117 @@ export class QuerySql implements IQuery {
          * allows the code block to reference the page it is being rendered on and access
          * the page meta data for more complex queries.
          */
-        if (alasql('SHOW TABLES FROM alasql LIKE "pagedata"').length == 0) {
-            alasql('CREATE TABLE pagedata (name STRING, keyvalue STRING)');
-        }
+        // if (alasql('SHOW TABLES FROM alasql LIKE "pagedata"').length == 0) {
+        //     alasql('CREATE TABLE pagedata (name STRING, keyvalue STRING)');
+        // }
 
-        if (alasql(`SELECT keyvalue FROM pagedata WHERE name = "sourcePath${this._queryId}"`).length == 0) {
-            alasql(`INSERT INTO pagedata VALUES ('sourcePath${this._queryId}','${this._sourcePath}')`);
-        }
+        // if (alasql(`SELECT keyvalue FROM pagedata WHERE name = "sourcePath${this._queryId}"`).length == 0) {
+        //     alasql(`INSERT INTO pagedata VALUES ('sourcePath${this._queryId}','${this._sourcePath.replace("'", "''")}')`);
+        // }
 
         // Set moment() function available to AlaSQL.
         alasql.fn.moment = window.moment;
 
-        alasql.fn.pageProperty = function (field) {
+        // Return details about the note the query is running on.
+        alasql.fn.notePathWithFileExtension = function () {
+            return currentQuery._sourcePath;
+        };
+
+        alasql.fn.notePath = function () {
+            return currentQuery._sourcePath.split('/').slice(0, -1).join('/');
+        };
+
+        alasql.fn.noteFileName = function () {
+            return currentQuery._sourcePath.split('/').slice(-1)[0].split('.')[0];
+        };
+
+        // Return details about the note the query is running on.
+        alasql.fn.pageProperty = function (field: string) {
+            return currentQuery._frontmatter[field];
+        };
+
+        // To make the process of querying by status type simpler
+        // these functions can help filter by different properties
+        // of the status object.
+        alasql.fn.isToDo = function (status: Status) {
+            return status.type == StatusType.TODO;
+        };
+
+        alasql.fn.isDone = function (status: Status) {
+            return status.type == StatusType.DONE;
+        };
+
+        alasql.fn.isInProgress = function (status: Status) {
+            return status.type == StatusType.IN_PROGRESS;
+        };
+
+        alasql.fn.isCancelled = function (status: Status) {
+            return status.type == StatusType.CANCELLED;
+        };
+
+        alasql.fn.isNonTask = function (status: Status) {
+            return status.type == StatusType.NON_TASK;
+        };
+
+        // The status type has filtering based on a number and not
+        // the string value of the status. This function allows that
+        // to be replicated in the SQL Query.
+        alasql.fn.statusTypeOrdering = function (status: Status) {
+            let prefix: string;
+            // Add a numeric prefix to sort in to a meaningful order for users
+            switch (status.type) {
+                case StatusType.IN_PROGRESS:
+                    prefix = '1';
+                    break;
+                case StatusType.TODO:
+                    prefix = '2';
+                    break;
+                case StatusType.DONE:
+                    prefix = '3';
+                    break;
+                case StatusType.CANCELLED:
+                    prefix = '4';
+                    break;
+                case StatusType.NON_TASK:
+                    prefix = '5';
+                    break;
+                case StatusType.EMPTY:
+                    prefix = '6';
+                    break;
+            }
+            return prefix + ' ' + status.type;
+        };
+
+        // In the current Query engine when sorting or filtering on the description it
+        // strips the markdown from the string. This allows the same process to happen.
+        const globalFilter = GlobalFilter.get();
+        alasql.fn.removeMarkdown = function (field) {
+            field = field.replace(globalFilter, '').trim();
+
+            const startsWithLinkRegex = /^\[\[?([^\]]*)]]?/;
+            const linkRegexMatch = field.match(startsWithLinkRegex);
+            if (linkRegexMatch !== null) {
+                const innerLinkText = linkRegexMatch[1];
+                // For a link, we have to check whether it has another visible name set.
+                // For example `[[this is the link|but this is actually shown]]`.
+                field =
+                    innerLinkText.substring(innerLinkText.indexOf('|') + 1) + field.replace(startsWithLinkRegex, '');
+            }
+
+            const markdownRegularExpressions = [
+                /^\*\*([^*]+)\*\*/,
+                /^\*([^*]+)\*/,
+                /^==([^=]+)==/,
+                /^__([^_]+)__/,
+                /^_([^_]+)_/,
+            ];
+
+            markdownRegularExpressions.forEach((markdownPattern) => {
+                if (field.match(markdownPattern) !== null) {
+                    field = field.match(markdownPattern)[1] + field.replace(markdownPattern, '');
+                    console.log(field);
+                }
+            });
             return field;
         };
 
@@ -275,7 +387,6 @@ export class QuerySql implements IQuery {
         //     };
         // };
 
-        const currentQuery = this;
         // Return the ID of this query used for debugging as needed.
         alasql.fn.queryId = function () {
             return currentQuery._queryId;
@@ -283,31 +394,33 @@ export class QuerySql implements IQuery {
 
         alasql.options.nocount = true; // Disable row count for queries.
 
-        const rawQueryDetailsTask = Task.fromLine({
-            line: '- [ ] Query results can be seen in the console. Use `Ctrl+Shift+I` to open the console',
-            taskLocation: TaskLocation.fromUnknownPosition('file.md'),
-            fallbackDate: null,
-        }) as Task;
-
         // If the '# raw' command is added to the query then we will return the raw
         // query results, allows more advanced based query results. The information
         // is returned to the console currently. Independent rendering is a TBD.
         if (this._rawMode && !this._rawWithTasksMode) {
-            let rawResult = alasql(this.source);
-            if (this._multilineQueryMode) {
-                rawResult = rawResult.slice(-1)[0];
+            let rawResult;
+
+            // This query will use tasks to query against.
+            try {
+                if (this._multilineQueryMode) {
+                    rawResult = alasql(this.source).slice(-1)[0];
+                } else {
+                    rawResult = alasql(this.source);
+                }
+            } catch (error) {
+                this._error = `Error with query: ${error}`;
+                this.logger.errorWithId(this._queryId, 'Error with query', error);
             }
             this.logger.infoWithId(this._queryId, 'RAW SQL Query Results:', rawResult);
-            return rawResult;
-        }
+            this._rawResults = rawResult;
 
-        if (this._rawMode && this._rawWithTasksMode) {
-            let rawResult = alasql(this.source, [tasks]);
-            if (this._multilineQueryMode) {
-                rawResult = rawResult.slice(-1)[0];
-            }
-            this.logger.infoWithId(this._queryId, 'RAW SQL Query Results with Tasks as data:', rawResult);
-            return new Array<Task>(rawQueryDetailsTask);
+            // Return a empty array of Tasks as output is on console.
+            rawResult = new Array<Task>();
+            this._error = 'To view results please open the console.';
+
+            return rawResult.map((task) => {
+                return new Task({ ...task });
+            });
         }
 
         // Direct tasks uses the Task object and not TaskRecord so less conversion/overhead.
@@ -318,53 +431,26 @@ export class QuerySql implements IQuery {
         // then update the db on a change event like the current cache with references to the
         // tasks.
         // By default direct should be used as it is faster.
-        if (this._enableDirectTaskQueries) {
-            let queryResult: Task[];
+        let queryResult: Task[];
 
-            try {
-                if (this._multilineQueryMode) {
-                    queryResult = alasql(this.source, [tasks]).slice(-1)[0];
-                } else {
-                    queryResult = alasql(this.source, [tasks]);
-                }
-            } catch (error) {
-                queryResult = new Array<Task>();
-                this._error = `Error with query ${error}`;
-
-                this.logger.errorWithId(this._queryId, 'Error with query', error);
-            }
-            this.logger.debugWithId(this._queryId, `queryResult: ${queryResult.length}`, queryResult);
-            return queryResult.map((task) => {
-                return new Task({ ...task });
-            });
-        } else {
-            const records: TaskRecord[] = this.convertToTaskRecords(tasks);
-            let queryResult: TaskRecord[];
-            try {
-                queryResult = alasql(this.source, [records]);
-                if (this._multilineQueryMode) {
-                    queryResult = alasql(this.source, [records]).slice(-1)[0];
-                } else {
-                    queryResult = alasql(this.source, [records]);
-                }
-            } catch (error) {
-                queryResult = new Array<TaskRecord>();
-                this._error = `Error with query ${error}`;
-
-                this.logger.errorWithId(this._queryId, 'Error with query', error);
-            }
-            this.logger.debugWithId(this._queryId, `queryResult: ${queryResult.length}`, queryResult);
-            // If the '# raw tasks' command is added to the query then we will return the raw
-            // results in the console and the tasks back to the group renderer.
-
-            if (this._groupingPossible) {
-                return queryResult;
+        try {
+            if (this._multilineQueryMode) {
+                queryResult = alasql(this.source, [tasks]).slice(-1)[0];
             } else {
-                return queryResult.map((task) => {
-                    return QuerySql.fromTaskRecord(task);
-                });
+                queryResult = alasql(this.source, [tasks]);
             }
+        } catch (error) {
+            this._error = `Error with query: ${error}`;
+            this.logger.errorWithId(this._queryId, 'Error with query', error);
+            queryResult = new Array<Task>();
         }
+        if (this._rawMode && this._rawWithTasksMode) {
+            this.logger.infoWithId(this._queryId, 'RAW SQL Query Results with Tasks as data:', queryResult);
+        }
+        this.logger.debugWithId(this._queryId, `queryResult: ${queryResult.length}`, queryResult);
+        return queryResult.map((task) => {
+            return new Task({ ...task });
+        });
     }
 
     /**
@@ -377,61 +463,61 @@ export class QuerySql implements IQuery {
      * @memberof QuerySql
      */
     public applyQueryToTasks(tasks: Task[]): TaskGroups {
-        const queryResult: any[] = this.queryTasks(tasks);
+        const queryResult: Task[] = this.queryTasks(tasks) as Task[];
 
         // Group is work in progress, the result of the query is a grouped
         // tree but the group logic used in tasks is more focused on a
         // static set of queries and not dynamic so hit and miss for
         // now.
-        if (this._groupingPossible) {
-            // There may be sub groups in the returned data. This would be
-            // array -> <any>(somefield: value, array -> TaskRecord[])
-            // interface GroupedResult {
-            //     status: number;
-            //     tasks: Array<User>;
-            //   }
-            const parentGroups: any[] = queryResult;
-            const renderedGroups: TaskGroup[] = new Array<TaskGroup>();
+        // if (this._groupingPossible) {
+        //     // There may be sub groups in the returned data. This would be
+        //     // array -> <any>(somefield: value, array -> TaskRecord[])
+        //     // interface GroupedResult {
+        //     //     status: number;
+        //     //     tasks: Array<User>;
+        //     //   }
+        //     const parentGroups: any[] = queryResult;
+        //     const renderedGroups: TaskGroup[] = new Array<TaskGroup>();
 
-            for (const group of parentGroups) {
-                const currentGroup: [string, any][] = group;
-                const groupByFieldName = <string>Object.entries(currentGroup)[0][0];
-                const groupByFieldValue = <string>Object.entries(currentGroup)[0][1];
-                let foundTasks: Task[];
+        //     for (const group of parentGroups) {
+        //         const currentGroup: [string, any][] = group;
+        //         const groupByFieldName = <string>Object.entries(currentGroup)[0][0];
+        //         const groupByFieldValue = <string>Object.entries(currentGroup)[0][1];
+        //         let foundTasks: Task[];
 
-                if (this._enableDirectTaskQueries) {
-                    const groupByFieldTasks = <Task[]>Object.entries(currentGroup)[1][1];
-                    this.logger.infoWithId(
-                        this._queryId,
-                        `groupByFieldName: ${groupByFieldName} groupByFieldValue: ${groupByFieldValue} groupByFieldTasks ${groupByFieldTasks}`,
-                        queryResult,
-                    );
-                    foundTasks = groupByFieldTasks.map((task) => {
-                        return new Task({ ...task });
-                    });
-                } else {
-                    const groupByFieldTasks = <TaskRecord[]>Object.entries(currentGroup)[1][1];
-                    this.logger.infoWithId(
-                        this._queryId,
-                        `groupByFieldName: ${groupByFieldName} groupByFieldValue: ${groupByFieldValue} groupByFieldTasks ${groupByFieldTasks}`,
-                        queryResult,
-                    );
-                    foundTasks = groupByFieldTasks.map((task) => {
-                        return QuerySql.fromTaskRecord(task);
-                    });
-                }
+        //         if (this._enableDirectTaskQueries) {
+        //             const groupByFieldTasks = <Task[]>Object.entries(currentGroup)[1][1];
+        //             this.logger.infoWithId(
+        //                 this._queryId,
+        //                 `groupByFieldName: ${groupByFieldName} groupByFieldValue: ${groupByFieldValue} groupByFieldTasks ${groupByFieldTasks}`,
+        //                 queryResult,
+        //             );
+        //             foundTasks = groupByFieldTasks.map((task) => {
+        //                 return new Task({ ...task });
+        //             });
+        //         } else {
+        //             const groupByFieldTasks = <TaskRecord[]>Object.entries(currentGroup)[1][1];
+        //             this.logger.infoWithId(
+        //                 this._queryId,
+        //                 `groupByFieldName: ${groupByFieldName} groupByFieldValue: ${groupByFieldValue} groupByFieldTasks ${groupByFieldTasks}`,
+        //                 queryResult,
+        //             );
+        //             foundTasks = groupByFieldTasks.map((task) => {
+        //                 return QuerySql.fromTaskRecord(task);
+        //             });
+        //         }
 
-                renderedGroups.push(
-                    new TaskGroup([groupByFieldName], [new GroupHeading(1, groupByFieldValue)], foundTasks),
-                );
-            }
+        //         renderedGroups.push(
+        //             new TaskGroup([groupByFieldName], [new GroupHeading(1, groupByFieldValue)], foundTasks),
+        //         );
+        //     }
 
-            const preGrouped = new TaskGroups([], []);
-            preGrouped.groups = renderedGroups;
-            return preGrouped;
-        } else {
-            return Group.by(this.grouping, queryResult);
-        }
+        //     const preGrouped = new TaskGroups([], []);
+        //     preGrouped.groups = renderedGroups;
+        //     return preGrouped;
+        // } else {
+        return Group.by(this.grouping, queryResult as Task[]);
+        // }
     }
 
     public explainQuery(): string {
@@ -491,29 +577,29 @@ export class QuerySql implements IQuery {
      * @param {RegExpMatchArray} sqlTokens
      * @memberof QuerySql
      */
-    private parseGroupingDetails(sqlTokens: RegExpMatchArray) {
-        try {
-            for (let index = 0; index < sqlTokens.length; index++) {
-                // Find 'GROUP BY'
-                if (sqlTokens[index] === 'GROUP' && sqlTokens[index + 1] === 'BY') {
-                    // If using a property in a object use the value before the ->.
-                    if (sqlTokens[index + 2].contains('->')) {
-                        this._groupByFields.push([sqlTokens[index + 2].split('->')[0], sqlTokens[index + 2]]);
-                    } else {
-                        this._groupByFields.push([sqlTokens[index + 2], sqlTokens[index + 2]]);
-                    }
-                }
-            }
-            if (this._groupByFields.length > 0) {
-                this.source = `SELECT ${this._groupByFields[0][1]} AS ${this._groupByFields[0][0]}, ARRAY(_) AS tasks FROM ? ${this.source}`;
-            } else {
-                this.source = `${this.defaultQueryPrefix} ${this.source}`;
-            }
-        } catch (error) {
-            this._error = `Unable to parse group statement from ${this.source}`;
-            this.logger.errorWithId(this._queryId, 'Unable to parse group statement.', this.source);
-        }
-    }
+    // private parseGroupingDetails(sqlTokens: RegExpMatchArray) {
+    //     try {
+    //         for (let index = 0; index < sqlTokens.length; index++) {
+    //             // Find 'GROUP BY'
+    //             if (sqlTokens[index] === 'GROUP' && sqlTokens[index + 1] === 'BY') {
+    //                 // If using a property in a object use the value before the ->.
+    //                 if (sqlTokens[index + 2].contains('->')) {
+    //                     this._groupByFields.push([sqlTokens[index + 2].split('->')[0], sqlTokens[index + 2]]);
+    //                 } else {
+    //                     this._groupByFields.push([sqlTokens[index + 2], sqlTokens[index + 2]]);
+    //                 }
+    //             }
+    //         }
+    //         if (this._groupByFields.length > 0) {
+    //             this.source = `SELECT ${this._groupByFields[0][1]} AS ${this._groupByFields[0][0]}, ARRAY(_) AS tasks FROM ? ${this.source}`;
+    //         } else {
+    //             this.source = `${this.defaultQueryPrefix} ${this.source}`;
+    //         }
+    //     } catch (error) {
+    //         this._error = `Unable to parse group statement from ${this.source}`;
+    //         this.logger.errorWithId(this._queryId, 'Unable to parse group statement.', this.source);
+    //     }
+    // }
 
     /**
      * This function processes query directives and comments in a given line of
@@ -638,115 +724,115 @@ export class QuerySql implements IQuery {
         return randomString;
     }
 
-    private convertToTaskRecords(tasks: Task[]): TaskRecord[] {
-        return tasks.map((task) => {
-            return QuerySql.toTaskRecord(task);
-        });
-    }
+    // private convertToTaskRecords(tasks: Task[]): TaskRecord[] {
+    //     return tasks.map((task) => {
+    //         return QuerySql.toTaskRecord(task);
+    //     });
+    // }
 
-    static fromTaskRecord(record: TaskRecord): Task {
-        return new Task({
-            status: record.status,
-            description: record.description,
-            taskLocation: new TaskLocation(
-                record.path,
-                0,
-                record.sectionStart,
-                record.sectionIndex,
-                record.precedingHeader,
-            ),
-            indentation: record.indentation,
-            listMarker: record.listMarker,
-            priority: record.priority,
-            createdDate: record.createdDate !== null ? window.moment(record.createdDate) : null, // !== null ? new CreatedDateProperty(record.createdDate) : null,
-            startDate: record.startDate !== null ? window.moment(record.startDate) : null,
-            scheduledDate: record.scheduledDate !== null ? window.moment(record.scheduledDate) : null,
-            dueDate: record.dueDate !== null ? window.moment(record.dueDate) : null,
-            doneDate: record.doneDate !== null ? window.moment(record.doneDate) : null,
-            recurrence: record.recurrence ? QuerySql.fromRecurrenceRecord(record.recurrence) : null,
-            blockLink: record.blockLink,
-            tags: record.tags,
-            originalMarkdown: record.originalMarkdown,
-            scheduledDateIsInferred: record.scheduledDateIsInferred,
-        });
-    }
+    // static fromTaskRecord(record: TaskRecord): Task {
+    //     return new Task({
+    //         status: record.status,
+    //         description: record.description,
+    //         taskLocation: new TaskLocation(
+    //             record.path,
+    //             0,
+    //             record.sectionStart,
+    //             record.sectionIndex,
+    //             record.precedingHeader,
+    //         ),
+    //         indentation: record.indentation,
+    //         listMarker: record.listMarker,
+    //         priority: record.priority,
+    //         createdDate: record.createdDate !== null ? window.moment(record.createdDate) : null, // !== null ? new CreatedDateProperty(record.createdDate) : null,
+    //         startDate: record.startDate !== null ? window.moment(record.startDate) : null,
+    //         scheduledDate: record.scheduledDate !== null ? window.moment(record.scheduledDate) : null,
+    //         dueDate: record.dueDate !== null ? window.moment(record.dueDate) : null,
+    //         doneDate: record.doneDate !== null ? window.moment(record.doneDate) : null,
+    //         recurrence: record.recurrence ? QuerySql.fromRecurrenceRecord(record.recurrence) : null,
+    //         blockLink: record.blockLink,
+    //         tags: record.tags,
+    //         originalMarkdown: record.originalMarkdown,
+    //         scheduledDateIsInferred: record.scheduledDateIsInferred,
+    //     });
+    // }
 
-    static toTaskRecord(task: Task): TaskRecord {
-        return {
-            status: task.status,
-            description: task.description,
-            path: task.path,
-            file: task.filename,
-            indentation: task.indentation,
-            listMarker: task.listMarker,
-            sectionStart: task.sectionStart,
-            sectionIndex: task.sectionIndex,
-            precedingHeader: task.precedingHeader,
-            tags: task.tags,
-            blockLink: task.blockLink,
-            priority: task.priority,
-            startDate: task.startDate ? task.startDate.toDate() : null,
-            scheduledDate: task.scheduledDate ? task.scheduledDate.toDate() : null,
-            dueDate: task.dueDate ? task.dueDate.toDate() : null,
-            createdDate: task.createdDate ? task.createdDate.toDate() : null,
-            doneDate: task.doneDate ? task.doneDate.toDate() : null,
-            recurrence: task.recurrence ? QuerySql.toRecurrenceRecord(task.recurrence) : null,
-            originalMarkdown: task.originalMarkdown,
-            scheduledDateIsInferred: task.scheduledDateIsInferred,
-        };
-    }
+    // static toTaskRecord(task: Task): TaskRecord {
+    //     return {
+    //         status: task.status,
+    //         description: task.description,
+    //         path: task.path,
+    //         file: task.filename,
+    //         indentation: task.indentation,
+    //         listMarker: task.listMarker,
+    //         sectionStart: task.sectionStart,
+    //         sectionIndex: task.sectionIndex,
+    //         precedingHeader: task.precedingHeader,
+    //         tags: task.tags,
+    //         blockLink: task.blockLink,
+    //         priority: task.priority,
+    //         startDate: task.startDate ? task.startDate.toDate() : null,
+    //         scheduledDate: task.scheduledDate ? task.scheduledDate.toDate() : null,
+    //         dueDate: task.dueDate ? task.dueDate.toDate() : null,
+    //         createdDate: task.createdDate ? task.createdDate.toDate() : null,
+    //         doneDate: task.doneDate ? task.doneDate.toDate() : null,
+    //         recurrence: task.recurrence ? QuerySql.toRecurrenceRecord(task.recurrence) : null,
+    //         originalMarkdown: task.originalMarkdown,
+    //         scheduledDateIsInferred: task.scheduledDateIsInferred,
+    //     };
+    // }
 
-    static fromRecurrenceRecord(record: RecurrenceRecord): Recurrence {
-        return new Recurrence({
-            rrule: rrulestr(record.rrule),
-            baseOnToday: record.baseOnToday,
-            referenceDate: record.referenceDate ? window.moment(record.referenceDate) : null,
-            startDate: record.startDate ? window.moment(record.startDate) : null,
-            scheduledDate: record.scheduledDate ? window.moment(record.scheduledDate) : null,
-            dueDate: record.dueDate ? window.moment(record.dueDate) : null,
-        });
-    }
+    // static fromRecurrenceRecord(record: RecurrenceRecord): Recurrence {
+    //     return new Recurrence({
+    //         rrule: rrulestr(record.rrule),
+    //         baseOnToday: record.baseOnToday,
+    //         referenceDate: record.referenceDate ? window.moment(record.referenceDate) : null,
+    //         startDate: record.startDate ? window.moment(record.startDate) : null,
+    //         scheduledDate: record.scheduledDate ? window.moment(record.scheduledDate) : null,
+    //         dueDate: record.dueDate ? window.moment(record.dueDate) : null,
+    //     });
+    // }
 
-    static toRecurrenceRecord(recurrence: Recurrence): RecurrenceRecord {
-        return {
-            rrule: recurrence.rrule.toString(),
-            baseOnToday: recurrence.baseOnToday,
-            referenceDate: recurrence.referenceDate ? recurrence.referenceDate.toDate() : null,
-            startDate: recurrence.startDate ? recurrence.startDate.toDate() : null,
-            scheduledDate: recurrence.scheduledDate ? recurrence.scheduledDate.toDate() : null,
-            dueDate: recurrence.dueDate ? recurrence.dueDate.toDate() : null,
-        };
-    }
+    // static toRecurrenceRecord(recurrence: Recurrence): RecurrenceRecord {
+    //     return {
+    //         rrule: recurrence.rrule.toString(),
+    //         baseOnToday: recurrence.baseOnToday,
+    //         referenceDate: recurrence.referenceDate ? recurrence.referenceDate.toDate() : null,
+    //         startDate: recurrence.startDate ? recurrence.startDate.toDate() : null,
+    //         scheduledDate: recurrence.scheduledDate ? recurrence.scheduledDate.toDate() : null,
+    //         dueDate: recurrence.dueDate ? recurrence.dueDate.toDate() : null,
+    //     };
+    // }
 }
 
-export type RecurrenceRecord = {
-    rrule: string;
-    baseOnToday: boolean;
-    referenceDate: Date | null;
-    startDate: Date | null;
-    scheduledDate: Date | null;
-    dueDate: Date | null;
-};
+// export type RecurrenceRecord = {
+//     rrule: string;
+//     baseOnToday: boolean;
+//     referenceDate: Date | null;
+//     startDate: Date | null;
+//     scheduledDate: Date | null;
+//     dueDate: Date | null;
+// };
 
-export type TaskRecord = {
-    status: Status;
-    description: string;
-    path: string;
-    file: string | null;
-    indentation: string;
-    listMarker: string;
-    sectionStart: number;
-    sectionIndex: number;
-    precedingHeader: string | null;
-    priority: Priority;
-    startDate: Date | null;
-    scheduledDate: Date | null;
-    dueDate: Date | null;
-    createdDate: Date | null;
-    doneDate: Date | null;
-    recurrence: RecurrenceRecord | null;
-    blockLink: string;
-    tags: string[] | [];
-    originalMarkdown: string;
-    scheduledDateIsInferred: boolean;
-};
+// export type TaskRecord = {
+//     status: Status;
+//     description: string;
+//     path: string;
+//     file: string | null;
+//     indentation: string;
+//     listMarker: string;
+//     sectionStart: number;
+//     sectionIndex: number;
+//     precedingHeader: string | null;
+//     priority: Priority;
+//     startDate: Date | null;
+//     scheduledDate: Date | null;
+//     dueDate: Date | null;
+//     createdDate: Date | null;
+//     doneDate: Date | null;
+//     recurrence: RecurrenceRecord | null;
+//     blockLink: string;
+//     tags: string[] | [];
+//     originalMarkdown: string;
+//     scheduledDateIsInferred: boolean;
+// };
