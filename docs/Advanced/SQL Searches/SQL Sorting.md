@@ -29,3 +29,16 @@ WHERE status->symbol = 'x'
 ORDER BY dueDate DESC, doneDate DESC
 ```
 ````
+
+## Ordering by description without markdown
+
+By default the description contains markdown, to query the rendered string you need to remove the markdown when ordering. To make this simpler there is a function that will do it for you.
+
+This will work for any string passed to the `removeMarkdown(field)` function.
+
+````text
+```tasks-sql
+WHERE status->symbol = ' '
+ORDER BY removeMarkdown(description) ASC, dueDate DESC
+```
+````
