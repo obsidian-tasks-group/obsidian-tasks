@@ -13,7 +13,7 @@ The following query will list 3 tasks due from today.
 ````text
 ```tasks-sql
 WHERE status->symbol = 'x'
-  AND moment(dueDate)->isAfter(moment()->startOf('day'))
+  AND dueDate->isAfter(moment()->startOf('day'))
 LIMIT 3
 ```
 ````

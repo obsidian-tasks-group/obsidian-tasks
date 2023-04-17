@@ -3,7 +3,7 @@ import { rrulestr } from 'rrule';
 
 import { TaskLocation } from '../TaskLocation';
 import { Recurrence } from '../Recurrence';
-import { type Priority, Task } from '../Task';
+import { Priority, Task } from '../Task';
 import type { IQuery } from '../IQuery';
 import { TaskGroups } from '../Query/TaskGroups';
 import { Group } from '../Query/Group';
@@ -17,41 +17,10 @@ import type { Status } from '../Status';
 
 export type GroupingProperty = 'backlink' | 'filename' | 'folder' | 'heading' | 'path' | 'status';
 export type Grouping = { property: GroupingProperty };
-export type RecurrenceRecord = {
-    rrule: string;
-    baseOnToday: boolean;
-    referenceDate: Date | null;
-    startDate: Date | null;
-    scheduledDate: Date | null;
-    dueDate: Date | null;
-};
-export type TaskRecord = {
-    status: Status;
-    description: string;
-    path: string;
-    file: string | null;
-    indentation: string;
-    listMarker: string;
-    sectionStart: number;
-    sectionIndex: number;
-    precedingHeader: string | null;
-    priority: Priority;
-    startDate: Date | null;
-    scheduledDate: Date | null;
-    dueDate: Date | null;
-    createdDate: Date | null;
-    doneDate: Date | null;
-    recurrence: RecurrenceRecord | null;
-    blockLink: string;
-    tags: string[] | [];
-    originalMarkdown: string;
-    scheduledDateIsInferred: boolean;
-};
 
 export class QuerySql implements IQuery {
     public source: string;
     public name: string;
-    // public sourceHash: string;
 
     // @ts-ignore
     private _sourcePath: string;
@@ -60,30 +29,57 @@ export class QuerySql implements IQuery {
 
     private _layoutOptions: LayoutOptions = new LayoutOptions();
 
-    // private _grouping: Grouping[] = [];
     private _error: string | undefined = undefined;
     private _groupingPossible: boolean = false;
     private _groupByFields: [string, string][] = [];
     private _rawMode: boolean = false;
     private _rawWithTasksMode: boolean = false;
+    private _multilineQueryMode: boolean = false;
+
     logger = logging.getLogger('tasks.QuerySql');
 
-    private _commentReplacementRegexp = /(^#.*$(\r\n|\r|\n)?)/gm;
+    // Directives
+    // These are used to control the settings of the query and task output.
     private _commentRegexp = /^#.*/;
-    private _hideOptionsRegexp =
-        /^hide (task count|backlink|priority|start date|scheduled date|done date|due date|recurrence rule|edit button)/;
-    private _shortModeRegexp = /^short/;
-    private _rawQuery = /^raw (empty|tasks)/;
+    private _commentReplacementRegexp = /(^#.*$(\r\n|\r|\n)?)/gm;
     private _customJSRegexp = /^customjs (.*) (.*)/;
     private _customTemplateRegexp = /^template (.*)/;
+    private _multilineQueryRegexp = /^(multiline|ml)/;
+    private _rawQuery = /^raw (empty|tasks)/;
+    private _shortModeRegexp = /^short/;
 
+    // Pending a future PR to enable Custom JS again.
     private _customJsClasses: Array<[string, string]>;
     private _customTemplate: string = '';
 
+    // Used internally to uniquely log each query execution in the console.
     private _queryId: string = '';
 
+    // Enables the direct querying of Tasks and skips the translation to the
+    // simpler TaskRecord.
     private _enableDirectTaskQueries: boolean = true;
 
+    /**
+     * This prefix is added to any query unless #raw empty is used.
+     *
+     * @private
+     * @memberof QuerySql
+     */
+    private readonly defaultQueryPrefix = 'SELECT * FROM ?';
+
+    /**
+     * Creates an instance of QuerySql.
+     * @param {({
+     *         source: string;
+     *         sourcePath: string;
+     *         frontmatter: any | null | undefined;
+     *     })} {
+     *         source,
+     *         sourcePath,
+     *         frontmatter
+     *     } - This is a collection of the source query, the path to the source query, and the frontmatter.
+     * @memberof QuerySql
+     */
     constructor({
         source,
         sourcePath,
@@ -96,150 +92,121 @@ export class QuerySql implements IQuery {
         this.name = 'QuerySql';
         this._queryId = this.generateQueryId(10);
 
-        // this.sourceHash = ADLER32.str(source).toString();
-
         this._sourcePath = sourcePath;
         this._frontmatter = frontmatter;
+        // Pending a future PR to enable Custom JS again.
         this._customJsClasses = [];
 
-        source
-            .split('\n')
-            .map((line: string) => line.trim())
-            .forEach((line: string) => {
-                switch (true) {
-                    case line === '':
-                        break;
-                    case this._commentRegexp.test(line):
-                        {
-                            // Comment lines are rendering directives
-                            // #hide (task count|backlink|priority|start date|scheduled date|done date|due date|recurrence rule|edit button)
-                            // #short
-                            // #raw (empty|tasks)
-                            // Will be used to filter the columns... probably...
-                            const directive = line.slice(1).trim();
+        // Process the query to pull out directives and comments.
+        this.processDirectivesAndComments(source);
 
-                            if (this._shortModeRegexp.test(directive)) {
-                                // this._layoutOptions.shortMode = true;
-                            } else if (this._hideOptionsRegexp.test(directive)) {
-                                this.parseHideOptions({ line: directive });
-                            } else if (this._rawQuery.test(directive)) {
-                                this._rawMode = true;
-                                const rawOptions = directive.match(this._rawQuery);
-                                if (rawOptions !== null && rawOptions[1].trim().toLowerCase() === 'empty') {
-                                    this._rawWithTasksMode = false;
-                                } else {
-                                    this._rawWithTasksMode = true;
-                                }
-                            } else if (this._customJSRegexp.test(directive)) {
-                                const customJSClasses = directive.match(this._customJSRegexp);
-                                if (
-                                    customJSClasses !== null &&
-                                    customJSClasses[1].trim() !== '' &&
-                                    customJSClasses[2].trim() !== ''
-                                ) {
-                                    this._customJsClasses.push([customJSClasses[1].trim(), customJSClasses[2].trim()]);
-                                }
-                            } else if (this._customTemplateRegexp.test(directive)) {
-                                // Search for #template <template>.
-                                if (isFeatureEnabled('ENABLE_INLINE_TEMPLATE')) {
-                                    const customTemplate = directive.match(this._customTemplateRegexp);
-                                    if (customTemplate !== null && customTemplate[1].trim() !== '') {
-                                        this._customTemplate = customTemplate[1].trim();
-                                    }
-                                }
-                            }
-                        }
-                        break;
-                }
-            });
-
-        const queryPrefix = 'SELECT * FROM ?';
-
+        // Remove all the comments from the query.
         this.source = source.replace(this._commentReplacementRegexp, '').trim();
-
         this.logger.infoWithId(this._queryId, 'Source Query', this.source);
 
-        // Exit out if raw with no set table to query.
+        // If this is multiline then only the last query should have the prefix.
+        if (this._multilineQueryMode) {
+            this.setPrefixForMultilineQuery();
+        } else {
+            if (!this.source.includes('SELECT')) {
+                this.source = `${this.defaultQueryPrefix} ${this.source}`;
+            }
+        }
+
+        // Exit out if raw with no set table to query. This is '#raw empty'.
         if (this._rawMode && !this._rawWithTasksMode) {
+            this.logger.debugWithId(this._queryId, 'RAW mode without tasks as data source');
             return;
         }
-        const sqlTokens = this.source.match(/[^\s,;]+|;/gi);
 
         // If there is a group by clause, then we can do grouping later on, no need to
         // use the existing filters in current grouping classes.
         if (/(^|\s)GROUP BY*/gim.test(this.source)) {
             this._groupingPossible = true;
         }
-
         this.logger.debugWithId(this._queryId, 'Grouping Possible', this._groupingPossible);
 
-        if (/^SELECT/gim.test(this.source)) {
-            // User has entered a full query. Clean up.
-            this.source = this.source.replace(/(^|\s)FROM Tasks*/gim, ' FROM ?');
-            this.logger.debugWithId(this._queryId, 'Source Query after clean from full', this.source);
-        } else {
-            if (this._groupingPossible && sqlTokens !== null) {
-                try {
-                    // Get the column/s we are grouping on. Starting with support
-                    // for one only.
-                    // this.logger.infoWithId(this._queryId, 'SQL Tokens.', sqlTokens);
-                    for (let index = 0; index < sqlTokens.length; index++) {
-                        // Find 'GROUP BY'
-                        if (sqlTokens[index] === 'GROUP' && sqlTokens[index + 1] === 'BY') {
-                            // If using a property in a object use the value before the ->.
-                            if (sqlTokens[index + 2].contains('->')) {
-                                this._groupByFields.push([sqlTokens[index + 2].split('->')[0], sqlTokens[index + 2]]);
-                            } else {
-                                this._groupByFields.push([sqlTokens[index + 2], sqlTokens[index + 2]]);
-                            }
-                        }
-                    }
-                    if (this._groupByFields.length > 0) {
-                        this.source = `SELECT ${this._groupByFields[0][1]} AS ${this._groupByFields[0][0]}, ARRAY(_) AS tasks FROM ? ${this.source}`;
-                    } else {
-                        this.source = `${queryPrefix} ${this.source}`;
-                    }
-                } catch (error) {
-                    this._error = `Unable to parse group statement from ${this.source}`;
-                    this.logger.errorWithId(this._queryId, 'Unable to parse group statement.', this.source);
-                }
-            } else {
-                this.source = `${queryPrefix} ${this.source}`;
-            }
+        const sqlTokens = this.source.match(/[^\s,;]+|;/gi);
+
+        if (this._groupingPossible && sqlTokens !== null) {
+            this.parseGroupingDetails(sqlTokens);
         }
     }
 
+    /**
+     * This function returns an empty array of type Grouper.
+     *
+     * @readonly
+     * @type {Grouper[]} - An empty array of type `Grouper[]`
+     * @memberof QuerySql
+     */
     public get grouping(): Grouper[] {
         return new Array<Grouper>();
         // return this._grouping;
     }
 
+    /**
+     * Returns the error message if any errors occur. It is 'undefined' if no errors.
+     *
+     * @readonly
+     * @type {(string | undefined)}
+     * @memberof QuerySql
+     */
     public get error(): string | undefined {
         return this._error;
     }
 
+    /**
+     * The ID of this query execution.
+     *
+     * @readonly
+     * @type {(string | undefined)}
+     * @memberof QuerySql
+     */
     public get queryId(): string | undefined {
         return this._queryId;
     }
 
+    /**
+     * The custom template. Pending future PR.
+     *
+     * @readonly
+     * @type {(string | undefined)}
+     * @memberof QuerySql
+     */
     public get template(): string | undefined {
         return this._customTemplate;
     }
 
+    /**
+     * The layout options for this query.
+     *
+     * @readonly
+     * @type {LayoutOptions}
+     * @memberof QuerySql
+     */
     public get layoutOptions(): LayoutOptions {
         return this._layoutOptions;
     }
 
+    /**
+     * Returns true if using 'Task' as the data source
+     *
+     * @type {boolean}
+     * @memberof QuerySql
+     */
     public get enableDirectTaskQueries(): boolean {
         return this._enableDirectTaskQueries;
     }
 
+    /**
+     * Enables the processing to be toggled between 'Task[]' and 'TaskRecord[]'
+     *
+     * @memberof QuerySql
+     */
     public set enableDirectTaskQueries(value: boolean) {
         this._enableDirectTaskQueries = value;
     }
-
-    // public applyQueryToTasks(tasks: Task[]): TaskGroups {
-    // }
 
     /**
      * This will run the SQL query against the collection of tasks and
@@ -309,21 +276,38 @@ export class QuerySql implements IQuery {
         // };
 
         const currentQuery = this;
-        // Return the ID of this query used for degugging as needed.
+        // Return the ID of this query used for debugging as needed.
         alasql.fn.queryId = function () {
             return currentQuery._queryId;
         };
 
         alasql.options.nocount = true; // Disable row count for queries.
-        //console.log(alasql(`DECLARE @queryId STRING = '${queryId}';`));
+
+        const rawQueryDetailsTask = Task.fromLine({
+            line: '- [ ] Query results can be seen in the console. Use `Ctrl+Shift+I` to open the console',
+            taskLocation: TaskLocation.fromUnknownPosition('file.md'),
+            fallbackDate: null,
+        }) as Task;
 
         // If the '# raw' command is added to the query then we will return the raw
         // query results, allows more advanced based query results. The information
         // is returned to the console currently. Independent rendering is a TBD.
         if (this._rawMode && !this._rawWithTasksMode) {
-            const rawResult = alasql(this.source);
-            this.logger.infoWithId(this._queryId, 'RAW Data result from AlaSQL query', rawResult);
+            let rawResult = alasql(this.source);
+            if (this._multilineQueryMode) {
+                rawResult = rawResult.slice(-1)[0];
+            }
+            this.logger.infoWithId(this._queryId, 'RAW SQL Query Results:', rawResult);
             return rawResult;
+        }
+
+        if (this._rawMode && this._rawWithTasksMode) {
+            let rawResult = alasql(this.source, [tasks]);
+            if (this._multilineQueryMode) {
+                rawResult = rawResult.slice(-1)[0];
+            }
+            this.logger.infoWithId(this._queryId, 'RAW SQL Query Results with Tasks as data:', rawResult);
+            return new Array<Task>(rawQueryDetailsTask);
         }
 
         // Direct tasks uses the Task object and not TaskRecord so less conversion/overhead.
@@ -338,7 +322,11 @@ export class QuerySql implements IQuery {
             let queryResult: Task[];
 
             try {
-                queryResult = alasql(this.source, [tasks]);
+                if (this._multilineQueryMode) {
+                    queryResult = alasql(this.source, [tasks]).slice(-1)[0];
+                } else {
+                    queryResult = alasql(this.source, [tasks]);
+                }
             } catch (error) {
                 queryResult = new Array<Task>();
                 this._error = `Error with query ${error}`;
@@ -346,11 +334,6 @@ export class QuerySql implements IQuery {
                 this.logger.errorWithId(this._queryId, 'Error with query', error);
             }
             this.logger.debugWithId(this._queryId, `queryResult: ${queryResult.length}`, queryResult);
-            // If the '# raw tasks' command is added to the query then we will return the raw
-            // results in the console and the tasks back to the group renderer.
-            if (this._rawMode && this._rawWithTasksMode) {
-                this.logger.infoWithId(this._queryId, 'RAW Data result from AlaSQL query', queryResult);
-            }
             return queryResult.map((task) => {
                 return new Task({ ...task });
             });
@@ -359,6 +342,11 @@ export class QuerySql implements IQuery {
             let queryResult: TaskRecord[];
             try {
                 queryResult = alasql(this.source, [records]);
+                if (this._multilineQueryMode) {
+                    queryResult = alasql(this.source, [records]).slice(-1)[0];
+                } else {
+                    queryResult = alasql(this.source, [records]);
+                }
             } catch (error) {
                 queryResult = new Array<TaskRecord>();
                 this._error = `Error with query ${error}`;
@@ -368,9 +356,6 @@ export class QuerySql implements IQuery {
             this.logger.debugWithId(this._queryId, `queryResult: ${queryResult.length}`, queryResult);
             // If the '# raw tasks' command is added to the query then we will return the raw
             // results in the console and the tasks back to the group renderer.
-            if (this._rawMode && this._rawWithTasksMode) {
-                this.logger.infoWithId(this._queryId, 'RAW Data result from AlaSQL query', queryResult);
-            }
 
             if (this._groupingPossible) {
                 return queryResult;
@@ -380,12 +365,6 @@ export class QuerySql implements IQuery {
                 });
             }
         }
-    }
-
-    private convertToTaskRecords(tasks: Task[]): TaskRecord[] {
-        return tasks.map((task) => {
-            return QuerySql.toTaskRecord(task);
-        });
     }
 
     /**
@@ -459,51 +438,210 @@ export class QuerySql implements IQuery {
         return 'Explanation of this Tasks SQL code block query:\n\n';
     }
 
-    private parseHideOptions({ line }: { line: string }): void {
-        const hideOptionsMatch = line.match(this._hideOptionsRegexp);
-        if (hideOptionsMatch !== null) {
-            const option = hideOptionsMatch[1].trim().toLowerCase();
+    /**
+     * Processes all the lines in the query for directives and comments
+     *
+     * @private
+     * @param {string} source
+     * @memberof QuerySql
+     */
+    private processDirectivesAndComments(source: string) {
+        source
+            .split('\n')
+            .map((line: string) => line.trim())
+            .forEach((line: string) => {
+                this.logger.debugWithId(this._queryId, 'Line to process:', line);
+                switch (true) {
+                    case line === '':
+                        break;
+                    case this._commentRegexp.test(line):
+                        this.processQueryDirectivesAndComments(line);
+                        break;
+                }
+            });
+    }
 
-            switch (option) {
-                case 'task count':
-                    this._layoutOptions.hideTaskCount = true;
-                    break;
-                case 'backlink':
-                    this._layoutOptions.hideBacklinks = true;
-                    break;
-                case 'priority':
-                    this._layoutOptions.hidePriority = true;
-                    break;
-                case 'start date':
-                    this._layoutOptions.hideStartDate = true;
-                    break;
-                case 'scheduled date':
-                    this._layoutOptions.hideScheduledDate = true;
-                    break;
-                case 'due date':
-                    this._layoutOptions.hideDueDate = true;
-                    break;
-                case 'done date':
-                    this._layoutOptions.hideDoneDate = true;
-                    break;
-                case 'recurrence rule':
-                    this._layoutOptions.hideRecurrenceRule = true;
-                    break;
-                case 'edit button':
-                    this._layoutOptions.hideEditButton = true;
-                    break;
-                default:
-                    this._error = 'do not understand hide option';
+    /**
+     * For a multiline query break it up into an array and set prefix on last query.
+     *
+     * @private
+     * @return {void}
+     * @memberof QuerySql
+     */
+    private setPrefixForMultilineQuery(): void {
+        const multilineQuery = this.source
+            .split(';')
+            .filter((element) => element)
+            .map((line: string) => line.trim());
+
+        const lastQuery: string = multilineQuery[multilineQuery.length - 1];
+        // Add the select prefix to the last query only.
+        if (!lastQuery.includes('SELECT')) {
+            multilineQuery[multilineQuery.length - 1] = `${this.defaultQueryPrefix} ${
+                multilineQuery[multilineQuery.length - 1]
+            }`;
+        }
+        this.source = multilineQuery.join(';');
+    }
+
+    /**
+     * Look for the GROUP BY clause and setup processing to handle it.
+     *
+     * @private
+     * @param {RegExpMatchArray} sqlTokens
+     * @memberof QuerySql
+     */
+    private parseGroupingDetails(sqlTokens: RegExpMatchArray) {
+        try {
+            for (let index = 0; index < sqlTokens.length; index++) {
+                // Find 'GROUP BY'
+                if (sqlTokens[index] === 'GROUP' && sqlTokens[index + 1] === 'BY') {
+                    // If using a property in a object use the value before the ->.
+                    if (sqlTokens[index + 2].contains('->')) {
+                        this._groupByFields.push([sqlTokens[index + 2].split('->')[0], sqlTokens[index + 2]]);
+                    } else {
+                        this._groupByFields.push([sqlTokens[index + 2], sqlTokens[index + 2]]);
+                    }
+                }
+            }
+            if (this._groupByFields.length > 0) {
+                this.source = `SELECT ${this._groupByFields[0][1]} AS ${this._groupByFields[0][0]}, ARRAY(_) AS tasks FROM ? ${this.source}`;
+            } else {
+                this.source = `${this.defaultQueryPrefix} ${this.source}`;
+            }
+        } catch (error) {
+            this._error = `Unable to parse group statement from ${this.source}`;
+            this.logger.errorWithId(this._queryId, 'Unable to parse group statement.', this.source);
+        }
+    }
+
+    /**
+     * This function processes query directives and comments in a given line of
+     * code.
+     *
+     * @private
+     * @param {string} line - A string representing a line of code that may
+     * contain directives or comments.
+     * @memberof QuerySql
+     */
+    private processQueryDirectivesAndComments(line: string): void {
+        const directive = line.slice(1).trim();
+        switch (true) {
+            case this._shortModeRegexp.test(directive):
+                this._layoutOptions.shortMode = true;
+                break;
+            case LayoutOptions.hideOptionsRegexp.test(directive):
+                this.parseHideOptions({ line: directive });
+                break;
+            case this._rawQuery.test(directive):
+                this.parseRawOptions(directive);
+                break;
+            case this._multilineQueryRegexp.test(directive):
+                this.parseMultilineOptions(directive);
+                break;
+            case this._customJSRegexp.test(directive):
+                this.parseCustomJSPluginOptions(directive);
+                break;
+            case this._customTemplateRegexp.test(directive):
+                this.parseCustomTemplateOptions(directive);
+                break;
+        }
+    }
+
+    /**
+     * Search for #template <template>. Functionality is pending future PR.
+     *
+     * @private
+     * @param {string} directive - The string minus the # symbol to process.
+     * @memberof QuerySql
+     */
+    private parseCustomTemplateOptions(directive: string) {
+        if (isFeatureEnabled('ENABLE_INLINE_TEMPLATE')) {
+            const customTemplate = directive.match(this._customTemplateRegexp);
+            if (customTemplate !== null && customTemplate[1].trim() !== '') {
+                this._customTemplate = customTemplate[1].trim();
             }
         }
     }
 
+    /**
+     * Allow custom functions to be available in the SQL query via the CustomJS
+     * plugin. Functionality is pending future PR.
+     *
+     * @private
+     * @param {string} directive - The string minus the # symbol to process.
+     * @memberof QuerySql
+     */
+    private parseCustomJSPluginOptions(directive: string) {
+        const customJSClasses = directive.match(this._customJSRegexp);
+        if (customJSClasses !== null && customJSClasses[1].trim() !== '' && customJSClasses[2].trim() !== '') {
+            this._customJsClasses.push([customJSClasses[1].trim(), customJSClasses[2].trim()]);
+        }
+    }
+
+    /**
+     *  Multiline mode directs the processing to only take the last array, if
+     *  you are running raw mode and want all the output of the commands this
+     *  can be skipped.
+     *
+     * @private
+     * @param {string} directive - The string minus the # symbol to process.
+     * @memberof QuerySql
+     */
+    private parseMultilineOptions(directive: string) {
+        this.logger.debugWithId(this._queryId, 'Detected multiline directive', directive);
+        this._multilineQueryMode = true;
+    }
+
+    /**
+     * Parses the raw options to allow customized queries and debugging via console.
+     *
+     * @private
+     * @param {string} directive - The string minus the # symbol to process.
+     * @memberof QuerySql
+     */
+    private parseRawOptions(directive: string) {
+        this.logger.debugWithId(this._queryId, 'Detected RAW mode directive', directive);
+        this._rawMode = true;
+        const rawOptions = directive.match(this._rawQuery);
+        if (rawOptions !== null && rawOptions[1].trim().toLowerCase() === 'empty') {
+            this._rawWithTasksMode = false;
+        } else {
+            this._rawWithTasksMode = true;
+        }
+    }
+
+    /**
+     * Parses the common layout options for the tasks plugin.
+     *
+     * @private
+     * @param {{ line: string }} { line }
+     * @memberof QuerySql
+     */
+    private parseHideOptions({ line }: { line: string }): void {
+        this._layoutOptions.parseLayoutOptions({ line });
+    }
+
+    /**
+     * Creates a unique ID for correlation of console logging.
+     *
+     * @private
+     * @param {number} length
+     * @return {*}  {string}
+     * @memberof QuerySql
+     */
     private generateQueryId(length: number): string {
         const chars = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
         const randomArray = Array.from({ length }, () => chars[Math.floor(Math.random() * chars.length)]);
 
         const randomString = randomArray.join('');
         return randomString;
+    }
+
+    private convertToTaskRecords(tasks: Task[]): TaskRecord[] {
+        return tasks.map((task) => {
+            return QuerySql.toTaskRecord(task);
+        });
     }
 
     static fromTaskRecord(record: TaskRecord): Task {
@@ -580,3 +718,35 @@ export class QuerySql implements IQuery {
         };
     }
 }
+
+export type RecurrenceRecord = {
+    rrule: string;
+    baseOnToday: boolean;
+    referenceDate: Date | null;
+    startDate: Date | null;
+    scheduledDate: Date | null;
+    dueDate: Date | null;
+};
+
+export type TaskRecord = {
+    status: Status;
+    description: string;
+    path: string;
+    file: string | null;
+    indentation: string;
+    listMarker: string;
+    sectionStart: number;
+    sectionIndex: number;
+    precedingHeader: string | null;
+    priority: Priority;
+    startDate: Date | null;
+    scheduledDate: Date | null;
+    dueDate: Date | null;
+    createdDate: Date | null;
+    doneDate: Date | null;
+    recurrence: RecurrenceRecord | null;
+    blockLink: string;
+    tags: string[] | [];
+    originalMarkdown: string;
+    scheduledDateIsInferred: boolean;
+};

@@ -15,6 +15,63 @@ export class LayoutOptions {
     hideUrgency: boolean = true;
     shortMode: boolean = false;
     explainQuery: boolean = false;
+
+    public static readonly hideOptionsRegexp =
+        /^(hide|show) (task count|backlink|priority|created date|start date|scheduled date|done date|due date|recurrence rule|edit button|urgency)/;
+
+    /**
+     * The function parses layout options from a string and updates corresponding boolean values.
+     *
+     * @param {{ line: string }} line - The layout option line to parse.
+     * @returns {boolean} True if the line could be parse to a valid layout option, otherwise false.
+     * @memberof LayoutOptions
+     */
+    public parseLayoutOptions({ line }: { line: string }): boolean {
+        const hideOptionsMatch = line.match(LayoutOptions.hideOptionsRegexp);
+        if (hideOptionsMatch !== null) {
+            const hide = hideOptionsMatch[1] === 'hide';
+            const option = hideOptionsMatch[2];
+
+            switch (option) {
+                case 'task count':
+                    this.hideTaskCount = hide;
+                    break;
+                case 'backlink':
+                    this.hideBacklinks = hide;
+                    break;
+                case 'priority':
+                    this.hidePriority = hide;
+                    break;
+                case 'created date':
+                    this.hideCreatedDate = hide;
+                    break;
+                case 'start date':
+                    this.hideStartDate = hide;
+                    break;
+                case 'scheduled date':
+                    this.hideScheduledDate = hide;
+                    break;
+                case 'due date':
+                    this.hideDueDate = hide;
+                    break;
+                case 'done date':
+                    this.hideDoneDate = hide;
+                    break;
+                case 'recurrence rule':
+                    this.hideRecurrenceRule = hide;
+                    break;
+                case 'edit button':
+                    this.hideEditButton = hide;
+                    break;
+                case 'urgency':
+                    this.hideUrgency = hide;
+                    break;
+                default:
+                    return false;
+            }
+        }
+        return true;
+    }
 }
 
 export type TaskLayoutComponent =

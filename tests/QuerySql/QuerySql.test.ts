@@ -18,15 +18,15 @@ describe('Query parsing', () => {
     // In alphabetical order, please
     const filters = [
         "WHERE moment(createdDate)->[format]('YYYY-MM-DD') > '2021-12-27'", // generic query with moment,
-        "SELECT pageProperty('test') \n#raw",
-        'SELECT queryId() \n#raw',
-        'SELECT debugMe() \n#raw',
+        "SELECT pageProperty('test') \n#raw empty",
+        'SELECT queryId() \n#raw empty',
+        'SELECT debugMe() \n#raw empty',
 
         // Add more filters here if there are any more custom functions added.
     ];
 
-    describe('should recognise custom functions', () => {
-        test.concurrent.each<string>(filters)('recognises %j', (filter) => {
+    describe('should recognize custom functions', () => {
+        test.concurrent.each<string>(filters)('recognizes %j', (filter) => {
             // Arrange
             const query = new QuerySql({ source: filter, sourcePath: '', frontmatter: {} });
 
@@ -42,14 +42,14 @@ describe('Query parsing', () => {
         it('should return query id when queryId() is called', () => {
             // Arrange
             const query = new QuerySql({
-                source: 'CREATE TABLE one;INSERT INTO one VALUES @{a:1}, @{a:2}, @{a:3};SELECT queryId() AS QueryID FROM one  LIMIT 1 \n#raw empty',
+                source: 'CREATE TABLE one;INSERT INTO one VALUES @{a:1}, @{a:2}, @{a:3};SELECT queryId() AS QueryID FROM one  LIMIT 1 \n#raw empty\n#ml',
                 sourcePath: '',
                 frontmatter: {},
             });
 
             // Act
             const result = query.queryTasks([]);
-            const selectResult = result[2][0].QueryID;
+            const selectResult = result[0].QueryID;
 
             // Assert
             expect(query.error).toBeUndefined();

@@ -24,8 +24,6 @@ export class Query implements IQuery {
 
     private readonly groupByRegexp = /^group by (backlink|folder|root)/;
 
-    private readonly hideOptionsRegexp =
-        /^(hide|show) (task count|backlink|priority|created date|start date|scheduled date|done date|due date|recurrence rule|edit button|urgency)/;
     private readonly shortModeRegexp = /^short/;
     private readonly explainQueryRegexp = /^explain/;
 
@@ -58,7 +56,7 @@ export class Query implements IQuery {
                     case this.groupByRegexp.test(line):
                         this.parseGroupBy({ line });
                         break;
-                    case this.hideOptionsRegexp.test(line):
+                    case LayoutOptions.hideOptionsRegexp.test(line):
                         this.parseHideOptions({ line });
                         break;
                     case this.commentRegexp.test(line):
@@ -146,49 +144,7 @@ export class Query implements IQuery {
     }
 
     private parseHideOptions({ line }: { line: string }): void {
-        const hideOptionsMatch = line.match(this.hideOptionsRegexp);
-        if (hideOptionsMatch !== null) {
-            const hide = hideOptionsMatch[1] === 'hide';
-            const option = hideOptionsMatch[2];
-
-            switch (option) {
-                case 'task count':
-                    this._layoutOptions.hideTaskCount = hide;
-                    break;
-                case 'backlink':
-                    this._layoutOptions.hideBacklinks = hide;
-                    break;
-                case 'priority':
-                    this._layoutOptions.hidePriority = hide;
-                    break;
-                case 'created date':
-                    this._layoutOptions.hideCreatedDate = hide;
-                    break;
-                case 'start date':
-                    this._layoutOptions.hideStartDate = hide;
-                    break;
-                case 'scheduled date':
-                    this._layoutOptions.hideScheduledDate = hide;
-                    break;
-                case 'due date':
-                    this._layoutOptions.hideDueDate = hide;
-                    break;
-                case 'done date':
-                    this._layoutOptions.hideDoneDate = hide;
-                    break;
-                case 'recurrence rule':
-                    this._layoutOptions.hideRecurrenceRule = hide;
-                    break;
-                case 'edit button':
-                    this._layoutOptions.hideEditButton = hide;
-                    break;
-                case 'urgency':
-                    this._layoutOptions.hideUrgency = hide;
-                    break;
-                default:
-                    this._error = 'do not understand hide/show option';
-            }
-        }
+        this._layoutOptions.parseLayoutOptions({ line });
     }
 
     private parseFilter(line: string) {

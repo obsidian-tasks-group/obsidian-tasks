@@ -13,8 +13,6 @@ The SQL query version is more complex but provides more powerful ways to filter 
 
 By default you should only need the conditions of the SQL query, that is everything after the `WHERE` clause including the `WHERE` for example `WHERE status->symbol != "x" AND path LIKE '%Journal%' LIMIT 10` which will return 10 tasks not completed (`x`) with `Journal` in the path.
 
-If you want to add comments to your queries you can use the `#` symbol followed by the comment, it will be ignored when processed by the query engine.
-
 ## General Queries
 
 ### Queries using file

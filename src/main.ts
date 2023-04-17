@@ -30,6 +30,11 @@ export default class TasksPlugin extends Plugin {
         log('info', `loading plugin "${this.manifest.name}" v${this.manifest.version}`);
 
         await this.loadSettings();
+
+        // Configure logging.
+        const { loggingOptions } = getSettings();
+        logging.configure(loggingOptions);
+
         this.addSettingTab(new SettingsTab({ plugin: this }));
 
         initializeFile({

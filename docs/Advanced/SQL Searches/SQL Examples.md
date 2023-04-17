@@ -8,15 +8,21 @@ publish: true
 
 ## Filtering on Tags
 
+This will return all the tasks with `#wf` in the tags.
+
 ````text
 ```tasks-sql  
-WHERE '#MindCare' IN tags  
+WHERE '#wf' IN tags
 ```  
 ````
 
 ---
 
-## All open tasks that are due today
+## All open tasks that are due today and marked at important as the status
+
+This will match a task like below assuming todays dat is 2023-10-11.
+
+- [!] #task Important Task 📅 2023-10-11
 
 ````text
 ```tasks-sql

@@ -4,6 +4,7 @@ import { StatusConfiguration } from '../StatusConfiguration';
 import { Status } from '../Status';
 import { DefaultTaskSerializer, type TaskSerializer } from '../TaskSerializer';
 import type { SuggestionBuilder } from '../Suggestor';
+import type { LogOptions } from '../lib/logging';
 import { DebugSettings } from './DebugSettings';
 import { StatusSettings } from './StatusSettings';
 import { Feature } from './Feature';
@@ -68,6 +69,8 @@ export interface Settings {
     // Tracks the stage of the headings in the settings UI.
     headingOpened: HeadingState;
     debugSettings: DebugSettings;
+
+    loggingOptions: LogOptions;
 }
 
 const defaultSettings: Settings = {
@@ -95,6 +98,21 @@ const defaultSettings: Settings = {
     },
     headingOpened: {},
     debugSettings: new DebugSettings(),
+
+    /* 
+    `loggingOptions` is a property in the `Settings` interface that defines the logging options for
+    the application. It is an object that contains a `minLevels` property, which is a map of logger
+    names to their minimum logging levels. This allows the application to control the amount of
+    logging output based on the logger name and the minimum logging level. For example, the logger
+    name `tasks` might have a minimum logging level of `debug`, while the root logger might have a
+    minimum logging level of `info`.
+    */
+    loggingOptions: {
+        minLevels: {
+            '': 'info',
+            tasks: 'info',
+        },
+    },
 };
 
 let settings: Settings = { ...defaultSettings };

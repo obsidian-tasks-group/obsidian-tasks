@@ -2,7 +2,7 @@
 publish: true
 ---
 
-# Columns / Properties
+# SQL Columns
 
 <span class="related-pages">#advanced/sql-search</span>
 
@@ -26,11 +26,11 @@ The following columns or properties are available to be used in the WHERE clause
 | filename                 | Name of the file containing the task, with the .md extension removed.               | string              |
 | precedingHeader          | The heading that the task is under                                                  | string              |
 | priority                 | The priority of the task. This has to be treated like a string ('1', '2', '3', '4') | string              |
-| startDate                | Taken from the task string, matches `🛫 yyyy-mm-dd`. No time specified.             | Date                |
-| scheduledDate            | Taken from the task string, matches `⏳ yyyy-mm-dd`. No time specified.             | Date                |
-| dueDate                  | Taken from the task string, matches `📅 yyyy-mm-dd`. No time specified.             | Date                |
-| createdDate              | Taken from the task string, matches `➕ yyyy-mm-dd`. No time specified.             | Date                |
-| doneDate                 | Taken from the task string, matches `✅ yyyy-mm-dd`. No time specified.             | Date                |
+| startDate                | Taken from the task string, matches `🛫 yyyy-mm-dd`. No time specified.             | Moment                |
+| scheduledDate            | Taken from the task string, matches `⏳ yyyy-mm-dd`. No time specified.             | Moment                |
+| dueDate                  | Taken from the task string, matches `📅 yyyy-mm-dd`. No time specified.             | Moment                |
+| createdDate              | Taken from the task string, matches `➕ yyyy-mm-dd`. No time specified.             | Moment                |
+| doneDate                 | Taken from the task string, matches `✅ yyyy-mm-dd`. No time specified.             | Moment                |
 | recurrence               | This uses logic from [jakubroztocil/rrule](https://github.com/jakubroztocil/rrule)  | Recurrence  Object  |
 | blockLink                | The blockLink is a "^" annotation after the dates/recurrence rules.                 | string              |
 | tags                     | This is an array of strings.                                                        | string[]            |
@@ -49,7 +49,7 @@ When using the date columns you can use JavaScript commands in the WHERE clause.
 
 ````markdown
 ```tasks-sql
-WHERE ((dueDate->getUTCFullYear() = 2021 AND status->symbol = 'x') OR (dueDate->getUTCFullYear() = 2022 AND status->symbol = ' ')) AND description LIKE '%#%'
+WHERE ((dueDate->year() = 2021 AND status->symbol = 'x') OR (dueDate->year() = 2022 AND status->symbol = ' ')) AND description LIKE '%#%'
 ```
 ````
 
