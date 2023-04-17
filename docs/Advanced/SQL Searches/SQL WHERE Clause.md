@@ -42,3 +42,26 @@ The following SQL statement selects all tasks where priority is "2" AND indicato
 WHERE priority = '2' AND (status->symbol='!' OR status->symbol='?')
 ```
 ````
+
+## The LIKE Operator
+
+The `LIKE` operator is used in a `WHERE` clause to search for a specified pattern, it is a simpler approach than using a Regular Expression.
+
+There are two wild cards you can use.
+
+- The percent sign (%) represents zero, one, or multiple characters
+- The underscore sign (_) represents one, single character
+
+These can also be combined. For example the following query will return all tasks where the notes they are on have anything followed by `/2023/2023-0` then a single character followed by `/` then by anything. This would match the following example folders:
+
+"1 Journal/2023/2023-04/2023-04-17.md"
+"General Notes/2023/2023-04/my cool idea.md"
+"Reference/school/2023/2023-04/lecture one.md"
+
+````text
+```tasks-sql
+WHERE path LIKE '%/2023/2023-0_/%'
+```
+````
+
+Any column that is of type `string` can be queried using the `LIKE` operator.
