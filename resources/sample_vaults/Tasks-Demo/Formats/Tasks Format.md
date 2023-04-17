@@ -24,7 +24,7 @@
 ## Confirming that the fields are read correctly
 
 ```tasks
-path includes tasks format
+path regex matches /^Formats\/Tasks Format/
 group by heading
 sort by description
 ```

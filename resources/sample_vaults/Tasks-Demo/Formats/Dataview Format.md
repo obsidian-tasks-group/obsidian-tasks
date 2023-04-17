@@ -26,7 +26,7 @@ The fields shown below can be surrounded by either `[]` or `()`.
 ## Confirming that the fields are read correctly
 
 ```tasks
-path includes dataview format
+path regex matches /^Formats\/Dataview Format/
 group by heading
 sort by description
 ```
