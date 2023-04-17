@@ -13,7 +13,13 @@ import type { FilteringCase } from '../TestingTools/FilterTestHelpers';
 //import { TaskBuilder } from '../TestingTools/TaskBuilder';
 
 window.moment = moment;
-
+function createTaskFromLine(line: string) {
+    return Task.fromLine({
+        line: line + ' #task',
+        taskLocation: TaskLocation.fromUnknownPosition('file.md'),
+        fallbackDate: null,
+    }) as Task;
+}
 describe('Query parsing', () => {
     // In alphabetical order, please
     const filters = [
@@ -42,7 +48,13 @@ describe('Query parsing', () => {
         it('should return query id when queryId() is called', () => {
             // Arrange
             const query = new QuerySql({
-                source: 'CREATE TABLE one;INSERT INTO one VALUES @{a:1}, @{a:2}, @{a:3};SELECT queryId() AS QueryID FROM one  LIMIT 1 \n#raw empty\n#ml',
+                source: [
+                    'CREATE TABLE one;',
+                    'INSERT INTO one VALUES @{a:1}, @{a:2}, @{a:3};',
+                    'SELECT queryId() AS QueryID FROM one LIMIT 1;',
+                    '#raw empty',
+                    '#ml',
+                ].join('\n'),
                 sourcePath: '',
                 frontmatter: {},
             });
@@ -54,6 +66,32 @@ describe('Query parsing', () => {
             // Assert
             expect(query.error).toBeUndefined();
             expect(selectResult).toBe(query.queryId);
+        });
+        it('should run inline function', () => {
+            // Arrange
+            const query = new QuerySql({
+                source: [
+                    "CREATE FUNCTION inLastSevenDays AS ``function(date) {return date ? date.isBetween(window.moment().subtract(7, 'days'), window.moment()) : false; }``;",
+                    'WHERE inLastSevenDays(dueDate); ',
+                    '#ml',
+                ].join('\n'),
+                sourcePath: '',
+                frontmatter: {},
+            });
+
+            const tasksToTest = [
+                createTaskFromLine('- [ ] Task due a long time ago 📅 2021-09-12'),
+                createTaskFromLine(
+                    `- [ ] Task due three days ago 📅 ${moment().subtract(3, 'days').format('YYYY-MM-DD')}`,
+                ),
+            ];
+
+            // Act
+            const result = query.queryTasks(tasksToTest) as Task[];
+            // Assert
+            expect(query.error).toBeUndefined();
+            expect(result).toHaveLength(1);
+            expect(result[0].dueDate?.format('YYYY-MM-DD')).toBe(moment().subtract(3, 'days').format('YYYY-MM-DD'));
         });
     });
 });
