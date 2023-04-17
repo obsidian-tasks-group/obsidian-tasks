@@ -17,7 +17,7 @@ The following basic operators can be used in the `WHERE` clause. More can be fou
 | <        | Less than                                                                   |
 | >=       | Greater than or equal                                                       |
 | <=       | Less than or equal                                                          |
-| <>       | Not equal. Note: In some versions of SQL this operator may be written as != |
+| <>       | Not equal                                                                   |
 | BETWEEN  | Between a certain range                                                     |
 | LIKE     | Search for a pattern                                                        |
 | IN       | To specify multiple possible values for a column                            |
