@@ -119,3 +119,15 @@ urgency = 0.0 + 6.0 + 0.0 - 3.0 = 3.0
 ## How to Display the Urgency Score
 
 You can display the calculated Urgency score in your task list using the `show urgency` option.
+
+## Common Questions
+
+### Why do all my tasks have urgency score 1.95?
+
+We sometimes get told that the urgency score is broken and Tasks is ignoring the user's Due Date, Priority and so on.
+
+Invariably this is because the user's Tasks data is incorrect in some way that prevents the Tasks plugin from reading the data.
+
+And the most likely current cause of that is incorrectly ordered values in a task: see [[Auto-Suggest#What do I need to know about the order of items in a task?|What do I need to know about the order of items in a task?]].
+
+We are tracking this ordering limitation in [issue #1505](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1505).
