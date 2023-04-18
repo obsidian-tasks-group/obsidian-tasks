@@ -15,3 +15,7 @@ These methods pop up a list of available templates, so you can select a snippet 
 
 - Click on the `<%` icon in the Ribbon
 - Use `Ctrl + P` or `Cmd + P` to trigger the Command Palette and select the pinned command `Templater: Open Insert Template modal`
+
+## Naming templates
+
+Please use lower-case names for template files, to distinguish them from the actual documentation pages.
