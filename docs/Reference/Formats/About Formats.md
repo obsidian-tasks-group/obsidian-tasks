@@ -34,19 +34,21 @@ You can chose the format that Tasks will use to read and write data on task line
   - `[created:: 2023-04-03] [completion:: 2023-04-08]`
   - **Note:** do read the documentation, as there are some important differences between Tasks and Dataview interpretations.
 
-## Where the chosen format is used
+## Impact of format on Tasks behaviour
+
+### Where the chosen format is used
 
 The chosen file format determines how the Tasks plugin reads and writes task data.
 
 The following facilities **use** the chosen format:
 
 - **Live Preview**
-- The [[Create or edit Task]] saves the task in the chosen format
-  - Note while editing a task, it shows the current values in the default (Emoji) format, though.
+- The [[Create or edit Task]] modal saves the task in the chosen format
+  - Note that, while editing a task, it shows the current values in the default (Emoji) format, though.
 - [[Auto-Suggest]]
   - Note that, for dataview format, the user is required to first type the chosen brackets - `[]` or `()` - and then start typing to chose a field to insert in the brackets.
 
-## Where the default format is NOT used
+### Where the default format is NOT used
 
 In this early support for multiple formats, the following facilities currently **ignore** the chosen format and instead use the default emoji format:
 

@@ -20,11 +20,13 @@ Tasks now has evolving support for the dataview plugin's text-based format for a
 
 ## Brackets
 
-Requires `[]` or `()` around fields
+- [ ] Requires `[]` or `()` around fields
 
-Document difference between the two
+- [ ] Document difference between the two
 
-Link to the relevant bit of dataview docs
+- [ ] Link to the relevant bit of dataview docs
+
+---
 
 ## Supported dataview fields
 
@@ -67,11 +69,15 @@ This name was chosen for use in Tasks, because it is suggested in the [dataview 
 
 For more information, see [[Recurring Tasks]].
 
+---
+
 ## Limitations of Dataview Format
 
-[[Auto-Suggest]] - start by typing `[]` or `()` - then type field names inside your chosen brackets.
+- [ ] [[Auto-Suggest]] - start by typing `[]` or `()` - then type field names inside your chosen brackets.
 
-## Comparison of Tasks and Dataview formats
+Note that, for dataview format, the user is required to first type the chosen brackets - `[]` or `()` - and then start typing to chose a field to insert in the brackets.
+
+## Comparison of Tasks and Dataview reading code
 
 | Facility                          | Dataview interpretation of dataview format                                                        | Tasks' interpretation of dataview format                 |
 | --------------------------------- | ------------------------------------------------------------------------------------------------- | -------------------------------------------------------- |

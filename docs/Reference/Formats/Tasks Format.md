@@ -38,7 +38,3 @@ For more information, see [[Priority]].
 ```
 
 For more information, see [[Recurring Tasks]].
-
-## Limitations of Tasks Format
-
-==TODO==
