@@ -61,7 +61,13 @@ export class SettingsTab extends PluginSettingTab {
 
         new Setting(containerEl)
             .setName('Task Format')
-            .setDesc('The format that Tasks uses to read and write tasks.')
+            .setDesc(
+                SettingsTab.createFragmentWithHTML(
+                    '<p>The format that Tasks uses to read and write tasks.</p>' +
+                        '<p><b>Important:</b> Tasks currently only supports one format at a time. Selecting Dataview will currently <b>stop Tasks reading its own emoji signifiers</b>.</p>' +
+                        '<p>See the <a href="https://publish.obsidian.md/tasks/Reference/Formats/About+Formats">documentation</a>.</p>',
+                ),
+            )
             .addDropdown((dropdown) => {
                 for (const key of Object.keys(TASK_FORMATS) as (keyof TASK_FORMATS)[]) {
                     dropdown.addOption(key, TASK_FORMATS[key].displayName);
