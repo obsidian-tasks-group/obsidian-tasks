@@ -11,16 +11,9 @@ publish: true
 > [!released]
 > Introduced in Tasks X.Y.Z.
 
-You can chose the format that Tasks will use to read and write data on task lines:
+You can now chose the format that Tasks will use to read and write data on task lines:
 
 ![Screenshot of the settings option to select Task Format](settings-task-format.png)
-
-> [!Warning]
-> Currently tasks only supports one format at a time.
->
-> If you select the dataview format, Tasks will no longer read any of its own Emoji signifiers.
->
-> We are tracking this in [issue #1891](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1891).
 
 ## Supported formats
 
@@ -32,25 +25,34 @@ You can chose the format that Tasks will use to read and write data on task line
   - `[priority:: high] [repeat:: every day when done]`
   - `[start:: 2023-04-05] [scheduled:: 2023-04-06] [due:: 2023-04-07]`
   - `[created:: 2023-04-03] [completion:: 2023-04-08]`
-  - **Note:** do read the documentation, as there are some important differences between Tasks and Dataview interpretations.
+  - **Note:** do read this format's documentation, as there are some important differences between Tasks and Dataview interpretations.
 
-## Impact of format on Tasks behaviour
+## Impact of non-default formats on Tasks behaviour
 
-### Where the chosen format is used
+> [!Warning]
+> In this initial support for multiple formats, **Tasks only supports reading and writing one format at a time**.
+>
+> If you select Dataview format, Tasks will no longer read any of its own Emoji signifiers (until you change the format back to Tasks again).
+>
+> We are tracking this in [issue #1891](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1891), and Tasks will taught to *read* all supported formats in a future release.
+
+### Tasks features that respect the chosen format
 
 The chosen file format determines how the Tasks plugin reads and writes task data.
 
-The following facilities **use** the chosen format:
+The following facilities use the chosen format:
 
+- **Reading and writing of Task lines**
+  - These will **only** use the chosen format.
 - **Live Preview**
 - The [[Create or edit Task]] modal saves the task in the chosen format
   - Note that, while editing a task, it shows the current values in the default (Emoji) format, though.
 - [[Auto-Suggest]]
-  - Note that, for dataview format, the user is required to first type the chosen brackets - `[]` or `()` - and then start typing to chose a field to insert in the brackets.
+  - Note that, for dataview format, you should first type the chosen brackets - `[]` or `()` - and then start typing to choose a field to insert in the brackets.
 
-### Where the default format is NOT used
+### Tasks features that don't respect the chosen format
 
-In this early support for multiple formats, the following facilities currently **ignore** the chosen format and instead use the default emoji format:
+In this early support for multiple formats, the following facilities don't (yet) use the chosen format and instead use the default (Emoji) format:
 
 - **Reading mode**
   - When viewing a note containing task lines in Reading mode, the task data is shown with Emojis, irrespective of the user's selected task format.
@@ -64,7 +66,7 @@ In this early support for multiple formats, the following facilities currently *
 - The order of fields on the task line still matters.
   - See [[Auto-Suggest#What do I need to know about the order of items in a task?]]
   - We are tracking this in [issue #1505](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1505).
-- Currently, Tasks only supports one format at a time.
+- Currently, Tasks only supports one format at a time (as mentioned above).
   - If you select the Dataview format, it will no longer read or write Tasks emoji signifiers.
   - We are tracking this in [issue #1891](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1891).
-- There is no facility in Tasks to convert vault from one format to another.
+- There is no facility in Tasks to convert a vault from one task format to another.
