@@ -6,6 +6,9 @@ publish: true
 
 <span class="related-pages">#formats #format/dataview #plugin/dataview</span>
 
+> [!released]
+> Introduced in Tasks X.Y.Z.
+
 These samples demonstrate all the fields supported by the Tasks plugin's parsing of dataview fields.
 
 ## Dataview Format Dates
