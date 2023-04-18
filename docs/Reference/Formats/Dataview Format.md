@@ -18,19 +18,26 @@ Tasks now has evolving support for the dataview plugin's text-based format for a
 >
 > We will work to improve compatibility, but in the meantime, **please do read this page carefully**.
 
-## Brackets
+## Bracketed inline fields
 
-- [ ] Requires `[]` or `()` around fields
+Tasks specifically reads [Dataview's Bracketed inline fields](https://blacksmithgu.github.io/obsidian-dataview/annotation/add-metadata/#inline-fields) in task list items.
 
-- [ ] Document difference between the two
+This means you need to write the `key:: value` strings on Tasks lines surrounded by *either* `[]` or `()`.
 
-- [ ] Link to the relevant bit of dataview docs
+Note, however, that when Tasks *writes* task lines, it always writes them with `[]`, even if they were initially written as `()`.
+
+The brackets `[]` and `()` differ in how Dataview displays them. (Citation needed.)
 
 ---
 
 ## Supported dataview fields
 
 These samples demonstrate all the fields supported by the Tasks plugin's parsing of dataview fields.
+
+> [!Tip]
+> All the examples below work show the fields in square brackets: `[...]`.
+>
+> Tasks also reads dataview fields in parentheses: `(...)`.
 
 ### Dataview Format for Dates
 
@@ -73,14 +80,13 @@ For more information, see [[Recurring Tasks]].
 
 ## Limitations of Dataview Format
 
-- [ ] [[Auto-Suggest]] - start by typing `[]` or `()` - then type field names inside your chosen brackets.
+Essential reading:
 
-Note that, for dataview format, the user is required to first type the chosen brackets - `[]` or `()` - and then start typing to chose a field to insert in the brackets.
+- [[About Formats#Impact of non-default formats on Tasks behaviour]]
+- [[About Formats#Limitations of file format support]]
 
-## Comparison of Tasks and Dataview reading code
+Additional Dataview specific limitations:
 
-| Facility                          | Dataview interpretation of dataview format                                                        | Tasks' interpretation of dataview format                 |
-| --------------------------------- | ------------------------------------------------------------------------------------------------- | -------------------------------------------------------- |
-| Reading multiple formats          | Reads both Dataview and Tasks formats, so can read a task that has both dataview and tasks format | Only reads the format that was selected at launch        |
-| Order of fields on the Tasks line | Fields and free text can be mixed together within the task line                                   | Reads fields and tags backwards from the end of the line |
-| Data from other lines             |                                                                                                   | Does not read from frontmatter, inline fields, headings  |
+- Tasks currently only reads Dataview fields from task lines that match any global filter.
+  - It does not yet read fields from [frontmatter](https://blacksmithgu.github.io/obsidian-dataview/annotation/add-metadata/#frontmatter).
+  - It does not read [inline fields](https://blacksmithgu.github.io/obsidian-dataview/annotation/add-metadata/#inline-fields) outside of lines already considered to be tasks.
