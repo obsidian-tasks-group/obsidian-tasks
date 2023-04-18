@@ -4,15 +4,29 @@ publish: true
 
 # Combining Dataview and Tasks
 
-<span class="related-pages">#plugin/dataview</span>
+<span class="related-pages">#plugin/dataview #format/dataview </span>
+
+## Tasks and dataview
+
+> [!released]
+> Parsing of dataview format was introduced in Tasks X.Y.Z.
+
+Tasks now has partial support for reading data in [[Dataview Format]].
+
+> [!Warning]
+> Currently, support of dataview format is partial, with some important differences from the dataview behaviour.
+>
+> We will work to improve compatibility, but in the meantime, **please do read the [[Dataview Format]] documentation carefully**.
+
+## Increasing Dataview compatibility with Tasks
 
 The [Dataview](https://github.com/blacksmithgu/obsidian-dataview) plugin provides many data analysis features for Obsidian vaults, including queries about tasks.
-This page only describes settings to maximize compatibility between Dataview and Tasks; for all other information on Dataview, including Dataview's names for the task emoji fields,
+This section only describes settings to maximize compatibility between Dataview and Tasks; for all other information on Dataview, including Dataview's names for the task emoji fields,
 please see its [documentation](https://blacksmithgu.github.io/obsidian-dataview/data-annotation/#tasks).
 
 > As of Dataview 0.5.43, all Tasks emoji fields **except recurrence** can be queried through Dataview or dataviewjs. Information is in the [Dataview documentation](https://blacksmithgu.github.io/obsidian-dataview/data-annotation/#tasks).
 
-## Automatic Task Completion
+### Automatic Task Completion
 
 > [!released]
 Introduced in Dataview 0.5.42
