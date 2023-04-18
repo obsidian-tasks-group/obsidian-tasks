@@ -15,5 +15,7 @@
     "images",
     "Support and Help"
   ],
-  "excluded": []
+  "excluded": [
+    "_meta"
+  ]
 }
