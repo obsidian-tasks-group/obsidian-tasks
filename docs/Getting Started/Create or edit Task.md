@@ -115,6 +115,8 @@ For more information, including adding your own customised statuses, see [[Statu
 >
 > Also, completing a recurring task via the Status in the modal does not yet add the new recurrence.
 >
+> We are tracking this in [issue #1590](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1590).
+>
 > For now, you should still complete tasks via command or by clicking on task checkboxes.
 
 ## Display values
