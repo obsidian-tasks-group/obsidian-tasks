@@ -2,13 +2,13 @@
 publish: true
 ---
 
-# Tasks Format
+# Tasks Emoji Format
 
 <span class="related-pages">#formats #format/tasks</span>
 
 These samples demonstrate all the fields supported by the Tasks plugin's parsing of its own emoji signifiers.
 
-## Tasks Format for Dates
+## Tasks Emoji Format for Dates
 
 ```markdown
 - [ ] #task Has a created date ➕ 2023-04-13
@@ -20,7 +20,7 @@ These samples demonstrate all the fields supported by the Tasks plugin's parsing
 
 For more information, see [[Dates]].
 
-## Tasks Format for Priorities
+## Tasks Emoji Format for Priorities
 
 ```markdown
 - [ ] #task Low priority 🔽
@@ -31,7 +31,7 @@ For more information, see [[Dates]].
 
 For more information, see [[Priority]].
 
-## Tasks Format for Recurrence
+## Tasks Emoji Format for Recurrence
 
 ```markdown
 - [ ] #task Is a recurring task 🔁 every day when done
