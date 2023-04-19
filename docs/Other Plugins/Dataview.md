@@ -4,7 +4,7 @@ publish: true
 
 # Combining Dataview and Tasks
 
-<span class="related-pages">#plugin/dataview #format/dataview </span>
+<span class="related-pages">#plugin/dataview #task-format/dataview </span>
 
 ## Tasks and dataview
 

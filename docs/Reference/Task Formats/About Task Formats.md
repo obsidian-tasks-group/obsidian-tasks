@@ -4,7 +4,7 @@ publish: true
 
 # About Task Formats
 
-<span class="related-pages">#formats</span>
+<span class="related-pages">#task-formats</span>
 
 ## What is a "Task Format"?
 

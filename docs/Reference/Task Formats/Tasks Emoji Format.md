@@ -4,7 +4,7 @@ publish: true
 
 # Tasks Emoji Format
 
-<span class="related-pages">#formats #format/tasks</span>
+<span class="related-pages">#task-formats #task-format/tasks</span>
 
 These samples demonstrate all the fields supported by the Tasks plugin's parsing of its own emoji signifiers.
 

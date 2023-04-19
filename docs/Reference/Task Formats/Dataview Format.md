@@ -4,7 +4,7 @@ publish: true
 
 # Dataview Format
 
-<span class="related-pages">#formats #format/dataview #plugin/dataview</span>
+<span class="related-pages">#task-formats #task-format/dataview #plugin/dataview</span>
 
 ## Reading and writing dataview format
 
