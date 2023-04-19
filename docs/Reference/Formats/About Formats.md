@@ -61,7 +61,7 @@ In this early support for multiple formats, the following facilities don't (yet)
   - When viewing a note containing task search results, the task data is shown with Emojis, irrespective of the user's selected task format.
   - We are tracking this in [issue #1890](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1890).
 
-## Limitations of file format support
+## Limitations of task format support
 
 - The order of fields on the task line still matters.
   - See [[Auto-Suggest#What do I need to know about the order of items in a task?]]
