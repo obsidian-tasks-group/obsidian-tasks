@@ -85,8 +85,9 @@ Essential reading:
 - [[About Formats#Impact of non-default formats on Tasks behaviour]]
 - [[About Formats#Limitations of file format support]]
 
-Additional Dataview specific limitations:
+Additional limitations, compared to the Dataview's own parsing of task lines:
 
+- Tasks cannot yet read Dataview fields arbitrarily anywhere within a task line, even though Dataview allows this.
 - Tasks currently only reads Dataview fields from task lines that match any global filter.
   - It does not yet read fields from [frontmatter](https://blacksmithgu.github.io/obsidian-dataview/annotation/add-metadata/#frontmatter).
   - It does not read [inline fields](https://blacksmithgu.github.io/obsidian-dataview/annotation/add-metadata/#inline-fields) outside of lines already considered to be tasks.
