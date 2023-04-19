@@ -26,7 +26,7 @@ This means you need to write the `key:: value` strings on Tasks lines surrounded
 
 Note, however, that when Tasks *writes* task lines, it always writes them with `[]`, even if they were initially written as `()`.
 
-The brackets `[]` and `()` differ in how Dataview displays them. (Citation needed.)
+The brackets `[]` and `()` differ in how [Dataview displays them](https://blacksmithgu.github.io/obsidian-dataview/annotation/add-metadata/#inline-fields). With the parenthesis syntax, Dataview only shows the field value and not the key.
 
 ---
 
@@ -55,7 +55,8 @@ For more information, see [[Dates]].
 
 ### Dataview Format for Priorities
 
-These names were chosen for use in Tasks, and are not known to dataview. They can of course be searched in dataview.
+> [!Info]
+> These names were chosen for use in Tasks, and are not known to dataview. They can of course be searched in dataview.
 
 ```markdown
 - [ ] #task Low priority [priority:: low]
@@ -68,7 +69,8 @@ For more information, see [[Priority]].
 
 ### Dataview Format for Recurrence
 
-This name was chosen for use in Tasks, because it is suggested in the [dataview feature request #878](https://github.com/blacksmithgu/obsidian-dataview/issues/878). It is not yet known to dataview. It can of course be searched in dataview.
+> [!Info]
+> This name was chosen for use in Tasks, because it is suggested in the [dataview feature request #878](https://github.com/blacksmithgu/obsidian-dataview/issues/878). It is not yet known to dataview. It can of course be searched in dataview.
 
 ```markdown
 - [ ] #task Is a recurring task [repeat:: every day when done]
