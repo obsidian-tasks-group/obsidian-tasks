@@ -9,7 +9,7 @@ publish: true
 ## Reading and writing dataview format
 
 > [!released]
-> Introduced in Tasks X.Y.Z.
+> Introduced in Tasks 3.3.0.
 
 Tasks now has evolving support for the dataview plugin's text-based format for adding data to task lines.
 

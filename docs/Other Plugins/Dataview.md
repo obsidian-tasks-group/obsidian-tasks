@@ -9,7 +9,7 @@ publish: true
 ## Tasks and dataview
 
 > [!released]
-> Parsing of dataview format was introduced in Tasks X.Y.Z.
+> Parsing of dataview format was introduced in Tasks 3.3.0.
 
 Tasks now has partial support for reading data in [[Dataview Format]].
 

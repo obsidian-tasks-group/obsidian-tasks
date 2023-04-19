@@ -6,7 +6,7 @@ publish: true
 
 ## What's New?
 
-- X.Y.Z: 🔥 Multiple [[About Task Formats|Task Format]] support - starting with [[Dataview Format]]
+- 3.3.0: 🔥 Multiple [[About Task Formats|Task Format]] support - starting with [[Dataview Format]]
 
 ## Task management for the Obsidian knowledge base
 

@@ -15,7 +15,7 @@ Since its creation, the Tasks plugin has only ever used Emoji characters such as
 ## Selecting the task format
 
 > [!released]
-> Introduced in Tasks X.Y.Z.
+> Introduced in Tasks 3.3.0.
 
 You can now choose the task format that Tasks will use to read and write data on task lines:
 
