@@ -6,6 +6,12 @@ publish: true
 
 <span class="related-pages">#formats</span>
 
+## What is a "Task Format"?
+
+In this project, we use "Task Format" to refer to the characters to include in a task line in Markdown to express that task's properties, such as Due date and Priority.
+
+Since its creation, the Tasks plugin has only ever used Emoji characters such as 📅 and ⏫.
+
 ## Selecting the task format
 
 > [!released]
@@ -15,7 +21,9 @@ You can now chose the format that Tasks will use to read and write data on task 
 
 ![Screenshot of the settings option to select Task Format](settings-task-format.png)
 
-## Supported formats
+## Supported task formats
+
+Tasks supports these task formats:
 
 - [[Tasks Emoji Format]] - the default format
   - `⏫ 🔁 every day when done`
