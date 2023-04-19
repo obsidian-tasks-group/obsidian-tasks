@@ -36,7 +36,7 @@ interface TaskFormat {
 /** Map of all defined {@link TaskFormat}s */
 export const TASK_FORMATS = {
     tasksPluginEmoji: {
-        displayName: 'Default',
+        displayName: 'Tasks Emoji Format',
         taskSerializer: new DefaultTaskSerializer(DEFAULT_SYMBOLS),
         buildSuggestions: makeDefaultSuggestionBuilder(DEFAULT_SYMBOLS),
     },
