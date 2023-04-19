@@ -3,11 +3,11 @@ import { fromLine } from '../../TestHelpers';
 
 describe('folder', () => {
     it('should provide access to the file name with extension', () => {
-        const rootField = new RootField();
+        const field = new RootField();
 
-        expect(rootField.value(fromLine({ line: '- [ ] do' }))).toStrictEqual('/');
-        expect(rootField.value(fromLine({ line: '- [ ] do', path: 'outside/inside/' }))).toStrictEqual('outside/');
-        expect(rootField.value(fromLine({ line: '- [ ] do', path: 'a_b/_c_d_/' }))).toStrictEqual('a\\_b/');
+        expect(field.value(fromLine({ line: '- [ ] do' }))).toStrictEqual('/');
+        expect(field.value(fromLine({ line: '- [ ] do', path: 'outside/inside/' }))).toStrictEqual('outside/');
+        expect(field.value(fromLine({ line: '- [ ] do', path: 'a_b/_c_d_/' }))).toStrictEqual('a\\_b/');
     });
 });
 

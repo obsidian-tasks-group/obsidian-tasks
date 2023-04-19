@@ -3,18 +3,18 @@ import { fromLine } from '../../TestHelpers';
 
 describe('backlink', () => {
     it('should provide the backlink', () => {
-        const folderField = new BacklinkField();
+        const field = new BacklinkField();
 
-        expect(folderField.value(fromLine({ line: '- [ ] do' }))).toStrictEqual('Unknown Location');
-        expect(folderField.value(fromLine({ line: '- [ ] do', path: 'folder/file.md' }))).toStrictEqual('file');
-        expect(folderField.value(fromLine({ line: '- [ ] do', path: 'a_b/_c_d_/_fi_le_.md' }))).toStrictEqual(
+        expect(field.value(fromLine({ line: '- [ ] do' }))).toStrictEqual('Unknown Location');
+        expect(field.value(fromLine({ line: '- [ ] do', path: 'folder/file.md' }))).toStrictEqual('file');
+        expect(field.value(fromLine({ line: '- [ ] do', path: 'a_b/_c_d_/_fi_le_.md' }))).toStrictEqual(
             '\\_fi\\_le\\_',
         );
+        expect(field.value(fromLine({ line: '- [ ] do', path: 'file.md', precedingHeader: 'topic' }))).toStrictEqual(
+            'file > topic',
+        );
         expect(
-            folderField.value(fromLine({ line: '- [ ] do', path: 'file.md', precedingHeader: 'topic' })),
-        ).toStrictEqual('file > topic');
-        expect(
-            folderField.value(fromLine({ line: '- [ ] do', path: 'fi_le.md', precedingHeader: 'topic _ita_' })),
+            field.value(fromLine({ line: '- [ ] do', path: 'fi_le.md', precedingHeader: 'topic _ita_' })),
         ).toStrictEqual('fi\\_le > topic _ita_');
     });
 });
