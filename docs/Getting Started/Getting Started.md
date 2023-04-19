@@ -25,6 +25,10 @@ Now you have a list of all open tasks! This is enough to get started with tasks.
 You can _optionally_ start using one or more of the other features that Tasks offers.
 Like, for example, [[Priority|priorities]] or [[Dates#Start date|dates]].
 
+This Tasks User Guide almost entirely uses Emoji to add data to your tasks.
+
+However, if you prefer to use text instead of Emoji, see [[About Task Formats]] for other options.
+
 ## Easy editing of tasks
 
 A more convenient way to create a task is by using the `Tasks: Create or edit` command from the command palette.
