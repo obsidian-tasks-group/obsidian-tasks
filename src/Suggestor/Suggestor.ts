@@ -320,10 +320,9 @@ function addRecurrenceSuggestions(line: string, cursorPos: number, settings: Set
  * Matches a string with a regex according to a position (typically of a cursor).
  * Will return a result only if a match exists and the given position is part of it.
  */
-export function matchByPosition(s: string, r: RegExp, position: number): RegExpMatchArray {
+export function matchByPosition(s: string, r: RegExp, position: number): RegExpMatchArray | void {
     const matches = s.matchAll(r);
     for (const match of matches) {
         if (match?.index && match.index <= position && position <= match.index + match[0].length) return match;
     }
-    return [];
 }
