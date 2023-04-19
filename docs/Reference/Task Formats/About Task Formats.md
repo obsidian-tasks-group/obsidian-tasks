@@ -17,7 +17,7 @@ Since its creation, the Tasks plugin has only ever used Emoji characters such as
 > [!released]
 > Introduced in Tasks X.Y.Z.
 
-You can now chose the format that Tasks will use to read and write data on task lines:
+You can now choose the task format that Tasks will use to read and write data on task lines:
 
 ![Screenshot of the settings option to select Task Format](settings-task-format.png)
 
@@ -35,18 +35,18 @@ Tasks supports these task formats:
   - `[created:: 2023-04-03] [completion:: 2023-04-08]`
   - **Note:** do read this format's documentation, as there are some important differences between Tasks and Dataview interpretations.
 
-## Impact of non-default formats on Tasks behaviour
+## Impact of non-default task formats on Tasks behaviour
 
 > [!Warning]
 > In this initial support for multiple formats, **Tasks only supports reading and writing one format at a time**.
 >
 > If you select Dataview format, Tasks will no longer read any of its own Emoji signifiers (until you change the format back to Tasks again).
 >
-> We are tracking this in [issue #1891](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1891), and Tasks will taught to *read* all supported formats in a future release.
+> We are tracking this in [issue #1891](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1891), and Tasks will be taught to *read* all supported task formats in a future release.
 
 ### Tasks features that respect the chosen format
 
-The chosen file format determines how the Tasks plugin reads and writes task data.
+The chosen task format determines how the Tasks plugin reads and writes task data.
 
 The following facilities use the chosen format:
 
