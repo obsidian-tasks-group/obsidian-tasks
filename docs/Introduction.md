@@ -4,6 +4,10 @@ publish: true
 
 # Introduction
 
+## What's New?
+
+- X.Y.Z: 🔥 Multiple [[About Task Formats|Task Format]] support - starting with [[Dataview Format]]
+
 ## Task management for the Obsidian knowledge base
 
 Track tasks across your entire [Obsidian](https://obsidian.md/) vault.
