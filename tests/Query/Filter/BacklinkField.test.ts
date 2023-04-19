@@ -7,15 +7,13 @@ describe('backlink', () => {
 
         expect(field.value(fromLine({ line: '- [ ] do' }))).toStrictEqual('Unknown Location');
         expect(field.value(fromLine({ line: '- [ ] do', path: 'folder/file.md' }))).toStrictEqual('file');
-        expect(field.value(fromLine({ line: '- [ ] do', path: 'a_b/_c_d_/_fi_le_.md' }))).toStrictEqual(
-            '\\_fi\\_le\\_',
-        );
+        expect(field.value(fromLine({ line: '- [ ] do', path: 'a_b/_c_d_/_fi_le_.md' }))).toStrictEqual('_fi_le_');
         expect(field.value(fromLine({ line: '- [ ] do', path: 'file.md', precedingHeader: 'topic' }))).toStrictEqual(
             'file > topic',
         );
         expect(
             field.value(fromLine({ line: '- [ ] do', path: 'fi_le.md', precedingHeader: 'topic _ita_' })),
-        ).toStrictEqual('fi\\_le > topic _ita_');
+        ).toStrictEqual('fi_le > topic _ita_');
     });
 });
 

@@ -19,8 +19,7 @@ export class BacklinkField extends TextField {
         let filenameComponent = 'Unknown Location';
 
         if (task.filename !== null) {
-            // Markdown characters in the file name must be escaped.
-            filenameComponent = Group.escapeMarkdownCharacters(task.filename);
+            filenameComponent = task.filename;
         }
 
         if (task.precedingHeader === null || task.precedingHeader.length === 0) {
