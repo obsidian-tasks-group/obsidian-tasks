@@ -2,6 +2,7 @@ import { Group } from '../Group';
 import type { Task } from '../../Task';
 import { TextField } from './TextField';
 import { HeadingField } from './HeadingField';
+import { FilterOrErrorMessage } from './Filter';
 
 export class BacklinkField extends TextField {
     public fieldName(): string {
@@ -34,6 +35,14 @@ export class BacklinkField extends TextField {
         } else {
             return `${filenameComponent} > ${headingComponent}`;
         }
+    }
+
+    createFilterOrErrorMessage(line: string): FilterOrErrorMessage {
+        return FilterOrErrorMessage.fromError(line, 'backlink field does not support filtering');
+    }
+
+    canCreateFilterForLine(_line: string): boolean {
+        return false;
     }
 
     public supportsGrouping(): boolean {

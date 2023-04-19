@@ -19,6 +19,17 @@ describe('backlink', () => {
     });
 });
 
+describe('backlink', () => {
+    it('should not support filtering', () => {
+        // Arrange
+        const field = new BacklinkField();
+
+        // Assert
+        expect(field.createFilterOrErrorMessage('backlink includes heading > filename')).not.toBeValid();
+        expect(field.canCreateFilterForLine('backlink includes heading > filename')).toEqual(false);
+    });
+});
+
 describe('grouping by backlink', () => {
     it('supports grouping methods correctly', () => {
         const field = new BacklinkField();
