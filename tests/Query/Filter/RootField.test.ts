@@ -1,13 +1,33 @@
 import { RootField } from '../../../src/Query/Filter/RootField';
 import { fromLine } from '../../TestHelpers';
 
-describe('folder', () => {
-    it('should provide access to the file name with extension', () => {
+describe('root', () => {
+    it('should provide access to root folder name with trailing slash', () => {
         const field = new RootField();
 
-        expect(field.value(fromLine({ line: '- [ ] do' }))).toStrictEqual('/');
-        expect(field.value(fromLine({ line: '- [ ] do', path: 'outside/inside/' }))).toStrictEqual('outside/');
-        expect(field.value(fromLine({ line: '- [ ] do', path: 'a_b/_c_d_/' }))).toStrictEqual('a_b/');
+        const line = '- [ ] do';
+        expect(field.value(fromLine({ line: line }))).toStrictEqual('/');
+        expect(field.value(fromLine({ line: line, path: 'outside/inside/A.md' }))).toStrictEqual('outside/');
+        expect(field.value(fromLine({ line: line, path: 'a_b/_c_d_/B.md' }))).toStrictEqual('a_b/');
+        expect(field.value(fromLine({ line: line, path: '/root/SeArch_Text/search_text.md' }))).toStrictEqual('root/');
+    });
+});
+
+describe('root', () => {
+    // Note: We don't need to check all behaviours that are implemented in the base class.
+    // These are minimal tests to confirm that the filters are correctly wired up,
+    // to guard against possible future coding errors.
+
+    it('filter by root (includes)', () => {
+        // Arrange
+        const filter = new RootField().createFilterOrErrorMessage('root includes search_text');
+
+        // Assert
+        expect(filter).toBeValid();
+        expect(filter).not.toMatchTaskWithPath('');
+        expect(filter).toMatchTaskWithPath('/SeArch_Text/some folder name/some file name.md');
+        expect(filter).not.toMatchTaskWithPath('/some root folder/SeArch_Text/search_text.md'); // Ignores text in child folder names
+        expect(filter).not.toMatchTaskWithPath('/some root folder/folder/search_text.md'); // Ignores text in file names
     });
 });
 
