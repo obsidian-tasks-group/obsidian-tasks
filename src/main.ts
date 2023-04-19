@@ -1,6 +1,6 @@
 import { Plugin } from 'obsidian';
 
-import { TaskNotification } from './reminders/notification';
+import { TaskNotification } from './reminders/Notification';
 import { Cache } from './Cache';
 import { Commands } from './Commands';
 import { TasksEvents } from './TasksEvents';
@@ -51,6 +51,7 @@ export default class TasksPlugin extends Plugin {
             vault: this.app.vault,
             events,
         });
+        console.log('cache', this.cache);
         this.inlineRenderer = new InlineRenderer({ plugin: this });
         this.queryRenderer = new QueryRenderer({ plugin: this, events });
 

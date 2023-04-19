@@ -1,7 +1,7 @@
 import type { Moment } from 'moment';
 
 export class Reminder {
-    public date: Moment | null;
+    public date: Moment;
     private isAck: boolean;
 
     constructor(date: Moment) {
@@ -10,10 +10,10 @@ export class Reminder {
     }
 
     public toString(): string {
-        return `${this.date?.format('YYYY-MM-DD')}`;
+        return `${this.date.format('YYYY-MM-DD')}`;
     }
 
-    public getDate(): Moment | null {
+    public getDate(): Moment {
         return this.date;
     }
 
@@ -24,18 +24,4 @@ export class Reminder {
     public complete(): void {
         this.isAck = true;
     }
-
-    //   public getExpiredReminders(defaultTime: Time): Array<Reminder> {
-    //     const now = new Date().getTime();
-    //     const result: Array<Reminder> = [];
-    //     for (let i = 0; i < this.reminders.length; i++) {
-    //       const reminder = this.reminders[i]!;
-    //       if (reminder.time.getTimeInMillis(defaultTime) <= now) {
-    //         result.push(reminder);
-    //       } else {
-    //         break;
-    //       }
-    //     }
-    //     return result;
-    //   }
 }

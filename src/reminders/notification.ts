@@ -7,29 +7,23 @@ const Notification = electron.remote.Notification;
 //  Platform.isDesktopApp, // Platform.isMobileApp,
 //  import { Platform } from 'obsidian';
 
+const notificationTitle = 'Task Reminder'; //TODO constant for language localization, is there a file for these already?
+
 export class TaskNotification {
     constructor(private app: App) {} //private app: App
 
-    public show() {
-        const reminder = {
-            title: 'Reminder Title',
-            file: 'path/to/file.md',
-            time: new Date(),
-            rowNumber: 1,
-            done: false,
-        };
-
+    public show(task: Task) {
         // if election notification is supported, aka desktop app
         if (Notification.isSupported()) {
             // Show system notification
             const n = new Notification({
-                title: 'Obsidian Reminder',
-                body: "Hello World, You've got mail!",
+                title: notificationTitle, // todo set to constant for language localization
+                body: task.description,
             });
             n.on('click', () => {
                 console.log('Notification clicked');
                 n.close();
-                this.showBuiltinReminder(reminder);
+                this.showBuiltinReminder(task);
             });
             n.on('close', () => {
                 console.log('Notification closed');
@@ -56,7 +50,7 @@ export class TaskNotification {
         } else {
             // Show obsidian modal notification for mobile users
             // Must be in app for this to trigger
-            this.showBuiltinReminder(reminder);
+            this.showBuiltinReminder(task);
         }
     }
 
@@ -77,7 +71,7 @@ export class TaskNotification {
             this.reminderEvent(tasks).finally(() => {
                 intervalTaskRunning = false;
             });
-        }, 1000);
+        }, 1000000);
     }
 
     private async reminderEvent(tasks: Task[]): Promise<void> {
@@ -93,16 +87,22 @@ export class TaskNotification {
             reminderTasks = reminderTasks.filter(filter.filterFunction);
         });
 
-        for (const rTask of reminderTasks) {
-            const now = window.moment();
-            const daily = window.moment().startOf('day'); // match on moments that have no time set
-            // Might want to adjust this offset to be based on the setInterval + ~1 second
-            if (rTask.reminders[0].date?.isBetween(now.subtract(30, 'seconds'), now.add(30, 'seconds'))) {
+        for (const task of reminderTasks) {
+            const now = window.moment(); // current date + time
+            const alertTime = window.moment('09:00', 'hh:mm'); // time to show daily reminders
+            const daily = window.moment().startOf('day'); // today with a blank time
+
+            // Check if reminder is within 30 seconds of now
+            // need .clone() to avoid mutating original date todo: is there a better way to do this?
+            if (task.reminders[0].date.isBetween(now, now.clone().add(30, 'seconds'))) {
                 console.log('Show Notification');
-            } else if (rTask.reminders[0].date?.isSame(daily)) {
-                // Add check for if {{9am}}
-                console.log('Daily Notification');
-                //this.show();
+                this.show(task);
+                // else check for daily reminder
+            } else if (
+                task.reminders[0].date.isSame(daily) &&
+                now.isBetween(alertTime, alertTime.clone().add(30, 'minutes'))
+            ) {
+                this.show(task);
             }
         }
     }
@@ -131,7 +131,7 @@ class ObsidianNotificationModal extends Modal {
     constructor(
         app: App,
         private laters: Array<Number>,
-        private reminder: any, // callbacks // private onRemindMeLater: (time: any) => void, // private onDone: () => void, // private onCancel: () => void, // private onOpenFile: () => void,
+        private task: Task, // callbacks // private onRemindMeLater: (time: any) => void, // private onDone: () => void, // private onCancel: () => void, // private onOpenFile: () => void,
     ) {
         super(app);
     }
@@ -141,7 +141,7 @@ class ObsidianNotificationModal extends Modal {
         new ReminderView({
             target: contentEl,
             props: {
-                reminder: this.reminder,
+                task: this.task,
                 laters: this.laters,
                 component: this,
                 onRemindMeLater: () => {

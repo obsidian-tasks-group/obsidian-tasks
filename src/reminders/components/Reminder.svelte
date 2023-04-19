@@ -2,8 +2,9 @@
   import type { Component } from "obsidian";
   import Icon from "./Icon.svelte";
   import Markdown from "./Markdown.svelte";
+  import type { Task } from "../../Task";
 
-  export let reminder: any;
+  export let task: Task;
   export let component: Component;
   export let onRemindMeLater: (time: any) => void;
   export let onDone: () => void;
@@ -26,16 +27,16 @@
 <main>
   <h1>
     <Markdown
-      markdown={reminder.title}
-      sourcePath={reminder.file}
+      markdown={task.description}
+      sourcePath={task.filename ?? "NO FILE"} 
       {component}
     />
   </h1>
-  <span class="reminder-file" on:click={onOpenFile}>
+  <span class="task-file" on:click={onOpenFile}>
     <Icon icon="link" />
-    {reminder.file}
+    {"task.file"}
   </span>
-  <div class="reminder-actions">
+  <div class="task-actions">
     <button class="mod-cta" on:click={onDone}>
       <Icon icon="check-small" /> Mark as Done
     </button>
@@ -63,18 +64,18 @@
     margin: 0 auto;
   }
 
-  .reminder-actions {
+  .task-actions {
     margin-top: 1rem;
     display: flex;
     gap: 0.5rem;
   }
 
-  .reminder-file {
+  .task-file {
     color: var(--text-muted);
     cursor: pointer;
   }
 
-  .reminder-file:hover {
+  .task-file:hover {
     color: var(--text-normal);
     text-decoration: underline;
   }
