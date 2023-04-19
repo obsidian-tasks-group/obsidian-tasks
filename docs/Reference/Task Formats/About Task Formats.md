@@ -2,7 +2,7 @@
 publish: true
 ---
 
-# About Formats
+# About Task Formats
 
 <span class="related-pages">#formats</span>
 
