@@ -9,9 +9,7 @@ describe('folder', () => {
         expect(field.value(fromLine({ line: '- [ ] do', path: 'outside/inside/file.md' }))).toStrictEqual(
             'outside/inside/',
         );
-        expect(field.value(fromLine({ line: '- [ ] do', path: 'a_b/_c_d_/file.md' }))).toStrictEqual(
-            'a\\_b/\\_c\\_d\\_/',
-        );
+        expect(field.value(fromLine({ line: '- [ ] do', path: 'a_b/_c_d_/file.md' }))).toStrictEqual('a_b/_c_d_/');
     });
 });
 

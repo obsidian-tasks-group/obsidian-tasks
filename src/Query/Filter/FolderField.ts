@@ -1,5 +1,6 @@
 import { Group } from '../Group';
 import type { Task } from '../../Task';
+import type { GrouperFunction } from '../Grouper';
 import { TextField } from './TextField';
 
 export class FolderField extends TextField {
@@ -14,10 +15,22 @@ export class FolderField extends TextField {
         if (folder === '') {
             return '/';
         }
-        return Group.escapeMarkdownCharacters(folder);
+        return folder;
     }
 
     public supportsGrouping(): boolean {
         return true;
+    }
+
+    public grouper(): GrouperFunction {
+        return (task: Task) => {
+            const path = task.path;
+            const fileNameWithExtension = task.filename + '.md';
+            const folder = path.substring(0, path.lastIndexOf(fileNameWithExtension));
+            if (folder === '') {
+                return ['/'];
+            }
+            return [Group.escapeMarkdownCharacters(folder)];
+        };
     }
 }
