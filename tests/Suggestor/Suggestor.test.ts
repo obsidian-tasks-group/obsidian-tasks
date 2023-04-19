@@ -14,9 +14,13 @@ window.moment = moment;
 // Set predictable date for all tests in this file
 const mockDate = new Date(moment('2022-07-11 15:00').valueOf());
 
-jest.spyOn(chrono, 'parseDate').mockImplementation(
-    (text, _, options) => chrono.en.casual.parseDate(text, mockDate, options)!,
-);
+const chronoSpy = jest
+    .spyOn(chrono, 'parseDate')
+    .mockImplementation((text, _, options) => chrono.en.casual.parseDate(text, mockDate, options)!);
+
+afterAll(() => {
+    chronoSpy.mockRestore();
+});
 
 describe.each([
     { name: 'emoji', symbols: DEFAULT_SYMBOLS },
