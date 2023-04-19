@@ -13,6 +13,23 @@ describe('folder', () => {
     });
 });
 
+describe('folder', () => {
+    // Note: We don't need to check all behaviours that are implemented in the base class.
+    // These are minimal tests to confirm that the filters are correctly wired up,
+    // to guard against possible future coding errors.
+
+    it('filter by folder (includes)', () => {
+        // Arrange
+        const filter = new FolderField().createFilterOrErrorMessage('folder includes search_text');
+
+        // Assert
+        expect(filter).toBeValid();
+        expect(filter).not.toMatchTaskWithPath('');
+        expect(filter).toMatchTaskWithPath('/some/SeArch_Text/some file name.md');
+        expect(filter).not.toMatchTaskWithPath('/other/folder/search_text.md'); // Ignores text in file names
+    });
+});
+
 describe('grouping by folder', () => {
     it('supports grouping methods correctly', () => {
         const field = new FolderField();
