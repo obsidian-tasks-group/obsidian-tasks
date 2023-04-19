@@ -17,7 +17,7 @@ You can now chose the format that Tasks will use to read and write data on task 
 
 ## Supported formats
 
-- [[Tasks Emoji Format]] - the Default format
+- [[Tasks Emoji Format]] - the default format
   - `⏫ 🔁 every day when done`
   - `🛫 2023-04-05 ⏳ 2023-04-06 📅 2023-04-07`
   - `➕ 2023-04-03 ✅ 2023-04-08`
