@@ -94,6 +94,8 @@ function addTaskProperySuggestions(
         const parsedDate = DateParser.parseDate('today', true);
         const formattedDate = parsedDate.format(TaskRegularExpressions.dateFormat);
         genericSuggestions.push({
+            // We don't want this to match when the user types "today"
+            textToMatch: `${symbols.createdDateSymbol} created`,
             displayText: `${symbols.createdDateSymbol} created today (${formattedDate})`,
             appendText: `${symbols.createdDateSymbol} ${formattedDate} `,
         });
@@ -108,9 +110,10 @@ function addTaskProperySuggestions(
     if (wordMatch && wordMatch.length > 0) {
         const wordUnderCursor = wordMatch[0];
         if (wordUnderCursor.length >= Math.max(1, _settings.autoSuggestMinMatch)) {
-            const filteredSuggestions = genericSuggestions.filter((suggestInfo) =>
-                suggestInfo.displayText.toLowerCase().includes(wordUnderCursor.toLowerCase()),
-            );
+            const filteredSuggestions = genericSuggestions.filter((suggestInfo) => {
+                const textToMatch = suggestInfo.textToMatch || suggestInfo.displayText;
+                return textToMatch.toLowerCase().includes(wordUnderCursor.toLowerCase());
+            });
             for (const filtered of filteredSuggestions) {
                 matchingSuggestions.push({
                     suggestionType: 'match',

@@ -194,7 +194,7 @@ Similarly, you can type some fraction of the word `start` (of whatever length is
 | 📅 due date                   | 📅                         |
 | ⏳ scheduled date             | ⏳                         |
 | 🛫 start date                 | 🛫                         |
-| ➕ created today (2022-07-11) | ➕ 2022-07-11              |
+| ➕ created                    | ➕ 2022-07-11              |
 | today (2022-07-11)            | 2022-07-11                 |
 | tomorrow (2022-07-12)         | 2022-07-12                 |
 | Sunday (2022-07-17)           | 2022-07-17                 |
