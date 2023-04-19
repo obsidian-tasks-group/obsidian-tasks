@@ -2,6 +2,7 @@
  * @jest-environment jsdom
  */
 import moment from 'moment';
+import { verify } from 'approvals/lib/Providers/Jest/JestApprovals';
 import { DueDateField } from '../../../src/Query/Filter/DueDateField';
 import type { FilterOrErrorMessage } from '../../../src/Query/Filter/Filter';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
@@ -103,6 +104,32 @@ describe('due date', () => {
 
         const filterOrMessage = new DueDateField().createFilterOrErrorMessage('due in two weeks');
         expect(filterOrMessage).toHaveExplanation('due date is on 2023-03-20 (Monday 20th March 2023)');
+    });
+
+    it.skip('due on named day of week', () => {
+        jest.useFakeTimers();
+        jest.setSystemTime(new Date('2023-04-19'));
+
+        const increments = ['', 'last', 'this', 'next'];
+        const weekdays = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
+
+        const instructions: string[] = [];
+
+        const divider = 'description includes ------------------------------';
+        instructions.push('explain');
+        instructions.push(divider);
+        instructions.push('due today');
+        instructions.push(divider);
+        for (const weekday of weekdays) {
+            for (const increment of increments) {
+                instructions.push(`due ${increment} ${weekday}`);
+            }
+            instructions.push(divider);
+        }
+        const source = instructions.join('\n');
+        const query = new Query({ source });
+        const explanation = query.explainQuery();
+        verify(explanation);
     });
 });
 
