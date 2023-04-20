@@ -53,12 +53,13 @@ export abstract class DateField extends Field {
 
         const fieldNameKeywordDate = Field.getMatch(this.filterRegExp(), line);
         if (fieldNameKeywordDate !== null) {
-            const fieldKeyword = fieldNameKeywordDate[1];
-            const fieldDateString = fieldNameKeywordDate[2];
+            const keywordAndDateString = fieldNameKeywordDate[1];
+            const fieldKeyword = fieldNameKeywordDate[2];
+            const fieldDateString = fieldNameKeywordDate[3];
             let fieldDates = DateParser.parseDateRange(fieldDateString);
             if (!fieldDates.isValid()) {
                 // Try the old way of parsing
-                const date = DateParser.parseDate(fieldKeyword + ' ' + fieldDateString);
+                const date = DateParser.parseDate(keywordAndDateString);
                 if (date.isValid()) {
                     fieldDates = new DateRange(date, date);
                 }
@@ -110,7 +111,7 @@ export abstract class DateField extends Field {
     }
 
     protected filterRegExp(): RegExp {
-        return new RegExp(`^${this.fieldNameForFilterInstruction()} (before|after|on|in)? ?(.*)`);
+        return new RegExp(`^${this.fieldNameForFilterInstruction()} ((before|after|on|in)? ?(.*))`);
     }
 
     /**
