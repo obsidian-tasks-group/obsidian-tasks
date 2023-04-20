@@ -1,6 +1,7 @@
 import { App, Modal } from 'obsidian';
 import type { Task } from '../Task';
 import { Query } from '../Query/Query';
+import { isDateBetween } from '../lib/DateTools';
 import ReminderView from './components/Reminder.svelte';
 const electron = require('electron');
 const Notification = electron.remote.Notification;
@@ -34,6 +35,7 @@ export class TaskNotification {
                 n.on('action', (_: any, index: any) => {
                     if (index === 0) {
                         // mark task as done
+                        // task.toggle();
                         return;
                     }
                     // const later = laters[index - 1]!;
@@ -88,20 +90,16 @@ export class TaskNotification {
         });
 
         for (const task of reminderTasks) {
+            const reminderDate = task.reminders[0].date;
             const now = window.moment(); // current date + time
-            const alertTime = window.moment('09:00', 'hh:mm'); // time to show daily reminders
-            const daily = window.moment().startOf('day'); // today with a blank time
-
             // Check if reminder is within 30 seconds of now
-            // need .clone() to avoid mutating original date todo: is there a better way to do this?
-            if (task.reminders[0].date.isBetween(now, now.clone().add(30, 'seconds'))) {
+            if (isDateBetween(reminderDate, now, 30, 'seconds')) {
                 console.log('Show Notification');
                 this.show(task);
                 // else check for daily reminder
-            } else if (
-                task.reminders[0].date.isSame(daily) &&
-                now.isBetween(alertTime, alertTime.clone().add(30, 'minutes'))
-            ) {
+            } else if (isDailyReminder(reminderDate)) {
+                // TODO dont think this is being used since modal autos to current
+                // time even when left blank. Will only hit this if task created manually
                 this.show(task);
             }
         }
@@ -110,18 +108,12 @@ export class TaskNotification {
     private showBuiltinReminder(
         reminder: any,
         // onRemindMeLater: (time: any) => void,
-        // onDone: () => void,
-        // onCancel: () => void,
-        // onOpenFile: () => void,
     ) {
         new ObsidianNotificationModal(
             this.app,
             [1, 2, 3, 4, 5],
             reminder,
             // onRemindMeLater,
-            // onDone,
-            // onCancel,
-            // onOpenFile,
         ).open();
     }
 }
@@ -151,6 +143,7 @@ class ObsidianNotificationModal extends Modal {
                 },
                 onDone: () => {
                     // this.onDone();
+                    // call task.toggle() ?
                     this.close();
                 },
                 onOpenFile: () => {
@@ -158,6 +151,7 @@ class ObsidianNotificationModal extends Modal {
                     this.close();
                 },
                 onMute: () => {
+                    // remove reminder from task
                     this.close();
                 },
             },
@@ -170,4 +164,13 @@ class ObsidianNotificationModal extends Modal {
         const { contentEl } = this;
         contentEl.empty();
     }
+}
+
+function isDailyReminder(date: moment.Moment) {
+    const daily = window.moment().startOf('day'); // todays date with a blank time
+    const alertTime = window.moment('09:00', 'hh:mm'); // time to show daily reminders
+    const now = window.moment(); // current date + time
+
+    // time has not been set and is between alertTime and offset
+    return date.isSame(daily) && isDateBetween(alertTime, now, 30, 'seconds');
 }

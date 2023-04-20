@@ -35,6 +35,7 @@ export interface DefaultTaskSerializerSymbols {
         doneDateRegex: RegExp;
         recurrenceRegex: RegExp;
         reminderDateRegex: RegExp;
+        reminderDateTimeRegex: RegExp;
     };
 }
 
@@ -67,8 +68,11 @@ export const DEFAULT_SYMBOLS: DefaultTaskSerializerSymbols = {
         doneDateRegex: /✅ *(\d{4}-\d{2}-\d{2})$/u,
         recurrenceRegex: /🔁 ?([a-zA-Z0-9, !]+)$/iu,
         reminderDateRegex: /⏲️ *(\d{4}-\d{2}-\d{2})$/u,
+        reminderDateTimeRegex: /⏲️ *(\d{4}-\d{2}-\d{2}\s\d{1,2}:\d{2}(?:\s(?:am|pm|AM|PM))?)$/u, //*(\d{4}-\d{2}-\d{2} \d{2}:\d{2} \s{2})$/u,
     },
 } as const;
+// ⏲️ *(\d{4}-\d{2}-\d{2}\s\d{1,2}:\d{2}(?:\s(?:am|pm|AM|PM))?) works
+// ^.*⏲️ *(\d{4}-\d{2}-\d{2}\s\d{1,2}:\d{2}(?:\s(?:am|pm|AM|PM))?).*$
 
 export class DefaultTaskSerializer implements TaskSerializer {
     constructor(public readonly symbols: DefaultTaskSerializerSymbols) {}
@@ -147,7 +151,7 @@ export class DefaultTaskSerializer implements TaskSerializer {
                 if (task.reminders.length <= 0 || task.reminders[0].date === null) return '';
                 return layout.options.shortMode
                     ? ' ' + reminderDateSymbol
-                    : ` ${reminderDateSymbol} ${task.reminders[0].date.format(TaskRegularExpressions.dateFormat)}`;
+                    : ` ${reminderDateSymbol} ${task.reminders[0].date.format(TaskRegularExpressions.dateTimeFormat)}`;
             case 'recurrenceRule':
                 if (!task.recurrence) return '';
                 return layout.options.shortMode
@@ -266,9 +270,12 @@ export class DefaultTaskSerializer implements TaskSerializer {
                 trailingTags = trailingTags.length > 0 ? [tagName, trailingTags].join(' ') : tagName;
             }
 
-            const reminderDateRegex = line.match(TaskFormatRegularExpressions.reminderDateRegex);
-            if (reminderDateRegex !== null) {
-                reminderDate = window.moment(reminderDateRegex[1], TaskRegularExpressions.dateFormat);
+            // TODO probably could do this with a single regex, but i'm trash at regex
+            const reminderRegex =
+                line.match(TaskFormatRegularExpressions.reminderDateTimeRegex) ||
+                line.match(TaskFormatRegularExpressions.reminderDateRegex);
+            if (reminderRegex !== null) {
+                reminderDate = window.moment(reminderRegex[1], TaskRegularExpressions.dateTimeFormat);
                 line = line.replace(TaskFormatRegularExpressions.reminderDateRegex, '').trim();
                 matched = true;
             }

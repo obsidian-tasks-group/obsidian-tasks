@@ -10,7 +10,7 @@ export class Reminder {
     }
 
     public toString(): string {
-        return `${this.date.format('YYYY-MM-DD')}`;
+        return `${this.date.format('YYYY-MM-DD h:mm a')}`;
     }
 
     public getDate(): Moment {

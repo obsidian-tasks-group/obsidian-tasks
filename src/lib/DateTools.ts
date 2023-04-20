@@ -1,3 +1,5 @@
+import type { DurationInputArg1, DurationInputArg2 } from 'moment';
+
 export function compareByDate(a: moment.Moment | null, b: moment.Moment | null): -1 | 0 | 1 {
     if (a !== null && b === null) {
         return -1;
@@ -20,4 +22,16 @@ export function compareByDate(a: moment.Moment | null, b: moment.Moment | null):
     } else {
         return 0;
     }
+}
+
+export function isDateBetween(
+    a: moment.Moment | null,
+    b: moment.Moment,
+    offset: DurationInputArg1,
+    unit: DurationInputArg2,
+) {
+    if (a === null || b === null || !a.isValid() || !b.isValid()) {
+        return false;
+    }
+    return a.isBetween(b, b.clone().add(offset, unit));
 }

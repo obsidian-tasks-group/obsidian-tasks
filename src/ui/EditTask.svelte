@@ -132,6 +132,23 @@
         return `<i>invalid ${fieldName} date</i>`;
     }
 
+    function parseTypedDateTimeForDisplay(
+        fieldName: 'created' | 'start' | 'scheduled' | 'due' | 'reminder' | 'done',
+        typedDate: string,
+        forwardDate: Date | undefined = undefined,
+    ): string {
+        if (!typedDate) {
+            return `<i>no ${fieldName} date</i>`;
+        }
+        const parsed = chrono.parseDate(typedDate, forwardDate, {
+            forwardDate: forwardDate != undefined,
+        });
+        if (parsed !== null) {
+            return window.moment(parsed).format('YYYY-MM-DD h:mm a');
+        }
+        return `<i>invalid ${fieldName} date</i>`;
+    }
+
     /**
      * Like {@link parseTypedDateForDisplay} but also accounts for the 'Only future dates' setting.
      * @param fieldName
@@ -140,6 +157,14 @@
      */
     function parseTypedDateForDisplayUsingFutureDate(fieldName: 'start' | 'scheduled' | 'due' | 'done' | 'reminder', typedDate: string): string {
         return parseTypedDateForDisplay(
+            fieldName,
+            typedDate,
+            editableTask.forwardOnly ? new Date() : undefined,
+        );
+    }
+
+    function parseTypedDateTimeForDisplayUsingFutureDate(fieldName: 'start' | 'scheduled' | 'due' | 'done' | 'reminder', typedDate: string): string {
+        return parseTypedDateTimeForDisplay(
             fieldName,
             typedDate,
             editableTask.forwardOnly ? new Date() : undefined,
@@ -187,7 +212,7 @@
 
     $: {
         editableTask.reminderDate = doAutocomplete(editableTask.reminderDate);
-        parsedReminderDate = parseTypedDateForDisplayUsingFutureDate('reminder', editableTask.reminderDate);
+        parsedReminderDate = parseTypedDateTimeForDisplayUsingFutureDate('reminder', editableTask.reminderDate);
         isReminderDateValid = !parsedReminderDate.includes('invalid');
     }
 
@@ -252,7 +277,7 @@
                 ? task.scheduledDate.format('YYYY-MM-DD')
                 : '',
             dueDate: task.dueDate ? task.dueDate.format('YYYY-MM-DD') : '',
-            reminderDate: task.reminders[0] ? task.reminders[0].date!.format('YYYY-MM-DD') : '', // todo update to remove !
+            reminderDate: task.reminders[0] ? task.reminders[0].date!.format('YYYY-MM-DD h:mm a') : '', // todo update to remove !
             doneDate: task.doneDate ? task.doneDate.format('YYYY-MM-DD') : '',
             forwardOnly: true,
         };
