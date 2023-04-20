@@ -18,10 +18,10 @@ describe('explain', () => {
         jest.useRealTimers();
     });
 
-    it('date reference', () => {
+    it.each([['last-this-next-weekday']])('date reference %s', (queryFileBasename: string) => {
         // Arrange
 
-        const inputFile = 'tests/Query/Filter/ReferenceDocs/FilterReference/last-this-next-weekday.input.query';
+        const inputFile = `tests/Query/Filter/ReferenceDocs/FilterReference/${queryFileBasename}.input.query`;
         const instructions = readFileSync(inputFile, 'utf-8');
 
         // Act, Assert
