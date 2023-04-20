@@ -9,7 +9,12 @@ export class RootField extends TextField {
     }
 
     public value(task: Task): string {
-        const path = task.path.replace(/\\/g, '/');
+        let path = task.path.replace(/\\/g, '/');
+
+        if (path.charAt(0) === '/') {
+            path = path.substring(1);
+        }
+
         const separatorIndex = path.indexOf('/');
         if (separatorIndex == -1) {
             return '/';
