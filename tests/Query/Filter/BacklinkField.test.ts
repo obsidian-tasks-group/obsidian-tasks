@@ -44,11 +44,16 @@ describe('grouping by backlink', () => {
         // no heading supplied
         ['a/b/c.md', undefined, ['c']],
 
+        // File and heading, nominal case
         ['a/b/c.md', 'heading', ['c > heading']],
+
         // If file name and heading are identical, avoid duplication ('c > c')
         ['a/b/c.md', 'c', ['c']],
-        // underscores in file name component are escaped
-        // but underscores in the heading component are not
+
+        // Underscores in file name component are escaped
+        ['a/b/_c_.md', undefined, ['\\_c\\_']],
+
+        // But underscores in the heading component are not
         ['a/b/_c_.md', 'heading _italic text_', ['\\_c\\_ > heading _italic text_']],
     ])(
         'task "%s" with path "%s" should have groups: %s',
