@@ -24,13 +24,7 @@ export class FolderField extends TextField {
 
     public grouper(): GrouperFunction {
         return (task: Task) => {
-            const path = task.path;
-            const fileNameWithExtension = task.filename + '.md';
-            const folder = path.substring(0, path.lastIndexOf(fileNameWithExtension));
-            if (folder === '') {
-                return ['/'];
-            }
-            return [Group.escapeMarkdownCharacters(folder)];
+            return [Group.escapeMarkdownCharacters(this.value(task))];
         };
     }
 }

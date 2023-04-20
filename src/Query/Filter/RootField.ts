@@ -28,12 +28,7 @@ export class RootField extends TextField {
 
     public grouper(): GrouperFunction {
         return (task: Task) => {
-            const path = task.path.replace(/\\/g, '/');
-            const separatorIndex = path.indexOf('/');
-            if (separatorIndex == -1) {
-                return ['/'];
-            }
-            return [Group.escapeMarkdownCharacters(path.substring(0, separatorIndex + 1))];
+            return [Group.escapeMarkdownCharacters(this.value(task))];
         };
     }
 }
