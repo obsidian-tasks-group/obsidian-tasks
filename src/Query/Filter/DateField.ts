@@ -1,5 +1,5 @@
 import type { Moment } from 'moment';
-import type { DateRange } from '../DateRange';
+import { DateRange } from '../DateRange';
 import type { Task } from '../../Task';
 import { DateParser } from '../DateParser';
 import { Explanation } from '../Explain/Explanation';
@@ -55,7 +55,14 @@ export abstract class DateField extends Field {
         if (fieldNameKeywordDate !== null) {
             const fieldKeyword = fieldNameKeywordDate[1];
             const fieldDateString = fieldNameKeywordDate[2];
-            const fieldDates = DateParser.parseDateRange(fieldDateString);
+            let fieldDates = DateParser.parseDateRange(fieldDateString);
+            if (!fieldDates.isValid()) {
+                // Try the old way of parsing
+                const date = DateParser.parseDate(fieldKeyword + ' ' + fieldDateString);
+                if (date.isValid()) {
+                    fieldDates = new DateRange(date, date);
+                }
+            }
             if (!fieldDates.isValid()) {
                 result.error = 'do not understand ' + this.fieldName() + ' date';
             } else {

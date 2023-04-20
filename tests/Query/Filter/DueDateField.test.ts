@@ -97,7 +97,7 @@ describe('due date', () => {
         testTaskFilterForTaskWithDueDate(filter, '2022-04-25', false);
     });
 
-    it.failing('due in two weeks', () => {
+    it('due in two weeks', () => {
         jest.useFakeTimers();
         jest.setSystemTime(new Date(2023, 3 - 1, 6));
 
