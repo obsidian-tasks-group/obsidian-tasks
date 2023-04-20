@@ -63,9 +63,8 @@ export abstract class DateField extends Field {
             // If the date range parsing failed, try again to parse the whole line except the field name
             // as a single date, using the pre-date-ranges parsing mechanism.
             // This is needed to keep 'due in two weeks' working, as 'two weeks' is not actually a valid date range
-            // if the futureDates value parsed in to chrono's parsing functions is false.
+            // if the futureDates value passed in to chrono's parsing functions is false.
             if (!fieldDates.isValid()) {
-                // Try the old way of parsing
                 const date = DateParser.parseDate(keywordAndDateString);
                 if (date.isValid()) {
                     fieldDates = new DateRange(date, date);
