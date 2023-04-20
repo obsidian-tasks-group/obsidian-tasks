@@ -16,7 +16,7 @@ export class DateParser {
      * Parse a line and extract a pair of dates, returned in a tuple, sorted by date.
      * @param input - any pair of dates, separate by one or more spaces '17 August 2013 19 August 2013',
      *                or a single date.
-     * @param forwardDate - if true, will return dates in the future
+     * @param forwardDate - if true, and date is ambiguous, chrono will return dates in the future
      * @return - A Tuple of dates. If both input dates are invalid, then both output dates will be invalid.
      */
     public static parseDateRange(input: string, forwardDate: boolean = false): DateRange {
