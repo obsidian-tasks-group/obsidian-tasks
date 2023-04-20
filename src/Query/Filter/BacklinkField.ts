@@ -51,31 +51,16 @@ export class BacklinkField extends TextField {
 
     public grouper(): GrouperFunction {
         return (task: Task) => {
-            const linkText = task.getLinkText({ isFilenameUnique: true });
-            if (linkText === null) {
-                return ['Unknown Location'];
+            const filename = task.filename;
+            if (filename !== null) {
+                const backlink = this.value(task);
+                if (filename !== backlink) {
+                    // In case backlink is 'file_name > heading', the filename only shall be escaped
+                    return [Group.escapeMarkdownCharacters(filename) + backlink.substring(filename.length)];
+                }
             }
 
-            let filenameComponent = 'Unknown Location';
-
-            if (task.filename !== null) {
-                // Markdown characters in the file name must be escaped.
-                filenameComponent = Group.escapeMarkdownCharacters(task.filename);
-            }
-
-            if (task.precedingHeader === null || task.precedingHeader.length === 0) {
-                return [filenameComponent];
-            }
-
-            // Markdown characters in the heading must NOT be escaped.
-            const headingGrouper = new HeadingField().createGrouper().grouper;
-            const headingComponent = headingGrouper(task)[0];
-
-            if (filenameComponent === headingComponent) {
-                return [filenameComponent];
-            } else {
-                return [`${filenameComponent} > ${headingComponent}`];
-            }
+            return [Group.escapeMarkdownCharacters(this.value(task))];
         };
     }
 }
