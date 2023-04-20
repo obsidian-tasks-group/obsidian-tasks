@@ -102,11 +102,13 @@ describe('due date', () => {
         jest.useFakeTimers();
         jest.setSystemTime(new Date(2023, 3 - 1, 6));
 
+        // This test fails to parse after fixing #1901
         const filterOrMessage = new DueDateField().createFilterOrErrorMessage('due in two weeks');
         expect(filterOrMessage).toHaveExplanation('due date is on 2023-03-20 (Monday 20th March 2023)');
     });
 
-    it.skip('due on named day of week', () => {
+    it('due on named day of week', () => {
+        // See https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1901
         jest.useFakeTimers();
         jest.setSystemTime(new Date('2023-04-19'));
 
