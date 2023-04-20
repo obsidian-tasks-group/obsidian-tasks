@@ -687,14 +687,17 @@ export class QuerySql implements IQuery {
      * @memberof QuerySql
      */
     private parseRawOptions(directive: string) {
-        this.logger.debugWithId(this._queryId, 'Detected RAW mode directive', directive);
+        this.logger.debugWithId(this._queryId, 'Detected RAW mode directive: ', directive);
         this._rawMode = true;
         const rawOptions = directive.match(this._rawQuery);
+        this.logger.debugWithId(this._queryId, 'rawOptions: ', JSON.stringify(rawOptions));
+
         if (rawOptions !== null && rawOptions[1].trim().toLowerCase() === 'empty') {
             this._rawWithTasksMode = false;
         } else {
             this._rawWithTasksMode = true;
         }
+        this.logger.debugWithId(this._queryId, 'Set _rawWithTasksMode to: ', this._rawWithTasksMode);
     }
 
     /**
