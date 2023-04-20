@@ -2,7 +2,7 @@ import { FolderField } from '../../../src/Query/Filter/FolderField';
 import { fromLine } from '../../TestHelpers';
 
 describe('folder', () => {
-    it('should provide access to the file name with extension', () => {
+    it('should provide access to the folder', () => {
         const field = new FolderField();
 
         expect(field.value(fromLine({ line: '- [ ] do' }))).toStrictEqual('/');
