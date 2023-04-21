@@ -7,6 +7,7 @@ publish: true
 ## What's New?
 
 - X.Y.Z: 🔥 Clicking on a [[Backlinks|Backlink]] jumps to the exact task line.
+- X.Y.Z: Tasks now requires at least Obsidian 1.1.1.
 - 3.3.0: 🔥 Multiple [[About Task Formats|Task Format]] support - starting with [[Dataview Format]].
 
 ## Task management for the Obsidian knowledge base
