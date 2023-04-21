@@ -7,7 +7,7 @@ import { TaskRegularExpressions } from '../Task';
 import type { SuggestInfo, SuggestionBuilder } from '.';
 
 export function makeDefaultSuggestionBuilder(symbols: DefaultTaskSerializerSymbols): SuggestionBuilder {
-    const datePrefixCharacters = `${symbols.startDateSymbol}${symbols.scheduledDateSymbol}${symbols.dueDateSymbol}`;
+    const datePrefixRegex = [symbols.startDateSymbol, symbols.scheduledDateSymbol, symbols.dueDateSymbol].join('|');
     /*
      * Return a list of suggestions, either generic or more fine-grained to the words at the cursor.
      */
@@ -15,7 +15,7 @@ export function makeDefaultSuggestionBuilder(symbols: DefaultTaskSerializerSymbo
         let suggestions: SuggestInfo[] = [];
 
         // Step 1: add date suggestions if relevant
-        suggestions = suggestions.concat(addDatesSuggestions(line, cursorPos, settings, datePrefixCharacters));
+        suggestions = suggestions.concat(addDatesSuggestions(line, cursorPos, settings, datePrefixRegex));
 
         // Step 2: add recurrence suggestions if relevant
         suggestions = suggestions.concat(addRecurrenceSuggestions(line, cursorPos, settings, symbols.recurrenceSymbol));
@@ -141,7 +141,7 @@ function addDatesSuggestions(
     line: string,
     cursorPos: number,
     settings: Settings,
-    datePrefixCharacters: string,
+    datePrefixRegex: string,
 ): SuggestInfo[] {
     const genericSuggestions = [
         'today',
@@ -159,7 +159,7 @@ function addDatesSuggestions(
     ];
 
     const results: SuggestInfo[] = [];
-    const dateRegex = new RegExp(`([${datePrefixCharacters}])\\s*([0-9a-zA-Z ]*)`, 'ug');
+    const dateRegex = new RegExp(`(${datePrefixRegex})\\s*([0-9a-zA-Z ]*)`, 'ug');
     const dateMatch = matchByPosition(line, dateRegex, cursorPos);
     if (dateMatch && dateMatch.length >= 2) {
         const datePrefix = dateMatch[1];

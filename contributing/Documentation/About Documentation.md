@@ -11,6 +11,7 @@ In the simplest case, you can update the existing markdown file and create a pul
 This section is for anyone contributing to Tasks and improving the documentation.
 
 - [[How the documentation is generated]] - how to edit the Tasks documentation
+- [[Templates for common text snippets]]
 - [[Linking to other pages in the docs]]
 - [[Screenshots in documentation]]
 - [[Callouts]]

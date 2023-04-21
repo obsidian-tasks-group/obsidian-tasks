@@ -16,9 +16,10 @@ export class DateParser {
      * Parse a line and extract a pair of dates, returned in a tuple, sorted by date.
      * @param input - any pair of dates, separate by one or more spaces '17 August 2013 19 August 2013',
      *                or a single date.
-     * @return - A Tuple of dates. If both input dates are invalid, then both ouput dates will be invalid.
+     * @param forwardDate - if true, and date is ambiguous, chrono will return dates in the future
+     * @return - A Tuple of dates. If both input dates are invalid, then both output dates will be invalid.
      */
-    public static parseDateRange(input: string): DateRange {
+    public static parseDateRange(input: string, forwardDate: boolean = false): DateRange {
         const dateRangeParsers = [
             // Try parsing a relative date range like 'current month'
             DateParser.parseRelativeDateRange,
@@ -29,7 +30,7 @@ export class DateParser {
         ];
 
         for (const parser of dateRangeParsers) {
-            const parsedDateRange = parser(input);
+            const parsedDateRange = parser(input, forwardDate);
             if (parsedDateRange.isValid()) {
                 return parsedDateRange;
             }
@@ -39,9 +40,9 @@ export class DateParser {
         return DateRange.buildInvalid();
     }
 
-    private static parseAbsoluteDateRange(input: string): DateRange {
+    private static parseAbsoluteDateRange(input: string, forwardDate: boolean): DateRange {
         const result = chrono.parse(input, undefined, {
-            forwardDate: true,
+            forwardDate: forwardDate,
         });
 
         // Check chrono parsing
@@ -57,7 +58,7 @@ export class DateParser {
         return new DateRange(start, end);
     }
 
-    private static parseRelativeDateRange(input: string): DateRange {
+    private static parseRelativeDateRange(input: string, _forwardDate: boolean): DateRange {
         const relativeDateRangeRegexp = /(last|this|next) (week|month|quarter|year)/;
         const relativeDateRangeMatch = input.match(relativeDateRangeRegexp);
         if (relativeDateRangeMatch && relativeDateRangeMatch.length === 3) {
@@ -81,7 +82,7 @@ export class DateParser {
         return DateRange.buildInvalid();
     }
 
-    private static parseNumberedDateRange(input: string): DateRange {
+    private static parseNumberedDateRange(input: string, _forwardDate: boolean): DateRange {
         const parsingVectors: [RegExp, string, moment.unitOfTime.StartOf][] = [
             [/^\s*[0-9]{4}\s*$/, 'YYYY', 'year'],
             [/^\s*[0-9]{4}-Q[1-4]\s*$/, 'YYYY-Q', 'quarter'],
