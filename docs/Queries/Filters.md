@@ -53,6 +53,12 @@ Tasks allows date searches to specify a pair of dates, `<date range>` .
 
 These searches are inclusive: the dates at either end are found by the search.
 
+> [!warning]
+For absolute and relative date ranges weeks are defined as [ISO 8601](https://en.wikipedia.org/wiki/ISO_week_date) weeks **starting on Monday** and **ending on Sunday**. You may choose the starting day of the week using `First day of the week` dropdown in the Settings.
+
+> [!released]
+Choosing first day of the week was introduced in Tasks X.Y.Z.
+
 #### Absolute date ranges
 
 `<date range>` may be specified as 2 valid dates in `YYYY-MM-DD` format.
@@ -81,18 +87,11 @@ See the tables in the [[Filters#Appendix: Tasks 2.0.0 improvements to date filte
 
 #### Relative date ranges
 
-Tasks supports a very specific set of relative `<date range>` values: `last|this|next week|month|quarter|year`. The pipe (`|`) character means 'or'.
+Tasks supports a very specific set of relative `<date range>` values: `last|this|next week|month|quarter|year`. The pipe (`|`) character means 'or'. Relative date ranges support only the exact keywords specified above. For example, `previous half of year` and `next semester` are not supported.
 
 Tasks will process these ranges, based on today's date, and convert them to absolute date ranges (`YYYY-MM-DD YYYY-MM-DD`) internally.
 
 Dates on either end are included, that is, it is an inclusive search.
-
-Notes:
-
-- By default all weeks are defined as [ISO 8601](https://en.wikipedia.org/wiki/ISO_week_date) weeks **starting on Monday** and **ending on Sunday**.
-  - You may shift the start of the week to another day in `First day of the week` dropdown in Settings.
-- Relative date ranges support only the exact keywords specified above.
-  - So, for example, `previous half of year` and `next semester` are not supported.
 
 Example relative date ranges:
 
@@ -105,14 +104,11 @@ Example relative date ranges:
 Prior to Tasks 2.0.0, the interpretation of relative date ranges was confusing, and not what most users naturally expected.
 See the tables in the [[Filters#Appendix: Tasks 2.0.0 improvements to date filters|Appendix below]] to understand the changes in results, and whether you need to update any of your searches.
 
-> [!released]
-> Changing the first day of the week was introduced in Tasks X.Y.Z.
-
 #### Numbered date ranges
 
 There is also the ability to use numbered date ranges that are independent of the current date. These numbered date range types are supported:
 
-- Week ([ISO 8601](https://en.wikipedia.org/wiki/ISO_week_date))
+- Week
   - Format: `YYYY-Www` (`ww` is the week number, always in 2 digits)
   - Example: `2022-W14`
 - Month
