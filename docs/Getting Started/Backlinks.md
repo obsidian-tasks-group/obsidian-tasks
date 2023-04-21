@@ -27,7 +27,7 @@ You can click on a backlink to navigate directly to the task's source line.
 > [!Tip]
 > This honours the standard Obsidian keyboard modifiers used when clicking on internal links, to control how the note is opened (Navigate, New Tab, New Tab Group, New Window).
 >
-> See the table about a third of the way down the [Obsidian 1.0.0 release notes](https://forum.obsidian.md/t/obsidian-release-v1-0-0/44873).
+> See the table in the Tabs section of the [Obsidian 1.0.0 release notes](https://forum.obsidian.md/t/obsidian-release-v1-0-0/44873#tabs-1).
 
 > [!released]
 > Navigating directly to the task line was introduced in Tasks X.Y.Z.
