@@ -1,6 +1,6 @@
 import type { Moment } from 'moment';
 
-// not used now, might want to give user ability to switch from 12 to 24 hour time
+//TODO erik-handeland: not used now, might want to give user ability to switch from 12 to 24 hour time
 export const reminderSettings = {
     enabled: true,
     dateTimeRegex: 'YYYY-MM-DD h:mm a',
@@ -9,7 +9,7 @@ export const reminderSettings = {
 };
 
 export class Reminder {
-    public date: Moment;
+    private date: Moment;
     private isAck: boolean; // is acknowledged, not sure if needed could just remove from array
 
     constructor(date: Moment) {
@@ -25,7 +25,8 @@ export class Reminder {
         return this.date;
     }
 
-    public getIsCompleted(): boolean {
+    // could probably remove this and just check if reminder is in array
+    public isComplete(): boolean {
         return this.isAck;
     }
 

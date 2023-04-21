@@ -103,8 +103,6 @@ export class Task {
     public readonly taskLocation: TaskLocation;
 
     public readonly tags: string[];
-    // setup as an array of objects to allow for multiple reminders in the future
-    // i.e remind on due or start date, currently only used for an explicit Reminder
     public readonly reminders: Reminder[];
 
     public readonly priority: Priority;
@@ -506,6 +504,14 @@ export class Task {
         if (this.reminders.length !== other.reminders.length) {
             return false;
         }
+        // reminders are the same only if the values are in the same order
+        if (
+            !this.reminders.every(function (element, index) {
+                return element === other.reminders[index];
+            })
+        ) {
+            return false;
+        }
 
         // Compare Date fields
         args = ['createdDate', 'startDate', 'scheduledDate', 'dueDate', 'doneDate'];
@@ -538,17 +544,6 @@ export class Task {
      * @returns An array of hashTags found in the string
      */
     public static extractHashtags(description: string): string[] {
-        return description.match(TaskRegularExpressions.hashTags)?.map((tag) => tag.trim()) ?? [];
-    }
-
-    /**
-     * Returns an array of reminders found in string
-     *
-     * @param description A task description that may contain reminders
-     *
-     * @returns An array of reminders found in the string
-     */
-    public static extractReminders(description: string): string[] {
         return description.match(TaskRegularExpressions.hashTags)?.map((tag) => tag.trim()) ?? [];
     }
 }

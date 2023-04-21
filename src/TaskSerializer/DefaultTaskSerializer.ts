@@ -69,8 +69,6 @@ export const DEFAULT_SYMBOLS: DefaultTaskSerializerSymbols = {
         reminderRegex: /⏲️ *(\d{4}-\d{2}-\d{2}(?:\s\d{1,2}:\d{2}(?:\s(?:am|pm|AM|PM))?)?)$/u,
     },
 } as const;
-// ⏲️ *(\d{4}-\d{2}-\d{2}\s\d{1,2}:\d{2}(?:\s(?:am|pm|AM|PM))?) works
-// ^.*⏲️ *(\d{4}-\d{2}-\d{2}\s\d{1,2}:\d{2}(?:\s(?:am|pm|AM|PM))?).*$
 
 export class DefaultTaskSerializer implements TaskSerializer {
     constructor(public readonly symbols: DefaultTaskSerializerSymbols) {}
@@ -146,10 +144,12 @@ export class DefaultTaskSerializer implements TaskSerializer {
                     ? ' ' + dueDateSymbol
                     : ` ${dueDateSymbol} ${task.dueDate.format(TaskRegularExpressions.dateFormat)}`;
             case 'reminderDate':
-                if (task.reminders.length <= 0 || task.reminders[0].date === null) return '';
+                if (task.reminders.length <= 0 || task.reminders[0].getDate() === null) return '';
                 return layout.options.shortMode
                     ? ' ' + reminderDateSymbol
-                    : ` ${reminderDateSymbol} ${task.reminders[0].date.format(TaskRegularExpressions.dateTimeFormat)}`;
+                    : ` ${reminderDateSymbol} ${task.reminders[0]
+                          .getDate()
+                          .format(TaskRegularExpressions.dateTimeFormat)}`;
             case 'recurrenceRule':
                 if (!task.recurrence) return '';
                 return layout.options.shortMode

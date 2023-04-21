@@ -277,7 +277,7 @@
                 ? task.scheduledDate.format('YYYY-MM-DD')
                 : '',
             dueDate: task.dueDate ? task.dueDate.format('YYYY-MM-DD') : '',
-            reminderDate: task.reminders[0] ? task.reminders[0].date!.format('YYYY-MM-DD h:mm a') : '', // todo update to remove !
+            reminderDate: task.reminders[0] ? task.reminders[0].toString() : '',
             doneDate: task.doneDate ? task.doneDate.format('YYYY-MM-DD') : '',
             forwardOnly: true,
         };

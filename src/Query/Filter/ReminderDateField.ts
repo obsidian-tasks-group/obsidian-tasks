@@ -2,9 +2,6 @@ import type { Moment } from 'moment';
 import type { Task } from '../../Task';
 import { DateField } from './DateField';
 
-/**
- * Support the 'due' search instruction.
- */
 export class ReminderDateField extends DateField {
     public fieldName(): string {
         return 'reminder';

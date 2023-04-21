@@ -80,7 +80,7 @@ function summarizeTaskDetails(t: TaskDetails | null): SummarizedTaskDetails | nu
         dueDate: t.dueDate?.format(TaskRegularExpressions.dateFormat) ?? null,
         doneDate: t.doneDate?.format(TaskRegularExpressions.dateFormat) ?? null,
         recurrence: t.recurrence?.toText() ?? null,
-        reminders: t.reminders ? t.reminders[0].toString() : '', //todo see how tags are handled
+        reminders: t.reminders[0]?.toString() ?? null,
     };
 }
 

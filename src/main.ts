@@ -31,7 +31,6 @@ export default class TasksPlugin extends Plugin {
         logging.registerConsoleLogger();
         console.log('loading plugin "tasks"');
         this.taskNotification = new TaskNotification(this.app);
-        // this.taskNotification.show();
 
         await this.loadSettings();
         this.addSettingTab(new SettingsTab({ plugin: this }));
@@ -51,7 +50,6 @@ export default class TasksPlugin extends Plugin {
             vault: this.app.vault,
             events,
         });
-        console.log('cache', this.cache);
         this.inlineRenderer = new InlineRenderer({ plugin: this });
         this.queryRenderer = new QueryRenderer({ plugin: this, events });
 

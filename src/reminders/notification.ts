@@ -6,20 +6,18 @@ import ReminderView from './components/Reminder.svelte';
 import { reminderSettings } from './Reminder';
 const electron = require('electron');
 const Notification = electron.remote.Notification;
-//  Platform.isDesktopApp, // Platform.isMobileApp,
-//  import { Platform } from 'obsidian';
 
-const notificationTitle = 'Task Reminder'; // todo is there a file for language localization?
+const notificationTitle = 'Task Reminder'; // Todo erik-handeland: is there a file for language localization?
 
 export class TaskNotification {
-    constructor(private app: App) {} //private app: App
+    constructor(private app: App) {}
 
     public show(task: Task) {
         // if election notification is supported, aka desktop app
         if (Notification.isSupported()) {
             // Show system notification
             const n = new Notification({
-                title: notificationTitle, // todo set to constant for language localization
+                title: notificationTitle,
                 body: task.description,
             });
             n.on('click', () => {
@@ -51,8 +49,7 @@ export class TaskNotification {
 
             n.show();
         } else {
-            // Show obsidian modal notification for mobile users
-            // Must be in app for this to trigger
+            // Show obsidian modal notification for mobile users, must be in app
             this.showBuiltinReminder(task);
         }
     }
@@ -91,7 +88,7 @@ export class TaskNotification {
         });
 
         for (const task of reminderTasks) {
-            const reminderDate = task.reminders[0].date;
+            const reminderDate = task.reminders[0].getDate();
             const now = window.moment(); // current date + time
             // Check if reminder will occur inbetween now and next refresh interval, + 1 to account for rounding
             if (isDateBetween(reminderDate, now, reminderSettings.refreshInterval + 1, 'milliseconds')) {
@@ -149,7 +146,7 @@ class ObsidianNotificationModal extends Modal {
                     // this.onOpenFile();
                     this.close();
                 },
-                onMute: () => {
+                onIgnore: () => {
                     // remove reminder from task
                     this.close();
                 },
@@ -158,8 +155,7 @@ class ObsidianNotificationModal extends Modal {
     }
 
     override onClose() {
-        // Unset the reminder from being displayed. This lets other parts of the
-        // plugin continue.
+        // Unset the reminder from being displayed. This lets other parts of the plugin continue.
         const { contentEl } = this;
         contentEl.empty();
     }
