@@ -30,7 +30,7 @@ You can group by the following properties.
 
 ### File contents
 
-1. `backlink` (the text that would be shown in the task's backlink, combining the task's file name and heading, but with no link added)
+1. `backlink` (the text that would be shown in the task's [[Backlinks|backlink]], combining the task's file name and heading, but with no link added)
 1. `heading` (the heading preceding the task, or `(No heading)` if there are no headings in the file)
 
 ### Task date properties

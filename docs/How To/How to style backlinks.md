@@ -4,13 +4,13 @@ publish: true
 
 # How to style backlinks
 
-<span class="related-pages">#css</span>
+<span class="related-pages">#css #feature/backlinks </span>
 
 ## Motivation and assumptions
 
 In Tasks results, by default each task is displayed with its filename,
 and the name of the previous heading, for example `(ACME > Steps to world domination)`.
-This is called a **backlink**.
+This is called a **[[Backlinks|Backlink]]**.
 
 If you don't like how backlinks look, this guide shows how you can modify their appearance.
 

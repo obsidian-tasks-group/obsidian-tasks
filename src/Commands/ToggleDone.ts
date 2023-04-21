@@ -1,10 +1,10 @@
-import { Editor, type EditorPosition, MarkdownView, View } from 'obsidian';
+import { Editor, type EditorPosition, type MarkdownFileInfo, MarkdownView } from 'obsidian';
 import { StatusRegistry } from '../StatusRegistry';
 
 import { Task, TaskRegularExpressions } from '../Task';
 import { TaskLocation } from '../TaskLocation';
 
-export const toggleDone = (checking: boolean, editor: Editor, view: View) => {
+export const toggleDone = (checking: boolean, editor: Editor, view: MarkdownView | MarkdownFileInfo) => {
     if (checking) {
         if (!(view instanceof MarkdownView)) {
             // If we are not in a markdown view, the command shouldn't be shown.
