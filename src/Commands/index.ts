@@ -1,4 +1,4 @@
-import type { App, Editor, Plugin, View } from 'obsidian';
+import type { App, Editor, MarkdownFileInfo, MarkdownView, Plugin, View } from 'obsidian';
 import { createOrEdit } from './CreateOrEdit';
 
 import { toggleDone } from './ToggleDone';
@@ -17,8 +17,8 @@ export class Commands {
             id: 'edit-task',
             name: 'Create or edit task',
             icon: 'pencil',
-            editorCheckCallback: (checking: boolean, editor: Editor, view: View) => {
-                return createOrEdit(checking, editor, view, this.app);
+            editorCheckCallback: (checking: boolean, editor: Editor, view: MarkdownView | MarkdownFileInfo) => {
+                return createOrEdit(checking, editor, view as View, this.app);
             },
         });
 

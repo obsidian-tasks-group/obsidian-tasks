@@ -1,9 +1,9 @@
-import { App, MarkdownRenderChild, MarkdownRenderer, Plugin, TFile } from 'obsidian';
+import { App, Keymap, MarkdownRenderChild, MarkdownRenderer, Plugin, TFile } from 'obsidian';
 import type { EventRef, MarkdownPostProcessorContext } from 'obsidian';
 
 import type { IQuery } from './IQuery';
 import { State } from './Cache';
-import { replaceTaskWithTasks } from './File';
+import { getTaskLineAndFile, replaceTaskWithTasks } from './File';
 import { Query } from './Query/Query';
 import type { GroupHeading } from './Query/GroupHeading';
 import { TaskModal } from './TaskModal';
@@ -303,19 +303,11 @@ class QueryRenderChild extends MarkdownRenderChild {
 
         const link = backLink.createEl('a');
 
-        link.href = task.path;
-        link.setAttribute('data-href', task.path);
         link.rel = 'noopener';
         link.target = '_blank';
         link.addClass('internal-link');
         if (shortMode) {
             link.addClass('internal-link-short-mode');
-        }
-
-        if (task.precedingHeader !== null) {
-            const sanitisedHeading = task.precedingHeader.replace(/#/g, '');
-            link.href = link.href + '#' + sanitisedHeading;
-            link.setAttribute('data-href', link.getAttribute('data-href') + '#' + sanitisedHeading);
         }
 
         let linkText: string;
@@ -326,6 +318,39 @@ class QueryRenderChild extends MarkdownRenderChild {
         }
 
         link.setText(linkText);
+
+        // Go to the line the task is defined at
+        const vault = this.app.vault;
+        link.addEventListener('click', async (ev: MouseEvent) => {
+            const result = await getTaskLineAndFile(task, vault);
+            if (result) {
+                const [line, file] = result;
+                const leaf = this.app.workspace.getLeaf(Keymap.isModEvent(ev));
+                // This opens the file with the required line highlighted.
+                // It works for Edit and Reading mode, however, for some reason (maybe an Obsidian bug),
+                // when used in Reading mode, switching the result to Edit does not sync the scroll.
+                // A patch suggested over Discord to use leaf.setEphemeralState({scroll: line}) does not seem
+                // to make a difference.
+                // The issue is tracked here: https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1879
+                await leaf.openFile(file, { eState: { line: line } });
+            }
+        });
+
+        link.addEventListener('mousedown', async (ev: MouseEvent) => {
+            // Open in a new tab on middle-click.
+            // This distinction is not available in the 'click' event, so we handle the 'mousedown' event
+            // solely for this.
+            // (for regular left-click we prefer the 'click' event, and not to just do everything here, because
+            // the 'click' event is more generic for touch devices etc.)
+            if (ev.button === 1) {
+                const result = await getTaskLineAndFile(task, vault);
+                if (result) {
+                    const [line, file] = result;
+                    const leaf = this.app.workspace.getLeaf('tab');
+                    await leaf.openFile(file, { eState: { line: line } });
+                }
+            }
+        });
 
         if (!shortMode) {
             backLink.append(')');
