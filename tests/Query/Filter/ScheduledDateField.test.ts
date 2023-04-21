@@ -43,11 +43,7 @@ describe('sorting by scheduled', () => {
 
 describe('grouping by scheduled date', () => {
     it('supports Field grouping methods correctly', () => {
-        const field = new ScheduledDateField();
-        expect(field.supportsGrouping()).toEqual(true);
-
-        const fieldGrouper = field.createGrouper();
-        expect(fieldGrouper.property).toEqual('scheduled');
+        expect(new ScheduledDateField()).toSupportGroupingWithProperty('scheduled');
     });
 
     it('group by scheduled date', () => {

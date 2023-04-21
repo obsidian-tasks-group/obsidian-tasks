@@ -137,11 +137,7 @@ describe('sorting by happens', () => {
 
 describe('grouping by happens date', () => {
     it('supports Field grouping methods correctly', () => {
-        const field = new HappensDateField();
-        expect(field.supportsGrouping()).toEqual(true);
-
-        const fieldGrouper = field.createGrouper();
-        expect(fieldGrouper.property).toEqual('happens');
+        expect(new HappensDateField()).toSupportGroupingWithProperty('happens');
     });
 
     it.each([

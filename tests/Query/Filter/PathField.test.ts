@@ -146,11 +146,7 @@ describe('sorting by path', () => {
 
 describe('grouping by path', () => {
     it('supports grouping methods correctly', () => {
-        const field = new PathField();
-        expect(field.supportsGrouping()).toEqual(true);
-
-        const fieldGrouper = field.createGrouper();
-        expect(fieldGrouper.property).toEqual('path');
+        expect(new PathField()).toSupportGroupingWithProperty('path');
     });
 
     it.each([

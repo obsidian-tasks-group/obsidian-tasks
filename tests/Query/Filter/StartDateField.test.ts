@@ -59,11 +59,7 @@ describe('sorting by start', () => {
 
 describe('grouping by start date', () => {
     it('supports Field grouping methods correctly', () => {
-        const field = new StartDateField();
-        expect(field.supportsGrouping()).toEqual(true);
-
-        const fieldGrouper = field.createGrouper();
-        expect(fieldGrouper.property).toEqual('start');
+        expect(new StartDateField()).toSupportGroupingWithProperty('start');
     });
 
     it('group by start date', () => {
