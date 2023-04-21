@@ -17,6 +17,4 @@
     });
 </script>
 
-<span>
-    <span class="reminder-markdown" bind:this={span} />
-</span>
+<span class="task-markdown" bind:this={span} />

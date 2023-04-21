@@ -34,8 +34,7 @@ export interface DefaultTaskSerializerSymbols {
         dueDateRegex: RegExp;
         doneDateRegex: RegExp;
         recurrenceRegex: RegExp;
-        reminderDateRegex: RegExp;
-        reminderDateTimeRegex: RegExp;
+        reminderRegex: RegExp;
     };
 }
 
@@ -67,8 +66,7 @@ export const DEFAULT_SYMBOLS: DefaultTaskSerializerSymbols = {
         dueDateRegex: /[📅📆🗓] *(\d{4}-\d{2}-\d{2})$/u,
         doneDateRegex: /✅ *(\d{4}-\d{2}-\d{2})$/u,
         recurrenceRegex: /🔁 ?([a-zA-Z0-9, !]+)$/iu,
-        reminderDateRegex: /⏲️ *(\d{4}-\d{2}-\d{2})$/u,
-        reminderDateTimeRegex: /⏲️ *(\d{4}-\d{2}-\d{2}\s\d{1,2}:\d{2}(?:\s(?:am|pm|AM|PM))?)$/u, //*(\d{4}-\d{2}-\d{2} \d{2}:\d{2} \s{2})$/u,
+        reminderRegex: /⏲️ *(\d{4}-\d{2}-\d{2}(?:\s\d{1,2}:\d{2}(?:\s(?:am|pm|AM|PM))?)?)$/u,
     },
 } as const;
 // ⏲️ *(\d{4}-\d{2}-\d{2}\s\d{1,2}:\d{2}(?:\s(?:am|pm|AM|PM))?) works
@@ -270,13 +268,10 @@ export class DefaultTaskSerializer implements TaskSerializer {
                 trailingTags = trailingTags.length > 0 ? [tagName, trailingTags].join(' ') : tagName;
             }
 
-            // TODO probably could do this with a single regex, but i'm trash at regex
-            const reminderRegex =
-                line.match(TaskFormatRegularExpressions.reminderDateTimeRegex) ||
-                line.match(TaskFormatRegularExpressions.reminderDateRegex);
-            if (reminderRegex !== null) {
-                reminderDate = window.moment(reminderRegex[1], TaskRegularExpressions.dateTimeFormat);
-                line = line.replace(TaskFormatRegularExpressions.reminderDateRegex, '').trim();
+            const reminderMatch = line.match(TaskFormatRegularExpressions.reminderRegex);
+            if (reminderMatch !== null) {
+                reminderDate = window.moment(reminderMatch[1], TaskRegularExpressions.dateTimeFormat);
+                line = line.replace(TaskFormatRegularExpressions.reminderRegex, '').trim();
                 matched = true;
             }
 

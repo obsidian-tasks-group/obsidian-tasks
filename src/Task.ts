@@ -10,7 +10,7 @@ import { renderTaskLine } from './TaskLineRenderer';
 import type { TaskLineRenderDetails } from './TaskLineRenderer';
 import { DateFallback } from './DateFallback';
 import { compareByDate } from './lib/DateTools';
-import type { Reminder } from './reminders/Reminder';
+import { type Reminder, reminderSettings } from './reminders/Reminder';
 
 /**
  * When sorting, make sure low always comes after none. This way any tasks with low will be below any exiting
@@ -28,7 +28,7 @@ export enum Priority {
 
 export class TaskRegularExpressions {
     public static readonly dateFormat = 'YYYY-MM-DD';
-    public static readonly dateTimeFormat = 'YYYY-MM-DD h:mm a';
+    public static readonly dateTimeFormat = reminderSettings.dateTimeRegex;
 
     // Matches indentation before a list marker (including > for potentially nested blockquotes or Obsidian callouts)
     public static readonly indentationRegex = /^([\s\t>]*)/;
@@ -506,7 +506,6 @@ export class Task {
         if (this.reminders.length !== other.reminders.length) {
             return false;
         }
-        // TODO check that date has changed
 
         // Compare Date fields
         args = ['createdDate', 'startDate', 'scheduledDate', 'dueDate', 'doneDate'];

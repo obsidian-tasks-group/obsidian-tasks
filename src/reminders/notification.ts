@@ -3,12 +3,13 @@ import type { Task } from '../Task';
 import { Query } from '../Query/Query';
 import { isDateBetween } from '../lib/DateTools';
 import ReminderView from './components/Reminder.svelte';
+import { reminderSettings } from './Reminder';
 const electron = require('electron');
 const Notification = electron.remote.Notification;
 //  Platform.isDesktopApp, // Platform.isMobileApp,
 //  import { Platform } from 'obsidian';
 
-const notificationTitle = 'Task Reminder'; //TODO constant for language localization, is there a file for these already?
+const notificationTitle = 'Task Reminder'; // todo is there a file for language localization?
 
 export class TaskNotification {
     constructor(private app: App) {} //private app: App
@@ -73,7 +74,7 @@ export class TaskNotification {
             this.reminderEvent(tasks).finally(() => {
                 intervalTaskRunning = false;
             });
-        }, 1000000);
+        }, reminderSettings.refreshInterval);
     }
 
     private async reminderEvent(tasks: Task[]): Promise<void> {
@@ -92,14 +93,12 @@ export class TaskNotification {
         for (const task of reminderTasks) {
             const reminderDate = task.reminders[0].date;
             const now = window.moment(); // current date + time
-            // Check if reminder is within 30 seconds of now
-            if (isDateBetween(reminderDate, now, 30, 'seconds')) {
+            // Check if reminder will occur inbetween now and next refresh interval, + 1 to account for rounding
+            if (isDateBetween(reminderDate, now, reminderSettings.refreshInterval + 1, 'milliseconds')) {
                 console.log('Show Notification');
                 this.show(task);
                 // else check for daily reminder
             } else if (isDailyReminder(reminderDate)) {
-                // TODO dont think this is being used since modal autos to current
-                // time even when left blank. Will only hit this if task created manually
                 this.show(task);
             }
         }
@@ -168,7 +167,7 @@ class ObsidianNotificationModal extends Modal {
 
 function isDailyReminder(date: moment.Moment) {
     const daily = window.moment().startOf('day'); // todays date with a blank time
-    const alertTime = window.moment('09:00', 'hh:mm'); // time to show daily reminders
+    const alertTime = window.moment(reminderSettings.dailyReminderTime, reminderSettings.dateTimeRegex);
     const now = window.moment(); // current date + time
 
     // time has not been set and is between alertTime and offset

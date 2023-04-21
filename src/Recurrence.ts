@@ -188,7 +188,7 @@ export class Recurrence {
                     // Rounding days to handle cross daylight-savings-time recurrences.
                     dueDate.add(Math.round(originalDifference.asDays()), 'days');
                 }
-                //TODO - copliot review this
+                //TODO erik-handeland - copliot review this
                 if (this.reminderDate) {
                     const originalDifference = window.moment.duration(this.reminderDate.diff(this.referenceDate));
 

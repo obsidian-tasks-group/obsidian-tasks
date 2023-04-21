@@ -25,10 +25,10 @@
 </script>
 
 <main>
-  <h1>
+  <h1 class="task-reminder-description">
     <Markdown
       markdown={task.description}
-      sourcePath={task.filename ?? "NO FILE"} 
+      sourcePath={task.filename ?? "filename was null"} 
       {component}
     />
   </h1>

@@ -2,7 +2,6 @@
  * Various rendering options for a query.
  */
 export class LayoutOptions {
-    // TODO: hideReminderDate
     hideTaskCount: boolean = false;
     hideBacklinks: boolean = false;
     hidePriority: boolean = false;
@@ -11,6 +10,7 @@ export class LayoutOptions {
     hideScheduledDate: boolean = false;
     hideDoneDate: boolean = false;
     hideDueDate: boolean = false;
+    hideReminderDate: boolean = false;
     hideRecurrenceRule: boolean = false;
     hideEditButton: boolean = false;
     hideUrgency: boolean = true;
@@ -97,6 +97,7 @@ export class TaskLayout {
         newComponents = removeIf(newComponents, layoutOptions.hideScheduledDate, 'scheduledDate');
         newComponents = removeIf(newComponents, layoutOptions.hideDueDate, 'dueDate');
         newComponents = removeIf(newComponents, layoutOptions.hideDoneDate, 'doneDate');
+        newComponents = removeIf(newComponents, layoutOptions.hideReminderDate, 'reminderDate');
         if (layoutOptions.shortMode) this.specificClasses.push('tasks-layout-short-mode');
         return newComponents;
     }
