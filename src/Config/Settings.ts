@@ -67,7 +67,6 @@ export interface Settings {
 
     // Tracks the stage of the headings in the settings UI.
     headingOpened: HeadingState;
-
     debugSettings: DebugSettings;
 }
 
