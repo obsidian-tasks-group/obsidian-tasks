@@ -4,7 +4,6 @@ import type { Task } from './Task';
 import * as taskModule from './Task';
 import type { LayoutOptions, TaskLayoutComponent } from './TaskLayout';
 import { TaskLayout } from './TaskLayout';
-import { replaceTaskWithTasks } from './File';
 import { TASK_FORMATS, getSettings } from './Config/Settings';
 import { GlobalFilter } from './Config/GlobalFilter';
 
@@ -90,11 +89,7 @@ export async function renderTaskLine(
 
         // Should be re-rendered as enabled after update in file.
         checkbox.disabled = true;
-        const toggledTasks = task.toggle();
-        replaceTaskWithTasks({
-            originalTask: task,
-            newTasks: toggledTasks,
-        });
+        task.toggleUpdate();
     });
 
     li.prepend(checkbox);
@@ -228,6 +223,7 @@ export type AttributesDictionary = { [key: string]: string };
  * options in LayoutClasses.
  * The dataAttributes describe the content of the component, e.g. `data-task-priority="medium"`, `data-task-due="past-1d"` etc.
  */
+// TODO erik-handeland: does not include reminders?
 function getComponentClassesAndData(component: TaskLayoutComponent, task: Task): [string[], AttributesDictionary] {
     const genericClasses: string[] = [];
     const dataAttributes: AttributesDictionary = {};

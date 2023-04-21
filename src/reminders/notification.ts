@@ -28,13 +28,12 @@ export class TaskNotification {
             n.on('close', () => {
                 console.log('Notification closed');
             });
-            // action only supported in macOS
+            // Notification actions only supported in macOS
             {
                 // const laters = SETTINGS.laters.value;
                 n.on('action', (_: any, index: any) => {
                     if (index === 0) {
-                        // mark task as done
-                        // task.toggle();
+                        onDone(task);
                         return;
                     }
                     // const later = laters[index - 1]!;
@@ -103,15 +102,30 @@ export class TaskNotification {
 
     private showBuiltinReminder(
         reminder: any,
-        // onRemindMeLater: (time: any) => void,
+        //onRemindMeLater: (time: DateTime) => void,
     ) {
         new ObsidianNotificationModal(
             this.app,
             [1, 2, 3, 4, 5],
             reminder,
-            // onRemindMeLater,
+            //onRemindMeLater,
+            onDone,
+            onIgnore,
+            onOpenFile,
         ).open();
     }
+}
+
+// TODO erik-handeland are these fucntions private by default?
+function onDone(task: Task) {
+    console.log('*** task done');
+    if (!task.status.isCompleted()) {
+        task.toggleUpdate();
+    }
+}
+function onIgnore() {}
+function onOpenFile(task: Task) {
+    console.log('*** Todo open ' + task.filename);
 }
 
 // Probably want to rewrite this modal to better display task infor
@@ -119,7 +133,11 @@ class ObsidianNotificationModal extends Modal {
     constructor(
         app: App,
         private laters: Array<Number>,
-        private task: Task, // callbacks // private onRemindMeLater: (time: any) => void, // private onDone: () => void, // private onCancel: () => void, // private onOpenFile: () => void,
+        private task: Task, // callbacks //
+        //private onRemindMeLater: (time: any) => void,
+        private onDone: (task: Task) => void,
+        private onIgnore: () => void,
+        private onOpenFile: (task: Task) => void,
     ) {
         super(app);
     }
@@ -138,16 +156,16 @@ class ObsidianNotificationModal extends Modal {
                     this.close();
                 },
                 onDone: () => {
-                    // this.onDone();
-                    // call task.toggle() ?
+                    this.onDone(this.task);
                     this.close();
                 },
                 onOpenFile: () => {
-                    // this.onOpenFile();
+                    this.onOpenFile(this.task);
                     this.close();
                 },
                 onIgnore: () => {
                     // remove reminder from task
+                    this.onIgnore();
                     this.close();
                 },
             },

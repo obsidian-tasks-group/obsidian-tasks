@@ -11,6 +11,7 @@ import type { TaskLineRenderDetails } from './TaskLineRenderer';
 import { DateFallback } from './DateFallback';
 import { compareByDate } from './lib/DateTools';
 import { type Reminder, reminderSettings } from './reminders/Reminder';
+import { replaceTaskWithTasks } from './File';
 
 /**
  * When sorting, make sure low always comes after none. This way any tasks with low will be below any exiting
@@ -360,6 +361,16 @@ export class Task {
         newTasks.push(toggledTask);
 
         return newTasks;
+    }
+
+    // toggle task status and update
+    public toggleUpdate() {
+        const newTasks = this.toggle();
+
+        replaceTaskWithTasks({
+            originalTask: this,
+            newTasks: newTasks,
+        });
     }
 
     public get urgency(): number {
