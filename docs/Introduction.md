@@ -6,7 +6,8 @@ publish: true
 
 ## What's New?
 
-- 3.3.0: 🔥 Multiple [[About Task Formats|Task Format]] support - starting with [[Dataview Format]]
+- X.Y.Z: 🔥 Clicking on a [[Backlinks|Backlink]] jumps to the exact task line.
+- 3.3.0: 🔥 Multiple [[About Task Formats|Task Format]] support - starting with [[Dataview Format]].
 
 ## Task management for the Obsidian knowledge base
 
