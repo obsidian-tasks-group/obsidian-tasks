@@ -17,44 +17,27 @@ declare global {
 }
 
 export function toSupportGroupingWithProperty(field: Field, property: string) {
-    const fieldGrouper = field.createGrouper();
-
-    const groupingIsSupported = field.supportsGrouping();
-    const propertyAsExpected = fieldGrouper.property === property;
-
-    if (groupingIsSupported && propertyAsExpected) {
+    if (!field.supportsGrouping()) {
         return {
-            message: () =>
-                `'${field.fieldName()}' field supports grouping with property set to '${fieldGrouper.property}'.`,
-            pass: true,
-        };
-    }
-
-    if (groupingIsSupported && !propertyAsExpected) {
-        return {
-            message: () =>
-                `'${field.fieldName()}' field supports grouping but property set to '${property}', expected '${
-                    fieldGrouper.property
-                }'.`,
+            message: () => `'${field.fieldName()}' field doesn't support grouping.`,
             pass: false,
         };
     }
 
-    if (!groupingIsSupported && propertyAsExpected) {
+    const fieldGrouper = field.createGrouper();
+    if (fieldGrouper.property !== property) {
         return {
             message: () =>
-                `'${field.fieldName()}' field doesn't support grouping, while property is set to '${
+                `'${field.fieldName()}' field grouper property set to '${
                     fieldGrouper.property
-                }' as expected.`,
+                }', expected '${property}'.`,
             pass: false,
         };
     }
 
     return {
         message: () =>
-            `'${field.fieldName()}' field doesn't support grouping and property set to '${property}', expected '${
-                fieldGrouper.property
-            }'.`,
-        pass: false,
+            `'${field.fieldName()}' field supports grouping, grouping property set to '${fieldGrouper.property}'.`,
+        pass: true,
     };
 }
