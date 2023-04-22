@@ -630,11 +630,7 @@ describe('Sort by tags', () => {
 
 describe('grouping by tag', () => {
     it('supports grouping methods correctly', () => {
-        const field = new TagsField();
-        expect(field.supportsGrouping()).toEqual(true);
-
-        const fieldGrouper = field.createGrouper();
-        expect(fieldGrouper.property).toEqual('tags');
+        expect(new TagsField()).toSupportGroupingWithProperty('tags');
     });
 
     it.each([
