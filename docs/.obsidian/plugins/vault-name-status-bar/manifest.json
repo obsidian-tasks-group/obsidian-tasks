@@ -1,0 +1,10 @@
+{
+	"id": "vault-name-status-bar",
+	"name": "Vault name in status bar",
+	"version": "1.0.1",
+	"minAppVersion": "1.1.0",
+	"description": "Vault name in status bar. can be reduced to ::",
+	"author": "1C0D",
+	"authorUrl": "",
+	"isDesktopOnly": true
+}
