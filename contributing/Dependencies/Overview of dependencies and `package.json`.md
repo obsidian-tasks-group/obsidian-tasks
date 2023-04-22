@@ -34,3 +34,16 @@ Therefore, "devDependency" vs. "dependency" separation is not a sufficient indic
 needs manual "[[How do I smoke-test the Tasks plugin|smoke testing]]" of runtime behavior.
 
 See also [[Thought-Process for Deciding Whether a Dependency Needs Manual Testing]].
+
+### Obsidian's current dependencies
+
+As of 2023-04-16, the Obsidian team reported that Obsidian team [reported that](https://discord.com/channels/686053708261228577/840286264964022302/1097141108972212274) Obsidian's codemirror dependency versions are:
+
+```yaml
+"@codemirror/commands": "6.2.1",
+"@codemirror/language": "https://github.com/lishid/cm-language",
+"@codemirror/lint": "6.1.1",
+"@codemirror/search": "6.2.3",
+"@codemirror/state": "6.2.0",
+"@codemirror/view": "https://github.com/lishid/cm-view",
+```

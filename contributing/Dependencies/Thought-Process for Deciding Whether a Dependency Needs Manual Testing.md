@@ -12,7 +12,7 @@ Anything that is involved in producing the built output to users. For example:
 - everything in the "dependencies" (rather than "devDependencies") list in `package.json`
 - `esbuild` (the build system)
 - anything imported by the esbuild config file `esbuild.config.mjs` (for example, `builtin-modules`, `svelte-preprocess`)
-- `obsidian` (also see [[Notes and Special Cases]] below)
+- `obsidian` (also see [[Notes and Special Cases]])
 - all `@codemirror/*`
 - `moment`
 
