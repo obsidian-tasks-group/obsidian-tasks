@@ -6,7 +6,8 @@ Dependencies for the plugin are set using the two files:
 - [yarn.lock](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/yarn.lock) (machine-generated)
 
 After any change to dependencies in `package.json`, run `yarn` to update the `yarn.lock` file and commit the changes in both files.
-If you see a warning from `yarn` about a **missing peer dependency that mentions `obsidian` or `@codemirror`, you can safely ignore it**. Other yarn messages should likely be resolved before commit.
+
+If you see a warning from `yarn` about a **unmet peer dependency that mentions `obsidian` or `@codemirror`, you can safely ignore it**. Other yarn messages should likely be resolved before commit.
 
 Code changes that also involve dependency changes may require additional testing and review.
 Please only change [package.json](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/package.json) if necessary for your contribution.
