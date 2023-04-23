@@ -36,6 +36,9 @@ short mode
 ```tasks
 path includes Styling of Queries
 hide priority
+hide backlinks
+hide urgency
+hide edit button
 ```
 
 - [ ] 6. Open the Obsidian settings of the Demo vault and under Appearance | CSS Snippets, turn **off** `tasks-plugin-smoke-test-query-styling`.
