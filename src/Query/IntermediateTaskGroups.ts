@@ -1,5 +1,4 @@
 import type { Task } from '../Task';
-import { Group } from './Group';
 import type { Grouper } from './Grouper';
 import { GroupingTreeNode } from './GroupingTreeNode';
 
@@ -78,7 +77,9 @@ export class IntermediateTaskGroups {
             const nextTreeLevel = [];
             for (const currentTreeNode of currentTreeLevel) {
                 for (const task of currentTreeNode.values) {
-                    const groupNames = Group.getGroupNamesForTask(grouping, task);
+                    // Get properties of a task for the grouping
+                    // The returned string is rendered, so special Markdown characters will be escaped
+                    const groupNames = grouping.grouper(task);
                     for (const groupName of groupNames) {
                         let child = currentTreeNode.children.get(groupName);
                         if (child === undefined) {
