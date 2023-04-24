@@ -52,19 +52,19 @@ export class TaskGroupingTree {
 
     /**
      * Group a list of tasks, according to one or more task properties
-     * @param groupings 0 or more Grouping values, one per 'group by' line
+     * @param groupers 0 or more Grouping values, one per 'group by' line
      * @param tasks The tasks that match the task block's Query
      */
-    constructor(groupings: Grouper[], tasks: Task[]) {
-        const tree = this.buildGroupingTree(groupings, tasks);
+    constructor(groupers: Grouper[], tasks: Task[]) {
+        const tree = this.buildGroupingTree(groupers, tasks);
         this.groups = tree.generateAllPaths();
         this.groups = this.getSortedGroups();
     }
 
     /**
-     * Returns a grouping tree that groups the passed @tasks by the passed @groupings.
+     * Returns a grouping tree that groups the passed @tasks by the passed @groupers.
      */
-    private buildGroupingTree(groupings: Grouper[], tasks: Task[]): TaskGroupingTreeNode {
+    private buildGroupingTree(groupers: Grouper[], tasks: Task[]): TaskGroupingTreeNode {
         // The tree is build layer by layer, starting from the root.
         // At every level, we iterate on the nodes of that level to generate
         // the next one using the next grouping.
@@ -73,13 +73,13 @@ export class TaskGroupingTree {
         const root = new TaskGroupingTreeNode(tasks);
 
         let currentTreeLevel = [root];
-        for (const grouping of groupings) {
+        for (const grouper of groupers) {
             const nextTreeLevel = [];
             for (const currentTreeNode of currentTreeLevel) {
                 for (const task of currentTreeNode.values) {
-                    // Get properties of a task for the grouping
+                    // Get properties of a task for the grouper
                     // The returned string is rendered, so special Markdown characters will be escaped
-                    const groupNames = grouping.grouper(task);
+                    const groupNames = grouper.grouper(task);
                     for (const groupName of groupNames) {
                         let child = currentTreeNode.children.get(groupName);
                         if (child === undefined) {
