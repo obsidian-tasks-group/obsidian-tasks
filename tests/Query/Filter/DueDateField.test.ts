@@ -518,8 +518,7 @@ describe('due date', () => {
 
 describe('grouping by due date', () => {
     it('supports Field grouping methods correctly', () => {
-        const field = new DueDateField();
-        expect(field.supportsGrouping()).toEqual(true);
+        expect(new DueDateField()).toSupportGroupingWithProperty('due');
     });
 
     it('group by due date', () => {

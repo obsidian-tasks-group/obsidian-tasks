@@ -78,8 +78,7 @@ describe('recurrence', () => {
 
 describe('grouping by recurrence', () => {
     it('supports grouping methods correctly', () => {
-        const field = new RecurrenceField();
-        expect(field.supportsGrouping()).toEqual(true);
+        expect(new RecurrenceField()).toSupportGroupingWithProperty('recurrence');
     });
 
     it.each([

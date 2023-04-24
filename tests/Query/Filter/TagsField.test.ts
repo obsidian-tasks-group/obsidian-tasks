@@ -630,10 +630,7 @@ describe('Sort by tags', () => {
 
 describe('grouping by tag', () => {
     it('supports grouping methods correctly', () => {
-        const field = new TagsField();
-        const fieldGrouper = field.createGrouper();
-        expect(field.supportsGrouping()).toEqual(true);
-        expect(fieldGrouper.property).toEqual('tags');
+        expect(new TagsField()).toSupportGroupingWithProperty('tags');
     });
 
     it.each([
@@ -646,10 +643,5 @@ describe('grouping by tag', () => {
 
         // Assert
         expect(grouper(fromLine({ line: taskLine }))).toEqual(groups);
-    });
-
-    it('supports grouping methods correctly', () => {
-        const field = new TagsField();
-        expect(field.supportsGrouping()).toEqual(true);
     });
 });

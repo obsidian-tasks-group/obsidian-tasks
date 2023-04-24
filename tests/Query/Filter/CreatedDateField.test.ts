@@ -92,8 +92,7 @@ describe('sorting by created', () => {
 
 describe('grouping by created date', () => {
     it('supports Field grouping methods correctly', () => {
-        const field = new CreatedDateField();
-        expect(field.supportsGrouping()).toEqual(true);
+        expect(new CreatedDateField()).toSupportGroupingWithProperty('created');
     });
 
     it('group by created date', () => {

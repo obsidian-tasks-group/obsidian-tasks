@@ -91,8 +91,7 @@ describe('sorting by heading', () => {
 
 describe('grouping by heading', () => {
     it('supports grouping methods correctly', () => {
-        const field = new HeadingField();
-        expect(field.supportsGrouping()).toEqual(true);
+        expect(new HeadingField()).toSupportGroupingWithProperty('heading');
     });
 
     it.each([

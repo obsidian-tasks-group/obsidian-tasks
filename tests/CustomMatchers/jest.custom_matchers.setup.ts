@@ -11,6 +11,8 @@ import {
     toMatchTaskWithStatus,
 } from './CustomMatchersForFilters';
 
+import { toSupportGroupingWithProperty } from './CustomMatchersForGrouping';
+
 import { toMatchTaskDetails } from './CustomMatchersForTaskSerializer';
 
 expect.extend({
@@ -22,4 +24,5 @@ expect.extend({
     toMatchTaskWithPath,
     toMatchTaskWithStatus,
     toMatchTaskDetails,
+    toSupportGroupingWithProperty,
 });

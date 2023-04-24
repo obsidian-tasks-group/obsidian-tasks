@@ -159,8 +159,7 @@ describe('sorting by priority', () => {
 
 describe('grouping by priority', () => {
     it('supports grouping methods correctly', () => {
-        const field = new PriorityField();
-        expect(field.supportsGrouping()).toEqual(true);
+        expect(new PriorityField()).toSupportGroupingWithProperty('priority');
     });
 
     it.each([

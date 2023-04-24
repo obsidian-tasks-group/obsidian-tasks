@@ -43,8 +43,7 @@ describe('recurring', () => {
 
 describe('grouping by recurring', () => {
     it('supports grouping methods correctly', () => {
-        const field = new RecurringField();
-        expect(field.supportsGrouping()).toEqual(true);
+        expect(new RecurringField()).toSupportGroupingWithProperty('recurring');
     });
 
     it.each([

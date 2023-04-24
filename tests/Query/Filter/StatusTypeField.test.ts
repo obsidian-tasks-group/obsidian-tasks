@@ -144,8 +144,7 @@ describe('sorting by status.name', () => {
 
 describe('grouping by status.type', () => {
     it('supports Field grouping methods correctly', () => {
-        const field = new StatusTypeField();
-        expect(field.supportsGrouping()).toEqual(true);
+        expect(new StatusTypeField()).toSupportGroupingWithProperty('status.type');
     });
 
     it('group by status.type', () => {
