@@ -31,11 +31,14 @@ path includes Styling of Queries
 short mode
 ```
 
-- [ ] **5. Test 'hidden' query classes** - the following lines (except the backlinks) should be colored **red**:
+- [ ] **5. Test 'hidden' query classes** - the following lines should be colored **red**:
 
 ```tasks
 path includes Styling of Queries
 hide priority
+hide backlinks
+hide urgency
+hide edit button
 ```
 
 - [ ] 6. Open the Obsidian settings of the Demo vault and under Appearance | CSS Snippets, turn **off** `tasks-plugin-smoke-test-query-styling`.
