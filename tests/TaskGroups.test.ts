@@ -3,12 +3,12 @@
  */
 import moment from 'moment';
 import { FilenameField } from '../src/Query/Filter/FilenameField';
-import { Group } from '../src/Query/Group';
 import type { Grouper } from '../src/Query/Grouper';
 import type { Task } from '../src/Task';
 import { PathField } from '../src/Query/Filter/PathField';
 import { TagsField } from '../src/Query/Filter/TagsField';
 import { FolderField } from '../src/Query/Filter/FolderField';
+import { TaskGroups } from '../src/Query/TaskGroups';
 import { fromLine } from './TestHelpers';
 
 window.moment = moment;
@@ -23,7 +23,7 @@ describe('Grouping tasks', () => {
 
         // Act
         const grouping = [new PathField().createGrouper()];
-        const groups = Group.by(grouping, inputs);
+        const groups = new TaskGroups(grouping, inputs);
 
         // Assert
         expect(groups.toString()).toMatchInlineSnapshot(`
@@ -55,7 +55,7 @@ describe('Grouping tasks', () => {
 
         // Act
         const grouping: Grouper[] = [];
-        const groups = Group.by(grouping, inputs);
+        const groups = new TaskGroups(grouping, inputs);
 
         // Assert
         // No grouping specified, so no headings generated
@@ -79,7 +79,7 @@ describe('Grouping tasks', () => {
         const grouping = [new PathField().createGrouper()];
 
         // Act
-        const groups = Group.by(grouping, inputs);
+        const groups = new TaskGroups(grouping, inputs);
 
         // Assert
         expect(groups.groups.length).toEqual(1);
@@ -103,7 +103,7 @@ describe('Grouping tasks', () => {
         const inputs = [a, b, c];
 
         const grouping = [new PathField().createGrouper()];
-        const groups = Group.by(grouping, inputs);
+        const groups = new TaskGroups(grouping, inputs);
         expect(groups.toString()).toMatchInlineSnapshot(`
             "
             Group names: [a/b/c]
@@ -142,7 +142,7 @@ describe('Grouping tasks', () => {
         const inputs = [a, b, c];
 
         const grouping = [new TagsField().createGrouper()];
-        const groups = Group.by(grouping, inputs);
+        const groups = new TaskGroups(grouping, inputs);
         expect(groups.toString()).toMatchInlineSnapshot(`
             "
             Group names: [#group1]
@@ -183,7 +183,7 @@ describe('Grouping tasks', () => {
         const grouping: Grouper[] = [new FolderField().createGrouper(), new FilenameField().createGrouper()];
 
         // Act
-        const groups = Group.by(grouping, tasks);
+        const groups = new TaskGroups(grouping, tasks);
 
         // Assert
         expect(groups.toString()).toMatchInlineSnapshot(`

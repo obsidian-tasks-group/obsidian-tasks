@@ -1,4 +1,3 @@
-import { Group } from '../Group';
 import type { Task } from '../../Task';
 import type { GrouperFunction } from '../Grouper';
 import { TextField } from './TextField';
@@ -56,11 +55,11 @@ export class BacklinkField extends TextField {
                 const backlink = this.value(task);
                 if (filename !== backlink) {
                     // In case backlink is 'file_name > heading', the filename only shall be escaped
-                    return [Group.escapeMarkdownCharacters(filename) + backlink.substring(filename.length)];
+                    return [TextField.escapeMarkdownCharacters(filename) + backlink.substring(filename.length)];
                 }
             }
 
-            return [Group.escapeMarkdownCharacters(this.value(task))];
+            return [TextField.escapeMarkdownCharacters(this.value(task))];
         };
     }
 }
