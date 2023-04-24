@@ -5,7 +5,7 @@ import type { IQuery } from './IQuery';
 import { State } from './Cache';
 import { getTaskLineAndFile, replaceTaskWithTasks } from './File';
 import { Query } from './Query/Query';
-import type { GroupHeading } from './Query/GroupHeading';
+import type { GroupDisplayHeading } from './Query/GroupDisplayHeading';
 import { TaskModal } from './TaskModal';
 import type { TasksEvents } from './TasksEvents';
 import type { Task } from './Task';
@@ -266,13 +266,13 @@ class QueryRenderChild extends MarkdownRenderChild {
      *                        in which case no headings will be added.
      * @private
      */
-    private addGroupHeadings(content: HTMLDivElement, groupHeadings: GroupHeading[]) {
+    private addGroupHeadings(content: HTMLDivElement, groupHeadings: GroupDisplayHeading[]) {
         for (const heading of groupHeadings) {
             this.addGroupHeading(content, heading);
         }
     }
 
-    private async addGroupHeading(content: HTMLDivElement, group: GroupHeading) {
+    private async addGroupHeading(content: HTMLDivElement, group: GroupDisplayHeading) {
         let header: any;
         // Is it possible to remove the repetition here?
         // Ideally, by creating a variable that contains h4, h5 or h6

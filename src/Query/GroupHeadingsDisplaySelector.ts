@@ -1,4 +1,4 @@
-import { GroupHeading } from './GroupHeading';
+import { GroupDisplayHeading } from './GroupDisplayHeading';
 import type { TaskGroupingTreeStorage } from './TaskGroupingTree';
 
 /*
@@ -71,7 +71,7 @@ import type { TaskGroupingTreeStorage } from './TaskGroupingTree';
  * The TaskGroupingTree class below does the initial grouping and sorting.
  *
  * The GroupHeadingsDisplaySelector class below implements pjeby's heading detection algorithm, but instead of doing the printing directly,
- * it returns the calculated heading levels in an array of GroupHeading objects, for later use in QueryRenderer.ts.
+ * it returns the calculated heading levels in an array of GroupDisplayHeading objects, for later use in QueryRenderer.ts.
  */
 
 /**
@@ -95,16 +95,16 @@ export class GroupHeadingsDisplaySelector {
      * Calculate the minimal set of headings that should be displayed
      * before the tasks with the given group names.
      *
-     * Data for each required heading is stored in a GroupHeading object.
+     * Data for each required heading is stored in a GroupDisplayHeading object.
      * @param groupNames 0 or more group names, one per 'group by' line
      */
-    getHeadingsForTaskGroup(groupNames: string[]): GroupHeading[] {
+    getHeadingsForTaskGroup(groupNames: string[]): GroupDisplayHeading[] {
         // See 'pjeby's answer' above for an explanation of this algorithm.
-        const headingsForGroup = new Array<GroupHeading>();
+        const headingsForGroup = new Array<GroupDisplayHeading>();
         for (let level = 0; level < groupNames.length; level++) {
             const group = groupNames[level];
             if (group != this.lastHeadingAtLevel[level]) {
-                headingsForGroup.push(new GroupHeading(level, group));
+                headingsForGroup.push(new GroupDisplayHeading(level, group));
                 // Reset all the lower heading levels to un-seen
                 for (let j = level; j < groupNames.length; j++) {
                     this.lastHeadingAtLevel[j] = '';

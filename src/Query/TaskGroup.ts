@@ -1,5 +1,5 @@
 import type { Task } from '../Task';
-import type { GroupHeading } from './GroupHeading';
+import type { GroupDisplayHeading } from './GroupDisplayHeading';
 
 /**
  * TaskGroup stores a single group of tasks, that all share the same group names.
@@ -33,7 +33,7 @@ export class TaskGroup {
      * If there were no 'group by' instructions in the tasks code block,
      * this will be empty.
      */
-    public readonly groupHeadings: GroupHeading[];
+    public readonly groupHeadings: GroupDisplayHeading[];
 
     /**
      * All the tasks that match the user's filters and that have the
@@ -44,10 +44,10 @@ export class TaskGroup {
     /**
      * Constructor for TaskGroup
      * @param {string[]} groups - See this.groups for details
-     * @param {GroupHeading[]} groupHeadings - See this.groupHeadings for details
+     * @param {GroupDisplayHeading[]} groupHeadings - See this.groupHeadings for details
      * @param tasks {Task[]} - See this.tasks for details
      */
-    constructor(groups: string[], groupHeadings: GroupHeading[], tasks: Task[]) {
+    constructor(groups: string[], groupHeadings: GroupDisplayHeading[], tasks: Task[]) {
         this.groups = groups;
         this.groupHeadings = groupHeadings;
         this.tasks = tasks;
