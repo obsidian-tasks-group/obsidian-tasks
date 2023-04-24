@@ -40,6 +40,9 @@ const fieldCreators = [
     () => new DueDateField(),
     () => new DoneDateField(),
     () => new PathField(),
+    () => new FolderField(),
+    () => new RootField(),
+    () => new BacklinkField(),
     () => new DescriptionField(),
     () => new TagsField(),
     () => new HeadingField(),
@@ -48,9 +51,6 @@ const fieldCreators = [
     () => new FilenameField(),
     () => new UrgencyField(),
     () => new RecurrenceField(),
-    () => new FolderField(),
-    () => new RootField(),
-    () => new BacklinkField(),
 ];
 
 export function parseFilter(filterString: string): FilterOrErrorMessage | null {
