@@ -31,7 +31,7 @@ path includes Styling of Queries
 short mode
 ```
 
-- [ ] **5. Test 'hidden' query classes** - the following lines (except the backlinks) should be colored **red**:
+- [ ] **5. Test 'hidden' query classes** - the following lines should be colored **red**:
 
 ```tasks
 path includes Styling of Queries
