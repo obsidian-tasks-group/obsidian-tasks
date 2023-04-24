@@ -84,8 +84,7 @@ describe('sorting by status', () => {
 
 describe('grouping by status', () => {
     it('supports grouping methods correctly', () => {
-        const field = new StatusField();
-        expect(field.supportsGrouping()).toEqual(true);
+        expect(new StatusField()).toSupportGroupingWithProperty('status');
     });
 
     it.each([
