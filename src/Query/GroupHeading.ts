@@ -12,7 +12,7 @@ export class GroupHeading {
     /**
      * The text to be displayed for the group.
      */
-    public readonly name: string;
+    public readonly displayName: string;
 
     /**
      * Construct a GroupHeading object
@@ -21,6 +21,6 @@ export class GroupHeading {
      */
     constructor(nestingLevel: number, name: string) {
         this.nestingLevel = nestingLevel;
-        this.name = name;
+        this.displayName = name;
     }
 }
