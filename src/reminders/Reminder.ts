@@ -25,6 +25,10 @@ export class Reminder {
         return this.date;
     }
 
+    public setDate(date: Moment): void {
+        this.date = date;
+    }
+
     // could probably remove this and just check if reminder is in array
     public isComplete(): boolean {
         return this.isAck;

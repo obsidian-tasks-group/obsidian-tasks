@@ -1,6 +1,7 @@
 import type { Moment } from 'moment';
 import { RRule } from 'rrule';
 import { compareByDate } from './lib/DateTools';
+import type { Reminder } from './reminders/Reminder';
 
 export class Recurrence {
     private readonly rrule: RRule;
@@ -8,7 +9,7 @@ export class Recurrence {
     private readonly startDate: Moment | null;
     private readonly scheduledDate: Moment | null;
     private readonly dueDate: Moment | null;
-    private readonly reminderDate: Moment | null;
+    private readonly reminders: Reminder[] | [];
 
     /**
      * The reference date is used to calculate future occurrences.
@@ -32,7 +33,7 @@ export class Recurrence {
         startDate,
         scheduledDate,
         dueDate,
-        reminderDate,
+        reminders,
     }: {
         rrule: RRule;
         baseOnToday: boolean;
@@ -40,7 +41,7 @@ export class Recurrence {
         startDate: Moment | null;
         scheduledDate: Moment | null;
         dueDate: Moment | null;
-        reminderDate: Moment | null;
+        reminders: Reminder[] | [];
     }) {
         this.rrule = rrule;
         this.baseOnToday = baseOnToday;
@@ -48,7 +49,7 @@ export class Recurrence {
         this.startDate = startDate;
         this.scheduledDate = scheduledDate;
         this.dueDate = dueDate;
-        this.reminderDate = reminderDate;
+        this.reminders = reminders;
     }
 
     public static fromText({
@@ -56,13 +57,13 @@ export class Recurrence {
         startDate,
         scheduledDate,
         dueDate,
-        reminderDate,
+        reminders,
     }: {
         recurrenceRuleText: string;
         startDate: Moment | null;
         scheduledDate: Moment | null;
         dueDate: Moment | null;
-        reminderDate: Moment | null;
+        reminders: Reminder[] | [];
     }): Recurrence | null {
         try {
             const match = recurrenceRuleText.match(/^([a-zA-Z0-9, !]+?)( when done)?$/i);
@@ -85,8 +86,6 @@ export class Recurrence {
                     referenceDate = window.moment(scheduledDate);
                 } else if (startDate) {
                     referenceDate = window.moment(startDate);
-                } else if (reminderDate) {
-                    referenceDate = window.moment(reminderDate);
                 }
 
                 if (!baseOnToday && referenceDate !== null) {
@@ -103,7 +102,7 @@ export class Recurrence {
                     startDate,
                     scheduledDate,
                     dueDate,
-                    reminderDate,
+                    reminders,
                 });
             }
         } catch (error) {
@@ -129,7 +128,7 @@ export class Recurrence {
         startDate: Moment | null;
         scheduledDate: Moment | null;
         dueDate: Moment | null;
-        reminderDate: Moment | null;
+        reminders: Reminder[] | [];
     } | null {
         let next: Date;
         if (this.baseOnToday) {
@@ -159,7 +158,7 @@ export class Recurrence {
             let startDate: Moment | null = null;
             let scheduledDate: Moment | null = null;
             let dueDate: Moment | null = null;
-            let reminderDate: Moment | null = null;
+            const reminders: Reminder[] = [];
 
             // Only if a reference date is given. A reference date will exist if at
             // least one of the other dates is set.
@@ -188,14 +187,18 @@ export class Recurrence {
                     // Rounding days to handle cross daylight-savings-time recurrences.
                     dueDate.add(Math.round(originalDifference.asDays()), 'days');
                 }
-                //TODO erik-handeland: - copliot review this
-                if (this.reminderDate) {
-                    const originalDifference = window.moment.duration(this.reminderDate.diff(this.referenceDate));
-
-                    // Cloning so that original won't be manipulated:
-                    reminderDate = window.moment(next);
-                    // Rounding days to handle cross daylight-savings-time recurrences.
-                    reminderDate.add(Math.round(originalDifference.asDays()), 'days');
+                //TODO erik-handeland: review
+                if (this.reminders) {
+                    console.log('this.reminders', this.reminders);
+                    this.reminders.forEach((reminder) => {
+                        const newReminder = window
+                            .moment(next)
+                            .set({ hour: reminder.getDate().hour(), minute: reminder.getDate().minute() });
+                        reminder.setDate(newReminder);
+                        reminders.push(reminder);
+                    });
+                } else {
+                    console.log('no reminders');
                 }
             }
 
@@ -203,13 +206,14 @@ export class Recurrence {
                 startDate,
                 scheduledDate,
                 dueDate,
-                reminderDate,
+                reminders,
             };
         }
 
         return null;
     }
 
+    // TODO erik-handeland: couldn't you just compare the string representation of the recurrence?
     public identicalTo(other: Recurrence) {
         if (this.baseOnToday !== other.baseOnToday) {
             return false;
@@ -225,9 +229,9 @@ export class Recurrence {
         if (compareByDate(this.dueDate, other.dueDate) !== 0) {
             return false;
         }
-        if (compareByDate(this.reminderDate, other.reminderDate) !== 0) {
-            return false;
-        }
+        // if (compareByDate(this.reminders, other.reminders) !== 0) {
+        //     return false;
+        // }
 
         return this.toText() === other.toText(); // this also checks baseOnToday
     }

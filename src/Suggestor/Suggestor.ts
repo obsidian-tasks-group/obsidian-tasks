@@ -251,7 +251,7 @@ function addRecurrenceSuggestions(line: string, cursorPos: number, settings: Set
                 startDate: null,
                 scheduledDate: null,
                 dueDate: null,
-                reminderDate: null,
+                reminders: [],
             })?.toText();
             if (parsedRecurrence) {
                 const appendedText = `${recurrencePrefix} ${parsedRecurrence} `;

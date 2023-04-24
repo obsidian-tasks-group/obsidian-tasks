@@ -227,7 +227,7 @@
                     startDate: null,
                     scheduledDate: null,
                     dueDate: null,
-                    reminderDate: null,
+                    reminders: [],
                 })?.toText();
             if (!recurrenceFromText) {
                 parsedRecurrence = '<i>invalid recurrence rule</i>';
@@ -335,7 +335,7 @@
                 startDate,
                 scheduledDate,
                 dueDate,
-                reminderDate,
+                reminders: reminderDate ? [new Reminder(reminderDate)] : [],
             });
         }
 

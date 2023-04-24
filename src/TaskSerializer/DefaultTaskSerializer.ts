@@ -285,7 +285,7 @@ export class DefaultTaskSerializer implements TaskSerializer {
                 startDate,
                 scheduledDate,
                 dueDate,
-                reminderDate,
+                reminders: reminderDate ? [new Reminder(reminderDate)] : [],
             });
         }
         // Add back any trailing tags to the description. We removed them so we can parse the rest of the
