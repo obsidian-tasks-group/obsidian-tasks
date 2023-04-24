@@ -62,11 +62,11 @@ export class TaskGroups {
 
     private addTasks(taskGroupingTree: TaskGroupingTree) {
         // Get the headings
-        const grouper = new GroupHeadingsDisplaySelector(taskGroupingTree.groups);
+        const headingsDisplaySelector = new GroupHeadingsDisplaySelector(taskGroupingTree.groups);
 
         // Build a container of all the groups
         for (const [groups, tasks] of taskGroupingTree.groups) {
-            const groupHeadings = grouper.getHeadingsForTaskGroup(groups);
+            const groupHeadings = headingsDisplaySelector.getHeadingsForTaskGroup(groups);
             const taskGroup = new TaskGroup(groups, groupHeadings, tasks);
             this.add(taskGroup);
         }
