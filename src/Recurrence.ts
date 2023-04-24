@@ -187,7 +187,7 @@ export class Recurrence {
                     // Rounding days to handle cross daylight-savings-time recurrences.
                     dueDate.add(Math.round(originalDifference.asDays()), 'days');
                 }
-                //TODO erik-handeland: review
+
                 if (this.reminders) {
                     console.log('this.reminders', this.reminders);
                     this.reminders.forEach((reminder) => {
@@ -197,8 +197,6 @@ export class Recurrence {
                         reminder.setDate(newReminder);
                         reminders.push(reminder);
                     });
-                } else {
-                    console.log('no reminders');
                 }
             }
 
