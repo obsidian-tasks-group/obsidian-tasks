@@ -23,6 +23,9 @@ import type { FilterOrErrorMessage } from './Filter/Filter';
 import type { Sorter } from './Sorter';
 import type { Grouper } from './Grouper';
 import { MultiTextField } from './Filter/MultiTextField';
+import { FolderField } from './Filter/FolderField';
+import { RootField } from './Filter/RootField';
+import { BacklinkField } from './Filter/BacklinkField';
 
 const fieldCreators = [
     () => new StatusNameField(), // status.name is before status, to avoid ambiguity
@@ -37,6 +40,9 @@ const fieldCreators = [
     () => new DueDateField(),
     () => new DoneDateField(),
     () => new PathField(),
+    () => new FolderField(),
+    () => new RootField(),
+    () => new BacklinkField(),
     () => new DescriptionField(),
     () => new TagsField(),
     () => new HeadingField(),
