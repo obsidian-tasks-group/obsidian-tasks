@@ -291,7 +291,7 @@ class QueryRenderChild extends MarkdownRenderChild {
                 cls: 'tasks-group-heading',
             });
         }
-        await MarkdownRenderer.renderMarkdown(group.name, header, this.filePath, this);
+        await MarkdownRenderer.renderMarkdown(group.displayName, header, this.filePath, this);
     }
 
     private addBacklinks(listItem: HTMLElement, task: Task, shortMode: boolean, isFilenameUnique: boolean | undefined) {

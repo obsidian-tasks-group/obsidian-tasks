@@ -12,15 +12,15 @@ export class GroupDisplayHeading {
     /**
      * The text to be displayed for the group.
      */
-    public readonly name: string;
+    public readonly displayName: string;
 
     /**
      * Construct a GroupDisplayHeading object
      * @param {number} nestingLevel - See this.nestingLevel for details
-     * @param {string} name - The text to be displayed for the group
+     * @param {string} displayName - The text to be displayed for the group
      */
-    constructor(nestingLevel: number, name: string) {
+    constructor(nestingLevel: number, displayName: string) {
         this.nestingLevel = nestingLevel;
-        this.name = name;
+        this.displayName = displayName;
     }
 }
