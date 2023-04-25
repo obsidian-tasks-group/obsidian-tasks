@@ -78,6 +78,8 @@ import type { TaskGroupingTreeStorage } from './TaskGroupingTree';
  * GroupDisplayHeadingSelector calculates which headings need to be displayed, for
  * a given group of tasks.
  *
+ * It selects which {@link GroupDisplayHeading} objects to create.
+ *
  * See the explanation in GroupDisplayHeadingSelector.ts for how it works.
  */
 export class GroupDisplayHeadingSelector {
