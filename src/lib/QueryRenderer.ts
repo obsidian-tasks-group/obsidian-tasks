@@ -1,5 +1,5 @@
 import type { IQuery } from '../IQuery';
-import { getGlobalQuery } from '../Config/Settings';
+import { getGlobalQuerySource } from '../Config/Settings';
 import { GlobalFilter } from '../Config/GlobalFilter';
 import { Query } from '../Query/Query';
 
@@ -29,7 +29,7 @@ export function explainResults(source: string): string {
         result += `Only tasks containing the global filter '${GlobalFilter.get()}'.\n\n`;
     }
 
-    const globalQuery: IQuery = getGlobalQuery();
+    const globalQuery: IQuery = new Query(getGlobalQuerySource());
 
     if (globalQuery.source.trim() !== '') {
         result += `Explanation of the global query:\n\n${globalQuery.explainQuery()}\n`;
@@ -49,5 +49,5 @@ export function explainResults(source: string): string {
  * @returns {Query} The query to execute
  */
 export function getQueryForQueryRenderer(source: string): Query {
-    return getGlobalQuery().append(new Query({ source }));
+    return new Query(getGlobalQuerySource()).append(new Query({ source }));
 }

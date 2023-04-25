@@ -6,7 +6,6 @@ import { Status } from '../Status';
 import { DefaultTaskSerializer, type TaskSerializer } from '../TaskSerializer';
 import type { SuggestionBuilder } from '../Suggestor';
 import { DataviewTaskSerializer } from '../TaskSerializer/DataviewTaskSerializer';
-import { Query } from '../Query/Query';
 import { DebugSettings } from './DebugSettings';
 import { StatusSettings } from './StatusSettings';
 import { Feature } from './Feature';
@@ -203,13 +202,10 @@ export function getUserSelectedTaskFormat(): TaskFormat {
 }
 
 /**
- * Retrieves the global {@link Query}
+ * Retrieves the source of the global {@link Query}
  *
  * @exports
- * @returns {Query}
  */
-export function getGlobalQuery(): Query {
-    const { globalQuery } = getSettings();
-
-    return new Query({ source: globalQuery });
+export function getGlobalQuerySource(): { source: string } {
+    return { source: getSettings().globalQuery };
 }
