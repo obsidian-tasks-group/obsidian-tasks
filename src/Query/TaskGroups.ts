@@ -20,8 +20,7 @@ export class TaskGroups {
      * Constructor for {@link TaskGroups}
      * @param {Grouper[]} groups - 0 or more {@link Grouper} objects,
      *                              1 per 'group by' line in the task query block
-     * @param {Task[]} tasks - 0 or more Task objects, with all the tasks
-     *                         matching the query, already in sort order
+     * @param {Task[]} tasks - all the tasks matching the query, already sorted
      */
     constructor(groups: Grouper[], tasks: Task[]) {
         // Grouping doesn't change the number of tasks, and all the tasks
