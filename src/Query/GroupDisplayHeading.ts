@@ -1,5 +1,5 @@
 /**
- * GroupDisplayHeading contains the data needed to render one heading for a group of tasks.
+ * Store the data needed to render one heading for a group of tasks.
  */
 export class GroupDisplayHeading {
     /**
@@ -22,12 +22,12 @@ export class GroupDisplayHeading {
     public readonly displayName: string;
 
     /**
-     * Construct a GroupDisplayHeading object
-     * @param {number} nestingLevel - See this.nestingLevel for details
-     * @param {string} name - The text to be displayed for the group
+     * Construct a {@link GroupDisplayHeading} object
+     * @param {number} nestingLevel - See {@link nestingLevel} for details
+     * @param {string} displayName - The text to be displayed for the group
      */
-    constructor(nestingLevel: number, name: string) {
+    constructor(nestingLevel: number, displayName: string) {
         this.nestingLevel = nestingLevel;
-        this.displayName = name;
+        this.displayName = displayName;
     }
 }
