@@ -1,0 +1,87 @@
+---
+publish: true
+---
+
+# Global Query
+
+## Summary
+
+> [!released]
+The Global Query setting was added in Tasks X.Y.Z.
+
+You can set a global query in the settings that Tasks will add to the start of all the Queries in your vault.
+
+> [!example]
+> With a global query set to `path includes /tasks`, the following task block
+>
+>     ```tasks
+>     tags include work
+>     ```
+>
+> will run as if it were
+>
+>     ```tasks
+>     path includes /tasks
+>     tags include work
+>     ``` 
+
+## Examples
+
+Currently, any query that is allowed in a task block will also work as your Global Query. But this feature is especially useful for applying [filters](Filters) or [layout options](Layout) by default for all your queries.
+
+> [!warning]
+> It currently isn't generally possible to reverse layout or filter instructions from a Global Query in task blocks within your vault. We're tracking this across several issues: [issue #1619](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1619) and [issue #1806](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1806).
+
+### [[Layout]]
+
+> [!example]
+> **Turn on short mode**
+>
+>     ```tasks
+>     short mode
+>     ```
+
+> [!example]
+> **Hide priority**
+>
+>     ```tasks
+>     hide priority
+>     ```
+
+> [!example]
+> **Show up to 50 tasks**
+>  
+>  
+>     ```tasks
+>     limit 50
+>     ```
+> &nbsp
+>
+> > [!info]
+> > You **_can_** override a limit set in your Global Query in a task block in a vault.
+
+### [[Filters]]
+
+> [!example]
+> **Only show tasks under specific headings**
+>
+>     ```tasks
+>     heading includes Task
+>     ```
+
+> [!example]
+> **Exclude tasks from a specific path**
+>
+>     ```tasks
+>     path regex does not match /^_templates/
+>     ```
+
+## Settings
+
+The following settings in the Tasks Options pane control the vault's global query.
+
+You query should start working immediately, but open queries may need to be refreshed.
+
+![settings-global-filter](../images/settings-global-query.png)
+
+Image of the settings options for the global query, showing the default settings.
