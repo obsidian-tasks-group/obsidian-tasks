@@ -5,14 +5,16 @@ import type { Settings } from '../Config/Settings';
  */
 export type SuggestInfo = {
     suggestionType?: 'match' | 'default' | 'empty';
-    // What to display to the user
+    /** What to display to the user  */
     displayText: string;
-    // What to append to the note
+    /** What to append to the note  */
     appendText: string;
-    // At what index in the line to do the insertion (if not specified, the cursor location is used)
+    /** At what index in the line to do the insertion (if not specified, the cursor location is used) */
     insertAt?: number;
-    // How many characters to skip from the original line (e.g. if replacing existing text)
+    /** How many characters to skip from the original line (e.g. if replacing existing text) */
     insertSkip?: number;
+    /** Text to match with the user input if matching against the display text is not desirable */
+    textToMatch?: string;
 };
 
 /*
