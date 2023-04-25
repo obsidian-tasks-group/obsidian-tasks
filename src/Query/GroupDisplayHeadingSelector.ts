@@ -70,15 +70,15 @@ import type { TaskGroupingTreeStorage } from './TaskGroupingTree';
  *
  * The TaskGroupingTree class below does the initial grouping and sorting.
  *
- * The GroupHeadings class below implements pjeby's heading detection algorithm, but instead of doing the printing directly,
- * it returns the calculated heading levels in an array of GroupHeading objects, for later use in QueryRenderer.ts.
+ * The GroupDisplayHeadingSelector class below implements pjeby's heading detection algorithm, but instead of doing the printing directly,
+ * it returns the calculated heading levels in an array of GroupDisplayHeading objects, for later use in QueryRenderer.ts.
  */
 
 /**
- * GroupHeadings calculates which headings need to be displayed, for
+ * GroupDisplayHeadingSelector calculates which headings need to be displayed, for
  * a given group of tasks.
  *
- * See the explanation in GroupHeadings.ts for how it works.
+ * See the explanation in GroupDisplayHeadingSelector.ts for how it works.
  */
 export class GroupDisplayHeadingSelector {
     private lastHeadingAtLevel = new Array<string>();
@@ -95,7 +95,7 @@ export class GroupDisplayHeadingSelector {
      * Calculate the minimal set of headings that should be displayed
      * before the tasks with the given group names.
      *
-     * Data for each required heading is stored in a GroupHeading object.
+     * Data for each required heading is stored in a GroupDisplayHeading object.
      * @param groupNames 0 or more group names, one per 'group by' line
      */
     getHeadingsForTaskGroup(groupNames: string[]): GroupDisplayHeading[] {
