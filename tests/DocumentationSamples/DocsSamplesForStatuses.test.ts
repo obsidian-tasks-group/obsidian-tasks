@@ -1,18 +1,18 @@
 import { verify } from 'approvals/lib/Providers/Jest/JestApprovals';
 
-import { StatusField } from '../src/Query/Filter/StatusField';
-import { Status } from '../src/Status';
-import type { Task } from '../src/Task';
-import { StatusConfiguration, StatusType } from '../src/StatusConfiguration';
-import type { FilterOrErrorMessage } from '../src/Query/Filter/Filter';
-import * as FilterParser from '../src/Query/FilterParser';
-import { StatusNameField } from '../src/Query/Filter/StatusNameField';
-import { StatusTypeField } from '../src/Query/Filter/StatusTypeField';
-import type { StatusCollection, StatusCollectionEntry } from '../src/StatusCollection';
-import * as Themes from '../src/Config/Themes';
-import { StatusValidator } from '../src/StatusValidator';
-import { TaskBuilder } from './TestingTools/TaskBuilder';
-import { MarkdownTable, verifyMarkdownForDocs } from './TestingTools/VerifyMarkdownTable';
+import { StatusField } from '../../src/Query/Filter/StatusField';
+import { Status } from '../../src/Status';
+import type { Task } from '../../src/Task';
+import { StatusConfiguration, StatusType } from '../../src/StatusConfiguration';
+import type { FilterOrErrorMessage } from '../../src/Query/Filter/Filter';
+import * as FilterParser from '../../src/Query/FilterParser';
+import { StatusNameField } from '../../src/Query/Filter/StatusNameField';
+import { StatusTypeField } from '../../src/Query/Filter/StatusTypeField';
+import type { StatusCollection, StatusCollectionEntry } from '../../src/StatusCollection';
+import * as Themes from '../../src/Config/Themes';
+import { StatusValidator } from '../../src/StatusValidator';
+import { TaskBuilder } from '../TestingTools/TaskBuilder';
+import { MarkdownTable, verifyMarkdownForDocs } from '../TestingTools/VerifyMarkdownTable';
 
 function getPrintableSymbol(symbol: string) {
     const result = symbol !== ' ' ? symbol : 'space';
