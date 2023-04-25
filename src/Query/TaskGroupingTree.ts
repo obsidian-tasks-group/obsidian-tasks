@@ -47,7 +47,7 @@ class TaskGroupingTreeNode extends GroupingTreeNode<Task> {}
  *
  * Ideally, this code would be simplified and moved in to TaskGroups.
  */
-export class IntermediateTaskGroups {
+export class TaskGroupingTree {
     public groups = new IntermediateTaskGroupsStorage();
 
     /**
