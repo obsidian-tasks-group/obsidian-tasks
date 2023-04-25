@@ -83,8 +83,8 @@ import type { TaskGroupingTreeStorage } from './TaskGroupingTree';
 export class GroupDisplayHeadingSelector {
     private lastHeadingAtLevel = new Array<string>();
 
-    constructor(groupedTasks: TaskGroupingTreeStorage) {
-        const firstGroup = groupedTasks.keys().next().value;
+    constructor(taskGroupingTreeStorage: TaskGroupingTreeStorage) {
+        const firstGroup = taskGroupingTreeStorage.keys().next().value;
         const groupCount = firstGroup.length;
         for (let i = 0; i < groupCount; i++) {
             this.lastHeadingAtLevel.push('');
