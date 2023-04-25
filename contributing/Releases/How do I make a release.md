@@ -8,7 +8,6 @@
     - Backwards incompatible change: increase major version
     - New functionality: increase minor version
     - Only bug fixes: increase patch version
-1. Having decided on the new version, replace all `X.Y.Z` in the documentation with the new version number.
 1. Check the current version of the obsidian dependency in [package.json](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/package.json) (for example, `0.13.21`)
 1. Run `./release.sh <new tasks version> <obsidian version>`
     - Make sure there are no uncommitted changes. Stash them if necessary.
