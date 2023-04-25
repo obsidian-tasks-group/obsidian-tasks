@@ -3,7 +3,7 @@
 ## Update tests/
 
 - Add a new test block to generate files for inclusion in docs:
-  - See examples in [tests/DocsSamplesForStatuses.test.ts](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/DocsSamplesForStatuses.test.ts)
+  - See examples in [tests/DocumentationSamples/DocsSamplesForStatuses.test.ts](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/DocumentationSamples/DocsSamplesForStatuses.test.ts)
   - Section = `describe('Theme', () => {`
   - After implementing the code below, run the tests
   - Run the new test and approve all the output files
