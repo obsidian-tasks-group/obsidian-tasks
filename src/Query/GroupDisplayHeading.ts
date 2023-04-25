@@ -1,5 +1,5 @@
 /**
- * GroupHeading contains the data needed to render one heading for a group of tasks
+ * GroupDisplayHeading contains the data needed to render one heading for a group of tasks
  */
 export class GroupDisplayHeading {
     /**
@@ -15,7 +15,7 @@ export class GroupDisplayHeading {
     public readonly name: string;
 
     /**
-     * Construct a GroupHeading object
+     * Construct a GroupDisplayHeading object
      * @param {number} nestingLevel - See this.nestingLevel for details
      * @param {string} name - The text to be displayed for the group
      */
