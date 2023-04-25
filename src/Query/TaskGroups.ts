@@ -1,6 +1,6 @@
 import type { Task } from '../Task';
 import type { Grouper } from './Grouper';
-import { GroupHeadings } from './GroupHeadings';
+import { GroupDisplayHeadingSelector } from './GroupDisplayHeadingSelector';
 import { TaskGroupingTree } from './TaskGroupingTree';
 import { TaskGroup } from './TaskGroup';
 
@@ -62,7 +62,7 @@ export class TaskGroups {
 
     private addTasks(initialGroups: TaskGroupingTree) {
         // Get the headings
-        const grouper = new GroupHeadings(initialGroups.groups);
+        const grouper = new GroupDisplayHeadingSelector(initialGroups.groups);
 
         // Build a container of all the groups
         for (const [groups, tasks] of initialGroups.groups) {

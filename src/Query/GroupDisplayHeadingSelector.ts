@@ -80,7 +80,7 @@ import type { IntermediateTaskGroupsStorage } from './TaskGroupingTree';
  *
  * See the explanation in GroupHeadings.ts for how it works.
  */
-export class GroupHeadings {
+export class GroupDisplayHeadingSelector {
     private lastHeadingAtLevel = new Array<string>();
 
     constructor(groupedTasks: IntermediateTaskGroupsStorage) {
