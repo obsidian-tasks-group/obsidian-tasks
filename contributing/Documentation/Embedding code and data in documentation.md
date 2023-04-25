@@ -172,13 +172,13 @@ Maintaining that amount of information, for multiple themes, would be an error-p
 
 The following test source file exists purely to write out files for embedding in the documentation.
 
-- [DocsSamplesForStatuses.test.ts](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/DocsSamplesForStatuses.test.ts)
+- [DocsSamplesForStatuses.test.ts](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/DocumentationSamples/DocsSamplesForStatuses.test.ts)
 
 For the ITS theme, the above tests generate these `*.approved.*` files, using [[Approval Tests]]:
 
-- [tests/DocsSamplesForStatuses.test.Theme_ITS_Table.approved.md](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/DocsSamplesForStatuses.test.Theme_ITS_Table.approved.md)
-- [tests/DocsSamplesForStatuses.test.Theme_ITS_Tasks.approved.md](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/DocsSamplesForStatuses.test.Theme_ITS_Tasks.approved.md)
-- [tests/DocsSamplesForStatuses.test.Theme_ITS_Text.approved.txt](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/DocsSamplesForStatuses.test.Theme_ITS_Text.approved.txt)
+- [tests/DocumentationSamples/DocsSamplesForStatuses.test.Theme_ITS_Table.approved.md](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/DocumentationSamples/DocsSamplesForStatuses.test.Theme_ITS_Table.approved.md)
+- [tests/DocumentationSamples/DocsSamplesForStatuses.test.Theme_ITS_Tasks.approved.md](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/DocumentationSamples/DocsSamplesForStatuses.test.Theme_ITS_Tasks.approved.md)
+- [tests/DocumentationSamples/DocsSamplesForStatuses.test.Theme_ITS_Text.approved.txt](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/DocumentationSamples/DocsSamplesForStatuses.test.Theme_ITS_Text.approved.txt)
 
 And mdsnippets then embeds the above `*.approved.*` in to the source file.
 
