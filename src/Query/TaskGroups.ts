@@ -1,7 +1,7 @@
 import type { Task } from '../Task';
 import type { Grouper } from './Grouper';
 import { GroupHeadings } from './GroupHeadings';
-import { IntermediateTaskGroups } from './IntermediateTaskGroups';
+import { TaskGroupingTree } from './TaskGroupingTree';
 import { TaskGroup } from './TaskGroup';
 
 /**
@@ -24,7 +24,7 @@ export class TaskGroups {
         // will be shown in at least one group.
         this._totalTaskCount = tasks.length;
 
-        const initialGroups = new IntermediateTaskGroups(groups, tasks);
+        const initialGroups = new TaskGroupingTree(groups, tasks);
         this.addTasks(initialGroups);
     }
 
@@ -60,7 +60,7 @@ export class TaskGroups {
         return output;
     }
 
-    private addTasks(initialGroups: IntermediateTaskGroups) {
+    private addTasks(initialGroups: TaskGroupingTree) {
         // Get the headings
         const grouper = new GroupHeadings(initialGroups.groups);
 

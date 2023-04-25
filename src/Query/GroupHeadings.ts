@@ -1,5 +1,5 @@
 import { GroupHeading } from './GroupHeading';
-import type { IntermediateTaskGroupsStorage } from './IntermediateTaskGroups';
+import type { IntermediateTaskGroupsStorage } from './TaskGroupingTree';
 
 /*
  * This file contains implementation details of Group.ts
