@@ -1,5 +1,5 @@
 import { GroupHeading } from './GroupHeading';
-import type { IntermediateTaskGroupsStorage } from './IntermediateTaskGroups';
+import type { TaskGroupingTreeStorage } from './TaskGroupingTree';
 
 /*
  * This file contains implementation details of Group.ts
@@ -68,7 +68,7 @@ import type { IntermediateTaskGroupsStorage } from './IntermediateTaskGroups';
  * What the code does
  * ==================
  *
- * The IntermediateTaskGroups class below does the initial grouping and sorting.
+ * The TaskGroupingTree class below does the initial grouping and sorting.
  *
  * The GroupHeadings class below implements pjeby's heading detection algorithm, but instead of doing the printing directly,
  * it returns the calculated heading levels in an array of GroupHeading objects, for later use in QueryRenderer.ts.
@@ -83,7 +83,7 @@ import type { IntermediateTaskGroupsStorage } from './IntermediateTaskGroups';
 export class GroupHeadings {
     private lastHeadingAtLevel = new Array<string>();
 
-    constructor(groupedTasks: IntermediateTaskGroupsStorage) {
+    constructor(groupedTasks: TaskGroupingTreeStorage) {
         const firstGroup = groupedTasks.keys().next().value;
         const groupCount = firstGroup.length;
         for (let i = 0; i < groupCount; i++) {

@@ -9,7 +9,7 @@ import { GroupingTreeNode } from './GroupingTreeNode';
  * For example, one set of keys might be ['Folder Name/', 'File Name']
  * and the values would be all the matching Tasks from that file.
  */
-export class IntermediateTaskGroupsStorage extends Map<string[], Task[]> {}
+export class TaskGroupingTreeStorage extends Map<string[], Task[]> {}
 
 /*
  * A tree of tasks where every level in the tree corresponds to a grouping property.
@@ -37,18 +37,18 @@ export class IntermediateTaskGroupsStorage extends Map<string[], Task[]> {}
 class TaskGroupingTreeNode extends GroupingTreeNode<Task> {}
 
 /**
- * IntermediateTaskGroups does the initial grouping together of tasks,
+ * TaskGroupingTree does the initial grouping together of tasks,
  * in alphabetical order by group names.
  *
- * It is essentially a thin wrapper around Map - see IntermediateTaskGroupsStorage.
+ * It is essentially a thin wrapper around Map - see TaskGroupingTreeStorage.
  *
  * It is named "Intermediate" because its results are only temporary.
  * They will be discarded once the final TaskGroups object is created.
  *
  * Ideally, this code would be simplified and moved in to TaskGroups.
  */
-export class IntermediateTaskGroups {
-    public groups = new IntermediateTaskGroupsStorage();
+export class TaskGroupingTree {
+    public groups = new TaskGroupingTreeStorage();
 
     /**
      * Group a list of tasks, according to one or more task properties
@@ -101,6 +101,6 @@ export class IntermediateTaskGroups {
         // groups.keys() will initially be in the order the entries were added,
         // so effectively random.
         // Return a duplicate map, with the keys (that is, group names) sorted in alphabetical order:
-        return new IntermediateTaskGroupsStorage([...this.groups.entries()].sort());
+        return new TaskGroupingTreeStorage([...this.groups.entries()].sort());
     }
 }
