@@ -533,7 +533,7 @@ Note that the path includes the `.md` extension.
 ### Root
 
 > [!released]
-> Introduced in Tasks X.Y.Z.
+> Introduced in Tasks 3.4.0.
 
 The `root` is the top-level folder of the file that contains the task, that is, the first directory in the path, which will be `/` for files in root of the vault.
 
@@ -546,7 +546,7 @@ The `root` is the top-level folder of the file that contains the task, that is, 
 ### Folder
 
 > [!released]
-> Introduced in Tasks X.Y.Z.
+> Introduced in Tasks 3.4.0.
 
 This is the `folder` to the file that contains the task, which will be `/` for files in root of the vault.
 
