@@ -21,7 +21,7 @@ export function makeDefaultSuggestionBuilder(symbols: DefaultTaskSerializerSymbo
         suggestions = suggestions.concat(addRecurrenceSuggestions(line, cursorPos, settings, symbols.recurrenceSymbol));
 
         // Step 3: add task property suggestions ('due', 'recurrence' etc)
-        suggestions = suggestions.concat(addTaskProperySuggestions(line, cursorPos, settings, symbols));
+        suggestions = suggestions.concat(addTaskPropertySuggestions(line, cursorPos, settings, symbols));
 
         // Unless we have a suggestion that is a match for something the user is currently typing, add
         // an 'Enter' entry in the beginning of the menu, so an Enter press will move to the next line
@@ -45,7 +45,7 @@ export function makeDefaultSuggestionBuilder(symbols: DefaultTaskSerializerSymbo
 /*
  * Get suggestions for generic task components, e.g. a priority or a 'due' symbol
  */
-function addTaskProperySuggestions(
+function addTaskPropertySuggestions(
     line: string,
     cursorPos: number,
     _settings: Settings,
