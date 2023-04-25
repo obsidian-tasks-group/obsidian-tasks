@@ -24,8 +24,8 @@ export class TaskGroups {
         // will be shown in at least one group.
         this._totalTaskCount = tasks.length;
 
-        const initialGroups = new TaskGroupingTree(groups, tasks);
-        this.addTasks(initialGroups);
+        const taskGroupingTree = new TaskGroupingTree(groups, tasks);
+        this.addTasks(taskGroupingTree);
     }
 
     /**
@@ -60,13 +60,13 @@ export class TaskGroups {
         return output;
     }
 
-    private addTasks(initialGroups: TaskGroupingTree) {
+    private addTasks(taskGroupingTree: TaskGroupingTree) {
         // Get the headings
-        const grouper = new GroupDisplayHeadingSelector(initialGroups.groups);
+        const displayHeadingSelector = new GroupDisplayHeadingSelector(taskGroupingTree.groups);
 
         // Build a container of all the groups
-        for (const [groups, tasks] of initialGroups.groups) {
-            const groupHeadings = grouper.getHeadingsForTaskGroup(groups);
+        for (const [groups, tasks] of taskGroupingTree.groups) {
+            const groupHeadings = displayHeadingSelector.getHeadingsForTaskGroup(groups);
             const taskGroup = new TaskGroup(groups, groupHeadings, tasks);
             this.add(taskGroup);
         }
