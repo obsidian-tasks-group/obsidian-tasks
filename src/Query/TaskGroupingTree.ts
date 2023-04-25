@@ -40,10 +40,10 @@ class TaskGroupingTreeNode extends GroupingTreeNode<Task> {}
  * TaskGroupingTree does the initial grouping together of tasks,
  * in alphabetical order by group names.
  *
- * It is essentially a thin wrapper around Map - see TaskGroupingTreeStorage.
+ * It is essentially a thin wrapper around Map - see {@link TaskGroupingTreeStorage}.
  *
- * It is named "Intermediate" because its results are only temporary.
- * They will be discarded once the final TaskGroups object is created.
+ * It is an implementation detail of the task-grouping code, and does not need to
+ * be understood in order to group tasks.
  *
  * Ideally, this code would be simplified and moved in to TaskGroups.
  */

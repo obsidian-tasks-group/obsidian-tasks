@@ -119,7 +119,10 @@ export class Query implements IQuery {
         return this._sorting;
     }
 
-    public get grouping() {
+    /**
+     * Return the {@link Grouper} objects that represent any `group by` instructions in the tasks block.
+     */
+    public get grouping(): Grouper[] {
         return this._grouping;
     }
 
