@@ -30,7 +30,7 @@ You can click on a backlink to navigate directly to the task's source line.
 > See the table in the Tabs section of the [Obsidian 1.0.0 release notes](https://forum.obsidian.md/t/obsidian-release-v1-0-0/44873#tabs-1).
 
 > [!released]
-> Navigating directly to the task line was introduced in Tasks X.Y.Z.
+> Navigating directly to the task line was introduced in Tasks 3.4.0.
 
 ## Limitations
 
