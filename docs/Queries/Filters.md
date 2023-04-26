@@ -286,15 +286,31 @@ For full details of combining filters with boolean operators, see [[Combining Fi
 > - `starts (before|after|in) <date range>` searches were introduced in Tasks 2.0.0.
 > - `starts (before|after|in) (YYYY-Www|YYYY-mm|YYYY-Qq|YYYY)` searches were introduced in Tasks 3.1.0.
 
-When filtering queries by [[Dates#Start date|start date]],
-the result will include tasks without a start date.
-This way, you can use the start date as a filter to filter out any tasks that you cannot yet work on.
+#### Making Start Date only find tasks with Start
+
+> [!Warning]
+> When filtering queries by [[Dates#Start date|start date]],
+> the result will include tasks without a start date.
+> This way, you can use the start date as a filter to filter out any tasks that you cannot yet work on.
 
 Such filter could be:
 
     ```tasks
+    # Find tasks which:
+    #    EITHER start before today or earlier
+    #    OR     have no start date:
     starts before tomorrow
     ```
+
+> [!Tip]
+> To find tasks which really do start before tomorrow:
+>
+> ````text
+> ```tasks
+> # Find tasks which start today or earlier:
+> ( (starts before tomorrow) AND (has start date) )
+> ```
+> ````
 
 ### Created Date
 
