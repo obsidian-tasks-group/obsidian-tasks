@@ -37,7 +37,7 @@ The brackets `[]` and `()` differ in how [Dataview displays them](https://blacks
 >
 > So a task with multiple inline fields:
 >
-> ```markdown
+> ```text
 > - [ ] This is a task [priority:: high] [start:: 2023-04-24] [due:: 2023-05-01]
 > ```
 >
@@ -54,7 +54,7 @@ The brackets `[]` and `()` differ in how [Dataview displays them](https://blacks
 >
 > > [!example]
 >   >
->   > ```markdown
+>   > ```text
 >   >  - [ ] This is a task [priority:: high]  [start:: 2023-04-24]  [due:: 2023-05-01]
 >   >  ```
 >
@@ -62,7 +62,7 @@ The brackets `[]` and `()` differ in how [Dataview displays them](https://blacks
 >
 > > [!example]
 >   >
->   > ```markdown
+>   > ```text
 >   >  - [ ] This is a task [priority:: high], [start:: 2023-04-24], [due:: 2023-05-01]
 >   > ```
 
