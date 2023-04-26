@@ -45,6 +45,7 @@ function toInlineFieldRegex(innerFieldRegex: RegExp): RegExp {
             innerFieldRegex,
             / */,
             /[)\]]/,
+            /(?: *,)?/, // Allow trailing comma, enables workaround from #1913 for rendering issue
             /$/, // Regexes are matched from the end of the string forwards
         ] as const
     )
