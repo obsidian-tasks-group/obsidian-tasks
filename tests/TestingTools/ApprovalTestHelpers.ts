@@ -2,6 +2,7 @@ import { Options } from 'approvals/lib/Core/Options';
 import { verify } from 'approvals/lib/Providers/Jest/JestApprovals';
 import { Query } from '../../src/Query/Query';
 import { explainResults } from '../../src/lib/QueryRendererHelper';
+
 /**
  * Save an instructions block to disc, so that it can be embedded in
  * to documentation, using a 'snippet' line.
@@ -19,6 +20,11 @@ export function verifyQuery(instructions: string, options?: Options): void {
 /**
  * Save an explanation of the instructions block to disk, so that it can be
  * embedded in to documentation, using a 'snippet' line.
+ *
+ * This method explains only the instructions in a single query block.
+ *
+ * See {@link verifyTaskBlockExplanation} to also explain any global filter or global query.
+ *
  * @param instructions
  * @param options
  */
@@ -36,6 +42,10 @@ export function verifyQueryExplanation(instructions: string, options?: Options):
 /**
  * Save an explanation of the task block to disk, so that it can be
  * embedded in to documentation, using a 'snippet' line.
+ *
+ * This method explains the query and also any global filter or global query.
+ *
+ * See {@link verifyQueryExplanation} to just explain the query.
  *
  * @param instructions
  * @param options

@@ -90,6 +90,12 @@ export class Query implements IQuery {
         return new Query({ source: `${this.source}\n${q2.source}` });
     }
 
+    /**
+     * Generate a text description of the contents of this query.
+     *
+     * This does not show any global filter and global query.
+     * Use {@link explainResults} if you want to see any global query and global filter as well.
+     */
     public explainQuery(): string {
         let result = '';
 
