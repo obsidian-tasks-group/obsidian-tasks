@@ -2,8 +2,8 @@
  * @jest-environment jsdom
  */
 import moment from 'moment';
-import { verifyExplanation, verifyQuery } from '../../TestingTools/ApprovalTestHelpers';
-
+import { verifyQuery, verifyTaskBlockExplanation } from '../../TestingTools/ApprovalTestHelpers';
+import { resetSettings, updateSettings } from '../../../src/Config/Settings';
 window.moment = moment;
 
 describe('explain', () => {
@@ -16,6 +16,8 @@ describe('explain', () => {
         jest.useRealTimers();
     });
 
+    afterEach(resetSettings);
+
     it('expands dates', () => {
         // Arrange
         const instructions: string = `
@@ -26,7 +28,7 @@ explain`;
 
         // Act, Assert
         verifyQuery(instructions);
-        verifyExplanation(instructions);
+        verifyTaskBlockExplanation(instructions);
     });
 
     it('boolean combinations', () => {
@@ -38,7 +40,7 @@ not done
 
         // Act, Assert
         verifyQuery(instructions);
-        verifyExplanation(instructions);
+        verifyTaskBlockExplanation(instructions);
     });
 
     it('nested boolean combinations', () => {
@@ -49,6 +51,23 @@ explain
 
         // Act, Assert
         verifyQuery(instructions);
-        verifyExplanation(instructions);
+        verifyTaskBlockExplanation(instructions);
+    });
+
+    it('explains task block with global query active', () => {
+        // Arrange
+        const globalQuery = `limit 50
+heading includes tasks`;
+
+        updateSettings({ globalQuery });
+
+        const blockQuery = `
+not done
+due next week
+explain`;
+
+        // Act, Assert
+        verifyQuery(blockQuery);
+        verifyTaskBlockExplanation(blockQuery);
     });
 });

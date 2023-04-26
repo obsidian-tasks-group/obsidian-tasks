@@ -50,6 +50,7 @@ export const TASK_FORMATS = {
 export type TASK_FORMATS = typeof TASK_FORMATS; // For convenience to make some typing easier
 
 export interface Settings {
+    globalQuery: string;
     globalFilter: string;
     removeGlobalFilter: boolean;
     taskFormat: keyof TASK_FORMATS;
@@ -78,6 +79,7 @@ export interface Settings {
 }
 
 const defaultSettings: Settings = {
+    globalQuery: '',
     globalFilter: GlobalFilter.empty,
     removeGlobalFilter: false,
     taskFormat: 'tasksPluginEmoji',
@@ -197,4 +199,13 @@ export const toggleFeature = (internalName: string, enabled: boolean): FeatureFl
  */
 export function getUserSelectedTaskFormat(): TaskFormat {
     return TASK_FORMATS[getSettings().taskFormat];
+}
+
+/**
+ * Retrieves the source of the global {@link Query}
+ *
+ * @exports
+ */
+export function getGlobalQuerySource(): { source: string } {
+    return { source: getSettings().globalQuery };
 }

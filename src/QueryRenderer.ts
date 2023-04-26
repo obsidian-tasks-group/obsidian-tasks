@@ -4,13 +4,13 @@ import type { EventRef, MarkdownPostProcessorContext } from 'obsidian';
 import type { IQuery } from './IQuery';
 import { State } from './Cache';
 import { getTaskLineAndFile, replaceTaskWithTasks } from './File';
-import { Query } from './Query/Query';
 import type { GroupDisplayHeading } from './Query/GroupDisplayHeading';
 import { TaskModal } from './TaskModal';
 import type { TasksEvents } from './TasksEvents';
 import type { Task } from './Task';
 import { DateFallback } from './DateFallback';
 import { TaskLayout } from './TaskLayout';
+import { explainResults, getQueryForQueryRenderer } from './lib/QueryRendererHelper';
 
 export class QueryRenderer {
     private readonly app: App;
@@ -74,12 +74,12 @@ class QueryRenderChild extends MarkdownRenderChild {
         // added later.
         switch (this.containerEl.className) {
             case 'block-language-tasks':
-                this.query = new Query({ source });
+                this.query = getQueryForQueryRenderer(this.source);
                 this.queryType = 'tasks';
                 break;
 
             default:
-                this.query = new Query({ source });
+                this.query = getQueryForQueryRenderer(this.source);
                 this.queryType = 'tasks';
                 break;
         }
@@ -120,7 +120,7 @@ class QueryRenderChild extends MarkdownRenderChild {
         const millisecondsToMidnight = midnight.getTime() - now.getTime();
 
         this.queryReloadTimeout = setTimeout(() => {
-            this.query = new Query({ source: this.source });
+            this.query = getQueryForQueryRenderer(this.source);
             // Process the current cache state:
             this.events.triggerRequestCacheUpdate(this.render.bind(this));
             this.reloadQueryAtMidnight();
@@ -169,7 +169,7 @@ class QueryRenderChild extends MarkdownRenderChild {
 
     // Use the 'explain' instruction to enable this
     private createExplanation(content: HTMLDivElement) {
-        const explanationAsString = this.query.explainQuery();
+        const explanationAsString = explainResults(this.source);
 
         const explanationsBlock = content.createEl('pre');
         explanationsBlock.addClasses(['plugin-tasks-query-explanation']);
