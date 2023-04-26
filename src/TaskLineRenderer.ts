@@ -223,7 +223,6 @@ export type AttributesDictionary = { [key: string]: string };
  * options in LayoutClasses.
  * The dataAttributes describe the content of the component, e.g. `data-task-priority="medium"`, `data-task-due="past-1d"` etc.
  */
-// TODO erik-handeland: does not include reminders?
 function getComponentClassesAndData(component: TaskLayoutComponent, task: Task): [string[], AttributesDictionary] {
     const genericClasses: string[] = [];
     const dataAttributes: AttributesDictionary = {};

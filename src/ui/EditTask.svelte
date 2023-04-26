@@ -127,24 +127,11 @@
             forwardDate: forwardDate != undefined,
         });
         if (parsed !== null) {
-            return window.moment(parsed).format('YYYY-MM-DD');
-        }
-        return `<i>invalid ${fieldName} date</i>`;
-    }
-
-    function parseTypedDateTimeForDisplay(
-        fieldName: 'created' | 'start' | 'scheduled' | 'due' | 'reminder' | 'done',
-        typedDate: string,
-        forwardDate: Date | undefined = undefined,
-    ): string {
-        if (!typedDate) {
-            return `<i>no ${fieldName} date</i>`;
-        }
-        const parsed = chrono.parseDate(typedDate, forwardDate, {
-            forwardDate: forwardDate != undefined,
-        });
-        if (parsed !== null) {
-            return window.moment(parsed).format('YYYY-MM-DD h:mm a');
+            if (fieldName === 'reminder') {
+                return window.moment(parsed).format('YYYY-MM-DD h:mm a');
+            }else{
+                return window.moment(parsed).format('YYYY-MM-DD');
+            }
         }
         return `<i>invalid ${fieldName} date</i>`;
     }
@@ -157,14 +144,6 @@
      */
     function parseTypedDateForDisplayUsingFutureDate(fieldName: 'start' | 'scheduled' | 'due' | 'done' | 'reminder', typedDate: string): string {
         return parseTypedDateForDisplay(
-            fieldName,
-            typedDate,
-            editableTask.forwardOnly ? new Date() : undefined,
-        );
-    }
-
-    function parseTypedDateTimeForDisplayUsingFutureDate(fieldName: 'start' | 'scheduled' | 'due' | 'done' | 'reminder', typedDate: string): string {
-        return parseTypedDateTimeForDisplay(
             fieldName,
             typedDate,
             editableTask.forwardOnly ? new Date() : undefined,
@@ -212,7 +191,7 @@
 
     $: {
         editableTask.reminderDate = doAutocomplete(editableTask.reminderDate);
-        parsedReminderDate = parseTypedDateTimeForDisplayUsingFutureDate('reminder', editableTask.reminderDate);
+        parsedReminderDate = parseTypedDateForDisplayUsingFutureDate('reminder', editableTask.reminderDate);
         isReminderDateValid = !parsedReminderDate.includes('invalid');
     }
 

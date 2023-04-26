@@ -1,7 +1,7 @@
 import type { Moment } from 'moment';
 import { RRule } from 'rrule';
 import { compareByDate } from './lib/DateTools';
-import { Reminder } from './reminders/Reminder';
+import { Reminder, isRemindersSame } from './reminders/Reminder';
 
 export class Recurrence {
     private readonly rrule: RRule;
@@ -159,7 +159,6 @@ export class Recurrence {
             let scheduledDate: Moment | null = null;
             let dueDate: Moment | null = null;
             const reminders: Reminder[] = [];
-            console.log(next);
 
             // Only if a reference date is given. A reference date will exist if at
             // least one of the other dates is set.
@@ -214,7 +213,6 @@ export class Recurrence {
         return null;
     }
 
-    // TODO erik-handeland: couldn't you just compare the string representation of the recurrence?
     public identicalTo(other: Recurrence) {
         if (this.baseOnToday !== other.baseOnToday) {
             return false;
@@ -228,6 +226,9 @@ export class Recurrence {
             return false;
         }
         if (compareByDate(this.dueDate, other.dueDate) !== 0) {
+            return false;
+        }
+        if (!isRemindersSame(this.reminders, other.reminders)) {
             return false;
         }
 

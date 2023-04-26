@@ -10,7 +10,7 @@ import { renderTaskLine } from './TaskLineRenderer';
 import type { TaskLineRenderDetails } from './TaskLineRenderer';
 import { DateFallback } from './DateFallback';
 import { compareByDate } from './lib/DateTools';
-import { type Reminder, reminderSettings } from './reminders/Reminder';
+import { type Reminder, isRemindersSame, reminderSettings } from './reminders/Reminder';
 import { replaceTaskWithTasks } from './File';
 
 /**
@@ -513,15 +513,7 @@ export class Task {
         }
 
         // compare reminders
-        if (this.reminders.length !== other.reminders.length) {
-            return false;
-        }
-        // reminders are the same only if the values are in the same order
-        if (
-            !this.reminders.every(function (element, index) {
-                return element === other.reminders[index];
-            })
-        ) {
+        if (!isRemindersSame(this.reminders, other.reminders)) {
             return false;
         }
 

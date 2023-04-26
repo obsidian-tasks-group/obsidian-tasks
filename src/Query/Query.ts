@@ -175,8 +175,6 @@ export class Query implements IQuery {
                     this._layoutOptions.hideDueDate = hide;
                     break;
                 case 'reminder date':
-                    this._layoutOptions.hideReminders = hide;
-                    break;
                 case 'reminders':
                     this._layoutOptions.hideReminders = hide;
                     break;

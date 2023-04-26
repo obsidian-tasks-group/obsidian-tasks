@@ -25,10 +25,6 @@ export class Reminder {
         return this.date;
     }
 
-    public setDate(date: Moment): void {
-        this.date = date;
-    }
-
     // could probably remove this and just check if reminder is in array
     public isComplete(): boolean {
         return this.isAck;
@@ -45,4 +41,21 @@ export function printReminders(reminders: Reminder[]): string {
 
 export function getReminders(reminders: Reminder[]): Moment[] {
     return reminders.map((reminder) => reminder.getDate());
+}
+
+export function isRemindersSame(a: Reminder[], b: Reminder[]): boolean {
+    if (a.length !== b.length) {
+        return false;
+    }
+
+    const sortedA = a.map((reminder) => reminder.getDate().valueOf()).sort();
+    const sortedB = b.map((reminder) => reminder.getDate().valueOf()).sort();
+
+    for (let i = 0; i < sortedA.length; i++) {
+        if (sortedA[i] !== sortedB[i]) {
+            return false;
+        }
+    }
+
+    return true;
 }

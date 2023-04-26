@@ -30,8 +30,5 @@ export function isDateBetween(
     offset: DurationInputArg1,
     unit: DurationInputArg2,
 ) {
-    if (a === null || b === null || !a.isValid() || !b.isValid()) {
-        return false;
-    }
-    return a.isBetween(b, b.clone().add(offset, unit));
+    return a?.isValid() && b.isValid() && a.isBetween(b, b.clone().add(offset, unit));
 }

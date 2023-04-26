@@ -118,7 +118,6 @@ export class TaskNotification {
     }
 }
 
-// TODO erik-handeland are these fucntions private by default?
 function onDone(task: Task) {
     console.log('*** task done');
     if (!task.status.isCompleted()) {
