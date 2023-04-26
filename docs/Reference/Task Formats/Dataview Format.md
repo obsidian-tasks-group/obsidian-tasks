@@ -28,6 +28,8 @@ Note, however, that when Tasks *writes* task lines, it always writes them with `
 
 The brackets `[]` and `()` differ in how [Dataview displays them](https://blacksmithgu.github.io/obsidian-dataview/annotation/add-metadata/#inline-fields). With the parenthesis syntax, Dataview only shows the field value and not the key.
 
+### Ensuring correct display in Live Preview
+
 > [!warning]
 > `[Text][More Text]` is a Markdown feature called a [reference-style link](https://daringfireball.net/projects/markdown/syntax#link).
 >  
