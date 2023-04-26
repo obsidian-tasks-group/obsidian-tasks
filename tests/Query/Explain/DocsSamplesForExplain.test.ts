@@ -3,7 +3,7 @@
  */
 import moment from 'moment';
 import { verifyQuery, verifyTaskBlockExplanation } from '../../TestingTools/ApprovalTestHelpers';
-
+import { resetSettings, updateSettings } from '../../../src/Config/Settings';
 window.moment = moment;
 
 describe('explain', () => {
@@ -15,6 +15,8 @@ describe('explain', () => {
     afterAll(() => {
         jest.useRealTimers();
     });
+
+    afterEach(resetSettings);
 
     it('expands dates', () => {
         // Arrange
@@ -50,5 +52,22 @@ explain
         // Act, Assert
         verifyQuery(instructions);
         verifyTaskBlockExplanation(instructions);
+    });
+
+    it('explains task block with global query active', () => {
+        // Arrange
+        const globalQuery = `limit 50
+heading includes tasks`;
+
+        updateSettings({ globalQuery });
+
+        const blockQuery = `
+not done
+due next week
+explain`;
+
+        // Act, Assert
+        verifyQuery(blockQuery);
+        verifyTaskBlockExplanation(blockQuery);
     });
 });
