@@ -2,10 +2,10 @@
  * @jest-environment jsdom
  */
 import moment from 'moment';
-import { Query } from '../src/Query/Query';
-import { resetSettings, updateSettings } from '../src/Config/Settings';
-import { explainResults, getQueryForQueryRenderer } from '../src/lib/QueryRenderer';
-import { GlobalFilter } from '../src/Config/GlobalFilter';
+import { Query } from '../../src/Query/Query';
+import { resetSettings, updateSettings } from '../../src/Config/Settings';
+import { explainResults, getQueryForQueryRenderer } from '../../src/lib/QueryRendererHelper';
+import { GlobalFilter } from '../../src/Config/GlobalFilter';
 
 window.moment = moment;
 

@@ -10,7 +10,7 @@ import type { TasksEvents } from './TasksEvents';
 import type { Task } from './Task';
 import { DateFallback } from './DateFallback';
 import { TaskLayout } from './TaskLayout';
-import { explainResults, getQueryForQueryRenderer } from './lib/QueryRenderer';
+import { explainResults, getQueryForQueryRenderer } from './lib/QueryRendererHelper';
 
 export class QueryRenderer {
     private readonly app: App;
