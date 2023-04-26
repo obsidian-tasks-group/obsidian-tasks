@@ -159,6 +159,7 @@ export class Recurrence {
             let scheduledDate: Moment | null = null;
             let dueDate: Moment | null = null;
             const reminders: Reminder[] = [];
+            console.log(next);
 
             // Only if a reference date is given. A reference date will exist if at
             // least one of the other dates is set.
@@ -186,17 +187,17 @@ export class Recurrence {
                     dueDate = window.moment(next);
                     // Rounding days to handle cross daylight-savings-time recurrences.
                     dueDate.add(Math.round(originalDifference.asDays()), 'days');
+                    console.log(dueDate);
                 }
 
-                /* TODO: erik-handeland: current bugs reminders are being set to same day as due date
-                📅 2023-04-27 ⏲️ 2023-04-28 10:10 pm, 2023-04-29 11:05 am > 📅 2023-04-28 ⏲️ 2023-04-28 10:10 pm, 2023-04-28 11:05 am
-                rucurring does not set value if only reminder is set
-                */
                 if (this.reminders) {
                     this.reminders.forEach((reminder) => {
-                        const newReminder = window
-                            .moment(next)
-                            .set({ hour: reminder.getDate().hour(), minute: reminder.getDate().minute() });
+                        const originalDifference = window.moment.duration(reminder.getDate().diff(this.referenceDate));
+                        const newReminder = window.moment(next);
+
+                        newReminder.add(Math.round(originalDifference.asDays()), 'days');
+                        // add back time
+                        newReminder.set({ hour: reminder.getDate().hour(), minute: reminder.getDate().minute() });
                         reminders.push(new Reminder(newReminder));
                     });
                 }
