@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 import moment from 'moment';
-import { verifyExplanation, verifyQuery } from '../../TestingTools/ApprovalTestHelpers';
+import { verifyQuery, verifyTaskBlockExplanation } from '../../TestingTools/ApprovalTestHelpers';
 
 window.moment = moment;
 
@@ -26,7 +26,7 @@ explain`;
 
         // Act, Assert
         verifyQuery(instructions);
-        verifyExplanation(instructions);
+        verifyTaskBlockExplanation(instructions);
     });
 
     it('boolean combinations', () => {
@@ -38,7 +38,7 @@ not done
 
         // Act, Assert
         verifyQuery(instructions);
-        verifyExplanation(instructions);
+        verifyTaskBlockExplanation(instructions);
     });
 
     it('nested boolean combinations', () => {
@@ -49,6 +49,6 @@ explain
 
         // Act, Assert
         verifyQuery(instructions);
-        verifyExplanation(instructions);
+        verifyTaskBlockExplanation(instructions);
     });
 });
