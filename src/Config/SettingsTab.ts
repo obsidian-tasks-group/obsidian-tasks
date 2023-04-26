@@ -130,18 +130,22 @@ export class SettingsTab extends PluginSettingTab {
             new Setting(containerEl)
                 .setDesc(
                     SettingsTab.createFragmentWithHTML(
-                        'A query that is automatically included at the start of every Tasks block in the vault.' +
-                            ' Useful for adding default filters, or layout options.</br></br>',
+                        '<p>A query that is automatically included at the start of every Tasks block in the vault.' +
+                            ' Useful for adding default filters, or layout options.</p>' +
+                            '<p>See the <a href="https://publish.obsidian.md/tasks/Queries/Global+Query">documentation</a>.</p>',
                     ),
                 )
                 .addTextArea((text) => {
                     const settings = getSettings();
 
-                    text.setValue(settings.globalQuery).onChange(async (value) => {
-                        updateSettings({ globalQuery: value });
+                    text.inputEl.rows = 4;
+                    text.setPlaceholder('# For example...\npath does not include _templates/\nlimit 300\nshow urgency')
+                        .setValue(settings.globalQuery)
+                        .onChange(async (value) => {
+                            updateSettings({ globalQuery: value });
 
-                        await this.plugin.saveSettings();
-                    });
+                            await this.plugin.saveSettings();
+                        });
                 }),
         );
 

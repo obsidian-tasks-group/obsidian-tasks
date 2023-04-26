@@ -9,21 +9,23 @@ publish: true
 > [!released]
 The Global Query setting was added in Tasks X.Y.Z.
 
+Global Query is a powerful and flexible alternative to the [[Global Filter]].
+
 You can set a global query in the settings that Tasks will add to the start of all the Queries in your vault.
 
 > [!example]
-> With a global query set to `path includes /tasks`, the following task block
+> With a global query set to `path includes /tasks`, the following task block:
 >
 >     ```tasks
 >     tags include work
 >     ```
 >
-> will run as if it were
+> will run as if it were:
 >
 >     ```tasks
 >     path includes /tasks
 >     tags include work
->     ``` 
+>     ```
 
 ## Examples
 
@@ -53,8 +55,8 @@ Currently, any query that is allowed in a task block will also work as your Glob
 
 > [!example]
 > **Show up to 50 tasks**
->  
->  
+>
+>
 >     ```tasks
 >     limit 50
 >     ```
@@ -80,7 +82,7 @@ Currently, any query that is allowed in a task block will also work as your Glob
 
 ## Settings
 
-The following setting in the Tasks Options pane controls the vault's global query:
+The following setting in the [[Settings|Tasks Options pane]] controls the vault's global query:
 
 ![Image of the settings options for the global query, showing the default settings.](../images/settings-global-query.png)
 

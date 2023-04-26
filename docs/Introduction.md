@@ -6,6 +6,7 @@ publish: true
 
 ## What's New?
 
+- X.Y.Z: 🔥 New [[Global Query]] facility.
 - 3.4.0: 🔥 Clicking on a [[Backlinks|Backlink]] jumps to the exact task line.
 - 3.4.0: Tasks now requires at least Obsidian 1.1.1.
 - 3.3.0: 🔥 Multiple [[About Task Formats|Task Format]] support - starting with [[Dataview Format]].

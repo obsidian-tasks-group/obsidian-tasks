@@ -21,7 +21,9 @@ As the number of options in Tasks has grown, we have documented each setting in 
 
 For convenience, here is a list of all those documentation pages (in the order the options appear in the Tasks Settings pane):
 
+- [[About Task Formats#Selecting the task format]]
 - [[Global Filter]]
+- [[Global Query]]
 - [[Status Settings]]
 - [[Dates#Date-tracking settings]]
 - [[Auto-Suggest]]

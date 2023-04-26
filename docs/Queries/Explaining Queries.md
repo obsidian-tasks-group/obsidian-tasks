@@ -19,6 +19,7 @@ This has a number of benefits:
   - Combinations of queries (via `AND`, `OR`, `NOT` etc)  can be seen more clearly.
 - If there is a [[Global Filter|global filter]] enabled, it is included in the explanation.
   - This often explains why tasks are missing from results.
+- If there is a [[Global Query|global query]] enabled, it too is included in the explanation.
 
 ## Examples
 
