@@ -192,6 +192,22 @@ describe('DataviewTaskSerializer', () => {
             });
         });
 
+        // This test validates that the workaround for https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1913
+        // works
+        it('should recognize comma seperated inline fields', () => {
+            const taskDetails = deserialize(
+                'Some task that is [due::2021-08-22], [priority::high]       , (start::2021-08-19)',
+            );
+            expect(taskDetails).toMatchTaskDetails({
+                priority: Priority.High,
+                dueDate: moment('2021-08-22', 'YYYY-MM-DD'),
+                startDate: moment('2021-08-19', 'YYYY-MM-DD'),
+                // Note that the commas are consumed by the inline field parsing
+                // This may have to change if #1505 is implemented
+                description: 'Some task that is',
+            });
+        });
+
         // This is one major behavior difference between Dataview and Tasks
         // This task is marked as skipped until tasks has support for parsing fields arbitrarily
         // within a task line
