@@ -78,7 +78,7 @@ Currently, any query that is allowed in a task block will also work as your Glob
 
 ## Settings
 
-The following settings in the Tasks Options pane control the vault's global query.
+The following setting in the Tasks Options pane controls the vault's global query:
 
 ![Image of the settings options for the global query, showing the default settings.](../images/settings-global-query.png)
 
