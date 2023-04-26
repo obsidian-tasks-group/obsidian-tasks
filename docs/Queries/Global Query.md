@@ -27,10 +27,10 @@ You can set a global query in the settings that Tasks will add to the start of a
 
 ## Examples
 
-Currently, any query that is allowed in a task block will also work as your Global Query. But this feature is especially useful for applying [filters](Filters) or [layout options](Layout) by default for all your queries.
+Currently, any query that is allowed in a task block will also work as your Global Query. This feature is especially useful for applying [filters](Filters) or [layout options](Layout) by default for all your queries.
 
 > [!warning]
-> It currently isn't generally possible to reverse layout or filter instructions from a Global Query in task blocks within your vault. We're tracking this across several issues: [issue #1619](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1619) and [issue #1806](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1806).
+> It isn't always possible to override a filter or layout option set in the Global Query. We're tracking this across several issues: [issue #1619](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1619) and [issue #1806](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1806).
 
 ### [[Layout]]
 
@@ -57,7 +57,7 @@ Currently, any query that is allowed in a task block will also work as your Glob
 >     ```
 >
 > > [!info]
-> > You **_can_** override a limit set in your Global Query in a task block in a vault.
+> > You can override this in a task block by specifying a new limit in that task block
 
 ### [[Filters]]
 
