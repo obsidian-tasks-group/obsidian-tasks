@@ -3,7 +3,7 @@ import type { Task } from '../Task';
 import { Query } from '../Query/Query';
 import { isDateBetween } from '../lib/DateTools';
 import ReminderView from './components/Reminder.svelte';
-import { reminderSettings } from './Reminder';
+import { getReminders, reminderSettings } from './Reminder';
 const electron = require('electron');
 const Notification = electron.remote.Notification;
 
@@ -87,16 +87,18 @@ export class TaskNotification {
         });
 
         for (const task of reminderTasks) {
-            const reminderDate = task.reminders[0].getDate();
+            const reminderList = getReminders(task.reminders);
             const now = window.moment(); // current date + time
             // Check if reminder will occur inbetween now and next refresh interval, + 1 to account for rounding
-            if (isDateBetween(reminderDate, now, reminderSettings.refreshInterval + 1, 'milliseconds')) {
-                console.log('Show Notification');
-                this.show(task);
-                // else check for daily reminder
-            } else if (isDailyReminder(reminderDate)) {
-                this.show(task);
-            }
+            reminderList.forEach((reminderDate) => {
+                if (isDateBetween(reminderDate, now, reminderSettings.refreshInterval + 1, 'milliseconds')) {
+                    console.log('Show Notification');
+                    this.show(task);
+                    // else check for daily reminder
+                } else if (isDailyReminder(reminderDate)) {
+                    this.show(task);
+                }
+            });
         }
     }
 

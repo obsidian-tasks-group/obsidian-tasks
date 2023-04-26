@@ -38,3 +38,11 @@ export class Reminder {
         this.isAck = true;
     }
 }
+
+export function printReminders(reminders: Reminder[]): string {
+    return reminders.map((reminder) => `${reminder.toString()}`).join(', ');
+}
+
+export function getReminders(reminders: Reminder[]): Moment[] {
+    return reminders.map((reminder) => reminder.getDate());
+}

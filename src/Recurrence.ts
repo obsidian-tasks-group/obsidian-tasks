@@ -1,7 +1,7 @@
 import type { Moment } from 'moment';
 import { RRule } from 'rrule';
 import { compareByDate } from './lib/DateTools';
-import type { Reminder } from './reminders/Reminder';
+import { Reminder } from './reminders/Reminder';
 
 export class Recurrence {
     private readonly rrule: RRule;
@@ -188,14 +188,16 @@ export class Recurrence {
                     dueDate.add(Math.round(originalDifference.asDays()), 'days');
                 }
 
+                /* TODO: erik-handeland: current bugs reminders are being set to same day as due date
+                📅 2023-04-27 ⏲️ 2023-04-28 10:10 pm, 2023-04-29 11:05 am > 📅 2023-04-28 ⏲️ 2023-04-28 10:10 pm, 2023-04-28 11:05 am
+                rucurring does not set value if only reminder is set
+                */
                 if (this.reminders) {
-                    console.log('this.reminders', this.reminders);
                     this.reminders.forEach((reminder) => {
                         const newReminder = window
                             .moment(next)
                             .set({ hour: reminder.getDate().hour(), minute: reminder.getDate().minute() });
-                        reminder.setDate(newReminder);
-                        reminders.push(reminder);
+                        reminders.push(new Reminder(newReminder));
                     });
                 }
             }
@@ -227,9 +229,6 @@ export class Recurrence {
         if (compareByDate(this.dueDate, other.dueDate) !== 0) {
             return false;
         }
-        // if (compareByDate(this.reminders, other.reminders) !== 0) {
-        //     return false;
-        // }
 
         return this.toText() === other.toText(); // this also checks baseOnToday
     }

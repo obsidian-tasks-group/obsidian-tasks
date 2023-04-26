@@ -514,17 +514,14 @@ export class Task {
 
         // compare reminders
         if (this.reminders.length !== other.reminders.length) {
-            console.log('Hit Compare reminders');
             return false;
         }
         // reminders are the same only if the values are in the same order
         if (
             !this.reminders.every(function (element, index) {
-                console.log('Hit Compare reminders 2');
                 return element === other.reminders[index];
             })
         ) {
-            console.log('Hit Compare reminders 3');
             return false;
         }
 

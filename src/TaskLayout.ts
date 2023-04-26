@@ -10,7 +10,7 @@ export class LayoutOptions {
     hideScheduledDate: boolean = false;
     hideDoneDate: boolean = false;
     hideDueDate: boolean = false;
-    hideReminderDate: boolean = false;
+    hideReminders: boolean = false;
     hideRecurrenceRule: boolean = false;
     hideEditButton: boolean = false;
     hideUrgency: boolean = true;
@@ -26,7 +26,7 @@ export type TaskLayoutComponent =
     | 'startDate'
     | 'scheduledDate'
     | 'dueDate'
-    | 'reminderDate'
+    | 'reminders'
     | 'doneDate'
     | 'blockLink';
 
@@ -44,7 +44,7 @@ export class TaskLayout {
         'startDate',
         'scheduledDate',
         'dueDate',
-        'reminderDate',
+        'reminders',
         'doneDate',
         'blockLink',
     ];
@@ -97,7 +97,7 @@ export class TaskLayout {
         newComponents = removeIf(newComponents, layoutOptions.hideScheduledDate, 'scheduledDate');
         newComponents = removeIf(newComponents, layoutOptions.hideDueDate, 'dueDate');
         newComponents = removeIf(newComponents, layoutOptions.hideDoneDate, 'doneDate');
-        newComponents = removeIf(newComponents, layoutOptions.hideReminderDate, 'reminderDate');
+        newComponents = removeIf(newComponents, layoutOptions.hideReminders, 'reminders');
         if (layoutOptions.shortMode) this.specificClasses.push('tasks-layout-short-mode');
         return newComponents;
     }
