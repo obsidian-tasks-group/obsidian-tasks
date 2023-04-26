@@ -2,7 +2,6 @@ import { LayoutOptions } from '../TaskLayout';
 import type { Task } from '../Task';
 import type { IQuery } from '../IQuery';
 import { getSettings } from '../Config/Settings';
-import { GlobalFilter } from '../Config/GlobalFilter';
 import { Sort } from './Sort';
 import type { Sorter } from './Sorter';
 import { TaskGroups } from './TaskGroups';
@@ -65,16 +64,34 @@ export class Query implements IQuery {
             });
     }
 
-    public explainQuery(): string {
-        return 'Explanation of this Tasks code block query:\n\n' + this.explainQueryWithoutIntroduction();
+    /**
+     *
+     * Appends {@link q2} to this query.
+     *
+     * @note At time of writing, this query language appears to play nicely with combining queries.
+     *
+     * More formally, the concatenation operation on the query language:
+     *     * Is closed (concatenating two queries is another valid query)
+     *     * Is not commutative (q1.append(q2) !== q2.append(q1))
+     *
+     * And the semantics of the combination are straight forward:
+     *     * Combining two queries appends their filters
+     *           (assuming that the filters are pure functions, filter concatenation is commutative)
+     *     * Combining two queries appends their sorting instructions. (this is not commutative)
+     *     * Combining two queries appends their grouping instructions. (this is not commutative)
+     *     * Successive limit instructions overwrite previous ones.
+     *
+     * @param {Query} q2
+     * @return {Query} The combined query
+     */
+    public append(q2: Query): Query {
+        if (this.source === '') return q2;
+        if (q2.source === '') return this;
+        return new Query({ source: `${this.source}\n${q2.source}` });
     }
 
-    public explainQueryWithoutIntroduction(): string {
+    public explainQuery(): string {
         let result = '';
-
-        if (!GlobalFilter.isEmpty()) {
-            result += `Only tasks containing the global filter '${GlobalFilter.get()}'.\n\n`;
-        }
 
         const numberOfFilters = this.filters.length;
         if (numberOfFilters === 0) {

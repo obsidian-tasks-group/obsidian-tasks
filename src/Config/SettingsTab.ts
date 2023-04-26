@@ -123,6 +123,29 @@ export class SettingsTab extends PluginSettingTab {
             });
 
         // ---------------------------------------------------------------------------
+        containerEl.createEl('h4', { text: 'Global Query' });
+        // ---------------------------------------------------------------------------
+
+        makeMultilineTextSetting(
+            new Setting(containerEl)
+                .setDesc(
+                    SettingsTab.createFragmentWithHTML(
+                        'A query that is automatically included at the start of every Tasks block in the vault.' +
+                            ' Useful for adding default filters, or layout options.</br></br>',
+                    ),
+                )
+                .addTextArea((text) => {
+                    const settings = getSettings();
+
+                    text.setValue(settings.globalQuery).onChange(async (value) => {
+                        updateSettings({ globalQuery: value });
+
+                        await this.plugin.saveSettings();
+                    });
+                }),
+        );
+
+        // ---------------------------------------------------------------------------
         containerEl.createEl('h4', { text: 'Task Statuses' });
         // ---------------------------------------------------------------------------
 
@@ -606,4 +629,19 @@ async function updateAndSaveStatusSettings(statusTypes: StatusSettings, settings
     StatusSettings.applyToStatusRegistry(statusTypes, StatusRegistry.getInstance());
 
     await settings.saveSettings(true);
+}
+
+function makeMultilineTextSetting(setting: Setting) {
+    const { settingEl, infoEl, controlEl } = setting;
+    const textEl: HTMLElement | null = controlEl.querySelector('textarea');
+    console.log({ settingEl, infoEl, controlEl, textEl });
+
+    // Not a setting with a text field
+    if (textEl === null) {
+        return;
+    }
+
+    settingEl.style.display = 'block';
+    infoEl.style.marginRight = '0px';
+    textEl.style.minWidth = '-webkit-fill-available';
 }

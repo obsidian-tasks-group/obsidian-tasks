@@ -4,7 +4,7 @@
 
 import { readFileSync } from 'fs';
 import moment from 'moment';
-import { verifyExplanation } from '../../../../TestingTools/ApprovalTestHelpers';
+import { verifyQueryExplanation } from '../../../../TestingTools/ApprovalTestHelpers';
 
 window.moment = moment;
 
@@ -28,6 +28,6 @@ describe('explain', () => {
         const instructions = readFileSync(inputFile, 'utf-8');
 
         // Act, Assert
-        verifyExplanation(instructions);
+        verifyQueryExplanation(instructions);
     });
 });

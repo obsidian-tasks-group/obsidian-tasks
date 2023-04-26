@@ -36,7 +36,7 @@ describe('DebugSettings', () => {
         // Check that the tasks are found in the original order, not the order in the sort instruction
         expect('\n' + soleTaskGroup.tasksAsStringOfLines()).toStrictEqual(tasksAsMarkdown);
 
-        expect(query.explainQueryWithoutIntroduction()).toMatchInlineSnapshot(`
+        expect(query.explainQuery()).toMatchInlineSnapshot(`
             "No filters supplied. All tasks will match the query.
 
             NOTE: All sort instructions, including default sort order, are disabled, due to 'ignoreSortInstructions' setting."

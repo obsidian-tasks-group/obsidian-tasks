@@ -1,7 +1,7 @@
 import { Options } from 'approvals/lib/Core/Options';
 import { verify } from 'approvals/lib/Providers/Jest/JestApprovals';
 import { Query } from '../../src/Query/Query';
-
+import { explainResults } from '../../src/lib/QueryRendererHelper';
 /**
  * Save an instructions block to disc, so that it can be embedded in
  * to documentation, using a 'snippet' line.
@@ -22,11 +22,26 @@ export function verifyQuery(instructions: string, options?: Options): void {
  * @param instructions
  * @param options
  */
-export function verifyExplanation(instructions: string, options?: Options): void {
+export function verifyQueryExplanation(instructions: string, options?: Options): void {
     const query = new Query({ source: instructions });
     const explanation = query.explainQuery();
 
     expect(query.error).toBeUndefined();
+
+    options = options || new Options();
+    options = options.forFile().withFileExtention('explanation.text');
+    verify(explanation, options);
+}
+
+/**
+ * Save an explanation of the task block to disk, so that it can be
+ * embedded in to documentation, using a 'snippet' line.
+ *
+ * @param instructions
+ * @param options
+ */
+export function verifyTaskBlockExplanation(instructions: string, options?: Options): void {
+    const explanation = explainResults(instructions);
 
     options = options || new Options();
     options = options.forFile().withFileExtention('explanation.text');

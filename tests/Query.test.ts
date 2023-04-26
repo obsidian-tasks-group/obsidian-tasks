@@ -798,19 +798,7 @@ describe('Query', () => {
             const query = new Query({ source: input });
 
             const expectedDisplayText = 'No filters supplied. All tasks will match the query.';
-            expect(query.explainQueryWithoutIntroduction()).toEqual(expectedDisplayText);
-        });
-
-        it('should explain 0 filters with global filter', () => {
-            GlobalFilter.set('#task');
-
-            const input = '';
-            const query = new Query({ source: input });
-
-            const expectedDisplayText = `Only tasks containing the global filter '#task'.
-
-No filters supplied. All tasks will match the query.`;
-            expect(query.explainQueryWithoutIntroduction()).toEqual(expectedDisplayText);
+            expect(query.explainQuery()).toEqual(expectedDisplayText);
         });
 
         it('should explain 1 filter', () => {
@@ -819,20 +807,7 @@ No filters supplied. All tasks will match the query.`;
 
             const expectedDisplayText = `description includes hello
 `;
-            expect(query.explainQueryWithoutIntroduction()).toEqual(expectedDisplayText);
-        });
-
-        it('should explain 1 filter', () => {
-            GlobalFilter.set('#task');
-
-            const input = 'description includes hello';
-            const query = new Query({ source: input });
-
-            const expectedDisplayText = `Only tasks containing the global filter '#task'.
-
-description includes hello
-`;
-            expect(query.explainQueryWithoutIntroduction()).toEqual(expectedDisplayText);
+            expect(query.explainQuery()).toEqual(expectedDisplayText);
         });
 
         it('should explain 2 filters', () => {
@@ -844,7 +819,7 @@ description includes hello
 due 2012-01-23 =>
   due date is on 2012-01-23 (Monday 23rd January 2012)
 `;
-            expect(query.explainQueryWithoutIntroduction()).toEqual(expectedDisplayText);
+            expect(query.explainQuery()).toEqual(expectedDisplayText);
         });
 
         it('should explain limit 5', () => {
@@ -855,7 +830,7 @@ due 2012-01-23 =>
 
 At most 5 tasks.
 `;
-            expect(query.explainQueryWithoutIntroduction()).toEqual(expectedDisplayText);
+            expect(query.explainQuery()).toEqual(expectedDisplayText);
         });
 
         it('should explain limit 1', () => {
@@ -866,7 +841,7 @@ At most 5 tasks.
 
 At most 1 task.
 `;
-            expect(query.explainQueryWithoutIntroduction()).toEqual(expectedDisplayText);
+            expect(query.explainQuery()).toEqual(expectedDisplayText);
         });
 
         it('should explain limit 0', () => {
@@ -877,7 +852,7 @@ At most 1 task.
 
 At most 0 tasks.
 `;
-            expect(query.explainQueryWithoutIntroduction()).toEqual(expectedDisplayText);
+            expect(query.explainQuery()).toEqual(expectedDisplayText);
         });
     });
 
