@@ -47,6 +47,9 @@ Currently, any query that is allowed in a task block will also work as your Glob
 >     ```tasks
 >     hide priority
 >     ```
+>
+> > [!info]
+> > You can override this in a task block using `show priority`
 
 > [!example]
 > **Show up to 50 tasks**
