@@ -230,7 +230,7 @@ describe('DataviewTaskSerializer', () => {
         it.each(dateFields)('should serialize a %s', (dateField) => {
             const serialized = serialize(new TaskBuilder()[dateField]('2021-06-20').description('').build());
             const symbol = DATAVIEW_SYMBOLS[`${dateField}Symbol`];
-            expect(serialized).toEqual(` [${symbol} 2021-06-20]`);
+            expect(serialized).toEqual(`  [${symbol} 2021-06-20]`);
         });
 
         it('should serialize a High, Medium and Low priority', () => {
@@ -238,7 +238,7 @@ describe('DataviewTaskSerializer', () => {
             for (const p of priorities) {
                 const task = new TaskBuilder().priority(Priority[p]).description('').build();
                 const serialized = serialize(task);
-                expect(serialized).toEqual(` [${DATAVIEW_SYMBOLS.prioritySymbols[p]}]`);
+                expect(serialized).toEqual(`  [${DATAVIEW_SYMBOLS.prioritySymbols[p]}]`);
             }
         });
 
@@ -254,7 +254,7 @@ describe('DataviewTaskSerializer', () => {
                 .description('')
                 .build();
             const serialized = serialize(task);
-            expect(serialized).toEqual(' [repeat:: every day]');
+            expect(serialized).toEqual('  [repeat:: every day]');
         });
 
         it('should serialize tags', () => {
@@ -285,7 +285,7 @@ describe('DataviewTaskSerializer', () => {
 
             const serialized = serialize(task);
             expect(serialized).toEqual(
-                'Wobble #tag1 #tag2 #tag3 #tag4 #tag5 #tag6 #tag7 #tag8 #tag9 #tag10 [priority:: high] [repeat:: every day] [start:: 2023-08-03] [scheduled:: 2022-07-02] [due:: 2025-10-05] [completion:: 2024-09-04]',
+                'Wobble #tag1 #tag2 #tag3 #tag4 #tag5 #tag6 #tag7 #tag8 #tag9 #tag10  [priority:: high]  [repeat:: every day]  [start:: 2023-08-03]  [scheduled:: 2022-07-02]  [due:: 2025-10-05]  [completion:: 2024-09-04]',
             );
         });
     });
