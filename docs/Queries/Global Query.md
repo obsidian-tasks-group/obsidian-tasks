@@ -55,7 +55,6 @@ Currently, any query that is allowed in a task block will also work as your Glob
 >     ```tasks
 >     limit 50
 >     ```
-> &nbsp
 >
 > > [!info]
 > > You **_can_** override a limit set in your Global Query in a task block in a vault.
