@@ -80,8 +80,6 @@ Currently, any query that is allowed in a task block will also work as your Glob
 
 The following settings in the Tasks Options pane control the vault's global query.
 
-You query should start working immediately, but open queries may need to be refreshed.
-
 ![Image of the settings options for the global query, showing the default settings.](../images/settings-global-query.png)
 
-
+Changing the global query should take effect without restarting Obsidian, but open queries may need to be refreshed.
