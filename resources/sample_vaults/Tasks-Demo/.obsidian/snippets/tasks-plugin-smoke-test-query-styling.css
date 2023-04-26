@@ -8,6 +8,6 @@
     background-color: aqua;
 }
 
-ul.contains-task-list.tasks-layout-hide-priority {
+ul.contains-task-list.tasks-layout-hide-priority.tasks-layout-hide-backlinks.tasks-layout-hide-urgency.tasks-layout-hide-edit-button {
     color: red;
 }

@@ -3,20 +3,15 @@
  */
 import moment from 'moment';
 import { FilenameField } from '../src/Query/Filter/FilenameField';
-import { Group } from '../src/Query/Group';
 import type { Grouper } from '../src/Query/Grouper';
-import type { GroupingProperty } from '../src/Query/Grouper';
 import type { Task } from '../src/Task';
 import { PathField } from '../src/Query/Filter/PathField';
 import { TagsField } from '../src/Query/Filter/TagsField';
+import { FolderField } from '../src/Query/Filter/FolderField';
+import { TaskGroups } from '../src/Query/TaskGroups';
 import { fromLine } from './TestHelpers';
 
 window.moment = moment;
-
-function checkGroupNamesOfTask(task: Task, property: GroupingProperty, expectedGroupNames: string[]) {
-    const group = Group.getGroupNamesForTask(Group.fromGroupingProperty(property), task);
-    expect(group).toEqual(expectedGroupNames);
-}
 
 describe('Grouping tasks', () => {
     it('groups correctly by path', () => {
@@ -28,7 +23,7 @@ describe('Grouping tasks', () => {
 
         // Act
         const grouping = [new PathField().createGrouper()];
-        const groups = Group.by(grouping, inputs);
+        const groups = new TaskGroups(grouping, inputs);
 
         // Assert
         expect(groups.toString()).toMatchInlineSnapshot(`
@@ -60,7 +55,7 @@ describe('Grouping tasks', () => {
 
         // Act
         const grouping: Grouper[] = [];
-        const groups = Group.by(grouping, inputs);
+        const groups = new TaskGroups(grouping, inputs);
 
         // Assert
         // No grouping specified, so no headings generated
@@ -84,7 +79,7 @@ describe('Grouping tasks', () => {
         const grouping = [new PathField().createGrouper()];
 
         // Act
-        const groups = Group.by(grouping, inputs);
+        const groups = new TaskGroups(grouping, inputs);
 
         // Assert
         expect(groups.groups.length).toEqual(1);
@@ -108,7 +103,7 @@ describe('Grouping tasks', () => {
         const inputs = [a, b, c];
 
         const grouping = [new PathField().createGrouper()];
-        const groups = Group.by(grouping, inputs);
+        const groups = new TaskGroups(grouping, inputs);
         expect(groups.toString()).toMatchInlineSnapshot(`
             "
             Group names: [a/b/c]
@@ -147,7 +142,7 @@ describe('Grouping tasks', () => {
         const inputs = [a, b, c];
 
         const grouping = [new TagsField().createGrouper()];
-        const groups = Group.by(grouping, inputs);
+        const groups = new TaskGroups(grouping, inputs);
         expect(groups.toString()).toMatchInlineSnapshot(`
             "
             Group names: [#group1]
@@ -185,10 +180,10 @@ describe('Grouping tasks', () => {
         });
         const tasks = [t1, t2, t3];
 
-        const grouping: Grouper[] = [Group.fromGroupingProperty('folder'), new FilenameField().createGrouper()];
+        const grouping: Grouper[] = [new FolderField().createGrouper(), new FilenameField().createGrouper()];
 
         // Act
-        const groups = Group.by(grouping, tasks);
+        const groups = new TaskGroups(grouping, tasks);
 
         // Assert
         expect(groups.toString()).toMatchInlineSnapshot(`
@@ -217,119 +212,4 @@ describe('Grouping tasks', () => {
             "
         `);
     });
-});
-
-describe('Group names', () => {
-    type GroupNameCase = {
-        groupBy: GroupingProperty;
-        taskLine: string;
-        expectedGroupNames: string[];
-        path?: string;
-        precedingHeading?: string | null;
-    };
-
-    const groupNameCases: Array<GroupNameCase> = [
-        // Maintenance Note: tests are in alphabetical order of 'groupBy' name
-
-        // -----------------------------------------------------------
-        // group by backlink
-        {
-            groupBy: 'backlink',
-            taskLine: '- [ ] xxx', // no location supplied
-            expectedGroupNames: ['Unknown Location'],
-            precedingHeading: 'heading',
-        },
-        {
-            groupBy: 'backlink',
-            taskLine: '- [ ] xxx', // no heading supplied
-            expectedGroupNames: ['c'],
-            path: 'a/b/c.md',
-        },
-        {
-            groupBy: 'backlink',
-            taskLine: '- [ ] xxx',
-            expectedGroupNames: ['c > heading'],
-            path: 'a/b/c.md',
-            precedingHeading: 'heading',
-        },
-        {
-            groupBy: 'backlink',
-            taskLine: '- [ ] xxx',
-            expectedGroupNames: ['c'], // If file name and heading are identical, avoid duplication ('c > c')
-            path: 'a/b/c.md',
-            precedingHeading: 'c',
-        },
-        {
-            groupBy: 'backlink',
-            taskLine: '- [ ] xxx',
-            // underscores in file name component are escaped
-            // but underscores in the heading component are not
-            expectedGroupNames: ['\\_c\\_ > heading _italic text_'],
-            path: 'a/b/_c_.md',
-            precedingHeading: 'heading _italic text_',
-        },
-
-        // -----------------------------------------------------------
-        // group by folder
-        {
-            groupBy: 'folder',
-            taskLine: '- [ ] a',
-            expectedGroupNames: ['a/b/'],
-            path: 'a/b/c.md',
-        },
-        {
-            groupBy: 'folder',
-            taskLine: '- [ ] a',
-            expectedGroupNames: ['a/\\_b\\_/'], // underscores in folder names are escaped
-            path: 'a/_b_/c.md',
-        },
-        {
-            // file in root of vault:
-            groupBy: 'folder',
-            taskLine: '- [ ] a',
-            expectedGroupNames: ['/'],
-            path: 'a.md',
-        },
-
-        // -----------------------------------------------------------
-        // group by root
-        {
-            groupBy: 'root',
-            taskLine: '- [ ] a',
-            expectedGroupNames: ['a/'],
-            path: 'a/b/c.md',
-        },
-        {
-            groupBy: 'root',
-            taskLine: '- [ ] a',
-            expectedGroupNames: ['\\_g\\_/'], // underscores in root folder names are escaped
-            path: '_g_/h/i.md',
-        },
-        {
-            groupBy: 'root',
-            taskLine: '- [ ] a',
-            expectedGroupNames: ['a/'],
-            path: 'a\\b\\c.md', // Windows path
-        },
-        {
-            // file in root of vault:
-            groupBy: 'root',
-            taskLine: '- [ ] a',
-            expectedGroupNames: ['/'],
-            path: 'a.md',
-        },
-        // -----------------------------------------------------------
-    ];
-
-    test.concurrent.each<GroupNameCase>(groupNameCases)(
-        'assigns correct group name (%j)',
-        ({ groupBy, taskLine, path, expectedGroupNames, precedingHeading }) => {
-            const task = fromLine({
-                line: taskLine,
-                path: path ? path : '',
-                precedingHeader: precedingHeading,
-            });
-            checkGroupNamesOfTask(task, groupBy, expectedGroupNames);
-        },
-    );
 });

@@ -1,5 +1,4 @@
 import type { Task } from '../Task';
-import { Group } from './Group';
 import type { Grouper } from './Grouper';
 import { GroupingTreeNode } from './GroupingTreeNode';
 
@@ -10,7 +9,7 @@ import { GroupingTreeNode } from './GroupingTreeNode';
  * For example, one set of keys might be ['Folder Name/', 'File Name']
  * and the values would be all the matching Tasks from that file.
  */
-export class IntermediateTaskGroupsStorage extends Map<string[], Task[]> {}
+export class TaskGroupingTreeStorage extends Map<string[], Task[]> {}
 
 /*
  * A tree of tasks where every level in the tree corresponds to a grouping property.
@@ -38,34 +37,34 @@ export class IntermediateTaskGroupsStorage extends Map<string[], Task[]> {}
 class TaskGroupingTreeNode extends GroupingTreeNode<Task> {}
 
 /**
- * IntermediateTaskGroups does the initial grouping together of tasks,
+ * TaskGroupingTree does the initial grouping together of tasks,
  * in alphabetical order by group names.
  *
- * It is essentially a thin wrapper around Map - see IntermediateTaskGroupsStorage.
+ * It is essentially a thin wrapper around Map - see {@link TaskGroupingTreeStorage}.
  *
- * It is named "Intermediate" because its results are only temporary.
- * They will be discarded once the final TaskGroups object is created.
+ * It is an implementation detail of the task-grouping code, and does not need to
+ * be understood in order to group tasks.
  *
  * Ideally, this code would be simplified and moved in to TaskGroups.
  */
-export class IntermediateTaskGroups {
-    public groups = new IntermediateTaskGroupsStorage();
+export class TaskGroupingTree {
+    public groups = new TaskGroupingTreeStorage();
 
     /**
      * Group a list of tasks, according to one or more task properties
-     * @param groupings 0 or more Grouping values, one per 'group by' line
+     * @param groupers 0 or more Grouping values, one per 'group by' line
      * @param tasks The tasks that match the task block's Query
      */
-    constructor(groupings: Grouper[], tasks: Task[]) {
-        const tree = this.buildGroupingTree(groupings, tasks);
+    constructor(groupers: Grouper[], tasks: Task[]) {
+        const tree = this.buildGroupingTree(groupers, tasks);
         this.groups = tree.generateAllPaths();
         this.groups = this.getSortedGroups();
     }
 
     /**
-     * Returns a grouping tree that groups the passed @tasks by the passed @groupings.
+     * Returns a grouping tree that groups the passed @tasks by the passed @groupers.
      */
-    private buildGroupingTree(groupings: Grouper[], tasks: Task[]): TaskGroupingTreeNode {
+    private buildGroupingTree(groupers: Grouper[], tasks: Task[]): TaskGroupingTreeNode {
         // The tree is build layer by layer, starting from the root.
         // At every level, we iterate on the nodes of that level to generate
         // the next one using the next grouping.
@@ -74,11 +73,13 @@ export class IntermediateTaskGroups {
         const root = new TaskGroupingTreeNode(tasks);
 
         let currentTreeLevel = [root];
-        for (const grouping of groupings) {
+        for (const grouper of groupers) {
             const nextTreeLevel = [];
             for (const currentTreeNode of currentTreeLevel) {
                 for (const task of currentTreeNode.values) {
-                    const groupNames = Group.getGroupNamesForTask(grouping, task);
+                    // Get properties of a task for the grouper
+                    // The returned string is rendered, so special Markdown characters will be escaped
+                    const groupNames = grouper.grouper(task);
                     for (const groupName of groupNames) {
                         let child = currentTreeNode.children.get(groupName);
                         if (child === undefined) {
@@ -100,6 +101,6 @@ export class IntermediateTaskGroups {
         // groups.keys() will initially be in the order the entries were added,
         // so effectively random.
         // Return a duplicate map, with the keys (that is, group names) sorted in alphabetical order:
-        return new IntermediateTaskGroupsStorage([...this.groups.entries()].sort());
+        return new TaskGroupingTreeStorage([...this.groups.entries()].sort());
     }
 }

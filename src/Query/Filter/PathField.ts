@@ -1,4 +1,3 @@
-import { Group } from '../Group';
 import type { Task } from '../../Task';
 import type { GrouperFunction } from '../Grouper';
 import { TextField } from './TextField';
@@ -35,7 +34,7 @@ export class PathField extends TextField {
         return (task: Task) => {
             // Does this need to be made stricter?
             // Is there a better way of getting the file name?
-            return [Group.escapeMarkdownCharacters(task.path.replace('.md', ''))];
+            return [TextField.escapeMarkdownCharacters(task.path.replace('.md', ''))];
         };
     }
 }

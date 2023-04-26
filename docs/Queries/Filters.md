@@ -530,6 +530,32 @@ Note that the path includes the `.md` extension.
 > [!released]
 `regex matches` and `regex does not match` were introduced in Tasks 1.12.0.
 
+### Root
+
+> [!released]
+> Introduced in Tasks 3.4.0.
+
+The `root` is the top-level folder of the file that contains the task, that is, the first directory in the path, which will be `/` for files in root of the vault.
+
+- `root (includes|does not include) <root>`
+  - Matches case-insensitive (disregards capitalization).
+- `root (regex matches|regex does not match) /<JavaScript-style Regex>/`
+  - Does regular expression match (case-sensitive by default).
+  - Essential reading: [[Regular Expressions|Regular Expression Searches]].
+
+### Folder
+
+> [!released]
+> Introduced in Tasks 3.4.0.
+
+This is the `folder` to the file that contains the task, which will be `/` for files in root of the vault.
+
+- `folder (includes|does not include) <folder>`
+  - Matches case-insensitive (disregards capitalization).
+- `folder (regex matches|regex does not match) /<JavaScript-style Regex>/`
+  - Does regular expression match (case-sensitive by default).
+  - Essential reading: [[Regular Expressions|Regular Expression Searches]].
+
 ### File Name
 
 > [!released]

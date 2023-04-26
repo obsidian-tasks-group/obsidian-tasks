@@ -4,11 +4,9 @@ import type { IQuery } from '../IQuery';
 import { getSettings } from '../Config/Settings';
 import { Sort } from './Sort';
 import type { Sorter } from './Sorter';
-import type { TaskGroups } from './TaskGroups';
+import { TaskGroups } from './TaskGroups';
 import * as FilterParser from './FilterParser';
-import { Group } from './Group';
 import type { Grouper } from './Grouper';
-import type { GroupingProperty } from './Grouper';
 import type { Filter } from './Filter/Filter';
 
 export class Query implements IQuery {
@@ -20,8 +18,6 @@ export class Query implements IQuery {
     private _error: string | undefined = undefined;
     private _sorting: Sorter[] = [];
     private _grouping: Grouper[] = [];
-
-    private readonly groupByRegexp = /^group by (backlink|folder|root)/;
 
     private readonly hideOptionsRegexp =
         /^(hide|show) (task count|backlink|priority|created date|start date|scheduled date|done date|due date|recurrence rule|edit button|urgency)/;
@@ -52,10 +48,7 @@ export class Query implements IQuery {
                         break;
                     case this.parseSortBy({ line }):
                         break;
-                    case this.parseGroupBy2({ line }):
-                        break;
-                    case this.groupByRegexp.test(line):
-                        this.parseGroupBy({ line });
+                    case this.parseGroupBy({ line }):
                         break;
                     case this.hideOptionsRegexp.test(line):
                         this.parseHideOptions({ line });
@@ -143,7 +136,10 @@ export class Query implements IQuery {
         return this._sorting;
     }
 
-    public get grouping() {
+    /**
+     * Return the {@link Grouper} objects that represent any `group by` instructions in the tasks block.
+     */
+    public get grouping(): Grouper[] {
         return this._grouping;
     }
 
@@ -159,7 +155,7 @@ export class Query implements IQuery {
         const { debugSettings } = getSettings();
         const tasksSorted = debugSettings.ignoreSortInstructions ? tasks : Sort.by(this.sorting, tasks);
         const tasksSortedLimited = tasksSorted.slice(0, this.limit);
-        return Group.by(this.grouping, tasksSortedLimited);
+        return new TaskGroups(this.grouping, tasksSortedLimited);
     }
 
     private parseHideOptions({ line }: { line: string }): void {
@@ -238,35 +234,13 @@ export class Query implements IQuery {
     }
 
     /**
-     * Old-style parsing of `group by` lines, for grouping that is implemented with static
-     * methods in {@link Group}, that are looked up from a {@link GroupingProperty}.
-     *
-     * These will be gradually migrated to the grouping method in {@link Field}
-     * classes, after which this method will be deleted.
-     *
-     * @param line
-     * @private
-     * @see parseGroupBy2
-     */
-    private parseGroupBy({ line }: { line: string }): void {
-        const fieldMatch = line.match(this.groupByRegexp);
-        if (fieldMatch !== null) {
-            this._grouping.push(Group.fromGroupingProperty(fieldMatch[1] as GroupingProperty));
-        } else {
-            this._error = 'do not understand query grouping';
-        }
-    }
-
-    /**
-     * New-style parsing of `group by` lines, for grouping that is implemented in the {@link Field}
+     * Parsing of `group by` lines, for grouping that is implemented in the {@link Field}
      * classes.
      *
-     * Once the original {@link parseGroupBy} has been removed, rename this to parseGroupBy()
      * @param line
      * @private
-     * @see parseGroupBy
      */
-    private parseGroupBy2({ line }: { line: string }): boolean {
+    private parseGroupBy({ line }: { line: string }): boolean {
         const groupingMaybe = FilterParser.parseGrouper(line);
         if (groupingMaybe) {
             this._grouping.push(groupingMaybe);

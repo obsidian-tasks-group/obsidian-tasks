@@ -1,25 +1,31 @@
 import type { Task } from '../Task';
-import type { GroupHeading } from './GroupHeading';
+import type { GroupDisplayHeading } from './GroupDisplayHeading';
 
 /**
- * TaskGroup stores a single group of tasks, that all share the same group names.
- * TaskGroup objects are stored in a TaskGroups object.
+ * Store a single group of tasks, that all share the same group names.
+ * {@link TaskGroup} objects are stored in a {@link TaskGroups} object.
  *
  * For example, if the user supplied these 'group by' lines:
  *   group by folder
  *   group by filename
  *   group by heading
- * Then the names of one TaskGroup might be this:
+ * Then the names of one {@link TaskGroup} might be this:
  *   Some/Folder/In/The/Vault
  *   A Particular File Name
  *   My lovely heading
- * And the TaskGroup would store all the tasks from that location
+ * And the {@link TaskGroup} would store all the tasks from that location
  * that match the task block's filters, in the task block's sort order
  */
 export class TaskGroup {
     /**
-     * The names of the group properties for this set of tasks,
-     * in the order of the 'group by' lines the user specified
+     * The full list of names of the group properties for this set of tasks,
+     * in the order of the 'group by' lines the user specified.
+     *
+     * If there were no 'group by' instructions in the tasks code block,
+     * this will be empty.
+     *
+     * Note that the strings returned contain markdown for rendering,
+     * if required.
      */
     public readonly groups: string[];
 
@@ -30,10 +36,14 @@ export class TaskGroup {
      * It only contains the minimal set of headings required to separate
      * this group of tasks from the previous group of tasks.
      *
+     * If this group of tasks has the same first-level heading as the previous
+     * group of tasks, there is no need to display that first-level heading
+     * to separate these tasks from the previous group.
+     *
      * If there were no 'group by' instructions in the tasks code block,
      * this will be empty.
      */
-    public readonly groupHeadings: GroupHeading[];
+    public readonly groupHeadings: GroupDisplayHeading[];
 
     /**
      * All the tasks that match the user's filters and that have the
@@ -42,12 +52,12 @@ export class TaskGroup {
     public readonly tasks: Task[];
 
     /**
-     * Constructor for TaskGroup
-     * @param {string[]} groups - See this.groups for details
-     * @param {GroupHeading[]} groupHeadings - See this.groupHeadings for details
-     * @param tasks {Task[]} - See this.tasks for details
+     * Constructor
+     * @param {string[]} groups - See {@link groups} for details
+     * @param {GroupDisplayHeading[]} groupHeadings - See {@link groupHeadings} for details
+     * @param tasks {Task[]} - See {@link tasks} for details
      */
-    constructor(groups: string[], groupHeadings: GroupHeading[], tasks: Task[]) {
+    constructor(groups: string[], groupHeadings: GroupDisplayHeading[], tasks: Task[]) {
         this.groups = groups;
         this.groupHeadings = groupHeadings;
         this.tasks = tasks;
@@ -81,7 +91,7 @@ export class TaskGroup {
             // These headings mimic the behaviour of QueryRenderer,
             // which uses 'h4', 'h5' and 'h6' for nested groups.
             const headingPrefix = '#'.repeat(4 + heading.nestingLevel);
-            output += `${headingPrefix} ${heading.name}\n`;
+            output += `${headingPrefix} ${heading.displayName}\n`;
         }
 
         output += this.tasksAsStringOfLines();

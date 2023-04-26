@@ -14,9 +14,13 @@ window.moment = moment;
 // Set predictable date for all tests in this file
 const mockDate = new Date(moment('2022-07-11 15:00').valueOf());
 
-jest.spyOn(chrono, 'parseDate').mockImplementation(
-    (text, _, options) => chrono.en.casual.parseDate(text, mockDate, options)!,
-);
+const chronoSpy = jest
+    .spyOn(chrono, 'parseDate')
+    .mockImplementation((text, _, options) => chrono.en.casual.parseDate(text, mockDate, options)!);
+
+afterAll(() => {
+    chronoSpy.mockRestore();
+});
 
 describe.each([
     { name: 'emoji', symbols: DEFAULT_SYMBOLS },
@@ -96,6 +100,19 @@ describe.each([
         suggestions = buildSuggestions(line, 20, originalSettings);
         expect(suggestions[0].displayText).toEqual('every');
         expect(suggestions[1].displayText).toEqual('every day');
+    });
+
+    it('matches created property suggestion when user types "created" but not "today"', () => {
+        // Arrange
+        const originalSettings = getSettings();
+        let line = '- [ ] some task cr';
+        let suggestions: SuggestInfo[] = buildSuggestions(line, 18, originalSettings);
+        expect(suggestions[0].displayText).toEqual(`${createdDateSymbol} created today (2022-07-11)`);
+
+        line = '- [ ] some task tod';
+        suggestions = buildSuggestions(line, 19, originalSettings);
+        expect(suggestions[0].suggestionType).toEqual('empty');
+        expect(suggestions[0].displayText).not.toContain('created today');
     });
 
     // Until the maximum date suggestion number is no longer hardcoded,
