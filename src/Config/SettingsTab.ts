@@ -137,8 +137,8 @@ export class SettingsTab extends PluginSettingTab {
                 .addTextArea((text) => {
                     const settings = getSettings();
 
-                    // TODO It would be good to make this 3 or 4 rows high, for a clearer placeholder.
-                    text.setPlaceholder('For example.... path does not include _templates/\nlimit 300')
+                    text.inputEl.rows = 4;
+                    text.setPlaceholder('# For example...\npath does not include _templates/\nlimit 300\nshow urgency')
                         .setValue(settings.globalQuery)
                         .onChange(async (value) => {
                             updateSettings({ globalQuery: value });
