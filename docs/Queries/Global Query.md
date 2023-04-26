@@ -82,6 +82,6 @@ The following settings in the Tasks Options pane control the vault's global quer
 
 You query should start working immediately, but open queries may need to be refreshed.
 
-![settings-global-filter](../images/settings-global-query.png)
+![Image of the settings options for the global query, showing the default settings.](../images/settings-global-query.png)
 
-Image of the settings options for the global query, showing the default settings.
+
