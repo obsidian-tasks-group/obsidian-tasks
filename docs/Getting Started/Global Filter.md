@@ -4,6 +4,9 @@ publish: true
 
 # Global Filter
 
+> [!tip]
+> Since Tasks X.Y.Z, a new [[Global Query]] facility has been added, which offers a lot more flexibility than the Global Filter.
+
 ## Optional Global Filter
 
 You can set a global filter in the settings so that Tasks only matches specific checklist items.
