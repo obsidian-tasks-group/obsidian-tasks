@@ -30,9 +30,9 @@ Tasks supports these task formats:
   - `🛫 2023-04-05 ⏳ 2023-04-06 📅 2023-04-07`
   - `➕ 2023-04-03 ✅ 2023-04-08`
 - [[Dataview Format]]
-  - `[priority:: high] [repeat:: every day when done]`
-  - `[start:: 2023-04-05] [scheduled:: 2023-04-06] [due:: 2023-04-07]`
-  - `[created:: 2023-04-03] [completion:: 2023-04-08]`
+  - `[priority:: high], [repeat:: every day when done]`
+  - `[start:: 2023-04-05], [scheduled:: 2023-04-06], [due:: 2023-04-07]`
+  - `[created:: 2023-04-03], [completion:: 2023-04-08]`
   - **Note:** do read this format's documentation, as there are some important differences between Tasks and Dataview interpretations.
 
 ## Impact of non-default task formats on Tasks behaviour

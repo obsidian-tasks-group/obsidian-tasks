@@ -45,6 +45,7 @@ function toInlineFieldRegex(innerFieldRegex: RegExp): RegExp {
             innerFieldRegex,
             / */,
             /[)\]]/,
+            /(?: *,)?/, // Allow trailing comma, enables workaround from #1913 for rendering issue
             /$/, // Regexes are matched from the end of the string forwards
         ] as const
     )
@@ -107,6 +108,11 @@ export class DataviewTaskSerializer extends DefaultTaskSerializer {
         const stringComponent = super.componentToString(task, layout, component);
         const notInlineFieldComponents: TaskLayoutComponent[] = ['blockLink', 'description'];
         const shouldMakeInlineField = stringComponent !== '' && !notInlineFieldComponents.includes(component);
-        return shouldMakeInlineField ? ` [${stringComponent.trim()}]` : stringComponent;
+        return shouldMakeInlineField
+            ? // Having 2 (TWO) leading spaces avoids a rendering issues that makes every other
+              // square-bracketed inline-field invisible.
+              // See https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1913
+              `  [${stringComponent.trim()}]`
+            : stringComponent;
     }
 }
