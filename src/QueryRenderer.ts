@@ -273,14 +273,12 @@ class QueryRenderChild extends MarkdownRenderChild {
     }
 
     private async addGroupHeading(content: HTMLDivElement, group: GroupDisplayHeading) {
-        let headerWeight: keyof HTMLElementTagNameMap;
+        // Headings nested to 2 or more levels are all displayed with 'h6:
+        let headerWeight: keyof HTMLElementTagNameMap = 'h6';
         if (group.nestingLevel === 0) {
             headerWeight = 'h4';
         } else if (group.nestingLevel === 1) {
             headerWeight = 'h5';
-        } else {
-            // Headings nested to 2 or more levels are all displayed with 'h6:
-            headerWeight = 'h6';
         }
 
         const header = content.createEl(headerWeight, {
