@@ -5,7 +5,7 @@ publish: true
 # Global Filter
 
 > [!tip]
-> Since Tasks X.Y.Z, a new [[Global Query]] facility has been added, which offers a lot more flexibility than the Global Filter.
+> Since Tasks 3.5.0, a new [[Global Query]] facility has been added, which offers a lot more flexibility than the Global Filter.
 
 ## Optional Global Filter
 
