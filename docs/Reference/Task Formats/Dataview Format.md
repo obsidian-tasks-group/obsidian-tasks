@@ -30,6 +30,12 @@ The brackets `[]` and `()` differ in how [Dataview displays them](https://blacks
 
 ### Ensuring correct display in Live Preview
 
+> [!tip]
+> If, in Source or Live Preview, **any of your dataview fields are underlined**, to ensure you see all your data in Live Preview, you should **separate the fields** with one of:
+>
+> - 2 spaces
+> - a comma and a space
+
 > [!warning]
 > `[Text][More Text]` is a Markdown feature called a [reference-style link](https://daringfireball.net/projects/markdown/syntax#link).
 >  
