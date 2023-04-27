@@ -28,6 +28,52 @@ Note, however, that when Tasks *writes* task lines, it always writes them with `
 
 The brackets `[]` and `()` differ in how [Dataview displays them](https://blacksmithgu.github.io/obsidian-dataview/annotation/add-metadata/#inline-fields). With the parenthesis syntax, Dataview only shows the field value and not the key.
 
+### Ensuring correct display in Live Preview
+
+> [!tip]
+> If, in Source or Live Preview, **any of your dataview fields are underlined**, to ensure you see all your data in Live Preview, you should **separate the fields** with one of:
+>
+> - 2 spaces
+> - a comma and a space
+>
+> The [[Create or edit Task]] modal puts 2 spaces between dataview fields automatically.
+
+> [!warning]
+> `[Text][More Text]` is a Markdown feature called a [reference-style link](https://daringfireball.net/projects/markdown/syntax#link).
+>
+> If Live Preview in Obsidian is **enabled**, Obsidian will **hide** everything inside the second set of square brackets.
+>
+> So a task with multiple inline fields:
+>
+> ```text
+> - [ ] This is a task [priority:: high] [start:: 2023-04-24] [due:: 2023-05-01]
+> ```
+>
+> Will look like this with Live Preview enabled:
+>
+> > - [ ] This is a task <u>priority:: high</u> [due:: 2023-05-01]
+>
+> ---
+>
+> This issue is outside the scope of the Tasks plugin, but can be avoided with any of the following workarounds:
+>
+> - Turning **off** Live Preview in Obsidian.
+> - Separating each field with at least 2 spaces.
+>
+> > [!example]
+>   >
+>   > ```text
+>   >  - [ ] This is a task [priority:: high]  [start:: 2023-04-24]  [due:: 2023-05-01]
+>   >  ```
+>
+> - Separating each field with commas.
+>
+> > [!example]
+>   >
+>   > ```text
+>   >  - [ ] This is a task [priority:: high], [start:: 2023-04-24], [due:: 2023-05-01]
+>   > ```
+
 ---
 
 ## Supported dataview fields
