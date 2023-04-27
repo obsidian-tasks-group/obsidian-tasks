@@ -7,7 +7,7 @@ publish: true
 ## Summary
 
 > [!released]
-The Global Query setting was added in Tasks X.Y.Z.
+The Global Query setting was added in Tasks 3.5.0.
 
 Global Query is a powerful and flexible alternative to the [[Global Filter]].
 
