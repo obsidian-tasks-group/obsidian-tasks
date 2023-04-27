@@ -274,17 +274,17 @@ class QueryRenderChild extends MarkdownRenderChild {
 
     private async addGroupHeading(content: HTMLDivElement, group: GroupDisplayHeading) {
         // Headings nested to 2 or more levels are all displayed with 'h6:
-        let headerWeight: keyof HTMLElementTagNameMap = 'h6';
+        let header: keyof HTMLElementTagNameMap = 'h6';
         if (group.nestingLevel === 0) {
-            headerWeight = 'h4';
+            header = 'h4';
         } else if (group.nestingLevel === 1) {
-            headerWeight = 'h5';
+            header = 'h5';
         }
 
-        const header = content.createEl(headerWeight, {
+        const headerEl = content.createEl(header, {
             cls: 'tasks-group-heading',
         });
-        await MarkdownRenderer.renderMarkdown(group.displayName, header, this.filePath, this);
+        await MarkdownRenderer.renderMarkdown(group.displayName, headerEl, this.filePath, this);
     }
 
     private addBacklinks(listItem: HTMLElement, task: Task, shortMode: boolean, isFilenameUnique: boolean | undefined) {
