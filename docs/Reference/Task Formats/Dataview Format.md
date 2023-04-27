@@ -35,10 +35,12 @@ The brackets `[]` and `()` differ in how [Dataview displays them](https://blacks
 >
 > - 2 spaces
 > - a comma and a space
+>
+> The [[Create or edit Task]] modal puts 2 spaces between dataview fields automatically.
 
 > [!warning]
 > `[Text][More Text]` is a Markdown feature called a [reference-style link](https://daringfireball.net/projects/markdown/syntax#link).
->  
+>
 > If Live Preview in Obsidian is **enabled**, Obsidian will **hide** everything inside the second set of square brackets.
 >
 > So a task with multiple inline fields:
