@@ -34,6 +34,15 @@ table td, th {
     vertical-align: top;
 }
 
+/* Use altnerating shades for table rows */
+table tr:nth-child(odd) {
+    background-color: var(--background-primary) !important;
+}
+
+table tr:nth-child(even) {
+    background-color: var(--background-secondary) !important;
+}
+
 /* Put a soft border around images, to make them stand out from the background */
 img {
     margin-bottom: 1.5rem;
