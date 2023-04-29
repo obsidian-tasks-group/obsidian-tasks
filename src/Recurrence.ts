@@ -192,13 +192,13 @@ export class Recurrence {
         if (this.baseOnToday) {
             // The next occurrence should happen based off the current date.
             const today = window.moment();
-            return this.nextReferenceDateFromToday(today);
+            return this.nextReferenceDateFromToday(today).toDate();
         } else {
-            return this.nextReferenceDateFromOriginalReferenceDate();
+            return this.nextReferenceDateFromOriginalReferenceDate().toDate();
         }
     }
 
-    private nextReferenceDateFromToday(today: Moment): Date {
+    private nextReferenceDateFromToday(today: Moment): Moment {
         const ruleBasedOnToday = new RRule({
             ...this.rrule.origOptions,
             dtstart: today.startOf('day').utc(true).toDate(),
@@ -207,7 +207,7 @@ export class Recurrence {
         return this.nextAfter(today.endOf('day'), ruleBasedOnToday);
     }
 
-    private nextReferenceDateFromOriginalReferenceDate(): Date {
+    private nextReferenceDateFromOriginalReferenceDate(): Moment {
         // The next occurrence should happen based on the original reference
         // date if possible. Otherwise, base it on today if we do not have a
         // reference date.
@@ -240,7 +240,7 @@ export class Recurrence {
      * eventually calculate the next occurrence based on `2022-01-28`, ending up
      * in February as the user would expect.
      */
-    private nextAfter(after: Moment, rrule: RRule): Date {
+    private nextAfter(after: Moment, rrule: RRule): Moment {
         // We need to remove the timezone, as rrule does not regard timezones and always
         // calculates in UTC.
         // The timezone is added again before returning the next date.
@@ -264,7 +264,7 @@ export class Recurrence {
         }
 
         // Here we add the timezone again that we removed in the beginning of this method.
-        return Recurrence.addTimezone(next).toDate();
+        return Recurrence.addTimezone(next);
     }
 
     /**
