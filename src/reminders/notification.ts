@@ -68,7 +68,8 @@ export class TaskNotification {
         if (!tasks?.length) {
             return; // No tasks, nothing to do.
         }
-        const input = 'has reminder date';
+        // get list of all future reminders that are not done
+        const input = 'reminder after yesterday\nnot done';
         const query = new Query({ source: input });
 
         // Get list of tasks with reminders
