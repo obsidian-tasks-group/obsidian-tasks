@@ -198,17 +198,21 @@ export class Recurrence {
             });
             return this.nextAfter(today.endOf('day'), ruleBasedOnToday);
         } else {
-            // The next occurrence should happen based on the original reference
-            // date if possible. Otherwise, base it on today if we do not have a
-            // reference date.
-            const after = window
-                // Reference date can be `undefined` to mean "today".
-                // Moment only accepts `undefined`, not `null`.
-                .moment(this.referenceDate ?? undefined)
-                .endOf('day');
-
-            return this.nextAfter(after, this.rrule);
+            return this.nextReferenceDateFromOriginalReferenceDate();
         }
+    }
+
+    private nextReferenceDateFromOriginalReferenceDate(): Date {
+        // The next occurrence should happen based on the original reference
+        // date if possible. Otherwise, base it on today if we do not have a
+        // reference date.
+        const after = window
+            // Reference date can be `undefined` to mean "today".
+            // Moment only accepts `undefined`, not `null`.
+            .moment(this.referenceDate ?? undefined)
+            .endOf('day');
+
+        return this.nextAfter(after, this.rrule);
     }
 
     /**
