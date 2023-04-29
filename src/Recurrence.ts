@@ -121,27 +121,7 @@ export class Recurrence {
         scheduledDate: Moment | null;
         dueDate: Moment | null;
     } | null {
-        let next: Date;
-        if (this.baseOnToday) {
-            // The next occurrence should happen based off the current date.
-            const today = window.moment();
-            const ruleBasedOnToday = new RRule({
-                ...this.rrule.origOptions,
-                dtstart: today.startOf('day').utc(true).toDate(),
-            });
-            next = this.nextAfter(today.endOf('day'), ruleBasedOnToday);
-        } else {
-            // The next occurrence should happen based on the original reference
-            // date if possible. Otherwise, base it on today if we do not have a
-            // reference date.
-            const after = window
-                // Reference date can be `undefined` to mean "today".
-                // Moment only accepts `undefined`, not `null`.
-                .moment(this.referenceDate ?? undefined)
-                .endOf('day');
-
-            next = this.nextAfter(after, this.rrule);
-        }
+        const next = this.nextReferenceDate();
 
         if (next !== null) {
             // Keep the relative difference between the reference date and
@@ -206,6 +186,29 @@ export class Recurrence {
         }
 
         return this.toText() === other.toText(); // this also checks baseOnToday
+    }
+
+    private nextReferenceDate(): Date {
+        if (this.baseOnToday) {
+            // The next occurrence should happen based off the current date.
+            const today = window.moment();
+            const ruleBasedOnToday = new RRule({
+                ...this.rrule.origOptions,
+                dtstart: today.startOf('day').utc(true).toDate(),
+            });
+            return this.nextAfter(today.endOf('day'), ruleBasedOnToday);
+        } else {
+            // The next occurrence should happen based on the original reference
+            // date if possible. Otherwise, base it on today if we do not have a
+            // reference date.
+            const after = window
+                // Reference date can be `undefined` to mean "today".
+                // Moment only accepts `undefined`, not `null`.
+                .moment(this.referenceDate ?? undefined)
+                .endOf('day');
+
+            return this.nextAfter(after, this.rrule);
+        }
     }
 
     /**
