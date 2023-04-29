@@ -53,7 +53,7 @@ Tasks allows date searches to specify a pair of dates, `<date range>` .
 
 These searches are inclusive: the dates at either end are found by the search.
 
-### Absolute date ranges
+#### Absolute date ranges
 
 `<date range>` may be specified as 2 valid dates in `YYYY-MM-DD` format.
 
@@ -79,7 +79,7 @@ Example absolute date ranges:
 Prior to Tasks 2.0.0, the second date in absolute date ranges was ignored.
 See the tables in the [[Filters#Appendix: Tasks 2.0.0 improvements to date filters|Appendix below]] to understand the changes in results, and whether you need to update any of your searches.
 
-### Relative date ranges
+#### Relative date ranges
 
 Tasks supports a very specific set of relative `<date range>` values: `last|this|next week|month|quarter|year`. The pipe (`|`) character means 'or'.
 
@@ -106,6 +106,26 @@ Example relative date ranges:
 Prior to Tasks 2.0.0, the interpretation of relative date ranges was confusing, and not what most users naturally expected.
 See the tables in the [[Filters#Appendix: Tasks 2.0.0 improvements to date filters|Appendix below]] to understand the changes in results, and whether you need to update any of your searches.
 
+#### Numbered date ranges
+
+There is also the ability to use numbered date ranges that are independent of the current date. These numbered date range types are supported:
+
+- Week
+  - Format: `YYYY-Www` (`ww` is the week number, always in 2 digits)
+  - Example: `2022-W14`
+- Month
+  - Format: `YYYY-mm` (`mm` is the month number, always in 2 digits)
+  - Example: `2023-10`
+- Quarter
+  - Format: `YYYY-Qq` (`q` is the quarter number, always 1 digit)
+  - Example: `2021-Q4`
+- Year
+  - Format: `YYYY`
+  - Example: `2023`
+
+> [!released]
+> Numbered date ranges were introduced in Tasks 3.1.0.
+
 ### Troubleshooting date searches
 
 If your date searches are giving unexpected results, add an [[Explaining Queries|`explain`]] line to your query.
@@ -120,8 +140,9 @@ If relative dates in queries do not update from the previous day, and your compu
 ### Finding Tasks with Invalid Dates
 
 > [!released]
-Validation of dates was introduced in Tasks 1.16.0.<br>
-`created date is invalid` was introduced in Tasks 2.0.0.
+>
+> - Validation of dates was introduced in Tasks 1.16.0.
+> - `created date is invalid` was introduced in Tasks 2.0.0.
 
 It is possible to accidentally use a non-existent date on a task signifier, such as `📅 2022-02-30`. February has at most 29 days.
 
@@ -134,7 +155,7 @@ Any such mistakes can be found systematically with this search:
     ```
 
 > [!warning]
-> If the above search finds any tasks with invalid dates, they are best fixed by clicking on the backlink to navigate
+> If the above search finds any tasks with invalid dates, they are best fixed by clicking on the [[Backlinks|backlink]] to navigate
 to the incorrect line, and fixing it by directly typing in the new date.
 
 If you use the 'Create or edit Task' Modal, it will discard the broken date, and there will be no information about
@@ -198,79 +219,110 @@ For full details of combining filters with boolean operators, see [[Combining Fi
 - `no done date`
 - `has done date`
 - `done (before|after|on) <date>`
-- `done (before|after|in) YYYY-MM-DD YYYY-MM-DD`
-- `done (before|after|in) (last|this|next) (week|month|quarter|year)`
+- `done (before|after|in) <date range>`
+  - `YYYY-MM-DD YYYY-MM-DD`
+  - `(last|this|next) (week|month|quarter|year)`
+  - `(YYYY-Www|YYYY-mm|YYYY-Qq|YYYY)`
 - `done date is invalid`
 
 > [!released]
-`no done date` and `has done date` were introduced in Tasks 1.7.0.<br>
-`done date is invalid` was introduced in Tasks 1.16.0.<br>
-`done (before|after|in) <date range>` searches were introduced in Tasks 2.0.0.
+>
+> - `no done date` and `has done date` were introduced in Tasks 1.7.0.
+> - `done date is invalid` was introduced in Tasks 1.16.0.
+> - `done (before|after|in) <date range>` searches were introduced in Tasks 2.0.0.
+> - `done (before|after|in) (YYYY-Www|YYYY-mm|YYYY-Qq|YYYY)` searches were introduced in Tasks 3.1.0.
 
 ### Due Date
 
 - `no due date`
 - `has due date`
 - `due (before|after|on) <date>`
-- `due (before|after|in) YYYY-MM-DD YYYY-MM-DD`
-- `due (before|after|in) (last|this|next) (week|month|quarter|year)`
+- `due (before|after|in) <date range>`
+  - `YYYY-MM-DD YYYY-MM-DD`
+  - `(last|this|next) (week|month|quarter|year)`
+  - `(YYYY-Www|YYYY-mm|YYYY-Qq|YYYY)`
 - `due date is invalid`
 
 > [!released]
-`has due date` was introduced in Tasks 1.6.0.<br>
-`due date is invalid` was introduced in Tasks 1.16.0.<br>
-`due (before|after|in) <date range>` searches were introduced in Tasks 2.0.0.
+>
+> - `has due date` was introduced in Tasks 1.6.0.
+> - `due date is invalid` was introduced in Tasks 1.16.0.
+> - `due (before|after|in) <date range>` searches were introduced in Tasks 2.0.0.
+> - `due (before|after|in) (YYYY-Www|YYYY-mm|YYYY-Qq|YYYY)` searches were introduced in Tasks 3.1.0.
 
 ### Scheduled Date
 
 - `no scheduled date`
 - `has scheduled date`
 - `scheduled (before|after|on) <date>`
-- `scheduled (before|after|in) YYYY-MM-DD YYYY-MM-DD`
-- `scheduled (before|after|in) (last|this|next) (week|month|quarter|year)`
+- `scheduled (before|after|in) <date range>`
+  - `YYYY-MM-DD YYYY-MM-DD`
+  - `(last|this|next) (week|month|quarter|year)`
+  - `(YYYY-Www|YYYY-mm|YYYY-Qq|YYYY)`
 - `scheduled date is invalid`
 
 > [!released]
-`has scheduled date` was introduced in Tasks 1.6.0.<br>
-`scheduled date is invalid` was introduced in Tasks 1.16.0.<br>
-`scheduled (before|after|in) <date range>` searches were introduced in Tasks 2.0.0.
+>
+> - `has scheduled date` was introduced in Tasks 1.6.0.
+> - `scheduled date is invalid` was introduced in Tasks 1.16.0.
+> - `scheduled (before|after|in) <date range>` searches were introduced in Tasks 2.0.0.
+> - `scheduled (before|after|in) (YYYY-Www|YYYY-mm|YYYY-Qq|YYYY)` searches were introduced in Tasks 3.1.0.
 
 ### Start Date
 
 - `no start date`
 - `has start date`
 - `starts (before|after|on) <date>`
-- `starts (before|after|in) YYYY-MM-DD YYYY-MM-DD`
-- `starts (before|after|in) (last|this|next) (week|month|quarter|year)`
+- `starts (before|after|in) <date range>`
+  - `YYYY-MM-DD YYYY-MM-DD`
+  - `(last|this|next) (week|month|quarter|year)`
+  - `(YYYY-Www|YYYY-mm|YYYY-Qq|YYYY)`
 - `start date is invalid`
 
 > [!released]
-`has start date` was Introduced in Tasks 1.6.0.<br>
-`start date is invalid` was introduced in Tasks 1.16.0.<br>
-`starts (before|after|in) <date range>` searches were introduced in Tasks 2.0.0.
+>
+> - `has start date` was Introduced in Tasks 1.6.0.
+> - `start date is invalid` was introduced in Tasks 1.16.0.
+> - `starts (before|after|in) <date range>` searches were introduced in Tasks 2.0.0.
+> - `starts (before|after|in) (YYYY-Www|YYYY-mm|YYYY-Qq|YYYY)` searches were introduced in Tasks 3.1.0.
 
-When filtering queries by [[Dates#🛫 Start|start date]],
-the result will include tasks without a start date.
-This way, you can use the start date as a filter to filter out any tasks that you cannot yet work on.
+#### Making Start Date only find tasks with Start
+
+> [!Warning]
+> When filtering queries by [[Dates#Start date|start date]],
+> the result will include tasks without a start date.
+> This way, you can use the start date as a filter to filter out any tasks that you cannot yet work on.
 
 Such filter could be:
 
     ```tasks
+    # Find tasks which:
+    #    EITHER start before today or earlier
+    #    OR     have no start date:
     starts before tomorrow
     ```
 
+> [!Tip]
+> To find tasks which really do start before tomorrow:
+>
+> ````text
+> ```tasks
+> # Find tasks which start today or earlier:
+> ( (starts before tomorrow) AND (has start date) )
+> ```
+> ````
+
 ### Created Date
 
-> [!released]
-Created date was introduced in Tasks 2.0.0.
-
-See [[Dates#➕ Created|created date]] for how to make Tasks record the created date on any task lines that it creates.
+See [[Dates#Created date|created date]] for how to make Tasks record the created date on any task lines that it creates.
 
 - `no created date`
 - `has created date`
 - `created (before|after|on) <date>`
-- `created (before|after|in) YYYY-MM-DD YYYY-MM-DD`
-- `created (before|after|in) (last|this|next) (week|month|quarter|year)`
+- `created (before|after|in) <date range>`
+  - `YYYY-MM-DD YYYY-MM-DD`
+  - `(last|this|next) (week|month|quarter|year)`
+  - `(YYYY-Www|YYYY-mm|YYYY-Qq|YYYY)`
 - `created date is invalid`
 
 Such a filter could be:
@@ -279,11 +331,18 @@ Such a filter could be:
     created before tomorrow
     ```
 
+> [!released]
+>
+> - Created date was introduced in Tasks 2.0.0.
+> - `created (before|after|in) (YYYY-Www|YYYY-mm|YYYY-Qq|YYYY)` searches were introduced in Tasks 3.1.0.
+
 ### Happens
 
 - `happens (before|after|on) <date>`
-- `happens (before|after|in) YYYY-MM-DD YYYY-MM-DD`
-- `happens (before|after|in) (last|this|next) (week|month|quarter|year)`
+- `happens (before|after|in) <date range>`
+  - `YYYY-MM-DD YYYY-MM-DD`
+  - `(last|this|next) (week|month|quarter|year)`
+  - `(YYYY-Www|YYYY-mm|YYYY-Qq|YYYY)`
 
 `happens` returns any task for a matching start date, scheduled date, _or_ due date.
 For example, `happens before tomorrow` will return all tasks that are starting, scheduled, or due earlier than tomorrow.
@@ -296,8 +355,10 @@ because the tasks starts before tomorrow. Only one of the dates needs to match.
   - Return tasks where _any_ of start date, scheduled date, _or_ due date are set.
 
 > [!released]
-`no happens date` and `has happens date` were introduced in Tasks 1.7.0.<br>
-`happens (before|after|in) <date range>` searches were introduced in Tasks 2.0.0.
+>
+> - `no happens date` and `has happens date` were introduced in Tasks 1.7.0.
+> - `happens (before|after|in) <date range>` searches were introduced in Tasks 2.0.0.
+> - `happens (before|after|in) (YYYY-Www|YYYY-mm|YYYY-Qq|YYYY)` searches were introduced in Tasks 3.1.0.
 
 ## Filters for Task Statuses
 
@@ -317,7 +378,7 @@ because the tasks starts before tomorrow. Only one of the dates needs to match.
 ### Status Name
 
 - This searches the names given to your custom statuses.
-- For example, perhaps you might have named `[!]` as `Important`, and so this field would search then text `Important` for all tasks with that status symbol.
+- For example, perhaps you might have named `[!]` as `Important`, and so this field would search the text `Important` for all tasks with that status symbol.
 - `status.name (includes|does not include) <string>`
   - Matches case-insensitive (disregards capitalization).
 - `status.name (regex matches|regex does not match) /<JavaScript-style Regex>/`
@@ -454,8 +515,9 @@ Introduced in Tasks 1.6.0.
   - If searching for sub-tags, remember to escape the slashes in regular expressions: `\/`
 
 > [!released]
-`regex matches` and `regex does not match` were introduced in Tasks 1.13.0.<br>
-`no tags` and `has tags` were introduced in Tasks 2.0.0.
+>
+> - `regex matches` and `regex does not match` were introduced in Tasks 1.13.0.
+> - `no tags` and `has tags` were introduced in Tasks 2.0.0.
 
 #### Tag Query Examples
 
@@ -483,6 +545,32 @@ Note that the path includes the `.md` extension.
 
 > [!released]
 `regex matches` and `regex does not match` were introduced in Tasks 1.12.0.
+
+### Root
+
+> [!released]
+> Introduced in Tasks 3.4.0.
+
+The `root` is the top-level folder of the file that contains the task, that is, the first directory in the path, which will be `/` for files in root of the vault.
+
+- `root (includes|does not include) <root>`
+  - Matches case-insensitive (disregards capitalization).
+- `root (regex matches|regex does not match) /<JavaScript-style Regex>/`
+  - Does regular expression match (case-sensitive by default).
+  - Essential reading: [[Regular Expressions|Regular Expression Searches]].
+
+### Folder
+
+> [!released]
+> Introduced in Tasks 3.4.0.
+
+This is the `folder` to the file that contains the task, which will be `/` for files in root of the vault.
+
+- `folder (includes|does not include) <folder>`
+  - Matches case-insensitive (disregards capitalization).
+- `folder (regex matches|regex does not match) /<JavaScript-style Regex>/`
+  - Does regular expression match (case-sensitive by default).
+  - Essential reading: [[Regular Expressions|Regular Expression Searches]].
 
 ### File Name
 

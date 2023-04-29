@@ -1,9 +1,11 @@
 import { makeDefaultSuggestionBuilder } from '../Suggestor/Suggestor';
 import { DEFAULT_SYMBOLS } from '../TaskSerializer/DefaultTaskSerializer';
+import { DATAVIEW_SYMBOLS } from '../TaskSerializer/DataviewTaskSerializer';
 import { StatusConfiguration } from '../StatusConfiguration';
 import { Status } from '../Status';
 import { DefaultTaskSerializer, type TaskSerializer } from '../TaskSerializer';
 import type { SuggestionBuilder } from '../Suggestor';
+import { DataviewTaskSerializer } from '../TaskSerializer/DataviewTaskSerializer';
 import { DebugSettings } from './DebugSettings';
 import { StatusSettings } from './StatusSettings';
 import { Feature } from './Feature';
@@ -34,15 +36,21 @@ interface TaskFormat {
 /** Map of all defined {@link TaskFormat}s */
 export const TASK_FORMATS = {
     tasksPluginEmoji: {
-        displayName: 'Default',
+        displayName: 'Tasks Emoji Format',
         taskSerializer: new DefaultTaskSerializer(DEFAULT_SYMBOLS),
         buildSuggestions: makeDefaultSuggestionBuilder(DEFAULT_SYMBOLS),
+    },
+    dataview: {
+        displayName: 'Dataview',
+        taskSerializer: new DataviewTaskSerializer(),
+        buildSuggestions: makeDefaultSuggestionBuilder(DATAVIEW_SYMBOLS),
     },
 } as const;
 
 export type TASK_FORMATS = typeof TASK_FORMATS; // For convenience to make some typing easier
 
 export interface Settings {
+    globalQuery: string;
     globalFilter: string;
     removeGlobalFilter: boolean;
     taskFormat: keyof TASK_FORMATS;
@@ -71,6 +79,7 @@ export interface Settings {
 }
 
 const defaultSettings: Settings = {
+    globalQuery: '',
     globalFilter: GlobalFilter.empty,
     removeGlobalFilter: false,
     taskFormat: 'tasksPluginEmoji',
@@ -190,4 +199,13 @@ export const toggleFeature = (internalName: string, enabled: boolean): FeatureFl
  */
 export function getUserSelectedTaskFormat(): TaskFormat {
     return TASK_FORMATS[getSettings().taskFormat];
+}
+
+/**
+ * Retrieves the source of the global {@link Query}
+ *
+ * @exports
+ */
+export function getGlobalQuerySource(): { source: string } {
+    return { source: getSettings().globalQuery };
 }

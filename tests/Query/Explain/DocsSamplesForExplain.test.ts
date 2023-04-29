@@ -1,43 +1,10 @@
 /**
  * @jest-environment jsdom
  */
-import { verify } from 'approvals/lib/Providers/Jest/JestApprovals';
 import moment from 'moment';
-import { Options } from 'approvals/lib/Core/Options';
-import { Query } from '../../../src/Query/Query';
-
+import { verifyQuery, verifyTaskBlockExplanation } from '../../TestingTools/ApprovalTestHelpers';
+import { resetSettings, updateSettings } from '../../../src/Config/Settings';
 window.moment = moment;
-
-/**
- * Save an instructions block to disc, so that it can be embedded in
- * to documentation, using a 'snippet' line.
- * @todo Figure out how to include the '```tasks' and '```' lines:
- *       see discussion in https://github.com/SimonCropp/MarkdownSnippets/issues/537
- * @param instructions
- * @param options
- */
-function verifyQuery(instructions: string, options?: Options): void {
-    options = options || new Options();
-    options = options.forFile().withFileExtention('query.text');
-    verify(instructions, options);
-}
-
-/**
- * Save an explanation of the instructions block to disk, so that it can be
- * embedded in to documentation, using a 'snippet' line.
- * @param instructions
- * @param options
- */
-function verifyExplanation(instructions: string, options?: Options): void {
-    const query = new Query({ source: instructions });
-    const explanation = query.explainQuery();
-
-    expect(query.error).toBeUndefined();
-
-    options = options || new Options();
-    options = options.forFile().withFileExtention('explanation.text');
-    verify(explanation, options);
-}
 
 describe('explain', () => {
     beforeAll(() => {
@@ -49,6 +16,8 @@ describe('explain', () => {
         jest.useRealTimers();
     });
 
+    afterEach(resetSettings);
+
     it('expands dates', () => {
         // Arrange
         const instructions: string = `
@@ -59,7 +28,7 @@ explain`;
 
         // Act, Assert
         verifyQuery(instructions);
-        verifyExplanation(instructions);
+        verifyTaskBlockExplanation(instructions);
     });
 
     it('boolean combinations', () => {
@@ -71,7 +40,7 @@ not done
 
         // Act, Assert
         verifyQuery(instructions);
-        verifyExplanation(instructions);
+        verifyTaskBlockExplanation(instructions);
     });
 
     it('nested boolean combinations', () => {
@@ -82,6 +51,23 @@ explain
 
         // Act, Assert
         verifyQuery(instructions);
-        verifyExplanation(instructions);
+        verifyTaskBlockExplanation(instructions);
+    });
+
+    it('explains task block with global query active', () => {
+        // Arrange
+        const globalQuery = `limit 50
+heading includes tasks`;
+
+        updateSettings({ globalQuery });
+
+        const blockQuery = `
+not done
+due next week
+explain`;
+
+        // Act, Assert
+        verifyQuery(blockQuery);
+        verifyTaskBlockExplanation(blockQuery);
     });
 });

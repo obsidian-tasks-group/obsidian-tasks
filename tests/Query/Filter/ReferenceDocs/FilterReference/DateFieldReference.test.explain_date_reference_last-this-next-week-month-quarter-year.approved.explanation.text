@@ -1,0 +1,74 @@
+description includes ------------------------------
+
+due today =>
+  due date is on 2023-04-19 (Wednesday 19th April 2023)
+
+description includes ------------------------------
+
+due last week =>
+  due date is between:
+    2023-04-10 (Monday 10th April 2023) and
+    2023-04-16 (Sunday 16th April 2023) inclusive
+
+due this week =>
+  due date is between:
+    2023-04-17 (Monday 17th April 2023) and
+    2023-04-23 (Sunday 23rd April 2023) inclusive
+
+due next week =>
+  due date is between:
+    2023-04-24 (Monday 24th April 2023) and
+    2023-04-30 (Sunday 30th April 2023) inclusive
+
+description includes ------------------------------
+
+due last month =>
+  due date is between:
+    2023-03-01 (Wednesday 1st March 2023) and
+    2023-03-31 (Friday 31st March 2023) inclusive
+
+due this month =>
+  due date is between:
+    2023-04-01 (Saturday 1st April 2023) and
+    2023-04-30 (Sunday 30th April 2023) inclusive
+
+due next month =>
+  due date is between:
+    2023-05-01 (Monday 1st May 2023) and
+    2023-05-31 (Wednesday 31st May 2023) inclusive
+
+description includes ------------------------------
+
+due last quarter =>
+  due date is between:
+    2023-01-01 (Sunday 1st January 2023) and
+    2023-03-31 (Friday 31st March 2023) inclusive
+
+due this quarter =>
+  due date is between:
+    2023-04-01 (Saturday 1st April 2023) and
+    2023-06-30 (Friday 30th June 2023) inclusive
+
+due next quarter =>
+  due date is between:
+    2023-07-01 (Saturday 1st July 2023) and
+    2023-09-30 (Saturday 30th September 2023) inclusive
+
+description includes ------------------------------
+
+due last year =>
+  due date is between:
+    2022-01-01 (Saturday 1st January 2022) and
+    2022-12-31 (Saturday 31st December 2022) inclusive
+
+due this year =>
+  due date is between:
+    2023-01-01 (Sunday 1st January 2023) and
+    2023-12-31 (Sunday 31st December 2023) inclusive
+
+due next year =>
+  due date is between:
+    2024-01-01 (Monday 1st January 2024) and
+    2024-12-31 (Tuesday 31st December 2024) inclusive
+
+description includes ------------------------------

@@ -63,9 +63,9 @@ See [[Recurring Tasks|recurring tasks (repetition)]].
 ### Dates
 
 Here you can optionally give the task
-[[Dates#📅 Due|due]],
-[[Dates#⏳ Scheduled|scheduled]] and
-[[Dates#🛫 Start|start]] dates.
+[[Dates#Due date|due]],
+[[Dates#Scheduled date|scheduled]] and
+[[Dates#Start date|start]] dates.
 
 There is a lot of flexibility here. For example:
 
@@ -115,6 +115,8 @@ For more information, including adding your own customised statuses, see [[Statu
 >
 > Also, completing a recurring task via the Status in the modal does not yet add the new recurrence.
 >
+> We are tracking this in [issue #1590](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1590).
+>
 > For now, you should still complete tasks via command or by clicking on task checkboxes.
 
 ## Display values
@@ -130,13 +132,13 @@ A read-only checkbox, showing whether the task is completed.
 > [!released]
 Created date was introduced in Tasks 2.0.0.
 
-A read-only display of the task's [[Dates#➕ Created|created date]], if any.
+A read-only display of the task's [[Dates#Created date|created date]], if any.
 
 If you have enabled ‘Set created date on every added task’ in Tasks settings (and restarted Obsidian), when you create a new Task via this modal, today's date will be added automatically.
 
 ### Done on
 
-A read-only display of the task's [[Dates#✅ Done|done date]], if any.
+A read-only display of the task's [[Dates#Done date|done date]], if any.
 
 ## Finishing off
 

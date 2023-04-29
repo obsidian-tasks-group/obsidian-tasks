@@ -1,3 +1,5 @@
+import type { Task } from '../../Task';
+import type { GrouperFunction } from '../Grouper';
 import { FilterInstructionsBasedField } from './FilterInstructionsBasedField';
 
 export class RecurringField extends FilterInstructionsBasedField {
@@ -9,5 +11,19 @@ export class RecurringField extends FilterInstructionsBasedField {
 
     public fieldName(): string {
         return 'recurring';
+    }
+
+    public supportsGrouping(): boolean {
+        return true;
+    }
+
+    public grouper(): GrouperFunction {
+        return (task: Task) => {
+            if (task.recurrence !== null) {
+                return ['Recurring'];
+            } else {
+                return ['Not Recurring'];
+            }
+        };
     }
 }

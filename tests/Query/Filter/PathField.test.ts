@@ -143,3 +143,24 @@ describe('sorting by path', () => {
         expectTaskComparesAfter(sorter, with_path('a/b.md'), with_path('c/d.md'));
     });
 });
+
+describe('grouping by path', () => {
+    it('supports grouping methods correctly', () => {
+        expect(new PathField()).toSupportGroupingWithProperty('path');
+    });
+
+    it.each([
+        // the file extension is removed
+        ['- [ ] a', 'a/b/c.md', ['a/b/c']],
+        // underscores in paths are escaped
+        ['- [ ] a', '_a_/b/_c_.md', ['\\_a\\_/b/\\_c\\_']],
+        // backslashes are escaped. (this artificial example is to test escaping)
+        ['- [ ] a', 'a\\b\\c.md', ['a\\\\b\\\\c']],
+    ])('task "%s" with path "%s" should have groups: %s', (taskLine: string, path: string, groups: string[]) => {
+        // Arrange
+        const grouper = new PathField().createGrouper().grouper;
+
+        // Assert
+        expect(grouper(fromLine({ line: taskLine, path: path }))).toEqual(groups);
+    });
+});

@@ -5,7 +5,7 @@ import { StatusRegistry } from '../StatusRegistry';
 import { Status } from '../Status';
 import type { StatusCollection } from '../StatusCollection';
 import * as Themes from './Themes';
-import type { HeadingState } from './Settings';
+import { type HeadingState, TASK_FORMATS } from './Settings';
 import { getSettings, isFeatureEnabled, updateGeneralSetting, updateSettings } from './Settings';
 import { GlobalFilter } from './GlobalFilter';
 import { StatusSettings } from './StatusSettings';
@@ -56,6 +56,30 @@ export class SettingsTab extends PluginSettingTab {
         });
 
         // ---------------------------------------------------------------------------
+        containerEl.createEl('h4', { text: 'Task Format Settings' });
+        // ---------------------------------------------------------------------------
+
+        new Setting(containerEl)
+            .setName('Task Format')
+            .setDesc(
+                SettingsTab.createFragmentWithHTML(
+                    '<p>The format that Tasks uses to read and write tasks.</p>' +
+                        '<p><b>Important:</b> Tasks currently only supports one format at a time. Selecting Dataview will currently <b>stop Tasks reading its own emoji signifiers</b>.</p>' +
+                        '<p>See the <a href="https://publish.obsidian.md/tasks/Reference/Task+Formats/About+Task+Formats">documentation</a>.</p>',
+                ),
+            )
+            .addDropdown((dropdown) => {
+                for (const key of Object.keys(TASK_FORMATS) as (keyof TASK_FORMATS)[]) {
+                    dropdown.addOption(key, TASK_FORMATS[key].displayName);
+                }
+
+                dropdown.setValue(getSettings().taskFormat).onChange(async (value) => {
+                    updateSettings({ taskFormat: value as keyof TASK_FORMATS });
+                    await this.plugin.saveSettings();
+                });
+            });
+
+        // ---------------------------------------------------------------------------
         containerEl.createEl('h4', { text: 'Global filter Settings' });
         // ---------------------------------------------------------------------------
 
@@ -97,6 +121,33 @@ export class SettingsTab extends PluginSettingTab {
                     await this.plugin.saveSettings();
                 });
             });
+
+        // ---------------------------------------------------------------------------
+        containerEl.createEl('h4', { text: 'Global Query' });
+        // ---------------------------------------------------------------------------
+
+        makeMultilineTextSetting(
+            new Setting(containerEl)
+                .setDesc(
+                    SettingsTab.createFragmentWithHTML(
+                        '<p>A query that is automatically included at the start of every Tasks block in the vault.' +
+                            ' Useful for adding default filters, or layout options.</p>' +
+                            '<p>See the <a href="https://publish.obsidian.md/tasks/Queries/Global+Query">documentation</a>.</p>',
+                    ),
+                )
+                .addTextArea((text) => {
+                    const settings = getSettings();
+
+                    text.inputEl.rows = 4;
+                    text.setPlaceholder('# For example...\npath does not include _templates/\nlimit 300\nshow urgency')
+                        .setValue(settings.globalQuery)
+                        .onChange(async (value) => {
+                            updateSettings({ globalQuery: value });
+
+                            await this.plugin.saveSettings();
+                        });
+                }),
+        );
 
         // ---------------------------------------------------------------------------
         containerEl.createEl('h4', { text: 'Task Statuses' });
@@ -440,12 +491,13 @@ export class SettingsTab extends PluginSettingTab {
         const themes: NamedTheme[] = [
             // Light and Dark themes - alphabetical order
             ['AnuPpuccin Theme', Themes.anuppuccinSupportedStatuses()],
+            ['Aura Theme', Themes.auraSupportedStatuses()],
             ['Ebullientworks Theme', Themes.ebullientworksSupportedStatuses()],
             ['ITS Theme & SlRvb Checkboxes', Themes.itsSupportedStatuses()],
             ['Minimal Theme', Themes.minimalSupportedStatuses()],
             ['Things Theme', Themes.thingsSupportedStatuses()],
             // Dark only themes - alphabetical order
-            ['Aura Theme (Dark mode only)', Themes.auraSupportedStatuses()],
+            ['LYT Mode Theme (Dark mode only)', Themes.lytModeSupportedStatuses()],
         ];
         for (const [name, collection] of themes) {
             const addStatusesSupportedByThisTheme = new Setting(containerEl).addButton((button) => {
@@ -581,4 +633,19 @@ async function updateAndSaveStatusSettings(statusTypes: StatusSettings, settings
     StatusSettings.applyToStatusRegistry(statusTypes, StatusRegistry.getInstance());
 
     await settings.saveSettings(true);
+}
+
+function makeMultilineTextSetting(setting: Setting) {
+    const { settingEl, infoEl, controlEl } = setting;
+    const textEl: HTMLElement | null = controlEl.querySelector('textarea');
+    console.log({ settingEl, infoEl, controlEl, textEl });
+
+    // Not a setting with a text field
+    if (textEl === null) {
+        return;
+    }
+
+    settingEl.style.display = 'block';
+    infoEl.style.marginRight = '0px';
+    textEl.style.minWidth = '-webkit-fill-available';
 }

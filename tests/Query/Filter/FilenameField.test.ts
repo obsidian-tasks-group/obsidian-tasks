@@ -1,6 +1,7 @@
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { FilenameField } from '../../../src/Query/Filter/FilenameField';
 import * as CustomMatchersForSorting from '../../CustomMatchers/CustomMatchersForSorting';
+import { fromLine } from '../../TestHelpers';
 
 describe('filename', () => {
     it('should provide access to the file name with extension', () => {
@@ -99,5 +100,23 @@ describe('sorting by filename', () => {
         // (There's no need to repeat all the examples above)
         const sorter = new FilenameField().createReverseSorter();
         CustomMatchersForSorting.expectTaskComparesAfter(sorter, with_path('a/b.md'), with_path('c/d.md'));
+    });
+});
+
+describe('grouping by filename', () => {
+    it('supports grouping methods correctly', () => {
+        expect(new FilenameField()).toSupportGroupingWithProperty('filename');
+    });
+
+    it.each([
+        ['- [ ] a', 'a/b/c.md', ['[[c]]']],
+        // underscores in links shall not be escaped
+        ['- [ ] a', 'a/b/_c_.md', ['[[_c_]]']],
+    ])('task "%s" with path "%s" should have groups: %s', (taskLine: string, path: string, groups: string[]) => {
+        // Arrange
+        const grouper = new FilenameField().createGrouper().grouper;
+
+        // Assert
+        expect(grouper(fromLine({ line: taskLine, path: path }))).toEqual(groups);
     });
 });

@@ -4,6 +4,13 @@ publish: true
 
 # Introduction
 
+## What's New?
+
+- 3.5.0: 🔥 New [[Global Query]] facility.
+- 3.4.0: 🔥 Clicking on a [[Backlinks|Backlink]] jumps to the exact task line.
+- 3.4.0: Tasks now requires at least Obsidian 1.1.1.
+- 3.3.0: 🔥 Multiple [[About Task Formats|Task Format]] support - starting with [[Dataview Format]].
+
 ## Task management for the Obsidian knowledge base
 
 Track tasks across your entire [Obsidian](https://obsidian.md/) vault.
@@ -12,7 +19,7 @@ Supports due dates, recurring tasks (repetition), done dates, sub-set of checkli
 
 You can toggle the task status in any view or query and it will update the source file.
 
-> Please submit bugs using the [Bug Report form](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/new?assignees=&labels=type%3A+bug&template=bug-report.yaml).
+> Please submit bugs using [[Report a Bug]].
 >
 > Please submit ideas using the [Feature Request form](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/new?assignees=&labels=type%3A+enhancement&template=feature-request.yaml).
 >

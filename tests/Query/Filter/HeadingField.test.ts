@@ -3,6 +3,7 @@ import type { FilterOrErrorMessage } from '../../../src/Query/Filter/Filter';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { testFilter } from '../../TestingTools/FilterTestHelpers';
 import * as CustomMatchersForSorting from '../../CustomMatchers/CustomMatchersForSorting';
+import { fromLine } from '../../TestHelpers';
 
 function testTaskFilterForHeading(filter: FilterOrErrorMessage, precedingHeader: string | null, expected: boolean) {
     const builder = new TaskBuilder();
@@ -86,4 +87,27 @@ describe('sorting by heading', () => {
         const sorter = new HeadingField().createReverseSorter();
         CustomMatchersForSorting.expectTaskComparesAfter(sorter, with_heading('Heading 1'), with_heading('Heading 2'));
     });
+});
+
+describe('grouping by heading', () => {
+    it('supports grouping methods correctly', () => {
+        expect(new HeadingField()).toSupportGroupingWithProperty('heading');
+    });
+
+    it.each([
+        ['- [ ] xxx', null, ['(No heading)']],
+        ['- [ ] xxx', '', ['(No heading)']],
+        ['- [ ] xxx', 'heading', ['heading']],
+        // underscores in headings are NOT escaped - will be rendered
+        ['- [ ] xxx', 'heading _italic text_', ['heading _italic text_']],
+    ])(
+        'task "%s" with header "%s" should have groups: %s',
+        (taskLine: string, header: string | null, groups: string[]) => {
+            // Arrange
+            const grouper = new HeadingField().createGrouper().grouper;
+
+            // Assert
+            expect(grouper(fromLine({ line: taskLine, precedingHeader: header }))).toEqual(groups);
+        },
+    );
 });

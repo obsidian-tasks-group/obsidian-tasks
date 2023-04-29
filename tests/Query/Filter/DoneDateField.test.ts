@@ -86,3 +86,20 @@ describe('sorting by done', () => {
         expectTaskComparesAfter(new DoneDateField().createReverseSorter(), date1, date2);
     });
 });
+
+describe('grouping by done date', () => {
+    it('supports Field grouping methods correctly', () => {
+        expect(new DoneDateField()).toSupportGroupingWithProperty('done');
+    });
+
+    it('group by done date', () => {
+        // Arrange
+        const grouper = new DoneDateField().createGrouper();
+        const taskWithDate = new TaskBuilder().doneDate('1970-01-01').build();
+        const taskWithoutDate = new TaskBuilder().build();
+
+        // Assert
+        expect(grouper.grouper(taskWithDate)).toEqual(['1970-01-01 Thursday']);
+        expect(grouper.grouper(taskWithoutDate)).toEqual(['No done date']);
+    });
+});

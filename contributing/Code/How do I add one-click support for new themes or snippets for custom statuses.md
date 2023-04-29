@@ -3,7 +3,7 @@
 ## Update tests/
 
 - Add a new test block to generate files for inclusion in docs:
-  - See examples in [tests/DocsSamplesForStatuses.test.ts](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/DocsSamplesForStatuses.test.ts)
+  - See examples in [tests/DocumentationSamples/DocsSamplesForStatuses.test.ts](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/tests/DocumentationSamples/DocsSamplesForStatuses.test.ts)
   - Section = `describe('Theme', () => {`
   - After implementing the code below, run the tests
   - Run the new test and approve all the output files
@@ -26,7 +26,7 @@
 - Create a sample note for users to test
 - Embed the approved file showing the tasks with supported statuses in it
   - for an example, see [resources/sample_vaults/Tasks-Demo/Styling](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/resources/sample_vaults/Tasks-Demo/Styling) for `Theme - Minimal Theme.md`
-    - `include:` then `DocsSamplesForStatuses.test.Theme_Things Tasks.approved.md`
+    - `include:` then `DocsSamplesForStatuses.test.Theme_Things_Tasks.approved.md`
 
 ## Update doc/
 
@@ -34,8 +34,8 @@
   - for example: [docs/reference/status-collections/minimal-theme.md](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/docs/reference/status-collections/minimal-theme.md)
   - Best to copy and paste an existing one
   - Embed the 2 blocks of text in it, for example:
-    - `snippet:` then `DocsSamplesForStatuses.test.Theme_Minimal Text.approved.txt`
-    - `include:` then `DocsSamplesForStatuses.test.Theme_Minimal Table.approved.md`
+    - `snippet:` then `DocsSamplesForStatuses.test.Theme_Minimal_Text.approved.txt`
+    - `include:` then `DocsSamplesForStatuses.test.Theme_Minimal_Table.approved.md`
 - Save a screenshot of the supported checkboxes, displayed with just the theme or snippet enabled
 - Add the theme-specific screenshot to the reference documentation
 - Update any images in the screenshots that show all the available 'One Click' buttons

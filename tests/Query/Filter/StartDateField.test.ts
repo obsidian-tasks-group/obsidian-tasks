@@ -56,3 +56,20 @@ describe('sorting by start', () => {
         expectTaskComparesAfter(new StartDateField().createReverseSorter(), date1, date2);
     });
 });
+
+describe('grouping by start date', () => {
+    it('supports Field grouping methods correctly', () => {
+        expect(new StartDateField()).toSupportGroupingWithProperty('start');
+    });
+
+    it('group by start date', () => {
+        // Arrange
+        const grouper = new StartDateField().createGrouper();
+        const taskWithDate = new TaskBuilder().startDate('1970-01-01').build();
+        const taskWithoutDate = new TaskBuilder().build();
+
+        // Assert
+        expect(grouper.grouper(taskWithDate)).toEqual(['1970-01-01 Thursday']);
+        expect(grouper.grouper(taskWithoutDate)).toEqual(['No start date']);
+    });
+});

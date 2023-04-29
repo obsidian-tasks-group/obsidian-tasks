@@ -6,6 +6,7 @@ import { HappensDateField } from '../../../src/Query/Filter/HappensDateField';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { testFilter } from '../../TestingTools/FilterTestHelpers';
 import * as CustomMatchersForSorting from '../../CustomMatchers/CustomMatchersForSorting';
+import { fromLine } from '../../TestHelpers';
 
 window.moment = moment;
 
@@ -131,5 +132,27 @@ describe('sorting by happens', () => {
 
     it('sort by happens reverse', () => {
         CustomMatchersForSorting.expectTaskComparesAfter(new HappensDateField().createReverseSorter(), date1, date2);
+    });
+});
+
+describe('grouping by happens date', () => {
+    it('supports Field grouping methods correctly', () => {
+        expect(new HappensDateField()).toSupportGroupingWithProperty('happens');
+    });
+
+    it.each([
+        ['- [ ] a', ['No happens date']],
+        ['- [ ] due is only date 📅 1970-01-01', ['1970-01-01 Thursday']],
+        ['- [ ] scheduled is only date ⏳ 1970-01-02', ['1970-01-02 Friday']],
+        ['- [ ] start is only date 🛫 1970-01-03', ['1970-01-03 Saturday']],
+        ['- [ ] due is earliest date 🛫 1970-01-03 ⏳ 1970-01-02 📅 1970-01-01', ['1970-01-01 Thursday']],
+        ['- [ ] scheduled is earliest date 🛫 1970-01-03 ⏳ 1970-01-01 📅 1970-01-02', ['1970-01-01 Thursday']],
+        ['- [ ] start is earliest date 🛫 1970-01-01 ⏳ 1970-01-02 📅 1970-01-03', ['1970-01-01 Thursday']],
+    ])('group by happens date: task "%s" should have groups %s', (taskLine: string, expectedResult: string[]) => {
+        // Arrange
+        const grouper = new HappensDateField().createGrouper();
+
+        // Assert
+        expect(grouper.grouper(fromLine({ line: taskLine }))).toEqual(expectedResult);
     });
 });

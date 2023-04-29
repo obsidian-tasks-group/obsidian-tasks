@@ -2,6 +2,7 @@ import { Priority } from '../../../src/Task';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { testFilter } from '../../TestingTools/FilterTestHelpers';
 import { PriorityField } from '../../../src/Query/Filter/PriorityField';
+import { fromLine } from '../../TestHelpers';
 
 import {
     expectTaskComparesAfter,
@@ -153,5 +154,24 @@ describe('sorting by priority', () => {
         // (There's no need to repeat all the examples above)
         const sorter = new PriorityField().createReverseSorter();
         expectTaskComparesAfter(sorter, with_priority(Priority.High), with_priority(Priority.Medium));
+    });
+});
+
+describe('grouping by priority', () => {
+    it('supports grouping methods correctly', () => {
+        expect(new PriorityField()).toSupportGroupingWithProperty('priority');
+    });
+
+    it.each([
+        ['- [ ] a ⏫', ['Priority 1: High']],
+        ['- [ ] a 🔼', ['Priority 2: Medium']],
+        ['- [ ] a', ['Priority 3: None']],
+        ['- [ ] a 🔽', ['Priority 4: Low']],
+    ])('task "%s" should have groups: %s', (taskLine: string, groups: string[]) => {
+        // Arrange
+        const grouper = new PriorityField().createGrouper().grouper;
+
+        // Assert
+        expect(grouper(fromLine({ line: taskLine }))).toEqual(groups);
     });
 });

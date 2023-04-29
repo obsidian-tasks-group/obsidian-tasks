@@ -4,6 +4,8 @@ publish: true
 
 # How to show tasks in a calendar
 
+<span class="related-pages">#plugin/dataview</span>
+
 ## No Calendar view in Tasks Plugin
 
 The Tasks plugin can group tasks by their due dates, and the other kinds of dates.

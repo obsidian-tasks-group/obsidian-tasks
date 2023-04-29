@@ -6,6 +6,7 @@ import moment from 'moment';
 import { RecurrenceField } from '../../../src/Query/Filter/RecurrenceField';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { RecurrenceBuilder } from '../../TestingTools/RecurrenceBuilder';
+import { fromLine } from '../../TestHelpers';
 
 window.moment = moment;
 
@@ -72,5 +73,24 @@ describe('recurrence', () => {
         expect(filter).not.toMatchTask(with_recurrence('every month on the 31st'));
         expect(filter).toMatchTask(new TaskBuilder().build());
         expect(filter).toMatchTask(with_recurrence('every month on the last'));
+    });
+});
+
+describe('grouping by recurrence', () => {
+    it('supports grouping methods correctly', () => {
+        expect(new RecurrenceField()).toSupportGroupingWithProperty('recurrence');
+    });
+
+    it.each([
+        ['- [ ] a', ['None']],
+        ['- [ ] a 🔁 every Sunday', ['every week on Sunday']],
+        ['- [ ] a 🔁 every Sunday when done', ['every week on Sunday when done']],
+        ['- [ ] a 🔁 every 6 months on the 2nd Wednesday', ['every 6 months on the 2nd Wednesday']],
+    ])('task "%s" should have groups: %s', (taskLine: string, groups: string[]) => {
+        // Arrange
+        const grouper = new RecurrenceField().createGrouper().grouper;
+
+        // Assert
+        expect(grouper(fromLine({ line: taskLine }))).toEqual(groups);
     });
 });

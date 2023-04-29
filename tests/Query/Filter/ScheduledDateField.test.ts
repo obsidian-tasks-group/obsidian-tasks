@@ -40,3 +40,20 @@ describe('sorting by scheduled', () => {
         expectTaskComparesAfter(new ScheduledDateField().createReverseSorter(), date1, date2);
     });
 });
+
+describe('grouping by scheduled date', () => {
+    it('supports Field grouping methods correctly', () => {
+        expect(new ScheduledDateField()).toSupportGroupingWithProperty('scheduled');
+    });
+
+    it('group by scheduled date', () => {
+        // Arrange
+        const grouper = new ScheduledDateField().createGrouper();
+        const taskWithDate = new TaskBuilder().scheduledDate('1970-01-01').build();
+        const taskWithoutDate = new TaskBuilder().build();
+
+        // Assert
+        expect(grouper.grouper(taskWithDate)).toEqual(['1970-01-01 Thursday']);
+        expect(grouper.grouper(taskWithoutDate)).toEqual(['No scheduled date']);
+    });
+});

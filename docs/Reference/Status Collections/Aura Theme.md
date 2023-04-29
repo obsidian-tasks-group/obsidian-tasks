@@ -2,7 +2,7 @@
 publish: true
 ---
 
-# Aura Theme (Dark mode only)
+# Aura Theme
 
 ## Introduction
 
@@ -11,7 +11,7 @@ publish: true
 |                        GitHub: | <https://github.com/ashwinjadhav818/obsidian-aura>                                                                                                            |
 |                  Obsidian Hub: | [Aura Theme](https://publish.obsidian.md/hub/02+-+Community+Expansions/02.05+All+Community+Expansions/Themes/Aura)                                            |
 | Test note in Tasks-Demo vault: | [Theme - Aura Theme](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/resources/sample_vaults/Tasks-Demo/Styling/Theme%20-%20Aura%20Theme.md) |
-|                         Notes: | **Dark mode only**                                                                                                                                            |
+|                         Notes: |                                                                                                                                                               |
 
 ## Screenshot
 
@@ -19,7 +19,7 @@ publish: true
 
 ## Supported statuses
 
-<!-- snippet: DocsSamplesForStatuses.test.Theme_Aura Text.approved.txt -->
+<!-- snippet: DocsSamplesForStatuses.test.Theme_Aura_Text.approved.txt -->
 ```txt
 - [ ] #task `space` incomplete
 - [x] #task `x` complete / done
@@ -47,7 +47,7 @@ publish: true
 
 Tasks' setting pane has a one-click button to add the following information, representing the custom checkboxes in this plugin.
 
-<!-- placeholder to force blank line before included text --> <!-- include: DocsSamplesForStatuses.test.Theme_Aura Table.approved.md -->
+<!-- placeholder to force blank line before included text --> <!-- include: DocsSamplesForStatuses.test.Theme_Aura_Table.approved.md -->
 
 | Status Symbol | Next Status Symbol | Status Name<br>`status.name includes...`<br>`sort by status.name`<br>`group by status.name` | Status Type<br>`status.type is...`<br>`sort by status.type`<br>`group by status.type` | Needs Custom Styling |
 | ----- | ----- | ----- | ----- | ----- |

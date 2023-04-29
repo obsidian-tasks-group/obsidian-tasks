@@ -1,4 +1,5 @@
 import type { Task } from '../../Task';
+import type { GrouperFunction } from '../Grouper';
 import { TextField } from './TextField';
 
 /** Support the 'path' search instruction.
@@ -23,5 +24,17 @@ export class PathField extends TextField {
 
     public supportsSorting(): boolean {
         return true;
+    }
+
+    public supportsGrouping(): boolean {
+        return true;
+    }
+
+    public grouper(): GrouperFunction {
+        return (task: Task) => {
+            // Does this need to be made stricter?
+            // Is there a better way of getting the file name?
+            return [TextField.escapeMarkdownCharacters(task.path.replace('.md', ''))];
+        };
     }
 }

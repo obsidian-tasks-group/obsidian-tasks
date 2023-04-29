@@ -69,7 +69,7 @@ group by path
 
 Errors with invalid dates are not easily fixed using the [[Create or edit Task|‘Create or edit Task’ Modal]], as it shows any invalid dates with placeholder text, instead of showing the original values.
 
-So to fix any found tasks, use the backlink to navigate to the original line and fix the error there.
+So to fix any found tasks, use the [[Backlinks|backlink]] to navigate to the original line and fix the error there.
 
 ## Invalid recurrence rules
 

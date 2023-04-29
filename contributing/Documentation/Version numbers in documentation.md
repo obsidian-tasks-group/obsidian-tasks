@@ -20,3 +20,8 @@ This placeholder is used when you need to tag a sub-part of something, for examp
 > [!released]
 > X (Y and Z) was introduced in Tasks X.Y.Z.
 ```
+
+> [!Tip]
+> We have Templater templates for both these blocks. Use the `<%` icon in the Ribbon choose a template and insert it where the cursor is.
+
+The [release.sh](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/release.sh) script automatically updates all `X.Y.Z` to the new version number during the release.

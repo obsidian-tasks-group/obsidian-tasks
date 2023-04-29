@@ -8,6 +8,7 @@ import {
     expectTaskComparesEqual,
 } from '../../CustomMatchers/CustomMatchersForSorting';
 import { StatusConfiguration, StatusType } from '../../../src/StatusConfiguration';
+import { fromLine } from '../../TestHelpers';
 
 describe('status', () => {
     it('done', () => {
@@ -78,5 +79,26 @@ describe('sorting by status', () => {
         expectTaskComparesBefore(sorter, doneTask, todoTask);
         expectTaskComparesAfter(sorter, todoTask, doneTask);
         expectTaskComparesEqual(sorter, doneTask, doneTask);
+    });
+});
+
+describe('grouping by status', () => {
+    it('supports grouping methods correctly', () => {
+        expect(new StatusField()).toSupportGroupingWithProperty('status');
+    });
+
+    it.each([
+        ['- [ ] a', ['Todo']],
+        ['- [x] a', ['Done']],
+        ['- [X] a', ['Done']],
+        ['- [/] a', ['Done']],
+        ['- [-] a', ['Done']],
+        ['- [!] a', ['Done']],
+    ])('task "%s" should have groups: %s', (taskLine: string, groups: string[]) => {
+        // Arrange
+        const grouper = new StatusField().createGrouper().grouper;
+
+        // Assert
+        expect(grouper(fromLine({ line: taskLine }))).toEqual(groups);
     });
 });

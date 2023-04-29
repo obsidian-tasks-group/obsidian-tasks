@@ -1,16 +1,16 @@
-import { App, MarkdownRenderChild, MarkdownRenderer, Plugin, TFile } from 'obsidian';
+import { App, Keymap, MarkdownRenderChild, MarkdownRenderer, Plugin, TFile } from 'obsidian';
 import type { EventRef, MarkdownPostProcessorContext } from 'obsidian';
 
 import type { IQuery } from './IQuery';
 import { State } from './Cache';
-import { replaceTaskWithTasks } from './File';
-import { Query } from './Query/Query';
-import type { GroupHeading } from './Query/GroupHeading';
+import { getTaskLineAndFile, replaceTaskWithTasks } from './File';
+import type { GroupDisplayHeading } from './Query/GroupDisplayHeading';
 import { TaskModal } from './TaskModal';
 import type { TasksEvents } from './TasksEvents';
 import type { Task } from './Task';
 import { DateFallback } from './DateFallback';
 import { TaskLayout } from './TaskLayout';
+import { explainResults, getQueryForQueryRenderer } from './lib/QueryRendererHelper';
 
 export class QueryRenderer {
     private readonly app: App;
@@ -74,12 +74,12 @@ class QueryRenderChild extends MarkdownRenderChild {
         // added later.
         switch (this.containerEl.className) {
             case 'block-language-tasks':
-                this.query = new Query({ source });
+                this.query = getQueryForQueryRenderer(this.source);
                 this.queryType = 'tasks';
                 break;
 
             default:
-                this.query = new Query({ source });
+                this.query = getQueryForQueryRenderer(this.source);
                 this.queryType = 'tasks';
                 break;
         }
@@ -120,7 +120,7 @@ class QueryRenderChild extends MarkdownRenderChild {
         const millisecondsToMidnight = midnight.getTime() - now.getTime();
 
         this.queryReloadTimeout = setTimeout(() => {
-            this.query = new Query({ source: this.source });
+            this.query = getQueryForQueryRenderer(this.source);
             // Process the current cache state:
             this.events.triggerRequestCacheUpdate(this.render.bind(this));
             this.reloadQueryAtMidnight();
@@ -169,7 +169,7 @@ class QueryRenderChild extends MarkdownRenderChild {
 
     // Use the 'explain' instruction to enable this
     private createExplanation(content: HTMLDivElement) {
-        const explanationAsString = this.query.explainQuery();
+        const explanationAsString = explainResults(this.source);
 
         const explanationsBlock = content.createEl('pre');
         explanationsBlock.addClasses(['plugin-tasks-query-explanation']);
@@ -266,13 +266,13 @@ class QueryRenderChild extends MarkdownRenderChild {
      *                        in which case no headings will be added.
      * @private
      */
-    private addGroupHeadings(content: HTMLDivElement, groupHeadings: GroupHeading[]) {
+    private addGroupHeadings(content: HTMLDivElement, groupHeadings: GroupDisplayHeading[]) {
         for (const heading of groupHeadings) {
             this.addGroupHeading(content, heading);
         }
     }
 
-    private async addGroupHeading(content: HTMLDivElement, group: GroupHeading) {
+    private async addGroupHeading(content: HTMLDivElement, group: GroupDisplayHeading) {
         let header: any;
         // Is it possible to remove the repetition here?
         // Ideally, by creating a variable that contains h4, h5 or h6
@@ -291,7 +291,7 @@ class QueryRenderChild extends MarkdownRenderChild {
                 cls: 'tasks-group-heading',
             });
         }
-        await MarkdownRenderer.renderMarkdown(group.name, header, this.filePath, this);
+        await MarkdownRenderer.renderMarkdown(group.displayName, header, this.filePath, this);
     }
 
     private addBacklinks(listItem: HTMLElement, task: Task, shortMode: boolean, isFilenameUnique: boolean | undefined) {
@@ -303,19 +303,11 @@ class QueryRenderChild extends MarkdownRenderChild {
 
         const link = backLink.createEl('a');
 
-        link.href = task.path;
-        link.setAttribute('data-href', task.path);
         link.rel = 'noopener';
         link.target = '_blank';
         link.addClass('internal-link');
         if (shortMode) {
             link.addClass('internal-link-short-mode');
-        }
-
-        if (task.precedingHeader !== null) {
-            const sanitisedHeading = task.precedingHeader.replace(/#/g, '');
-            link.href = link.href + '#' + sanitisedHeading;
-            link.setAttribute('data-href', link.getAttribute('data-href') + '#' + sanitisedHeading);
         }
 
         let linkText: string;
@@ -326,6 +318,39 @@ class QueryRenderChild extends MarkdownRenderChild {
         }
 
         link.setText(linkText);
+
+        // Go to the line the task is defined at
+        const vault = this.app.vault;
+        link.addEventListener('click', async (ev: MouseEvent) => {
+            const result = await getTaskLineAndFile(task, vault);
+            if (result) {
+                const [line, file] = result;
+                const leaf = this.app.workspace.getLeaf(Keymap.isModEvent(ev));
+                // This opens the file with the required line highlighted.
+                // It works for Edit and Reading mode, however, for some reason (maybe an Obsidian bug),
+                // when used in Reading mode, switching the result to Edit does not sync the scroll.
+                // A patch suggested over Discord to use leaf.setEphemeralState({scroll: line}) does not seem
+                // to make a difference.
+                // The issue is tracked here: https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1879
+                await leaf.openFile(file, { eState: { line: line } });
+            }
+        });
+
+        link.addEventListener('mousedown', async (ev: MouseEvent) => {
+            // Open in a new tab on middle-click.
+            // This distinction is not available in the 'click' event, so we handle the 'mousedown' event
+            // solely for this.
+            // (for regular left-click we prefer the 'click' event, and not to just do everything here, because
+            // the 'click' event is more generic for touch devices etc.)
+            if (ev.button === 1) {
+                const result = await getTaskLineAndFile(task, vault);
+                if (result) {
+                    const [line, file] = result;
+                    const leaf = this.app.workspace.getLeaf('tab');
+                    await leaf.openFile(file, { eState: { line: line } });
+                }
+            }
+        });
 
         if (!shortMode) {
             backLink.append(')');

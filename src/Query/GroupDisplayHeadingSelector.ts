@@ -1,5 +1,5 @@
-import { GroupHeading } from './GroupHeading';
-import type { IntermediateTaskGroupsStorage } from './IntermediateTaskGroups';
+import { GroupDisplayHeading } from './GroupDisplayHeading';
+import type { TaskGroupingTreeStorage } from './TaskGroupingTree';
 
 /*
  * This file contains implementation details of Group.ts
@@ -68,23 +68,25 @@ import type { IntermediateTaskGroupsStorage } from './IntermediateTaskGroups';
  * What the code does
  * ==================
  *
- * The IntermediateTaskGroups class below does the initial grouping and sorting.
+ * The TaskGroupingTree class below does the initial grouping and sorting.
  *
- * The GroupHeadings class below implements pjeby's heading detection algorithm, but instead of doing the printing directly,
- * it returns the calculated heading levels in an array of GroupHeading objects, for later use in QueryRenderer.ts.
+ * The GroupDisplayHeadingSelector class below implements pjeby's heading detection algorithm, but instead of doing the printing directly,
+ * it returns the calculated heading levels in an array of GroupDisplayHeading objects, for later use in QueryRenderer.ts.
  */
 
 /**
- * GroupHeadings calculates which headings need to be displayed, for
+ * GroupDisplayHeadingSelector calculates which headings need to be displayed, for
  * a given group of tasks.
  *
- * See the explanation in GroupHeadings.ts for how it works.
+ * It selects which {@link GroupDisplayHeading} objects to create.
+ *
+ * See the explanation in GroupDisplayHeadingSelector.ts for how it works.
  */
-export class GroupHeadings {
+export class GroupDisplayHeadingSelector {
     private lastHeadingAtLevel = new Array<string>();
 
-    constructor(groupedTasks: IntermediateTaskGroupsStorage) {
-        const firstGroup = groupedTasks.keys().next().value;
+    constructor(taskGroupingTreeStorage: TaskGroupingTreeStorage) {
+        const firstGroup = taskGroupingTreeStorage.keys().next().value;
         const groupCount = firstGroup.length;
         for (let i = 0; i < groupCount; i++) {
             this.lastHeadingAtLevel.push('');
@@ -95,16 +97,16 @@ export class GroupHeadings {
      * Calculate the minimal set of headings that should be displayed
      * before the tasks with the given group names.
      *
-     * Data for each required heading is stored in a GroupHeading object.
+     * Data for each required heading is stored in a GroupDisplayHeading object.
      * @param groupNames 0 or more group names, one per 'group by' line
      */
-    getHeadingsForTaskGroup(groupNames: string[]): GroupHeading[] {
+    getHeadingsForTaskGroup(groupNames: string[]): GroupDisplayHeading[] {
         // See 'pjeby's answer' above for an explanation of this algorithm.
-        const headingsForGroup = new Array<GroupHeading>();
+        const headingsForGroup = new Array<GroupDisplayHeading>();
         for (let level = 0; level < groupNames.length; level++) {
             const group = groupNames[level];
             if (group != this.lastHeadingAtLevel[level]) {
-                headingsForGroup.push(new GroupHeading(level, group));
+                headingsForGroup.push(new GroupDisplayHeading(level, group));
                 // Reset all the lower heading levels to un-seen
                 for (let j = level; j < groupNames.length; j++) {
                     this.lastHeadingAtLevel[j] = '';

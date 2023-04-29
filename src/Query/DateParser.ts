@@ -1,97 +1,88 @@
 import * as chrono from 'chrono-node';
 import moment from 'moment';
+import { DateRange } from './DateRange';
 
 export class DateParser {
     public static parseDate(input: string, forwardDate: boolean = false): moment.Moment {
         // Using start of day to correctly match on comparison with other dates (like equality).
-        return window
-            .moment(
-                chrono.parseDate(input, undefined, {
-                    forwardDate: forwardDate,
-                }),
-            )
-            .startOf('day');
+        return moment(
+            chrono.parseDate(input, undefined, {
+                forwardDate: forwardDate,
+            }),
+        ).startOf('day');
     }
 
     /**
      * Parse a line and extract a pair of dates, returned in a tuple, sorted by date.
      * @param input - any pair of dates, separate by one or more spaces '17 August 2013 19 August 2013',
      *                or a single date.
-     * @return - A Tuple of dates. If both input dates are invalid, then both ouput dates will be invalid.
+     * @param forwardDate - if true, and date is ambiguous, chrono will return dates in the future
+     * @return - A Tuple of dates. If both input dates are invalid, then both output dates will be invalid.
      */
-    public static parseDateRange(input: string): [moment.Moment, moment.Moment] {
+    public static parseDateRange(input: string, forwardDate: boolean = false): DateRange {
         const dateRangeParsers = [
             // Try parsing a relative date range like 'current month'
             DateParser.parseRelativeDateRange,
             // Try '2022-W10' otherwise
-            DateParser.parseSpecificDateRange,
+            DateParser.parseNumberedDateRange,
             // If previous failed, fallback on absolute date range with chrono
             DateParser.parseAbsoluteDateRange,
         ];
 
         for (const parser of dateRangeParsers) {
-            const parsedDateRange = parser(input);
-            if (parsedDateRange !== undefined) {
+            const parsedDateRange = parser(input, forwardDate);
+            if (parsedDateRange.isValid()) {
                 return parsedDateRange;
             }
         }
 
         // If nothing worked return and invalid date range
-        return [moment.invalid(), moment.invalid()];
+        return DateRange.buildInvalid();
     }
 
-    private static parseAbsoluteDateRange(input: string): [moment.Moment, moment.Moment] | undefined {
+    private static parseAbsoluteDateRange(input: string, forwardDate: boolean): DateRange {
         const result = chrono.parse(input, undefined, {
-            forwardDate: true,
+            forwardDate: forwardDate,
         });
 
         // Check chrono parsing
         if (result.length === 0) {
-            return undefined;
+            return DateRange.buildInvalid();
         }
 
         const startDate = result[0].start;
         const endDate = result[1] && result[1].start ? result[1].start : startDate;
-        const start = window.moment(startDate.date());
-        const end = window.moment(endDate.date());
+        const start = moment(startDate.date());
+        const end = moment(endDate.date());
 
-        let absoluteDateRange: [moment.Moment, moment.Moment] = [start, end];
-        if (end.isBefore(start)) {
-            absoluteDateRange = [end, start];
-        }
-
-        return DateParser.setDateRangeToStartOfDay(absoluteDateRange);
+        return new DateRange(start, end);
     }
 
-    private static parseRelativeDateRange(input: string): [moment.Moment, moment.Moment] | undefined {
+    private static parseRelativeDateRange(input: string, _forwardDate: boolean): DateRange {
         const relativeDateRangeRegexp = /(last|this|next) (week|month|quarter|year)/;
         const relativeDateRangeMatch = input.match(relativeDateRangeRegexp);
         if (relativeDateRangeMatch && relativeDateRangeMatch.length === 3) {
             const lastThisNext = relativeDateRangeMatch[1];
             const range = relativeDateRangeMatch[2];
 
-            const delta = moment.duration(1, range as moment.unitOfTime.DurationConstructor);
+            const dateRange = DateRange.buildRelative(range as moment.unitOfTime.StartOf);
 
-            let dateRange: [moment.Moment, moment.Moment] = [moment(), moment()];
             switch (lastThisNext) {
                 case 'last':
-                    dateRange.forEach((d) => d.subtract(delta));
+                    dateRange.moveToPrevious(range as moment.unitOfTime.DurationConstructor);
                     break;
                 case 'next':
-                    dateRange.forEach((d) => d.add(delta));
+                    dateRange.moveToNext(range as moment.unitOfTime.DurationConstructor);
                     break;
             }
 
-            const unitOfTime = range === 'week' ? 'isoWeek' : (range as moment.unitOfTime.DurationConstructor);
-            dateRange = [dateRange[0].startOf(unitOfTime), dateRange[1].endOf(unitOfTime)];
-
-            return DateParser.setDateRangeToStartOfDay(dateRange);
+            return dateRange;
         }
 
-        return undefined;
+        return DateRange.buildInvalid();
     }
 
-    private static parseSpecificDateRange(input: string): [moment.Moment, moment.Moment] | undefined {
+    private static parseNumberedDateRange(input: string, _forwardDate: boolean): DateRange {
         const parsingVectors: [RegExp, string, moment.unitOfTime.StartOf][] = [
             [/^\s*[0-9]{4}\s*$/, 'YYYY', 'year'],
             [/^\s*[0-9]{4}-Q[1-4]\s*$/, 'YYYY-Q', 'quarter'],
@@ -99,25 +90,15 @@ export class DateParser {
             [/^\s*[0-9]{4}-W[0-9]{2}\s*$/, 'YYYY-WW', 'isoWeek'],
         ];
 
-        for (const [regexp, format, unit] of parsingVectors) {
+        for (const [regexp, dateFormat, range] of parsingVectors) {
             const matched = input.match(regexp);
             if (matched) {
                 // RegExps allow spaces (\s*), remove them before calling moment()
-                const range = matched[0].trim();
-                const parsedRange: [moment.Moment, moment.Moment] = [
-                    moment(range, format).startOf(unit),
-                    moment(range, format).endOf(unit),
-                ];
-                return DateParser.setDateRangeToStartOfDay(parsedRange);
+                const date = matched[0].trim();
+                return new DateRange(moment(date, dateFormat).startOf(range), moment(date, dateFormat).endOf(range));
             }
         }
 
-        return undefined;
-    }
-
-    private static setDateRangeToStartOfDay(dateRange: [moment.Moment, moment.Moment]): [moment.Moment, moment.Moment] {
-        // Dates shall be at midnight eg 00:00
-        dateRange.forEach((d) => d.startOf('day'));
-        return dateRange;
+        return DateRange.buildInvalid();
     }
 }

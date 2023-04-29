@@ -81,6 +81,12 @@ function debugLog(message: string) {
     logger.debug(message);
 }
 
+// When this exception is thrown, it is meant to indicate that the caller should consider to try the operation
+// again soon
+class WarningWorthRetrying extends Error {}
+// Same as above, but be silent about it
+class RetryWithoutWarning extends Error {}
+
 /**
  * This is a workaround to re-try when the returned file cache is `undefined`.
  * Retrying after a while may return a valid file cache.
@@ -138,37 +144,63 @@ Recommendations:
         }, timeout);
     };
 
+    try {
+        const [taskLineNumber, file, fileLines] = await getTaskAndFileLines(originalTask, vault);
+        // Finally, we can insert 1 or more lines over the original task line:
+        const updatedFileLines = [
+            ...fileLines.slice(0, taskLineNumber),
+            ...newTasks.map((task: Task) => task.toFileLineString()),
+            ...fileLines.slice(taskLineNumber + 1), // Only supports single-line tasks.
+        ];
+
+        await vault.modify(file, updatedFileLines.join('\n'));
+    } catch (e) {
+        if (e instanceof WarningWorthRetrying) {
+            if (e.message) warnAndNotice(e.message);
+            return retry();
+        } else if (e instanceof RetryWithoutWarning) {
+            return retry();
+        } else if (e instanceof Error) {
+            errorAndNotice(e.message);
+        }
+    }
+};
+
+/*
+ * This method returns the line on which `task` is defined, together with the file it is defined in, and the
+ * lines of that file, possibly for the purpose of updating the task in the file or jumping to it.
+ * It may throw a WarningWorthRetrying exception in several cases that justify a retry (should be handled by the caller)
+ * or an Error exception in case of an unrecoverable error.
+ */
+async function getTaskAndFileLines(task: Task, vault: Vault): Promise<[number, TFile, string[]]> {
+    if (metadataCache === undefined) throw new WarningWorthRetrying();
     // Validate our inputs.
     // For permanent failures, return nothing.
     // For failures that might be fixed if we wait for a little while, return retry().
-    const file = vault.getAbstractFileByPath(originalTask.path);
+    const file = vault.getAbstractFileByPath(task.path);
     if (!(file instanceof TFile)) {
-        warnAndNotice(`Tasks: No file found for task ${originalTask.description}. Retrying ...`);
-        return retry();
+        throw new WarningWorthRetrying(`Tasks: No file found for task ${task.description}. Retrying ...`);
     }
 
     if (!supportedFileExtensions.includes(file.extension)) {
-        errorAndNotice(`Tasks: Does not support files with the ${file.extension} file extension.`);
-        return;
+        throw new Error(`Tasks: Does not support files with the ${file.extension} file extension.`);
     }
 
     const fileCache = metadataCache.getFileCache(file);
     if (fileCache == undefined || fileCache === null) {
-        warnAndNotice(`Tasks: No file cache found for file ${file.path}. Retrying ...`);
-        return retry();
+        throw new WarningWorthRetrying(`Tasks: No file cache found for file ${file.path}. Retrying ...`);
     }
 
     const listItemsCache = fileCache.listItems;
     if (listItemsCache === undefined || listItemsCache.length === 0) {
-        warnAndNotice(`Tasks: No list items found in file cache of ${file.path}. Retrying ...`);
-        return retry();
+        throw new WarningWorthRetrying(`Tasks: No list items found in file cache of ${file.path}. Retrying ...`);
     }
 
     // We can now try and find which line in the file currently contains originalTask,
     // so that we know which line to update.
     const fileContent = await vault.read(file); // TODO: replace with vault.process.
     const fileLines = fileContent.split('\n');
-    const taskLineNumber = findLineNumberOfTaskToToggle(originalTask, fileLines, listItemsCache, debugLog);
+    const taskLineNumber = findLineNumberOfTaskToToggle(task, fileLines, listItemsCache, debugLog);
 
     if (taskLineNumber === undefined) {
         const logDataForMocking = false;
@@ -177,20 +209,28 @@ Recommendations:
             // so write out to the console a representation of the data needed to reconstruct the above
             // findLineNumberOfTaskToToggle() call, so that the content can be saved
             // to a JSON file and then re-used in a 'unit' test.
-            saveMockDataForTesting(originalTask, fileLines, listItemsCache);
+            saveMockDataForTesting(task, fileLines, listItemsCache);
         }
-        return retry();
+        throw new RetryWithoutWarning();
     }
+    return [taskLineNumber, file, fileLines];
+}
 
-    // Finally, we can insert 1 or more lines over the original task line:
-    const updatedFileLines = [
-        ...fileLines.slice(0, taskLineNumber),
-        ...newTasks.map((task: Task) => task.toFileLineString()),
-        ...fileLines.slice(taskLineNumber + 1), // Only supports single-line tasks.
-    ];
-
-    await vault.modify(file, updatedFileLines.join('\n'));
-};
+// A simpler version of the method above, which doesn't return the lines of the file, and handles exceptions
+// internally rather than throw them to the outside
+export async function getTaskLineAndFile(task: Task, vault: Vault): Promise<[number, TFile] | undefined> {
+    try {
+        const [taskLineNumber, file, _] = await getTaskAndFileLines(task, vault);
+        return [taskLineNumber, file];
+    } catch (e) {
+        if (e instanceof WarningWorthRetrying) {
+            if (e.message) warnAndNotice(e.message);
+        } else if (e instanceof Error) {
+            errorAndNotice(e.message);
+        }
+    }
+    return undefined;
+}
 
 function isValidLineNumber(listItemLineNumber: number, fileLines: string[]) {
     return listItemLineNumber < fileLines.length;

@@ -3,6 +3,8 @@ These two files should always have the same CSS content, please,
 so that the styling in the Obsidian app and the published docs
 is consistent:
 
+- contributing/publish.css
+- contributing/.obsidian/snippets/publish-simulation.css
 - docs/.obsidian/snippets/publish-simulation.css
 - docs/publish.css
 
@@ -10,9 +12,35 @@ If you make any changes in one of those files, please copy
 them to the other one. Thank you.
 */
 
+/* Style "<span class="related-pages">#plugin/quickadd</span>" sections */
+span.related-pages::before {
+    content: "See also: ";
+}
+span.related-pages a.tag {
+    background-color: var(--text-highlight-bg);
+    border: none;
+    color: black;
+    padding: 10px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 12px;
+}
+
 /* Top-align all table cells, for readability */
 table td, th {
     vertical-align: top;
+}
+
+/* Use altnerating shades for table rows */
+table tr:nth-child(odd) {
+    background-color: var(--background-primary) !important;
+}
+
+table tr:nth-child(even) {
+    background-color: var(--background-secondary) !important;
 }
 
 /* Put a soft border around images, to make them stand out from the background */
@@ -24,6 +52,12 @@ img {
 
 /* Put a pale border around inline code samples, to make them stand out */
 :not(pre, figure) > code {
+    border: 1px solid var(--color-base-30);
+    border-radius:4px
+}
+
+/* Put a pale border around PRE code samples, to make them stand out */
+pre {
     border: 1px solid var(--color-base-30);
     border-radius:4px
 }

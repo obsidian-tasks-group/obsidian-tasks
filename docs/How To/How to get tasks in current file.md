@@ -4,6 +4,8 @@ publish: true
 
 # How to get all tasks in the current file
 
+<span class="related-pages">#plugin/dataview</span>
+
 ## Motivation and assumptions
 
 When working on a note with lots of tasks, it can be useful to see a list of all the remaining tasks in the file,

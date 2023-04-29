@@ -19,6 +19,7 @@ This has a number of benefits:
   - Combinations of queries (via `AND`, `OR`, `NOT` etc)  can be seen more clearly.
 - If there is a [[Global Filter|global filter]] enabled, it is included in the explanation.
   - This often explains why tasks are missing from results.
+- If there is a [[Global Query|global query]] enabled, it too is included in the explanation.
 
 ## Examples
 
@@ -26,7 +27,7 @@ This has a number of benefits:
 
 For example, when the following text is placed in a tasks query block:
 
-<!-- snippet: DocsSamplesForExplain.test.explain_expands dates.approved.query.text -->
+<!-- snippet: DocsSamplesForExplain.test.explain_expands_dates.approved.query.text -->
 ```text
 starts after 2 years ago
 scheduled after 1 week ago
@@ -37,7 +38,7 @@ explain
 
 the results begin with the following, on `2022-10-21`:
 
-<!-- snippet: DocsSamplesForExplain.test.explain_expands dates.approved.explanation.text -->
+<!-- snippet: DocsSamplesForExplain.test.explain_expands_dates.approved.explanation.text -->
 ```text
 Explanation of this Tasks code block query:
 
@@ -60,7 +61,7 @@ It also shows that `starts` searches also match tasks with not start date.
 
 For example, when the following text is placed in a tasks query block:
 
-<!-- snippet: DocsSamplesForExplain.test.explain_boolean combinations.approved.query.text -->
+<!-- snippet: DocsSamplesForExplain.test.explain_boolean_combinations.approved.query.text -->
 ```text
 explain
 not done
@@ -70,7 +71,7 @@ not done
 
 the results begin with the following, on `2022-10-21`:
 
-<!-- snippet: DocsSamplesForExplain.test.explain_boolean combinations.approved.explanation.text -->
+<!-- snippet: DocsSamplesForExplain.test.explain_boolean_combinations.approved.explanation.text -->
 ```text
 Explanation of this Tasks code block query:
 
@@ -89,7 +90,7 @@ With complex Boolean combinations of filters, it is easy to get parentheses in t
 
 For example, when the following text is placed in a tasks query block:
 
-<!-- snippet: DocsSamplesForExplain.test.explain_nested boolean combinations.approved.query.text -->
+<!-- snippet: DocsSamplesForExplain.test.explain_nested_boolean_combinations.approved.query.text -->
 ```text
 explain
 ( (description includes 1) AND (description includes 2) AND (description includes 3) ) OR ( (description includes 5) AND (description includes 6) AND (description includes 7) ) AND NOT (description includes 7)
@@ -98,7 +99,7 @@ explain
 
 the results begin with the following, on `2022-10-21`:
 
-<!-- snippet: DocsSamplesForExplain.test.explain_nested boolean combinations.approved.explanation.text -->
+<!-- snippet: DocsSamplesForExplain.test.explain_nested_boolean_combinations.approved.explanation.text -->
 ```text
 Explanation of this Tasks code block query:
 

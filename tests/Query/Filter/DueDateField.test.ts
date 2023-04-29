@@ -506,12 +506,29 @@ describe('due date', () => {
                 const query = new Query({ source: `due ${keyword}${date}` });
                 expect(query.error).toBeUndefined();
 
-                newRow.push(query.explainQueryWithoutIntroduction().replace(/(\n)/g, '<br>'));
+                newRow.push(query.explainQuery().replace(/(\n)/g, '<br>'));
             });
 
             table.addRow(newRow);
         });
 
         table.verify();
+    });
+});
+
+describe('grouping by due date', () => {
+    it('supports Field grouping methods correctly', () => {
+        expect(new DueDateField()).toSupportGroupingWithProperty('due');
+    });
+
+    it('group by due date', () => {
+        // Arrange
+        const grouper = new DueDateField().createGrouper();
+        const taskWithDate = new TaskBuilder().dueDate('1970-01-01').build();
+        const taskWithoutDate = new TaskBuilder().build();
+
+        // Assert
+        expect(grouper.grouper(taskWithDate)).toEqual(['1970-01-01 Thursday']);
+        expect(grouper.grouper(taskWithoutDate)).toEqual(['No due date']);
     });
 });

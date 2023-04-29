@@ -1,0 +1,10 @@
+{
+  "id": "tag-wrangler",
+  "name": "Tag Wrangler",
+  "author": "PJ Eby",
+  "authorUrl": "https://github.com/pjeby",
+  "version": "0.5.8",
+  "minAppVersion": "0.15.9",
+  "description": "Rename, merge, toggle, and search tags from the tag pane",
+  "isDesktopOnly": false
+}
