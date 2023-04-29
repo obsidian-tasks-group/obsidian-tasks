@@ -20,6 +20,7 @@ export class RecurrenceBuilder {
     private _startDate: Moment | null = null;
     private _scheduledDate: Moment | null = null;
     private _dueDate: Moment | null = null;
+    private _reminders = null;
 
     /**
      * Build a Recurrence
@@ -38,7 +39,7 @@ export class RecurrenceBuilder {
             startDate: this._startDate,
             scheduledDate: this._scheduledDate,
             dueDate: this._dueDate,
-            reminders: [],
+            reminders: this._reminders,
         }) as Recurrence;
     }
 

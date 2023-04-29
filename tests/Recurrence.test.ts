@@ -16,7 +16,7 @@ describe('Recurrence', () => {
             startDate: null,
             scheduledDate: null,
             dueDate: null,
-            reminders: [],
+            reminders: null,
         });
 
         // Act
@@ -27,7 +27,7 @@ describe('Recurrence', () => {
             startDate: null,
             scheduledDate: null,
             dueDate: null,
-            reminders: [],
+            reminders: null,
         });
     });
 
@@ -38,7 +38,7 @@ describe('Recurrence', () => {
             startDate: null,
             scheduledDate: null,
             dueDate: moment('2022-01-31').startOf('day'),
-            reminders: [],
+            reminders: null,
         });
 
         // Act
@@ -57,7 +57,7 @@ describe('Recurrence', () => {
             startDate: null,
             scheduledDate: null,
             dueDate: moment('2022-01-31').startOf('day'),
-            reminders: [],
+            reminders: null,
         });
 
         // Act
@@ -76,7 +76,7 @@ describe('Recurrence', () => {
             startDate: null,
             scheduledDate: null,
             dueDate: moment('2023-12-31').startOf('day'),
-            reminders: [],
+            reminders: null,
         });
 
         // Act
@@ -95,7 +95,7 @@ describe('Recurrence', () => {
             startDate: null,
             scheduledDate: null,
             dueDate: moment('2024-02-29').startOf('day'),
-            reminders: [],
+            reminders: null,
         });
 
         // Act
@@ -114,7 +114,7 @@ describe('Recurrence', () => {
             startDate: null,
             scheduledDate: null,
             dueDate: moment('2020-03-31').startOf('day'),
-            reminders: [],
+            reminders: null,
         });
 
         // Act
@@ -133,7 +133,7 @@ describe('Recurrence', () => {
             startDate: null,
             scheduledDate: null,
             dueDate: moment('2020-01-31').startOf('day'),
-            reminders: [],
+            reminders: null,
         });
 
         // Act
@@ -156,7 +156,7 @@ describe('Recurrence - with invalid dates in tasks', () => {
             startDate: null,
             scheduledDate: null,
             dueDate: moment('2022-02-30').startOf('day'), // 30th February: invalid date
-            reminders: [],
+            reminders: null,
         });
 
         // Assert
@@ -177,7 +177,7 @@ describe('Recurrence - with invalid dates in tasks', () => {
             startDate: null,
             scheduledDate: moment('2022-02-30').startOf('day'), // 30th February: invalid date
             dueDate: moment('2022-02-27').startOf('day'),
-            reminders: [],
+            reminders: null,
         });
 
         // Act

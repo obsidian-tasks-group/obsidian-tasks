@@ -1,7 +1,7 @@
 import type { Moment } from 'moment';
 import { RRule } from 'rrule';
-import { compareByDate } from './lib/DateTools';
-import { Reminder, isRemindersSame } from './reminders/Reminder';
+import { compareByDate, isRemindersSame } from './lib/DateTools';
+import { Reminders } from './reminders/Reminders';
 
 export class Recurrence {
     private readonly rrule: RRule;
@@ -9,7 +9,7 @@ export class Recurrence {
     private readonly startDate: Moment | null;
     private readonly scheduledDate: Moment | null;
     private readonly dueDate: Moment | null;
-    private readonly reminders: Reminder[] | [];
+    private readonly reminders: Reminders | null;
 
     /**
      * The reference date is used to calculate future occurrences.
@@ -41,7 +41,7 @@ export class Recurrence {
         startDate: Moment | null;
         scheduledDate: Moment | null;
         dueDate: Moment | null;
-        reminders: Reminder[] | [];
+        reminders: Reminders | null;
     }) {
         this.rrule = rrule;
         this.baseOnToday = baseOnToday;
@@ -63,7 +63,7 @@ export class Recurrence {
         startDate: Moment | null;
         scheduledDate: Moment | null;
         dueDate: Moment | null;
-        reminders: Reminder[] | [];
+        reminders: Reminders | null;
     }): Recurrence | null {
         try {
             const match = recurrenceRuleText.match(/^([a-zA-Z0-9, !]+?)( when done)?$/i);
@@ -128,7 +128,7 @@ export class Recurrence {
         startDate: Moment | null;
         scheduledDate: Moment | null;
         dueDate: Moment | null;
-        reminders: Reminder[] | [];
+        reminders: Reminders | null;
     } | null {
         let next: Date;
         if (this.baseOnToday) {
@@ -158,7 +158,7 @@ export class Recurrence {
             let startDate: Moment | null = null;
             let scheduledDate: Moment | null = null;
             let dueDate: Moment | null = null;
-            const reminders: Reminder[] = [];
+            let reminders: Reminders | null = null;
 
             // Only if a reference date is given. A reference date will exist if at
             // least one of the other dates is set.
@@ -190,14 +190,15 @@ export class Recurrence {
                 }
 
                 if (this.reminders) {
-                    this.reminders.forEach((reminder) => {
-                        const originalDifference = window.moment.duration(reminder.getDate().diff(this.referenceDate));
+                    reminders = new Reminders(null);
+                    this.reminders.times.forEach((reminder) => {
+                        const originalDifference = window.moment.duration(reminder.diff(this.referenceDate));
                         const newReminder = window.moment(next);
 
                         newReminder.add(Math.round(originalDifference.asDays()), 'days');
                         // add back time
-                        newReminder.set({ hour: reminder.getDate().hour(), minute: reminder.getDate().minute() });
-                        reminders.push(new Reminder(newReminder));
+                        newReminder.set({ hour: reminder.hour(), minute: reminder.minute() });
+                        reminders!.times.push(newReminder);
                     });
                 }
             }
@@ -228,6 +229,7 @@ export class Recurrence {
         if (compareByDate(this.dueDate, other.dueDate) !== 0) {
             return false;
         }
+
         if (!isRemindersSame(this.reminders, other.reminders)) {
             return false;
         }

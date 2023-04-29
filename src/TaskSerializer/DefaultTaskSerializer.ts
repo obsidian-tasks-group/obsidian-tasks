@@ -1,5 +1,5 @@
 import type { Moment } from 'moment';
-import { Reminder, printReminders } from '../reminders/Reminder';
+import { Reminders } from '../reminders/Reminders';
 import { TaskLayout } from '../TaskLayout';
 import type { TaskLayoutComponent } from '../TaskLayout';
 import { Recurrence } from '../Recurrence';
@@ -145,10 +145,10 @@ export class DefaultTaskSerializer implements TaskSerializer {
                     ? ' ' + dueDateSymbol
                     : ` ${dueDateSymbol} ${task.dueDate.format(TaskRegularExpressions.dateFormat)}`;
             case 'reminders':
-                if (!task.reminders || task.reminders.length <= 0) return '';
+                if (!task.reminders || task.reminders.times.length <= 0) return '';
                 return layout.options.shortMode
                     ? ' ' + reminderDateSymbol
-                    : ` ${reminderDateSymbol} ${printReminders(task.reminders)}`;
+                    : ` ${reminderDateSymbol} ${task.reminders.toString()}`;
             case 'recurrenceRule':
                 if (!task.recurrence) return '';
                 return layout.options.shortMode
@@ -179,7 +179,7 @@ export class DefaultTaskSerializer implements TaskSerializer {
         let scheduledDate: Moment | null = null;
         let dueDate: Moment | null = null;
         let doneDate: Moment | null = null;
-        const reminders: Reminder[] = [];
+        let reminders: Reminders | null = null;
         let createdDate: Moment | null = null;
         let recurrenceRule: string = '';
         let recurrence: Recurrence | null = null;
@@ -271,12 +271,14 @@ export class DefaultTaskSerializer implements TaskSerializer {
             if (reminderMatch !== null) {
                 line = line.replace(TaskFormatRegularExpressions.reminderRegex, '').trim();
                 const split = reminderMatch[0].split(',');
+                reminders = new Reminders(null);
                 split.forEach((reminderDate) => {
-                    reminders.push(new Reminder(window.moment(reminderDate, TaskRegularExpressions.dateTimeFormat)));
+                    if (reminders) {
+                        reminders.times.push(window.moment(reminderDate, TaskRegularExpressions.dateTimeFormat));
+                    }
                 });
                 matched = true;
             }
-
             runs++;
         } while (matched && runs <= maxRuns);
 

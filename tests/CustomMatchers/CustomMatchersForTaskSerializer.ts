@@ -4,7 +4,6 @@ import moment from 'moment';
 import type { TaskDetails } from '../../src/TaskSerializer';
 import { Priority, TaskRegularExpressions } from '../../src/Task';
 import { Recurrence } from '../../src/Recurrence';
-import { printReminders } from '../../src/reminders/Reminder';
 
 declare global {
     namespace jest {
@@ -81,7 +80,7 @@ function summarizeTaskDetails(t: TaskDetails | null): SummarizedTaskDetails | nu
         dueDate: t.dueDate?.format(TaskRegularExpressions.dateFormat) ?? null,
         doneDate: t.doneDate?.format(TaskRegularExpressions.dateFormat) ?? null,
         recurrence: t.recurrence?.toText() ?? null,
-        reminders: printReminders(t.reminders),
+        reminders: t.reminders?.toString() ?? null,
     };
 }
 
@@ -105,7 +104,7 @@ function tryBuildTaskDetails(t: object): TaskDetails | null {
         doneDate: null,
         recurrence: null,
         tags: [],
-        reminders: [],
+        reminders: null,
         ...t,
     };
     if (!isTaskDetails(toReturn)) return null;

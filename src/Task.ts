@@ -9,8 +9,8 @@ import { Urgency } from './Urgency';
 import { renderTaskLine } from './TaskLineRenderer';
 import type { TaskLineRenderDetails } from './TaskLineRenderer';
 import { DateFallback } from './DateFallback';
-import { compareByDate } from './lib/DateTools';
-import { type Reminder, isRemindersSame, reminderSettings } from './reminders/Reminder';
+import { compareByDate, isRemindersSame } from './lib/DateTools';
+import { type Reminders, reminderSettings } from './reminders/Reminders';
 import { replaceTaskWithTasks } from './File';
 
 /**
@@ -29,7 +29,7 @@ export enum Priority {
 
 export class TaskRegularExpressions {
     public static readonly dateFormat = 'YYYY-MM-DD';
-    public static readonly dateTimeFormat = reminderSettings.dateTimeRegex;
+    public static readonly dateTimeFormat = reminderSettings.dateTimeFormat;
 
     // Matches indentation before a list marker (including > for potentially nested blockquotes or Obsidian callouts)
     public static readonly indentationRegex = /^([\s\t>]*)/;
@@ -104,7 +104,7 @@ export class Task {
     public readonly taskLocation: TaskLocation;
 
     public readonly tags: string[];
-    public readonly reminders: Reminder[];
+    public readonly reminders: Reminders | null;
 
     public readonly priority: Priority;
 
@@ -161,7 +161,7 @@ export class Task {
         recurrence: Recurrence | null;
         blockLink: string;
         tags: string[] | [];
-        reminders: Reminder[] | [];
+        reminders: Reminders | null;
         originalMarkdown: string;
         scheduledDateIsInferred: boolean;
     }) {
@@ -314,7 +314,7 @@ export class Task {
             startDate: Moment | null;
             scheduledDate: Moment | null;
             dueDate: Moment | null;
-            reminders: Reminder[] | [];
+            reminders: Reminders | null;
         } | null = null;
 
         if (newStatus.isCompleted()) {

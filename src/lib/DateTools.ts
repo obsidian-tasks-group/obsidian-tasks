@@ -1,4 +1,5 @@
 import type { DurationInputArg1, DurationInputArg2 } from 'moment';
+import type { Reminders } from '../reminders/Reminders';
 
 export function compareByDate(a: moment.Moment | null, b: moment.Moment | null): -1 | 0 | 1 {
     if (a !== null && b === null) {
@@ -31,4 +32,27 @@ export function isDateBetween(
     unit: DurationInputArg2,
 ) {
     return a?.isValid() && b.isValid() && a.isBetween(b, b.clone().add(offset, unit));
+}
+
+export function isRemindersSame(a: Reminders | null, b: Reminders | null) {
+    if (a === null && b !== null) {
+        return false;
+    } else if (a !== null && b === null) {
+        return false;
+    } else if (a !== null && b !== null) {
+        if (a.times.length !== b.times.length) {
+            return false;
+        }
+
+        const sortedA = a.times.map((reminder) => reminder.valueOf()).sort();
+        const sortedB = b.times.map((reminder) => reminder.valueOf()).sort();
+
+        for (let i = 0; i < sortedA.length; i++) {
+            if (sortedA[i] !== sortedB[i]) {
+                return false;
+            }
+        }
+    }
+
+    return true;
 }

@@ -7,7 +7,7 @@
     import { Status } from '../Status';
     import { Priority, Task } from '../Task';
     import { doAutocomplete } from '../DateAbbreviations';
-    import { Reminder } from '../reminders/Reminder';
+    import { Reminders } from '../reminders/Reminders';
 
     // These exported variables are passed in as props by TaskModal.onOpen():
     export let task: Task;
@@ -206,7 +206,7 @@
                     startDate: null,
                     scheduledDate: null,
                     dueDate: null,
-                    reminders: [],
+                    reminders: null,
                 })?.toText();
             if (!recurrenceFromText) {
                 parsedRecurrence = '<i>invalid recurrence rule</i>';
@@ -256,7 +256,7 @@
                 ? task.scheduledDate.format('YYYY-MM-DD')
                 : '',
             dueDate: task.dueDate ? task.dueDate.format('YYYY-MM-DD') : '',
-            reminderDate: task.reminders[0] ? task.reminders[0].toString() : '',
+            reminderDate: task.reminders?.times[0] ? task.reminders?.times[0].format('YYYY-MM-DD h:mm a') : '',
             doneDate: task.doneDate ? task.doneDate.format('YYYY-MM-DD') : '',
             forwardOnly: true,
         };
@@ -314,7 +314,7 @@
                 startDate,
                 scheduledDate,
                 dueDate,
-                reminders: reminderDate ? [new Reminder(reminderDate)] : [],
+                reminders: reminderDate ? new Reminders([reminderDate]) : null,
             });
         }
 
@@ -342,7 +342,7 @@
             startDate,
             scheduledDate,
             dueDate,
-            reminders: reminderDate ? [new Reminder(reminderDate)] : [],
+            reminders: reminderDate ? new Reminders([reminderDate]) : null,
             doneDate: window
                 .moment(editableTask.doneDate, 'YYYY-MM-DD')
                 .isValid()
@@ -466,7 +466,7 @@
             <code>{startDateSymbol} {@html parsedStartDate}</code>
 
             <!-- --------------------------------------------------------------------------- -->
-            <!--  Reminder Date  -->
+            <!--  Reminders Date  -->
             <!-- --------------------------------------------------------------------------- -->
             <label for="reminder"><span class="accesskey">R</span>eminder</label>
             <!-- svelte-ignore a11y-accesskey -->

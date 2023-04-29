@@ -3,11 +3,11 @@ import type { Task } from '../Task';
 import { Query } from '../Query/Query';
 import { isDateBetween } from '../lib/DateTools';
 import ReminderView from './components/Reminder.svelte';
-import { getReminders, reminderSettings } from './Reminder';
+import { reminderSettings } from './Reminders';
 const electron = require('electron');
 const Notification = electron.remote.Notification;
 
-const notificationTitle = 'Task Reminder'; // Todo erik-handeland: is there a file for language localization?
+const notificationTitle = 'Task Reminders'; // Todo erik-handeland: is there a file for language localization?
 
 export class TaskNotification {
     constructor(private app: App) {}
@@ -87,10 +87,9 @@ export class TaskNotification {
         });
 
         for (const task of reminderTasks) {
-            const reminderList = getReminders(task.reminders);
             const now = window.moment(); // current date + time
             // Check if reminder will occur inbetween now and next refresh interval, + 1 to account for rounding
-            reminderList.forEach((reminderDate) => {
+            task.reminders?.times.forEach((reminderDate) => {
                 if (isDateBetween(reminderDate, now, reminderSettings.refreshInterval + 1, 'milliseconds')) {
                     console.log('Show Notification');
                     this.show(task);
@@ -153,7 +152,6 @@ class ObsidianNotificationModal extends Modal {
                 component: this,
                 onRemindMeLater: () => {
                     // this.onRemindMeLater(time);
-
                     this.close();
                 },
                 onDone: () => {
@@ -182,7 +180,7 @@ class ObsidianNotificationModal extends Modal {
 
 function isDailyReminder(date: moment.Moment) {
     const daily = window.moment().startOf('day'); // todays date with a blank time
-    const alertTime = window.moment(reminderSettings.dailyReminderTime, reminderSettings.dateTimeRegex);
+    const alertTime = window.moment(reminderSettings.dailyReminderTime, reminderSettings.dateTimeFormat);
     const now = window.moment(); // current date + time
 
     // time has not been set and is between alertTime and offset
