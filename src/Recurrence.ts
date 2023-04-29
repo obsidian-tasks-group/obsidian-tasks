@@ -192,14 +192,19 @@ export class Recurrence {
         if (this.baseOnToday) {
             // The next occurrence should happen based off the current date.
             const today = window.moment();
-            const ruleBasedOnToday = new RRule({
-                ...this.rrule.origOptions,
-                dtstart: today.startOf('day').utc(true).toDate(),
-            });
-            return this.nextAfter(today.endOf('day'), ruleBasedOnToday);
+            return this.nextReferenceDateFromToday(today);
         } else {
             return this.nextReferenceDateFromOriginalReferenceDate();
         }
+    }
+
+    private nextReferenceDateFromToday(today: Moment): Date {
+        const ruleBasedOnToday = new RRule({
+            ...this.rrule.origOptions,
+            dtstart: today.startOf('day').utc(true).toDate(),
+        });
+
+        return this.nextAfter(today.endOf('day'), ruleBasedOnToday);
     }
 
     private nextReferenceDateFromOriginalReferenceDate(): Date {
