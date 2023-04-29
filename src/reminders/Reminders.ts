@@ -1,6 +1,8 @@
 import type { Moment } from 'moment';
 
 //TODO erik-handeland: not used now, might want to give user ability to switch from 12 to 24 hour time
+// would cause a breaking change if user has reminders set and switches from 12 to 24 hour time
+// Either don't give them the option, option with a warning, or option with some kinda conversion?
 export const reminderSettings = {
     notificationTitle: 'Task Reminders',
     enabled: true,
