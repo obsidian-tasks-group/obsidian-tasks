@@ -2,12 +2,12 @@ import { App, Modal } from 'obsidian';
 import type { Task } from '../Task';
 import { Query } from '../Query/Query';
 import { isDateBetween } from '../lib/DateTools';
+import type { Cache } from '../Cache';
+import { getTaskLineAndFile } from '../File';
 import ReminderView from './components/Reminder.svelte';
 import { reminderSettings } from './Reminders';
 const electron = require('electron');
 const Notification = electron.remote.Notification;
-
-const notificationTitle = 'Task Reminders'; // Todo erik-handeland: is there a file for language localization?
 
 export class TaskNotification {
     constructor(private app: App) {}
@@ -17,7 +17,7 @@ export class TaskNotification {
         if (Notification.isSupported()) {
             // Show system notification
             const n = new Notification({
-                title: notificationTitle,
+                title: reminderSettings.notificationTitle,
                 body: task.description,
             });
             n.on('click', () => {
@@ -30,19 +30,13 @@ export class TaskNotification {
             });
             // Notification actions only supported in macOS
             {
-                // const laters = SETTINGS.laters.value;
                 n.on('action', (_: any, index: any) => {
                     if (index === 0) {
                         onDone(task);
                         return;
                     }
-                    // const later = laters[index - 1]!;
-                    // onRemindMeLater(later.later());
                 });
                 const actions = [{ type: 'button', text: 'Mark as Done' }];
-                // laters.forEach((later) => {
-                //     actions.push({ type: 'button', text: later.label });
-                // });
                 n.actions = actions as any;
             }
 
@@ -53,20 +47,17 @@ export class TaskNotification {
         }
     }
 
-    public watcher(tasks: Task[]): number | undefined {
-        let intervalTaskRunning = true;
-        // Force the view to refresh as soon as possible.
-        this.reminderEvent(tasks).finally(() => {
-            intervalTaskRunning = false;
-        });
-
+    public watcher(cache: Cache): number | undefined {
+        let intervalTaskRunning = false;
         // Set up the recurring check for reminders.
         return window.setInterval(() => {
             if (intervalTaskRunning) {
-                console.log('Skip reminder interval task because task is already running.');
+                // console.log('Skip reminder interval task because task is already running.');
                 return;
             }
             intervalTaskRunning = true;
+
+            const tasks = cache.getTasks();
             this.reminderEvent(tasks).finally(() => {
                 intervalTaskRunning = false;
             });
@@ -88,10 +79,10 @@ export class TaskNotification {
 
         for (const task of reminderTasks) {
             const now = window.moment(); // current date + time
-            // Check if reminder will occur inbetween now and next refresh interval, + 1 to account for rounding
+            // Check if reminder will occur between now and next refresh interval, + 1 to account for rounding
             task.reminders?.times.forEach((reminderDate) => {
                 if (isDateBetween(reminderDate, now, reminderSettings.refreshInterval + 1, 'milliseconds')) {
-                    console.log('Show Notification');
+                    // console.log('Show Notification: now: ' + now.format() + ' reminder: ' + reminderDate.format());
                     this.show(task);
                     // else check for daily reminder
                 } else if (isDailyReminder(reminderDate)) {
@@ -124,8 +115,15 @@ function onDone(task: Task) {
     }
 }
 function onIgnore() {}
-function onOpenFile(task: Task) {
+
+async function onOpenFile(task: Task, app: App) {
     console.log('*** Todo open ' + task.filename);
+    const result = await getTaskLineAndFile(task, app.vault);
+    if (result) {
+        const [line, file] = result;
+        const leaf = app.workspace.getLeaf('tab');
+        await leaf.openFile(file, { eState: { line: line } });
+    }
 }
 
 // Probably want to rewrite this modal to better display task infor
@@ -137,7 +135,7 @@ class ObsidianNotificationModal extends Modal {
         //private onRemindMeLater: (time: any) => void,
         private onDone: (task: Task) => void,
         private onIgnore: () => void,
-        private onOpenFile: (task: Task) => void,
+        private onOpenFile: (task: Task, app: App) => void,
     ) {
         super(app);
     }
@@ -159,7 +157,7 @@ class ObsidianNotificationModal extends Modal {
                     this.close();
                 },
                 onOpenFile: () => {
-                    this.onOpenFile(this.task);
+                    this.onOpenFile(this.task, this.app);
                     this.close();
                 },
                 onIgnore: () => {

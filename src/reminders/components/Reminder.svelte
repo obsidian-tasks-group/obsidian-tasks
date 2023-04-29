@@ -34,7 +34,7 @@
   </h1>
   <span class="task-file" on:click={onOpenFile}>
     <Icon icon="link" />
-    {"task.file"}
+    {task.filename ?? "filename was null"}
   </span>
   <div class="task-actions">
     <button class="mod-cta" on:click={onDone}>
