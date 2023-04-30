@@ -344,7 +344,7 @@ export class SettingsTab extends PluginSettingTab {
             .addSlider((slider) => {
                 const settings = getSettings().reminderSettings;
                 slider
-                    .setLimits(1, 59, 1)
+                    .setLimits(1, 30, 1)
                     .setValue(settings.refreshInterval / 1000) // convert from miliseconds to seconds
                     .setDynamicTooltip()
                     .onChange(async (value) => {

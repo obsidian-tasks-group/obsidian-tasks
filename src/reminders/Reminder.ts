@@ -6,7 +6,7 @@ export class ReminderSettings {
     dateFormat: string = 'YYYY-MM-DD';
     dateTimeFormat: string = 'YYYY-MM-DD h:mm a';
     dailyReminderTime: string = '9:00 am';
-    refreshInterval: number = 10 * 1000; // in Miliseconds
+    refreshInterval: number = 5 * 1000; // in Miliseconds
 
     constructor() {}
 }
@@ -45,6 +45,7 @@ export enum ReminderType {
 export class Reminder {
     public time: Moment;
     public type: ReminderType;
+    public notified: boolean = false;
 
     constructor(time: Moment, type: ReminderType) {
         this.time = time;

@@ -2,7 +2,7 @@ import { App, Modal } from 'obsidian';
 import { getSettings } from '../Config/Settings';
 import type { Task } from '../Task';
 import { Query } from '../Query/Query';
-import { isDateBetween } from '../lib/DateTools';
+import { sameDateTime } from '../lib/DateTools';
 import type { Cache } from '../Cache';
 import { getTaskLineAndFile } from '../File';
 import ReminderView from './components/Reminder.svelte';
@@ -27,9 +27,6 @@ export class TaskNotification {
                 console.log('Notification clicked');
                 n.close();
                 this.showBuiltinReminder(task);
-            });
-            n.on('close', () => {
-                console.log('Notification closed');
             });
             // Notification actions only supported in macOS
             {
@@ -85,25 +82,23 @@ export class TaskNotification {
 
         const { reminderSettings } = getSettings();
         for (const task of reminderTasks) {
-            const curTime = window.moment();
+            let curTime = window.moment();
             const dailyTime = window.moment(
                 `${curTime.format('YYYY-MM-DD')} ${reminderSettings.dailyReminderTime}`,
                 reminderSettings.dateTimeFormat,
             );
 
             task.reminders?.reminders.forEach((rDate) => {
-                // daily reminder
-                console.log(reminderSettings);
-                console.log(dailyTime);
-                console.log(isDateBetween(dailyTime, curTime, reminderSettings.refreshInterval + 1, 'milliseconds'));
-                if (
-                    rDate.type === ReminderType.Date &&
-                    isDateBetween(dailyTime, curTime, reminderSettings.refreshInterval + 1, 'milliseconds')
-                ) {
-                    this.show(task);
-                    // time reminder
-                } else if (isDateBetween(rDate.time, curTime, reminderSettings.refreshInterval + 1, 'milliseconds')) {
-                    this.show(task);
+                curTime = window.moment();
+                if (!rDate.notified) {
+                    if (rDate.type === ReminderType.Date && sameDateTime(dailyTime, curTime)) {
+                        rDate.notified = true;
+                        this.show(task);
+                        // time reminder
+                    } else if (sameDateTime(rDate.time, curTime)) {
+                        rDate.notified = true;
+                        this.show(task);
+                    }
                 }
             });
         }
@@ -126,7 +121,6 @@ export class TaskNotification {
 }
 
 function onDone(task: Task) {
-    console.log('*** task done');
     if (!task.status.isCompleted()) {
         task.toggleUpdate();
     }
@@ -134,7 +128,6 @@ function onDone(task: Task) {
 function onIgnore() {}
 
 async function onOpenFile(task: Task, app: App) {
-    console.log('*** Todo open ' + task.filename);
     const result = await getTaskLineAndFile(task, app.vault);
     if (result) {
         const [line, file] = result;
