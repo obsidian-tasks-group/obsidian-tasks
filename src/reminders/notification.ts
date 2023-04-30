@@ -1,15 +1,17 @@
 import { App, Modal } from 'obsidian';
+import { getSettings } from 'Config/Settings';
 import type { Task } from '../Task';
 import { Query } from '../Query/Query';
 import { isDateBetween } from '../lib/DateTools';
 import type { Cache } from '../Cache';
 import { getTaskLineAndFile } from '../File';
 import ReminderView from './components/Reminder.svelte';
-import { reminderSettings } from './Reminder';
+import type { ReminderSettings } from './Reminder';
 const electron = require('electron');
 const Notification = electron.remote.Notification;
 
 export class TaskNotification {
+    reminderSettings = getSettings().reminderSettings;
     constructor(private app: App) {}
 
     public show(task: Task) {
@@ -17,7 +19,7 @@ export class TaskNotification {
         if (Notification.isSupported()) {
             // Show system notification
             const n = new Notification({
-                title: reminderSettings.notificationTitle,
+                title: this.reminderSettings.notificationTitle,
                 body: task.description,
             });
             n.on('click', () => {
@@ -61,13 +63,14 @@ export class TaskNotification {
             this.reminderEvent(tasks).finally(() => {
                 intervalTaskRunning = false;
             });
-        }, reminderSettings.refreshInterval);
+        }, this.reminderSettings.refreshInterval);
     }
 
     private async reminderEvent(tasks: Task[]): Promise<void> {
         if (!tasks?.length) {
             return; // No tasks, nothing to do.
         }
+
         // get list of all future reminders that are not done
         const input = 'reminder after yesterday\nnot done';
         const query = new Query({ source: input });
@@ -82,11 +85,11 @@ export class TaskNotification {
             const now = window.moment(); // current date + time
             // Check if reminder will occur between now and next refresh interval, + 1 to account for rounding
             task.reminders?.reminders.forEach((reminderDate) => {
-                if (isDateBetween(reminderDate.time, now, reminderSettings.refreshInterval + 1, 'milliseconds')) {
+                if (isDateBetween(reminderDate.time, now, this.reminderSettings.refreshInterval + 1, 'milliseconds')) {
                     // console.log('Show Notification: now: ' + now.format() + ' reminder: ' + reminderDate.format());
                     this.show(task);
                     // else check for daily reminder
-                } else if (isDailyReminder(reminderDate.time)) {
+                } else if (isDailyReminder(reminderDate.time, this.reminderSettings)) {
                     this.show(task);
                 }
             });
@@ -177,7 +180,7 @@ class ObsidianNotificationModal extends Modal {
     }
 }
 
-function isDailyReminder(date: moment.Moment) {
+function isDailyReminder(date: moment.Moment, reminderSettings: ReminderSettings) {
     const daily = window.moment().startOf('day'); // todays date with a blank time
     const alertTime = window.moment(reminderSettings.dailyReminderTime, reminderSettings.dateTimeFormat);
     const now = window.moment(); // current date + time

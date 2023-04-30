@@ -1,4 +1,5 @@
 import type { Moment } from 'moment';
+import { getSettings } from '../Config/Settings';
 import { Reminder, ReminderList } from '../reminders/Reminder';
 import { TaskLayout } from '../TaskLayout';
 import type { TaskLayoutComponent } from '../TaskLayout';
@@ -210,6 +211,7 @@ export class DefaultTaskSerializer implements TaskSerializer {
         // (e.g. #tag1 <due date> #tag2), they do not have to all trail all task components,
         // but eventually we want to paste them back to the task description at the end
         let trailingTags = '';
+        const { reminderSettings } = getSettings();
         // Add a "max runs" failsafe to never end in an endless loop:
         const maxRuns = 20;
         let runs = 0;
@@ -287,7 +289,7 @@ export class DefaultTaskSerializer implements TaskSerializer {
                     reminderDate = reminderDate.trim(); // Remove any extra spaces
                     if (rList) {
                         rList.reminders.push(
-                            new Reminder(window.moment(reminderDate, TaskRegularExpressions.dateTimeFormat)), // erik update to type
+                            new Reminder(window.moment(reminderDate, reminderSettings.dateTimeFormat)),
                         );
                     }
                 });

@@ -178,7 +178,7 @@ export class Recurrence {
                         remTime.add(Math.round(originalDifference.asDays()), 'days');
                         // add back time
                         remTime.set({ hour: reminder.time.hour(), minute: reminder.time.minute() });
-                        reminders!.reminders.push(new Reminder(remTime)); // erik-hand todo add TYPE selector
+                        reminders!.reminders.push(new Reminder(remTime, reminder.type));
                     });
                 }
             }

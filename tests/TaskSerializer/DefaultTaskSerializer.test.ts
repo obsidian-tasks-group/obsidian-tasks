@@ -2,9 +2,8 @@
  * @jest-environment jsdom
  */
 import moment from 'moment';
-import { reminderSettings } from '../../src/reminders/Reminder';
 import { Priority } from '../../src/Task';
-import type { Settings } from '../../src/Config/Settings';
+import { type Settings, getSettings } from '../../src/Config/Settings';
 import { DefaultTaskSerializer } from '../../src/TaskSerializer';
 import { RecurrenceBuilder } from '../TestingTools/RecurrenceBuilder';
 import { DEFAULT_SYMBOLS, type DefaultTaskSerializerSymbols } from '../../src/TaskSerializer/DefaultTaskSerializer';
@@ -25,6 +24,7 @@ describe.each(symbolMap)("DefaultTaskSerializer with '$taskFormat' symbols", ({ 
     const taskSerializer = new DefaultTaskSerializer(symbols);
     const serialize = taskSerializer.serialize.bind(taskSerializer);
     const deserialize = taskSerializer.deserialize.bind(taskSerializer);
+    const { reminderSettings } = getSettings();
     const {
         startDateSymbol,
         createdDateSymbol,

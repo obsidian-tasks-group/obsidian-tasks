@@ -6,6 +6,7 @@ import { Status } from '../Status';
 import { DefaultTaskSerializer, type TaskSerializer } from '../TaskSerializer';
 import type { SuggestionBuilder } from '../Suggestor';
 import { DataviewTaskSerializer } from '../TaskSerializer/DataviewTaskSerializer';
+import { ReminderSettings } from '../reminders/Reminder';
 import { DebugSettings } from './DebugSettings';
 import { StatusSettings } from './StatusSettings';
 import { Feature } from './Feature';
@@ -49,6 +50,12 @@ export const TASK_FORMATS = {
 
 export type TASK_FORMATS = typeof TASK_FORMATS; // For convenience to make some typing easier
 
+// Time formats for the reminder settings.
+export const TIME_FORMATS = {
+    twelveHour: 'YYYY-MM-DD h:mm a',
+    twentyFourHour: 'YYYY-MM-DD HH:mm',
+};
+
 export interface Settings {
     globalQuery: string;
     globalFilter: string;
@@ -72,6 +79,8 @@ export interface Settings {
     // Settings are moved to a more general map to allow the settings UI to be
     // dynamically generated.
     generalSettings: SettingsMap;
+
+    reminderSettings: ReminderSettings;
 
     // Tracks the stage of the headings in the settings UI.
     headingOpened: HeadingState;
@@ -104,6 +113,7 @@ const defaultSettings: Settings = {
     },
     headingOpened: {},
     debugSettings: new DebugSettings(),
+    reminderSettings: new ReminderSettings(),
 };
 
 let settings: Settings = { ...defaultSettings };

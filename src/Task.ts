@@ -10,7 +10,7 @@ import { renderTaskLine } from './TaskLineRenderer';
 import type { TaskLineRenderDetails } from './TaskLineRenderer';
 import { DateFallback } from './DateFallback';
 import { compareByDate, isRemindersSame } from './lib/DateTools';
-import { type ReminderList, reminderSettings } from './reminders/Reminder';
+import type { ReminderList } from './reminders/Reminder';
 import { replaceTaskWithTasks } from './File';
 
 /**
@@ -29,7 +29,6 @@ export enum Priority {
 
 export class TaskRegularExpressions {
     public static readonly dateFormat = 'YYYY-MM-DD';
-    public static readonly dateTimeFormat = reminderSettings.dateTimeFormat;
 
     // Matches indentation before a list marker (including > for potentially nested blockquotes or Obsidian callouts)
     public static readonly indentationRegex = /^([\s\t>]*)/;

@@ -1,16 +1,19 @@
 import type { Moment } from 'moment';
+import { getSettings } from '../Config/Settings';
 
 //TODO erik-handeland: not used now, might want to give user ability to switch from 12 to 24 hour time
 // would cause a breaking change if user has reminders set and switches from 12 to 24 hour time
 // Either don't give them the option, option with a warning, or option with some kinda conversion?
-export const reminderSettings = {
-    notificationTitle: 'Task Reminders',
-    enabled: true,
-    dateTimeFormat: 'YYYY-MM-DD h:mm a',
-    dateFormat: 'YYYY-MM-DD',
-    dailyReminderTime: '09:00 am',
-    refreshInterval: 10 * 1000, // Miliseconds (> 60 seconds is not recommended)
-};
+
+export class ReminderSettings {
+    notificationTitle: string = 'Task Reminders';
+    dateTimeFormat: string = 'YYYY-MM-DD h:mm a';
+    dateFormat: string = 'YYYY-MM-DD';
+    dailyReminderTime: string = '09:00 am';
+    refreshInterval: number = 10 * 1000; // Miliseconds (> 60 seconds is not recommended)
+
+    constructor() {}
+}
 
 export class ReminderList {
     public reminders: Reminder[];
@@ -47,6 +50,7 @@ export class Reminder {
     }
 
     public toString(): string {
+        const reminderSettings = getSettings().reminderSettings;
         if (this.type === ReminderType.Date) {
             return this.time.format(reminderSettings.dateFormat);
         }
@@ -55,6 +59,7 @@ export class Reminder {
 }
 
 export function parseDateTime(dateTime: string): Reminder {
+    const reminderSettings = getSettings().reminderSettings;
     const reminder = window.moment(dateTime, reminderSettings.dateTimeFormat);
     if (reminder.format('h:mm a') === '12:00 am') {
         //aka .startOf(day) which is the default time for reminders

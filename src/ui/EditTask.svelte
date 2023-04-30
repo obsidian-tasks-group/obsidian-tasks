@@ -7,7 +7,7 @@
     import { Status } from '../Status';
     import { Priority, Task } from '../Task';
     import { doAutocomplete } from '../DateAbbreviations';
-    import { Reminder, ReminderList, reminderSettings } from '../reminders/Reminder';
+    import { Reminder, ReminderList } from '../reminders/Reminder';
 
     // These exported variables are passed in as props by TaskModal.onOpen():
     export let task: Task;
@@ -120,6 +120,7 @@
         typedDate: string,
         forwardDate: Date | undefined = undefined,
     ): string {
+        const { reminderSettings } = getSettings();
         if (!typedDate) {
             return `<i>no ${fieldName} date</i>`;
         }
@@ -223,7 +224,7 @@
     }
 
     onMount(() => {
-        const { provideAccessKeys } = getSettings();
+        const { provideAccessKeys, reminderSettings } = getSettings();
         withAccessKeys = provideAccessKeys;
         const description = GlobalFilter.removeAsWordFrom(task.description);
         // If we're displaying to the user the description without the global filter (i.e. it was removed in the method
