@@ -1,4 +1,5 @@
 import { App, Modal } from 'obsidian';
+import type { Moment } from 'moment';
 import { getSettings } from '../Config/Settings';
 import type { Task } from '../Task';
 import { Query } from '../Query/Query';
@@ -6,9 +7,7 @@ import { sameDateTime } from '../lib/DateTools';
 import type { Cache } from '../Cache';
 import { getTaskLineAndFile } from '../File';
 import ReminderView from './components/Reminder.svelte';
-import { ReminderType } from './Reminder';
-const electron = require('electron');
-const Notification = electron.remote.Notification;
+import { Reminder, ReminderType } from './Reminder';
 
 export class TaskNotification {
     // this is the default reminder settings not getting updated
@@ -16,6 +15,9 @@ export class TaskNotification {
 
     public show(task: Task) {
         const { reminderSettings } = getSettings();
+        const electron = require('electron');
+        const Notification = electron.remote.Notification;
+
         // if election notification is supported, aka desktop app
         if (Notification.isSupported()) {
             // Show system notification
@@ -32,7 +34,7 @@ export class TaskNotification {
             {
                 n.on('action', (_: any, index: any) => {
                     if (index === 0) {
-                        onDone(task);
+                        this.onDone(task);
                         return;
                     }
                 });
@@ -82,26 +84,32 @@ export class TaskNotification {
 
         const { reminderSettings } = getSettings();
         for (const task of reminderTasks) {
-            let curTime = window.moment();
-            const dailyTime = window.moment(
-                `${curTime.format('YYYY-MM-DD')} ${reminderSettings.dailyReminderTime}`,
+            const dailyReminderTime = window.moment(
+                `${window.moment().format('YYYY-MM-DD')} ${reminderSettings.dailyReminderTime}`,
                 reminderSettings.dateTimeFormat,
             );
 
             task.reminders?.reminders.forEach((rDate) => {
-                curTime = window.moment();
-                if (!rDate.notified) {
-                    if (rDate.type === ReminderType.Date && sameDateTime(dailyTime, curTime)) {
-                        rDate.notified = true;
-                        this.show(task);
-                        // time reminder
-                    } else if (sameDateTime(rDate.time, curTime)) {
-                        rDate.notified = true;
-                        this.show(task);
-                    }
+                const curTime = window.moment();
+                if (TaskNotification.shouldNotifiy(rDate, dailyReminderTime, curTime)) {
+                    rDate.notified = true;
+                    this.show(task);
                 }
             });
         }
+    }
+
+    public static shouldNotifiy(rDate: Reminder, dailyReminderTime: Moment, curTime: Moment) {
+        if (!rDate.notified) {
+            // daily reminder
+            if (rDate.type === ReminderType.Date && sameDateTime(dailyReminderTime, curTime)) {
+                return true;
+            } else if (sameDateTime(rDate.time, curTime)) {
+                // specific time reminder
+                return true;
+            }
+        }
+        return false;
     }
 
     private showBuiltinReminder(
@@ -113,39 +121,35 @@ export class TaskNotification {
             [1, 2, 3, 4, 5],
             reminder,
             //onRemindMeLater,
-            onDone,
-            onIgnore,
-            onOpenFile,
+            this.onDone,
+            this.onOpenFile,
         ).open();
     }
-}
 
-function onDone(task: Task) {
-    if (!task.status.isCompleted()) {
-        task.toggleUpdate();
+    private onDone(task: Task) {
+        if (!task.status.isCompleted()) {
+            task.toggleUpdate();
+        }
+    }
+
+    private async onOpenFile(task: Task) {
+        const result = await getTaskLineAndFile(task, app.vault);
+        if (result) {
+            const [line, file] = result;
+            const leaf = this.app.workspace.getLeaf('tab');
+            await leaf.openFile(file, { eState: { line: line } });
+        }
     }
 }
-function onIgnore() {}
 
-async function onOpenFile(task: Task, app: App) {
-    const result = await getTaskLineAndFile(task, app.vault);
-    if (result) {
-        const [line, file] = result;
-        const leaf = app.workspace.getLeaf('tab');
-        await leaf.openFile(file, { eState: { line: line } });
-    }
-}
-
-// Probably want to rewrite this modal to better display task infor
 class ObsidianNotificationModal extends Modal {
     constructor(
         app: App,
         private laters: Array<Number>,
-        private task: Task, // callbacks //
+        private task: Task,
         //private onRemindMeLater: (time: any) => void,
         private onDone: (task: Task) => void,
-        private onIgnore: () => void,
-        private onOpenFile: (task: Task, app: App) => void,
+        private onOpenFile: (task: Task) => void,
     ) {
         super(app);
     }
@@ -167,12 +171,7 @@ class ObsidianNotificationModal extends Modal {
                     this.close();
                 },
                 onOpenFile: () => {
-                    this.onOpenFile(this.task, this.app);
-                    this.close();
-                },
-                onIgnore: () => {
-                    // remove reminder from task
-                    this.onIgnore();
+                    this.onOpenFile(this.task);
                     this.close();
                 },
             },
