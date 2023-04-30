@@ -1,7 +1,7 @@
 import type { Moment } from 'moment';
 import { RRule } from 'rrule';
 import { compareByDate, isRemindersSame } from './lib/DateTools';
-import { ReminderList } from './reminders/ReminderList';
+import { Reminder, ReminderList } from './reminders/Reminder';
 
 export class Recurrence {
     private readonly rrule: RRule;
@@ -171,14 +171,14 @@ export class Recurrence {
 
                 if (this.reminders) {
                     reminders = new ReminderList(null);
-                    this.reminders.times.forEach((reminder) => {
-                        const originalDifference = window.moment.duration(reminder.diff(this.referenceDate));
-                        const newReminder = window.moment(next);
+                    this.reminders.reminders.forEach((reminder) => {
+                        const originalDifference = window.moment.duration(reminder.time.diff(this.referenceDate));
+                        const remTime = window.moment(next);
 
-                        newReminder.add(Math.round(originalDifference.asDays()), 'days');
+                        remTime.add(Math.round(originalDifference.asDays()), 'days');
                         // add back time
-                        newReminder.set({ hour: reminder.hour(), minute: reminder.minute() });
-                        reminders!.times.push(newReminder);
+                        remTime.set({ hour: reminder.time.hour(), minute: reminder.time.minute() });
+                        reminders!.reminders.push(new Reminder(remTime)); // erik-hand todo add TYPE selector
                     });
                 }
             }

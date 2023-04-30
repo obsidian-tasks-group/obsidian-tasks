@@ -7,7 +7,7 @@
     import { Status } from '../Status';
     import { Priority, Task } from '../Task';
     import { doAutocomplete } from '../DateAbbreviations';
-    import { ReminderList } from '../reminders/ReminderList';
+    import { Reminder, ReminderList, reminderSettings } from '../reminders/Reminder';
 
     // These exported variables are passed in as props by TaskModal.onOpen():
     export let task: Task;
@@ -128,7 +128,7 @@
         });
         if (parsed !== null) {
             if (fieldName === 'reminder') {
-                return window.moment(parsed).format('YYYY-MM-DD h:mm a');
+                return window.moment(parsed).format(reminderSettings.dateTimeFormat);
             }else{
                 return window.moment(parsed).format('YYYY-MM-DD');
             }
@@ -256,7 +256,7 @@
                 ? task.scheduledDate.format('YYYY-MM-DD')
                 : '',
             dueDate: task.dueDate ? task.dueDate.format('YYYY-MM-DD') : '',
-            reminderDate: task.reminders?.times[0] ? task.reminders?.times[0].format('YYYY-MM-DD h:mm a') : '',
+            reminderDate: task.reminders?.peek() ? task.reminders?.peek()!.format(reminderSettings.dateTimeFormat) : '',
             doneDate: task.doneDate ? task.doneDate.format('YYYY-MM-DD') : '',
             forwardOnly: true,
         };
@@ -314,7 +314,7 @@
                 startDate,
                 scheduledDate,
                 dueDate,
-                reminders: reminderDate ? new ReminderList([reminderDate]) : null,
+                reminders: reminderDate ? new ReminderList([new Reminder(reminderDate)]) : null,
             });
         }
 
@@ -342,7 +342,7 @@
             startDate,
             scheduledDate,
             dueDate,
-            reminders: reminderDate ? new ReminderList([reminderDate]) : null,
+            reminders: reminderDate ? new ReminderList([new Reminder(reminderDate)]) : null,
             doneDate: window
                 .moment(editableTask.doneDate, 'YYYY-MM-DD')
                 .isValid()

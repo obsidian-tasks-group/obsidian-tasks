@@ -5,16 +5,11 @@ import { DateRange } from './DateRange';
 export class DateParser {
     public static parseDate(input: string, forwardDate: boolean = false): moment.Moment {
         // Using start of day to correctly match on comparison with other dates (like equality).
-        let date = moment(
+        return moment(
             chrono.parseDate(input, undefined, {
                 forwardDate: forwardDate,
             }),
-        );
-        // needed for reminders, if no time is specified, chrono will return midnight, but tasks likes noon
-        if (date.hours() === 12 && date.minutes() === 0 && date.seconds() === 0) {
-            date = date.startOf('day');
-        }
-        return date;
+        ).startOf('day');
     }
 
     /**

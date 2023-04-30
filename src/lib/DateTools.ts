@@ -1,5 +1,5 @@
 import type { DurationInputArg1, DurationInputArg2 } from 'moment';
-import type { ReminderList } from '../reminders/ReminderList';
+import type { ReminderList } from '../reminders/Reminder';
 
 export function compareByDate(a: moment.Moment | null, b: moment.Moment | null): -1 | 0 | 1 {
     if (a !== null && b === null) {
@@ -40,12 +40,12 @@ export function isRemindersSame(a: ReminderList | null, b: ReminderList | null) 
     } else if (a !== null && b === null) {
         return false;
     } else if (a !== null && b !== null) {
-        if (a.times.length !== b.times.length) {
+        if (a.reminders.length !== b.reminders.length) {
             return false;
         }
 
-        const sortedA = a.times.map((reminder) => reminder.valueOf()).sort();
-        const sortedB = b.times.map((reminder) => reminder.valueOf()).sort();
+        const sortedA = a.reminders.map((reminder) => reminder.valueOf()).sort();
+        const sortedB = b.reminders.map((reminder) => reminder.valueOf()).sort();
 
         for (let i = 0; i < sortedA.length; i++) {
             if (sortedA[i] !== sortedB[i]) {

@@ -1,5 +1,5 @@
 import type { Moment } from 'moment';
-import { ReminderList } from '../reminders/ReminderList';
+import { Reminder, ReminderList } from '../reminders/Reminder';
 import { TaskLayout } from '../TaskLayout';
 import type { TaskLayoutComponent } from '../TaskLayout';
 import { Recurrence } from '../Recurrence';
@@ -145,7 +145,7 @@ export class DefaultTaskSerializer implements TaskSerializer {
                     ? ' ' + dueDateSymbol
                     : ` ${dueDateSymbol} ${task.dueDate.format(TaskRegularExpressions.dateFormat)}`;
             case 'reminders':
-                if (!task.reminders || task.reminders.times.length <= 0) return '';
+                if (!task.reminders || task.reminders.reminders.length <= 0) return '';
                 return layout.options.shortMode
                     ? ' ' + reminderDateSymbol
                     : ` ${reminderDateSymbol} ${task.reminders.toString()}`;
@@ -201,7 +201,7 @@ export class DefaultTaskSerializer implements TaskSerializer {
         let scheduledDate: Moment | null = null;
         let dueDate: Moment | null = null;
         let doneDate: Moment | null = null;
-        let reminders: ReminderList | null = null;
+        let rList: ReminderList | null = null;
         let createdDate: Moment | null = null;
         let recurrenceRule: string = '';
         let recurrence: Recurrence | null = null;
@@ -282,11 +282,13 @@ export class DefaultTaskSerializer implements TaskSerializer {
             if (reminderMatch !== null) {
                 line = line.replace(TaskFormatRegularExpressions.reminderRegex, '').trim();
                 const split = reminderMatch[1].split(',');
-                reminders = new ReminderList(null);
+                rList = new ReminderList(null);
                 split.forEach((reminderDate) => {
                     reminderDate = reminderDate.trim(); // Remove any extra spaces
-                    if (reminders) {
-                        reminders.times.push(window.moment(reminderDate, TaskRegularExpressions.dateTimeFormat));
+                    if (rList) {
+                        rList.reminders.push(
+                            new Reminder(window.moment(reminderDate, TaskRegularExpressions.dateTimeFormat)), // erik update to type
+                        );
                     }
                 });
                 matched = true;
@@ -301,7 +303,7 @@ export class DefaultTaskSerializer implements TaskSerializer {
                 startDate,
                 scheduledDate,
                 dueDate,
-                reminders: reminders,
+                reminders: rList,
             });
         }
         // Add back any trailing tags to the description. We removed them so we can parse the rest of the
@@ -320,7 +322,7 @@ export class DefaultTaskSerializer implements TaskSerializer {
             doneDate,
             recurrence,
             tags: Task.extractHashtags(line),
-            reminders: reminders,
+            reminders: rList,
         };
     }
 }
