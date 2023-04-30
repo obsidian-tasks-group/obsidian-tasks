@@ -39,6 +39,9 @@ describe('Query parsing', () => {
         'due in 2021-12-27 2021-12-29',
         'due on 2021-12-27',
         'due this week',
+        'reminder after yesterday',
+        'reminder before 2021-12-27',
+        'reminder date is invalid',
         'exclude sub-items',
         'filename includes wibble',
         'happens after 2021-12-27',
@@ -54,6 +57,7 @@ describe('Query parsing', () => {
         'has start date',
         'has tags',
         'has tag',
+        'has reminder date',
         'heading does not include wibble',
         'heading includes AND', // Verify Query doesn't confuse this with a boolean query
         'heading includes wibble',
@@ -67,6 +71,7 @@ describe('Query parsing', () => {
         'no start date',
         'no tags',
         'no tag',
+        'no reminder date',
         'not done',
         'path does not include some/path',
         'path includes AND', // Verify Query doesn't confuse this with a boolean query
