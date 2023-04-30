@@ -6,7 +6,7 @@ import type { Recurrence } from '../../src/Recurrence';
 import { DateParser } from '../../src/Query/DateParser';
 import { StatusConfiguration, StatusType } from '../../src/StatusConfiguration';
 import { TaskLocation } from '../../src/TaskLocation';
-import type { Reminders } from '../../src/reminders/Reminders';
+import { ReminderList } from '../../src/reminders/ReminderList';
 
 /**
  * A fluent class for creating tasks for tests.
@@ -40,7 +40,7 @@ export class TaskBuilder {
     private _scheduledDate: Moment | null = null;
     private _dueDate: Moment | null = null;
     private _doneDate: Moment | null = null;
-    private _reminders: Reminders | null = null;
+    private _reminders: ReminderList | null = null;
 
     private _recurrence: Recurrence | null = null;
     private _blockLink: string = '';
@@ -197,8 +197,17 @@ export class TaskBuilder {
         return this;
     }
 
-    public reminders(reminders: Reminders | null): TaskBuilder {
-        this._reminders = reminders;
+    public reminders(reminders: string[]): TaskBuilder {
+        if (reminders.length > 0) {
+            const parsedReminders = new ReminderList(null);
+            for (const reminder of reminders) {
+                const reminderDate = TaskBuilder.parseDateTime(reminder);
+                if (reminderDate) {
+                    parsedReminders.times.push(reminderDate);
+                }
+            }
+            this._reminders = parsedReminders;
+        }
         return this;
     }
 
@@ -218,6 +227,14 @@ export class TaskBuilder {
     }
 
     private static parseDate(date: string | null): Moment | null {
+        if (date) {
+            return DateParser.parseDate(date);
+        } else {
+            return null;
+        }
+    }
+
+    private static parseDateTime(date: string | null): Moment | null {
         if (date) {
             return DateParser.parseDate(date);
         } else {

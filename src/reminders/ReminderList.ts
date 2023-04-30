@@ -11,7 +11,7 @@ export const reminderSettings = {
     refreshInterval: 10 * 1000, // Miliseconds (> 60 seconds is not recommended)
 };
 
-export class Reminders {
+export class ReminderList {
     public times: Moment[];
 
     constructor(times: Moment[] | null) {

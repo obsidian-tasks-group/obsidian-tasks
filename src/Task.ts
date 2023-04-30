@@ -10,7 +10,7 @@ import { renderTaskLine } from './TaskLineRenderer';
 import type { TaskLineRenderDetails } from './TaskLineRenderer';
 import { DateFallback } from './DateFallback';
 import { compareByDate, isRemindersSame } from './lib/DateTools';
-import { type Reminders, reminderSettings } from './reminders/Reminders';
+import { type ReminderList, reminderSettings } from './reminders/ReminderList';
 import { replaceTaskWithTasks } from './File';
 
 /**
@@ -104,7 +104,7 @@ export class Task {
     public readonly taskLocation: TaskLocation;
 
     public readonly tags: string[];
-    public readonly reminders: Reminders | null;
+    public readonly reminders: ReminderList | null;
 
     public readonly priority: Priority;
 
@@ -161,7 +161,7 @@ export class Task {
         recurrence: Recurrence | null;
         blockLink: string;
         tags: string[] | [];
-        reminders: Reminders | null;
+        reminders: ReminderList | null;
         originalMarkdown: string;
         scheduledDateIsInferred: boolean;
     }) {
@@ -314,7 +314,7 @@ export class Task {
             startDate: Moment | null;
             scheduledDate: Moment | null;
             dueDate: Moment | null;
-            reminders: Reminders | null;
+            reminders: ReminderList | null;
         } | null = null;
 
         if (newStatus.isCompleted()) {

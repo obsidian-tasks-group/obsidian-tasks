@@ -1,5 +1,5 @@
 import type { Moment } from 'moment';
-import { Reminders } from '../reminders/Reminders';
+import { ReminderList } from '../reminders/ReminderList';
 import { TaskLayout } from '../TaskLayout';
 import type { TaskLayoutComponent } from '../TaskLayout';
 import { Recurrence } from '../Recurrence';
@@ -66,7 +66,7 @@ export const DEFAULT_SYMBOLS: DefaultTaskSerializerSymbols = {
         dueDateRegex: /[📅📆🗓] *(\d{4}-\d{2}-\d{2})$/u,
         doneDateRegex: /✅ *(\d{4}-\d{2}-\d{2})$/u,
         recurrenceRegex: /🔁 ?([a-zA-Z0-9, !]+)$/iu,
-        reminderRegex: /⏲️ *((\d{4}-\d{2}-\d{2}(?: \d{1,2}:\d{2} (?:am|pm|PM|AM))?\s*(?:,\s*)?)+)\b$/g, // multiple dates
+        reminderRegex: /⏲️ *((\d{4}-\d{2}-\d{2}(?: \d{1,2}:\d{2} (?:am|pm|PM|AM))?\s*(?:,\s*)?)+)$/u, // multiple dates
         // reminderRegex: /⏲️ *(\d{4}-\d{2}-\d{2}(?:\s\d{1,2}:\d{2}(?:\s(?:am|pm|AM|PM))?)?)/u, // just one date
     },
 } as const;
@@ -201,7 +201,7 @@ export class DefaultTaskSerializer implements TaskSerializer {
         let scheduledDate: Moment | null = null;
         let dueDate: Moment | null = null;
         let doneDate: Moment | null = null;
-        let reminders: Reminders | null = null;
+        let reminders: ReminderList | null = null;
         let createdDate: Moment | null = null;
         let recurrenceRule: string = '';
         let recurrence: Recurrence | null = null;
@@ -281,9 +281,10 @@ export class DefaultTaskSerializer implements TaskSerializer {
             const reminderMatch = line.match(TaskFormatRegularExpressions.reminderRegex);
             if (reminderMatch !== null) {
                 line = line.replace(TaskFormatRegularExpressions.reminderRegex, '').trim();
-                const split = reminderMatch[0].split(',');
-                reminders = new Reminders(null);
+                const split = reminderMatch[1].split(',');
+                reminders = new ReminderList(null);
                 split.forEach((reminderDate) => {
+                    reminderDate = reminderDate.trim(); // Remove any extra spaces
                     if (reminders) {
                         reminders.times.push(window.moment(reminderDate, TaskRegularExpressions.dateTimeFormat));
                     }

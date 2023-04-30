@@ -7,7 +7,7 @@
     import { Status } from '../Status';
     import { Priority, Task } from '../Task';
     import { doAutocomplete } from '../DateAbbreviations';
-    import { Reminders } from '../reminders/Reminders';
+    import { ReminderList } from '../reminders/ReminderList';
 
     // These exported variables are passed in as props by TaskModal.onOpen():
     export let task: Task;
@@ -314,7 +314,7 @@
                 startDate,
                 scheduledDate,
                 dueDate,
-                reminders: reminderDate ? new Reminders([reminderDate]) : null,
+                reminders: reminderDate ? new ReminderList([reminderDate]) : null,
             });
         }
 
@@ -342,7 +342,7 @@
             startDate,
             scheduledDate,
             dueDate,
-            reminders: reminderDate ? new Reminders([reminderDate]) : null,
+            reminders: reminderDate ? new ReminderList([reminderDate]) : null,
             doneDate: window
                 .moment(editableTask.doneDate, 'YYYY-MM-DD')
                 .isValid()

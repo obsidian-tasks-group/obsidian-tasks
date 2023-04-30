@@ -5,7 +5,7 @@ import { isDateBetween } from '../lib/DateTools';
 import type { Cache } from '../Cache';
 import { getTaskLineAndFile } from '../File';
 import ReminderView from './components/Reminder.svelte';
-import { reminderSettings } from './Reminders';
+import { reminderSettings } from './ReminderList';
 const electron = require('electron');
 const Notification = electron.remote.Notification;
 

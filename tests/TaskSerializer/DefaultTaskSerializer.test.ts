@@ -8,6 +8,7 @@ import { DefaultTaskSerializer } from '../../src/TaskSerializer';
 import { RecurrenceBuilder } from '../TestingTools/RecurrenceBuilder';
 import { DEFAULT_SYMBOLS, type DefaultTaskSerializerSymbols } from '../../src/TaskSerializer/DefaultTaskSerializer';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
+import { ReminderList } from '../../src/reminders/ReminderList';
 
 jest.mock('obsidian');
 window.moment = moment;
@@ -23,8 +24,15 @@ describe.each(symbolMap)("DefaultTaskSerializer with '$taskFormat' symbols", ({ 
     const taskSerializer = new DefaultTaskSerializer(symbols);
     const serialize = taskSerializer.serialize.bind(taskSerializer);
     const deserialize = taskSerializer.deserialize.bind(taskSerializer);
-    const { startDateSymbol, createdDateSymbol, recurrenceSymbol, scheduledDateSymbol, dueDateSymbol, doneDateSymbol } =
-        symbols;
+    const {
+        startDateSymbol,
+        createdDateSymbol,
+        recurrenceSymbol,
+        scheduledDateSymbol,
+        dueDateSymbol,
+        doneDateSymbol,
+        reminderDateSymbol,
+    } = symbols;
 
     describe('deserialize', () => {
         it('should parse an empty string', () => {
@@ -68,6 +76,30 @@ describe.each(symbolMap)("DefaultTaskSerializer with '$taskFormat' symbols", ({ 
             expect(taskDetails).toMatchTaskDetails({
                 tags: ['#hello', '#world', '#task'],
                 description,
+            });
+        });
+
+        it('should parse a single reminder date', () => {
+            const taskDetails = deserialize(`${reminderDateSymbol} 2021-06-20`);
+            expect(taskDetails).toMatchTaskDetails({
+                reminders: new ReminderList([moment('2021-06-20', 'YYYY-MM-DD h:mm a')]),
+            });
+        });
+
+        it('should parse a single reminder date time', () => {
+            const taskDetails = deserialize(`${reminderDateSymbol} 2021-06-20 10:00 am`);
+            expect(taskDetails).toMatchTaskDetails({
+                reminders: new ReminderList([moment('2021-06-20 10:00 am', 'YYYY-MM-DD h:mm a')]),
+            });
+        });
+
+        it('should parse a multiple reminder string', () => {
+            const taskDetails = deserialize(`${reminderDateSymbol} 2021-06-20 10:00 am, 2021-06-21`);
+            expect(taskDetails).toMatchTaskDetails({
+                reminders: new ReminderList([
+                    moment('2021-06-20 10:00 am', 'YYYY-MM-DD h:mm a'),
+                    moment('2021-06-21', 'YYYY-MM-DD h:mm a'),
+                ]),
             });
         });
     });
@@ -117,6 +149,23 @@ describe.each(symbolMap)("DefaultTaskSerializer with '$taskFormat' symbols", ({ 
             const task = new TaskBuilder().description('').tags(['#hello', '#world', '#task']).build();
             const serialized = serialize(task);
             expect(serialized).toEqual(' #hello #world #task');
+        });
+
+        it('should serialize a single reminder date', () => {
+            const serialized = serialize(new TaskBuilder().reminders(['2021-06-20']).description('').build());
+            expect(serialized).toEqual(` ${reminderDateSymbol} 2021-06-20 12:00 am`);
+        });
+
+        it('should serialize a single reminder date time', () => {
+            const serialized = serialize(new TaskBuilder().reminders(['2021-06-20 5:00 pm']).description('').build());
+            expect(serialized).toEqual(` ${reminderDateSymbol} 2021-06-20 5:00 pm`);
+        });
+
+        it('should serialize a multiple reminder dates', () => {
+            const serialized = serialize(
+                new TaskBuilder().reminders(['2021-06-20 5:00 pm', '2021-06-21']).description('').build(),
+            );
+            expect(serialized).toEqual(` ${reminderDateSymbol} 2021-06-20 5:00 pm, 2021-06-21 12:00 am`);
         });
     });
 });

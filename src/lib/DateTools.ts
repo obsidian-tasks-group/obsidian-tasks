@@ -1,5 +1,5 @@
 import type { DurationInputArg1, DurationInputArg2 } from 'moment';
-import type { Reminders } from '../reminders/Reminders';
+import type { ReminderList } from '../reminders/ReminderList';
 
 export function compareByDate(a: moment.Moment | null, b: moment.Moment | null): -1 | 0 | 1 {
     if (a !== null && b === null) {
@@ -34,7 +34,7 @@ export function isDateBetween(
     return a?.isValid() && b.isValid() && a.isBetween(b, b.clone().add(offset, unit));
 }
 
-export function isRemindersSame(a: Reminders | null, b: Reminders | null) {
+export function isRemindersSame(a: ReminderList | null, b: ReminderList | null) {
     if (a === null && b !== null) {
         return false;
     } else if (a !== null && b === null) {
