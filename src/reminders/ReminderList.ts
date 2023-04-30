@@ -12,7 +12,9 @@ export const reminderSettings = {
 };
 
 export class ReminderList {
-    public times: Moment[];
+    public times: Moment[]; // debating whether to make this a custom Reminder[] class or not
+    // would allow me to add a TYPE property to the class, which might be useful for serialization
+    // date vs datetime
 
     constructor(times: Moment[] | null) {
         this.times = times ?? [];
