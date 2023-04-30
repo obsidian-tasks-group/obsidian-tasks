@@ -5,7 +5,7 @@ export class ReminderSettings {
     notificationTitle: string = 'Task Reminders';
     dateFormat: string = 'YYYY-MM-DD';
     dateTimeFormat: string = 'YYYY-MM-DD h:mm a';
-    dailyReminderTime: string = '09:00 am';
+    dailyReminderTime: string = '9:00 am';
     refreshInterval: number = 10 * 1000; // in Miliseconds
 
     constructor() {}

@@ -11,15 +11,16 @@ const electron = require('electron');
 const Notification = electron.remote.Notification;
 
 export class TaskNotification {
-    reminderSettings = getSettings().reminderSettings;
+    // this is the default reminder settings not getting updated
     constructor(private app: App) {}
 
     public show(task: Task) {
+        const { reminderSettings } = getSettings();
         // if election notification is supported, aka desktop app
         if (Notification.isSupported()) {
             // Show system notification
             const n = new Notification({
-                title: this.reminderSettings.notificationTitle,
+                title: reminderSettings.notificationTitle,
                 body: task.description,
             });
             n.on('click', () => {
@@ -51,6 +52,7 @@ export class TaskNotification {
 
     public watcher(cache: Cache): number | undefined {
         let intervalTaskRunning = false;
+        const { reminderSettings } = getSettings();
         // Set up the recurring check for reminders.
         return window.setInterval(() => {
             if (intervalTaskRunning) {
@@ -63,7 +65,7 @@ export class TaskNotification {
             this.reminderEvent(tasks).finally(() => {
                 intervalTaskRunning = false;
             });
-        }, this.reminderSettings.refreshInterval);
+        }, reminderSettings.refreshInterval);
     }
 
     private async reminderEvent(tasks: Task[]): Promise<void> {
@@ -81,18 +83,27 @@ export class TaskNotification {
             reminderTasks = reminderTasks.filter(filter.filterFunction);
         });
 
+        const { reminderSettings } = getSettings();
         for (const task of reminderTasks) {
-            const now = window.moment(); // current date + time
+            const curTime = window.moment();
+            const dailyTime = window.moment(
+                `${curTime.format('YYYY-MM-DD')} ${reminderSettings.dailyReminderTime}`,
+                reminderSettings.dateTimeFormat,
+            );
+
             task.reminders?.reminders.forEach((rDate) => {
-                if (rDate.time.isSame(now, 'day')) {
-                    if (rDate.type === ReminderType.Date) {
-                        // Daily reminder
-                        this.show(task);
-                    } else if (
-                        isDateBetween(rDate.time, now, this.reminderSettings.refreshInterval + 1, 'milliseconds')
-                    ) {
-                        this.show(task);
-                    }
+                // daily reminder
+                console.log(reminderSettings);
+                console.log(dailyTime);
+                console.log(isDateBetween(dailyTime, curTime, reminderSettings.refreshInterval + 1, 'milliseconds'));
+                if (
+                    rDate.type === ReminderType.Date &&
+                    isDateBetween(dailyTime, curTime, reminderSettings.refreshInterval + 1, 'milliseconds')
+                ) {
+                    this.show(task);
+                    // time reminder
+                } else if (isDateBetween(rDate.time, curTime, reminderSettings.refreshInterval + 1, 'milliseconds')) {
+                    this.show(task);
                 }
             });
         }
