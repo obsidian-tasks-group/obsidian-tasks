@@ -6,7 +6,7 @@ import { isDateBetween } from '../lib/DateTools';
 import type { Cache } from '../Cache';
 import { getTaskLineAndFile } from '../File';
 import ReminderView from './components/Reminder.svelte';
-import type { ReminderSettings } from './Reminder';
+import { ReminderType } from './Reminder';
 const electron = require('electron');
 const Notification = electron.remote.Notification;
 
@@ -83,14 +83,16 @@ export class TaskNotification {
 
         for (const task of reminderTasks) {
             const now = window.moment(); // current date + time
-            // Check if reminder will occur between now and next refresh interval, + 1 to account for rounding
-            task.reminders?.reminders.forEach((reminderDate) => {
-                if (isDateBetween(reminderDate.time, now, this.reminderSettings.refreshInterval + 1, 'milliseconds')) {
-                    // console.log('Show Notification: now: ' + now.format() + ' reminder: ' + reminderDate.format());
-                    this.show(task);
-                    // else check for daily reminder
-                } else if (isDailyReminder(reminderDate.time, this.reminderSettings)) {
-                    this.show(task);
+            task.reminders?.reminders.forEach((rDate) => {
+                if (rDate.time.isSame(now, 'day')) {
+                    if (rDate.type === ReminderType.Date) {
+                        // Daily reminder
+                        this.show(task);
+                    } else if (
+                        isDateBetween(rDate.time, now, this.reminderSettings.refreshInterval + 1, 'milliseconds')
+                    ) {
+                        this.show(task);
+                    }
                 }
             });
         }
@@ -178,13 +180,4 @@ class ObsidianNotificationModal extends Modal {
         const { contentEl } = this;
         contentEl.empty();
     }
-}
-
-function isDailyReminder(date: moment.Moment, reminderSettings: ReminderSettings) {
-    const daily = window.moment().startOf('day'); // todays date with a blank time
-    const alertTime = window.moment(reminderSettings.dailyReminderTime, reminderSettings.dateTimeFormat);
-    const now = window.moment(); // current date + time
-
-    // time has not been set and is between alertTime and offset
-    return date.isSame(daily) && isDateBetween(alertTime, now, 30, 'seconds');
 }

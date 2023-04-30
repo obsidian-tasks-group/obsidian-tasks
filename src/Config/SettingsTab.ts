@@ -353,15 +353,6 @@ export class SettingsTab extends PluginSettingTab {
                         await this.plugin.saveSettings();
                     });
             });
-
-        new Setting(containerEl).addButton((button) => {
-            button
-                .setButtonText('Print Settings')
-                .setCta()
-                .onClick(async () => {
-                    console.log(getSettings().reminderSettings);
-                });
-        });
     }
 
     private addOneSettingsBlock(containerEl: HTMLElement, heading: any, headingOpened: HeadingState) {

@@ -166,7 +166,6 @@ export class Recurrence {
                     dueDate = window.moment(next);
                     // Rounding days to handle cross daylight-savings-time recurrences.
                     dueDate.add(Math.round(originalDifference.asDays()), 'days');
-                    console.log(dueDate);
                 }
 
                 if (this.reminders) {
@@ -175,7 +174,7 @@ export class Recurrence {
                         const originalDifference = window.moment.duration(reminder.time.diff(this.referenceDate));
                         const remTime = window.moment(next);
 
-                        remTime.add(Math.round(originalDifference.asDays()), 'days');
+                        remTime.add(Math.floor(originalDifference.asDays()), 'days');
                         // add back time
                         remTime.set({ hour: reminder.time.hour(), minute: reminder.time.minute() });
                         reminders!.reminders.push(new Reminder(remTime, reminder.type));

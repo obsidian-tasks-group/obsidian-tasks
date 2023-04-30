@@ -1,6 +1,6 @@
 import type { Moment } from 'moment';
 import { getSettings } from '../Config/Settings';
-import { Reminder, ReminderList } from '../reminders/Reminder';
+import { ReminderList } from '../reminders/Reminder';
 import { TaskLayout } from '../TaskLayout';
 import type { TaskLayoutComponent } from '../TaskLayout';
 import { Recurrence } from '../Recurrence';
@@ -288,9 +288,7 @@ export class DefaultTaskSerializer implements TaskSerializer {
                 split.forEach((reminderDate) => {
                     reminderDate = reminderDate.trim(); // Remove any extra spaces
                     if (rList) {
-                        rList.reminders.push(
-                            new Reminder(window.moment(reminderDate, reminderSettings.dateTimeFormat)),
-                        );
+                        rList.push(window.moment(reminderDate, reminderSettings.dateTimeFormat));
                     }
                 });
                 matched = true;

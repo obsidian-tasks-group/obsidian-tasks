@@ -3,35 +3,41 @@ import { getSettings } from '../Config/Settings';
 
 export class ReminderSettings {
     notificationTitle: string = 'Task Reminders';
-    dateTimeFormat: string = 'YYYY-MM-DD h:mm a';
     dateFormat: string = 'YYYY-MM-DD';
+    dateTimeFormat: string = 'YYYY-MM-DD h:mm a';
     dailyReminderTime: string = '09:00 am';
-    refreshInterval: number = 10 * 1000; // Miliseconds (> 60 seconds is not recommended)
+    refreshInterval: number = 10 * 1000; // in Miliseconds
 
     constructor() {}
 }
 
 export class ReminderList {
-    public reminders: Reminder[];
+    public reminders: Reminder[] = [];
 
-    constructor(times: Reminder[] | null) {
-        this.reminders = times ?? [];
+    constructor(times: Moment[] | null) {
+        times?.forEach((time) => {
+            this.reminders.push(parseMoment(time));
+        });
     }
 
     public toString(): string {
         return this.reminders.map((reminder) => `${reminder.toString()}`).join(', ');
     }
 
-    // TODO only used in ReminderDateField need way to teal with modal multiple reminders
+    // TODO only used in ReminderDateField need way to deal with modal multiple reminders
     public peek(): Moment | null {
         if (this.reminders.length === 0) {
             return null;
         }
         return this.reminders[0].time;
     }
+
+    public push(reminder: Moment) {
+        this.reminders.push(parseMoment(reminder));
+    }
 }
 
-enum ReminderType {
+export enum ReminderType {
     Date,
     DateTime,
 }
@@ -40,9 +46,9 @@ export class Reminder {
     public time: Moment;
     public type: ReminderType;
 
-    constructor(time: Moment, type?: ReminderType) {
+    constructor(time: Moment, type: ReminderType) {
         this.time = time;
-        this.type = type ?? ReminderType.Date;
+        this.type = type;
     }
 
     public toString(): string {
@@ -57,6 +63,10 @@ export class Reminder {
 export function parseDateTime(dateTime: string): Reminder {
     const reminderSettings = getSettings().reminderSettings;
     const reminder = window.moment(dateTime, reminderSettings.dateTimeFormat);
+    return parseMoment(reminder);
+}
+
+export function parseMoment(reminder: Moment): Reminder {
     if (reminder.format('h:mm a') === '12:00 am') {
         //aka .startOf(day) which is the default time for reminders
         return new Reminder(reminder, ReminderType.Date);

@@ -8,7 +8,7 @@ import { DefaultTaskSerializer } from '../../src/TaskSerializer';
 import { RecurrenceBuilder } from '../TestingTools/RecurrenceBuilder';
 import { DEFAULT_SYMBOLS, type DefaultTaskSerializerSymbols } from '../../src/TaskSerializer/DefaultTaskSerializer';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
-import { Reminder, ReminderList } from '../../src/reminders/Reminder';
+import { ReminderList } from '../../src/reminders/Reminder';
 
 jest.mock('obsidian');
 window.moment = moment;
@@ -83,16 +83,14 @@ describe.each(symbolMap)("DefaultTaskSerializer with '$taskFormat' symbols", ({ 
         it('should parse a single reminder date', () => {
             const taskDetails = deserialize(`${reminderDateSymbol} 2021-06-20`);
             expect(taskDetails).toMatchTaskDetails({
-                reminders: new ReminderList([new Reminder(moment('2021-06-20', reminderSettings.dateTimeFormat))]),
+                reminders: new ReminderList([moment('2021-06-20', reminderSettings.dateTimeFormat)]),
             });
         });
 
         it('should parse a single reminder date time', () => {
             const taskDetails = deserialize(`${reminderDateSymbol} 2021-06-20 10:00 am`);
             expect(taskDetails).toMatchTaskDetails({
-                reminders: new ReminderList([
-                    new Reminder(moment('2021-06-20 10:00 am', reminderSettings.dateTimeFormat)),
-                ]),
+                reminders: new ReminderList([moment('2021-06-20 10:00 am', reminderSettings.dateTimeFormat)]),
             });
         });
 
@@ -100,8 +98,8 @@ describe.each(symbolMap)("DefaultTaskSerializer with '$taskFormat' symbols", ({ 
             const taskDetails = deserialize(`${reminderDateSymbol} 2021-06-20 10:00 am, 2021-06-21`);
             expect(taskDetails).toMatchTaskDetails({
                 reminders: new ReminderList([
-                    new Reminder(moment('2021-06-20 10:00 am', reminderSettings.dateTimeFormat)),
-                    new Reminder(moment('2021-06-21', reminderSettings.dateTimeFormat)),
+                    moment('2021-06-20 10:00 am', reminderSettings.dateTimeFormat),
+                    moment('2021-06-21', reminderSettings.dateTimeFormat),
                 ]),
             });
         });
