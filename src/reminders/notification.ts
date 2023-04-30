@@ -1,5 +1,5 @@
 import { App, Modal } from 'obsidian';
-import { getSettings } from 'Config/Settings';
+import { getSettings } from '../Config/Settings';
 import type { Task } from '../Task';
 import { Query } from '../Query/Query';
 import { isDateBetween } from '../lib/DateTools';
