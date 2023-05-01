@@ -15,7 +15,7 @@ export function makeDefaultSuggestionBuilder(symbols: DefaultTaskSerializerSymbo
         let suggestions: SuggestInfo[] = [];
 
         // Step 1: add date suggestions if relevant
-        suggestions = suggestions.concat(addDatesSuggestions(line, cursorPos, settings, datePrefixRegex));
+        suggestions = suggestions.concat(addDatesSuggestions(line, cursorPos, settings, datePrefixRegex, 5));
 
         // Step 2: add recurrence suggestions if relevant
         suggestions = suggestions.concat(addRecurrenceSuggestions(line, cursorPos, settings, symbols.recurrenceSymbol));
@@ -145,6 +145,7 @@ function addDatesSuggestions(
     cursorPos: number,
     settings: Settings,
     datePrefixRegex: string,
+    maxGenericSuggestions: number,
 ): SuggestInfo[] {
     const genericSuggestions = [
         'today',
@@ -194,7 +195,6 @@ function addDatesSuggestions(
         // a max number. We want the max number to be around half the total allowed matches, to also allow
         // some global generic matches (e.g. task components) to find their way to the menu
         const minMatch = 1;
-        const maxGenericSuggestions = 5;
         let genericMatches = genericSuggestions
             .filter(
                 (value) =>
