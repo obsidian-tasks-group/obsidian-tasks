@@ -1,4 +1,5 @@
-
+| suggestion | expansion |
+| ----- | ----- |
 | ⏎ | <new line> |
 | due:: due date | due::  |
 | start:: start date | start::  |

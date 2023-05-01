@@ -3,12 +3,12 @@
  */
 import moment from 'moment';
 import * as chrono from 'chrono-node';
-import { verify } from 'approvals/lib/Providers/Jest/JestApprovals';
 import { getSettings } from '../../src/Config/Settings';
 import type { SuggestInfo } from '../../src/Suggestor';
 import { makeDefaultSuggestionBuilder } from '../../src/Suggestor/Suggestor';
 import { DEFAULT_SYMBOLS } from '../../src/TaskSerializer/DefaultTaskSerializer';
 import { DATAVIEW_SYMBOLS } from '../../src/TaskSerializer/DataviewTaskSerializer';
+import { MarkdownTable } from '../TestingTools/VerifyMarkdownTable';
 
 window.moment = moment;
 
@@ -130,7 +130,7 @@ describe.each([
             `- [ ] some task ${scheduledDateSymbol} `,
             `- [ ] some task ${startDateSymbol} `,
         ];
-        const allSuggestions: string[] = [];
+        const markdownTable = new MarkdownTable(['suggestion', 'expansion']);
         for (const line of lines) {
             // allSuggestions.push(`| ${line} | |`);
             const suggestions: SuggestInfo[] = buildSuggestions(line, line.length - 1, originalSettings);
@@ -143,15 +143,12 @@ describe.each([
                     replacementText = '<new line>';
                 }
                 // Format for pasting in to a Markdown table:
-                const suggestionAsText = `| ${suggestion.displayText} | ${replacementText} |`;
-                if (!allSuggestions.includes(suggestionAsText)) {
-                    allSuggestions.push(suggestionAsText);
-                }
+                markdownTable.addRowIfNew([suggestion.displayText, replacementText]);
             }
         }
 
         // CAUTION: In obsidian, when using this feature on a 'Monday' expands to the execution date.
         // In these tests, it expands to the Next Monday.
-        verify('\n' + allSuggestions.join('\n') + '\n');
+        markdownTable.verify();
     });
 });
