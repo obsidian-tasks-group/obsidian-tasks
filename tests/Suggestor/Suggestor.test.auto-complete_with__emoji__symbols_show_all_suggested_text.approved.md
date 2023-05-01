@@ -1,4 +1,5 @@
-
+| suggestion | expansion |
+| ----- | ----- |
 | ⏎ | <new line> |
 | 📅 due date | 📅  |
 | 🛫 start date | 🛫  |
