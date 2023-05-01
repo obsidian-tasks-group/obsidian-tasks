@@ -1,6 +1,6 @@
 | suggestion | expansion |
 | ----- | ----- |
-| ⏎ | <new line> |
+| ⏎ | &lt;new line> |
 | 📅 due date | 📅  |
 | 🛫 start date | 🛫  |
 | ⏳ scheduled date | ⏳  |

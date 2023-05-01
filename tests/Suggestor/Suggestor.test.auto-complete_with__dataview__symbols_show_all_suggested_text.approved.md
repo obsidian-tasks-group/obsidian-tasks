@@ -1,6 +1,6 @@
 | suggestion | expansion |
 | ----- | ----- |
-| ⏎ | <new line> |
+| ⏎ | &lt;new line> |
 | due:: due date | due::  |
 | start:: start date | start::  |
 | scheduled:: scheduled date | scheduled::  |

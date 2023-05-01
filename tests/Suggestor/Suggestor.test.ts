@@ -135,10 +135,11 @@ describe.each([
             for (const suggestion of suggestions) {
                 // The 'new line' replacement adds a trailing space at the end of a line,
                 // which causes auto-formatting to then make the test fail.
-                // So we replace the 'new line' character with some fixed text.
+                // So we replace the 'new line' character with some fixed text,
+                // that displays nicely when the output Markdown table is viewed.
                 let replacementText = `${suggestion.appendText}`;
                 if (replacementText === '\n') {
-                    replacementText = '<new line>';
+                    replacementText = '&lt;new line>';
                 }
                 markdownTable.addRowIfNew([suggestion.displayText, replacementText]);
             }
