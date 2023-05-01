@@ -38,12 +38,12 @@ export const TASK_FORMATS = {
     tasksPluginEmoji: {
         displayName: 'Tasks Emoji Format',
         taskSerializer: new DefaultTaskSerializer(DEFAULT_SYMBOLS),
-        buildSuggestions: makeDefaultSuggestionBuilder(DEFAULT_SYMBOLS),
+        buildSuggestions: makeDefaultSuggestionBuilder(DEFAULT_SYMBOLS, 5),
     },
     dataview: {
         displayName: 'Dataview',
         taskSerializer: new DataviewTaskSerializer(),
-        buildSuggestions: makeDefaultSuggestionBuilder(DATAVIEW_SYMBOLS),
+        buildSuggestions: makeDefaultSuggestionBuilder(DATAVIEW_SYMBOLS, 5),
     },
 } as const;
 

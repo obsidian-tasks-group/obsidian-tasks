@@ -8,7 +8,7 @@ import type { SuggestInfo, SuggestionBuilder } from '.';
 
 export function makeDefaultSuggestionBuilder(
     symbols: DefaultTaskSerializerSymbols,
-    maxGenericSuggestions: number = 5,
+    maxGenericSuggestions: number,
 ): SuggestionBuilder {
     const datePrefixRegex = [symbols.startDateSymbol, symbols.scheduledDateSymbol, symbols.dueDateSymbol].join('|');
     /*
