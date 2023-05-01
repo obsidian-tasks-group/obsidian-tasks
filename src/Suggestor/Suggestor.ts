@@ -6,9 +6,15 @@ import type { DefaultTaskSerializerSymbols } from '../TaskSerializer/DefaultTask
 import { TaskRegularExpressions } from '../Task';
 import type { SuggestInfo, SuggestionBuilder } from '.';
 
+/**
+ * Recommended default value to pass in to {@link makeDefaultSuggestionBuilder} maxGenericSuggestions parameter
+ * for production code.
+ */
+export const DEFAULT_MAX_GENERIC_SUGGESTIONS = 5;
+
 export function makeDefaultSuggestionBuilder(
     symbols: DefaultTaskSerializerSymbols,
-    maxGenericSuggestions: number,
+    maxGenericSuggestions: number /** See {@link DEFAULT_MAX_GENERIC_SUGGESTIONS} */,
 ): SuggestionBuilder {
     const datePrefixRegex = [symbols.startDateSymbol, symbols.scheduledDateSymbol, symbols.dueDateSymbol].join('|');
     /*
