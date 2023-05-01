@@ -23,11 +23,13 @@ afterAll(() => {
     chronoSpy.mockRestore();
 });
 
+const maxGenericSuggestions = 50;
+
 describe.each([
     { name: 'emoji', symbols: DEFAULT_SYMBOLS },
     { name: 'dataview', symbols: DATAVIEW_SYMBOLS },
 ])("auto-complete with '$name' symbols", ({ symbols }) => {
-    const buildSuggestions = makeDefaultSuggestionBuilder(symbols, 5);
+    const buildSuggestions = makeDefaultSuggestionBuilder(symbols, maxGenericSuggestions);
     const {
         dueDateSymbol,
         scheduledDateSymbol,
