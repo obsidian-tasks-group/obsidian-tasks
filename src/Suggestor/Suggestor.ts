@@ -6,7 +6,10 @@ import type { DefaultTaskSerializerSymbols } from '../TaskSerializer/DefaultTask
 import { TaskRegularExpressions } from '../Task';
 import type { SuggestInfo, SuggestionBuilder } from '.';
 
-export function makeDefaultSuggestionBuilder(symbols: DefaultTaskSerializerSymbols): SuggestionBuilder {
+export function makeDefaultSuggestionBuilder(
+    symbols: DefaultTaskSerializerSymbols,
+    maxGenericSuggestions: number = 5,
+): SuggestionBuilder {
     const datePrefixRegex = [symbols.startDateSymbol, symbols.scheduledDateSymbol, symbols.dueDateSymbol].join('|');
     /*
      * Return a list of suggestions, either generic or more fine-grained to the words at the cursor.
@@ -15,7 +18,9 @@ export function makeDefaultSuggestionBuilder(symbols: DefaultTaskSerializerSymbo
         let suggestions: SuggestInfo[] = [];
 
         // Step 1: add date suggestions if relevant
-        suggestions = suggestions.concat(addDatesSuggestions(line, cursorPos, settings, datePrefixRegex, 5));
+        suggestions = suggestions.concat(
+            addDatesSuggestions(line, cursorPos, settings, datePrefixRegex, maxGenericSuggestions),
+        );
 
         // Step 2: add recurrence suggestions if relevant
         suggestions = suggestions.concat(addRecurrenceSuggestions(line, cursorPos, settings, symbols.recurrenceSymbol));
