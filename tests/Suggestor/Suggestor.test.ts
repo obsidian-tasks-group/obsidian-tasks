@@ -145,8 +145,8 @@ describe.each([
             }
         }
 
-        // CAUTION: In obsidian, when using this feature on a 'Monday' expands to the execution date.
-        // In these tests, it expands to the Next Monday.
+        // For help if this test fails and you are new to Approval Tests, see:
+        //    https://publish.obsidian.md/tasks-contributing/Testing/Approval+Tests
         markdownTable.verify();
     });
 });
