@@ -119,7 +119,6 @@ describe.each([
     });
 
     it('show all suggested text', () => {
-        // Arrange
         const originalSettings = getSettings();
         originalSettings.autoSuggestMaxItems = 200;
 
@@ -132,7 +131,6 @@ describe.each([
         ];
         const markdownTable = new MarkdownTable(['suggestion', 'expansion']);
         for (const line of lines) {
-            // allSuggestions.push(`| ${line} | |`);
             const suggestions: SuggestInfo[] = buildSuggestions(line, line.length - 1, originalSettings);
             for (const suggestion of suggestions) {
                 // The 'new line' replacement adds a trailing space at the end of a line,
@@ -142,7 +140,6 @@ describe.each([
                 if (replacementText === '\n') {
                     replacementText = '<new line>';
                 }
-                // Format for pasting in to a Markdown table:
                 markdownTable.addRowIfNew([suggestion.displayText, replacementText]);
             }
         }
