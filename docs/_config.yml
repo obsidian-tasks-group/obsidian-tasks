@@ -18,7 +18,7 @@ aux_links:
     - "//github.com/obsidian-tasks-group/obsidian-tasks"
 
 # Footer "Edit this page on GitHub" link text
-gh_edit_link: true # show or hide edit this page link
+gh_edit_link: false # show or hide edit this page link
 gh_edit_link_text: "Edit this page on GitHub"
 gh_edit_repository: "https://github.com/obsidian-tasks-group/obsidian-tasks" # the github URL for your repo
 gh_edit_branch: "main" # the branch that your docs is served from
