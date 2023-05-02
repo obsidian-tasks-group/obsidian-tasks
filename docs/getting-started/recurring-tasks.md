@@ -1,7 +1,6 @@
 ---
-permalink: /tasks/Getting+Started/Recurring+Tasks
 redirect_to:
-- https://publish.obsidian.md
+- https://publish.obsidian.md/tasks/Getting+Started/Recurring+Tasks
 layout: default
 title: Recurring Tasks
 nav_order: 5
