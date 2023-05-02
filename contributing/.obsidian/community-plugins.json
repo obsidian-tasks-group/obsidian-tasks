@@ -6,5 +6,6 @@
   "copy-publish-url",
   "cmdr",
   "vault-name-status-bar",
-  "templater-obsidian"
+  "templater-obsidian",
+  "tag-wrangler"
 ]
