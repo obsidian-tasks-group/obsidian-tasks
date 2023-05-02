@@ -34,7 +34,7 @@
     "approvals": "^6.2.1",
     "async-mutex": "^0.4.0",
     "builtin-modules": "^3.3.0",
-    "esbuild": "0.15.6",
+    "esbuild": "0.17.18",
     "esbuild-svelte": "^0.7.1",
     "eslint": "^8.23.0",
     "eslint-config-prettier": "^8.8.0",
