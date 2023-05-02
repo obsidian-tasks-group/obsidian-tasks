@@ -1,5 +1,7 @@
 # Updating code
 
+<span class="related-pages">#pull-requests</span>
+
 Ideally, an [issue](https://github.com/obsidian-tasks-group/obsidian-tasks/issues) or
 [Discussion](https://github.com/obsidian-tasks-group/obsidian-tasks/discussions) already exists
 and we discussed your implementation in that issue before you open the pull request (PR).
