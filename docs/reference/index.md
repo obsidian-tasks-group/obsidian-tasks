@@ -1,11 +1,4 @@
 ---
-layout: default
-title: Reference
-nav_order: 9
-has_children: true
+redirect_to:
+- https://publish.obsidian.md/tasks/Reference/Reference
 ---
-
-# Reference
-{: .no_toc }
-
-This section provides reference material - content which is typically too detailed for other parts of the documentation.

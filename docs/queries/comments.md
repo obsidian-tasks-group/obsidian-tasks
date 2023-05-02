@@ -1,20 +1,4 @@
 ---
-layout: default
-title: Comments
-nav_order: 8
-parent: Queries
-has_toc: false
+redirect_to:
+- https://publish.obsidian.md/tasks/Queries/Comments
 ---
-
-# Comments
-
-All query lines beginning with a `#` character are treated as
-comments, and will be ignored.
-
-Example:
-
-    ```tasks
-    not done
-    # Uncomment the following line to enable short mode:
-    # short mode
-    ```

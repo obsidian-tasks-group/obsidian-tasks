@@ -1,8 +1,4 @@
 ---
-layout: default
-title: Advanced
-nav_order: 7
-has_children: true
+redirect_to:
+- https://publish.obsidian.md/tasks/Advanced/Advanced
 ---
-
-# Advanced
