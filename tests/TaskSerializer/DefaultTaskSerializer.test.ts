@@ -8,7 +8,7 @@ import { DefaultTaskSerializer } from '../../src/TaskSerializer';
 import { RecurrenceBuilder } from '../TestingTools/RecurrenceBuilder';
 import { DEFAULT_SYMBOLS, type DefaultTaskSerializerSymbols } from '../../src/TaskSerializer/DefaultTaskSerializer';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
-import { ReminderList } from '../../src/reminders/Reminder';
+import { ReminderList } from '../../src/Reminders/Reminder';
 
 jest.mock('obsidian');
 window.moment = moment;

@@ -224,6 +224,68 @@ export class SettingsTab extends PluginSettingTab {
             });
 
         // ---------------------------------------------------------------------------
+        containerEl.createEl('h4', { text: 'Reminder Settings' });
+        // ---------------------------------------------------------------------------
+
+        new Setting(containerEl)
+            .setName('Reminder Format')
+            .setDesc(
+                SettingsTab.createFragmentWithHTML(
+                    '<p class="tasks-setting-important">Do not change if reminders already exist, otherwise you will not be notified unless manually converted to new format.</p>' +
+                        '<p>The format that Tasks uses to read and write reminders time i.e 12hr 6:00 pm or 24hr 18:00.</p>',
+                ),
+            )
+            .addDropdown((dropdown) => {
+                let k: keyof typeof TIME_FORMATS;
+                for (k in TIME_FORMATS) {
+                    dropdown.addOption(TIME_FORMATS[k], k);
+                }
+                const settings = getSettings().reminderSettings;
+
+                dropdown.setValue(settings.dateTimeFormat).onChange(async (value) => {
+                    settings.dateTimeFormat = value;
+                    updateSettings({ reminderSettings: settings });
+                    await this.plugin.saveSettings();
+                });
+            });
+
+        new Setting(containerEl)
+            .setName('Daily Reminder Time')
+            .setDesc(
+                SettingsTab.createFragmentWithHTML(
+                    '<p>When daily reminders should be triggered. Should be in same format as above i.e 12 or 24hr.</p>',
+                ),
+            )
+            .addText((text) => {
+                const settings = getSettings().reminderSettings;
+                text.setPlaceholder('10')
+                    .setValue(settings.dailyReminderTime)
+                    .onChange(async (value) => {
+                        settings.dailyReminderTime = value;
+                        updateSettings({ reminderSettings: settings });
+                        await this.plugin.saveSettings();
+                    });
+            });
+
+        new Setting(containerEl)
+            .setName('Check Reminders interval')
+            .setDesc(
+                SettingsTab.createFragmentWithHTML('<p>How often Tasks should check for reminders in Seconds.</p>'),
+            )
+            .addSlider((slider) => {
+                const settings = getSettings().reminderSettings;
+                slider
+                    .setLimits(1, 30, 1)
+                    .setValue(settings.refreshIntervalMilliseconds / 1000) // convert from miliseconds to seconds
+                    .setDynamicTooltip()
+                    .onChange(async (value) => {
+                        settings.refreshIntervalMilliseconds = value * 1000; // convert from seconds to miliseconds
+                        updateSettings({ reminderSettings: settings });
+                        await this.plugin.saveSettings();
+                    });
+            });
+
+        // ---------------------------------------------------------------------------
         containerEl.createEl('h4', { text: 'Auto-suggest Settings' });
         // ---------------------------------------------------------------------------
 
@@ -290,68 +352,6 @@ export class SettingsTab extends PluginSettingTab {
                     updateSettings({ provideAccessKeys: value });
                     await this.plugin.saveSettings();
                 });
-            });
-
-        // ---------------------------------------------------------------------------
-        containerEl.createEl('h4', { text: 'Reminder Settings' });
-        // ---------------------------------------------------------------------------
-
-        new Setting(containerEl)
-            .setName('Reminder Format')
-            .setDesc(
-                SettingsTab.createFragmentWithHTML(
-                    '<p class="tasks-setting-important">Do not change if reminders already exist, otherwise you will not be notified unless manually converted to new format.</p>' +
-                        '<p>The format that Tasks uses to read and write reminders time i.e 12hr 6:00 pm or 24hr 18:00.</p>',
-                ),
-            )
-            .addDropdown((dropdown) => {
-                let k: keyof typeof TIME_FORMATS;
-                for (k in TIME_FORMATS) {
-                    dropdown.addOption(TIME_FORMATS[k], k);
-                }
-                const settings = getSettings().reminderSettings;
-
-                dropdown.setValue(settings.dateTimeFormat).onChange(async (value) => {
-                    settings.dateTimeFormat = value;
-                    updateSettings({ reminderSettings: settings });
-                    await this.plugin.saveSettings();
-                });
-            });
-
-        new Setting(containerEl)
-            .setName('Daily Reminder Time')
-            .setDesc(
-                SettingsTab.createFragmentWithHTML(
-                    '<p>When daily reminders should be triggered. Should be in same format as above i.e 12 or 24hr.</p>',
-                ),
-            )
-            .addText((text) => {
-                const settings = getSettings().reminderSettings;
-                text.setPlaceholder('10')
-                    .setValue(settings.dailyReminderTime)
-                    .onChange(async (value) => {
-                        settings.dailyReminderTime = value;
-                        updateSettings({ reminderSettings: settings });
-                        await this.plugin.saveSettings();
-                    });
-            });
-
-        new Setting(containerEl)
-            .setName('Check Reminders interval')
-            .setDesc(
-                SettingsTab.createFragmentWithHTML('<p>How often Tasks should check for reminders in Seconds.</p>'),
-            )
-            .addSlider((slider) => {
-                const settings = getSettings().reminderSettings;
-                slider
-                    .setLimits(1, 30, 1)
-                    .setValue(settings.refreshInterval / 1000) // convert from miliseconds to seconds
-                    .setDynamicTooltip()
-                    .onChange(async (value) => {
-                        settings.refreshInterval = value * 1000; // convert from seconds to miliseconds
-                        updateSettings({ reminderSettings: settings });
-                        await this.plugin.saveSettings();
-                    });
             });
     }
 

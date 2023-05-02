@@ -1,4 +1,4 @@
-import type { ReminderList } from '../reminders/Reminder';
+import type { ReminderList } from '../Reminders/Reminder';
 
 export function compareByDate(a: moment.Moment | null, b: moment.Moment | null): -1 | 0 | 1 {
     if (a !== null && b === null) {

@@ -3,7 +3,7 @@
  */
 jest.mock('obsidian');
 import moment from 'moment';
-import { Reminder, ReminderType, parseMoment } from '../../src/reminders/Reminder';
+import { Reminder, ReminderType, parseMoment } from '../../src/Reminders/Reminder';
 
 window.moment = moment;
 

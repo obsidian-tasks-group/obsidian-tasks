@@ -1,7 +1,7 @@
 import type { Moment } from 'moment';
 import { RRule } from 'rrule';
 import { compareByDate, isRemindersSame } from './lib/DateTools';
-import { Reminder, ReminderList } from './reminders/Reminder';
+import { Reminder, ReminderList } from './Reminders/Reminder';
 
 export class Recurrence {
     private readonly rrule: RRule;

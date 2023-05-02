@@ -3,8 +3,8 @@
  */
 jest.mock('obsidian');
 import moment from 'moment';
-import { Reminder, ReminderType, parseMoment } from '../../src/reminders/Reminder';
-//import { TaskNotification } from '../../src/reminders/Notification';
+import { Reminder, ReminderType, parseMoment } from '../../src/Reminders/Reminder';
+//import { TaskNotification } from '../../src/Reminders/Notification';
 window.moment = moment;
 
 describe('Notifications ', () => {
@@ -29,7 +29,7 @@ describe('Notifications ', () => {
     //     /* Fails: TypeError: Class extends value undefined is not a constructor or null
     //          > 145 | class ObsidianNotificationModal extends Modal {
     //                 |                                         ^
-    //         at Object.<anonymous> (src/reminders/Notification.ts:145:41)
+    //         at Object.<anonymous> (src/Reminders/Notification.ts:145:41)
     //         at Object.<anonymous> (tests/Reminder/Notifications.test.ts:8:1)
 
     //     */

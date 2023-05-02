@@ -1,6 +1,6 @@
 import type { Moment } from 'moment';
 import { getSettings } from '../Config/Settings';
-import { ReminderList } from '../reminders/Reminder';
+import { ReminderList } from '../Reminders/Reminder';
 import { TaskLayout } from '../TaskLayout';
 import type { TaskLayoutComponent } from '../TaskLayout';
 import { Recurrence } from '../Recurrence';

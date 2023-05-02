@@ -64,7 +64,7 @@ export class TaskNotification {
             this.reminderEvent(tasks).finally(() => {
                 intervalTaskRunning = false;
             });
-        }, reminderSettings.refreshInterval);
+        }, reminderSettings.refreshIntervalMilliseconds);
     }
 
     private async reminderEvent(tasks: Task[]): Promise<void> {

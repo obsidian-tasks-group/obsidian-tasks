@@ -7,7 +7,7 @@
     import { Status } from '../Status';
     import { Priority, Task } from '../Task';
     import { doAutocomplete } from '../DateAbbreviations';
-    import {  ReminderList } from '../reminders/Reminder';
+    import {  ReminderList } from '../Reminders/Reminder';
 
     // These exported variables are passed in as props by TaskModal.onOpen():
     export let task: Task;

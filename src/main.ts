@@ -1,6 +1,6 @@
 import { Plugin } from 'obsidian';
 
-import { TaskNotification } from './reminders/Notification';
+import { TaskNotification } from './Reminders/Notification';
 import { Cache } from './Cache';
 import { Commands } from './Commands';
 import { TasksEvents } from './TasksEvents';
@@ -59,9 +59,8 @@ export default class TasksPlugin extends Plugin {
 
         // Register the watcher for reminders.
         this.app.workspace.onLayoutReady(async () => {
-            const tasks = this.getTasks();
-            if (this.taskNotification && tasks) {
-                this.registerInterval(this.taskNotification.watcher(tasks)!);
+            if (this.taskNotification && this.cache) {
+                this.registerInterval(this.taskNotification.watcher(this.cache) ?? 0);
             }
         });
     }

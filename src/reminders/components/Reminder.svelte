@@ -9,7 +9,6 @@
   export let onRemindMeLater: (time: any) => void;
   export let onDone: () => void;
   export let onOpenFile: () => void;
-  export let onIgnore: () => void;
   // Do not set initial value so that svelte can render the placeholder `Remind Me Later`.
   let selectedIndex: number;
 
@@ -39,9 +38,6 @@
   <div class="task-actions">
     <button class="mod-cta" on:click={onDone}>
       <Icon icon="check-small" /> Mark as Done
-    </button>
-    <button on:click={onIgnore}>
-      <Icon icon="minus-with-circle" /> Ignore
     </button>
     <select
       class="dropdown later-select"

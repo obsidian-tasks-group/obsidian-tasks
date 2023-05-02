@@ -6,7 +6,7 @@ import { Status } from '../Status';
 import { DefaultTaskSerializer, type TaskSerializer } from '../TaskSerializer';
 import type { SuggestionBuilder } from '../Suggestor';
 import { DataviewTaskSerializer } from '../TaskSerializer/DataviewTaskSerializer';
-import { ReminderSettings } from '../reminders/Reminder';
+import { ReminderSettings } from '../Reminders/Reminder';
 import { DebugSettings } from './DebugSettings';
 import { StatusSettings } from './StatusSettings';
 import { Feature } from './Feature';

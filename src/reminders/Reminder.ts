@@ -1,12 +1,12 @@
 import type { Moment } from 'moment';
-import { getSettings } from '../Config/Settings';
+import { TIME_FORMATS, getSettings } from '../Config/Settings';
 
 export class ReminderSettings {
-    notificationTitle: string = 'Task Reminders';
+    notificationTitle: string = 'Task Reminder';
     dateFormat: string = 'YYYY-MM-DD';
-    dateTimeFormat: string = 'YYYY-MM-DD h:mm a';
+    dateTimeFormat: string = TIME_FORMATS.twelveHour;
     dailyReminderTime: string = '9:00 am';
-    refreshInterval: number = 5 * 1000; // in Miliseconds
+    refreshIntervalMilliseconds: number = 5 * 1000;
 
     constructor() {}
 }

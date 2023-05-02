@@ -10,7 +10,7 @@ import { renderTaskLine } from './TaskLineRenderer';
 import type { TaskLineRenderDetails } from './TaskLineRenderer';
 import { DateFallback } from './DateFallback';
 import { compareByDate, isRemindersSame } from './lib/DateTools';
-import type { ReminderList } from './reminders/Reminder';
+import type { ReminderList } from './Reminders/Reminder';
 import { replaceTaskWithTasks } from './File';
 
 /**

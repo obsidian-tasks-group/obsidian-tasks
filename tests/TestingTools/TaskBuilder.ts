@@ -6,7 +6,7 @@ import type { Recurrence } from '../../src/Recurrence';
 import { DateParser } from '../../src/Query/DateParser';
 import { StatusConfiguration, StatusType } from '../../src/StatusConfiguration';
 import { TaskLocation } from '../../src/TaskLocation';
-import { Reminder, ReminderList, parseDateTime } from '../../src/reminders/Reminder';
+import { Reminder, ReminderList, parseDateTime } from '../../src/Reminders/Reminder';
 
 /**
  * A fluent class for creating tasks for tests.
