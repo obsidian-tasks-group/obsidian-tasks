@@ -6,7 +6,7 @@ import { Query } from '../Query/Query';
 import { sameDateTime } from '../lib/DateTools';
 import type { Cache } from '../Cache';
 import { getTaskLineAndFile } from '../File';
-import ReminderView from './components/Reminder.svelte';
+import ReminderView from './Components/Reminder.svelte';
 import { Reminder, ReminderType } from './Reminder';
 
 export class TaskNotification {

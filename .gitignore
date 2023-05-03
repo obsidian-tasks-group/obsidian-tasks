@@ -42,3 +42,4 @@ yarn-error.log
 !.vscode/launch.json
 !.vscode/extensions.json
 !.vscode/*.code-snippets
+main.css
