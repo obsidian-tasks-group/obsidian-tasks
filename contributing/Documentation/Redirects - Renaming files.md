@@ -8,6 +8,8 @@ This note records why and how to keep published links working.
 
 See also [[Redirects - Testing old links still work]] for how we test this.
 
+You can also [[Rename headings]].
+
 ## Why we care about keeping links working
 
 Once a file has been published, users may bookmark it, and search engines will find it and point users to it.
