@@ -4,6 +4,8 @@ publish: true
 
 # About Getting Started
 
+<span class="related-pages">#index-pages</span>
+
 ## Basics
 
 - [[Installation]]
