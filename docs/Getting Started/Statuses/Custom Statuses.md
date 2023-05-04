@@ -60,7 +60,7 @@ And this is how you can use them:
 >   - [[Statuses]]
 >   - [[Custom Statuses]]
 > - Choose your status styling scheme: this will determine the names and symbols for your custom statuses:
->   - Some common ones are shown in [[Status Collections]]
+>   - Some common ones are shown in [[About Status Collections]]
 > - Set up your status styling scheme
 >   - [[Style custom statuses|How to style custom statuses]].
 > - Configure Tasks to use your custom statuses
@@ -76,7 +76,7 @@ You can use any snippet or theme you wish. If you are already using a snippet or
 
 If, however, you are using the default theme, or a theme that doesn't know style "custom checkboxes", you will need to pick one.
 
-[[Status Collections]] has a list of the ones that Tasks already has one-click support for, to help you choose.
+[[About Status Collections]] has a list of the ones that Tasks already has one-click support for, to help you choose.
 
 ### Install your styling scheme
 
