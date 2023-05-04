@@ -15,27 +15,28 @@ publish: true
 
 These are the main pages and sections, that connect to all the pages here:
 
-### Basics
-
-- [[Installation]]
-- [[About Getting Started|Getting Started ...]]
-  - [[About Statuses|Statuses ...]]
-- [[About Queries|Queries ...]]
-- [[Quick Reference]]
-- [[About How Tos|How Tos ...]]
-
-### Advanced and Detail
-
-- [[About Advanced|Advanced ...]]
-- [[About Other Plugins|Other Plugins ...]]
-- [[About Reference|Reference ...]]
-  - [[About Status Collections|Status Collections ...]]
-  - [[About Task Formats|Task Formats ...]]
-
-### Support
-
-- [[About Support and Help|Support and Help ...]]
-- [[Useful Links]]
+> [!Info] Navigation
+> ### Basics
+>
+> - [[Installation]]
+> - [[About Getting Started|Getting Started ...]]
+>   - [[About Statuses|Statuses ...]]
+> - [[About Queries|Queries ...]]
+> - [[Quick Reference]]
+> - [[About How Tos|How Tos ...]]
+>
+> ### Advanced and Detail
+>
+> - [[About Advanced|Advanced ...]]
+> - [[About Other Plugins|Other Plugins ...]]
+> - [[About Reference|Reference ...]]
+>   - [[About Status Collections|Status Collections ...]]
+>   - [[About Task Formats|Task Formats ...]]
+>
+> ### Support
+>
+> - [[About Support and Help|Support and Help ...]]
+> - [[Useful Links]]
 
 ## Task management for the Obsidian knowledge base
 
