@@ -1,5 +1,7 @@
 ---
 publish: true
+aliases:
+  - Queries/Queries
 ---
 
 # Queries
