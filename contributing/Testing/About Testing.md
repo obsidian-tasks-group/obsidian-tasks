@@ -11,9 +11,13 @@ The tests use the [ts-jest](https://www.npmjs.com/package/ts-jest) wrapper aroun
 
 The [Expect](https://jestjs.io/docs/expect) page is a good reference for the many jest testing features.
 
-## Writing automated tests
+## Running automated tests
 
 - [[Introduction to Running the tests]] - start here if you haven't run the tests before
+- [[Test Coverage]]
+
+## Writing automated tests
+
 - [[Introduction to Writing Unit Tests]] - start here if you haven't written tests before, or are new to testing in TypeScript
 - [[Example Tests]] - this shows a selection of existing tests, to give ideas on writing new tests
 - [[Jest and the WebStorm IDE]] - tips if you use WebStorm
@@ -23,10 +27,6 @@ More advanced features:
 
 - [[Snapshot Tests]]
 - [[Approval Tests]]
-
-## Running automated tests
-
-- [[Test Coverage]]
 
 ## Manual Testing
 
