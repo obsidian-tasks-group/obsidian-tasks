@@ -2,6 +2,8 @@
 
 This page is to keep a record of published pages that have moved, so we can confirm that their redirects still work.
 
+See also [[Redirects - Renaming files]] for the mechanics of adding redirects.
+
 ## Moved files in the docs vault
 
 None yet.
