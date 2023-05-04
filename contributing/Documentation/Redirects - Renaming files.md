@@ -62,10 +62,16 @@ Follow these steps:
 3. Put the cursor at the end of the empty alias line.
 4. Apply the templater template `file path for redirecting alias`.
 
-### 2. Rename the file in Obsidian
+### 2. Add the old URL to list to test
+
+1. Run the command `Open Publish URL in browser`, and confirm the URL works
+2. Copy the old published URL
+3. Paste the old URL to [[Redirects - Testing old links still work]], so we can check in future that the redirect works.
+
+### 3. Rename the file in Obsidian
 
 1. Use Obsidian's `Rename file` command to do the renaming, to ensure that all links to the file are updated.
 
-### 3. Update any URLs to the file
+### 4. Update any URLs to the file
 
 1. Search the whole repository to update any URLs to the old location to point to the new instead.
