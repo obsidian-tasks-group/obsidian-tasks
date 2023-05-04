@@ -8,6 +8,7 @@ See also [[Redirects - Renaming files]] for the mechanics of adding redirects.
 
 All these links should still work:
 
+- <https://publish.obsidian.md/tasks/Advanced/Advanced>
 - <https://publish.obsidian.md/tasks/Getting+Started/Backlinks>
 - <https://publish.obsidian.md/tasks/How+To/How+Tos>
 - <https://publish.obsidian.md/tasks/Installation/Installation>
