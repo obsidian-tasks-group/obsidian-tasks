@@ -22,8 +22,8 @@ This section is for anyone contributing to Tasks and improving the documentation
 ## Renaming files and headings
 
 - [[Redirects - Renaming files]]
-- [[Rename headings]]
 - [[Redirects - Testing old links still work]]
+- [[Rename headings]]
 
 ## For Tasks maintainers
 
