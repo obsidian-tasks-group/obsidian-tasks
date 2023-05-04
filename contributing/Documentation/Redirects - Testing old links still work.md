@@ -9,6 +9,7 @@ See also [[Redirects - Renaming files]] for the mechanics of adding redirects.
 All these links should still work:
 
 - <https://publish.obsidian.md/tasks/Getting+Started/Backlinks>
+- <https://publish.obsidian.md/tasks/How+To/How+Tos>
 - <https://publish.obsidian.md/tasks/Installation/Installation>
 - <https://publish.obsidian.md/tasks/Queries/Queries>
 - <https://publish.obsidian.md/tasks/Quick+Reference/Quick+Reference>
