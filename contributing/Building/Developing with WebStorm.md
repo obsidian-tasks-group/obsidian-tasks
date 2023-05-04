@@ -1,5 +1,7 @@
 # Developing with JetBrains WebStorm
 
+<span class="related-pages">#tools/webstorm</span>
+
 Some tips for anyone using the JetBrains WebStorm IDE.
 
 ## Make WebStorm ignore non-code directories
