@@ -18,6 +18,10 @@ This section is for anyone contributing to Tasks and improving the documentation
 - [[Version numbers in documentation]]
 - [[Embedding code and data in documentation]]
 - [[Documentation and branches]]
+
+## Renaming files and headings
+
+- [[Redirects - Renaming files]]
 - [[Redirects - Testing old links still work]]
 
 ## For Tasks maintainers
