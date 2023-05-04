@@ -11,5 +11,7 @@
     "Releases",
     "Testing"
   ],
-  "excluded": []
+  "excluded": [
+    "_meta"
+  ]
 }
