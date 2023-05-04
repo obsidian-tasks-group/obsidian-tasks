@@ -11,6 +11,33 @@ publish: true
 - 3.4.0: Tasks now requires at least Obsidian 1.1.1.
 - 3.3.0: 🔥 Multiple [[About Task Formats|Task Format]] support - starting with [[Dataview Format]].
 
+## Navigation around this site
+
+These are the main pages and sections, that connect to all the pages here:
+
+> [!Info] Navigation
+> ### Basics
+>
+> - [[Installation]]
+> - [[About Getting Started|Getting Started ...]]
+>   - [[About Statuses|Statuses ...]]
+> - [[About Queries|Queries ...]]
+> - [[Quick Reference]]
+>
+> ### Advanced and Detail
+>
+> - [[About Advanced|Advanced ...]]
+> - [[About Other Plugins|Other Plugins ...]]
+> - [[About Reference|Reference ...]]
+>   - [[About Status Collections|Status Collections ...]]
+>   - [[About Task Formats|Task Formats ...]]
+>
+> ### Help
+>
+> - [[About How Tos|How Tos ...]]
+> - [[About Support and Help|Support and Help ...]]
+> - [[Useful Links]]
+
 ## Task management for the Obsidian knowledge base
 
 Track tasks across your entire [Obsidian](https://obsidian.md/) vault.
