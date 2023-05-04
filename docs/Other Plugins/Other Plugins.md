@@ -1,5 +1,7 @@
 ---
 publish: true
+aliases:
+  - Other Plugins/Other Plugins
 ---
 
 # Working with Other Obsidian Plugins
