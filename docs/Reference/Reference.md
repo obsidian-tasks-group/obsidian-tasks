@@ -1,5 +1,7 @@
 ---
 publish: true
+aliases:
+  - Reference/Reference
 ---
 
 # Reference
