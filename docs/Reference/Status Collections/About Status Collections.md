@@ -6,6 +6,8 @@ aliases:
 
 # About Status Collections
 
+<span class="related-pages">#index-pages</span>
+
 ## Background
 
 > [!released]
@@ -61,4 +63,12 @@ However, you can also browse through the pages in this section, to see the other
 
 ## Supported CSS Snippets and Themes
 
-See the table of contents below.
+- [[About Status Collections]]
+- [[AnuPpuccin Theme]]
+- [[Aura Theme]]
+- [[Ebullientworks Theme]]
+- [[ITS Theme]]
+- [[LYT Mode Theme]]
+- [[Minimal Theme]]
+- [[SlRvb's Alternate Checkboxes]]
+- [[Things Theme]]
