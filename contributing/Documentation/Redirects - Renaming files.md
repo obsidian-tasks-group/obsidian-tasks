@@ -69,3 +69,7 @@ Follow these steps:
 ### 3. Update any URLs to the file
 
 1. Search the whole repository to update any URLs to the old location to point to the new instead.
+
+### 4. Add the old URL to list to test
+
+1. Add the old URL to [[Redirects - Testing old links still work]], so we can check in future that the redirect works.
