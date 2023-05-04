@@ -1,5 +1,7 @@
 ---
 publish: true
+aliases:
+  - Reference/Status Collections/Status Collections
 ---
 
 # Status Collections
