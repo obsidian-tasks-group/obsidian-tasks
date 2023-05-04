@@ -1,5 +1,7 @@
 # Jest and the WebStorm IDE
 
+<span class="related-pages">#testing/automated-testing</span>
+
 The WebStorm IDE has a [helpful page](https://www.jetbrains.com/help/webstorm/running-unit-tests-on-jest.html)
 on how it makes testing with jest easy.
 

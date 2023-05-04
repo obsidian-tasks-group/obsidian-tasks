@@ -1,5 +1,7 @@
 # How do I test a GitHub build of the Tasks plugin?
 
+<span class="related-pages">#testing/manual-testing</span>
+
 First...
 
 1. Go to the [Verify Commit actions page](https://github.com/obsidian-tasks-group/obsidian-tasks/actions/workflows/verify.yml).

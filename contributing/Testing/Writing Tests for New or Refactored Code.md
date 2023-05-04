@@ -1,5 +1,7 @@
 # Writing Tests for New or Refactored Code
 
+<span class="related-pages">#testing/automated-testing</span>
+
 ## Think of it as testing user-visible features
 
 - Tests that test low-level implementation details are hard to maintain over time. Instead, test user-visible features.

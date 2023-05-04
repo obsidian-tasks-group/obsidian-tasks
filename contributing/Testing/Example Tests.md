@@ -1,5 +1,7 @@
 # Example Tests
 
+<span class="related-pages">#testing/automated-testing</span>
+
 This page shows a few examples of typical tests in the Tasks code, to give ideas on writing tests.
 
 ## An example Jest  test

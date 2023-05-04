@@ -1,5 +1,7 @@
 # Introduction to Running the tests
 
+<span class="related-pages">#testing/automated-testing</span>
+
 This note shows you how to run the Tasks automated tests on your machine, and what a test failure looks like.
 
 ## Setup
