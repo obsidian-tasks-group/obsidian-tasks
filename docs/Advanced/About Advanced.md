@@ -4,4 +4,4 @@ aliases:
   - Advanced/Advanced
 ---
 
-# Advanced
+# About Advanced
