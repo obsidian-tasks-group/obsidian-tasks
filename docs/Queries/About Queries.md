@@ -4,7 +4,7 @@ aliases:
   - Queries/Queries
 ---
 
-# Queries
+# About Queries
 
 You can list tasks from your entire vault by querying them using a `tasks` code block. You can edit the tasks from the query results by clicking on the little pencil icon next to them.
 Tasks are by default sorted by status, due date, and then path. You can change the sorting (see query options below).
