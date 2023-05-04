@@ -1,5 +1,7 @@
 # Snapshot Tests
 
+<span class="related-pages">#testing/automated-testing</span>
+
 For testing more complex objects, some of the tests here use Jest's
 [Snapshot Testing](https://jestjs.io/docs/snapshot-testing) facility, which is similar to
 [Approval Tests](https://approvaltests.com) but easier to use in JavaScript.

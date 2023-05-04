@@ -1,5 +1,7 @@
 # Maintaining the tests
 
+<span class="related-pages">#testing/automated-testing #testing/manual-testing</span>
+
 This project really cares about automated testing of its source code.
 
 It's not perfect, but it is valuable and we try to continually improve the tests.

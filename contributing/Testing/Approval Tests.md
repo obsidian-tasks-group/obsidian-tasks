@@ -1,5 +1,7 @@
 # Approval Tests
 
+<span class="related-pages">#testing/automated-testing</span>
+
 ## Motivation for using Approval Tests
 
 Some tests in this project use the [Approval Tests implementation in NodeJS](https://github.com/approvals/Approvals.NodeJS).
