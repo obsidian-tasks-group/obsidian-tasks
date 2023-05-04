@@ -1,5 +1,7 @@
 ---
 publish: true
+aliases:
+  - How To/How Tos
 ---
 
 # How Tos
