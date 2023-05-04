@@ -12,6 +12,7 @@ All these links should still work:
 - <https://publish.obsidian.md/tasks/Installation/Installation>
 - <https://publish.obsidian.md/tasks/Queries/Queries>
 - <https://publish.obsidian.md/tasks/Quick+Reference/Quick+Reference>
+- <https://publish.obsidian.md/tasks/Reference/Status+Collections/Status+Collections>
 
 ## Moved files in the contributing vault
 

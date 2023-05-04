@@ -9,4 +9,4 @@ This section provides reference material - content which is typically too detail
 ## Reference section contents
 
 - [[About Task Formats|Task Formats]]
-- [[Status Collections]]
+- [[About Status Collections]]

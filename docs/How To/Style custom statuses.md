@@ -49,7 +49,7 @@ Tasks doesn't know the meaning of any custom statuses. This means that by defaul
 
 There are many community Snippets and Themes available to customise the appearance of checkboxes in Obsidian, and different people have different preferences.
 
-Tasks allows (and requires) you to choose your own styling option. We have a list of common ones in [[Status Collections]]
+Tasks allows (and requires) you to choose your own styling option. We have a list of common ones in [[About Status Collections]]
 
 For this example, we will choose to style our tasks with [[Custom Statuses|SlRvb's Alternate Checkboxes]].
 
@@ -91,7 +91,7 @@ Now the above three tasks look more colourful, and tasks with `[x]` and `[X]` ar
 >   - [[Statuses]]
 >   - [[Custom Statuses]]
 > - Choose your status styling scheme: this will determine the names and symbols for your custom statuses:
->   - Some common ones are shown in [[Status Collections]]
+>   - Some common ones are shown in [[About Status Collections]]
 > - Set up your status styling scheme
 >   - [[Style custom statuses|How to style custom statuses]].
 > - Configure Tasks to use your custom statuses
