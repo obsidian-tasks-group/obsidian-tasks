@@ -2,6 +2,7 @@
 publish: true
 alias:
 - Backlink
+- Getting Started/Backlinks
 ---
 
 # Backlinks
