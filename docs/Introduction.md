@@ -23,7 +23,6 @@ These are the main pages and sections, that connect to all the pages here:
 >   - [[About Statuses|Statuses ...]]
 > - [[About Queries|Queries ...]]
 > - [[Quick Reference]]
-> - [[About How Tos|How Tos ...]]
 >
 > ### Advanced and Detail
 >
@@ -33,8 +32,9 @@ These are the main pages and sections, that connect to all the pages here:
 >   - [[About Status Collections|Status Collections ...]]
 >   - [[About Task Formats|Task Formats ...]]
 >
-> ### Support
+> ### Help
 >
+> - [[About How Tos|How Tos ...]]
 > - [[About Support and Help|Support and Help ...]]
 > - [[Useful Links]]
 
