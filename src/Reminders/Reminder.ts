@@ -24,7 +24,7 @@ export class ReminderList {
         return this.reminders.map((reminder) => `${reminder.toString()}`).join(', ');
     }
 
-    // TODO only used in ReminderDateField need way to deal with modal multiple reminders
+    // TODO only used in ReminderDateField & Edit modal need way to deal with modal multiple reminders
     public peek(): Moment | null {
         if (this.reminders.length === 0) {
             return null;

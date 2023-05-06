@@ -1213,9 +1213,11 @@ describe('identicalTo', () => {
     });
 
     it('should check reminders', () => {
-        const lhs = new TaskBuilder().reminders([]);
-        expect(lhs).toBeIdenticalTo(new TaskBuilder().reminders([]));
+        const lhs = new TaskBuilder().reminders(['2023-03-07 09:25 am']);
+        expect(lhs).toBeIdenticalTo(new TaskBuilder().reminders(['2023-03-07 09:25 am']));
+        expect(lhs).not.toBeIdenticalTo(new TaskBuilder().reminders([]));
         expect(lhs).not.toBeIdenticalTo(new TaskBuilder().reminders(['2023-03-07']));
+        expect(lhs).not.toBeIdenticalTo(new TaskBuilder().reminders(['2023-03-07 09:27 am']));
     });
 });
 

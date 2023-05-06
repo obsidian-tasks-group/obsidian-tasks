@@ -38,8 +38,8 @@ export function isRemindersSame(a: ReminderList | null, b: ReminderList | null) 
             return false;
         }
 
-        const sortedA = a.reminders.map((reminder) => reminder.valueOf()).sort();
-        const sortedB = b.reminders.map((reminder) => reminder.valueOf()).sort();
+        const sortedA = a.reminders.map((reminder) => reminder.time.valueOf()).sort();
+        const sortedB = b.reminders.map((reminder) => reminder.time.valueOf()).sort();
 
         for (let i = 0; i < sortedA.length; i++) {
             if (sortedA[i] !== sortedB[i]) {
