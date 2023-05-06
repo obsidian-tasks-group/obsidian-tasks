@@ -3,12 +3,13 @@
  */
 import moment from 'moment';
 import { Priority } from '../../src/Task';
-import { type Settings, getSettings } from '../../src/Config/Settings';
+import { type Settings, TIME_FORMATS, resetSettings } from '../../src/Config/Settings';
 import { DefaultTaskSerializer } from '../../src/TaskSerializer';
 import { RecurrenceBuilder } from '../TestingTools/RecurrenceBuilder';
 import { DEFAULT_SYMBOLS, type DefaultTaskSerializerSymbols } from '../../src/TaskSerializer/DefaultTaskSerializer';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { ReminderList } from '../../src/Reminders/Reminder';
+import { setDateTimeFormat } from '../TestHelpers';
 
 jest.mock('obsidian');
 window.moment = moment;
@@ -24,7 +25,6 @@ describe.each(symbolMap)("DefaultTaskSerializer with '$taskFormat' symbols", ({ 
     const taskSerializer = new DefaultTaskSerializer(symbols);
     const serialize = taskSerializer.serialize.bind(taskSerializer);
     const deserialize = taskSerializer.deserialize.bind(taskSerializer);
-    const { reminderSettings } = getSettings();
     const {
         startDateSymbol,
         createdDateSymbol,
@@ -79,27 +79,63 @@ describe.each(symbolMap)("DefaultTaskSerializer with '$taskFormat' symbols", ({ 
                 description,
             });
         });
+    });
 
-        it('should parse a single reminder date', () => {
-            const taskDetails = deserialize(`${reminderDateSymbol} 2021-06-20`);
-            expect(taskDetails).toMatchTaskDetails({
-                reminders: new ReminderList([moment('2021-06-20', reminderSettings.dateTimeFormat)]),
+    describe('deserialize reminders', () => {
+        afterEach(function () {
+            resetSettings();
+        });
+
+        it('should parse a single 12h reminder', () => {
+            setDateTimeFormat(TIME_FORMATS.twelveHour);
+            const times = [
+                '2021-06-20 1:45 pm',
+                '2021-06-20 1:45 am',
+                '2021-06-20 01:45 PM',
+                '2021-06-20 01:45 AM',
+                '2021-06-20',
+            ];
+            times.forEach((time) => {
+                const taskDetails = deserialize(`${reminderDateSymbol} ${time}`);
+                expect(taskDetails).toMatchTaskDetails({
+                    reminders: new ReminderList([moment(time, TIME_FORMATS.twelveHour)]),
+                });
             });
         });
 
-        it('should parse a single reminder date time', () => {
-            const taskDetails = deserialize(`${reminderDateSymbol} 2021-06-20 10:00 am`);
-            expect(taskDetails).toMatchTaskDetails({
-                reminders: new ReminderList([moment('2021-06-20 10:00 am', reminderSettings.dateTimeFormat)]),
+        it('should parse a single 24h reminder', () => {
+            setDateTimeFormat(TIME_FORMATS.twentyFourHour);
+            const times = ['2021-06-20 13:45', '2021-06-20 01:45', '2021-06-20'];
+            times.forEach((time) => {
+                const taskDetails = deserialize(`${reminderDateSymbol} ${time}`);
+                expect(taskDetails).toMatchTaskDetails({
+                    reminders: new ReminderList([moment(time, TIME_FORMATS.twentyFourHour)]),
+                });
             });
         });
 
-        it('should parse a multiple reminder string', () => {
-            const taskDetails = deserialize(`${reminderDateSymbol} 2021-06-20 10:00 am, 2021-06-21`);
+        it('should parse multiple 12h reminders', () => {
+            setDateTimeFormat(TIME_FORMATS.twelveHour);
+            const taskDetails = deserialize(
+                `${reminderDateSymbol} 2021-06-20 10:00 am, 2021-06-21, 2021-07-19 3:00 pm`,
+            );
             expect(taskDetails).toMatchTaskDetails({
                 reminders: new ReminderList([
-                    moment('2021-06-20 10:00 am', reminderSettings.dateTimeFormat),
-                    moment('2021-06-21', reminderSettings.dateTimeFormat),
+                    moment('2021-06-20 10:00 am', TIME_FORMATS.twelveHour),
+                    moment('2021-06-21', TIME_FORMATS.twelveHour),
+                    moment('2021-07-19 3:00 pm', TIME_FORMATS.twelveHour),
+                ]),
+            });
+        });
+
+        it('should parse multiple 24h reminders', () => {
+            setDateTimeFormat(TIME_FORMATS.twentyFourHour);
+            const taskDetails = deserialize(`${reminderDateSymbol} 2021-06-20 10:00, 2021-06-21, 2021-07-19 16:00`);
+            expect(taskDetails).toMatchTaskDetails({
+                reminders: new ReminderList([
+                    moment('2021-06-20 10:00', TIME_FORMATS.twentyFourHour),
+                    moment('2021-06-21', TIME_FORMATS.twentyFourHour),
+                    moment('2021-07-19 16:00', TIME_FORMATS.twentyFourHour),
                 ]),
             });
         });
@@ -156,17 +192,63 @@ describe.each(symbolMap)("DefaultTaskSerializer with '$taskFormat' symbols", ({ 
             const serialized = serialize(new TaskBuilder().reminders(['2021-06-20']).description('').build());
             expect(serialized).toEqual(` ${reminderDateSymbol} 2021-06-20`);
         });
+    });
 
-        it('should serialize a single reminder date time', () => {
-            const serialized = serialize(new TaskBuilder().reminders(['2021-06-20 5:00 pm']).description('').build());
-            expect(serialized).toEqual(` ${reminderDateSymbol} 2021-06-20 5:00 pm`);
+    describe('serialize reminders', () => {
+        afterEach(function () {
+            resetSettings();
         });
 
-        it('should serialize a multiple reminder dates', () => {
+        it('should serialize a single 12h reminder', () => {
+            setDateTimeFormat(TIME_FORMATS.twelveHour);
+            const times = ['2021-06-20 1:45 pm', '2021-06-20 1:45 am', '2021-06-20'];
+
+            times.forEach((time) => {
+                const serialized = serialize(new TaskBuilder().reminders([time]).description('').build());
+                expect(serialized).toEqual(` ${reminderDateSymbol} ${time}`);
+            });
+        });
+
+        it('should serialize malformed 12h reminders', () => {
+            setDateTimeFormat(TIME_FORMATS.twelveHour);
+            const times = ['2021-06-20 01:45 pm', '2021-06-20 1:45 PM', '2021-06-20 01:45 PM', '2021-06-20 1:45 p'];
+
+            times.forEach((time) => {
+                const serialized = serialize(new TaskBuilder().reminders([time]).description('').build());
+                expect(serialized).toEqual(` ${reminderDateSymbol} 2021-06-20 1:45 pm`);
+            });
+        });
+
+        it('should serialize a single 24h reminder', () => {
+            setDateTimeFormat(TIME_FORMATS.twentyFourHour);
+            const times = ['2021-06-20 13:45', '2021-06-20 01:45', '2021-06-20'];
+
+            times.forEach((time) => {
+                const serialized = serialize(new TaskBuilder().reminders([time]).description('').build());
+                expect(serialized).toEqual(` ${reminderDateSymbol} ${time}`);
+            });
+        });
+
+        it('should serialize a multiple 12h reminders', () => {
+            setDateTimeFormat(TIME_FORMATS.twelveHour);
             const serialized = serialize(
-                new TaskBuilder().reminders(['2021-06-20 5:00 pm', '2021-06-21']).description('').build(),
+                new TaskBuilder()
+                    .reminders(['2021-06-20 5:00 pm', '2021-06-21', '2021-06-20 10:00 am'])
+                    .description('')
+                    .build(),
             );
-            expect(serialized).toEqual(` ${reminderDateSymbol} 2021-06-20 5:00 pm, 2021-06-21`);
+            expect(serialized).toEqual(` ${reminderDateSymbol} 2021-06-20 5:00 pm, 2021-06-21, 2021-06-20 10:00 am`);
+        });
+
+        it('should serialize a multiple 24h reminders', () => {
+            setDateTimeFormat(TIME_FORMATS.twentyFourHour);
+            const serialized = serialize(
+                new TaskBuilder()
+                    .reminders(['2021-06-20 13:45', '2021-06-20 01:45', '2021-06-20'])
+                    .description('')
+                    .build(),
+            );
+            expect(serialized).toEqual(` ${reminderDateSymbol} 2021-06-20 13:45, 2021-06-20 01:45, 2021-06-20`);
         });
     });
 });
