@@ -198,16 +198,16 @@ export class TaskBuilder {
     }
 
     public reminders(reminders: string[]): TaskBuilder {
-        if (reminders.length > 0) {
-            const parsedReminders = new ReminderList(null);
-            for (const reminder of reminders) {
-                const reminderDate = TaskBuilder.parseReminder(reminder);
-                if (reminderDate) {
-                    parsedReminders.reminders.push(reminderDate);
-                }
+        const parsedReminders = new ReminderList(null);
+        for (const reminder of reminders) {
+            const reminderDate = TaskBuilder.parseReminder(reminder);
+            if (reminderDate) {
+                parsedReminders.reminders.push(reminderDate);
+            } else {
+                throw new Error(`TaskBuilder.parseReminder() was unable to parse: ${reminder}`);
             }
-            this._reminders = parsedReminders;
         }
+        this._reminders = parsedReminders;
         return this;
     }
 
