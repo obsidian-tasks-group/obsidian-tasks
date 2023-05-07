@@ -1,7 +1,7 @@
 import type { Moment } from 'moment';
 import { RRule } from 'rrule';
-import { compareByDate, isRemindersSame } from './lib/DateTools';
-import { Reminder, ReminderList } from './Reminders/Reminder';
+import { compareByDate } from './lib/DateTools';
+import { Reminder, ReminderList, isRemindersSame } from './Reminders/Reminder';
 
 export class Recurrence {
     private readonly rrule: RRule;
@@ -86,6 +86,8 @@ export class Recurrence {
                     referenceDate = window.moment(scheduledDate);
                 } else if (startDate) {
                     referenceDate = window.moment(startDate);
+                } else if (reminders?.peek()) {
+                    referenceDate = window.moment(reminders.peek()?.format('YYYY-MM-DD'));
                 }
 
                 if (!baseOnToday && referenceDate !== null) {
@@ -167,7 +169,6 @@ export class Recurrence {
                     // Rounding days to handle cross daylight-savings-time recurrences.
                     dueDate.add(Math.round(originalDifference.asDays()), 'days');
                 }
-
                 if (this.reminders) {
                     reminders = new ReminderList(null);
                     this.reminders.reminders.forEach((reminder) => {

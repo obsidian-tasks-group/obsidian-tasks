@@ -35,6 +35,10 @@ export class ReminderList {
     public push(reminder: Moment) {
         this.reminders.push(parseMoment(reminder));
     }
+
+    isSame(other: ReminderList | null) {
+        return isRemindersSame(this, other);
+    }
 }
 
 export enum ReminderType {
@@ -67,6 +71,19 @@ export function parseDateTime(dateTime: string): Reminder {
     return parseMoment(reminder);
 }
 
+export function parseDateTimes(dateTimes: string[]): ReminderList {
+    const parsedReminders = new ReminderList(null);
+    for (const reminder of dateTimes) {
+        const reminderDate = parseDateTime(reminder);
+        if (reminderDate) {
+            parsedReminders.reminders.push(reminderDate);
+        } else {
+            throw new Error(`TaskBuilder.parseReminder() was unable to parse: ${reminder}`);
+        }
+    }
+    return parsedReminders;
+}
+
 export function parseMoment(reminder: Moment): Reminder {
     if (reminder.format('h:mm a') === '12:00 am') {
         //aka .startOf(day) which is the default time for reminders
@@ -74,4 +91,27 @@ export function parseMoment(reminder: Moment): Reminder {
     } else {
         return new Reminder(reminder, ReminderType.DateTime);
     }
+}
+
+export function isRemindersSame(a: ReminderList | null, b: ReminderList | null) {
+    if (a === null && b !== null) {
+        return false;
+    } else if (a !== null && b === null) {
+        return false;
+    } else if (a !== null && b !== null) {
+        if (a.reminders.length !== b.reminders.length) {
+            return false;
+        }
+
+        const sortedA = a.reminders.map((reminder) => reminder.time.valueOf()).sort();
+        const sortedB = b.reminders.map((reminder) => reminder.time.valueOf()).sort();
+
+        for (let i = 0; i < sortedA.length; i++) {
+            if (sortedA[i] !== sortedB[i]) {
+                return false;
+            }
+        }
+    }
+
+    return true;
 }

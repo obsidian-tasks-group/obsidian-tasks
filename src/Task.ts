@@ -9,8 +9,8 @@ import { Urgency } from './Urgency';
 import { renderTaskLine } from './TaskLineRenderer';
 import type { TaskLineRenderDetails } from './TaskLineRenderer';
 import { DateFallback } from './DateFallback';
-import { compareByDate, isRemindersSame } from './lib/DateTools';
-import type { ReminderList } from './Reminders/Reminder';
+import { compareByDate } from './lib/DateTools';
+import { type ReminderList, isRemindersSame } from './Reminders/Reminder';
 import { replaceTaskWithTasks } from './File';
 
 /**

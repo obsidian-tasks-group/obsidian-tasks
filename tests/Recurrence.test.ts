@@ -2,7 +2,9 @@
  * @jest-environment jsdom
  */
 import moment from 'moment';
+import { ReminderList } from '../src/Reminders/Reminder';
 import { Recurrence } from '../src/Recurrence';
+import { TIME_FORMATS } from '../src/Config/Settings';
 import { RecurrenceBuilder } from './TestingTools/RecurrenceBuilder';
 
 jest.mock('obsidian');
@@ -240,5 +242,116 @@ describe('identicalTo', () => {
 
         expect(date1Recurrence?.identicalTo(date1Recurrence)).toBe(true);
         expect(date1Recurrence?.identicalTo(date2Recurrence)).toBe(false);
+    });
+});
+
+describe('Recurrence - with reminders', () => {
+    it('creates a recurring instance with single 12h reminders', () => {
+        // Arrange
+        const recurrence = Recurrence.fromText({
+            recurrenceRuleText: 'every week',
+            startDate: null,
+            scheduledDate: null,
+            dueDate: null,
+            reminders: new ReminderList([moment('2021-06-20 10:00 am', TIME_FORMATS.twelveHour)]),
+        });
+
+        // Act
+        const next = recurrence!.next();
+
+        // Assert
+        expect(
+            next!.reminders!.isSame(new ReminderList([moment('2021-06-27 10:00 am', TIME_FORMATS.twelveHour)])),
+        ).toStrictEqual(true);
+    });
+
+    it('creates a recurring instance with single 24h reminders', () => {
+        // Arrange
+        const recurrence = Recurrence.fromText({
+            recurrenceRuleText: 'every week',
+            startDate: null,
+            scheduledDate: null,
+            dueDate: null,
+            reminders: new ReminderList([moment('2021-06-20 13:00', TIME_FORMATS.twentyFourHour)]),
+        });
+
+        // Act
+        const next = recurrence!.next();
+
+        // Assert
+        expect(
+            next!.reminders!.isSame(new ReminderList([moment('2021-06-27 13:00', TIME_FORMATS.twentyFourHour)])),
+        ).toStrictEqual(true);
+    });
+
+    it('creates a recurring instance with multple 12h reminders', () => {
+        // Arrange
+        const recurrence = Recurrence.fromText({
+            recurrenceRuleText: 'every week',
+            startDate: null,
+            scheduledDate: null,
+            dueDate: null,
+            reminders: new ReminderList([
+                moment('2021-06-20 10:00 am', TIME_FORMATS.twelveHour),
+                moment('2021-06-21', TIME_FORMATS.twelveHour),
+                moment('2021-07-19 3:00 pm', TIME_FORMATS.twelveHour),
+            ]),
+        });
+
+        // Act
+        const next = recurrence!.next();
+
+        // Assert
+        expect(
+            next!.reminders!.isSame(
+                new ReminderList([
+                    moment('2021-06-27 10:00 am', TIME_FORMATS.twelveHour),
+                    moment('2021-06-28', TIME_FORMATS.twelveHour),
+                    moment('2021-07-26 3:00 pm', TIME_FORMATS.twelveHour),
+                ]),
+            ),
+        ).toStrictEqual(true);
+    });
+
+    it('creates a recurring instance with multple 24h reminders', () => {
+        // Arrange
+        const recurrence = Recurrence.fromText({
+            recurrenceRuleText: 'every week',
+            startDate: null,
+            scheduledDate: null,
+            dueDate: null,
+            reminders: new ReminderList([
+                moment('2021-06-20 11:00', TIME_FORMATS.twentyFourHour),
+                moment('2021-06-21', TIME_FORMATS.twentyFourHour),
+                moment('2021-07-19 15:00', TIME_FORMATS.twentyFourHour),
+            ]),
+        });
+
+        // Act
+        const next = recurrence!.next();
+
+        // Assert
+        expect(
+            next!.reminders!.isSame(
+                new ReminderList([
+                    moment('2021-06-27 11:00', TIME_FORMATS.twentyFourHour),
+                    moment('2021-06-28', TIME_FORMATS.twentyFourHour),
+                    moment('2021-07-26 15:00', TIME_FORMATS.twentyFourHour),
+                ]),
+            ),
+        ).toStrictEqual(true);
+    });
+
+    it('differing only in reminder', () => {
+        const date1Recurrence = new RecurrenceBuilder().reminders(['2021-10-21']).build();
+
+        const date2Recurrence = new RecurrenceBuilder().reminders(['1998-03-13']).build();
+
+        const nullRecurrence = new RecurrenceBuilder().reminders([]).build();
+
+        expect(date1Recurrence?.identicalTo(date1Recurrence)).toBe(true);
+        expect(date1Recurrence?.identicalTo(date2Recurrence)).toBe(false);
+        expect(date1Recurrence?.identicalTo(nullRecurrence)).toBe(false);
+        expect(nullRecurrence?.identicalTo(date1Recurrence)).toBe(false);
     });
 });
