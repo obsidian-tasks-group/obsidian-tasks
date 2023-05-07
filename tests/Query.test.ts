@@ -39,9 +39,6 @@ describe('Query parsing', () => {
         'due in 2021-12-27 2021-12-29',
         'due on 2021-12-27',
         'due this week',
-        'reminder after yesterday',
-        'reminder before 2021-12-27',
-        'reminder date is invalid',
         'exclude sub-items',
         'filename includes wibble',
         'happens after 2021-12-27',
@@ -96,6 +93,13 @@ describe('Query parsing', () => {
         'starts in 2021-12-27 2021-12-29',
         'starts on 2021-12-27',
         'starts this week',
+        'reminder date is invalid',
+        'reminder after 2021-12-27',
+        'reminder before 2021-12-27',
+        'reminder in 2021-12-27 2021-12-29',
+        'reminder on 2021-12-27',
+        'reminder this week',
+        'reminder after yesterday',
         'status.name includes cancelled',
         'status.type is IN_PROGRESS',
         'tag does not include #sometag',
@@ -175,6 +179,8 @@ describe('Query parsing', () => {
             'sort by priority',
             'sort by scheduled reverse',
             'sort by scheduled',
+            'sort by reminder reverse',
+            'sort by reminder',
             'sort by start reverse',
             'sort by start',
             'sort by status reverse',
@@ -218,6 +224,7 @@ describe('Query parsing', () => {
             'group by recurring',
             'group by root',
             'group by scheduled',
+            'group by reminder',
             'group by start',
             'group by status',
             'group by status.name',
@@ -248,6 +255,8 @@ describe('Query parsing', () => {
             'hide priority',
             'hide recurrence rule',
             'hide scheduled date',
+            'hide reminder date',
+            'hide reminders',
             'hide start date',
             'hide task count',
             'hide urgency',
@@ -262,6 +271,7 @@ describe('Query parsing', () => {
             'show priority',
             'show recurrence rule',
             'show scheduled date',
+            'show reminder date',
             'show created date',
             'show start date',
             'show task count',
@@ -409,6 +419,21 @@ describe('Query', () => {
                 },
             ],
             [
+                'by reminder date presence',
+                {
+                    filters: ['has reminder date'],
+                    tasks: [
+                        '- [ ] task 1',
+                        '- [ ] task 2 🛫 2022-04-20 ⏳ 2022-04-20 ⏲️ 2022-04-20',
+                        '- [ ] task 3 ⏲️ 2022-04-20',
+                    ],
+                    expectedResult: [
+                        '- [ ] task 2 🛫 2022-04-20 ⏳ 2022-04-20 ⏲️ 2022-04-20',
+                        '- [ ] task 3 ⏲️ 2022-04-20',
+                    ],
+                },
+            ],
+            [
                 'by due date absence',
                 {
                     filters: ['no due date'],
@@ -445,6 +470,18 @@ describe('Query', () => {
                 },
             ],
             [
+                'by reminder date absence',
+                {
+                    filters: ['no reminder date'],
+                    tasks: [
+                        '- [ ] task 1',
+                        '- [ ] task 2 🛫 2022-04-20 ⏳ 2022-04-20 ⏲️ 2022-04-20',
+                        '- [ ] task 3 ⏲️ 2022-04-20',
+                    ],
+                    expectedResult: ['- [ ] task 1'],
+                },
+            ],
+            [
                 'by start date (before)',
                 {
                     filters: ['starts before 2022-04-20'],
@@ -474,6 +511,19 @@ describe('Query', () => {
                 },
             ],
             [
+                'by reminder date (before)', // TODO Erik
+                {
+                    filters: ['reminder before 2022-04-20'],
+                    tasks: [
+                        '- [ ] task 1',
+                        '- [ ] task 2 ⏲️ 2022-04-15',
+                        '- [ ] task 3 ⏲️ 2022-04-20',
+                        '- [ ] task 4 ⏲️ 2022-04-25',
+                    ],
+                    expectedResult: ['- [ ] task 2 ⏲️ 2022-04-15'],
+                },
+            ],
+            [
                 'by done date (before)',
                 {
                     filters: ['done before 2022-12-23'],
@@ -485,6 +535,26 @@ describe('Query', () => {
                 },
             ],
         ])('should support filtering %s', (_, { tasks: allTaskLines, filters, expectedResult }) => {
+            shouldSupportFiltering(filters, allTaskLines, expectedResult);
+        });
+    });
+
+    describe('filtering reminders', () => {
+        test.concurrent.each<[string, FilteringCase]>([
+            [
+                'Reminder after AND not done',
+                {
+                    filters: ['"reminder after 2022-04-20" AND "not done"'],
+                    tasks: [
+                        '- [ ] task 1',
+                        '- [ ] task 2 ⏲️ 2022-04-20',
+                        '- [x] task 3 ⏲️ 2022-04-21',
+                        '- [ ] task 4 ⏲️ 2022-04-21',
+                    ],
+                    expectedResult: ['- [ ] task 4 ⏲️ 2022-04-21'],
+                },
+            ],
+        ])('should support reminder filter %s', (_, { tasks: allTaskLines, filters, expectedResult }) => {
             shouldSupportFiltering(filters, allTaskLines, expectedResult);
         });
     });
