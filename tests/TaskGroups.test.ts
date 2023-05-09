@@ -142,18 +142,17 @@ describe('Grouping tasks', () => {
 
         const grouping = [new FilenameField().createGrouper()];
         const groups = new TaskGroups(grouping, inputs);
-        // TODO Fix this - the two groups currently are in the wrong order.
         expect(groups.toString()).toMatchInlineSnapshot(`
             "
-            Group names: [[[10 something]]]
-            #### [[10 something]]
-            - [ ] second, as 10 is more than 9
-
-            ---
-
             Group names: [[[9 something]]]
             #### [[9 something]]
             - [ ] first, as 9 is less then 10
+
+            ---
+
+            Group names: [[[10 something]]]
+            #### [[10 something]]
+            - [ ] second, as 10 is more than 9
 
             ---
 

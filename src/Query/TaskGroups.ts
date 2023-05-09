@@ -93,13 +93,10 @@ export class TaskGroups {
             // Compare two TaskGroup objects, sorting them by the group names at each grouping level.
             const groupNames1 = group1.groups;
             const groupNames2 = group2.groups;
-            // TODO Replace with localeCompare()
             for (let i = 0; i < groupNames1.length; i++) {
-                if (groupNames1[i] < groupNames2[i]) {
-                    return -1;
-                }
-                if (groupNames1[i] > groupNames2[i]) {
-                    return 1;
+                const result = groupNames1[i].localeCompare(groupNames2[i], undefined, { numeric: true });
+                if (result !== 0) {
+                    return result;
                 }
             }
             // identical if we reach here
