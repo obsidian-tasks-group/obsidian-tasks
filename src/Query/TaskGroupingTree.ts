@@ -38,7 +38,7 @@ class TaskGroupingTreeNode extends GroupingTreeNode<Task> {}
 
 /**
  * TaskGroupingTree does the initial grouping together of tasks,
- * in alphabetical order by group names.
+ * in arbitrary order. Caller is responsible for sorting groups in to desired order.
  *
  * It is essentially a thin wrapper around Map - see {@link TaskGroupingTreeStorage}.
  *
@@ -58,7 +58,6 @@ export class TaskGroupingTree {
     constructor(groupers: Grouper[], tasks: Task[]) {
         const tree = this.buildGroupingTree(groupers, tasks);
         this.groups = tree.generateAllPaths();
-        this.groups = this.getSortedGroups();
     }
 
     /**
@@ -95,12 +94,5 @@ export class TaskGroupingTree {
         }
 
         return root;
-    }
-
-    private getSortedGroups() {
-        // groups.keys() will initially be in the order the entries were added,
-        // so effectively random.
-        // Return a duplicate map, with the keys (that is, group names) sorted in alphabetical order:
-        return new TaskGroupingTreeStorage([...this.groups.entries()].sort());
     }
 }
