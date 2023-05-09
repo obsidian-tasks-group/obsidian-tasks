@@ -194,6 +194,10 @@ export class TaskBuilder {
         return this;
     }
 
+    /**
+     * See {@link RecurrenceBuilder} for easy construction of {@link Recurrence} objects in tests.
+     * @param recurrence
+     */
     public recurrence(recurrence: Recurrence | null): TaskBuilder {
         this._recurrence = recurrence;
         return this;
