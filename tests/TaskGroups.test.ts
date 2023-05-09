@@ -129,6 +129,39 @@ describe('Grouping tasks', () => {
         `);
     });
 
+    it('sorts group names beginning with numeric values correctly', () => {
+        const a = fromLine({
+            line: '- [ ] first, as 9 is less then 10',
+            path: '9 something.md',
+        });
+        const b = fromLine({
+            line: '- [ ] second, as 10 is more than 9',
+            path: '10 something.md',
+        });
+        const inputs = [a, b];
+
+        const grouping = [new FilenameField().createGrouper()];
+        const groups = new TaskGroups(grouping, inputs);
+        // TODO Fix this - the two groups currently are in the wrong order.
+        expect(groups.toString()).toMatchInlineSnapshot(`
+            "
+            Group names: [[[10 something]]]
+            #### [[10 something]]
+            - [ ] second, as 10 is more than 9
+
+            ---
+
+            Group names: [[[9 something]]]
+            #### [[9 something]]
+            - [ ] first, as 9 is less then 10
+
+            ---
+
+            2 tasks
+            "
+        `);
+    });
+
     it('handles tasks matching multiple groups correctly', () => {
         const a = fromLine({
             line: '- [ ] Task 1 #group1',
