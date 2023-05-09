@@ -168,6 +168,7 @@ describe('Query parsing', () => {
             'sort by path',
             'sort by priority reverse',
             'sort by priority',
+            'sort by recurring',
             'sort by scheduled reverse',
             'sort by scheduled',
             'sort by start reverse',

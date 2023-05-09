@@ -6,6 +6,13 @@ import { RecurringField } from '../../../src/Query/Filter/RecurringField';
 import type { FilterOrErrorMessage } from '../../../src/Query/Filter/Filter';
 import { testTaskFilter } from '../../TestingTools/FilterTestHelpers';
 import { fromLine } from '../../TestHelpers';
+import { TaskBuilder } from '../../TestingTools/TaskBuilder';
+import {
+    expectTaskComparesAfter,
+    expectTaskComparesBefore,
+    expectTaskComparesEqual,
+} from '../../CustomMatchers/CustomMatchersForSorting';
+import { RecurrenceBuilder } from '../../TestingTools/RecurrenceBuilder';
 
 window.moment = moment;
 
@@ -38,6 +45,44 @@ describe('recurring', () => {
         testRecurringFilter(filter, non_recurring, true);
         testRecurringFilter(filter, recurring, false);
         testRecurringFilter(filter, invalid, true);
+    });
+});
+
+describe('sorting by recurring', () => {
+    const recurrence = new RecurrenceBuilder().rule('every week when done').startDate('2022-07-14').build();
+    const recurring = new TaskBuilder().recurrence(recurrence).build();
+    const nonRecurring = new TaskBuilder().recurrence(null).build();
+
+    it('supports Field sorting methods correctly', () => {
+        const field = new RecurringField();
+        expect(field.supportsSorting()).toEqual(true);
+    });
+
+    it('parses sort by recurrence', () => {
+        const field = new RecurringField();
+        expect(field.parseSortLine('sort by recurring')).not.toBeNull();
+    });
+
+    it('sort by due', () => {
+        // Arrange
+        const sorter = new RecurringField().createNormalSorter();
+
+        // Assert
+        expectTaskComparesBefore(sorter, recurring, nonRecurring);
+        expectTaskComparesAfter(sorter, nonRecurring, recurring);
+        expectTaskComparesEqual(sorter, nonRecurring, nonRecurring);
+        expectTaskComparesEqual(sorter, recurring, recurring);
+    });
+
+    it('sort by due reverse', () => {
+        // Arrange
+        const sorter = new RecurringField().createReverseSorter();
+
+        // Assert
+        expectTaskComparesAfter(sorter, recurring, nonRecurring);
+        expectTaskComparesBefore(sorter, nonRecurring, recurring);
+        expectTaskComparesEqual(sorter, nonRecurring, nonRecurring);
+        expectTaskComparesEqual(sorter, recurring, recurring);
     });
 });
 
