@@ -46,10 +46,13 @@ function lowPriorityBuilder() {
 describe('urgency - priority component', () => {
     it('should score correctly for priority', () => {
         const builder = new TaskBuilder();
+        // I don't really know what values should I put here
+        testUrgency(builder.priority(Priority.Highest), 9.0);
         testUrgency(builder.priority(Priority.High), 6.0);
         testUrgency(builder.priority(Priority.Medium), 3.9);
         testUrgency(builder.priority(Priority.None), 1.95);
-        testUrgency(builder.priority(Priority.Low), 0.0);
+        testUrgency(builder.priority(Priority.Low), 0.6);
+        testUrgency(builder.priority(Priority.Lowest), 0.0);
     });
 });
 
@@ -65,28 +68,28 @@ function testUrgencyForDueDate(daysToDate: number, expectedScore: number) {
 
 describe('urgency - due date component', () => {
     it('More than 7 days overdue: 12.0', () => {
-        testUrgencyForDueDate(-200, 12.0);
-        testUrgencyForDueDate(-8, 12.0);
+        testUrgencyForDueDate(-200, 12.6);
+        testUrgencyForDueDate(-8, 12.6);
     });
 
     it('Due between 7 days ago and in 14 days: Range of 12.0 to 0.2', () => {
-        testUrgencyForDueDate(-7, 12.0);
-        testUrgencyForDueDate(0, 8.8); // documentation says: 9.0 for "today"
-        testUrgencyForDueDate(1, 8.34286);
-        testUrgencyForDueDate(6, 6.05714);
-        testUrgencyForDueDate(13, 2.85714);
-        testUrgencyForDueDate(14, 2.4); // documentation says: 0.2
+        testUrgencyForDueDate(-7, 12.6);
+        testUrgencyForDueDate(0, 9.4); // documentation says: 9.0 for "today"
+        testUrgencyForDueDate(1, 8.94286);
+        testUrgencyForDueDate(6, 6.65714);
+        testUrgencyForDueDate(13, 3.45714);
+        testUrgencyForDueDate(14, 3); // documentation says: 0.2
     });
 
     it('More than 14 days until due: 0.2', () => {
-        testUrgencyForDueDate(15, 2.4); // // documentation says: 0.2
-        testUrgencyForDueDate(40, 2.4); // // documentation says: 0.2
-        testUrgencyForDueDate(200, 2.4); // // documentation says: 0.2
+        testUrgencyForDueDate(15, 3); // // documentation says: 0.2
+        testUrgencyForDueDate(40, 3); // // documentation says: 0.2
+        testUrgencyForDueDate(200, 3); // // documentation says: 0.2
     });
 
     it('not due: 0.0', () => {
         const lowPriority = lowPriorityBuilder();
-        testUrgency(lowPriority.dueDate(null), 0.0);
+        testUrgency(lowPriority.dueDate(null), 0.6);
     });
 });
 
@@ -104,17 +107,17 @@ describe('urgency - scheduled date component', () => {
     const lowPriority = lowPriorityBuilder();
 
     it('scheduled Today or earlier: 5.0', () => {
-        testUrgencyForScheduledDate(0, 5.0);
-        testUrgencyForScheduledDate(-20, 5.0);
+        testUrgencyForScheduledDate(0, 5.6);
+        testUrgencyForScheduledDate(-20, 5.6);
     });
 
     it('scheduled Tomorrow or later: 0.0', () => {
-        testUrgencyForScheduledDate(1, 0.0);
-        testUrgencyForScheduledDate(39, 0.0);
+        testUrgencyForScheduledDate(1, 0.6);
+        testUrgencyForScheduledDate(39, 0.6);
     });
 
     it('not scheduled: 0.0', () => {
-        testUrgency(lowPriority.scheduledDate(null), 0.0);
+        testUrgency(lowPriority.scheduledDate(null), 0.6);
     });
 });
 
@@ -132,16 +135,16 @@ describe('urgency - start date component', () => {
     const lowPriority = lowPriorityBuilder();
 
     it('start Today or earlier: 0.0', () => {
-        testUrgencyForStartDate(0, 0.0);
-        testUrgencyForStartDate(-22, 0.0);
+        testUrgencyForStartDate(0, 0.6);
+        testUrgencyForStartDate(-22, 0.6);
     });
 
     it('start Tomorrow or later: -3.0', () => {
-        testUrgencyForStartDate(1, -3.0);
-        testUrgencyForStartDate(67, -3.0);
+        testUrgencyForStartDate(1, -2.4);
+        testUrgencyForStartDate(67, -2.4);
     });
 
     it('not scheduled: 0.0', () => {
-        testUrgency(lowPriority.startDate(null), 0.0);
+        testUrgency(lowPriority.startDate(null), 0.6);
     });
 });

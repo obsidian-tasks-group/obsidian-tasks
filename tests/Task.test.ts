@@ -242,7 +242,7 @@ describe('parsing', () => {
                 scheduled: '2022-07-03',
                 start: '2022-07-04',
                 created: '2022-07-05',
-                priority: '3',
+                priority: '4',
                 recurrence: 'every day',
             });
         }

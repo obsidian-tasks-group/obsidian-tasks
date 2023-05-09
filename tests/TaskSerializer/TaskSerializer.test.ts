@@ -15,9 +15,9 @@ window.moment = moment;
  This file contains a tested, end-to-end example for implementing and using a
  {@link TaskSerializer}.
  <br>
- This file should also contain any {@link TaskSerializer} tests that should be tested 
+ This file should also contain any {@link TaskSerializer} tests that should be tested
  against all the {@link TaskSerializer}s defined in this repo. Tests that only
- apply to one should be housed in that serializer's specific test file 
+ apply to one should be housed in that serializer's specific test file
 */
 
 describe('TaskSerializer Example', () => {
@@ -87,7 +87,7 @@ describe('TaskSerializer Example', () => {
         });
 
         it('should parse just a priority', () => {
-            expect(ts.deserialize('1')).toMatchTaskDetails({ priority: Priority.High });
+            expect(ts.deserialize('2')).toMatchTaskDetails({ priority: Priority.High });
         });
 
         it('should parse just a description', () => {
@@ -97,18 +97,18 @@ describe('TaskSerializer Example', () => {
         });
 
         it('should parse a priority and dueDate', () => {
-            expect(ts.deserialize('1 1978-09-21')).toMatchTaskDetails({
+            expect(ts.deserialize('2 1978-09-21')).toMatchTaskDetails({
                 priority: Priority.High,
                 dueDate: moment('1978-09-21', 'YYYY-MM-DD'),
             });
         });
 
         it('should parse a priority and description', () => {
-            expect(ts.deserialize('1 Wobble')).toMatchTaskDetails({ priority: Priority.High, description: 'Wobble' });
+            expect(ts.deserialize('2 Wobble')).toMatchTaskDetails({ priority: Priority.High, description: 'Wobble' });
         });
 
         it('should parse a full task', () => {
-            expect(ts.deserialize('1 1978-09-21 Wobble')).toMatchTaskDetails({
+            expect(ts.deserialize('2 1978-09-21 Wobble')).toMatchTaskDetails({
                 priority: Priority.High,
                 description: 'Wobble',
                 dueDate: moment('1978-09-21', 'YYYY-MM-DD'),
@@ -119,9 +119,9 @@ describe('TaskSerializer Example', () => {
     describe('serialize', () => {
         it('should serialize a task', () => {
             const tb = new TaskBuilder().description('');
-            expect(ts.serialize(tb.priority(Priority.High).build())).toEqual('1');
-            expect(ts.serialize(tb.description('Wobble').build())).toEqual('1 Wobble');
-            expect(ts.serialize(tb.dueDate('1978-09-21').build())).toEqual('1 1978-09-21 Wobble');
+            expect(ts.serialize(tb.priority(Priority.High).build())).toEqual('2');
+            expect(ts.serialize(tb.description('Wobble').build())).toEqual('2 Wobble');
+            expect(ts.serialize(tb.dueDate('1978-09-21').build())).toEqual('2 1978-09-21 Wobble');
         });
     });
 });
