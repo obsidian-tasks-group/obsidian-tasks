@@ -59,6 +59,7 @@ For more information, including adding your own customised statuses, see [[Statu
 1. `description` (the description of the task)
 1. `priority` (priority of the task; "low" is below "none": [[Priority|priorities]])
 1. `urgency` ([[Urgency|urgency]])
+1. `recurring` (recurring tasks sort before non-recurring ones: [[Recurring Tasks]])
 1. `tag` (the description of the task)
 
 ## Multiple sort criteria
