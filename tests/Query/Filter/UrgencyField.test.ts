@@ -11,6 +11,7 @@ import {
     expectTaskComparesBefore,
     expectTaskComparesEqual,
 } from '../../CustomMatchers/CustomMatchersForSorting';
+import { fromLine } from '../../TestHelpers';
 
 window.moment = moment;
 
@@ -73,5 +74,26 @@ describe('sorting by urgency', () => {
             with_priority(Priority.High), // Higher priority comes last
             with_priority(Priority.Medium),
         );
+    });
+});
+
+describe('grouping by urgency', () => {
+    it('supports grouping methods correctly', () => {
+        expect(new UrgencyField()).toSupportGroupingWithProperty('urgency');
+    });
+
+    // Numbers taken from:
+    // https://publish.obsidian.md/tasks/Advanced/Urgency
+    it.each([
+        ['- [ ] a ⏫', ['6.00']],
+        ['- [ ] a 🔼', ['3.90']],
+        ['- [ ] a', ['1.95']],
+        ['- [ ] a 🔽', ['0.00']],
+    ])('task "%s" should have groups: %s', (taskLine: string, groups: string[]) => {
+        // Arrange
+        const grouper = new UrgencyField().createGrouper().grouper;
+
+        // Assert
+        expect(grouper(fromLine({ line: taskLine }))).toEqual(groups);
     });
 });

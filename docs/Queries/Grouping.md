@@ -81,6 +81,9 @@ For more information, including adding your own customised statuses, see [[Statu
         - `Priority 2: Medium`
         - `Priority 3: None`
         - `Priority 4: Low`
+1. `urgency` ([[Urgency|urgency]])
+    - Currently, the groups run from the lowest urgency to highest.
+    - In a future release, the default group order will become from the highest urgency to lowest.
 1. `recurring`
     - Whether the task is recurring: either `Recurring` or `Not Recurring`.
 1. `recurrence`
@@ -90,9 +93,11 @@ For more information, including adding your own customised statuses, see [[Statu
     - The tags of the tasks or `(No tags)`. If the task has multiple tags, it will show up under every tag.
 
 > [!released]
-`start`, `scheduled`, `due` and `done` grouping options were introduced in Tasks 1.7.0.<br>
-`tags` grouping option was introduced in Tasks 1.10.0.<br>
-`priority`, `recurring` and `recurrence` grouping options were introduced in Tasks 1.11.0.
+>
+> - `start`, `scheduled`, `due` and `done` grouping options were introduced in Tasks 1.7.0.<br>
+> - `tags` grouping option was introduced in Tasks 1.10.0.<br>
+> - `priority`, `recurring` and `recurrence` grouping options were introduced in Tasks 1.11.0.
+> - `urgency` grouping option was introduced in Tasks X.Y.Z.
 
 ## Multiple groups
 
