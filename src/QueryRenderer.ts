@@ -273,25 +273,18 @@ class QueryRenderChild extends MarkdownRenderChild {
     }
 
     private async addGroupHeading(content: HTMLDivElement, group: GroupDisplayHeading) {
-        let header: any;
-        // Is it possible to remove the repetition here?
-        // Ideally, by creating a variable that contains h4, h5 or h6
-        // and then only having one call to content.createEl().
+        // Headings nested to 2 or more levels are all displayed with 'h6:
+        let header: keyof HTMLElementTagNameMap = 'h6';
         if (group.nestingLevel === 0) {
-            header = content.createEl('h4', {
-                cls: 'tasks-group-heading',
-            });
+            header = 'h4';
         } else if (group.nestingLevel === 1) {
-            header = content.createEl('h5', {
-                cls: 'tasks-group-heading',
-            });
-        } else {
-            // Headings nested to 2 or more levels are all displayed with 'h6:
-            header = content.createEl('h6', {
-                cls: 'tasks-group-heading',
-            });
+            header = 'h5';
         }
-        await MarkdownRenderer.renderMarkdown(group.displayName, header, this.filePath, this);
+
+        const headerEl = content.createEl(header, {
+            cls: 'tasks-group-heading',
+        });
+        await MarkdownRenderer.renderMarkdown(group.displayName, headerEl, this.filePath, this);
     }
 
     private addBacklinks(listItem: HTMLElement, task: Task, shortMode: boolean, isFilenameUnique: boolean | undefined) {
