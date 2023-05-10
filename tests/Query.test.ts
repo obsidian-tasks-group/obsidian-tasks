@@ -219,6 +219,7 @@ describe('Query parsing', () => {
             'group by status.name',
             'group by status.type',
             'group by tags',
+            'group by urgency',
         ];
         test.concurrent.each<string>(filters)('recognises %j', (filter) => {
             // Arrange
