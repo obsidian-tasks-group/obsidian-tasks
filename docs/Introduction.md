@@ -6,7 +6,8 @@ publish: true
 
 ## What's New?
 
-- X.Y.Z: 🔥 Add `group by urgency`: See [[Grouping#Other task properties]]
+- X.Y.Z: 🔥 Add [[Grouping#Other task properties|group by urgency]]
+- X.Y.Z: 🔥 Add [[Sorting#Other task properties|sort by recurring]]
 - 3.5.0: 🔥 New [[Global Query]] facility.
 - 3.4.0: 🔥 Clicking on a [[Backlinks|Backlink]] jumps to the exact task line.
 - 3.4.0: Tasks now requires at least Obsidian 1.1.1.
