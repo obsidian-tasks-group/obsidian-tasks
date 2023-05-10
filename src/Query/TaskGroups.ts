@@ -93,7 +93,13 @@ export class TaskGroups {
             // Compare two TaskGroup objects, sorting them by the group names at each grouping level.
             const groupNames1 = group1.groups;
             const groupNames2 = group2.groups;
+            // The containers are guaranteed to be identical sizes,
+            // they have one value for each 'group by' line in the query.
             for (let i = 0; i < groupNames1.length; i++) {
+                // For now, we only have one sort option: sort by the names of the groups.
+                // In future, we will add control over the sorting of group headings,
+                // which will likely involve adjusting this code to sort by applying a Comparator
+                // to the first Task in each group.
                 const result = groupNames1[i].localeCompare(groupNames2[i], undefined, { numeric: true });
                 if (result !== 0) {
                     return result;
