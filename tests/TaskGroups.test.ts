@@ -9,6 +9,8 @@ import { PathField } from '../src/Query/Filter/PathField';
 import { TagsField } from '../src/Query/Filter/TagsField';
 import { FolderField } from '../src/Query/Filter/FolderField';
 import { TaskGroups } from '../src/Query/TaskGroups';
+import { StatusTypeField } from '../src/Query/Filter/StatusTypeField';
+import { HappensDateField } from '../src/Query/Filter/HappensDateField';
 import { fromLine } from './TestHelpers';
 
 window.moment = moment;
@@ -237,6 +239,51 @@ describe('Grouping tasks', () => {
             Group names: [folder\\_b/folder\\_c/,[[file_d]]]
             ##### [[file_d]]
             - [ ] Task 2 - but path is 2nd, alphabetically
+
+            ---
+
+            3 tasks
+            "
+        `);
+    });
+
+    it('should create nested headings if multiple groups used - case 2', () => {
+        const b = fromLine({
+            line: '- [ ] Task a - early date 📅 2022-09-19',
+        });
+        const a = fromLine({
+            line: '- [ ] Task b - later date ⏳ 2022-12-06',
+        });
+        const c = fromLine({
+            line: '- [ ] Task c - intermediate date ⏳ 2022-10-06',
+        });
+        const inputs = [a, b, c];
+
+        const grouping = [
+            new StatusTypeField().createGrouper(), // Two group levels
+            new HappensDateField().createGrouper(),
+        ];
+        const groups = new TaskGroups(grouping, inputs);
+        // This result is incorrect. The '2 TODO' heading is shown before
+        // the last group instead of before the first one.
+        expect(groups.toString()).toMatchInlineSnapshot(`
+            "
+            Group names: [2 TODO,2022-09-19 Monday]
+            ##### 2022-09-19 Monday
+            - [ ] Task a - early date 📅 2022-09-19
+
+            ---
+
+            Group names: [2 TODO,2022-10-06 Thursday]
+            ##### 2022-10-06 Thursday
+            - [ ] Task c - intermediate date ⏳ 2022-10-06
+
+            ---
+
+            Group names: [2 TODO,2022-12-06 Tuesday]
+            #### 2 TODO
+            ##### 2022-12-06 Tuesday
+            - [ ] Task b - later date ⏳ 2022-12-06
 
             ---
 
