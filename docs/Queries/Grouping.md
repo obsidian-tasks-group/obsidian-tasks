@@ -97,7 +97,7 @@ For more information, including adding your own customised statuses, see [[Statu
 > - `start`, `scheduled`, `due` and `done` grouping options were introduced in Tasks 1.7.0.<br>
 > - `tags` grouping option was introduced in Tasks 1.10.0.<br>
 > - `priority`, `recurring` and `recurrence` grouping options were introduced in Tasks 1.11.0.
-> - `urgency` grouping option was introduced in Tasks X.Y.Z.
+> - `urgency` grouping option was introduced in Tasks 3.6.0.
 
 ## Multiple groups
 
