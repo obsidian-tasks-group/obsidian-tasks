@@ -269,6 +269,7 @@ describe('Grouping tasks', () => {
         expect(groups.toString()).toMatchInlineSnapshot(`
             "
             Group names: [2 TODO,2022-09-19 Monday]
+            #### 2 TODO
             ##### 2022-09-19 Monday
             - [ ] Task a - early date 📅 2022-09-19
 
@@ -281,7 +282,6 @@ describe('Grouping tasks', () => {
             ---
 
             Group names: [2 TODO,2022-12-06 Tuesday]
-            #### 2 TODO
             ##### 2022-12-06 Tuesday
             - [ ] Task b - later date ⏳ 2022-12-06
 

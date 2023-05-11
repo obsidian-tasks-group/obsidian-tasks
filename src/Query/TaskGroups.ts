@@ -78,13 +78,13 @@ export class TaskGroups {
             this.add(taskGroup);
         }
 
-        // Get the headings.
+        this.sortTaskGroups();
+
+        // Get the headings, now that the groups have been sorted.
         const displayHeadingSelector = new GroupDisplayHeadingSelector(taskGroupingTree.groups);
         for (const group of this._groups) {
             group.setGroupHeadings(displayHeadingSelector.getHeadingsForTaskGroup(group.groups));
         }
-
-        this.sortTaskGroups();
     }
 
     private add(taskGroup: TaskGroup) {
