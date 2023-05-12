@@ -6,8 +6,8 @@ import type { Task } from '../Task';
  * are the further grouping of those values.
  *
  */
-export class TaskGroupingTreeNode {
-    children: Map<string, TaskGroupingTreeNode> = new Map();
+export class TaskGroupingNode {
+    children: Map<string, TaskGroupingNode> = new Map();
     values: Task[] = [];
 
     constructor(values: Task[]) {

@@ -1,6 +1,6 @@
 import type { Task } from '../Task';
 import type { Grouper } from './Grouper';
-import { TaskGroupingTreeNode } from './TaskGroupingTreeNode';
+import { TaskGroupingNode } from './TaskGroupingNode';
 
 /**
  * Storage used for the initial grouping together of tasks.
@@ -59,13 +59,13 @@ export class TaskGroupingTree {
     /**
      * Returns a grouping tree that groups the passed @tasks by the passed @groupers.
      */
-    private buildGroupingTree(groupers: Grouper[], tasks: Task[]): TaskGroupingTreeNode {
+    private buildGroupingTree(groupers: Grouper[], tasks: Task[]): TaskGroupingNode {
         // The tree is build layer by layer, starting from the root.
         // At every level, we iterate on the nodes of that level to generate
         // the next one using the next grouping.
 
         // The root of the tree contains all the tasks.
-        const root = new TaskGroupingTreeNode(tasks);
+        const root = new TaskGroupingNode(tasks);
 
         let currentTreeLevel = [root];
         for (const grouper of groupers) {
@@ -78,7 +78,7 @@ export class TaskGroupingTree {
                     for (const groupName of groupNames) {
                         let child = currentTreeNode.children.get(groupName);
                         if (child === undefined) {
-                            child = new TaskGroupingTreeNode([]);
+                            child = new TaskGroupingNode([]);
                             currentTreeNode.children.set(groupName, child);
                             nextTreeLevel.push(child);
                         }
