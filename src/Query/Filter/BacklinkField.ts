@@ -35,9 +35,12 @@ export class BacklinkField extends TextField {
                 return ['Unknown Location'];
             }
 
+            // Always escape the filename, to prevent any underscores being interpreted as markdown:
             let result = TextField.escapeMarkdownCharacters(filename);
-            // In case backlink is 'file_name > heading', the filename only shall be escaped
+
+            // Only append the heading if it differs from the un-escaped fileanme:
             if (task.precedingHeader && task.precedingHeader !== filename) {
+                // We don't escape the heading, as any markdown inside really are markdown styling
                 result += ' > ' + task.precedingHeader;
             }
             return [result];
