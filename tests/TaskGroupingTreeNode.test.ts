@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 import type { Task } from 'Task';
-import { GroupingTreeNode } from '../src/Query/GroupingTreeNode';
+import { TaskGroupingTreeNode } from '../src/Query/TaskGroupingTreeNode';
 import { fromLine } from './TestHelpers';
 
 const task1 = fromLine({ line: '-[ ] #task 1' });
@@ -24,14 +24,14 @@ describe('Grouping Tree', () => {
         //        D[1]                  E[3, 4]       F[4, 5, 6]
         //                                            /        \
         //                                          G[4]       H[5, 6]
-        const tree = new GroupingTreeNode([task1, task2, task3, task4, task5, task6]);
-        const b = new GroupingTreeNode([task1, task5, task6]);
-        const c = new GroupingTreeNode([task3, task4, task5, task6]);
-        const d = new GroupingTreeNode([task1]);
-        const e = new GroupingTreeNode([task3, task4]);
-        const f = new GroupingTreeNode([task4, task5, task6]);
-        const g = new GroupingTreeNode([task4]);
-        const h = new GroupingTreeNode([task5, task6]);
+        const tree = new TaskGroupingTreeNode([task1, task2, task3, task4, task5, task6]);
+        const b = new TaskGroupingTreeNode([task1, task5, task6]);
+        const c = new TaskGroupingTreeNode([task3, task4, task5, task6]);
+        const d = new TaskGroupingTreeNode([task1]);
+        const e = new TaskGroupingTreeNode([task3, task4]);
+        const f = new TaskGroupingTreeNode([task4, task5, task6]);
+        const g = new TaskGroupingTreeNode([task4]);
+        const h = new TaskGroupingTreeNode([task5, task6]);
         tree.children.set('B', b);
         tree.children.set('C', c);
         b.children.set('D', d);
@@ -54,7 +54,7 @@ describe('Grouping Tree', () => {
 
     it("generates correct map when the node doesn't have children", () => {
         // Arrange
-        const tree = new GroupingTreeNode([task1, task2, task3, task4, task5, task6]);
+        const tree = new TaskGroupingTreeNode([task1, task2, task3, task4, task5, task6]);
 
         // Act
         const allLeafs = tree.generateAllPaths();

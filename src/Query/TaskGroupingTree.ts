@@ -1,6 +1,6 @@
 import type { Task } from '../Task';
 import type { Grouper } from './Grouper';
-import { GroupingTreeNode } from './GroupingTreeNode';
+import { TaskGroupingTreeNode } from './TaskGroupingTreeNode';
 
 /**
  * Storage used for the initial grouping together of tasks.
@@ -33,10 +33,6 @@ export class TaskGroupingTreeStorage extends Map<string[], Task[]> {}
  * to how the tasks will be rendered.
  *
  * NOTE: The same task can appear in multiple leaf nodes, if it matches multiple paths.
- */
-class TaskGroupingTreeNode extends GroupingTreeNode {}
-
-/**
  * TaskGroupingTree does the initial grouping together of tasks,
  * in arbitrary order. Caller is responsible for sorting groups in to desired order.
  *

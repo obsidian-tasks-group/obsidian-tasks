@@ -1,4 +1,4 @@
-import type { Task } from './../Task';
+import type { Task } from '../Task';
 
 /**
  * A node in the grouping tree. The node contains the
@@ -6,8 +6,8 @@ import type { Task } from './../Task';
  * are the further grouping of those values.
  *
  */
-export class GroupingTreeNode {
-    children: Map<string, GroupingTreeNode> = new Map();
+export class TaskGroupingTreeNode {
+    children: Map<string, TaskGroupingTreeNode> = new Map();
     values: Task[] = [];
 
     constructor(values: Task[]) {
