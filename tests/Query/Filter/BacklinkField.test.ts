@@ -35,7 +35,7 @@ describe('grouping by backlink', () => {
 
     it.each([
         // no location supplied
-        [undefined, 'heading', ['Unknown Location']],
+        ['', 'heading', ['Unknown Location']],
 
         // no heading supplied
         ['a/b/c.md', null, ['c']],
@@ -54,15 +54,12 @@ describe('grouping by backlink', () => {
 
         // But underscores in the heading component are not
         ['a/b/_c_.md', 'heading _italic text_', ['\\_c\\_ > heading _italic text_']],
-    ])(
-        'task "%s" with path "%s" should have groups: %s',
-        (path: string | undefined, heading: string | null, groups: string[]) => {
-            // Arrange
-            const grouper = new BacklinkField().createGrouper().grouper;
-            const t = '- [ ] xyz';
+    ])('task "%s" with path "%s" should have groups: %s', (path: string, heading: string | null, groups: string[]) => {
+        // Arrange
+        const grouper = new BacklinkField().createGrouper().grouper;
+        const t = '- [ ] xyz';
 
-            // Assert
-            expect(grouper(fromLine({ line: t, path: path, precedingHeader: heading }))).toEqual(groups);
-        },
-    );
+        // Assert
+        expect(grouper(fromLine({ line: t, path: path, precedingHeader: heading }))).toEqual(groups);
+    });
 });
