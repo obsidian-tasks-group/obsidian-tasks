@@ -54,7 +54,7 @@ describe('grouping by backlink', () => {
 
         // But underscores in the heading component are not
         ['a/b/_c_.md', 'heading _italic text_', ['\\_c\\_ > heading _italic text_']],
-    ])('task "%s" with path "%s" should have groups: %s', (path: string, heading: string | null, groups: string[]) => {
+    ])('path "%s" & heading "%s" should have groups: %s', (path: string, heading: string | null, groups: string[]) => {
         // Arrange
         const grouper = new BacklinkField().createGrouper().grouper;
         const t = '- [ ] xyz';
