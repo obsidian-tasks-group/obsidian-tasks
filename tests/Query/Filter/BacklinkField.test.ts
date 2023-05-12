@@ -38,7 +38,7 @@ describe('grouping by backlink', () => {
         [undefined, 'heading', ['Unknown Location']],
 
         // no heading supplied
-        ['a/b/c.md', undefined, ['c']],
+        ['a/b/c.md', null, ['c']],
 
         // File and heading, nominal case
         ['a/b/c.md', 'heading', ['c > heading']],
@@ -50,13 +50,13 @@ describe('grouping by backlink', () => {
         ['a_b_c.md', 'a_b_c', ['a\\_b\\_c']],
 
         // Underscores in file name component are escaped
-        ['a/b/_c_.md', undefined, ['\\_c\\_']],
+        ['a/b/_c_.md', null, ['\\_c\\_']],
 
         // But underscores in the heading component are not
         ['a/b/_c_.md', 'heading _italic text_', ['\\_c\\_ > heading _italic text_']],
     ])(
         'task "%s" with path "%s" should have groups: %s',
-        (path: string | undefined, heading: string | undefined, groups: string[]) => {
+        (path: string | undefined, heading: string | null, groups: string[]) => {
             // Arrange
             const grouper = new BacklinkField().createGrouper().grouper;
             const t = '- [ ] xyz';
