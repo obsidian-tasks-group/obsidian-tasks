@@ -1,4 +1,5 @@
 import type { Task } from '../Task';
+import type { TaskGroupingTreeStorage } from './TaskGroupingTree';
 
 /**
  * A node in the grouping tree. The node contains the
@@ -20,7 +21,7 @@ export class TaskGroupingNode {
      * matching this path.
      * NOTE: The node itself doesn't get included in the generated paths.
      */
-    generateAllPaths(pathSoFar: string[] = []): Map<string[], Task[]> {
+    generateAllPaths(pathSoFar: string[] = []): TaskGroupingTreeStorage {
         const resultMap = new Map();
         if (this.children.size == 0) {
             // Base case: Leaf node. Populate the results map with the path to
