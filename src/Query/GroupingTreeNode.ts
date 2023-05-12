@@ -1,14 +1,16 @@
+import type { Task } from './../Task';
+
 /**
  * A node in the grouping tree. The node contains the
  * list of values matching the path from the root so far, and its children
  * are the further grouping of those values.
  *
  */
-export class GroupingTreeNode<T> {
-    children: Map<string, GroupingTreeNode<T>> = new Map();
-    values: T[] = [];
+export class GroupingTreeNode {
+    children: Map<string, GroupingTreeNode> = new Map();
+    values: Task[] = [];
 
-    constructor(values: T[]) {
+    constructor(values: Task[]) {
         this.values = values;
     }
 
@@ -18,7 +20,7 @@ export class GroupingTreeNode<T> {
      * matching this path.
      * NOTE: The node itself doesn't get included in the generated paths.
      */
-    generateAllPaths(pathSoFar: string[] = []): Map<string[], T[]> {
+    generateAllPaths(pathSoFar: string[] = []): Map<string[], Task[]> {
         const resultMap = new Map();
         if (this.children.size == 0) {
             // Base case: Leaf node. Populate the results map with the path to

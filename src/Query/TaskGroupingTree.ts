@@ -34,7 +34,7 @@ export class TaskGroupingTreeStorage extends Map<string[], Task[]> {}
  *
  * NOTE: The same task can appear in multiple leaf nodes, if it matches multiple paths.
  */
-class TaskGroupingTreeNode extends GroupingTreeNode<Task> {}
+class TaskGroupingTreeNode extends GroupingTreeNode {}
 
 /**
  * TaskGroupingTree does the initial grouping together of tasks,
