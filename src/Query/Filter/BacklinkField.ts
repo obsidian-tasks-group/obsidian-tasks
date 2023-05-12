@@ -31,15 +31,16 @@ export class BacklinkField extends TextField {
     public grouper(): GrouperFunction {
         return (task: Task) => {
             const filename = task.filename;
-            if (filename !== null) {
-                const backlink = this.value(task);
-                if (filename !== backlink) {
-                    // In case backlink is 'file_name > heading', the filename only shall be escaped
-                    return [TextField.escapeMarkdownCharacters(filename) + backlink.substring(filename.length)];
-                }
+            if (filename === null) {
+                return ['Unknown Location'];
             }
 
-            return [TextField.escapeMarkdownCharacters(this.value(task))];
+            let result = TextField.escapeMarkdownCharacters(filename);
+            // In case backlink is 'file_name > heading', the filename only shall be escaped
+            if (task.precedingHeader && task.precedingHeader !== filename) {
+                result += ' > ' + task.precedingHeader;
+            }
+            return [result];
         };
     }
 }
