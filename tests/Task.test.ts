@@ -414,6 +414,82 @@ describe('parsing tags', () => {
     );
 });
 
+describe('backlinks', () => {
+    function shouldGiveLinkText(
+        path: string,
+        heading: string | null,
+        filenameUnique: boolean,
+        expected: string | null,
+    ) {
+        expect(
+            new TaskBuilder()
+                .path(path)
+                .precedingHeader(heading)
+                .build()
+                .getLinkText({ isFilenameUnique: filenameUnique }),
+        ).toEqual(expected);
+    }
+
+    describe('valid and unique paths', () => {
+        it('valid, unique path without heading should use filename as backlink', () => {
+            shouldGiveLinkText('a/b/c.md', null, true, 'c');
+        });
+
+        it('valid, unique path with different heading should use filename and heading as backlink', () => {
+            shouldGiveLinkText('a/b/c.md', 'heading', true, 'c > heading');
+        });
+
+        it('valid, unique path with same heading should use just filename as backlink', () => {
+            shouldGiveLinkText('a/b/c.md', 'c', true, 'c');
+        });
+    });
+
+    describe('valid non-unique paths', () => {
+        it('valid, non-unique path without heading should use full path as backlink', () => {
+            shouldGiveLinkText('a/b/c.md', null, false, '/a/b/c.md');
+        });
+
+        it('valid, non-unique path with different heading should use full path and heading as backlink', () => {
+            shouldGiveLinkText('a/b/c.md', 'heading', false, '/a/b/c.md > heading');
+        });
+
+        it('valid, non-unique path with same heading as file name should use full path and heading as backlink', () => {
+            shouldGiveLinkText('a/b/c.md', 'c', false, '/a/b/c.md > c');
+        });
+
+        it('valid, non-unique path with same heading as path name with initial slash should use just the path as backlink', () => {
+            // This is not a realistic use-case, but is included to show the current behaviour of the code
+            shouldGiveLinkText('a/b/c.md', '/a/b/c.md', false, '/a/b/c.md');
+        });
+    });
+
+    describe('invalid unique paths', () => {
+        // use invalid file extension to generate null filename
+        // This is not a realistic use-case, but is included to show the current behaviour of the code
+
+        it('invalid, unique path without heading should give null for backlink', () => {
+            shouldGiveLinkText('a/b/c.markdown', null, true, null);
+        });
+
+        it('invalid, unique path with heading should give null for backlink', () => {
+            shouldGiveLinkText('a/b/c.markdown', 'heading', true, null);
+        });
+    });
+
+    describe('invalid non-unique paths', () => {
+        // use invalid file extension to generate null filename
+        // This is not a realistic use-case, but is included to show the current behaviour of the code
+
+        it('invalid, non-unique path without heading uses path anyway for backlink', () => {
+            shouldGiveLinkText('a/b/c.markdown', null, false, '/a/b/c.markdown');
+        });
+
+        it('invalid, non-unique path with heading uses path and backlink anyway for backlink', () => {
+            shouldGiveLinkText('a/b/c.markdown', 'heading', false, '/a/b/c.markdown > heading');
+        });
+    });
+});
+
 describe('to string', () => {
     it('retains the indentation', () => {
         const line = '> > > - [ ] Task inside a nested blockquote or callout';
