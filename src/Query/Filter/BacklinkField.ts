@@ -40,7 +40,7 @@ export class BacklinkField extends TextField {
 
             // Only append the heading if it differs from the un-escaped fileanme:
             if (task.precedingHeader && task.precedingHeader !== filename) {
-                // We don't escape the heading, as any markdown inside really are markdown styling
+                // We don't escape the heading, as any markdown characters in it really are markdown styling:
                 result += ' > ' + task.precedingHeader;
             }
             return [result];

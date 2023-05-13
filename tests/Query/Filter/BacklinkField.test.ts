@@ -46,7 +46,7 @@ describe('grouping by backlink', () => {
         // If file name and heading are identical, avoid duplication ('c > c')
         ['a/b/c.md', 'c', ['c']],
 
-        // Even if there are underscores in the file name
+        // If file name and heading are identical, avoid duplication, even if there are underscores in the file name
         ['a_b_c.md', 'a_b_c', ['a\\_b\\_c']],
 
         // Underscores in file name component are escaped
