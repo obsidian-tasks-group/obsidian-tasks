@@ -49,7 +49,7 @@ Use `next tuesday` instead if you mean "next tuesday".
 > [!released]
 Date range searches were introduced in Tasks 2.0.0.
 
-Tasks allows date searches to specify a pair of dates, `<date range>` .
+Tasks allows date searches to specify a pair of dates, `<date range>`.
 
 These searches are inclusive: the dates at either end are found by the search.
 
@@ -190,6 +190,8 @@ For full details of combining filters with boolean operators, see [[Combining Fi
   - `(YYYY-Www|YYYY-mm|YYYY-Qq|YYYY)`
 - `done date is invalid`
 
+For more information, see [[Dates#Done date|Done date]].
+
 > [!released]
 >
 > - `no done date` and `has done date` were introduced in Tasks 1.7.0.
@@ -207,6 +209,8 @@ For full details of combining filters with boolean operators, see [[Combining Fi
   - `(last|this|next) (week|month|quarter|year)`
   - `(YYYY-Www|YYYY-mm|YYYY-Qq|YYYY)`
 - `due date is invalid`
+
+For more information, see [[Dates#Due date|Due date]].
 
 > [!released]
 >
@@ -226,6 +230,8 @@ For full details of combining filters with boolean operators, see [[Combining Fi
   - `(YYYY-Www|YYYY-mm|YYYY-Qq|YYYY)`
 - `scheduled date is invalid`
 
+For more information, see [[Dates#Scheduled date|Scheduled date]].
+
 > [!released]
 >
 > - `has scheduled date` was introduced in Tasks 1.6.0.
@@ -243,6 +249,8 @@ For full details of combining filters with boolean operators, see [[Combining Fi
   - `(last|this|next) (week|month|quarter|year)`
   - `(YYYY-Www|YYYY-mm|YYYY-Qq|YYYY)`
 - `start date is invalid`
+
+For more information, see [[Dates#Start date|Start date]].
 
 > [!released]
 >
@@ -327,7 +335,7 @@ because the tasks starts before tomorrow. Only one of the dates needs to match.
 
 ### Troubleshooting date searches
 
-If your date searches are giving unexpected results, add an [[Explaining Queries|`explain`]] line to your query.
+If your date searches are giving unexpected results, add an [[Explaining Queries|explain]] line to your query.
 
 This will help you identify common mistakes such as:
 
@@ -455,7 +463,7 @@ The available priorities are (from high to low):
 3. use no signifier to indicate no priority (searched for with 'none')
 4. 🔽 for low priority
 
-For more information, see [[Priority|Priorities]] .
+For more information, see [[Priority|Priorities]].
 
 #### Examples
 
@@ -484,6 +492,8 @@ For more information, see [[Priority|Priorities]] .
 - `recurrence (regex matches|regex does not match) /<JavaScript-style Regex>/`
   - Does regular expression match (case-sensitive by default).
   - Essential reading: [[Regular Expressions|Regular Expression Searches]].
+
+For more information, see [[Recurring Tasks]].
 
 > [!released]
 `recurrence` text searching was introduced in Tasks 1.22.0.
