@@ -1,4 +1,5 @@
 import type { MarkdownPostProcessorContext, Plugin } from 'obsidian';
+import type { Component } from 'obsidian';
 import { GlobalFilter } from './Config/GlobalFilter';
 import { Task } from './Task';
 import { TaskLocation } from './TaskLocation';
@@ -96,6 +97,8 @@ export class InlineRenderer {
             const taskElement = await task.toLi({
                 parentUlElement: element,
                 listIndex,
+                // TODO TEMP this is not ok
+                obsidianComponent: null as unknown as Component,
             });
 
             // If the rendered element contains a sub-list or sub-div (e.g. the
