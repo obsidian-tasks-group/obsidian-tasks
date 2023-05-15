@@ -142,11 +142,11 @@ For example:
 
 > [!info]
 > The order of operations ensures that grouping does not modify which tasks are displayed, for example when the `limit` option is used:
-
-1. all the filter instructions are run
-1. then any sorting instructions are run
-1. then any `limit` instructions are run
-1. then finally any grouping instructions are run
+>
+> 1. all the filter instructions are run
+> 1. then any sorting instructions are run
+> 1. then any `limit` instructions are run
+> 1. then finally any grouping instructions are run
 
 ---
 
