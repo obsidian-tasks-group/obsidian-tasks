@@ -83,6 +83,7 @@ For more information, including adding your own customised statuses, see [[Statu
         - `Priority 4: Low`
 1. `urgency` ([[Urgency|urgency]])
     - Currently, the groups run from the lowest urgency to highest.
+    - You can reverse this with `group by urgency reverse`.
     - In a future release, the default group order will become from the highest urgency to lowest.
 1. `recurring`
     - Whether the task is recurring: either `Recurring` or `Not Recurring`.
