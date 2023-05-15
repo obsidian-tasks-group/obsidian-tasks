@@ -230,7 +230,7 @@ describe('Grouping tasks', () => {
         `);
     });
 
-    it('should create nested headings if multiple groups used', () => {
+    it('should create nested headings if multiple groups used even if one is reversed', () => {
         // Arrange
         const t1 = fromLine({
             line: '- [ ] Task 1 - but path is 2nd, alphabetically',
@@ -246,7 +246,7 @@ describe('Grouping tasks', () => {
         });
         const tasks = [t1, t2, t3];
 
-        const grouping: Grouper[] = [new FolderField().createGrouper(), new FilenameField().createGrouper()];
+        const grouping: Grouper[] = [new FolderField().createGrouper(true), new FilenameField().createGrouper()];
 
         // Act
         const groups = new TaskGroups(grouping, tasks);
@@ -254,13 +254,6 @@ describe('Grouping tasks', () => {
         // Assert
         expect(groups.toString()).toMatchInlineSnapshot(`
             "
-            Group names: [folder\\_a/folder\\_b/,[[file_c]]]
-            #### folder\\_a/folder\\_b/
-            ##### [[file_c]]
-            - [ ] Task 3 - but path is 1st, alphabetically
-
-            ---
-
             Group names: [folder\\_b/folder\\_c/,[[file_c]]]
             #### folder\\_b/folder\\_c/
             ##### [[file_c]]
@@ -271,6 +264,13 @@ describe('Grouping tasks', () => {
             Group names: [folder\\_b/folder\\_c/,[[file_d]]]
             ##### [[file_d]]
             - [ ] Task 2 - but path is 2nd, alphabetically
+
+            ---
+
+            Group names: [folder\\_a/folder\\_b/,[[file_c]]]
+            #### folder\\_a/folder\\_b/
+            ##### [[file_c]]
+            - [ ] Task 3 - but path is 1st, alphabetically
 
             ---
 
