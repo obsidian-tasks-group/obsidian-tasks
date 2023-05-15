@@ -29,6 +29,7 @@ describe('Grouping tasks', () => {
         const groups = new TaskGroups(grouping, inputs);
 
         // Assert
+        expect(groups.groupers).toStrictEqual(grouping);
         expect(groups.toString()).toMatchInlineSnapshot(`
             "
             Group names: [file1]
