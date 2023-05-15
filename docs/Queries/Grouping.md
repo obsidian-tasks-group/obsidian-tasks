@@ -120,7 +120,7 @@ See the [screenshots below](#screenshots) for how this looks in practice.
 ## Reversing groups
 
 > [!released]
-> Reversing of group headings was introduced in Tasks X.Y.Z.
+> Reversing of group headings was introduced in Tasks 3.7.0.
 
 After the name of the property that you want to group by, you can add the `reverse` keyword.
 If given, the group headings will be reversed for that property.

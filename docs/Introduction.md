@@ -6,7 +6,7 @@ publish: true
 
 ## What's New?
 
-- X.Y.Z: 🔥 Add [[Grouping#Reversing groups|reverse sorting of groups]]
+- 3.7.0: 🔥 Add [[Grouping#Reversing groups|reverse sorting of groups]]
 - 3.6.0: 🔥 Add [[Grouping#Other task properties|group by urgency]]
 - 3.6.0: 🔥 Add [[Sorting#Other task properties|sort by recurring]]
 - 3.5.0: 🔥 New [[Global Query]] facility.
