@@ -280,7 +280,7 @@ export abstract class Field {
      * For now, parsing of `group by` lines is currently done in {@link FilterParser.parseGrouper()}.
      * Later, this will probably be moved to the {@link Field} classes.
      */
-    public createGrouper(reverse: boolean = false): Grouper {
+    public createGrouper(reverse: boolean): Grouper {
         return new Grouper(this.fieldNameSingular(), this.grouper(), reverse);
     }
 
