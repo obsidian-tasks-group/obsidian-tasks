@@ -34,6 +34,13 @@ export class TaskGroups {
     }
 
     /**
+     * Return the {@link Grouper} objects, 1 per 'group by' line in the tasks query block.
+     */
+    public get groupers(): Grouper[] {
+        return this._groupers;
+    }
+
+    /**
      * All the tasks matching the query, grouped together, and in the order
      * that they should be displayed.
      *
