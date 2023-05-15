@@ -246,7 +246,10 @@ describe('Grouping tasks', () => {
         });
         const tasks = [t1, t2, t3];
 
-        const grouping: Grouper[] = [new FolderField().createGrouper(true), new FilenameField().createGrouper()];
+        const grouping: Grouper[] = [
+            new FolderField().createReverseGrouper(),
+            new FilenameField().createNormalGrouper(),
+        ];
 
         // Act
         const groups = new TaskGroups(grouping, tasks);
