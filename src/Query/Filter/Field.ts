@@ -265,26 +265,6 @@ export abstract class Field {
     }
 
     /**
-     * Return a function to get a list of a task's group names, for use in grouping by this field's value.
-     *
-     * See {@link supportsGrouping} for what to do, to enable support of grouping in a
-     * particular {@link Field} implementation.
-     */
-    public grouper(): GrouperFunction {
-        throw Error(`grouper() unimplemented for ${this.fieldNameSingular()}`);
-    }
-
-    /**
-     * Create a {@link Grouper} object for grouping tasks by this field's value.
-     *
-     * For now, parsing of `group by` lines is currently done in {@link FilterParser.parseGrouper()}.
-     * Later, this will probably be moved to the {@link Field} classes.
-     */
-    public createGrouper(reverse: boolean): Grouper {
-        return new Grouper(this.fieldNameSingular(), this.grouper(), reverse);
-    }
-
-    /**
      * Parse a 'group by' line and return a {@link Grouper} object.
      *
      * Returns null line does not match this field or is invalid,
@@ -363,6 +343,26 @@ export abstract class Field {
         }
 
         return new RegExp(`^group by ${this.fieldNameSingularEscaped()}( reverse)?$`);
+    }
+
+    /**
+     * Return a function to get a list of a task's group names, for use in grouping by this field's value.
+     *
+     * See {@link supportsGrouping} for what to do, to enable support of grouping in a
+     * particular {@link Field} implementation.
+     */
+    public grouper(): GrouperFunction {
+        throw Error(`grouper() unimplemented for ${this.fieldNameSingular()}`);
+    }
+
+    /**
+     * Create a {@link Grouper} object for grouping tasks by this field's value.
+     *
+     * For now, parsing of `group by` lines is currently done in {@link FilterParser.parseGrouper()}.
+     * Later, this will probably be moved to the {@link Field} classes.
+     */
+    public createGrouper(reverse: boolean): Grouper {
+        return new Grouper(this.fieldNameSingular(), this.grouper(), reverse);
     }
 
     /**
