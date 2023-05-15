@@ -150,7 +150,7 @@ describe('grouping by happens date', () => {
         ['- [ ] start is earliest date 🛫 1970-01-01 ⏳ 1970-01-02 📅 1970-01-03', ['1970-01-01 Thursday']],
     ])('group by happens date: task "%s" should have groups %s', (taskLine: string, expectedResult: string[]) => {
         // Arrange
-        const grouper = new HappensDateField().createGrouper();
+        const grouper = new HappensDateField().createNormalGrouper();
 
         // Assert
         expect(grouper.grouper(fromLine({ line: taskLine }))).toEqual(expectedResult);

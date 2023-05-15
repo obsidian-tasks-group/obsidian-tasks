@@ -114,7 +114,7 @@ describe('grouping by filename', () => {
         ['- [ ] a', 'a/b/_c_.md', ['[[_c_]]']],
     ])('task "%s" with path "%s" should have groups: %s', (taskLine: string, path: string, groups: string[]) => {
         // Arrange
-        const grouper = new FilenameField().createGrouper().grouper;
+        const grouper = new FilenameField().createNormalGrouper().grouper;
 
         // Assert
         expect(grouper(fromLine({ line: taskLine, path: path }))).toEqual(groups);

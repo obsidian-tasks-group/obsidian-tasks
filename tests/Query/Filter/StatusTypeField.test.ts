@@ -149,7 +149,7 @@ describe('grouping by status.type', () => {
 
     it('group by status.type', () => {
         // Arrange
-        const grouper = new StatusTypeField().createGrouper();
+        const grouper = new StatusTypeField().createNormalGrouper();
 
         // // Assert
         expect(grouper.grouper(inprTask)).toEqual(['1 IN_PROGRESS']);

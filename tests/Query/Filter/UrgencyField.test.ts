@@ -91,7 +91,7 @@ describe('grouping by urgency', () => {
         ['- [ ] a 🔽', ['0.00']],
     ])('task "%s" should have groups: %s', (taskLine: string, groups: string[]) => {
         // Arrange
-        const grouper = new UrgencyField().createGrouper().grouper;
+        const grouper = new UrgencyField().createNormalGrouper().grouper;
 
         // Assert
         expect(grouper(fromLine({ line: taskLine }))).toEqual(groups);

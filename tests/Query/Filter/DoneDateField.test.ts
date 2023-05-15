@@ -94,7 +94,7 @@ describe('grouping by done date', () => {
 
     it('group by done date', () => {
         // Arrange
-        const grouper = new DoneDateField().createGrouper();
+        const grouper = new DoneDateField().createNormalGrouper();
         const taskWithDate = new TaskBuilder().doneDate('1970-01-01').build();
         const taskWithoutDate = new TaskBuilder().build();
 
