@@ -66,4 +66,12 @@ export abstract class MultiTextField extends TextField {
     public createGrouper(): Grouper {
         return new Grouper(this.fieldNamePlural(), this.grouper());
     }
+
+    protected grouperRegExp(): RegExp {
+        if (!this.supportsGrouping()) {
+            throw Error(`grouperRegExp() unimplemented for ${this.fieldNameSingular()}`);
+        }
+
+        return new RegExp(`^group by ${this.fieldNamePlural()}$`);
+    }
 }
