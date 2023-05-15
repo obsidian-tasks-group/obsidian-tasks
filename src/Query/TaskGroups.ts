@@ -34,7 +34,6 @@ export class TaskGroups {
 
         this.sortTaskGroups();
 
-        // Get the headings, now that the groups have been sorted.
         this.setGroupsHeadings(taskGroupingTree);
     }
 
@@ -91,7 +90,6 @@ export class TaskGroups {
     }
 
     private addTasks(taskGroupingTree: TaskGroupingTree) {
-        // Build a container of all the groups
         for (const [groups, tasks] of taskGroupingTree.groups) {
             const taskGroup = new TaskGroup(groups, tasks);
             this.add(taskGroup);
