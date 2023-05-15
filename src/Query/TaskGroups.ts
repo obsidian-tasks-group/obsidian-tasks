@@ -30,7 +30,7 @@ export class TaskGroups {
         this._groupers = groups;
 
         const taskGroupingTree = new TaskGroupingTree(groups, tasks);
-        this.addTasks(taskGroupingTree);
+        this.addTaskGroups(taskGroupingTree);
 
         this.sortTaskGroups();
 
@@ -89,14 +89,14 @@ export class TaskGroups {
         return output;
     }
 
-    private addTasks(taskGroupingTree: TaskGroupingTree) {
+    private addTaskGroups(taskGroupingTree: TaskGroupingTree) {
         for (const [groups, tasks] of taskGroupingTree.groups) {
             const taskGroup = new TaskGroup(groups, tasks);
-            this.add(taskGroup);
+            this.addTaskGroup(taskGroup);
         }
     }
 
-    private add(taskGroup: TaskGroup) {
+    private addTaskGroup(taskGroup: TaskGroup) {
         this._groups.push(taskGroup);
     }
 
