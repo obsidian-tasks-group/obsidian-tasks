@@ -663,13 +663,13 @@ describe('grouping by tag', () => {
             - tags reverse
 
             Group names: [#tag2]
-            #### #tag2
+            #### [tags] #tag2
             - [ ] b #tag2
 
             ---
 
             Group names: [#tag1]
-            #### #tag1
+            #### [tags] #tag1
             - [ ] a #tag1
 
             ---

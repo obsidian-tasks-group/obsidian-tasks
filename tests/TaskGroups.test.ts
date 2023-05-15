@@ -35,14 +35,14 @@ describe('Grouping tasks', () => {
             - path
 
             Group names: [file1]
-            #### file1
+            #### [path] file1
             - [ ] b
             - [ ] c
 
             ---
 
             Group names: [file2]
-            #### file2
+            #### [path] file2
             - [ ] a
 
             ---
@@ -116,19 +116,19 @@ describe('Grouping tasks', () => {
             - path
 
             Group names: [a/b/c]
-            #### a/b/c
+            #### [path] a/b/c
             - [ ] first file path, alphabetically
 
             ---
 
             Group names: [b/c/d]
-            #### b/c/d
+            #### [path] b/c/d
             - [ ] second file path
 
             ---
 
             Group names: [d/e/f]
-            #### d/e/f
+            #### [path] d/e/f
             - [ ] third file path
 
             ---
@@ -156,13 +156,13 @@ describe('Grouping tasks', () => {
             - filename
 
             Group names: [[[9 something]]]
-            #### [[9 something]]
+            #### [filename] [[9 something]]
             - [ ] first, as 9 is less then 10
 
             ---
 
             Group names: [[[10 something]]]
-            #### [[10 something]]
+            #### [filename] [[10 something]]
             - [ ] second, as 10 is more than 9
 
             ---
@@ -189,13 +189,13 @@ describe('Grouping tasks', () => {
             - due reverse
 
             Group names: [2023-07-08 Saturday]
-            #### 2023-07-08 Saturday
+            #### [due] 2023-07-08 Saturday
             - [ ] b 📅 2023-07-08
 
             ---
 
             Group names: [2023-04-05 Wednesday]
-            #### 2023-04-05 Wednesday
+            #### [due] 2023-04-05 Wednesday
             - [ ] a 📅 2023-04-05
 
             ---
@@ -224,14 +224,14 @@ describe('Grouping tasks', () => {
             - tags
 
             Group names: [#group1]
-            #### #group1
+            #### [tags] #group1
             - [ ] Task 1 #group1
             - [ ] Task 2 #group2 #group1
 
             ---
 
             Group names: [#group2]
-            #### #group2
+            #### [tags] #group2
             - [ ] Task 2 #group2 #group1
             - [ ] Task 3 #group2
 
@@ -273,21 +273,21 @@ describe('Grouping tasks', () => {
             - filename
 
             Group names: [folder\\_b/folder\\_c/,[[file_c]]]
-            #### folder\\_b/folder\\_c/
-            ##### [[file_c]]
+            #### [folder] folder\\_b/folder\\_c/
+            ##### [filename] [[file_c]]
             - [ ] Task 1 - but path is 2nd, alphabetically
 
             ---
 
             Group names: [folder\\_b/folder\\_c/,[[file_d]]]
-            ##### [[file_d]]
+            ##### [filename] [[file_d]]
             - [ ] Task 2 - but path is 2nd, alphabetically
 
             ---
 
             Group names: [folder\\_a/folder\\_b/,[[file_c]]]
-            #### folder\\_a/folder\\_b/
-            ##### [[file_c]]
+            #### [folder] folder\\_a/folder\\_b/
+            ##### [filename] [[file_c]]
             - [ ] Task 3 - but path is 1st, alphabetically
 
             ---
@@ -322,20 +322,20 @@ describe('Grouping tasks', () => {
             - happens
 
             Group names: [2 TODO,2022-09-19 Monday]
-            #### 2 TODO
-            ##### 2022-09-19 Monday
+            #### [status.type] 2 TODO
+            ##### [happens] 2022-09-19 Monday
             - [ ] Task a - early date 📅 2022-09-19
 
             ---
 
             Group names: [2 TODO,2022-10-06 Thursday]
-            ##### 2022-10-06 Thursday
+            ##### [happens] 2022-10-06 Thursday
             - [ ] Task c - intermediate date ⏳ 2022-10-06
 
             ---
 
             Group names: [2 TODO,2022-12-06 Tuesday]
-            ##### 2022-12-06 Tuesday
+            ##### [happens] 2022-12-06 Tuesday
             - [ ] Task b - later date ⏳ 2022-12-06
 
             ---
