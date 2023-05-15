@@ -91,7 +91,7 @@ describe('grouping by status.name', () => {
 
     it('group by status.name', () => {
         // Arrange
-        const grouper = new StatusNameField().createGrouper();
+        const grouper = new StatusNameField().createNormalGrouper();
 
         // // Assert
         expect(grouper.grouper(todoTask)).toEqual(['Todo']);
