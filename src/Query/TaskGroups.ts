@@ -30,7 +30,11 @@ export class TaskGroups {
         this._groupers = groups;
 
         const taskGroupingTree = new TaskGroupingTree(groups, tasks);
-        this.addTasks(taskGroupingTree);
+        this.addTaskGroups(taskGroupingTree);
+
+        this.sortTaskGroups();
+
+        this.setGroupsHeadings(taskGroupingTree);
     }
 
     /**
@@ -85,23 +89,14 @@ export class TaskGroups {
         return output;
     }
 
-    private addTasks(taskGroupingTree: TaskGroupingTree) {
-        // Build a container of all the groups
+    private addTaskGroups(taskGroupingTree: TaskGroupingTree) {
         for (const [groups, tasks] of taskGroupingTree.groups) {
             const taskGroup = new TaskGroup(groups, tasks);
-            this.add(taskGroup);
-        }
-
-        this.sortTaskGroups();
-
-        // Get the headings, now that the groups have been sorted.
-        const displayHeadingSelector = new GroupDisplayHeadingSelector(taskGroupingTree.groups, this._groupers);
-        for (const group of this._groups) {
-            group.setGroupHeadings(displayHeadingSelector.getHeadingsForTaskGroup(group.groups));
+            this.addTaskGroup(taskGroup);
         }
     }
 
-    private add(taskGroup: TaskGroup) {
+    private addTaskGroup(taskGroup: TaskGroup) {
         this._groups.push(taskGroup);
     }
 
@@ -127,5 +122,12 @@ export class TaskGroups {
             return 0;
         };
         this._groups.sort(compareFn);
+    }
+
+    private setGroupsHeadings(taskGroupingTree: TaskGroupingTree) {
+        const displayHeadingSelector = new GroupDisplayHeadingSelector(taskGroupingTree.groups, this._groupers);
+        for (const group of this._groups) {
+            group.setGroupHeadings(displayHeadingSelector.getHeadingsForTaskGroup(group.groups));
+        }
     }
 }
