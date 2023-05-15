@@ -342,8 +342,8 @@ export abstract class Field {
             return null;
         }
 
-        //const reverse = !!match[1];
-        return this.createGrouper();
+        const reverse = !!match[1];
+        return this.createGrouper(reverse);
     }
 
     /**
@@ -362,6 +362,6 @@ export abstract class Field {
             throw Error(`grouperRegExp() unimplemented for ${this.fieldNameSingular()}`);
         }
 
-        return new RegExp(`^group by ${this.fieldNameSingularEscaped()}$`);
+        return new RegExp(`^group by ${this.fieldNameSingularEscaped()}( reverse)?$`);
     }
 }

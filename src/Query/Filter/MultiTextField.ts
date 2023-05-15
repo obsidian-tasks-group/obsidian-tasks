@@ -63,8 +63,8 @@ export abstract class MultiTextField extends TextField {
     /**
      * This overloads {@link Field.createGrouper} to put a plural field name in the {@link Grouper.property}.
      */
-    public createGrouper(): Grouper {
-        return new Grouper(this.fieldNamePlural(), this.grouper());
+    public createGrouper(reverse: boolean = false): Grouper {
+        return new Grouper(this.fieldNamePlural(), this.grouper(), reverse);
     }
 
     protected grouperRegExp(): RegExp {
@@ -72,6 +72,6 @@ export abstract class MultiTextField extends TextField {
             throw Error(`grouperRegExp() unimplemented for ${this.fieldNameSingular()}`);
         }
 
-        return new RegExp(`^group by ${this.fieldNamePlural()}$`);
+        return new RegExp(`^group by ${this.fieldNamePlural()}( reverse)?$`);
     }
 }

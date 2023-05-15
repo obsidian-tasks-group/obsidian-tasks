@@ -171,7 +171,7 @@ describe('Grouping tasks', () => {
         const inputs = [a, b];
 
         // Act
-        const grouping: Grouper[] = [new DueDateField().createGrouper(true)];
+        const grouping: Grouper[] = [new DueDateField().createGrouperFromLine('group by due reverse')!];
         const groups = new TaskGroups(grouping, inputs);
 
         // Assert

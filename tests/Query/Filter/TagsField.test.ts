@@ -7,6 +7,8 @@ import { fromLine } from '../../TestHelpers';
 import { Sort } from '../../../src/Query/Sort';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { expectTaskComparesAfter, expectTaskComparesBefore } from '../../CustomMatchers/CustomMatchersForSorting';
+import type { Grouper } from '../../../src/Query/Grouper';
+import { TaskGroups } from '../../../src/Query/TaskGroups';
 
 describe('tag presence & absence', () => {
     it.each(['has tag', 'has tags'])('should have "%s" filtering', (filterLine: string) => {
@@ -643,5 +645,35 @@ describe('grouping by tag', () => {
 
         // Assert
         expect(grouper(fromLine({ line: taskLine }))).toEqual(groups);
+    });
+
+    it('sorts headings in reverse', () => {
+        // Arrange
+        const a = fromLine({ line: '- [ ] a #tag1' });
+        const b = fromLine({ line: '- [ ] b #tag2' });
+        const inputs = [a, b];
+
+        // Act
+        const grouping: Grouper[] = [new TagsField().createGrouperFromLine('group by tags reverse')!];
+        const groups = new TaskGroups(grouping, inputs);
+
+        // Assert
+        expect(groups.toString()).toMatchInlineSnapshot(`
+            "
+            Group names: [#tag2]
+            #### #tag2
+            - [ ] b #tag2
+
+            ---
+
+            Group names: [#tag1]
+            #### #tag1
+            - [ ] a #tag1
+
+            ---
+
+            2 tasks
+            "
+        `);
     });
 });
