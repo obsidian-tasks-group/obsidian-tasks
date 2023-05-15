@@ -31,6 +31,14 @@ export class TaskGroups {
 
         const taskGroupingTree = new TaskGroupingTree(groups, tasks);
         this.addTasks(taskGroupingTree);
+
+        this.sortTaskGroups();
+
+        // Get the headings, now that the groups have been sorted.
+        const displayHeadingSelector = new GroupDisplayHeadingSelector(taskGroupingTree.groups, this._groupers);
+        for (const group of this._groups) {
+            group.setGroupHeadings(displayHeadingSelector.getHeadingsForTaskGroup(group.groups));
+        }
     }
 
     /**
@@ -90,14 +98,6 @@ export class TaskGroups {
         for (const [groups, tasks] of taskGroupingTree.groups) {
             const taskGroup = new TaskGroup(groups, tasks);
             this.add(taskGroup);
-        }
-
-        this.sortTaskGroups();
-
-        // Get the headings, now that the groups have been sorted.
-        const displayHeadingSelector = new GroupDisplayHeadingSelector(taskGroupingTree.groups, this._groupers);
-        for (const group of this._groups) {
-            group.setGroupHeadings(displayHeadingSelector.getHeadingsForTaskGroup(group.groups));
         }
     }
 
