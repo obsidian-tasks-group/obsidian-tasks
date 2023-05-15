@@ -3,7 +3,7 @@
  */
 import moment from 'moment';
 import { FilenameField } from '../src/Query/Filter/FilenameField';
-import type { Grouper } from '../src/Query/Grouper';
+import { Grouper } from '../src/Query/Grouper';
 import type { Task } from '../src/Task';
 import { PathField } from '../src/Query/Filter/PathField';
 import { TagsField } from '../src/Query/Filter/TagsField';
@@ -11,6 +11,7 @@ import { FolderField } from '../src/Query/Filter/FolderField';
 import { TaskGroups } from '../src/Query/TaskGroups';
 import { StatusTypeField } from '../src/Query/Filter/StatusTypeField';
 import { HappensDateField } from '../src/Query/Filter/HappensDateField';
+import { DueDateField } from '../src/Query/Filter/DueDateField';
 import { fromLine } from './TestHelpers';
 
 window.moment = moment;
@@ -155,6 +156,38 @@ describe('Grouping tasks', () => {
             Group names: [[[10 something]]]
             #### [[10 something]]
             - [ ] second, as 10 is more than 9
+
+            ---
+
+            2 tasks
+            "
+        `);
+    });
+
+    it('sorts due date group headings in reverse', () => {
+        // Arrange
+        const a = fromLine({ line: '- [ ] a 📅 2023-04-05', path: '2.md' });
+        const b = fromLine({ line: '- [ ] b 📅 2023-07-08', path: '3.md' });
+        const inputs = [a, b];
+
+        // Act
+        const dueDateField = new DueDateField();
+        const grouping: Grouper[] = [new Grouper('due reverse', dueDateField.grouper(), true)];
+        const groups = new TaskGroups(grouping, inputs);
+
+        // Assert
+        // No grouping specified, so no headings generated
+        expect(groups.toString()).toMatchInlineSnapshot(`
+            "
+            Group names: [2023-07-08 Saturday]
+            #### 2023-07-08 Saturday
+            - [ ] b 📅 2023-07-08
+
+            ---
+
+            Group names: [2023-04-05 Wednesday]
+            #### 2023-04-05 Wednesday
+            - [ ] a 📅 2023-04-05
 
             ---
 
