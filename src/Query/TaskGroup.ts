@@ -62,7 +62,7 @@ export class TaskGroup {
         this.tasks = tasks;
     }
 
-    setGroupHeadings(headingsForTaskGroup: GroupDisplayHeading[]) {
+    public setGroupHeadings(headingsForTaskGroup: GroupDisplayHeading[]) {
         for (const groupDisplayHeading of headingsForTaskGroup) {
             this.groupHeadings.push(groupDisplayHeading);
         }
