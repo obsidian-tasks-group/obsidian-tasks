@@ -357,9 +357,7 @@ export abstract class Field {
 
     /**
      * Create a {@link Grouper} object for grouping tasks by this field's value.
-     *
-     * For now, parsing of `group by` lines is currently done in {@link FilterParser.parseGrouper()}.
-     * Later, this will probably be moved to the {@link Field} classes.
+     * @param reverse - false for normal group order, true for reverse group order.
      */
     public createGrouper(reverse: boolean): Grouper {
         return new Grouper(this.fieldNameSingular(), this.grouper(), reverse);
