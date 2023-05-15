@@ -364,4 +364,24 @@ export abstract class Field {
 
         return new RegExp(`^group by ${this.fieldNameSingularEscaped()}( reverse)?$`);
     }
+
+    /**
+     * Create a {@link Grouper} object for grouping tasks by this field's value,
+     * in the standard/normal group order for this field.
+     *
+     * @see {@link createReverseGrouper}
+     */
+    public createNormalGrouper(): Grouper {
+        return this.createGrouper(false);
+    }
+
+    /**
+     * Create a {@link Grouper} object for grouping tasks by this field's value,
+     * in the reverse of the standard/normal group order for this field.
+     *
+     * @see {@link createNormalGrouper}
+     */
+    public createReverseGrouper(): Grouper {
+        return this.createGrouper(true);
+    }
 }
