@@ -31,7 +31,9 @@ describe('Grouping tasks', () => {
         // Assert
         expect(groups.groupers).toStrictEqual(grouping);
         expect(groups.toString()).toMatchInlineSnapshot(`
-            "
+            "Groupers (if any):
+            - path
+
             Group names: [file1]
             #### file1
             - [ ] b
@@ -64,7 +66,8 @@ describe('Grouping tasks', () => {
         // Assert
         // No grouping specified, so no headings generated
         expect(groups.toString()).toMatchInlineSnapshot(`
-            "
+            "Groupers (if any):
+
             Group names: []
             - [ ] a 📅 1970-01-01
             - [ ] b 📅 1970-01-02
@@ -109,7 +112,9 @@ describe('Grouping tasks', () => {
         const grouping = [new PathField().createNormalGrouper()];
         const groups = new TaskGroups(grouping, inputs);
         expect(groups.toString()).toMatchInlineSnapshot(`
-            "
+            "Groupers (if any):
+            - path
+
             Group names: [a/b/c]
             #### a/b/c
             - [ ] first file path, alphabetically
@@ -147,7 +152,9 @@ describe('Grouping tasks', () => {
         const grouping = [new FilenameField().createNormalGrouper()];
         const groups = new TaskGroups(grouping, inputs);
         expect(groups.toString()).toMatchInlineSnapshot(`
-            "
+            "Groupers (if any):
+            - filename
+
             Group names: [[[9 something]]]
             #### [[9 something]]
             - [ ] first, as 9 is less then 10
@@ -178,7 +185,9 @@ describe('Grouping tasks', () => {
         // Assert
         // No grouping specified, so no headings generated
         expect(groups.toString()).toMatchInlineSnapshot(`
-            "
+            "Groupers (if any):
+            - due reverse
+
             Group names: [2023-07-08 Saturday]
             #### 2023-07-08 Saturday
             - [ ] b 📅 2023-07-08
@@ -211,7 +220,9 @@ describe('Grouping tasks', () => {
         const grouping = [new TagsField().createNormalGrouper()];
         const groups = new TaskGroups(grouping, inputs);
         expect(groups.toString()).toMatchInlineSnapshot(`
-            "
+            "Groupers (if any):
+            - tags
+
             Group names: [#group1]
             #### #group1
             - [ ] Task 1 #group1
@@ -257,7 +268,10 @@ describe('Grouping tasks', () => {
 
         // Assert
         expect(groups.toString()).toMatchInlineSnapshot(`
-            "
+            "Groupers (if any):
+            - folder reverse
+            - filename
+
             Group names: [folder\\_b/folder\\_c/,[[file_c]]]
             #### folder\\_b/folder\\_c/
             ##### [[file_c]]
@@ -303,7 +317,10 @@ describe('Grouping tasks', () => {
         // This result is incorrect. The '2 TODO' heading is shown before
         // the last group instead of before the first one.
         expect(groups.toString()).toMatchInlineSnapshot(`
-            "
+            "Groupers (if any):
+            - status.type
+            - happens
+
             Group names: [2 TODO,2022-09-19 Monday]
             #### 2 TODO
             ##### 2022-09-19 Monday
