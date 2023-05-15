@@ -116,7 +116,29 @@ See the [screenshots below](#screenshots) for how this looks in practice.
 > [!info]
 > Headings are displayed in case-sensitive alphabetical order, not the original order.
 
----
+## Reversing groups
+
+> [!released]
+> Reversing of group headings was introduced in Tasks X.Y.Z.
+
+After the name of the property that you want to group by, you can add the `reverse` keyword.
+If given, the group headings will be reversed for that property.
+
+For example:
+
+- `group by due` will sort the group headings:
+  - from **oldest** due date first...
+  - to **newest** due date last
+- `group by due reverse` will sort the group headings:
+  - from **newest** due date first...
+  - to **oldest** due date last
+
+> [!tip]
+> The `reverse` keyword controls the order that group headings are displayed.
+>
+> The [[Sorting|sort by]] facility, by contrast, controls the order in which displays are displayed *inside* each group.
+
+## Notes
 
 > [!info]
 > The order of operations ensures that grouping does not modify which tasks are displayed, for example when the `limit` option is used:
@@ -148,9 +170,19 @@ Tasks grouped.
 
 ## Examples
 
+Give me three levels of grouping, to indicate the locations of my tasks:
+
     ```tasks
     not done
     group by folder
     group by filename
     group by heading
+    ```
+
+Show me tasks I need to do today - and put today's tasks first, for visibility:
+
+    ```tasks
+    not done
+    due before tomorrow
+    group by due reverse
     ```
