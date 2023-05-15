@@ -3,7 +3,7 @@
  */
 import moment from 'moment';
 import { FilenameField } from '../src/Query/Filter/FilenameField';
-import { Grouper } from '../src/Query/Grouper';
+import type { Grouper } from '../src/Query/Grouper';
 import type { Task } from '../src/Task';
 import { PathField } from '../src/Query/Filter/PathField';
 import { TagsField } from '../src/Query/Filter/TagsField';
@@ -171,8 +171,7 @@ describe('Grouping tasks', () => {
         const inputs = [a, b];
 
         // Act
-        const dueDateField = new DueDateField();
-        const grouping: Grouper[] = [new Grouper('due reverse', dueDateField.grouper(), true)];
+        const grouping: Grouper[] = [new DueDateField().createGrouper(true)];
         const groups = new TaskGroups(grouping, inputs);
 
         // Assert
