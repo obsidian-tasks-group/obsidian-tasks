@@ -96,7 +96,7 @@ export class TaskGroup {
             // These headings mimic the behaviour of QueryRenderer,
             // which uses 'h4', 'h5' and 'h6' for nested groups.
             const headingPrefix = '#'.repeat(4 + heading.nestingLevel);
-            output += `${headingPrefix} ${heading.displayName}\n`;
+            output += `${headingPrefix} [${heading.property}] ${heading.displayName}\n`;
         }
 
         output += this.tasksAsStringOfLines();

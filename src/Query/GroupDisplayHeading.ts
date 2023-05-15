@@ -22,12 +22,21 @@ export class GroupDisplayHeading {
     public readonly displayName: string;
 
     /**
+     * The property, or field name, in the 'group by' line that generated this heading.
+     * For example, 'starts', 'status.type', or 'priority'.
+     */
+    public readonly property: string;
+
+    /**
      * Construct a {@link GroupDisplayHeading} object
      * @param {number} nestingLevel - See {@link nestingLevel} for details
      * @param {string} displayName - The text to be displayed for the group
+     * @param {string} property - The name, usually field name, in the 'group by' instruction,
+     *                            for example 'due' or 'priority'. This may be useful in styling the group headings.
      */
-    constructor(nestingLevel: number, displayName: string) {
+    constructor(nestingLevel: number, displayName: string, property: string) {
         this.nestingLevel = nestingLevel;
         this.displayName = displayName;
+        this.property = property;
     }
 }
