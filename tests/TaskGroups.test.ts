@@ -11,6 +11,7 @@ import { FolderField } from '../src/Query/Filter/FolderField';
 import { TaskGroups } from '../src/Query/TaskGroups';
 import { StatusTypeField } from '../src/Query/Filter/StatusTypeField';
 import { HappensDateField } from '../src/Query/Filter/HappensDateField';
+import { DueDateField } from '../src/Query/Filter/DueDateField';
 import { fromLine } from './TestHelpers';
 
 window.moment = moment;
@@ -24,7 +25,7 @@ describe('Grouping tasks', () => {
         const inputs = [a, b, c];
 
         // Act
-        const grouping = [new PathField().createGrouper()];
+        const grouping = [new PathField().createNormalGrouper()];
         const groups = new TaskGroups(grouping, inputs);
 
         // Assert
@@ -78,7 +79,7 @@ describe('Grouping tasks', () => {
     it('groups empty task list correctly', () => {
         // Arrange
         const inputs: Task[] = [];
-        const grouping = [new PathField().createGrouper()];
+        const grouping = [new PathField().createNormalGrouper()];
 
         // Act
         const groups = new TaskGroups(grouping, inputs);
@@ -104,7 +105,7 @@ describe('Grouping tasks', () => {
         });
         const inputs = [a, b, c];
 
-        const grouping = [new PathField().createGrouper()];
+        const grouping = [new PathField().createNormalGrouper()];
         const groups = new TaskGroups(grouping, inputs);
         expect(groups.toString()).toMatchInlineSnapshot(`
             "
@@ -142,7 +143,7 @@ describe('Grouping tasks', () => {
         });
         const inputs = [a, b];
 
-        const grouping = [new FilenameField().createGrouper()];
+        const grouping = [new FilenameField().createNormalGrouper()];
         const groups = new TaskGroups(grouping, inputs);
         expect(groups.toString()).toMatchInlineSnapshot(`
             "
@@ -163,6 +164,37 @@ describe('Grouping tasks', () => {
         `);
     });
 
+    it('sorts due date group headings in reverse', () => {
+        // Arrange
+        const a = fromLine({ line: '- [ ] a 📅 2023-04-05', path: '2.md' });
+        const b = fromLine({ line: '- [ ] b 📅 2023-07-08', path: '3.md' });
+        const inputs = [a, b];
+
+        // Act
+        const grouping: Grouper[] = [new DueDateField().createGrouperFromLine('group by due reverse')!];
+        const groups = new TaskGroups(grouping, inputs);
+
+        // Assert
+        // No grouping specified, so no headings generated
+        expect(groups.toString()).toMatchInlineSnapshot(`
+            "
+            Group names: [2023-07-08 Saturday]
+            #### 2023-07-08 Saturday
+            - [ ] b 📅 2023-07-08
+
+            ---
+
+            Group names: [2023-04-05 Wednesday]
+            #### 2023-04-05 Wednesday
+            - [ ] a 📅 2023-04-05
+
+            ---
+
+            2 tasks
+            "
+        `);
+    });
+
     it('handles tasks matching multiple groups correctly', () => {
         const a = fromLine({
             line: '- [ ] Task 1 #group1',
@@ -175,7 +207,7 @@ describe('Grouping tasks', () => {
         });
         const inputs = [a, b, c];
 
-        const grouping = [new TagsField().createGrouper()];
+        const grouping = [new TagsField().createNormalGrouper()];
         const groups = new TaskGroups(grouping, inputs);
         expect(groups.toString()).toMatchInlineSnapshot(`
             "
@@ -198,7 +230,7 @@ describe('Grouping tasks', () => {
         `);
     });
 
-    it('should create nested headings if multiple groups used', () => {
+    it('should create nested headings if multiple groups used even if one is reversed', () => {
         // Arrange
         const t1 = fromLine({
             line: '- [ ] Task 1 - but path is 2nd, alphabetically',
@@ -214,7 +246,10 @@ describe('Grouping tasks', () => {
         });
         const tasks = [t1, t2, t3];
 
-        const grouping: Grouper[] = [new FolderField().createGrouper(), new FilenameField().createGrouper()];
+        const grouping: Grouper[] = [
+            new FolderField().createReverseGrouper(),
+            new FilenameField().createNormalGrouper(),
+        ];
 
         // Act
         const groups = new TaskGroups(grouping, tasks);
@@ -222,13 +257,6 @@ describe('Grouping tasks', () => {
         // Assert
         expect(groups.toString()).toMatchInlineSnapshot(`
             "
-            Group names: [folder\\_a/folder\\_b/,[[file_c]]]
-            #### folder\\_a/folder\\_b/
-            ##### [[file_c]]
-            - [ ] Task 3 - but path is 1st, alphabetically
-
-            ---
-
             Group names: [folder\\_b/folder\\_c/,[[file_c]]]
             #### folder\\_b/folder\\_c/
             ##### [[file_c]]
@@ -239,6 +267,13 @@ describe('Grouping tasks', () => {
             Group names: [folder\\_b/folder\\_c/,[[file_d]]]
             ##### [[file_d]]
             - [ ] Task 2 - but path is 2nd, alphabetically
+
+            ---
+
+            Group names: [folder\\_a/folder\\_b/,[[file_c]]]
+            #### folder\\_a/folder\\_b/
+            ##### [[file_c]]
+            - [ ] Task 3 - but path is 1st, alphabetically
 
             ---
 
@@ -260,8 +295,8 @@ describe('Grouping tasks', () => {
         const inputs = [a, b, c];
 
         const grouping = [
-            new StatusTypeField().createGrouper(), // Two group levels
-            new HappensDateField().createGrouper(),
+            new StatusTypeField().createNormalGrouper(), // Two group levels
+            new HappensDateField().createNormalGrouper(),
         ];
         const groups = new TaskGroups(grouping, inputs);
         // This result is incorrect. The '2 TODO' heading is shown before

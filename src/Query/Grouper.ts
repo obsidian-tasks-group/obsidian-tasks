@@ -34,8 +34,11 @@ export class Grouper {
      */
     public readonly grouper: GrouperFunction;
 
-    constructor(property: string, grouper: GrouperFunction) {
+    public readonly reverse: boolean;
+
+    constructor(property: string, grouper: GrouperFunction, reverse: boolean) {
         this.property = property;
         this.grouper = grouper;
+        this.reverse = reverse;
     }
 }

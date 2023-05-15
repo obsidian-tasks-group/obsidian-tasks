@@ -23,7 +23,6 @@ import { RecurrenceField } from './Filter/RecurrenceField';
 import type { FilterOrErrorMessage } from './Filter/Filter';
 import type { Sorter } from './Sorter';
 import type { Grouper } from './Grouper';
-import { MultiTextField } from './Filter/MultiTextField';
 import { FolderField } from './Filter/FolderField';
 import { RootField } from './Filter/RootField';
 import { BacklinkField } from './Filter/BacklinkField';
@@ -102,19 +101,9 @@ export function parseGrouper(line: string): Grouper | null {
     // See if any of the fields can parse the line.
     for (const creator of fieldCreators) {
         const field = creator();
-        const fieldName = field.fieldNameSingular();
-        if (field.supportsGrouping()) {
-            if (line === `group by ${fieldName}`) {
-                return field.createGrouper();
-            }
-
-            // MultiTextField is written as a plural ('group by tags')
-            // See also MultiTextField.createGrouper()
-            if (field instanceof MultiTextField) {
-                if (line === `group by ${field.fieldNamePlural()}`) {
-                    return field.createGrouper();
-                }
-            }
+        const grouper = field.parseGroupLine(line);
+        if (grouper) {
+            return grouper;
         }
     }
     return null;

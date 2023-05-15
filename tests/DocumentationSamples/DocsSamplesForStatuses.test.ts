@@ -208,9 +208,9 @@ function verifyTransitionsAsMarkdownTable(statuses: Status[]) {
         table.addRow(cells);
     }
 
-    showGroupNamesForAllTasks('status', new StatusField().createGrouper().grouper);
-    showGroupNamesForAllTasks('status.type', new StatusTypeField().createGrouper().grouper);
-    showGroupNamesForAllTasks('status.name', new StatusNameField().createGrouper().grouper);
+    showGroupNamesForAllTasks('status', new StatusField().createNormalGrouper().grouper);
+    showGroupNamesForAllTasks('status.type', new StatusTypeField().createNormalGrouper().grouper);
+    showGroupNamesForAllTasks('status.name', new StatusNameField().createNormalGrouper().grouper);
 
     table.verifyForDocs();
 }
