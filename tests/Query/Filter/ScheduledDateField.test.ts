@@ -48,7 +48,7 @@ describe('grouping by scheduled date', () => {
 
     it('group by scheduled date', () => {
         // Arrange
-        const grouper = new ScheduledDateField().createGrouper();
+        const grouper = new ScheduledDateField().createNormalGrouper();
         const taskWithDate = new TaskBuilder().scheduledDate('1970-01-01').build();
         const taskWithoutDate = new TaskBuilder().build();
 

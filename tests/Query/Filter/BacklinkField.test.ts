@@ -58,7 +58,7 @@ describe('grouping by backlink', () => {
         'path "%s" and heading "%s" should have groups: %s',
         (path: string, heading: string | null, groups: string[]) => {
             // Arrange
-            const grouper = new BacklinkField().createGrouper().grouper;
+            const grouper = new BacklinkField().createNormalGrouper().grouper;
             const t = '- [ ] xyz';
 
             // Assert

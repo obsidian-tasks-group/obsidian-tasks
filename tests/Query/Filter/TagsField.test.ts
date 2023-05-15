@@ -641,7 +641,7 @@ describe('grouping by tag', () => {
         ['- [x] a', ['(No tags)']],
     ])('task "%s" should have groups: %s', (taskLine: string, groups: string[]) => {
         // Arrange
-        const grouper = new TagsField().createGrouper().grouper;
+        const grouper = new TagsField().createNormalGrouper().grouper;
 
         // Assert
         expect(grouper(fromLine({ line: taskLine }))).toEqual(groups);

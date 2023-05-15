@@ -158,7 +158,7 @@ describe('grouping by path', () => {
         ['- [ ] a', 'a\\b\\c.md', ['a\\\\b\\\\c']],
     ])('task "%s" with path "%s" should have groups: %s', (taskLine: string, path: string, groups: string[]) => {
         // Arrange
-        const grouper = new PathField().createGrouper().grouper;
+        const grouper = new PathField().createNormalGrouper().grouper;
 
         // Assert
         expect(grouper(fromLine({ line: taskLine, path: path }))).toEqual(groups);

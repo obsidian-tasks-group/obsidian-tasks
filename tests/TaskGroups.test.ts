@@ -25,7 +25,7 @@ describe('Grouping tasks', () => {
         const inputs = [a, b, c];
 
         // Act
-        const grouping = [new PathField().createGrouper()];
+        const grouping = [new PathField().createNormalGrouper()];
         const groups = new TaskGroups(grouping, inputs);
 
         // Assert
@@ -79,7 +79,7 @@ describe('Grouping tasks', () => {
     it('groups empty task list correctly', () => {
         // Arrange
         const inputs: Task[] = [];
-        const grouping = [new PathField().createGrouper()];
+        const grouping = [new PathField().createNormalGrouper()];
 
         // Act
         const groups = new TaskGroups(grouping, inputs);
@@ -105,7 +105,7 @@ describe('Grouping tasks', () => {
         });
         const inputs = [a, b, c];
 
-        const grouping = [new PathField().createGrouper()];
+        const grouping = [new PathField().createNormalGrouper()];
         const groups = new TaskGroups(grouping, inputs);
         expect(groups.toString()).toMatchInlineSnapshot(`
             "
@@ -143,7 +143,7 @@ describe('Grouping tasks', () => {
         });
         const inputs = [a, b];
 
-        const grouping = [new FilenameField().createGrouper()];
+        const grouping = [new FilenameField().createNormalGrouper()];
         const groups = new TaskGroups(grouping, inputs);
         expect(groups.toString()).toMatchInlineSnapshot(`
             "
@@ -207,7 +207,7 @@ describe('Grouping tasks', () => {
         });
         const inputs = [a, b, c];
 
-        const grouping = [new TagsField().createGrouper()];
+        const grouping = [new TagsField().createNormalGrouper()];
         const groups = new TaskGroups(grouping, inputs);
         expect(groups.toString()).toMatchInlineSnapshot(`
             "
@@ -295,8 +295,8 @@ describe('Grouping tasks', () => {
         const inputs = [a, b, c];
 
         const grouping = [
-            new StatusTypeField().createGrouper(), // Two group levels
-            new HappensDateField().createGrouper(),
+            new StatusTypeField().createNormalGrouper(), // Two group levels
+            new HappensDateField().createNormalGrouper(),
         ];
         const groups = new TaskGroups(grouping, inputs);
         // This result is incorrect. The '2 TODO' heading is shown before
