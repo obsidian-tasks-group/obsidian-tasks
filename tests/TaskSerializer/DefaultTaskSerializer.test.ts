@@ -163,7 +163,7 @@ describe.each(symbolMap)("DefaultTaskSerializer with '$taskFormat' symbols", ({ 
         });
 
         it('should serialize a single reminder date', () => {
-            const serialized = serialize(new TaskBuilder().reminders(['2021-06-20']).description('').build());
+            const serialized = serialize(new TaskBuilder().reminders('2021-06-20').description('').build());
             expect(serialized).toEqual(` ${reminderDateSymbol} 2021-06-20`);
         });
     });
@@ -178,7 +178,7 @@ describe.each(symbolMap)("DefaultTaskSerializer with '$taskFormat' symbols", ({ 
             const times = ['2021-06-20 1:45 pm', '2021-06-20 1:45 am', '2021-06-20'];
 
             times.forEach((time) => {
-                const serialized = serialize(new TaskBuilder().reminders([time]).description('').build());
+                const serialized = serialize(new TaskBuilder().reminders(time).description('').build());
                 expect(serialized).toEqual(` ${reminderDateSymbol} ${time}`);
             });
         });
@@ -188,7 +188,7 @@ describe.each(symbolMap)("DefaultTaskSerializer with '$taskFormat' symbols", ({ 
             const times = ['2021-06-20 01:45 pm', '2021-06-20 1:45 PM', '2021-06-20 01:45 PM', '2021-06-20 1:45 p'];
 
             times.forEach((time) => {
-                const serialized = serialize(new TaskBuilder().reminders([time]).description('').build());
+                const serialized = serialize(new TaskBuilder().reminders(time).description('').build());
                 expect(serialized).toEqual(` ${reminderDateSymbol} 2021-06-20 1:45 pm`);
             });
         });
@@ -198,7 +198,7 @@ describe.each(symbolMap)("DefaultTaskSerializer with '$taskFormat' symbols", ({ 
             const times = ['2021-06-20 13:45', '2021-06-20 01:45', '2021-06-20'];
 
             times.forEach((time) => {
-                const serialized = serialize(new TaskBuilder().reminders([time]).description('').build());
+                const serialized = serialize(new TaskBuilder().reminders(time).description('').build());
                 expect(serialized).toEqual(` ${reminderDateSymbol} ${time}`);
             });
         });

@@ -29,8 +29,8 @@ describe('sorting by reminder', () => {
     // These are minimal tests just to confirm basic behaviour is set up for this field.
     // Thorough testing is done in DueDateField.test.ts.
 
-    const date1 = new TaskBuilder().reminders(['2021-01-12']).build();
-    const date2 = new TaskBuilder().reminders(['2022-12-23']).build();
+    const date1 = new TaskBuilder().reminders('2021-01-12').build();
+    const date2 = new TaskBuilder().reminders('2022-12-23').build();
 
     it('sort by reminder', () => {
         expectTaskComparesBefore(new ReminderDateField().createNormalSorter(), date1, date2);
@@ -49,7 +49,7 @@ describe('grouping by reminder date', () => {
     it('group by reminder date', () => {
         // Arrange
         const grouper = new ReminderDateField().createGrouper();
-        const taskWithDate = new TaskBuilder().reminders(['1970-01-01']).build();
+        const taskWithDate = new TaskBuilder().reminders('1970-01-01').build();
         const taskWithoutDate = new TaskBuilder().build();
 
         // Assert
