@@ -1,7 +1,7 @@
 import type { Task } from '../Task';
 import type { Grouper } from './Grouper';
 import { GroupDisplayHeadingSelector } from './GroupDisplayHeadingSelector';
-import { TaskGroupingTree } from './TaskGroupingTree';
+import { TaskGroupingTree, TaskGroupingTreeStorage } from './TaskGroupingTree';
 import { TaskGroup } from './TaskGroup';
 
 /**
@@ -34,7 +34,7 @@ export class TaskGroups {
 
         this.sortTaskGroups();
 
-        this.setGroupsHeadings(taskGroupingTree);
+        this.setGroupsHeadings(taskGroupingTree.groupingTreeStorage);
     }
 
     /**
@@ -124,11 +124,8 @@ export class TaskGroups {
         this._groups.sort(compareFn);
     }
 
-    private setGroupsHeadings(taskGroupingTree: TaskGroupingTree) {
-        const displayHeadingSelector = new GroupDisplayHeadingSelector(
-            taskGroupingTree.groupingTreeStorage,
-            this._groupers,
-        );
+    private setGroupsHeadings(groupingTreeStorage: TaskGroupingTreeStorage) {
+        const displayHeadingSelector = new GroupDisplayHeadingSelector(groupingTreeStorage, this._groupers);
         for (const group of this._groups) {
             group.setGroupHeadings(displayHeadingSelector.getHeadingsForTaskGroup(group.groups));
         }
