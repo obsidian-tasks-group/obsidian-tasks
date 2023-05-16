@@ -90,7 +90,7 @@ export class TaskGroups {
     }
 
     private addTaskGroups(taskGroupingTree: TaskGroupingTree) {
-        for (const [groups, tasks] of taskGroupingTree.groups) {
+        for (const [groups, tasks] of taskGroupingTree.groupingTreeStorage) {
             const taskGroup = new TaskGroup(groups, tasks);
             this.addTaskGroup(taskGroup);
         }
@@ -125,7 +125,10 @@ export class TaskGroups {
     }
 
     private setGroupsHeadings(taskGroupingTree: TaskGroupingTree) {
-        const displayHeadingSelector = new GroupDisplayHeadingSelector(taskGroupingTree.groups, this._groupers);
+        const displayHeadingSelector = new GroupDisplayHeadingSelector(
+            taskGroupingTree.groupingTreeStorage,
+            this._groupers,
+        );
         for (const group of this._groups) {
             group.setGroupHeadings(displayHeadingSelector.getHeadingsForTaskGroup(group.groups));
         }
