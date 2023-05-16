@@ -1,18 +1,7 @@
 import type { Task } from '../Task';
 import type { Grouper } from './Grouper';
 import { GroupingTreeNode } from './GroupingTreeNode';
-
-/**
- * Storage used for the initial grouping together of tasks.
- *
- * The keys of the map are the names of the groups.
- * For example, one set of keys might be ['Folder Name/', 'File Name']
- * and the values would be all the matching Tasks from that file.
- *
- * This is an implementation detail of the task-grouping code, and does not need to
- * be understood in order to group tasks.
- */
-export class TaskGroupingTreeStorage extends Map<string[], Task[]> {}
+import type { TaskGroupingTreeStorage } from './TaskGroups';
 
 /*
  * A tree of tasks where every level in the tree corresponds to a grouping property.
