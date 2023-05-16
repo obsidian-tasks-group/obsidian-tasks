@@ -48,6 +48,7 @@ class TaskGroupingTreeNode extends GroupingTreeNode<Task> {}
  * Ideally, this code would be simplified and moved in to TaskGroups.
  */
 export class TaskGroupingTree {
+    private root: TaskGroupingTreeNode;
     public groupingTreeStorage = new TaskGroupingTreeStorage();
 
     /**
@@ -56,8 +57,8 @@ export class TaskGroupingTree {
      * @param tasks The tasks that match the task block's Query
      */
     constructor(groupers: Grouper[], tasks: Task[]) {
-        const tree = this.buildGroupingTree(groupers, tasks);
-        this.groupingTreeStorage = tree.generateAllPaths();
+        this.root = this.buildGroupingTree(groupers, tasks);
+        this.groupingTreeStorage = this.root.generateAllPaths();
     }
 
     /**
