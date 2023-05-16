@@ -74,7 +74,7 @@ export class TaskGroups {
      *
      * Note that tasks may be displayed more than once. For example any tasks with more than one
      * tag will be displayed multiple times if grouped by Tag.
-     * So summing the number of tasks in all the {@link groups} can give a larger number than
+     * So summing the number of tasks in all the {@link _groups} can give a larger number than
      * this.
      */
     public totalTasksCount() {
