@@ -67,19 +67,6 @@ export function parseDateTime(dateTime: string): Reminder {
     return parseMoment(reminder);
 }
 
-export function parseDateTimes(dateTimes: string[]): ReminderList {
-    const parsedReminders = new ReminderList(null);
-    for (const reminder of dateTimes) {
-        const reminderDate = parseDateTime(reminder);
-        if (reminderDate) {
-            parsedReminders.reminders.push(reminderDate);
-        } else {
-            throw new Error(`TaskBuilder.parseReminder() was unable to parse: ${reminder}`);
-        }
-    }
-    return parsedReminders;
-}
-
 export function parseMoment(reminder: Moment): Reminder {
     if (reminder.format('h:mm a') === '12:00 am') {
         //aka .startOf(day) which is the default time for reminders
