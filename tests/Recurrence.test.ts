@@ -280,12 +280,14 @@ describe('Recurrence - with reminders', () => {
 
     it('creates a recurring instance with single 24h reminders', () => {
         // Arrange
+        const originalReminder = new ReminderList(moment('2021-06-20 13:00', TIME_FORMATS.twentyFourHour));
+        const originalReminderAsString = originalReminder.toString();
         const recurrence = Recurrence.fromText({
             recurrenceRuleText: 'every week',
             startDate: null,
             scheduledDate: null,
             dueDate: null,
-            reminder: new ReminderList(moment('2021-06-20 13:00', TIME_FORMATS.twentyFourHour)),
+            reminder: originalReminder,
         });
 
         // Act
@@ -295,5 +297,9 @@ describe('Recurrence - with reminders', () => {
         expect(
             next!.reminder!.isSame(new ReminderList(moment('2021-06-27 13:00', TIME_FORMATS.twentyFourHour))),
         ).toStrictEqual(true);
+        expect(next!.reminder!.toString()).toStrictEqual('2021-06-27 1:00 pm');
+
+        // Confirm that the original date has not been modified
+        expect(originalReminder.toString()).toStrictEqual(originalReminderAsString);
     });
 });
