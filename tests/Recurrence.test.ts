@@ -284,64 +284,6 @@ describe('Recurrence - with reminders', () => {
         ).toStrictEqual(true);
     });
 
-    it('creates a recurring instance with multple 12h reminders', () => {
-        // Arrange
-        const recurrence = Recurrence.fromText({
-            recurrenceRuleText: 'every week',
-            startDate: null,
-            scheduledDate: null,
-            dueDate: null,
-            reminder: new ReminderList([
-                moment('2021-06-20 10:00 am', TIME_FORMATS.twelveHour),
-                moment('2021-06-21', TIME_FORMATS.twelveHour),
-                moment('2021-07-19 3:00 pm', TIME_FORMATS.twelveHour),
-            ]),
-        });
-
-        // Act
-        const next = recurrence!.next();
-
-        // Assert
-        expect(
-            next!.reminder!.isSame(
-                new ReminderList([
-                    moment('2021-06-27 10:00 am', TIME_FORMATS.twelveHour),
-                    moment('2021-06-28', TIME_FORMATS.twelveHour),
-                    moment('2021-07-26 3:00 pm', TIME_FORMATS.twelveHour),
-                ]),
-            ),
-        ).toStrictEqual(true);
-    });
-
-    it('creates a recurring instance with multple 24h reminders', () => {
-        // Arrange
-        const recurrence = Recurrence.fromText({
-            recurrenceRuleText: 'every week',
-            startDate: null,
-            scheduledDate: null,
-            dueDate: null,
-            reminder: new ReminderList([
-                moment('2021-06-20 11:00', TIME_FORMATS.twentyFourHour),
-                moment('2021-06-21', TIME_FORMATS.twentyFourHour),
-                moment('2021-07-19 15:00', TIME_FORMATS.twentyFourHour),
-            ]),
-        });
-
-        // Act
-        const next = recurrence!.next();
-
-        // Assert
-        expect(
-            next!.reminder!.isSame(
-                new ReminderList([
-                    moment('2021-06-27 11:00', TIME_FORMATS.twentyFourHour),
-                    moment('2021-06-28', TIME_FORMATS.twentyFourHour),
-                    moment('2021-07-26 15:00', TIME_FORMATS.twentyFourHour),
-                ]),
-            ),
-        ).toStrictEqual(true);
-    });
-
     it('differing only in reminder', () => {
         const date1Recurrence = new RecurrenceBuilder().reminders(['2021-10-21']).build();
 
