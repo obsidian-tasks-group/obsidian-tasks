@@ -285,11 +285,11 @@ describe('Recurrence - with reminders', () => {
     });
 
     it('differing only in reminder', () => {
-        const date1Recurrence = new RecurrenceBuilder().reminders(['2021-10-21']).build();
+        const date1Recurrence = new RecurrenceBuilder().reminders('2021-10-21').build();
 
-        const date2Recurrence = new RecurrenceBuilder().reminders(['1998-03-13']).build();
+        const date2Recurrence = new RecurrenceBuilder().reminders('1998-03-13').build();
 
-        const nullRecurrence = new RecurrenceBuilder().reminders([]).build();
+        const nullRecurrence = new RecurrenceBuilder().reminders('').build();
 
         expect(date1Recurrence?.identicalTo(date1Recurrence)).toBe(true);
         expect(date1Recurrence?.identicalTo(date2Recurrence)).toBe(false);
