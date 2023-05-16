@@ -62,6 +62,7 @@ export interface Settings {
     provideAccessKeys: boolean;
     useFilenameAsScheduledDate: boolean;
     filenameAsDateFolders: string[];
+    recurrenceOnNextLine: boolean;
 
     // The custom status states.
     statusSettings: StatusSettings;
@@ -91,6 +92,7 @@ const defaultSettings: Settings = {
     provideAccessKeys: true,
     useFilenameAsScheduledDate: false,
     filenameAsDateFolders: [],
+    recurrenceOnNextLine: false,
     statusSettings: new StatusSettings(),
     features: Feature.settingsFlags,
     generalSettings: {

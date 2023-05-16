@@ -353,7 +353,8 @@ export class Task {
         // Write next occurrence before previous occurrence.
         newTasks.push(toggledTask);
 
-        return newTasks;
+        const { recurrenceOnNextLine: recurrenceOnNextLine } = getSettings();
+        return recurrenceOnNextLine ? newTasks.reverse() : newTasks;
     }
 
     public get urgency(): number {
