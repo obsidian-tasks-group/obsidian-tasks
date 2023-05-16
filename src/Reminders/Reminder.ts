@@ -11,32 +11,6 @@ export class ReminderSettings {
     constructor() {}
 }
 
-export class ReminderList {
-    public reminders: Reminder[] = [];
-
-    constructor(time: Moment | null) {
-        if (time) {
-            this.reminders.push(parseMoment(time));
-        }
-    }
-
-    public toString(): string {
-        return this.reminders.map((reminder) => `${reminder.toString()}`).join(', ');
-    }
-
-    // TODO only used in ReminderDateField & Edit modal need way to deal with modal multiple reminders
-    public peek(): Moment | null {
-        if (this.reminders.length === 0) {
-            return null;
-        }
-        return this.reminders[0].time;
-    }
-
-    isSame(other: ReminderList | null) {
-        return isRemindersSame(this, other);
-    }
-}
-
 export enum ReminderType {
     Date,
     DateTime,
@@ -93,29 +67,6 @@ export function isReminderSame(a: Reminder | null, b: Reminder | null) {
         }
         if (a.type != b.type) {
             return false;
-        }
-    }
-
-    return true;
-}
-
-export function isRemindersSame(a: ReminderList | null, b: ReminderList | null) {
-    if (a === null && b !== null) {
-        return false;
-    } else if (a !== null && b === null) {
-        return false;
-    } else if (a !== null && b !== null) {
-        if (a.reminders.length !== b.reminders.length) {
-            return false;
-        }
-
-        const sortedA = a.reminders.map((reminder) => reminder.time.valueOf()).sort();
-        const sortedB = b.reminders.map((reminder) => reminder.time.valueOf()).sort();
-
-        for (let i = 0; i < sortedA.length; i++) {
-            if (sortedA[i] !== sortedB[i]) {
-                return false;
-            }
         }
     }
 
