@@ -49,7 +49,6 @@ class TaskGroupingTreeNode extends GroupingTreeNode<Task> {}
  */
 export class TaskGroupingTree {
     private root: TaskGroupingTreeNode;
-    public groupingTreeStorage = new TaskGroupingTreeStorage();
 
     /**
      * Group a list of tasks, according to one or more task properties
@@ -58,7 +57,6 @@ export class TaskGroupingTree {
      */
     constructor(groupers: Grouper[], tasks: Task[]) {
         this.root = this.buildGroupingTree(groupers, tasks);
-        this.generateTaskTreeStorage();
     }
 
     /**
@@ -97,7 +95,7 @@ export class TaskGroupingTree {
         return root;
     }
 
-    private generateTaskTreeStorage() {
-        this.groupingTreeStorage = this.root.generateNodePath();
+    public generateTaskTreeStorage(): TaskGroupingTreeStorage {
+        return this.root.generateNodePath();
     }
 }
