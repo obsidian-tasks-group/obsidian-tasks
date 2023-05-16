@@ -12,8 +12,11 @@ For example: `🔁 every weekday` means the task will repeat every week on Monda
 Every recurrence rule has to start with the word `every`.
 
 When you toggle the status of a recurring task to anything but "todo" (i.e. "done"), the original task that you wanted to toggle will be marked as done and get the done date appended to it, like any other task.
-In addition, _a new task will be put one line above the original task._
+In addition, _a new task will be put one line above the original task_ by default. You may change this behavior and make the new task appear on the line below the original task by enabling the `Next recurrence appears on the line below` setting.
 The new task will have updated dates based off the original task.
+
+> [!released]
+> `Next recurrence appears on the line below` setting was introduced in Tasks X.Y.Z
 
 ### Basic Example
 
