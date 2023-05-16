@@ -282,14 +282,9 @@ export class DefaultTaskSerializer implements TaskSerializer {
             const reminderMatch = line.match(TaskFormatRegularExpressions.reminderRegex);
             if (reminderMatch !== null) {
                 line = line.replace(TaskFormatRegularExpressions.reminderRegex, '').trim();
-                const split = reminderMatch[1].split(',');
-                rList = new ReminderList(null);
-                split.forEach((reminderDate) => {
-                    reminderDate = reminderDate.trim(); // Remove any extra spaces
-                    if (rList) {
-                        rList.push(window.moment(reminderDate, reminderSettings.dateTimeFormat));
-                    }
-                });
+                const reminderDate2 = reminderMatch[1];
+                const reminder = window.moment(reminderDate2, reminderSettings.dateTimeFormat);
+                rList = new ReminderList(reminder);
                 matched = true;
             }
             runs++;

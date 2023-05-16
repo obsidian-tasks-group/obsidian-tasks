@@ -32,10 +32,6 @@ export class ReminderList {
         return this.reminders[0].time;
     }
 
-    public push(reminder: Moment) {
-        this.reminders.push(parseMoment(reminder));
-    }
-
     isSame(other: ReminderList | null) {
         return isRemindersSame(this, other);
     }
