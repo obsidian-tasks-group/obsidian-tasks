@@ -60,14 +60,15 @@ export class TaskGroupingTree {
     }
 
     /**
-     * Returns a grouping tree that groups the passed @tasks by the passed @groupers.
+     * Returns a grouping .
      */
     private buildGroupingTree(groupers: Grouper[], tasks: Task[]): TaskGroupingTreeNode {
-        // The tree is build layer by layer, starting from the root.
-        // At every level, we iterate on the nodes of that level to generate
-        // the next one using the next grouping.
-
-        // The root of the tree contains all the tasks.
+        /** The tree is build layer by layer, starting from the root.
+         * At every level, we iterate on the nodes of that level to generate
+         * the next one using the next grouping.
+         * The root of the tree contains all the tasks. The tree tree groups
+         * the passed @tasks by the passed @groupers
+         */
         const root = new TaskGroupingTreeNode(tasks);
 
         let currentTreeLevel = [root];
