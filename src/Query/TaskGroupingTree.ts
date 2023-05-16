@@ -58,7 +58,7 @@ export class TaskGroupingTree {
      */
     constructor(groupers: Grouper[], tasks: Task[]) {
         this.root = this.buildGroupingTree(groupers, tasks);
-        this.groupingTreeStorage = this.root.generateNodePath();
+        this.generateTaskTreeStorage();
     }
 
     /**
@@ -95,5 +95,9 @@ export class TaskGroupingTree {
         }
 
         return root;
+    }
+
+    private generateTaskTreeStorage() {
+        this.groupingTreeStorage = this.root.generateNodePath();
     }
 }
