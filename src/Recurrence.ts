@@ -9,7 +9,7 @@ export class Recurrence {
     private readonly startDate: Moment | null;
     private readonly scheduledDate: Moment | null;
     private readonly dueDate: Moment | null;
-    private readonly reminders: ReminderList | null;
+    private readonly reminder: ReminderList | null;
 
     /**
      * The reference date is used to calculate future occurrences.
@@ -33,7 +33,7 @@ export class Recurrence {
         startDate,
         scheduledDate,
         dueDate,
-        reminders,
+        reminder,
     }: {
         rrule: RRule;
         baseOnToday: boolean;
@@ -41,7 +41,7 @@ export class Recurrence {
         startDate: Moment | null;
         scheduledDate: Moment | null;
         dueDate: Moment | null;
-        reminders: ReminderList | null;
+        reminder: ReminderList | null;
     }) {
         this.rrule = rrule;
         this.baseOnToday = baseOnToday;
@@ -49,7 +49,7 @@ export class Recurrence {
         this.startDate = startDate;
         this.scheduledDate = scheduledDate;
         this.dueDate = dueDate;
-        this.reminders = reminders;
+        this.reminder = reminder;
     }
 
     public static fromText({
@@ -57,13 +57,13 @@ export class Recurrence {
         startDate,
         scheduledDate,
         dueDate,
-        reminders,
+        reminder,
     }: {
         recurrenceRuleText: string;
         startDate: Moment | null;
         scheduledDate: Moment | null;
         dueDate: Moment | null;
-        reminders: ReminderList | null;
+        reminder: ReminderList | null;
     }): Recurrence | null {
         try {
             const match = recurrenceRuleText.match(/^([a-zA-Z0-9, !]+?)( when done)?$/i);
@@ -86,8 +86,8 @@ export class Recurrence {
                     referenceDate = window.moment(scheduledDate);
                 } else if (startDate) {
                     referenceDate = window.moment(startDate);
-                } else if (reminders?.peek()) {
-                    referenceDate = window.moment(reminders.peek()?.format('YYYY-MM-DD'));
+                } else if (reminder?.peek()) {
+                    referenceDate = window.moment(reminder.peek()?.format('YYYY-MM-DD'));
                 }
 
                 if (!baseOnToday && referenceDate !== null) {
@@ -104,7 +104,7 @@ export class Recurrence {
                     startDate,
                     scheduledDate,
                     dueDate,
-                    reminders,
+                    reminder: reminder,
                 });
             }
         } catch (error) {
@@ -130,7 +130,7 @@ export class Recurrence {
         startDate: Moment | null;
         scheduledDate: Moment | null;
         dueDate: Moment | null;
-        reminders: ReminderList | null;
+        reminder: ReminderList | null;
     } | null {
         const next = this.nextReferenceDate();
 
@@ -169,9 +169,9 @@ export class Recurrence {
                     // Rounding days to handle cross daylight-savings-time recurrences.
                     dueDate.add(Math.round(originalDifference.asDays()), 'days');
                 }
-                if (this.reminders) {
+                if (this.reminder) {
                     reminders = new ReminderList(null);
-                    this.reminders.reminders.forEach((reminder) => {
+                    this.reminder.reminders.forEach((reminder) => {
                         const originalDifference = window.moment.duration(reminder.time.diff(this.referenceDate));
                         const remTime = window.moment(next);
 
@@ -187,7 +187,7 @@ export class Recurrence {
                 startDate,
                 scheduledDate,
                 dueDate,
-                reminders,
+                reminder: reminders,
             };
         }
 
@@ -210,7 +210,7 @@ export class Recurrence {
             return false;
         }
 
-        if (!isRemindersSame(this.reminders, other.reminders)) {
+        if (!isRemindersSame(this.reminder, other.reminder)) {
             return false;
         }
 

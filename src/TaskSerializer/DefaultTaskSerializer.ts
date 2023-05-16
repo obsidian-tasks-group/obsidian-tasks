@@ -145,10 +145,10 @@ export class DefaultTaskSerializer implements TaskSerializer {
                     ? ' ' + dueDateSymbol
                     : ` ${dueDateSymbol} ${task.dueDate.format(TaskRegularExpressions.dateFormat)}`;
             case 'reminders':
-                if (!task.reminders || task.reminders.reminders.length <= 0) return '';
+                if (!task.reminder || task.reminder.reminders.length <= 0) return '';
                 return layout.options.shortMode
                     ? ' ' + reminderDateSymbol
-                    : ` ${reminderDateSymbol} ${task.reminders.toString()}`;
+                    : ` ${reminderDateSymbol} ${task.reminder.toString()}`;
             case 'recurrenceRule':
                 if (!task.recurrence) return '';
                 return layout.options.shortMode
@@ -302,7 +302,7 @@ export class DefaultTaskSerializer implements TaskSerializer {
                 startDate,
                 scheduledDate,
                 dueDate,
-                reminders: rList,
+                reminder: rList,
             });
         }
         // Add back any trailing tags to the description. We removed them so we can parse the rest of the
@@ -321,7 +321,7 @@ export class DefaultTaskSerializer implements TaskSerializer {
             doneDate,
             recurrence,
             tags: Task.extractHashtags(line),
-            reminders: rList,
+            reminder: rList,
         };
     }
 }

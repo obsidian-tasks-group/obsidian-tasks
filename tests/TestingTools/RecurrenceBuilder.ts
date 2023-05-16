@@ -40,7 +40,7 @@ export class RecurrenceBuilder {
             startDate: this._startDate,
             scheduledDate: this._scheduledDate,
             dueDate: this._dueDate,
-            reminders: this._reminders,
+            reminder: this._reminders,
         }) as Recurrence;
     }
 

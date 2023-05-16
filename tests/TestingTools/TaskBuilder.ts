@@ -85,7 +85,7 @@ export class TaskBuilder {
             recurrence: this._recurrence,
             blockLink: this._blockLink,
             tags: this._tags,
-            reminders: this._reminders,
+            reminder: this._reminders,
             originalMarkdown: '',
             scheduledDateIsInferred: this._scheduledDateIsInferred,
         });

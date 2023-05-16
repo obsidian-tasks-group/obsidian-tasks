@@ -80,7 +80,7 @@ function summarizeTaskDetails(t: TaskDetails | null): SummarizedTaskDetails | nu
         dueDate: t.dueDate?.format(TaskRegularExpressions.dateFormat) ?? null,
         doneDate: t.doneDate?.format(TaskRegularExpressions.dateFormat) ?? null,
         recurrence: t.recurrence?.toText() ?? null,
-        reminders: t.reminders?.toString() ?? null,
+        reminder: t.reminder?.toString() ?? null,
     };
 }
 
@@ -104,7 +104,7 @@ function tryBuildTaskDetails(t: object): TaskDetails | null {
         doneDate: null,
         recurrence: null,
         tags: [],
-        reminders: null,
+        reminder: null,
         ...t,
     };
     if (!isTaskDetails(toReturn)) return null;

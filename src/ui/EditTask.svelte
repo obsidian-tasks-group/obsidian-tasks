@@ -207,7 +207,7 @@
                     startDate: null,
                     scheduledDate: null,
                     dueDate: null,
-                    reminders: null,
+                    reminder: null,
                 })?.toText();
             if (!recurrenceFromText) {
                 parsedRecurrence = '<i>invalid recurrence rule</i>';
@@ -257,7 +257,7 @@
                 ? task.scheduledDate.format('YYYY-MM-DD')
                 : '',
             dueDate: task.dueDate ? task.dueDate.format('YYYY-MM-DD') : '',
-            reminderDate: task.reminders?.peek() ? task.reminders?.peek()!.format(reminderSettings.dateTimeFormat) : '',
+            reminderDate: task.reminder?.peek() ? task.reminder?.peek()!.format(reminderSettings.dateTimeFormat) : '',
             doneDate: task.doneDate ? task.doneDate.format('YYYY-MM-DD') : '',
             forwardOnly: true,
         };
@@ -315,7 +315,7 @@
                 startDate,
                 scheduledDate,
                 dueDate,
-                reminders: reminderDate ? new ReminderList([reminderDate]) : null,
+                reminder: reminderDate ? new ReminderList([reminderDate]) : null,
             });
         }
 
@@ -343,7 +343,7 @@
             startDate,
             scheduledDate,
             dueDate,
-            reminders: reminderDate ? new ReminderList([reminderDate]) : null,
+            reminder: reminderDate ? new ReminderList([reminderDate]) : null,
             doneDate: window
                 .moment(editableTask.doneDate, 'YYYY-MM-DD')
                 .isValid()

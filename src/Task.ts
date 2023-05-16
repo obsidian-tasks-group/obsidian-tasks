@@ -103,7 +103,7 @@ export class Task {
     public readonly taskLocation: TaskLocation;
 
     public readonly tags: string[];
-    public readonly reminders: ReminderList | null;
+    public readonly reminder: ReminderList | null;
 
     public readonly priority: Priority;
 
@@ -142,7 +142,7 @@ export class Task {
         recurrence,
         blockLink,
         tags,
-        reminders,
+        reminder,
         originalMarkdown,
         scheduledDateIsInferred,
     }: {
@@ -160,7 +160,7 @@ export class Task {
         recurrence: Recurrence | null;
         blockLink: string;
         tags: string[] | [];
-        reminders: ReminderList | null;
+        reminder: ReminderList | null;
         originalMarkdown: string;
         scheduledDateIsInferred: boolean;
     }) {
@@ -171,7 +171,7 @@ export class Task {
         this.taskLocation = taskLocation;
 
         this.tags = tags;
-        this.reminders = reminders;
+        this.reminder = reminder;
 
         this.priority = priority;
 
@@ -313,7 +313,7 @@ export class Task {
             startDate: Moment | null;
             scheduledDate: Moment | null;
             dueDate: Moment | null;
-            reminders: ReminderList | null;
+            reminder: ReminderList | null;
         } | null = null;
 
         if (newStatus.isCompleted()) {
@@ -512,7 +512,7 @@ export class Task {
         }
 
         // compare reminders
-        if (!isRemindersSame(this.reminders, other.reminders)) {
+        if (!isRemindersSame(this.reminder, other.reminder)) {
             return false;
         }
 

@@ -20,7 +20,7 @@ export type TaskDetails = Writeable<
         | 'doneDate'
         | 'recurrence'
         | 'tags'
-        | 'reminders'
+        | 'reminder'
     >
 >;
 

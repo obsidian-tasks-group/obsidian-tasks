@@ -89,7 +89,7 @@ export class TaskNotification {
                 reminderSettings.dateTimeFormat,
             );
 
-            task.reminders?.reminders.forEach((rDate) => {
+            task.reminder?.reminders.forEach((rDate) => {
                 const curTime = window.moment();
                 if (TaskNotification.shouldNotifiy(rDate, dailyReminderTime, curTime)) {
                     rDate.notified = true;

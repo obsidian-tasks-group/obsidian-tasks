@@ -98,7 +98,7 @@ describe.each(symbolMap)("DefaultTaskSerializer with '$taskFormat' symbols", ({ 
             times.forEach((time) => {
                 const taskDetails = deserialize(`${reminderDateSymbol} ${time}`);
                 expect(taskDetails).toMatchTaskDetails({
-                    reminders: new ReminderList([moment(time, TIME_FORMATS.twelveHour)]),
+                    reminder: new ReminderList([moment(time, TIME_FORMATS.twelveHour)]),
                 });
             });
         });
@@ -109,7 +109,7 @@ describe.each(symbolMap)("DefaultTaskSerializer with '$taskFormat' symbols", ({ 
             times.forEach((time) => {
                 const taskDetails = deserialize(`${reminderDateSymbol} ${time}`);
                 expect(taskDetails).toMatchTaskDetails({
-                    reminders: new ReminderList([moment(time, TIME_FORMATS.twentyFourHour)]),
+                    reminder: new ReminderList([moment(time, TIME_FORMATS.twentyFourHour)]),
                 });
             });
         });
@@ -120,7 +120,7 @@ describe.each(symbolMap)("DefaultTaskSerializer with '$taskFormat' symbols", ({ 
                 `${reminderDateSymbol} 2021-06-20 10:00 am, 2021-06-21, 2021-07-19 3:00 pm`,
             );
             expect(taskDetails).toMatchTaskDetails({
-                reminders: new ReminderList([
+                reminder: new ReminderList([
                     moment('2021-06-20 10:00 am', TIME_FORMATS.twelveHour),
                     moment('2021-06-21', TIME_FORMATS.twelveHour),
                     moment('2021-07-19 3:00 pm', TIME_FORMATS.twelveHour),
@@ -132,7 +132,7 @@ describe.each(symbolMap)("DefaultTaskSerializer with '$taskFormat' symbols", ({ 
             setDateTimeFormat(TIME_FORMATS.twentyFourHour);
             const taskDetails = deserialize(`${reminderDateSymbol} 2021-06-20 10:00, 2021-06-21, 2021-07-19 16:00`);
             expect(taskDetails).toMatchTaskDetails({
-                reminders: new ReminderList([
+                reminder: new ReminderList([
                     moment('2021-06-20 10:00', TIME_FORMATS.twentyFourHour),
                     moment('2021-06-21', TIME_FORMATS.twentyFourHour),
                     moment('2021-07-19 16:00', TIME_FORMATS.twentyFourHour),

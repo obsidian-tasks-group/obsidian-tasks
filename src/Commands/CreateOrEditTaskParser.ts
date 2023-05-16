@@ -60,7 +60,7 @@ export const taskFromLine = ({ line, path }: { line: string; path: string }): Ta
             recurrence: null,
             blockLink: '',
             tags: [],
-            reminders: null,
+            reminder: null,
             originalMarkdown: '',
             scheduledDateIsInferred: false,
         });
@@ -96,7 +96,7 @@ export const taskFromLine = ({ line, path }: { line: string; path: string }): Ta
         doneDate: null,
         recurrence: null,
         tags: [],
-        reminders: null,
+        reminder: null,
         originalMarkdown: '',
         // Not needed since the inferred status is always re-computed after submitting.
         scheduledDateIsInferred: false,

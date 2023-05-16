@@ -72,7 +72,7 @@ describe('should parse task strings: ', () => {
 
         const line = '- [ ] #task Reminder at 13:57 ⏲️ 2023-05-03 1:57 pm';
         const task = fromLine({ line: line });
-        expect(task.reminders).not.toBeNull();
+        expect(task.reminder).not.toBeNull();
     });
 
     it('valid task - in 24-hour format', () => {
@@ -80,6 +80,6 @@ describe('should parse task strings: ', () => {
 
         const line = '- [ ] #task Reminder at 13:57 ⏲️ 2023-05-03 13:57';
         const task = fromLine({ line: line });
-        expect(task.reminders).not.toBeNull();
+        expect(task.reminder).not.toBeNull();
     });
 });
