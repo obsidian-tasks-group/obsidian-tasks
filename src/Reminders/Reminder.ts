@@ -59,6 +59,10 @@ export class Reminder {
         }
         return this.time.format(reminderSettings.dateTimeFormat);
     }
+
+    isSame(other: Reminder | null) {
+        return isReminderSame(this, other);
+    }
 }
 
 export function parseDateTime(dateTime: string): Reminder {
@@ -74,6 +78,25 @@ export function parseMoment(reminder: Moment): Reminder {
     } else {
         return new Reminder(reminder, ReminderType.DateTime);
     }
+}
+
+// TODO Add detailed tests
+// TODO Move to Reminder class
+export function isReminderSame(a: Reminder | null, b: Reminder | null) {
+    if (a === null && b !== null) {
+        return false;
+    } else if (a !== null && b === null) {
+        return false;
+    } else if (a !== null && b !== null) {
+        if (!a.time.isSame(b.time)) {
+            return false;
+        }
+        if (a.type != b.type) {
+            return false;
+        }
+    }
+
+    return true;
 }
 
 export function isRemindersSame(a: ReminderList | null, b: ReminderList | null) {

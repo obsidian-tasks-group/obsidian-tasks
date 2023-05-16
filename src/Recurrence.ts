@@ -1,7 +1,7 @@
 import type { Moment } from 'moment';
 import { RRule } from 'rrule';
 import { compareByDate } from './lib/DateTools';
-import { Reminder, ReminderList, isRemindersSame } from './Reminders/Reminder';
+import { Reminder, isReminderSame } from './Reminders/Reminder';
 
 export class Recurrence {
     private readonly rrule: RRule;
@@ -9,7 +9,7 @@ export class Recurrence {
     private readonly startDate: Moment | null;
     private readonly scheduledDate: Moment | null;
     private readonly dueDate: Moment | null;
-    private readonly reminder: ReminderList | null;
+    private readonly reminder: Reminder | null;
 
     /**
      * The reference date is used to calculate future occurrences.
@@ -41,7 +41,7 @@ export class Recurrence {
         startDate: Moment | null;
         scheduledDate: Moment | null;
         dueDate: Moment | null;
-        reminder: ReminderList | null;
+        reminder: Reminder | null;
     }) {
         this.rrule = rrule;
         this.baseOnToday = baseOnToday;
@@ -63,7 +63,7 @@ export class Recurrence {
         startDate: Moment | null;
         scheduledDate: Moment | null;
         dueDate: Moment | null;
-        reminder: ReminderList | null;
+        reminder: Reminder | null;
     }): Recurrence | null {
         try {
             const match = recurrenceRuleText.match(/^([a-zA-Z0-9, !]+?)( when done)?$/i);
@@ -86,8 +86,8 @@ export class Recurrence {
                     referenceDate = window.moment(scheduledDate);
                 } else if (startDate) {
                     referenceDate = window.moment(startDate);
-                } else if (reminder?.peek()) {
-                    referenceDate = window.moment(reminder.peek()?.format('YYYY-MM-DD'));
+                } else if (reminder) {
+                    referenceDate = window.moment(reminder.time.format('YYYY-MM-DD'));
                 }
 
                 if (!baseOnToday && referenceDate !== null) {
@@ -130,7 +130,7 @@ export class Recurrence {
         startDate: Moment | null;
         scheduledDate: Moment | null;
         dueDate: Moment | null;
-        reminder: ReminderList | null;
+        reminder: Reminder | null;
     } | null {
         const next = this.nextReferenceDate();
 
@@ -140,7 +140,7 @@ export class Recurrence {
             let startDate: Moment | null = null;
             let scheduledDate: Moment | null = null;
             let dueDate: Moment | null = null;
-            let reminders: ReminderList | null = null;
+            let reminders: Reminder | null = null;
 
             // Only if a reference date is given. A reference date will exist if at
             // least one of the other dates is set.
@@ -170,19 +170,16 @@ export class Recurrence {
                     dueDate.add(Math.round(originalDifference.asDays()), 'days');
                 }
                 if (this.reminder) {
-                    if (this.reminder.reminders.length > 1) {
-                        throw Error('this should not happen: too many reminders in Reccurence');
-                    }
-                    if (this.reminder.reminders.length === 1) {
-                        const reminder = this.reminder.reminders[0];
+                    {
+                        // TODO Remove braces - added to minimise diffs in large change
+                        const reminder = this.reminder; // TODO Inline reminder
                         const originalDifference = window.moment.duration(reminder.time.diff(this.referenceDate));
                         const remTime = window.moment(next);
 
                         remTime.add(Math.floor(originalDifference.asDays()), 'days');
                         // add back time
                         remTime.set({ hour: reminder.time.hour(), minute: reminder.time.minute() });
-                        reminders = new ReminderList(null);
-                        reminders.reminders.push(new Reminder(remTime, reminder.type));
+                        reminders = new Reminder(remTime, reminder.type);
                     }
                 }
             }
@@ -214,7 +211,7 @@ export class Recurrence {
             return false;
         }
 
-        if (!isRemindersSame(this.reminder, other.reminder)) {
+        if (!isReminderSame(this.reminder, other.reminder)) {
             return false;
         }
 

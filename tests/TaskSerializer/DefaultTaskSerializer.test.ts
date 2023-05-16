@@ -8,7 +8,7 @@ import { DefaultTaskSerializer } from '../../src/TaskSerializer';
 import { RecurrenceBuilder } from '../TestingTools/RecurrenceBuilder';
 import { DEFAULT_SYMBOLS, type DefaultTaskSerializerSymbols } from '../../src/TaskSerializer/DefaultTaskSerializer';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
-import { ReminderList } from '../../src/Reminders/Reminder';
+import { parseMoment } from '../../src/Reminders/Reminder';
 import { setDateTimeFormat } from '../TestHelpers';
 
 jest.mock('obsidian');
@@ -98,7 +98,7 @@ describe.each(symbolMap)("DefaultTaskSerializer with '$taskFormat' symbols", ({ 
             times.forEach((time) => {
                 const taskDetails = deserialize(`${reminderDateSymbol} ${time}`);
                 expect(taskDetails).toMatchTaskDetails({
-                    reminder: new ReminderList(moment(time, TIME_FORMATS.twelveHour)),
+                    reminder: parseMoment(moment(time, TIME_FORMATS.twelveHour)),
                 });
             });
         });
@@ -109,7 +109,7 @@ describe.each(symbolMap)("DefaultTaskSerializer with '$taskFormat' symbols", ({ 
             times.forEach((time) => {
                 const taskDetails = deserialize(`${reminderDateSymbol} ${time}`);
                 expect(taskDetails).toMatchTaskDetails({
-                    reminder: new ReminderList(moment(time, TIME_FORMATS.twentyFourHour)),
+                    reminder: parseMoment(moment(time, TIME_FORMATS.twentyFourHour)),
                 });
             });
         });

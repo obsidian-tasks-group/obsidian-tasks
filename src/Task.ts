@@ -10,8 +10,9 @@ import { renderTaskLine } from './TaskLineRenderer';
 import type { TaskLineRenderDetails } from './TaskLineRenderer';
 import { DateFallback } from './DateFallback';
 import { compareByDate } from './lib/DateTools';
-import { type ReminderList, isRemindersSame } from './Reminders/Reminder';
+import type { Reminder } from './Reminders/Reminder';
 import { replaceTaskWithTasks } from './File';
+import { isReminderSame } from './Reminders/Reminder';
 
 /**
  * When sorting, make sure low always comes after none. This way any tasks with low will be below any exiting
@@ -103,7 +104,7 @@ export class Task {
     public readonly taskLocation: TaskLocation;
 
     public readonly tags: string[];
-    public readonly reminder: ReminderList | null;
+    public readonly reminder: Reminder | null;
 
     public readonly priority: Priority;
 
@@ -160,7 +161,7 @@ export class Task {
         recurrence: Recurrence | null;
         blockLink: string;
         tags: string[] | [];
-        reminder: ReminderList | null;
+        reminder: Reminder | null;
         originalMarkdown: string;
         scheduledDateIsInferred: boolean;
     }) {
@@ -313,7 +314,7 @@ export class Task {
             startDate: Moment | null;
             scheduledDate: Moment | null;
             dueDate: Moment | null;
-            reminder: ReminderList | null;
+            reminder: Reminder | null;
         } | null = null;
 
         if (newStatus.isCompleted()) {
@@ -512,7 +513,7 @@ export class Task {
         }
 
         // compare reminders
-        if (!isRemindersSame(this.reminder, other.reminder)) {
+        if (!isReminderSame(this.reminder, other.reminder)) {
             return false;
         }
 

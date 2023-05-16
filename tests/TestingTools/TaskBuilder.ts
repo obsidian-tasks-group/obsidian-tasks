@@ -6,7 +6,7 @@ import type { Recurrence } from '../../src/Recurrence';
 import { DateParser } from '../../src/Query/DateParser';
 import { StatusConfiguration, StatusType } from '../../src/StatusConfiguration';
 import { TaskLocation } from '../../src/TaskLocation';
-import { ReminderList, parseDateTime } from '../../src/Reminders/Reminder';
+import { Reminder, parseDateTime } from '../../src/Reminders/Reminder';
 
 /**
  * A fluent class for creating tasks for tests.
@@ -40,7 +40,7 @@ export class TaskBuilder {
     private _scheduledDate: Moment | null = null;
     private _dueDate: Moment | null = null;
     private _doneDate: Moment | null = null;
-    private _reminders: ReminderList | null = null;
+    private _reminders: Reminder | null = null; // TODO Rename to singular
 
     private _recurrence: Recurrence | null = null;
     private _blockLink: string = '';
@@ -198,9 +198,10 @@ export class TaskBuilder {
     }
 
     public reminders(reminder: string): TaskBuilder {
-        this._reminders = new ReminderList(null);
         if (reminder.length > 0) {
-            this._reminders.reminders.push(parseDateTime(reminder));
+            this._reminders = parseDateTime(reminder);
+        } else {
+            this._reminders = null;
         }
         return this;
     }

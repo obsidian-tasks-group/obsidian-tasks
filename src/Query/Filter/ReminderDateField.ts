@@ -9,7 +9,7 @@ export class ReminderDateField extends DateField {
 
     public date(task: Task): Moment | null {
         if (task.reminder) {
-            return task.reminder.peek();
+            return task.reminder.time;
         } else {
             return null;
         }

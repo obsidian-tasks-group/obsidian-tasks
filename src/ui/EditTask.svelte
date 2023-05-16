@@ -7,7 +7,7 @@
     import { Status } from '../Status';
     import { Priority, Task } from '../Task';
     import { doAutocomplete } from '../DateAbbreviations';
-    import {  ReminderList } from '../Reminders/Reminder';
+    import { parseMoment } from '../Reminders/Reminder';
 
     // These exported variables are passed in as props by TaskModal.onOpen():
     export let task: Task;
@@ -257,7 +257,7 @@
                 ? task.scheduledDate.format('YYYY-MM-DD')
                 : '',
             dueDate: task.dueDate ? task.dueDate.format('YYYY-MM-DD') : '',
-            reminderDate: task.reminder?.peek() ? task.reminder?.peek()!.format(reminderSettings.dateTimeFormat) : '',
+            reminderDate: task.reminder? task.reminder!.time.format(reminderSettings.dateTimeFormat) : '',
             doneDate: task.doneDate ? task.doneDate.format('YYYY-MM-DD') : '',
             forwardOnly: true,
         };
@@ -306,6 +306,7 @@
 
         const dueDate = parseTypedDateForSaving(editableTask.dueDate);
 
+        // TODO Add tests for all the reminder handling inside the Edit modal tests
         const reminderDate = parseTypedDateForSaving(editableTask.reminderDate);
 
         let recurrence: Recurrence | null = null;
@@ -315,7 +316,7 @@
                 startDate,
                 scheduledDate,
                 dueDate,
-                reminder: reminderDate ? new ReminderList(reminderDate) : null,
+                reminder: reminderDate ? parseMoment(reminderDate) : null,
             });
         }
 
@@ -343,7 +344,7 @@
             startDate,
             scheduledDate,
             dueDate,
-            reminder: reminderDate ? new ReminderList(reminderDate) : null,
+            reminder: reminderDate ? parseMoment(reminderDate) : null,
             doneDate: window
                 .moment(editableTask.doneDate, 'YYYY-MM-DD')
                 .isValid()

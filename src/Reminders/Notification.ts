@@ -89,13 +89,14 @@ export class TaskNotification {
                 reminderSettings.dateTimeFormat,
             );
 
-            task.reminder?.reminders.forEach((rDate) => {
+            if (task.reminder) {
+                const rDate = task.reminder; // TODO Inline rDate
                 const curTime = window.moment();
                 if (TaskNotification.shouldNotifiy(rDate, dailyReminderTime, curTime)) {
                     rDate.notified = true;
                     this.show(task);
                 }
-            });
+            }
         }
     }
 

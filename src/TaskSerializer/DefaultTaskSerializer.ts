@@ -1,6 +1,6 @@
 import type { Moment } from 'moment';
 import { getSettings } from '../Config/Settings';
-import { ReminderList } from '../Reminders/Reminder';
+import { Reminder, parseMoment } from '../Reminders/Reminder';
 import { TaskLayout } from '../TaskLayout';
 import type { TaskLayoutComponent } from '../TaskLayout';
 import { Recurrence } from '../Recurrence';
@@ -144,8 +144,8 @@ export class DefaultTaskSerializer implements TaskSerializer {
                 return layout.options.shortMode
                     ? ' ' + dueDateSymbol
                     : ` ${dueDateSymbol} ${task.dueDate.format(TaskRegularExpressions.dateFormat)}`;
-            case 'reminders':
-                if (!task.reminder || task.reminder.reminders.length <= 0) return '';
+            case 'reminders': // TODO Rename to singular
+                if (!task.reminder) return '';
                 return layout.options.shortMode
                     ? ' ' + reminderDateSymbol
                     : ` ${reminderDateSymbol} ${task.reminder.toString()}`;
@@ -201,7 +201,7 @@ export class DefaultTaskSerializer implements TaskSerializer {
         let scheduledDate: Moment | null = null;
         let dueDate: Moment | null = null;
         let doneDate: Moment | null = null;
-        let rList: ReminderList | null = null;
+        let rList: Reminder | null = null; // TODO Rename to reminder
         let createdDate: Moment | null = null;
         let recurrenceRule: string = '';
         let recurrence: Recurrence | null = null;
@@ -284,7 +284,7 @@ export class DefaultTaskSerializer implements TaskSerializer {
                 line = line.replace(TaskFormatRegularExpressions.reminderRegex, '').trim();
                 const reminderDate2 = reminderMatch[1];
                 const reminder = window.moment(reminderDate2, reminderSettings.dateTimeFormat);
-                rList = new ReminderList(reminder);
+                rList = parseMoment(reminder);
                 matched = true;
             }
             runs++;

@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 import moment from 'moment';
-import { ReminderList } from '../src/Reminders/Reminder';
+import { parseMoment } from '../src/Reminders/Reminder';
 import { Recurrence } from '../src/Recurrence';
 import { TIME_FORMATS } from '../src/Config/Settings';
 import { RecurrenceBuilder } from './TestingTools/RecurrenceBuilder';
@@ -266,7 +266,7 @@ describe('Recurrence - with reminders', () => {
             startDate: null,
             scheduledDate: null,
             dueDate: null,
-            reminder: new ReminderList(moment('2021-06-20 10:00 am', TIME_FORMATS.twelveHour)),
+            reminder: parseMoment(moment('2021-06-20 10:00 am', TIME_FORMATS.twelveHour)),
         });
 
         // Act
@@ -274,13 +274,13 @@ describe('Recurrence - with reminders', () => {
 
         // Assert
         expect(
-            next!.reminder!.isSame(new ReminderList(moment('2021-06-27 10:00 am', TIME_FORMATS.twelveHour))),
+            next!.reminder!.isSame(parseMoment(moment('2021-06-27 10:00 am', TIME_FORMATS.twelveHour))),
         ).toStrictEqual(true);
     });
 
     it('creates a recurring instance with single 24h reminders', () => {
         // Arrange
-        const originalReminder = new ReminderList(moment('2021-06-20 13:00', TIME_FORMATS.twentyFourHour));
+        const originalReminder = parseMoment(moment('2021-06-20 13:00', TIME_FORMATS.twentyFourHour));
         const originalReminderAsString = originalReminder.toString();
         const recurrence = Recurrence.fromText({
             recurrenceRuleText: 'every week',
@@ -295,7 +295,7 @@ describe('Recurrence - with reminders', () => {
 
         // Assert
         expect(
-            next!.reminder!.isSame(new ReminderList(moment('2021-06-27 13:00', TIME_FORMATS.twentyFourHour))),
+            next!.reminder!.isSame(parseMoment(moment('2021-06-27 13:00', TIME_FORMATS.twentyFourHour))),
         ).toStrictEqual(true);
         expect(next!.reminder!.toString()).toStrictEqual('2021-06-27 1:00 pm');
 
