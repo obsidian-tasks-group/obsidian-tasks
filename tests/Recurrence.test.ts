@@ -243,6 +243,19 @@ describe('identicalTo', () => {
         expect(date1Recurrence?.identicalTo(date1Recurrence)).toBe(true);
         expect(date1Recurrence?.identicalTo(date2Recurrence)).toBe(false);
     });
+
+    it('differing only in reminder', () => {
+        const date1Recurrence = new RecurrenceBuilder().reminders('2021-10-21').build();
+
+        const date2Recurrence = new RecurrenceBuilder().reminders('1998-03-13').build();
+
+        const nullRecurrence = new RecurrenceBuilder().reminders('').build();
+
+        expect(date1Recurrence?.identicalTo(date1Recurrence)).toBe(true);
+        expect(date1Recurrence?.identicalTo(date2Recurrence)).toBe(false);
+        expect(date1Recurrence?.identicalTo(nullRecurrence)).toBe(false);
+        expect(nullRecurrence?.identicalTo(date1Recurrence)).toBe(false);
+    });
 });
 
 describe('Recurrence - with reminders', () => {
@@ -282,18 +295,5 @@ describe('Recurrence - with reminders', () => {
         expect(
             next!.reminder!.isSame(new ReminderList(moment('2021-06-27 13:00', TIME_FORMATS.twentyFourHour))),
         ).toStrictEqual(true);
-    });
-
-    it('differing only in reminder', () => {
-        const date1Recurrence = new RecurrenceBuilder().reminders('2021-10-21').build();
-
-        const date2Recurrence = new RecurrenceBuilder().reminders('1998-03-13').build();
-
-        const nullRecurrence = new RecurrenceBuilder().reminders('').build();
-
-        expect(date1Recurrence?.identicalTo(date1Recurrence)).toBe(true);
-        expect(date1Recurrence?.identicalTo(date2Recurrence)).toBe(false);
-        expect(date1Recurrence?.identicalTo(nullRecurrence)).toBe(false);
-        expect(nullRecurrence?.identicalTo(date1Recurrence)).toBe(false);
     });
 });
