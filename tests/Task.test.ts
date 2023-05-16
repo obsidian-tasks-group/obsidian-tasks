@@ -1139,12 +1139,12 @@ describe('next task recurrence appearance', () => {
         const task = fromLine({ line: '- [ ] this is a recurring task 🔁 every day' });
 
         // Act
-        const tasks = task.toggle();
+        const lines = task.toggle().map((t) => t.toFileLineString());
 
         // Assert
-        expect(tasks.length).toEqual(2);
-        expect(tasks[0].toString()).toMatchInlineSnapshot('"this is a recurring task 🔁 every day"');
-        expect(tasks[1].toString()).toMatchInlineSnapshot('"this is a recurring task 🔁 every day ✅ 2023-05-16"');
+        expect(lines.length).toEqual(2);
+        expect(lines[0]).toMatchInlineSnapshot('"- [ ] this is a recurring task 🔁 every day"');
+        expect(lines[1]).toMatchInlineSnapshot('"- [x] this is a recurring task 🔁 every day ✅ 2023-05-16"');
     });
 
     it('new task shall appear on next line with the setting set to false', () => {
@@ -1153,12 +1153,12 @@ describe('next task recurrence appearance', () => {
         updateSettings({ recurrenceOnNextLine: false });
 
         // Act
-        const tasks = task.toggle();
+        const lines = task.toggle().map((t) => t.toFileLineString());
 
         // Assert
-        expect(tasks.length).toEqual(2);
-        expect(tasks[0].toString()).toMatchInlineSnapshot('"this is a recurring task 🔁 every day"');
-        expect(tasks[1].toString()).toMatchInlineSnapshot('"this is a recurring task 🔁 every day ✅ 2023-05-16"');
+        expect(lines.length).toEqual(2);
+        expect(lines[0]).toMatchInlineSnapshot('"- [ ] this is a recurring task 🔁 every day"');
+        expect(lines[1]).toMatchInlineSnapshot('"- [x] this is a recurring task 🔁 every day ✅ 2023-05-16"');
     });
 
     it('new task shall appear on next line with the setting set to true', () => {
@@ -1167,12 +1167,12 @@ describe('next task recurrence appearance', () => {
         updateSettings({ recurrenceOnNextLine: true });
 
         // Act
-        const tasks = task.toggle();
+        const lines = task.toggle().map((t) => t.toFileLineString());
 
         // Assert
-        expect(tasks.length).toEqual(2);
-        expect(tasks[0].toString()).toMatchInlineSnapshot('"this is a recurring task 🔁 every day ✅ 2023-05-16"');
-        expect(tasks[1].toString()).toMatchInlineSnapshot('"this is a recurring task 🔁 every day"');
+        expect(lines.length).toEqual(2);
+        expect(lines[0]).toMatchInlineSnapshot('"- [x] this is a recurring task 🔁 every day ✅ 2023-05-16"');
+        expect(lines[1]).toMatchInlineSnapshot('"- [ ] this is a recurring task 🔁 every day"');
     });
 });
 
