@@ -223,6 +223,19 @@ export class SettingsTab extends PluginSettingTab {
                     });
             });
 
+        new Setting(containerEl)
+            .setName('Next recurrence appears on the line below')
+            .setDesc(
+                'Enabling this will make the next recurrence of a task appear on line below the completed task. Otherwise the next recurrence will appear on the line of the toggled task and the completed one below.',
+            )
+            .addToggle((toggle) => {
+                const { recurrenceOnNextLine: recurrenceOnNextLine } = getSettings();
+                toggle.setValue(recurrenceOnNextLine).onChange(async (value) => {
+                    updateSettings({ recurrenceOnNextLine: value });
+                    await this.plugin.saveSettings();
+                });
+            });
+
         // ---------------------------------------------------------------------------
         containerEl.createEl('h4', { text: 'Auto-suggest Settings' });
         // ---------------------------------------------------------------------------
