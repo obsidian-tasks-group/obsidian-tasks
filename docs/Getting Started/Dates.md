@@ -134,6 +134,13 @@ Done dates use a white check-mark emoji: ✅.
 - [x] take out the trash ✅ 2021-04-09
 ```
 
+### Next recurrence appears on the line below
+
+Enabling this will make the next recurrence of a task appear on line below the completed task. Otherwise the next recurrence will appear on the line of the toggled task and the completed one below. This is the default behaviour.
+
+> [!released]
+> `Next recurrence appears on the line below` setting was introduced in Tasks X.Y.Z
+
 ---
 
 ## Finding mistakes in dates on task lines
