@@ -30,11 +30,13 @@ export class TaskGroups {
         this._groupers = groups;
 
         const taskGroupingTree = new TaskGroupingTree(groups, tasks);
-        this.addTaskGroups(taskGroupingTree.groupingTreeStorage);
+        const groupingTreeStorage = taskGroupingTree.groupingTreeStorage;
+
+        this.addTaskGroups(groupingTreeStorage);
 
         this.sortTaskGroups();
 
-        this.setGroupsHeadings(taskGroupingTree.groupingTreeStorage);
+        this.setGroupsHeadings(groupingTreeStorage);
     }
 
     /**
