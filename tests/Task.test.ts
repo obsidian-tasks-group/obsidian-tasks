@@ -1122,6 +1122,32 @@ describe('set correct created date on reccurence task', () => {
     });
 });
 
+describe('next task recurrence appearance', () => {
+    beforeAll(() => {
+        jest.useFakeTimers();
+        jest.setSystemTime(new Date(2023, 5 - 1, 16));
+        resetSettings();
+    });
+
+    afterAll(() => {
+        jest.useRealTimers();
+        resetSettings();
+    });
+
+    it('new task shall appear on the original line by default', () => {
+        // Arrange
+        const task = fromLine({ line: '- [ ] this is a recurring task 🔁 every day' });
+
+        // Act
+        const tasks = task.toggle();
+
+        // Assert
+        expect(tasks.length).toEqual(2);
+        expect(tasks[0].toString()).toMatchInlineSnapshot('"this is a recurring task 🔁 every day"');
+        expect(tasks[1].toString()).toMatchInlineSnapshot('"this is a recurring task 🔁 every day ✅ 2023-05-16"');
+    });
+});
+
 declare global {
     namespace jest {
         interface Matchers<R> {
