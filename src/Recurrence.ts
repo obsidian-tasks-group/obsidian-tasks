@@ -170,16 +170,20 @@ export class Recurrence {
                     dueDate.add(Math.round(originalDifference.asDays()), 'days');
                 }
                 if (this.reminder) {
-                    reminders = new ReminderList(null);
-                    this.reminder.reminders.forEach((reminder) => {
+                    if (this.reminder.reminders.length > 1) {
+                        throw Error('this should not happen: too many reminders in Reccurence');
+                    }
+                    if (this.reminder.reminders.length === 1) {
+                        const reminder = this.reminder.reminders[0];
                         const originalDifference = window.moment.duration(reminder.time.diff(this.referenceDate));
                         const remTime = window.moment(next);
 
                         remTime.add(Math.floor(originalDifference.asDays()), 'days');
                         // add back time
                         remTime.set({ hour: reminder.time.hour(), minute: reminder.time.minute() });
-                        reminders!.reminders.push(new Reminder(remTime, reminder.type));
-                    });
+                        reminders = new ReminderList(null);
+                        reminders.reminders.push(new Reminder(remTime, reminder.type));
+                    }
                 }
             }
 
