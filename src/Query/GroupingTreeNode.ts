@@ -19,20 +19,20 @@ export class GroupingTreeNode<T> {
      * NOTE: The node itself doesn't get included in the generated paths.
      */
     generateNodePath(pathSoFar: string[] = []): Map<string[], T[]> {
-        const resultMap = new Map();
+        const nodePath = new Map();
         if (this.children.size == 0) {
             // Base case: Leaf node. Populate the results map with the path to
             // this node, and the values that match this path.
-            resultMap.set([...pathSoFar], this.values);
-            return resultMap;
+            nodePath.set([...pathSoFar], this.values);
+            return nodePath;
         }
 
         for (const [property, child] of this.children) {
             pathSoFar.push(property);
-            const childResult = child.generateNodePath(pathSoFar);
-            childResult.forEach((value, key) => resultMap.set(key, value));
+            const childPath = child.generateNodePath(pathSoFar);
+            childPath.forEach((value, key) => nodePath.set(key, value));
             pathSoFar.pop();
         }
-        return resultMap;
+        return nodePath;
     }
 }
