@@ -1,17 +1,17 @@
 ---
-publish: false
+publish: true
 ---
 
-# Notifications
+# Tasks Reminders
 
 <span class="related-pages">#plugin/reminder</span>
 
-Within Tasks, reminder notifications can be set using the standard Tasks format `⏲️ YYYY-MM-DD` for daily notifications at a set or by specifying the hour `⏲️ YYYY-MM-DD h:mm a`. Multiple reminders can be set by separating secondary reminders with a comma: `⏲️ 2000-03-24, 2000-03-28 10:05 am, 2000-03-31`
+Within Tasks, reminder notifications can be set using the standard Tasks format `⏲️ YYYY-MM-DD` for daily notifications at a set or by specifying the hour `⏲️ YYYY-MM-DD h:mm a`.
 
-## Limitnations
+## Limitations
 
-- It's not posible to set a reminder for midnight 12:00 am. This due to a limination with how tasks creates dates using momentjs which sets the defaults time to midnight when one isn't provided.
-- System notifications don't work on Mobile because Obsidian doesn't provide an API
+- It's not possible to set a reminder for midnight 12:00 am. This due to a limitation with how tasks creates dates using `momentjs` which sets the defaults time to midnight when one isn't provided.
+- System notifications don't work on Mobile because Obsidian doesn't provide an API.
 
 ## How to complete the reminder
 
