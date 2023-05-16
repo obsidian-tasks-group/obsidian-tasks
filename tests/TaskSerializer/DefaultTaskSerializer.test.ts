@@ -98,7 +98,7 @@ describe.each(symbolMap)("DefaultTaskSerializer with '$taskFormat' symbols", ({ 
             times.forEach((time) => {
                 const taskDetails = deserialize(`${reminderDateSymbol} ${time}`);
                 expect(taskDetails).toMatchTaskDetails({
-                    reminder: new ReminderList([moment(time, TIME_FORMATS.twelveHour)]),
+                    reminder: new ReminderList(moment(time, TIME_FORMATS.twelveHour)),
                 });
             });
         });
@@ -109,7 +109,7 @@ describe.each(symbolMap)("DefaultTaskSerializer with '$taskFormat' symbols", ({ 
             times.forEach((time) => {
                 const taskDetails = deserialize(`${reminderDateSymbol} ${time}`);
                 expect(taskDetails).toMatchTaskDetails({
-                    reminder: new ReminderList([moment(time, TIME_FORMATS.twentyFourHour)]),
+                    reminder: new ReminderList(moment(time, TIME_FORMATS.twentyFourHour)),
                 });
             });
         });

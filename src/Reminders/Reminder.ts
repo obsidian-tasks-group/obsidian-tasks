@@ -14,10 +14,10 @@ export class ReminderSettings {
 export class ReminderList {
     public reminders: Reminder[] = [];
 
-    constructor(times: Moment[] | null) {
-        times?.forEach((time) => {
+    constructor(time: Moment | null) {
+        if (time) {
             this.reminders.push(parseMoment(time));
-        });
+        }
     }
 
     public toString(): string {

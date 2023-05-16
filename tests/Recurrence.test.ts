@@ -253,7 +253,7 @@ describe('Recurrence - with reminders', () => {
             startDate: null,
             scheduledDate: null,
             dueDate: null,
-            reminder: new ReminderList([moment('2021-06-20 10:00 am', TIME_FORMATS.twelveHour)]),
+            reminder: new ReminderList(moment('2021-06-20 10:00 am', TIME_FORMATS.twelveHour)),
         });
 
         // Act
@@ -261,7 +261,7 @@ describe('Recurrence - with reminders', () => {
 
         // Assert
         expect(
-            next!.reminder!.isSame(new ReminderList([moment('2021-06-27 10:00 am', TIME_FORMATS.twelveHour)])),
+            next!.reminder!.isSame(new ReminderList(moment('2021-06-27 10:00 am', TIME_FORMATS.twelveHour))),
         ).toStrictEqual(true);
     });
 
@@ -272,7 +272,7 @@ describe('Recurrence - with reminders', () => {
             startDate: null,
             scheduledDate: null,
             dueDate: null,
-            reminder: new ReminderList([moment('2021-06-20 13:00', TIME_FORMATS.twentyFourHour)]),
+            reminder: new ReminderList(moment('2021-06-20 13:00', TIME_FORMATS.twentyFourHour)),
         });
 
         // Act
@@ -280,7 +280,7 @@ describe('Recurrence - with reminders', () => {
 
         // Assert
         expect(
-            next!.reminder!.isSame(new ReminderList([moment('2021-06-27 13:00', TIME_FORMATS.twentyFourHour)])),
+            next!.reminder!.isSame(new ReminderList(moment('2021-06-27 13:00', TIME_FORMATS.twentyFourHour))),
         ).toStrictEqual(true);
     });
 

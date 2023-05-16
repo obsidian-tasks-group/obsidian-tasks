@@ -315,7 +315,7 @@
                 startDate,
                 scheduledDate,
                 dueDate,
-                reminder: reminderDate ? new ReminderList([reminderDate]) : null,
+                reminder: reminderDate ? new ReminderList(reminderDate) : null,
             });
         }
 
@@ -343,7 +343,7 @@
             startDate,
             scheduledDate,
             dueDate,
-            reminder: reminderDate ? new ReminderList([reminderDate]) : null,
+            reminder: reminderDate ? new ReminderList(reminderDate) : null,
             doneDate: window
                 .moment(editableTask.doneDate, 'YYYY-MM-DD')
                 .isValid()
