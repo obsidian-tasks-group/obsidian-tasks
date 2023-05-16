@@ -127,12 +127,15 @@ export class TaskNotification {
         ).open();
     }
 
+    // TODO How does this work with recurring tasks?
     private onDone(task: Task) {
         if (!task.status.isCompleted()) {
             task.toggleUpdate();
         }
     }
 
+    // TODO Understand and test this.
+    // TODO What happens if this is invoked in a way that fails to find the task???
     private async onOpenFile(task: Task) {
         const result = await getTaskLineAndFile(task, app.vault);
         if (result) {

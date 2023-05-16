@@ -104,7 +104,7 @@ export class Task {
     public readonly taskLocation: TaskLocation;
 
     public readonly tags: string[];
-    public readonly reminder: Reminder | null;
+    public readonly reminder: Reminder | null; // TODO Move this to after doneDate??
 
     public readonly priority: Priority;
 
