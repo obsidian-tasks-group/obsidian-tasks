@@ -3,9 +3,9 @@ import { TIME_FORMATS, getSettings } from '../Config/Settings';
 
 export class ReminderSettings {
     notificationTitle: string = 'Task Reminder';
-    dateFormat: string = 'YYYY-MM-DD';
-    dateTimeFormat: string = TIME_FORMATS.twelveHour;
-    dailyReminderTime: string = '9:00 am';
+    dateFormat: string = 'YYYY-MM-DD'; // TODO Do not put format strings in user settings
+    dateTimeFormat: string = TIME_FORMATS.twelveHour; // TODO Do not put format strings in user settings - give this format an alias/name and use that in settings
+    dailyReminderTime: string = '9:00 am'; // TODO Use 24 hour clock for this setting
     refreshIntervalMilliseconds: number = 5 * 1000;
 
     constructor() {}
@@ -34,17 +34,20 @@ export class Reminder {
         return this.time.format(reminderSettings.dateTimeFormat);
     }
 
+    // TODO Rename this to identicalTo() - for consistency with similar methods...?? Check how Task does it
     isSame(other: Reminder | null) {
         return isReminderSame(this, other);
     }
 }
 
+// TODO Move this to a named constructor
 export function parseDateTime(dateTime: string): Reminder {
     const reminderSettings = getSettings().reminderSettings;
     const reminder = window.moment(dateTime, reminderSettings.dateTimeFormat);
     return parseMoment(reminder);
 }
 
+// TODO Move this to a named constructor
 export function parseMoment(reminder: Moment): Reminder {
     if (reminder.format('h:mm a') === '12:00 am') {
         //aka .startOf(day) which is the default time for reminders

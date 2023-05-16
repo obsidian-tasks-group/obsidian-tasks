@@ -2,6 +2,7 @@ import type { Moment } from 'moment';
 import type { Task } from '../../Task';
 import { DateField } from './DateField';
 
+// TODO Think about how this handles times - can users query times?
 export class ReminderDateField extends DateField {
     public fieldName(): string {
         return 'reminder';

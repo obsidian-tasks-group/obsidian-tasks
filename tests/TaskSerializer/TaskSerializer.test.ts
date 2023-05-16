@@ -104,6 +104,7 @@ describe('TaskSerializer Example', () => {
             });
         });
 
+        // TODO Figure out why this changed.
         it('should parse a priority and description', () => {
             expect(ts.deserialize('1 Wobble')).toMatchTaskDetails({
                 priority: Priority.High,

@@ -365,6 +365,8 @@ export class Task {
     }
 
     // toggle task status and update
+    // TODO Understand why this method exists.
+    // TODO Check that this method has tests.
     public toggleUpdate() {
         const newTasks = this.toggle();
 

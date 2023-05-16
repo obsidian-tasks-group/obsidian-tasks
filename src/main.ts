@@ -62,6 +62,7 @@ export default class TasksPlugin extends Plugin {
             if (this.taskNotification && this.cache) {
                 this.registerInterval(this.taskNotification.watcher(this.cache) ?? 0);
             }
+            // TODO Is it possible for this.cache to not yet be set up?
         });
     }
 

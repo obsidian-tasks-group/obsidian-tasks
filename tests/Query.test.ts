@@ -418,6 +418,7 @@ describe('Query', () => {
                     ],
                 },
             ],
+            // TODO Move these new tests to ReminderDateField tests
             [
                 'by reminder date presence',
                 {

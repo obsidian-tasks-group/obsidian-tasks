@@ -27,7 +27,7 @@
   <h1 class="task-reminder-description">
     <Markdown
       markdown={task.description}
-      sourcePath={task.filename ?? "filename was null"} 
+      sourcePath={task.filename ?? "filename was null"}
       {component}
     />
   </h1>
@@ -48,7 +48,7 @@
       <option selected disabled hidden>Remind Me Later</option>
       <!-- options -->
       {#each laters as i}
-        <option value={i} selected={selectedIndex === i}>{"later.label"}</option>
+        <option value={i} selected={selectedIndex === i}>{"later.label"}</option> <!-- TODO the string later.label is what is added to the dropdown -->
       {/each}
     </select>
   </div>

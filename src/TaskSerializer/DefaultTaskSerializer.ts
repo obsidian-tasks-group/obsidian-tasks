@@ -67,6 +67,8 @@ export const DEFAULT_SYMBOLS: DefaultTaskSerializerSymbols = {
         dueDateRegex: /[📅📆🗓] *(\d{4}-\d{2}-\d{2})$/u,
         doneDateRegex: /✅ *(\d{4}-\d{2}-\d{2})$/u,
         recurrenceRegex: /🔁 ?([a-zA-Z0-9, !]+)$/iu,
+        // TODO Too complex Break this down, so it is easy to understand.
+        // TODO Does not work with Am. Add 'i' to make it case-insensitive.
         reminderRegex: /⏲️ *(\d{4}-\d{2}-\d{2}(?:\s\d{1,2}:\d{2}(?:\s(?:am|pm|AM|PM))?)?)/u,
     },
 } as const;
@@ -210,7 +212,7 @@ export class DefaultTaskSerializer implements TaskSerializer {
         // (e.g. #tag1 <due date> #tag2), they do not have to all trail all task components,
         // but eventually we want to paste them back to the task description at the end
         let trailingTags = '';
-        const { reminderSettings } = getSettings();
+        const { reminderSettings } = getSettings(); // TODO Add an abstraction for reminder settings
         // Add a "max runs" failsafe to never end in an endless loop:
         const maxRuns = 20;
         let runs = 0;

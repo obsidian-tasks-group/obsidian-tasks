@@ -29,6 +29,8 @@ describe('sorting by reminder', () => {
     // These are minimal tests just to confirm basic behaviour is set up for this field.
     // Thorough testing is done in DueDateField.test.ts.
 
+    // TODO Needs to test that sorting also honours the time value, so multiple reminders on same date are sorted correctly.
+
     const date1 = new TaskBuilder().reminders('2021-01-12').build();
     const date2 = new TaskBuilder().reminders('2022-12-23').build();
 
