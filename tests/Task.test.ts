@@ -1147,6 +1147,20 @@ describe('next task recurrence appearance', () => {
         expect(tasks[1].toString()).toMatchInlineSnapshot('"this is a recurring task 🔁 every day ✅ 2023-05-16"');
     });
 
+    it('new task shall appear on next line with the setting set to false', () => {
+        // Arrange
+        const task = fromLine({ line: '- [ ] this is a recurring task 🔁 every day' });
+        updateSettings({ recurrenceOnNextLine: false });
+
+        // Act
+        const tasks = task.toggle();
+
+        // Assert
+        expect(tasks.length).toEqual(2);
+        expect(tasks[0].toString()).toMatchInlineSnapshot('"this is a recurring task 🔁 every day"');
+        expect(tasks[1].toString()).toMatchInlineSnapshot('"this is a recurring task 🔁 every day ✅ 2023-05-16"');
+    });
+
     it('new task shall appear on next line with the setting set to true', () => {
         // Arrange
         const task = fromLine({ line: '- [ ] this is a recurring task 🔁 every day' });
