@@ -5,7 +5,7 @@ import { StatusRegistry } from '../StatusRegistry';
 import { Status } from '../Status';
 import type { StatusCollection } from '../StatusCollection';
 import * as Themes from './Themes';
-import { type HeadingState, TASK_FORMATS, TIME_FORMATS } from './Settings';
+import { type HeadingState, TASK_FORMATS } from './Settings';
 import { getSettings, isFeatureEnabled, updateGeneralSetting, updateSettings } from './Settings';
 import { GlobalFilter } from './GlobalFilter';
 import { StatusSettings } from './StatusSettings';
@@ -228,32 +228,10 @@ export class SettingsTab extends PluginSettingTab {
         // ---------------------------------------------------------------------------
 
         new Setting(containerEl)
-            .setName('Reminder Format')
-            .setDesc(
-                SettingsTab.createFragmentWithHTML(
-                    '<p class="tasks-setting-important">Do not change if reminders already exist, otherwise you will not be notified unless manually converted to new format.</p>' +
-                        '<p>The format that Tasks uses to read and write reminders time i.e 12hr 6:00 pm or 24hr 18:00.</p>',
-                ),
-            )
-            .addDropdown((dropdown) => {
-                let k: keyof typeof TIME_FORMATS;
-                for (k in TIME_FORMATS) {
-                    dropdown.addOption(TIME_FORMATS[k], k);
-                }
-                const settings = getSettings().reminderSettings;
-
-                dropdown.setValue(settings.dateTimeFormat).onChange(async (value) => {
-                    settings.dateTimeFormat = value;
-                    updateSettings({ reminderSettings: settings });
-                    await this.plugin.saveSettings();
-                });
-            });
-
-        new Setting(containerEl)
             .setName('Daily Reminder Time')
             .setDesc(
                 SettingsTab.createFragmentWithHTML(
-                    '<p>When daily reminders should be triggered. Should be in same format as above i.e 12 or 24hr.</p>',
+                    '<p>When daily reminders should be triggered. Should be in the 24-hour clock, for example 09:00 or 21:00.</p>',
                 ),
             )
             .addText((text) => {
