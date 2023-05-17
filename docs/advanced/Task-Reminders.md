@@ -9,7 +9,10 @@ publish: true
 > [!released]
 > Reminder support was introduced in Tasks X.Y.Z.
 
-Within Tasks, reminder notifications can be set using the standard Tasks format `⏲️ YYYY-MM-DD` for daily notifications at a set or by specifying the hour `⏲️ YYYY-MM-DD h:mm a`.
+Within Tasks, reminder notifications can be set using either of two formats:
+
+- the standard Tasks format `⏲️ YYYY-MM-DD` for daily notifications at a set time
+- or by specifying the time as well, in 24-hour clock `⏲️ YYYY-MM-DD HH:mm`.
 
 ## Limitations
 

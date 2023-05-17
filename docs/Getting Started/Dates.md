@@ -88,15 +88,12 @@ You can ask Tasks for a reminder to do a task. And unlike all the other dates, r
 Reminder dates use a timer clock emoji: ⏲
 
 ```markdown
-- [ ] take out the trash ⏲ 2021-04-09 9:50 am
+- [ ] take out the trash ⏲ 2021-04-09 09:50
 ```
 
 This differs from the [[Notifications|Reminders plugin]], which uses ⏰.
 
 For more information on the Reminders facility in Tasks, see [[Task-Reminders]].
-
-> [!warning]
-> The time format for task reminders may change.
 
 > [!released]
 > Reminder support was introduced in Tasks X.Y.Z.
