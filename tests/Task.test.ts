@@ -1139,7 +1139,7 @@ describe('next task recurrence appearance', () => {
         const task = fromLine({ line: '- [ ] this is a recurring task 🔁 every day' });
 
         // Act
-        const lines = task.toggle().map((t) => t.toFileLineString());
+        const lines = task.toggleWithRecurrenceInUsersOrder().map((t) => t.toFileLineString());
 
         // Assert
         expect(lines.length).toEqual(2);
@@ -1153,7 +1153,7 @@ describe('next task recurrence appearance', () => {
         updateSettings({ recurrenceOnNextLine: false });
 
         // Act
-        const lines = task.toggle().map((t) => t.toFileLineString());
+        const lines = task.toggleWithRecurrenceInUsersOrder().map((t) => t.toFileLineString());
 
         // Assert
         expect(lines.length).toEqual(2);
@@ -1167,7 +1167,7 @@ describe('next task recurrence appearance', () => {
         updateSettings({ recurrenceOnNextLine: true });
 
         // Act
-        const lines = task.toggle().map((t) => t.toFileLineString());
+        const lines = task.toggleWithRecurrenceInUsersOrder().map((t) => t.toFileLineString());
 
         // Assert
         expect(lines.length).toEqual(2);

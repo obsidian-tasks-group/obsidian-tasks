@@ -89,7 +89,7 @@ export async function renderTaskLine(
 
         // Should be re-rendered as enabled after update in file.
         checkbox.disabled = true;
-        const toggledTasks = task.toggle();
+        const toggledTasks = task.toggleWithRecurrenceInUsersOrder();
         replaceTaskWithTasks({
             originalTask: task,
             newTasks: toggledTasks,
