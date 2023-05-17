@@ -197,8 +197,8 @@ export class TaskBuilder {
         return this;
     }
 
-    public reminder(reminder: string): TaskBuilder {
-        if (reminder.length > 0) {
+    public reminder(reminder: string | null): TaskBuilder {
+        if (reminder) {
             this._reminders = parseDateTime(reminder);
         } else {
             this._reminders = null;
