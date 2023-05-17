@@ -52,7 +52,6 @@ export type TASK_FORMATS = typeof TASK_FORMATS; // For convenience to make some 
 
 // Time formats for the reminder settings.
 export const TIME_FORMATS = {
-    twelveHour: 'YYYY-MM-DD h:mm a',
     twentyFourHour: 'YYYY-MM-DD HH:mm',
 };
 
