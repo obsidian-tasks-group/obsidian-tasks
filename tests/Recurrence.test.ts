@@ -278,7 +278,7 @@ describe('Recurrence - with reminders', () => {
         expect(
             next!.reminder!.isSame(parseMoment(moment('2021-06-27 13:00', TIME_FORMATS.twentyFourHour))),
         ).toStrictEqual(true);
-        expect(next!.reminder!.toString()).toStrictEqual('2021-06-27 1:00 pm');
+        expect(next!.reminder!.toString()).toStrictEqual('2021-06-27 13:00');
 
         // Confirm that the original date has not been modified
         expect(originalReminder.toString()).toStrictEqual(originalReminderAsString);
