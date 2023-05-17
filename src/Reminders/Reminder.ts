@@ -4,7 +4,6 @@ import { TIME_FORMATS, getSettings } from '../Config/Settings';
 export class ReminderSettings {
     notificationTitle: string = 'Task Reminder';
     dateFormat: string = 'YYYY-MM-DD'; // TODO Do not put format strings in user settings
-    dateTimeFormat: string = TIME_FORMATS.twentyFourHour; // TODO Remove this option from settings
     dailyReminderTime: string = '09:00';
     refreshIntervalMilliseconds: number = 5 * 1000;
 
