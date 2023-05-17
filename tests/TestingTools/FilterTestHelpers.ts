@@ -25,9 +25,12 @@ export function testFilter(filter: FilterOrErrorMessage, taskBuilder: TaskBuilde
  * @param expected true if the task should match the filter, and false otherwise.
  */
 export function testTaskFilter(filter: FilterOrErrorMessage, task: Task, expected: boolean) {
-    expect(filter.filterFunction).toBeDefined();
-    expect(filter.error).toBeUndefined();
-    expect(filter.filterFunction!(task)).toEqual(expected);
+    expect(filter).toBeValid();
+    if (expected) {
+        expect(filter).toMatchTask(task);
+    } else {
+        expect(filter).not.toMatchTask(task);
+    }
 }
 
 /**
