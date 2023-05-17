@@ -60,6 +60,11 @@ describe('explain reminder date queries', () => {
         expect(filterOrMessage).toHaveExplanation('reminder date is before 2023-01-02 (Monday 2nd January 2023)');
     });
 
+    it('should show that times in reminder filters are ignored', () => {
+        const filterOrMessage = new ReminderDateField().createFilterOrErrorMessage('reminder on 2023-01-02 15:43');
+        expect(filterOrMessage).toHaveExplanation('reminder date is on 2023-01-02 (Monday 2nd January 2023)');
+    });
+
     it('implicit "on" gets added to explanation', () => {
         const filterOrMessage = new ReminderDateField().createFilterOrErrorMessage('reminder 2023-01-02');
         expect(filterOrMessage).toHaveExplanation('reminder date is on 2023-01-02 (Monday 2nd January 2023)');
