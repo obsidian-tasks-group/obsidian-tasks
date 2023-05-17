@@ -31,7 +31,7 @@ export class Reminder {
         if (this.type === ReminderType.Date) {
             return this.time.format(reminderSettings.dateFormat);
         }
-        return this.time.format(reminderSettings.dateTimeFormat);
+        return this.time.format(TIME_FORMATS.twentyFourHour);
     }
 
     // TODO Rename this to identicalTo() - for consistency with similar methods...?? Check how Task does it
@@ -42,8 +42,7 @@ export class Reminder {
 
 // TODO Move this to a named constructor
 export function parseDateTime(dateTime: string): Reminder {
-    const reminderSettings = getSettings().reminderSettings;
-    const reminder = window.moment(dateTime, reminderSettings.dateTimeFormat);
+    const reminder = window.moment(dateTime, TIME_FORMATS.twentyFourHour);
     return parseMoment(reminder);
 }
 

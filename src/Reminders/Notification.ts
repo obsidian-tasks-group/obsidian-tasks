@@ -1,6 +1,6 @@
 import { App, Modal } from 'obsidian';
 import type { Moment } from 'moment';
-import { getSettings } from '../Config/Settings';
+import { TIME_FORMATS, getSettings } from '../Config/Settings';
 import type { Task } from '../Task';
 import { Query } from '../Query/Query';
 import { sameDateTime } from '../lib/DateTools';
@@ -86,7 +86,7 @@ export class TaskNotification {
         for (const task of reminderTasks) {
             const dailyReminderTime = window.moment(
                 `${window.moment().format('YYYY-MM-DD')} ${reminderSettings.dailyReminderTime}`,
-                reminderSettings.dateTimeFormat,
+                TIME_FORMATS.twentyFourHour,
             );
 
             if (task.reminder) {
