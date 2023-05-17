@@ -469,7 +469,7 @@
             <!-- --------------------------------------------------------------------------- -->
             <!--  Reminders Date  -->
             <!-- --------------------------------------------------------------------------- -->
-            <label for="reminder"><span class="accesskey">R</span>eminder</label>
+            <label for="reminder">R<span class="accesskey">e</span>minder</label>
             <!-- svelte-ignore a11y-accesskey -->
             <input
                 bind:value={editableTask.reminderDate}
@@ -477,7 +477,7 @@
                 type="text"
                 class:tasks-modal-error={!isReminderDateValid}
                 placeholder={datePlaceholder}
-                accesskey={accesskey("a")}
+                accesskey={accesskey("e")}
             />
             <code>{reminderDateSymbol} {@html parsedReminderDate}</code>
 
