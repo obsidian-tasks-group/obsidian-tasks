@@ -31,7 +31,7 @@ describe('reminder date', () => {
         // Act, Assert
         testTaskFilterForTaskWithReminderDate(filter, null, false);
         testTaskFilterForTaskWithReminderDate(filter, '2022-04-15', false);
-        testTaskFilterForTaskWithReminderDate(filter, '2022-04-20 09:15', false); // TODO should be true, I think
+        testTaskFilterForTaskWithReminderDate(filter, '2022-04-20 09:15', true);
         testTaskFilterForTaskWithReminderDate(filter, '2022-04-20', true);
         testTaskFilterForTaskWithReminderDate(filter, '2022-04-25', false);
     });
@@ -43,9 +43,13 @@ describe('reminder date', () => {
         // Act, Assert
         testTaskFilterForTaskWithReminderDate(filter, null, false);
         testTaskFilterForTaskWithReminderDate(filter, '2022-04-15', false);
-        testTaskFilterForTaskWithReminderDate(filter, '2022-04-20', true); // TODO should be false, I think
-        testTaskFilterForTaskWithReminderDate(filter, '2022-04-20 09:15', false);
-        testTaskFilterForTaskWithReminderDate(filter, '2022-04-20 15:43', false); // TODO should be true, I think
+
+        // Filter matches whole day, even though it was supplied with a time, so reminders
+        // with any time on the filter's day should match.
+        testTaskFilterForTaskWithReminderDate(filter, '2022-04-20', true);
+        testTaskFilterForTaskWithReminderDate(filter, '2022-04-20 09:15', true);
+        testTaskFilterForTaskWithReminderDate(filter, '2022-04-20 15:43', true);
+
         testTaskFilterForTaskWithReminderDate(filter, '2022-04-25', false);
     });
 });
