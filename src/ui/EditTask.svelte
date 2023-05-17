@@ -2,7 +2,7 @@
     import * as chrono from 'chrono-node';
     import { onMount } from 'svelte';
     import { Recurrence } from '../Recurrence';
-    import { getSettings, TASK_FORMATS } from '../Config/Settings';
+    import { getSettings, TASK_FORMATS, TIME_FORMATS} from '../Config/Settings';
     import { GlobalFilter } from '../Config/GlobalFilter';
     import { Status } from '../Status';
     import { Priority, Task } from '../Task';
@@ -120,7 +120,6 @@
         typedDate: string,
         forwardDate: Date | undefined = undefined,
     ): string {
-        const { reminderSettings } = getSettings();
         if (!typedDate) {
             return `<i>no ${fieldName} date</i>`;
         }
@@ -129,7 +128,7 @@
         });
         if (parsed !== null) {
             if (fieldName === 'reminder') {
-                return window.moment(parsed).format(reminderSettings.dateTimeFormat);
+                return window.moment(parsed).format(TIME_FORMATS.twentyFourHour);
             }else{
                 return window.moment(parsed).format('YYYY-MM-DD');
             }
@@ -224,7 +223,7 @@
     }
 
     onMount(() => {
-        const { provideAccessKeys, reminderSettings } = getSettings();
+        const { provideAccessKeys } = getSettings();
         withAccessKeys = provideAccessKeys;
         const description = GlobalFilter.removeAsWordFrom(task.description);
         // If we're displaying to the user the description without the global filter (i.e. it was removed in the method
@@ -257,7 +256,7 @@
                 ? task.scheduledDate.format('YYYY-MM-DD')
                 : '',
             dueDate: task.dueDate ? task.dueDate.format('YYYY-MM-DD') : '',
-            reminderDate: task.reminder? task.reminder!.time.format(reminderSettings.dateTimeFormat) : '',
+            reminderDate: task.reminder? task.reminder!.time.format(TIME_FORMATS.twentyFourHour) : '',
             doneDate: task.doneDate ? task.doneDate.format('YYYY-MM-DD') : '',
             forwardOnly: true,
         };
