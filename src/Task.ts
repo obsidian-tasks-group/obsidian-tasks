@@ -291,12 +291,16 @@ export class Task {
     }
 
     /**
-     * Toggles this task and returns the resulting tasks.
+     * Toggles this task and returns the resulting task(s). If the
+     * task is not recurring, it will return `[toggled]`.
      *
      * Toggling can result in more than one returned task in the case of
-     * recurrence. If it is a recurring task, the toggled task will be returned
-     * together with the next occurrence in the order `[next, toggled]`. If the
-     * task is not recurring, it will return `[toggled]`.
+     * recurrence. In this case, the toggled task will be returned
+     * together with the next occurrence in the order `[next, toggled]`.
+     *
+     * There is a possibility to use user set order `[next, toggled]`
+     * or `[toggled, next]` - {@link toggleWithRecurrenceInUsersOrder}.
+     *
      */
     public toggle(): Task[] {
         const newStatus = StatusRegistry.getInstance().getNextStatusOrCreate(this.status);
@@ -352,6 +356,24 @@ export class Task {
 
         // Write next occurrence before previous occurrence.
         newTasks.push(toggledTask);
+
+        return newTasks;
+    }
+
+    /**
+     * Toggles this task and returns the resulting task(s). If the
+     * task is not recurring, it will return `[toggled]`.
+     *
+     * Toggling can result in more than one returned task in the case of
+     * recurrence. In this case, the toggled task will be returned in
+     * user set order `[next, toggled]` or `[toggled, next]` depending
+     * on {@link Settings}.
+     *
+     * If there is no need to consider user settings call {@link toggle}.
+     *
+     */
+    public toggleWithRecurrenceInUsersOrder(): Task[] {
+        const newTasks = this.toggle();
 
         const { recurrenceOnNextLine: recurrenceOnNextLine } = getSettings();
         return recurrenceOnNextLine ? newTasks.reverse() : newTasks;
