@@ -67,9 +67,7 @@ export const DEFAULT_SYMBOLS: DefaultTaskSerializerSymbols = {
         dueDateRegex: /[📅📆🗓] *(\d{4}-\d{2}-\d{2})$/u,
         doneDateRegex: /✅ *(\d{4}-\d{2}-\d{2})$/u,
         recurrenceRegex: /🔁 ?([a-zA-Z0-9, !]+)$/iu,
-        // TODO Too complex Break this down, so it is easy to understand.
-        // TODO Does not work with Am. Add 'i' to make it case-insensitive.
-        reminderRegex: /⏲️ *(\d{4}-\d{2}-\d{2}(?:\s\d{1,2}:\d{2}(?:\s(?:am|pm|AM|PM))?)?)/u,
+        reminderRegex: /⏲️ *(\d{4}-\d{2}-\d{2}(?: \d{2}:\d{2})?)/u,
     },
 } as const;
 
