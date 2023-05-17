@@ -85,10 +85,10 @@ starts before tomorrow
 
 You can ask Tasks for a reminder to do a task. And unlike all the other dates, reminders can have times.
 
-Reminder dates use a timer clock emoji: ⏲
+Reminder dates use an alarm clock emoji: ⏰
 
 ```markdown
-- [ ] take out the trash ⏲ 2021-04-09 09:50
+- [ ] take out the trash ⏰ 2021-04-09 09:50
 ```
 
 This differs from the [[Notifications|Reminders plugin]], which uses ⏰.
