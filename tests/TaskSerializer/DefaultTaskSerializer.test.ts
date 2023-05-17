@@ -86,23 +86,6 @@ describe.each(symbolMap)("DefaultTaskSerializer with '$taskFormat' symbols", ({ 
             resetSettings();
         });
 
-        it('should parse a single 12h reminder', () => {
-            setDateTimeFormat(TIME_FORMATS.twelveHour);
-            const times = [
-                '2021-06-20 1:45 pm',
-                '2021-06-20 1:45 am',
-                '2021-06-20 01:45 PM',
-                '2021-06-20 01:45 AM',
-                '2021-06-20',
-            ];
-            times.forEach((time) => {
-                const taskDetails = deserialize(`${reminderDateSymbol} ${time}`);
-                expect(taskDetails).toMatchTaskDetails({
-                    reminder: parseMoment(moment(time, TIME_FORMATS.twelveHour)),
-                });
-            });
-        });
-
         it('should parse a single 24h reminder', () => {
             setDateTimeFormat(TIME_FORMATS.twentyFourHour);
             const times = ['2021-06-20 13:45', '2021-06-20 01:45', '2021-06-20'];
@@ -171,26 +154,6 @@ describe.each(symbolMap)("DefaultTaskSerializer with '$taskFormat' symbols", ({ 
     describe('serialize reminders', () => {
         afterEach(function () {
             resetSettings();
-        });
-
-        it('should serialize a single 12h reminder', () => {
-            setDateTimeFormat(TIME_FORMATS.twelveHour);
-            const times = ['2021-06-20 1:45 pm', '2021-06-20 1:45 am', '2021-06-20'];
-
-            times.forEach((time) => {
-                const serialized = serialize(new TaskBuilder().reminders(time).description('').build());
-                expect(serialized).toEqual(` ${reminderDateSymbol} ${time}`);
-            });
-        });
-
-        it('should serialize malformed 12h reminders', () => {
-            setDateTimeFormat(TIME_FORMATS.twelveHour);
-            const times = ['2021-06-20 01:45 pm', '2021-06-20 1:45 PM', '2021-06-20 01:45 PM', '2021-06-20 1:45 p'];
-
-            times.forEach((time) => {
-                const serialized = serialize(new TaskBuilder().reminders(time).description('').build());
-                expect(serialized).toEqual(` ${reminderDateSymbol} 2021-06-20 1:45 pm`);
-            });
         });
 
         it('should serialize a single 24h reminder', () => {

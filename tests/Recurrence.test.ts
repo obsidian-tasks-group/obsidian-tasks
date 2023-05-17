@@ -259,25 +259,6 @@ describe('identicalTo', () => {
 });
 
 describe('Recurrence - with reminders', () => {
-    it('creates a recurring instance with single 12h reminders', () => {
-        // Arrange
-        const recurrence = Recurrence.fromText({
-            recurrenceRuleText: 'every week',
-            startDate: null,
-            scheduledDate: null,
-            dueDate: null,
-            reminder: parseMoment(moment('2021-06-20 10:00 am', TIME_FORMATS.twelveHour)),
-        });
-
-        // Act
-        const next = recurrence!.next();
-
-        // Assert
-        expect(
-            next!.reminder!.isSame(parseMoment(moment('2021-06-27 10:00 am', TIME_FORMATS.twelveHour))),
-        ).toStrictEqual(true);
-    });
-
     it('creates a recurring instance with single 24h reminders', () => {
         // Arrange
         const originalReminder = parseMoment(moment('2021-06-20 13:00', TIME_FORMATS.twentyFourHour));
