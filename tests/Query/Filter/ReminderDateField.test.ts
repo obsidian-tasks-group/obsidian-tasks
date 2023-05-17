@@ -33,9 +33,14 @@ describe('sorting by reminder', () => {
 
     const date1 = new TaskBuilder().reminders('2021-01-12').build();
     const date2 = new TaskBuilder().reminders('2022-12-23').build();
+    const date3 = new TaskBuilder().reminders('2022-12-23 09:27').build();
+    const date4 = new TaskBuilder().reminders('2022-12-23 13:59').build();
 
     it('sort by reminder', () => {
-        expectTaskComparesBefore(new ReminderDateField().createNormalSorter(), date1, date2);
+        const sorter = new ReminderDateField().createNormalSorter();
+        expectTaskComparesBefore(sorter, date1, date2);
+        expectTaskComparesBefore(sorter, date2, date3);
+        expectTaskComparesBefore(sorter, date3, date4);
     });
 
     it('sort by reminder reverse', () => {
