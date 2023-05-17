@@ -6,6 +6,9 @@ publish: true
 
 <span class="related-pages">#plugin/reminder</span>
 
+> [!released]
+> Reminder support was introduced in Tasks X.Y.Z.
+
 Within Tasks, reminder notifications can be set using the standard Tasks format `⏲️ YYYY-MM-DD` for daily notifications at a set or by specifying the hour `⏲️ YYYY-MM-DD h:mm a`.
 
 ## Limitations
