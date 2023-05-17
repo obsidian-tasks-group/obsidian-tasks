@@ -5,8 +5,50 @@ import moment from 'moment';
 import { ReminderDateField } from '../../../src/Query/Filter/ReminderDateField';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { expectTaskComparesAfter, expectTaskComparesBefore } from '../../CustomMatchers/CustomMatchersForSorting';
+import type { FilterOrErrorMessage } from '../../../src/Query/Filter/Filter';
+import { testFilter } from '../../TestingTools/FilterTestHelpers';
 
 window.moment = moment;
+
+function testTaskFilterForTaskWithReminderDate(
+    filter: FilterOrErrorMessage,
+    reminderDateTime: string | null,
+    expected: boolean,
+) {
+    const builder = new TaskBuilder();
+    testFilter(filter, builder.reminder(reminderDateTime), expected);
+}
+
+describe('reminder date', () => {
+    afterAll(() => {
+        jest.useRealTimers();
+    });
+
+    it('by reminder date (on) - with filter containing date only', () => {
+        // Arrange
+        const filter = new ReminderDateField().createFilterOrErrorMessage('reminder on 2022-04-20');
+
+        // Act, Assert
+        testTaskFilterForTaskWithReminderDate(filter, null, false);
+        testTaskFilterForTaskWithReminderDate(filter, '2022-04-15', false);
+        testTaskFilterForTaskWithReminderDate(filter, '2022-04-20 09:15', false); // TODO should be true, I think
+        testTaskFilterForTaskWithReminderDate(filter, '2022-04-20', true);
+        testTaskFilterForTaskWithReminderDate(filter, '2022-04-25', false);
+    });
+
+    it('by reminder date (on) - with filter containing date and time', () => {
+        // Arrange
+        const filter = new ReminderDateField().createFilterOrErrorMessage('reminder on 2022-04-20 15:43');
+
+        // Act, Assert
+        testTaskFilterForTaskWithReminderDate(filter, null, false);
+        testTaskFilterForTaskWithReminderDate(filter, '2022-04-15', false);
+        testTaskFilterForTaskWithReminderDate(filter, '2022-04-20', true); // TODO should be false, I think
+        testTaskFilterForTaskWithReminderDate(filter, '2022-04-20 09:15', false);
+        testTaskFilterForTaskWithReminderDate(filter, '2022-04-20 15:43', false); // TODO should be true, I think
+        testTaskFilterForTaskWithReminderDate(filter, '2022-04-25', false);
+    });
+});
 
 describe('explain reminder date queries', () => {
     it('should explain explicit date', () => {
