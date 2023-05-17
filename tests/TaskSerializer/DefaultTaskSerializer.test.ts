@@ -9,7 +9,6 @@ import { RecurrenceBuilder } from '../TestingTools/RecurrenceBuilder';
 import { DEFAULT_SYMBOLS, type DefaultTaskSerializerSymbols } from '../../src/TaskSerializer/DefaultTaskSerializer';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { parseMoment } from '../../src/Reminders/Reminder';
-import { setDateTimeFormat } from '../TestHelpers';
 
 jest.mock('obsidian');
 window.moment = moment;
@@ -87,7 +86,6 @@ describe.each(symbolMap)("DefaultTaskSerializer with '$taskFormat' symbols", ({ 
         });
 
         it('should parse a single 24h reminder', () => {
-            setDateTimeFormat(TIME_FORMATS.twentyFourHour);
             const times = ['2021-06-20 13:45', '2021-06-20 01:45', '2021-06-20'];
             times.forEach((time) => {
                 const taskDetails = deserialize(`${reminderDateSymbol} ${time}`);
@@ -157,7 +155,6 @@ describe.each(symbolMap)("DefaultTaskSerializer with '$taskFormat' symbols", ({ 
         });
 
         it('should serialize a single 24h reminder', () => {
-            setDateTimeFormat(TIME_FORMATS.twentyFourHour);
             const times = ['2021-06-20 13:45', '2021-06-20 01:45', '2021-06-20'];
 
             times.forEach((time) => {

@@ -5,7 +5,7 @@ jest.mock('obsidian');
 import moment from 'moment';
 import { TIME_FORMATS, resetSettings } from '../../src/Config/Settings';
 import { Reminder, ReminderType, parseDateTime, parseMoment } from '../../src/Reminders/Reminder';
-import { fromLine, setDateTimeFormat } from '../TestHelpers';
+import { fromLine } from '../TestHelpers';
 
 window.moment = moment;
 
@@ -35,8 +35,6 @@ describe('should parse dates & times string as reminder: ', () => {
     });
 
     it('test 24-hour format', () => {
-        setDateTimeFormat(TIME_FORMATS.twentyFourHour);
-
         checkParsedDateTime('2023-01-15', '2023-01-15');
         checkParsedDateTime('2023-01-15 13:45', '2023-01-15 13:45');
         checkParsedDateTime('2023-01-15 1:45 pm', '2023-01-15 01:45'); // the pm & leading 0 are ignored
@@ -49,8 +47,6 @@ describe('should parse task strings: ', () => {
     });
 
     it('valid task - in 24-hour format', () => {
-        setDateTimeFormat(TIME_FORMATS.twentyFourHour);
-
         const line = '- [ ] #task Reminder at 13:57 ⏲️ 2023-05-03 13:57';
         const task = fromLine({ line: line });
         expect(task.reminder).not.toBeNull();

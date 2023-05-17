@@ -1,4 +1,3 @@
-import { getSettings, updateSettings } from '../src/Config/Settings';
 import { Task } from '../src/Task';
 import { TaskLocation } from '../src/TaskLocation';
 
@@ -32,10 +31,4 @@ export function createTasksFromMarkdown(tasksAsMarkdown: string, path: string, p
         }
     }
     return tasks;
-}
-
-export function setDateTimeFormat(dateTimeFormat: string) {
-    const settings = getSettings().reminderSettings;
-    settings.dateTimeFormat = dateTimeFormat;
-    updateSettings({ reminderSettings: settings });
 }
