@@ -144,7 +144,7 @@ describe.each(symbolMap)("DefaultTaskSerializer with '$taskFormat' symbols", ({ 
         });
 
         it('should serialize a single reminder date', () => {
-            const serialized = serialize(new TaskBuilder().reminders('2021-06-20').description('').build());
+            const serialized = serialize(new TaskBuilder().reminder('2021-06-20').description('').build());
             expect(serialized).toEqual(` ${reminderDateSymbol} 2021-06-20`);
         });
     });
@@ -158,7 +158,7 @@ describe.each(symbolMap)("DefaultTaskSerializer with '$taskFormat' symbols", ({ 
             const times = ['2021-06-20 13:45', '2021-06-20 01:45', '2021-06-20'];
 
             times.forEach((time) => {
-                const serialized = serialize(new TaskBuilder().reminders(time).description('').build());
+                const serialized = serialize(new TaskBuilder().reminder(time).description('').build());
                 expect(serialized).toEqual(` ${reminderDateSymbol} ${time}`);
             });
         });

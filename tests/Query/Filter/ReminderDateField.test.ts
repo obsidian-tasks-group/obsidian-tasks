@@ -31,10 +31,10 @@ describe('sorting by reminder', () => {
 
     // Because Reminder is the first field to support times, we do need to test
     // that sorting takes account of differences in reminder time.
-    const date1 = new TaskBuilder().reminders('2021-01-12').build();
-    const date2 = new TaskBuilder().reminders('2022-12-23').build();
-    const date3 = new TaskBuilder().reminders('2022-12-23 09:27').build();
-    const date4 = new TaskBuilder().reminders('2022-12-23 13:59').build();
+    const date1 = new TaskBuilder().reminder('2021-01-12').build();
+    const date2 = new TaskBuilder().reminder('2022-12-23').build();
+    const date3 = new TaskBuilder().reminder('2022-12-23 09:27').build();
+    const date4 = new TaskBuilder().reminder('2022-12-23 13:59').build();
 
     it('sort by reminder', () => {
         const sorter = new ReminderDateField().createNormalSorter();
@@ -56,7 +56,7 @@ describe('grouping by reminder date', () => {
     it('group by reminder date', () => {
         // Arrange
         const grouper = new ReminderDateField().createGrouper();
-        const taskWithDate = new TaskBuilder().reminders('1970-01-01').build();
+        const taskWithDate = new TaskBuilder().reminder('1970-01-01').build();
         const taskWithoutDate = new TaskBuilder().build();
 
         // Assert
