@@ -139,10 +139,17 @@ export class TaskGroups {
             return;
         }
 
+        this._groups.forEach((group) => {
+            group.applyTaskLimit(limit);
+        });
+
+        this.calculateTotalTaskCount();
+    }
+
+    private calculateTotalTaskCount() {
         let uniqueTasks: Task[] = [];
 
         this._groups.forEach((group) => {
-            group.applyTaskLimit(limit);
             uniqueTasks = [...uniqueTasks, ...group.tasks];
             uniqueTasks = [...new Set(uniqueTasks)];
         });
