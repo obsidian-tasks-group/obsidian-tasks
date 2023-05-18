@@ -138,9 +138,7 @@ export class TaskGroups {
         let uniqueDeletedTasks: Task[] = [];
 
         this._groups.forEach((group) => {
-            const taskCountToRemove = group.tasks.length - limit;
-            const deletedTasks = group.tasks.splice(0, taskCountToRemove);
-
+            const deletedTasks = group.limitTo(limit);
             uniqueDeletedTasks = [...uniqueDeletedTasks, ...deletedTasks];
         });
 

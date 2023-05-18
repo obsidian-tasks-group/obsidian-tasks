@@ -68,6 +68,12 @@ export class TaskGroup {
         }
     }
 
+    public limitTo(limit: number): Task[] {
+        const taskCountToRemove = this.tasks.length - limit;
+        const removedTasks = this.tasks.splice(0, taskCountToRemove);
+        return removedTasks;
+    }
+
     /**
      * A markdown-format representation of all the tasks in this group.
      *
