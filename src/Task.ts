@@ -291,8 +291,12 @@ export class Task {
     }
 
     /**
-     * Toggles this task and returns the resulting task(s). If the
-     * task is not recurring, it will return `[toggled]`.
+     * Toggles this task and returns the resulting task(s).
+     *
+     * Use this method if you need to know which is the original (completed)
+     * task and which is the new recurrence.
+     *
+     * If the task is not recurring, it will return `[toggled]`.
      *
      * Toggling can result in more than one returned task in the case of
      * recurrence. In this case, the toggled task will be returned
@@ -361,8 +365,13 @@ export class Task {
     }
 
     /**
-     * Toggles this task and returns the resulting task(s). If the
-     * task is not recurring, it will return `[toggled]`.
+     * Toggles this task and returns the resulting task(s).
+     *
+     * Use this method if the updated task(s) are to be saved,
+     * as this honours the user setting to control the order
+     * the tasks should be saved in.
+     *
+     * If the task is not recurring, it will return `[toggled]`.
      *
      * Toggling can result in more than one returned task in the case of
      * recurrence. In this case, the toggled task will be returned in
