@@ -961,5 +961,48 @@ At most 4 tasks per group.
 `;
             expect('\n' + soleTaskGroup.tasksAsStringOfLines()).toStrictEqual(expectedTasks);
         });
+
+        it('should apply group limit correctly, after sorting tasks', () => {
+            // Arrange
+            const input = `
+                # sorting by status will move the incomplete tasks first
+                sort by status
+
+                # grouping by status will give two groups: Done and Todo
+                group by status
+
+                # Apply a limit, to test which tasks make it to
+                limit group 3
+                `;
+            const query = new Query({ source: input });
+
+            const tasksAsMarkdown = `
+- [x] Task 1 - will be in the first group
+- [x] Task 2 - will be in the first group
+- [ ] Task 3 - will be sorted to 1st place in the second group and pass the limit
+- [ ] Task 4 - will be sorted to 2nd place in the second group and pass the limit
+- [ ] Task 5 - will be sorted to 3nd place in the second group and pass the limit
+- [ ] Task 6 - should not appear in output
+            `;
+
+            const tasks = createTasksFromMarkdown(tasksAsMarkdown, 'some_markdown_file', 'Some Heading');
+
+            // Act
+            const groups = query.applyQueryToTasks(tasks);
+
+            // Assert
+            expect(groups.groups.length).toEqual(2);
+            expect(groups.groups[0].tasksAsStringOfLines()).toMatchInlineSnapshot(`
+                "- [x] Task 1 - will be in the first group
+                - [x] Task 2 - will be in the first group
+                "
+            `);
+            expect(groups.groups[1].tasksAsStringOfLines()).toMatchInlineSnapshot(`
+                "- [ ] Task 3 - will be sorted to 1st place in the second group and pass the limit
+                - [ ] Task 4 - will be sorted to 2nd place in the second group and pass the limit
+                - [ ] Task 5 - will be sorted to 3nd place in the second group and pass the limit
+                "
+            `);
+        });
     });
 });
