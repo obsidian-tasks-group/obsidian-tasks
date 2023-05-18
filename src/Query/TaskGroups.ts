@@ -133,4 +133,6 @@ export class TaskGroups {
             group.setGroupHeadings(displayHeadingSelector.getHeadingsForTaskGroup(group.groups));
         }
     }
+
+    public limitTo(_limit: number) {}
 }

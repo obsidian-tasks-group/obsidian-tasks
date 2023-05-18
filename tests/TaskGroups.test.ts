@@ -344,4 +344,51 @@ describe('Grouping tasks', () => {
             "
         `);
     });
+
+    it('should limit tasks in 1 group', () => {
+        // Arrange
+        const a = fromLine({ line: '- [ ] a', path: 'file2.md' });
+        const b = fromLine({ line: '- [ ] b', path: 'file1.md' });
+        const c = fromLine({ line: '- [ ] c', path: 'file1.md' });
+        const d = fromLine({ line: '- [ ] d', path: 'file3.md' });
+        const e = fromLine({ line: '- [ ] e', path: 'file3.md' });
+        const f = fromLine({ line: '- [ ] f', path: 'file3.md' });
+        const inputs = [a, b, c, d, e, f];
+
+        // Act
+        const grouping = [new PathField().createNormalGrouper()];
+        const groups = new TaskGroups(grouping, inputs);
+        groups.limitTo(2);
+
+        // Assert
+        expect(groups.totalTasksCount()).toEqual(6);
+        expect(groups.toString()).toMatchInlineSnapshot(`
+            "Groupers (if any):
+            - path
+
+            Group names: [file1]
+            #### [path] file1
+            - [ ] b
+            - [ ] c
+
+            ---
+
+            Group names: [file2]
+            #### [path] file2
+            - [ ] a
+
+            ---
+
+            Group names: [file3]
+            #### [path] file3
+            - [ ] d
+            - [ ] e
+            - [ ] f
+
+            ---
+
+            6 tasks
+            "
+        `);
+    });
 });
