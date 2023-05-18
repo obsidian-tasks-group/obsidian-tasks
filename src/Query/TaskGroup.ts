@@ -68,14 +68,13 @@ export class TaskGroup {
         }
     }
 
-    public applyTaskLimit(limit: number): Task[] {
+    public applyTaskLimit(limit: number) {
         if (limit >= this.tasks.length) {
-            return [];
+            return;
         }
 
         const taskCountToRemove = this.tasks.length - limit;
-        const removedTasks = this.tasks.splice(-taskCountToRemove);
-        return removedTasks;
+        this.tasks.splice(-taskCountToRemove);
     }
 
     /**
