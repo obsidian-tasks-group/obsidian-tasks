@@ -24,7 +24,7 @@ export class Query implements IQuery {
     private readonly shortModeRegexp = /^short/;
     private readonly explainQueryRegexp = /^explain/;
 
-    private readonly limitRegexp = /^limit (to )?(\d+)( tasks?)?/;
+    private readonly limitRegexp = /^limit (group )?(to )?(\d+)( tasks?)?/;
 
     private readonly commentRegexp = /^#.*/;
 
@@ -223,8 +223,8 @@ export class Query implements IQuery {
     private parseLimit({ line }: { line: string }): void {
         const limitMatch = line.match(this.limitRegexp);
         if (limitMatch !== null) {
-            // limitMatch[2] is per regex always digits and therefore parsable.
-            this._limit = Number.parseInt(limitMatch[2], 10);
+            // limitMatch[3] is per regex always digits and therefore parsable.
+            this._limit = Number.parseInt(limitMatch[3], 10);
         } else {
             this._error = 'do not understand query limit';
         }

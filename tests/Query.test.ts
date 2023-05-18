@@ -270,6 +270,8 @@ describe('Query parsing', () => {
             'hide urgency',
             'limit 42',
             'limit to 42 tasks',
+            'limit group 31',
+            'limit group to 31 tasks',
             'short mode',
             'short',
             'show backlink',
