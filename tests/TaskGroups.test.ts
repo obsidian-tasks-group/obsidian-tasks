@@ -345,7 +345,7 @@ describe('Grouping tasks', () => {
         `);
     });
 
-    it('should limit tasks in 1 group', () => {
+    it('should limit tasks in each group (no task overlapping across group)', () => {
         // Arrange
         const a = fromLine({ line: '- [ ] a', path: 'file2.md' });
         const b = fromLine({ line: '- [ ] b', path: 'file1.md' });
@@ -391,7 +391,7 @@ describe('Grouping tasks', () => {
         `);
     });
 
-    it('should limit tasks with tasks repeating in multiple groups', () => {
+    it('should limit tasks with tasks that overlap across multiple groups', () => {
         // Arrange
         const taskA = fromLine({ line: '- [ ] task A #tag1 #tag2' });
         const taskB = fromLine({ line: '- [ ] task B #tag1 #tag3' });

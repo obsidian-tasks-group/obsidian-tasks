@@ -992,6 +992,7 @@ At most 4 tasks per group.
 
             // Assert
             expect(groups.groups.length).toEqual(2);
+            expect(groups.totalTasksCount()).toEqual(5);
             expect(groups.groups[0].tasksAsStringOfLines()).toMatchInlineSnapshot(`
                 "- [x] Task 1 - will be in the first group
                 - [x] Task 2 - will be in the first group
