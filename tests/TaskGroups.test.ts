@@ -390,4 +390,46 @@ describe('Grouping tasks', () => {
             "
         `);
     });
+
+    it('should limit tasks with tasks repeating in multiple groups', () => {
+        // Arrange
+        const taskA = fromLine({ line: '- [ ] task A #tag1 #tag2' });
+        const taskB = fromLine({ line: '- [ ] task B #tag1 #tag3' });
+        const taskC = fromLine({ line: '- [ ] task C #tag3 #tag2' });
+        const taskD = fromLine({ line: '- [ ] task D #tag1 #tag2' });
+        const inputs = [taskA, taskB, taskC, taskD];
+
+        // Act
+        const grouping = [new TagsField().createNormalGrouper()];
+        const groups = new TaskGroups(grouping, inputs);
+        groups.applyTaskLimit(1);
+
+        // Assert
+        expect(groups.totalTasksCount()).toEqual(2);
+        expect(groups.toString()).toMatchInlineSnapshot(`
+            "Groupers (if any):
+            - tags
+
+            Group names: [#tag1]
+            #### [tags] #tag1
+            - [ ] task A #tag1 #tag2
+
+            ---
+
+            Group names: [#tag2]
+            #### [tags] #tag2
+            - [ ] task A #tag1 #tag2
+
+            ---
+
+            Group names: [#tag3]
+            #### [tags] #tag3
+            - [ ] task B #tag1 #tag3
+
+            ---
+
+            2 tasks
+            "
+        `);
+    });
 });
