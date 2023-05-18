@@ -1,7 +1,7 @@
 import type { Task } from '../Task';
 import type { Grouper } from './Grouper';
 import { GroupingTreeNode } from './GroupingTreeNode';
-import type { TaskGroupingTreeStorage } from './TaskGroups';
+import type { TaskGroupingTreeStorage } from './TaskGroupingTreeStorage';
 
 /*
  * A tree of tasks where every level in the tree corresponds to a grouping property.
