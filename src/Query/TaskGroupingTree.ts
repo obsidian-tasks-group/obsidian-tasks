@@ -48,12 +48,16 @@ export class TaskGroupingTree {
      * @param tasks The tasks that match the task block's Query
      */
     constructor(groupers: Grouper[], tasks: Task[]) {
+        // The root of the tree contains all the tasks.
+        this.root = new TaskGroupingTreeNode(tasks);
+
+        this.buildGroupingTree(groupers);
+    }
+
+    private buildGroupingTree(groupers: Grouper[]) {
         // The tree is build layer by layer, starting from the root.
         // At every level, we iterate on the nodes of that level to generate
         // the next one using the next grouping.
-
-        // The root of the tree contains all the tasks.
-        this.root = new TaskGroupingTreeNode(tasks);
 
         let currentTreeLevel = [this.root];
         for (const grouper of groupers) {
