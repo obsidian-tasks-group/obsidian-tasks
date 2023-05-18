@@ -68,6 +68,14 @@ export class TaskGroup {
         }
     }
 
+    /**
+     * Limits {@link tasks} array to a certain number. Tasks exceeding
+     * the limit will be removed from the end, shall be called on sorted tasks.
+     *
+     * @param limit number of tasks for the group to have. If greater
+     * than the task count, no action will be taken.
+     *
+     */
     public applyTaskLimit(limit: number) {
         if (limit >= this.tasks.length) {
             return;

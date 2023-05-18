@@ -134,6 +134,13 @@ export class TaskGroups {
         }
     }
 
+    /**
+     * Limits all {@link groups} to have a certain number of tasks and
+     * recalculates the {@link _totalTaskCount} for consistency.
+     *
+     * @param limit number of tasks for each group to have.
+     *
+     */
     public applyTaskLimit(limit: number) {
         this._groups.forEach((group) => {
             group.applyTaskLimit(limit);
