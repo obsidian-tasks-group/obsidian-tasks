@@ -32,19 +32,27 @@ class TaskGroupingTreeNode extends GroupingTreeNode<Task> {}
  * TaskGroupingTree does the initial grouping together of tasks,
  * in arbitrary order. Caller is responsible for sorting groups in to desired order.
  *
+ * It is essentially a thin wrapper around Map - see {@link TaskGroupingTreeStorage}.
+ *
+ * It is an implementation detail of the task-grouping code, and does not need to
+ * be understood in order to group tasks.
+ *
+ * Ideally, this code would be simplified and moved in to TaskGroups.
  */
 export class TaskGroupingTree {
     private root: TaskGroupingTreeNode;
 
     /**
-     * The tree is built layer by layer, starting from the root.
-     * At every level, we iterate on the nodes of that level to generate
-     * the next one using the next grouping. The tree tree groups
-     * the passed {@link tasks} by the passed {@link groupers}.
+     * Group a list of tasks, according to one or more task properties.
      * @param groupers 0 or more Grouping values, one per 'group by' line
      * @param tasks The tasks that match the task block's Query
      */
     constructor(groupers: Grouper[], tasks: Task[]) {
+        // The tree is build layer by layer, starting from the root.
+        // At every level, we iterate on the nodes of that level to generate
+        // the next one using the next grouping.
+
+        // The root of the tree contains all the tasks.
         this.root = new TaskGroupingTreeNode(tasks);
 
         let currentTreeLevel = [this.root];
