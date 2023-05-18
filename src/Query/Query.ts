@@ -161,7 +161,9 @@ export class Query implements IQuery {
         const { debugSettings } = getSettings();
         const tasksSorted = debugSettings.ignoreSortInstructions ? tasks : Sort.by(this.sorting, tasks);
         const tasksSortedLimited = tasksSorted.slice(0, this.limit);
-        return new TaskGroups(this.grouping, tasksSortedLimited);
+
+        const taskGroups = new TaskGroups(this.grouping, tasksSortedLimited);
+        return taskGroups;
     }
 
     private parseHideOptions({ line }: { line: string }): void {
