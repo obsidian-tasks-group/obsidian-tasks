@@ -878,6 +878,17 @@ At most 0 tasks.
 `;
             expect(query.explainQuery()).toEqual(expectedDisplayText);
         });
+
+        it('should explain group limit 4', () => {
+            const input = 'limit group 4';
+            const query = new Query({ source: input });
+
+            const expectedDisplayText = `No filters supplied. All tasks will match the query.
+
+At most 4 tasks per group.
+`;
+            expect(query.explainQuery()).toEqual(expectedDisplayText);
+        });
     });
 
     // This tests the parsing of 'group by' instructions.

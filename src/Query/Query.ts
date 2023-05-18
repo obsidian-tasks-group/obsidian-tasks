@@ -13,6 +13,7 @@ export class Query implements IQuery {
     public source: string;
 
     private _limit: number | undefined = undefined;
+    private _taskGroupLimit: number | undefined = undefined;
     private _layoutOptions: LayoutOptions = new LayoutOptions();
     private _filters: Filter[] = [];
     private _error: string | undefined = undefined;
@@ -115,6 +116,14 @@ export class Query implements IQuery {
                 result += 's';
             }
             result += '.\n';
+        }
+
+        if (this._taskGroupLimit !== undefined) {
+            result += `\n\nAt most ${this._taskGroupLimit} task`;
+            if (this._taskGroupLimit !== 1) {
+                result += 's';
+            }
+            result += ' per group.\n';
         }
 
         const { debugSettings } = getSettings();
@@ -226,7 +235,13 @@ export class Query implements IQuery {
         const limitMatch = line.match(this.limitRegexp);
         if (limitMatch !== null) {
             // limitMatch[3] is per regex always digits and therefore parsable.
-            this._limit = Number.parseInt(limitMatch[3], 10);
+            const limitFromLine = Number.parseInt(limitMatch[3], 10);
+
+            if (limitMatch[1] !== undefined) {
+                this._taskGroupLimit = limitFromLine;
+            } else {
+                this._limit = limitFromLine;
+            }
         } else {
             this._error = 'do not understand query limit';
         }
