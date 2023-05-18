@@ -76,6 +76,6 @@ export class TaskGroupingTree {
      * and the values are the tasks.
      */
     public generateTaskTreeStorage(): TaskGroupingTreeStorage {
-        return this.root.generateNodePath();
+        return this.root.generateAllPaths();
     }
 }

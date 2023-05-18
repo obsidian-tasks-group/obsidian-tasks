@@ -32,7 +32,7 @@ describe('Grouping Tree', () => {
         f.children.set('H', h);
 
         // Act
-        const allLeafs = root.generateNodePath();
+        const allLeafs = root.generateAllPaths();
 
         // Assert
         const expected = new Map<string[], number[]>();
@@ -48,7 +48,7 @@ describe('Grouping Tree', () => {
         const root = new GroupingTreeNode<number>([1, 2, 3, 4, 5, 6]);
 
         // Act
-        const allLeafs = root.generateNodePath();
+        const allLeafs = root.generateAllPaths();
 
         // Assert
         const expected = new Map<string[], number[]>();
