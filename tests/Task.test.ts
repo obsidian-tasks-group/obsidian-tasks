@@ -1122,6 +1122,60 @@ describe('set correct created date on reccurence task', () => {
     });
 });
 
+describe('next task recurrence appearance', () => {
+    beforeAll(() => {
+        jest.useFakeTimers();
+        jest.setSystemTime(new Date(2023, 5 - 1, 16));
+        resetSettings();
+    });
+
+    afterAll(() => {
+        jest.useRealTimers();
+        resetSettings();
+    });
+
+    it('new task shall appear on previous line by default', () => {
+        // Arrange
+        const task = fromLine({ line: '- [ ] this is a recurring task 🔁 every day' });
+
+        // Act
+        const lines = task.toggleWithRecurrenceInUsersOrder().map((t) => t.toFileLineString());
+
+        // Assert
+        expect(lines.length).toEqual(2);
+        expect(lines[0]).toMatchInlineSnapshot('"- [ ] this is a recurring task 🔁 every day"');
+        expect(lines[1]).toMatchInlineSnapshot('"- [x] this is a recurring task 🔁 every day ✅ 2023-05-16"');
+    });
+
+    it('new task shall appear on next line with the setting set to false', () => {
+        // Arrange
+        const task = fromLine({ line: '- [ ] this is a recurring task 🔁 every day' });
+        updateSettings({ recurrenceOnNextLine: false });
+
+        // Act
+        const lines = task.toggleWithRecurrenceInUsersOrder().map((t) => t.toFileLineString());
+
+        // Assert
+        expect(lines.length).toEqual(2);
+        expect(lines[0]).toMatchInlineSnapshot('"- [ ] this is a recurring task 🔁 every day"');
+        expect(lines[1]).toMatchInlineSnapshot('"- [x] this is a recurring task 🔁 every day ✅ 2023-05-16"');
+    });
+
+    it('new task shall appear on next line with the setting set to true', () => {
+        // Arrange
+        const task = fromLine({ line: '- [ ] this is a recurring task 🔁 every day' });
+        updateSettings({ recurrenceOnNextLine: true });
+
+        // Act
+        const lines = task.toggleWithRecurrenceInUsersOrder().map((t) => t.toFileLineString());
+
+        // Assert
+        expect(lines.length).toEqual(2);
+        expect(lines[0]).toMatchInlineSnapshot('"- [x] this is a recurring task 🔁 every day ✅ 2023-05-16"');
+        expect(lines[1]).toMatchInlineSnapshot('"- [ ] this is a recurring task 🔁 every day"');
+    });
+});
+
 declare global {
     namespace jest {
         interface Matchers<R> {

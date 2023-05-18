@@ -291,12 +291,20 @@ export class Task {
     }
 
     /**
-     * Toggles this task and returns the resulting tasks.
+     * Toggles this task and returns the resulting task(s).
+     *
+     * Use this method if you need to know which is the original (completed)
+     * task and which is the new recurrence.
+     *
+     * If the task is not recurring, it will return `[toggled]`.
      *
      * Toggling can result in more than one returned task in the case of
-     * recurrence. If it is a recurring task, the toggled task will be returned
-     * together with the next occurrence in the order `[next, toggled]`. If the
-     * task is not recurring, it will return `[toggled]`.
+     * recurrence. In this case, the toggled task will be returned
+     * together with the next occurrence in the order `[next, toggled]`.
+     *
+     * There is a possibility to use user set order `[next, toggled]`
+     * or `[toggled, next]` - {@link toggleWithRecurrenceInUsersOrder}.
+     *
      */
     public toggle(): Task[] {
         const newStatus = StatusRegistry.getInstance().getNextStatusOrCreate(this.status);
@@ -354,6 +362,30 @@ export class Task {
         newTasks.push(toggledTask);
 
         return newTasks;
+    }
+
+    /**
+     * Toggles this task and returns the resulting task(s).
+     *
+     * Use this method if the updated task(s) are to be saved,
+     * as this honours the user setting to control the order
+     * the tasks should be saved in.
+     *
+     * If the task is not recurring, it will return `[toggled]`.
+     *
+     * Toggling can result in more than one returned task in the case of
+     * recurrence. In this case, the toggled task will be returned in
+     * user set order `[next, toggled]` or `[toggled, next]` depending
+     * on {@link Settings}.
+     *
+     * If there is no need to consider user settings call {@link toggle}.
+     *
+     */
+    public toggleWithRecurrenceInUsersOrder(): Task[] {
+        const newTasks = this.toggle();
+
+        const { recurrenceOnNextLine: recurrenceOnNextLine } = getSettings();
+        return recurrenceOnNextLine ? newTasks.reverse() : newTasks;
     }
 
     public get urgency(): number {
