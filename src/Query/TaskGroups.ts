@@ -135,9 +135,15 @@ export class TaskGroups {
     }
 
     public limitTo(limit: number) {
+        let uniqueDeletedTasks: Task[] = [];
+
         this._groups.forEach((group) => {
             const taskCountToRemove = group.tasks.length - limit;
-            group.tasks.splice(0, taskCountToRemove);
+            const deletedTasks = group.tasks.splice(0, taskCountToRemove);
+
+            uniqueDeletedTasks = [...uniqueDeletedTasks, ...deletedTasks];
         });
+
+        this._totalTaskCount -= uniqueDeletedTasks.length;
     }
 }

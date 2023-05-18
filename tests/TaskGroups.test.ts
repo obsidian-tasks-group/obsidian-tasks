@@ -361,7 +361,7 @@ describe('Grouping tasks', () => {
         groups.limitTo(2);
 
         // Assert
-        expect(groups.totalTasksCount()).toEqual(6);
+        expect(groups.totalTasksCount()).toEqual(5);
         expect(groups.toString()).toMatchInlineSnapshot(`
             "Groupers (if any):
             - path
@@ -386,7 +386,7 @@ describe('Grouping tasks', () => {
 
             ---
 
-            6 tasks
+            5 tasks
             "
         `);
     });
