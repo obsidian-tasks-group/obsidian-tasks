@@ -134,11 +134,7 @@ export class TaskGroups {
         }
     }
 
-    public applyTaskLimit(limit: number | undefined) {
-        if (limit === undefined) {
-            return;
-        }
-
+    public applyTaskLimit(limit: number) {
         this._groups.forEach((group) => {
             group.applyTaskLimit(limit);
         });
