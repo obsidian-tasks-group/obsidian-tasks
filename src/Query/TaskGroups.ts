@@ -147,13 +147,13 @@ export class TaskGroups {
     }
 
     private calculateTotalTaskCount() {
-        let uniqueTasks: Task[] = [];
+        let concatenatedTasks: Task[] = [];
 
         this._groups.forEach((group) => {
-            uniqueTasks = [...uniqueTasks, ...group.tasks];
-            uniqueTasks = [...new Set(uniqueTasks)];
+            concatenatedTasks = [...concatenatedTasks, ...group.tasks];
         });
 
+        const uniqueTasks = [...new Set(concatenatedTasks)];
         this._totalTaskCount = uniqueTasks.length;
     }
 }
