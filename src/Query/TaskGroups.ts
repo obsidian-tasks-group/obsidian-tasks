@@ -134,5 +134,10 @@ export class TaskGroups {
         }
     }
 
-    public limitTo(_limit: number) {}
+    public limitTo(limit: number) {
+        this._groups.forEach((group) => {
+            const taskCountToRemove = group.tasks.length - limit;
+            group.tasks.splice(0, taskCountToRemove);
+        });
+    }
 }

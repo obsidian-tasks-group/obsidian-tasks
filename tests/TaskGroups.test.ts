@@ -381,7 +381,6 @@ describe('Grouping tasks', () => {
 
             Group names: [file3]
             #### [path] file3
-            - [ ] d
             - [ ] e
             - [ ] f
 
