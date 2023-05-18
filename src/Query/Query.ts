@@ -172,7 +172,7 @@ export class Query implements IQuery {
         const tasksSortedLimited = tasksSorted.slice(0, this.limit);
 
         const taskGroups = new TaskGroups(this.grouping, tasksSortedLimited);
-        taskGroups.limitTo(this._taskGroupLimit);
+        taskGroups.applyTaskLimit(this._taskGroupLimit);
         return taskGroups;
     }
 

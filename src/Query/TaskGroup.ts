@@ -68,7 +68,7 @@ export class TaskGroup {
         }
     }
 
-    public limitTo(limit: number): Task[] {
+    public applyTaskLimit(limit: number): Task[] {
         if (limit >= this.tasks.length) {
             return [];
         }

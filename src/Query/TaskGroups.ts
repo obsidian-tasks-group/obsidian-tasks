@@ -134,7 +134,7 @@ export class TaskGroups {
         }
     }
 
-    public limitTo(limit: number | undefined) {
+    public applyTaskLimit(limit: number | undefined) {
         if (limit === undefined) {
             return;
         }
@@ -142,7 +142,7 @@ export class TaskGroups {
         let uniqueRemovedTasks: Task[] = [];
 
         this._groups.forEach((group) => {
-            const removedTasksFromAGroup = group.limitTo(limit);
+            const removedTasksFromAGroup = group.applyTaskLimit(limit);
             uniqueRemovedTasks = [...uniqueRemovedTasks, ...removedTasksFromAGroup];
         });
 

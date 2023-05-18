@@ -358,7 +358,7 @@ describe('Grouping tasks', () => {
         // Act
         const grouping = [new PathField().createNormalGrouper()];
         const groups = new TaskGroups(grouping, inputs);
-        groups.limitTo(2);
+        groups.applyTaskLimit(2);
 
         // Assert
         expect(groups.totalTasksCount()).toEqual(5);
