@@ -238,17 +238,18 @@ export class Query implements IQuery {
 
     private parseLimit({ line }: { line: string }): void {
         const limitMatch = line.match(this.limitRegexp);
-        if (limitMatch !== null) {
-            // limitMatch[3] is per regex always digits and therefore parsable.
-            const limitFromLine = Number.parseInt(limitMatch[3], 10);
-
-            if (limitMatch[1] !== undefined) {
-                this._taskGroupLimit = limitFromLine;
-            } else {
-                this._limit = limitFromLine;
-            }
-        } else {
+        if (limitMatch === null) {
             this._error = 'do not understand query limit';
+            return;
+        }
+
+        // limitMatch[3] is per regex always digits and therefore parsable.
+        const limitFromLine = Number.parseInt(limitMatch[3], 10);
+
+        if (limitMatch[1] !== undefined) {
+            this._taskGroupLimit = limitFromLine;
+        } else {
+            this._limit = limitFromLine;
         }
     }
 
