@@ -347,12 +347,12 @@ describe('Grouping tasks', () => {
 
     it('should limit tasks in each group (no task overlapping across group)', () => {
         // Arrange
-        const a = fromLine({ line: '- [ ] a', path: 'file2.md' });
-        const b = fromLine({ line: '- [ ] b', path: 'file1.md' });
-        const c = fromLine({ line: '- [ ] c', path: 'file1.md' });
-        const d = fromLine({ line: '- [ ] d', path: 'file3.md' });
-        const e = fromLine({ line: '- [ ] e', path: 'file3.md' });
-        const f = fromLine({ line: '- [ ] f', path: 'file3.md' });
+        const a = fromLine({ line: '- [ ] a', path: 'tasks_under_the_limit.md' });
+        const b = fromLine({ line: '- [ ] b', path: 'tasks_equal_to_limit.md' });
+        const c = fromLine({ line: '- [ ] c', path: 'tasks_equal_to_limit.md' });
+        const d = fromLine({ line: '- [ ] d', path: 'tasks_over_the_limit.md' });
+        const e = fromLine({ line: '- [ ] e', path: 'tasks_over_the_limit.md' });
+        const f = fromLine({ line: '- [ ] f', path: 'tasks_over_the_limit.md' });
         const inputs = [a, b, c, d, e, f];
 
         // Act
@@ -366,23 +366,23 @@ describe('Grouping tasks', () => {
             "Groupers (if any):
             - path
 
-            Group names: [file1]
-            #### [path] file1
+            Group names: [tasks\\_equal\\_to\\_limit]
+            #### [path] tasks\\_equal\\_to\\_limit
             - [ ] b
             - [ ] c
 
             ---
 
-            Group names: [file2]
-            #### [path] file2
-            - [ ] a
+            Group names: [tasks\\_over\\_the\\_limit]
+            #### [path] tasks\\_over\\_the\\_limit
+            - [ ] d
+            - [ ] e
 
             ---
 
-            Group names: [file3]
-            #### [path] file3
-            - [ ] d
-            - [ ] e
+            Group names: [tasks\\_under\\_the\\_limit]
+            #### [path] tasks\\_under\\_the\\_limit
+            - [ ] a
 
             ---
 
@@ -391,7 +391,7 @@ describe('Grouping tasks', () => {
         `);
     });
 
-    it('should limit tasks with tasks that overlap across multiple groups', () => {
+    it('should limit tasks with tasks that overlap across multiple groups and correctly calculate unique tasks', () => {
         // Arrange
         const taskA = fromLine({ line: '- [ ] task A #tag1 #tag2' });
         const taskB = fromLine({ line: '- [ ] task B #tag1 #tag3' });
