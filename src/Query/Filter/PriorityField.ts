@@ -102,22 +102,13 @@ export class PriorityField extends Field {
                     priorityName = 'Low';
                     break;
             }
-            return [`Priority ${task.priority}: ${priorityName}`];
+            return [`${priorityName}`];
         };
     }
 
     protected groupComparator(): GroupSorter {
         return (groupName1: string, groupName2: string) => {
-            const comparatorArray = [
-                `Priority ${Priority.High}: High`,
-                `Priority ${Priority.Medium}: Medium`,
-                `Priority ${Priority.None}: None`,
-                `Priority ${Priority.Low}: Low`,
-            ];
-
-            const groupName1Index = comparatorArray.indexOf(groupName1);
-            const groupName2Index = comparatorArray.indexOf(groupName2);
-            return groupName1Index - groupName2Index;
+            return Priority.toNumber(groupName1) - Priority.toNumber(groupName2);
         };
     }
 }

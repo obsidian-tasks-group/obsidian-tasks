@@ -164,10 +164,10 @@ describe('grouping by priority', () => {
     });
 
     it.each([
-        ['- [ ] a ⏫', ['Priority 1: High']],
-        ['- [ ] a 🔼', ['Priority 2: Medium']],
-        ['- [ ] a', ['Priority 3: None']],
-        ['- [ ] a 🔽', ['Priority 4: Low']],
+        ['- [ ] a ⏫', ['High']],
+        ['- [ ] a 🔼', ['Medium']],
+        ['- [ ] a', ['None']],
+        ['- [ ] a 🔽', ['Low']],
     ])('task "%s" should have groups: %s', (taskLine: string, groups: string[]) => {
         // Arrange
         const grouper = new PriorityField().createNormalGrouper().grouper;
@@ -193,26 +193,26 @@ describe('grouping by priority', () => {
             "Groupers (if any):
             - priority
 
-            Group names: [Priority 1: High]
-            #### [priority] Priority 1: High
+            Group names: [High]
+            #### [priority] High
             - [ ] a ⏫
 
             ---
 
-            Group names: [Priority 2: Medium]
-            #### [priority] Priority 2: Medium
+            Group names: [Medium]
+            #### [priority] Medium
             - [ ] a 🔼
 
             ---
 
-            Group names: [Priority 3: None]
-            #### [priority] Priority 3: None
+            Group names: [None]
+            #### [priority] None
             - [ ] a
 
             ---
 
-            Group names: [Priority 4: Low]
-            #### [priority] Priority 4: Low
+            Group names: [Low]
+            #### [priority] Low
             - [ ] a 🔽
 
             ---
