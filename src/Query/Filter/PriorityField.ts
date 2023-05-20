@@ -87,22 +87,18 @@ export class PriorityField extends Field {
 
     public grouper(): GrouperFunction {
         return (task: Task) => {
-            let priorityName = 'ERROR';
             switch (task.priority) {
                 case Priority.High:
-                    priorityName = 'High';
-                    break;
+                    return ['High'];
                 case Priority.Medium:
-                    priorityName = 'Medium';
-                    break;
+                    return ['Medium'];
                 case Priority.None:
-                    priorityName = 'None';
-                    break;
+                    return ['None'];
                 case Priority.Low:
-                    priorityName = 'Low';
-                    break;
+                    return ['Low'];
+                default:
+                    return ['ERROR'];
             }
-            return [`${priorityName}`];
         };
     }
 
