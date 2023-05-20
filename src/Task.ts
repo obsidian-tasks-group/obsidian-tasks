@@ -33,11 +33,11 @@ export namespace Priority {
             case 'Medium':
                 return 2;
             case 'None':
+            default:
                 return 3;
             case 'Low':
                 return 4;
         }
-        return 1;
     }
 }
 
