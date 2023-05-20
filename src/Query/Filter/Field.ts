@@ -1,7 +1,7 @@
 import { Sorter } from '../Sorter';
 import type { Comparator } from '../Sorter';
 import * as RegExpTools from '../../lib/RegExpTools';
-import { Grouper } from '../Grouper';
+import { type GroupSorter, Grouper } from '../Grouper';
 import type { GrouperFunction } from '../Grouper';
 import type { FilterOrErrorMessage } from './Filter';
 
@@ -355,12 +355,18 @@ export abstract class Field {
         throw Error(`grouper() unimplemented for ${this.fieldNameSingular()}`);
     }
 
+    protected groupSorter(): GroupSorter {
+        return (groupName1: string, groupName2: string) => {
+            return groupName1.localeCompare(groupName2, undefined, { numeric: true });
+        };
+    }
+
     /**
      * Create a {@link Grouper} object for grouping tasks by this field's value.
      * @param reverse - false for normal group order, true for reverse group order.
      */
     public createGrouper(reverse: boolean): Grouper {
-        return new Grouper(this.fieldNameSingular(), this.grouper(), reverse);
+        return new Grouper(this.fieldNameSingular(), this.grouper(), reverse, this.groupSorter());
     }
 
     /**
