@@ -355,7 +355,7 @@ export abstract class Field {
         throw Error(`grouper() unimplemented for ${this.fieldNameSingular()}`);
     }
 
-    protected groupSorter(): GroupSorter {
+    protected groupComparator(): GroupSorter {
         return (groupName1: string, groupName2: string) => {
             return groupName1.localeCompare(groupName2, undefined, { numeric: true });
         };
@@ -366,7 +366,7 @@ export abstract class Field {
      * @param reverse - false for normal group order, true for reverse group order.
      */
     public createGrouper(reverse: boolean): Grouper {
-        return new Grouper(this.fieldNameSingular(), this.grouper(), reverse, this.groupSorter());
+        return new Grouper(this.fieldNameSingular(), this.grouper(), reverse, this.groupComparator());
     }
 
     /**

@@ -116,7 +116,7 @@ export class TaskGroups {
                 // which will likely involve adjusting this code to sort by applying a Comparator
                 // to the first Task in each group.
                 const grouper = this._groupers[i];
-                const result = grouper.groupSorter(groupNames1[i], groupNames2[i]);
+                const result = grouper.groupComparator(groupNames1[i], groupNames2[i]);
                 if (result !== 0) {
                     return grouper.reverse ? -result : result;
                 }

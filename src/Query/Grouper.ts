@@ -38,12 +38,12 @@ export class Grouper {
 
     public readonly reverse: boolean;
 
-    public readonly groupSorter: GroupSorter;
+    public readonly groupComparator: GroupSorter;
 
-    constructor(property: string, grouper: GrouperFunction, reverse: boolean, groupSorter: GroupSorter) {
+    constructor(property: string, grouper: GrouperFunction, reverse: boolean, groupComparator: GroupSorter) {
         this.property = property;
         this.grouper = grouper;
         this.reverse = reverse;
-        this.groupSorter = groupSorter;
+        this.groupComparator = groupComparator;
     }
 }
