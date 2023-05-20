@@ -10,6 +10,13 @@ import type { Task } from '../Task';
  */
 export type GrouperFunction = (task: Task) => string[];
 
+type GroupSorter = (groupName1: string, groupName2: string) => number;
+export default GroupSorter;
+
+export const defaultGroupSorter = (groupName1: string, groupName2: string) => {
+    return groupName1.localeCompare(groupName2, undefined, { numeric: true });
+};
+
 /**
  * A named function that is used to determine the group heading name(s) to use for a {@link Task} object.
  *
@@ -36,9 +43,17 @@ export class Grouper {
 
     public readonly reverse: boolean;
 
-    constructor(property: string, grouper: GrouperFunction, reverse: boolean) {
+    public readonly groupSorter: GroupSorter;
+
+    constructor(
+        property: string,
+        grouper: GrouperFunction,
+        reverse: boolean,
+        _groupSorter: GroupSorter = defaultGroupSorter,
+    ) {
         this.property = property;
         this.grouper = grouper;
         this.reverse = reverse;
+        this.groupSorter = _groupSorter;
     }
 }
