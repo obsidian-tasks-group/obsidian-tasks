@@ -355,12 +355,6 @@ export abstract class Field {
         throw Error(`grouper() unimplemented for ${this.fieldNameSingular()}`);
     }
 
-    protected groupComparator(): GroupSorter {
-        return (groupName1: string, groupName2: string) => {
-            return groupName1.localeCompare(groupName2, undefined, { numeric: true });
-        };
-    }
-
     /**
      * Create a {@link Grouper} object for grouping tasks by this field's value.
      * @param reverse - false for normal group order, true for reverse group order.
@@ -387,5 +381,11 @@ export abstract class Field {
      */
     public createReverseGrouper(): Grouper {
         return this.createGrouper(true);
+    }
+
+    protected groupComparator(): GroupSorter {
+        return (groupName1: string, groupName2: string) => {
+            return groupName1.localeCompare(groupName2, undefined, { numeric: true });
+        };
     }
 }
