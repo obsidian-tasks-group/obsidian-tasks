@@ -9,6 +9,7 @@ import {
     expectTaskComparesBefore,
     expectTaskComparesEqual,
 } from '../../CustomMatchers/CustomMatchersForSorting';
+import { TaskGroups } from '../../../src/Query/TaskGroups';
 
 function testTaskFilterForTaskWithPriority(filter: string, priority: Priority, expected: boolean) {
     const builder = new TaskBuilder();
@@ -173,5 +174,51 @@ describe('grouping by priority', () => {
 
         // Assert
         expect(grouper(fromLine({ line: taskLine }))).toEqual(groups);
+    });
+
+    it('task "%s" should have groups: %s', () => {
+        // Arrange
+        const tasks = [
+            fromLine({ line: '- [ ] a 🔽' }),
+            fromLine({ line: '- [ ] a ⏫' }),
+            fromLine({ line: '- [ ] a' }),
+            fromLine({ line: '- [ ] a 🔼' }),
+        ];
+
+        const grouper = [new PriorityField().createNormalGrouper()];
+        const groups = new TaskGroups(grouper, tasks);
+
+        // Assert
+        expect(groups.toString()).toMatchInlineSnapshot(`
+            "Groupers (if any):
+            - priority
+
+            Group names: [Priority 1: High]
+            #### [priority] Priority 1: High
+            - [ ] a ⏫
+
+            ---
+
+            Group names: [Priority 2: Medium]
+            #### [priority] Priority 2: Medium
+            - [ ] a 🔼
+
+            ---
+
+            Group names: [Priority 3: None]
+            #### [priority] Priority 3: None
+            - [ ] a
+
+            ---
+
+            Group names: [Priority 4: Low]
+            #### [priority] Priority 4: Low
+            - [ ] a 🔽
+
+            ---
+
+            4 tasks
+            "
+        `);
     });
 });
