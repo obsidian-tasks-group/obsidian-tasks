@@ -1,7 +1,7 @@
 import { Sorter } from '../Sorter';
 import type { Comparator } from '../Sorter';
 import * as RegExpTools from '../../lib/RegExpTools';
-import { type GroupSorter, Grouper } from '../Grouper';
+import { type GroupComparator, Grouper } from '../Grouper';
 import type { GrouperFunction } from '../Grouper';
 import type { FilterOrErrorMessage } from './Filter';
 
@@ -383,7 +383,7 @@ export abstract class Field {
         return this.createGrouper(true);
     }
 
-    protected groupComparator(): GroupSorter {
+    protected groupComparator(): GroupComparator {
         return (groupName1: string, groupName2: string) => {
             return groupName1.localeCompare(groupName2, undefined, { numeric: true });
         };

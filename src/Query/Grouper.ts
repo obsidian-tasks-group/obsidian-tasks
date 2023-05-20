@@ -10,7 +10,7 @@ import type { Task } from '../Task';
  */
 export type GrouperFunction = (task: Task) => string[];
 
-export type GroupSorter = (groupName1: string, groupName2: string) => number;
+export type GroupComparator = (groupName1: string, groupName2: string) => number;
 
 /**
  * A named function that is used to determine the group heading name(s) to use for a {@link Task} object.
@@ -38,9 +38,9 @@ export class Grouper {
 
     public readonly reverse: boolean;
 
-    public readonly groupComparator: GroupSorter;
+    public readonly groupComparator: GroupComparator;
 
-    constructor(property: string, grouper: GrouperFunction, reverse: boolean, groupComparator: GroupSorter) {
+    constructor(property: string, grouper: GrouperFunction, reverse: boolean, groupComparator: GroupComparator) {
         this.property = property;
         this.grouper = grouper;
         this.reverse = reverse;
