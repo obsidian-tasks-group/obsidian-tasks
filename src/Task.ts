@@ -25,6 +25,22 @@ export enum Priority {
     Low = '4',
 }
 
+export namespace Priority {
+    export function toNumber(priority: string): number {
+        switch (priority) {
+            case 'High':
+                return 1;
+            case 'Medium':
+                return 2;
+            case 'None':
+                return 3;
+            case 'Low':
+                return 4;
+        }
+        return 1;
+    }
+}
+
 export class TaskRegularExpressions {
     public static readonly dateFormat = 'YYYY-MM-DD';
 
