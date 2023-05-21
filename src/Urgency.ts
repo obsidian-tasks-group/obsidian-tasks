@@ -42,24 +42,25 @@ export class Urgency {
 
         switch (task.priority) {
             // Highest
-            case '1':
+            case '0':
                 urgency += 1.5 * Urgency.priorityCoefficient;
                 break;
             // High
-            case '2':
+            case '1':
                 urgency += 1.0 * Urgency.priorityCoefficient;
                 break;
             // Medium
-            case '3':
+            case '2':
                 urgency += 0.65 * Urgency.priorityCoefficient;
                 break;
             // None
-            case '4':
+            case '3':
                 urgency += 0.325 * Urgency.priorityCoefficient;
                 break;
-            // Low
+            // no modification for "Low" priority
+            // Lowest
             case '5':
-                urgency += 0.1 * Urgency.priorityCoefficient;
+                urgency -= 0.1 * Urgency.priorityCoefficient;
                 break;
         }
 

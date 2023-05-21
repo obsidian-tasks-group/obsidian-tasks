@@ -200,12 +200,12 @@ describe('grouping by priority', () => {
     });
 
     it.each([
-        ['- [ ] a 🔝', ['Priority 1: Highest']],
-        ['- [ ] a ⏫', ['Priority 2: High']],
-        ['- [ ] a 🔼', ['Priority 3: Medium']],
-        ['- [ ] a', ['Priority 4: None']],
-        ['- [ ] a 🔽', ['Priority 5: Low']],
-        ['- [ ] a ⏬', ['Priority 6: Lowest']],
+        ['- [ ] a 🆙', ['Priority 0: Highest']],
+        ['- [ ] a ⏫', ['Priority 1: High']],
+        ['- [ ] a 🔼', ['Priority 2: Medium']],
+        ['- [ ] a', ['Priority 3: None']],
+        ['- [ ] a 🔽', ['Priority 4: Low']],
+        ['- [ ] a ⏬', ['Priority 5: Lowest']],
     ])('task "%s" should have groups: %s', (taskLine: string, groups: string[]) => {
         // Arrange
         const grouper = new PriorityField().createGrouper().grouper;
