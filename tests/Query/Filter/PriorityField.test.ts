@@ -176,7 +176,7 @@ describe('grouping by priority', () => {
         expect(grouper(fromLine({ line: taskLine }))).toEqual(groups);
     });
 
-    it('task "%s" should have groups: %s', () => {
+    it('should sort groups according to priority meaning', () => {
         // Arrange
         const tasks = [
             fromLine({ line: '- [ ] a 🔽' }),
