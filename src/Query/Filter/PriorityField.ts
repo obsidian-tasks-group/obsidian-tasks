@@ -1,7 +1,7 @@
 import { Priority, Task } from '../../Task';
 import { Explanation } from '../Explain/Explanation';
 import type { Comparator } from '../Sorter';
-import type { GroupComparator as GroupComparator, GrouperFunction } from '../Grouper';
+import type { GroupComparator, GrouperFunction } from '../Grouper';
 import { Field } from './Field';
 import { Filter, FilterOrErrorMessage } from './Filter';
 
