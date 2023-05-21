@@ -1,7 +1,7 @@
 import { Sorter } from '../Sorter';
 import type { Comparator } from '../Sorter';
 import * as RegExpTools from '../../lib/RegExpTools';
-import { type GroupComparator, Grouper } from '../Grouper';
+import { Grouper } from '../Grouper';
 import type { GrouperFunction } from '../Grouper';
 import type { FilterOrErrorMessage } from './Filter';
 
@@ -360,7 +360,7 @@ export abstract class Field {
      * @param reverse - false for normal group order, true for reverse group order.
      */
     public createGrouper(reverse: boolean): Grouper {
-        return new Grouper(this.fieldNameSingular(), this.grouper(), reverse, this.groupComparator());
+        return new Grouper(this.fieldNameSingular(), this.grouper(), reverse, this.comparator());
     }
 
     /**
@@ -381,11 +381,5 @@ export abstract class Field {
      */
     public createReverseGrouper(): Grouper {
         return this.createGrouper(true);
-    }
-
-    protected groupComparator(): GroupComparator {
-        return (groupName1: string, groupName2: string) => {
-            return groupName1.localeCompare(groupName2, undefined, { numeric: true });
-        };
     }
 }

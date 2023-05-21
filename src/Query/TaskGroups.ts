@@ -105,18 +105,10 @@ export class TaskGroups {
 
     private sortTaskGroups() {
         const compareFn = (group1: TaskGroup, group2: TaskGroup) => {
-            // Compare two TaskGroup objects, sorting them by the group names at each grouping level.
-            const groupNames1 = group1.groups;
-            const groupNames2 = group2.groups;
-            // The containers are guaranteed to be identical sizes,
-            // they have one value for each 'group by' line in the query.
-            for (let i = 0; i < groupNames1.length; i++) {
-                // For now, we only have one sort option: sort by the names of the groups.
-                // In future, we will add control over the sorting of group headings,
-                // which will likely involve adjusting this code to sort by applying a Comparator
-                // to the first Task in each group.
+            // Compare two TaskGroup objects, sorting them by first task in each group.
+            for (let i = 0; i < this._groupers.length; i++) {
                 const grouper = this._groupers[i];
-                const result = grouper.groupComparator(groupNames1[i], groupNames2[i]);
+                const result = grouper.groupComparator(group1.tasks[0], group2.tasks[0]);
                 if (result !== 0) {
                     return grouper.reverse ? -result : result;
                 }

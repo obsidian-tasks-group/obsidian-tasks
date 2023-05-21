@@ -1,7 +1,7 @@
 import { Priority, Task } from '../../Task';
 import { Explanation } from '../Explain/Explanation';
 import type { Comparator } from '../Sorter';
-import type { GroupComparator, GrouperFunction } from '../Grouper';
+import type { GrouperFunction } from '../Grouper';
 import { Field } from './Field';
 import { Filter, FilterOrErrorMessage } from './Filter';
 
@@ -99,12 +99,6 @@ export class PriorityField extends Field {
                 default:
                     return ['ERROR'];
             }
-        };
-    }
-
-    protected groupComparator(): GroupComparator {
-        return (groupName1: string, groupName2: string) => {
-            return Priority.toNumber(groupName1) - Priority.toNumber(groupName2);
         };
     }
 }
