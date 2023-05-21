@@ -68,31 +68,45 @@
     const priorityOptions: {
             value: typeof editableTask.priority,
             label: string,
-            symbol: string }[] =
+            symbol: string,
+            accessKey: string,
+            accessKeyIndex: number}[] =
         [{
             value: 'lowest',
             label: 'Lowest',
-            symbol: prioritySymbols.Lowest
+            symbol: prioritySymbols.Lowest,
+            accessKey: 'o',
+            accessKeyIndex: 1
         }, {
             value: 'low',
             label: 'Low',
-            symbol: prioritySymbols.Low
+            symbol: prioritySymbols.Low,
+            accessKey: 'l',
+            accessKeyIndex: 0
         }, {
             value: 'none',
             label: 'Normal',
-            symbol: prioritySymbols.None
+            symbol: prioritySymbols.None,
+            accessKey: 'n',
+            accessKeyIndex: 0
         }, {
             value: 'medium',
             label: 'Medium',
-            symbol: prioritySymbols.Medium
+            symbol: prioritySymbols.Medium,
+            accessKey: 'm',
+            accessKeyIndex: 0
         }, {
             value: 'high',
             label: 'High',
-            symbol: prioritySymbols.High
+            symbol: prioritySymbols.High,
+            accessKey: 'h',
+            accessKeyIndex: 0
         }, {
             value: 'highest',
             label: 'Highest',
-            symbol: prioritySymbols.Highest
+            symbol: prioritySymbols.Highest,
+            accessKey: 'e',
+            accessKeyIndex: 4
         }]
 
     /*
@@ -377,7 +391,7 @@
         <!-- --------------------------------------------------------------------------- -->
         <div class="tasks-modal-section tasks-modal-priorities" on:keyup={_onPriorityKeyup}>
             <label for="priority-{editableTask.priority}">Priority</label>
-            {#each priorityOptions as {value, label, symbol}}
+            {#each priorityOptions as {value, label, symbol, accessKey, accessKeyIndex}}
                 <span>
                     <!-- svelte-ignore a11y-accesskey -->
                     <input
@@ -385,10 +399,10 @@
                         id="priority-{value}"
                         {value}
                         bind:group={editableTask.priority}
-                        accesskey={accesskey(label.charAt(0).toLowerCase())}
+                        accesskey={accesskey(accessKey)}
                     />
                     <label for="priority-{value}">
-                        <span class="accesskey-first">{label}</span>
+                        <span>{label.substring(0,accessKeyIndex)}</span><span class="accesskey">{label.substring(accessKeyIndex,accessKeyIndex+1)}</span><span>{label.substring(accessKeyIndex+1)}</span>
                         {#if symbol && symbol.charCodeAt(0) >= 0x100}
                             <span>{symbol}</span>
                         {/if}
