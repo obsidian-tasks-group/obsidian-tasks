@@ -200,7 +200,7 @@ describe('grouping by priority', () => {
     });
 
     it.each([
-        ['- [ ] a 🆙', ['Priority 0: Highest']],
+        ['- [ ] a *️⃣', ['Priority 0: Highest']],
         ['- [ ] a ⏫', ['Priority 1: High']],
         ['- [ ] a 🔼', ['Priority 2: Medium']],
         ['- [ ] a', ['Priority 3: None']],
