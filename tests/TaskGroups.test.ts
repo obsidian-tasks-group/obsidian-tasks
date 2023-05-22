@@ -432,4 +432,35 @@ describe('Grouping tasks', () => {
             "
         `);
     });
+
+    it('should not limit tasks if no groups were specified', () => {
+        // Arrange
+        const taskA = fromLine({ line: '- [ ] task A' });
+        const taskB = fromLine({ line: '- [ ] task B' });
+        const taskC = fromLine({ line: '- [ ] task C' });
+        const taskD = fromLine({ line: '- [ ] task D' });
+        const inputs = [taskA, taskB, taskC, taskD];
+
+        // Act
+        const grouping: Grouper[] = [];
+        const groups = new TaskGroups(grouping, inputs);
+        groups.applyTaskLimit(1);
+
+        // Assert
+        expect(groups.totalTasksCount()).toEqual(4);
+        expect(groups.toString()).toMatchInlineSnapshot(`
+            "Groupers (if any):
+
+            Group names: []
+            - [ ] task A
+            - [ ] task B
+            - [ ] task C
+            - [ ] task D
+
+            ---
+
+            4 tasks
+            "
+        `);
+    });
 });

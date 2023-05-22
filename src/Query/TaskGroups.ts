@@ -142,6 +142,10 @@ export class TaskGroups {
      *
      */
     public applyTaskLimit(limit: number) {
+        if (this._groupers.length === 0) {
+            return;
+        }
+
         this._groups.forEach((group) => {
             group.applyTaskLimit(limit);
         });
