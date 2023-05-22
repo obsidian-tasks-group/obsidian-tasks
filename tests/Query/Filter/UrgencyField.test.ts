@@ -12,6 +12,7 @@ import {
     expectTaskComparesEqual,
 } from '../../CustomMatchers/CustomMatchersForSorting';
 import { fromLine } from '../../TestHelpers';
+import { TaskGroups } from '../../../src/Query/TaskGroups';
 
 window.moment = moment;
 
@@ -95,5 +96,37 @@ describe('grouping by urgency', () => {
 
         // Assert
         expect(grouper(fromLine({ line: taskLine }))).toEqual(groups);
+    });
+
+    it('should sort groups from more urgent to less urgent', () => {
+        // Arrange
+        const tasks = [
+            new TaskBuilder().description('task1').dueDate('2023-05-22').build(),
+            new TaskBuilder().description('task2').dueDate('2023-05-21').build(),
+        ];
+
+        const grouper = [new UrgencyField().createNormalGrouper()];
+        const groups = new TaskGroups(grouper, tasks);
+
+        // Assert
+        expect(groups.toString()).toMatchInlineSnapshot(`
+            "Groupers (if any):
+            - urgency
+
+            Group names: [11.21]
+            #### [urgency] 11.21
+            - [ ] task2 📅 2023-05-21
+
+            ---
+
+            Group names: [10.75]
+            #### [urgency] 10.75
+            - [ ] task1 📅 2023-05-22
+
+            ---
+
+            2 tasks
+            "
+        `);
     });
 });
