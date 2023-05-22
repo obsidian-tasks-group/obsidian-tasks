@@ -1,3 +1,4 @@
+import type { Task } from 'Task';
 import { Sorter } from '../Sorter';
 import type { Comparator } from '../Sorter';
 import * as RegExpTools from '../../lib/RegExpTools';
@@ -360,7 +361,13 @@ export abstract class Field {
      * @param reverse - false for normal group order, true for reverse group order.
      */
     public createGrouper(reverse: boolean): Grouper {
-        return new Grouper(this.fieldNameSingular(), this.grouper(), reverse, this.comparator());
+        let defaultOrFieldComparator = this.defaultGroupComparator;
+
+        if (this.supportsSorting()) {
+            defaultOrFieldComparator = this.comparator();
+        }
+
+        return new Grouper(this.fieldNameSingular(), this.grouper(), reverse, defaultOrFieldComparator);
     }
 
     /**
@@ -382,4 +389,17 @@ export abstract class Field {
     public createReverseGrouper(): Grouper {
         return this.createGrouper(true);
     }
+
+    private defaultGroupComparator: Comparator = (a: Task, b: Task) => {
+        const groupNamesA = this.grouper()(a);
+        const groupNamesB = this.grouper()(b);
+
+        for (let i = 0; i < groupNamesA.length; i++) {
+            // The containers are guaranteed to be identical sizes since we are calling the same grouper
+            return groupNamesA[i].localeCompare(groupNamesB[i], undefined, { numeric: true });
+        }
+
+        // identical if we reach here
+        return 0;
+    };
 }
