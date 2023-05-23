@@ -4,7 +4,7 @@
 | 📅 due date | 📅  |
 | 🛫 start date | 🛫  |
 | ⏳ scheduled date | ⏳  |
-| *️⃣ highest priority | *️⃣  |
+| 🔺 highest priority | 🔺  |
 | ⏫ high priority | ⏫  |
 | 🔼 medium priority | 🔼  |
 | 🔽 low priority | 🔽  |
