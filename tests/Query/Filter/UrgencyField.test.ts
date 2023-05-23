@@ -79,6 +79,15 @@ describe('sorting by urgency', () => {
 });
 
 describe('grouping by urgency', () => {
+    beforeAll(() => {
+        jest.useFakeTimers();
+        jest.setSystemTime(new Date(2023, 5 - 1, 22));
+    });
+
+    afterAll(() => {
+        jest.useRealTimers();
+    });
+
     it('supports grouping methods correctly', () => {
         expect(new UrgencyField()).toSupportGroupingWithProperty('urgency');
     });
