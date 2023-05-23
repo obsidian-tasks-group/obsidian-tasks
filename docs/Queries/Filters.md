@@ -446,14 +446,16 @@ For example:
 
 ### Priority
 
-- `priority is (above|below|not)? (low|none|medium|high)`
+- `priority is (above|below|not)? (lowest|low|none|medium|high|highest)`
 
 The available priorities are (from high to low):
 
-1. ⏫ for high priority
-2. 🔼 for medium priority
-3. use no signifier to indicate no priority (searched for with 'none')
-4. 🔽 for low priority
+1. 🔺 for highest priority
+2. ⏫ for high priority
+3. 🔼 for medium priority
+4. use no signifier to indicate no priority (searched for with 'none')
+5. 🔽 for low priority
+6. ⏬️ for lowest priority
 
 For more information, see [[Priority|Priorities]] .
 
