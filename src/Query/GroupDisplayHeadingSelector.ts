@@ -1,5 +1,6 @@
 import { GroupDisplayHeading } from './GroupDisplayHeading';
-import type { TaskGroupingTreeStorage } from './TaskGroupingTree';
+import type { Grouper } from './Grouper';
+import type { TaskGroupingTreeStorage } from './TaskGroupingTreeStorage';
 
 /*
  * This file contains implementation details of Group.ts
@@ -84,8 +85,10 @@ import type { TaskGroupingTreeStorage } from './TaskGroupingTree';
  */
 export class GroupDisplayHeadingSelector {
     private lastHeadingAtLevel = new Array<string>();
+    private groupers: Grouper[];
 
-    constructor(taskGroupingTreeStorage: TaskGroupingTreeStorage) {
+    constructor(taskGroupingTreeStorage: TaskGroupingTreeStorage, groupers: Grouper[]) {
+        this.groupers = groupers;
         const firstGroup = taskGroupingTreeStorage.keys().next().value;
         const groupCount = firstGroup.length;
         for (let i = 0; i < groupCount; i++) {
@@ -106,7 +109,7 @@ export class GroupDisplayHeadingSelector {
         for (let level = 0; level < groupNames.length; level++) {
             const group = groupNames[level];
             if (group != this.lastHeadingAtLevel[level]) {
-                headingsForGroup.push(new GroupDisplayHeading(level, group));
+                headingsForGroup.push(new GroupDisplayHeading(level, group, this.groupers[level].property));
                 // Reset all the lower heading levels to un-seen
                 for (let j = level; j < groupNames.length; j++) {
                     this.lastHeadingAtLevel[j] = '';

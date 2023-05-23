@@ -1,7 +1,6 @@
 import type { Task } from '../../Task';
 import type { GrouperFunction } from '../Grouper';
 import { TextField } from './TextField';
-import { HeadingField } from './HeadingField';
 import { FilterOrErrorMessage } from './Filter';
 
 export class BacklinkField extends TextField {
@@ -14,26 +13,7 @@ export class BacklinkField extends TextField {
         if (linkText === null) {
             return 'Unknown Location';
         }
-
-        let filenameComponent = 'Unknown Location';
-
-        if (task.filename !== null) {
-            filenameComponent = task.filename;
-        }
-
-        if (task.precedingHeader === null || task.precedingHeader.length === 0) {
-            return filenameComponent;
-        }
-
-        // Markdown characters in the heading must NOT be escaped.
-        const headingGrouper = new HeadingField().createGrouper().grouper;
-        const headingComponent = headingGrouper(task)[0];
-
-        if (filenameComponent === headingComponent) {
-            return filenameComponent;
-        } else {
-            return `${filenameComponent} > ${headingComponent}`;
-        }
+        return linkText;
     }
 
     createFilterOrErrorMessage(line: string): FilterOrErrorMessage {
@@ -51,15 +31,19 @@ export class BacklinkField extends TextField {
     public grouper(): GrouperFunction {
         return (task: Task) => {
             const filename = task.filename;
-            if (filename !== null) {
-                const backlink = this.value(task);
-                if (filename !== backlink) {
-                    // In case backlink is 'file_name > heading', the filename only shall be escaped
-                    return [TextField.escapeMarkdownCharacters(filename) + backlink.substring(filename.length)];
-                }
+            if (filename === null) {
+                return ['Unknown Location'];
             }
 
-            return [TextField.escapeMarkdownCharacters(this.value(task))];
+            // Always escape the filename, to prevent any underscores being interpreted as markdown:
+            let result = TextField.escapeMarkdownCharacters(filename);
+
+            // Only append the heading if it differs from the un-escaped fileanme:
+            if (task.precedingHeader && task.precedingHeader !== filename) {
+                // We don't escape the heading, as any markdown characters in it really are markdown styling:
+                result += ' > ' + task.precedingHeader;
+            }
+            return [result];
         };
     }
 }

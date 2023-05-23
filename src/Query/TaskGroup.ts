@@ -54,13 +54,18 @@ export class TaskGroup {
     /**
      * Constructor
      * @param {string[]} groups - See {@link groups} for details
-     * @param {GroupDisplayHeading[]} groupHeadings - See {@link groupHeadings} for details
      * @param tasks {Task[]} - See {@link tasks} for details
      */
-    constructor(groups: string[], groupHeadings: GroupDisplayHeading[], tasks: Task[]) {
+    constructor(groups: string[], tasks: Task[]) {
         this.groups = groups;
-        this.groupHeadings = groupHeadings;
+        this.groupHeadings = [];
         this.tasks = tasks;
+    }
+
+    public setGroupHeadings(headingsForTaskGroup: GroupDisplayHeading[]) {
+        for (const groupDisplayHeading of headingsForTaskGroup) {
+            this.groupHeadings.push(groupDisplayHeading);
+        }
     }
 
     /**
@@ -91,7 +96,7 @@ export class TaskGroup {
             // These headings mimic the behaviour of QueryRenderer,
             // which uses 'h4', 'h5' and 'h6' for nested groups.
             const headingPrefix = '#'.repeat(4 + heading.nestingLevel);
-            output += `${headingPrefix} ${heading.displayName}\n`;
+            output += `${headingPrefix} [${heading.property}] ${heading.displayName}\n`;
         }
 
         output += this.tasksAsStringOfLines();

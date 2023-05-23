@@ -43,7 +43,7 @@ describe('grouping by folder', () => {
         ['- [ ] a', 'a.md', ['/']],
     ])('task "%s" with path "%s" should have groups: %s', (taskLine: string, path: string, groups: string[]) => {
         // Arrange
-        const grouper = new FolderField().createGrouper().grouper;
+        const grouper = new FolderField().createNormalGrouper().grouper;
 
         // Assert
         expect(grouper(fromLine({ line: taskLine, path: path }))).toEqual(groups);

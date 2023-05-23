@@ -4,7 +4,7 @@ import { TaskLocation } from '../src/TaskLocation';
 export function fromLine({
     line,
     path = '',
-    precedingHeader = '',
+    precedingHeader = null,
 }: {
     line: string;
     path?: string;

@@ -83,6 +83,10 @@ For more information, including adding your own customised statuses, see [[Statu
         - `Priority 3: None`
         - `Priority 4: Low`
         - `Priority 5: Lowest`
+1. `urgency` ([[Urgency|urgency]])
+    - Currently, the groups run from the lowest urgency to highest.
+    - You can reverse this with `group by urgency reverse`.
+    - In a future release, the default group order will become from the highest urgency to lowest.
 1. `recurring`
     - Whether the task is recurring: either `Recurring` or `Not Recurring`.
 1. `recurrence`
@@ -92,9 +96,11 @@ For more information, including adding your own customised statuses, see [[Statu
     - The tags of the tasks or `(No tags)`. If the task has multiple tags, it will show up under every tag.
 
 > [!released]
-`start`, `scheduled`, `due` and `done` grouping options were introduced in Tasks 1.7.0.<br>
-`tags` grouping option was introduced in Tasks 1.10.0.<br>
-`priority`, `recurring` and `recurrence` grouping options were introduced in Tasks 1.11.0.
+>
+> - `start`, `scheduled`, `due` and `done` grouping options were introduced in Tasks 1.7.0.<br>
+> - `tags` grouping option was introduced in Tasks 1.10.0.<br>
+> - `priority`, `recurring` and `recurrence` grouping options were introduced in Tasks 1.11.0.
+> - `urgency` grouping option was introduced in Tasks 3.6.0.
 
 ## Multiple groups
 
@@ -113,15 +119,37 @@ See the [screenshots below](#screenshots) for how this looks in practice.
 > [!info]
 > Headings are displayed in case-sensitive alphabetical order, not the original order.
 
----
+## Reversing groups
+
+> [!released]
+> Reversing of group headings was introduced in Tasks 3.7.0.
+
+After the name of the property that you want to group by, you can add the `reverse` keyword.
+If given, the group headings will be reversed for that property.
+
+For example:
+
+- `group by due` will sort the group headings:
+  - from **oldest** due date first...
+  - to **newest** due date last
+- `group by due reverse` will sort the group headings:
+  - from **newest** due date first...
+  - to **oldest** due date last
+
+> [!tip]
+> The `reverse` keyword controls the order that group headings are displayed.
+>
+> The [[Sorting|sort by]] facility, by contrast, controls the order in which displays are displayed *inside* each group.
+
+## Notes
 
 > [!info]
 > The order of operations ensures that grouping does not modify which tasks are displayed, for example when the `limit` option is used:
-
-1. all the filter instructions are run
-1. then any sorting instructions are run
-1. then any `limit` instructions are run
-1. then finally any grouping instructions are run
+>
+> 1. all the filter instructions are run
+> 1. then any sorting instructions are run
+> 1. then any `limit` instructions are run
+> 1. then finally any grouping instructions are run
 
 ---
 
@@ -145,9 +173,19 @@ Tasks grouped.
 
 ## Examples
 
+Give me three levels of grouping, to indicate the locations of my tasks:
+
     ```tasks
     not done
     group by folder
     group by filename
     group by heading
+    ```
+
+Show me tasks I need to do today - and put today's tasks first, for visibility:
+
+    ```tasks
+    not done
+    due before tomorrow
+    group by due reverse
     ```

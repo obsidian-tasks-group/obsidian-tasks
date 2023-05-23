@@ -75,7 +75,7 @@ class LivePreviewExtension implements PluginValue {
         event.preventDefault();
 
         // Clicked on a task's checkbox. Toggle the task and set it.
-        const toggled = task.toggle();
+        const toggled = task.toggleWithRecurrenceInUsersOrder();
         const toggledString = toggled.map((t) => t.toFileLineString()).join(state.lineBreak);
 
         // Creates a CodeMirror transaction in order to update the document.
