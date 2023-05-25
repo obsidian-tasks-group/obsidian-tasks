@@ -1,6 +1,7 @@
 import { MetadataCache, Notice, TAbstractFile, TFile, Vault } from 'obsidian';
 import type { CachedMetadata, EventRef } from 'obsidian';
 import type { HeadingCache, ListItemCache, SectionCache } from 'obsidian';
+import { getAllTags } from 'obsidian';
 import { Mutex } from 'async-mutex';
 
 import { Task } from './Task';
@@ -200,7 +201,8 @@ export class Cache {
             return task.path === file.path;
         });
 
-        const listItems = fileCache.listItems;
+        let listItems = fileCache.listItems;
+        if (getAllTags(fileCache)?.contains('#disable-tasks-plugin')) listItems = undefined;
         // When there is no list items cache, there are no tasks.
         // Still continue to notify watchers of removal.
 
