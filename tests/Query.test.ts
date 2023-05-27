@@ -889,6 +889,20 @@ At most 4 tasks per group.
 `;
             expect(query.explainQuery()).toEqual(expectedDisplayText);
         });
+
+        it('should explain all limit options', () => {
+            const input = 'limit 127\nlimit groups to 8 tasks';
+            const query = new Query({ source: input });
+
+            const expectedDisplayText = `No filters supplied. All tasks will match the query.
+
+At most 127 tasks.
+
+
+At most 8 tasks per group.
+`;
+            expect(query.explainQuery()).toEqual(expectedDisplayText);
+        });
     });
 
     // This tests the parsing of 'group by' instructions.
