@@ -395,8 +395,7 @@ describe('Sort by tags', () => {
 
         it('should fail to parse a invalid line', () => {
             const line = 'sort by jsdajhasdfa';
-            expect(tagsField.createSorterFromLine(line)).toBeNull();
-            const sorting = tagsField.parseSortLine(line);
+            const sorting = tagsField.createSorterFromLine(line);
             expect(sorting).toBeNull();
         });
     });
