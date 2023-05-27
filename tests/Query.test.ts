@@ -965,7 +965,7 @@ At most 4 tasks per group.
         it('should apply group limit correctly, after sorting tasks', () => {
             // Arrange
             const input = `
-                # sorting by status will move the incomplete tasks first
+                # sorting by description will sort the tasks alphabetically
                 sort by description
 
                 # grouping by status will give two groups: Done and Todo
