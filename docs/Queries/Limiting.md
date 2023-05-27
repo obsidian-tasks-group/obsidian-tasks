@@ -4,7 +4,7 @@ publish: true
 
 # Limiting
 
-## Total tasks
+## Limit total number of tasks
 
 You can limit the total number of tasks to show as query results.
 
@@ -13,7 +13,7 @@ This will only list the first `<number>` results of the query (after sorting).
 
 Shorthand is `limit <number>`.
 
-## Tasks per group
+## Limit number of tasks in each group
 
 You can also limit the allowed number of tasks in each group, if [[Grouping|grouping]] is used. Otherwise this limit is ignored.
 
