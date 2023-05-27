@@ -26,4 +26,4 @@ Shorthand is `limit groups <number>`.
 > `limit groups` instructions are ignored if there are no `group by` instructions in the Tasks query.
 
 > [!released]
-> `limit groups to <number> tasks` was introduced in Tasks X.Y.Z.
+> `limit groups to <number> tasks` was introduced in Tasks 3.8.0.
