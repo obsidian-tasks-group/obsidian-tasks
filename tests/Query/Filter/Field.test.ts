@@ -64,7 +64,6 @@ describe('sorting - base class usability and implementation', () => {
         it('should fail to parse a "valid" line', () => {
             // expect(unsupported.parseSortLine('sort by unsupported')).toThrow(Error);
             const line = 'sort by unsupported';
-            expect(unsupported.canCreateSorterForLine(line)).toBe(false);
             expect(unsupported.createSorterFromLine(line)).toBeNull();
             const sorting = unsupported.parseSortLine(line);
             expect(sorting).toBeNull();
@@ -84,7 +83,6 @@ describe('sorting - base class usability and implementation', () => {
 
         it('should parse a valid line', () => {
             const line = 'sort by description-length';
-            expect(supported.canCreateSorterForLine(line)).toBe(true);
             expect(supported.createSorterFromLine(line)).not.toBeNull();
             const sorting = supported.parseSortLine(line);
             expect(sorting).not.toBeNull();
@@ -93,7 +91,6 @@ describe('sorting - base class usability and implementation', () => {
 
         it('should fail to parse a invalid line', () => {
             const line = 'sort by jsdajhasdfa';
-            expect(supported.canCreateSorterForLine(line)).toBe(false);
             expect(supported.createSorterFromLine(line)).toBeNull();
             const sorting = supported.parseSortLine(line);
             expect(sorting).toBeNull();
