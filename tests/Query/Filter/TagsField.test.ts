@@ -345,17 +345,6 @@ describe('Sort by tags', () => {
             expect(tagsField.supportsSorting()).toEqual(true);
         });
 
-        it('should report whether it can parse lines', () => {
-            // Valid sort by tag lines:
-            expect(tagsField.canCreateSorterForLine('sort by tag')).toBe(true);
-            expect(tagsField.canCreateSorterForLine('sort by tag 2')).toBe(true);
-            expect(tagsField.canCreateSorterForLine('sort by tag reverse')).toBe(true);
-            expect(tagsField.canCreateSorterForLine('sort by tag reverse 3')).toBe(true);
-
-            // Invalid lines:
-            expect(tagsField.canCreateSorterForLine('sort by description')).toBe(false);
-        });
-
         const tag_a = new TaskBuilder().tags(['#a']).build();
         const tag_b = new TaskBuilder().tags(['#b']).build();
         const tags_a_b = new TaskBuilder().tags(['#a', '#b']).build();
@@ -406,7 +395,6 @@ describe('Sort by tags', () => {
 
         it('should fail to parse a invalid line', () => {
             const line = 'sort by jsdajhasdfa';
-            expect(tagsField.canCreateSorterForLine(line)).toBe(false);
             expect(tagsField.createSorterFromLine(line)).toBeNull();
             const sorting = tagsField.parseSortLine(line);
             expect(sorting).toBeNull();
