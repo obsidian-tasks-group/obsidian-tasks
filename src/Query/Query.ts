@@ -109,7 +109,7 @@ export class Query implements IQuery {
                 result += this.filters[i].explainFilterIndented('');
             }
         }
-        result = this.explainQueryLimits(result);
+        result += this.explainQueryLimits();
 
         const { debugSettings } = getSettings();
         if (debugSettings.ignoreSortInstructions) {
@@ -120,7 +120,8 @@ export class Query implements IQuery {
         return result;
     }
 
-    private explainQueryLimits(result: string) {
+    private explainQueryLimits() {
+        let result = '';
         if (this._limit !== undefined) {
             result += `\n\nAt most ${this._limit} task`;
             if (this._limit !== 1) {
