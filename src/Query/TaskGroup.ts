@@ -49,7 +49,7 @@ export class TaskGroup {
      * All the tasks that match the user's filters and that have the
      * group names exactly matching groups().
      */
-    public readonly tasks: Task[];
+    public tasks: Task[];
 
     /**
      * Constructor
@@ -77,12 +77,7 @@ export class TaskGroup {
      *
      */
     public applyTaskLimit(limit: number) {
-        if (limit >= this.tasks.length) {
-            return;
-        }
-
-        const taskCountToRemove = this.tasks.length - limit;
-        this.tasks.splice(-taskCountToRemove);
+        this.tasks = this.tasks.slice(0, limit);
     }
 
     /**
