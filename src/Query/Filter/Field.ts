@@ -271,10 +271,6 @@ export abstract class Field {
      * or this field does not support grouping.
      */
     public parseGroupLine(line: string): Grouper | null {
-        if (!this.supportsGrouping()) {
-            return null;
-        }
-
         return this.createGrouperFromLine(line);
     }
 
