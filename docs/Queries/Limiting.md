@@ -6,16 +6,24 @@ publish: true
 
 ## Total tasks
 
-You can limit the number of total tasks to show as query results.
+You can limit the total number of tasks to show as query results.
+
 Use the query string `limit to <number> tasks`.
-This will only list the `<number>` first results of the query.
+This will only list the first `<number>` results of the query (after sorting).
 
 Shorthand is `limit <number>`.
 
 ## Tasks per group
 
-You can also limit the max number of tasks in groups if grouping is used. Otherwise this limit is ignored.
+You can also limit the allowed number of tasks in each group, if [[Grouping|grouping]] is used. Otherwise this limit is ignored.
+
 Use the query string `limit groups to <number> tasks`.
-This will only list the `<number>` first tasks in each group from the results of the query.
+This will only list the first `<number>` tasks in each group from the results of the query.
 
 Shorthand is `limit groups <number>`.
+
+> [!NOTE]
+> `limit groups` instructions are ignored if there are no `group by` instructions in the Tasks query.
+
+> [!released]
+> `limit groups to <number> tasks` was introduced in Tasks X.Y.Z.
