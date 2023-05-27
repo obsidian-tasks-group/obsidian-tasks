@@ -60,7 +60,7 @@ describe('sorting by recurring', () => {
 
     it('parses sort by recurrence', () => {
         const field = new RecurringField();
-        expect(field.parseSortLine('sort by recurring')).not.toBeNull();
+        expect(field.createSorterFromLine('sort by recurring')).not.toBeNull();
     });
 
     it('sort by due', () => {
