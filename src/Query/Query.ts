@@ -123,7 +123,7 @@ export class Query implements IQuery {
             if (this._taskGroupLimit !== 1) {
                 result += 's';
             }
-            result += ' per group.\n';
+            result += ' per group (if any "group by" options are supplied).\n';
         }
 
         const { debugSettings } = getSettings();

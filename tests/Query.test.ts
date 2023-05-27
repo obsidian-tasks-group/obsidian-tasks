@@ -885,7 +885,7 @@ At most 0 tasks.
 
             const expectedDisplayText = `No filters supplied. All tasks will match the query.
 
-At most 4 tasks per group.
+At most 4 tasks per group (if any "group by" options are supplied).
 `;
             expect(query.explainQuery()).toEqual(expectedDisplayText);
         });
@@ -899,7 +899,7 @@ At most 4 tasks per group.
 At most 127 tasks.
 
 
-At most 8 tasks per group.
+At most 8 tasks per group (if any "group by" options are supplied).
 `;
             expect(query.explainQuery()).toEqual(expectedDisplayText);
         });
