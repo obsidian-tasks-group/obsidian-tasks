@@ -122,19 +122,22 @@ export class Query implements IQuery {
 
     private explainQueryLimits() {
         let result = '';
-        if (this._limit !== undefined) {
-            result += `\n\nAt most ${this._limit} task`;
-            if (this._limit !== 1) {
-                result += 's';
+
+        function getPluralisedText(limit: number) {
+            let text = `\n\nAt most ${limit} task`;
+            if (limit !== 1) {
+                text += 's';
             }
+            return text;
+        }
+
+        if (this._limit !== undefined) {
+            result += getPluralisedText(this._limit);
             result += '.\n';
         }
 
         if (this._taskGroupLimit !== undefined) {
-            result += `\n\nAt most ${this._taskGroupLimit} task`;
-            if (this._taskGroupLimit !== 1) {
-                result += 's';
-            }
+            result += getPluralisedText(this._taskGroupLimit);
             result += ' per group (if any "group by" options are supplied).\n';
         }
         return result;
