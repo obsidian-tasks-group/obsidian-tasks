@@ -62,7 +62,6 @@ describe('sorting - base class usability and implementation', () => {
         });
 
         it('should fail to parse a "valid" line', () => {
-            // expect(unsupported.parseSortLine('sort by unsupported')).toThrow(Error);
             const line = 'sort by unsupported';
             expect(unsupported.createSorterFromLine(line)).toBeNull();
             const sorting = unsupported.parseSortLine(line);
@@ -97,7 +96,7 @@ describe('sorting - base class usability and implementation', () => {
         });
 
         it('should compare two tasks', () => {
-            const sorting = supported.parseSortLine('sort by description-length');
+            const sorting = supported.createSorterFromLine('sort by description-length');
             const a = new TaskBuilder().description('short description').build();
             const b = new TaskBuilder().description('very looooooooong description').build();
             expectTaskComparesBefore(sorting!, a, b);
