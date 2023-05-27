@@ -13,6 +13,7 @@ export class Query implements IQuery {
     public source: string;
 
     private _limit: number | undefined = undefined;
+    private _taskGroupLimit: number | undefined = undefined;
     private _layoutOptions: LayoutOptions = new LayoutOptions();
     private _filters: Filter[] = [];
     private _error: string | undefined = undefined;
@@ -24,7 +25,7 @@ export class Query implements IQuery {
     private readonly shortModeRegexp = /^short/;
     private readonly explainQueryRegexp = /^explain/;
 
-    private readonly limitRegexp = /^limit (to )?(\d+)( tasks?)?/;
+    private readonly limitRegexp = /^limit (groups )?(to )?(\d+)( tasks?)?/;
 
     private readonly commentRegexp = /^#.*/;
 
@@ -117,6 +118,14 @@ export class Query implements IQuery {
             result += '.\n';
         }
 
+        if (this._taskGroupLimit !== undefined) {
+            result += `\n\nAt most ${this._taskGroupLimit} task`;
+            if (this._taskGroupLimit !== 1) {
+                result += 's';
+            }
+            result += ' per group.\n';
+        }
+
         const { debugSettings } = getSettings();
         if (debugSettings.ignoreSortInstructions) {
             result +=
@@ -161,7 +170,14 @@ export class Query implements IQuery {
         const { debugSettings } = getSettings();
         const tasksSorted = debugSettings.ignoreSortInstructions ? tasks : Sort.by(this.sorting, tasks);
         const tasksSortedLimited = tasksSorted.slice(0, this.limit);
-        return new TaskGroups(this.grouping, tasksSortedLimited);
+
+        const taskGroups = new TaskGroups(this.grouping, tasksSortedLimited);
+
+        if (this._taskGroupLimit !== undefined) {
+            taskGroups.applyTaskLimit(this._taskGroupLimit);
+        }
+
+        return taskGroups;
     }
 
     private parseHideOptions({ line }: { line: string }): void {
@@ -222,11 +238,18 @@ export class Query implements IQuery {
 
     private parseLimit({ line }: { line: string }): void {
         const limitMatch = line.match(this.limitRegexp);
-        if (limitMatch !== null) {
-            // limitMatch[2] is per regex always digits and therefore parsable.
-            this._limit = Number.parseInt(limitMatch[2], 10);
-        } else {
+        if (limitMatch === null) {
             this._error = 'do not understand query limit';
+            return;
+        }
+
+        // limitMatch[3] is per regex always digits and therefore parsable.
+        const limitFromLine = Number.parseInt(limitMatch[3], 10);
+
+        if (limitMatch[1] !== undefined) {
+            this._taskGroupLimit = limitFromLine;
+        } else {
+            this._limit = limitFromLine;
         }
     }
 
