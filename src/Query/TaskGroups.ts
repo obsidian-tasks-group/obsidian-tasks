@@ -138,6 +138,9 @@ export class TaskGroups {
      * Limits all {@link groups} to have a certain number of tasks and
      * recalculates the {@link _totalTaskCount} for consistency.
      *
+     * If no `group by ...` instructions were provided the limit is ignored,
+     * however there will be one task group.
+     *
      * @param limit number of tasks for each group to have.
      *
      */
