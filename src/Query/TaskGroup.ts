@@ -49,7 +49,7 @@ export class TaskGroup {
      * All the tasks that match the user's filters and that have the
      * group names exactly matching groups().
      */
-    public readonly tasks: Task[];
+    public tasks: Task[];
 
     /**
      * Constructor
@@ -66,6 +66,18 @@ export class TaskGroup {
         for (const groupDisplayHeading of headingsForTaskGroup) {
             this.groupHeadings.push(groupDisplayHeading);
         }
+    }
+
+    /**
+     * Limits {@link tasks} array to a certain number. Tasks exceeding
+     * the limit will be removed from the end, shall be called on sorted tasks.
+     *
+     * @param limit number of tasks for the group to have. If greater
+     * than the task count, no action will be taken.
+     *
+     */
+    public applyTaskLimit(limit: number) {
+        this.tasks = this.tasks.slice(0, limit);
     }
 
     /**

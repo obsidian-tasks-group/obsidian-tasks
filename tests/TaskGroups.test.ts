@@ -344,4 +344,123 @@ describe('Grouping tasks', () => {
             "
         `);
     });
+
+    it('should limit tasks in each group (no task overlapping across group)', () => {
+        // Arrange
+        const a = fromLine({ line: '- [ ] a', path: 'tasks_under_the_limit.md' });
+        const b = fromLine({ line: '- [ ] b', path: 'tasks_equal_to_limit.md' });
+        const c = fromLine({ line: '- [ ] c', path: 'tasks_equal_to_limit.md' });
+        const d = fromLine({ line: '- [ ] d', path: 'tasks_over_the_limit.md' });
+        const e = fromLine({ line: '- [ ] e', path: 'tasks_over_the_limit.md' });
+        const f = fromLine({ line: '- [ ] f', path: 'tasks_over_the_limit.md' });
+        const inputs = [a, b, c, d, e, f];
+
+        // Act
+        const grouping = [new PathField().createNormalGrouper()];
+        const groups = new TaskGroups(grouping, inputs);
+        groups.applyTaskLimit(2);
+
+        // Assert
+        expect(groups.totalTasksCount()).toEqual(5);
+        expect(groups.toString()).toMatchInlineSnapshot(`
+            "Groupers (if any):
+            - path
+
+            Group names: [tasks\\_equal\\_to\\_limit]
+            #### [path] tasks\\_equal\\_to\\_limit
+            - [ ] b
+            - [ ] c
+
+            ---
+
+            Group names: [tasks\\_over\\_the\\_limit]
+            #### [path] tasks\\_over\\_the\\_limit
+            - [ ] d
+            - [ ] e
+
+            ---
+
+            Group names: [tasks\\_under\\_the\\_limit]
+            #### [path] tasks\\_under\\_the\\_limit
+            - [ ] a
+
+            ---
+
+            5 tasks
+            "
+        `);
+    });
+
+    it('should limit tasks with tasks that overlap across multiple groups and correctly calculate unique tasks', () => {
+        // Arrange
+        const taskA = fromLine({ line: '- [ ] task A #tag1 #tag2' });
+        const taskB = fromLine({ line: '- [ ] task B #tag1 #tag3' });
+        const taskC = fromLine({ line: '- [ ] task C #tag3 #tag2' });
+        const taskD = fromLine({ line: '- [ ] task D #tag1 #tag2' });
+        const inputs = [taskA, taskB, taskC, taskD];
+
+        // Act
+        const grouping = [new TagsField().createNormalGrouper()];
+        const groups = new TaskGroups(grouping, inputs);
+        groups.applyTaskLimit(1);
+
+        // Assert
+        expect(groups.totalTasksCount()).toEqual(2);
+        expect(groups.toString()).toMatchInlineSnapshot(`
+            "Groupers (if any):
+            - tags
+
+            Group names: [#tag1]
+            #### [tags] #tag1
+            - [ ] task A #tag1 #tag2
+
+            ---
+
+            Group names: [#tag2]
+            #### [tags] #tag2
+            - [ ] task A #tag1 #tag2
+
+            ---
+
+            Group names: [#tag3]
+            #### [tags] #tag3
+            - [ ] task B #tag1 #tag3
+
+            ---
+
+            2 tasks
+            "
+        `);
+    });
+
+    it('should not limit tasks if no groups were specified', () => {
+        // Arrange
+        const taskA = fromLine({ line: '- [ ] task A' });
+        const taskB = fromLine({ line: '- [ ] task B' });
+        const taskC = fromLine({ line: '- [ ] task C' });
+        const taskD = fromLine({ line: '- [ ] task D' });
+        const inputs = [taskA, taskB, taskC, taskD];
+
+        // Act
+        const grouping: Grouper[] = [];
+        const groups = new TaskGroups(grouping, inputs);
+        groups.applyTaskLimit(1);
+
+        // Assert
+        expect(groups.totalTasksCount()).toEqual(4);
+        expect(groups.toString()).toMatchInlineSnapshot(`
+            "Groupers (if any):
+
+            Group names: []
+            - [ ] task A
+            - [ ] task B
+            - [ ] task C
+            - [ ] task D
+
+            ---
+
+            4 tasks
+            "
+        `);
+    });
 });

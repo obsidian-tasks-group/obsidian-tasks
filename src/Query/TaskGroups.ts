@@ -133,4 +133,37 @@ export class TaskGroups {
             group.setGroupHeadings(displayHeadingSelector.getHeadingsForTaskGroup(group.groups));
         }
     }
+
+    /**
+     * Limits all {@link groups} to have a certain number of tasks and
+     * recalculates the {@link _totalTaskCount} for consistency.
+     *
+     * If no `group by ...` instructions were provided the limit is ignored,
+     * however there will be one task group.
+     *
+     * @param limit number of tasks for each group to have.
+     *
+     */
+    public applyTaskLimit(limit: number) {
+        if (this._groupers.length === 0) {
+            return;
+        }
+
+        this._groups.forEach((group) => {
+            group.applyTaskLimit(limit);
+        });
+
+        this.calculateTotalTaskCount();
+    }
+
+    private calculateTotalTaskCount() {
+        let concatenatedTasks: Task[] = [];
+
+        this._groups.forEach((group) => {
+            concatenatedTasks = [...concatenatedTasks, ...group.tasks];
+        });
+
+        const uniqueTasks = [...new Set(concatenatedTasks)];
+        this._totalTaskCount = uniqueTasks.length;
+    }
 }
