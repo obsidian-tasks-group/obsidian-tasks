@@ -81,7 +81,7 @@ export function parseSorter(sorterString: string): Sorter | null {
     // See if any of the fields can parse the line.
     for (const creator of fieldCreators) {
         const field = creator();
-        const sorter = field.parseSortLine(sorterString);
+        const sorter = field.createSorterFromLine(sorterString);
         if (sorter) {
             return sorter;
         }
