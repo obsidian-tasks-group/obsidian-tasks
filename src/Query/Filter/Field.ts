@@ -342,6 +342,7 @@ export abstract class Field {
             throw Error(`grouperRegExp() unimplemented for ${this.fieldNameSingular()}`);
         }
 
+        // The $ at end is required to distinguish between group by status and status.name
         return new RegExp(`^group by ${this.fieldNameSingularEscaped()}( reverse)?$`);
     }
 
