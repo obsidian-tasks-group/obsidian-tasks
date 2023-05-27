@@ -109,7 +109,18 @@ export class Query implements IQuery {
                 result += this.filters[i].explainFilterIndented('');
             }
         }
+        result = this.explainQueryLimits(result);
 
+        const { debugSettings } = getSettings();
+        if (debugSettings.ignoreSortInstructions) {
+            result +=
+                "\n\nNOTE: All sort instructions, including default sort order, are disabled, due to 'ignoreSortInstructions' setting.";
+        }
+
+        return result;
+    }
+
+    private explainQueryLimits(result: string) {
         if (this._limit !== undefined) {
             result += `\n\nAt most ${this._limit} task`;
             if (this._limit !== 1) {
@@ -125,13 +136,6 @@ export class Query implements IQuery {
             }
             result += ' per group (if any "group by" options are supplied).\n';
         }
-
-        const { debugSettings } = getSettings();
-        if (debugSettings.ignoreSortInstructions) {
-            result +=
-                "\n\nNOTE: All sort instructions, including default sort order, are disabled, due to 'ignoreSortInstructions' setting.";
-        }
-
         return result;
     }
 
