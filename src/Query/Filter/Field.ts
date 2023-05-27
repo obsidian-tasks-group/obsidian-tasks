@@ -265,16 +265,6 @@ export abstract class Field {
     }
 
     /**
-     * Parse a 'group by' line and return a {@link Grouper} object.
-     *
-     * Returns null line does not match this field or is invalid,
-     * or this field does not support grouping.
-     */
-    public parseGroupLine(line: string): Grouper | null {
-        return this.createGrouperFromLine(line);
-    }
-
-    /**
      * Parse the line, and return either a {@link Grouper} object or null.
      *
      * This default implementation works for all fields that support
