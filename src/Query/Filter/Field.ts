@@ -265,41 +265,6 @@ export abstract class Field {
     }
 
     /**
-     * Parse a 'group by' line and return a {@link Grouper} object.
-     *
-     * Returns null line does not match this field or is invalid,
-     * or this field does not support grouping.
-     */
-    public parseGroupLine(line: string): Grouper | null {
-        if (!this.supportsGrouping()) {
-            return null;
-        }
-
-        if (!this.canCreateGrouperForLine(line)) {
-            return null;
-        }
-
-        return this.createGrouperFromLine(line);
-    }
-
-    /**
-     * Returns true if the class can parse the given 'group by' instruction line.
-     *
-     * Current implementation simply checks whether the class does support grouping,
-     * and whether the line matches this.grouperRegExp().
-     * @param line - A line from a ```tasks``` block.
-     *
-     * @see {@link createGrouperFromLine}
-     */
-    public canCreateGrouperForLine(line: string): boolean {
-        if (!this.supportsGrouping()) {
-            return false;
-        }
-
-        return Field.lineMatchesFilter(this.grouperRegExp(), line);
-    }
-
-    /**
      * Parse the line, and return either a {@link Grouper} object or null.
      *
      * This default implementation works for all fields that support
@@ -309,8 +274,6 @@ export abstract class Field {
      * this method.
      *
      * @param line - A 'group by' line from a ```tasks``` block.
-     *
-     * @see {@link canCreateGrouperForLine}
      */
     public createGrouperFromLine(line: string): Grouper | null {
         if (!this.supportsGrouping()) {
