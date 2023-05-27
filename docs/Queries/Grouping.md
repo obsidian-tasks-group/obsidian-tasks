@@ -117,7 +117,9 @@ See the [screenshots below](#screenshots) for how this looks in practice.
 > [!info]
 > Headings are displayed in case-sensitive alphabetical order, not the original order.
 
-## Reversing groups
+## Refining groups
+
+### Reversing groups
 
 > [!released]
 > Reversing of group headings was introduced in Tasks 3.7.0.
@@ -138,6 +140,12 @@ For example:
 > The `reverse` keyword controls the order that group headings are displayed.
 >
 > The [[Sorting|sort by]] facility, by contrast, controls the order in which displays are displayed *inside* each group.
+
+### Limiting group size
+
+You can limit the number of tasks in each group, perhaps to work on the most important things first.
+
+See [[Limiting#Limit number of tasks in each group|Limit number of tasks in each group]].
 
 ## Notes
 
