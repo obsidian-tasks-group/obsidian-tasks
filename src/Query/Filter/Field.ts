@@ -132,20 +132,6 @@ export abstract class Field {
     }
 
     /**
-     * Parse a 'sort by' line and return a {@link Sorter} object.
-     *
-     * Returns null line does not match this field or is invalid,
-     * or this field does not support sorting.
-     */
-    public parseSortLine(line: string): Sorter | null {
-        if (!this.supportsSorting()) {
-            return null;
-        }
-
-        return this.createSorterFromLine(line);
-    }
-
-    /**
      * Parse the line, and return either a {@link Sorter} object or null.
      *
      * This default implementation works for all fields that support
