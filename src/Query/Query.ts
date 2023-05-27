@@ -109,22 +109,7 @@ export class Query implements IQuery {
                 result += this.filters[i].explainFilterIndented('');
             }
         }
-
-        if (this._limit !== undefined) {
-            result += `\n\nAt most ${this._limit} task`;
-            if (this._limit !== 1) {
-                result += 's';
-            }
-            result += '.\n';
-        }
-
-        if (this._taskGroupLimit !== undefined) {
-            result += `\n\nAt most ${this._taskGroupLimit} task`;
-            if (this._taskGroupLimit !== 1) {
-                result += 's';
-            }
-            result += ' per group.\n';
-        }
+        result += this.explainQueryLimits();
 
         const { debugSettings } = getSettings();
         if (debugSettings.ignoreSortInstructions) {
@@ -132,6 +117,29 @@ export class Query implements IQuery {
                 "\n\nNOTE: All sort instructions, including default sort order, are disabled, due to 'ignoreSortInstructions' setting.";
         }
 
+        return result;
+    }
+
+    private explainQueryLimits() {
+        let result = '';
+
+        function getPluralisedText(limit: number) {
+            let text = `\n\nAt most ${limit} task`;
+            if (limit !== 1) {
+                text += 's';
+            }
+            return text;
+        }
+
+        if (this._limit !== undefined) {
+            result += getPluralisedText(this._limit);
+            result += '.\n';
+        }
+
+        if (this._taskGroupLimit !== undefined) {
+            result += getPluralisedText(this._taskGroupLimit);
+            result += ' per group (if any "group by" options are supplied).\n';
+        }
         return result;
     }
 
