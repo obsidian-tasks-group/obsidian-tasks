@@ -270,8 +270,8 @@ describe('Query parsing', () => {
             'hide urgency',
             'limit 42',
             'limit to 42 tasks',
-            'limit group 31',
-            'limit group to 31 tasks',
+            'limit groups 31',
+            'limit groups to 31 tasks',
             'short mode',
             'short',
             'show backlink',
@@ -880,7 +880,7 @@ At most 0 tasks.
         });
 
         it('should explain group limit 4', () => {
-            const input = 'limit group 4';
+            const input = 'limit groups 4';
             const query = new Query({ source: input });
 
             const expectedDisplayText = `No filters supplied. All tasks will match the query.
@@ -972,7 +972,7 @@ At most 4 tasks per group.
                 group by status
 
                 # Apply a limit, to test which tasks make it to
-                limit group 3
+                limit groups 3
                 `;
             const query = new Query({ source: input });
 

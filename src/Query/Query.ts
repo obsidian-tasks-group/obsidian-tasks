@@ -25,7 +25,7 @@ export class Query implements IQuery {
     private readonly shortModeRegexp = /^short/;
     private readonly explainQueryRegexp = /^explain/;
 
-    private readonly limitRegexp = /^limit (group )?(to )?(\d+)( tasks?)?/;
+    private readonly limitRegexp = /^limit (groups )?(to )?(\d+)( tasks?)?/;
 
     private readonly commentRegexp = /^#.*/;
 
