@@ -81,7 +81,7 @@ Use this setting to control where the recurring task is inserted. The default is
 ![Setting for next recurrence appearance](../../images/settings-recurrence-location.png)
 
 > [!released]
-> Control of the location (or order) of the new task was introduced in Tasks X.Y.Z
+> Control of the location (or order) of the new task was introduced in Tasks 3.8.0
 
 ---
 
