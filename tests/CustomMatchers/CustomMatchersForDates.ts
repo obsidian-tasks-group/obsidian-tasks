@@ -9,11 +9,11 @@ declare global {
     }
 }
 
-// From https://stackoverflow.com/a/60229956/104370
-export function toBeSameMoment(received: moment.Moment, expected: moment.Moment): jest.CustomMatcherResult {
-    const pass: boolean = received.isSame(expected);
+// Based on https://stackoverflow.com/a/60229956/104370
+export function toBeSameMoment(received: moment.Moment | null, expected: moment.Moment): jest.CustomMatcherResult {
+    const pass: boolean = expected.isSame(received);
     const expectedAsText = expected.toISOString();
-    const receivedAsText = received.toISOString();
+    const receivedAsText = received ? received.toISOString() : 'null';
     const message: () => string = () =>
         pass
             ? `Received moment should not be ${expectedAsText}`
