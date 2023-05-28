@@ -5,14 +5,17 @@ declare global {
     namespace jest {
         interface Matchers<R> {
             toToggleLineTo(expectedLines: string[]): R;
+            toToggleWithRecurrenceInUsersOrderTo(expectedLines: string[]): R;
         }
 
         interface Expect {
             toToggleLineTo(expectedLines: string[]): any;
+            toToggleWithRecurrenceInUsersOrderTo(expectedLines: string[]): any;
         }
 
         interface InverseAsymmetricMatchers {
             toToggleLineTo(expectedLines: string[]): any;
+            toToggleWithRecurrenceInUsersOrderTo(expectedLines: string[]): any;
         }
     }
 }
@@ -20,6 +23,12 @@ declare global {
 export function toToggleLineTo(line: string, expectedLines: string[]) {
     const task = fromLine({ line: line });
     const receivedLines = task.toggle().map((t) => t.toFileLineString());
+    return toMatchLines(receivedLines, expectedLines);
+}
+
+export function toToggleWithRecurrenceInUsersOrderTo(line: string, expectedLines: string[]) {
+    const task = fromLine({ line: line });
+    const receivedLines = task.toggleWithRecurrenceInUsersOrder().map((t) => t.toFileLineString());
     return toMatchLines(receivedLines, expectedLines);
 }
 
