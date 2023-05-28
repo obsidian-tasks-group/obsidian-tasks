@@ -1019,6 +1019,10 @@ describe('toggle done', () => {
 });
 
 describe('set correct created date on reccurence task', () => {
+    afterEach(() => {
+        resetSettings();
+    });
+
     it('does not set created date with disabled setting', () => {
         // Arrange
         const line = '- [ ] this is a task 📅 2021-09-12 🔁 every day';
@@ -1037,9 +1041,6 @@ describe('set correct created date on reccurence task', () => {
         expect(tasks.length).toEqual(2);
         const nextTask: Task = tasks[0];
         expect(nextTask.createdDate).toBeNull();
-
-        // cleanup
-        resetSettings();
     });
 
     it('does not set created date with disabled setting when repeated has created date', () => {
@@ -1061,9 +1062,6 @@ describe('set correct created date on reccurence task', () => {
         expect(tasks.length).toEqual(2);
         const nextTask: Task = tasks[0];
         expect(nextTask.createdDate).toBeNull();
-
-        // cleanup
-        resetSettings();
     });
 
     it('set created date with enabled setting', () => {
@@ -1089,7 +1087,6 @@ describe('set correct created date on reccurence task', () => {
         expect(nextTask!.createdDate!.isSame(moment(today, 'YYYY-MM-DD'))).toStrictEqual(true);
 
         // cleanup
-        resetSettings();
         todaySpy.mockClear();
     });
 
@@ -1117,7 +1114,6 @@ describe('set correct created date on reccurence task', () => {
         expect(nextTask!.createdDate!.isSame(moment(today, 'YYYY-MM-DD'))).toStrictEqual(true);
 
         // cleanup
-        resetSettings();
         todaySpy.mockClear();
     });
 });
