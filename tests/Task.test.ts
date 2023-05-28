@@ -1122,7 +1122,7 @@ describe('set correct created date on reccurence task', () => {
     });
 });
 
-describe('next task recurrence appearance', () => {
+describe('order of recurring tasks', () => {
     beforeAll(() => {
         jest.useFakeTimers();
         jest.setSystemTime(new Date(2023, 5 - 1, 16));
@@ -1134,7 +1134,7 @@ describe('next task recurrence appearance', () => {
         resetSettings();
     });
 
-    it('new task shall appear on previous line by default', () => {
+    it('should put new task before old, by default', () => {
         // Arrange
         const task = fromLine({ line: '- [ ] this is a recurring task 🔁 every day' });
 
@@ -1147,7 +1147,7 @@ describe('next task recurrence appearance', () => {
         expect(lines[1]).toMatchInlineSnapshot('"- [x] this is a recurring task 🔁 every day ✅ 2023-05-16"');
     });
 
-    it('new task shall appear on next line with the setting set to false', () => {
+    it('should honour new-task-before-old setting', () => {
         // Arrange
         const task = fromLine({ line: '- [ ] this is a recurring task 🔁 every day' });
         updateSettings({ recurrenceOnNextLine: false });
@@ -1161,7 +1161,7 @@ describe('next task recurrence appearance', () => {
         expect(lines[1]).toMatchInlineSnapshot('"- [x] this is a recurring task 🔁 every day ✅ 2023-05-16"');
     });
 
-    it('new task shall appear on next line with the setting set to true', () => {
+    it('should honour old-task-before-new setting', () => {
         // Arrange
         const task = fromLine({ line: '- [ ] this is a recurring task 🔁 every day' });
         updateSettings({ recurrenceOnNextLine: true });
