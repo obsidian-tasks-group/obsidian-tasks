@@ -1035,7 +1035,7 @@ describe('created dates on recurring task', () => {
         updateSettings({ setCreatedDate: false });
 
         // Act
-        expect(line).toToggleLineTo([
+        expect(line).toToggleTo([
             '- [ ] this is a task 🔁 every day 📅 2021-09-13',
             '- [x] this is a task 🔁 every day 📅 2021-09-12 ✅ 2023-03-08',
         ]);
@@ -1047,7 +1047,7 @@ describe('created dates on recurring task', () => {
         updateSettings({ setCreatedDate: false });
 
         // Act
-        expect(line).toToggleLineTo([
+        expect(line).toToggleTo([
             '- [ ] this is a task 🔁 every day 📅 2021-09-13',
             '- [x] this is a task 🔁 every day ➕ 2021-09-11 📅 2021-09-12 ✅ 2023-03-08',
         ]);
@@ -1059,7 +1059,7 @@ describe('created dates on recurring task', () => {
         updateSettings({ setCreatedDate: true });
 
         // Act
-        expect(line).toToggleLineTo([
+        expect(line).toToggleTo([
             '- [ ] this is a task 🔁 every day ➕ 2023-03-08 📅 2021-09-13',
             '- [x] this is a task 🔁 every day 📅 2021-09-12 ✅ 2023-03-08',
         ]);
@@ -1071,7 +1071,7 @@ describe('created dates on recurring task', () => {
         updateSettings({ setCreatedDate: true });
 
         // Act
-        expect(line).toToggleLineTo([
+        expect(line).toToggleTo([
             '- [ ] this is a task 🔁 every day ➕ 2023-03-08 📅 2021-09-13',
             '- [x] this is a task 🔁 every day ➕ 2021-09-11 📅 2021-09-12 ✅ 2023-03-08',
         ]);
