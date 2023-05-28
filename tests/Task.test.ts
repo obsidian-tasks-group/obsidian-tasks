@@ -1134,45 +1134,37 @@ describe('order of recurring tasks', () => {
         resetSettings();
     });
 
-    it('should put new task before old, by default', () => {
+    function togglingInUsersOrderShouldGive(line: string, expectedLines: string[]) {
         // Arrange
-        const task = fromLine({ line: '- [ ] this is a recurring task 🔁 every day' });
+        const task = fromLine({ line: line });
 
         // Act
         const lines = task.toggleWithRecurrenceInUsersOrder().map((t) => t.toFileLineString());
 
         // Assert
-        expect(lines).toStrictEqual([
+        expect(lines).toStrictEqual(expectedLines);
+    }
+
+    it('should put new task before old, by default', () => {
+        togglingInUsersOrderShouldGive('- [ ] this is a recurring task 🔁 every day', [
             '- [ ] this is a recurring task 🔁 every day',
             '- [x] this is a recurring task 🔁 every day ✅ 2023-05-16',
         ]);
     });
 
     it('should honour new-task-before-old setting', () => {
-        // Arrange
         updateSettings({ recurrenceOnNextLine: false });
-        const task = fromLine({ line: '- [ ] this is a recurring task 🔁 every day' });
 
-        // Act
-        const lines = task.toggleWithRecurrenceInUsersOrder().map((t) => t.toFileLineString());
-
-        // Assert
-        expect(lines).toStrictEqual([
+        togglingInUsersOrderShouldGive('- [ ] this is a recurring task 🔁 every day', [
             '- [ ] this is a recurring task 🔁 every day',
             '- [x] this is a recurring task 🔁 every day ✅ 2023-05-16',
         ]);
     });
 
     it('should honour old-task-before-new setting', () => {
-        // Arrange
         updateSettings({ recurrenceOnNextLine: true });
-        const task = fromLine({ line: '- [ ] this is a recurring task 🔁 every day' });
 
-        // Act
-        const lines = task.toggleWithRecurrenceInUsersOrder().map((t) => t.toFileLineString());
-
-        // Assert
-        expect(lines).toStrictEqual([
+        togglingInUsersOrderShouldGive('- [ ] this is a recurring task 🔁 every day', [
             '- [x] this is a recurring task 🔁 every day ✅ 2023-05-16',
             '- [ ] this is a recurring task 🔁 every day',
         ]);
