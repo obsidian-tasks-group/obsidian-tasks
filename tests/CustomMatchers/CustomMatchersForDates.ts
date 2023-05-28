@@ -1,4 +1,5 @@
 import type moment from 'moment';
+import { diff } from 'jest-diff';
 
 declare global {
     namespace jest {
@@ -14,7 +15,7 @@ export function toBeSameMoment(received: moment.Moment, expected: moment.Moment)
     const message: () => string = () =>
         pass
             ? ''
-            : `Received moment (${received.toISOString()}) is not the same as expected (${expected.toISOString()})`;
+            : `Received moment is not the same as expected: ${diff(expected.toISOString(), received.toISOString())}`;
 
     return {
         message,
