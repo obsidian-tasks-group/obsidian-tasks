@@ -1019,11 +1019,9 @@ describe('toggle done', () => {
 });
 
 describe('set correct created date on reccurence task', () => {
-    const today = '2023-03-08';
-
     beforeEach(() => {
         jest.useFakeTimers();
-        jest.setSystemTime(new Date(today));
+        jest.setSystemTime(new Date('2023-03-08'));
     });
 
     afterEach(() => {
