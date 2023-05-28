@@ -1150,8 +1150,8 @@ describe('order of recurring tasks', () => {
 
     it('should honour new-task-before-old setting', () => {
         // Arrange
-        const task = fromLine({ line: '- [ ] this is a recurring task 🔁 every day' });
         updateSettings({ recurrenceOnNextLine: false });
+        const task = fromLine({ line: '- [ ] this is a recurring task 🔁 every day' });
 
         // Act
         const lines = task.toggleWithRecurrenceInUsersOrder().map((t) => t.toFileLineString());
@@ -1165,8 +1165,8 @@ describe('order of recurring tasks', () => {
 
     it('should honour old-task-before-new setting', () => {
         // Arrange
-        const task = fromLine({ line: '- [ ] this is a recurring task 🔁 every day' });
         updateSettings({ recurrenceOnNextLine: true });
+        const task = fromLine({ line: '- [ ] this is a recurring task 🔁 every day' });
 
         // Act
         const lines = task.toggleWithRecurrenceInUsersOrder().map((t) => t.toFileLineString());
