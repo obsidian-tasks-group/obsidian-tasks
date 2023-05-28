@@ -1018,7 +1018,7 @@ describe('toggle done', () => {
     });
 });
 
-describe('set correct created date on reccurence task', () => {
+describe('created dates on recurring task', () => {
     beforeEach(() => {
         jest.useFakeTimers();
         jest.setSystemTime(new Date('2023-03-08'));
@@ -1029,7 +1029,7 @@ describe('set correct created date on reccurence task', () => {
         resetSettings();
     });
 
-    it('does not set created date with disabled setting', () => {
+    it('should not set created date with disabled setting', () => {
         // Arrange
         const line = '- [ ] this is a task 📅 2021-09-12 🔁 every day';
         updateSettings({ setCreatedDate: false });
@@ -1041,7 +1041,7 @@ describe('set correct created date on reccurence task', () => {
         ]);
     });
 
-    it('does not set created date with disabled setting when repeated has created date', () => {
+    it('should not set created date if setting disabled, even if original has created date', () => {
         // Arrange
         const line = '- [ ] this is a task ➕ 2021-09-11 📅 2021-09-12 🔁 every day';
         updateSettings({ setCreatedDate: false });
@@ -1053,7 +1053,7 @@ describe('set correct created date on reccurence task', () => {
         ]);
     });
 
-    it('set created date with enabled setting', () => {
+    it('should set created date if setting enabled', () => {
         // Arrange
         const line = '- [ ] this is a task 📅 2021-09-12 🔁 every day';
         updateSettings({ setCreatedDate: true });
@@ -1065,7 +1065,7 @@ describe('set correct created date on reccurence task', () => {
         ]);
     });
 
-    it('set created date with enabled setting when repeated has created date', () => {
+    it('should set created date if setting enabled, when original has created date', () => {
         // Arrange
         const line = '- [ ] this is a task ➕ 2021-09-11 📅 2021-09-12 🔁 every day';
         updateSettings({ setCreatedDate: true });
