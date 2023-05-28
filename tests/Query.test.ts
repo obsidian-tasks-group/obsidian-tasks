@@ -255,7 +255,6 @@ describe('Query parsing', () => {
             'hide priority',
             'hide recurrence rule',
             'hide reminder date',
-            'hide reminders',
             'hide scheduled date',
             'hide start date',
             'hide task count',
