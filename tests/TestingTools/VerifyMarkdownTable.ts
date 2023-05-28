@@ -41,11 +41,23 @@ export class MarkdownTable {
     }
 
     public addRow(cells: string[]) {
+        const row = this.makeRowText(cells);
+        this._markdown += `${row}\n`;
+    }
+
+    public addRowIfNew(cells: string[]) {
+        const row = this.makeRowText(cells);
+        if (!this._markdown.includes(row)) {
+            this._markdown += `${row}\n`;
+        }
+    }
+
+    private makeRowText(cells: string[]) {
         let row = '|';
         cells.forEach((s) => {
             row += ` ${s} |`;
         });
-        this._markdown += `${row}\n`;
+        return row;
     }
 
     public verifyForDocs() {

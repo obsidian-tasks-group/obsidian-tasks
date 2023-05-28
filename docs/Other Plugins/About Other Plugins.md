@@ -1,8 +1,18 @@
 ---
 publish: true
+aliases:
+  - Other Plugins/Other Plugins
 ---
 
-# Working with Other Obsidian Plugins
+# About Other Plugins
+
+<span class="related-pages">#index-pages</span>
+
+## In this section
+
+- [[Dataview]]
+
+## Working with Other Obsidian Plugins
 
 Note: Some information about working with other Obsidian plugins is currently under the Advanced section.
 

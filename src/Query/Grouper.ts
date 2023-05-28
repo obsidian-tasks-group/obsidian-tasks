@@ -34,8 +34,14 @@ export class Grouper {
      */
     public readonly grouper: GrouperFunction;
 
-    constructor(property: string, grouper: GrouperFunction) {
+    /**
+     * Whether the headings for this group should be reversed.
+     */
+    public readonly reverse: boolean;
+
+    constructor(property: string, grouper: GrouperFunction, reverse: boolean) {
         this.property = property;
         this.grouper = grouper;
+        this.reverse = reverse;
     }
 }

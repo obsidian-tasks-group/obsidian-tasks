@@ -49,7 +49,7 @@ Use `next tuesday` instead if you mean "next tuesday".
 > [!released]
 Date range searches were introduced in Tasks 2.0.0.
 
-Tasks allows date searches to specify a pair of dates, `<date range>` .
+Tasks allows date searches to specify a pair of dates, `<date range>`.
 
 These searches are inclusive: the dates at either end are found by the search.
 
@@ -126,41 +126,6 @@ There is also the ability to use numbered date ranges that are independent of th
 > [!released]
 > Numbered date ranges were introduced in Tasks 3.1.0.
 
-### Troubleshooting date searches
-
-If your date searches are giving unexpected results, add an [[Explaining Queries|`explain`]] line to your query.
-
-This will help you identify common mistakes such as:
-
-- Accidentally using an invalid absolute date in a filter.
-- Using unsupported keywords in relative date ranges.
-
-If relative dates in queries do not update from the previous day, and your computer was sleeping at midnight, this is likely caused by a known Chrome bug and you will need to re-open the note. See [#1289](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1289).
-
-### Finding Tasks with Invalid Dates
-
-> [!released]
->
-> - Validation of dates was introduced in Tasks 1.16.0.
-> - `created date is invalid` was introduced in Tasks 2.0.0.
-
-It is possible to accidentally use a non-existent date on a task signifier, such as `📅 2022-02-30`. February has at most 29 days.
-
-Such tasks look like they have a date, but that date will never be found. When viewed in Reading mode, the date will be shown as `Invalid date`.
-
-Any such mistakes can be found systematically with this search:
-
-    ```tasks
-    (created date is invalid) OR (done date is invalid) OR (due date is invalid) OR (scheduled date is invalid) OR (start date is invalid)
-    ```
-
-> [!warning]
-> If the above search finds any tasks with invalid dates, they are best fixed by clicking on the [[Backlinks|backlink]] to navigate
-to the incorrect line, and fixing it by directly typing in the new date.
-
-If you use the 'Create or edit Task' Modal, it will discard the broken date, and there will be no information about
-the original, incorrect value.
-
 ---
 
 ## Text filters
@@ -225,6 +190,8 @@ For full details of combining filters with boolean operators, see [[Combining Fi
   - `(YYYY-Www|YYYY-mm|YYYY-Qq|YYYY)`
 - `done date is invalid`
 
+For more information, see [[Dates#Done date|Done date]].
+
 > [!released]
 >
 > - `no done date` and `has done date` were introduced in Tasks 1.7.0.
@@ -242,6 +209,8 @@ For full details of combining filters with boolean operators, see [[Combining Fi
   - `(last|this|next) (week|month|quarter|year)`
   - `(YYYY-Www|YYYY-mm|YYYY-Qq|YYYY)`
 - `due date is invalid`
+
+For more information, see [[Dates#Due date|Due date]].
 
 > [!released]
 >
@@ -261,6 +230,8 @@ For full details of combining filters with boolean operators, see [[Combining Fi
   - `(YYYY-Www|YYYY-mm|YYYY-Qq|YYYY)`
 - `scheduled date is invalid`
 
+For more information, see [[Dates#Scheduled date|Scheduled date]].
+
 > [!released]
 >
 > - `has scheduled date` was introduced in Tasks 1.6.0.
@@ -278,6 +249,8 @@ For full details of combining filters with boolean operators, see [[Combining Fi
   - `(last|this|next) (week|month|quarter|year)`
   - `(YYYY-Www|YYYY-mm|YYYY-Qq|YYYY)`
 - `start date is invalid`
+
+For more information, see [[Dates#Start date|Start date]].
 
 > [!released]
 >
@@ -359,6 +332,41 @@ because the tasks starts before tomorrow. Only one of the dates needs to match.
 > - `no happens date` and `has happens date` were introduced in Tasks 1.7.0.
 > - `happens (before|after|in) <date range>` searches were introduced in Tasks 2.0.0.
 > - `happens (before|after|in) (YYYY-Www|YYYY-mm|YYYY-Qq|YYYY)` searches were introduced in Tasks 3.1.0.
+
+### Troubleshooting date searches
+
+If your date searches are giving unexpected results, add an [[Explaining Queries|explain]] line to your query.
+
+This will help you identify common mistakes such as:
+
+- Accidentally using an invalid absolute date in a filter.
+- Using unsupported keywords in relative date ranges.
+
+If relative dates in queries do not update from the previous day, and your computer was sleeping at midnight, this is likely caused by a known Chrome bug and you will need to re-open the note. See [#1289](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1289).
+
+### Finding Tasks with Invalid Dates
+
+> [!released]
+>
+> - Validation of dates was introduced in Tasks 1.16.0.
+> - `created date is invalid` was introduced in Tasks 2.0.0.
+
+It is possible to accidentally use a non-existent date on a task signifier, such as `📅 2022-02-30`. February has at most 29 days.
+
+Such tasks look like they have a date, but that date will never be found. When viewed in Reading mode, the date will be shown as `Invalid date`.
+
+Any such mistakes can be found systematically with this search:
+
+    ```tasks
+    (created date is invalid) OR (done date is invalid) OR (due date is invalid) OR (scheduled date is invalid) OR (start date is invalid)
+    ```
+
+> [!warning]
+> If the above search finds any tasks with invalid dates, they are best fixed by clicking on the [[Backlinks|backlink]] to navigate
+to the incorrect line, and fixing it by directly typing in the new date.
+
+If you use the 'Create or edit Task' Modal, it will discard the broken date, and there will be no information about
+the original, incorrect value.
 
 ## Filters for Task Statuses
 
@@ -455,7 +463,7 @@ The available priorities are (from high to low):
 3. use no signifier to indicate no priority (searched for with 'none')
 4. 🔽 for low priority
 
-For more information, see [[Priority|Priorities]] .
+For more information, see [[Priority|Priorities]].
 
 #### Examples
 
@@ -484,6 +492,8 @@ For more information, see [[Priority|Priorities]] .
 - `recurrence (regex matches|regex does not match) /<JavaScript-style Regex>/`
   - Does regular expression match (case-sensitive by default).
   - Essential reading: [[Regular Expressions|Regular Expression Searches]].
+
+For more information, see [[Recurring Tasks]].
 
 > [!released]
 `recurrence` text searching was introduced in Tasks 1.22.0.

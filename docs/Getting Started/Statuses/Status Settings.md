@@ -69,7 +69,7 @@ You can see screenshots, and the statuses that will be added:
 
 Tasks knows about a growing list of custom checkboxes in Themes and CSS Snippets.
 
-You can find a full list, with screenshots and complete details of the supported checkboxes, in [[Status Collections]].
+You can find a full list, with screenshots and complete details of the supported checkboxes, in [[About Status Collections]].
 
 ### Add All Unknown Status Types
 

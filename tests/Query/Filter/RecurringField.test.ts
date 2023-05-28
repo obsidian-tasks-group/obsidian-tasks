@@ -6,6 +6,13 @@ import { RecurringField } from '../../../src/Query/Filter/RecurringField';
 import type { FilterOrErrorMessage } from '../../../src/Query/Filter/Filter';
 import { testTaskFilter } from '../../TestingTools/FilterTestHelpers';
 import { fromLine } from '../../TestHelpers';
+import { TaskBuilder } from '../../TestingTools/TaskBuilder';
+import {
+    expectTaskComparesAfter,
+    expectTaskComparesBefore,
+    expectTaskComparesEqual,
+} from '../../CustomMatchers/CustomMatchersForSorting';
+import { RecurrenceBuilder } from '../../TestingTools/RecurrenceBuilder';
 
 window.moment = moment;
 
@@ -41,6 +48,44 @@ describe('recurring', () => {
     });
 });
 
+describe('sorting by recurring', () => {
+    const recurrence = new RecurrenceBuilder().rule('every week when done').startDate('2022-07-14').build();
+    const recurring = new TaskBuilder().recurrence(recurrence).build();
+    const nonRecurring = new TaskBuilder().recurrence(null).build();
+
+    it('supports Field sorting methods correctly', () => {
+        const field = new RecurringField();
+        expect(field.supportsSorting()).toEqual(true);
+    });
+
+    it('parses sort by recurrence', () => {
+        const field = new RecurringField();
+        expect(field.createSorterFromLine('sort by recurring')).not.toBeNull();
+    });
+
+    it('sort by due', () => {
+        // Arrange
+        const sorter = new RecurringField().createNormalSorter();
+
+        // Assert
+        expectTaskComparesBefore(sorter, recurring, nonRecurring);
+        expectTaskComparesAfter(sorter, nonRecurring, recurring);
+        expectTaskComparesEqual(sorter, nonRecurring, nonRecurring);
+        expectTaskComparesEqual(sorter, recurring, recurring);
+    });
+
+    it('sort by due reverse', () => {
+        // Arrange
+        const sorter = new RecurringField().createReverseSorter();
+
+        // Assert
+        expectTaskComparesAfter(sorter, recurring, nonRecurring);
+        expectTaskComparesBefore(sorter, nonRecurring, recurring);
+        expectTaskComparesEqual(sorter, nonRecurring, nonRecurring);
+        expectTaskComparesEqual(sorter, recurring, recurring);
+    });
+});
+
 describe('grouping by recurring', () => {
     it('supports grouping methods correctly', () => {
         expect(new RecurringField()).toSupportGroupingWithProperty('recurring');
@@ -51,7 +96,7 @@ describe('grouping by recurring', () => {
         ['- [ ] a 🔁 every Sunday', ['Recurring']],
     ])('task "%s" should have groups: %s', (taskLine: string, groups: string[]) => {
         // Arrange
-        const grouper = new RecurringField().createGrouper().grouper;
+        const grouper = new RecurringField().createNormalGrouper().grouper;
 
         // Assert
         expect(grouper(fromLine({ line: taskLine }))).toEqual(groups);

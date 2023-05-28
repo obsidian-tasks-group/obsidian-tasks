@@ -523,7 +523,7 @@ describe('grouping by due date', () => {
 
     it('group by due date', () => {
         // Arrange
-        const grouper = new DueDateField().createGrouper();
+        const grouper = new DueDateField().createNormalGrouper();
         const taskWithDate = new TaskBuilder().dueDate('1970-01-01').build();
         const taskWithoutDate = new TaskBuilder().build();
 

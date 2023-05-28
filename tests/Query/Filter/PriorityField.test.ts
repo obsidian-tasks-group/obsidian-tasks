@@ -169,7 +169,7 @@ describe('grouping by priority', () => {
         ['- [ ] a 🔽', ['Priority 4: Low']],
     ])('task "%s" should have groups: %s', (taskLine: string, groups: string[]) => {
         // Arrange
-        const grouper = new PriorityField().createGrouper().grouper;
+        const grouper = new PriorityField().createNormalGrouper().grouper;
 
         // Assert
         expect(grouper(fromLine({ line: taskLine }))).toEqual(groups);

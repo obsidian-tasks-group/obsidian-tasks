@@ -4,7 +4,6 @@
 
 - [Contributing Guide](https://publish.obsidian.md/tasks-contributing/) (this vault)
 - [User Guide](https://publish.obsidian.md/tasks/)
-  - Original, [Jekyll-based User Guide](https://obsidian-tasks-group.github.io/obsidian-tasks/)
 
 ## GitHub Links
 

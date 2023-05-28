@@ -4,6 +4,7 @@ import type { Task } from './Task';
 import * as taskModule from './Task';
 import type { LayoutOptions, TaskLayoutComponent } from './TaskLayout';
 import { TaskLayout } from './TaskLayout';
+import { replaceTaskWithTasks } from './File';
 import { TASK_FORMATS, getSettings } from './Config/Settings';
 import { GlobalFilter } from './Config/GlobalFilter';
 
@@ -89,7 +90,11 @@ export async function renderTaskLine(
 
         // Should be re-rendered as enabled after update in file.
         checkbox.disabled = true;
-        task.toggleUpdate();
+        const toggledTasks = task.toggleWithRecurrenceInUsersOrder();
+        replaceTaskWithTasks({
+            originalTask: task,
+            newTasks: toggledTasks,
+        });
     });
 
     li.prepend(checkbox);

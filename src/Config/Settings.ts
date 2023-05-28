@@ -1,4 +1,4 @@
-import { makeDefaultSuggestionBuilder } from '../Suggestor/Suggestor';
+import { DEFAULT_MAX_GENERIC_SUGGESTIONS, makeDefaultSuggestionBuilder } from '../Suggestor/Suggestor';
 import { DEFAULT_SYMBOLS } from '../TaskSerializer/DefaultTaskSerializer';
 import { DATAVIEW_SYMBOLS } from '../TaskSerializer/DataviewTaskSerializer';
 import { StatusConfiguration } from '../StatusConfiguration';
@@ -39,12 +39,12 @@ export const TASK_FORMATS = {
     tasksPluginEmoji: {
         displayName: 'Tasks Emoji Format',
         taskSerializer: new DefaultTaskSerializer(DEFAULT_SYMBOLS),
-        buildSuggestions: makeDefaultSuggestionBuilder(DEFAULT_SYMBOLS),
+        buildSuggestions: makeDefaultSuggestionBuilder(DEFAULT_SYMBOLS, DEFAULT_MAX_GENERIC_SUGGESTIONS),
     },
     dataview: {
         displayName: 'Dataview',
         taskSerializer: new DataviewTaskSerializer(),
-        buildSuggestions: makeDefaultSuggestionBuilder(DATAVIEW_SYMBOLS),
+        buildSuggestions: makeDefaultSuggestionBuilder(DATAVIEW_SYMBOLS, DEFAULT_MAX_GENERIC_SUGGESTIONS),
     },
 } as const;
 
@@ -68,6 +68,7 @@ export interface Settings {
     provideAccessKeys: boolean;
     useFilenameAsScheduledDate: boolean;
     filenameAsDateFolders: string[];
+    recurrenceOnNextLine: boolean;
 
     // The custom status states.
     statusSettings: StatusSettings;
@@ -99,6 +100,7 @@ const defaultSettings: Settings = {
     provideAccessKeys: true,
     useFilenameAsScheduledDate: false,
     filenameAsDateFolders: [],
+    recurrenceOnNextLine: false,
     statusSettings: new StatusSettings(),
     features: Feature.settingsFlags,
     generalSettings: {

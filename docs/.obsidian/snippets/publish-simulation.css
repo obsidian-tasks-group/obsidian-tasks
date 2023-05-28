@@ -1,15 +1,20 @@
 /* MAINTENANCE NOTE
-These two files should always have the same CSS content, please,
+These file files should always have the same CSS content, please,
 so that the styling in the Obsidian app and the published docs
-is consistent:
+is consistent, across the docs and contributing sites:
 
-- contributing/publish.css
-- contributing/.obsidian/snippets/publish-simulation.css
 - docs/.obsidian/snippets/publish-simulation.css
 - docs/publish.css
+- contributing/.obsidian/snippets/publish-simulation.css
+- contributing/publish.css
 
 If you make any changes in one of those files, please copy
 them to the other one. Thank you.
+
+This can be done most conveniently by:
+
+- editing 'docs/.obsidian/snippets/publish-simulation.css' first, and testings in Obsidian
+- then running 'scripts/copy-docs-snippet-to-other-css-files.sh', which will copy that file to the other ones
 */
 
 /* Style "<span class="related-pages">#plugin/quickadd</span>" sections */
@@ -34,7 +39,7 @@ table td, th {
     vertical-align: top;
 }
 
-/* Use altnerating shades for table rows */
+/* Use alternating shades for table rows */
 table tr:nth-child(odd) {
     background-color: var(--background-primary) !important;
 }
@@ -48,6 +53,11 @@ img {
     margin-bottom: 1.5rem;
     border-radius: 4px;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12), 0 3px 10px rgba(0, 0, 0, 0.08);
+}
+
+/* Put a soft border around callouts */
+div.callout {
+    box-shadow: 0 0.2rem 0.5rem var(--background-modifier-box-shadow);
 }
 
 /* Put a pale border around inline code samples, to make them stand out */

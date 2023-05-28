@@ -1,5 +1,3 @@
 ---
 publish: true
 ---
-
-# Advanced

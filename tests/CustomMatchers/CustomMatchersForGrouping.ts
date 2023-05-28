@@ -24,7 +24,7 @@ export function toSupportGroupingWithProperty(field: Field, property: string) {
         };
     }
 
-    const fieldGrouper = field.createGrouper();
+    const fieldGrouper = field.createNormalGrouper();
     if (fieldGrouper.property !== property) {
         return {
             message: () =>

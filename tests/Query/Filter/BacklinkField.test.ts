@@ -35,10 +35,10 @@ describe('grouping by backlink', () => {
 
     it.each([
         // no location supplied
-        [undefined, 'heading', ['Unknown Location']],
+        ['', 'heading', ['Unknown Location']],
 
         // no heading supplied
-        ['a/b/c.md', undefined, ['c']],
+        ['a/b/c.md', null, ['c']],
 
         // File and heading, nominal case
         ['a/b/c.md', 'heading', ['c > heading']],
@@ -46,16 +46,19 @@ describe('grouping by backlink', () => {
         // If file name and heading are identical, avoid duplication ('c > c')
         ['a/b/c.md', 'c', ['c']],
 
+        // If file name and heading are identical, avoid duplication, even if there are underscores in the file name
+        ['a_b_c.md', 'a_b_c', ['a\\_b\\_c']],
+
         // Underscores in file name component are escaped
-        ['a/b/_c_.md', undefined, ['\\_c\\_']],
+        ['a/b/_c_.md', null, ['\\_c\\_']],
 
         // But underscores in the heading component are not
         ['a/b/_c_.md', 'heading _italic text_', ['\\_c\\_ > heading _italic text_']],
     ])(
-        'task "%s" with path "%s" should have groups: %s',
-        (path: string | undefined, heading: string | undefined, groups: string[]) => {
+        'path "%s" and heading "%s" should have groups: %s',
+        (path: string, heading: string | null, groups: string[]) => {
             // Arrange
-            const grouper = new BacklinkField().createGrouper().grouper;
+            const grouper = new BacklinkField().createNormalGrouper().grouper;
             const t = '- [ ] xyz';
 
             // Assert

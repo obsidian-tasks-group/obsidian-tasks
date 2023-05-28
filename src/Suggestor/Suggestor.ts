@@ -6,7 +6,16 @@ import type { DefaultTaskSerializerSymbols } from '../TaskSerializer/DefaultTask
 import { TaskRegularExpressions } from '../Task';
 import type { SuggestInfo, SuggestionBuilder } from '.';
 
-export function makeDefaultSuggestionBuilder(symbols: DefaultTaskSerializerSymbols): SuggestionBuilder {
+/**
+ * Recommended default value to pass in to {@link makeDefaultSuggestionBuilder} maxGenericSuggestions parameter
+ * for production code.
+ */
+export const DEFAULT_MAX_GENERIC_SUGGESTIONS = 5;
+
+export function makeDefaultSuggestionBuilder(
+    symbols: DefaultTaskSerializerSymbols,
+    maxGenericSuggestions: number /** See {@link DEFAULT_MAX_GENERIC_SUGGESTIONS} */,
+): SuggestionBuilder {
     const datePrefixRegex = [symbols.startDateSymbol, symbols.scheduledDateSymbol, symbols.dueDateSymbol].join('|');
     /*
      * Return a list of suggestions, either generic or more fine-grained to the words at the cursor.
@@ -15,7 +24,9 @@ export function makeDefaultSuggestionBuilder(symbols: DefaultTaskSerializerSymbo
         let suggestions: SuggestInfo[] = [];
 
         // Step 1: add date suggestions if relevant
-        suggestions = suggestions.concat(addDatesSuggestions(line, cursorPos, settings, datePrefixRegex));
+        suggestions = suggestions.concat(
+            addDatesSuggestions(line, cursorPos, settings, datePrefixRegex, maxGenericSuggestions),
+        );
 
         // Step 2: add recurrence suggestions if relevant
         suggestions = suggestions.concat(addRecurrenceSuggestions(line, cursorPos, settings, symbols.recurrenceSymbol));
@@ -145,6 +156,7 @@ function addDatesSuggestions(
     cursorPos: number,
     settings: Settings,
     datePrefixRegex: string,
+    maxGenericSuggestions: number,
 ): SuggestInfo[] {
     const genericSuggestions = [
         'today',
@@ -194,7 +206,6 @@ function addDatesSuggestions(
         // a max number. We want the max number to be around half the total allowed matches, to also allow
         // some global generic matches (e.g. task components) to find their way to the menu
         const minMatch = 1;
-        const maxGenericSuggestions = 5;
         let genericMatches = genericSuggestions
             .filter(
                 (value) =>

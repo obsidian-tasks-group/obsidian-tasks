@@ -1,8 +1,12 @@
 ---
 publish: true
+aliases:
+  - Reference/Status Collections/Status Collections
 ---
 
-# Status Collections
+# About Status Collections
+
+<span class="related-pages">#index-pages</span>
 
 ## Background
 
@@ -20,7 +24,7 @@ You can control the behaviour of your tasks (such as what happens when you click
 >   - [[Statuses]]
 >   - [[Custom Statuses]]
 > - Choose your status styling scheme: this will determine the names and symbols for your custom statuses:
->   - Some common ones are shown in [[Status Collections]]
+>   - Some common ones are shown in [[About Status Collections]]
 > - Set up your status styling scheme
 >   - [[Style custom statuses|How to style custom statuses]].
 > - Configure Tasks to use your custom statuses
@@ -59,4 +63,12 @@ However, you can also browse through the pages in this section, to see the other
 
 ## Supported CSS Snippets and Themes
 
-See the table of contents below.
+- [[About Status Collections]]
+- [[AnuPpuccin Theme]]
+- [[Aura Theme]]
+- [[Ebullientworks Theme]]
+- [[ITS Theme]]
+- [[LYT Mode Theme]]
+- [[Minimal Theme]]
+- [[SlRvb's Alternate Checkboxes]]
+- [[Things Theme]]

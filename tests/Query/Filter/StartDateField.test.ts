@@ -64,7 +64,7 @@ describe('grouping by start date', () => {
 
     it('group by start date', () => {
         // Arrange
-        const grouper = new StartDateField().createGrouper();
+        const grouper = new StartDateField().createNormalGrouper();
         const taskWithDate = new TaskBuilder().startDate('1970-01-01').build();
         const taskWithoutDate = new TaskBuilder().build();
 

@@ -21,7 +21,7 @@ Once you're comfortable with the background information in this page, further in
 
 - [[Style custom statuses|How to style custom statuses]].
 - [[Set up custom statuses|How to set up your custom statuses]].
-- [[Status Collections]].
+- [[About Status Collections]].
 
 ---
 
@@ -155,7 +155,7 @@ What Tasks' custom statuses allow you to do is to **also customise the behaviour
 >   - [[Statuses]]
 >   - [[Custom Statuses]]
 > - Choose your status styling scheme: this will determine the names and symbols for your custom statuses:
->   - Some common ones are shown in [[Status Collections]]
+>   - Some common ones are shown in [[About Status Collections]]
 > - Set up your status styling scheme
 >   - [[Style custom statuses|How to style custom statuses]].
 > - Configure Tasks to use your custom statuses

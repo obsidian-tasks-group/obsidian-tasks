@@ -144,7 +144,7 @@ describe('grouping by reminder date', () => {
 
     it('group by reminder date', () => {
         // Arrange
-        const grouper = new ReminderDateField().createGrouper();
+        const grouper = new ReminderDateField().createNormalGrouper();
         const taskWithDate = new TaskBuilder().reminder('1970-01-01').build();
         const taskWithoutDate = new TaskBuilder().build();
 

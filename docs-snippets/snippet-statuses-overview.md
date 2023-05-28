@@ -7,7 +7,7 @@
 >   - [[Statuses]]
 >   - [[Custom Statuses]]
 > - Choose your status styling scheme: this will determine the names and symbols for your custom statuses:
->   - Some common ones are shown in [[Status Collections]]
+>   - Some common ones are shown in [[About Status Collections]]
 > - Set up your status styling scheme
 >   - [[Style custom statuses|How to style custom statuses]].
 > - Configure Tasks to use your custom statuses

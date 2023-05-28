@@ -132,41 +132,6 @@ export abstract class Field {
     }
 
     /**
-     * Parse a 'sort by' line and return a {@link Sorter} object.
-     *
-     * Returns null line does not match this field or is invalid,
-     * or this field does not support sorting.
-     */
-    public parseSortLine(line: string): Sorter | null {
-        if (!this.supportsSorting()) {
-            return null;
-        }
-
-        if (!this.canCreateSorterForLine(line)) {
-            return null;
-        }
-
-        return this.createSorterFromLine(line);
-    }
-
-    /**
-     * Returns true if the class can parse the given 'sort by' instruction line.
-     *
-     * Current implementation simply checks whether the class does support sorting,
-     * and whether the line matches this.sorterRegExp().
-     * @param line - A line from a ```tasks``` block.
-     *
-     * @see {@link createSorterFromLine}
-     */
-    public canCreateSorterForLine(line: string): boolean {
-        if (!this.supportsSorting()) {
-            return false;
-        }
-
-        return Field.lineMatchesFilter(this.sorterRegExp(), line);
-    }
-
-    /**
      * Parse the line, and return either a {@link Sorter} object or null.
      *
      * This default implementation works for all fields that support
@@ -176,8 +141,6 @@ export abstract class Field {
      * this method.
      *
      * @param line - A 'sort by' line from a ```tasks``` block.
-     *
-     * @see {@link canCreateSorterForLine}
      */
     public createSorterFromLine(line: string): Sorter | null {
         if (!this.supportsSorting()) {
@@ -265,6 +228,51 @@ export abstract class Field {
     }
 
     /**
+     * Parse the line, and return either a {@link Grouper} object or null.
+     *
+     * This default implementation works for all fields that support
+     * the default grouping pattern of `group by <fieldName> (reverse)?`.
+     *
+     * Fields that offer more complicated 'group by' options can override
+     * this method.
+     *
+     * @param line - A 'group by' line from a ```tasks``` block.
+     */
+    public createGrouperFromLine(line: string): Grouper | null {
+        if (!this.supportsGrouping()) {
+            return null;
+        }
+
+        const match = Field.getMatch(this.grouperRegExp(), line);
+        if (match === null) {
+            return null;
+        }
+
+        const reverse = !!match[1];
+        return this.createGrouper(reverse);
+    }
+
+    /**
+     * Return a regular expression that will match a correctly-formed
+     * instruction line for grouping Tasks by this field.
+     *
+     * Throws if this field does not support grouping.
+     *
+     * `match[1]` will be either `reverse` or undefined.
+     *
+     * Fields that offer more complicated 'group by' options can override
+     * this method.
+     */
+    protected grouperRegExp(): RegExp {
+        if (!this.supportsGrouping()) {
+            throw Error(`grouperRegExp() unimplemented for ${this.fieldNameSingular()}`);
+        }
+
+        // The $ at end is required to distinguish between group by status and status.name
+        return new RegExp(`^group by ${this.fieldNameSingularEscaped()}( reverse)?$`);
+    }
+
+    /**
      * Return a function to get a list of a task's group names, for use in grouping by this field's value.
      *
      * See {@link supportsGrouping} for what to do, to enable support of grouping in a
@@ -276,11 +284,29 @@ export abstract class Field {
 
     /**
      * Create a {@link Grouper} object for grouping tasks by this field's value.
-     *
-     * For now, parsing of `group by` lines is currently done in {@link FilterParser.parseGrouper()}.
-     * Later, this will probably be moved to the {@link Field} classes.
+     * @param reverse - false for normal group order, true for reverse group order.
      */
-    public createGrouper(): Grouper {
-        return new Grouper(this.fieldNameSingular(), this.grouper());
+    public createGrouper(reverse: boolean): Grouper {
+        return new Grouper(this.fieldNameSingular(), this.grouper(), reverse);
+    }
+
+    /**
+     * Create a {@link Grouper} object for grouping tasks by this field's value,
+     * in the standard/normal group order for this field.
+     *
+     * @see {@link createReverseGrouper}
+     */
+    public createNormalGrouper(): Grouper {
+        return this.createGrouper(false);
+    }
+
+    /**
+     * Create a {@link Grouper} object for grouping tasks by this field's value,
+     * in the reverse of the standard/normal group order for this field.
+     *
+     * @see {@link createNormalGrouper}
+     */
+    public createReverseGrouper(): Grouper {
+        return this.createGrouper(true);
     }
 }

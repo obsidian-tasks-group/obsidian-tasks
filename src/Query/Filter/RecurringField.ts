@@ -1,5 +1,6 @@
 import type { Task } from '../../Task';
 import type { GrouperFunction } from '../Grouper';
+import type { Comparator } from '../Sorter';
 import { FilterInstructionsBasedField } from './FilterInstructionsBasedField';
 
 export class RecurringField extends FilterInstructionsBasedField {
@@ -12,6 +13,31 @@ export class RecurringField extends FilterInstructionsBasedField {
     public fieldName(): string {
         return 'recurring';
     }
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // Sorting
+    // -----------------------------------------------------------------------------------------------------------------
+
+    public supportsSorting(): boolean {
+        return true;
+    }
+
+    comparator(): Comparator {
+        // Recurring tasks sort before non-recurring ones
+        return (a: Task, b: Task) => {
+            if (a.recurrence !== null && b.recurrence === null) {
+                return -1;
+            } else if (a.recurrence === null && b.recurrence !== null) {
+                return 1;
+            } else {
+                return 0;
+            }
+        };
+    }
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // Grouping
+    // -----------------------------------------------------------------------------------------------------------------
 
     public supportsGrouping(): boolean {
         return true;

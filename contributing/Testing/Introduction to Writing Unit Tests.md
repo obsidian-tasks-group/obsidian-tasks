@@ -1,5 +1,7 @@
 # Introduction to Writing Unit Tests
 
+<span class="related-pages">#testing/automated-testing</span>
+
 Once you have got the tests [[Introduction to Running the tests|running on your machine]], this page aims to help you get started writing new tests.
 
 ## Why bother with tests?

@@ -1,0 +1,65 @@
+{
+  "collapse-filter": false,
+  "search": "-path:_meta -file:README",
+  "showTags": false,
+  "showAttachments": false,
+  "hideUnresolved": false,
+  "showOrphans": true,
+  "collapse-color-groups": false,
+  "colorGroups": [
+    {
+      "query": "path:\"Getting Started/Statuses\"",
+      "color": {
+        "a": 1,
+        "rgb": 11392604
+      }
+    },
+    {
+      "query": "path:\"Getting Started\"",
+      "color": {
+        "a": 1,
+        "rgb": 14048348
+      }
+    },
+    {
+      "query": "path:Queries",
+      "color": {
+        "a": 1,
+        "rgb": 14069084
+      }
+    },
+    {
+      "query": "file:Introduction",
+      "color": {
+        "a": 1,
+        "rgb": 7757014
+      }
+    },
+    {
+      "query": "path:Reference",
+      "color": {
+        "a": 1,
+        "rgb": 11129027
+      }
+    },
+    {
+      "query": "path:\"How To\"",
+      "color": {
+        "a": 1,
+        "rgb": 16776960
+      }
+    }
+  ],
+  "collapse-display": true,
+  "showArrow": false,
+  "textFadeMultiplier": 0,
+  "nodeSizeMultiplier": 1,
+  "lineSizeMultiplier": 1,
+  "collapse-forces": false,
+  "centerStrength": 0.518713248970312,
+  "repelStrength": 16.8733723958333,
+  "linkStrength": 1,
+  "linkDistance": 319,
+  "scale": 1.3626171834729273,
+  "close": false
+}
