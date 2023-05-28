@@ -418,7 +418,6 @@ describe('Query', () => {
                     ],
                 },
             ],
-            // TODO Move these new tests to ReminderDateField tests
             [
                 'by reminder date presence',
                 {
@@ -512,19 +511,6 @@ describe('Query', () => {
                 },
             ],
             [
-                'by reminder date (before)', // TODO Erik
-                {
-                    filters: ['reminder before 2022-04-20'],
-                    tasks: [
-                        '- [ ] task 1',
-                        '- [ ] task 2 ⏰️ 2022-04-15',
-                        '- [ ] task 3 ⏰️ 2022-04-20',
-                        '- [ ] task 4 ⏰️ 2022-04-25',
-                    ],
-                    expectedResult: ['- [ ] task 2 ⏰️ 2022-04-15'],
-                },
-            ],
-            [
                 'by done date (before)',
                 {
                     filters: ['done before 2022-12-23'],
@@ -536,26 +522,6 @@ describe('Query', () => {
                 },
             ],
         ])('should support filtering %s', (_, { tasks: allTaskLines, filters, expectedResult }) => {
-            shouldSupportFiltering(filters, allTaskLines, expectedResult);
-        });
-    });
-
-    describe('filtering reminders', () => {
-        test.concurrent.each<[string, FilteringCase]>([
-            [
-                'Reminder after AND not done',
-                {
-                    filters: ['"reminder after 2022-04-20" AND "not done"'],
-                    tasks: [
-                        '- [ ] task 1',
-                        '- [ ] task 2 ⏰️ 2022-04-20',
-                        '- [x] task 3 ⏰️ 2022-04-21',
-                        '- [ ] task 4 ⏰️ 2022-04-21',
-                    ],
-                    expectedResult: ['- [ ] task 4 ⏰️ 2022-04-21'],
-                },
-            ],
-        ])('should support reminder filter %s', (_, { tasks: allTaskLines, filters, expectedResult }) => {
             shouldSupportFiltering(filters, allTaskLines, expectedResult);
         });
     });

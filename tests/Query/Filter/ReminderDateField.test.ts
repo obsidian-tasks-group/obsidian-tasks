@@ -24,6 +24,44 @@ describe('reminder date', () => {
         jest.useRealTimers();
     });
 
+    it('by reminder date (before)', () => {
+        // Arrange
+        const filter = new ReminderDateField().createFilterOrErrorMessage('reminder before 2022-04-20 11:45');
+
+        // Act, Assert
+        testTaskFilterForTaskWithReminderDate(filter, null, false);
+        testTaskFilterForTaskWithReminderDate(filter, '2022-04-15', true);
+        testTaskFilterForTaskWithReminderDate(filter, '2022-04-19 23:59', true);
+
+        // Filter matches whole day, even though it was supplied with a time, so reminders
+        // with any time on the filter's day should match.
+        testTaskFilterForTaskWithReminderDate(filter, '2022-04-20', false);
+        testTaskFilterForTaskWithReminderDate(filter, '2022-04-20 11:44', false);
+        testTaskFilterForTaskWithReminderDate(filter, '2022-04-20 11:45', false);
+        testTaskFilterForTaskWithReminderDate(filter, '2022-04-20 11:46', false);
+
+        testTaskFilterForTaskWithReminderDate(filter, '2022-04-21', false);
+    });
+
+    it('by reminder date (after)', () => {
+        // Arrange
+        const filter = new ReminderDateField().createFilterOrErrorMessage('reminder after 2022-04-19 11:45');
+
+        // Act, Assert
+        testTaskFilterForTaskWithReminderDate(filter, null, false);
+        testTaskFilterForTaskWithReminderDate(filter, '2022-04-15', false);
+        testTaskFilterForTaskWithReminderDate(filter, '2022-04-18 23:59', false);
+
+        // Filter matches whole day, even though it was supplied with a time, so reminders
+        // with any time on the filter's day should match.
+        testTaskFilterForTaskWithReminderDate(filter, '2022-04-20', true);
+        testTaskFilterForTaskWithReminderDate(filter, '2022-04-20 11:44', true);
+        testTaskFilterForTaskWithReminderDate(filter, '2022-04-20 11:45', true);
+        testTaskFilterForTaskWithReminderDate(filter, '2022-04-20 11:46', true);
+
+        testTaskFilterForTaskWithReminderDate(filter, '2022-04-21', true);
+    });
+
     it('by reminder date (on) - with filter containing date only', () => {
         // Arrange
         const filter = new ReminderDateField().createFilterOrErrorMessage('reminder on 2022-04-20');
