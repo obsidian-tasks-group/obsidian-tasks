@@ -1142,9 +1142,10 @@ describe('order of recurring tasks', () => {
         const lines = task.toggleWithRecurrenceInUsersOrder().map((t) => t.toFileLineString());
 
         // Assert
-        expect(lines.length).toEqual(2);
-        expect(lines[0]).toMatchInlineSnapshot('"- [ ] this is a recurring task 🔁 every day"');
-        expect(lines[1]).toMatchInlineSnapshot('"- [x] this is a recurring task 🔁 every day ✅ 2023-05-16"');
+        expect(lines).toStrictEqual([
+            '- [ ] this is a recurring task 🔁 every day',
+            '- [x] this is a recurring task 🔁 every day ✅ 2023-05-16',
+        ]);
     });
 
     it('should honour new-task-before-old setting', () => {
@@ -1156,9 +1157,10 @@ describe('order of recurring tasks', () => {
         const lines = task.toggleWithRecurrenceInUsersOrder().map((t) => t.toFileLineString());
 
         // Assert
-        expect(lines.length).toEqual(2);
-        expect(lines[0]).toMatchInlineSnapshot('"- [ ] this is a recurring task 🔁 every day"');
-        expect(lines[1]).toMatchInlineSnapshot('"- [x] this is a recurring task 🔁 every day ✅ 2023-05-16"');
+        expect(lines).toStrictEqual([
+            '- [ ] this is a recurring task 🔁 every day',
+            '- [x] this is a recurring task 🔁 every day ✅ 2023-05-16',
+        ]);
     });
 
     it('should honour old-task-before-new setting', () => {
@@ -1170,9 +1172,10 @@ describe('order of recurring tasks', () => {
         const lines = task.toggleWithRecurrenceInUsersOrder().map((t) => t.toFileLineString());
 
         // Assert
-        expect(lines.length).toEqual(2);
-        expect(lines[0]).toMatchInlineSnapshot('"- [x] this is a recurring task 🔁 every day ✅ 2023-05-16"');
-        expect(lines[1]).toMatchInlineSnapshot('"- [ ] this is a recurring task 🔁 every day"');
+        expect(lines).toStrictEqual([
+            '- [x] this is a recurring task 🔁 every day ✅ 2023-05-16',
+            '- [ ] this is a recurring task 🔁 every day',
+        ]);
     });
 });
 
