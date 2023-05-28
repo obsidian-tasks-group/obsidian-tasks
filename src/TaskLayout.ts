@@ -11,7 +11,7 @@ export class LayoutOptions {
     hideScheduledDate: boolean = false;
     hideDoneDate: boolean = false;
     hideDueDate: boolean = false;
-    hideReminders: boolean = false;
+    hideReminderDate: boolean = false;
     hideRecurrenceRule: boolean = false;
     hideEditButton: boolean = false;
     hideUrgency: boolean = true;
@@ -103,7 +103,7 @@ export class TaskLayout {
         newComponents = removeIf(newComponents, layoutOptions.hideScheduledDate, 'scheduledDate');
         newComponents = removeIf(newComponents, layoutOptions.hideDueDate, 'dueDate');
         newComponents = removeIf(newComponents, layoutOptions.hideDoneDate, 'doneDate');
-        newComponents = removeIf(newComponents, layoutOptions.hideReminders, 'reminders');
+        newComponents = removeIf(newComponents, layoutOptions.hideReminderDate, 'reminders');
         // The following components are handled in QueryRenderer.ts and thus are not part of the same flow that
         // hides TaskLayoutComponent items. However, we still want to have 'tasks-layout-hide' items for them
         // (see https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1866).

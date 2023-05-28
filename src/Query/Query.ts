@@ -193,7 +193,7 @@ export class Query implements IQuery {
                     this._layoutOptions.hideDueDate = hide;
                     break;
                 case 'reminder date':
-                    this._layoutOptions.hideReminders = hide;
+                    this._layoutOptions.hideReminderDate = hide;
                     break;
                 case 'done date':
                     this._layoutOptions.hideDoneDate = hide;
