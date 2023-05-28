@@ -1037,18 +1037,10 @@ describe('set correct created date on reccurence task', () => {
         updateSettings({ setCreatedDate: false });
 
         // Act
-        const task = fromLine({
-            line,
-        });
-
-        // Assert
-        expect(task).not.toBeNull();
-        expect(task!.createdDate).toBeNull();
-
-        const tasks = task!.toggle();
-        expect(tasks.length).toEqual(2);
-        const nextTask: Task = tasks[0];
-        expect(nextTask.createdDate).toBeNull();
+        expect(line).toToggleLineTo([
+            '- [ ] this is a task 🔁 every day 📅 2021-09-13',
+            '- [x] this is a task 🔁 every day 📅 2021-09-12 ✅ 2023-03-08',
+        ]);
     });
 
     it('does not set created date with disabled setting when repeated has created date', () => {
@@ -1057,19 +1049,10 @@ describe('set correct created date on reccurence task', () => {
         updateSettings({ setCreatedDate: false });
 
         // Act
-        const task = fromLine({
-            line,
-        });
-
-        // Assert
-        expect(task).not.toBeNull();
-        expect(task!.createdDate).not.toBeNull();
-        expect(task!.createdDate!.isSame(moment('2021-09-11', 'YYYY-MM-DD'))).toStrictEqual(true);
-
-        const tasks = task!.toggle();
-        expect(tasks.length).toEqual(2);
-        const nextTask: Task = tasks[0];
-        expect(nextTask.createdDate).toBeNull();
+        expect(line).toToggleLineTo([
+            '- [ ] this is a task 🔁 every day 📅 2021-09-13',
+            '- [x] this is a task 🔁 every day ➕ 2021-09-11 📅 2021-09-12 ✅ 2023-03-08',
+        ]);
     });
 
     it('set created date with enabled setting', () => {
@@ -1078,19 +1061,10 @@ describe('set correct created date on reccurence task', () => {
         updateSettings({ setCreatedDate: true });
 
         // Act
-        const task = fromLine({
-            line,
-        });
-
-        // Assert
-        expect(task).not.toBeNull();
-        expect(task!.createdDate).toBeNull();
-
-        const tasks = task!.toggle();
-        expect(tasks.length).toEqual(2);
-        const nextTask: Task = tasks[0];
-        expect(nextTask.createdDate).not.toBeNull();
-        expect(nextTask!.createdDate!.isSame(moment(today, 'YYYY-MM-DD'))).toStrictEqual(true);
+        expect(line).toToggleLineTo([
+            '- [ ] this is a task 🔁 every day ➕ 2023-03-08 📅 2021-09-13',
+            '- [x] this is a task 🔁 every day 📅 2021-09-12 ✅ 2023-03-08',
+        ]);
     });
 
     it('set created date with enabled setting when repeated has created date', () => {
@@ -1099,20 +1073,10 @@ describe('set correct created date on reccurence task', () => {
         updateSettings({ setCreatedDate: true });
 
         // Act
-        const task = fromLine({
-            line,
-        });
-
-        // Assert
-        expect(task).not.toBeNull();
-        expect(task!.createdDate).not.toBeNull();
-        expect(task!.createdDate!.isSame(moment('2021-09-11', 'YYYY-MM-DD'))).toStrictEqual(true);
-
-        const tasks = task!.toggle();
-        expect(tasks.length).toEqual(2);
-        const nextTask: Task = tasks[0];
-        expect(nextTask.createdDate).not.toBeNull();
-        expect(nextTask!.createdDate!.isSame(moment(today, 'YYYY-MM-DD'))).toStrictEqual(true);
+        expect(line).toToggleLineTo([
+            '- [ ] this is a task 🔁 every day ➕ 2023-03-08 📅 2021-09-13',
+            '- [x] this is a task 🔁 every day ➕ 2021-09-11 📅 2021-09-12 ✅ 2023-03-08',
+        ]);
     });
 });
 
