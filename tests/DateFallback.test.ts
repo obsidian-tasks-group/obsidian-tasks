@@ -173,7 +173,7 @@ describe('extract date from filename', () => {
             // Assert
             if (testCase.expectedDate !== null) {
                 expect(parsedDate).not.toBeNull();
-                expect(parsedDate!.isSame(date(testCase.expectedDate))).toStrictEqual(true);
+                expect(parsedDate!).toBeSameMoment(moment(testCase.expectedDate));
             } else {
                 expect(parsedDate).toBeNull();
             }
@@ -209,7 +209,7 @@ describe('parse task with date fallback', () => {
 
         // Assert
         expect(task!.scheduledDate).not.toBeNull();
-        expect(task!.scheduledDate!.isSame(date('2022-10-22'))).toStrictEqual(true);
+        expect(task!.scheduledDate!).toBeSameMoment(moment('2022-10-22'));
         expect(task!.scheduledDateIsInferred).toBe(true);
     });
 
@@ -246,7 +246,7 @@ describe('parse task with date fallback', () => {
 
         // Assert
         expect(task!.scheduledDate).not.toBeNull();
-        expect(task!.scheduledDate!.isSame(date('2022-11-22'))).toStrictEqual(true);
+        expect(task!.scheduledDate!).toBeSameMoment(moment('2022-11-22'));
         expect(task!.scheduledDateIsInferred).toBe(false);
     });
 
@@ -259,7 +259,7 @@ describe('parse task with date fallback', () => {
 
         // Assert
         expect(task!.scheduledDate).not.toBeNull();
-        expect(task!.scheduledDate!.isSame(date('2022-10-22'))).toStrictEqual(true);
+        expect(task!.scheduledDate!).toBeSameMoment(moment('2022-10-22'));
         expect(task!.scheduledDateIsInferred).toBe(true);
     });
 
@@ -286,7 +286,7 @@ describe('parse task with date fallback', () => {
         // Assert
         expect(toggled.scheduledDateIsInferred).toBe(true);
         expect(toggled.scheduledDate).not.toBeNull();
-        expect(toggled.scheduledDate!.isSame(date('2022-10-22'))).toStrictEqual(true);
+        expect(toggled.scheduledDate!).toBeSameMoment(moment('2022-10-22'));
         expect(toggled.toFileLineString()).toBe('- [ ] this is a task');
     });
 });
@@ -376,7 +376,8 @@ describe('update fallback date when path is changed', () => {
         if (expectedScheduledDate === null) {
             expect(updatedTask.scheduledDate).toBeNull();
         } else {
-            expect(updatedTask.scheduledDate!.isSame(expectedScheduledDate)).toStrictEqual(true);
+            expect(updatedTask.scheduledDate!).toBeSameMoment(expectedScheduledDate);
+            true;
         }
 
         expect(updatedTask.scheduledDateIsInferred).toBe(expectedIsInferred);
