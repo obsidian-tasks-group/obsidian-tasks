@@ -13,6 +13,11 @@ import {
 
 import { toSupportGroupingWithProperty } from './CustomMatchersForGrouping';
 
+import { toBeIdenticalTo } from './CustomMatchersForTaskBuilder';
+expect.extend({
+    toBeIdenticalTo,
+});
+
 import { toMatchTaskDetails } from './CustomMatchersForTaskSerializer';
 
 expect.extend({
