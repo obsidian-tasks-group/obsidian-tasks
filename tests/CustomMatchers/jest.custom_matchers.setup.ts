@@ -37,6 +37,14 @@ expect.extend({
 });
 
 // ---------------------------------------------------------------------
+// CustomMatchersForTasks
+// ---------------------------------------------------------------------
+import { toToggleLineTo } from './CustomMatchersForTasks';
+expect.extend({
+    toToggleLineTo,
+});
+
+// ---------------------------------------------------------------------
 // CustomMatchersForTaskBuilder
 // ---------------------------------------------------------------------
 import { toMatchTaskDetails } from './CustomMatchersForTaskSerializer';
