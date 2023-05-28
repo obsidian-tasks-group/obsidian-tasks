@@ -37,7 +37,7 @@ function isTaskDetails(val: any): val is TaskDetails {
     const dates: ReadonlyArray<keyof TaskDetails> = [
         'startDate',
         'createdDate',
-        'createdDate',
+        'scheduledDate',
         'dueDate',
         'doneDate',
     ] as const;
