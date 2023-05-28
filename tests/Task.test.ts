@@ -1019,7 +1019,15 @@ describe('toggle done', () => {
 });
 
 describe('set correct created date on reccurence task', () => {
+    const today = '2023-03-08';
+
+    beforeEach(() => {
+        jest.useFakeTimers();
+        jest.setSystemTime(new Date(today));
+    });
+
     afterEach(() => {
+        jest.useRealTimers();
         resetSettings();
     });
 
@@ -1066,8 +1074,6 @@ describe('set correct created date on reccurence task', () => {
 
     it('set created date with enabled setting', () => {
         // Arrange
-        const today = '2023-03-08';
-        const todaySpy = jest.spyOn(Date, 'now').mockReturnValue(moment(today).valueOf());
         const line = '- [ ] this is a task 📅 2021-09-12 🔁 every day';
         updateSettings({ setCreatedDate: true });
 
@@ -1085,15 +1091,10 @@ describe('set correct created date on reccurence task', () => {
         const nextTask: Task = tasks[0];
         expect(nextTask.createdDate).not.toBeNull();
         expect(nextTask!.createdDate!.isSame(moment(today, 'YYYY-MM-DD'))).toStrictEqual(true);
-
-        // cleanup
-        todaySpy.mockClear();
     });
 
     it('set created date with enabled setting when repeated has created date', () => {
         // Arrange
-        const today = '2023-03-08';
-        const todaySpy = jest.spyOn(Date, 'now').mockReturnValue(moment(today).valueOf());
         const line = '- [ ] this is a task ➕ 2021-09-11 📅 2021-09-12 🔁 every day';
         updateSettings({ setCreatedDate: true });
 
@@ -1112,9 +1113,6 @@ describe('set correct created date on reccurence task', () => {
         const nextTask: Task = tasks[0];
         expect(nextTask.createdDate).not.toBeNull();
         expect(nextTask!.createdDate!.isSame(moment(today, 'YYYY-MM-DD'))).toStrictEqual(true);
-
-        // cleanup
-        todaySpy.mockClear();
     });
 });
 
