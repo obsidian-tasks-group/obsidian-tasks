@@ -14,7 +14,7 @@ export function toBeSameMoment(received: moment.Moment, expected: moment.Moment)
     const pass: boolean = received.isSame(expected);
     const message: () => string = () =>
         pass
-            ? ''
+            ? `Received moment should not be ${expected.toISOString()}`
             : `Received moment is not the same as expected: ${diff(expected.toISOString(), received.toISOString())}`;
 
     return {
