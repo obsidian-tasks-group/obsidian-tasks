@@ -1031,7 +1031,7 @@ describe('created dates on recurring task', () => {
 
     it('should not set created date with disabled setting', () => {
         // Arrange
-        const line = '- [ ] this is a task 📅 2021-09-12 🔁 every day';
+        const line = '- [ ] this is a task 🔁 every day 📅 2021-09-12';
         updateSettings({ setCreatedDate: false });
 
         // Act
@@ -1043,7 +1043,7 @@ describe('created dates on recurring task', () => {
 
     it('should not set created date if setting disabled, even if original has created date', () => {
         // Arrange
-        const line = '- [ ] this is a task ➕ 2021-09-11 📅 2021-09-12 🔁 every day';
+        const line = '- [ ] this is a task 🔁 every day ➕ 2021-09-11 📅 2021-09-12';
         updateSettings({ setCreatedDate: false });
 
         // Act
@@ -1055,7 +1055,7 @@ describe('created dates on recurring task', () => {
 
     it('should set created date if setting enabled', () => {
         // Arrange
-        const line = '- [ ] this is a task 📅 2021-09-12 🔁 every day';
+        const line = '- [ ] this is a task 🔁 every day 📅 2021-09-12';
         updateSettings({ setCreatedDate: true });
 
         // Act
@@ -1067,7 +1067,7 @@ describe('created dates on recurring task', () => {
 
     it('should set created date if setting enabled, when original has created date', () => {
         // Arrange
-        const line = '- [ ] this is a task ➕ 2021-09-11 📅 2021-09-12 🔁 every day';
+        const line = '- [ ] this is a task 🔁 every day ➕ 2021-09-11 📅 2021-09-12';
         updateSettings({ setCreatedDate: true });
 
         // Act
