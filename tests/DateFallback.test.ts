@@ -172,7 +172,7 @@ describe('extract date from filename', () => {
 
             // Assert
             if (testCase.expectedDate !== null) {
-                expect(parsedDate).toBeSameMoment(moment(testCase.expectedDate));
+                expect(parsedDate).toEqualMoment(moment(testCase.expectedDate));
             } else {
                 expect(parsedDate).toBeNull();
             }
@@ -207,7 +207,7 @@ describe('parse task with date fallback', () => {
         const task = constructTaskFromLine(line, '2022-10-22');
 
         // Assert
-        expect(task!.scheduledDate).toBeSameMoment(moment('2022-10-22'));
+        expect(task!.scheduledDate).toEqualMoment(moment('2022-10-22'));
         expect(task!.scheduledDateIsInferred).toBe(true);
     });
 
@@ -243,7 +243,7 @@ describe('parse task with date fallback', () => {
         const task = constructTaskFromLine(line, '2022-10-22');
 
         // Assert
-        expect(task!.scheduledDate).toBeSameMoment(moment('2022-11-22'));
+        expect(task!.scheduledDate).toEqualMoment(moment('2022-11-22'));
         expect(task!.scheduledDateIsInferred).toBe(false);
     });
 
@@ -255,7 +255,7 @@ describe('parse task with date fallback', () => {
         const task = constructTaskFromLine(line, '2022-10-22');
 
         // Assert
-        expect(task!.scheduledDate).toBeSameMoment(moment('2022-10-22'));
+        expect(task!.scheduledDate).toEqualMoment(moment('2022-10-22'));
         expect(task!.scheduledDateIsInferred).toBe(true);
     });
 
@@ -281,7 +281,7 @@ describe('parse task with date fallback', () => {
 
         // Assert
         expect(toggled.scheduledDateIsInferred).toBe(true);
-        expect(toggled.scheduledDate).toBeSameMoment(moment('2022-10-22'));
+        expect(toggled.scheduledDate).toEqualMoment(moment('2022-10-22'));
         expect(toggled.toFileLineString()).toBe('- [ ] this is a task');
     });
 });
@@ -371,7 +371,7 @@ describe('update fallback date when path is changed', () => {
         if (expectedScheduledDate === null) {
             expect(updatedTask.scheduledDate).toBeNull();
         } else {
-            expect(updatedTask.scheduledDate).toBeSameMoment(expectedScheduledDate);
+            expect(updatedTask.scheduledDate).toEqualMoment(expectedScheduledDate);
             true;
         }
 

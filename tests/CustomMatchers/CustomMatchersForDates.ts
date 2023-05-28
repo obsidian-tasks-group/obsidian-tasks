@@ -4,13 +4,13 @@ import { diff } from 'jest-diff';
 declare global {
     namespace jest {
         interface Matchers<R> {
-            toBeSameMoment(expected: moment.Moment): CustomMatcherResult;
+            toEqualMoment(expected: moment.Moment): CustomMatcherResult;
         }
     }
 }
 
 // Based on https://stackoverflow.com/a/60229956/104370
-export function toBeSameMoment(received: moment.Moment | null, expected: moment.Moment): jest.CustomMatcherResult {
+export function toEqualMoment(received: moment.Moment | null, expected: moment.Moment): jest.CustomMatcherResult {
     const pass: boolean = expected.isSame(received);
     const expectedAsText = expected.toISOString();
     const receivedAsText = received ? received.toISOString() : 'null';

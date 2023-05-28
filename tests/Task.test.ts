@@ -31,9 +31,9 @@ describe('parsing', () => {
         expect(task!.listMarker).toEqual('-');
         expect(task!.description).toEqual('this is a done task');
         expect(task!.status).toStrictEqual(Status.DONE);
-        expect(task!.createdDate).toBeSameMoment(moment('2023-03-07'));
-        expect(task!.dueDate).toBeSameMoment(moment('2021-09-12'));
-        expect(task!.doneDate).toBeSameMoment(moment('2021-06-20'));
+        expect(task!.createdDate).toEqualMoment(moment('2023-03-07'));
+        expect(task!.dueDate).toEqualMoment(moment('2021-09-12'));
+        expect(task!.doneDate).toEqualMoment(moment('2021-06-20'));
         expect(task!.originalMarkdown).toStrictEqual(line);
         expect(task!.lineNumber).toEqual(0);
     });
@@ -129,8 +129,8 @@ describe('parsing', () => {
         expect(task).not.toBeNull();
         expect(task!.description).toEqual('this is a ✅ done task');
         expect(task!.status).toStrictEqual(Status.DONE);
-        expect(task!.dueDate).toBeSameMoment(moment('2021-09-12'));
-        expect(task!.doneDate).toBeSameMoment(moment('2021-06-20'));
+        expect(task!.dueDate).toEqualMoment(moment('2021-09-12'));
+        expect(task!.doneDate).toEqualMoment(moment('2021-06-20'));
     });
     // end-snippet
 
@@ -147,8 +147,8 @@ describe('parsing', () => {
         expect(task).not.toBeNull();
         expect(task!.description).toEqual('this is a ✅ done task');
         expect(task!.status).toStrictEqual(Status.DONE);
-        expect(task!.dueDate).toBeSameMoment(moment('2021-09-12'));
-        expect(task!.doneDate).toBeSameMoment(moment('2021-06-20'));
+        expect(task!.dueDate).toEqualMoment(moment('2021-09-12'));
+        expect(task!.doneDate).toEqualMoment(moment('2021-06-20'));
         expect(task!.blockLink).toEqual(' ^my-precious');
     });
 
@@ -165,7 +165,7 @@ describe('parsing', () => {
         expect(task).not.toBeNull();
         expect(task!.description).toEqual('this is a task due #inside_tag #some/tags_with_underscore');
         expect(task!.tags).toEqual(['#inside_tag', '#some/tags_with_underscore']);
-        expect(task!.dueDate).toBeSameMoment(moment('2021-09-12'));
+        expect(task!.dueDate).toEqualMoment(moment('2021-09-12'));
         expect(task!.priority).toEqual(Priority.High);
     });
 
@@ -182,10 +182,10 @@ describe('parsing', () => {
         // Assert
         expect(task).not.toBeNull();
         expect(task!.description).toEqual('Wobble #tag1 #tag2 #tag3 #tag4 #tag5 #tag6 #tag7 #tag8 #tag9 #tag10');
-        expect(task!.dueDate).toBeSameMoment(moment('2022-07-02'));
-        expect(task!.doneDate).toBeSameMoment(moment('2022-07-02'));
-        expect(task!.startDate).toBeSameMoment(moment('2022-07-02'));
-        expect(task!.scheduledDate).toBeSameMoment(moment('2022-07-02'));
+        expect(task!.dueDate).toEqualMoment(moment('2022-07-02'));
+        expect(task!.doneDate).toEqualMoment(moment('2022-07-02'));
+        expect(task!.startDate).toEqualMoment(moment('2022-07-02'));
+        expect(task!.scheduledDate).toEqualMoment(moment('2022-07-02'));
         expect(task!.priority).toEqual(Priority.High);
         expect(task!.tags).toStrictEqual([
             '#tag1',
@@ -991,7 +991,7 @@ describe('toggle done', () => {
 
         // Assert
         expect(task).not.toBeNull();
-        expect(task!.dueDate).toBeSameMoment(moment('2021-09-12'));
+        expect(task!.dueDate).toEqualMoment(moment('2021-09-12'));
 
         const tasks = task!.toggle();
         expect(tasks.length).toEqual(2);

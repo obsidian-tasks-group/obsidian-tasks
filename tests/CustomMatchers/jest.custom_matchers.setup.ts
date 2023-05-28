@@ -1,9 +1,9 @@
 // ---------------------------------------------------------------------
 // CustomMatchersForDates
 // ---------------------------------------------------------------------
-import { toBeSameMoment } from './CustomMatchersForDates';
+import { toEqualMoment } from './CustomMatchersForDates';
 expect.extend({
-    toBeSameMoment,
+    toEqualMoment,
 });
 
 // ---------------------------------------------------------------------
