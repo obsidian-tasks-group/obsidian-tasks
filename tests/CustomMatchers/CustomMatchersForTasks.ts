@@ -20,7 +20,10 @@ declare global {
 export function toToggleLineTo(line: string, expectedLines: string[]) {
     const task = fromLine({ line: line });
     const receivedLines = task.toggle().map((t) => t.toFileLineString());
+    return toMatchLines(receivedLines, expectedLines);
+}
 
+function toMatchLines(receivedLines: string[], expectedLines: string[]) {
     const matches = receivedLines.join('\n') === expectedLines.join('\n');
     if (!matches) {
         return {
