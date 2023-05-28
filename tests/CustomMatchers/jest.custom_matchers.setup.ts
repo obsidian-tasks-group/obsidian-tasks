@@ -10,11 +10,6 @@ import {
     toMatchTaskWithPath,
     toMatchTaskWithStatus,
 } from './CustomMatchersForFilters';
-
-import { toSupportGroupingWithProperty } from './CustomMatchersForGrouping';
-
-import { toMatchTaskDetails } from './CustomMatchersForTaskSerializer';
-
 expect.extend({
     toBeValid,
     toHaveExplanation,
@@ -23,6 +18,37 @@ expect.extend({
     toMatchTaskWithHeading,
     toMatchTaskWithPath,
     toMatchTaskWithStatus,
-    toMatchTaskDetails,
+});
+
+// ---------------------------------------------------------------------
+// CustomMatchersForGrouping
+// ---------------------------------------------------------------------
+import { toSupportGroupingWithProperty } from './CustomMatchersForGrouping';
+expect.extend({
     toSupportGroupingWithProperty,
+});
+
+// ---------------------------------------------------------------------
+// CustomMatchersForTaskBuilder
+// ---------------------------------------------------------------------
+import { toBeIdenticalTo } from './CustomMatchersForTaskBuilder';
+expect.extend({
+    toBeIdenticalTo,
+});
+
+// ---------------------------------------------------------------------
+// CustomMatchersForTasks
+// ---------------------------------------------------------------------
+import { toToggleTo, toToggleWithRecurrenceInUsersOrderTo } from './CustomMatchersForTasks';
+expect.extend({
+    toToggleTo,
+    toToggleWithRecurrenceInUsersOrderTo,
+});
+
+// ---------------------------------------------------------------------
+// CustomMatchersForTaskBuilder
+// ---------------------------------------------------------------------
+import { toMatchTaskDetails } from './CustomMatchersForTaskSerializer';
+expect.extend({
+    toMatchTaskDetails,
 });

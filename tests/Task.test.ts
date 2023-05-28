@@ -1018,111 +1018,67 @@ describe('toggle done', () => {
     });
 });
 
-describe('set correct created date on reccurence task', () => {
-    it('does not set created date with disabled setting', () => {
+describe('created dates on recurring task', () => {
+    beforeEach(() => {
+        jest.useFakeTimers();
+        jest.setSystemTime(new Date('2023-03-08'));
+    });
+
+    afterEach(() => {
+        jest.useRealTimers();
+        resetSettings();
+    });
+
+    it('should not set created date with disabled setting', () => {
         // Arrange
-        const line = '- [ ] this is a task 📅 2021-09-12 🔁 every day';
+        const line = '- [ ] this is a task 🔁 every day 📅 2021-09-12';
         updateSettings({ setCreatedDate: false });
 
         // Act
-        const task = fromLine({
-            line,
-        });
-
-        // Assert
-        expect(task).not.toBeNull();
-        expect(task!.createdDate).toBeNull();
-
-        const tasks = task!.toggle();
-        expect(tasks.length).toEqual(2);
-        const nextTask: Task = tasks[0];
-        expect(nextTask.createdDate).toBeNull();
-
-        // cleanup
-        resetSettings();
+        expect(line).toToggleTo([
+            '- [ ] this is a task 🔁 every day 📅 2021-09-13',
+            '- [x] this is a task 🔁 every day 📅 2021-09-12 ✅ 2023-03-08',
+        ]);
     });
 
-    it('does not set created date with disabled setting when repeated has created date', () => {
+    it('should not set created date if setting disabled, even if original has created date', () => {
         // Arrange
-        const line = '- [ ] this is a task ➕ 2021-09-11 📅 2021-09-12 🔁 every day';
+        const line = '- [ ] this is a task 🔁 every day ➕ 2021-09-11 📅 2021-09-12';
         updateSettings({ setCreatedDate: false });
 
         // Act
-        const task = fromLine({
-            line,
-        });
-
-        // Assert
-        expect(task).not.toBeNull();
-        expect(task!.createdDate).not.toBeNull();
-        expect(task!.createdDate!.isSame(moment('2021-09-11', 'YYYY-MM-DD'))).toStrictEqual(true);
-
-        const tasks = task!.toggle();
-        expect(tasks.length).toEqual(2);
-        const nextTask: Task = tasks[0];
-        expect(nextTask.createdDate).toBeNull();
-
-        // cleanup
-        resetSettings();
+        expect(line).toToggleTo([
+            '- [ ] this is a task 🔁 every day 📅 2021-09-13',
+            '- [x] this is a task 🔁 every day ➕ 2021-09-11 📅 2021-09-12 ✅ 2023-03-08',
+        ]);
     });
 
-    it('set created date with enabled setting', () => {
+    it('should set created date if setting enabled', () => {
         // Arrange
-        const today = '2023-03-08';
-        const todaySpy = jest.spyOn(Date, 'now').mockReturnValue(moment(today).valueOf());
-        const line = '- [ ] this is a task 📅 2021-09-12 🔁 every day';
+        const line = '- [ ] this is a task 🔁 every day 📅 2021-09-12';
         updateSettings({ setCreatedDate: true });
 
         // Act
-        const task = fromLine({
-            line,
-        });
-
-        // Assert
-        expect(task).not.toBeNull();
-        expect(task!.createdDate).toBeNull();
-
-        const tasks = task!.toggle();
-        expect(tasks.length).toEqual(2);
-        const nextTask: Task = tasks[0];
-        expect(nextTask.createdDate).not.toBeNull();
-        expect(nextTask!.createdDate!.isSame(moment(today, 'YYYY-MM-DD'))).toStrictEqual(true);
-
-        // cleanup
-        resetSettings();
-        todaySpy.mockClear();
+        expect(line).toToggleTo([
+            '- [ ] this is a task 🔁 every day ➕ 2023-03-08 📅 2021-09-13',
+            '- [x] this is a task 🔁 every day 📅 2021-09-12 ✅ 2023-03-08',
+        ]);
     });
 
-    it('set created date with enabled setting when repeated has created date', () => {
+    it('should set created date if setting enabled, when original has created date', () => {
         // Arrange
-        const today = '2023-03-08';
-        const todaySpy = jest.spyOn(Date, 'now').mockReturnValue(moment(today).valueOf());
-        const line = '- [ ] this is a task ➕ 2021-09-11 📅 2021-09-12 🔁 every day';
+        const line = '- [ ] this is a task 🔁 every day ➕ 2021-09-11 📅 2021-09-12';
         updateSettings({ setCreatedDate: true });
 
         // Act
-        const task = fromLine({
-            line,
-        });
-
-        // Assert
-        expect(task).not.toBeNull();
-        expect(task!.createdDate).not.toBeNull();
-        expect(task!.createdDate!.isSame(moment('2021-09-11', 'YYYY-MM-DD'))).toStrictEqual(true);
-
-        const tasks = task!.toggle();
-        expect(tasks.length).toEqual(2);
-        const nextTask: Task = tasks[0];
-        expect(nextTask.createdDate).not.toBeNull();
-        expect(nextTask!.createdDate!.isSame(moment(today, 'YYYY-MM-DD'))).toStrictEqual(true);
-
-        // cleanup
-        resetSettings();
-        todaySpy.mockClear();
+        expect(line).toToggleTo([
+            '- [ ] this is a task 🔁 every day ➕ 2023-03-08 📅 2021-09-13',
+            '- [x] this is a task 🔁 every day ➕ 2021-09-11 📅 2021-09-12 ✅ 2023-03-08',
+        ]);
     });
 });
 
-describe('next task recurrence appearance', () => {
+describe('order of recurring tasks', () => {
     beforeAll(() => {
         jest.useFakeTimers();
         jest.setSystemTime(new Date(2023, 5 - 1, 16));
@@ -1134,85 +1090,33 @@ describe('next task recurrence appearance', () => {
         resetSettings();
     });
 
-    it('new task shall appear on previous line by default', () => {
-        // Arrange
-        const task = fromLine({ line: '- [ ] this is a recurring task 🔁 every day' });
-
-        // Act
-        const lines = task.toggleWithRecurrenceInUsersOrder().map((t) => t.toFileLineString());
-
-        // Assert
-        expect(lines.length).toEqual(2);
-        expect(lines[0]).toMatchInlineSnapshot('"- [ ] this is a recurring task 🔁 every day"');
-        expect(lines[1]).toMatchInlineSnapshot('"- [x] this is a recurring task 🔁 every day ✅ 2023-05-16"');
+    it('should put new task before old, by default', () => {
+        const line = '- [ ] this is a recurring task 🔁 every day';
+        expect(line).toToggleWithRecurrenceInUsersOrderTo([
+            '- [ ] this is a recurring task 🔁 every day',
+            '- [x] this is a recurring task 🔁 every day ✅ 2023-05-16',
+        ]);
     });
 
-    it('new task shall appear on next line with the setting set to false', () => {
-        // Arrange
-        const task = fromLine({ line: '- [ ] this is a recurring task 🔁 every day' });
+    it('should honour new-task-before-old setting', () => {
         updateSettings({ recurrenceOnNextLine: false });
 
-        // Act
-        const lines = task.toggleWithRecurrenceInUsersOrder().map((t) => t.toFileLineString());
-
-        // Assert
-        expect(lines.length).toEqual(2);
-        expect(lines[0]).toMatchInlineSnapshot('"- [ ] this is a recurring task 🔁 every day"');
-        expect(lines[1]).toMatchInlineSnapshot('"- [x] this is a recurring task 🔁 every day ✅ 2023-05-16"');
+        const line = '- [ ] this is a recurring task 🔁 every day';
+        expect(line).toToggleWithRecurrenceInUsersOrderTo([
+            '- [ ] this is a recurring task 🔁 every day',
+            '- [x] this is a recurring task 🔁 every day ✅ 2023-05-16',
+        ]);
     });
 
-    it('new task shall appear on next line with the setting set to true', () => {
-        // Arrange
-        const task = fromLine({ line: '- [ ] this is a recurring task 🔁 every day' });
+    it('should honour old-task-before-new setting', () => {
         updateSettings({ recurrenceOnNextLine: true });
 
-        // Act
-        const lines = task.toggleWithRecurrenceInUsersOrder().map((t) => t.toFileLineString());
-
-        // Assert
-        expect(lines.length).toEqual(2);
-        expect(lines[0]).toMatchInlineSnapshot('"- [x] this is a recurring task 🔁 every day ✅ 2023-05-16"');
-        expect(lines[1]).toMatchInlineSnapshot('"- [ ] this is a recurring task 🔁 every day"');
+        const line = '- [ ] this is a recurring task 🔁 every day';
+        expect(line).toToggleWithRecurrenceInUsersOrderTo([
+            '- [x] this is a recurring task 🔁 every day ✅ 2023-05-16',
+            '- [ ] this is a recurring task 🔁 every day',
+        ]);
     });
-});
-
-declare global {
-    namespace jest {
-        interface Matchers<R> {
-            toBeIdenticalTo(builder2: TaskBuilder): R;
-        }
-
-        interface Expect {
-            toBeIdenticalTo(builder2: TaskBuilder): any;
-        }
-
-        interface InverseAsymmetricMatchers {
-            toBeIdenticalTo(builder2: TaskBuilder): any;
-        }
-    }
-}
-
-export function toBeIdenticalTo(builder1: TaskBuilder, builder2: TaskBuilder) {
-    const task1 = builder1.build();
-    const task2 = builder2.build();
-    const pass = task1.identicalTo(task2);
-
-    if (pass) {
-        return {
-            message: () => 'Tasks treated as identical, but should be different',
-            pass: true,
-        };
-    }
-    return {
-        message: () => {
-            return 'Tasks should be identical, but are treated as different';
-        },
-        pass: false,
-    };
-}
-
-expect.extend({
-    toBeIdenticalTo,
 });
 
 describe('identicalTo', () => {
