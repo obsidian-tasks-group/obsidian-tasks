@@ -44,7 +44,7 @@ describe('Recurrence', () => {
         // Assert
         expect(next!.startDate).toBeNull();
         expect(next!.scheduledDate).toBeNull();
-        expect(next!.dueDate!).toBeSameMoment(moment('2022-02-28'));
+        expect(next!.dueDate).toBeSameMoment(moment('2022-02-28'));
     });
 
     it('creates a recurrence 3 months in', () => {
@@ -62,7 +62,7 @@ describe('Recurrence', () => {
         // Assert
         expect(next!.startDate).toBeNull();
         expect(next!.scheduledDate).toBeNull();
-        expect(next!.dueDate!).toBeSameMoment(moment('2022-04-30'));
+        expect(next!.dueDate).toBeSameMoment(moment('2022-04-30'));
     });
 
     it('creates a recurrence the next month, even across years', () => {
@@ -80,7 +80,7 @@ describe('Recurrence', () => {
         // Assert
         expect(next!.startDate).toBeNull();
         expect(next!.scheduledDate).toBeNull();
-        expect(next!.dueDate!).toBeSameMoment(moment('2024-02-29'));
+        expect(next!.dueDate).toBeSameMoment(moment('2024-02-29'));
     });
 
     it('creates a recurrence in 2 years, even on Feb 29th', () => {
@@ -98,7 +98,7 @@ describe('Recurrence', () => {
         // Assert
         expect(next!.startDate).toBeNull();
         expect(next!.scheduledDate).toBeNull();
-        expect(next!.dueDate!).toBeSameMoment(moment('2026-02-28'));
+        expect(next!.dueDate).toBeSameMoment(moment('2026-02-28'));
     });
 
     it('creates a recurrence in 11 months, even on March 31', () => {
@@ -116,7 +116,7 @@ describe('Recurrence', () => {
         // Assert
         expect(next!.startDate).toBeNull();
         expect(next!.scheduledDate).toBeNull();
-        expect(next!.dueDate!).toBeSameMoment(moment('2021-02-28'));
+        expect(next!.dueDate).toBeSameMoment(moment('2021-02-28'));
     });
 
     it('creates a recurrence in 13 months, even on Jan 31', () => {
@@ -134,7 +134,7 @@ describe('Recurrence', () => {
         // Assert
         expect(next!.startDate).toBeNull();
         expect(next!.scheduledDate).toBeNull();
-        expect(next!.dueDate!).toBeSameMoment(moment('2021-02-28'));
+        expect(next!.dueDate).toBeSameMoment(moment('2021-02-28'));
     });
 });
 
@@ -178,8 +178,8 @@ describe('Recurrence - with invalid dates in tasks', () => {
         // The original scheduled date was an illegal/invalid date.
         // So it is simply given the new value of the same date as the reference date,
         // which here is the due date.
-        expect(next!.scheduledDate!).toBeSameMoment(moment('2022-02-28')); // date was invalid, so is given the value of highest priority supplied date
-        expect(next!.dueDate!).toBeSameMoment(moment('2022-02-28'));
+        expect(next!.scheduledDate).toBeSameMoment(moment('2022-02-28')); // date was invalid, so is given the value of highest priority supplied date
+        expect(next!.dueDate).toBeSameMoment(moment('2022-02-28'));
     });
 });
 
