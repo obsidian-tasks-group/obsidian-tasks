@@ -44,7 +44,7 @@ describe('Recurrence', () => {
         // Assert
         expect(next!.startDate).toBeNull();
         expect(next!.scheduledDate).toBeNull();
-        expect(next!.dueDate!.isSame(moment('2022-02-28'))).toStrictEqual(true);
+        expect(next!.dueDate!).toBeSameMoment(moment('2022-02-28'));
     });
 
     it('creates a recurrence 3 months in', () => {
