@@ -39,9 +39,10 @@ expect.extend({
 // ---------------------------------------------------------------------
 // CustomMatchersForTasks
 // ---------------------------------------------------------------------
-import { toToggleLineTo } from './CustomMatchersForTasks';
+import { toToggleLineTo, toToggleWithRecurrenceInUsersOrderTo } from './CustomMatchersForTasks';
 expect.extend({
     toToggleLineTo,
+    toToggleWithRecurrenceInUsersOrderTo,
 });
 
 // ---------------------------------------------------------------------
