@@ -1090,19 +1090,9 @@ describe('order of recurring tasks', () => {
         resetSettings();
     });
 
-    function togglingInUsersOrderShouldGive(line: string, expectedLines: string[]) {
-        // Arrange
-        const task = fromLine({ line: line });
-
-        // Act
-        const lines = task.toggleWithRecurrenceInUsersOrder().map((t) => t.toFileLineString());
-
-        // Assert
-        expect(lines).toStrictEqual(expectedLines);
-    }
-
     it('should put new task before old, by default', () => {
-        togglingInUsersOrderShouldGive('- [ ] this is a recurring task 🔁 every day', [
+        const line = '- [ ] this is a recurring task 🔁 every day';
+        expect(line).toToggleWithRecurrenceInUsersOrderTo([
             '- [ ] this is a recurring task 🔁 every day',
             '- [x] this is a recurring task 🔁 every day ✅ 2023-05-16',
         ]);
@@ -1111,7 +1101,8 @@ describe('order of recurring tasks', () => {
     it('should honour new-task-before-old setting', () => {
         updateSettings({ recurrenceOnNextLine: false });
 
-        togglingInUsersOrderShouldGive('- [ ] this is a recurring task 🔁 every day', [
+        const line = '- [ ] this is a recurring task 🔁 every day';
+        expect(line).toToggleWithRecurrenceInUsersOrderTo([
             '- [ ] this is a recurring task 🔁 every day',
             '- [x] this is a recurring task 🔁 every day ✅ 2023-05-16',
         ]);
@@ -1120,7 +1111,8 @@ describe('order of recurring tasks', () => {
     it('should honour old-task-before-new setting', () => {
         updateSettings({ recurrenceOnNextLine: true });
 
-        togglingInUsersOrderShouldGive('- [ ] this is a recurring task 🔁 every day', [
+        const line = '- [ ] this is a recurring task 🔁 every day';
+        expect(line).toToggleWithRecurrenceInUsersOrderTo([
             '- [x] this is a recurring task 🔁 every day ✅ 2023-05-16',
             '- [ ] this is a recurring task 🔁 every day',
         ]);
