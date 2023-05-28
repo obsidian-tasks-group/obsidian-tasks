@@ -4,23 +4,23 @@ import { fromLine } from '../TestHelpers';
 declare global {
     namespace jest {
         interface Matchers<R> {
-            toToggleLineTo(expectedLines: string[]): R;
+            toToggleTo(expectedLines: string[]): R;
             toToggleWithRecurrenceInUsersOrderTo(expectedLines: string[]): R;
         }
 
         interface Expect {
-            toToggleLineTo(expectedLines: string[]): any;
+            toToggleTo(expectedLines: string[]): any;
             toToggleWithRecurrenceInUsersOrderTo(expectedLines: string[]): any;
         }
 
         interface InverseAsymmetricMatchers {
-            toToggleLineTo(expectedLines: string[]): any;
+            toToggleTo(expectedLines: string[]): any;
             toToggleWithRecurrenceInUsersOrderTo(expectedLines: string[]): any;
         }
     }
 }
 
-export function toToggleLineTo(line: string, expectedLines: string[]) {
+export function toToggleTo(line: string, expectedLines: string[]) {
     const task = fromLine({ line: line });
     const receivedLines = task.toggle().map((t) => t.toFileLineString());
     return toMatchLines(receivedLines, expectedLines);
