@@ -10,16 +10,6 @@ import {
     toMatchTaskWithPath,
     toMatchTaskWithStatus,
 } from './CustomMatchersForFilters';
-
-import { toSupportGroupingWithProperty } from './CustomMatchersForGrouping';
-
-import { toBeIdenticalTo } from './CustomMatchersForTaskBuilder';
-expect.extend({
-    toBeIdenticalTo,
-});
-
-import { toMatchTaskDetails } from './CustomMatchersForTaskSerializer';
-
 expect.extend({
     toBeValid,
     toHaveExplanation,
@@ -28,6 +18,28 @@ expect.extend({
     toMatchTaskWithHeading,
     toMatchTaskWithPath,
     toMatchTaskWithStatus,
-    toMatchTaskDetails,
+});
+
+// ---------------------------------------------------------------------
+// CustomMatchersForGrouping
+// ---------------------------------------------------------------------
+import { toSupportGroupingWithProperty } from './CustomMatchersForGrouping';
+expect.extend({
     toSupportGroupingWithProperty,
+});
+
+// ---------------------------------------------------------------------
+// CustomMatchersForTaskBuilder
+// ---------------------------------------------------------------------
+import { toBeIdenticalTo } from './CustomMatchersForTaskBuilder';
+expect.extend({
+    toBeIdenticalTo,
+});
+
+// ---------------------------------------------------------------------
+// CustomMatchersForTaskBuilder
+// ---------------------------------------------------------------------
+import { toMatchTaskDetails } from './CustomMatchersForTaskSerializer';
+expect.extend({
+    toMatchTaskDetails,
 });
