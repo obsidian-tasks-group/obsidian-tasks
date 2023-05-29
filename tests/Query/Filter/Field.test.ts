@@ -62,11 +62,8 @@ describe('sorting - base class usability and implementation', () => {
         });
 
         it('should fail to parse a "valid" line', () => {
-            // expect(unsupported.parseSortLine('sort by unsupported')).toThrow(Error);
             const line = 'sort by unsupported';
-            expect(unsupported.canCreateSorterForLine(line)).toBe(false);
-            expect(unsupported.createSorterFromLine(line)).toBeNull();
-            const sorting = unsupported.parseSortLine(line);
+            const sorting = unsupported.createSorterFromLine(line);
             expect(sorting).toBeNull();
         });
     });
@@ -84,23 +81,19 @@ describe('sorting - base class usability and implementation', () => {
 
         it('should parse a valid line', () => {
             const line = 'sort by description-length';
-            expect(supported.canCreateSorterForLine(line)).toBe(true);
-            expect(supported.createSorterFromLine(line)).not.toBeNull();
-            const sorting = supported.parseSortLine(line);
+            const sorting = supported.createSorterFromLine(line);
             expect(sorting).not.toBeNull();
             expect(sorting?.property).toEqual('description-length');
         });
 
         it('should fail to parse a invalid line', () => {
             const line = 'sort by jsdajhasdfa';
-            expect(supported.canCreateSorterForLine(line)).toBe(false);
-            expect(supported.createSorterFromLine(line)).toBeNull();
-            const sorting = supported.parseSortLine(line);
+            const sorting = supported.createSorterFromLine(line);
             expect(sorting).toBeNull();
         });
 
         it('should compare two tasks', () => {
-            const sorting = supported.parseSortLine('sort by description-length');
+            const sorting = supported.createSorterFromLine('sort by description-length');
             const a = new TaskBuilder().description('short description').build();
             const b = new TaskBuilder().description('very looooooooong description').build();
             expectTaskComparesBefore(sorting!, a, b);

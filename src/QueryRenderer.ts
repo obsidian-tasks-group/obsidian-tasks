@@ -202,6 +202,7 @@ class QueryRenderChild extends MarkdownRenderChild {
                 layoutOptions: this.query.layoutOptions,
                 isFilenameUnique,
                 taskLayout: layout,
+                obsidianComponent: this,
             });
 
             // Remove all footnotes. They don't re-appear in another document.

@@ -345,17 +345,6 @@ describe('Sort by tags', () => {
             expect(tagsField.supportsSorting()).toEqual(true);
         });
 
-        it('should report whether it can parse lines', () => {
-            // Valid sort by tag lines:
-            expect(tagsField.canCreateSorterForLine('sort by tag')).toBe(true);
-            expect(tagsField.canCreateSorterForLine('sort by tag 2')).toBe(true);
-            expect(tagsField.canCreateSorterForLine('sort by tag reverse')).toBe(true);
-            expect(tagsField.canCreateSorterForLine('sort by tag reverse 3')).toBe(true);
-
-            // Invalid lines:
-            expect(tagsField.canCreateSorterForLine('sort by description')).toBe(false);
-        });
-
         const tag_a = new TaskBuilder().tags(['#a']).build();
         const tag_b = new TaskBuilder().tags(['#b']).build();
         const tags_a_b = new TaskBuilder().tags(['#a', '#b']).build();
@@ -373,20 +362,20 @@ describe('Sort by tags', () => {
         });
 
         it('should parse a valid line with default tag number', () => {
-            const sorter = tagsField.parseSortLine('sort by tag');
+            const sorter = tagsField.createSorterFromLine('sort by tag');
             expect(sorter?.property).toEqual('tag');
             expect(sorter?.comparator(tag_a, tag_b)).toBeLessThan(0);
             expectTaskComparesBefore(sorter!, tag_a, tag_b);
         });
 
         it('should parse a valid line with a non-default tag number', () => {
-            const sorter = tagsField.parseSortLine('sort by tag 2');
+            const sorter = tagsField.createSorterFromLine('sort by tag 2');
             expect(sorter?.property).toEqual('tag');
             expectTaskComparesBefore(sorter!, tags_a_b, tags_a_c);
         });
 
         it('should parse a valid line with reverse and a non-default tag number', () => {
-            const sorter = tagsField.parseSortLine('sort by tag reverse 2');
+            const sorter = tagsField.createSorterFromLine('sort by tag reverse 2');
             expect(sorter?.property).toEqual('tag');
             expectTaskComparesAfter(sorter!, tags_a_b, tags_a_c);
         });
@@ -406,9 +395,7 @@ describe('Sort by tags', () => {
 
         it('should fail to parse a invalid line', () => {
             const line = 'sort by jsdajhasdfa';
-            expect(tagsField.canCreateSorterForLine(line)).toBe(false);
-            expect(tagsField.createSorterFromLine(line)).toBeNull();
-            const sorting = tagsField.parseSortLine(line);
+            const sorting = tagsField.createSorterFromLine(line);
             expect(sorting).toBeNull();
         });
     });
@@ -429,7 +416,10 @@ describe('Sort by tags', () => {
 
         // Act / Assert
         expect(
-            Sort.by([new TagsField().parseSortLine('sort by tag 1')!], [t1, t3, t5, t7, t6, t4, t2, t8, t9, t10]),
+            Sort.by(
+                [new TagsField().createSorterFromLine('sort by tag 1')!],
+                [t1, t3, t5, t7, t6, t4, t2, t8, t9, t10],
+            ),
         ).toEqual(expectedOrder);
     });
 
@@ -450,7 +440,7 @@ describe('Sort by tags', () => {
         // Act / Assert
         expect(
             Sort.by(
-                [new TagsField().parseSortLine('sort by tag reverse 1')!],
+                [new TagsField().createSorterFromLine('sort by tag reverse 1')!],
                 [t1, t3, t5, t7, t6, t4, t2, t8, t9, t10],
             ),
         ).toEqual(expectedOrder);
@@ -463,7 +453,9 @@ describe('Sort by tags', () => {
         const t4 = fromLine({ line: '- [ ] a #iii #ddd' });
         const t5 = fromLine({ line: '- [ ] a #hhh #eee' });
         const expectedOrder = [t1, t2, t3, t4, t5];
-        expect(Sort.by([new TagsField().parseSortLine('sort by tag 2')!], [t4, t3, t2, t1, t5])).toEqual(expectedOrder);
+        expect(Sort.by([new TagsField().createSorterFromLine('sort by tag 2')!], [t4, t3, t2, t1, t5])).toEqual(
+            expectedOrder,
+        );
     });
 
     it('should sort correctly reversed by second tag with no global filter', () => {
@@ -473,7 +465,7 @@ describe('Sort by tags', () => {
         const t4 = fromLine({ line: '- [ ] a #iii #ddd' });
         const t5 = fromLine({ line: '- [ ] a #hhh #eee' });
         const expectedOrder = [t5, t4, t3, t2, t1];
-        expect(Sort.by([new TagsField().parseSortLine('sort by tag reverse 2')!], [t4, t3, t2, t1, t5])).toEqual(
+        expect(Sort.by([new TagsField().createSorterFromLine('sort by tag reverse 2')!], [t4, t3, t2, t1, t5])).toEqual(
             expectedOrder,
         );
     });
@@ -501,7 +493,7 @@ describe('Sort by tags', () => {
         // Act
         expect(
             Sort.by(
-                [new TagsField().parseSortLine('sort by tag 1')!],
+                [new TagsField().createSorterFromLine('sort by tag 1')!],
                 [t1, t12, t3, t13, t5, t7, t6, t4, t2, t8, t9, t10, t11],
             ),
         ).toEqual(expectedOrder);
@@ -533,7 +525,7 @@ describe('Sort by tags', () => {
         // Act
         expect(
             Sort.by(
-                [new TagsField().parseSortLine('sort by tag reverse 1')!],
+                [new TagsField().createSorterFromLine('sort by tag reverse 1')!],
                 [t1, t12, t3, t13, t5, t7, t6, t4, t2, t8, t9, t10, t11],
             ),
         ).toEqual(expectedOrder);
@@ -557,7 +549,10 @@ describe('Sort by tags', () => {
         const expectedOrder = [t1, t2, t3, t4, t5, t6, t7, t8];
 
         // Act
-        const result = Sort.by([new TagsField().parseSortLine('sort by tag 2')!], [t4, t7, t5, t2, t3, t1, t8, t6]);
+        const result = Sort.by(
+            [new TagsField().createSorterFromLine('sort by tag 2')!],
+            [t4, t7, t5, t2, t3, t1, t8, t6],
+        );
 
         // Assert
         expect(result).toEqual(expectedOrder);
@@ -582,7 +577,7 @@ describe('Sort by tags', () => {
 
         // Act
         const result = Sort.by(
-            [new TagsField().parseSortLine('sort by tag reverse 2')!],
+            [new TagsField().createSorterFromLine('sort by tag reverse 2')!],
             [t4, t7, t5, t2, t3, t1, t8, t6],
         );
 
@@ -620,8 +615,8 @@ describe('Sort by tags', () => {
         expect(
             Sort.by(
                 [
-                    new TagsField().parseSortLine('sort by tag 2')!, // tag 2 - ascending
-                    new TagsField().parseSortLine('sort by tag 1')!, // tag 1 - ascending
+                    new TagsField().createSorterFromLine('sort by tag 2')!, // tag 2 - ascending
+                    new TagsField().createSorterFromLine('sort by tag 1')!, // tag 1 - ascending
                     new DescriptionField().createNormalSorter(), // then description - ascending
                 ],
                 input,
