@@ -10,7 +10,6 @@ import {
     expectTaskComparesBefore,
     expectTaskComparesEqual,
 } from '../../CustomMatchers/CustomMatchersForSorting';
-import { expectGroupHeadingsToBe } from '../../CustomMatchers/CustomMatchersForGrouping';
 
 function testTaskFilterForTaskWithPriority(filter: string, priority: Priority, expected: boolean) {
     const builder = new TaskBuilder();
@@ -226,7 +225,7 @@ describe('grouping by priority', () => {
 
         tasks.sort(() => Math.random() - 0.5);
         const groups = new TaskGroups([grouper], tasks);
-        expectGroupHeadingsToBe(groups, expectedGroupHeadings);
+        expect(groups).groupHeadingsToBe(expectedGroupHeadings);
     });
 });
 

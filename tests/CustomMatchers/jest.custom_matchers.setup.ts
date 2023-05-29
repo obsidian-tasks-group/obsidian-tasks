@@ -31,8 +31,9 @@ expect.extend({
 // ---------------------------------------------------------------------
 // CustomMatchersForGrouping
 // ---------------------------------------------------------------------
-import { toSupportGroupingWithProperty } from './CustomMatchersForGrouping';
+import { groupHeadingsToBe, toSupportGroupingWithProperty } from './CustomMatchersForGrouping';
 expect.extend({
+    groupHeadingsToBe,
     toSupportGroupingWithProperty,
 });
 

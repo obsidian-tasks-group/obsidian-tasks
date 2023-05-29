@@ -1,3 +1,4 @@
+import { diff } from 'jest-diff';
 import type { TaskGroups } from '../../src/Query/TaskGroups';
 import type { Field } from '../../src/Query/Filter/Field';
 
@@ -5,6 +6,7 @@ declare global {
     namespace jest {
         interface Matchers<R> {
             toSupportGroupingWithProperty(property: string): R;
+            groupHeadingsToBe(expectedGroupHeadings: string[]): R;
         }
 
         interface Expect {
@@ -43,7 +45,7 @@ export function toSupportGroupingWithProperty(field: Field, property: string) {
     };
 }
 
-export function expectGroupHeadingsToBe(groups: TaskGroups, expectedGroupHeadings: string[]) {
+export function groupHeadingsToBe(groups: TaskGroups, expectedGroupHeadings: string[]): jest.CustomMatcherResult {
     const groupHeadings: string[] = [];
     groups.groups.forEach((taskGroup) => {
         taskGroup.groupHeadings.forEach((heading) => {
@@ -51,5 +53,14 @@ export function expectGroupHeadingsToBe(groups: TaskGroups, expectedGroupHeading
         });
     });
 
-    expect(groupHeadings).toEqual(expectedGroupHeadings);
+    const pass: boolean = groupHeadings.join() === expectedGroupHeadings.join();
+    const message: () => string = () =>
+        pass
+            ? `Group headings should not be\n${expectedGroupHeadings.join('\n')}`
+            : `Group headings are not the same as expected: ${diff(expectedGroupHeadings, groupHeadings)}`;
+
+    return {
+        message,
+        pass,
+    };
 }
