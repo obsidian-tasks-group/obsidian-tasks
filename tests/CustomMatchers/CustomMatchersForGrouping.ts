@@ -45,7 +45,10 @@ export function toSupportGroupingWithProperty(field: Field, property: string) {
     };
 }
 
-export function groupHeadingsToBe(groups: TaskGroups, expectedGroupHeadings: string[]): jest.CustomMatcherResult {
+export function groupHeadingsToBe(
+    { groups }: { groups: TaskGroups },
+    expectedGroupHeadings: string[],
+): jest.CustomMatcherResult {
     const groupHeadings: string[] = [];
     groups.groups.forEach((taskGroup) => {
         taskGroup.groupHeadings.forEach((heading) => {

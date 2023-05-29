@@ -225,7 +225,7 @@ describe('grouping by priority', () => {
 
         tasks.sort(() => Math.random() - 0.5);
         const groups = new TaskGroups([grouper], tasks);
-        expect(groups).groupHeadingsToBe(expectedGroupHeadings);
+        expect({ groups }).groupHeadingsToBe(expectedGroupHeadings);
     });
 });
 
