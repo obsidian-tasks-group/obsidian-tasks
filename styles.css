@@ -134,7 +134,7 @@
 
 .tasks-modal-priorities {
     display: grid;
-    grid-template-columns: 4em 6em 6em 6em 6em;
+    grid-template-columns: 4em 8em 8em 8em;
     grid-column-gap: 1.33em;
 }
 
@@ -156,7 +156,7 @@
     border-color: var(--background-modifier-border-focus);
 }
 
-.tasks-modal-priorities input:checked + label > span:first-child {
+.tasks-modal-priorities input:checked + label > span {
     font-weight: bold;
 }
 

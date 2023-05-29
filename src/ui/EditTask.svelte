@@ -105,8 +105,8 @@
             value: 'highest',
             label: 'Highest',
             symbol: prioritySymbols.Highest,
-            accessKey: 'e',
-            accessKeyIndex: 4
+            accessKey: 'i',
+            accessKeyIndex: 1
         }]
 
     /*
