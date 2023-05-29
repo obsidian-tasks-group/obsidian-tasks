@@ -13,10 +13,12 @@ group by heading
 
 ## Priority
 
+- [ ] #task Lowest priority example task ⏬
 - [ ] #task Low priority example task 🔽
 - [ ] #task Normal priority example task
 - [ ] #task Medium priority example task 🔼
 - [ ] #task High priority example task ⏫
+- [ ] #task Highest priority example task 🔺
 
 ## Custom Statuses
 
