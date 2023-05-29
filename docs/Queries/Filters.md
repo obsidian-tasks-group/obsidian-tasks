@@ -467,6 +467,9 @@ The available priorities are (from high to low):
 
 For more information, see [[Priority|Priorities]].
 
+> [!released]
+> Priorities 'lowest' and 'highest' were introduced in Tasks X.Y.Z.
+
 #### Examples
 
     ```tasks

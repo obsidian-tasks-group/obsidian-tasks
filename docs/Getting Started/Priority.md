@@ -24,6 +24,9 @@ The idea is that you can easily filter out unimportant tasks without needing to 
 - [ ] take out the trash 🔼
 ```
 
+> [!released]
+> Priorities 'lowest' and 'highest' were introduced in Tasks X.Y.Z.
+
 ## Easy adding of Priorities
 
 Instead of adding the emoji manually, you can:
