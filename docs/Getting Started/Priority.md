@@ -25,7 +25,7 @@ The idea is that you can easily filter out unimportant tasks without needing to 
 ```
 
 > [!released]
-> Priorities 'lowest' and 'highest' were introduced in Tasks X.Y.Z.
+> Priorities 'lowest' and 'highest' were introduced in Tasks 3.9.0.
 
 ## Easy adding of Priorities
 
