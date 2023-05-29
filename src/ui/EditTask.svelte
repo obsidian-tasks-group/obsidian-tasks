@@ -25,7 +25,7 @@
     let editableTask: {
         description: string;
         status: Status;
-        priority: 'none' | 'low' | 'medium' | 'high';
+        priority: 'none' | 'lowest' | 'low' | 'medium' | 'high' | 'highest';
         recurrenceRule: string;
         createdDate: string;
         startDate: string;
@@ -68,23 +68,45 @@
     const priorityOptions: {
             value: typeof editableTask.priority,
             label: string,
-            symbol: string }[] =
+            symbol: string,
+            accessKey: string,
+            accessKeyIndex: number}[] =
         [{
+            value: 'lowest',
+            label: 'Lowest',
+            symbol: prioritySymbols.Lowest,
+            accessKey: 'o',
+            accessKeyIndex: 1
+        }, {
             value: 'low',
             label: 'Low',
-            symbol: prioritySymbols.Low
+            symbol: prioritySymbols.Low,
+            accessKey: 'l',
+            accessKeyIndex: 0
         }, {
             value: 'none',
             label: 'Normal',
-            symbol: prioritySymbols.None
+            symbol: prioritySymbols.None,
+            accessKey: 'n',
+            accessKeyIndex: 0
         }, {
             value: 'medium',
             label: 'Medium',
-            symbol: prioritySymbols.Medium
+            symbol: prioritySymbols.Medium,
+            accessKey: 'm',
+            accessKeyIndex: 0
         }, {
             value: 'high',
             label: 'High',
-            symbol: prioritySymbols.High
+            symbol: prioritySymbols.High,
+            accessKey: 'h',
+            accessKeyIndex: 0
+        }, {
+            value: 'highest',
+            label: 'Highest',
+            symbol: prioritySymbols.Highest,
+            accessKey: 'i',
+            accessKeyIndex: 1
         }]
 
     /*
@@ -216,12 +238,16 @@
             addGlobalFilterOnSave = true;
         }
         let priority: typeof editableTask.priority = 'none';
-        if (task.priority === Priority.Low) {
+        if (task.priority === Priority.Lowest) {
+            priority = 'lowest';
+        } else if (task.priority === Priority.Low) {
             priority = 'low';
         } else if (task.priority === Priority.Medium) {
             priority = 'medium';
         } else if (task.priority === Priority.High) {
             priority = 'high';
+        } else if (task.priority === Priority.Highest) {
+            priority = 'highest';
         }
 
         editableTask = {
@@ -299,6 +325,9 @@
 
         let parsedPriority: Priority;
         switch (editableTask.priority) {
+            case 'lowest':
+                parsedPriority = Priority.Lowest;
+                break;
             case 'low':
                 parsedPriority = Priority.Low;
                 break;
@@ -307,6 +336,9 @@
                 break;
             case 'high':
                 parsedPriority = Priority.High;
+                break;
+            case 'highest':
+                parsedPriority = Priority.Highest;
                 break;
             default:
                 parsedPriority = Priority.None;
@@ -359,7 +391,7 @@
         <!-- --------------------------------------------------------------------------- -->
         <div class="tasks-modal-section tasks-modal-priorities" on:keyup={_onPriorityKeyup}>
             <label for="priority-{editableTask.priority}">Priority</label>
-            {#each priorityOptions as {value, label, symbol}}
+            {#each priorityOptions as {value, label, symbol, accessKey, accessKeyIndex}}
                 <span>
                     <!-- svelte-ignore a11y-accesskey -->
                     <input
@@ -367,10 +399,10 @@
                         id="priority-{value}"
                         {value}
                         bind:group={editableTask.priority}
-                        accesskey={accesskey(label.charAt(0).toLowerCase())}
+                        accesskey={accesskey(accessKey)}
                     />
                     <label for="priority-{value}">
-                        <span class="accesskey-first">{label}</span>
+                        <span>{label.substring(0,accessKeyIndex)}</span><span class="accesskey">{label.substring(accessKeyIndex,accessKeyIndex+1)}</span><span>{label.substring(accessKeyIndex+1)}</span>
                         {#if symbol && symbol.charCodeAt(0) >= 0x100}
                             <span>{symbol}</span>
                         {/if}

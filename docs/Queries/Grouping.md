@@ -77,10 +77,12 @@ For more information, including adding your own customised statuses, see [[Statu
 
 1. `priority`
     - The priority of the task, namely one of:
+        - `Priority 0: Highest`
         - `Priority 1: High`
         - `Priority 2: Medium`
         - `Priority 3: None`
         - `Priority 4: Low`
+        - `Priority 5: Lowest`
 1. `urgency` ([[Urgency|urgency]])
     - Currently, the groups run from the lowest urgency to highest.
     - You can reverse this with `group by urgency reverse`.

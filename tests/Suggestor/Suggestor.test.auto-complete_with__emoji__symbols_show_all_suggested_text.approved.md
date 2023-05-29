@@ -4,9 +4,11 @@
 | 📅 due date | 📅  |
 | 🛫 start date | 🛫  |
 | ⏳ scheduled date | ⏳  |
+| 🔺 highest priority | 🔺  |
 | ⏫ high priority | ⏫  |
 | 🔼 medium priority | 🔼  |
 | 🔽 low priority | 🔽  |
+| ⏬ lowest priority | ⏬  |
 | 🔁 recurring (repeat) | 🔁  |
 | ➕ created today (2022-07-11) | ➕ 2022-07-11  |
 | every | 🔁 every  |

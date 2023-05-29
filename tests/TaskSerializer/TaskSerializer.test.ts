@@ -15,9 +15,9 @@ window.moment = moment;
  This file contains a tested, end-to-end example for implementing and using a
  {@link TaskSerializer}.
  <br>
- This file should also contain any {@link TaskSerializer} tests that should be tested 
+ This file should also contain any {@link TaskSerializer} tests that should be tested
  against all the {@link TaskSerializer}s defined in this repo. Tests that only
- apply to one should be housed in that serializer's specific test file 
+ apply to one should be housed in that serializer's specific test file
 */
 
 describe('TaskSerializer Example', () => {
