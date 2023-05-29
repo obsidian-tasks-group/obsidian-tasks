@@ -80,7 +80,7 @@ The scores are as follows:
   </tr>
     <tr>
     <td>Lowest</td>
-    <td><code>-0.6</code></td>
+    <td><code>-1.8</code></td>
   </tr>
   <tr>
     <td rowspan="3">Scheduled</td>

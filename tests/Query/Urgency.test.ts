@@ -52,7 +52,7 @@ describe('urgency - priority component', () => {
         testUrgency(builder.priority(Priority.Medium), 3.9);
         testUrgency(builder.priority(Priority.None), 1.95);
         testUrgency(builder.priority(Priority.Low), 0.0);
-        testUrgency(builder.priority(Priority.Lowest), -0.6);
+        testUrgency(builder.priority(Priority.Lowest), -1.8);
     });
 });
 

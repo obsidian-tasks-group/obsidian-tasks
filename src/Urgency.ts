@@ -60,7 +60,7 @@ export class Urgency {
             // no modification for "Low" priority
             // Lowest
             case '5':
-                urgency -= 0.1 * Urgency.priorityCoefficient;
+                urgency -= 0.3 * Urgency.priorityCoefficient;
                 break;
         }
 
