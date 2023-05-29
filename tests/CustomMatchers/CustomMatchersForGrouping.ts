@@ -1,7 +1,5 @@
-import { TaskGroups } from '../../src/Query/TaskGroups';
+import type { TaskGroups } from '../../src/Query/TaskGroups';
 import type { Field } from '../../src/Query/Filter/Field';
-import type { Task } from '../../src/Task';
-import type { Grouper } from '../../src/Query/Grouper';
 
 declare global {
     namespace jest {
@@ -45,11 +43,7 @@ export function toSupportGroupingWithProperty(field: Field, property: string) {
     };
 }
 
-export function expectGroupHeadingsToBe(grouper: Grouper, tasks: Task[], expectedGroupHeadings: string[]) {
-    tasks.sort(() => Math.random() - 0.5);
-
-    // Act
-    const groups = new TaskGroups([grouper], tasks);
+export function expectGroupHeadingsToBe(groups: TaskGroups, expectedGroupHeadings: string[]) {
     const groupHeadings: string[] = [];
     groups.groups.forEach((taskGroup) => {
         taskGroup.groupHeadings.forEach((heading) => {
@@ -57,6 +51,5 @@ export function expectGroupHeadingsToBe(grouper: Grouper, tasks: Task[], expecte
         });
     });
 
-    // Assert
     expect(groupHeadings).toEqual(expectedGroupHeadings);
 }

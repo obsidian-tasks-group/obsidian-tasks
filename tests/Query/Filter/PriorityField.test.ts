@@ -1,3 +1,4 @@
+import { TaskGroups } from '../../../src/Query/TaskGroups';
 import { Priority, Task } from '../../../src/Task';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { testFilter } from '../../TestingTools/FilterTestHelpers';
@@ -223,7 +224,9 @@ describe('grouping by priority', () => {
 
         const expectedGroupHeadings = ['Priority 1: High', 'Priority 2: Medium', 'Priority 3: None', 'Priority 4: Low'];
 
-        expectGroupHeadingsToBe(grouper, tasks, expectedGroupHeadings);
+        tasks.sort(() => Math.random() - 0.5);
+        const groups = new TaskGroups([grouper], tasks);
+        expectGroupHeadingsToBe(groups, expectedGroupHeadings);
     });
 });
 
