@@ -220,12 +220,7 @@ describe('grouping by priority', () => {
         const field = new PriorityField();
         const grouper = [field.createNormalGrouper()];
 
-        const tasks: Task[] = [];
-        const allPriorities = Object.values(Priority);
-        allPriorities.forEach((priority) => {
-            const task = new TaskBuilder().priority(priority).build();
-            tasks.push(task);
-        });
+        const tasks = withAllPriorities();
         tasks.sort(() => Math.random() - 0.5);
 
         // Act
@@ -246,3 +241,14 @@ describe('grouping by priority', () => {
         ]);
     });
 });
+
+function withAllPriorities(): Task[] {
+    const tasks: Task[] = [];
+    const allPriorities = Object.values(Priority);
+    allPriorities.forEach((priority) => {
+        const task = new TaskBuilder().priority(priority).build();
+        tasks.push(task);
+    });
+    return tasks;
+}
+
