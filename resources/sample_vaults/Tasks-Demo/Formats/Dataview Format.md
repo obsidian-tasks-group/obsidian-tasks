@@ -12,10 +12,12 @@ The fields shown below can be surrounded by either `[]` or `()`.
 
 ## Dataview Format for Priorities
 
+- [ ] #task Lowest priority  [priority:: lowest]
 - [ ] #task Low priority  [priority:: low]
 - [ ] #task Normal priority
 - [ ] #task Medium priority  [priority:: medium]
 - [ ] #task High priority  [priority:: high]
+- [ ] #task Highest priority  [priority:: highest]
 
 ## Dataview Format for Recurrence
 
