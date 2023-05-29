@@ -215,13 +215,15 @@ describe('grouping by priority', () => {
     });
 
     it('should sort groups for PriorityField', () => {
-        // Prepare
         const grouper = new PriorityField().createNormalGrouper();
         const tasks = withAllPriorities();
 
-        const expectedGroupHeadings = ['Priority 1: High', 'Priority 2: Medium', 'Priority 3: None', 'Priority 4: Low'];
-
-        expect({ grouper, tasks }).groupHeadingsToBe(expectedGroupHeadings);
+        expect({ grouper, tasks }).groupHeadingsToBe([
+            'Priority 1: High',
+            'Priority 2: Medium',
+            'Priority 3: None',
+            'Priority 4: Low',
+        ]);
     });
 });
 
