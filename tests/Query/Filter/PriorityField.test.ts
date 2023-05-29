@@ -9,8 +9,7 @@ import {
     expectTaskComparesBefore,
     expectTaskComparesEqual,
 } from '../../CustomMatchers/CustomMatchersForSorting';
-import { TaskGroups } from '../../../src/Query/TaskGroups';
-import type { Grouper } from 'Query/Grouper';
+import { expectGroupHeadingsToBe } from '../../CustomMatchers/CustomMatchersForGrouping';
 
 function testTaskFilterForTaskWithPriority(filter: string, priority: Priority, expected: boolean) {
     const builder = new TaskBuilder();
@@ -222,32 +221,11 @@ describe('grouping by priority', () => {
 
         const tasks = withAllPriorities();
 
-        const expectedGroupHeadings = [
-            'Priority 1: High',
-            'Priority 2: Medium',
-            'Priority 3: None',
-            'Priority 4: Low',
-        ];
+        const expectedGroupHeadings = ['Priority 1: High', 'Priority 2: Medium', 'Priority 3: None', 'Priority 4: Low'];
 
-        expectGroupHeadingsToBe(tasks, grouper, expectedGroupHeadings);
+        expectGroupHeadingsToBe(grouper, tasks, expectedGroupHeadings);
     });
 });
-
-function expectGroupHeadingsToBe(tasks: Task[], grouper: Grouper, expectedGroupHeadings: string[]) {
-    tasks.sort(() => Math.random() - 0.5);
-
-    // Act
-    const groups = new TaskGroups([grouper], tasks);
-    const groupHeadings: string[] = [];
-    groups.groups.forEach((taskGroup) => {
-        taskGroup.groupHeadings.forEach((heading) => {
-            groupHeadings.push(heading.displayName);
-        });
-    });
-
-    // Assert
-    expect(groupHeadings).toEqual(expectedGroupHeadings);
-}
 
 function withAllPriorities(): Task[] {
     const tasks: Task[] = [];
@@ -258,4 +236,3 @@ function withAllPriorities(): Task[] {
     });
     return tasks;
 }
-
