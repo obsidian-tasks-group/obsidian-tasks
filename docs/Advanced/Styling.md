@@ -196,7 +196,7 @@ For example:
 
 ### Priority as a Checkbox Color
 
-The following rules remove the Tasks priority emoticon and render the tasks' checkboxes in red, orange, blue and cyan according to the tasks' priority:
+The following rules remove the Tasks priority emoticon and render the tasks' checkboxes in purple, red, orange, blue, cyan and green according to the tasks' priority:
 
 <!-- snippet: resources/sample_vaults/Tasks-Demo/.obsidian/snippets/tasks-plugin-priority-as-checkbox-color.css -->
 ```css
