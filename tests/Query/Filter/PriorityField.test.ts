@@ -217,8 +217,7 @@ describe('grouping by priority', () => {
 
     it('should sort groups for PriorityField', () => {
         // Prepare
-        const field = new PriorityField();
-        const grouper = [field.createNormalGrouper()];
+        const grouper = new PriorityField().createNormalGrouper();
 
         const tasks = withAllPriorities();
 
@@ -228,11 +227,11 @@ describe('grouping by priority', () => {
             'Priority 3: None',
             'Priority 4: Low',
         ];
-        
+
         tasks.sort(() => Math.random() - 0.5);
 
         // Act
-        const groups = new TaskGroups(grouper, tasks);
+        const groups = new TaskGroups([grouper], tasks);
         const groupHeadings: string[] = [];
         groups.groups.forEach((taskGroup) => {
             taskGroup.groupHeadings.forEach((heading) => {
