@@ -23,10 +23,12 @@ For more information, see [[Dates]].
 ## Tasks Emoji Format for Priorities
 
 ```markdown
+- [ ] #task Lowest priority ⏬️
 - [ ] #task Low priority 🔽
 - [ ] #task Normal priority
 - [ ] #task Medium priority 🔼
 - [ ] #task High priority ⏫
+- [ ] #task Highest priority 🔺
 ```
 
 For more information, see [[Priority]].

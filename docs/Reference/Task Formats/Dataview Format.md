@@ -105,10 +105,12 @@ For more information, see [[Dates]].
 > These names were chosen for use in Tasks, and are not known to dataview. They can of course be searched in dataview.
 
 ```markdown
+- [ ] #task Lowest priority [priority:: lowest]
 - [ ] #task Low priority [priority:: low]
 - [ ] #task Normal priority
 - [ ] #task Medium priority [priority:: medium]
 - [ ] #task High priority [priority:: high]
+- [ ] #task Highest priority [priority:: highest]
 ```
 
 For more information, see [[Priority]].

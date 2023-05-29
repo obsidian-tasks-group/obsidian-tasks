@@ -60,9 +60,11 @@ function toInlineFieldRegex(innerFieldRegex: RegExp): RegExp {
  */
 export const DATAVIEW_SYMBOLS = {
     prioritySymbols: {
+        Highest: 'priority:: highest',
         High: 'priority:: high',
         Medium: 'priority:: medium',
         Low: 'priority:: low',
+        Lowest: 'priority:: lowest',
         None: '',
     },
     startDateSymbol: 'start::',
@@ -72,7 +74,7 @@ export const DATAVIEW_SYMBOLS = {
     doneDateSymbol: 'completion::',
     recurrenceSymbol: 'repeat::',
     TaskFormatRegularExpressions: {
-        priorityRegex: toInlineFieldRegex(/priority:: *(high|medium|low)/),
+        priorityRegex: toInlineFieldRegex(/priority:: *(highest|high|medium|low|lowest)/),
         startDateRegex: toInlineFieldRegex(/start:: *(\d{4}-\d{2}-\d{2})/),
         createdDateRegex: toInlineFieldRegex(/created:: *(\d{4}-\d{2}-\d{2})/),
         scheduledDateRegex: toInlineFieldRegex(/scheduled:: *(\d{4}-\d{2}-\d{2})/),
@@ -93,12 +95,16 @@ export class DataviewTaskSerializer extends DefaultTaskSerializer {
 
     protected parsePriority(p: string): Priority {
         switch (p) {
+            case 'highest':
+                return Priority.Highest;
             case 'high':
                 return Priority.High;
             case 'medium':
                 return Priority.Medium;
             case 'low':
                 return Priority.Low;
+            case 'lowest':
+                return Priority.Lowest;
             default:
                 return Priority.None;
         }

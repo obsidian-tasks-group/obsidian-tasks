@@ -10,7 +10,8 @@ export class PriorityField extends Field {
     // is to capture them in Nested Capture Groups, like this:
     //  (leading-white-space-in-outer-capture-group(values-to-use-are-in-inner-capture-group))
     // The capture groups are numbered in the order of their opening brackets, from left to right.
-    private static readonly priorityRegexp = /^priority(\s+is)?(\s+(above|below|not))?(\s+(low|none|medium|high))$/;
+    private static readonly priorityRegexp =
+        /^priority(\s+is)?(\s+(above|below|not))?(\s+(lowest|low|none|medium|high|highest))$/;
 
     createFilterOrErrorMessage(line: string): FilterOrErrorMessage {
         const result = new FilterOrErrorMessage(line);
@@ -20,6 +21,9 @@ export class PriorityField extends Field {
             let filterPriority: Priority | null = null;
 
             switch (filterPriorityString) {
+                case 'lowest':
+                    filterPriority = Priority.Lowest;
+                    break;
                 case 'low':
                     filterPriority = Priority.Low;
                     break;
@@ -31,6 +35,9 @@ export class PriorityField extends Field {
                     break;
                 case 'high':
                     filterPriority = Priority.High;
+                    break;
+                case 'highest':
+                    filterPriority = Priority.Highest;
                     break;
             }
 
@@ -92,6 +99,9 @@ export class PriorityField extends Field {
                 case Priority.High:
                     priorityName = 'High';
                     break;
+                case Priority.Highest:
+                    priorityName = 'Highest';
+                    break;
                 case Priority.Medium:
                     priorityName = 'Medium';
                     break;
@@ -100,6 +110,9 @@ export class PriorityField extends Field {
                     break;
                 case Priority.Low:
                     priorityName = 'Low';
+                    break;
+                case Priority.Lowest:
+                    priorityName = 'Lowest';
                     break;
             }
             return [`Priority ${task.priority}: ${priorityName}`];
