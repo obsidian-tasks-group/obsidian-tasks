@@ -1,4 +1,3 @@
-import { TaskGroups } from '../../../src/Query/TaskGroups';
 import { Priority, Task } from '../../../src/Task';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { testFilter } from '../../TestingTools/FilterTestHelpers';
@@ -218,14 +217,11 @@ describe('grouping by priority', () => {
     it('should sort groups for PriorityField', () => {
         // Prepare
         const grouper = new PriorityField().createNormalGrouper();
-
         const tasks = withAllPriorities();
 
         const expectedGroupHeadings = ['Priority 1: High', 'Priority 2: Medium', 'Priority 3: None', 'Priority 4: Low'];
 
-        tasks.sort(() => Math.random() - 0.5);
-        const groups = new TaskGroups([grouper], tasks);
-        expect({ groups }).groupHeadingsToBe(expectedGroupHeadings);
+        expect({ grouper, tasks }).groupHeadingsToBe(expectedGroupHeadings);
     });
 });
 

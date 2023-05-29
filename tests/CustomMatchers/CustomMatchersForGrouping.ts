@@ -1,5 +1,7 @@
 import { diff } from 'jest-diff';
-import type { TaskGroups } from '../../src/Query/TaskGroups';
+import type { Grouper } from 'Query/Grouper';
+import type { Task } from 'Task';
+import { TaskGroups } from '../../src/Query/TaskGroups';
 import type { Field } from '../../src/Query/Filter/Field';
 
 declare global {
@@ -46,9 +48,12 @@ export function toSupportGroupingWithProperty(field: Field, property: string) {
 }
 
 export function groupHeadingsToBe(
-    { groups }: { groups: TaskGroups },
+    { grouper, tasks }: { grouper: Grouper; tasks: Task[] },
     expectedGroupHeadings: string[],
 ): jest.CustomMatcherResult {
+    tasks.sort(() => Math.random() - 0.5);
+    const groups = new TaskGroups([grouper], tasks);
+
     const groupHeadings: string[] = [];
     groups.groups.forEach((taskGroup) => {
         taskGroup.groupHeadings.forEach((heading) => {
