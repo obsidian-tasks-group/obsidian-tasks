@@ -221,6 +221,14 @@ describe('grouping by priority', () => {
         const grouper = [field.createNormalGrouper()];
 
         const tasks = withAllPriorities();
+
+        const expectedGroupHeadings = [
+            'Priority 1: High',
+            'Priority 2: Medium',
+            'Priority 3: None',
+            'Priority 4: Low',
+        ];
+        
         tasks.sort(() => Math.random() - 0.5);
 
         // Act
@@ -233,12 +241,7 @@ describe('grouping by priority', () => {
         });
 
         // Assert
-        expect(groupHeadings).toEqual([
-            'Priority 1: High',
-            'Priority 2: Medium',
-            'Priority 3: None',
-            'Priority 4: Low',
-        ]);
+        expect(groupHeadings).toEqual(expectedGroupHeadings);
     });
 });
 
