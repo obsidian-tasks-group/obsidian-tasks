@@ -50,7 +50,7 @@
     "svelte": "^3.59.1",
     "svelte-check": "^2.10.3",
     "svelte-jester": "^2.3.2",
-    "svelte-preprocess": "^4.10.1",
+    "svelte-preprocess": "^5.0.4",
     "ts-jest": "^29.1.0",
     "tslib": "^2.5.2",
     "typescript": "^5.0.4"
