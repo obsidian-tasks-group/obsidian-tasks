@@ -48,8 +48,8 @@ describe.each([
             { displayText: `${dueDateSymbol} due date`, appendText: `${dueDateSymbol} ` },
             { displayText: `${startDateSymbol} start date`, appendText: `${startDateSymbol} ` },
             { displayText: `${scheduledDateSymbol} scheduled date`, appendText: `${scheduledDateSymbol} ` },
-            { displayText: `${prioritySymbols.Highest} highest priority`, appendText: `${prioritySymbols.Highest} ` },
             { displayText: `${prioritySymbols.High} high priority`, appendText: `${prioritySymbols.High} ` },
+            { displayText: `${prioritySymbols.Medium} medium priority`, appendText: `${prioritySymbols.Medium} ` },
         ]);
     });
 
