@@ -84,10 +84,6 @@ function addTaskPropertySuggestions(
         });
     if (!hasPriority(line)) {
         genericSuggestions.push({
-            displayText: `${symbols.prioritySymbols.Highest} highest priority`,
-            appendText: `${symbols.prioritySymbols.Highest} `,
-        });
-        genericSuggestions.push({
             displayText: `${symbols.prioritySymbols.High} high priority`,
             appendText: `${symbols.prioritySymbols.High} `,
         });
@@ -98,6 +94,10 @@ function addTaskPropertySuggestions(
         genericSuggestions.push({
             displayText: `${symbols.prioritySymbols.Low} low priority`,
             appendText: `${symbols.prioritySymbols.Low} `,
+        });
+        genericSuggestions.push({
+            displayText: `${symbols.prioritySymbols.Highest} highest priority`,
+            appendText: `${symbols.prioritySymbols.Highest} `,
         });
         genericSuggestions.push({
             displayText: `${symbols.prioritySymbols.Lowest} lowest priority`,
