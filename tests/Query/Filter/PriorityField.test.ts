@@ -219,10 +219,12 @@ describe('grouping by priority', () => {
         const tasks = withAllPriorities();
 
         expect({ grouper, tasks }).groupHeadingsToBe([
+            'Priority 0: Highest',
             'Priority 1: High',
             'Priority 2: Medium',
             'Priority 3: None',
             'Priority 4: Low',
+            'Priority 5: Lowest',
         ]);
     });
 });
