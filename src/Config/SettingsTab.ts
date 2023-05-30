@@ -166,7 +166,10 @@ export class SettingsTab extends PluginSettingTab {
         new Setting(containerEl)
             .setName('Set created date on every added task')
             .setDesc(
-                "Enabling this will add a timestamp ➕ YYYY-MM-DD before other date values, when a task is created with 'Create or edit task', or by completing a recurring task.",
+                SettingsTab.createFragmentWithHTML(
+                    "Enabling this will add a timestamp ➕ YYYY-MM-DD before other date values, when a task is created with 'Create or edit task', or by completing a recurring task.</br>" +
+                        '<p>See the <a href="https://publish.obsidian.md/tasks/Getting+Started/Dates#Created+date">documentation</a>.</p>',
+                ),
             )
             .addToggle((toggle) => {
                 const settings = getSettings();
@@ -178,7 +181,12 @@ export class SettingsTab extends PluginSettingTab {
 
         new Setting(containerEl)
             .setName('Set done date on every completed task')
-            .setDesc('Enabling this will add a timestamp ✅ YYYY-MM-DD at the end when a task is toggled to done.')
+            .setDesc(
+                SettingsTab.createFragmentWithHTML(
+                    'Enabling this will add a timestamp ✅ YYYY-MM-DD at the end when a task is toggled to done.</br>' +
+                        '<p>See the <a href="https://publish.obsidian.md/tasks/Getting+Started/Dates#Done+date">documentation</a>.</p>',
+                ),
+            )
             .addToggle((toggle) => {
                 const settings = getSettings();
                 toggle.setValue(settings.setDoneDate).onChange(async (value) => {
@@ -230,7 +238,10 @@ export class SettingsTab extends PluginSettingTab {
         new Setting(containerEl)
             .setName('Next recurrence appears on the line below')
             .setDesc(
-                'Enabling this will make the next recurrence of a task appear on the line below the completed task. Otherwise the next recurrence will appear before the completed one.',
+                SettingsTab.createFragmentWithHTML(
+                    'Enabling this will make the next recurrence of a task appear on the line below the completed task. Otherwise the next recurrence will appear before the completed one.</br>' +
+                        '<p>See the <a href="https://publish.obsidian.md/tasks/Getting+Started/Recurring+Tasks">documentation</a>.</p>',
+                ),
             )
             .addToggle((toggle) => {
                 const { recurrenceOnNextLine: recurrenceOnNextLine } = getSettings();
@@ -246,7 +257,12 @@ export class SettingsTab extends PluginSettingTab {
 
         new Setting(containerEl)
             .setName('Auto-suggest task content')
-            .setDesc('Enabling this will open an intelligent suggest menu while typing inside a recognized task line.')
+            .setDesc(
+                SettingsTab.createFragmentWithHTML(
+                    'Enabling this will open an intelligent suggest menu while typing inside a recognized task line.</br>' +
+                        '<p>See the <a href="https://publish.obsidian.md/tasks/Getting+Started/Auto-Suggest">documentation</a>.</p>',
+                ),
+            )
             .addToggle((toggle) => {
                 const settings = getSettings();
                 toggle.setValue(settings.autoSuggestInEditor).onChange(async (value) => {
@@ -296,10 +312,13 @@ export class SettingsTab extends PluginSettingTab {
         new Setting(containerEl)
             .setName('Provide access keys in dialogs')
             .setDesc(
-                'If the access keys (keyboard shortcuts) for various controls' +
-                    ' in dialog boxes conflict with system keyboard shortcuts' +
-                    ' or assistive technology functionality that is important for you,' +
-                    ' you may want to deactivate them here.',
+                SettingsTab.createFragmentWithHTML(
+                    'If the access keys (keyboard shortcuts) for various controls' +
+                        ' in dialog boxes conflict with system keyboard shortcuts' +
+                        ' or assistive technology functionality that is important for you,' +
+                        ' you may want to deactivate them here.</br>' +
+                        '<p>See the <a href="https://publish.obsidian.md/tasks/Getting+Started/Create+or+edit+Task#Keyboard+shortcuts">documentation</a>.</p>',
+                ),
             )
             .addToggle((toggle) => {
                 const settings = getSettings();
