@@ -174,10 +174,10 @@ Similarly, you can type some fraction of the word `start` (of whatever length is
 | Searchable Text               | Text that is added         |
 | ----------------------------- | -------------------------- |
 | ⏎                             | \<new line>                |
-| 🔺 highest priority           | 🔺                         |
 | ⏫ high priority              | ⏫                         |
 | 🔼 medium priority            | 🔼                         |
 | 🔽 low priority               | 🔽                         |
+| 🔺 highest priority           | 🔺                         |
 | ⏬️ lowest priority            | ⏬️                         |
 | 🔁 recurring (repeat)         | 🔁                         |
 | every                         | 🔁 every                   |
