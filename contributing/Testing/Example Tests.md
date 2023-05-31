@@ -25,6 +25,9 @@ it('allows signifier emojis as part of the description', () => {
     expect(task).not.toBeNull();
     expect(task!.description).toEqual('this is a ✅ done task');
     expect(task!.status).toStrictEqual(Status.DONE);
+    expect(task!.startDate).toBeNull();
+
+    // Note for docs: The following are actually Tasks-specific testers...
     expect(task!.dueDate).toEqualMoment(moment('2021-09-12'));
     expect(task!.doneDate).toEqualMoment(moment('2021-06-20'));
 });
