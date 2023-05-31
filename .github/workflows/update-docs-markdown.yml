@@ -21,7 +21,7 @@ jobs:
         run: |
           dotnet tool install --global MarkdownSnippets.Tool
           mdsnippets ${GITHUB_WORKSPACE} && yarn run lint:markdown && git add --renormalize .
-          git commit -m "docs: Update snippets and examples in docs" -a  || echo "nothing to commit"
+          git commit -m "docs/contrib: Update snippets and examples in markdown" -a  || echo "nothing to commit"
         shell: bash
 
       # ----------------------------------------------------------------------------------
@@ -32,10 +32,11 @@ jobs:
         id: cpr
         uses: peter-evans/create-pull-request@v3
         with:
-          title: "docs: Update snippets and examples in docs"
+          title: "docs/contrib: Update snippets and examples in markdown"
           branch: create-pull-request/${{ github.workflow }}
           labels: |
             scope: documentation
+            type: automated update
 
       - name: Show Pull Request
         run: |
