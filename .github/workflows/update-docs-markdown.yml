@@ -13,7 +13,7 @@ jobs:
       - name: Run MarkdownSnippets
         run: |
           dotnet tool install --global MarkdownSnippets.Tool
-          mdsnippets ${GITHUB_WORKSPACE}
+          mdsnippets ${GITHUB_WORKSPACE} && yarn run lint:markdown && git add --renormalize .
         shell: bash
       - name: Push changes
         run: |
