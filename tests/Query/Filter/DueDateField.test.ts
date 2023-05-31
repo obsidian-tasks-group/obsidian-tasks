@@ -2,6 +2,7 @@
  * @jest-environment jsdom
  */
 import moment from 'moment';
+import type { Task } from 'Task';
 import { DueDateField } from '../../../src/Query/Filter/DueDateField';
 import type { FilterOrErrorMessage } from '../../../src/Query/Filter/Filter';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
@@ -531,4 +532,27 @@ describe('grouping by due date', () => {
         expect(grouper.grouper(taskWithDate)).toEqual(['1970-01-01 Thursday']);
         expect(grouper.grouper(taskWithoutDate)).toEqual(['No due date']);
     });
+
+    it('should sort groups for DueDateField', () => {
+        const grouper = new DueDateField().createNormalGrouper();
+        const tasks = withAllRepresentativeDueDates();
+
+        expect({ grouper, tasks }).groupHeadingsToBe([
+            '2023-05-30 Tuesday',
+            '2023-05-31 Wednesday',
+            '2023-06-01 Thursday',
+            'Invalid date',
+            'No due date',
+        ]);
+    });
 });
+
+function withAllRepresentativeDueDates(): Task[] {
+    const dates = ['2023-05-30', '2023-05-31', '2023-06-01', '2023-02-32', null];
+
+    const tasks = dates.map((date) => {
+        return new TaskBuilder().dueDate(date).build();
+    });
+
+    return tasks;
+}

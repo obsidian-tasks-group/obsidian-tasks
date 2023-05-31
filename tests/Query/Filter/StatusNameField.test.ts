@@ -5,6 +5,9 @@ import {
     expectTaskComparesBefore,
     expectTaskComparesEqual,
 } from '../../CustomMatchers/CustomMatchersForSorting';
+import type { Task } from '../../../src/Task';
+import { TaskBuilder } from '../../TestingTools/TaskBuilder';
+import { Status } from '../../../src/Status';
 
 // Abbreviated names so that the markdown text is aligned
 const todoTask = TestHelpers.fromLine({ line: '- [ ] Xxx' });
@@ -97,4 +100,27 @@ describe('grouping by status.name', () => {
         expect(grouper.grouper(todoTask)).toEqual(['Todo']);
         expect(grouper.grouper(inprTask)).toEqual(['In Progress']);
     });
+
+    it('should sort groups for StatusNameField', () => {
+        const grouper = new StatusNameField().createNormalGrouper();
+        const tasks = withAllStatuses();
+
+        expect({ grouper, tasks }).groupHeadingsToBe(['Cancelled', 'Done', 'EMPTY', 'In Progress', 'Todo']);
+    });
 });
+
+function withAllStatuses(): Task[] {
+    const statuses = [
+        Status.makeCancelled(),
+        Status.makeDone(),
+        Status.makeEmpty(),
+        Status.makeInProgress(),
+        Status.makeTodo(),
+    ];
+
+    const tasks = statuses.map((status) => {
+        return new TaskBuilder().status(status).build();
+    });
+
+    return tasks;
+}

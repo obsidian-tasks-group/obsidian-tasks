@@ -1,4 +1,4 @@
-import { Priority } from '../../../src/Task';
+import { Priority, Task } from '../../../src/Task';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { testFilter } from '../../TestingTools/FilterTestHelpers';
 import { PriorityField } from '../../../src/Query/Filter/PriorityField';
@@ -213,4 +213,28 @@ describe('grouping by priority', () => {
         // Assert
         expect(grouper(fromLine({ line: taskLine }))).toEqual(groups);
     });
+
+    it('should sort groups for PriorityField', () => {
+        const grouper = new PriorityField().createNormalGrouper();
+        const tasks = withAllPriorities();
+
+        expect({ grouper, tasks }).groupHeadingsToBe([
+            'Priority 0: Highest',
+            'Priority 1: High',
+            'Priority 2: Medium',
+            'Priority 3: None',
+            'Priority 4: Low',
+            'Priority 5: Lowest',
+        ]);
+    });
 });
+
+function withAllPriorities(): Task[] {
+    const tasks: Task[] = [];
+    const allPriorities = Object.values(Priority);
+    allPriorities.forEach((priority) => {
+        const task = new TaskBuilder().priority(priority).build();
+        tasks.push(task);
+    });
+    return tasks;
+}
