@@ -10,6 +10,10 @@ jobs:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v2
+
+      - name: Install modules
+        run: yarn
+
       - name: Run MarkdownSnippets
         run: |
           dotnet tool install --global MarkdownSnippets.Tool
