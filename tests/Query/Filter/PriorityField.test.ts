@@ -16,6 +16,19 @@ function testTaskFilterForTaskWithPriority(filter: string, priority: Priority, e
     testFilter(filterOrError, builder.priority(priority), expected);
 }
 
+describe('priority naming', () => {
+    it.each(Object.values(Priority))('should name priority value: "%i"', (priority) => {
+        const name = PriorityField.priorityNameUsingNone(priority);
+        expect(name).not.toEqual('ERROR'); // if this fails, code needs to be updated for a new priority
+    });
+
+    it('should name default priority correctly', () => {
+        const none = Priority.None;
+        expect(PriorityField.priorityNameUsingNone(none)).toEqual('None');
+        expect(PriorityField.priorityNameUsingNormal(none)).toEqual('Normal');
+    });
+});
+
 describe('priority is', () => {
     it('priority is highest', () => {
         const filter = 'priority is highest';
