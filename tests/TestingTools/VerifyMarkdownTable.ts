@@ -16,7 +16,7 @@ export function verifyMarkdown(output: string) {
             'vscode', // VS Code diff works well with files containing emojis
             // Last one is jest reporter, that should write diffs to console in
             // Continuous Integration builds, such as GitHub Actions
-            // new JestReporter(),
+            // new JestReporter(), // disabled due to import error - see above
         ];
         return c;
     };
