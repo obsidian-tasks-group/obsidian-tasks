@@ -100,7 +100,7 @@ export class PriorityField extends Field {
     }
 
     /**
-     * Get the name of a {@link Priority} value, returning 'None' for Priority.None
+     * Get the name of a {@link Priority} value, returning 'None' for {@link Priority.None}
      * @param priority
      * @see priorityNameUsingNormal
      */
@@ -130,7 +130,7 @@ export class PriorityField extends Field {
     }
 
     /**
-     * Get the name of a {@link Priority} value, returning 'Normal' for Priority.None
+     * Get the name of a {@link Priority} value, returning 'Normal' for {@link Priority.None}
      * @param priority
      * @see priorityNameUsingNone
      */
