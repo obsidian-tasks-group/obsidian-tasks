@@ -10,12 +10,16 @@
 
 ## Tasks Format for Priorities
 
+<!-- placeholder to force blank line before included text --> <!-- include: DocsSamplesForTaskFormats.test.Serializer_Priorities_tasksPluginEmoji-include.approved.md -->
+
 - [ ] #task Lowest priority ⏬
 - [ ] #task Low priority 🔽
 - [ ] #task Normal priority
 - [ ] #task Medium priority 🔼
 - [ ] #task High priority ⏫
 - [ ] #task Highest priority 🔺
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
 
 ## Tasks Format for Recurrence
 
