@@ -246,10 +246,11 @@ export function withAllPriorities(): Task[] {
     const tasks: Task[] = [];
     const allPriorities = Object.values(Priority);
     allPriorities.forEach((priority) => {
-        const priorityName = PriorityField.priorityNameUsingNormal(priority);
-        const description = `#task ${priorityName} priority`;
         // This description is chosen to be useful for including tasks in user docs, so
         // changing it will change documentation and sample vault content.
+        const priorityName = PriorityField.priorityNameUsingNormal(priority);
+        const description = `#task ${priorityName} priority`;
+
         const task = new TaskBuilder().priority(priority).description(description).build();
         tasks.push(task);
     });
