@@ -104,7 +104,7 @@ For more information, see [[Dates]].
 > [!Info]
 > These names were chosen for use in Tasks, and are not known to dataview. They can of course be searched in dataview.
 
-<!-- snippet: DocsSamplesForTaskFormats.test.Serializer_dataview_-_priorities.approved.md -->
+<!-- snippet: DocsSamplesForTaskFormats.test.Serializer_Priorities_dataview-snippet.approved.md -->
 ```md
 - [ ] #task Lowest priority  [priority:: lowest]
 - [ ] #task Low priority  [priority:: low]

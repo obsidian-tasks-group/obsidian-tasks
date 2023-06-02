@@ -22,7 +22,7 @@ For more information, see [[Dates]].
 
 ## Tasks Emoji Format for Priorities
 
-<!-- snippet: DocsSamplesForTaskFormats.test.Serializer_tasksPluginEmoji_-_priorities.approved.md -->
+<!-- snippet: DocsSamplesForTaskFormats.test.Serializer_Priorities_tasksPluginEmoji-snippet.approved.md -->
 ```md
 - [ ] #task Lowest priority ⏬
 - [ ] #task Low priority 🔽
