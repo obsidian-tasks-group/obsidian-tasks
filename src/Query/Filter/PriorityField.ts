@@ -99,6 +99,11 @@ export class PriorityField extends Field {
         };
     }
 
+    /**
+     * Get the name of a {@link Priority} value, returning 'None' for Priority.None
+     * @param priority
+     * @see priorityNameUsingNormal
+     */
     public static priorityNameUsingNone(priority: Priority) {
         let priorityName = 'ERROR';
         switch (priority) {
@@ -124,6 +129,11 @@ export class PriorityField extends Field {
         return priorityName;
     }
 
+    /**
+     * Get the name of a {@link Priority} value, returning 'Normal' for Priority.None
+     * @param priority
+     * @see priorityNameUsingNone
+     */
     public static priorityNameUsingNormal(priority: Priority) {
         return PriorityField.priorityNameUsingNone(priority).replace('None', 'Normal');
     }
