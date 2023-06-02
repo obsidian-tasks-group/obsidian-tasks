@@ -3,14 +3,13 @@ import { verifyMarkdown } from '../TestingTools/VerifyMarkdownTable';
 import { withAllPriorities } from '../Query/Filter/PriorityField.test';
 
 describe('Serializer', () => {
-    it.each(Object.keys(TASK_FORMATS))('%s - priorities', (key: string) => {
-        // Arrange
-        updateSettings({ taskFormat: key as keyof TASK_FORMATS });
-
+    function allPriorityLines() {
         const tasks = withAllPriorities().reverse();
-        const taskLines = tasks.map((t) => t.toFileLineString()).join('\n');
+        return tasks.map((t) => t.toFileLineString()).join('\n');
+    }
 
-        // Assert
-        verifyMarkdown(taskLines);
+    it.each(Object.keys(TASK_FORMATS))('%s - priorities', (key: string) => {
+        updateSettings({ taskFormat: key as keyof TASK_FORMATS });
+        verifyMarkdown(allPriorityLines());
     });
 });
