@@ -1114,7 +1114,7 @@ describe('order of recurring tasks', () => {
 
 describe('identicalTo', () => {
     it('should check status', () => {
-        const lhs = new TaskBuilder().status(Status.TODO);
+        const lhs = new TaskBuilder().status(Status.makeTodo());
         expect(lhs).toBeIdenticalTo(new TaskBuilder().status(Status.TODO));
         expect(lhs).not.toBeIdenticalTo(new TaskBuilder().status(Status.DONE));
     });

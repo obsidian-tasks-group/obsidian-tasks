@@ -212,6 +212,17 @@ export class Status {
     }
 
     /**
+     * Compare all the fields in another Status, to detect any differences from this one.
+     *
+     * If any field is different in any way, it will return false.
+     *
+     * @param other
+     */
+    public identicalTo(other: Status): boolean {
+        return this.configuration.identicalTo(other.configuration);
+    }
+
+    /**
      * Return a one-line summary of the status, for presentation to users.
      */
     public previewText() {

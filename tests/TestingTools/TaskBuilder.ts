@@ -2,7 +2,7 @@
 import type { Moment } from 'moment';
 import { Status } from '../../src/Status';
 import { Priority, Task } from '../../src/Task';
-import type { Recurrence } from '../../src/Recurrence';
+import { Recurrence } from '../../src/Recurrence';
 import { DateParser } from '../../src/Query/DateParser';
 import { StatusConfiguration, StatusType } from '../../src/StatusConfiguration';
 import { TaskLocation } from '../../src/TaskLocation';
@@ -20,7 +20,7 @@ import { TaskLocation } from '../../src/TaskLocation';
  *            Create a new TaskBuilder object to start from a clean state,
  */
 export class TaskBuilder {
-    private _status: Status = Status.TODO;
+    private _status: Status = Status.makeTodo();
     private _description: string = 'my description';
     private _path: string = '';
     private _indentation: string = '';
@@ -62,7 +62,7 @@ export class TaskBuilder {
         if (this._tags.length > 0) {
             description += ' ' + this._tags.join(' ');
         }
-        return new Task({
+        const task = new Task({
             status: this._status,
             description: description,
             taskLocation: new TaskLocation(
@@ -86,6 +86,51 @@ export class TaskBuilder {
             originalMarkdown: '',
             scheduledDateIsInferred: this._scheduledDateIsInferred,
         });
+        const markdown = task.toFileLineString();
+        return new Task({
+            ...task,
+            originalMarkdown: markdown,
+        });
+    }
+
+    /**
+     * Create a Task that has all fields populated.
+     */
+    public static createFullyPopulatedTask(): Task {
+        const taskBuilder = new TaskBuilder()
+            .indentation('  ')
+            .description('Do exercises')
+            .tags(['#todo', '#health'])
+            .priority(Priority.Medium)
+            .createdDate('2023-07-01')
+            .startDate('2023-07-02')
+            .scheduledDate('2023-07-03')
+            .dueDate('2023-07-04')
+            .doneDate('2023-07-05')
+            .blockLink(' ^dcf64c')
+            // Values in TaskLocation:
+            .path('/some/folder/fileName.md')
+            .lineNumber(17)
+            .sectionStart(5)
+            .sectionIndex(3)
+            .precedingHeader('My Header');
+
+        taskBuilder.recurrence(
+            Recurrence.fromText({
+                recurrenceRuleText: 'every day when done',
+                startDate: taskBuilder._startDate,
+                scheduledDate: taskBuilder._scheduledDate,
+                dueDate: taskBuilder._dueDate,
+            }),
+        );
+
+        const task = taskBuilder.build();
+
+        // Force urgency value to be cached:
+        // @ts-ignore
+        const unused = task!.urgency;
+
+        return task;
     }
 
     /**
