@@ -13,7 +13,6 @@ import { fromLine } from './TestHelpers';
 import { TaskBuilder } from './TestingTools/TaskBuilder';
 import { RecurrenceBuilder } from './TestingTools/RecurrenceBuilder';
 
-jest.mock('obsidian');
 window.moment = moment;
 
 describe('parsing', () => {

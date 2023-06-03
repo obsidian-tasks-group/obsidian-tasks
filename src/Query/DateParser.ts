@@ -1,15 +1,17 @@
 import * as chrono from 'chrono-node';
-import moment from 'moment';
+import type { Moment } from 'moment';
 import { DateRange } from './DateRange';
 
 export class DateParser {
-    public static parseDate(input: string, forwardDate: boolean = false): moment.Moment {
+    public static parseDate(input: string, forwardDate: boolean = false): Moment {
         // Using start of day to correctly match on comparison with other dates (like equality).
-        return moment(
-            chrono.parseDate(input, undefined, {
-                forwardDate: forwardDate,
-            }),
-        ).startOf('day');
+        return window
+            .moment(
+                chrono.parseDate(input, undefined, {
+                    forwardDate: forwardDate,
+                }),
+            )
+            .startOf('day');
     }
 
     /**
@@ -52,8 +54,8 @@ export class DateParser {
 
         const startDate = result[0].start;
         const endDate = result[1] && result[1].start ? result[1].start : startDate;
-        const start = moment(startDate.date());
-        const end = moment(endDate.date());
+        const start = window.moment(startDate.date());
+        const end = window.moment(endDate.date());
 
         return new DateRange(start, end);
     }
@@ -93,9 +95,12 @@ export class DateParser {
         for (const [regexp, dateFormat, range] of parsingVectors) {
             const matched = input.match(regexp);
             if (matched) {
-                // RegExps allow spaces (\s*), remove them before calling moment()
+                // RegExps allow spaces (\s*), remove them before calling window.moment()
                 const date = matched[0].trim();
-                return new DateRange(moment(date, dateFormat).startOf(range), moment(date, dateFormat).endOf(range));
+                return new DateRange(
+                    window.moment(date, dateFormat).startOf(range),
+                    window.moment(date, dateFormat).endOf(range),
+                );
             }
         }
 

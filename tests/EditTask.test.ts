@@ -3,7 +3,7 @@
  */
 import { fireEvent, render } from '@testing-library/svelte';
 import { describe, expect, it } from '@jest/globals';
-import moment from 'moment/moment';
+import moment from 'moment';
 import { taskFromLine } from '../src/Commands/CreateOrEditTaskParser';
 import type { Task } from '../src/Task';
 import EditTask from '../src/ui/EditTask.svelte';
