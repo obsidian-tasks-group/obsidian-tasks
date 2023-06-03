@@ -3,7 +3,8 @@
  */
 
 import moment from 'moment';
-import type { Task } from '../../src/Task';
+import { Task } from '../../src/Task';
+import { TaskLocation } from '../../src/TaskLocation';
 import { TaskBuilder } from './TaskBuilder';
 
 export {};
@@ -45,11 +46,20 @@ describe('TaskBuilder', () => {
         }
         expect(nullOrUnsetFields).toEqual([]);
 
-        // Currently the blockLink is not formatted correctly:
-        expect(task.originalMarkdown).toEqual(
-            '  - [ ] my description 🔁 every day when done ➕ 2023-07-01 🛫 2023-07-02 ⏳ 2023-07-03 📅 2023-07-04 ✅ 2023-07-05 ^dcf64c',
-        );
+        // TODO Add tests of Tasklocation values
 
-        // Once blocklink is written correctly, test that we can parse this line, round-trip and get an identical line and task
+        const expectedMarkdownLine =
+            '  - [ ] my description 🔁 every day when done ➕ 2023-07-01 🛫 2023-07-02 ⏳ 2023-07-03 📅 2023-07-04 ✅ 2023-07-05 ^dcf64c';
+        expect(task.originalMarkdown).toEqual(expectedMarkdownLine);
+
+        // Test that we can parse this line, round-trip and get an identical task
+        const reReadTask = Task.fromLine({
+            line: task.originalMarkdown,
+            taskLocation: TaskLocation.fromUnknownPosition(task.path),
+            fallbackDate: null,
+        });
+        expect(reReadTask).not.toBeNull();
+        expect(reReadTask!.identicalTo(task)).toEqual(true);
+        expect(reReadTask!.originalMarkdown).toEqual(expectedMarkdownLine);
     });
 });
