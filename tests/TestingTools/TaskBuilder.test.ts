@@ -23,8 +23,7 @@ describe('TaskBuilder', () => {
         expect(task.originalMarkdown).toEqual('- [ ] hello');
     });
 
-    it('createFullyPopulatedTask() should populate every field', () => {
-        const task: Task = TaskBuilder.createFullyPopulatedTask();
+    function getNullOrUnsetFields(task: Task) {
         // @ts-ignore
         const args: Array<keyof Task> = Object.getOwnPropertyDescriptors(task);
         const nullOrUnsetFields: string[] = [];
@@ -39,6 +38,12 @@ describe('TaskBuilder', () => {
                 nullOrUnsetFields.push(key);
             }
         }
+        return nullOrUnsetFields;
+    }
+
+    it('createFullyPopulatedTask() should populate every field', () => {
+        const task: Task = TaskBuilder.createFullyPopulatedTask();
+        const nullOrUnsetFields = getNullOrUnsetFields(task);
         expect(nullOrUnsetFields).toEqual([]);
 
         // TODO Add tests of Tasklocation values
