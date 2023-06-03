@@ -100,6 +100,7 @@ export class TaskBuilder {
         const taskBuilder = new TaskBuilder()
             .indentation('  ')
             .description('Do exercises')
+            .tags(['#todo', '#health'])
             .priority(Priority.Medium)
             .createdDate('2023-07-01')
             .startDate('2023-07-02')
