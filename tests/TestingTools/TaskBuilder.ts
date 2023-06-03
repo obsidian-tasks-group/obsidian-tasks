@@ -6,6 +6,7 @@ import type { Recurrence } from '../../src/Recurrence';
 import { DateParser } from '../../src/Query/DateParser';
 import { StatusConfiguration, StatusType } from '../../src/StatusConfiguration';
 import { TaskLocation } from '../../src/TaskLocation';
+import { RecurrenceBuilder } from './RecurrenceBuilder';
 
 /**
  * A fluent class for creating tasks for tests.
@@ -86,6 +87,37 @@ export class TaskBuilder {
             originalMarkdown: '',
             scheduledDateIsInferred: this._scheduledDateIsInferred,
         });
+    }
+
+    /**
+     * Create a Task that has all fields populated.
+     *
+     * Note: Currently originalMarkdown is not populated.
+     */
+    public static createFullyPopulatedTask(): Task {
+        const startDate = '2023-07-02';
+        const scheduledDate = '2023-07-03';
+        const dueDate = '2023-07-04';
+        const recurrence = new RecurrenceBuilder()
+            .rule('every day when done')
+            .dueDate(dueDate)
+            .scheduledDate(scheduledDate)
+            .startDate(startDate)
+            .build();
+
+        const taskBuilder = new TaskBuilder()
+            .indentation('  ')
+            .createdDate('2023-07-01')
+            .startDate(startDate)
+            .scheduledDate(scheduledDate)
+            .dueDate(dueDate)
+            .doneDate('2023-07-05')
+            .recurrence(recurrence)
+            .blockLink('dcf64c');
+
+        const taskWithoutOriginalMarkdown = taskBuilder.build();
+        // TODO Set originalMarkdown
+        return taskWithoutOriginalMarkdown;
     }
 
     /**
