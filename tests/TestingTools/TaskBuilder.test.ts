@@ -23,12 +23,12 @@ describe('TaskBuilder', () => {
         expect(task.originalMarkdown).toEqual('- [ ] hello');
     });
 
-    function getNullOrUnsetFields(task: Task) {
+    function getNullOrUnsetFields<Type>(type: Type) {
         // @ts-ignore
-        const args: Array<keyof Task> = Object.getOwnPropertyDescriptors(task);
+        const args: Array<keyof Type> = Object.getOwnPropertyDescriptors(type);
         const nullOrUnsetFields: string[] = [];
         for (const key in args) {
-            const value = task[key as keyof Task];
+            const value = type[key as keyof Type];
             if (typeof value === 'boolean') {
                 // false is valid for booleans...
                 continue;
