@@ -3,6 +3,7 @@ import { StatusRegistry } from '../StatusRegistry';
 
 import { Task, TaskRegularExpressions } from '../Task';
 import { TaskLocation } from '../TaskLocation';
+import { GlobalFilter } from '../Config/GlobalFilter';
 
 export const toggleDone = (checking: boolean, editor: Editor, view: MarkdownView | MarkdownFileInfo) => {
     if (checking) {
@@ -91,7 +92,9 @@ export const toggleLine = (line: string, path: string): EditorInsertion => {
             return { text: line.replace(TaskRegularExpressions.taskRegex, `$1- [${newStatusString}] $4`) };
         } else if (TaskRegularExpressions.listItemRegex.test(line)) {
             // Convert the list item to a checklist item.
-            const text = line.replace(TaskRegularExpressions.listItemRegex, '$1$2 [ ]');
+            const globalFilter = GlobalFilter.get();
+            const newTaskText = globalFilter == '' ? '[ ]' : `[ ] ${globalFilter}`;
+            const text = line.replace(TaskRegularExpressions.listItemRegex, `$1$2 ${newTaskText}`);
             return { text, moveTo: { ch: text.length } };
         } else {
             // Convert the line to a list item.

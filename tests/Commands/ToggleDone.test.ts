@@ -106,9 +106,9 @@ describe('ToggleDone', () => {
 
         GlobalFilter.set('#task');
 
-        testToggleLine('|- ', '- [ ] |');
-        testToggleLine('- |', '- [ ] |');
-        testToggleLine('- |foobar', '- [ ] foobar|');
+        testToggleLine('|- ', '- [ ] #task |');
+        testToggleLine('- |', '- [ ] #task |');
+        testToggleLine('- |foobar', '- [ ] #task foobar|');
     });
 
     it('should complete a task', () => {
