@@ -1,8 +1,11 @@
 /**
  * @jest-environment jsdom
  */
+import moment from 'moment';
 import { DateParser } from '../../src/Query/DateParser';
 import { TaskRegularExpressions } from '../../src/Task';
+
+window.moment = moment;
 
 function testParsingeSingleDate(input: string, result: string) {
     const moment = DateParser.parseDate(input);

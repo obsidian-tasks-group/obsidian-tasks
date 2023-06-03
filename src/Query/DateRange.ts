@@ -1,11 +1,11 @@
-import moment from 'moment';
+import type { Moment } from 'moment';
 
 /**
  * Represent an inclusive span of time between two days at 00:00 local time.
  */
 export class DateRange {
-    start: moment.Moment;
-    end: moment.Moment;
+    start: Moment;
+    end: Moment;
 
     /**
      * Builds the date range. If start is after the end, the dates will be automatically reversed.
@@ -15,7 +15,7 @@ export class DateRange {
      * @param start
      * @param end
      */
-    constructor(start: moment.Moment, end: moment.Moment) {
+    constructor(start: Moment, end: Moment) {
         this.start = start;
         this.end = end;
 
@@ -40,7 +40,10 @@ export class DateRange {
         // Treat all weeks as ISO 8601 weeks
         const unitOfTime = range === 'week' ? 'isoWeek' : range;
 
-        return new DateRange(moment().startOf(unitOfTime).startOf('day'), moment().endOf(unitOfTime).startOf('day'));
+        return new DateRange(
+            window.moment().startOf(unitOfTime).startOf('day'),
+            window.moment().endOf(unitOfTime).startOf('day'),
+        );
     }
 
     /**
@@ -49,7 +52,7 @@ export class DateRange {
      * @returns
      */
     public static buildInvalid(): DateRange {
-        return new DateRange(moment.invalid(), moment.invalid());
+        return new DateRange(window.moment.invalid(), window.moment.invalid());
     }
 
     /**
@@ -66,7 +69,7 @@ export class DateRange {
      * @param duration one of 'week'/'month'/'quarter'/'year'
      */
     public moveToPrevious(duration: moment.unitOfTime.DurationConstructor) {
-        const delta = moment.duration(1, duration);
+        const delta = window.moment.duration(1, duration);
         this.start.subtract(delta);
         this.end.subtract(delta);
 
@@ -83,7 +86,7 @@ export class DateRange {
      * @param duration one of 'week'/'month'/'quarter'/'year'
      */
     public moveToNext(duration: moment.unitOfTime.DurationConstructor) {
-        const delta = moment.duration(1, duration);
+        const delta = window.moment.duration(1, duration);
         this.start.add(delta);
         this.end.add(delta);
 

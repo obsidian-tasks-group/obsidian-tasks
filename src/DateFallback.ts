@@ -1,4 +1,4 @@
-import type { Moment } from 'moment/moment';
+import type { Moment } from 'moment';
 import { getSettings } from './Config/Settings';
 import { Task } from './Task';
 

@@ -5,7 +5,6 @@ import moment from 'moment';
 import { Recurrence } from '../src/Recurrence';
 import { RecurrenceBuilder } from './TestingTools/RecurrenceBuilder';
 
-jest.mock('obsidian');
 window.moment = moment;
 
 describe('Recurrence', () => {
