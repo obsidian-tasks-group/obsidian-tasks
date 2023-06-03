@@ -23,17 +23,14 @@ describe('TaskBuilder', () => {
         expect(task.originalMarkdown).toEqual('- [ ] hello');
     });
 
-    function hasValue<Type>(value: Type[keyof Type]) {
-        let valid = true;
+    function hasValue<Type>(value: Type[keyof Type]): boolean {
         if (Array.isArray(value)) {
             // Check for empty arrays:
             return value.length > 0;
         }
-        if (!value) {
-            // Check for un-set values:
-            valid = false;
-        }
-        return valid;
+
+        // Check that values are non-null, strings are not empty...
+        return !!value;
     }
 
     function getNullOrUnsetFields<Type>(type: Type) {
