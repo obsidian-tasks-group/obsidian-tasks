@@ -1,5 +1,11 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import moment from 'moment';
 import { DateRange } from '../../src/Query/DateRange';
+
+window.moment = moment;
 
 function testDateRange(dateRange: DateRange, start: string, end: string) {
     expect(dateRange.start).toBeDefined();
