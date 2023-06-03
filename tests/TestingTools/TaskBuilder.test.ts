@@ -34,7 +34,18 @@ describe('TaskBuilder', () => {
                 continue;
             }
 
-            if (!value) {
+            let valid = true;
+            if (Array.isArray(value)) {
+                // Check for empty arrays:
+                if (value.length === 0) {
+                    valid = false;
+                }
+            } else if (!value) {
+                // Check for un-set values:
+                valid = false;
+            }
+
+            if (!valid) {
                 nullOrUnsetFields.push(key);
             }
         }
