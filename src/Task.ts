@@ -190,7 +190,7 @@ export class Task {
     }
 
     /**
-     * Takes the given line from a obsidian note and returns a Task object.
+     * Takes the given line from an obsidian note and returns a Task object.
      *
      * @static
      * @param {string} line - The full line in the note to parse.
@@ -269,7 +269,7 @@ export class Task {
     /**
      * Create an HTML rendered List Item element (LI) for the current task.
      * @note Output is based on the {@link DefaultTaskSerializer}'s format, with default (emoji) symbols
-     * @param {renderTails}
+     * @param renderDetails
      */
     public async toLi(renderDetails: TaskLineRenderDetails): Promise<HTMLLIElement> {
         return renderTaskLine(this, renderDetails);
@@ -359,7 +359,7 @@ export class Task {
                 // New occurrences cannot have the same block link.
                 // And random block links don't help.
                 blockLink: '',
-                // add new createdDate on reccuring tasks
+                // add new createdDate on recurring tasks
                 createdDate,
             });
             newTasks.push(nextTask);
