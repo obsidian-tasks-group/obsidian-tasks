@@ -311,7 +311,16 @@ export abstract class Field {
         return this.createGrouper(true);
     }
 
-    protected defaultComparator: Comparator = (_a: Task, _b: Task) => {
+    protected defaultComparator: Comparator = (a: Task, b: Task) => {
+        const groupA = this.grouper()(a);
+        const groupB = this.grouper()(b);
+
+        for (let i = 0; i < groupA.length; i++) {
+            // The containers are guaranteed to be identical sizes since we are calling the same grouper
+            return groupA[i].localeCompare(groupB[i], undefined, { numeric: true });
+        }
+
+        // identical if we reach here
         return 0;
     };
 }
