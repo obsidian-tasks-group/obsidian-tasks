@@ -23,6 +23,20 @@ describe('TaskBuilder', () => {
         expect(task.originalMarkdown).toEqual('- [ ] hello');
     });
 
+    function hasValue<Type>(value: Type[keyof Type]) {
+        let valid = true;
+        if (Array.isArray(value)) {
+            // Check for empty arrays:
+            if (value.length === 0) {
+                valid = false;
+            }
+        } else if (!value) {
+            // Check for un-set values:
+            valid = false;
+        }
+        return valid;
+    }
+
     function getNullOrUnsetFields<Type>(type: Type) {
         // @ts-ignore
         const args: Array<keyof Type> = Object.getOwnPropertyDescriptors(type);
@@ -33,17 +47,7 @@ describe('TaskBuilder', () => {
                 // false is valid for booleans...
                 continue;
             }
-
-            let valid = true;
-            if (Array.isArray(value)) {
-                // Check for empty arrays:
-                if (value.length === 0) {
-                    valid = false;
-                }
-            } else if (!value) {
-                // Check for un-set values:
-                valid = false;
-            }
+            const valid = hasValue(value);
 
             if (!valid) {
                 nullOrUnsetFields.push(key);
