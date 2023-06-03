@@ -674,7 +674,6 @@ async function updateAndSaveStatusSettings(statusTypes: StatusSettings, settings
 function makeMultilineTextSetting(setting: Setting) {
     const { settingEl, infoEl, controlEl } = setting;
     const textEl: HTMLElement | null = controlEl.querySelector('textarea');
-    console.log({ settingEl, infoEl, controlEl, textEl });
 
     // Not a setting with a text field
     if (textEl === null) {
