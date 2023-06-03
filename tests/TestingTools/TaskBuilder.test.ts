@@ -43,10 +43,9 @@ describe('TaskBuilder', () => {
 
     it('createFullyPopulatedTask() should populate every field', () => {
         const task: Task = TaskBuilder.createFullyPopulatedTask();
-        const nullOrUnsetFields = getNullOrUnsetFields(task);
-        expect(nullOrUnsetFields).toEqual([]);
 
-        // TODO Add tests of Tasklocation values
+        expect(getNullOrUnsetFields(task)).toEqual([]);
+        expect(getNullOrUnsetFields(task.taskLocation)).toEqual([]);
 
         expect(task.originalMarkdown).toEqual(
             '  - [ ] my description 🔁 every day when done ➕ 2023-07-01 🛫 2023-07-02 ⏳ 2023-07-03 📅 2023-07-04 ✅ 2023-07-05 ^dcf64c',

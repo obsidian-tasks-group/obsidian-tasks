@@ -104,7 +104,13 @@ export class TaskBuilder {
             .scheduledDate('2023-07-03')
             .dueDate('2023-07-04')
             .doneDate('2023-07-05')
-            .blockLink(' ^dcf64c');
+            .blockLink(' ^dcf64c')
+            // Values in TaskLocation:
+            .path('/some/folder/fileName.md')
+            .lineNumber(17)
+            .sectionStart(5)
+            .sectionIndex(3)
+            .precedingHeader('My Header');
 
         taskBuilder.recurrence(
             Recurrence.fromText({
