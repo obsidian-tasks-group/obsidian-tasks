@@ -2,11 +2,10 @@
 import type { Moment } from 'moment';
 import { Status } from '../../src/Status';
 import { Priority, Task } from '../../src/Task';
-import type { Recurrence } from '../../src/Recurrence';
+import { Recurrence } from '../../src/Recurrence';
 import { DateParser } from '../../src/Query/DateParser';
 import { StatusConfiguration, StatusType } from '../../src/StatusConfiguration';
 import { TaskLocation } from '../../src/TaskLocation';
-import { RecurrenceBuilder } from './RecurrenceBuilder';
 
 /**
  * A fluent class for creating tasks for tests.
@@ -36,7 +35,7 @@ export class TaskBuilder {
     private _priority: Priority = Priority.None;
 
     private _createdDate: Moment | null = null;
-    private _startDate: Moment | null = null;
+    public _startDate: Moment | null = null;
     private _scheduledDate: Moment | null = null;
     private _dueDate: Moment | null = null;
     private _doneDate: Moment | null = null;
@@ -95,25 +94,23 @@ export class TaskBuilder {
      * Note: Currently originalMarkdown is not populated.
      */
     public static createFullyPopulatedTask(): Task {
-        const startDate = '2023-07-02';
-        const scheduledDate = '2023-07-03';
-        const dueDate = '2023-07-04';
-        const recurrence = new RecurrenceBuilder()
-            .rule('every day when done')
-            .dueDate(dueDate)
-            .scheduledDate(scheduledDate)
-            .startDate(startDate)
-            .build();
-
         const taskBuilder = new TaskBuilder()
             .indentation('  ')
             .createdDate('2023-07-01')
-            .startDate(startDate)
-            .scheduledDate(scheduledDate)
-            .dueDate(dueDate)
+            .startDate('2023-07-02')
+            .scheduledDate('2023-07-03')
+            .dueDate('2023-07-04')
             .doneDate('2023-07-05')
-            .recurrence(recurrence)
             .blockLink('dcf64c');
+
+        taskBuilder.recurrence(
+            Recurrence.fromText({
+                recurrenceRuleText: 'every day when done',
+                startDate: taskBuilder._startDate,
+                scheduledDate: taskBuilder._scheduledDate,
+                dueDate: taskBuilder._dueDate,
+            }),
+        );
 
         const taskWithoutOriginalMarkdown = taskBuilder.build();
         // TODO Set originalMarkdown
