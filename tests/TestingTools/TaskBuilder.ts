@@ -35,7 +35,7 @@ export class TaskBuilder {
     private _priority: Priority = Priority.None;
 
     private _createdDate: Moment | null = null;
-    public _startDate: Moment | null = null;
+    private _startDate: Moment | null = null;
     private _scheduledDate: Moment | null = null;
     private _dueDate: Moment | null = null;
     private _doneDate: Moment | null = null;
