@@ -3,7 +3,9 @@
  */
 import moment from 'moment';
 
+// begin-snippet: fix-window.moment-calls-in-tests
 window.moment = moment;
+// end-snippet
 
 import {
     expectDateComparesAfter,
