@@ -3,6 +3,7 @@ import type { Comparator } from '../Sorter';
 import * as RegExpTools from '../../lib/RegExpTools';
 import { Grouper } from '../Grouper';
 import type { GrouperFunction } from '../Grouper';
+import type { Task } from './../../Task';
 import type { FilterOrErrorMessage } from './Filter';
 
 /**
@@ -287,7 +288,7 @@ export abstract class Field {
      * @param reverse - false for normal group order, true for reverse group order.
      */
     public createGrouper(reverse: boolean): Grouper {
-        return new Grouper(this.fieldNameSingular(), this.grouper(), reverse);
+        return new Grouper(this.fieldNameSingular(), this.grouper(), reverse, this.defaultComparator);
     }
 
     /**
@@ -309,4 +310,8 @@ export abstract class Field {
     public createReverseGrouper(): Grouper {
         return this.createGrouper(true);
     }
+
+    protected defaultComparator: Comparator = (_a: Task, _b: Task) => {
+        return 0;
+    };
 }

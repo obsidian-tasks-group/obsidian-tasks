@@ -1,4 +1,5 @@
 import type { Task } from '../Task';
+import type { Comparator } from './Sorter';
 
 /**
  * A group-naming function, that takes a Task object and returns zero or more
@@ -39,9 +40,12 @@ export class Grouper {
      */
     public readonly reverse: boolean;
 
-    constructor(property: string, grouper: GrouperFunction, reverse: boolean) {
+    public readonly comparator: Comparator;
+
+    constructor(property: string, grouper: GrouperFunction, reverse: boolean, comparator: Comparator) {
         this.property = property;
         this.grouper = grouper;
         this.reverse = reverse;
+        this.comparator = comparator;
     }
 }
