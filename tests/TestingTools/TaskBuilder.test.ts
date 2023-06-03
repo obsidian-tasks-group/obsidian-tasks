@@ -24,6 +24,11 @@ describe('TaskBuilder', () => {
     });
 
     function hasValue<Type>(value: Type[keyof Type]): boolean {
+        if (typeof value === 'boolean') {
+            // false is valid for booleans...
+            return true;
+        }
+
         if (Array.isArray(value)) {
             // Check for empty arrays:
             return value.length > 0;
@@ -39,13 +44,7 @@ describe('TaskBuilder', () => {
         const nullOrUnsetFields: string[] = [];
         for (const key in args) {
             const value = type[key as keyof Type];
-            if (typeof value === 'boolean') {
-                // false is valid for booleans...
-                continue;
-            }
-            const valid = hasValue(value);
-
-            if (!valid) {
+            if (!hasValue(value)) {
                 nullOrUnsetFields.push(key);
             }
         }
