@@ -503,7 +503,6 @@ export class Task {
         //       any of the tasks in a file. This does mean that redrawing of tasks blocks
         //       happens more often than is ideal.
         let args: Array<keyof Task> = [
-            'status',
             'description',
             'path',
             'indentation',
@@ -518,6 +517,10 @@ export class Task {
         ];
         for (const el of args) {
             if (this[el] !== other[el]) return false;
+        }
+
+        if (!this.status.identicalTo(other.status)) {
+            return false;
         }
 
         // Compare tags
