@@ -110,7 +110,7 @@ export class TaskGroups {
                 const grouper = this._groupers[i];
                 const result = grouper.comparator(group1.tasks[0], group2.tasks[0]);
                 if (result !== 0) {
-                    return grouper.reverse ? -result : result;
+                    return result;
                 }
             }
             // identical if we reach here

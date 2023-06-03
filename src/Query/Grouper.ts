@@ -37,6 +37,7 @@ export class Grouper {
 
     /**
      * Whether the headings for this group should be reversed.
+     * TODO now reverse used only in TaskGroups.toString(), shall be removed.
      */
     public readonly reverse: boolean;
 
@@ -46,6 +47,10 @@ export class Grouper {
         this.property = property;
         this.grouper = grouper;
         this.reverse = reverse;
-        this.comparator = comparator;
+        this.comparator = (a: Task, b: Task) => {
+            const result = comparator(a, b);
+
+            return reverse ? -result : result;
+        };
     }
 }
