@@ -115,7 +115,13 @@ export class TaskBuilder {
             }),
         );
 
-        return taskBuilder.build();
+        const task = taskBuilder.build();
+
+        // Force urgency value to be cached:
+        // @ts-ignore
+        const unused = task!.urgency;
+
+        return task;
     }
 
     /**

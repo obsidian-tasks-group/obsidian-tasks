@@ -29,10 +29,6 @@ describe('TaskBuilder', () => {
         const args: Array<keyof Task> = Object.getOwnPropertyDescriptors(task);
         const nullOrUnsetFields: string[] = [];
         for (const key in args) {
-            if (key[0] === '_') {
-                // ignore private fields
-                continue;
-            }
             const value = task[key as keyof Task];
             if (typeof value === 'boolean') {
                 // false is valid for booleans...
