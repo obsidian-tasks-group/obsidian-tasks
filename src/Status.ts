@@ -211,6 +211,13 @@ export class Status {
         return this.type === StatusType.DONE;
     }
 
+    /**
+     * Compare all the fields in another Status, to detect any differences from this one.
+     *
+     * If any field is different in any way, it will return false.
+     *
+     * @param other
+     */
     public identicalTo(other: Status): boolean {
         return this.configuration.identicalTo(other.configuration);
     }

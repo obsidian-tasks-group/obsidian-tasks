@@ -80,6 +80,13 @@ export class StatusConfiguration {
         this.type = type;
     }
 
+    /**
+     * Compare all the fields in another StatusConfiguration, to detect any differences from this one.
+     *
+     * If any field is different in any way, it will return false.
+     *
+     * @param other
+     */
     public identicalTo(other: StatusConfiguration): boolean {
         const args: Array<keyof StatusConfiguration> = [
             'symbol',
