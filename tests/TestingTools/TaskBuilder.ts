@@ -104,7 +104,7 @@ export class TaskBuilder {
             .scheduledDate('2023-07-03')
             .dueDate('2023-07-04')
             .doneDate('2023-07-05')
-            .blockLink('dcf64c');
+            .blockLink(' ^dcf64c');
 
         taskBuilder.recurrence(
             Recurrence.fromText({

@@ -117,7 +117,8 @@ export class Task {
     public readonly doneDate: Moment | null;
 
     public readonly recurrence: Recurrence | null;
-    /** The blockLink is a "^" annotation after the dates/recurrence rules. */
+    /** The blockLink is a "^" annotation after the dates/recurrence rules.
+     * Any non-empty value must begin with ' ^'. */
     public readonly blockLink: string;
 
     /** The original line read from file.
