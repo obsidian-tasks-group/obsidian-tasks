@@ -10,11 +10,11 @@ See also the equivalent [[How do I use Moment in src]].
 
 ## Declare moment in tests/
 
-This is how to declare moment and Moment in files that **test** code in the Tasks plugin.
+This is how to declare `moment` and `Moment` in files that **test** code in the Tasks plugin.
 
 ### Use the "jsdom" test environment
 
-Any test files that call any code in `src/` that uses moment or Moment need to start with this boilerplate code:
+Any test files that call any code in `src/` that uses `moment` or `Moment` need to start with this boilerplate code:
 
 <!-- snippet: declare-moment-in-tests -->
 ```ts
