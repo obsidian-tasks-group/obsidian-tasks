@@ -27,10 +27,9 @@ describe('TaskBuilder', () => {
         let valid = true;
         if (Array.isArray(value)) {
             // Check for empty arrays:
-            if (value.length === 0) {
-                valid = false;
-            }
-        } else if (!value) {
+            return value.length > 0;
+        }
+        if (!value) {
             // Check for un-set values:
             valid = false;
         }
