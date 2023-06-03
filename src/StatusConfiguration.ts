@@ -79,4 +79,25 @@ export class StatusConfiguration {
         this.availableAsCommand = availableAsCommand;
         this.type = type;
     }
+
+    /**
+     * Compare all the fields in another StatusConfiguration, to detect any differences from this one.
+     *
+     * If any field is different in any way, it will return false.
+     *
+     * @param other
+     */
+    public identicalTo(other: StatusConfiguration): boolean {
+        const args: Array<keyof StatusConfiguration> = [
+            'symbol',
+            'name',
+            'nextStatusSymbol',
+            'availableAsCommand',
+            'type',
+        ];
+        for (const el of args) {
+            if (this[el] !== other[el]) return false;
+        }
+        return true;
+    }
 }
