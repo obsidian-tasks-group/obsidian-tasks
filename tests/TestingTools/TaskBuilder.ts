@@ -99,6 +99,7 @@ export class TaskBuilder {
     public static createFullyPopulatedTask(): Task {
         const taskBuilder = new TaskBuilder()
             .indentation('  ')
+            .description('Do exercises')
             .priority(Priority.Medium)
             .createdDate('2023-07-01')
             .startDate('2023-07-02')
