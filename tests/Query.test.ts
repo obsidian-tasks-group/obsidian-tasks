@@ -270,6 +270,8 @@ describe('Query parsing', () => {
             'hide urgency',
             'limit 42',
             'limit to 42 tasks',
+            'limit groups 31',
+            'limit groups to 31 tasks',
             'short mode',
             'short',
             'show backlink',
@@ -876,6 +878,31 @@ At most 0 tasks.
 `;
             expect(query.explainQuery()).toEqual(expectedDisplayText);
         });
+
+        it('should explain group limit 4', () => {
+            const input = 'limit groups 4';
+            const query = new Query({ source: input });
+
+            const expectedDisplayText = `No filters supplied. All tasks will match the query.
+
+At most 4 tasks per group (if any "group by" options are supplied).
+`;
+            expect(query.explainQuery()).toEqual(expectedDisplayText);
+        });
+
+        it('should explain all limit options', () => {
+            const input = 'limit 127\nlimit groups to 8 tasks';
+            const query = new Query({ source: input });
+
+            const expectedDisplayText = `No filters supplied. All tasks will match the query.
+
+At most 127 tasks.
+
+
+At most 8 tasks per group (if any "group by" options are supplied).
+`;
+            expect(query.explainQuery()).toEqual(expectedDisplayText);
+        });
     });
 
     // This tests the parsing of 'group by' instructions.
@@ -947,6 +974,50 @@ At most 0 tasks.
 - [ ] Task 4 - will be sorted to 2nd place, so should pass limit
 `;
             expect('\n' + soleTaskGroup.tasksAsStringOfLines()).toStrictEqual(expectedTasks);
+        });
+
+        it('should apply group limit correctly, after sorting tasks', () => {
+            // Arrange
+            const input = `
+                # sorting by description will sort the tasks alphabetically
+                sort by description
+
+                # grouping by status will give two groups: Done and Todo
+                group by status
+
+                # Apply a limit, to test which tasks make it to
+                limit groups 3
+                `;
+            const query = new Query({ source: input });
+
+            const tasksAsMarkdown = `
+- [x] Task 2 - will be in the first group and sorted after next one
+- [x] Task 1 - will be in the first group
+- [ ] Task 4 - will be sorted to 2nd place in the second group and pass the limit
+- [ ] Task 6 - will be sorted to 4th place in the second group and NOT pass the limit
+- [ ] Task 3 - will be sorted to 1st place in the second group and pass the limit
+- [ ] Task 5 - will be sorted to 3nd place in the second group and pass the limit
+            `;
+
+            const tasks = createTasksFromMarkdown(tasksAsMarkdown, 'some_markdown_file', 'Some Heading');
+
+            // Act
+            const groups = query.applyQueryToTasks(tasks);
+
+            // Assert
+            expect(groups.groups.length).toEqual(2);
+            expect(groups.totalTasksCount()).toEqual(5);
+            expect(groups.groups[0].tasksAsStringOfLines()).toMatchInlineSnapshot(`
+                "- [x] Task 1 - will be in the first group
+                - [x] Task 2 - will be in the first group and sorted after next one
+                "
+            `);
+            expect(groups.groups[1].tasksAsStringOfLines()).toMatchInlineSnapshot(`
+                "- [ ] Task 3 - will be sorted to 1st place in the second group and pass the limit
+                - [ ] Task 4 - will be sorted to 2nd place in the second group and pass the limit
+                - [ ] Task 5 - will be sorted to 3nd place in the second group and pass the limit
+                "
+            `);
         });
     });
 });

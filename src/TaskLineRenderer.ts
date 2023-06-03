@@ -12,6 +12,7 @@ export type TaskLineRenderDetails = {
     parentUlElement: HTMLElement;
     /** The nth item in this list (including non-tasks). */
     listIndex: number;
+    obsidianComponent: Component | null;
     layoutOptions?: LayoutOptions;
     isFilenameUnique?: boolean;
     taskLayout?: TaskLayout;
@@ -35,10 +36,21 @@ const DAY_VALUE_OVER_RANGE_POSTFIX = 'far';
 /**
  * The function used to render a Markdown task line into an existing HTML element.
  */
-export type TextRenderer = (text: string, element: HTMLSpanElement, path: string) => Promise<void>;
+export type TextRenderer = (
+    text: string,
+    element: HTMLSpanElement,
+    path: string,
+    obsidianComponent: Component | null, // null is allowed here only for tests
+) => Promise<void>;
 
-async function obsidianMarkdownRenderer(text: string, element: HTMLSpanElement, path: string) {
-    await MarkdownRenderer.renderMarkdown(text, element, path, null as unknown as Component);
+async function obsidianMarkdownRenderer(
+    text: string,
+    element: HTMLSpanElement,
+    path: string,
+    obsidianComponent: Component | null,
+) {
+    if (!obsidianComponent) throw new Error('Must call the Obsidian renderer with an Obsidian Component object');
+    await MarkdownRenderer.renderMarkdown(text, element, path, obsidianComponent);
 }
 
 /**
@@ -138,7 +150,14 @@ async function taskToHtml(
                 // to do things like surrouding only the text (rather than its whole placeholder) with a highlight
                 const internalSpan = document.createElement('span');
                 span.appendChild(internalSpan);
-                await renderComponentText(internalSpan, componentString, component, task, textRenderer);
+                await renderComponentText(
+                    internalSpan,
+                    componentString,
+                    component,
+                    task,
+                    textRenderer,
+                    renderDetails.obsidianComponent,
+                );
                 const [genericClasses, dataAttributes] = getComponentClassesAndData(component, task);
                 addInternalClasses(component, internalSpan);
                 // Add the generic classes that apply to what this component is (priority, due date etc)
@@ -178,6 +197,7 @@ async function renderComponentText(
     component: TaskLayoutComponent,
     task: Task,
     textRenderer: TextRenderer,
+    obsidianComponent: Component | null,
 ) {
     if (component === 'description') {
         const { debugSettings } = getSettings();
@@ -185,7 +205,7 @@ async function renderComponentText(
             // Add some debug output to enable hidden information in the task to be inspected.
             componentString += `<br>🐛 <b>${task.lineNumber}</b> . ${task.sectionStart} . ${task.sectionIndex} . '<code>${task.originalMarkdown}</code>'<br>'<code>${task.path}</code>' > '<code>${task.precedingHeader}</code>'<br>`;
         }
-        await textRenderer(componentString, span, task.path);
+        await textRenderer(componentString, span, task.path, obsidianComponent);
 
         // If the task is a block quote, the block quote wraps the p-tag that contains the content.
         // In that case, we need to unwrap the p-tag *inside* the surrounding block quote.
@@ -240,9 +260,11 @@ function getComponentClassesAndData(component: TaskLayoutComponent, task: Task):
             break;
         case 'priority': {
             let priorityValue = null;
-            if (task.priority === taskModule.Priority.High) priorityValue = 'high';
+            if (task.priority === taskModule.Priority.Highest) priorityValue = 'highest';
+            else if (task.priority === taskModule.Priority.High) priorityValue = 'high';
             else if (task.priority === taskModule.Priority.Medium) priorityValue = 'medium';
             else if (task.priority === taskModule.Priority.Low) priorityValue = 'low';
+            else if (task.priority === taskModule.Priority.Lowest) priorityValue = 'lowest';
             else priorityValue = 'normal';
             dataAttributes['taskPriority'] = priorityValue;
             genericClasses.push(LayoutClasses.priority);

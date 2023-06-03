@@ -6,6 +6,9 @@ publish: true
 
 ## What's New?
 
+- 3.9.0: 🔥 Add [[Priority#Priorities and Order|lowest and highest]] priorities
+- 3.8.0: 🔥 Add [[Limiting#Limit number of tasks in each group|limiting tasks per group]]
+- 3.8.0: 🔥 Add option to control the [[Recurring Tasks#Order of the new task|order of new recurring tasks]]
 - 3.7.0: 🔥 Add [[Grouping#Reversing groups|reverse sorting of groups]]
 - 3.6.0: 🔥 Add [[Grouping#Other task properties|group by urgency]]
 - 3.6.0: 🔥 Add [[Sorting#Other task properties|sort by recurring]]

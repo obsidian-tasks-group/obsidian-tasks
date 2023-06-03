@@ -2,6 +2,8 @@
 
 ## MarkdownSnippets/mdsnippets
 
+## Overview
+
 The [MarkdownSnippets](https://github.com/SimonCropp/MarkdownSnippets) tool, also known as `mdsnippets`, is a [dotnet tool](https://docs.microsoft.com/en-us/dotnet/core/tools/global-tools) that extract snippets from code files and merges them into Markdown documents.
 
 Examples of things it can embed:
@@ -10,9 +12,18 @@ Examples of things it can embed:
 - Whole files, such as CSS files
 - Machine-generated `.md` and `.txt` files written by unit tests for the purpose of embedding in documentation.
 
+### Automation via GitHub Action
+
+The Tasks project has automation via GitHub Action to update the documentation samples automatically via:
+
+- GitHub Action workflow: [update-docs-markdown.yml](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/.github/workflows/update-docs-markdown.yml)
+- The [logs from update-docs-markdown runs](https://github.com/obsidian-tasks-group/obsidian-tasks/actions/workflows/update-docs-markdown.yml)
+
+When this job updates any documentation files, it creates a [Pull Request](https://github.com/obsidian-tasks-group/obsidian-tasks/pulls?q=is%3Apr+label%3A%22type%3A+automated+update%22+label%3A%22scope%3A+documentation%22) for review and merging.
+
 ### Running mdsnippets
 
-This process will eventually be automated automatically via GitHub Actions, but for now, the following needs to be done in order to run mdsnippets:
+To run mdsnippets on a development machine:
 
 1. Install [MarkdownSnippets](https://github.com/SimonCropp/MarkdownSnippets), also known as `mdsnippets`
 2. Run:
@@ -48,7 +59,7 @@ For example:
 
 Run `mdsnippets` - see [[#Running mdsnippets]]
 
-Your `include: ...` line will be converted to this:
+Your `snippet: ...` line will be converted to this:
 
 <!-- snippet: ApprovalTestsDemo.test.ApprovalTests_JsonVerify.approved.json -->
 ```json

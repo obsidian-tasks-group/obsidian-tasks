@@ -77,10 +77,12 @@ For more information, including adding your own customised statuses, see [[Statu
 
 1. `priority`
     - The priority of the task, namely one of:
+        - `Priority 0: Highest`
         - `Priority 1: High`
         - `Priority 2: Medium`
         - `Priority 3: None`
         - `Priority 4: Low`
+        - `Priority 5: Lowest`
 1. `urgency` ([[Urgency|urgency]])
     - Currently, the groups run from the lowest urgency to highest.
     - You can reverse this with `group by urgency reverse`.
@@ -117,7 +119,9 @@ See the [screenshots below](#screenshots) for how this looks in practice.
 > [!info]
 > Headings are displayed in case-sensitive alphabetical order, not the original order.
 
-## Reversing groups
+## Refining groups
+
+### Reversing groups
 
 > [!released]
 > Reversing of group headings was introduced in Tasks 3.7.0.
@@ -138,6 +142,12 @@ For example:
 > The `reverse` keyword controls the order that group headings are displayed.
 >
 > The [[Sorting|sort by]] facility, by contrast, controls the order in which displays are displayed *inside* each group.
+
+### Limiting group size
+
+You can limit the number of tasks in each group, perhaps to work on the most important things first.
+
+See [[Limiting#Limit number of tasks in each group|Limit number of tasks in each group]].
 
 ## Notes
 

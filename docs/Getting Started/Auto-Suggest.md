@@ -177,6 +177,8 @@ Similarly, you can type some fraction of the word `start` (of whatever length is
 | ⏫ high priority              | ⏫                         |
 | 🔼 medium priority            | 🔼                         |
 | 🔽 low priority               | 🔽                         |
+| 🔺 highest priority           | 🔺                         |
+| ⏬️ lowest priority            | ⏬️                         |
 | 🔁 recurring (repeat)         | 🔁                         |
 | every                         | 🔁 every                   |
 | every day                     | 🔁 every day               |

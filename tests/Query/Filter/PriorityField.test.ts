@@ -1,4 +1,4 @@
-import { Priority } from '../../../src/Task';
+import { Priority, Task } from '../../../src/Task';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { testFilter } from '../../TestingTools/FilterTestHelpers';
 import { PriorityField } from '../../../src/Query/Filter/PriorityField';
@@ -16,53 +16,97 @@ function testTaskFilterForTaskWithPriority(filter: string, priority: Priority, e
     testFilter(filterOrError, builder.priority(priority), expected);
 }
 
+describe('priority naming', () => {
+    it.each(Object.values(Priority))('should name priority value: "%i"', (priority) => {
+        const name = PriorityField.priorityNameUsingNone(priority);
+        expect(name).not.toEqual('ERROR'); // if this fails, code needs to be updated for a new priority
+    });
+
+    it('should name default priority correctly', () => {
+        const none = Priority.None;
+        expect(PriorityField.priorityNameUsingNone(none)).toEqual('None');
+        expect(PriorityField.priorityNameUsingNormal(none)).toEqual('Normal');
+    });
+});
+
 describe('priority is', () => {
+    it('priority is highest', () => {
+        const filter = 'priority is highest';
+        testTaskFilterForTaskWithPriority(filter, Priority.Highest, true);
+        testTaskFilterForTaskWithPriority(filter, Priority.High, false);
+        testTaskFilterForTaskWithPriority(filter, Priority.Medium, false);
+        testTaskFilterForTaskWithPriority(filter, Priority.None, false);
+        testTaskFilterForTaskWithPriority(filter, Priority.Low, false);
+        testTaskFilterForTaskWithPriority(filter, Priority.Lowest, false);
+    });
+
     it('priority is high', () => {
         const filter = 'priority is high';
+        testTaskFilterForTaskWithPriority(filter, Priority.Highest, false);
         testTaskFilterForTaskWithPriority(filter, Priority.High, true);
         testTaskFilterForTaskWithPriority(filter, Priority.Medium, false);
         testTaskFilterForTaskWithPriority(filter, Priority.None, false);
         testTaskFilterForTaskWithPriority(filter, Priority.Low, false);
+        testTaskFilterForTaskWithPriority(filter, Priority.Lowest, false);
     });
 
     it('priority is medium', () => {
         const filter = 'priority is medium';
+        testTaskFilterForTaskWithPriority(filter, Priority.Highest, false);
         testTaskFilterForTaskWithPriority(filter, Priority.High, false);
         testTaskFilterForTaskWithPriority(filter, Priority.Medium, true);
         testTaskFilterForTaskWithPriority(filter, Priority.None, false);
         testTaskFilterForTaskWithPriority(filter, Priority.Low, false);
+        testTaskFilterForTaskWithPriority(filter, Priority.Lowest, false);
     });
 
     it('priority is none', () => {
         const filter = 'priority is none';
+        testTaskFilterForTaskWithPriority(filter, Priority.Highest, false);
         testTaskFilterForTaskWithPriority(filter, Priority.High, false);
         testTaskFilterForTaskWithPriority(filter, Priority.Medium, false);
         testTaskFilterForTaskWithPriority(filter, Priority.None, true);
         testTaskFilterForTaskWithPriority(filter, Priority.Low, false);
+        testTaskFilterForTaskWithPriority(filter, Priority.Lowest, false);
     });
 
     it('priority is low', () => {
         const filter = 'priority is low';
+        testTaskFilterForTaskWithPriority(filter, Priority.Highest, false);
         testTaskFilterForTaskWithPriority(filter, Priority.High, false);
         testTaskFilterForTaskWithPriority(filter, Priority.Medium, false);
         testTaskFilterForTaskWithPriority(filter, Priority.None, false);
         testTaskFilterForTaskWithPriority(filter, Priority.Low, true);
+        testTaskFilterForTaskWithPriority(filter, Priority.Lowest, false);
+    });
+
+    it('priority is lowest', () => {
+        const filter = 'priority is lowest';
+        testTaskFilterForTaskWithPriority(filter, Priority.Highest, false);
+        testTaskFilterForTaskWithPriority(filter, Priority.High, false);
+        testTaskFilterForTaskWithPriority(filter, Priority.Medium, false);
+        testTaskFilterForTaskWithPriority(filter, Priority.None, false);
+        testTaskFilterForTaskWithPriority(filter, Priority.Low, false);
+        testTaskFilterForTaskWithPriority(filter, Priority.Lowest, true);
     });
 });
 
 describe('priority above', () => {
     it('priority above none', () => {
         const filter = 'priority above none';
+        testTaskFilterForTaskWithPriority(filter, Priority.Lowest, false);
         testTaskFilterForTaskWithPriority(filter, Priority.Low, false);
         testTaskFilterForTaskWithPriority(filter, Priority.None, false);
         testTaskFilterForTaskWithPriority(filter, Priority.Medium, true);
         testTaskFilterForTaskWithPriority(filter, Priority.High, true);
+        testTaskFilterForTaskWithPriority(filter, Priority.Highest, true);
     });
 });
 
 describe('priority below', () => {
     it('priority below none', () => {
         const filter = 'priority below none';
+        testTaskFilterForTaskWithPriority(filter, Priority.Lowest, true);
         testTaskFilterForTaskWithPriority(filter, Priority.Low, true);
         testTaskFilterForTaskWithPriority(filter, Priority.None, false);
     });
@@ -70,6 +114,8 @@ describe('priority below', () => {
 
 describe('priority is not', () => {
     it.each([
+        ['lowest', Priority.Lowest, false],
+        ['lowest', Priority.Low, true],
         ['low', Priority.Low, false],
         ['low', Priority.None, true],
         ['none', Priority.None, false],
@@ -78,6 +124,8 @@ describe('priority is not', () => {
         ['medium', Priority.Medium, false],
         ['high', Priority.Medium, true],
         ['high', Priority.High, false],
+        ['highest', Priority.Highest, false],
+        ['highest', Priority.High, true],
     ])('priority is not %s (with %s)', (filter: string, input: Priority, expected: boolean) => {
         // TODO Use name of input priority instead of
         testTaskFilterForTaskWithPriority(`priority is not ${filter}`, input, expected);
@@ -142,9 +190,11 @@ describe('sorting by priority', () => {
         // Assert
         // This tests each adjacent pair of priority values, in descending order,
         // to prove that sorting of all combinations will be correct.
+        expectTaskComparesBefore(sorter, with_priority(Priority.Highest), with_priority(Priority.High));
         expectTaskComparesBefore(sorter, with_priority(Priority.High), with_priority(Priority.Medium));
         expectTaskComparesBefore(sorter, with_priority(Priority.Medium), with_priority(Priority.None));
         expectTaskComparesBefore(sorter, with_priority(Priority.None), with_priority(Priority.Low));
+        expectTaskComparesBefore(sorter, with_priority(Priority.Low), with_priority(Priority.Lowest));
 
         expectTaskComparesEqual(sorter, with_priority(Priority.None), with_priority(Priority.None));
     });
@@ -163,10 +213,12 @@ describe('grouping by priority', () => {
     });
 
     it.each([
+        ['- [ ] a 🔺', ['Priority 0: Highest']],
         ['- [ ] a ⏫', ['Priority 1: High']],
         ['- [ ] a 🔼', ['Priority 2: Medium']],
         ['- [ ] a', ['Priority 3: None']],
         ['- [ ] a 🔽', ['Priority 4: Low']],
+        ['- [ ] a ⏬', ['Priority 5: Lowest']],
     ])('task "%s" should have groups: %s', (taskLine: string, groups: string[]) => {
         // Arrange
         const grouper = new PriorityField().createNormalGrouper().grouper;
@@ -174,4 +226,33 @@ describe('grouping by priority', () => {
         // Assert
         expect(grouper(fromLine({ line: taskLine }))).toEqual(groups);
     });
+
+    it('should sort groups for PriorityField', () => {
+        const grouper = new PriorityField().createNormalGrouper();
+        const tasks = withAllPriorities();
+
+        expect({ grouper, tasks }).groupHeadingsToBe([
+            'Priority 0: Highest',
+            'Priority 1: High',
+            'Priority 2: Medium',
+            'Priority 3: None',
+            'Priority 4: Low',
+            'Priority 5: Lowest',
+        ]);
+    });
 });
+
+export function withAllPriorities(): Task[] {
+    const tasks: Task[] = [];
+    const allPriorities = Object.values(Priority);
+    allPriorities.forEach((priority) => {
+        // This description is chosen to be useful for including tasks in user docs, so
+        // changing it will change documentation and sample vault content.
+        const priorityName = PriorityField.priorityNameUsingNormal(priority);
+        const description = `#task ${priorityName} priority`;
+
+        const task = new TaskBuilder().priority(priority).description(description).build();
+        tasks.push(task);
+    });
+    return tasks;
+}

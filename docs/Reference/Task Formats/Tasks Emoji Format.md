@@ -22,12 +22,16 @@ For more information, see [[Dates]].
 
 ## Tasks Emoji Format for Priorities
 
-```markdown
+<!-- snippet: DocsSamplesForTaskFormats.test.Serializer_Priorities_tasksPluginEmoji-snippet.approved.md -->
+```md
+- [ ] #task Lowest priority ⏬
 - [ ] #task Low priority 🔽
 - [ ] #task Normal priority
 - [ ] #task Medium priority 🔼
 - [ ] #task High priority ⏫
+- [ ] #task Highest priority 🔺
 ```
+<!-- endSnippet -->
 
 For more information, see [[Priority]].
 

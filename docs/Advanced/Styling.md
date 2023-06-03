@@ -80,7 +80,7 @@ The generic classes are:
 
 In addition to the generic classes, there are [**data attributes**](https://developer.mozilla.org/en-US/docs/Learn/HTML/Howto/Use_data_attributes) that represent the content of the various task components.
 
-A **priority data attributes** named `data-task-priority` represents the specific priority of a class. It can be `high`, `medium`, `low` or `normal`.
+A **priority data attributes** named `data-task-priority` represents the specific priority of a class. It can be `highest`, `high`, `medium`, `low`, `lowest` or `normal`.
 The `normal` value is special: it is added as a default to a task's upper `task-list-item` even if there is no priority field set for that task.
 
 A **date attribute** represents a due, created, start, scheduled or done date in a format relative to the current date.
@@ -196,10 +196,15 @@ For example:
 
 ### Priority as a Checkbox Color
 
-The following rules remove the Tasks priority emoticon and render the tasks' checkboxes in red, orange, blue and cyan according to the tasks' priority:
+The following rules remove the Tasks priority emoticon and render the tasks' checkboxes in purple, red, orange, blue, cyan and green according to the tasks' priority:
 
 <!-- snippet: resources/sample_vaults/Tasks-Demo/.obsidian/snippets/tasks-plugin-priority-as-checkbox-color.css -->
 ```css
+.task-list-item[data-task-priority="highest"] input[type=checkbox] {
+    box-shadow: 0px 0px 2px 2px var(--color-purple);
+    border-color: var(--color-purple);
+}
+
 .task-list-item[data-task-priority="high"] input[type=checkbox] {
     box-shadow: 0px 0px 2px 2px var(--color-red);
     border-color: var(--color-red);
@@ -218,6 +223,11 @@ The following rules remove the Tasks priority emoticon and render the tasks' che
 .task-list-item[data-task-priority="low"] input[type=checkbox] {
     box-shadow: 0px 0px 2px 2px var(--color-cyan);
     border-color: var(--color-cyan);
+}
+
+.task-list-item[data-task-priority="lowest"] input[type=checkbox] {
+    box-shadow: 0px 0px 2px 2px var(--color-green);
+    border-color: var(--color-green);
 }
 
 /* This part removes the regular priority emoticon */
@@ -457,6 +467,11 @@ span.tasks-list-text {
 }
 
 /* Represent tasks' priority with colorful round checkboxes instead of the priority emoticons */
+.task-list-item[data-task-priority="highest"] input[type=checkbox] {
+    box-shadow: 0px 0px 2px 2px var(--color-purple);
+    border-color: var(--color-purple);
+}
+
 .task-list-item[data-task-priority="high"] input[type=checkbox] {
     box-shadow: 0px 0px 2px 2px var(--color-red);
     border-color: var(--color-red);
@@ -475,6 +490,11 @@ span.tasks-list-text {
 .task-list-item[data-task-priority="low"] input[type=checkbox] {
     box-shadow: 0px 0px 2px 2px var(--color-cyan);
     border-color: var(--color-cyan);
+}
+
+.task-list-item[data-task-priority="lowest"] input[type=checkbox] {
+    box-shadow: 0px 0px 2px 2px var(--color-green);
+    border-color: var(--color-green);
 }
 
 /* This part removes the regular priority emoticon */

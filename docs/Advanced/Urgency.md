@@ -58,7 +58,11 @@ The scores are as follows:
     <td><code>0.0</code></td>
   </tr>
   <tr>
-    <td rowspan="4">Priority</td>
+    <td rowspan="6">Priority</td>
+    <td>Highest</td>
+    <td><code>9.0</code></td>
+  </tr>
+  <tr>
     <td>High</td>
     <td><code>6.0</code></td>
   </tr>
@@ -73,6 +77,10 @@ The scores are as follows:
   <tr>
     <td>Low</td>
     <td><code>0.0</code></td>
+  </tr>
+  <tr>
+    <td>Lowest</td>
+    <td><code>-1.8</code></td>
   </tr>
   <tr>
     <td rowspan="3">Scheduled</td>

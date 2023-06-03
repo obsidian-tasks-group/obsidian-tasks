@@ -7,6 +7,8 @@
 | priority:: high high priority | priority:: high  |
 | priority:: medium medium priority | priority:: medium  |
 | priority:: low low priority | priority:: low  |
+| priority:: highest highest priority | priority:: highest  |
+| priority:: lowest lowest priority | priority:: lowest  |
 | repeat:: recurring (repeat) | repeat::  |
 | created:: created today (2022-07-11) | created:: 2022-07-11  |
 | every | repeat:: every  |

@@ -81,7 +81,7 @@ export function parseSorter(sorterString: string): Sorter | null {
     // See if any of the fields can parse the line.
     for (const creator of fieldCreators) {
         const field = creator();
-        const sorter = field.parseSortLine(sorterString);
+        const sorter = field.createSorterFromLine(sorterString);
         if (sorter) {
             return sorter;
         }
@@ -101,7 +101,7 @@ export function parseGrouper(line: string): Grouper | null {
     // See if any of the fields can parse the line.
     for (const creator of fieldCreators) {
         const field = creator();
-        const grouper = field.parseGroupLine(line);
+        const grouper = field.createGrouperFromLine(line);
         if (grouper) {
             return grouper;
         }

@@ -1,0 +1,44 @@
+name: update-docs-markdown
+on:
+  # Obtained fom https://stackoverflow.com/a/61565445/104370
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+    # Inputs the workflow accepts.
+    inputs:
+
+jobs:
+  docs:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install modules
+        run: yarn
+
+      - name: Run MarkdownSnippets
+        run: |
+          dotnet tool install --global MarkdownSnippets.Tool
+          mdsnippets ${GITHUB_WORKSPACE} && yarn run lint:markdown && git add --renormalize .
+          git commit -m "docs/contrib: Update snippets and examples in markdown" -a  || echo "nothing to commit"
+        shell: bash
+
+      # ----------------------------------------------------------------------------------
+      # Finalisation
+      # ----------------------------------------------------------------------------------
+      # Reference: https://github.com/marketplace/actions/create-pull-request
+      - name: Create Pull Request
+        id: cpr
+        uses: peter-evans/create-pull-request@v5
+        with:
+          title: "docs/contrib: Update snippets and examples in markdown"
+          branch: create-pull-request/${{ github.workflow }}
+          labels: |
+            scope: documentation
+            type: automated update
+
+      - name: Show Pull Request
+        run: |
+          echo "Pull Request Number - ${{ steps.cpr.outputs.pull-request-number }}"
+          echo "Pull Request URL - ${{ steps.cpr.outputs.pull-request-url }}"

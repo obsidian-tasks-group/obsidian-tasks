@@ -1,3 +1,8 @@
+.task-list-item[data-task-priority="highest"] input[type=checkbox] {
+    box-shadow: 0px 0px 2px 2px var(--color-purple);
+    border-color: var(--color-purple);
+}
+
 .task-list-item[data-task-priority="high"] input[type=checkbox] {
     box-shadow: 0px 0px 2px 2px var(--color-red);
     border-color: var(--color-red);
@@ -18,8 +23,12 @@
     border-color: var(--color-cyan);
 }
 
+.task-list-item[data-task-priority="lowest"] input[type=checkbox] {
+    box-shadow: 0px 0px 2px 2px var(--color-green);
+    border-color: var(--color-green);
+}
+
 /* This part removes the regular priority emoticon */
 span.task-priority {
     display: none;
 }
-
