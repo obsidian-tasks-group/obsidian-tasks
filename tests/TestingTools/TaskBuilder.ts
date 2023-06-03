@@ -62,7 +62,7 @@ export class TaskBuilder {
         if (this._tags.length > 0) {
             description += ' ' + this._tags.join(' ');
         }
-        return new Task({
+        const task = new Task({
             status: this._status,
             description: description,
             taskLocation: new TaskLocation(
@@ -86,12 +86,15 @@ export class TaskBuilder {
             originalMarkdown: '',
             scheduledDateIsInferred: this._scheduledDateIsInferred,
         });
+        const markdown = task.toFileLineString();
+        return new Task({
+            ...task,
+            originalMarkdown: markdown,
+        });
     }
 
     /**
      * Create a Task that has all fields populated.
-     *
-     * Note: Currently originalMarkdown is not populated.
      */
     public static createFullyPopulatedTask(): Task {
         const taskBuilder = new TaskBuilder()
@@ -112,9 +115,7 @@ export class TaskBuilder {
             }),
         );
 
-        const taskWithoutOriginalMarkdown = taskBuilder.build();
-        // TODO Set originalMarkdown
-        return taskWithoutOriginalMarkdown;
+        return taskBuilder.build();
     }
 
     /**

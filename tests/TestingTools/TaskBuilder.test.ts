@@ -17,6 +17,12 @@ describe('TaskBuilder', () => {
         expect(task.toFileLineString()).toStrictEqual('- [ ] hello #tag1 #tag2');
     });
 
+    it('should populate originalMarkdown', () => {
+        const builder = new TaskBuilder();
+        const task = builder.description('hello').build();
+        expect(task.originalMarkdown).toEqual('- [ ] hello');
+    });
+
     it('createFullyPopulatedTask() should populate every field', () => {
         const task: Task = TaskBuilder.createFullyPopulatedTask();
         // @ts-ignore
@@ -37,13 +43,10 @@ describe('TaskBuilder', () => {
                 nullOrUnsetFields.push(key);
             }
         }
-        expect(nullOrUnsetFields).toEqual(['originalMarkdown']);
-
-        // Current limitation: TaskBuilder does not yet automatically populate originalMarkdown:
-        expect(task.originalMarkdown).toEqual('');
+        expect(nullOrUnsetFields).toEqual([]);
 
         // Currently the blockLink is not formatted correctly:
-        expect(task.toFileLineString()).toEqual(
+        expect(task.originalMarkdown).toEqual(
             '  - [ ] my description 🔁 every day when done ➕ 2023-07-01 🛫 2023-07-02 ⏳ 2023-07-03 📅 2023-07-04 ✅ 2023-07-05dcf64c',
         );
 
