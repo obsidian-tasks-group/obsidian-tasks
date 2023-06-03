@@ -211,6 +211,10 @@ export class Status {
         return this.type === StatusType.DONE;
     }
 
+    public identicalTo(other: Status): boolean {
+        return this.configuration.identicalTo(other.configuration);
+    }
+
     /**
      * Return a one-line summary of the status, for presentation to users.
      */

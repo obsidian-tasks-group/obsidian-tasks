@@ -79,4 +79,18 @@ export class StatusConfiguration {
         this.availableAsCommand = availableAsCommand;
         this.type = type;
     }
+
+    public identicalTo(other: StatusConfiguration): boolean {
+        const args: Array<keyof StatusConfiguration> = [
+            'symbol',
+            'name',
+            'nextStatusSymbol',
+            'availableAsCommand',
+            'type',
+        ];
+        for (const el of args) {
+            if (this[el] !== other[el]) return false;
+        }
+        return true;
+    }
 }

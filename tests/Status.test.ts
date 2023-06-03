@@ -124,3 +124,13 @@ describe('Status', () => {
         expect(status.availableAsCommand).toEqual(false);
     });
 });
+
+describe('identicalTo', () => {
+    it('should check StatusConfiguration', () => {
+        const lhs = new Status(new StatusConfiguration('P', 'Pro', 'C', true, StatusType.TODO));
+        expect(lhs.identicalTo(lhs)).toEqual(true);
+
+        const rhs = new Status(new StatusConfiguration('P', 'Maybe', 'C', true, StatusType.TODO));
+        expect(lhs.identicalTo(rhs)).toEqual(false);
+    });
+});
