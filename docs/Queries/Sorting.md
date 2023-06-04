@@ -92,12 +92,27 @@ For more information, including adding your own customised statuses, see [[Statu
 
 ## Sort by File Properties
 
+### File Path
+
 1. `path` (the path to the file that contains the task)
+
+### Root
+
+It is not currently possible to sort by the top-level folder that contains the task.
+
+### Folder
+
+It is not currently possible to sort by the folder that contains the task.
+
+### File Name
+
 1. `filename` (the filename of the file that contains the task, with its extension)
     - Note that tasks from different notes with the same file name will be sorter.
 
 > [!released]
 `sort by filename` was introduced in Tasks 1.21.0.
+
+### Heading
 
 1. `sort by heading` (the heading preceding the task; files with empty headings sort before other tasks)
 
