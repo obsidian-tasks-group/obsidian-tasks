@@ -69,13 +69,12 @@ export function groupByFn(task: Task, arg: GroupingArg): string[] {
     const params = paramsArgs.map(([p]) => p);
     const groupBy = arg && new Function(...params, `return ${arg}`);
 
-    if (groupBy instanceof Function) {
-        const args = paramsArgs.map(([_, a]) => a);
-        const result = groupBy(...args);
-        const group = typeof result === 'string' ? result : 'Error with group result';
-
-        return [TextField.escapeMarkdownCharacters(group)];
-    } else {
+    if (!(groupBy instanceof Function)) {
         return ['Error parsing group function'];
     }
+    const args = paramsArgs.map(([_, a]) => a);
+    const result = groupBy(...args);
+    const group = typeof result === 'string' ? result : 'Error with group result';
+
+    return [TextField.escapeMarkdownCharacters(group)];
 }
