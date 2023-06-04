@@ -4,6 +4,21 @@ publish: true
 
 # Grouping
 
+## Contents
+
+This page is long. Here are some links to the main sections:
+
+- [[#Basics]
+- [[#Group by Task Statuses]
+- [[#Group by Dates in Tasks]
+- [[#Group by Other Task Properties]
+- [[#Group by File Properties]
+- [[#Multiple groups]
+- [[#Refining groups]
+- [[#Notes]
+- [[#Screenshots]
+- [[#Examples]
+
 ## Basics
 
 > [!released]
@@ -12,10 +27,6 @@ Introduced in Tasks 1.6.0.
 By default, Tasks displays tasks in a single list.
 
 To divide the matching tasks up with headings, you can add `group by` lines to the query.
-
-## Available grouping properties
-
-You can group by the following properties.
 
 ## Group by Task Statuses
 

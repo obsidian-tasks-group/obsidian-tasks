@@ -4,15 +4,25 @@ publish: true
 
 # Sorting
 
+## Contents
+
+This page is long. Here are some links to the main sections:
+
+- [[#Basics]]
+- [[#Sort by Task Statuses]]
+- [[#Sort by Dates in Tasks]]
+- [[#Sort by Other Task Properties]]
+- [[#Sort by File Properties]]
+- [[#Multiple sort criteria]]
+- [[#Notes]]
+- [[#Reverse sorting]]
+- [[#Examples]]
+
 ## Basics
 
 By default Tasks sorts tasks by [[Urgency|a calculated score we call "urgency"]].
 
 To sort the results of a query different from the default, you must add at least one `sort by` line to the query.
-
-## Available sorting properties
-
-You can sort tasks by the following properties.
 
 ## Sort by Task Statuses
 
