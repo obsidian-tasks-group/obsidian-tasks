@@ -4,6 +4,8 @@ publish: true
 
 # Sorting
 
+---
+
 ## Contents
 
 This page is long. Here are some links to the main sections:
@@ -18,11 +20,15 @@ This page is long. Here are some links to the main sections:
 - [[#Reverse sorting]]
 - [[#Examples]]
 
+---
+
 ## Basics
 
 By default Tasks sorts tasks by [[Urgency|a calculated score we call "urgency"]].
 
 To sort the results of a query different from the default, you must add at least one `sort by` line to the query.
+
+---
 
 ## Sort by Task Statuses
 
@@ -45,6 +51,8 @@ For more information, including adding your own customised statuses, see [[Statu
 
 > [!released]
 `sort by status.type` was introduced in Tasks 1.23.0.
+
+---
 
 ## Sort by Dates in Tasks
 
@@ -77,6 +85,8 @@ For more information, including adding your own customised statuses, see [[Statu
 
 > [!released]
 `sort by happens` was introduced in Tasks 1.21.0.
+
+---
 
 ## Sort by Other Task Properties
 
@@ -111,6 +121,8 @@ For example this query will sort by the second tag found in the description.
 > [!released]
 Tag sorting was introduced in Tasks 1.6.0.
 
+---
+
 ## Sort by File Properties
 
 ### File Path
@@ -140,11 +152,15 @@ It is not currently possible to sort by the folder that contains the task.
 > [!released]
 `sort by heading` was introduced in Tasks 1.21.0.
 
+---
+
 ## Multiple sort criteria
 
 You can add multiple `sort by` query options, each on an extra line.
 The first sort has the highest priority.
 Each subsequent `sort` will sort within the existing sorting.
+
+---
 
 ## Notes
 
@@ -164,6 +180,8 @@ add the following `sort` expressions to your queries:
 > Sorting by description should take into account `[[Links]]` and `[Links with an|Alias]` (note pipe).
 It should also take into account `*italics*` and `==highlights==`.
 It sorts by the text that's visible in preview mode.
+
+---
 
 ## Reverse sorting
 
