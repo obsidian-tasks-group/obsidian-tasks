@@ -2,7 +2,7 @@
 
 | Field | Type | Example |
 | ----- | ----- | ----- |
-| task.precedingHeader | string | 'My Header' |
+| `task.precedingHeader` | `string` | `'My Header'` |
 
 
 <!-- placeholder to force blank line after included text -->

@@ -16,8 +16,11 @@ function formatToRepresentType(x: any) {
     }
     // TODO Round numbers
     // TODO Format string arrays
-    // TODO Markup as code, in backticks
     return x;
+}
+
+function addBackticks(x: any) {
+    return '`' + x + '`';
 }
 
 describe('task', () => {
@@ -27,7 +30,7 @@ describe('task', () => {
         for (const field of fields) {
             const x = evaluateExpression(task, field);
             // better type label for string[] (tags)
-            const cells = [field, typeof x, formatToRepresentType(x)];
+            const cells = [addBackticks(field), addBackticks(typeof x), addBackticks(formatToRepresentType(x))];
             markdownTable.addRow(cells);
         }
         markdownTable.verifyForDocs();

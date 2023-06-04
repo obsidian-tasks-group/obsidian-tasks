@@ -64,10 +64,10 @@ gives this heading name:
 
 | Field | Type | Example |
 | ----- | ----- | ----- |
-| task.status.name | string | 'Todo' |
-| task.status.type | string | 'TODO' |
-| task.status.symbol | string | ' ' |
-| task.status.nextStatusSymbol | string | 'x' |
+| `task.status.name` | `string` | `'Todo'` |
+| `task.status.type` | `string` | `'TODO'` |
+| `task.status.symbol` | `string` | `' '` |
+| `task.status.nextStatusSymbol` | `string` | `'x'` |
 
 <!-- placeholder to force blank line after included text --> <!-- endInclude -->
 
@@ -85,10 +85,10 @@ None supported yet.
 
 | Field | Type | Example |
 | ----- | ----- | ----- |
-| task.description | string | 'Do exercises #todo #health' |
-| task.priority | string | '2' |
-| task.urgency | number | 3.3000000000000007 |
-| task.tags | object | #todo,#health |
+| `task.description` | `string` | `'Do exercises #todo #health'` |
+| `task.priority` | `string` | `'2'` |
+| `task.urgency` | `number` | `3.3000000000000007` |
+| `task.tags` | `object` | `#todo,#health` |
 
 <!-- placeholder to force blank line after included text --> <!-- endInclude -->
 
@@ -102,6 +102,6 @@ TODO Maybe use `heading` instead? Try to make field names consistent with existi
 
 | Field | Type | Example |
 | ----- | ----- | ----- |
-| task.precedingHeader | string | 'My Header' |
+| `task.precedingHeader` | `string` | `'My Header'` |
 
 <!-- placeholder to force blank line after included text --> <!-- endInclude -->
