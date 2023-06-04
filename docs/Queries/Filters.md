@@ -251,8 +251,6 @@ Find any tasks that have status symbols you have not yet added to your Tasks set
 
 ### Done Date
 
-- `done`
-- `not done`
 - `no done date`
 - `has done date`
 - `done (before|after|on) <date>`
