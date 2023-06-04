@@ -3,8 +3,6 @@ import type { GrouperFunction } from '../Grouper';
 import { Grouper } from '../Grouper';
 import { Field } from './Field';
 import { FilterOrErrorMessage } from './Filter';
-import { HappensDateField } from './HappensDateField';
-import { RootField } from './RootField';
 import { TextField } from './TextField';
 
 export class FunctionField extends Field {
@@ -63,28 +61,7 @@ function createGrouperFunctionFromLine(line: string): GrouperFunction {
 }
 
 function groupByFn(task: Task, arg?: GroupingArg): string[] {
-    const paramsArgs: [string, any][] = [
-        ['created', task.createdDate],
-        ['description', task.description],
-        ['done', task.doneDate],
-        ['due', task.dueDate],
-        ['filename', task.filename],
-        // ['folder', FolderField.folder(task.path, task.filename!)],
-        ['happens', new HappensDateField().earliestDate(task)],
-        ['header', task.precedingHeader],
-        ['indentation', task.indentation],
-        ['markdown', task.originalMarkdown],
-        ['path', task.path],
-        ['priority', task.priority],
-        ['recurrence', task.recurrence],
-        ['root', new RootField().value(task)],
-        ['scheduled', task.scheduledDate],
-        ['start', task.startDate],
-        ['status', task.status],
-        ['tags', task.tags],
-        ['task', task],
-        ['urgency', task.urgency],
-    ];
+    const paramsArgs: [string, any][] = [['task', task]];
 
     const params = paramsArgs.map(([p]) => p);
     const groupBy = arg && new Function(...params, `return ${arg}`);

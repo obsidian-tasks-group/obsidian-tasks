@@ -80,7 +80,7 @@ describe('FunctionField - grouping - basics', () => {
     it('should parse "group by function" line', () => {
         // Arrange
         const field = new FunctionField();
-        const instruction = 'group by function root === "journal/" ? root : path';
+        const instruction = 'group by function task.path.startsWith("journal/") ? "journal/" : task.path';
 
         // Assert
         const grouper = field.createGrouperFromLine(instruction);
@@ -91,7 +91,7 @@ describe('FunctionField - grouping - basics', () => {
     it('should parse "group by function reverse" line', () => {
         // Arrange
         const field = new FunctionField();
-        const instruction = 'group by function reverse root === "journal/" ? root : path';
+        const instruction = 'group by function reverse task.path.startsWith("journal/") ? "journal/" : task.path';
 
         // Assert
         const grouper = field.createGrouperFromLine(instruction);
@@ -114,29 +114,30 @@ describe('FunctionField - grouping - error-handling', () => {
 
 describe('FunctionField - grouping - example functions', () => {
     it('using root and path', () => {
-        const line = 'group by function root === "journal/" ? root : path';
+        // Note: This will change to task.file.path
+        const line = 'group by function task.path.startsWith("journal/") ? "journal/" : task.path';
         const grouper = createGrouper(line);
 
-        toGroupTaskWithPath(grouper, 'journal/a/b', ['journal/']);
+        toGroupTaskWithPath(grouper, 'journal/a/b.md', ['journal/']);
         toGroupTaskWithPath(grouper, 'hello/world/from-me.md', ['hello/world/from-me.md']);
         toGroupTaskWithPath(grouper, 'file-in-root-folder.md', ['file-in-root-folder.md']);
     });
 
     it('using path stripping folder', () => {
-        const line = 'group by function path.replace("some/prefix/", "")';
+        const line = 'group by function task.path.replace("some/prefix/", "")';
         const grouper = createGrouper(line);
 
         toGroupTaskWithPath(grouper, 'a/b/c.md', ['a/b/c.md']);
     });
 
     it('group by priority', () => {
-        const line = 'group by function priority';
+        const line = 'group by function task.priority';
         const grouper = createGrouper(line);
         toGroupTaskFromBuilder(grouper, new TaskBuilder().priority(Priority.Highest), ['0']);
     });
 
     it('group by status symbol', () => {
-        const line = 'group by function status.symbol';
+        const line = 'group by function task.status.symbol';
         const grouper = createGrouper(line);
         toGroupTaskFromBuilder(grouper, new TaskBuilder().status(Status.makeCancelled()), ['-']);
     });
