@@ -17,7 +17,7 @@ To divide the matching tasks up with headings, you can add `group by` lines to t
 
 You can group by the following properties.
 
-### File locations
+## Group by File Properties
 
 1. `path` (the path to the file that contains the task, that is, the folder and the filename)
 1. `root` (the top-level folder of the file that contains the task, that is, the first directory in the path, which will be `/` for files in root of the vault)
@@ -28,12 +28,10 @@ You can group by the following properties.
 > [!released]
 `root` grouping option was introduced in Tasks 1.11.0.
 
-### File contents
-
 1. `backlink` (the text that would be shown in the task's [[Backlinks|backlink]], combining the task's file name and heading, but with no link added)
 1. `heading` (the heading preceding the task, or `(No heading)` if there are no headings in the file)
 
-### Task date properties
+## Group by Dates in Tasks
 
 1. `created`
     - The created date of the task, including the week-day, or `No created date`.
@@ -52,7 +50,7 @@ You can group by the following properties.
 `happens` grouping option was introduced in Tasks 1.11.0.<br>
 `created` grouping option was introduced in Tasks 2.0.0.
 
-### Task statuses
+## Group by Task Statuses
 
 1. `status` (Done or Todo, which is capitalized for visibility in the headings)
     - Note that the Done group is displayed before the Todo group,
@@ -73,7 +71,7 @@ You can group by the following properties.
 
 For more information, including adding your own customised statuses, see [[Statuses]].
 
-### Other task properties
+## Group by Other Task Properties
 
 1. `priority`
     - The priority of the task, namely one of:
