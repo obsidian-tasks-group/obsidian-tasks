@@ -9,6 +9,7 @@ import { GlobalFilter } from '../../src/Config/GlobalFilter';
 import { StatusRegistry } from '../../src/StatusRegistry';
 import { Status } from '../../src/Status';
 import { StatusConfiguration } from '../../src/StatusConfiguration';
+import { updateSettings } from '../../src/Config/Settings';
 
 window.moment = moment;
 
@@ -79,6 +80,7 @@ function testToggleLineForOutOfRangeCursorPositions(
 describe('ToggleDone', () => {
     afterEach(() => {
         GlobalFilter.reset();
+        updateSettings({ autoInsertGlobalFilter: false });
     });
 
     const todaySpy = jest.spyOn(Date, 'now').mockReturnValue(moment('2022-09-04').valueOf());
@@ -101,12 +103,28 @@ describe('ToggleDone', () => {
 
     it('should add checkbox to hyphen and space', () => {
         GlobalFilter.set('');
+        updateSettings({ autoInsertGlobalFilter: false });
+
+        testToggleLine('|- ', '- [ ] |');
+        testToggleLine('- |', '- [ ] |');
+        testToggleLine('- |foobar', '- [ ] foobar|');
+
+        updateSettings({ autoInsertGlobalFilter: false });
 
         testToggleLine('|- ', '- [ ] |');
         testToggleLine('- |', '- [ ] |');
         testToggleLine('- |foobar', '- [ ] foobar|');
 
         GlobalFilter.set('#task');
+        updateSettings({ autoInsertGlobalFilter: false });
+
+        testToggleLine('|- ', '- [ ] |');
+        testToggleLine('- |', '- [ ] |');
+        testToggleLine('- |foobar', '- [ ] foobar|');
+        testToggleLine('- |#task', '- [ ] #task|');
+
+        GlobalFilter.set('#task');
+        updateSettings({ autoInsertGlobalFilter: true });
 
         testToggleLine('|- ', '- [ ] #task |');
         testToggleLine('- |', '- [ ] #task |');
@@ -114,6 +132,15 @@ describe('ToggleDone', () => {
         testToggleLine('- |#task', '- [ ] #task|');
 
         GlobalFilter.set('TODO');
+        updateSettings({ autoInsertGlobalFilter: false });
+
+        testToggleLine('|- ', '- [ ] |');
+        testToggleLine('- |', '- [ ] |');
+        testToggleLine('- |foobar', '- [ ] foobar|');
+        testToggleLine('- |TODO foobar', '- [ ] TODO foobar|');
+
+        GlobalFilter.set('TODO');
+        updateSettings({ autoInsertGlobalFilter: true });
 
         testToggleLine('|- ', '- [ ] TODO |');
         testToggleLine('- |', '- [ ] TODO |');
@@ -122,6 +149,13 @@ describe('ToggleDone', () => {
 
         // Test a global filter that has special characters from regular expressions
         GlobalFilter.set('a.*b');
+        updateSettings({ autoInsertGlobalFilter: false });
+
+        testToggleLine('|- [ ] a.*b ', '|- [x] a.*b ✅ 2022-09-04');
+        testToggleLine('- [ ] a.*b foobar |', '- [x] a.*b foobar |✅ 2022-09-04');
+
+        GlobalFilter.set('a.*b');
+        updateSettings({ autoInsertGlobalFilter: true });
 
         testToggleLine('|- [ ] a.*b ', '|- [x] a.*b ✅ 2022-09-04');
         testToggleLine('- [ ] a.*b foobar |', '- [x] a.*b foobar |✅ 2022-09-04');
@@ -137,31 +171,52 @@ describe('ToggleDone', () => {
 
         GlobalFilter.set('#task');
 
-        testToggleLine('|- [ ] ', '|- [x] ');
-        testToggleLine('- [ ] |', '- [x] |');
+        const completesWithTaskGlobalFilter = () => {
+            testToggleLine('|- [ ] ', '|- [x] ');
+            testToggleLine('- [ ] |', '- [x] |');
 
-        testToggleLine('|- [ ] #task ', '|- [x] #task ✅ 2022-09-04');
-        testToggleLine('- [ ] #task foobar |', '- [x] #task foobar |✅ 2022-09-04');
+            testToggleLine('|- [ ] #task ', '|- [x] #task ✅ 2022-09-04');
+            testToggleLine('- [ ] #task foobar |', '- [x] #task foobar |✅ 2022-09-04');
+        };
+
+        updateSettings({ autoInsertGlobalFilter: true });
+        completesWithTaskGlobalFilter();
+        updateSettings({ autoInsertGlobalFilter: false });
+        completesWithTaskGlobalFilter();
 
         // Issue #449 - cursor jumped 13 characters to the right on completion
         testToggleLine('- [ ] I have a |proper description', '- [x] I have a |proper description');
 
         GlobalFilter.set('TODO');
 
-        testToggleLine('|- [ ] ', '|- [x] ');
-        testToggleLine('- [ ] |', '- [x] |');
+        const completesWithTodoGlobalFilter = () => {
+            testToggleLine('|- [ ] ', '|- [x] ');
+            testToggleLine('- [ ] |', '- [x] |');
 
-        testToggleLine('|- [ ] TODO ', '|- [x] TODO ✅ 2022-09-04');
-        testToggleLine('- [ ] TODO foobar |', '- [x] TODO foobar |✅ 2022-09-04');
+            testToggleLine('|- [ ] TODO ', '|- [x] TODO ✅ 2022-09-04');
+            testToggleLine('- [ ] TODO foobar |', '- [x] TODO foobar |✅ 2022-09-04');
+        };
+
+        updateSettings({ autoInsertGlobalFilter: true });
+        completesWithTodoGlobalFilter();
+        updateSettings({ autoInsertGlobalFilter: false });
+        completesWithTodoGlobalFilter();
 
         // Test a global filter that has special characters from regular expressions
         GlobalFilter.set('a.*b');
 
-        testToggleLine('|- [ ] ', '|- [x] ');
-        testToggleLine('- [ ] |', '- [x] |');
+        const completesWithRegexGlobalFilter = () => {
+            testToggleLine('|- [ ] ', '|- [x] ');
+            testToggleLine('- [ ] |', '- [x] |');
 
-        testToggleLine('|- [ ] a.*b ', '|- [x] a.*b ✅ 2022-09-04');
-        testToggleLine('- [ ] a.*b foobar |', '- [x] a.*b foobar |✅ 2022-09-04');
+            testToggleLine('|- [ ] a.*b ', '|- [x] a.*b ✅ 2022-09-04');
+            testToggleLine('- [ ] a.*b foobar |', '- [x] a.*b foobar |✅ 2022-09-04');
+        };
+
+        updateSettings({ autoInsertGlobalFilter: true });
+        completesWithRegexGlobalFilter();
+        updateSettings({ autoInsertGlobalFilter: false });
+        completesWithRegexGlobalFilter();
     });
 
     it('should un-complete a completed task', () => {

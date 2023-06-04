@@ -108,6 +108,23 @@ export class SettingsTab extends PluginSettingTab {
             });
 
         new Setting(containerEl)
+            .setName('"Tasks: Toggle task done" command inserts global task filter')
+            .setDesc(
+                SettingsTab.createFragmentWithHTML(
+                    'Enabling this causes "Tasks: Toggle task done" command to insert the global task filter when creating a new checkbox',
+                ),
+            )
+            .addToggle((toggle) => {
+                const settings = getSettings();
+
+                toggle.setValue(settings.autoInsertGlobalFilter).onChange(async (value) => {
+                    updateSettings({ autoInsertGlobalFilter: value });
+
+                    await this.plugin.saveSettings();
+                });
+            });
+
+        new Setting(containerEl)
             .setName('Remove global filter from description')
             .setDesc(
                 'Enabling this removes the string that you set as global filter from the task description when displaying a task.',

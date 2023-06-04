@@ -34,6 +34,12 @@ export class GlobalFilter {
         return GlobalFilter.get() + ' ' + description;
     }
 
+    static shouldPrependToNewTask(line: string): boolean {
+        const { autoInsertGlobalFilter } = getSettings();
+
+        return !GlobalFilter.isEmpty() && autoInsertGlobalFilter && !GlobalFilter.includedIn(line);
+    }
+
     /**
      * Search for the global filter for the purpose of removing it from the description, but do so only
      * if it is a separate word (preceding the beginning of line or a space and followed by the end of line

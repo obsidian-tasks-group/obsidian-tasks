@@ -52,6 +52,7 @@ export type TASK_FORMATS = typeof TASK_FORMATS; // For convenience to make some 
 export interface Settings {
     globalQuery: string;
     globalFilter: string;
+    autoInsertGlobalFilter: boolean;
     removeGlobalFilter: boolean;
     taskFormat: keyof TASK_FORMATS;
     setCreatedDate: boolean;
@@ -82,6 +83,7 @@ export interface Settings {
 const defaultSettings: Settings = {
     globalQuery: '',
     globalFilter: GlobalFilter.empty,
+    autoInsertGlobalFilter: false,
     removeGlobalFilter: false,
     taskFormat: 'tasksPluginEmoji',
     setCreatedDate: false,
