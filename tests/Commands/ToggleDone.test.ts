@@ -119,6 +119,12 @@ describe('ToggleDone', () => {
         testToggleLine('- |', '- [ ] TODO |');
         testToggleLine('- |foobar', '- [ ] TODO foobar|');
         testToggleLine('- |TODO foobar', '- [ ] TODO foobar|');
+
+        // Test a global filter that has special characters from regular expressions
+        GlobalFilter.set('a.*b');
+
+        testToggleLine('|- [ ] a.*b ', '|- [x] a.*b ✅ 2022-09-04');
+        testToggleLine('- [ ] a.*b foobar |', '- [x] a.*b foobar |✅ 2022-09-04');
     });
 
     it('should complete a task', () => {
@@ -147,6 +153,15 @@ describe('ToggleDone', () => {
 
         testToggleLine('|- [ ] TODO ', '|- [x] TODO ✅ 2022-09-04');
         testToggleLine('- [ ] TODO foobar |', '- [x] TODO foobar |✅ 2022-09-04');
+
+        // Test a global filter that has special characters from regular expressions
+        GlobalFilter.set('a.*b');
+
+        testToggleLine('|- [ ] ', '|- [x] ');
+        testToggleLine('- [ ] |', '- [x] |');
+
+        testToggleLine('|- [ ] a.*b ', '|- [x] a.*b ✅ 2022-09-04');
+        testToggleLine('- [ ] a.*b foobar |', '- [x] a.*b foobar |✅ 2022-09-04');
     });
 
     it('should un-complete a completed task', () => {
