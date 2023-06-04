@@ -17,39 +17,6 @@ To divide the matching tasks up with headings, you can add `group by` lines to t
 
 You can group by the following properties.
 
-## Group by File Properties
-
-1. `path` (the path to the file that contains the task, that is, the folder and the filename)
-1. `root` (the top-level folder of the file that contains the task, that is, the first directory in the path, which will be `/` for files in root of the vault)
-1. `folder` (the folder to the file that contains the task, which will be `/` for files in root of the vault)
-1. `filename` (the link to the file that contains the task, without the `.md` extension)
-    - Note that tasks from different notes with the same file name will be grouped together in the same group.
-
-> [!released]
-`root` grouping option was introduced in Tasks 1.11.0.
-
-1. `backlink` (the text that would be shown in the task's [[Backlinks|backlink]], combining the task's file name and heading, but with no link added)
-1. `heading` (the heading preceding the task, or `(No heading)` if there are no headings in the file)
-
-## Group by Dates in Tasks
-
-1. `created`
-    - The created date of the task, including the week-day, or `No created date`.
-1. `start`
-    - The start date of the task, including the week-day, or `No start date`.
-1. `scheduled`
-    - The scheduled date of the task, including the week-day, or `No scheduled date`.
-1. `due`
-    - The due date of the task, including the week-day, or `No due date`.
-1. `done`
-    - The done date of the task, including the week-day, or `No done date`.
-1. `happens`
-    - The earliest of start date, scheduled date, and due date, including the week-day, or `No happens date` if none of those are set.
-
-> [!released]
-`happens` grouping option was introduced in Tasks 1.11.0.<br>
-`created` grouping option was introduced in Tasks 2.0.0.
-
 ## Group by Task Statuses
 
 1. `status` (Done or Todo, which is capitalized for visibility in the headings)
@@ -70,6 +37,25 @@ You can group by the following properties.
 `group by status.name` and `group by status.type` were introduced in Tasks 1.23.0.
 
 For more information, including adding your own customised statuses, see [[Statuses]].
+
+## Group by Dates in Tasks
+
+1. `created`
+    - The created date of the task, including the week-day, or `No created date`.
+1. `start`
+    - The start date of the task, including the week-day, or `No start date`.
+1. `scheduled`
+    - The scheduled date of the task, including the week-day, or `No scheduled date`.
+1. `due`
+    - The due date of the task, including the week-day, or `No due date`.
+1. `done`
+    - The done date of the task, including the week-day, or `No done date`.
+1. `happens`
+    - The earliest of start date, scheduled date, and due date, including the week-day, or `No happens date` if none of those are set.
+
+> [!released]
+`happens` grouping option was introduced in Tasks 1.11.0.<br>
+`created` grouping option was introduced in Tasks 2.0.0.
 
 ## Group by Other Task Properties
 
@@ -99,6 +85,20 @@ For more information, including adding your own customised statuses, see [[Statu
 > - `tags` grouping option was introduced in Tasks 1.10.0.<br>
 > - `priority`, `recurring` and `recurrence` grouping options were introduced in Tasks 1.11.0.
 > - `urgency` grouping option was introduced in Tasks 3.6.0.
+
+## Group by File Properties
+
+1. `path` (the path to the file that contains the task, that is, the folder and the filename)
+1. `root` (the top-level folder of the file that contains the task, that is, the first directory in the path, which will be `/` for files in root of the vault)
+1. `folder` (the folder to the file that contains the task, which will be `/` for files in root of the vault)
+1. `filename` (the link to the file that contains the task, without the `.md` extension)
+    - Note that tasks from different notes with the same file name will be grouped together in the same group.
+
+> [!released]
+`root` grouping option was introduced in Tasks 1.11.0.
+
+1. `backlink` (the text that would be shown in the task's [[Backlinks|backlink]], combining the task's file name and heading, but with no link added)
+1. `heading` (the heading preceding the task, or `(No heading)` if there are no headings in the file)
 
 ## Multiple groups
 
