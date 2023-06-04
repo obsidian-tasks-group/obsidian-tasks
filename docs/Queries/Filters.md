@@ -4,6 +4,19 @@ publish: true
 
 # Filters
 
+## Contents
+
+This page is long. Here are some links to the main sections:
+
+- [[#Searching for dates]]
+- [[#Text filters]]
+- [[#Matching multiple filters]]
+- [[#Filters for Task Statuses]]
+- [[#Filters for Dates in Tasks]]
+- [[#Filters for Other Task Properties]]
+- [[#Filters for File Properties]]
+- [[#Appendix: Tasks 2.0.0 improvements to date filters]]
+
 ## Searching for dates
 
 Tasks allows a lot of flexibility in the dates inside query blocks.
