@@ -14,6 +14,9 @@ function formatToRepresentType(x: any) {
     if (typeof x === 'string') {
         return "'" + x + "'";
     }
+    // TODO Round numbers
+    // TODO Format string arrays
+    // TODO Markup as code, in backticks
     return x;
 }
 
@@ -23,6 +26,7 @@ describe('task', () => {
         const task = TaskBuilder.createFullyPopulatedTask();
         for (const field of fields) {
             const x = evaluateExpression(task, field);
+            // better type label for string[] (tags)
             const cells = [field, typeof x, formatToRepresentType(x)];
             markdownTable.addRow(cells);
         }
@@ -30,7 +34,21 @@ describe('task', () => {
     }
 
     it('status', () => {
-        const fields = ['task.status.name', 'task.status.type', 'task.status.symbol', 'task.status.nextStatusSymbol'];
-        verifyFieldDataForReferenceDocs(fields);
+        verifyFieldDataForReferenceDocs([
+            'task.status.name',
+            'task.status.type',
+            'task.status.symbol',
+            'task.status.nextStatusSymbol',
+        ]);
+    });
+
+    it('other fields', () => {
+        // TODO Recurrence
+        verifyFieldDataForReferenceDocs(['task.description', 'task.priority', 'task.urgency', 'task.tags']);
+    });
+
+    it('file properties', () => {
+        // TODO Create task.file
+        verifyFieldDataForReferenceDocs(['task.precedingHeader']);
     });
 });

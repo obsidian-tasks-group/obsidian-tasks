@@ -24,10 +24,6 @@ Tasks code blocks allow certain instructions to be written as JavaScript express
 
 #### Syntax error
 
-const line = 'group by function hello';
-const grouper = createGrouper(line);
-toGroupTaskWithPath(grouper, 'journal/a/b.md', ['Error: Failed calculating expression "hello". The error message was: hello is not defined']);
-
 The following example gives an error:
 
 ````text
@@ -62,7 +58,7 @@ gives this heading name:
 
 ## Reference
 
-## Values by Task Statuses
+### Values for Task Statuses
 
 <!-- placeholder to force blank line before included text --> <!-- include: FunctionFieldReference.test.task_status.approved.md -->
 
@@ -72,5 +68,40 @@ gives this heading name:
 | task.status.type | string | 'TODO' |
 | task.status.symbol | string | ' ' |
 | task.status.nextStatusSymbol | string | 'x' |
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+
+---
+
+### Values for Dates in Tasks
+
+None supported yet.
+
+---
+
+### Values for Other Task Properties
+
+<!-- placeholder to force blank line before included text --> <!-- include: FunctionFieldReference.test.task_other_fields.approved.md -->
+
+| Field | Type | Example |
+| ----- | ----- | ----- |
+| task.description | string | 'Do exercises #todo #health' |
+| task.priority | string | '2' |
+| task.urgency | number | 3.3000000000000007 |
+| task.tags | object | #todo,#health |
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+
+---
+
+### Values for File Properties
+
+TODO Maybe use `heading` instead? Try to make field names consistent with existing filter names
+
+<!-- placeholder to force blank line before included text --> <!-- include: FunctionFieldReference.test.task_file_properties.approved.md -->
+
+| Field | Type | Example |
+| ----- | ----- | ----- |
+| task.precedingHeader | string | 'My Header' |
 
 <!-- placeholder to force blank line after included text --> <!-- endInclude -->
