@@ -61,7 +61,10 @@ function createGrouperFunctionFromLine(line: string): GrouperFunction {
 }
 
 function groupByFn(task: Task, arg?: GroupingArg): string[] {
-    const paramsArgs: [string, any][] = [['task', task]];
+    const paramsArgs: [string, any][] = [
+        // TODO Later, pass in the Query too, for access to file properties
+        ['task', task],
+    ];
 
     const params = paramsArgs.map(([p]) => p);
     const groupBy = arg && new Function(...params, `return ${arg}`);
