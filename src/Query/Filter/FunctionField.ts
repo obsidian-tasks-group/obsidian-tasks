@@ -72,8 +72,20 @@ export function groupByFn(task: Task, arg: GroupingArg): string[] {
     if (!(groupBy instanceof Function)) {
         return ['Error parsing group function'];
     }
+
+    let result;
     const args = paramsArgs.map(([_, a]) => a);
-    const result = groupBy(...args);
+    try {
+        result = groupBy(...args);
+    } catch (e) {
+        result = `Error: Failed calculating expression "${arg}". The error message was: `;
+        if (e instanceof Error) {
+            result += e.message;
+        } else {
+            result += 'Unknown error';
+        }
+    }
+
     const requiredType = 'string';
     const group =
         typeof result === requiredType

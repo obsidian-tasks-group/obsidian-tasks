@@ -111,6 +111,14 @@ describe('FunctionField - grouping - error-handling', () => {
         expect(t).toThrow(Error);
     });
 
+    it('should give a meaningful error for invalid syntax', () => {
+        const line = 'group by function hello';
+        const grouper = createGrouper(line);
+        toGroupTaskWithPath(grouper, 'journal/a/b.md', [
+            'Error: Failed calculating expression "hello". The error message was: hello is not defined',
+        ]);
+    });
+
     it('should give a meaningful error if the function does not return a string', () => {
         // This returns a boolean, which is currently not considered a valid type for a group name
         const line = "group by function task.status.symbol === '/'";
