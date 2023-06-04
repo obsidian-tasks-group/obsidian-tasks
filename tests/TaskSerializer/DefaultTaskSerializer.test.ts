@@ -3,11 +3,12 @@
  */
 import moment from 'moment';
 import { Priority } from '../../src/Task';
-import type { Settings } from '../../src/Config/Settings';
+import { type Settings, TIME_FORMATS, resetSettings } from '../../src/Config/Settings';
 import { DefaultTaskSerializer } from '../../src/TaskSerializer';
 import { RecurrenceBuilder } from '../TestingTools/RecurrenceBuilder';
 import { DEFAULT_SYMBOLS, type DefaultTaskSerializerSymbols } from '../../src/TaskSerializer/DefaultTaskSerializer';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
+import { parseMoment } from '../../src/Reminders/Reminder';
 
 jest.mock('obsidian');
 window.moment = moment;
@@ -23,8 +24,15 @@ describe.each(symbolMap)("DefaultTaskSerializer with '$taskFormat' symbols", ({ 
     const taskSerializer = new DefaultTaskSerializer(symbols);
     const serialize = taskSerializer.serialize.bind(taskSerializer);
     const deserialize = taskSerializer.deserialize.bind(taskSerializer);
-    const { startDateSymbol, createdDateSymbol, recurrenceSymbol, scheduledDateSymbol, dueDateSymbol, doneDateSymbol } =
-        symbols;
+    const {
+        startDateSymbol,
+        createdDateSymbol,
+        recurrenceSymbol,
+        scheduledDateSymbol,
+        dueDateSymbol,
+        doneDateSymbol,
+        reminderDateSymbol,
+    } = symbols;
 
     describe('deserialize', () => {
         it('should parse an empty string', () => {
@@ -65,7 +73,26 @@ describe.each(symbolMap)("DefaultTaskSerializer with '$taskFormat' symbols", ({ 
         it('should parse tags', () => {
             const description = ' #hello #world #task';
             const taskDetails = deserialize(description);
-            expect(taskDetails).toMatchTaskDetails({ tags: ['#hello', '#world', '#task'], description });
+            expect(taskDetails).toMatchTaskDetails({
+                tags: ['#hello', '#world', '#task'],
+                description,
+            });
+        });
+    });
+
+    describe('deserialize reminders', () => {
+        afterEach(function () {
+            resetSettings();
+        });
+
+        it('should parse a single 24h reminder', () => {
+            const times = ['2021-06-20 13:45', '2021-06-20 01:45', '2021-06-20'];
+            times.forEach((time) => {
+                const taskDetails = deserialize(`${reminderDateSymbol} ${time}`);
+                expect(taskDetails).toMatchTaskDetails({
+                    reminder: parseMoment(moment(time, TIME_FORMATS.twentyFourHour)),
+                });
+            });
         });
     });
 
@@ -114,6 +141,26 @@ describe.each(symbolMap)("DefaultTaskSerializer with '$taskFormat' symbols", ({ 
             const task = new TaskBuilder().description('').tags(['#hello', '#world', '#task']).build();
             const serialized = serialize(task);
             expect(serialized).toEqual(' #hello #world #task');
+        });
+
+        it('should serialize a single reminder date', () => {
+            const serialized = serialize(new TaskBuilder().reminder('2021-06-20').description('').build());
+            expect(serialized).toEqual(` ${reminderDateSymbol} 2021-06-20`);
+        });
+    });
+
+    describe('serialize reminders', () => {
+        afterEach(function () {
+            resetSettings();
+        });
+
+        it('should serialize a single 24h reminder', () => {
+            const times = ['2021-06-20 13:45', '2021-06-20 01:45', '2021-06-20'];
+
+            times.forEach((time) => {
+                const serialized = serialize(new TaskBuilder().reminder(time).description('').build());
+                expect(serialized).toEqual(` ${reminderDateSymbol} ${time}`);
+            });
         });
     });
 });

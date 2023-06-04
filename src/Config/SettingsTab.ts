@@ -232,6 +232,46 @@ export class SettingsTab extends PluginSettingTab {
             });
 
         // ---------------------------------------------------------------------------
+        containerEl.createEl('h4', { text: 'Reminder Settings' });
+        // ---------------------------------------------------------------------------
+
+        new Setting(containerEl)
+            .setName('Daily Reminder Time')
+            .setDesc(
+                SettingsTab.createFragmentWithHTML(
+                    '<p>When daily reminders should be triggered. Should be in the 24-hour clock, for example 09:00 or 21:00.</p>',
+                ),
+            )
+            .addText((text) => {
+                const settings = getSettings().reminderSettings;
+                text.setPlaceholder('10')
+                    .setValue(settings.dailyReminderTime)
+                    .onChange(async (value) => {
+                        settings.dailyReminderTime = value;
+                        updateSettings({ reminderSettings: settings });
+                        await this.plugin.saveSettings();
+                    });
+            });
+
+        new Setting(containerEl)
+            .setName('Check Reminders interval')
+            .setDesc(
+                SettingsTab.createFragmentWithHTML('<p>How often Tasks should check for reminders in Seconds.</p>'),
+            )
+            .addSlider((slider) => {
+                const settings = getSettings().reminderSettings;
+                slider
+                    .setLimits(1, 30, 1)
+                    .setValue(settings.refreshIntervalMilliseconds / 1000) // convert from miliseconds to seconds
+                    .setDynamicTooltip()
+                    .onChange(async (value) => {
+                        settings.refreshIntervalMilliseconds = value * 1000; // convert from seconds to miliseconds
+                        updateSettings({ reminderSettings: settings });
+                        await this.plugin.saveSettings();
+                    });
+            });
+
+        // ---------------------------------------------------------------------------
         containerEl.createEl('h4', { text: 'Recurring task Settings' });
         // ---------------------------------------------------------------------------
 

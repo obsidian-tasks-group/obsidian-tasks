@@ -1,4 +1,6 @@
 import type { Moment } from 'moment';
+import { TIME_FORMATS } from '../Config/Settings';
+import { Reminder, parseMoment } from '../Reminders/Reminder';
 import { TaskLayout } from '../TaskLayout';
 import type { TaskLayoutComponent } from '../TaskLayout';
 import { Recurrence } from '../Recurrence';
@@ -26,6 +28,7 @@ export interface DefaultTaskSerializerSymbols {
     readonly dueDateSymbol: string;
     readonly doneDateSymbol: string;
     readonly recurrenceSymbol: string;
+    readonly reminderDateSymbol: string;
     readonly TaskFormatRegularExpressions: {
         priorityRegex: RegExp;
         startDateRegex: RegExp;
@@ -34,6 +37,7 @@ export interface DefaultTaskSerializerSymbols {
         dueDateRegex: RegExp;
         doneDateRegex: RegExp;
         recurrenceRegex: RegExp;
+        reminderRegex: RegExp;
     };
 }
 
@@ -56,6 +60,7 @@ export const DEFAULT_SYMBOLS: DefaultTaskSerializerSymbols = {
     dueDateSymbol: '📅',
     doneDateSymbol: '✅',
     recurrenceSymbol: '🔁',
+    reminderDateSymbol: '⏰️',
     TaskFormatRegularExpressions: {
         // The following regex's end with `$` because they will be matched and
         // removed from the end until none are left.
@@ -66,6 +71,7 @@ export const DEFAULT_SYMBOLS: DefaultTaskSerializerSymbols = {
         dueDateRegex: /[📅📆🗓] *(\d{4}-\d{2}-\d{2})$/u,
         doneDateRegex: /✅ *(\d{4}-\d{2}-\d{2})$/u,
         recurrenceRegex: /🔁 ?([a-zA-Z0-9, !]+)$/iu,
+        reminderRegex: /⏰️ *(\d{4}-\d{2}-\d{2}(?: \d{2}:\d{2})?)/u,
     },
 } as const;
 
@@ -99,6 +105,7 @@ export class DefaultTaskSerializer implements TaskSerializer {
             doneDateSymbol,
             recurrenceSymbol,
             dueDateSymbol,
+            reminderDateSymbol,
         } = this.symbols;
 
         switch (component) {
@@ -145,6 +152,11 @@ export class DefaultTaskSerializer implements TaskSerializer {
                 return layout.options.shortMode
                     ? ' ' + dueDateSymbol
                     : ` ${dueDateSymbol} ${task.dueDate.format(TaskRegularExpressions.dateFormat)}`;
+            case 'reminders': // TODO Rename to singular
+                if (!task.reminder) return '';
+                return layout.options.shortMode
+                    ? ' ' + reminderDateSymbol
+                    : ` ${reminderDateSymbol} ${task.reminder.toString()}`;
             case 'recurrenceRule':
                 if (!task.recurrence) return '';
                 return layout.options.shortMode
@@ -201,6 +213,7 @@ export class DefaultTaskSerializer implements TaskSerializer {
         let scheduledDate: Moment | null = null;
         let dueDate: Moment | null = null;
         let doneDate: Moment | null = null;
+        let rList: Reminder | null = null; // TODO Rename to reminder
         let createdDate: Moment | null = null;
         let recurrenceRule: string = '';
         let recurrence: Recurrence | null = null;
@@ -277,6 +290,14 @@ export class DefaultTaskSerializer implements TaskSerializer {
                 trailingTags = trailingTags.length > 0 ? [tagName, trailingTags].join(' ') : tagName;
             }
 
+            const reminderMatch = line.match(TaskFormatRegularExpressions.reminderRegex);
+            if (reminderMatch !== null) {
+                line = line.replace(TaskFormatRegularExpressions.reminderRegex, '').trim();
+                const reminderDate2 = reminderMatch[1];
+                const reminder = window.moment(reminderDate2, TIME_FORMATS.twentyFourHour);
+                rList = parseMoment(reminder);
+                matched = true;
+            }
             runs++;
         } while (matched && runs <= maxRuns);
 
@@ -287,6 +308,7 @@ export class DefaultTaskSerializer implements TaskSerializer {
                 startDate,
                 scheduledDate,
                 dueDate,
+                reminder: rList,
             });
         }
         // Add back any trailing tags to the description. We removed them so we can parse the rest of the
@@ -305,6 +327,7 @@ export class DefaultTaskSerializer implements TaskSerializer {
             doneDate,
             recurrence,
             tags: Task.extractHashtags(line),
+            reminder: rList,
         };
     }
 }

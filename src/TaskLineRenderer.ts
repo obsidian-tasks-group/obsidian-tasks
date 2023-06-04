@@ -26,6 +26,7 @@ export const LayoutClasses: { [c in TaskLayoutComponent]: string } = {
     createdDate: 'task-created',
     scheduledDate: 'task-scheduled',
     doneDate: 'task-done',
+    reminders: 'task-reminders',
     recurrenceRule: 'task-recurring',
     blockLink: '',
 };

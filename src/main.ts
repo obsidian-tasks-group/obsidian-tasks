@@ -1,5 +1,6 @@
 import { Plugin } from 'obsidian';
 
+import { TaskNotification } from './Reminders/Notification';
 import { Cache } from './Cache';
 import { Commands } from './Commands';
 import { TasksEvents } from './TasksEvents';
@@ -20,6 +21,7 @@ export default class TasksPlugin extends Plugin {
     private cache: Cache | undefined;
     public inlineRenderer: InlineRenderer | undefined;
     public queryRenderer: QueryRenderer | undefined;
+    private taskNotification: TaskNotification | undefined;
 
     get apiV1() {
         return tasksApiV1(app);
@@ -28,6 +30,7 @@ export default class TasksPlugin extends Plugin {
     async onload() {
         logging.registerConsoleLogger();
         console.log('loading plugin "tasks"');
+        this.taskNotification = new TaskNotification(this.app);
 
         await this.loadSettings();
         this.addSettingTab(new SettingsTab({ plugin: this }));
@@ -53,6 +56,14 @@ export default class TasksPlugin extends Plugin {
         this.registerEditorExtension(newLivePreviewExtension());
         this.registerEditorSuggest(new EditorSuggestor(this.app, getSettings()));
         new Commands({ plugin: this });
+
+        // Register the watcher for reminders.
+        this.app.workspace.onLayoutReady(async () => {
+            if (this.taskNotification && this.cache) {
+                this.registerInterval(this.taskNotification.watcher(this.cache) ?? 0);
+            }
+            // TODO Is it possible for this.cache to not yet be set up?
+        });
     }
 
     async loadTaskStatuses() {

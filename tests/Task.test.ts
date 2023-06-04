@@ -1237,6 +1237,14 @@ describe('identicalTo', () => {
         expect(lhs).toBeIdenticalTo(new TaskBuilder().tags([]));
         expect(lhs).not.toBeIdenticalTo(new TaskBuilder().tags(['#stuff']));
     });
+
+    it('should check reminders', () => {
+        const lhs = new TaskBuilder().reminder('2023-03-07 09:25 am');
+        expect(lhs).toBeIdenticalTo(new TaskBuilder().reminder('2023-03-07 09:25 am'));
+        expect(lhs).not.toBeIdenticalTo(new TaskBuilder().reminder(null));
+        expect(lhs).not.toBeIdenticalTo(new TaskBuilder().reminder('2023-03-07'));
+        expect(lhs).not.toBeIdenticalTo(new TaskBuilder().reminder('2023-03-07 09:27 am'));
+    });
 });
 
 describe('checking if task lists are identical', () => {

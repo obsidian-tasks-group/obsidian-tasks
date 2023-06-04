@@ -68,6 +68,7 @@ describe('TaskSerializer Example', () => {
                 scheduledDate: null,
                 doneDate: null,
                 recurrence: null,
+                reminder: null,
             };
         }
 
@@ -103,8 +104,12 @@ describe('TaskSerializer Example', () => {
             });
         });
 
+        // TODO Figure out why this changed.
         it('should parse a priority and description', () => {
-            expect(ts.deserialize('1 Wobble')).toMatchTaskDetails({ priority: Priority.High, description: 'Wobble' });
+            expect(ts.deserialize('1 Wobble')).toMatchTaskDetails({
+                priority: Priority.High,
+                description: 'Wobble',
+            });
         });
 
         it('should parse a full task', () => {

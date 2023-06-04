@@ -6,6 +6,7 @@ import { Recurrence } from '../../src/Recurrence';
 import { DateParser } from '../../src/Query/DateParser';
 import { StatusConfiguration, StatusType } from '../../src/StatusConfiguration';
 import { TaskLocation } from '../../src/TaskLocation';
+import { Reminder, parseDateTime } from '../../src/Reminders/Reminder';
 
 /**
  * A fluent class for creating tasks for tests.
@@ -39,6 +40,7 @@ export class TaskBuilder {
     private _scheduledDate: Moment | null = null;
     private _dueDate: Moment | null = null;
     private _doneDate: Moment | null = null;
+    private _reminders: Reminder | null = null; // TODO Rename to singular
 
     private _recurrence: Recurrence | null = null;
     private _blockLink: string = '';
@@ -83,6 +85,7 @@ export class TaskBuilder {
             recurrence: this._recurrence,
             blockLink: this._blockLink,
             tags: this._tags,
+            reminder: this._reminders,
             originalMarkdown: '',
             scheduledDateIsInferred: this._scheduledDateIsInferred,
         });
@@ -236,6 +239,15 @@ export class TaskBuilder {
 
     public doneDate(doneDate: string | null): TaskBuilder {
         this._doneDate = TaskBuilder.parseDate(doneDate);
+        return this;
+    }
+
+    public reminder(reminder: string | null): TaskBuilder {
+        if (reminder) {
+            this._reminders = parseDateTime(reminder);
+        } else {
+            this._reminders = null;
+        }
         return this;
     }
 

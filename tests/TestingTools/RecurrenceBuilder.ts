@@ -2,6 +2,7 @@
 import type { Moment } from 'moment';
 import { Recurrence } from '../../src/Recurrence';
 import { DateParser } from '../../src/Query/DateParser';
+import { Reminder, parseDateTime } from '../../src/Reminders/Reminder';
 
 /**
  * A fluent class for creating Recurrence objects for tests.
@@ -20,6 +21,7 @@ export class RecurrenceBuilder {
     private _startDate: Moment | null = null;
     private _scheduledDate: Moment | null = null;
     private _dueDate: Moment | null = null;
+    private _reminder: Reminder | null = null;
 
     /**
      * Build a Recurrence
@@ -38,6 +40,7 @@ export class RecurrenceBuilder {
             startDate: this._startDate,
             scheduledDate: this._scheduledDate,
             dueDate: this._dueDate,
+            reminder: this._reminder,
         }) as Recurrence;
     }
 
@@ -58,6 +61,15 @@ export class RecurrenceBuilder {
 
     public dueDate(dueDate: string | null): RecurrenceBuilder {
         this._dueDate = RecurrenceBuilder.parseDate(dueDate);
+        return this;
+    }
+
+    public reminders(reminder: string): RecurrenceBuilder {
+        if (reminder.length > 0) {
+            this._reminder = parseDateTime(reminder);
+        } else {
+            this._reminder = null;
+        }
         return this;
     }
 

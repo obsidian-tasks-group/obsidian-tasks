@@ -21,7 +21,7 @@ export class Query implements IQuery {
     private _grouping: Grouper[] = [];
 
     private readonly hideOptionsRegexp =
-        /^(hide|show) (task count|backlink|priority|created date|start date|scheduled date|done date|due date|recurrence rule|edit button|urgency)/;
+        /^(hide|show) (task count|backlink|priority|created date|start date|scheduled date|done date|due date|recurrence rule|edit button|urgency|reminder date)/;
     private readonly shortModeRegexp = /^short/;
     private readonly explainQueryRegexp = /^explain/;
 
@@ -215,6 +215,9 @@ export class Query implements IQuery {
                     break;
                 case 'due date':
                     this._layoutOptions.hideDueDate = hide;
+                    break;
+                case 'reminder date':
+                    this._layoutOptions.hideReminderDate = hide;
                     break;
                 case 'done date':
                     this._layoutOptions.hideDoneDate = hide;

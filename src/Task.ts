@@ -10,6 +10,9 @@ import { renderTaskLine } from './TaskLineRenderer';
 import type { TaskLineRenderDetails } from './TaskLineRenderer';
 import { DateFallback } from './DateFallback';
 import { compareByDate } from './lib/DateTools';
+import type { Reminder } from './Reminders/Reminder';
+import { replaceTaskWithTasks } from './File';
+import { isReminderSame } from './Reminders/Reminder';
 
 /**
  * When sorting, make sure low always comes after none. This way any tasks with low will be below any exiting
@@ -107,6 +110,7 @@ export class Task {
     public readonly taskLocation: TaskLocation;
 
     public readonly tags: string[];
+    public readonly reminder: Reminder | null; // TODO Move this to after doneDate??
 
     public readonly priority: Priority;
 
@@ -146,6 +150,7 @@ export class Task {
         recurrence,
         blockLink,
         tags,
+        reminder,
         originalMarkdown,
         scheduledDateIsInferred,
     }: {
@@ -163,6 +168,7 @@ export class Task {
         recurrence: Recurrence | null;
         blockLink: string;
         tags: string[] | [];
+        reminder: Reminder | null;
         originalMarkdown: string;
         scheduledDateIsInferred: boolean;
     }) {
@@ -173,6 +179,7 @@ export class Task {
         this.taskLocation = taskLocation;
 
         this.tags = tags;
+        this.reminder = reminder;
 
         this.priority = priority;
 
@@ -322,6 +329,7 @@ export class Task {
             startDate: Moment | null;
             scheduledDate: Moment | null;
             dueDate: Moment | null;
+            reminder: Reminder | null;
         } | null = null;
 
         if (newStatus.isCompleted()) {
@@ -393,6 +401,18 @@ export class Task {
 
         const { recurrenceOnNextLine: recurrenceOnNextLine } = getSettings();
         return recurrenceOnNextLine ? newTasks.reverse() : newTasks;
+    }
+
+    // toggle task status and update
+    // TODO Understand why this method exists.
+    // TODO Check that this method has tests.
+    public toggleUpdate() {
+        const newTasks = this.toggle();
+
+        replaceTaskWithTasks({
+            originalTask: this,
+            newTasks: newTasks,
+        });
     }
 
     public get urgency(): number {
@@ -533,6 +553,11 @@ export class Task {
                 return element === other.tags[index];
             })
         ) {
+            return false;
+        }
+
+        // compare reminders
+        if (!isReminderSame(this.reminder, other.reminder)) {
             return false;
         }
 

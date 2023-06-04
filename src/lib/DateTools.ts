@@ -21,3 +21,7 @@ export function compareByDate(a: moment.Moment | null, b: moment.Moment | null):
         return 0;
     }
 }
+
+export function sameDateTime(a: moment.Moment, b: moment.Moment) {
+    return a.format('YYYY-MM-DD HH:mm') === b.format('YYYY-MM-DD HH:mm');
+}

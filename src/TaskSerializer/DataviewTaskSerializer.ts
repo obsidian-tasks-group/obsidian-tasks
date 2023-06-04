@@ -73,6 +73,7 @@ export const DATAVIEW_SYMBOLS = {
     dueDateSymbol: 'due::',
     doneDateSymbol: 'completion::',
     recurrenceSymbol: 'repeat::',
+    reminderDateSymbol: 'remind::',
     TaskFormatRegularExpressions: {
         priorityRegex: toInlineFieldRegex(/priority:: *(highest|high|medium|low|lowest)/),
         startDateRegex: toInlineFieldRegex(/start:: *(\d{4}-\d{2}-\d{2})/),
@@ -81,6 +82,11 @@ export const DATAVIEW_SYMBOLS = {
         dueDateRegex: toInlineFieldRegex(/due:: *(\d{4}-\d{2}-\d{2})/),
         doneDateRegex: toInlineFieldRegex(/completion:: *(\d{4}-\d{2}-\d{2})/),
         recurrenceRegex: toInlineFieldRegex(/repeat:: *([a-zA-Z0-9, !]+)/),
+        // TODO Remove the duplication of regex from emoji parsing code
+        // TODO Add tests and then actually hook up reminder reading in dataview format
+        reminderRegex: toInlineFieldRegex(
+            /remind:: *((\d{4}-\d{2}-\d{2}(?: \d{1,2}:\d{2} (?:am|pm|PM|AM))?\s*(?:,\s*)?)+)\b/,
+        ),
     },
 } as const;
 
