@@ -60,7 +60,16 @@ function createGrouperFunctionFromLine(line: string): GrouperFunction {
     };
 }
 
-export function groupByFn(task: Task, arg: GroupingArg): string[] {
+/**
+ * Evaluate an arbitrary JavaScript expression on a Task object
+ * @param task - a {@link Task} object
+ * @param arg - a string, such as `task.path.startsWith("journal/") ? "journal/" : task.path`
+ *
+ * Currently any errors are returned as string error messages, starting with the word 'Error'.
+ *
+ * @todo Implement a type-safe mechanism to report error messages distinct from expression results.
+ */
+export function evaluateExpression(task: Task, arg: string | null) {
     const paramsArgs: [string, any][] = [
         // TODO Later, pass in the Query too, for access to file properties
         ['task', task],
@@ -70,7 +79,8 @@ export function groupByFn(task: Task, arg: GroupingArg): string[] {
     const groupBy = arg && new Function(...params, `return ${arg}`);
 
     if (!(groupBy instanceof Function)) {
-        return ['Error parsing group function'];
+        // I have not managed to write a test that reaches here:
+        return 'Error parsing group function';
     }
 
     let result;
@@ -85,6 +95,11 @@ export function groupByFn(task: Task, arg: GroupingArg): string[] {
             result += 'Unknown error';
         }
     }
+    return result;
+}
+
+export function groupByFn(task: Task, arg: GroupingArg): string[] {
+    const result = evaluateExpression(task, arg);
 
     const requiredType = 'string';
     const group =
