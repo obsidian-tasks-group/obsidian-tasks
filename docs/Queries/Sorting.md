@@ -14,19 +14,16 @@ To sort the results of a query different from the default, you must add at least
 
 You can sort tasks by the following properties.
 
-## Sort by File Properties
+## Sort by Task Statuses
 
-1. `path` (the path to the file that contains the task)
-1. `filename` (the filename of the file that contains the task, with its extension)
-    - Note that tasks from different notes with the same file name will be sorter.
-
-> [!released]
-`sort by filename` was introduced in Tasks 1.21.0.
-
-1. `sort by heading` (the heading preceding the task; files with empty headings sort before other tasks)
+1. `status` (done or todo)
+1. `status.name` (Done, Todo, Cancelled, In Progress, Unknown, My very important custom status, etc - sorted alphabetically)
+1. `status.type` (Sorted in the order `IN_PROGRESS`, `TODO`, `DONE`, `CANCELLED` then `NON_TASK`)
 
 > [!released]
-`sort by heading` was introduced in Tasks 1.21.0.
+`sort by status.name` and `sort by status.type` were introduced in Tasks 1.23.0.
+
+For more information, including adding your own customised statuses, see [[Statuses]].
 
 ## Sort by Dates in Tasks
 
@@ -41,17 +38,6 @@ You can sort tasks by the following properties.
 `sort by happens` was introduced in Tasks 1.21.0.<br>
 `sort by created` was introduced in Tasks 2.0.0.
 
-## Sort by Task Statuses
-
-1. `status` (done or todo)
-1. `status.name` (Done, Todo, Cancelled, In Progress, Unknown, My very important custom status, etc - sorted alphabetically)
-1. `status.type` (Sorted in the order `IN_PROGRESS`, `TODO`, `DONE`, `CANCELLED` then `NON_TASK`)
-
-> [!released]
-`sort by status.name` and `sort by status.type` were introduced in Tasks 1.23.0.
-
-For more information, including adding your own customised statuses, see [[Statuses]].
-
 ## Sort by Other Task Properties
 
 1. `description` (the description of the task)
@@ -59,6 +45,20 @@ For more information, including adding your own customised statuses, see [[Statu
 1. `urgency` ([[Urgency|urgency]])
 1. `recurring` (recurring tasks sort before non-recurring ones: [[Recurring Tasks]])
 1. `tag` (the description of the task)
+
+## Sort by File Properties
+
+1. `path` (the path to the file that contains the task)
+1. `filename` (the filename of the file that contains the task, with its extension)
+    - Note that tasks from different notes with the same file name will be sorter.
+
+> [!released]
+`sort by filename` was introduced in Tasks 1.21.0.
+
+1. `sort by heading` (the heading preceding the task; files with empty headings sort before other tasks)
+
+> [!released]
+`sort by heading` was introduced in Tasks 1.21.0.
 
 ## Multiple sort criteria
 
