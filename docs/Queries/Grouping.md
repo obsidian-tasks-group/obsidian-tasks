@@ -56,20 +56,36 @@ For more information, including adding your own customised statuses, see [[Statu
 1. `done`
     - The done date of the task, including the week-day, or `No done date`.
 
+> [!released]
+>
+> - `done` grouping option was introduced in Tasks 1.7.0.
+
 ### Due Date
 
 1. `due`
     - The due date of the task, including the week-day, or `No due date`.
+
+> [!released]
+>
+> - `due` grouping option was introduced in Tasks 1.7.0.
 
 ### Scheduled Date
 
 1. `scheduled`
     - The scheduled date of the task, including the week-day, or `No scheduled date`.
 
+> [!released]
+>
+> - `scheduled` grouping option was introduced in Tasks 1.7.0.
+
 ### Start Date
 
 1. `start`
     - The start date of the task, including the week-day, or `No start date`.
+
+> [!released]
+>
+> - `start` grouping option was introduced in Tasks 1.7.0.
 
 ### Created Date
 
@@ -89,6 +105,8 @@ For more information, including adding your own customised statuses, see [[Statu
 
 ## Group by Other Task Properties
 
+### Priority
+
 1. `priority`
     - The priority of the task, namely one of:
         - `Priority 0: Highest`
@@ -97,24 +115,42 @@ For more information, including adding your own customised statuses, see [[Statu
         - `Priority 3: None`
         - `Priority 4: Low`
         - `Priority 5: Lowest`
+
+> [!released]
+>
+> - `priority` grouping option was introduced in Tasks 1.11.0.
+
+### Urgency
+
 1. `urgency` ([[Urgency|urgency]])
     - Currently, the groups run from the lowest urgency to highest.
     - You can reverse this with `group by urgency reverse`.
     - In a future release, the default group order will become from the highest urgency to lowest.
+
+> [!released]
+>
+> - `urgency` grouping option was introduced in Tasks 3.6.0.
+
+### Recurrence
+
 1. `recurring`
     - Whether the task is recurring: either `Recurring` or `Not Recurring`.
 1. `recurrence`
     - The recurrence rule of the task, for example `every week on Sunday`, or `None` for non-recurring tasks.
     - Note that the text displayed is generated programmatically and standardised, and so may not exactly match the text in any manually typed tasks. For example, a task with `🔁 every Sunday` is grouped in `every week on Sunday`.
+
+> [!released]
+>
+> - `recurring` and `recurrence` grouping options were introduced in Tasks 1.11.0.
+
+### Tags
+
 1. `tags`
     - The tags of the tasks or `(No tags)`. If the task has multiple tags, it will show up under every tag.
 
 > [!released]
 >
-> - `start`, `scheduled`, `due` and `done` grouping options were introduced in Tasks 1.7.0.<br>
-> - `tags` grouping option was introduced in Tasks 1.10.0.<br>
-> - `priority`, `recurring` and `recurrence` grouping options were introduced in Tasks 1.11.0.
-> - `urgency` grouping option was introduced in Tasks 3.6.0.
+> - `tags` grouping option was introduced in Tasks 1.10.0.
 
 ## Group by File Properties
 
