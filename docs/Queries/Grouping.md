@@ -51,6 +51,26 @@ For more information, including adding your own customised statuses, see [[Statu
 
 ## Group by Dates in Tasks
 
+### Done Date
+
+1. `done`
+    - The done date of the task, including the week-day, or `No done date`.
+
+### Due Date
+
+1. `due`
+    - The due date of the task, including the week-day, or `No due date`.
+
+### Scheduled Date
+
+1. `scheduled`
+    - The scheduled date of the task, including the week-day, or `No scheduled date`.
+
+### Start Date
+
+1. `start`
+    - The start date of the task, including the week-day, or `No start date`.
+
 ### Created Date
 
 1. `created`
@@ -58,26 +78,6 @@ For more information, including adding your own customised statuses, see [[Statu
 
 > [!released]
 `created` grouping option was introduced in Tasks 2.0.0.
-
-### Start Date
-
-1. `start`
-    - The start date of the task, including the week-day, or `No start date`.
-
-### Scheduled Date
-
-1. `scheduled`
-    - The scheduled date of the task, including the week-day, or `No scheduled date`.
-
-### Due Date
-
-1. `due`
-    - The due date of the task, including the week-day, or `No due date`.
-
-### Done Date
-
-1. `done`
-    - The done date of the task, including the week-day, or `No done date`.
 
 ### Happens
 
