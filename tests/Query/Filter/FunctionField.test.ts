@@ -113,10 +113,10 @@ describe('FunctionField - grouping - error-handling', () => {
 
     it('should give a meaningful error if the function does not return a string', () => {
         // This returns a boolean, which is currently not considered a valid type for a group name
-        const line = 'group by function task.status.availableAsCommand';
+        const line = "group by function task.status.symbol === '/'";
         const grouper = createGrouper(line);
         toGroupTaskWithPath(grouper, 'journal/a/b.md', [
-            'Error: Incorrect type from expression "task.status.availableAsCommand" returned value "true" of type "boolean" which is not a "string"',
+            'Error: Incorrect type from expression "task.status.symbol === \'/\'" returned value "false" of type "boolean" which is not a "string"',
         ]);
     });
 });
