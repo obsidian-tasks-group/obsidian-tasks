@@ -10,8 +10,8 @@ publish: true
 - 3.8.0: 🔥 Add [[Limiting#Limit number of tasks in each group|limiting tasks per group]]
 - 3.8.0: 🔥 Add option to control the [[Recurring Tasks#Order of the new task|order of new recurring tasks]]
 - 3.7.0: 🔥 Add [[Grouping#Reversing groups|reverse sorting of groups]]
-- 3.6.0: 🔥 Add [[Grouping#Other task properties|group by urgency]]
-- 3.6.0: 🔥 Add [[Sorting#Other task properties|sort by recurring]]
+- 3.6.0: 🔥 Add [[Grouping#Group by Other Task Properties|group by urgency]]
+- 3.6.0: 🔥 Add [[Sorting#Sort by Other Task Properties|sort by recurring]]
 - 3.5.0: 🔥 New [[Global Query]] facility.
 - 3.4.0: 🔥 Clicking on a [[Backlinks|Backlink]] jumps to the exact task line.
 - 3.4.0: Tasks now requires at least Obsidian 1.1.1.

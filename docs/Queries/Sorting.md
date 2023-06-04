@@ -14,7 +14,7 @@ To sort the results of a query different from the default, you must add at least
 
 You can sort tasks by the following properties.
 
-### File locations
+## Sort by File Properties
 
 1. `path` (the path to the file that contains the task)
 1. `filename` (the filename of the file that contains the task, with its extension)
@@ -23,14 +23,12 @@ You can sort tasks by the following properties.
 > [!released]
 `sort by filename` was introduced in Tasks 1.21.0.
 
-### File contents
-
 1. `sort by heading` (the heading preceding the task; files with empty headings sort before other tasks)
 
 > [!released]
 `sort by heading` was introduced in Tasks 1.21.0.
 
-### Task date properties
+## Sort by Dates in Tasks
 
 1. `created` (the date when the task was created)
 1. `start` (the date when the task starts)
@@ -43,7 +41,7 @@ You can sort tasks by the following properties.
 `sort by happens` was introduced in Tasks 1.21.0.<br>
 `sort by created` was introduced in Tasks 2.0.0.
 
-### Task statuses
+## Sort by Task Statuses
 
 1. `status` (done or todo)
 1. `status.name` (Done, Todo, Cancelled, In Progress, Unknown, My very important custom status, etc - sorted alphabetically)
@@ -54,7 +52,7 @@ You can sort tasks by the following properties.
 
 For more information, including adding your own customised statuses, see [[Statuses]].
 
-### Other task properties
+## Sort by Other Task Properties
 
 1. `description` (the description of the task)
 1. `priority` (priority of the task; "low" is below "none": [[Priority|priorities]])
