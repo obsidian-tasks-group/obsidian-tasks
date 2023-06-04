@@ -16,14 +16,25 @@ You can sort tasks by the following properties.
 
 ## Sort by Task Statuses
 
+For more information, including adding your own customised statuses, see [[Statuses]].
+
+### Status
+
 1. `status` (done or todo)
+
+### Status Name
+
 1. `status.name` (Done, Todo, Cancelled, In Progress, Unknown, My very important custom status, etc - sorted alphabetically)
+
+> [!released]
+`sort by status.name` was introduced in Tasks 1.23.0.
+
+### Status Type
+
 1. `status.type` (Sorted in the order `IN_PROGRESS`, `TODO`, `DONE`, `CANCELLED` then `NON_TASK`)
 
 > [!released]
-`sort by status.name` and `sort by status.type` were introduced in Tasks 1.23.0.
-
-For more information, including adding your own customised statuses, see [[Statuses]].
+`sort by status.type` was introduced in Tasks 1.23.0.
 
 ## Sort by Dates in Tasks
 

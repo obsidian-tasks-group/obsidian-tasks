@@ -19,11 +19,24 @@ You can group by the following properties.
 
 ## Group by Task Statuses
 
+For more information, including adding your own customised statuses, see [[Statuses]].
+
+### Status
+
 1. `status` (Done or Todo, which is capitalized for visibility in the headings)
     - Note that the Done group is displayed before the Todo group,
       which differs from the Sorting ordering of this property.
+
+### Status Name
+
 1. `status.name`
     - This groups by the names you give to your custom statuses, in alphabetical order.
+
+> [!released]
+`group by status.name` was introduced in Tasks 1.23.0.
+
+### Status Type
+
 1. `status.type`
     - This groups by the types you have given to your custom statuses.
     - In order to impose a useful sort order, the types are prefixed with a number, so the groups will appear in this order, and with these group names:
@@ -34,9 +47,7 @@ You can group by the following properties.
         - `5 NON_TASK`
 
 > [!released]
-`group by status.name` and `group by status.type` were introduced in Tasks 1.23.0.
-
-For more information, including adding your own customised statuses, see [[Statuses]].
+`group by status.type` was introduced in Tasks 1.23.0.
 
 ## Group by Dates in Tasks
 
