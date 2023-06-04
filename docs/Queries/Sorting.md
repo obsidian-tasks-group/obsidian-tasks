@@ -20,18 +20,18 @@ For more information, including adding your own customised statuses, see [[Statu
 
 ### Status
 
-1. `status` (done or todo)
+- `sort by status` (done or todo)
 
 ### Status Name
 
-1. `status.name` (Done, Todo, Cancelled, In Progress, Unknown, My very important custom status, etc - sorted alphabetically)
+- `sort by status.name` (Done, Todo, Cancelled, In Progress, Unknown, My very important custom status, etc - sorted alphabetically)
 
 > [!released]
 `sort by status.name` was introduced in Tasks 1.23.0.
 
 ### Status Type
 
-1. `status.type` (Sorted in the order `IN_PROGRESS`, `TODO`, `DONE`, `CANCELLED` then `NON_TASK`)
+- `sort by status.type` (Sorted in the order `IN_PROGRESS`, `TODO`, `DONE`, `CANCELLED` then `NON_TASK`)
 
 > [!released]
 `sort by status.type` was introduced in Tasks 1.23.0.
@@ -40,30 +40,30 @@ For more information, including adding your own customised statuses, see [[Statu
 
 ### Done Date
 
-1. `done` (the date when the task was done)
+- `sort by done` (the date when the task was done)
 
 ### Due Date
 
-1. `due` (the date when the task is due)
+- `sort by due` (the date when the task is due)
 
 ### Scheduled Date
 
-1. `scheduled` (the date when the task is scheduled)
+- `sort by scheduled` (the date when the task is scheduled)
 
 ### Start Date
 
-1. `start` (the date when the task starts)
+- `sort by start` (the date when the task starts)
 
 ### Created Date
 
-1. `created` (the date when the task was created)
+- `sort by created` (the date when the task was created)
 
 > [!released]
 `sort by created` was introduced in Tasks 2.0.0.
 
 ### Happens
 
-1. `happens` (the earliest of start date, scheduled date, and due date)
+- `sort by happens` (the earliest of start date, scheduled date, and due date)
 
 > [!released]
 `sort by happens` was introduced in Tasks 1.21.0.
@@ -72,29 +72,29 @@ For more information, including adding your own customised statuses, see [[Statu
 
 ### Description
 
-1. `description` (the description of the task)
+- `sort by description` (the description of the task)
 
 ### Priority
 
-1. `priority` (priority of the task; "low" is below "none": [[Priority|priorities]])
+- `sort by priority` (priority of the task; "low" is below "none": [[Priority|priorities]])
 
 ### Urgency
 
-1. `urgency` ([[Urgency|urgency]])
+- `sort by urgency` ([[Urgency|urgency]])
 
 ### Recurrence
 
-1. `recurring` (recurring tasks sort before non-recurring ones: [[Recurring Tasks]])
+- `sort by recurring` (recurring tasks sort before non-recurring ones: [[Recurring Tasks]])
 
 ### Tags
 
-1. `tag` (the description of the task)
+- `sort by tag` (the description of the task)
 
 ## Sort by File Properties
 
 ### File Path
 
-1. `path` (the path to the file that contains the task)
+- `sort by path` (the path to the file that contains the task)
 
 ### Root
 
@@ -106,15 +106,15 @@ It is not currently possible to sort by the folder that contains the task.
 
 ### File Name
 
-1. `filename` (the filename of the file that contains the task, with its extension)
-    - Note that tasks from different notes with the same file name will be sorter.
+- `sort by filename` (the filename of the file that contains the task, with its extension)
+  - Note that tasks from different notes with the same file name will be sorter.
 
 > [!released]
 `sort by filename` was introduced in Tasks 1.21.0.
 
 ### Heading
 
-1. `sort by heading` (the heading preceding the task; files with empty headings sort before other tasks)
+- `sort by sort by heading` (the heading preceding the task; files with empty headings sort before other tasks)
 
 > [!released]
 `sort by heading` was introduced in Tasks 1.21.0.
