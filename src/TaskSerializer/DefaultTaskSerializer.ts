@@ -293,7 +293,14 @@ export class DefaultTaskSerializer implements TaskSerializer {
         // components but now we want them back.
         // The goal is for a task of them form 'Do something #tag1 (due) tomorrow #tag2 (start) today'
         // to actually have the description 'Do something #tag1 #tag2'
-        if (trailingTags.length > 0) line += ' ' + trailingTags;
+        if (trailingTags.length > 0) {
+            // If the line is empty besides the tag then don't prepend a space because it results in a double space
+            if (line === '') {
+                line += trailingTags;
+            } else {
+                line += ' ' + trailingTags;
+            }
+        }
 
         return {
             description: line,

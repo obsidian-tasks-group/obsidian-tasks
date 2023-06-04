@@ -100,6 +100,8 @@ describe('ToggleDone', () => {
     });
 
     it('should add checkbox to hyphen and space', () => {
+        GlobalFilter.set('');
+
         testToggleLine('|- ', '- [ ] |');
         testToggleLine('- |', '- [ ] |');
         testToggleLine('- |foobar', '- [ ] foobar|');
@@ -109,11 +111,20 @@ describe('ToggleDone', () => {
         testToggleLine('|- ', '- [ ] #task |');
         testToggleLine('- |', '- [ ] #task |');
         testToggleLine('- |foobar', '- [ ] #task foobar|');
+        testToggleLine('- |#task', '- [ ] #task|');
+
+        GlobalFilter.set('TODO');
+
+        testToggleLine('|- ', '- [ ] TODO |');
+        testToggleLine('- |', '- [ ] TODO |');
+        testToggleLine('- |foobar', '- [ ] TODO foobar|');
+        testToggleLine('- |TODO foobar', '- [ ] TODO foobar|');
     });
 
     it('should complete a task', () => {
         testToggleLine('|- [ ] ', '|- [x]  ✅ 2022-09-04');
         testToggleLine('- [ ] |', '- [x] | ✅ 2022-09-04');
+        testToggleLine('- [ ]| ', '- [x]|  ✅ 2022-09-04');
 
         // Issue #449 - cursor jumped 13 characters to the right on completion
         testToggleLine('- [ ] I have a |proper description', '- [x] I have a |proper description ✅ 2022-09-04');
@@ -123,8 +134,19 @@ describe('ToggleDone', () => {
         testToggleLine('|- [ ] ', '|- [x] ');
         testToggleLine('- [ ] |', '- [x] |');
 
+        testToggleLine('|- [ ] #task ', '|- [x] #task ✅ 2022-09-04');
+        testToggleLine('- [ ] #task foobar |', '- [x] #task foobar |✅ 2022-09-04');
+
         // Issue #449 - cursor jumped 13 characters to the right on completion
         testToggleLine('- [ ] I have a |proper description', '- [x] I have a |proper description');
+
+        GlobalFilter.set('TODO');
+
+        testToggleLine('|- [ ] ', '|- [x] ');
+        testToggleLine('- [ ] |', '- [x] |');
+
+        testToggleLine('|- [ ] TODO ', '|- [x] TODO ✅ 2022-09-04');
+        testToggleLine('- [ ] TODO foobar |', '- [x] TODO foobar |✅ 2022-09-04');
     });
 
     it('should un-complete a completed task', () => {

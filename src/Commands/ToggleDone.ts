@@ -93,7 +93,8 @@ export const toggleLine = (line: string, path: string): EditorInsertion => {
         } else if (TaskRegularExpressions.listItemRegex.test(line)) {
             // Convert the list item to a checklist item.
             const globalFilter = GlobalFilter.get();
-            const newTaskText = globalFilter == '' ? '[ ]' : `[ ] ${globalFilter}`;
+            const addGlobalFilter = globalFilter != '' && !line.includes(globalFilter);
+            const newTaskText = addGlobalFilter ? `[ ] ${globalFilter}` : '[ ]';
             const text = line.replace(TaskRegularExpressions.listItemRegex, `$1$2 ${newTaskText}`);
             return { text, moveTo: { ch: text.length } };
         } else {
