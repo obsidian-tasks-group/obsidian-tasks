@@ -70,10 +70,24 @@ For more information, including adding your own customised statuses, see [[Statu
 
 ## Sort by Other Task Properties
 
+### Description
+
 1. `description` (the description of the task)
+
+### Priority
+
 1. `priority` (priority of the task; "low" is below "none": [[Priority|priorities]])
+
+### Urgency
+
 1. `urgency` ([[Urgency|urgency]])
+
+### Recurrence
+
 1. `recurring` (recurring tasks sort before non-recurring ones: [[Recurring Tasks]])
+
+### Tags
+
 1. `tag` (the description of the task)
 
 ## Sort by File Properties
