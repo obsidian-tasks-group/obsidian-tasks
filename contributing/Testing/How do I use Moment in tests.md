@@ -8,6 +8,13 @@ publish: true
 
 See also the equivalent [[How do I use Moment in src]].
 
+## Introduction
+
+[Moment.js](https://momentjs.com) is a date and time library, and Tasks uses it in preference to the built-in Date class.
+
+- [Moment.js Documentation](https://momentjs.com/docs/)
+- [Format Moment objects](https://momentjs.com/docs/#/displaying/)
+
 ## Declare moment in tests/
 
 This is how to declare `moment` and `Moment` in files that **test** code in the Tasks plugin.
@@ -45,10 +52,21 @@ TypeError: window.moment is not a function
 
 ## Use moment in tests/
 
+Calling the `moment` function:
+
 <!-- snippet: use-moment-in-tests -->
 ```ts
 const date = moment('2003-10-12');
 const now = moment();
+```
+<!-- endSnippet -->
+
+Testing `Moment` values:
+
+<!-- snippet: test-moment-equality -->
+```ts
+expect(task!.dueDate).toEqualMoment(moment('2021-09-12'));
+expect(task!.doneDate).toEqualMoment(moment('2021-06-20'));
 ```
 <!-- endSnippet -->
 

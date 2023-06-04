@@ -8,6 +8,13 @@ publish: true
 
 See also the equivalent [[How do I use Moment in tests]].
 
+## Introduction
+
+[Moment.js](https://momentjs.com) is a date and time library, and Tasks uses it in preference to the built-in Date class.
+
+- [Moment.js Documentation](https://momentjs.com/docs/)
+- [Format Moment objects](https://momentjs.com/docs/#/displaying/)
+
 ## Using Moment as a type in src/
 
 To declare the type `Moment`, for use as the type of a variable, field or function return type in files that will be **released** in the Tasks plugin:
