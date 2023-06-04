@@ -38,16 +38,35 @@ For more information, including adding your own customised statuses, see [[Statu
 
 ## Sort by Dates in Tasks
 
+### Created Date
+
 1. `created` (the date when the task was created)
+
+> [!released]
+`sort by created` was introduced in Tasks 2.0.0.
+
+### Start Date
+
 1. `start` (the date when the task starts)
+
+### Scheduled Date
+
 1. `scheduled` (the date when the task is scheduled)
+
+### Due Date
+
 1. `due` (the date when the task is due)
+
+### Done Date
+
 1. `done` (the date when the task was done)
+
+### Happens
+
 1. `happens` (the earliest of start date, scheduled date, and due date)
 
 > [!released]
-`sort by happens` was introduced in Tasks 1.21.0.<br>
-`sort by created` was introduced in Tasks 2.0.0.
+`sort by happens` was introduced in Tasks 1.21.0.
 
 ## Sort by Other Task Properties
 
