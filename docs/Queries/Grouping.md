@@ -4,6 +4,8 @@ publish: true
 
 # Grouping
 
+---
+
 ## Contents
 
 This page is long. Here are some links to the main sections:
@@ -19,6 +21,8 @@ This page is long. Here are some links to the main sections:
 - [[#Screenshots]
 - [[#Examples]
 
+---
+
 ## Basics
 
 > [!released]
@@ -27,6 +31,8 @@ Introduced in Tasks 1.6.0.
 By default, Tasks displays tasks in a single list.
 
 To divide the matching tasks up with headings, you can add `group by` lines to the query.
+
+---
 
 ## Group by Task Statuses
 
@@ -59,6 +65,8 @@ For more information, including adding your own customised statuses, see [[Statu
 
 > [!released]
 `group by status.type` was introduced in Tasks 1.23.0.
+
+---
 
 ## Group by Dates in Tasks
 
@@ -114,6 +122,8 @@ For more information, including adding your own customised statuses, see [[Statu
 > [!released]
 `happens` grouping option was introduced in Tasks 1.11.0.
 
+---
+
 ## Group by Other Task Properties
 
 ### Priority
@@ -163,6 +173,8 @@ For more information, including adding your own customised statuses, see [[Statu
 >
 > - `tags` grouping option was introduced in Tasks 1.10.0.
 
+---
+
 ## Group by File Properties
 
 ### File Path
@@ -193,6 +205,8 @@ For more information, including adding your own customised statuses, see [[Statu
 
 - `group by heading` (the heading preceding the task, or `(No heading)` if there are no headings in the file)
 
+---
+
 ## Multiple groups
 
 You can add multiple `group by` query options, each on an extra line.
@@ -209,6 +223,8 @@ See the [screenshots below](#screenshots) for how this looks in practice.
 
 > [!info]
 > Headings are displayed in case-sensitive alphabetical order, not the original order.
+
+---
 
 ## Refining groups
 
@@ -239,6 +255,8 @@ For example:
 You can limit the number of tasks in each group, perhaps to work on the most important things first.
 
 See [[Limiting#Limit number of tasks in each group|Limit number of tasks in each group]].
+
+---
 
 ## Notes
 

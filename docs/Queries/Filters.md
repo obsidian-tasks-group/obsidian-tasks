@@ -4,6 +4,8 @@ publish: true
 
 # Filters
 
+---
+
 ## Contents
 
 This page is long. Here are some links to the main sections:
@@ -16,6 +18,8 @@ This page is long. Here are some links to the main sections:
 - [[#Filters for Other Task Properties]]
 - [[#Filters for File Properties]]
 - [[#Appendix: Tasks 2.0.0 improvements to date filters]]
+
+---
 
 ## Searching for dates
 
@@ -241,6 +245,8 @@ Find any tasks that have status symbols you have not yet added to your Tasks set
     group by path
     ```
 
+---
+
 ## Filters for Dates in Tasks
 
 ### Done Date
@@ -434,6 +440,8 @@ to the incorrect line, and fixing it by directly typing in the new date.
 If you use the 'Create or edit Task' Modal, it will discard the broken date, and there will be no information about
 the original, incorrect value.
 
+---
+
 ## Filters for Other Task Properties
 
 As well as the date-related searches above, these filters search other properties in individual tasks.
@@ -557,6 +565,8 @@ Introduced in Tasks 1.6.0.
   - The trailing `i` means case-insensitive.
   - Searches for tags such as `#book`,  `#Book`, `#BOOK` and the `$` prevents matching of `#books`,  `#book/literature`, etc.
 
+---
+
 ## Filters for File Properties
 
 These filters allow searching for tasks in particular files and sections of files.
@@ -628,6 +638,8 @@ Note that the file name includes the `.md` extension.
 
 > [!released]
 `regex matches` and `regex does not match` were introduced in Tasks 1.12.0.
+
+---
 
 ## Appendix: Tasks 2.0.0 improvements to date filters
 
