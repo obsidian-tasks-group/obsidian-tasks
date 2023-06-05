@@ -101,10 +101,7 @@ export function groupByFn(task: Task, arg: GroupingArg): string[] {
     const result = evaluateExpression(task, arg);
 
     const requiredType = 'string';
-    const group =
-        typeof result === requiredType
-            ? result
-            : `Error: Incorrect type from expression "${arg}" returned value "${result}" of type "${typeof result}" which is not a "${requiredType}"`;
+    const group = typeof result === requiredType ? result : result.toString();
 
     return [TextField.escapeMarkdownCharacters(group)];
 }

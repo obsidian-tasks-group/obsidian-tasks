@@ -226,7 +226,7 @@ Tasks has a powerful mechanism for you to create your own custom groups, offerin
 >
 > We can achieve this with this line, where the `reverse` work makes the tasks with longest descriptions be shown first:
 >
-> `group by function reverse 'Description length: ' + task.description.length.toString()`
+> `group by function reverse 'Description length: ' + task.description.length`
 
 Here is a visual explanation of how that instruction behaves:
 
@@ -234,7 +234,7 @@ Here is a visual explanation of how that instruction behaves:
 flowchart TB
 
 4[Tasks code block]
-5["group by function reverse 'Description length: ' + task.description.length.toString()"]
+5["group by function reverse 'Description length: ' + task.description.length"]
 4 --> 5
 
 8["- [ ] #task Hello"]
@@ -242,8 +242,8 @@ flowchart TB
 task.indentation
 task.urgency
 etc"]
-10["'Description length: ' + task.description.length.toString()"]
-12["'Description length: ' + '#task Hello'.length.toString()"]
+10["'Description length: ' + task.description.length"]
+12["'Description length: ' + '#task Hello'.length"]
 13['Description length: 11']
 
 5 --> 10
@@ -316,27 +316,6 @@ gives this heading name:
 
 > [!todo]
 > Do syntax-error checking when parsing the instruction
-
-#### Group names must be strings
-
-Expressions for `group by function` must currently return a single `string` value.
-
-The following example returns a `boolean`:
-
-````text
-```tasks
-group by function task.status.symbol === '/'
-```
-````
-
-gives this heading name:
-
-```text
-##### Error: Incorrect type from expression "task.status.symbol === '/'" returned value "false" of type "boolean" which is not a "string"
-```
-
-> [!todo]
-> If all else fails, add a `.toString()` call, so information is written out
 
 ---
 

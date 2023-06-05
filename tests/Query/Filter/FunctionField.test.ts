@@ -118,18 +118,15 @@ describe('FunctionField - grouping - error-handling', () => {
             'Error: Failed calculating expression "hello". The error message was: hello is not defined',
         ]);
     });
-
-    it('should give a meaningful error if the function does not return a string', () => {
-        // This returns a boolean, which is currently not considered a valid type for a group name
-        const line = "group by function task.status.symbol === '/'";
-        const grouper = createGrouper(line);
-        toGroupTaskWithPath(grouper, 'journal/a/b.md', [
-            'Error: Incorrect type from expression "task.status.symbol === \'/\'" returned value "false" of type "boolean" which is not a "string"',
-        ]);
-    });
 });
 
 describe('FunctionField - grouping - example functions', () => {
+    it('should display booleans in a meaningful way', () => {
+        const line = "group by function task.status.symbol === '/'";
+        const grouper = createGrouper(line);
+        toGroupTaskWithPath(grouper, 'journal/a/b.md', ['false']);
+    });
+
     it('using root and path', () => {
         // Note: This will change to task.file.path
         const line = 'group by function task.path.startsWith("journal/") ? "journal/" : task.path';
@@ -166,5 +163,17 @@ describe('FunctionField - grouping - example functions', () => {
         const grouper = createGrouper(line);
         toGroupTaskFromBuilder(grouper, new TaskBuilder().status(Status.makeInProgress()), ['x']);
         toGroupTaskFromBuilder(grouper, new TaskBuilder().status(Status.makeDone()), ['space']);
+    });
+
+    it('group by using number', () => {
+        const line = 'group by function task.description.length';
+        const grouper = createGrouper(line);
+        toGroupTaskFromBuilder(grouper, new TaskBuilder().description('#task Hello'), ['11']);
+    });
+
+    it('group by using string literal', () => {
+        const line = 'group by function reverse "Description length: " + task.description.length';
+        const grouper = createGrouper(line);
+        toGroupTaskFromBuilder(grouper, new TaskBuilder().description('#task Hello'), ['Description length: 11']);
     });
 });
