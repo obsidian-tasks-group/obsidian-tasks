@@ -55,6 +55,15 @@ export class GlobalFilter {
         return description;
     }
 
+    static removeAsWordFromDependingOnSettings(description: string): string {
+        const { removeGlobalFilter } = getSettings();
+        if (removeGlobalFilter) {
+            return GlobalFilter.removeAsWordFrom(description);
+        }
+
+        return description;
+    }
+
     static removeAsSubstringFrom(description: string): string {
         const globalFilter = GlobalFilter.get();
         return description.replace(globalFilter, '').trim();
