@@ -266,9 +266,25 @@ The `expression` must:
 
 - use properties on a given task, such as `task.description`, `task.status.name`
   - See the reference page [[Task Properties]] for all the available properties
-- return:
-  - either a single value
-  - or an array of values (in which case, the task will be displayed )
+- return one of:
+  - either a single value of any type that can be converted to string
+  - or an array of values (in which case, the task will be displayed multiple times, once under each heading generated from the array)
+
+> [!bug]
+> This currently does not display the tasks that do not have tags:
+>
+> ```text
+> group by function task.tags
+> ```
+>
+> We are investigating.
+
+> [!warning]
+> The strings returned are rendered as-is. This means, for example, that if the text you return has underscores in (`_`) that are not meant to indicate italics, you should escape them with backslashes ('\_') like this:
+>
+> ```text
+> group by function task.description.replaceAll('_', '\\_')
+>```
 
 ### Custom group examples
 
@@ -294,9 +310,11 @@ The Reference section has a complete list of available [[Task Properties]].
 ### Troubleshooting
 
 > [!Warning]
-> Currently most types of error in function expressions are only evaluated when the search runs.
+> Currently most types of error in function expressions are only detected when the search runs.
 >
 > This means that error messages are displayed in the group headings, when results are viewed.
+>
+> In a future release, we plan to show errors in formulae when the query block is being read.
 
 #### Syntax error
 

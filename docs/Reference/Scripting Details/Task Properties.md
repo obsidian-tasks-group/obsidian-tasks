@@ -22,6 +22,8 @@ This documents all the available pieces of information in Tasks that you can acc
 
 ## Values for Task Statuses
 
+For more information, including adding your own customised statuses, see [[Statuses]].
+
 <!-- placeholder to force blank line before included text --> <!-- include: FunctionFieldReference.test.task_status.approved.md -->
 
 | Field | Type | Example |
@@ -57,6 +59,14 @@ None supported yet.
 | `task.originalMarkdown` | `string` | `'  - [ ] Do exercises #todo #health 🔼 🔁 every day when done ➕ 2023-07-01 🛫 2023-07-02 ⏳ 2023-07-03 📅 2023-07-04 ✅ 2023-07-05 ^dcf64c'` |
 
 <!-- placeholder to force blank line after included text --> <!-- endInclude -->
+
+1. `task.description` has spaces at the start and end stripped off.
+1. `task.description` includes any tags.
+1. In a future release we will provide `task.priorityName`
+1. `task.tags` actually would return `string[]`, that is `['#todo', '#health']`
+1. There is a rendering problem in Obsidian and Obsidian Publish: `task.indentation` is supposed to show 2 spaces in this example of an indented task.
+1. Note that `task.blockLink` really does begin with a space currently, for tasks that have a blocklink.
+1. There is a rendering problem in Obsidian and Obsidian Publish: `task.originalMarkdown` is supposed to begin with 2 spaces
 
 ---
 
