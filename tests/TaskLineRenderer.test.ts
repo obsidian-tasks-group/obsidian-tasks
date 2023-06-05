@@ -109,15 +109,15 @@ describe('task line rendering', () => {
         expect((internalDescriptionSpan as HTMLSpanElement).innerText).toEqual('This is a simple task');
     });
 
-    it('hides the global filter if and only if required', async () => {
-        const getDescriptionTest = async (taskLine: string) => {
-            const task = fromLine({
-                line: taskLine,
-            });
-            const parentRender = await createMockParentAndRender(task);
-            return getDescriptionText(parentRender);
-        };
+    const getDescriptionTest = async (taskLine: string) => {
+        const task = fromLine({
+            line: taskLine,
+        });
+        const parentRender = await createMockParentAndRender(task);
+        return getDescriptionText(parentRender);
+    };
 
+    it('hides the global filter if and only if required', async () => {
         const taskLine = '- [ ] This is a simple task with a #global filter';
         const descriptionWithFilter = await getDescriptionTest(taskLine);
         expect(descriptionWithFilter).toEqual('This is a simple task with a #global filter');
