@@ -137,14 +137,20 @@ describe('task line rendering', () => {
     });
 
     it.each([
-        ['- [ ] #task/stage at the beginning', '/stage at the beginning'],
-        ['- [ ] in the #task/stage middle', 'in the /stage middle'],
-        ['- [ ] at the end #task/stage', 'at the end /stage'],
+        // Global Filter is a tag
+        ['#task', '- [ ] #task/stage at the beginning', '/stage at the beginning'],
+        ['#task', '- [ ] in the #task/stage middle', 'in the /stage middle'],
+        ['#task', '- [ ] at the end #task/stage', 'at the end /stage'],
+
+        // Global Filter is not a tag
+        ['TODO', '- [ ] TODO/maybe at the beginning', '/maybe at the beginning'],
+        ['TODO', '- [ ] in the TODO/maybe middle', 'in the /maybe middle'],
+        ['TODO', '- [ ] at the end TODO/maybe', 'at the end /maybe'],
     ])(
-        'should not remove Global Filter if it is in a substring for a task "%s"',
-        async (taskLine: string, expectedDescription: string) => {
+        'should not remove Global Filter (%s) if it is in a substring for a task "%s"',
+        async (globalFilter: string, taskLine: string, expectedDescription: string) => {
             updateSettings({ removeGlobalFilter: true });
-            GlobalFilter.set('#task');
+            GlobalFilter.set(globalFilter);
 
             const renderedDescription = await getDescriptionTest(taskLine);
 
