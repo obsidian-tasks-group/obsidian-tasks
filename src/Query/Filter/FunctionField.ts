@@ -100,12 +100,15 @@ export function evaluateExpression(task: Task, arg: string | null) {
 export function groupByFn(task: Task, arg: GroupingArg): string[] {
     const result = evaluateExpression(task, arg);
 
-    const requiredType = 'string';
-    const group = typeof result === requiredType ? result : result.toString();
+    if (Array.isArray(result)) {
+        return result.map((h) => TextField.escapeMarkdownCharacters(h.toString()));
+    }
 
+    const group = result.toString();
     if (group.length > 0) {
         return [TextField.escapeMarkdownCharacters(group)];
     } else {
+        // The task does not have a group heading
         return [];
     }
 }

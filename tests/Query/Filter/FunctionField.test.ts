@@ -128,7 +128,8 @@ describe('FunctionField - grouping - handling various return types', () => {
         ['true', ['true']],
         ['1', ['1']],
         ['1.0765456', ['1.0765456']],
-        // ['["heading1", "heading2"]', ["heading1", "heading2"]], // return two headings, indicating that this task should be displayed twice, once in each heading
+        ['["heading1", "heading2"]', ['heading1', 'heading2']], // return two headings, indicating that this task should be displayed twice, once in each heading
+        ['[1, 2]', ['1', '2']], // return two headings, that need to be converted to strings
     ])("expression: '%s'", (expression: string, result: string[]) => {
         const line = `group by function ${expression}`;
         const grouper = createGrouper(line);
