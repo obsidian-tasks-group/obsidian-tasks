@@ -83,19 +83,18 @@ export function evaluateExpression(task: Task, arg: string | null) {
         return 'Error parsing group function';
     }
 
-    let result;
     const args = paramsArgs.map(([_, a]) => a);
+
     try {
-        result = groupBy(...args);
+        return groupBy(...args);
     } catch (e) {
-        result = `Error: Failed calculating expression "${arg}". The error message was: `;
+        const errorMessage = `Error: Failed calculating expression "${arg}". The error message was: `;
         if (e instanceof Error) {
-            result += e.message;
+            return errorMessage + e.message;
         } else {
-            result += 'Unknown error';
+            return errorMessage + 'Unknown error';
         }
     }
-    return result;
 }
 
 export function groupByFn(task: Task, arg: GroupingArg): string[] {
