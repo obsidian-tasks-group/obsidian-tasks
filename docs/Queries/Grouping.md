@@ -215,15 +215,47 @@ Tasks has a powerful mechanism for you to create your own custom groups, offerin
 > [!released]
 > `group by function` was introduced in Tasks X.Y.Z.
 
+### Worked Example
+
+> [!Example]
+> Suppose that we want to see which of our tasks have the longest descriptions.
+>
+> To do this, we could group tasks with group headings like:
+>
+> `Description length: 27` - for all tasks with description 27 characters long.
+>
+> We can achieve this with this line, where the `reverse` work makes the tasks with longest descriptions be shown first:
+>
+> `group by function reverse 'Description length: ' + task.description.length.toString()`
+
+Here is a visual explanation of how that instruction behaves:
+
+```mermaid
+flowchart TB
+
+4[Tasks code block]
+5["group by function reverse 'Description length: ' + task.description.length.toString()"]
+4 --> 5
+
+8["- [ ] #task Hello"]
+9["task.description
+task.indentation
+task.urgency
+etc"]
+10["'Description length: ' + task.description.length.toString()"]
+12["'Description length: ' + '#task Hello'.length.toString()"]
+13['Description length: 11']
+
+5 --> 10
+8 --> 9 --> 10 --> 12 --> 13
+```
+
 ### Expressions
 
 The instructions look like this:
 
 - `group by function <expression>`
 - `group by function reverse <expression>`
-
-> [!todo]
-> Draw a Mermaid diagram showing flow of data - Task -> Expression -> Group name or names for that task
 
 The `expression` can:
 
