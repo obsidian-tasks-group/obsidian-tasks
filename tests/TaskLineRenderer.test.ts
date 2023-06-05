@@ -136,6 +136,22 @@ describe('task line rendering', () => {
         expect(descriptionWithoutFilter).toEqual('This is a simple task with a  filter');
     });
 
+    it.each([
+        ['- [ ] #task/stage at the beginning', '/stage at the beginning'],
+        ['- [ ] in the #task/stage middle', 'in the /stage middle'],
+        ['- [ ] at the end #task/stage', 'at the end /stage'],
+    ])(
+        'should not remove Global Filter if it is in a substring for a task "%s"',
+        async (taskLine: string, expectedDescription: string) => {
+            updateSettings({ removeGlobalFilter: true });
+            GlobalFilter.set('#task');
+
+            const renderedDescription = await getDescriptionTest(taskLine);
+
+            expect(renderedDescription).toEqual(expectedDescription);
+        },
+    );
+
     const testLayoutOptions = async (
         taskLine: string,
         layoutOptions: Partial<LayoutOptions>,
