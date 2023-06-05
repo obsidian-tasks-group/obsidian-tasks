@@ -34,6 +34,15 @@ export class GlobalFilter {
         return GlobalFilter.get() + ' ' + description;
     }
 
+    static removeAsWordFromDependingOnSettings(description: string): string {
+        const { removeGlobalFilter } = getSettings();
+        if (removeGlobalFilter) {
+            return GlobalFilter.removeAsWordFrom(description);
+        }
+
+        return description;
+    }
+
     /**
      * Search for the global filter for the purpose of removing it from the description, but do so only
      * if it is a separate word (preceding the beginning of line or a space and followed by the end of line
@@ -50,15 +59,6 @@ export class GlobalFilter {
 
         if (description.search(theRegExp) > -1) {
             description = description.replace(theRegExp, '$1$2').replace('  ', ' ').trim();
-        }
-
-        return description;
-    }
-
-    static removeAsWordFromDependingOnSettings(description: string): string {
-        const { removeGlobalFilter } = getSettings();
-        if (removeGlobalFilter) {
-            return GlobalFilter.removeAsWordFrom(description);
         }
 
         return description;
