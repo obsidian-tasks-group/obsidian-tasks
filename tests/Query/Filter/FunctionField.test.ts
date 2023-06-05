@@ -150,6 +150,11 @@ describe('FunctionField - grouping - handling various return types', () => {
                 'Error: Failed calculating expression "undefined". The error message was: Cannot read properties of undefined (reading \'toString\')',
             ],
         ],
+        [
+            // Should allow manual escaping of markdown
+            String.raw`"I _am_ not _italic_".replaceAll("_", "\\_")`,
+            [String.raw`I \_am\_ not \_italic\_`],
+        ],
     ])("expression: '%s'", (expression: string, result: string[]) => {
         const line = `group by function ${expression}`;
         const grouper = createGrouper(line);
@@ -212,5 +217,13 @@ describe('FunctionField - grouping - example functions', () => {
         const line = 'group by function reverse "Description length: " + task.description.length';
         const grouper = createGrouper(line);
         toGroupTaskFromBuilder(grouper, new TaskBuilder().description('#task Hello'), ['Description length: 11']);
+    });
+
+    it('group by a selected tag', () => {
+        const line = "group by function task.tags.find((tag) => tag.includes('#context/'))";
+        const grouper = createGrouper(line);
+        toGroupTaskFromBuilder(grouper, new TaskBuilder().tags(['#context/pc_home', '#topic/sys_admin']), [
+            '#context/pc_home',
+        ]);
     });
 });

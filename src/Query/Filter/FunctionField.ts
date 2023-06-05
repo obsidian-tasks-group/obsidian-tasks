@@ -3,7 +3,6 @@ import type { GrouperFunction } from '../Grouper';
 import { Grouper } from '../Grouper';
 import { Field } from './Field';
 import { FilterOrErrorMessage } from './Filter';
-import { TextField } from './TextField';
 
 export class FunctionField extends Field {
     createFilterOrErrorMessage(line: string): FilterOrErrorMessage {
@@ -102,12 +101,12 @@ export function groupByFn(task: Task, arg: GroupingArg): string[] {
         const result = evaluateExpression(task, arg);
 
         if (Array.isArray(result)) {
-            return result.map((h) => TextField.escapeMarkdownCharacters(h.toString()));
+            return result.map((h) => h.toString());
         }
 
         const group = result.toString();
         if (group.length > 0) {
-            return [TextField.escapeMarkdownCharacters(group)];
+            return [group];
         } else {
             // The task does not have a group heading
             return [];
