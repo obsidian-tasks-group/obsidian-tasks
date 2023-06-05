@@ -10,16 +10,16 @@ publish: true
 
 This page is long. Here are some links to the main sections:
 
-- [[#Basics]
-- [[#Group by Task Statuses]
-- [[#Group by Dates in Tasks]
-- [[#Group by Other Task Properties]
-- [[#Group by File Properties]
-- [[#Multiple groups]
-- [[#Refining groups]
-- [[#Notes]
-- [[#Screenshots]
-- [[#Examples]
+- [[#Basics]]
+- [[#Group by Task Statuses]]
+- [[#Group by Dates in Tasks]]
+- [[#Group by Other Task Properties]]
+- [[#Group by File Properties]]
+- [[#Multiple groups]]
+- [[#Refining groups]]
+- [[#Notes]]
+- [[#Screenshots]]
+- [[#Examples]]
 
 ---
 
