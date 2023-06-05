@@ -68,12 +68,4 @@ export class GlobalFilter {
         const globalFilter = GlobalFilter.get();
         return description.replace(globalFilter, '').trim();
     }
-
-    static removeAsSubstringFromDependingOnSettings(description: string): string {
-        const { removeGlobalFilter } = getSettings();
-        if (removeGlobalFilter) {
-            return GlobalFilter.removeAsSubstringFrom(description);
-        }
-        return description;
-    }
 }

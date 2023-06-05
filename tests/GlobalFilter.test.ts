@@ -1,5 +1,4 @@
 import { GlobalFilter } from '../src/Config/GlobalFilter';
-import { resetSettings, updateSettings } from '../src/Config/Settings';
 
 describe('Global Filter tests', () => {
     afterEach(() => {
@@ -90,35 +89,6 @@ describe('Global Filter tests', () => {
 
         // Assert
         expect(GlobalFilter.removeAsSubstringFrom(testStringBefore)).toEqual(testStringAfter);
-    });
-});
-
-describe('Global Filter tests with Remove Global Filter Setting', () => {
-    afterEach(() => {
-        GlobalFilter.reset();
-        resetSettings();
-    });
-
-    it('Should remove Global Filter from a string when Setting is set to false', () => {
-        // Arrange
-        GlobalFilter.set('todo');
-        updateSettings({ removeGlobalFilter: false });
-
-        // Assert
-        expect(GlobalFilter.removeAsSubstringFromDependingOnSettings('This is absolutely todo')).toEqual(
-            'This is absolutely todo',
-        );
-    });
-
-    it('Should remove Global Filter from a string when Setting is set to true', () => {
-        // Arrange
-        GlobalFilter.set('todo');
-        updateSettings({ removeGlobalFilter: true });
-
-        // Assert
-        expect(GlobalFilter.removeAsSubstringFromDependingOnSettings('This is absolutely todo')).toEqual(
-            'This is absolutely',
-        );
     });
 });
 
