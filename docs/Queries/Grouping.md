@@ -15,7 +15,7 @@ This page is long. Here are some links to the main sections:
 - [[#Group by Dates in Tasks]]
 - [[#Group by Other Task Properties]]
 - [[#Group by File Properties]]
-- [[#Group by Function]]
+- [[#Group by Function - Custom Groups]]
 - [[#Multiple groups]]
 - [[#Refining groups]]
 - [[#Notes]]
@@ -208,18 +208,37 @@ For more information, including adding your own customised statuses, see [[Statu
 
 ---
 
-## Group by Function
+## Group by Function - Custom Groups
+
+Tasks has a powerful mechanism for you to create your own custom groups, offering incredible flexibility.
 
 > [!released]
-> Function instructions were introduced in Tasks X.Y.Z.
+> `group by function` was introduced in Tasks X.Y.Z.
 
-When you want to express a search for your Tasks, and the existing [[Filters]] do not satisdy your requirements, you can use function instructions for more control.
+### Expressions
 
-Tasks code blocks allow certain instructions to be written as JavaScript expressions, to give great customisability.
+The instructions look like this:
 
-This page shows the available function instructions, and the reference page [[Task Properties]] shows the data types available to you, for use in your function instructions.
+- `group by function <expression>`
+- `group by function reverse <expression>`
 
-### grouping examples
+> [!todo]
+> Draw a Mermaid diagram showing flow of data - Task -> Expression -> Group name or names for that task
+
+The `expression` can:
+
+- use a large range of properties of each task
+- use any valid JavaScript language features
+
+The `expression` must:
+
+- use properties on a given task, such as `task.description`, `task.status.name`
+  - See the reference page [[Task Properties]] for all the available properties
+- return:
+  - either a single value
+  - or an array of values (in which case, the task will be displayed )
+
+### Custom group examples
 
 ```text
 group by function task.priority
@@ -263,6 +282,9 @@ gives this heading name:
 ##### Error: Failed calculating expression "hello". The error message was: hello is not defined
 ```
 
+> [!todo]
+> Do syntax-error checking when parsing the instruction
+
 #### Group names must be strings
 
 Expressions for `group by function` must currently return a single `string` value.
@@ -280,6 +302,9 @@ gives this heading name:
 ```text
 ##### Error: Incorrect type from expression "task.status.symbol === '/'" returned value "false" of type "boolean" which is not a "string"
 ```
+
+> [!todo]
+> If all else fails, add a `.toString()` call, so information is written out
 
 ---
 

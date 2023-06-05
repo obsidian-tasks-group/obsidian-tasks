@@ -13,7 +13,7 @@ publish: true
 
 In a growing number of locations, Tasks allows programmatic/scripting access to values in your Tasks:
 
-- [[Grouping#Group by Function]]
+- [[Grouping#Group by Function - Custom Groups]]
 
 This documents all the available pieces of information in Tasks that you can access.
 
