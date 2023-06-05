@@ -117,16 +117,23 @@ describe('task line rendering', () => {
         return getDescriptionText(parentRender);
     };
 
-    it('hides the global filter if and only if required', async () => {
+    it('should render Global Filter by default', async () => {
+        GlobalFilter.set('#global');
+
         const taskLine = '- [ ] This is a simple task with a #global filter';
         const descriptionWithFilter = await getDescriptionTest(taskLine);
-        expect(descriptionWithFilter).toEqual('This is a simple task with a #global filter');
 
+        expect(descriptionWithFilter).toEqual('This is a simple task with a #global filter');
+    });
+
+    it('should not render Global Filter when the Remove Global Filter is set', async () => {
         updateSettings({ removeGlobalFilter: true });
         GlobalFilter.set('#global');
+
+        const taskLine = '- [ ] This is a simple task with a #global filter';
         const descriptionWithoutFilter = await getDescriptionTest(taskLine);
+
         expect(descriptionWithoutFilter).toEqual('This is a simple task with a  filter');
-        resetSettings();
     });
 
     const testLayoutOptions = async (
