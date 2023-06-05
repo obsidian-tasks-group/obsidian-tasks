@@ -98,17 +98,26 @@ export function evaluateExpression(task: Task, arg: string | null) {
 }
 
 export function groupByFn(task: Task, arg: GroupingArg): string[] {
-    const result = evaluateExpression(task, arg);
+    try {
+        const result = evaluateExpression(task, arg);
 
-    if (Array.isArray(result)) {
-        return result.map((h) => TextField.escapeMarkdownCharacters(h.toString()));
-    }
+        if (Array.isArray(result)) {
+            return result.map((h) => TextField.escapeMarkdownCharacters(h.toString()));
+        }
 
-    const group = result.toString();
-    if (group.length > 0) {
-        return [TextField.escapeMarkdownCharacters(group)];
-    } else {
-        // The task does not have a group heading
-        return [];
+        const group = result.toString();
+        if (group.length > 0) {
+            return [TextField.escapeMarkdownCharacters(group)];
+        } else {
+            // The task does not have a group heading
+            return [];
+        }
+    } catch (e) {
+        const errorMessage = `Error: Failed calculating expression "${arg}". The error message was: `;
+        if (e instanceof Error) {
+            return [errorMessage + e.message];
+        } else {
+            return [errorMessage + 'Unknown error'];
+        }
     }
 }

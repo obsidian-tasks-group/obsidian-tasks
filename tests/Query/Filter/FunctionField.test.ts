@@ -118,6 +118,14 @@ describe('FunctionField - grouping - error-handling', () => {
             'Error: Failed calculating expression "hello". The error message was: hello is not defined',
         ]);
     });
+
+    it('should give a meaningful error for unknown task field', () => {
+        const line = 'group by function task.nonExistentField';
+        const grouper = createGrouper(line);
+        toGroupTaskFromBuilder(grouper, new TaskBuilder(), [
+            'Error: Failed calculating expression "task.nonExistentField". The error message was: Cannot read properties of undefined (reading \'toString\')',
+        ]);
+    });
 });
 
 describe('FunctionField - grouping - handling various return types', () => {
@@ -130,6 +138,18 @@ describe('FunctionField - grouping - handling various return types', () => {
         ['1.0765456', ['1.0765456']],
         ['["heading1", "heading2"]', ['heading1', 'heading2']], // return two headings, indicating that this task should be displayed twice, once in each heading
         ['[1, 2]', ['1', '2']], // return two headings, that need to be converted to strings
+        [
+            'null',
+            [
+                'Error: Failed calculating expression "null". The error message was: Cannot read properties of null (reading \'toString\')',
+            ],
+        ],
+        [
+            'undefined',
+            [
+                'Error: Failed calculating expression "undefined". The error message was: Cannot read properties of undefined (reading \'toString\')',
+            ],
+        ],
     ])("expression: '%s'", (expression: string, result: string[]) => {
         const line = `group by function ${expression}`;
         const grouper = createGrouper(line);
