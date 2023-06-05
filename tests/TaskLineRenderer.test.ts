@@ -110,8 +110,7 @@ describe('task line rendering', () => {
     });
 
     it('hides the global filter if and only if required', async () => {
-        const getDescriptionTest = async () => {
-            const taskLine = '- [ ] This is a simple task with a #global filter';
+        const getDescriptionTest = async (taskLine: string) => {
             const task = fromLine({
                 line: taskLine,
             });
@@ -119,12 +118,13 @@ describe('task line rendering', () => {
             return getDescriptionText(parentRender);
         };
 
-        const descriptionWithFilter = await getDescriptionTest();
+        const taskLine = '- [ ] This is a simple task with a #global filter';
+        const descriptionWithFilter = await getDescriptionTest(taskLine);
         expect(descriptionWithFilter).toEqual('This is a simple task with a #global filter');
 
         updateSettings({ removeGlobalFilter: true });
         GlobalFilter.set('#global');
-        const descriptionWithoutFilter = await getDescriptionTest();
+        const descriptionWithoutFilter = await getDescriptionTest(taskLine);
         expect(descriptionWithoutFilter).toEqual('This is a simple task with a  filter');
         resetSettings();
     });
