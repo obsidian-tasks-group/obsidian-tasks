@@ -103,5 +103,9 @@ export function groupByFn(task: Task, arg: GroupingArg): string[] {
     const requiredType = 'string';
     const group = typeof result === requiredType ? result : result.toString();
 
-    return [TextField.escapeMarkdownCharacters(group)];
+    if (group.length > 0) {
+        return [TextField.escapeMarkdownCharacters(group)];
+    } else {
+        return [];
+    }
 }

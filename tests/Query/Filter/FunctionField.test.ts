@@ -120,6 +120,22 @@ describe('FunctionField - grouping - error-handling', () => {
     });
 });
 
+describe('FunctionField - grouping - handling various return types', () => {
+    it.each([
+        ['"hello"', ['hello']],
+        ['""', []], // return empty string to indicate an empty group heading, that is, this task is not grouped.
+        ['false', ['false']],
+        ['true', ['true']],
+        ['1', ['1']],
+        ['1.0765456', ['1.0765456']],
+        // ['["heading1", "heading2"]', ["heading1", "heading2"]], // return two headings, indicating that this task should be displayed twice, once in each heading
+    ])("expression: '%s'", (expression: string, result: string[]) => {
+        const line = `group by function ${expression}`;
+        const grouper = createGrouper(line);
+        toGroupTaskFromBuilder(grouper, new TaskBuilder(), result);
+    });
+});
+
 describe('FunctionField - grouping - example functions', () => {
     it('should display booleans in a meaningful way', () => {
         const line = "group by function task.status.symbol === '/'";
