@@ -14,3 +14,4 @@ This section provides reference material - content which is typically too detail
 
 - [[About Task Formats|Task Formats]]
 - [[About Status Collections]]
+- [[About Scripting Details]]
