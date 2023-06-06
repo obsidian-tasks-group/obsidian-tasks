@@ -11,9 +11,13 @@ import { MarkdownTable } from '../../../../TestingTools/VerifyMarkdownTable';
 
 window.moment = moment;
 
-function formatToRepresentType(x: any) {
+function formatToRepresentType(x: any): string {
     if (typeof x === 'string') {
         return "'" + x + "'";
+    }
+
+    if (Array.isArray(x)) {
+        return '[' + x.map((v) => formatToRepresentType(v)).join(', ') + ']';
     }
     // TODO Round numbers
     // TODO Format string arrays - can I use 'toString()'?

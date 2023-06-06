@@ -5,7 +5,7 @@
 | `task.description` | `string` | `'Do exercises #todo #health'` | `string` | `'minimal task'` |
 | `task.priority` | `string` | `'2'` | `string` | `'3'` |
 | `task.urgency` | `number` | `3.3000000000000007` | `number` | `1.9500000000000002` |
-| `task.tags` | `string[]` | `#todo,#health` | `any[]` | `` |
+| `task.tags` | `string[]` | `['#todo', '#health']` | `any[]` | `[]` |
 | `task.indentation` | `string` | `'  '` | `string` | `''` |
 | `task.listMarker` | `string` | `'-'` | `string` | `'-'` |
 | `task.blockLink` | `string` | `' ^dcf64c'` | `string` | `''` |
