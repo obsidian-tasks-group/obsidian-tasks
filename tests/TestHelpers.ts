@@ -69,7 +69,7 @@ export class SampleTasks {
         return tasks;
     }
 
-    public static withAllRepresentativeDates(): Task[] {
+    public static withAllRepresentativeDueDates(): Task[] {
         const dates = ['2023-05-30', '2023-05-31', '2023-06-01', '2023-02-32', null];
 
         const tasks = dates.map((date) => {

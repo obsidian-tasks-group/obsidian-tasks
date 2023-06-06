@@ -535,7 +535,7 @@ describe('grouping by due date', () => {
 
     it('should sort groups for DueDateField', () => {
         const grouper = new DueDateField().createNormalGrouper();
-        const tasks = SampleTasks.withAllRepresentativeDates();
+        const tasks = SampleTasks.withAllRepresentativeDueDates();
 
         expect({ grouper, tasks }).groupHeadingsToBe([
             '2023-05-30 Tuesday',
