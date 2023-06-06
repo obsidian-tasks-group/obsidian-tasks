@@ -113,7 +113,7 @@ describe('grouping by heading', () => {
 
     it('should sort groups for HeadingField', () => {
         // Arrange
-        const tasks = SampleTasks.withAllPathsAndHeadings();
+        const tasks = SampleTasks.withAllRootsPathsHeadings();
         const grouper = new HeadingField().createNormalGrouper();
 
         // Assert

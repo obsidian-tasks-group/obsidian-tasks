@@ -68,7 +68,7 @@ describe('grouping by backlink', () => {
 
     it('should sort groups for BacklinkField', () => {
         // Arrange
-        const tasks = SampleTasks.withAllPathsAndHeadings();
+        const tasks = SampleTasks.withAllRootsPathsHeadings();
         const grouper = new BacklinkField().createNormalGrouper();
 
         // Assert

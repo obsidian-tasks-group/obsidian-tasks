@@ -122,7 +122,7 @@ describe('grouping by filename', () => {
 
     it('should sort groups for FilenameField', () => {
         // Arrange
-        const tasks = SampleTasks.withAllPathsAndHeadings();
+        const tasks = SampleTasks.withAllRootsPathsHeadings();
         const grouper = new FilenameField().createNormalGrouper();
 
         // Assert

@@ -40,7 +40,7 @@ export function createTasksFromMarkdown(tasksAsMarkdown: string, path: string, p
 const representativeDates = ['2023-05-30', '2023-05-31', '2023-06-01', '2023-02-32', null];
 
 export class SampleTasks {
-    public static withAllPathsAndHeadings(): Task[] {
+    public static withAllRootsPathsHeadings(): Task[] {
         const allPathsAndHeadings: [string, string | null][] = [
             ['', 'heading'],
 

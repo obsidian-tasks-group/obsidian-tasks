@@ -166,7 +166,7 @@ describe('grouping by path', () => {
 
     it('should sort groups for PathField', () => {
         // Arrange
-        const tasks = SampleTasks.withAllPathsAndHeadings();
+        const tasks = SampleTasks.withAllRootsPathsHeadings();
         const grouper = new PathField().createNormalGrouper();
 
         // Assert
