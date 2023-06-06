@@ -160,4 +160,22 @@ describe('grouping by status.type', () => {
         expect(grouper.grouper(non_Task)).toEqual(['5 NON_TASK']);
         expect(grouper.grouper(emptTask)).toEqual(['6 EMPTY']); // won't be seen by users
     });
+
+    it('should sort groups for StatusTypeField', () => {
+        const grouper = new StatusTypeField().createNormalGrouper();
+        const tasks = withAllStatusTypes();
+
+        expect({ grouper, tasks }).groupHeadingsToBe([
+            '1 IN_PROGRESS',
+            '2 TODO',
+            '3 DONE',
+            '4 CANCELLED',
+            '5 NON_TASK',
+            '6 EMPTY',
+        ]);
+    });
 });
+
+export function withAllStatusTypes() {
+    return [todoTask, inprTask, doneTask, cancTask, unknTask, non_Task, emptTask];
+}
