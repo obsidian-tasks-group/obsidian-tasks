@@ -71,6 +71,14 @@ export class SampleTasks {
         return tasks;
     }
 
+    public static withAllRepresentativeCreatedDates(): Task[] {
+        const tasks = representativeDates.map((date) => {
+            return new TaskBuilder().createdDate(date).build();
+        });
+
+        return tasks;
+    }
+
     public static withAllRepresentativeDoneDates(): Task[] {
         const tasks = representativeDates.map((date) => {
             return new TaskBuilder().doneDate(date).build();
