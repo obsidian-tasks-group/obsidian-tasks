@@ -132,9 +132,12 @@ describe('FunctionField - grouping - handling various return types', () => {
     it.each([
         ['"hello"', ['hello']],
         ['""', []], // return empty string to indicate an empty group heading, that is, this task is not grouped.
+        ['"" || "No value"', ['No value']],
         ['false', ['false']],
         ['true', ['true']],
         ['1', ['1']],
+        ['0', ['0']],
+        ['0 || "No value"', ['No value']],
         ['1.0765456', ['1.0765456']],
         ['["heading1", "heading2"]', ['heading1', 'heading2']], // return two headings, indicating that this task should be displayed twice, once in each heading
         ['[1, 2]', ['1', '2']], // return two headings, that need to be converted to strings
@@ -144,12 +147,14 @@ describe('FunctionField - grouping - handling various return types', () => {
                 'Error: Failed calculating expression "null". The error message was: Cannot read properties of null (reading \'toString\')',
             ],
         ],
+        ['null || "No value"', ['No value']],
         [
             'undefined',
             [
                 'Error: Failed calculating expression "undefined". The error message was: Cannot read properties of undefined (reading \'toString\')',
             ],
         ],
+        ['undefined || "No value"', ['No value']],
         [
             // Should allow manual escaping of markdown
             String.raw`"I _am_ not _italic_".replaceAll("_", "\\_")`,
