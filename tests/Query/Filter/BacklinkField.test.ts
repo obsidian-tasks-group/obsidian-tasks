@@ -1,5 +1,5 @@
 import { BacklinkField } from '../../../src/Query/Filter/BacklinkField';
-import { fromLine } from '../../TestHelpers';
+import { SampleTasks, fromLine } from '../../TestHelpers';
 
 describe('backlink', () => {
     it('should provide the backlink', () => {
@@ -68,7 +68,7 @@ describe('grouping by backlink', () => {
 
     it('should sort groups for BacklinkField', () => {
         // Arrange
-        const tasks = withAllPathsAndHeadings();
+        const tasks = SampleTasks.withAllPathsAndHeadings();
         const grouper = new BacklinkField().createNormalGrouper();
 
         // Assert
@@ -82,34 +82,3 @@ describe('grouping by backlink', () => {
         ]);
     });
 });
-
-export function withAllPathsAndHeadings() {
-    const allPathsAndHeadings: [string, string | null][] = [
-        ['', 'heading'],
-
-        // no heading supplied
-        ['a/b/c.md', null],
-
-        // File and heading, nominal case
-        ['a/b/c.md', 'heading'],
-
-        // If file name and heading are identical, avoid duplication ('c > c')
-        ['a/b/c.md', 'c'],
-
-        // If file name and heading are identical, avoid duplication, even if there are underscores in the file name
-        ['a_b_c.md', 'a_b_c'],
-
-        // Underscores in file name component are escaped
-        ['a/b/_c_.md', null],
-
-        // But underscores in the heading component are not
-        ['a/b/_c_.md', 'heading _italic text_'],
-    ];
-    const t = '- [ ] xyz';
-
-    const tasks = allPathsAndHeadings.map(([path, heading]) => {
-        return fromLine({ line: t, path: path, precedingHeader: heading });
-    });
-
-    return tasks;
-}

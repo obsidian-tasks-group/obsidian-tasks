@@ -1,8 +1,8 @@
-import { Priority, Task } from '../../../src/Task';
+import { Priority } from '../../../src/Task';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { testFilter } from '../../TestingTools/FilterTestHelpers';
 import { PriorityField } from '../../../src/Query/Filter/PriorityField';
-import { fromLine } from '../../TestHelpers';
+import { SampleTasks, fromLine } from '../../TestHelpers';
 
 import {
     expectTaskComparesAfter,
@@ -229,7 +229,7 @@ describe('grouping by priority', () => {
 
     it('should sort groups for PriorityField', () => {
         const grouper = new PriorityField().createNormalGrouper();
-        const tasks = withAllPriorities();
+        const tasks = SampleTasks.withAllPriorities();
 
         expect({ grouper, tasks }).groupHeadingsToBe([
             'Priority 0: Highest',
@@ -241,18 +241,3 @@ describe('grouping by priority', () => {
         ]);
     });
 });
-
-export function withAllPriorities(): Task[] {
-    const tasks: Task[] = [];
-    const allPriorities = Object.values(Priority);
-    allPriorities.forEach((priority) => {
-        // This description is chosen to be useful for including tasks in user docs, so
-        // changing it will change documentation and sample vault content.
-        const priorityName = PriorityField.priorityNameUsingNormal(priority);
-        const description = `#task ${priorityName} priority`;
-
-        const task = new TaskBuilder().priority(priority).description(description).build();
-        tasks.push(task);
-    });
-    return tasks;
-}

@@ -1,5 +1,4 @@
 import { StatusTypeField } from '../../../src/Query/Filter/StatusTypeField';
-import * as TestHelpers from '../../TestHelpers';
 import {
     expectTaskComparesAfter,
     expectTaskComparesBefore,
@@ -9,13 +8,14 @@ import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { StatusType } from '../../../src/StatusConfiguration';
 import { Status } from '../../../src/Status';
 import * as FilterParser from '../../../src/Query/FilterParser';
+import { SampleTasks, fromLine } from '../../TestHelpers';
 
 // Abbreviated names so that the markdown text is aligned
-const todoTask = TestHelpers.fromLine({ line: '- [ ] Todo' });
-const inprTask = TestHelpers.fromLine({ line: '- [/] In progress' });
-const doneTask = TestHelpers.fromLine({ line: '- [x] Done' });
-const cancTask = TestHelpers.fromLine({ line: '- [-] Cancelled' });
-const unknTask = TestHelpers.fromLine({ line: '- [%] Unknown' });
+const todoTask = fromLine({ line: '- [ ] Todo' });
+const inprTask = fromLine({ line: '- [/] In progress' });
+const doneTask = fromLine({ line: '- [x] Done' });
+const cancTask = fromLine({ line: '- [-] Cancelled' });
+const unknTask = fromLine({ line: '- [%] Unknown' });
 const non_Task = new TaskBuilder()
     .statusValues('^', 'non-task', 'x', false, StatusType.NON_TASK)
     .description('Non-task')
@@ -163,7 +163,7 @@ describe('grouping by status.type', () => {
 
     it('should sort groups for StatusTypeField', () => {
         const grouper = new StatusTypeField().createNormalGrouper();
-        const tasks = withAllStatusTypes();
+        const tasks = SampleTasks.withAllStatusTypes();
 
         expect({ grouper, tasks }).groupHeadingsToBe([
             '1 IN_PROGRESS',
@@ -175,7 +175,3 @@ describe('grouping by status.type', () => {
         ]);
     });
 });
-
-export function withAllStatusTypes() {
-    return [todoTask, inprTask, doneTask, cancTask, unknTask, non_Task, emptTask];
-}
