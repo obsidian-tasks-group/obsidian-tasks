@@ -67,6 +67,14 @@ export class TaskGroupingTree {
                     // Get properties of a task for the grouper
                     // The returned string is rendered, so special Markdown characters will be escaped
                     const groupNames = grouper.grouper(task);
+
+                    if (groupNames.length === 0) {
+                        // Create a fake empty group-name so that we can add these tasks
+                        // to the tree. This group will be displayed with no heading.
+                        // Without this, they would be lost and not displayed at all the query results.
+                        groupNames.push('');
+                    }
+
                     for (const groupName of groupNames) {
                         let child = currentTreeNode.children.get(groupName);
                         if (child === undefined) {

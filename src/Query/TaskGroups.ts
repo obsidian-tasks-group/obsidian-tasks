@@ -153,10 +153,20 @@ export class TaskGroups {
             group.applyTaskLimit(limit);
         });
 
-        this.calculateTotalTaskCount();
+        this.recalculateTotalTaskCount();
     }
 
-    private calculateTotalTaskCount() {
+    /**
+     * Update the stored task count to represent the number of unique tasks
+     * across all the groups.
+     *
+     * In normal operation this is only useful after a limit to group size
+     * has been applied.
+     *
+     * However, it is also useful for test code to be able to ensure consistency
+     * of task count after the object has been initially constructed.
+     */
+    public recalculateTotalTaskCount() {
         let concatenatedTasks: Task[] = [];
 
         this._groups.forEach((group) => {
