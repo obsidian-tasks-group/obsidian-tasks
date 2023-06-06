@@ -95,6 +95,14 @@ export class SampleTasks {
         return tasks;
     }
 
+    public static withAllRepresentativeScheduledDates(): Task[] {
+        const tasks = representativeDates.map((date) => {
+            return new TaskBuilder().scheduledDate(date).build();
+        });
+
+        return tasks;
+    }
+
     public static withAllRepresentativeStartDates(): Task[] {
         const tasks = representativeDates.map((date) => {
             return new TaskBuilder().startDate(date).build();
