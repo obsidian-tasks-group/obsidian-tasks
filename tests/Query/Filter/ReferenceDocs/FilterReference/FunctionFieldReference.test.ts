@@ -29,12 +29,18 @@ function addBackticks(x: any) {
 
 describe('task', () => {
     function verifyFieldDataForReferenceDocs(fields: string[]) {
-        const markdownTable = new MarkdownTable(['Field', 'Type', 'Example']);
-        const task = TaskBuilder.createFullyPopulatedTask();
+        const markdownTable = new MarkdownTable(['Field', 'Type 1', 'Example 1', 'Type 2', 'Example 2']);
+        const task1 = TaskBuilder.createFullyPopulatedTask();
+        const task2 = new TaskBuilder().description('minimal task').build();
         for (const field of fields) {
-            const x = evaluateExpression(task, field);
             // TODO better type label for string[] (tags)
-            const cells = [addBackticks(field), addBackticks(typeof x), addBackticks(formatToRepresentType(x))];
+            const cells = [
+                addBackticks(field),
+                addBackticks(typeof evaluateExpression(task1, field)),
+                addBackticks(formatToRepresentType(evaluateExpression(task1, field))),
+                addBackticks(typeof evaluateExpression(task2, field)),
+                addBackticks(formatToRepresentType(evaluateExpression(task2, field))),
+            ];
             markdownTable.addRow(cells);
         }
         markdownTable.verifyForDocs();

@@ -26,12 +26,12 @@ For more information, including adding your own customised statuses, see [[Statu
 
 <!-- placeholder to force blank line before included text --> <!-- include: FunctionFieldReference.test.task_status.approved.md -->
 
-| Field | Type | Example |
-| ----- | ----- | ----- |
-| `task.status.name` | `string` | `'Todo'` |
-| `task.status.type` | `string` | `'TODO'` |
-| `task.status.symbol` | `string` | `' '` |
-| `task.status.nextStatusSymbol` | `string` | `'x'` |
+| Field | Type 1 | Example 1 | Type 2 | Example 2 |
+| ----- | ----- | ----- | ----- | ----- |
+| `task.status.name` | `string` | `'Todo'` | `string` | `'Todo'` |
+| `task.status.type` | `string` | `'TODO'` | `string` | `'TODO'` |
+| `task.status.symbol` | `string` | `' '` | `string` | `' '` |
+| `task.status.nextStatusSymbol` | `string` | `'x'` | `string` | `'x'` |
 
 <!-- placeholder to force blank line after included text --> <!-- endInclude -->
 
@@ -47,16 +47,16 @@ None supported yet.
 
 <!-- placeholder to force blank line before included text --> <!-- include: FunctionFieldReference.test.task_other_fields.approved.md -->
 
-| Field | Type | Example |
-| ----- | ----- | ----- |
-| `task.description` | `string` | `'Do exercises #todo #health'` |
-| `task.priority` | `string` | `'2'` |
-| `task.urgency` | `number` | `3.3000000000000007` |
-| `task.tags` | `object` | `#todo,#health` |
-| `task.indentation` | `string` | `'  '` |
-| `task.listMarker` | `string` | `'-'` |
-| `task.blockLink` | `string` | `' ^dcf64c'` |
-| `task.originalMarkdown` | `string` | `'  - [ ] Do exercises #todo #health 🔼 🔁 every day when done ➕ 2023-07-01 🛫 2023-07-02 ⏳ 2023-07-03 📅 2023-07-04 ✅ 2023-07-05 ^dcf64c'` |
+| Field | Type 1 | Example 1 | Type 2 | Example 2 |
+| ----- | ----- | ----- | ----- | ----- |
+| `task.description` | `string` | `'Do exercises #todo #health'` | `string` | `'minimal task'` |
+| `task.priority` | `string` | `'2'` | `string` | `'3'` |
+| `task.urgency` | `number` | `3.3000000000000007` | `number` | `1.9500000000000002` |
+| `task.tags` | `object` | `#todo,#health` | `object` | `` |
+| `task.indentation` | `string` | `'  '` | `string` | `''` |
+| `task.listMarker` | `string` | `'-'` | `string` | `'-'` |
+| `task.blockLink` | `string` | `' ^dcf64c'` | `string` | `''` |
+| `task.originalMarkdown` | `string` | `'  - [ ] Do exercises #todo #health 🔼 🔁 every day when done ➕ 2023-07-01 🛫 2023-07-02 ⏳ 2023-07-03 📅 2023-07-04 ✅ 2023-07-05 ^dcf64c'` | `string` | `'- [ ] minimal task'` |
 
 <!-- placeholder to force blank line after included text --> <!-- endInclude -->
 
@@ -76,8 +76,8 @@ TODO Maybe use `heading` instead? Try to make field names consistent with existi
 
 <!-- placeholder to force blank line before included text --> <!-- include: FunctionFieldReference.test.task_file_properties.approved.md -->
 
-| Field | Type | Example |
-| ----- | ----- | ----- |
-| `task.precedingHeader` | `string` | `'My Header'` |
+| Field | Type 1 | Example 1 | Type 2 | Example 2 |
+| ----- | ----- | ----- | ----- | ----- |
+| `task.precedingHeader` | `string` | `'My Header'` | `object` | `null` |
 
 <!-- placeholder to force blank line after included text --> <!-- endInclude -->
