@@ -4,6 +4,7 @@
 
 import moment from 'moment';
 import { evaluateExpression } from '../../../../../src/Query/Filter/FunctionField';
+import { Status } from '../../../../../src/Status';
 
 import { TaskBuilder } from '../../../../TestingTools/TaskBuilder';
 import { MarkdownTable } from '../../../../TestingTools/VerifyMarkdownTable';
@@ -31,7 +32,7 @@ describe('task', () => {
     function verifyFieldDataForReferenceDocs(fields: string[]) {
         const markdownTable = new MarkdownTable(['Field', 'Type 1', 'Example 1', 'Type 2', 'Example 2']);
         const task1 = TaskBuilder.createFullyPopulatedTask();
-        const task2 = new TaskBuilder().description('minimal task').build();
+        const task2 = new TaskBuilder().description('minimal task').status(Status.makeInProgress()).build();
         for (const field of fields) {
             // TODO better type label for string[] (tags)
             const cells = [
@@ -57,6 +58,18 @@ describe('task', () => {
         ]);
     });
 
+    it('dates', () => {
+        verifyFieldDataForReferenceDocs([
+            // TODO Replace these with values that can be released - TasksDate probably
+            'task.status.createdDate',
+            'task.createdDate',
+            'task.startDate',
+            'task.scheduledDate',
+            'task.dueDate',
+            'task.doneDate',
+        ]);
+    });
+
     it('other fields', () => {
         // TODO Recurrence
         verifyFieldDataForReferenceDocs([
@@ -72,7 +85,8 @@ describe('task', () => {
     });
 
     it('file properties', () => {
+        // TODO Replace this with values that can be published
         // TODO Create task.file
-        verifyFieldDataForReferenceDocs(['task.precedingHeader']);
+        verifyFieldDataForReferenceDocs(['task.path', 'task.filename', 'task.lineNumber', 'task.precedingHeader']);
     });
 });

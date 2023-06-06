@@ -9,7 +9,7 @@
 | `task.indentation` | `string` | `'  '` | `string` | `''` |
 | `task.listMarker` | `string` | `'-'` | `string` | `'-'` |
 | `task.blockLink` | `string` | `' ^dcf64c'` | `string` | `''` |
-| `task.originalMarkdown` | `string` | `'  - [ ] Do exercises #todo #health 🔼 🔁 every day when done ➕ 2023-07-01 🛫 2023-07-02 ⏳ 2023-07-03 📅 2023-07-04 ✅ 2023-07-05 ^dcf64c'` | `string` | `'- [ ] minimal task'` |
+| `task.originalMarkdown` | `string` | `'  - [ ] Do exercises #todo #health 🔼 🔁 every day when done ➕ 2023-07-01 🛫 2023-07-02 ⏳ 2023-07-03 📅 2023-07-04 ✅ 2023-07-05 ^dcf64c'` | `string` | `'- [/] minimal task'` |
 
 
 <!-- placeholder to force blank line after included text -->
