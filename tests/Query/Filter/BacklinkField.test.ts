@@ -65,4 +65,51 @@ describe('grouping by backlink', () => {
             expect(grouper(fromLine({ line: t, path: path, precedingHeader: heading }))).toEqual(groups);
         },
     );
+
+    it('should sort groups for BacklinkField', () => {
+        // Arrange
+        const tasks = withAllPathsAndHeadings();
+        const grouper = new BacklinkField().createNormalGrouper();
+
+        // Assert
+        expect({ grouper, tasks }).groupHeadingsToBe([
+            '\\_c\\_',
+            '\\_c\\_ > heading _italic text_',
+            'a\\_b\\_c',
+            'c',
+            'c > heading',
+            'Unknown Location',
+        ]);
+    });
 });
+
+export function withAllPathsAndHeadings() {
+    const allPathsAndHeadings: [string, string | null][] = [
+        ['', 'heading'],
+
+        // no heading supplied
+        ['a/b/c.md', null],
+
+        // File and heading, nominal case
+        ['a/b/c.md', 'heading'],
+
+        // If file name and heading are identical, avoid duplication ('c > c')
+        ['a/b/c.md', 'c'],
+
+        // If file name and heading are identical, avoid duplication, even if there are underscores in the file name
+        ['a_b_c.md', 'a_b_c'],
+
+        // Underscores in file name component are escaped
+        ['a/b/_c_.md', null],
+
+        // But underscores in the heading component are not
+        ['a/b/_c_.md', 'heading _italic text_'],
+    ];
+    const t = '- [ ] xyz';
+
+    const tasks = allPathsAndHeadings.map(([path, heading]) => {
+        return fromLine({ line: t, path: path, precedingHeader: heading });
+    });
+
+    return tasks;
+}
