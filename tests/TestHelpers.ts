@@ -37,6 +37,8 @@ export function createTasksFromMarkdown(tasksAsMarkdown: string, path: string, p
     return tasks;
 }
 
+const representativeDates = ['2023-05-30', '2023-05-31', '2023-06-01', '2023-02-32', null];
+
 export class SampleTasks {
     public static withAllPathsAndHeadings(): Task[] {
         const allPathsAndHeadings: [string, string | null][] = [
@@ -70,10 +72,16 @@ export class SampleTasks {
     }
 
     public static withAllRepresentativeDueDates(): Task[] {
-        const dates = ['2023-05-30', '2023-05-31', '2023-06-01', '2023-02-32', null];
-
-        const tasks = dates.map((date) => {
+        const tasks = representativeDates.map((date) => {
             return new TaskBuilder().dueDate(date).build();
+        });
+
+        return tasks;
+    }
+
+    public static withAllRepresentativeStartDates(): Task[] {
+        const tasks = representativeDates.map((date) => {
+            return new TaskBuilder().startDate(date).build();
         });
 
         return tasks;
