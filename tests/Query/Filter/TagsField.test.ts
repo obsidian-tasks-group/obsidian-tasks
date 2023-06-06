@@ -687,6 +687,6 @@ describe('grouping by tag', () => {
         ];
         const tasks = taskLines.map((taskLine) => fromLine({ line: taskLine }));
 
-        expect({ grouper, tasks }).groupHeadingsToBe(['(No tags)', '#tag1', '#tag2', '#tag1/tag3', '#tag2/tag4']);
+        expect({ grouper, tasks }).groupHeadingsToBe(['(No tags)', '#tag1', '#tag1/tag3', '#tag2', '#tag2/tag4']);
     });
 });
