@@ -4,6 +4,7 @@ import { Status } from './../src/Status';
 import { StatusType } from './../src/StatusConfiguration';
 import { PriorityField } from './../src/Query/Filter/PriorityField';
 import { TaskBuilder } from './TestingTools/TaskBuilder';
+import { Recurrence } from './../src/Recurrence';
 
 export function fromLine({
     line,
@@ -40,6 +41,45 @@ export function createTasksFromMarkdown(tasksAsMarkdown: string, path: string, p
 const representativeDates = ['2023-05-30', '2023-05-31', '2023-06-01', '2023-02-32', null];
 
 export class SampleTasks {
+    public static withAllRecurrences(): Task[] {
+        const recurrenceRules = [
+            // Months
+            'every 4 months on the 3rd Wednesday',
+            'every month',
+            'every second of month',
+            'every second of month when done',
+
+            // Weeks
+            'every Tuesday',
+            'every Tuesday when done',
+            'every week',
+            'every 3rd Thursday',
+            'every 4 weeks',
+
+            // Days
+            'every 6 days',
+            'every 8 days',
+            'every 8 days when done',
+            'every day',
+            '',
+        ];
+
+        const tasks = recurrenceRules.map((recurrenceRule) => {
+            return new TaskBuilder()
+                .recurrence(
+                    Recurrence.fromText({
+                        recurrenceRuleText: recurrenceRule,
+                        startDate: null,
+                        scheduledDate: null,
+                        dueDate: null,
+                    }),
+                )
+                .build();
+        });
+
+        return tasks;
+    }
+
     public static withAllRootsPathsHeadings(): Task[] {
         const allPathsAndHeadings: [string, string | null][] = [
             ['', 'heading'],
