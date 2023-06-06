@@ -49,6 +49,7 @@ export class SampleTasks {
 
             // File and heading, nominal case
             ['a/d/c.md', 'heading'],
+            ['e/d/c.md', 'heading'],
 
             // If file name and heading are identical, avoid duplication ('c > c')
             ['a/b/c.md', 'c'],

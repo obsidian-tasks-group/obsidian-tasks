@@ -176,6 +176,7 @@ describe('grouping by path', () => {
             'a/b/c',
             'a/d/c',
             'a\\_b\\_c',
+            'e/d/c',
         ]);
     });
 });
