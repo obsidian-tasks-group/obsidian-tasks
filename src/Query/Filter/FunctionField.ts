@@ -75,9 +75,9 @@ export function evaluateExpression(task: Task, arg: string | null) {
     ];
 
     const params = paramsArgs.map(([p]) => p);
-    const groupBy = arg && new Function(...params, `return ${arg}`);
+    const expression = arg && new Function(...params, `return ${arg}`);
 
-    if (!(groupBy instanceof Function)) {
+    if (!(expression instanceof Function)) {
         // I have not managed to write a test that reaches here:
         return 'Error parsing group function';
     }
@@ -85,7 +85,7 @@ export function evaluateExpression(task: Task, arg: string | null) {
     const args = paramsArgs.map(([_, a]) => a);
 
     try {
-        return groupBy(...args);
+        return expression(...args);
     } catch (e) {
         const errorMessage = `Error: Failed calculating expression "${arg}". The error message was: `;
         if (e instanceof Error) {
