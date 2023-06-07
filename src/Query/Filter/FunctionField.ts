@@ -68,6 +68,18 @@ export function groupByFn(task: Task, arg: GroupingArg): string[] {
             return result.map((h) => h.toString());
         }
 
+        // Task uses null to represent missing information.
+        // So we treat null as an empty group or 'not in a heading', for simplicity for users.
+        // This can be overridden with 'null || "No value"
+        if (result === null) {
+            return [];
+        }
+
+        // If there was an error in the expression, like it referred to
+        // an unknown task field, result will be undefined, and the call
+        // on undefined.toString() will give an exception and a useful error
+        // message below. This is a feature: it gives users feedback on the problem
+        // instruction line.
         const group = result.toString();
         return [group];
     } catch (e) {
