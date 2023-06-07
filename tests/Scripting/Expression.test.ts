@@ -4,15 +4,15 @@
 import moment from 'moment';
 
 import { evaluateExpression } from '../../src/Scripting/Expression';
-import { verifyAll } from '../TestingTools/ApprovalTestHelpers';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
+import { MarkdownTable } from '../TestingTools/VerifyMarkdownTable';
 
 window.moment = moment;
 
 describe('Expression', () => {
     it('result', () => {
         const task = TaskBuilder.createFullyPopulatedTask();
-        const expression = [
+        const expressions = [
             '"hello"',
             '""',
             '[]',
@@ -32,6 +32,11 @@ describe('Expression', () => {
             // Should allow manual escaping of markdown
             String.raw`"I _am_ not _italic_".replaceAll("_", "\\_")`,
         ];
-        verifyAll((a) => `${evaluateExpression(task, a)}`, expression);
+
+        const table = new MarkdownTable(['expression', 'result of evaluating the expression']);
+        for (const expression of expressions) {
+            table.addRow([expression, evaluateExpression(task, expression)]);
+        }
+        table.verifyForDocs();
     });
 });

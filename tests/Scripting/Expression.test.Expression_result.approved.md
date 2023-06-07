@@ -1,17 +1,4 @@
----
-publish: true
----
-
-# Expressions
-
-<span class="related-pages">#feature/scripting</span>
-
-> [!released]
-> Expressions were introduced in Tasks X.Y.Z.
-
-## Representation of values in 'group by' instructions
-
-<!-- placeholder to force blank line before included text --> <!-- include: Expression.test.Expression_result.approved.md -->
+<!-- placeholder to force blank line before included text -->
 
 | expression | result of evaluating the expression |
 | ----- | ----- |
@@ -33,4 +20,5 @@ publish: true
 | undefined || "No value" | No value |
 | "I _am_ not _italic_".replaceAll("_", "\\_") | I \_am\_ not \_italic\_ |
 
-<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+
+<!-- placeholder to force blank line after included text -->
