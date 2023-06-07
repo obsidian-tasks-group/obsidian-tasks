@@ -5,10 +5,9 @@ import { verifyAllCombinations1 } from 'approvals/lib/Providers/Jest/Combination
 import moment from 'moment';
 
 import { FunctionField } from '../../../src/Query/Filter/FunctionField';
-import type { Grouper } from '../../../src/Query/Grouper';
 import { Status } from '../../../src/Status';
-import type { Task } from '../../../src/Task';
 import { Priority } from '../../../src/Task';
+import { toGroupTaskFromBuilder, toGroupTaskWithPath } from '../../CustomMatchers/CustomMatchersForGrouping';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 
 window.moment = moment;
@@ -40,27 +39,6 @@ describe('FunctionField - sorting', () => {
 // -----------------------------------------------------------------------------------------------------------------
 // Grouping
 // -----------------------------------------------------------------------------------------------------------------
-
-function toGroupTask(grouper: Grouper | null, task: Task, expectedGroupNames: string[]) {
-    if (grouper === undefined) {
-        return {
-            message: () => 'unexpected null grouper: check your instruction matches your filter class.',
-            pass: false,
-        };
-    }
-
-    expect(grouper!.grouper(task)).toEqual(expectedGroupNames);
-}
-
-function toGroupTaskFromBuilder(grouper: Grouper | null, taskBuilder: TaskBuilder, expectedGroupNames: string[]) {
-    const task = taskBuilder.build();
-    toGroupTask(grouper, task, expectedGroupNames);
-}
-
-function toGroupTaskWithPath(grouper: Grouper | null, path: string, expectedGroupNames: string[]) {
-    const taskBuilder = new TaskBuilder().path(path);
-    toGroupTaskFromBuilder(grouper, taskBuilder, expectedGroupNames);
-}
 
 afterEach(() => {
     jest.useRealTimers();
