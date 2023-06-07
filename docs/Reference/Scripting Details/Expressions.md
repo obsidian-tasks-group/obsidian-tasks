@@ -9,28 +9,47 @@ publish: true
 > [!released]
 > Expressions were introduced in Tasks X.Y.Z.
 
-## Representation of values in 'group by' instructions
+## What are Expressions?
+
+- Language is JavaScript
+- The expression is a string instruction
+- Depending on the context, one or two tasks are passed in to the expression, and a calculation is performed.
+- Calculate some new value based on the input
+
+## Example expressions
+
+The real value of expressions is to calculate values from data in tasks.
+
+In this section, we use artificially simple fixed expressions, to demonstrate the kinds of abilities available.
+
+Each line below is of the form:
+
+~~~text
+expression => result
+~~~
+
+Sample expressions:
 
 <!-- placeholder to force blank line before included text --> <!-- include: Expression.test.Expression_result.approved.md -->
 
-| expression | result of evaluating the expression |
-| ----- | ----- |
-| "hello" | hello |
-| "" |  |
-| [] |  |
-| "" || "No value" | No value |
-| false | false |
-| true | true |
-| 1 | 1 |
-| 0 | 0 |
-| 0 || "No value" | No value |
-| 1.0765456 | 1.0765456 |
-| ["heading1", "heading2"] | heading1,heading2 |
-| [1, 2] | 1,2 |
-| null | null |
-| null || "No value" | No value |
-| undefined | undefined |
-| undefined || "No value" | No value |
-| "I _am_ not _italic_".replaceAll("_", "\\_") | I \_am\_ not \_italic\_ |
+~~~text
+"hello" => hello
+"" => 
+[] => 
+"" || "No value" => No value
+false => false
+true => true
+1 => 1
+0 => 0
+0 || "No value" => No value
+1.0765456 => 1.0765456
+["heading1", "heading2"] => heading1,heading2
+[1, 2] => 1,2
+null => null
+null || "No value" => No value
+undefined => undefined
+undefined || "No value" => No value
+"I _am_ not _italic_".replaceAll("_", "\\_") => I \_am\_ not \_italic\_
+~~~
 
 <!-- placeholder to force blank line after included text --> <!-- endInclude -->

@@ -5,7 +5,7 @@ import moment from 'moment';
 
 import { evaluateExpression } from '../../src/Scripting/Expression';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
-import { MarkdownTable } from '../TestingTools/VerifyMarkdownTable';
+import { verifyMarkdownForDocs } from '../TestingTools/VerifyMarkdownTable';
 
 window.moment = moment;
 
@@ -33,10 +33,11 @@ describe('Expression', () => {
             String.raw`"I _am_ not _italic_".replaceAll("_", "\\_")`,
         ];
 
-        const table = new MarkdownTable(['expression', 'result of evaluating the expression']);
+        let markdown = '~~~text\n';
         for (const expression of expressions) {
-            table.addRow([expression, evaluateExpression(task, expression)]);
+            markdown += `${expression} => ${evaluateExpression(task, expression)}\n`;
         }
-        table.verifyForDocs();
+        markdown += '~~~\n';
+        verifyMarkdownForDocs(markdown);
     });
 });
