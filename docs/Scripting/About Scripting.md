@@ -2,7 +2,7 @@
 publish: true
 ---
 
-# About Scripting Details
+# About Scripting
 
 <span class="related-pages">#index-pages #feature/scripting</span>
 
