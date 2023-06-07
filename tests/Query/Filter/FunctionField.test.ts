@@ -171,7 +171,7 @@ describe('FunctionField - grouping return types', () => {
     });
 
     it('group result on expressions', () => {
-        verifyAllCombinations1((a) => `placeholder for ${a}`, expressionsAndResults);
+        verifyAllCombinations1((a) => `${a}`, expressionsAndResults);
     });
 });
 
