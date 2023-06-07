@@ -1,7 +1,6 @@
 /**
  * @jest-environment jsdom
  */
-import { verifyAllCombinations1 } from 'approvals/lib/Providers/Jest/CombinationApprovals';
 import moment from 'moment';
 
 import { FunctionField } from '../../../src/Query/Filter/FunctionField';
@@ -9,6 +8,7 @@ import { evaluateExpression } from '../../../src/Scripting/Expression';
 import { Status } from '../../../src/Status';
 import { Priority } from '../../../src/Task';
 import { toGroupTaskFromBuilder, toGroupTaskWithPath } from '../../CustomMatchers/CustomMatchersForGrouping';
+import { verifyAll } from '../../TestingTools/ApprovalTestHelpers';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 
 window.moment = moment;
@@ -172,7 +172,7 @@ describe('FunctionField - grouping return types', () => {
             String.raw`"I _am_ not _italic_".replaceAll("_", "\\_")`,
         ];
         // TODO Remove [] from around a in the approved file (due to use of combinations)
-        verifyAllCombinations1((a) => `${evaluateExpression(task, a)}`, expressionsAndResults);
+        verifyAll((a) => `${evaluateExpression(task, a)}`, expressionsAndResults);
     });
 });
 
