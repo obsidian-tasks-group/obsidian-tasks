@@ -3,11 +3,11 @@
  */
 
 import moment from 'moment';
-import { evaluateExpression } from '../../../../../src/Scripting/Expression';
-import { Status } from '../../../../../src/Status';
+import { evaluateExpression } from '../../src/Scripting/Expression';
+import { Status } from '../../src/Status';
 
-import { TaskBuilder } from '../../../../TestingTools/TaskBuilder';
-import { MarkdownTable } from '../../../../TestingTools/VerifyMarkdownTable';
+import { TaskBuilder } from '../TestingTools/TaskBuilder';
+import { MarkdownTable } from '../TestingTools/VerifyMarkdownTable';
 
 window.moment = moment;
 
