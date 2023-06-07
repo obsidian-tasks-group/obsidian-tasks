@@ -14,6 +14,7 @@ describe('Expression', () => {
     it('result', () => {
         const task = TaskBuilder.createFullyPopulatedTask();
         const expressions = [
+            "'hello'",
             '"hello"',
             '""',
             '[]',

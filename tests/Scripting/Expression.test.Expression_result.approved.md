@@ -1,6 +1,7 @@
 <!-- placeholder to force blank line before included text -->
 
 ~~~text
+'hello' => 'hello'
 "hello" => 'hello'
 "" => ''
 [] => []
