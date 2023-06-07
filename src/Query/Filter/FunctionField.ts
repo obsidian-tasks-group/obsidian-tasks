@@ -105,12 +105,7 @@ export function groupByFn(task: Task, arg: GroupingArg): string[] {
         }
 
         const group = result.toString();
-        if (group.length > 0) {
-            return [group];
-        } else {
-            // The task does not have a group heading
-            return [];
-        }
+        return [group];
     } catch (e) {
         const errorMessage = `Error: Failed calculating expression "${arg}". The error message was: `;
         if (e instanceof Error) {

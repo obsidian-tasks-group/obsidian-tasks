@@ -131,7 +131,8 @@ describe('FunctionField - grouping - error-handling', () => {
 describe('FunctionField - grouping - handling various return types', () => {
     it.each([
         ['"hello"', ['hello']],
-        ['""', []], // return empty string to indicate an empty group heading, that is, this task is not grouped.
+        ['""', ['']],
+        ['[]', []],
         ['"" || "No value"', ['No value']],
         ['false', ['false']],
         ['true', ['true']],
