@@ -171,7 +171,6 @@ describe('FunctionField - grouping return types', () => {
             // Should allow manual escaping of markdown
             String.raw`"I _am_ not _italic_".replaceAll("_", "\\_")`,
         ];
-        // TODO Remove [] from around a in the approved file (due to use of combinations)
         verifyAll((a) => `${evaluateExpression(task, a)}`, expressionsAndResults);
     });
 });

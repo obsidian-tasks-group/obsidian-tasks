@@ -15,7 +15,7 @@ export function printIteration<T1>(func: <T1>(t1: T1) => any, params1: T1[]): st
         }
         const parameters = [p1].filter((p) => p !== EMPTY_ENTRY);
 
-        text += `[${parameters}] => ${output}\n`;
+        text += `${parameters} => ${output}\n`;
     }
     return text;
 }
