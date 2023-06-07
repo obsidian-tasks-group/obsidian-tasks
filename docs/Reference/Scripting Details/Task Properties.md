@@ -24,7 +24,7 @@ This documents all the available pieces of information in Tasks that you can acc
 
 For more information, including adding your own customised statuses, see [[Statuses]].
 
-<!-- placeholder to force blank line before included text --> <!-- include: FunctionFieldReference.test.task_status.approved.md -->
+<!-- placeholder to force blank line before included text --> <!-- include: TaskProperties.test.task_status.approved.md -->
 
 | Field | Type 1 | Example 1 | Type 2 | Example 2 |
 | ----- | ----- | ----- | ----- | ----- |
@@ -42,7 +42,7 @@ For more information, including adding your own customised statuses, see [[Statu
 > [!warning]
 > Do not use these properties. They will change before release.
 
-<!-- placeholder to force blank line before included text --> <!-- include: FunctionFieldReference.test.task_dates.approved.md -->
+<!-- placeholder to force blank line before included text --> <!-- include: TaskProperties.test.task_dates.approved.md -->
 
 | Field | Type 1 | Example 1 | Type 2 | Example 2 |
 | ----- | ----- | ----- | ----- | ----- |
@@ -59,7 +59,7 @@ For more information, including adding your own customised statuses, see [[Statu
 
 ## Values for Other Task Properties
 
-<!-- placeholder to force blank line before included text --> <!-- include: FunctionFieldReference.test.task_other_fields.approved.md -->
+<!-- placeholder to force blank line before included text --> <!-- include: TaskProperties.test.task_other_fields.approved.md -->
 
 | Field | Type 1 | Example 1 | Type 2 | Example 2 |
 | ----- | ----- | ----- | ----- | ----- |
@@ -91,7 +91,7 @@ For more information, including adding your own customised statuses, see [[Statu
 
 TODO Maybe use `heading` instead? Try to make field names consistent with existing filter names
 
-<!-- placeholder to force blank line before included text --> <!-- include: FunctionFieldReference.test.task_file_properties.approved.md -->
+<!-- placeholder to force blank line before included text --> <!-- include: TaskProperties.test.task_file_properties.approved.md -->
 
 | Field | Type 1 | Example 1 | Type 2 | Example 2 |
 | ----- | ----- | ----- | ----- | ----- |
