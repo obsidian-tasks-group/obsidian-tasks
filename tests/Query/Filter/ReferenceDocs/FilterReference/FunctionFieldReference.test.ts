@@ -3,7 +3,7 @@
  */
 
 import moment from 'moment';
-import { evaluateExpression } from '../../../../../src/Query/Filter/FunctionField';
+import { evaluateExpression } from '../../../../../src/Scripting/Expression';
 import { Status } from '../../../../../src/Status';
 
 import { TaskBuilder } from '../../../../TestingTools/TaskBuilder';
