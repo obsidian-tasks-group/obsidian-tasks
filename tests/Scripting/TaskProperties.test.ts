@@ -29,7 +29,7 @@ function addBackticks(x: any) {
     return '`' + x + '`';
 }
 
-function determineExpression(value: any) {
+function determineExpressionType(value: any) {
     if (Array.isArray(value)) {
         if (value.length > 0) {
             return `${typeof value[0]}[]`;
@@ -54,9 +54,9 @@ describe('task', () => {
             const value2 = evaluateExpression(task2, field);
             const cells = [
                 addBackticks(field),
-                addBackticks(determineExpression(value1)),
+                addBackticks(determineExpressionType(value1)),
                 addBackticks(formatToRepresentType(value1)),
-                addBackticks(determineExpression(value2)),
+                addBackticks(determineExpressionType(value2)),
                 addBackticks(formatToRepresentType(value2)),
             ];
             markdownTable.addRow(cells);
