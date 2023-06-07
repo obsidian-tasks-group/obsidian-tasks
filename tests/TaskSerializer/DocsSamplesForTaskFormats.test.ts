@@ -1,11 +1,11 @@
 import { TASK_FORMATS, updateSettings } from '../../src/Config/Settings';
 import { verifyMarkdown, verifyMarkdownForDocs } from '../TestingTools/VerifyMarkdownTable';
-import { withAllPriorities } from '../Query/Filter/PriorityField.test';
+import { SampleTasks } from '../TestHelpers';
 
 describe('Serializer', () => {
     describe('Priorities', () => {
         function allPriorityLines() {
-            const tasks = withAllPriorities().reverse();
+            const tasks = SampleTasks.withAllPriorities().reverse();
             return tasks.map((t) => t.toFileLineString()).join('\n');
         }
 

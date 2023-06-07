@@ -1,5 +1,5 @@
 import { RootField } from '../../../src/Query/Filter/RootField';
-import { fromLine } from '../../TestHelpers';
+import { SampleTasks, fromLine } from '../../TestHelpers';
 
 describe('root', () => {
     it('should provide access to root folder name with trailing slash', () => {
@@ -50,5 +50,14 @@ describe('grouping by root', () => {
 
         // Assert
         expect(grouper(fromLine({ line: taskLine, path: path }))).toEqual(groups);
+    });
+
+    it('should sort groups for FilenameField', () => {
+        // Arrange
+        const tasks = SampleTasks.withAllRootsPathsHeadings();
+        const grouper = new RootField().createNormalGrouper();
+
+        // Assert
+        expect({ grouper, tasks }).groupHeadingsToBe(['/', 'a/', 'e/']);
     });
 });

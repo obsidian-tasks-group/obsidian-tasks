@@ -7,7 +7,7 @@ import {
     expectTaskComparesBefore,
     expectTaskComparesEqual,
 } from '../../CustomMatchers/CustomMatchersForSorting';
-import { fromLine } from '../../TestHelpers';
+import { SampleTasks, fromLine } from '../../TestHelpers';
 
 function testTaskFilterForTaskWithPath(filter: FilterOrErrorMessage, path: string, expected: boolean) {
     const builder = new TaskBuilder();
@@ -162,5 +162,21 @@ describe('grouping by path', () => {
 
         // Assert
         expect(grouper(fromLine({ line: taskLine, path: path }))).toEqual(groups);
+    });
+
+    it('should sort groups for PathField', () => {
+        // Arrange
+        const tasks = SampleTasks.withAllRootsPathsHeadings();
+        const grouper = new PathField().createNormalGrouper();
+
+        // Assert
+        expect({ grouper, tasks }).groupHeadingsToBe([
+            // Why there is no path for empty path?
+            'a/b/\\_c\\_',
+            'a/b/c',
+            'a/d/c',
+            'a\\_b\\_c',
+            'e/d/c',
+        ]);
     });
 });

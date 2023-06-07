@@ -1,5 +1,4 @@
 import { StatusTypeField } from '../../../src/Query/Filter/StatusTypeField';
-import * as TestHelpers from '../../TestHelpers';
 import {
     expectTaskComparesAfter,
     expectTaskComparesBefore,
@@ -9,13 +8,14 @@ import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { StatusType } from '../../../src/StatusConfiguration';
 import { Status } from '../../../src/Status';
 import * as FilterParser from '../../../src/Query/FilterParser';
+import { SampleTasks, fromLine } from '../../TestHelpers';
 
 // Abbreviated names so that the markdown text is aligned
-const todoTask = TestHelpers.fromLine({ line: '- [ ] Todo' });
-const inprTask = TestHelpers.fromLine({ line: '- [/] In progress' });
-const doneTask = TestHelpers.fromLine({ line: '- [x] Done' });
-const cancTask = TestHelpers.fromLine({ line: '- [-] Cancelled' });
-const unknTask = TestHelpers.fromLine({ line: '- [%] Unknown' });
+const todoTask = fromLine({ line: '- [ ] Todo' });
+const inprTask = fromLine({ line: '- [/] In progress' });
+const doneTask = fromLine({ line: '- [x] Done' });
+const cancTask = fromLine({ line: '- [-] Cancelled' });
+const unknTask = fromLine({ line: '- [%] Unknown' });
 const non_Task = new TaskBuilder()
     .statusValues('^', 'non-task', 'x', false, StatusType.NON_TASK)
     .description('Non-task')
@@ -159,5 +159,19 @@ describe('grouping by status.type', () => {
         expect(grouper.grouper(cancTask)).toEqual(['4 CANCELLED']);
         expect(grouper.grouper(non_Task)).toEqual(['5 NON_TASK']);
         expect(grouper.grouper(emptTask)).toEqual(['6 EMPTY']); // won't be seen by users
+    });
+
+    it('should sort groups for StatusTypeField', () => {
+        const grouper = new StatusTypeField().createNormalGrouper();
+        const tasks = SampleTasks.withAllStatusTypes();
+
+        expect({ grouper, tasks }).groupHeadingsToBe([
+            '1 IN_PROGRESS',
+            '2 TODO',
+            '3 DONE',
+            '4 CANCELLED',
+            '5 NON_TASK',
+            '6 EMPTY',
+        ]);
     });
 });

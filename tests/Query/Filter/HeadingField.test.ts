@@ -3,7 +3,7 @@ import type { FilterOrErrorMessage } from '../../../src/Query/Filter/Filter';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { testFilter } from '../../TestingTools/FilterTestHelpers';
 import * as CustomMatchersForSorting from '../../CustomMatchers/CustomMatchersForSorting';
-import { fromLine } from '../../TestHelpers';
+import { SampleTasks, fromLine } from '../../TestHelpers';
 
 function testTaskFilterForHeading(filter: FilterOrErrorMessage, precedingHeader: string | null, expected: boolean) {
     const builder = new TaskBuilder();
@@ -110,4 +110,19 @@ describe('grouping by heading', () => {
             expect(grouper(fromLine({ line: taskLine, precedingHeader: header }))).toEqual(groups);
         },
     );
+
+    it('should sort groups for HeadingField', () => {
+        // Arrange
+        const tasks = SampleTasks.withAllRootsPathsHeadings();
+        const grouper = new HeadingField().createNormalGrouper();
+
+        // Assert
+        expect({ grouper, tasks }).groupHeadingsToBe([
+            '(No heading)',
+            'a_b_c',
+            'c',
+            'heading',
+            'heading _italic text_',
+        ]);
+    });
 });

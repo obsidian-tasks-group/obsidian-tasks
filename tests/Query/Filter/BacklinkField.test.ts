@@ -1,5 +1,5 @@
 import { BacklinkField } from '../../../src/Query/Filter/BacklinkField';
-import { fromLine } from '../../TestHelpers';
+import { SampleTasks, fromLine } from '../../TestHelpers';
 
 describe('backlink', () => {
     it('should provide the backlink', () => {
@@ -65,4 +65,20 @@ describe('grouping by backlink', () => {
             expect(grouper(fromLine({ line: t, path: path, precedingHeader: heading }))).toEqual(groups);
         },
     );
+
+    it('should sort groups for BacklinkField', () => {
+        // Arrange
+        const tasks = SampleTasks.withAllRootsPathsHeadings();
+        const grouper = new BacklinkField().createNormalGrouper();
+
+        // Assert
+        expect({ grouper, tasks }).groupHeadingsToBe([
+            '\\_c\\_',
+            '\\_c\\_ > heading _italic text_',
+            'a\\_b\\_c',
+            'c',
+            'c > heading',
+            'Unknown Location',
+        ]);
+    });
 });

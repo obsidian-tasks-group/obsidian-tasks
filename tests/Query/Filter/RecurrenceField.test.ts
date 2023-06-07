@@ -6,7 +6,7 @@ import moment from 'moment';
 import { RecurrenceField } from '../../../src/Query/Filter/RecurrenceField';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { RecurrenceBuilder } from '../../TestingTools/RecurrenceBuilder';
-import { fromLine } from '../../TestHelpers';
+import { SampleTasks, fromLine } from '../../TestHelpers';
 
 window.moment = moment;
 
@@ -92,5 +92,24 @@ describe('grouping by recurrence', () => {
 
         // Assert
         expect(grouper(fromLine({ line: taskLine }))).toEqual(groups);
+    });
+
+    it('should sort groups for RecurrenceField', () => {
+        const grouper = new RecurrenceField().createNormalGrouper();
+        const tasks = SampleTasks.withAllRecurrences();
+
+        expect({ grouper, tasks }).groupHeadingsToBe([
+            'every 4 months on the 3rd Wednesday',
+            'every 4 weeks',
+            'every 6 days',
+            'every 8 days',
+            'every 8 days when done',
+            'every day',
+            'every month',
+            'every week',
+            'every week on Tuesday',
+            'every week on Tuesday when done',
+            'None',
+        ]);
     });
 });

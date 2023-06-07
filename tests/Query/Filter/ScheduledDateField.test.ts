@@ -5,6 +5,7 @@ import moment from 'moment';
 import { ScheduledDateField } from '../../../src/Query/Filter/ScheduledDateField';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { expectTaskComparesAfter, expectTaskComparesBefore } from '../../CustomMatchers/CustomMatchersForSorting';
+import { SampleTasks } from '../../TestHelpers';
 
 window.moment = moment;
 
@@ -55,5 +56,18 @@ describe('grouping by scheduled date', () => {
         // Assert
         expect(grouper.grouper(taskWithDate)).toEqual(['1970-01-01 Thursday']);
         expect(grouper.grouper(taskWithoutDate)).toEqual(['No scheduled date']);
+    });
+
+    it('should sort groups for ScheduledDateField', () => {
+        const grouper = new ScheduledDateField().createNormalGrouper();
+        const tasks = SampleTasks.withAllRepresentativeScheduledDates();
+
+        expect({ grouper, tasks }).groupHeadingsToBe([
+            '2023-05-30 Tuesday',
+            '2023-05-31 Wednesday',
+            '2023-06-01 Thursday',
+            'Invalid date',
+            'No scheduled date',
+        ]);
     });
 });
