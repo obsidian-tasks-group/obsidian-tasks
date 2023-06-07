@@ -96,4 +96,12 @@ describe('grouping by urgency', () => {
         // Assert
         expect(grouper(fromLine({ line: taskLine }))).toEqual(groups);
     });
+
+    it('should sort groups for UrgencyField', () => {
+        const grouper = new UrgencyField().createNormalGrouper();
+        const taskLines = ['- [ ] a ⏫', '- [ ] a 🔼', '- [ ] a', '- [ ] a 🔽'];
+        const tasks = taskLines.map((taskLine) => fromLine({ line: taskLine }));
+
+        expect({ grouper, tasks }).groupHeadingsToBe(['0.00', '1.95', '3.90', '6.00']);
+    });
 });

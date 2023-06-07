@@ -5,7 +5,7 @@ import moment from 'moment';
 import { RecurringField } from '../../../src/Query/Filter/RecurringField';
 import type { FilterOrErrorMessage } from '../../../src/Query/Filter/Filter';
 import { testTaskFilter } from '../../TestingTools/FilterTestHelpers';
-import { fromLine } from '../../TestHelpers';
+import { SampleTasks, fromLine } from '../../TestHelpers';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import {
     expectTaskComparesAfter,
@@ -100,5 +100,12 @@ describe('grouping by recurring', () => {
 
         // Assert
         expect(grouper(fromLine({ line: taskLine }))).toEqual(groups);
+    });
+
+    it('should sort groups for RecurringField', () => {
+        const grouper = new RecurringField().createNormalGrouper();
+        const tasks = SampleTasks.withAllRecurrences();
+
+        expect({ grouper, tasks }).groupHeadingsToBe(['Not Recurring', 'Recurring']);
     });
 });

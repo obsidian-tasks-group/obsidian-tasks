@@ -2,7 +2,6 @@
  * @jest-environment jsdom
  */
 import moment from 'moment';
-import type { Task } from 'Task';
 import { DueDateField } from '../../../src/Query/Filter/DueDateField';
 import type { FilterOrErrorMessage } from '../../../src/Query/Filter/Filter';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
@@ -14,6 +13,7 @@ import {
 } from '../../CustomMatchers/CustomMatchersForSorting';
 import { Query } from '../../../src/Query/Query';
 import { MarkdownTable } from '../../TestingTools/VerifyMarkdownTable';
+import { SampleTasks } from '../../TestHelpers';
 
 window.moment = moment;
 
@@ -535,7 +535,7 @@ describe('grouping by due date', () => {
 
     it('should sort groups for DueDateField', () => {
         const grouper = new DueDateField().createNormalGrouper();
-        const tasks = withAllRepresentativeDueDates();
+        const tasks = SampleTasks.withAllRepresentativeDueDates();
 
         expect({ grouper, tasks }).groupHeadingsToBe([
             '2023-05-30 Tuesday',
@@ -546,13 +546,3 @@ describe('grouping by due date', () => {
         ]);
     });
 });
-
-function withAllRepresentativeDueDates(): Task[] {
-    const dates = ['2023-05-30', '2023-05-31', '2023-06-01', '2023-02-32', null];
-
-    const tasks = dates.map((date) => {
-        return new TaskBuilder().dueDate(date).build();
-    });
-
-    return tasks;
-}

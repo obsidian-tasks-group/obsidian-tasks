@@ -673,4 +673,20 @@ describe('grouping by tag', () => {
             "
         `);
     });
+
+    it('should sort groups for TagsField', () => {
+        const grouper = new TagsField().createNormalGrouper();
+        const taskLines = [
+            '- [ ] a #tag1',
+            '- [ ] a #tag1/tag3',
+            '- [ ] a #tag2',
+            '- [ ] a #tag2/tag4',
+            '- [ ] a #tag1 #tag2',
+            '- [ ] a #tag1/tag3 #tag2/tag4',
+            '- [ ] a',
+        ];
+        const tasks = taskLines.map((taskLine) => fromLine({ line: taskLine }));
+
+        expect({ grouper, tasks }).groupHeadingsToBe(['(No tags)', '#tag1', '#tag1/tag3', '#tag2', '#tag2/tag4']);
+    });
 });
