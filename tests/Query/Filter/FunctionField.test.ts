@@ -129,7 +129,7 @@ describe('FunctionField - grouping - error-handling', () => {
 });
 
 describe('FunctionField - grouping - handling various return types', () => {
-    it.each([
+    const expressionsAndResuts = [
         ['"hello"', ['hello']],
         ['""', ['']],
         ['[]', []],
@@ -161,7 +161,9 @@ describe('FunctionField - grouping - handling various return types', () => {
             String.raw`"I _am_ not _italic_".replaceAll("_", "\\_")`,
             [String.raw`I \_am\_ not \_italic\_`],
         ],
-    ])("expression: '%s'", (expression: string, result: string[]) => {
+    ];
+
+    it.each(expressionsAndResuts)("expression: '%s'", (expression: any, result: any) => {
         const line = `group by function ${expression}`;
         const grouper = createGrouper(line);
         toGroupTaskFromBuilder(grouper, new TaskBuilder(), result);
