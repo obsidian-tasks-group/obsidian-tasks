@@ -12,7 +12,7 @@ window.moment = moment;
 describe('Expression', () => {
     it('result', () => {
         const task = TaskBuilder.createFullyPopulatedTask();
-        const expressionsAndResults = [
+        const expression = [
             '"hello"',
             '""',
             '[]',
@@ -32,6 +32,6 @@ describe('Expression', () => {
             // Should allow manual escaping of markdown
             String.raw`"I _am_ not _italic_".replaceAll("_", "\\_")`,
         ];
-        verifyAll((a) => `${evaluateExpression(task, a)}`, expressionsAndResults);
+        verifyAll((a) => `${evaluateExpression(task, a)}`, expression);
     });
 });
