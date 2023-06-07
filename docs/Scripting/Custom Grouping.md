@@ -71,15 +71,6 @@ The `expression` must:
   - either a single value of any type that can be converted to string
   - or an array of values (in which case, the task will be displayed multiple times, once under each heading generated from the array)
 
-> [!bug]
-> This currently does not display the tasks that do not have tags:
->
-> ```text
-> group by function task.tags
-> ```
->
-> We are investigating.
-
 > [!warning]
 > The strings returned are rendered as-is. This means, for example, that if the text you return has underscores in (`_`) that are not meant to indicate italics, you should escape them with backslashes ('\_') like this:
 >
