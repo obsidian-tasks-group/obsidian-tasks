@@ -8,37 +8,9 @@ import { Status } from '../../src/Status';
 
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { MarkdownTable } from '../TestingTools/VerifyMarkdownTable';
+import { addBackticks, determineExpressionType, formatToRepresentType } from './ScriptingTestHelpers';
 
 window.moment = moment;
-
-function formatToRepresentType(x: any): string {
-    if (typeof x === 'string') {
-        return "'" + x + "'";
-    }
-
-    if (Array.isArray(x)) {
-        return '[' + x.map((v) => formatToRepresentType(v)).join(', ') + ']';
-    }
-    // TODO Round numbers
-    // TODO Format string arrays - can I use 'toString()'?
-    // TODO Fix display of 2 spaces as `'  '` - which appears as a single space. <pre></pre> gets the spacing OK, but line is too tall
-    return x;
-}
-
-function addBackticks(x: any) {
-    return '`' + x + '`';
-}
-
-function determineExpressionType(value: any) {
-    if (Array.isArray(value)) {
-        if (value.length > 0) {
-            return `${typeof value[0]}[]`;
-        } else {
-            return 'any[]';
-        }
-    }
-    return typeof value;
-}
 
 // TODO Show a task in a callout, or an ordered list
 // TODO Also create an empty task, and combine its types together with that of the populated one - to find any types that could be none/null/undefined
