@@ -11,6 +11,7 @@ true => true
 0 => 0
 0 || "No value" => 'No value'
 1.0765456 => 1.0765456
+6 * 7 => 42
 ["heading1", "heading2"] => ['heading1', 'heading2']
 [1, 2] => [1, 2]
 null => null

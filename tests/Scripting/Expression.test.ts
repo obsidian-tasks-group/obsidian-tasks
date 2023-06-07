@@ -24,8 +24,9 @@ describe('Expression', () => {
             '0',
             '0 || "No value"',
             '1.0765456',
-            '["heading1", "heading2"]', // return two headings, indicating that this task should be displayed twice, once in each heading
-            '[1, 2]', // return two headings, that need to be converted to strings
+            '6 * 7',
+            '["heading1", "heading2"]',
+            '[1, 2]',
             'null',
             'null || "No value"',
             'undefined',
