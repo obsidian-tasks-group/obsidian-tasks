@@ -6,6 +6,7 @@ import moment from 'moment';
 import { evaluateExpression } from '../../src/Scripting/Expression';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { verifyMarkdownForDocs } from '../TestingTools/VerifyMarkdownTable';
+import { formatToRepresentType } from './ScriptingTestHelpers';
 
 window.moment = moment;
 
@@ -35,7 +36,8 @@ describe('Expression', () => {
 
         let markdown = '~~~text\n';
         for (const expression of expressions) {
-            markdown += `${expression} => ${evaluateExpression(task, expression)}\n`;
+            const result = evaluateExpression(task, expression);
+            markdown += `${expression} => ${formatToRepresentType(result)}\n`;
         }
         markdown += '~~~\n';
         verifyMarkdownForDocs(markdown);
