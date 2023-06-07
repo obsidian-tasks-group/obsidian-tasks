@@ -1,0 +1,17 @@
+["hello",hello] => placeholder for "hello",hello
+["",] => placeholder for "",
+[[],] => placeholder for [],
+["" || "No value",No value] => placeholder for "" || "No value",No value
+[false,false] => placeholder for false,false
+[true,true] => placeholder for true,true
+[1,1] => placeholder for 1,1
+[0,0] => placeholder for 0,0
+[0 || "No value",No value] => placeholder for 0 || "No value",No value
+[1.0765456,1.0765456] => placeholder for 1.0765456,1.0765456
+[["heading1", "heading2"],heading1,heading2] => placeholder for ["heading1", "heading2"],heading1,heading2
+[[1, 2],1,2] => placeholder for [1, 2],1,2
+[null,Error: Failed calculating expression "null". The error message was: Cannot read properties of null (reading 'toString')] => placeholder for null,Error: Failed calculating expression "null". The error message was: Cannot read properties of null (reading 'toString')
+[null || "No value",No value] => placeholder for null || "No value",No value
+[undefined,Error: Failed calculating expression "undefined". The error message was: Cannot read properties of undefined (reading 'toString')] => placeholder for undefined,Error: Failed calculating expression "undefined". The error message was: Cannot read properties of undefined (reading 'toString')
+[undefined || "No value",No value] => placeholder for undefined || "No value",No value
+["I _am_ not _italic_".replaceAll("_", "\\_"),I \_am\_ not \_italic\_] => placeholder for "I _am_ not _italic_".replaceAll("_", "\\_"),I \_am\_ not \_italic\_

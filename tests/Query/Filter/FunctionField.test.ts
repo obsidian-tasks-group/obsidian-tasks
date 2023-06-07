@@ -1,6 +1,7 @@
 /**
  * @jest-environment jsdom
  */
+import { verifyAllCombinations1 } from 'approvals/lib/Providers/Jest/CombinationApprovals';
 import moment from 'moment';
 
 import { FunctionField } from '../../../src/Query/Filter/FunctionField';
@@ -128,8 +129,8 @@ describe('FunctionField - grouping - error-handling', () => {
     });
 });
 
-describe('FunctionField - grouping - handling various return types', () => {
-    const expressionsAndResuts = [
+describe('FunctionField - grouping return types', () => {
+    const expressionsAndResults = [
         ['"hello"', ['hello']],
         ['""', ['']],
         ['[]', []],
@@ -163,10 +164,14 @@ describe('FunctionField - grouping - handling various return types', () => {
         ],
     ];
 
-    it.each(expressionsAndResuts)("expression: '%s'", (expression: any, result: any) => {
+    it.each(expressionsAndResults)("expression: '%s'", (expression: any, result: any) => {
         const line = `group by function ${expression}`;
         const grouper = createGrouper(line);
         toGroupTaskFromBuilder(grouper, new TaskBuilder(), result);
+    });
+
+    it('group result on expressions', () => {
+        verifyAllCombinations1((a) => `placeholder for ${a}`, expressionsAndResults);
     });
 });
 
