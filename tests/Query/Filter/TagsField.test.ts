@@ -738,11 +738,11 @@ ${headings.join('\n')}
             const instruction = group[0];
             const comment = group[1];
             markdown += `
-${comment}:
-
 ~~~text
 ${instruction}
 ~~~
+
+- ${comment}.
 
 `;
         }
