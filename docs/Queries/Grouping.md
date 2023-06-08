@@ -103,6 +103,24 @@ group by function task.status.type
   
 For more information, see [[Custom Grouping]].
 
+### Status Symbol
+
+There is no built-in instruction to search for tasks with particular status symbols.
+
+Since Tasks X.Y.Z, **custom grouping by status symbol** is now possible.
+
+<!-- placeholder to force blank line before included text --> <!-- include: StatusSymbolFieldDocs.test.custom_grouping_by_status.symbol_docs.approved.md -->
+
+~~~text
+group by function "Status symbol: " + task.status.symbol.replace(" ", "space")
+~~~
+
+- Group by the status symbol, making space characters visible.
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+
+For more information, see [[Custom Grouping]].
+
 ---
 
 ## Group by Dates in Tasks
