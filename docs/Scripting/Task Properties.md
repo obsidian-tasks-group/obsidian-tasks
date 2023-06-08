@@ -77,7 +77,7 @@ For more information, including adding your own customised statuses, see [[Statu
 1. `task.description` has spaces at the start and end stripped off.
 1. `task.description` includes any tags.
 1. In a future release we will provide `task.priorityName`
-1. `task.tags` actually would return `string[]`, that is `['#todo', '#health']`
+1. Note that if there is a [[Global Filter]] enabled in settings, and the filter is a tag, it will be removed from `task.tags`.
 1. There is a rendering problem in Obsidian and Obsidian Publish: `task.indentation` is supposed to show 2 spaces in this example of an indented task.
 1. Note that `task.blockLink` really does begin with a space currently, for tasks that have a blocklink.
 1. There is a rendering problem in Obsidian and Obsidian Publish: `task.originalMarkdown` is supposed to begin with 2 spaces
