@@ -12,6 +12,7 @@ import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { expectTaskComparesAfter, expectTaskComparesBefore } from '../../CustomMatchers/CustomMatchersForSorting';
 import type { Grouper } from '../../../src/Query/Grouper';
 import { TaskGroups } from '../../../src/Query/TaskGroups';
+import { verifyMarkdownForDocs } from '../../TestingTools/VerifyMarkdownTable';
 
 describe('tag presence & absence', () => {
     it.each(['has tag', 'has tags'])('should have "%s" filtering', (filterLine: string) => {
@@ -698,11 +699,11 @@ describe('custom grouping by tag', () => {
     const customGroups = [
         [
             'group by function task.tags',
-            'Simple grouping by task.tags. Un-tagged tasks have no heading. Tasks with multiple tags are listed multiple times, once per heading.',
+            'Like "group by tags" except that tasks with no tags have no heading instead of "(No tags)"',
         ],
         [
             'group by function task.tags.join(", ")',
-            'Tasks with multiple tags are listed once, with a heading that combines all the tags. Separating with commas means the tags are clickable in the headings.',
+            'Tasks with multiple tags are listed once, with a heading that combines all the tags. Separating with commas means the tags are clickable in the headings',
         ],
         [
             'group by function task.tags.filter( (t) => t.includes("#context/"))',
@@ -729,5 +730,22 @@ ${headings.join('\n')}
 ====================================================================================
 `;
         });
+    });
+
+    it('docs', () => {
+        let markdown = '';
+        for (const group of customGroups) {
+            const instruction = group[0];
+            const comment = group[1];
+            markdown += `
+${comment}:
+
+~~~text
+${instruction}
+~~~
+
+`;
+        }
+        verifyMarkdownForDocs(markdown);
     });
 });

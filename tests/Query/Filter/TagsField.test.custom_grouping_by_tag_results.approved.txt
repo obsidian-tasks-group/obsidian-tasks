@@ -3,7 +3,7 @@ Results of custom groupers
 
 
 group by function task.tags
-Simple grouping by task.tags. Un-tagged tasks have no heading. Tasks with multiple tags are listed multiple times, once per heading.
+Like "group by tags" except that tasks with no tags have no heading instead of "(No tags)"
 =>
 #context/home
 #context/work
@@ -17,7 +17,7 @@ Simple grouping by task.tags. Un-tagged tasks have no heading. Tasks with multip
 
 
 group by function task.tags.join(", ")
-Tasks with multiple tags are listed once, with a heading that combines all the tags. Separating with commas means the tags are clickable in the headings.
+Tasks with multiple tags are listed once, with a heading that combines all the tags. Separating with commas means the tags are clickable in the headings
 =>
 #context/home
 #context/work
