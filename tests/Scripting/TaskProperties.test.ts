@@ -50,12 +50,12 @@ describe('task', () => {
     it('dates', () => {
         verifyFieldDataForReferenceDocs([
             // TODO Replace these with values that can be released - TasksDate probably
-            'task.status.createdDate',
             'task.createdDate',
             'task.startDate',
             'task.scheduledDate',
             'task.dueDate',
             'task.doneDate',
+            // TODO Add happens
         ]);
     });
 

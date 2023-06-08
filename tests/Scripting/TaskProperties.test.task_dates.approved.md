@@ -2,7 +2,6 @@
 
 | Field | Type 1 | Example 1 | Type 2 | Example 2 |
 | ----- | ----- | ----- | ----- | ----- |
-| `task.status.createdDate` | `undefined` | `undefined` | `undefined` | `undefined` |
 | `task.createdDate` | `object` | `1688169600000` | `object` | `null` |
 | `task.startDate` | `object` | `1688256000000` | `object` | `null` |
 | `task.scheduledDate` | `object` | `1688342400000` | `object` | `null` |
