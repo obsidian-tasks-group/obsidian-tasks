@@ -5,7 +5,7 @@ import { groupHeadingsForTask } from '../../../../CustomMatchers/CustomMatchersF
 import { SampleTasks } from '../../../../TestHelpers';
 import { verifyMarkdownForDocs } from '../../../../TestingTools/VerifyMarkdownTable';
 
-function verifyFunctionFieldSamplesOnTasks(customGroups: string[][], tasks: Task[]) {
+function verifyFunctionFieldGrouperSamplesOnTasks(customGroups: string[][], tasks: Task[]) {
     verifyAll('Results of custom groupers', customGroups, (group) => {
         const instruction = group[0];
         const comment = group[1];
@@ -21,7 +21,7 @@ ${headings.join('\n')}
     });
 }
 
-function verifyFunctionFieldSamplesForDocs(customGroups: string[][]) {
+function verifyFunctionFieldGrouperSamplesForDocs(customGroups: string[][]) {
     let markdown = '';
     for (const group of customGroups) {
         const instruction = group[0];
@@ -60,10 +60,10 @@ describe('custom grouping by tag', () => {
 
     it('results', () => {
         const tasks = SampleTasks.withRepresentativeTags();
-        verifyFunctionFieldSamplesOnTasks(customGroups, tasks);
+        verifyFunctionFieldGrouperSamplesOnTasks(customGroups, tasks);
     });
 
     it('docs', () => {
-        verifyFunctionFieldSamplesForDocs(customGroups);
+        verifyFunctionFieldGrouperSamplesForDocs(customGroups);
     });
 });
