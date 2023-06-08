@@ -40,6 +40,7 @@ Sample expressions:
 <!-- placeholder to force blank line before included text --> <!-- include: Expression.test.Expression_result.approved.md -->
 
 ~~~text
+'hello' => 'hello'
 "hello" => 'hello'
 "" => ''
 [] => []
