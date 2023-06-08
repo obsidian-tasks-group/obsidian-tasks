@@ -55,6 +55,26 @@ For more information, including adding your own customised statuses, see [[Statu
 > [!released]
 `group by status.name` was introduced in Tasks 1.23.0.
 
+Since Tasks X.Y.Z, **custom grouping by status names** is now possible.
+
+<!-- placeholder to force blank line before included text --> <!-- include: StatusNameFieldDocs.test.custom_grouping_by_status.name_docs.approved.md -->
+
+~~~text
+group by function task.status.name
+~~~
+
+- Identical to "grouping by status.name".
+
+~~~text
+group by function task.status.name.toUpperCase()
+~~~
+
+- Convert the status names to capitals.
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+
+For more information, see [[Custom Grouping]].
+
 ### Status Type
 
 - `group by status.type`
@@ -176,9 +196,9 @@ For more information, including adding your own customised statuses, see [[Statu
 >
 > - `tags` grouping option was introduced in Tasks 1.10.0.
 
-Since Tasks X.Y.Z, **custom grouping by tags** is now possible. Here are some examples.
+Since Tasks X.Y.Z, **custom grouping by tags** is now possible.
 
-<!-- placeholder to force blank line before included text --> <!-- include: TagsField.test.custom_grouping_by_tag_docs.approved.md -->
+<!-- placeholder to force blank line before included text --> <!-- include: TagsFieldDocs.test.custom_grouping_by_tag_docs.approved.md -->
 
 ~~~text
 group by function task.tags
@@ -205,6 +225,8 @@ group by function task.tags.filter( (t) => ! t.includes("#tag"))
 - Create headings for all tags that do not contain "#tag".
 
 <!-- placeholder to force blank line after included text --> <!-- endInclude -->
+
+For more information, see [[Custom Grouping]].
 
 ---
 
