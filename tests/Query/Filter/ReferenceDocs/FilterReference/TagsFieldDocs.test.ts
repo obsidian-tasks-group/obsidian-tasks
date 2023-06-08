@@ -21,6 +21,23 @@ ${headings.join('\n')}
     });
 }
 
+function verifyHelpFromSampleGroupers(customGroups: string[][]) {
+    let markdown = '';
+    for (const group of customGroups) {
+        const instruction = group[0];
+        const comment = group[1];
+        markdown += `
+~~~text
+${instruction}
+~~~
+
+- ${comment}.
+
+`;
+    }
+    verifyMarkdownForDocs(markdown);
+}
+
 describe('custom grouping by tag', () => {
     const customGroups = [
         [
@@ -47,19 +64,6 @@ describe('custom grouping by tag', () => {
     });
 
     it('docs', () => {
-        let markdown = '';
-        for (const group of customGroups) {
-            const instruction = group[0];
-            const comment = group[1];
-            markdown += `
-~~~text
-${instruction}
-~~~
-
-- ${comment}.
-
-`;
-        }
-        verifyMarkdownForDocs(markdown);
+        verifyHelpFromSampleGroupers(customGroups);
     });
 });
