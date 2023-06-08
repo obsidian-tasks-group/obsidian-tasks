@@ -252,7 +252,8 @@ describe('Grouping tasks', () => {
         const inputs = [a, b];
 
         const groupByTags: GrouperFunction = (task: Task) => task.tags;
-        const grouper = new Grouper('custom tag grouper', groupByTags, false);
+        const groupComparator = new TagsField().comparator();
+        const grouper = new Grouper('custom tag grouper', groupByTags, false, groupComparator);
         const groups = new TaskGroups([grouper], inputs);
 
         expect(groups.totalTasksCount()).toEqual(2);
