@@ -3,7 +3,7 @@ Results of custom groupers
 
 
 group by function task.status.name
-Identical to "grouping by status.name"
+Identical to "group by status.name"
 =>
 Cancelled
 Done

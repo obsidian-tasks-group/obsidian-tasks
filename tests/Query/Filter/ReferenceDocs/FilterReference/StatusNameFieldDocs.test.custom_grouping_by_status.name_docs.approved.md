@@ -5,7 +5,7 @@
 group by function task.status.name
 ~~~
 
-- Identical to "grouping by status.name".
+- Identical to "group by status.name".
 
 
 ~~~text
