@@ -1,0 +1,49 @@
+Results of custom groupers
+
+
+
+group by function task.tags
+Simple grouping by task.tags. Un-tagged tasks have no heading. Tasks with multiple tags are listed multiple times, once per heading.
+=>
+#context/home
+#context/work
+#multiple-tags1
+#multiple-tags2
+#project/project1
+#tag
+#tag/subtag
+#tag/subtag/sub-sub-tag
+====================================================================================
+
+
+group by function task.tags.join(", ")
+Tasks with multiple tags are listed once, with a heading that combines all the tags. Separating with commas means the tags are clickable in the headings.
+=>
+#context/home
+#context/work
+#multiple-tags1, #multiple-tags2
+#project/project1
+#tag
+#tag/subtag
+#tag/subtag/sub-sub-tag
+====================================================================================
+
+
+group by function task.tags.filter( (t) => t.includes("#context/"))
+Only create headings for tags that contain "#context/"
+=>
+#context/home
+#context/work
+====================================================================================
+
+
+group by function task.tags.filter( (t) => ! t.includes("#tag"))
+Create headings for all tags that do not contain "#tag"
+=>
+#context/home
+#context/work
+#multiple-tags1
+#multiple-tags2
+#project/project1
+====================================================================================
+

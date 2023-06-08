@@ -41,6 +41,23 @@ export function createTasksFromMarkdown(tasksAsMarkdown: string, path: string, p
 const representativeDates = ['2023-05-30', '2023-05-31', '2023-06-01', '2023-02-32', null];
 
 export class SampleTasks {
+    public static withRepresentativeTags(): Task[] {
+        const sampleTags = [
+            [],
+            ['#tag'],
+            ['#tag/subtag'],
+            ['#tag/subtag/sub-sub-tag'],
+            ['#multiple-tags1', '#multiple-tags2'],
+            ['#project/project1'],
+            ['#context/home'],
+            ['#context/work'],
+        ];
+
+        return sampleTags.map((tags) => {
+            return new TaskBuilder().tags(tags).build();
+        });
+    }
+
     public static withAllRecurrences(): Task[] {
         const recurrenceRules = [
             // Months

@@ -48,19 +48,29 @@ export function toSupportGroupingWithProperty(field: Field, property: string) {
     };
 }
 
+/**
+ * Collate all the headings obtained when grouping the tasks by the grouper
+ * @param grouper
+ * @param tasks
+ */
+export function groupHeadingsForTask(grouper: Grouper, tasks: Task[]) {
+    const groups = new TaskGroups([grouper], tasks);
+
+    const headings: string[] = [];
+    groups.groups.forEach((taskGroup) => {
+        taskGroup.groupHeadings.forEach((heading) => {
+            headings.push(heading.displayName);
+        });
+    });
+    return headings;
+}
+
 export function groupHeadingsToBe(
     { grouper, tasks }: { grouper: Grouper; tasks: Task[] },
     expectedGroupHeadings: string[],
 ): jest.CustomMatcherResult {
     tasks.sort(() => Math.random() - 0.5);
-    const groups = new TaskGroups([grouper], tasks);
-
-    const groupHeadings: string[] = [];
-    groups.groups.forEach((taskGroup) => {
-        taskGroup.groupHeadings.forEach((heading) => {
-            groupHeadings.push(heading.displayName);
-        });
-    });
+    const groupHeadings = groupHeadingsForTask(grouper, tasks);
 
     const pass: boolean = groupHeadings.join() === expectedGroupHeadings.join();
     const message: () => string = () =>
