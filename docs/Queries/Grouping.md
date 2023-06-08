@@ -63,7 +63,7 @@ Since Tasks X.Y.Z, **custom grouping by status names** is now possible.
 group by function task.status.name
 ~~~
 
-- Identical to "grouping by status.name".
+- Identical to "group by status.name".
 
 ~~~text
 group by function task.status.name.toUpperCase()
@@ -88,6 +88,20 @@ For more information, see [[Custom Grouping]].
 
 > [!released]
 `group by status.type` was introduced in Tasks 1.23.0.
+
+Since Tasks X.Y.Z, **custom grouping by status types** is now possible.  
+  
+<!-- placeholder to force blank line before included text --> <!-- include: StatusTypeFieldDocs.test.custom_grouping_by_status.type_docs.approved.md -->
+
+~~~text
+group by function task.status.type
+~~~
+
+- Unlike "group by status.type", this sorts the status types in alphabetical order.
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+  
+For more information, see [[Custom Grouping]].
 
 ---
 
