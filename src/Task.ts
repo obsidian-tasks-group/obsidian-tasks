@@ -408,6 +408,41 @@ export class Task {
     }
 
     /**
+     * An alias for {@link createdDate}, so the field names in scripting docs are consistent with the existing search instruction names.
+     */
+    public get created(): Moment | null {
+        return this.createdDate;
+    }
+
+    /**
+     * An alias for {@link doneDate}, so the field names in scripting docs are consistent with the existing search instruction names.
+     */
+    public get done(): Moment | null {
+        return this.doneDate;
+    }
+
+    /**
+     * An alias for {@link dueDate}, so the field names in scripting docs are consistent with the existing search instruction names.
+     */
+    public get due(): Moment | null {
+        return this.dueDate;
+    }
+
+    /**
+     * An alias for {@link scheduledDate}, so the field names in scripting docs are consistent with the existing search instruction names.
+     */
+    public get scheduled(): Moment | null {
+        return this.scheduledDate;
+    }
+
+    /**
+     * An alias for {@link startDate}, so the field names in scripting docs are consistent with the existing search instruction names.
+     */
+    public get start(): Moment | null {
+        return this.startDate;
+    }
+
+    /**
      * Return the name of the file containing the task, with the .md extension removed.
      */
     public get filename(): string | null {
