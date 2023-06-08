@@ -105,7 +105,7 @@ For more information, see [[Custom Grouping]].
 
 ### Status Symbol
 
-There is no built-in instruction to search for tasks with particular status symbols.
+There is no built-in instruction to group by status symbols.
 
 Since Tasks X.Y.Z, **custom grouping by status symbol** is now possible.
 
@@ -116,6 +116,24 @@ group by function "Status symbol: " + task.status.symbol.replace(" ", "space")
 ~~~
 
 - Group by the status symbol, making space characters visible.
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+
+For more information, see [[Custom Grouping]].
+
+### Next Status Symbol
+
+There is no built-in instruction to group by next status symbols.
+
+Since Tasks X.Y.Z, **custom grouping by next status symbol** is now possible.
+
+<!-- placeholder to force blank line before included text --> <!-- include: StatusNextStatusSymbolFieldDocs.test.custom_grouping_by_task.status.nextStatusSymbol_docs.approved.md -->
+
+~~~text
+group by function "Next status symbol: " + task.status.nextStatusSymbol.replace(" ", "space")
+~~~
+
+- Group by the next status symbol, making space characters visible.
 
 <!-- placeholder to force blank line after included text --> <!-- endInclude -->
 
