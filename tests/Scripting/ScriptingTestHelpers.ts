@@ -1,8 +1,13 @@
 import moment from 'moment';
+import { TaskRegularExpressions } from '../../src/Task';
 
 export function formatToRepresentType(x: any): string {
     if (typeof x === 'string') {
         return "'" + x + "'";
+    }
+
+    if (moment.isMoment(x)) {
+        return `moment('${x.format(TaskRegularExpressions.dateFormat)}')`;
     }
 
     if (Array.isArray(x)) {

@@ -43,12 +43,12 @@ For more information, including adding your own customised statuses, see [[Statu
 
 | Field | Type 1 | Example 1 | Type 2 | Example 2 |
 | ----- | ----- | ----- | ----- | ----- |
-| `task.created` | `Moment` | `1688169600000` | `null` | `null` |
-| `task.start` | `Moment` | `1688256000000` | `null` | `null` |
-| `task.scheduled` | `Moment` | `1688342400000` | `null` | `null` |
-| `task.due` | `Moment` | `1688428800000` | `null` | `null` |
-| `task.done` | `Moment` | `1688515200000` | `null` | `null` |
-| `task.happens` | `Moment` | `1688256000000` | `null` | `null` |
+| `task.created` | `Moment` | `moment('2023-07-01')` | `null` | `null` |
+| `task.start` | `Moment` | `moment('2023-07-02')` | `null` | `null` |
+| `task.scheduled` | `Moment` | `moment('2023-07-03')` | `null` | `null` |
+| `task.due` | `Moment` | `moment('2023-07-04')` | `null` | `null` |
+| `task.done` | `Moment` | `moment('2023-07-05')` | `null` | `null` |
+| `task.happens` | `Moment` | `moment('2023-07-02')` | `null` | `null` |
 
 <!-- placeholder to force blank line after included text --> <!-- endInclude -->
 
