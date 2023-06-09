@@ -12,6 +12,15 @@ import {
 
 window.moment = moment;
 
+beforeEach(() => {
+    jest.useFakeTimers();
+    jest.setSystemTime(new Date('2023-06-08 20:00'));
+});
+
+afterEach(() => {
+    jest.useRealTimers();
+});
+
 describe('custom grouping by task.due', () => {
     const customGroups = [
         [
