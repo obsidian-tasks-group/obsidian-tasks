@@ -215,4 +215,14 @@ export class SampleTasks {
         });
         return tasks;
     }
+
+    public static withAllRepresentativeDescriptions(): Task[] {
+        const descriptions = [
+            'short description',
+            'long description Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce quam ipsum, consectetur ut dolor nec, fringilla lobortis mi. Vestibulum gravida tincidunt urna nec ornare. Cras sit amet sagittis sapien, vitae mattis velit. Vestibulum sem tortor, blandit at ultrices eget, ultrices eget odio. Donec efficitur purus massa, vel molestie turpis tincidunt id. ',
+        ];
+        return descriptions.map((description) => {
+            return new TaskBuilder().description(description).build();
+        });
+    }
 }
