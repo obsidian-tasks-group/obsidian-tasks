@@ -54,7 +54,7 @@ describe('task', () => {
             'task.scheduled',
             'task.due',
             'task.done',
-            // TODO Add happens
+            'task.happens',
         ]);
     });
 

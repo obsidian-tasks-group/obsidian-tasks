@@ -443,6 +443,31 @@ export class Task {
     }
 
     /**
+     * Return the date fields that contribute to 'happens' searches.
+     *
+     * @see happens
+     * @see {@link HappensDateField}
+     */
+    public get happensDates(): (Moment | null)[] {
+        return Array.of(this.startDate, this.scheduledDate, this.dueDate);
+    }
+
+    /**
+     * Return the earliest of the dates used by 'happens' in this given task, or null if none set.
+     *
+     * Generally speaking, the earliest date is considered to be the highest priority,
+     * as it is the first point at which the user might wish to act on the task.
+     *
+     * @see happensDates
+     * @see {@link HappensDateField}
+     */
+    public get happens(): Moment | null {
+        const happensDates = this.happensDates;
+        const sortedHappensDates = happensDates.sort(compareByDate);
+        return sortedHappensDates[0];
+    }
+
+    /**
      * Return the name of the file containing the task, with the .md extension removed.
      */
     public get filename(): string | null {

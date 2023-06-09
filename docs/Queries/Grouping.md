@@ -299,7 +299,21 @@ For more information, see [[Custom Grouping]].
 > [!released]
 `happens` grouping option was introduced in Tasks 1.11.0.
 
-==TODO== Add `task.happens`
+Since Tasks X.Y.Z, **custom grouping by happens date** is now possible.
+
+<!-- placeholder to force blank line before included text --> <!-- include: HappensDateFieldDocs.test.custom_grouping_by_task.happens_docs.approved.md -->
+
+~~~text
+group by function task.happens?.format("YYYY-MM-DD dddd") || ""
+~~~
+
+- Like "group by task.happens", except it does not write "No happens date" if none of task.start, task.scheduled, and task.due are set. The question mark (`?`) and `|| ""` are needed because the happens date value may be null.
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+
+For more examples, see [[#Due Date]].
+
+For more information, see [[Custom Grouping]].
 
 ---
 

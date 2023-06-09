@@ -1,0 +1,13 @@
+Results of custom groupers
+
+
+
+group by function task.happens?.format("YYYY-MM-DD dddd") || ""
+Like "group by task.happens", except it does not write "No happens date" if none of task.start, task.scheduled, and task.due are set. The question mark (`?`) and `|| ""` are needed because the happens date value may be null
+=>
+2023-05-30 Tuesday
+2023-05-31 Wednesday
+2023-06-01 Thursday
+Invalid date
+====================================================================================
+

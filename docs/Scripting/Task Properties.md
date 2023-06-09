@@ -51,6 +51,7 @@ For more information, including adding your own customised statuses, see [[Statu
 | `task.scheduled` | `object` | `1688342400000` | `object` | `null` |
 | `task.due` | `object` | `1688428800000` | `object` | `null` |
 | `task.done` | `object` | `1688515200000` | `object` | `null` |
+| `task.happens` | `object` | `1688256000000` | `object` | `null` |
 
 <!-- placeholder to force blank line after included text --> <!-- endInclude -->
 

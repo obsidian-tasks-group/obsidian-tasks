@@ -419,6 +419,25 @@ describe('properties for scripting', () => {
         expect(task.scheduled!).toEqualMoment(task.scheduledDate!);
         expect(task.start!).toEqualMoment(task.startDate!);
     });
+
+    it('should provide access to happens and happensDates', () => {
+        // Fields that are used by happens:
+        const dueDate = '2023-06-19';
+        const scheduledDate = '2023-06-20';
+        const startDate = '2023-06-21';
+        const task = new TaskBuilder().dueDate(dueDate).scheduledDate(scheduledDate).startDate(startDate).build();
+        expect(task.happensDates[0]).toEqualMoment(moment(startDate));
+        expect(task.happensDates[1]).toEqualMoment(moment(scheduledDate));
+        expect(task.happensDates[2]).toEqualMoment(moment(dueDate));
+        expect(task.happens!).toEqualMoment(moment(dueDate)!); // the earliest
+    });
+
+    it('happens should ignore non-contributing date fields', () => {
+        // other fields, that are ignored by happens:
+        const sampleDate = '2023-06-19';
+        expect(new TaskBuilder().createdDate(sampleDate).build().happens).toBeNull();
+        expect(new TaskBuilder().doneDate(sampleDate).build().happens).toBeNull();
+    });
 });
 
 describe('backlinks', () => {
