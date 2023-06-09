@@ -527,6 +527,7 @@ describe('to string', () => {
 
         // Assert
         expect(task).not.toBeNull();
+        expect(task.indentation).toEqual('> > > ');
         expect(task.toFileLineString()).toStrictEqual(line);
     });
 
