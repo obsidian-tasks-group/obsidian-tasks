@@ -17,6 +17,9 @@ export function addBackticks(x: any) {
 }
 
 export function determineExpressionType(value: any) {
+    if (value === null) {
+        return 'null';
+    }
     if (Array.isArray(value)) {
         if (value.length > 0) {
             return `${typeof value[0]}[]`;

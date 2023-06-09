@@ -43,12 +43,12 @@ For more information, including adding your own customised statuses, see [[Statu
 
 | Field | Type 1 | Example 1 | Type 2 | Example 2 |
 | ----- | ----- | ----- | ----- | ----- |
-| `task.created` | `object` | `1688169600000` | `object` | `null` |
-| `task.start` | `object` | `1688256000000` | `object` | `null` |
-| `task.scheduled` | `object` | `1688342400000` | `object` | `null` |
-| `task.due` | `object` | `1688428800000` | `object` | `null` |
-| `task.done` | `object` | `1688515200000` | `object` | `null` |
-| `task.happens` | `object` | `1688256000000` | `object` | `null` |
+| `task.created` | `object` | `1688169600000` | `null` | `null` |
+| `task.start` | `object` | `1688256000000` | `null` | `null` |
+| `task.scheduled` | `object` | `1688342400000` | `null` | `null` |
+| `task.due` | `object` | `1688428800000` | `null` | `null` |
+| `task.done` | `object` | `1688515200000` | `null` | `null` |
+| `task.happens` | `object` | `1688256000000` | `null` | `null` |
 
 <!-- placeholder to force blank line after included text --> <!-- endInclude -->
 
@@ -95,8 +95,8 @@ TODO Maybe use `heading` instead? Try to make field names consistent with existi
 | Field | Type 1 | Example 1 | Type 2 | Example 2 |
 | ----- | ----- | ----- | ----- | ----- |
 | `task.path` | `string` | `'/some/folder/fileName.md'` | `string` | `''` |
-| `task.filename` | `string` | `'fileName'` | `object` | `null` |
+| `task.filename` | `string` | `'fileName'` | `null` | `null` |
 | `task.lineNumber` | `number` | `17` | `number` | `0` |
-| `task.precedingHeader` | `string` | `'My Header'` | `object` | `null` |
+| `task.precedingHeader` | `string` | `'My Header'` | `null` | `null` |
 
 <!-- placeholder to force blank line after included text --> <!-- endInclude -->
