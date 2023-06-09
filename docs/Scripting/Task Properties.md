@@ -52,6 +52,7 @@ For more information, including adding your own customised statuses, see [[Statu
 
 <!-- placeholder to force blank line after included text --> <!-- endInclude -->
 
+1. For example uses of date properties, see [[Grouping#Due Date]].
 1. `task.happens` is the earlier of `task.due`, `task.scheduled` and `task.start`.
 
 ---
