@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export function formatToRepresentType(x: any): string {
     if (typeof x === 'string') {
         return "'" + x + "'";
@@ -20,6 +22,11 @@ export function determineExpressionType(value: any) {
     if (value === null) {
         return 'null';
     }
+
+    if (moment.isMoment(value)) {
+        return 'Moment';
+    }
+
     if (Array.isArray(value)) {
         if (value.length > 0) {
             return `${typeof value[0]}[]`;
