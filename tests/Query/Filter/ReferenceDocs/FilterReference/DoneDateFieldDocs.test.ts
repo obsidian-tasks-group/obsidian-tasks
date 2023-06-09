@@ -30,7 +30,7 @@ describe('custom grouping by task.done', () => {
     ];
 
     it('results', () => {
-        verifyFunctionFieldGrouperSamplesOnTasks(customGroups, SampleTasks.withAllRepresentativeDueDates());
+        verifyFunctionFieldGrouperSamplesOnTasks(customGroups, SampleTasks.withAllRepresentativeDoneDates());
     });
 
     it('docs', () => {
