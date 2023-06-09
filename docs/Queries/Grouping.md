@@ -319,6 +319,42 @@ For more information, see [[Custom Grouping]].
 
 ## Group by Other Task Properties
 
+As well as the date-related groups above, groups can be created from properties in individual tasks.
+
+### Description
+
+Since Tasks X.Y.Z, **custom grouping by description** is now possible.
+
+<!-- placeholder to force blank line before included text --> <!-- include: TaskPropertyExamples.test.custom_grouping_by_task.description_docs.approved.md -->
+
+~~~text
+group by function task.description
+~~~
+
+- group by description. This might be useful for finding completed recurrences of the same task.
+
+~~~text
+group by function task.description.toUpperCase()
+~~~
+
+- Convert the description to capitals.
+
+~~~text
+group by function task.description.slice(0, 25)
+~~~
+
+- Truncate descriptions to at most their first 25 characters, and group by that string.
+
+~~~text
+group by function task.description.replace('short', '==short==')
+~~~
+
+- Highlight the word "short" in any group descriptions.
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+
+For more information, see [[Custom Grouping]].
+
 ### Priority
 
 - `group by priority`
