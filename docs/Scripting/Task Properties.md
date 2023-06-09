@@ -39,9 +39,6 @@ For more information, including adding your own customised statuses, see [[Statu
 
 ## Values for Dates in Tasks
 
-> [!warning]
-> Do not use these properties. They will change before release.
-
 <!-- placeholder to force blank line before included text --> <!-- include: TaskProperties.test.task_dates.approved.md -->
 
 | Field | Type 1 | Example 1 | Type 2 | Example 2 |
@@ -54,6 +51,8 @@ For more information, including adding your own customised statuses, see [[Statu
 | `task.happens` | `object` | `1688256000000` | `object` | `null` |
 
 <!-- placeholder to force blank line after included text --> <!-- endInclude -->
+
+1. `task.happens` is the earlier of `task.due`, `task.scheduled` and `task.start`.
 
 ---
 
