@@ -152,6 +152,22 @@ For more information, see [[Custom Grouping]].
 >
 > - `done` grouping option was introduced in Tasks 1.7.0.
 
+Since Tasks X.Y.Z, **custom grouping by done date** is now possible.
+
+<!-- placeholder to force blank line before included text --> <!-- include: DoneDateFieldDocs.test.custom_grouping_by_task.done_docs.approved.md -->
+
+~~~text
+group by function task.done?.format("YYYY-MM-DD dddd") || ""
+~~~
+
+- Like "group by task.done", except it does not write "No done date" if there is no done date. The question mark (`?`) and `|| ""` are needed because the done date value may be null.
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+
+For more examples, see [[#Due Date]].
+
+For more information, see [[Custom Grouping]].
+
 ### Due Date
 
 - `group by due`
@@ -234,6 +250,8 @@ For more information, see [[Custom Grouping]].
 
 > [!released]
 `happens` grouping option was introduced in Tasks 1.11.0.
+
+==TODO== Add `task.happens`
 
 ---
 
