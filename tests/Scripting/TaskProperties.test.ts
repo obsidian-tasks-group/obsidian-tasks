@@ -67,7 +67,7 @@ describe('task', () => {
             'task.tags',
             'task.indentation',
             'task.listMarker',
-            'task.blockLink',
+            // 'task.blockLink', // Release support for grouping by task.blockLink, after removing the leading space and maybe the carat
             'task.originalMarkdown',
         ]);
     });

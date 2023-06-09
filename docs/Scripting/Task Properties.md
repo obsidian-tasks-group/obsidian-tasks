@@ -69,7 +69,6 @@ For more information, including adding your own customised statuses, see [[Statu
 | `task.tags` | `string[]` | `['#todo', '#health']` | `any[]` | `[]` |
 | `task.indentation` | `string` | `'  '` | `string` | `''` |
 | `task.listMarker` | `string` | `'-'` | `string` | `'-'` |
-| `task.blockLink` | `string` | `' ^dcf64c'` | `string` | `''` |
 | `task.originalMarkdown` | `string` | `'  - [ ] Do exercises #todo #health 🔼 🔁 every day when done ➕ 2023-07-01 🛫 2023-07-02 ⏳ 2023-07-03 📅 2023-07-04 ✅ 2023-07-05 ^dcf64c'` | `string` | `'- [/] minimal task'` |
 
 <!-- placeholder to force blank line after included text --> <!-- endInclude -->
@@ -78,9 +77,9 @@ For more information, including adding your own customised statuses, see [[Statu
 1. `task.description` includes any tags.
 1. In a future release we will provide `task.priorityName`
 1. Note that if there is a [[Global Filter]] enabled in settings, and the filter is a tag, it will be removed from `task.tags`.
-1. There is a rendering problem in Obsidian and Obsidian Publish: `task.indentation` is supposed to show 2 spaces in this example of an indented task.
-1. Note that `task.blockLink` really does begin with a space currently, for tasks that have a blocklink.
-1. There is a rendering problem in Obsidian and Obsidian Publish: `task.originalMarkdown` is supposed to begin with 2 spaces
+1. There is a rendering problem in Obsidian and Obsidian Publish:
+    - `task.indentation` is supposed to show 2 spaces in this example of an indented task.
+    - `task.originalMarkdown` is supposed to begin with 2 spaces
 
 ---
 

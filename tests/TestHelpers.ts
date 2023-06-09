@@ -225,4 +225,11 @@ export class SampleTasks {
             return new TaskBuilder().description(description).build();
         });
     }
+
+    public static withAllRepresentativeBlockLinks(): Task[] {
+        const descriptions = ['', ' ^ca47c7', ' ^fromseparatefile'];
+        return descriptions.map((blockLink) => {
+            return new TaskBuilder().blockLink(blockLink).build();
+        });
+    }
 }

@@ -9,6 +9,17 @@ describe('custom grouping by', () => {
     type CustomGroupingPropertyTestData = [string, string[][], Task[]];
     const testData: CustomGroupingPropertyTestData[] = [
         [
+            'task.blockLink',
+            [
+                [
+                    "group by function task.blockLink.replace(' ^', '')",
+                    'DO NOT RELEASE UNTIL THE LEADING SPACE IS REMOVED FROM BLOCKLINKS. Removing the leading space and carat prevents the rendered heading itself being treated as a blocklink.',
+                ],
+            ],
+            SampleTasks.withAllRepresentativeBlockLinks(),
+        ],
+
+        [
             'task.description',
             [
                 [
@@ -27,6 +38,24 @@ describe('custom grouping by', () => {
             ],
             SampleTasks.withAllRepresentativeDescriptions(),
         ],
+
+        // [
+        //     'task.indentation',
+        //     [['group by function task.indentation', '...']],
+        //     SampleTasks.withAllPriorities(), // TODO Choose specific tasks for task.indentation'
+        // ],
+
+        // [
+        //     'task.listMarker',
+        //     [['group by function task.listMarker', '...']],
+        //     SampleTasks.withAllPriorities(), // TODO Choose specific tasks for task.listMarker'
+        // ],
+
+        // ['task.priority', [['group by function task.priority', '...']], SampleTasks.withAllPriorities()],
+
+        // Tags is documented in TagsFieldDocs.test.ts
+
+        // ['task.urgency', [['group by function task.urgency', '...']], SampleTasks.withAllPriorities()],
     ];
 
     it.each(testData)('%s results', (_: string, groups: string[][], tasks: Task[]) => {
