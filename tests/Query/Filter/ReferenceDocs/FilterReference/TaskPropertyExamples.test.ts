@@ -9,7 +9,7 @@ describe('custom grouping by', () => {
     type CustomGroupingPropertyTestData = [string, string[][], Task[]];
     const testData: CustomGroupingPropertyTestData[] = [
         [
-            'description',
+            'task.description',
             [
                 [
                     'group by function task.description',
