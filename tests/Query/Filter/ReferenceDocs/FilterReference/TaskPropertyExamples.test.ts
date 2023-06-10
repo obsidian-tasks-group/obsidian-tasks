@@ -63,11 +63,11 @@ describe('custom grouping by', () => {
         ],
 
         [
-            'task.status.type',
+            'task.status.nextStatusSymbol',
             [
                 [
-                    'group by function task.status.type',
-                    'Unlike "group by status.type", this sorts the status types in alphabetical order',
+                    'group by function "Next status symbol: " + task.status.nextStatusSymbol.replace(" ", "space")',
+                    'Group by the next status symbol, making space characters visible',
                 ],
             ],
             SampleTasks.withAllStatuses(),
@@ -85,11 +85,11 @@ describe('custom grouping by', () => {
         ],
 
         [
-            'task.status.nextStatusSymbol',
+            'task.status.type',
             [
                 [
-                    'group by function "Next status symbol: " + task.status.nextStatusSymbol.replace(" ", "space")',
-                    'Group by the next status symbol, making space characters visible',
+                    'group by function task.status.type',
+                    'Unlike "group by status.type", this sorts the status types in alphabetical order',
                 ],
             ],
             SampleTasks.withAllStatuses(),
