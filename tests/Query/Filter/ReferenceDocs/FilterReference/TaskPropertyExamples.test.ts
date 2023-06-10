@@ -85,6 +85,17 @@ describe('custom grouping by', () => {
         ],
 
         [
+            'task.status.nextStatusSymbol',
+            [
+                [
+                    'group by function "Next status symbol: " + task.status.nextStatusSymbol.replace(" ", "space")',
+                    'Group by the next status symbol, making space characters visible',
+                ],
+            ],
+            SampleTasks.withAllStatuses(),
+        ],
+
+        [
             'task.tags',
             [
                 [
