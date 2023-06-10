@@ -63,6 +63,15 @@ describe('custom grouping by', () => {
         ],
 
         [
+            'task.status.name',
+            [
+                ['group by function task.status.name', 'Identical to "group by status.name"'],
+                ['group by function task.status.name.toUpperCase()', 'Convert the status names to capitals'],
+            ],
+            SampleTasks.withAllStatuses(),
+        ],
+
+        [
             'task.status.nextStatusSymbol',
             [
                 [
