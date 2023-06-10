@@ -21,6 +21,17 @@ describe('custom grouping by', () => {
         // ---------------------------------------------------------------------------------
 
         [
+            'task.scheduled',
+            [
+                [
+                    'group by function task.scheduled?.format("YYYY-MM-DD dddd") || ""',
+                    'Like "group by task.scheduled", except it does not write "No scheduled date" if there is no scheduled date. The question mark (`?`) and `|| ""` are needed because the scheduled date value may be null',
+                ],
+            ],
+            SampleTasks.withAllRepresentativeScheduledDates(),
+        ],
+
+        [
             'task.start',
             [
                 [
