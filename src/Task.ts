@@ -468,6 +468,14 @@ export class Task {
     }
 
     /**
+     * Return true if the Task has a valid recurrence rule, and false otherwise,
+     * that is, false if it does not have a recurrence rule, or the recurrence rule is invalid.
+     */
+    public get recurring(): boolean {
+        return this.recurrence !== null;
+    }
+
+    /**
      * Return the name of the file containing the task, with the .md extension removed.
      */
     public get filename(): string | null {
