@@ -370,6 +370,9 @@ For more information, see [[Custom Grouping]].
 >
 > - `priority` grouping option was introduced in Tasks 1.11.0.
 
+> [!Note]
+> `group by function` is not yet able to refer task priorities.
+
 ### Urgency
 
 - `group by urgency` ([[Urgency|urgency]])

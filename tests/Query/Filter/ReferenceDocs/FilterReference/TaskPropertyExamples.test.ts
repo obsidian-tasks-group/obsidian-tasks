@@ -51,7 +51,16 @@ describe('custom grouping by', () => {
         //     SampleTasks.withAllPriorities(), // TODO Choose specific tasks for task.listMarker'
         // ],
 
-        // ['task.priority', [['group by function task.priority', '...']], SampleTasks.withAllPriorities()],
+        [
+            'task.priority',
+            [
+                [
+                    'group by function task.priority',
+                    "Group by the task's priority number, where Highest is 0 and Lowest is 5",
+                ],
+            ],
+            SampleTasks.withAllPriorities(),
+        ],
 
         // Tags is documented in TagsFieldDocs.test.ts
 

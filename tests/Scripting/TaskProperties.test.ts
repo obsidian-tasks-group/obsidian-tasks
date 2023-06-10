@@ -58,7 +58,7 @@ describe('task', () => {
         // TODO Recurrence
         verifyFieldDataForReferenceDocs([
             'task.description',
-            'task.priority',
+            // 'task.priority', // I think it will be more useful for task.priority to refer to the name. Currently, it gives the number. Needs more thought.
             'task.urgency',
             'task.tags',
             // 'task.indentation', // Cannot just use length to determine if sub-task, as it many be '> ' due to being in a sub-task
