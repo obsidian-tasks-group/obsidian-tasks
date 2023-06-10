@@ -57,7 +57,7 @@ For more information, including adding your own customised statuses, see [[Statu
 
 Since Tasks X.Y.Z, **custom grouping by status names** is now possible.
 
-<!-- placeholder to force blank line before included text --> <!-- include: StatusNameFieldDocs.test.custom_grouping_by_status.name_docs.approved.md -->
+<!-- placeholder to force blank line before included text --> <!-- include: TaskPropertyExamples.test.custom_grouping_by_task.status.name_docs.approved.md -->
 
 ~~~text
 group by function task.status.name
@@ -109,7 +109,7 @@ There is no built-in instruction to group by status symbols.
 
 Since Tasks X.Y.Z, **custom grouping by status symbol** is now possible.
 
-<!-- placeholder to force blank line before included text --> <!-- include: StatusSymbolFieldDocs.test.custom_grouping_by_status.symbol_docs.approved.md -->
+<!-- placeholder to force blank line before included text --> <!-- include: TaskPropertyExamples.test.custom_grouping_by_task.status.symbol_docs.approved.md -->
 
 ~~~text
 group by function "Status symbol: " + task.status.symbol.replace(" ", "space")
@@ -127,7 +127,7 @@ There is no built-in instruction to group by next status symbols.
 
 Since Tasks X.Y.Z, **custom grouping by next status symbol** is now possible.
 
-<!-- placeholder to force blank line before included text --> <!-- include: StatusNextStatusSymbolFieldDocs.test.custom_grouping_by_task.status.nextStatusSymbol_docs.approved.md -->
+<!-- placeholder to force blank line before included text --> <!-- include: TaskPropertyExamples.test.custom_grouping_by_task.status.nextStatusSymbol_docs.approved.md -->
 
 ~~~text
 group by function "Next status symbol: " + task.status.nextStatusSymbol.replace(" ", "space")
@@ -154,7 +154,7 @@ For more information, see [[Custom Grouping]].
 
 Since Tasks X.Y.Z, **custom grouping by done date** is now possible.
 
-<!-- placeholder to force blank line before included text --> <!-- include: DoneDateFieldDocs.test.custom_grouping_by_task.done_docs.approved.md -->
+<!-- placeholder to force blank line before included text --> <!-- include: TaskPropertyExamples.test.custom_grouping_by_task.done_docs.approved.md -->
 
 ~~~text
 group by function task.done?.format("YYYY-MM-DD dddd") || ""
@@ -181,7 +181,7 @@ Since Tasks X.Y.Z, **custom grouping by due date** is now possible.
 
 These examples make heavy use of the [moment.js format characters](https://momentjs.com/docs/#/displaying/format/).
 
-<!-- placeholder to force blank line before included text --> <!-- include: DueDateFieldDocs.test.custom_grouping_by_task.due_docs.approved.md -->
+<!-- placeholder to force blank line before included text --> <!-- include: TaskPropertyExamples.test.custom_grouping_by_task.due_docs.approved.md -->
 
 ~~~text
 group by function task.due?.format("YYYY-MM-DD dddd") || ""
@@ -228,7 +228,7 @@ For more information, see [[Custom Grouping]].
 
 Since Tasks X.Y.Z, **custom grouping by scheduled date** is now possible.
 
-<!-- placeholder to force blank line before included text --> <!-- include: ScheduledDateFieldDocs.test.custom_grouping_by_task.scheduled_docs.approved.md -->
+<!-- placeholder to force blank line before included text --> <!-- include: TaskPropertyExamples.test.custom_grouping_by_task.scheduled_docs.approved.md -->
 
 ~~~text
 group by function task.scheduled?.format("YYYY-MM-DD dddd") || ""
@@ -253,7 +253,7 @@ For more information, see [[Custom Grouping]].
 
 Since Tasks X.Y.Z, **custom grouping by start date** is now possible.
 
-<!-- placeholder to force blank line before included text --> <!-- include: StartDateFieldDocs.test.custom_grouping_by_task.start_docs.approved.md -->
+<!-- placeholder to force blank line before included text --> <!-- include: TaskPropertyExamples.test.custom_grouping_by_task.start_docs.approved.md -->
 
 ~~~text
 group by function task.start?.format("YYYY-MM-DD dddd") || ""
@@ -277,7 +277,7 @@ For more information, see [[Custom Grouping]].
 
 Since Tasks X.Y.Z, **custom grouping by created date** is now possible.
 
-<!-- placeholder to force blank line before included text --> <!-- include: CreatedDateFieldDocs.test.custom_grouping_by_task.created_docs.approved.md -->
+<!-- placeholder to force blank line before included text --> <!-- TaskPropertyExamples.test.custom_grouping_by_task.created_docs.approved.md -->
 
 ~~~text
 group by function task.created?.format("YYYY-MM-DD dddd") || ""
@@ -301,7 +301,7 @@ For more information, see [[Custom Grouping]].
 
 Since Tasks X.Y.Z, **custom grouping by happens date** is now possible.
 
-<!-- placeholder to force blank line before included text --> <!-- include: HappensDateFieldDocs.test.custom_grouping_by_task.happens_docs.approved.md -->
+<!-- placeholder to force blank line before included text --> <!-- include: TaskPropertyExamples.test.custom_grouping_by_task.happens_docs.approved.md -->
 
 ~~~text
 group by function task.happens?.format("YYYY-MM-DD dddd") || ""
