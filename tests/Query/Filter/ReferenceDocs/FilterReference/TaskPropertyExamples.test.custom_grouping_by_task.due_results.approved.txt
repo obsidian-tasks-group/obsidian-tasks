@@ -45,9 +45,9 @@ no  date
 group by function task.due?.fromNow() || ""
 Group by the time from now, for example "8 days ago". Whilst interesting, the alphabetical sort order makes the headings a little hard to read
 =>
-8 days ago
-9 days ago
 10 days ago
+11 days ago
+12 days ago
 Invalid date
 ====================================================================================
 
