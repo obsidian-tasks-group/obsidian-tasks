@@ -91,7 +91,7 @@ For more information, see [[Custom Grouping]].
 
 Since Tasks X.Y.Z, **custom grouping by status types** is now possible.
 
-<!-- placeholder to force blank line before included text --> <!-- include: StatusTypeFieldDocs.test.custom_grouping_by_status.type_docs.approved.md -->
+<!-- placeholder to force blank line before included text --> <!-- include: TaskPropertyExamples.test.custom_grouping_by_task.status.type_docs.approved.md -->
 
 ~~~text
 group by function task.status.type

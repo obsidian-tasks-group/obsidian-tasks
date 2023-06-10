@@ -63,6 +63,17 @@ describe('custom grouping by', () => {
         ],
 
         [
+            'task.status.type',
+            [
+                [
+                    'group by function task.status.type',
+                    'Unlike "group by status.type", this sorts the status types in alphabetical order',
+                ],
+            ],
+            SampleTasks.withAllStatuses(),
+        ],
+
+        [
             'task.tags',
             [
                 [
