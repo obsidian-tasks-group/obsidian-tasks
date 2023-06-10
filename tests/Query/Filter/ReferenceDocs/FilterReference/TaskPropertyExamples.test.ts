@@ -55,7 +55,11 @@ describe('custom grouping by', () => {
 
         // Tags is documented in TagsFieldDocs.test.ts
 
-        // ['task.urgency', [['group by function task.urgency', '...']], SampleTasks.withAllPriorities()],
+        // ['task.urgency', [['group by function task.urgency', '...']], SampleTasks.withAllPriorities()], // TODO Choose specific tasks for task.listMarker'
+
+        // idea: heading: only show the heading if it differs from the filename (for when I want to group by file and then heading)
+        // idea: folder: show only the closest folder name, not the whole tree
+        // idea: folder: show stripping out the folder containing the query file - may need to escape forward slashes if using regular expression
     ];
 
     it.each(testData)('%s results', (_: string, groups: string[][], tasks: Task[]) => {
