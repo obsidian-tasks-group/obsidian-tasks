@@ -15,6 +15,14 @@ publish: true
 - an instruction line of the form:
   - `group by function <expression>`
   - See [[Expressions]]
+  - that returns one of:
+    - a single value (the group name)
+      - where an empty string means 'no group'
+    - an array of values
+      - where an empty array means 'no group'
+      - and multiple values in the array mean the task is listed multiple times
+- Groups are sorted in alphabetical order by their name.
+- You can insert marking characters to format the headings
 
 ## Worked Example
 
