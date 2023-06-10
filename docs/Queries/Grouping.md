@@ -384,6 +384,20 @@ For more information, see [[Custom Grouping]].
 >
 > - `urgency` grouping option was introduced in Tasks 3.6.0.
 
+Since Tasks X.Y.Z, **custom grouping by urgency** is now possible.
+
+<!-- placeholder to force blank line before included text --> <!-- include: TaskPropertyExamples.test.custom_grouping_by_task.urgency_docs.approved.md -->
+
+~~~text
+group by function task.urgency.toFixed(3)
+~~~
+
+- Show the urgency to 3 decimal places, unlike the built-in "group by urgency" which uses 2.
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+
+For more information, see [[Custom Grouping]].
+
 ### Recurrence
 
 - `group by recurring`

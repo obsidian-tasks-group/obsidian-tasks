@@ -64,7 +64,16 @@ describe('custom grouping by', () => {
 
         // Tags is documented in TagsFieldDocs.test.ts
 
-        // ['task.urgency', [['group by function task.urgency', '...']], SampleTasks.withAllPriorities()], // TODO Choose specific tasks for task.listMarker'
+        [
+            'task.urgency',
+            [
+                [
+                    'group by function task.urgency.toFixed(3)',
+                    'Show the urgency to 3 decimal places, unlike the built-in "group by urgency" which uses 2',
+                ],
+            ],
+            SampleTasks.withAllPriorities(),
+        ],
 
         // idea: heading: only show the heading if it differs from the filename (for when I want to group by file and then heading)
         // idea: folder: show only the closest folder name, not the whole tree
