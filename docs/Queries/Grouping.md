@@ -421,7 +421,7 @@ For more information, see [[Custom Grouping]].
 
 Since Tasks X.Y.Z, **custom grouping by tags** is now possible.
 
-<!-- placeholder to force blank line before included text --> <!-- include: TagsFieldDocs.test.custom_grouping_by_tag_docs.approved.md -->
+<!-- placeholder to force blank line before included text --> <!-- include: TaskPropertyExamples.test.custom_grouping_by_task.tags_docs.approved.md -->
 
 ~~~text
 group by function task.tags
