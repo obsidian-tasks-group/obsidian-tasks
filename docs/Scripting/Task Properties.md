@@ -79,18 +79,13 @@ For more information, including adding your own customised statuses, see [[Statu
 
 ## Values for File Properties
 
-> [!warning]
-> Do not use these properties. They will change before release.
-
-TODO Maybe use `heading` instead? Try to make field names consistent with existing filter names
-
 <!-- placeholder to force blank line before included text --> <!-- include: TaskProperties.test.task_file_properties.approved.md -->
 
 | Field | Type 1 | Example 1 | Type 2 | Example 2 |
 | ----- | ----- | ----- | ----- | ----- |
-| `task.path` | `string` | `'/some/folder/fileName.md'` | `string` | `''` |
-| `task.filename` | `string` | `'fileName'` | `null` | `null` |
-| `task.lineNumber` | `number` | `17` | `number` | `0` |
 | `task.precedingHeader` | `string` | `'My Header'` | `null` | `null` |
 
 <!-- placeholder to force blank line after included text --> <!-- endInclude -->
+
+1. `task.precedingHeader` will be replaced by `task.heading` before release.
+1. Access to file properties will be added soon.
