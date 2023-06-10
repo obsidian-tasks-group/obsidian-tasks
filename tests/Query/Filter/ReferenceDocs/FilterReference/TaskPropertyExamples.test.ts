@@ -1,3 +1,9 @@
+/**
+ * @jest-environment jsdom
+ */
+
+import moment from 'moment';
+
 import type { Task } from '../../../../../src/Task';
 import { SampleTasks } from '../../../../TestHelpers';
 import {
@@ -5,9 +11,29 @@ import {
     verifyFunctionFieldGrouperSamplesOnTasks,
 } from './VerifyFunctionFieldSamples';
 
+window.moment = moment;
+
 describe('custom grouping by', () => {
     type CustomGroupingPropertyTestData = [string, string[][], Task[]];
     const testData: CustomGroupingPropertyTestData[] = [
+        // ---------------------------------------------------------------------------------
+        // DATE FIELDS
+        // ---------------------------------------------------------------------------------
+
+        [
+            'task.start',
+            [
+                [
+                    'group by function task.start?.format("YYYY-MM-DD dddd") || ""',
+                    'Like "group by task.start", except it does not write "No start date" if there is no start date. The question mark (`?`) and `|| ""` are needed because the start date value may be null',
+                ],
+            ],
+            SampleTasks.withAllRepresentativeStartDates(),
+        ],
+
+        // ---------------------------------------------------------------------------------
+        // OTHER FIELDS
+        // ---------------------------------------------------------------------------------
         [
             'task.blockLink',
             [
