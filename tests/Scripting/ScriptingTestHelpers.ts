@@ -7,7 +7,7 @@ export function formatToRepresentType(x: any): string {
     }
 
     if (moment.isMoment(x)) {
-        return `moment('${x.format(TaskRegularExpressions.dateFormat)}')`;
+        return `moment('${x.format(TaskRegularExpressions.dateTimeFormat)}')`;
     }
 
     if (Array.isArray(x)) {
