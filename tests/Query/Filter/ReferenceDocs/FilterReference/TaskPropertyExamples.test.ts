@@ -13,6 +13,15 @@ import {
 
 window.moment = moment;
 
+beforeEach(() => {
+    jest.useFakeTimers();
+    jest.setSystemTime(new Date('2023-06-10 20:00'));
+});
+
+afterEach(() => {
+    jest.useRealTimers();
+});
+
 describe('custom grouping by', () => {
     type CustomGroupingPropertyTestData = [string, string[][], Task[]];
     const testData: CustomGroupingPropertyTestData[] = [
