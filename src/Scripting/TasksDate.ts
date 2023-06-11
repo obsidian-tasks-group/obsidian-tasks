@@ -21,24 +21,27 @@ export class TasksDate {
 
     /**
      * Return the date formatted as YYYY-MM-DD, or an empty string if there is no date.
+     @param fallBackText - the string to use if the date is null. Defaults to empty string.
      */
-    public formatAsDate() {
-        return this.format(TaskRegularExpressions.dateFormat);
+    public formatAsDate(fallBackText: string = '') {
+        return this.format(TaskRegularExpressions.dateFormat, fallBackText);
     }
 
     /**
      * Return the date formatted as YYYY-MM-DD HH:mm, or an empty string if there is no date.
+     @param fallBackText - the string to use if the date is null. Defaults to empty string.
      */
-    public formatAsDateAndTime() {
-        return this.format(TaskRegularExpressions.dateTimeFormat);
+    public formatAsDateAndTime(fallBackText: string = '') {
+        return this.format(TaskRegularExpressions.dateTimeFormat, fallBackText);
     }
 
     /**
      * Return the date formatted with the given format string, or an empty string if there is no date.
      * See https://momentjs.com/docs/#/displaying/ for all the available formatting options.
      * @param format
+     * @param fallBackText - the string to use if the date is null. Defaults to empty string.
      */
-    public format(format: string) {
-        return this._date ? this._date!.format(format) : '';
+    public format(format: string, fallBackText: string = '') {
+        return this._date ? this._date!.format(format) : fallBackText;
     }
 }

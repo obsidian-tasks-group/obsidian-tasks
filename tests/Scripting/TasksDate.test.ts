@@ -33,6 +33,14 @@ describe('TasksDate', () => {
         expect(tasksDate.formatAsDateAndTime()).toEqual('');
     });
 
+    it('should format null dates as provided default string', () => {
+        const tasksDate = new TasksDate(null);
+        const fallBackText = 'no date';
+        expect(tasksDate.format('dddd', fallBackText)).toEqual(fallBackText);
+        expect(tasksDate.formatAsDate(fallBackText)).toEqual(fallBackText);
+        expect(tasksDate.formatAsDateAndTime(fallBackText)).toEqual(fallBackText);
+    });
+
     it('should format invalid dates meaningfully', () => {
         const tasksDate = new TasksDate(moment('2023-12-32'));
         expect(tasksDate.format('dddd')).toEqual('Invalid date');
