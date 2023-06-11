@@ -413,11 +413,11 @@ describe('parsing tags', () => {
 describe('properties for scripting', () => {
     it('should provide access to all date fields', () => {
         const task = TaskBuilder.createFullyPopulatedTask();
-        expect(task.created!.moment).toEqualMoment(task.createdDate!);
-        expect(task.done!).toEqualMoment(task.doneDate!);
-        expect(task.due!).toEqualMoment(task.dueDate!);
-        expect(task.scheduled!).toEqualMoment(task.scheduledDate!);
-        expect(task.start!).toEqualMoment(task.startDate!);
+        expect(task.created.moment!).toEqualMoment(task.createdDate!);
+        expect(task.done.moment!).toEqualMoment(task.doneDate!);
+        expect(task.due.moment!).toEqualMoment(task.dueDate!);
+        expect(task.scheduled!.moment).toEqualMoment(task.scheduledDate!);
+        expect(task.start.moment!).toEqualMoment(task.startDate!);
     });
 
     it('should provide access to happens and happensDates', () => {

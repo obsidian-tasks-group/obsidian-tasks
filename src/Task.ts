@@ -419,29 +419,29 @@ export class Task {
     /**
      * An alias for {@link doneDate}, so the field names in scripting docs are consistent with the existing search instruction names.
      */
-    public get done(): Moment | null {
-        return this.doneDate;
+    public get done(): TasksDate {
+        return new TasksDate(this.doneDate);
     }
 
     /**
      * An alias for {@link dueDate}, so the field names in scripting docs are consistent with the existing search instruction names.
      */
-    public get due(): Moment | null {
-        return this.dueDate;
+    public get due(): TasksDate {
+        return new TasksDate(this.dueDate);
     }
 
     /**
      * An alias for {@link scheduledDate}, so the field names in scripting docs are consistent with the existing search instruction names.
      */
-    public get scheduled(): Moment | null {
-        return this.scheduledDate;
+    public get scheduled(): TasksDate {
+        return new TasksDate(this.scheduledDate);
     }
 
     /**
      * An alias for {@link startDate}, so the field names in scripting docs are consistent with the existing search instruction names.
      */
-    public get start(): Moment | null {
-        return this.startDate;
+    public get start(): TasksDate {
+        return new TasksDate(this.startDate);
     }
 
     /**

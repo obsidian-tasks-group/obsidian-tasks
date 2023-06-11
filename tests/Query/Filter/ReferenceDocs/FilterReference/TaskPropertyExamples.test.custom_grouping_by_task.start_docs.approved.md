@@ -2,10 +2,10 @@
 
 
 ~~~text
-group by function task.start?.format("YYYY-MM-DD dddd") || ""
+group by function task.start.format("YYYY-MM-DD dddd")
 ~~~
 
-- Like "group by task.start", except it does not write "No start date" if there is no start date. The question mark (`?`) and `|| ""` are needed because the start date value may be null.
+- Like "group by task.start", except it uses an empty string instead of "No start date" if there is no start date.
 
 
 
