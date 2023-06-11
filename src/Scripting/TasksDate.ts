@@ -6,10 +6,17 @@ import { TaskRegularExpressions } from '../Task';
  * write in 'group by function' lines.
  */
 export class TasksDate {
-    private readonly date: Moment | null = null;
+    private readonly _date: Moment | null = null;
 
     public constructor(date: Moment | null) {
-        this.date = date;
+        this._date = date;
+    }
+
+    /**
+     * Return the raw underlying moment (or null, if there is no date)
+     */
+    get moment(): Moment | null {
+        return this._date;
     }
 
     /**
@@ -32,6 +39,6 @@ export class TasksDate {
      * @param format
      */
     public format(format: string) {
-        return this.date ? this.date!.format(format) : '';
+        return this._date ? this._date!.format(format) : '';
     }
 }

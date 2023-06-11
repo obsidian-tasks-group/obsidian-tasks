@@ -10,6 +10,7 @@ import { renderTaskLine } from './TaskLineRenderer';
 import type { TaskLineRenderDetails } from './TaskLineRenderer';
 import { DateFallback } from './DateFallback';
 import { compareByDate } from './lib/DateTools';
+import { TasksDate } from './Scripting/TasksDate';
 
 /**
  * When sorting, make sure low always comes after none. This way any tasks with low will be below any exiting
@@ -411,8 +412,8 @@ export class Task {
     /**
      * An alias for {@link createdDate}, so the field names in scripting docs are consistent with the existing search instruction names.
      */
-    public get created(): Moment | null {
-        return this.createdDate;
+    public get created(): TasksDate {
+        return new TasksDate(this.createdDate);
     }
 
     /**
