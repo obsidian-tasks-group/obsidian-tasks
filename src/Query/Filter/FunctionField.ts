@@ -56,11 +56,11 @@ type GroupingArg = string;
 
 function createGrouperFunctionFromLine(line: string): GrouperFunction {
     return (task: Task) => {
-        return groupByFn(task, line);
+        return groupByFunction(task, line);
     };
 }
 
-export function groupByFn(task: Task, arg: GroupingArg): string[] {
+export function groupByFunction(task: Task, arg: GroupingArg): string[] {
     try {
         const result = evaluateExpression(task, arg);
 
