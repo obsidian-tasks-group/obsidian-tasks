@@ -32,6 +32,7 @@ These are the main pages and sections, that connect to all the pages here:
 >
 > ### Advanced and Detail
 >
+> - [[About Scripting|Scripting ...]]
 > - [[About Advanced|Advanced ...]]
 > - [[About Other Plugins|Other Plugins ...]]
 > - [[About Reference|Reference ...]]

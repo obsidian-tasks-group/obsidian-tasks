@@ -212,6 +212,8 @@ describe('Query parsing', () => {
             'group by filename reverse',
             'group by folder',
             'group by folder reverse',
+            'group by function task.status.symbol.replace(" ", "space")',
+            'group by function reverse task.status.symbol.replace(" ", "space")',
             'group by happens',
             'group by happens reverse',
             'group by heading',

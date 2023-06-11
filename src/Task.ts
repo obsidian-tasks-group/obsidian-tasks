@@ -33,6 +33,7 @@ export enum Priority {
 
 export class TaskRegularExpressions {
     public static readonly dateFormat = 'YYYY-MM-DD';
+    public static readonly dateTimeFormat = 'YYYY-MM-DD HH:mm';
 
     // Matches indentation before a list marker (including > for potentially nested blockquotes or Obsidian callouts)
     public static readonly indentationRegex = /^([\s\t>]*)/;
@@ -405,6 +406,74 @@ export class Task {
 
     public get path(): string {
         return this.taskLocation.path;
+    }
+
+    /**
+     * An alias for {@link createdDate}, so the field names in scripting docs are consistent with the existing search instruction names.
+     */
+    public get created(): Moment | null {
+        return this.createdDate;
+    }
+
+    /**
+     * An alias for {@link doneDate}, so the field names in scripting docs are consistent with the existing search instruction names.
+     */
+    public get done(): Moment | null {
+        return this.doneDate;
+    }
+
+    /**
+     * An alias for {@link dueDate}, so the field names in scripting docs are consistent with the existing search instruction names.
+     */
+    public get due(): Moment | null {
+        return this.dueDate;
+    }
+
+    /**
+     * An alias for {@link scheduledDate}, so the field names in scripting docs are consistent with the existing search instruction names.
+     */
+    public get scheduled(): Moment | null {
+        return this.scheduledDate;
+    }
+
+    /**
+     * An alias for {@link startDate}, so the field names in scripting docs are consistent with the existing search instruction names.
+     */
+    public get start(): Moment | null {
+        return this.startDate;
+    }
+
+    /**
+     * Return the date fields that contribute to 'happens' searches.
+     *
+     * @see happens
+     * @see {@link HappensDateField}
+     */
+    public get happensDates(): (Moment | null)[] {
+        return Array.of(this.startDate, this.scheduledDate, this.dueDate);
+    }
+
+    /**
+     * Return the earliest of the dates used by 'happens' in this given task, or null if none set.
+     *
+     * Generally speaking, the earliest date is considered to be the highest priority,
+     * as it is the first point at which the user might wish to act on the task.
+     *
+     * @see happensDates
+     * @see {@link HappensDateField}
+     */
+    public get happens(): Moment | null {
+        const happensDates = this.happensDates;
+        const sortedHappensDates = happensDates.sort(compareByDate);
+        return sortedHappensDates[0];
+    }
+
+    /**
+     * Return true if the Task has a valid recurrence rule, and false otherwise,
+     * that is, false if it does not have a recurrence rule, or the recurrence rule is invalid.
+     */
+    public get recurring(): boolean {
+        return this.recurrence !== null;
     }
 
     /**

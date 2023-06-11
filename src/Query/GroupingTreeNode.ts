@@ -8,6 +8,11 @@ export class GroupingTreeNode<T> {
     children: Map<string, GroupingTreeNode<T>> = new Map();
     values: T[] = [];
 
+    /**
+     * After the GroupingTreeNode is created, the caller must populate the tree by adding values to {@link children}.
+     * See GroupingTreeNode.test.ts for an explanation of the contents of {@link children}.
+     * @param values
+     */
     constructor(values: T[]) {
         this.values = values;
     }

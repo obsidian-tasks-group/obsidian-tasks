@@ -3,6 +3,28 @@ import { verify } from 'approvals/lib/Providers/Jest/JestApprovals';
 import { Query } from '../../src/Query/Query';
 import { explainResults } from '../../src/lib/QueryRendererHelper';
 
+export function printIteration<T1>(func: <T1>(t1: T1) => any, params1: T1[]): string {
+    const EMPTY_ENTRY = {};
+    let text = '';
+    for (const p1 of params1) {
+        let output;
+        try {
+            output = func(p1);
+        } catch (e) {
+            output = `${e}`;
+        }
+        const parameters = [p1].filter((p) => p !== EMPTY_ENTRY);
+
+        text += `${parameters} => ${output}\n`;
+    }
+    return text;
+}
+
+export function verifyAll<T1>(func: (i: T1) => any, params1: T1[]) {
+    // @ts-ignore
+    verify(printIteration((t1) => func(t1), params1));
+}
+
 /**
  * Save an instructions block to disc, so that it can be embedded in
  * to documentation, using a 'snippet' line.

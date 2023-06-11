@@ -4,6 +4,8 @@ publish: true
 
 # Grouping
 
+<span class="related-pages">#feature/grouping</span>
+
 ---
 
 ## Contents
@@ -15,6 +17,7 @@ This page is long. Here are some links to the main sections:
 - [[#Group by Dates in Tasks]]
 - [[#Group by Other Task Properties]]
 - [[#Group by File Properties]]
+- [[#Group by Function - Custom Groups]]
 - [[#Multiple groups]]
 - [[#Refining groups]]
 - [[#Notes]]
@@ -52,6 +55,26 @@ For more information, including adding your own customised statuses, see [[Statu
 > [!released]
 `group by status.name` was introduced in Tasks 1.23.0.
 
+Since Tasks X.Y.Z, **custom grouping by status names** is now possible.
+
+<!-- placeholder to force blank line before included text --> <!-- include: TaskPropertyExamples.test.custom_grouping_by_task.status.name_docs.approved.md -->
+
+~~~text
+group by function task.status.name
+~~~
+
+- Identical to "group by status.name".
+
+~~~text
+group by function task.status.name.toUpperCase()
+~~~
+
+- Convert the status names to capitals.
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+
+For more information, see [[Custom Grouping]].
+
 ### Status Type
 
 - `group by status.type`
@@ -66,6 +89,56 @@ For more information, including adding your own customised statuses, see [[Statu
 > [!released]
 `group by status.type` was introduced in Tasks 1.23.0.
 
+Since Tasks X.Y.Z, **custom grouping by status types** is now possible.
+
+<!-- placeholder to force blank line before included text --> <!-- include: TaskPropertyExamples.test.custom_grouping_by_task.status.type_docs.approved.md -->
+
+~~~text
+group by function task.status.type
+~~~
+
+- Unlike "group by status.type", this sorts the status types in alphabetical order.
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+
+For more information, see [[Custom Grouping]].
+
+### Status Symbol
+
+There is no built-in instruction to group by status symbols.
+
+Since Tasks X.Y.Z, **custom grouping by status symbol** is now possible.
+
+<!-- placeholder to force blank line before included text --> <!-- include: TaskPropertyExamples.test.custom_grouping_by_task.status.symbol_docs.approved.md -->
+
+~~~text
+group by function "Status symbol: " + task.status.symbol.replace(" ", "space")
+~~~
+
+- Group by the status symbol, making space characters visible.
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+
+For more information, see [[Custom Grouping]].
+
+### Next Status Symbol
+
+There is no built-in instruction to group by next status symbols.
+
+Since Tasks X.Y.Z, **custom grouping by next status symbol** is now possible.
+
+<!-- placeholder to force blank line before included text --> <!-- include: TaskPropertyExamples.test.custom_grouping_by_task.status.nextStatusSymbol_docs.approved.md -->
+
+~~~text
+group by function "Next status symbol: " + task.status.nextStatusSymbol.replace(" ", "space")
+~~~
+
+- Group by the next status symbol, making space characters visible.
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+
+For more information, see [[Custom Grouping]].
+
 ---
 
 ## Group by Dates in Tasks
@@ -79,6 +152,22 @@ For more information, including adding your own customised statuses, see [[Statu
 >
 > - `done` grouping option was introduced in Tasks 1.7.0.
 
+Since Tasks X.Y.Z, **custom grouping by done date** is now possible.
+
+<!-- placeholder to force blank line before included text --> <!-- include: TaskPropertyExamples.test.custom_grouping_by_task.done_docs.approved.md -->
+
+~~~text
+group by function task.done?.format("YYYY-MM-DD dddd") || ""
+~~~
+
+- Like "group by task.done", except it does not write "No done date" if there is no done date. The question mark (`?`) and `|| ""` are needed because the done date value may be null.
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+
+For more examples, see [[#Due Date]].
+
+For more information, see [[Custom Grouping]].
+
 ### Due Date
 
 - `group by due`
@@ -87,6 +176,46 @@ For more information, including adding your own customised statuses, see [[Statu
 > [!released]
 >
 > - `due` grouping option was introduced in Tasks 1.7.0.
+
+Since Tasks X.Y.Z, **custom grouping by due date** is now possible.
+
+These examples make heavy use of the [moment.js format characters](https://momentjs.com/docs/#/displaying/format/).
+
+<!-- placeholder to force blank line before included text --> <!-- include: TaskPropertyExamples.test.custom_grouping_by_task.due_docs.approved.md -->
+
+~~~text
+group by function task.due?.format("YYYY-MM-DD dddd") || ""
+~~~
+
+- Like "group by task.due", except it does not write "No due date" if there is no due date. The question mark (`?`) and `|| ""` are needed because the due date value may be null.
+
+~~~text
+group by function task.due?.format("dddd") || ""
+~~~
+
+- Group by day of the week (Monday, Tuesday, etc).
+
+~~~text
+group by function task.due?.format("YYYY MM MMM") || "no due date"
+~~~
+
+- Group by month, for example "2023 05 May". The month number is also displayed, to control the sort order of headings.
+
+~~~text
+group by function task.due?.format("YYYY-MM MMM [- Week] WW") || "no  date"
+~~~
+
+- Group by month and week number, for example "2023-05 May - Week 22", or show a default heading if no date. If the month number is not displayed, in some years the first or last week of the year is displayed in a non-logical order.
+
+~~~text
+group by function task.due?.fromNow() || ""
+~~~
+
+- Group by the time from now, for example "8 days ago". Whilst interesting, the alphabetical sort order makes the headings a little hard to read.
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+
+For more information, see [[Custom Grouping]].
 
 ### Scheduled Date
 
@@ -97,6 +226,22 @@ For more information, including adding your own customised statuses, see [[Statu
 >
 > - `scheduled` grouping option was introduced in Tasks 1.7.0.
 
+Since Tasks X.Y.Z, **custom grouping by scheduled date** is now possible.
+
+<!-- placeholder to force blank line before included text --> <!-- include: TaskPropertyExamples.test.custom_grouping_by_task.scheduled_docs.approved.md -->
+
+~~~text
+group by function task.scheduled?.format("YYYY-MM-DD dddd") || ""
+~~~
+
+- Like "group by task.scheduled", except it does not write "No scheduled date" if there is no scheduled date. The question mark (`?`) and `|| ""` are needed because the scheduled date value may be null.
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+
+For more examples, see [[#Due Date]].
+
+For more information, see [[Custom Grouping]].
+
 ### Start Date
 
 - `group by start`
@@ -106,6 +251,22 @@ For more information, including adding your own customised statuses, see [[Statu
 >
 > - `start` grouping option was introduced in Tasks 1.7.0.
 
+Since Tasks X.Y.Z, **custom grouping by start date** is now possible.
+
+<!-- placeholder to force blank line before included text --> <!-- include: TaskPropertyExamples.test.custom_grouping_by_task.start_docs.approved.md -->
+
+~~~text
+group by function task.start?.format("YYYY-MM-DD dddd") || ""
+~~~
+
+- Like "group by task.start", except it does not write "No start date" if there is no start date. The question mark (`?`) and `|| ""` are needed because the start date value may be null.
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+
+For more examples, see [[#Due Date]].
+
+For more information, see [[Custom Grouping]].
+
 ### Created Date
 
 - `group by created`
@@ -113,6 +274,22 @@ For more information, including adding your own customised statuses, see [[Statu
 
 > [!released]
 `created` grouping option was introduced in Tasks 2.0.0.
+
+Since Tasks X.Y.Z, **custom grouping by created date** is now possible.
+
+<!-- placeholder to force blank line before included text --> <!-- TaskPropertyExamples.test.custom_grouping_by_task.created_docs.approved.md -->
+
+~~~text
+group by function task.created?.format("YYYY-MM-DD dddd") || ""
+~~~
+
+- Like "group by task.created", except it does not write "No created date" if there is no created date. The question mark (`?`) and `|| ""` are needed because the created date value may be null.
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+
+For more examples, see [[#Due Date]].
+
+For more information, see [[Custom Grouping]].
 
 ### Happens
 
@@ -122,9 +299,61 @@ For more information, including adding your own customised statuses, see [[Statu
 > [!released]
 `happens` grouping option was introduced in Tasks 1.11.0.
 
+Since Tasks X.Y.Z, **custom grouping by happens date** is now possible.
+
+<!-- placeholder to force blank line before included text --> <!-- include: TaskPropertyExamples.test.custom_grouping_by_task.happens_docs.approved.md -->
+
+~~~text
+group by function task.happens?.format("YYYY-MM-DD dddd") || ""
+~~~
+
+- Like "group by task.happens", except it does not write "No happens date" if none of task.start, task.scheduled, and task.due are set. The question mark (`?`) and `|| ""` are needed because the happens date value may be null.
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+
+For more examples, see [[#Due Date]].
+
+For more information, see [[Custom Grouping]].
+
 ---
 
 ## Group by Other Task Properties
+
+As well as the date-related groups above, groups can be created from properties in individual tasks.
+
+### Description
+
+Since Tasks X.Y.Z, **custom grouping by description** is now possible.
+
+<!-- placeholder to force blank line before included text --> <!-- include: TaskPropertyExamples.test.custom_grouping_by_task.description_docs.approved.md -->
+
+~~~text
+group by function task.description
+~~~
+
+- group by description. This might be useful for finding completed recurrences of the same task.
+
+~~~text
+group by function task.description.toUpperCase()
+~~~
+
+- Convert the description to capitals.
+
+~~~text
+group by function task.description.slice(0, 25)
+~~~
+
+- Truncate descriptions to at most their first 25 characters, and group by that string.
+
+~~~text
+group by function task.description.replace('short', '==short==')
+~~~
+
+- Highlight the word "short" in any group descriptions.
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+
+For more information, see [[Custom Grouping]].
 
 ### Priority
 
@@ -141,6 +370,9 @@ For more information, including adding your own customised statuses, see [[Statu
 >
 > - `priority` grouping option was introduced in Tasks 1.11.0.
 
+> [!Note]
+> `group by function` is not yet able to refer task priorities.
+
 ### Urgency
 
 - `group by urgency` ([[Urgency|urgency]])
@@ -151,6 +383,20 @@ For more information, including adding your own customised statuses, see [[Statu
 > [!released]
 >
 > - `urgency` grouping option was introduced in Tasks 3.6.0.
+
+Since Tasks X.Y.Z, **custom grouping by urgency** is now possible.
+
+<!-- placeholder to force blank line before included text --> <!-- include: TaskPropertyExamples.test.custom_grouping_by_task.urgency_docs.approved.md -->
+
+~~~text
+group by function task.urgency.toFixed(3)
+~~~
+
+- Show the urgency to 3 decimal places, unlike the built-in "group by urgency" which uses 2.
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+
+For more information, see [[Custom Grouping]].
 
 ### Recurrence
 
@@ -172,6 +418,38 @@ For more information, including adding your own customised statuses, see [[Statu
 > [!released]
 >
 > - `tags` grouping option was introduced in Tasks 1.10.0.
+
+Since Tasks X.Y.Z, **custom grouping by tags** is now possible.
+
+<!-- placeholder to force blank line before included text --> <!-- include: TaskPropertyExamples.test.custom_grouping_by_task.tags_docs.approved.md -->
+
+~~~text
+group by function task.tags
+~~~
+
+- Like "group by tags" except that tasks with no tags have no heading instead of "(No tags)".
+
+~~~text
+group by function task.tags.join(", ")
+~~~
+
+- Tasks with multiple tags are listed once, with a heading that combines all the tags. Separating with commas means the tags are clickable in the headings.
+
+~~~text
+group by function task.tags.filter( (t) => t.includes("#context/"))
+~~~
+
+- Only create headings for tags that contain "#context/".
+
+~~~text
+group by function task.tags.filter( (t) => ! t.includes("#tag"))
+~~~
+
+- Create headings for all tags that do not contain "#tag".
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+
+For more information, see [[Custom Grouping]].
 
 ---
 
@@ -204,6 +482,19 @@ For more information, including adding your own customised statuses, see [[Statu
 ### Heading
 
 - `group by heading` (the heading preceding the task, or `(No heading)` if there are no headings in the file)
+
+---
+
+## Group by Function - Custom Groups
+
+Tasks has a powerful mechanism for you to create your own custom groups, offering incredible flexibility.
+
+> [!released]
+> `group by function` was introduced in Tasks X.Y.Z.
+
+==TODO Provide examples==
+
+For details, see [[Custom Grouping]].
 
 ---
 

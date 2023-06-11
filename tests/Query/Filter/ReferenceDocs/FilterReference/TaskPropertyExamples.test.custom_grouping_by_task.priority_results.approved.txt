@@ -1,0 +1,15 @@
+Results of custom groupers
+
+
+
+group by function task.priority
+Group by the task's priority number, where Highest is 0 and Lowest is 5
+=>
+0
+1
+2
+3
+4
+5
+====================================================================================
+
