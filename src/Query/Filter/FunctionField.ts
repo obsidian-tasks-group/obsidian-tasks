@@ -52,7 +52,7 @@ export class FunctionField extends Field {
     }
 }
 
-type GroupingArg = string | null;
+type GroupingArg = string;
 
 function createGrouperFunctionFromLine(line: string): GrouperFunction {
     return (task: Task) => {
