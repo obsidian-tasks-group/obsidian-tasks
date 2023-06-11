@@ -58,6 +58,11 @@ describe('custom grouping by', () => {
                     'group by function task.due.format("YYYY-MM-DD dddd")',
                     'Like "group by task.due", except it uses an empty string instead of "No due date" if there is no due date',
                 ],
+                ['group by function task.due.formatAsDate()', 'Format date as YYYY-MM-DD or empty string if no date'],
+                [
+                    'group by function task.due.formatAsDateAndTime()',
+                    'Format date as YYYY-MM-DD HH:mm or empty string if no date',
+                ],
                 ['group by function task.due.format("dddd")', 'Group by day of the week (Monday, Tuesday, etc)'],
                 [
                     'group by function task.due.format("YYYY MM MMM", "no due date")',

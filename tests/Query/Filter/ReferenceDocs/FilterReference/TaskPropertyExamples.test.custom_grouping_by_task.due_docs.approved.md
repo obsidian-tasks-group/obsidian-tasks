@@ -9,6 +9,20 @@ group by function task.due.format("YYYY-MM-DD dddd")
 
 
 ~~~text
+group by function task.due.formatAsDate()
+~~~
+
+- Format date as YYYY-MM-DD or empty string if no date.
+
+
+~~~text
+group by function task.due.formatAsDateAndTime()
+~~~
+
+- Format date as YYYY-MM-DD HH:mm or empty string if no date.
+
+
+~~~text
 group by function task.due.format("dddd")
 ~~~
 
