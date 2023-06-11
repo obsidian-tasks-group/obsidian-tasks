@@ -8,6 +8,8 @@ import type { Task } from '../Task';
  * Currently any errors are returned as string error messages, starting with the word 'Error'.
  *
  * @todo Implement a type-safe mechanism to report error messages distinct from expression results.
+ *
+ * See also {@link FunctionField} which exposes this facility to users.
  */
 export function evaluateExpression(task: Task, arg: string | null) {
     const paramsArgs: [string, any][] = [

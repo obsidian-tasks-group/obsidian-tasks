@@ -5,6 +5,11 @@ import { Grouper } from '../Grouper';
 import { Field } from './Field';
 import { FilterOrErrorMessage } from './Filter';
 
+/**
+ * A {@link Field} implement that accepts a JavaSscript expression to group tasks together.
+ *
+ * See also {@link evaluateExpression}
+ */
 export class FunctionField extends Field {
     createFilterOrErrorMessage(line: string): FilterOrErrorMessage {
         return FilterOrErrorMessage.fromError(line, 'Searching by custom function not yet implemented');
