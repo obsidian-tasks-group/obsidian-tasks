@@ -44,4 +44,13 @@ export class TasksDate {
     public format(format: string, fallBackText: string = '') {
         return this._date ? this._date!.format(format) : fallBackText;
     }
+
+    /**
+     * Return the date as an ISO string, for example '2023-10-13T00:00:00.000Z'.
+     * Returns an empty string if no date, and null for an invalid date.
+     * @param keepOffset
+     */
+    public toISOString(keepOffset?: boolean): string {
+        return this._date ? this._date!.toISOString(keepOffset) : '';
+    }
 }

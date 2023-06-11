@@ -7,7 +7,7 @@
 | `task.scheduled` | `TasksDate` | `2023-07-03 00:00` | `TasksDate` | `` |
 | `task.due` | `TasksDate` | `2023-07-04 00:00` | `TasksDate` | `` |
 | `task.done` | `TasksDate` | `2023-07-05 00:00` | `TasksDate` | `` |
-| `task.happens` | `Moment` | `moment('2023-07-02 00:00')` | `null` | `null` |
+| `task.happens` | `TasksDate` | `2023-07-02 00:00` | `TasksDate` | `` |
 
 
 <!-- placeholder to force blank line after included text -->

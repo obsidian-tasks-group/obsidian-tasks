@@ -463,10 +463,10 @@ export class Task {
      * @see happensDates
      * @see {@link HappensDateField}
      */
-    public get happens(): Moment | null {
+    public get happens(): TasksDate {
         const happensDates = this.happensDates;
         const sortedHappensDates = happensDates.sort(compareByDate);
-        return sortedHappensDates[0];
+        return new TasksDate(sortedHappensDates[0]);
     }
 
     /**

@@ -24,6 +24,7 @@ describe('TasksDate', () => {
         expect(tasksDate.format('dddd')).toEqual('Friday');
         expect(tasksDate.formatAsDate()).toEqual(date);
         expect(tasksDate.formatAsDateAndTime()).toEqual(date + ' 00:00');
+        expect(tasksDate.toISOString()).toEqual('2023-10-13T00:00:00.000Z');
     });
 
     it('should format null dates as empty string', () => {
@@ -31,6 +32,7 @@ describe('TasksDate', () => {
         expect(tasksDate.format('dddd')).toEqual('');
         expect(tasksDate.formatAsDate()).toEqual('');
         expect(tasksDate.formatAsDateAndTime()).toEqual('');
+        expect(tasksDate.toISOString()).toEqual('');
     });
 
     it('should format null dates as provided default string', () => {
@@ -46,5 +48,6 @@ describe('TasksDate', () => {
         expect(tasksDate.format('dddd')).toEqual('Invalid date');
         expect(tasksDate.formatAsDate()).toEqual('Invalid date');
         expect(tasksDate.formatAsDateAndTime()).toEqual('Invalid date');
+        expect(tasksDate.toISOString()).toBeNull();
     });
 });
