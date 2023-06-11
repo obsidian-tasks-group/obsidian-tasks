@@ -410,6 +410,54 @@ describe('parsing tags', () => {
     );
 });
 
+describe('properties for scripting', () => {
+    it('should provide access to all date fields', () => {
+        const task = TaskBuilder.createFullyPopulatedTask();
+        expect(task.created!).toEqualMoment(task.createdDate!);
+        expect(task.done!).toEqualMoment(task.doneDate!);
+        expect(task.due!).toEqualMoment(task.dueDate!);
+        expect(task.scheduled!).toEqualMoment(task.scheduledDate!);
+        expect(task.start!).toEqualMoment(task.startDate!);
+    });
+
+    it('should provide access to happens and happensDates', () => {
+        // Fields that are used by happens:
+        const dueDate = '2023-06-19';
+        const scheduledDate = '2023-06-20';
+        const startDate = '2023-06-21';
+        const task = new TaskBuilder().dueDate(dueDate).scheduledDate(scheduledDate).startDate(startDate).build();
+        expect(task.happensDates[0]).toEqualMoment(moment(startDate));
+        expect(task.happensDates[1]).toEqualMoment(moment(scheduledDate));
+        expect(task.happensDates[2]).toEqualMoment(moment(dueDate));
+        expect(task.happens!).toEqualMoment(moment(dueDate)!); // the earliest
+    });
+
+    it('happens should ignore non-contributing date fields', () => {
+        // other fields, that are ignored by happens:
+        const sampleDate = '2023-06-19';
+        expect(new TaskBuilder().createdDate(sampleDate).build().happens).toBeNull();
+        expect(new TaskBuilder().doneDate(sampleDate).build().happens).toBeNull();
+    });
+
+    it('should provide access to recurring-related properties', () => {
+        const non_recurring = '- [ ] non-recurring task';
+        const recurring = '- [ ] recurring 🔁 every day 📅 2022-06-17';
+        // Invalid recurrence rules are discarded, and treated as non-recurring
+        const invalid = '- [ ] recurring 🔁 invalid rule 📅 2022-06-17';
+
+        // Test Task.recurring
+        expect(fromLine({ line: non_recurring }).recurring).toEqual(false);
+        expect(fromLine({ line: recurring }).recurring).toEqual(true);
+        expect(fromLine({ line: invalid }).recurring).toEqual(false);
+
+        // TODO Rename recurrence field, so that we can make Task.recurrence return the text directly.
+        //      And then release scripting access to task.recurring and task.recurrence
+        expect(fromLine({ line: non_recurring }).recurrence).toEqual(null);
+        expect(fromLine({ line: recurring }).recurrence!.toText()).toEqual('every day');
+        expect(fromLine({ line: invalid }).recurrence).toEqual(null);
+    });
+});
+
 describe('backlinks', () => {
     function shouldGiveLinkText(
         path: string,
@@ -497,6 +545,7 @@ describe('to string', () => {
 
         // Assert
         expect(task).not.toBeNull();
+        expect(task.indentation).toEqual('> > > ');
         expect(task.toFileLineString()).toStrictEqual(line);
     });
 

@@ -1,0 +1,14 @@
+Results of custom groupers
+
+
+
+group by function task.status.type
+Unlike "group by status.type", this sorts the status types in alphabetical order
+=>
+CANCELLED
+DONE
+EMPTY
+IN_PROGRESS
+TODO
+====================================================================================
+

@@ -41,6 +41,23 @@ export function createTasksFromMarkdown(tasksAsMarkdown: string, path: string, p
 const representativeDates = ['2023-05-30', '2023-05-31', '2023-06-01', '2023-02-32', null];
 
 export class SampleTasks {
+    public static withRepresentativeTags(): Task[] {
+        const sampleTags = [
+            [],
+            ['#tag'],
+            ['#tag/subtag'],
+            ['#tag/subtag/sub-sub-tag'],
+            ['#multiple-tags1', '#multiple-tags2'],
+            ['#project/project1'],
+            ['#context/home'],
+            ['#context/work'],
+        ];
+
+        return sampleTags.map((tags) => {
+            return new TaskBuilder().tags(tags).build();
+        });
+    }
+
     public static withAllRecurrences(): Task[] {
         const recurrenceRules = [
             // Months
@@ -197,5 +214,22 @@ export class SampleTasks {
             tasks.push(task);
         });
         return tasks;
+    }
+
+    public static withAllRepresentativeDescriptions(): Task[] {
+        const descriptions = [
+            'short description',
+            'long description Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce quam ipsum, consectetur ut dolor nec, fringilla lobortis mi. Vestibulum gravida tincidunt urna nec ornare. Cras sit amet sagittis sapien, vitae mattis velit. Vestibulum sem tortor, blandit at ultrices eget, ultrices eget odio. Donec efficitur purus massa, vel molestie turpis tincidunt id. ',
+        ];
+        return descriptions.map((description) => {
+            return new TaskBuilder().description(description).build();
+        });
+    }
+
+    public static withAllRepresentativeBlockLinks(): Task[] {
+        const descriptions = ['', ' ^ca47c7', ' ^fromseparatefile'];
+        return descriptions.map((blockLink) => {
+            return new TaskBuilder().blockLink(blockLink).build();
+        });
     }
 }
