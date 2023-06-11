@@ -33,6 +33,7 @@
         dueDate: string;
         doneDate: string;
         forwardOnly: boolean;
+        sequential: boolean;
     } = {
         description: '',
         status: Status.TODO,
@@ -43,7 +44,8 @@
         scheduledDate: '',
         dueDate: '',
         doneDate: '',
-        forwardOnly: true
+        forwardOnly: true,
+        sequential: false
     };
 
     let isDescriptionValid: boolean = true;
@@ -267,6 +269,7 @@
             dueDate: task.dueDate ? task.dueDate.format('YYYY-MM-DD') : '',
             doneDate: task.doneDate ? task.doneDate.format('YYYY-MM-DD') : '',
             forwardOnly: true,
+            sequential: task.sequential
         };
         setTimeout(() => {
             descriptionInput.focus();
@@ -358,6 +361,7 @@
                 .isValid()
                 ? window.moment(editableTask.doneDate, 'YYYY-MM-DD')
                 : null,
+            sequential: editableTask.sequential
         });
 
         onSubmit([updatedTask]);
@@ -488,6 +492,19 @@
                     type="checkbox"
                     class="task-list-item-checkbox tasks-modal-checkbox"
                     accesskey={accesskey("f")}
+                />
+            </div>
+
+            <!-- --------------------------------------------------------------------------- -->
+            <!--  Sequential Task  -->
+            <!-- --------------------------------------------------------------------------- -->
+            <div>
+                <label for="sequential">Sequential task:</label>
+                <input
+                    bind:checked={editableTask.sequential}
+                    id="sequential"
+                    type="checkbox"
+                    class="task-list-item-checkbox tasks-modal-checkbox"
                 />
             </div>
         </div>

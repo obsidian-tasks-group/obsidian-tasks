@@ -10,6 +10,7 @@
 | priority:: highest highest priority | priority:: highest  |
 | priority:: lowest lowest priority | priority:: lowest  |
 | repeat:: recurring (repeat) | repeat::  |
+| sequential sequential | sequential  |
 | created:: created today (2022-07-11) | created:: 2022-07-11  |
 | every | repeat:: every  |
 | every day | repeat:: every day  |

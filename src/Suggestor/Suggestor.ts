@@ -109,6 +109,11 @@ function addTaskPropertySuggestions(
             displayText: `${symbols.recurrenceSymbol} recurring (repeat)`,
             appendText: `${symbols.recurrenceSymbol} `,
         });
+    if (!line.includes(symbols.sequentialSymbol))
+        genericSuggestions.push({
+            displayText: `${symbols.sequentialSymbol} sequential`,
+            appendText: `${symbols.sequentialSymbol} `,
+        });
     if (!line.includes(symbols.createdDateSymbol)) {
         const parsedDate = DateParser.parseDate('today', true);
         const formattedDate = parsedDate.format(TaskRegularExpressions.dateFormat);

@@ -10,6 +10,7 @@
 | 🔺 highest priority | 🔺  |
 | ⏬ lowest priority | ⏬  |
 | 🔁 recurring (repeat) | 🔁  |
+| ⬇️ sequential | ⬇️  |
 | ➕ created today (2022-07-11) | ➕ 2022-07-11  |
 | every | 🔁 every  |
 | every day | 🔁 every day  |

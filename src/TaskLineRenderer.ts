@@ -28,6 +28,7 @@ export const LayoutClasses: { [c in TaskLayoutComponent]: string } = {
     doneDate: 'task-done',
     recurrenceRule: 'task-recurring',
     blockLink: '',
+    sequential: '',
 };
 
 const MAX_DAY_VALUE_RANGE = 7;

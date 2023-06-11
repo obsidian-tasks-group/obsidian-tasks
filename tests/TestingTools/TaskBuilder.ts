@@ -44,6 +44,7 @@ export class TaskBuilder {
     private _blockLink: string = '';
 
     private _scheduledDateIsInferred: boolean = false;
+    private _sequential: boolean = false;
 
     /**
      * Build a Task
@@ -85,6 +86,7 @@ export class TaskBuilder {
             tags: this._tags,
             originalMarkdown: '',
             scheduledDateIsInferred: this._scheduledDateIsInferred,
+            sequential: this._sequential,
         });
         const markdown = task.toFileLineString();
         return new Task({

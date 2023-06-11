@@ -222,6 +222,21 @@ export class Cache {
             return;
         }
 
+        let sequential_found = false;
+
+        newTasks = newTasks.filter((task) => {
+            const is_sequential = task.sequential && !task.doneDate;
+
+            // found first active sequential task
+            if (!sequential_found && is_sequential) {
+                sequential_found = true;
+                return true;
+            }
+
+            // don't add any others found
+            return !(sequential_found && is_sequential);
+        });
+
         if (this.getState() == State.Warm) {
             // logger.debug(`Cache read: ${file.path}`);
             console.debug(
