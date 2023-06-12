@@ -413,11 +413,11 @@ describe('parsing tags', () => {
 describe('properties for scripting', () => {
     it('should provide access to all date fields', () => {
         const task = TaskBuilder.createFullyPopulatedTask();
-        expect(task.created!).toEqualMoment(task.createdDate!);
-        expect(task.done!).toEqualMoment(task.doneDate!);
-        expect(task.due!).toEqualMoment(task.dueDate!);
-        expect(task.scheduled!).toEqualMoment(task.scheduledDate!);
-        expect(task.start!).toEqualMoment(task.startDate!);
+        expect(task.created.moment!).toEqualMoment(task.createdDate!);
+        expect(task.done.moment!).toEqualMoment(task.doneDate!);
+        expect(task.due.moment!).toEqualMoment(task.dueDate!);
+        expect(task.scheduled!.moment).toEqualMoment(task.scheduledDate!);
+        expect(task.start.moment!).toEqualMoment(task.startDate!);
     });
 
     it('should provide access to happens and happensDates', () => {
@@ -429,14 +429,14 @@ describe('properties for scripting', () => {
         expect(task.happensDates[0]).toEqualMoment(moment(startDate));
         expect(task.happensDates[1]).toEqualMoment(moment(scheduledDate));
         expect(task.happensDates[2]).toEqualMoment(moment(dueDate));
-        expect(task.happens!).toEqualMoment(moment(dueDate)!); // the earliest
+        expect(task.happens.moment).toEqualMoment(moment(dueDate)!); // the earliest
     });
 
     it('happens should ignore non-contributing date fields', () => {
         // other fields, that are ignored by happens:
         const sampleDate = '2023-06-19';
-        expect(new TaskBuilder().createdDate(sampleDate).build().happens).toBeNull();
-        expect(new TaskBuilder().doneDate(sampleDate).build().happens).toBeNull();
+        expect(new TaskBuilder().createdDate(sampleDate).build().happens.moment).toBeNull();
+        expect(new TaskBuilder().doneDate(sampleDate).build().happens.moment).toBeNull();
     });
 
     it('should provide access to recurring-related properties', () => {

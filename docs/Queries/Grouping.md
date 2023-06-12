@@ -157,10 +157,10 @@ Since Tasks X.Y.Z, **custom grouping by done date** is now possible.
 <!-- placeholder to force blank line before included text --> <!-- include: TaskPropertyExamples.test.custom_grouping_by_task.done_docs.approved.md -->
 
 ~~~text
-group by function task.done?.format("YYYY-MM-DD dddd") || ""
+group by function task.done.format("YYYY-MM-DD dddd")
 ~~~
 
-- Like "group by task.done", except it does not write "No done date" if there is no done date. The question mark (`?`) and `|| ""` are needed because the done date value may be null.
+- Like "group by task.done", except it uses an empty string instead of "No done date" if there is no done date.
 
 <!-- placeholder to force blank line after included text --> <!-- endInclude -->
 
@@ -184,34 +184,46 @@ These examples make heavy use of the [moment.js format characters](https://momen
 <!-- placeholder to force blank line before included text --> <!-- include: TaskPropertyExamples.test.custom_grouping_by_task.due_docs.approved.md -->
 
 ~~~text
-group by function task.due?.format("YYYY-MM-DD dddd") || ""
+group by function task.due.format("YYYY-MM-DD dddd")
 ~~~
 
-- Like "group by task.due", except it does not write "No due date" if there is no due date. The question mark (`?`) and `|| ""` are needed because the due date value may be null.
+- Like "group by task.due", except it uses an empty string instead of "No due date" if there is no due date.
 
 ~~~text
-group by function task.due?.format("dddd") || ""
+group by function task.due.formatAsDate()
+~~~
+
+- Format date as YYYY-MM-DD or empty string if no date.
+
+~~~text
+group by function task.due.formatAsDateAndTime()
+~~~
+
+- Format date as YYYY-MM-DD HH:mm or empty string if no date.
+
+~~~text
+group by function task.due.format("dddd")
 ~~~
 
 - Group by day of the week (Monday, Tuesday, etc).
 
 ~~~text
-group by function task.due?.format("YYYY MM MMM") || "no due date"
+group by function task.due.format("YYYY MM MMM", "no due date")
 ~~~
 
 - Group by month, for example "2023 05 May". The month number is also displayed, to control the sort order of headings.
 
 ~~~text
-group by function task.due?.format("YYYY-MM MMM [- Week] WW") || "no  date"
+group by function task.due.format("YYYY-MM MMM [- Week] WW", "no  date")
 ~~~
 
 - Group by month and week number, for example "2023-05 May - Week 22", or show a default heading if no date. If the month number is not displayed, in some years the first or last week of the year is displayed in a non-logical order.
 
 ~~~text
-group by function task.due?.fromNow() || ""
+group by function task.due.moment?.fromNow() || ""
 ~~~
 
-- Group by the time from now, for example "8 days ago". Whilst interesting, the alphabetical sort order makes the headings a little hard to read.
+- Group by the time from now, for example "8 days ago". Because Moment.fromNow() is not provided by TasksDate, we need special code for when there is no date value. Whilst interesting, the alphabetical sort order makes the headings a little hard to read.
 
 <!-- placeholder to force blank line after included text --> <!-- endInclude -->
 
@@ -231,10 +243,10 @@ Since Tasks X.Y.Z, **custom grouping by scheduled date** is now possible.
 <!-- placeholder to force blank line before included text --> <!-- include: TaskPropertyExamples.test.custom_grouping_by_task.scheduled_docs.approved.md -->
 
 ~~~text
-group by function task.scheduled?.format("YYYY-MM-DD dddd") || ""
+group by function task.scheduled.format("YYYY-MM-DD dddd")
 ~~~
 
-- Like "group by task.scheduled", except it does not write "No scheduled date" if there is no scheduled date. The question mark (`?`) and `|| ""` are needed because the scheduled date value may be null.
+- Like "group by task.scheduled", except it uses an empty string instead of "No scheduled date" if there is no scheduled date.
 
 <!-- placeholder to force blank line after included text --> <!-- endInclude -->
 
@@ -256,10 +268,10 @@ Since Tasks X.Y.Z, **custom grouping by start date** is now possible.
 <!-- placeholder to force blank line before included text --> <!-- include: TaskPropertyExamples.test.custom_grouping_by_task.start_docs.approved.md -->
 
 ~~~text
-group by function task.start?.format("YYYY-MM-DD dddd") || ""
+group by function task.start.format("YYYY-MM-DD dddd")
 ~~~
 
-- Like "group by task.start", except it does not write "No start date" if there is no start date. The question mark (`?`) and `|| ""` are needed because the start date value may be null.
+- Like "group by task.start", except it uses an empty string instead of "No start date" if there is no start date.
 
 <!-- placeholder to force blank line after included text --> <!-- endInclude -->
 
@@ -304,10 +316,10 @@ Since Tasks X.Y.Z, **custom grouping by happens date** is now possible.
 <!-- placeholder to force blank line before included text --> <!-- include: TaskPropertyExamples.test.custom_grouping_by_task.happens_docs.approved.md -->
 
 ~~~text
-group by function task.happens?.format("YYYY-MM-DD dddd") || ""
+group by function task.happens.format("YYYY-MM-DD dddd")
 ~~~
 
-- Like "group by task.happens", except it does not write "No happens date" if none of task.start, task.scheduled, and task.due are set. The question mark (`?`) and `|| ""` are needed because the happens date value may be null.
+- Like "group by task.happens", except it uses an empty string instead of "No happens date" if there is no happens date.
 
 <!-- placeholder to force blank line after included text --> <!-- endInclude -->
 

@@ -10,6 +10,7 @@ import { renderTaskLine } from './TaskLineRenderer';
 import type { TaskLineRenderDetails } from './TaskLineRenderer';
 import { DateFallback } from './DateFallback';
 import { compareByDate } from './lib/DateTools';
+import { TasksDate } from './Scripting/TasksDate';
 
 /**
  * When sorting, make sure low always comes after none. This way any tasks with low will be below any exiting
@@ -409,38 +410,38 @@ export class Task {
     }
 
     /**
-     * An alias for {@link createdDate}, so the field names in scripting docs are consistent with the existing search instruction names.
+     * Return {@link createdDate} as a {@link TasksDate}, so the field names in scripting docs are consistent with the existing search instruction names, and null values are easy to deal with.
      */
-    public get created(): Moment | null {
-        return this.createdDate;
+    public get created(): TasksDate {
+        return new TasksDate(this.createdDate);
     }
 
     /**
-     * An alias for {@link doneDate}, so the field names in scripting docs are consistent with the existing search instruction names.
+     * Return {@link doneDate} as a {@link TasksDate}, so the field names in scripting docs are consistent with the existing search instruction names, and null values are easy to deal with.
      */
-    public get done(): Moment | null {
-        return this.doneDate;
+    public get done(): TasksDate {
+        return new TasksDate(this.doneDate);
     }
 
     /**
-     * An alias for {@link dueDate}, so the field names in scripting docs are consistent with the existing search instruction names.
+     * Return {@link dueDate} as a {@link TasksDate}, so the field names in scripting docs are consistent with the existing search instruction names, and null values are easy to deal with.
      */
-    public get due(): Moment | null {
-        return this.dueDate;
+    public get due(): TasksDate {
+        return new TasksDate(this.dueDate);
     }
 
     /**
-     * An alias for {@link scheduledDate}, so the field names in scripting docs are consistent with the existing search instruction names.
+     * Return {@link scheduledDate} as a {@link TasksDate}, so the field names in scripting docs are consistent with the existing search instruction names, and null values are easy to deal with.
      */
-    public get scheduled(): Moment | null {
-        return this.scheduledDate;
+    public get scheduled(): TasksDate {
+        return new TasksDate(this.scheduledDate);
     }
 
     /**
-     * An alias for {@link startDate}, so the field names in scripting docs are consistent with the existing search instruction names.
+     * Return {@link startDate} as a {@link TasksDate}, so the field names in scripting docs are consistent with the existing search instruction names, and null values are easy to deal with.
      */
-    public get start(): Moment | null {
-        return this.startDate;
+    public get start(): TasksDate {
+        return new TasksDate(this.startDate);
     }
 
     /**
@@ -454,7 +455,7 @@ export class Task {
     }
 
     /**
-     * Return the earliest of the dates used by 'happens' in this given task, or null if none set.
+     * Return the earliest of the dates used by 'happens' in this given task as a {@link TasksDate}.
      *
      * Generally speaking, the earliest date is considered to be the highest priority,
      * as it is the first point at which the user might wish to act on the task.
@@ -462,10 +463,10 @@ export class Task {
      * @see happensDates
      * @see {@link HappensDateField}
      */
-    public get happens(): Moment | null {
+    public get happens(): TasksDate {
         const happensDates = this.happensDates;
         const sortedHappensDates = happensDates.sort(compareByDate);
-        return sortedHappensDates[0];
+        return new TasksDate(sortedHappensDates[0]);
     }
 
     /**

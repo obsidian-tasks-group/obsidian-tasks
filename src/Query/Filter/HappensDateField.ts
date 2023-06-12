@@ -48,7 +48,7 @@ export class HappensDateField extends DateField {
      * @param task
      */
     public earliestDate(task: Task): Moment | null {
-        return task.happens;
+        return task.happens.moment;
     }
 
     protected filterResultIfFieldMissing() {

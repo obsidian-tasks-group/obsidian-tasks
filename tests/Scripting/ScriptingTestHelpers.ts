@@ -1,5 +1,6 @@
 import moment from 'moment';
 import { TaskRegularExpressions } from '../../src/Task';
+import { TasksDate } from '../../src/Scripting/TasksDate';
 
 export function formatToRepresentType(x: any): string {
     if (typeof x === 'string') {
@@ -8,6 +9,10 @@ export function formatToRepresentType(x: any): string {
 
     if (moment.isMoment(x)) {
         return `moment('${x.format(TaskRegularExpressions.dateTimeFormat)}')`;
+    }
+
+    if (x instanceof TasksDate) {
+        return x.formatAsDateAndTime();
     }
 
     if (Array.isArray(x)) {
@@ -30,6 +35,10 @@ export function determineExpressionType(value: any) {
 
     if (moment.isMoment(value)) {
         return 'Moment';
+    }
+
+    if (value instanceof TasksDate) {
+        return 'TasksDate';
     }
 
     if (Array.isArray(value)) {
