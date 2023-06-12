@@ -4,12 +4,12 @@
 
 import moment from 'moment';
 
-import type { Task } from '../../../../../src/Task';
-import { SampleTasks } from '../../../../TestHelpers';
+import type { Task } from '../../src/Task';
+import { SampleTasks } from '../TestHelpers';
 import {
     verifyFunctionFieldGrouperSamplesForDocs,
     verifyFunctionFieldGrouperSamplesOnTasks,
-} from './VerifyFunctionFieldSamples';
+} from '../Query/Filter/ReferenceDocs/FilterReference/VerifyFunctionFieldSamples';
 
 window.moment = moment;
 
