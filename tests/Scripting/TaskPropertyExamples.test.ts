@@ -114,6 +114,32 @@ describe('custom grouping by', () => {
         ],
 
         // ---------------------------------------------------------------------------------
+        // RECURRENCE FIELDS
+        // ---------------------------------------------------------------------------------
+
+        [
+            'task.isRecurring',
+            [
+                [
+                    'group by function task.isRecurring ? "Recurring" : "Non-Recurring"',
+                    "Use JavaScript's ternary operator to choose what to do for true (after the ?) and false (after the :) values",
+                ],
+            ],
+            SampleTasks.withAllRecurrences(),
+        ],
+
+        [
+            'task.recurrenceRule',
+            [
+                [
+                    "group by function task.recurrenceRule.replace('when done', '==when done==')",
+                    'Group by recurrence rule, highlighting any occurrences of the words "when done"',
+                ],
+            ],
+            SampleTasks.withAllRecurrences(),
+        ],
+
+        // ---------------------------------------------------------------------------------
         // OTHER FIELDS
         // ---------------------------------------------------------------------------------
         [

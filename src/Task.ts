@@ -486,8 +486,16 @@ export class Task {
      * Return true if the Task has a valid recurrence rule, and false otherwise,
      * that is, false if it does not have a recurrence rule, or the recurrence rule is invalid.
      */
-    public get recurring(): boolean {
+    public get isRecurring(): boolean {
         return this.recurrence !== null;
+    }
+
+    /**
+     * Return the text of the Task's recurrence rule, if it is supplied and is valid,
+     * and an empty string otherwise.
+     */
+    public get recurrenceRule(): string {
+        return this.recurrence ? this.recurrence.toText() : '';
     }
 
     public get heading(): string | null {

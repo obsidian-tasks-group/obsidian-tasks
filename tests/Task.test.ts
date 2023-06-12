@@ -459,15 +459,13 @@ describe('properties for scripting', () => {
         const invalid = '- [ ] recurring 🔁 invalid rule 📅 2022-06-17';
 
         // Test Task.recurring
-        expect(fromLine({ line: non_recurring }).recurring).toEqual(false);
-        expect(fromLine({ line: recurring }).recurring).toEqual(true);
-        expect(fromLine({ line: invalid }).recurring).toEqual(false);
+        expect(fromLine({ line: non_recurring }).isRecurring).toEqual(false);
+        expect(fromLine({ line: recurring }).isRecurring).toEqual(true);
+        expect(fromLine({ line: invalid }).isRecurring).toEqual(false);
 
-        // TODO Rename recurrence field, so that we can make Task.recurrence return the text directly.
-        //      And then release scripting access to task.recurring and task.recurrence
-        expect(fromLine({ line: non_recurring }).recurrence).toEqual(null);
-        expect(fromLine({ line: recurring }).recurrence!.toText()).toEqual('every day');
-        expect(fromLine({ line: invalid }).recurrence).toEqual(null);
+        expect(fromLine({ line: non_recurring }).recurrenceRule).toEqual('');
+        expect(fromLine({ line: recurring }).recurrenceRule).toEqual('every day');
+        expect(fromLine({ line: invalid }).recurrenceRule).toEqual('');
     });
 
     it('should provide access to heading information', () => {
