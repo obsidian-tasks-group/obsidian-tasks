@@ -398,6 +398,10 @@ export class Task {
         return recurrenceOnNextLine ? newTasks.reverse() : newTasks;
     }
 
+    /**
+     * Return whether the task is considered done.
+     * @returns true if the status type is {@link StatusType.DONE}, {@link StatusType.CANCELLED} or {@link StatusType.NON_TASK}, and false otherwise.
+     */
     public get isDone(): boolean {
         return (
             this.status.type === StatusType.DONE ||
