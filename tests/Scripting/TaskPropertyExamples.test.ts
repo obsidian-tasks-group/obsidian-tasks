@@ -127,6 +127,15 @@ describe('custom grouping by', () => {
         ],
 
         [
+            'task.file.root',
+            [
+                // comment to force line break
+                ['group by function task.file.root', "Same as 'group by root'"],
+            ],
+            SampleTasks.withAllRootsPathsHeadings(),
+        ],
+
+        [
             'task.file.filename',
             [
                 ['group by function task.file.filename', "Like 'group by filename' but does not link to the file"],

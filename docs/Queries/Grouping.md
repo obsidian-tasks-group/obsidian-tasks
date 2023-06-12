@@ -530,6 +530,20 @@ For more information, see [[Custom Grouping]].
 > [!released]
 `root` grouping option was introduced in Tasks 1.11.0.
 
+Since Tasks X.Y.Z, **custom grouping by root folder** is now possible.
+
+<!-- placeholder to force blank line before included text --> <!-- include: TaskPropertyExamples.test.custom_grouping_by_task.file.root_docs.approved.md -->
+
+~~~text
+group by function task.file.root
+~~~
+
+- Same as 'group by root'.
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+
+For more information, see [[Custom Grouping]].
+
 ### Folder
 
 - `group by folder` (the folder to the file that contains the task, which will be `/` for files in root of the vault)
