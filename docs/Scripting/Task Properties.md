@@ -77,17 +77,15 @@ For more information, including adding your own customised statuses, see [[Statu
 
 ---
 
-%%
 ## Values for File Properties - commented out until precedingHeader renamed to heading
 
 <!-- placeholder to force blank line before included text --> <!-- include: TaskProperties.test.task_file_properties.approved.md -->
 
 | Field | Type 1 | Example 1 | Type 2 | Example 2 |
 | ----- | ----- | ----- | ----- | ----- |
-| `task.precedingHeader` | `string` | `'My Header'` | `null` | `null` |
+| `task.hasHeading` | `boolean` | `true` | `boolean` | `false` |
+| `task.heading` | `string` | `'My Header'` | `null` | `null` |
 
 <!-- placeholder to force blank line after included text --> <!-- endInclude -->
 
-1. `task.precedingHeader` will be replaced by `task.heading` before release.
 1. Access to file properties will be added soon.
-%%
