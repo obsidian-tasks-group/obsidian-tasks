@@ -123,7 +123,19 @@ describe('custom grouping by', () => {
                 // comment to force line break
                 ['group by function task.file.path', "Like 'group by path' but includes the file extension"],
             ],
-            SampleTasks.withAllRecurrences(),
+            SampleTasks.withAllRootsPathsHeadings(),
+        ],
+
+        [
+            'task.file.filename',
+            [
+                ['group by function task.file.filename', "Like 'group by filename' but does not link to the file"],
+                [
+                    "group by function  '[[' + task.file.filename.replace('.md', '') + ( task.hasHeading ? ('#' + task.heading) : '')  + ']]'",
+                    "Like 'group by backlink' but links to the heading in the file",
+                ],
+            ],
+            SampleTasks.withAllRootsPathsHeadings(),
         ],
 
         // ---------------------------------------------------------------------------------

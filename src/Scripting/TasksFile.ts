@@ -8,7 +8,23 @@ export class TasksFile {
         this._path = path;
     }
 
+    /**
+     * Return the path to the file.
+     */
     get path(): string {
         return this._path;
+    }
+
+    /**
+     * Return the filename including the extension.
+     */
+    get filename(): string {
+        // Copied from Task.filename and FilenameField.value() initially
+        const fileNameMatch = this.path.match(/([^/]+)$/);
+        if (fileNameMatch !== null) {
+            return fileNameMatch[1];
+        } else {
+            return '';
+        }
     }
 }

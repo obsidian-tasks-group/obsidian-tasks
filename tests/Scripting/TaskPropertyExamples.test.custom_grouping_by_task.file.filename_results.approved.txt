@@ -1,0 +1,25 @@
+Results of custom groupers
+
+
+
+group by function task.file.filename
+Like 'group by filename' but does not link to the file
+=>
+_c_.md
+a_b_c.md
+c.md
+====================================================================================
+
+
+group by function  '[[' + task.file.filename.replace('.md', '') + ( task.hasHeading ? ('#' + task.heading) : '')  + ']]'
+Like 'group by backlink' but links to the heading in the file
+=>
+[[_c_]]
+[[_c_#heading _italic text_]]
+[[#heading]]
+[[a_b_c#a_b_c]]
+[[c]]
+[[c#c]]
+[[c#heading]]
+====================================================================================
+
