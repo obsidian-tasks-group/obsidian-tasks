@@ -448,13 +448,13 @@ group by function task.tags.join(", ")
 - Tasks with multiple tags are listed once, with a heading that combines all the tags. Separating with commas means the tags are clickable in the headings.
 
 ~~~text
-group by function task.tags.filter( (t) => t.includes("#context/"))
+group by function task.tags.filter( (tag) => tag.includes("#context/") )
 ~~~
 
 - Only create headings for tags that contain "#context/".
 
 ~~~text
-group by function task.tags.filter( (t) => ! t.includes("#tag"))
+group by function task.tags.filter( (tag) => ! tag.includes("#tag") )
 ~~~
 
 - Create headings for all tags that do not contain "#tag".
