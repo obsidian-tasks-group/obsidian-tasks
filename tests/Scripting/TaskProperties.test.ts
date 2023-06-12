@@ -73,6 +73,7 @@ describe('task', () => {
     it('file properties', () => {
         verifyFieldDataForReferenceDocs([
             'task.file.path',
+            'task.file.filename',
             // 'task.filename',
             // 'task.lineNumber', // this name is misleading - in some circumstances the line number is not updated after user edits
             'task.hasHeading',

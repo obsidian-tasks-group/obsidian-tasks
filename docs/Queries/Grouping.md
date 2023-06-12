@@ -539,6 +539,26 @@ For more information, see [[Custom Grouping]].
 - `group by filename` (the link to the file that contains the task, without the `.md` extension)
   - Note that tasks from different notes with the same file name will be grouped together in the same group.
 
+Since Tasks X.Y.Z, **custom grouping by file name** is now possible.
+
+<!-- placeholder to force blank line before included text --> <!-- include: TaskPropertyExamples.test.custom_grouping_by_task.file.filename_docs.approved.md -->
+
+~~~text
+group by function task.file.filename
+~~~
+
+- Like 'group by filename' but does not link to the file.
+
+~~~text
+group by function  '[[' + task.file.filename.replace('.md', '') + ( task.hasHeading ? ('#' + task.heading) : '')  + ']]'
+~~~
+
+- Like 'group by backlink' but links to the heading in the file.
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+
+For more information, see [[Custom Grouping]].
+
 ### Backlink
 
 - `group by backlink` (the text that would be shown in the task's [[Backlinks|backlink]], combining the task's file name and heading, but with no link added)
