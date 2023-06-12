@@ -31,7 +31,7 @@ For more information, including adding your own customised statuses, see [[Statu
 | `task.status.name` | `string` | `'Todo'` | `string` | `'In Progress'` |
 | `task.status.type` | `string` | `'TODO'` | `string` | `'IN_PROGRESS'` |
 | `task.status.symbol` | `string` | `' '` | `string` | `'/'` |
-| `task.status.nextStatusSymbol` | `string` | `'x'` | `string` | `'x'` |
+| `task.status.nextSymbol` | `string` | `'x'` | `string` | `'x'` |
 
 <!-- placeholder to force blank line after included text --> <!-- endInclude -->
 
