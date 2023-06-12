@@ -477,6 +477,14 @@ export class Task {
         return this.recurrence !== null;
     }
 
+    public get heading(): string | null {
+        return this.precedingHeader;
+    }
+
+    public get hasHeading(): boolean {
+        return this.precedingHeader !== null;
+    }
+
     /**
      * Return the name of the file containing the task, with the .md extension removed.
      */

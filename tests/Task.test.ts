@@ -456,6 +456,14 @@ describe('properties for scripting', () => {
         expect(fromLine({ line: recurring }).recurrence!.toText()).toEqual('every day');
         expect(fromLine({ line: invalid }).recurrence).toEqual(null);
     });
+
+    it('should provide access to heading information', () => {
+        expect(new TaskBuilder().build().heading).toBeNull();
+        expect(new TaskBuilder().precedingHeader('my heading').build().heading).toEqual('my heading');
+
+        expect(new TaskBuilder().build().hasHeading).toEqual(false);
+        expect(new TaskBuilder().precedingHeader('my heading').build().hasHeading).toEqual(true);
+    });
 });
 
 describe('backlinks', () => {

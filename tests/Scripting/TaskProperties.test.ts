@@ -75,7 +75,8 @@ describe('task', () => {
             // 'task.path',
             // 'task.filename',
             // 'task.lineNumber', // this name is misleading - in some circumstances the line number is not updated after user edits
-            'task.precedingHeader',
+            'task.hasHeading',
+            'task.heading',
         ]);
     });
 });
