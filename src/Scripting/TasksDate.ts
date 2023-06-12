@@ -20,37 +20,38 @@ export class TasksDate {
     }
 
     /**
-     * Return the date formatted as YYYY-MM-DD, or an empty string if there is no date.
+     * Return the date formatted as YYYY-MM-DD, or {@link fallBackText} if there is no date.
      @param fallBackText - the string to use if the date is null. Defaults to empty string.
      */
-    public formatAsDate(fallBackText: string = '') {
+    public formatAsDate(fallBackText: string = ''): string {
         return this.format(TaskRegularExpressions.dateFormat, fallBackText);
     }
 
     /**
-     * Return the date formatted as YYYY-MM-DD HH:mm, or an empty string if there is no date.
+     * Return the date formatted as YYYY-MM-DD HH:mm, or {@link fallBackText} if there is no date.
      @param fallBackText - the string to use if the date is null. Defaults to empty string.
      */
-    public formatAsDateAndTime(fallBackText: string = '') {
+    public formatAsDateAndTime(fallBackText: string = ''): string {
         return this.format(TaskRegularExpressions.dateTimeFormat, fallBackText);
     }
 
     /**
-     * Return the date formatted with the given format string, or an empty string if there is no date.
+     * Return the date formatted with the given format string, or {@link fallBackText} if there is no date.
      * See https://momentjs.com/docs/#/displaying/ for all the available formatting options.
      * @param format
      * @param fallBackText - the string to use if the date is null. Defaults to empty string.
      */
-    public format(format: string, fallBackText: string = '') {
+    public format(format: string, fallBackText: string = ''): string {
         return this._date ? this._date!.format(format) : fallBackText;
     }
 
     /**
      * Return the date as an ISO string, for example '2023-10-13T00:00:00.000Z'.
-     * Returns an empty string if no date, and null for an invalid date.
      * @param keepOffset
+     * @returns - The date as an ISO string, for example: '2023-10-13T00:00:00.000Z',
+     *            OR an empty string if no date, OR null for an invalid date.
      */
-    public toISOString(keepOffset?: boolean): string {
+    public toISOString(keepOffset?: boolean): string | null {
         return this._date ? this._date!.toISOString(keepOffset) : '';
     }
 }
