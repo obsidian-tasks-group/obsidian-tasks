@@ -606,6 +606,22 @@ For more information, see [[Custom Grouping]].
 
 - `group by heading` (the heading preceding the task, or `(No heading)` if there are no headings in the file)
 
+Since Tasks X.Y.Z, **custom grouping by heading** is now possible.
+
+<!-- placeholder to force blank line before included text --> <!-- include: TaskPropertyExamples.test.custom_grouping_by_task.heading_docs.approved.md -->
+
+~~~text
+group by function (task.heading + '.md' === task.file.filename) ? '' : task.heading
+~~~
+
+- Group by heading, but only if the heading differs from the file name.
+- This works well immediately after a 'group by filename' line.
+- Note the three equals signs '===': these are important for safety in JavaScript.
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+
+For more information, see [[Custom Grouping]].
+
 ---
 
 ## Group by Function - Custom Groups
