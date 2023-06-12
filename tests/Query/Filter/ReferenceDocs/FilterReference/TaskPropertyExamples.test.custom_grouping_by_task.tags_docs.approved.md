@@ -16,14 +16,14 @@ group by function task.tags.join(", ")
 
 
 ~~~text
-group by function task.tags.filter( (t) => t.includes("#context/"))
+group by function task.tags.filter( (tag) => tag.includes("#context/") )
 ~~~
 
 - Only create headings for tags that contain "#context/".
 
 
 ~~~text
-group by function task.tags.filter( (t) => ! t.includes("#tag"))
+group by function task.tags.filter( (tag) => ! tag.includes("#tag") )
 ~~~
 
 - Create headings for all tags that do not contain "#tag".
