@@ -9,6 +9,7 @@ import { GlobalFilter } from '../src/Config/GlobalFilter';
 import type { StatusCollection } from '../src/StatusCollection';
 import { StatusRegistry } from '../src/StatusRegistry';
 import { TaskLocation } from '../src/TaskLocation';
+import { StatusConfiguration, StatusType } from '../src/StatusConfiguration';
 import { fromLine } from './TestHelpers';
 import { TaskBuilder } from './TestingTools/TaskBuilder';
 import { RecurrenceBuilder } from './TestingTools/RecurrenceBuilder';
@@ -411,6 +412,18 @@ describe('parsing tags', () => {
 });
 
 describe('properties for scripting', () => {
+    it('should provide isDone for convenience', () => {
+        expect(new TaskBuilder().status(Status.makeTodo()).build().isDone).toEqual(false);
+        expect(new TaskBuilder().status(Status.makeInProgress()).build().isDone).toEqual(false);
+        expect(new TaskBuilder().status(Status.makeDone()).build().isDone).toEqual(true);
+        expect(new TaskBuilder().status(Status.makeCancelled()).build().isDone).toEqual(true);
+        expect(
+            new TaskBuilder()
+                .status(new Status(new StatusConfiguration('%', 'Non-task', ' ', true, StatusType.NON_TASK)))
+                .build().isDone,
+        ).toEqual(true);
+    });
+
     it('should provide access to all date fields', () => {
         const task = TaskBuilder.createFullyPopulatedTask();
         expect(task.created.moment!).toEqualMoment(task.createdDate!);
