@@ -95,4 +95,4 @@ For more information, including adding your own customised statuses, see [[Statu
 
 <!-- placeholder to force blank line after included text --> <!-- endInclude -->
 
-1. Access to file properties will be added soon.
+1. The presence of `.md` filename extensions is chosen to match the existing conventions in the Tasks filter instructions [[Filters#File Path|path]] and [[Filters#File Name|filename]].
