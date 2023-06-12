@@ -165,6 +165,19 @@ describe('custom grouping by', () => {
             SampleTasks.withAllRootsPathsHeadings(),
         ],
 
+        [
+            'task.heading',
+            [
+                [
+                    "group by function (task.heading + '.md' === task.file.filename) ? '' : task.heading",
+                    `Group by heading, but only if the heading differs from the file name.
+- This works well immediately after a 'group by filename' line.
+- Note the three equals signs '===': these are important for safety in JavaScript`,
+                ],
+            ],
+            SampleTasks.withAllRootsPathsHeadings(),
+        ],
+
         // ---------------------------------------------------------------------------------
         // RECURRENCE FIELDS
         // ---------------------------------------------------------------------------------
@@ -335,8 +348,6 @@ describe('custom grouping by', () => {
             SampleTasks.withAllPriorities(),
         ],
 
-        // idea: heading: only show the heading if it differs from the filename (for when I want to group by file and then heading)
-        // idea: folder: show only the closest folder name, not the whole tree
         // idea: folder: show stripping out the folder containing the query file - may need to escape forward slashes if using regular expression
     ];
 
