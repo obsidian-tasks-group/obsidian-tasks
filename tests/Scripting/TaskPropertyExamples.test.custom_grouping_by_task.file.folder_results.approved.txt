@@ -1,0 +1,13 @@
+Results of custom groupers
+
+
+
+group by function task.file.folder
+Same as 'group by folder'
+=>
+/
+a/b/
+a/d/
+e/d/
+====================================================================================
+

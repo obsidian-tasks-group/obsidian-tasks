@@ -548,6 +548,20 @@ For more information, see [[Custom Grouping]].
 
 - `group by folder` (the folder to the file that contains the task, which will be `/` for files in root of the vault)
 
+Since Tasks X.Y.Z, **custom grouping by folder** is now possible.
+
+<!-- placeholder to force blank line before included text --> <!-- include: TaskPropertyExamples.test.custom_grouping_by_task.file.folder_docs.approved.md -->
+
+~~~text
+group by function task.file.folder
+~~~
+
+- Same as 'group by folder'.
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+
+For more information, see [[Custom Grouping]].
+
 ### File Name
 
 - `group by filename` (the link to the file that contains the task, without the `.md` extension)
