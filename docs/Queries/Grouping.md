@@ -436,6 +436,30 @@ For more information, see [[Custom Grouping]].
 >
 > - `recurring` and `recurrence` grouping options were introduced in Tasks 1.11.0.
 
+Since Tasks X.Y.Z, **custom grouping by recurrence** is now possible.
+
+<!-- placeholder to force blank line before included text --> <!-- include: TaskPropertyExamples.test.custom_grouping_by_task.isRecurring_docs.approved.md -->
+
+~~~text
+group by function task.isRecurring ? "Recurring" : "Non-Recurring"
+~~~
+
+- Use JavaScript's ternary operator to choose what to do for true (after the ?) and false (after the :) values.
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+
+<!-- placeholder to force blank line before included text --> <!-- include: TaskPropertyExamples.test.custom_grouping_by_task.recurrenceRule_docs.approved.md -->
+
+~~~text
+group by function task.recurrenceRule.replace('when done', '==when done==')
+~~~
+
+- Group by recurrence rule, highlighting any occurrences of the words "when done".
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+
+For more information, see [[Custom Grouping]].
+
 ### Tags
 
 - `group by tags`
