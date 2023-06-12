@@ -32,6 +32,16 @@ export class TasksFile {
         return path.substring(0, separatorIndex + 1);
     }
 
+    get folder(): string {
+        const path = this.path;
+        const fileNameWithExtension = this.filename;
+        const folder = path.substring(0, path.lastIndexOf(fileNameWithExtension));
+        if (folder === '') {
+            return '/';
+        }
+        return folder;
+    }
+
     /**
      * Return the filename including the extension.
      */
