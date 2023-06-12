@@ -11,6 +11,7 @@ import type { TaskLineRenderDetails } from './TaskLineRenderer';
 import { DateFallback } from './DateFallback';
 import { compareByDate } from './lib/DateTools';
 import { TasksDate } from './Scripting/TasksDate';
+import { StatusType } from './StatusConfiguration';
 
 /**
  * When sorting, make sure low always comes after none. This way any tasks with low will be below any exiting
@@ -395,6 +396,14 @@ export class Task {
 
         const { recurrenceOnNextLine: recurrenceOnNextLine } = getSettings();
         return recurrenceOnNextLine ? newTasks.reverse() : newTasks;
+    }
+
+    public get isDone(): boolean {
+        return (
+            this.status.type === StatusType.DONE ||
+            this.status.type === StatusType.CANCELLED ||
+            this.status.type === StatusType.NON_TASK
+        );
     }
 
     public get urgency(): number {

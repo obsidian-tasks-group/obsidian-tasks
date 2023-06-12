@@ -46,6 +46,20 @@ For more information, including adding your own customised statuses, see [[Statu
 - `group by status` (Done or Todo, which is capitalized for visibility in the headings)
   - Note that the Done group is displayed before the Todo group,
       which differs from the Sorting ordering of this property.
+    - `Done` is used for tasks status types `DONE`, `CANCELLED` and `NON_TASK`
+    - `Todo` is used for status types with type `TODO` and `IN_PROGRESS`
+
+Since Tasks X.Y.Z, **custom grouping by status** is now possible.
+
+<!-- placeholder to force blank line before included text --> <!-- include: TaskPropertyExamples.test.custom_grouping_by_task.isDone_docs.approved.md -->
+
+~~~text
+group by function task.isDone ? "Action Required" : "Nothing To Do"
+~~~
+
+- Use JavaScript's ternary operator to choose what to do for true (after the ?) and false (after the :) values.
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
 
 ### Status Name
 

@@ -36,6 +36,7 @@ describe('task', () => {
 
     it('status', () => {
         verifyFieldDataForReferenceDocs([
+            'task.isDone',
             'task.status.name',
             'task.status.type',
             'task.status.symbol',

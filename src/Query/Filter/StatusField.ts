@@ -1,6 +1,5 @@
 import type { Task } from '../../Task';
 import type { Comparator } from '../Sorter';
-import { StatusType } from '../../StatusConfiguration';
 import type { GrouperFunction } from '../Grouper';
 import { FilterInstructionsBasedField } from './FilterInstructionsBasedField';
 
@@ -17,17 +16,8 @@ export class StatusField extends FilterInstructionsBasedField {
         //   StatusType.TODO counts as not done
         //   StatusType.IN_PROGRESS counts as not done
         //   StatusType.NON_TASK counts as done
-        this._filters.add(
-            'done',
-            (task: Task) =>
-                task.status.type === StatusType.DONE ||
-                task.status.type === StatusType.CANCELLED ||
-                task.status.type === StatusType.NON_TASK,
-        );
-        this._filters.add(
-            'not done',
-            (task: Task) => task.status.type === StatusType.TODO || task.status.type === StatusType.IN_PROGRESS,
-        );
+        this._filters.add('done', (task: Task) => task.isDone);
+        this._filters.add('not done', (task: Task) => !task.isDone);
     }
 
     public fieldName(): string {
