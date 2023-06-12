@@ -16,6 +16,23 @@ export class TasksFile {
     }
 
     /**
+     * Return the root to the file.
+     */
+    get root(): string {
+        let path = this.path.replace(/\\/g, '/');
+
+        if (path.charAt(0) === '/') {
+            path = path.substring(1);
+        }
+
+        const separatorIndex = path.indexOf('/');
+        if (separatorIndex == -1) {
+            return '/';
+        }
+        return path.substring(0, separatorIndex + 1);
+    }
+
+    /**
      * Return the filename including the extension.
      */
     get filename(): string {
