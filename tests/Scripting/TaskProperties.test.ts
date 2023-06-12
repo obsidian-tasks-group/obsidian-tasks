@@ -74,6 +74,7 @@ describe('task', () => {
         verifyFieldDataForReferenceDocs([
             'task.file.path',
             'task.file.root',
+            'task.file.folder',
             'task.file.filename',
             // 'task.filename',
             // 'task.lineNumber', // this name is misleading - in some circumstances the line number is not updated after user edits

@@ -88,6 +88,7 @@ For more information, including adding your own customised statuses, see [[Statu
 | ----- | ----- | ----- | ----- | ----- |
 | `task.file.path` | `string` | `'/some/folder/fileName.md'` | `string` | `''` |
 | `task.file.root` | `string` | `'some/'` | `string` | `'/'` |
+| `task.file.folder` | `string` | `'/some/folder/'` | `string` | `'/'` |
 | `task.file.filename` | `string` | `'fileName.md'` | `string` | `''` |
 | `task.hasHeading` | `boolean` | `true` | `boolean` | `false` |
 | `task.heading` | `string` | `'My Header'` | `null` | `null` |
