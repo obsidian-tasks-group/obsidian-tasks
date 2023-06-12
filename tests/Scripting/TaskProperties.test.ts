@@ -71,10 +71,8 @@ describe('task', () => {
     });
 
     it('file properties', () => {
-        // TODO Replace this with values that can be published
-        // TODO Create task.file
         verifyFieldDataForReferenceDocs([
-            // 'task.path',
+            'task.file.path',
             // 'task.filename',
             // 'task.lineNumber', // this name is misleading - in some circumstances the line number is not updated after user edits
             'task.hasHeading',
