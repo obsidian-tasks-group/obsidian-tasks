@@ -509,6 +509,20 @@ For more information, see [[Custom Grouping]].
 
 - `group by path` (the path to the file that contains the task, that is, the folder and the filename)
 
+Since Tasks X.Y.Z, **custom grouping by file path** is now possible.
+
+<!-- placeholder to force blank line before included text --> <!-- include: TaskPropertyExamples.test.custom_grouping_by_task.file.path_docs.approved.md -->
+
+~~~text
+group by function task.file.path
+~~~
+
+- Like 'group by path' but includes the file extension.
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+
+For more information, see [[Custom Grouping]].
+
 ### Root
 
 - `group by root` (the top-level folder of the file that contains the task, that is, the first directory in the path, which will be `/` for files in root of the vault)

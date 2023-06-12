@@ -2,6 +2,7 @@
 
 | Field | Type 1 | Example 1 | Type 2 | Example 2 |
 | ----- | ----- | ----- | ----- | ----- |
+| `task.file.path` | `string` | `'/some/folder/fileName.md'` | `string` | `''` |
 | `task.hasHeading` | `boolean` | `true` | `boolean` | `false` |
 | `task.heading` | `string` | `'My Header'` | `null` | `null` |
 

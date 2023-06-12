@@ -12,6 +12,7 @@ import { DateFallback } from './DateFallback';
 import { compareByDate } from './lib/DateTools';
 import { TasksDate } from './Scripting/TasksDate';
 import { StatusType } from './StatusConfiguration';
+import { TasksFile } from './Scripting/TasksFile';
 
 /**
  * When sorting, make sure low always comes after none. This way any tasks with low will be below any exiting
@@ -504,6 +505,10 @@ export class Task {
 
     public get hasHeading(): boolean {
         return this.precedingHeader !== null;
+    }
+
+    public get file(): TasksFile {
+        return new TasksFile(this.path);
     }
 
     /**
