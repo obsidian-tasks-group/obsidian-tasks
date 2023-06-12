@@ -14,6 +14,12 @@ describe('TasksFile', () => {
         expect(new TasksFile('/root/SeArch_Text/search_text.md').root).toStrictEqual('root/');
     });
 
+    it('should provide access to the folder', () => {
+        expect(new TasksFile('').folder).toStrictEqual('/');
+        expect(new TasksFile('outside/inside/file.md').folder).toStrictEqual('outside/inside/');
+        expect(new TasksFile('a_b/_c_d_/file.md').folder).toStrictEqual('a_b/_c_d_/');
+    });
+
     it('should provide access to the filename', () => {
         expect(new TasksFile('').filename).toEqual('');
         expect(new TasksFile('file in root.md').filename).toEqual('file in root.md');
