@@ -39,7 +39,7 @@ describe('task', () => {
             'task.status.name',
             'task.status.type',
             'task.status.symbol',
-            'task.status.nextStatusSymbol',
+            'task.status.nextSymbol',
         ]);
     });
 

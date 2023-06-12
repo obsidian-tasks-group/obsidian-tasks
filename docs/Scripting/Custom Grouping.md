@@ -90,7 +90,7 @@ The `expression` must:
 
 ```text
 group by function task.priority
-group by function task.status.nextStatusSymbol.replace(" ", "space")
+group by function task.status.nextSymbol.replace(" ", "space")
 group by function task.status.symbol.replace(" ", "space")
 ```
 

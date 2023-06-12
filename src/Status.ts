@@ -75,8 +75,21 @@ export class Status {
      *
      * @type {string}
      * @memberof Status
+     * @see nextSymbol
      */
     public get nextStatusSymbol(): string {
+        return this.configuration.nextStatusSymbol;
+    }
+
+    /**
+     * Returns the next status for a task when toggled.
+     * This is an alias for {@link nextStatusSymbol} which is provided for brevity in user scripts.
+     *
+     * @type {string}
+     * @memberof Status
+     * @see nextStatusSymbol
+     */
+    public get nextSymbol(): string {
         return this.configuration.nextStatusSymbol;
     }
 
