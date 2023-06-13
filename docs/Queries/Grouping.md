@@ -37,6 +37,21 @@ To divide the matching tasks up with headings, you can add `group by` lines to t
 
 ---
 
+## Custom Groups
+
+> [!released]
+> `group by function` was introduced in Tasks X.Y.Z.
+
+Tasks provides many built-in grouping options, but sometimes they don't quite do what is wanted by all users.
+
+Now. Tasks has a powerful mechanism for you to create your own **custom groups**, offering incredible flexibility.
+
+There are many examples of the custom grouping instruction `group by function` in the documentation below, with explanations, for when the `group by` instructions built in to Tasks do not satisfy your preferences.
+
+You can find out more about this very powerful facility in [[Custom Grouping]].
+
+---
+
 ## Group by Task Statuses
 
 For more information, including adding your own customised statuses, see [[Statuses]].
@@ -508,19 +523,6 @@ Since Tasks X.Y.Z, **[[Custom Grouping|custom grouping]] by heading** is now pos
   - Note the three equals signs '===': these are important for safety in JavaScript.
 
 <!-- placeholder to force blank line after included text --> <!-- endInclude -->
-
----
-
-## Group by Function - Custom Groups
-
-Tasks has a powerful mechanism for you to create your own custom groups, offering incredible flexibility.
-
-> [!released]
-> `group by function` was introduced in Tasks X.Y.Z.
-
-==TODO Provide examples==
-
-For details, see [[Custom Grouping]].
 
 ---
 
