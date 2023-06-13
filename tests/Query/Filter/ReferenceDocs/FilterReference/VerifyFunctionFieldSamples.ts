@@ -18,12 +18,12 @@ export function verifyFunctionFieldGrouperSamplesOnTasks(
 ) {
     verifyAll('Results of custom groupers', customGroups, (group) => {
         const instruction = group[0];
-        const comment = group[1];
+        const comment = group.slice(1);
         const grouper = new FunctionField().createGrouperFromLine(instruction);
         const headings = groupHeadingsForTask(grouper!, tasks);
         return `
 ${instruction}
-${comment}
+${comment.join('\n')}
 =>
 ${headings.join('\n')}
 ====================================================================================
@@ -35,13 +35,13 @@ export function verifyFunctionFieldGrouperSamplesForDocs(customGroups: QueryInst
     let markdown = '';
     for (const group of customGroups) {
         const instruction = group[0];
-        const comment = group[1];
+        const comment = group.slice(1);
         markdown += `
 ~~~text
 ${instruction}
 ~~~
 
-- ${comment}.
+- ${comment.join('\n')}.
 
 `;
     }
