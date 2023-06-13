@@ -9,6 +9,7 @@ import { verifyMarkdownForDocs } from '../../../../TestingTools/VerifyMarkdownTa
  *
  * The second and subsequent values are descriptive text for the user docs, explaining the instruction line.
  * The descriptions will be written in a bullet list.
+ * To indent a bullet line, put spaces before it - 4 spaces is suggested.
  */
 export type QueryInstructionLineAndDescription = string[];
 
@@ -35,14 +36,9 @@ export function verifyFunctionFieldGrouperSamplesForDocs(customGroups: QueryInst
     let markdown = '';
     for (const group of customGroups) {
         const instruction = group[0];
-        const comment = group.slice(1);
-        markdown += `
-~~~text
-${instruction}
-~~~
-
-- ${comment.join('\n')}.
-
+        const comments = group.slice(1);
+        markdown += `- \`\`${instruction}\`\`
+${comments.map((l) => l.replace(/^( *)/, '$1    - ')).join('\n')}.
 `;
     }
     verifyMarkdownForDocs(markdown);

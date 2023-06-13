@@ -148,11 +148,11 @@ describe('custom grouping by', () => {
                 [
                     "group by function task.file.folder.slice(0, -1).split('/').pop() + '/'",
                     'Group by the immediate parent folder of the file containing task.',
-                    "- Here's how it works:",
-                    "    - '.slice(0, -1)' removes the trailing slash ('/') from the original folder.",
-                    "    - '.split('/')' divides the remaining path up in to an array of folder names.",
-                    "    - '.pop()' returns the last folder name, that is, the parent of the file containing the task.",
-                    '    - Then the trailing slash is added back, to ensure we do not get an empty string for files in the top level of the vault',
+                    "Here's how it works:",
+                    "    '.slice(0, -1)' removes the trailing slash ('/') from the original folder.",
+                    "    '.split('/')' divides the remaining path up in to an array of folder names.",
+                    "    '.pop()' returns the last folder name, that is, the parent of the file containing the task.",
+                    '    Then the trailing slash is added back, to ensure we do not get an empty string for files in the top level of the vault',
                 ],
             ],
             SampleTasks.withAllRootsPathsHeadings(),
@@ -176,8 +176,8 @@ describe('custom grouping by', () => {
                 [
                     "group by function (task.heading + '.md' === task.file.filename) ? '' : task.heading",
                     'Group by heading, but only if the heading differs from the file name.',
-                    "- This works well immediately after a 'group by filename' line.",
-                    "- Note the three equals signs '===': these are important for safety in JavaScript",
+                    "This works well immediately after a 'group by filename' line.",
+                    "Note the three equals signs '===': these are important for safety in JavaScript",
                 ],
             ],
             SampleTasks.withAllRootsPathsHeadings(),
@@ -333,8 +333,8 @@ describe('custom grouping by', () => {
                 [
                     'group by function task.tags.sort().join(", ")',
                     'Tasks with multiple tags are listed once, with a heading that combines all the tags.',
-                    '- Sorting the tags first ensures that the final headings are independent of order of tags in the tasks.',
-                    '- Separating with commas means the tags are clickable in the headings',
+                    'Sorting the tags first ensures that the final headings are independent of order of tags in the tasks.',
+                    'Separating with commas means the tags are clickable in the headings',
                 ],
                 [
                     'group by function task.tags.filter( (tag) => tag.includes("#context/") )',
