@@ -1,6 +1,6 @@
 <!-- placeholder to force blank line before included text -->
 
-- ``group by function task.file.root``
+- ```group by function task.file.root```
     - Same as 'group by root'.
 
 
