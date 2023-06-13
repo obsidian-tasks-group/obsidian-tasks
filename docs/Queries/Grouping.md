@@ -174,11 +174,15 @@ These examples make heavy use of the [moment.js format characters](https://momen
 - ``group by function task.due.format("dddd")``
   - Group by day of the week (Monday, Tuesday, etc).
 - ``group by function task.due.format("YYYY MM MMM", "no due date")``
-  - Group by month, for example "2023 05 May". The month number is also displayed, to control the sort order of headings.
+  - Group by month, for example "2023 05 May".
+  - The month number is also displayed, to control the sort order of headings.
 - ``group by function task.due.format("YYYY-MM MMM [- Week] WW", "no  date")``
-  - Group by month and week number, for example "2023-05 May - Week 22", or show a default heading if no date. If the month number is not displayed, in some years the first or last week of the year is displayed in a non-logical order.
+  - Group by month and week number, for example "2023-05 May - Week 22", or show a default heading if no date.
+  - If the month number is not displayed, in some years the first or last week of the year is displayed in a non-logical order.
 - ``group by function task.due.moment?.fromNow() || ""``
-  - Group by the time from now, for example "8 days ago". Because Moment.fromNow() is not provided by TasksDate, we need special code for when there is no date value. Whilst interesting, the alphabetical sort order makes the headings a little hard to read.
+  - Group by the time from now, for example "8 days ago".
+  - Because Moment.fromNow() is not provided by TasksDate, we need special code for when there is no date value.
+  - Whilst interesting, the alphabetical sort order makes the headings a little hard to read.
 
 <!-- placeholder to force blank line after included text --> <!-- endInclude -->
 
@@ -278,7 +282,8 @@ Since Tasks X.Y.Z, **[[Custom Grouping|custom grouping]] by description** is now
 <!-- placeholder to force blank line before included text --> <!-- include: TaskPropertyExamples.test.custom_grouping_by_task.description_docs.approved.md -->
 
 - ``group by function task.description``
-  - group by description. This might be useful for finding completed recurrences of the same task.
+  - group by description.
+  - This might be useful for finding completed recurrences of the same task.
 - ``group by function task.description.toUpperCase()``
   - Convert the description to capitals.
 - ``group by function task.description.slice(0, 25)``
@@ -370,11 +375,10 @@ Since Tasks X.Y.Z, **[[Custom Grouping|custom grouping]] by tags** is now possib
 - ``group by function task.tags``
   - Like "group by tags" except that tasks with no tags have no heading instead of "(No tags)".
 - ``group by function task.tags.join(", ")``
-  - Tasks with multiple tags are listed once, with a heading that combines all the tags. Separating with commas means the tags are clickable in the headings.
-- ``group by function task.tags.sort().join(", ")``
   - Tasks with multiple tags are listed once, with a heading that combines all the tags.
-  - Sorting the tags first ensures that the final headings are independent of order of tags in the tasks.
   - Separating with commas means the tags are clickable in the headings.
+- ``group by function task.tags.sort().join(", ")``
+  - As above, but sorting the tags first ensures that the final headings are independent of order of tags in the tasks..
 - ``group by function task.tags.filter( (tag) => tag.includes("#context/") )``
   - Only create headings for tags that contain "#context/".
 - ``group by function task.tags.filter( (tag) => ! tag.includes("#tag") )``

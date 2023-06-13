@@ -3,7 +3,8 @@ Results of custom groupers
 
 
 group by function task.description
-group by description. This might be useful for finding completed recurrences of the same task
+group by description.
+This might be useful for finding completed recurrences of the same task
 =>
 long description Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce quam ipsum, consectetur ut dolor nec, fringilla lobortis mi. Vestibulum gravida tincidunt urna nec ornare. Cras sit amet sagittis sapien, vitae mattis velit. Vestibulum sem tortor, blandit at ultrices eget, ultrices eget odio. Donec efficitur purus massa, vel molestie turpis tincidunt id. 
 short description
