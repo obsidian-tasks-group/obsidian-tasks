@@ -236,13 +236,10 @@ For more examples, see [[#Due Date]].
 
 Since Tasks X.Y.Z, **[[Custom Grouping|custom grouping]] by created date** is now possible.
 
-<!-- placeholder to force blank line before included text --> <!-- TaskPropertyExamples.test.custom_grouping_by_task.created_docs.approved.md -->
+<!-- placeholder to force blank line before included text --> <!-- include: TaskPropertyExamples.test.custom_grouping_by_task.created_docs.approved.md -->
 
-~~~text
-group by function task.created?.format("YYYY-MM-DD dddd") || ""
-~~~
-
-- Like "group by task.created", except it does not write "No created date" if there is no created date. The question mark (`?`) and `|| ""` are needed because the created date value may be null.
+- ``group by function task.created.format("YYYY-MM-DD dddd")``
+  - Like "group by task.created", except it uses an empty string instead of "No created date" if there is no created date..
 
 <!-- placeholder to force blank line after included text --> <!-- endInclude -->
 
