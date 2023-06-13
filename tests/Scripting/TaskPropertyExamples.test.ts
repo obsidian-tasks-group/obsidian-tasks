@@ -22,8 +22,20 @@ afterEach(() => {
     jest.useRealTimers();
 });
 
+/** For example, 'task.due' */
+type TaskPropertyName = string;
+
+/**
+ * The first value is an example Tasks query block instruction line.
+ *
+ * The second and subsequent values are descriptive text for the user docs, explaining the instruction line.
+ * The descriptions will be written in a bullet list.
+ */
+type QueryInstructionLineAndDescription = string[];
+
+type CustomGroupingPropertyTestData = [TaskPropertyName, QueryInstructionLineAndDescription[], Task[]];
+
 describe('custom grouping by', () => {
-    type CustomGroupingPropertyTestData = [string, string[][], Task[]];
     const testData: CustomGroupingPropertyTestData[] = [
         // ---------------------------------------------------------------------------------
         // DATE FIELDS
