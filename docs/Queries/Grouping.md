@@ -407,6 +407,8 @@ There is no built-in instruction to group by the original markdown line.
 
 Since Tasks X.Y.Z, **[[Custom Grouping|custom grouping]] by original markdown line** is now possible.
 
+For example, this could be used to extract information from `task.originalMarkdown` that Tasks does not parse, to use for grouping tasks.
+
 <!-- placeholder to force blank line before included text --> <!-- include: TaskPropertyExamples.test.custom_grouping_by_task.originalMarkdown_docs.approved.md -->
 
 - ```group by function '``' + task.originalMarkdown + '``'```
