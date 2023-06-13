@@ -239,7 +239,7 @@ Since Tasks X.Y.Z, **[[Custom Grouping|custom grouping]] by created date** is no
 <!-- placeholder to force blank line before included text --> <!-- include: TaskPropertyExamples.test.custom_grouping_by_task.created_docs.approved.md -->
 
 - ``group by function task.created.format("YYYY-MM-DD dddd")``
-  - Like "group by task.created", except it uses an empty string instead of "No created date" if there is no created date..
+  - Like "group by task.created", except it uses an empty string instead of "No created date" if there is no created date.
 
 <!-- placeholder to force blank line after included text --> <!-- endInclude -->
 
@@ -375,7 +375,7 @@ Since Tasks X.Y.Z, **[[Custom Grouping|custom grouping]] by tags** is now possib
   - Tasks with multiple tags are listed once, with a heading that combines all the tags.
   - Separating with commas means the tags are clickable in the headings.
 - ``group by function task.tags.sort().join(", ")``
-  - As above, but sorting the tags first ensures that the final headings are independent of order of tags in the tasks..
+  - As above, but sorting the tags first ensures that the final headings are independent of order of tags in the tasks.
 - ``group by function task.tags.filter( (tag) => tag.includes("#context/") )``
   - Only create headings for tags that contain "#context/".
 - ``group by function task.tags.filter( (tag) => ! tag.includes("#tag") )``
