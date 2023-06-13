@@ -2,6 +2,7 @@ import { Priority, Task } from '../../Task';
 import { Explanation } from '../Explain/Explanation';
 import type { Comparator } from '../Sorter';
 import type { GrouperFunction } from '../Grouper';
+import { PriorityTools } from '../../lib/PriorityTools';
 import { Field } from './Field';
 import { Filter, FilterOrErrorMessage } from './Filter';
 
@@ -94,47 +95,8 @@ export class PriorityField extends Field {
 
     public grouper(): GrouperFunction {
         return (task: Task) => {
-            const priorityName = PriorityField.priorityNameUsingNone(task.priority);
+            const priorityName = PriorityTools.priorityNameUsingNone(task.priority);
             return [`Priority ${task.priority}: ${priorityName}`];
         };
-    }
-
-    /**
-     * Get the name of a {@link Priority} value, returning 'None' for {@link Priority.None}
-     * @param priority
-     * @see priorityNameUsingNormal
-     */
-    public static priorityNameUsingNone(priority: Priority) {
-        let priorityName = 'ERROR';
-        switch (priority) {
-            case Priority.High:
-                priorityName = 'High';
-                break;
-            case Priority.Highest:
-                priorityName = 'Highest';
-                break;
-            case Priority.Medium:
-                priorityName = 'Medium';
-                break;
-            case Priority.None:
-                priorityName = 'None';
-                break;
-            case Priority.Low:
-                priorityName = 'Low';
-                break;
-            case Priority.Lowest:
-                priorityName = 'Lowest';
-                break;
-        }
-        return priorityName;
-    }
-
-    /**
-     * Get the name of a {@link Priority} value, returning 'Normal' for {@link Priority.None}
-     * @param priority
-     * @see priorityNameUsingNone
-     */
-    public static priorityNameUsingNormal(priority: Priority) {
-        return PriorityField.priorityNameUsingNone(priority).replace('None', 'Normal');
     }
 }

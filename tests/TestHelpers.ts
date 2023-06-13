@@ -1,8 +1,8 @@
 import { Priority, Task } from '../src/Task';
 import { TaskLocation } from '../src/TaskLocation';
+import { PriorityTools } from '../src/lib/PriorityTools';
 import { Status } from './../src/Status';
 import { StatusType } from './../src/StatusConfiguration';
-import { PriorityField } from './../src/Query/Filter/PriorityField';
 import { TaskBuilder } from './TestingTools/TaskBuilder';
 import { Recurrence } from './../src/Recurrence';
 
@@ -207,7 +207,7 @@ export class SampleTasks {
         allPriorities.forEach((priority) => {
             // This description is chosen to be useful for including tasks in user docs, so
             // changing it will change documentation and sample vault content.
-            const priorityName = PriorityField.priorityNameUsingNormal(priority);
+            const priorityName = PriorityTools.priorityNameUsingNormal(priority);
             const description = `#task ${priorityName} priority`;
 
             const task = new TaskBuilder().priority(priority).description(description).build();
