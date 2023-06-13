@@ -349,6 +349,8 @@ As well as the date-related groups above, groups can be created from properties 
 
 ### Description
 
+There is no built-in instruction to group by desciption.
+
 Since Tasks X.Y.Z, **custom grouping by description** is now possible.
 
 <!-- placeholder to force blank line before included text --> <!-- include: TaskPropertyExamples.test.custom_grouping_by_task.description_docs.approved.md -->
@@ -397,7 +399,7 @@ For more information, see [[Custom Grouping]].
 > - `priority` grouping option was introduced in Tasks 1.11.0.
 
 > [!Note]
-> `group by function` is not yet able to refer task priorities.
+> `group by function` is not yet able to refer to task priorities.
 
 ### Urgency
 
@@ -691,12 +693,13 @@ See [[Limiting#Limit number of tasks in each group|Limit number of tasks in each
 ## Notes
 
 > [!info]
-> The order of operations ensures that grouping does not modify which tasks are displayed, for example when the `limit` option is used:
+> The order of operations ensures that grouping does not modify which tasks are displayed, for example when the `limit` options are used:
 >
 > 1. all the filter instructions are run
 > 1. then any sorting instructions are run
 > 1. then any `limit` instructions are run
-> 1. then finally any grouping instructions are run
+> 1. then any grouping instructions are run
+> 1. then any `limit groups` instructions are run
 
 ---
 
