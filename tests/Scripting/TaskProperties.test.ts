@@ -58,7 +58,8 @@ describe('task', () => {
     it('other fields', () => {
         verifyFieldDataForReferenceDocs([
             'task.description',
-            // 'task.priority', // I think it will be more useful for task.priority to refer to the name. Currently, it gives the number. Needs more thought.
+            'task.priorityNumber',
+            'task.priorityName',
             'task.urgency',
             'task.isRecurring',
             'task.recurrenceRule',
