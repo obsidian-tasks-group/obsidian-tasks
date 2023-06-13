@@ -6,6 +6,7 @@ publish: true
 
 ## What's New?
 
+- X.Y.Z: 🔥 Add [[Custom Grouping]], using [[Task Properties]] to create [[Expressions]] - the start of a whole new [[About Scripting|scripting]] world in Tasks!
 - 3.9.0: 🔥 Add [[Priority#Priorities and Order|lowest and highest]] priorities
 - 3.8.0: 🔥 Add [[Limiting#Limit number of tasks in each group|limiting tasks per group]]
 - 3.8.0: 🔥 Add option to control the [[Recurring Tasks#Order of the new task|order of new recurring tasks]]
