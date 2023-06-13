@@ -39,7 +39,7 @@ describe('custom grouping by', () => {
             [
                 [
                     'group by function task.created.format("YYYY-MM-DD dddd")',
-                    'Like "group by task.created", except it uses an empty string instead of "No created date" if there is no created date.',
+                    'Like "group by task.created", except it uses an empty string instead of "No created date" if there is no created date',
                 ],
             ],
             SampleTasks.withAllRepresentativeCreatedDates(),
@@ -338,7 +338,7 @@ describe('custom grouping by', () => {
                 ],
                 [
                     'group by function task.tags.sort().join(", ")',
-                    'As above, but sorting the tags first ensures that the final headings are independent of order of tags in the tasks.',
+                    'As above, but sorting the tags first ensures that the final headings are independent of order of tags in the tasks',
                 ],
                 [
                     'group by function task.tags.filter( (tag) => tag.includes("#context/") )',

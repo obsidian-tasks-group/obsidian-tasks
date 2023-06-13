@@ -10,6 +10,7 @@ import { verifyMarkdownForDocs } from '../../../../TestingTools/VerifyMarkdownTa
  * The second and subsequent values are descriptive text for the user docs, explaining the instruction line.
  * The descriptions will be written in a bullet list.
  * To indent a bullet line, put spaces before it - 4 spaces is suggested.
+ * A full-stop ('.') is added to the last line of the description.
  */
 export type QueryInstructionLineAndDescription = string[];
 
