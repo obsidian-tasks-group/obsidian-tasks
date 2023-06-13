@@ -488,6 +488,14 @@ group by function task.tags.join(", ")
 - Tasks with multiple tags are listed once, with a heading that combines all the tags. Separating with commas means the tags are clickable in the headings.
 
 ~~~text
+group by function task.tags.sort().join(", ")
+~~~
+
+- Tasks with multiple tags are listed once, with a heading that combines all the tags.
+- Sorting the tags first ensures that the final headings are independent of order of tags in the tasks.
+- Separating with commas means the tags are clickable in the headings.
+
+~~~text
 group by function task.tags.filter( (tag) => tag.includes("#context/") )
 ~~~
 
