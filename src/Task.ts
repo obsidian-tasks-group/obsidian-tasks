@@ -19,8 +19,8 @@ import { TasksFile } from './Scripting/TasksFile';
  * tasks that have no priority which would be the default.
  *
  * Values can be converted to strings with:
- * - {@link priorityNameUsingNone} in {@link PriorityField}
- * - {@link priorityNameUsingNormal} in {@link PriorityField}
+ * - {@link priorityNameUsingNone} in {@link PriorityTools}
+ * - {@link priorityNameUsingNormal} in {@link PriorityTools}
  *
  * @export
  * @enum {number}
