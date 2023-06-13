@@ -272,10 +272,22 @@ describe('custom grouping by', () => {
         // ],
 
         [
-            'task.priority',
+            'task.priorityName',
             [
                 [
-                    'group by function task.priority',
+                    'group by function task.priorityName',
+                    "Group by the task's priority name",
+                    "Note that the default priority is called 'Normal', as opposed to with `group by priority` which calls the default 'None'",
+                ],
+            ],
+            SampleTasks.withAllPriorities(),
+        ],
+
+        [
+            'task.priorityNumber',
+            [
+                [
+                    'group by function task.priorityNumber',
                     "Group by the task's priority number, where Highest is 0 and Lowest is 5",
                 ],
             ],

@@ -305,8 +305,26 @@ Since Tasks X.Y.Z, **[[Custom Grouping|custom grouping]] by description** is now
 >
 > - `priority` grouping option was introduced in Tasks 1.11.0.
 
-> [!Note]
-> `group by function` is not yet able to refer to task priorities.
+Since Tasks X.Y.Z, **[[Custom Grouping|custom grouping]] by priority name and number** is now possible.
+
+Using the priority name:
+
+<!-- placeholder to force blank line before included text --> <!-- include: TaskPropertyExamples.test.custom_grouping_by_task.priorityName_docs.approved.md -->
+
+- ``group by function task.priorityName``
+  - Group by the task's priority name
+  - Note that the default priority is called 'Normal', as opposed to with `group by priority` which calls the default 'None'.
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+
+Using the priority number:
+
+<!-- placeholder to force blank line before included text --> <!-- include: TaskPropertyExamples.test.custom_grouping_by_task.priorityNumber_docs.approved.md -->
+
+- ``group by function task.priorityNumber``
+  - Group by the task's priority number, where Highest is 0 and Lowest is 5.
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
 
 ### Urgency
 

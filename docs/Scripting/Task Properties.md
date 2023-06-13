@@ -66,6 +66,8 @@ For more information, including adding your own customised statuses, see [[Statu
 | Field | Type 1 | Example 1 | Type 2 | Example 2 |
 | ----- | ----- | ----- | ----- | ----- |
 | `task.description` | `string` | `'Do exercises #todo #health'` | `string` | `'minimal task'` |
+| `task.priorityNumber` | `number` | `2` | `number` | `3` |
+| `task.priorityName` | `string` | `'Medium'` | `string` | `'Normal'` |
 | `task.urgency` | `number` | `3.3000000000000007` | `number` | `1.9500000000000002` |
 | `task.isRecurring` | `boolean` | `true` | `boolean` | `false` |
 | `task.recurrenceRule` | `string` | `'every day when done'` | `string` | `''` |
@@ -76,7 +78,6 @@ For more information, including adding your own customised statuses, see [[Statu
 1. `task.description` has spaces at the start and end stripped off.
 1. `task.description` includes any tags.
 1. Note that if there is a [[Global Filter]] enabled in settings, and the filter is a tag, it will be removed from `task.tags`.
-1. In a future release we will provide access to the task priority.
 
 ---
 

@@ -13,6 +13,7 @@ import { compareByDate } from './lib/DateTools';
 import { TasksDate } from './Scripting/TasksDate';
 import { StatusType } from './StatusConfiguration';
 import { TasksFile } from './Scripting/TasksFile';
+import { PriorityTools } from './lib/PriorityTools';
 
 /**
  * When sorting, make sure low always comes after none. This way any tasks with low will be below any exiting
@@ -409,6 +410,30 @@ export class Task {
             this.status.type === StatusType.CANCELLED ||
             this.status.type === StatusType.NON_TASK
         );
+    }
+
+    /**
+     * Return the number of the Task's priority.
+     *     - Highest = 0
+     *     - High = 1
+     *     - Medium = 2
+     *     - None = 3
+     *     - Low = 4
+     *     - Lowest = 5
+     * @see priorityName
+     */
+    public get priorityNumber(): number {
+        return Number.parseInt(this.priority);
+    }
+
+    /**
+     * Return the name of the Task's priority.
+     *
+     * Note that the default priority is called 'Normal', not 'None'.
+     @see priorityNumber
+     */
+    public get priorityName(): string {
+        return PriorityTools.priorityNameUsingNormal(this.priority);
     }
 
     public get urgency(): number {
