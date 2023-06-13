@@ -7,6 +7,7 @@ import moment from 'moment';
 import type { Task } from '../../src/Task';
 import { SampleTasks } from '../TestHelpers';
 import {
+    type QueryInstructionLineAndDescription,
     verifyFunctionFieldGrouperSamplesForDocs,
     verifyFunctionFieldGrouperSamplesOnTasks,
 } from '../Query/Filter/ReferenceDocs/FilterReference/VerifyFunctionFieldSamples';
@@ -24,14 +25,6 @@ afterEach(() => {
 
 /** For example, 'task.due' */
 type TaskPropertyName = string;
-
-/**
- * The first value is an example Tasks query block instruction line.
- *
- * The second and subsequent values are descriptive text for the user docs, explaining the instruction line.
- * The descriptions will be written in a bullet list.
- */
-type QueryInstructionLineAndDescription = string[];
 
 type CustomGroupingPropertyTestData = [TaskPropertyName, QueryInstructionLineAndDescription[], Task[]];
 
@@ -369,11 +362,11 @@ describe('custom grouping by', () => {
         // idea: folder: show stripping out the folder containing the query file - may need to escape forward slashes if using regular expression
     ];
 
-    it.each(testData)('%s results', (_: string, groups: string[][], tasks: Task[]) => {
+    it.each(testData)('%s results', (_: string, groups: QueryInstructionLineAndDescription[], tasks: Task[]) => {
         verifyFunctionFieldGrouperSamplesOnTasks(groups, tasks);
     });
 
-    it.each(testData)('%s docs', (_: string, groups: string[][], _tasks: Task[]) => {
+    it.each(testData)('%s docs', (_: string, groups: QueryInstructionLineAndDescription[], _tasks: Task[]) => {
         verifyFunctionFieldGrouperSamplesForDocs(groups);
     });
 });
