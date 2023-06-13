@@ -1,8 +1,8 @@
 <!-- placeholder to force blank line before included text -->
 
-- ``group by function task.file.folder``
+- ```group by function task.file.folder```
     - Same as 'group by folder'.
-- ``group by function task.file.folder.slice(0, -1).split('/').pop() + '/'``
+- ```group by function task.file.folder.slice(0, -1).split('/').pop() + '/'```
     - Group by the immediate parent folder of the file containing task.
     - Here's how it works:
         - '.slice(0, -1)' removes the trailing slash ('/') from the original folder.

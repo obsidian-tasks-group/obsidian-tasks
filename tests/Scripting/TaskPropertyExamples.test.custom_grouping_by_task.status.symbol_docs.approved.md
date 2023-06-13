@@ -1,6 +1,6 @@
 <!-- placeholder to force blank line before included text -->
 
-- ``group by function "Status symbol: " + task.status.symbol.replace(" ", "space")``
+- ```group by function "Status symbol: " + task.status.symbol.replace(" ", "space")```
     - Group by the status symbol, making space characters visible.
 
 

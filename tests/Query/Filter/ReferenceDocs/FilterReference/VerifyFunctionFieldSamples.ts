@@ -38,7 +38,7 @@ export function verifyFunctionFieldGrouperSamplesForDocs(customGroups: QueryInst
     for (const group of customGroups) {
         const instruction = group[0];
         const comments = group.slice(1);
-        markdown += `- \`\`${instruction}\`\`
+        markdown += `- \`\`\`${instruction}\`\`\`
 ${comments.map((l) => l.replace(/^( *)/, '$1    - ')).join('\n')}.
 `;
     }

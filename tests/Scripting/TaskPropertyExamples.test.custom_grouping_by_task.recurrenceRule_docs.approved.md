@@ -1,6 +1,6 @@
 <!-- placeholder to force blank line before included text -->
 
-- ``group by function task.recurrenceRule.replace('when done', '==when done==')``
+- ```group by function task.recurrenceRule.replace('when done', '==when done==')```
     - Group by recurrence rule, highlighting any occurrences of the words "when done".
 
 
