@@ -176,7 +176,9 @@ For more examples, see [[#Due Date]].
 
 Since Tasks X.Y.Z, **[[Custom Grouping|custom grouping]] by due date** is now possible.
 
-These examples make heavy use of the [moment.js format characters](https://momentjs.com/docs/#/displaying/format/).
+These examples all use  `task.due` property, which is a `TasksDate` object. You can see the current [TasksDate source code](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/src/Scripting/TasksDate.ts), to explore its capabilities.
+
+Some of these examples use the [moment.js format characters](https://momentjs.com/docs/#/displaying/format/).
 
 <!-- placeholder to force blank line before included text --> <!-- include: TaskPropertyExamples.test.custom_grouping_by_task.due_docs.approved.md -->
 
