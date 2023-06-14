@@ -53,6 +53,8 @@ For more information, including adding your own customised statuses, see [[Statu
 
 <!-- placeholder to force blank line after included text --> <!-- endInclude -->
 
+1. You can see the current [TasksDate source code](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/src/Scripting/TasksDate.ts), to explore its capabilities.
+1. The `TasksDate` formatting methods use the [moment.js format characters](https://momentjs.com/docs/#/displaying/format/).
 1. Note that currently all stored dates have no time, or rather, their time is midnight at the start of the day, local time.
 1. For example uses of date properties, see [[Grouping#Due Date]].
 1. `task.happens` is the earlier of `task.due`, `task.scheduled` and `task.start`.
@@ -97,4 +99,6 @@ For more information, including adding your own customised statuses, see [[Statu
 
 <!-- placeholder to force blank line after included text --> <!-- endInclude -->
 
+1. `task.file` is a `TasksFile` object.
+1. You can see the current [TasksFile source code](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/src/Scripting/TasksFile.ts), to explore its capabilities.
 1. The presence of `.md` filename extensions is chosen to match the existing conventions in the Tasks filter instructions [[Filters#File Path|path]] and [[Filters#File Name|filename]].
