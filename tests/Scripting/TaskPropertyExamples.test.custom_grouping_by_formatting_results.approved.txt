@@ -1,0 +1,23 @@
+Results of custom groupers
+
+
+
+group by function task.due.format("YYYY %%MM%% MMMM [<mark style='background: var(--color-base-00); color: var(--color-base-40)'>- Week</mark>] WW", "Undated")
+Show Year then Month, and then week number. Draw the fixed text paler, to de-emphasize it.
+=>
+2023 %%05%% May <mark style='background: var(--color-base-00); color: var(--color-base-40)'>- Week</mark> 22
+2023 %%06%% June <mark style='background: var(--color-base-00); color: var(--color-base-40)'>- Week</mark> 22
+Invalid date
+Undated
+====================================================================================
+
+
+group by function task.due.format("[%%]YYYY-MM-DD[%%]dddd [<mark style='background: var(--color-base-00); color: var(--color-base-40);'>](YYYY-MM-DD)[</mark>]")
+Show the day of the week, then the date in paler text
+=>
+%%2023-05-30%%Tuesday <mark style='background: var(--color-base-00); color: var(--color-base-40);'>(2023-05-30)</mark>
+%%2023-05-31%%Wednesday <mark style='background: var(--color-base-00); color: var(--color-base-40);'>(2023-05-31)</mark>
+%%2023-06-01%%Thursday <mark style='background: var(--color-base-00); color: var(--color-base-40);'>(2023-06-01)</mark>
+Invalid date
+====================================================================================
+
