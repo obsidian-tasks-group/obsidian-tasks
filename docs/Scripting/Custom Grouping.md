@@ -11,12 +11,17 @@ publish: true
 
 ## Summary
 
-- You can define your own custom task groups, such as:
-- There are loads of examples
+- Define your own custom task groups, using JavaScript expressions such as:
+  - `group by function task.urgency.toFixed(3)`
+- There are loads of examples in [[Grouping]].
+  - Search for `group by function` in that file.
+- Find all the supported tasks properties in [[Task Properties]] and [[Quick Reference]].
+  - A number of properties are only available for custom grouping, and not for built-in grouping instructions.
+- Learn a bit about how expressions work in [[Expressions]].
 
 ## Custom grouping introduction
 
-The Tasks plugin provides a lot of built-in ways to [[Grouping|group]] your tasks in tasks query results.
+The Tasks plugin provides a lot of built-in ways to [[Grouping|group]] similar tasks in Tasks query results.
 
 But sometimes the built-in facility just doesn't quite do what you want.
 
@@ -44,7 +49,7 @@ The expression is evaluated (calculated) on each task that matches your query, a
 | Desired heading                                                             | Values that you can return                                                                             |
 | --------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
 | A single group name for the task                                            | A single value, such as `'group name'`.<br>An array, with a single value in, such as `['group name']`. |
-| Display the task potentially more than once (as is done by `group by tags`) | A list of values, such as:<br>`['heading 1', 'heading 2']`                                             |
+| Display the task potentially more than once (as is done by `group by tags`) | An array of values, such as:<br>`['heading 1', 'heading 2']`                                             |
 | No heading                                                                  | `null`<br>Empty string `''`<br>Empty array `[]`                                                        |
 
 The `expression` can:
@@ -94,7 +99,7 @@ You can find many more examples by searching for `group by function` in the [[Gr
 <!-- placeholder to force blank line before included text --> <!-- include: TaskPropertyExamples.test.custom_grouping_by_task.done_docs.approved.md -->
 
 - ```group by function task.done.format("YYYY-MM-DD dddd")```
-  - Like "group by task.done", except it uses an empty string instead of "No done date" if there is no done date.
+  - Like "group by done", except it uses an empty string instead of "No done date" if there is no done date.
 
 <!-- placeholder to force blank line after included text --> <!-- endInclude -->
 

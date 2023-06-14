@@ -39,7 +39,7 @@ describe('custom grouping by', () => {
             [
                 [
                     'group by function task.created.format("YYYY-MM-DD dddd")',
-                    'Like "group by task.created", except it uses an empty string instead of "No created date" if there is no created date',
+                    'Like "group by created", except it uses an empty string instead of "No created date" if there is no created date',
                 ],
             ],
             SampleTasks.withAllRepresentativeCreatedDates(),
@@ -50,7 +50,7 @@ describe('custom grouping by', () => {
             [
                 [
                     'group by function task.done.format("YYYY-MM-DD dddd")',
-                    'Like "group by task.done", except it uses an empty string instead of "No done date" if there is no done date',
+                    'Like "group by done", except it uses an empty string instead of "No done date" if there is no done date',
                 ],
             ],
             SampleTasks.withAllRepresentativeDoneDates(),
@@ -61,7 +61,7 @@ describe('custom grouping by', () => {
             [
                 [
                     'group by function task.due.format("YYYY-MM-DD dddd")',
-                    'Like "group by task.due", except it uses no heading, instead of a heading "No due date", if there is no due date',
+                    'Like "group by due", except it uses no heading, instead of a heading "No due date", if there is no due date',
                 ],
                 [
                     'group by function task.due.formatAsDate()',
@@ -122,7 +122,7 @@ describe('custom grouping by', () => {
             [
                 [
                     'group by function task.happens.format("YYYY-MM-DD dddd")',
-                    'Like "group by task.happens", except it uses an empty string instead of "No happens date" if there is no happens date',
+                    'Like "group by happens", except it uses an empty string instead of "No happens date" if there is no happens date',
                 ],
             ],
             SampleTasks.withAllRepresentativeDueDates(),
@@ -133,7 +133,7 @@ describe('custom grouping by', () => {
             [
                 [
                     'group by function task.scheduled.format("YYYY-MM-DD dddd")',
-                    'Like "group by task.scheduled", except it uses an empty string instead of "No scheduled date" if there is no scheduled date',
+                    'Like "group by scheduled", except it uses an empty string instead of "No scheduled date" if there is no scheduled date',
                 ],
             ],
             SampleTasks.withAllRepresentativeScheduledDates(),
@@ -144,7 +144,7 @@ describe('custom grouping by', () => {
             [
                 [
                     'group by function task.start.format("YYYY-MM-DD dddd")',
-                    'Like "group by task.start", except it uses an empty string instead of "No start date" if there is no start date',
+                    'Like "group by start", except it uses an empty string instead of "No start date" if there is no start date',
                 ],
             ],
             SampleTasks.withAllRepresentativeStartDates(),
