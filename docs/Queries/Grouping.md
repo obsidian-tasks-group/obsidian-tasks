@@ -145,26 +145,6 @@ Since Tasks X.Y.Z, **[[Custom Grouping|custom grouping]] by next status symbol**
 
 ## Group by Dates in Tasks
 
-### Done Date
-
-- `group by done`
-  - The done date of the task, including the week-day, or `No done date`.
-
-> [!released]
->
-> - `done` grouping option was introduced in Tasks 1.7.0.
-
-Since Tasks X.Y.Z, **[[Custom Grouping|custom grouping]] by done date** is now possible.
-
-<!-- placeholder to force blank line before included text --> <!-- include: TaskPropertyExamples.test.custom_grouping_by_task.done_docs.approved.md -->
-
-- ```group by function task.done.format("YYYY-MM-DD dddd")```
-  - Like "group by task.done", except it uses an empty string instead of "No done date" if there is no done date.
-
-<!-- placeholder to force blank line after included text --> <!-- endInclude -->
-
-For more examples, see [[#Due Date]].
-
 ### Due Date
 
 - `group by due`
@@ -210,6 +190,26 @@ Some of these examples use the [moment.js format characters](https://momentjs.co
   - Whilst interesting, the alphabetical sort order makes the headings a little hard to read.
 
 <!-- placeholder to force blank line after included text --> <!-- endInclude -->
+
+### Done Date
+
+- `group by done`
+  - The done date of the task, including the week-day, or `No done date`.
+
+> [!released]
+>
+> - `done` grouping option was introduced in Tasks 1.7.0.
+
+Since Tasks X.Y.Z, **[[Custom Grouping|custom grouping]] by done date** is now possible.
+
+<!-- placeholder to force blank line before included text --> <!-- include: TaskPropertyExamples.test.custom_grouping_by_task.done_docs.approved.md -->
+
+- ```group by function task.done.format("YYYY-MM-DD dddd")```
+  - Like "group by task.done", except it uses an empty string instead of "No done date" if there is no done date.
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+
+For more examples, see [[#Due Date]].
 
 ### Scheduled Date
 
