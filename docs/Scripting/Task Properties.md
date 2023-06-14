@@ -81,7 +81,7 @@ For more information, including adding your own customised statuses, see [[Statu
 
 ---
 
-## Values for File Properties - commented out until precedingHeader renamed to heading
+## Values for File Properties
 
 <!-- placeholder to force blank line before included text --> <!-- include: TaskProperties.test.task_file_properties.approved.md -->
 

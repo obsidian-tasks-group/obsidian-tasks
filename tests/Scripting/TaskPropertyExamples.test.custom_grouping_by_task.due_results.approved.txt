@@ -3,7 +3,7 @@ Results of custom groupers
 
 
 group by function task.due.format("YYYY-MM-DD dddd")
-Like "group by task.due", except it uses no heading, instead of a heading "No due date", if there is no due date
+Like "group by due", except it uses no heading, instead of a heading "No due date", if there is no due date
 =>
 2023-05-30 Tuesday
 2023-05-31 Wednesday

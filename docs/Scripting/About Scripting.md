@@ -17,4 +17,5 @@ This is the start of a growing set of documentation on how to get finer control 
 ### Scripting reference
 
 - [[Task Properties]] - all the available task properties, such as `task.description`,  `task.file.path`.
+  - Note: The properties are also listed in [[Quick Reference]].
 - [[Expressions]] - some background about how JavaScript expressions work, for use in Tasks code blocks.

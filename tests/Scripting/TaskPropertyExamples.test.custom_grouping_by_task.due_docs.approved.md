@@ -1,7 +1,7 @@
 <!-- placeholder to force blank line before included text -->
 
 - ```group by function task.due.format("YYYY-MM-DD dddd")```
-    - Like "group by task.due", except it uses no heading, instead of a heading "No due date", if there is no due date.
+    - Like "group by due", except it uses no heading, instead of a heading "No due date", if there is no due date.
 - ```group by function task.due.formatAsDate()```
     - Format date as YYYY-MM-DD or empty string (so no heading) if there is no due date.
 - ```group by function task.due.formatAsDateAndTime()```
