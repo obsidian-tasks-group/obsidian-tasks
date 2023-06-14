@@ -9,62 +9,43 @@ publish: true
 > [!released]
 > Custom grouping was introduced in Tasks X.Y.Z.
 
-## Basics of custom grouping
+## Summary
 
-- A task, whose data you can access via all the [[Task Properties]]
-- an instruction line of the form:
-  - `group by function <expression>`
-  - See [[Expressions]]
-  - that returns one of:
-    - a single value (the group name)
-      - where an empty string means 'no group'
-    - an array of values
-      - where an empty array means 'no group'
-      - and multiple values in the array mean the task is listed multiple times
-- Groups are sorted in alphabetical order by their name.
-- You can insert marking characters to format the headings
+- You can define your own custom task groups, such as:
+- There are loads of examples
 
-## Worked Example
+## Custom grouping introduction
 
-> [!Example]
-> Suppose that we want to see which of our tasks have the longest descriptions.
->
-> To do this, we could group tasks with group headings like:
->
-> `Description length: 27` - for all tasks with description 27 characters long.
->
-> We can achieve this with this line, where the `reverse` work makes the tasks with longest descriptions be shown first:
->
-> `group by function reverse 'Description length: ' + task.description.length`
+The Tasks plugin provides a lot of built-in ways to [[Grouping|group]] your tasks in tasks query results.
 
-Here is a visual explanation of how that instruction behaves:
+But sometimes the built-in facility just doesn't quite do what you want.
 
-```mermaid
-flowchart TB
+**Custom grouping** allows you to **invent your own naming scheme** to group tasks.
 
-4[Tasks code block]
-5["group by function reverse 'Description length: ' + task.description.length"]
-4 --> 5
+You use the instruction `group by function` and then add a rule, written in JavaScript, to calculate a group name for a task. See the examples below.
 
-8["- [ ] #task Hello"]
-9["task.description
-task.indentation
-task.urgency
-etc"]
-10["'Description length: ' + task.description.length"]
-12["'Description length: ' + '#task Hello'.length"]
-13['Description length: 11']
+## How it works
 
-5 --> 10
-8 --> 9 --> 10 --> 12 --> 13
-```
+### Available Task Properties
 
-## Expressions
+The Reference section [[Task Properties]] shows all the task properties available for use in custom grouping.
+
+The available task properties are also shown in the [[Quick Reference]] table.
+
+### Expressions
 
 The instructions look like this:
 
 - `group by function <expression>`
 - `group by function reverse <expression>`
+
+The expression is evaluated (calculated) on each task that matches your query, and the expression result is used as the group heading for the task.
+
+| Desired heading                                                             | Values that you can return                                                                             |
+| --------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| A single group name for the task                                            | A single value, such as `'group name'`.<br>An array, with a single value in, such as `['group name']`. |
+| Display the task potentially more than once (as is done by `group by tags`) | A list of values, such as:<br>`['heading 1', 'heading 2']`                                             |
+| No heading                                                                  | `null`<br>Empty string `''`<br>Empty array `[]`                                                        |
 
 The `expression` can:
 
@@ -86,26 +67,129 @@ The `expression` must:
 > group by function task.description.replaceAll('_', '\\_')
 >```
 
-## Custom group examples
+## Example custom groups
 
-```text
-group by function task.priority
-group by function task.status.nextSymbol.replace(" ", "space")
-group by function task.status.symbol.replace(" ", "space")
+Below are some examples to give a flavour of what can be done with custom groups.
+
+You can find many more examples by searching for `group by function` in the [[Grouping]] page.
+
+### Text property example
+
+<!-- placeholder to force blank line before included text --> <!-- include: TaskPropertyExamples.test.custom_grouping_by_task.description_docs.approved.md -->
+
+- ```group by function task.description```
+  - group by description.
+  - This might be useful for finding completed recurrences of the same task.
+- ```group by function task.description.toUpperCase()```
+  - Convert the description to capitals.
+- ```group by function task.description.slice(0, 25)```
+  - Truncate descriptions to at most their first 25 characters, and group by that string.
+- ```group by function task.description.replace('short', '==short==')```
+  - Highlight the word "short" in any group descriptions.
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+
+### Date property example
+
+<!-- placeholder to force blank line before included text --> <!-- include: TaskPropertyExamples.test.custom_grouping_by_task.done_docs.approved.md -->
+
+- ```group by function task.done.format("YYYY-MM-DD dddd")```
+  - Like "group by task.done", except it uses an empty string instead of "No done date" if there is no done date.
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+
+There are many more date examples in [[Grouping#Due Date]].
+
+### Number property example
+
+<!-- placeholder to force blank line before included text --> <!-- include: TaskPropertyExamples.test.custom_grouping_by_task.urgency_docs.approved.md -->
+
+- ```group by function task.urgency.toFixed(3)```
+  - Show the urgency to 3 decimal places, unlike the built-in "group by urgency" which uses 2.
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+
+### File property example
+
+<!-- placeholder to force blank line before included text --> <!-- include: TaskPropertyExamples.test.custom_grouping_by_task.file.folder_docs.approved.md -->
+
+- ```group by function task.file.folder```
+  - Same as 'group by folder'.
+- ```group by function task.file.folder.slice(0, -1).split('/').pop() + '/'```
+  - Group by the immediate parent folder of the file containing task.
+  - Here's how it works:
+    - '.slice(0, -1)' removes the trailing slash ('/') from the original folder.
+    - '.split('/')' divides the remaining path up in to an array of folder names.
+    - '.pop()' returns the last folder name, that is, the parent of the file containing the task.
+    - Then the trailing slash is added back, to ensure we do not get an empty string for files in the top level of the vault.
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+
+## Sorting the groups
+
+### Default sort order: alphabetical
+
+Group names are sorted alphabetically.
+
+For example, the following instruction sorts the groups by priority name, from `High priority` to `Normal priority`:
+
+```javascript
+group by function task.priorityName +' priority'
 ```
 
-<!--
-Using task.path, so not yet reading for public visibility:
-```text
-group by function task.path.replace("some/prefix/", "")
-group by function reverse task.path.startsWith("journal/") ? "journal/" : task.path
-group by function task.path.startsWith("journal/") ? "journal/" : task.path
+### Controlling the sort order of groups
+
+It is possible to enforce a sort order by including some hidden text in the group names, inside a `%%....%%` comment.
+
+Alternatively, we can use a hidden `task.priorityNumber` value to force the sort order, which will now run from `High priority` to `Lowest priority`:
+
+```javascript
+group by function '%%' + task.priorityNumber.toString() + '%%' + task.priorityName +' priority'
 ```
+
+## Formatting the groups
+
+Here is an example of adding formatting to groups.
+
+(Make sure you paste the long `group by function task.due.format` lines as single lines, without accidentally splitting the lines.)
+
+<!-- the following example can be tested and screen-shotted with:
+'/Users/clare/Documents/develop/Obsidian/schemar/obsidian-tasks/resources/sample_vaults/Tasks-Demo/How To/Use formatting in custom group headings.md'
 -->
 
-## Available Properties
+```javascript
+group by function task.due.format("YYYY %%MM%% MMMM [<mark style='background: var(--color-base-00); color: var(--color-base-40)'>- Week</mark>] WW", "Undated")
+group by function task.due.format("[%%]YYYY-MM-DD[%%]dddd [<mark style='background: var(--color-base-00); color: var(--color-base-40);'>](YYYY-MM-DD)[</mark>]")
+```
 
-The Reference section has a complete list of available [[Task Properties]].
+Notes:
+
+- The formatting draws the enclosed text in a muted colour.
+- The text in square brackets (`[...]`) is included verbatim in the output.
+- The named colours such as `var(--color-base-00)` are defined by the current Obsidian theme, and whether the display mode is Light or Dark.
+  - See the [Obsidian documentation Colors page](https://docs.obsidian.md/Reference/CSS+variables/Foundations/Colors) for available colours.
+
+It might look like this:
+
+![Tasks Grouped](../images/tasks_custom_groups_with_formatting.png)
+Tasks with custom date groups, including formatting.
+
+## Tips
+
+- To create a complex custom group, start something simple and gradually build it up.
+- Use the [[Limiting#Limit number of tasks in each group|Limit number of tasks in each group]] facility - `limit groups 1` - when experimenting, to speed up feedback.
+- You can try out hard-coded expressions, to explore how the custom grouping works:
+  - `group by function null`
+  - `group by function ''`
+  - `group by function []`
+  - `group by function "hello world"`
+  - `group by function ["hello world"]`
+  - `group by function ["hello", "world"]`
+  - `group by function 6 * 7`
+  - `group by function undefined`
+- See [[Expressions]] for more examples to try out.
+- A task, whose data you can access via all the [[Task Properties]].
+- The generated text is rendered by Obsidian, so you can insert markdown characters to add formatting to your headings.
 
 ## Troubleshooting
 

@@ -17,9 +17,6 @@ In a growing number of locations, Tasks allows programmatic/scripting access to 
 
 This documents all the available pieces of information in Tasks that you can access.
 
-> [!warning]
-> Tasks does store other data, but we only guarantee future support for the data items listed here without warning.
-
 ## Values for Task Statuses
 
 For more information, including adding your own customised statuses, see [[Statuses]].

@@ -18,10 +18,11 @@ publish: true
 
 ## What are Expressions?
 
-- Language is JavaScript
-- The expression is a string instruction
+- Language is JavaScript.
+- The expression is a string instruction.
 - Depending on the context, one or two tasks are passed in to the expression, and a calculation is performed.
-- Calculate some new value based on the input
+  - As of Tasks X.Y.Z, in fact only a single task is passed in, to implement [[Custom Grouping]].
+- Tasks then calculates a value from the inputs.
 
 ## Example expressions
 
@@ -67,3 +68,4 @@ Note:
 
 - Single quotes (`'`) and double quotes (`"`) are generally equivalent and you can use whichever you prefer.
 - The `||` means 'or'. If the expression to the left of the `||` fails, the expression on the right is used instead.
+- You can experiment with these values by adding them to a `group by function` line in a Tasks query block.
