@@ -232,7 +232,17 @@ export class Status {
      * @param other
      */
     public identicalTo(other: Status): boolean {
-        return this.configuration.identicalTo(other.configuration);
+        const args: Array<keyof StatusConfiguration> = [
+            'symbol',
+            'name',
+            'nextStatusSymbol',
+            'availableAsCommand',
+            'type',
+        ];
+        for (const el of args) {
+            if (this[el] !== other[el]) return false;
+        }
+        return true;
     }
 
     /**
