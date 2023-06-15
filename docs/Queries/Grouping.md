@@ -329,12 +329,12 @@ Since Tasks X.Y.Z, **[[Custom Grouping|custom grouping]] by description** is now
 
 - `group by priority`
   - The priority of the task, namely one of:
-    - `Priority 0: Highest`
-    - `Priority 1: High`
-    - `Priority 2: Medium`
-    - `Priority 3: None`
-    - `Priority 4: Low`
-    - `Priority 5: Lowest`
+    - `Highest priority`
+    - `High priority`
+    - `Medium priority`
+    - `Normal priority`
+    - `Low priority`
+    - `Lowest priority`
 
 > [!released]
 >
