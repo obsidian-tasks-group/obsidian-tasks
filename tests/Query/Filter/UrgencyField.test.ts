@@ -98,7 +98,7 @@ describe('grouping by urgency', () => {
     });
 
     it('should sort groups for UrgencyField', () => {
-        const grouper = new UrgencyField().createNormalGrouper();
+        const grouper = new UrgencyField().createReverseGrouper();
         const taskLines = ['- [ ] a ⏫', '- [ ] a 🔼', '- [ ] a', '- [ ] a 🔽'];
         const tasks = taskLines.map((taskLine) => fromLine({ line: taskLine }));
 

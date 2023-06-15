@@ -1,6 +1,6 @@
 import type { Comparator } from '../Sorter';
 import type { Task } from '../../Task';
-import type { GrouperFunction } from '../Grouper';
+import type { Grouper, GrouperFunction } from '../Grouper';
 import { Field } from './Field';
 import { FilterOrErrorMessage } from './Filter';
 
@@ -57,5 +57,13 @@ export class UrgencyField extends Field {
         return (task: Task) => {
             return [`${task.urgency.toFixed(2)}`];
         };
+    }
+
+    /**
+     * Create a {@link Grouper} object for grouping tasks by this field's value.
+     * @param reverse - false for normal group order, true for reverse group order.
+     */
+    public createGrouper(reverse: boolean): Grouper {
+        return super.createGrouper(!reverse);
     }
 }
