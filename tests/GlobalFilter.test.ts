@@ -1,5 +1,5 @@
-import { GlobalFilter } from '../src/Config/GlobalFilter';
 import { resetSettings, updateSettings } from '../src/Config/Settings';
+import { GlobalFilter } from '../src/Config/GlobalFilter';
 
 describe('Global Filter tests', () => {
     afterEach(() => {
@@ -105,7 +105,7 @@ describe('Global Filter tests with Remove Global Filter Setting', () => {
         updateSettings({ removeGlobalFilter: false });
 
         // Assert
-        expect(GlobalFilter.removeAsSubstringFromDependingOnSettings('This is absolutely todo')).toEqual(
+        expect(GlobalFilter.removeAsWordFromDependingOnSettings('This is absolutely todo')).toEqual(
             'This is absolutely todo',
         );
     });
@@ -116,10 +116,30 @@ describe('Global Filter tests with Remove Global Filter Setting', () => {
         updateSettings({ removeGlobalFilter: true });
 
         // Assert
-        expect(GlobalFilter.removeAsSubstringFromDependingOnSettings('This is absolutely todo')).toEqual(
+        expect(GlobalFilter.removeAsWordFromDependingOnSettings('This is absolutely todo')).toEqual(
             'This is absolutely',
         );
     });
+
+    it.each([
+        // Global Filter is a tag
+        ['#task', '#task/stage at the beginning'],
+        ['#task', 'in the #task/stage middle'],
+        ['#task', 'at the end #task/stage'],
+
+        // Global Filter is not a tag
+        ['TODO', 'TODO/maybe at the beginning'],
+        ['TODO', 'in the TODO/maybe middle'],
+        ['TODO', 'at the end TODO/maybe'],
+    ])(
+        'should not remove Global Filter (%s) if it is in a substring for a task "- [ ] %s"',
+        async (globalFilter: string, description: string) => {
+            updateSettings({ removeGlobalFilter: true });
+            GlobalFilter.set(globalFilter);
+
+            expect(GlobalFilter.removeAsWordFrom(description)).toEqual(description);
+        },
+    );
 });
 
 describe('check removal of the global filter', () => {
