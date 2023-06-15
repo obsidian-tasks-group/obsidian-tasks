@@ -369,9 +369,8 @@ Using the priority number:
 ### Urgency
 
 - `group by urgency` ([[Urgency|urgency]])
-  - Currently, the groups run from the lowest urgency to highest.
+  - The groups run from the highest urgency to the lowest.
   - You can reverse this with `group by urgency reverse`.
-  - In a future release, the default group order will become from the highest urgency to lowest.
 
 > [!released]
 >
