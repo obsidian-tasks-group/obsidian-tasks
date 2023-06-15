@@ -1,6 +1,6 @@
 import type { Comparator } from '../Sorter';
 import type { Task } from '../../Task';
-import type { GrouperFunction } from '../Grouper';
+import type { Grouper, GrouperFunction } from '../Grouper';
 import { Field } from './Field';
 import { FilterOrErrorMessage } from './Filter';
 
@@ -57,5 +57,17 @@ export class UrgencyField extends Field {
         return (task: Task) => {
             return [`${task.urgency.toFixed(2)}`];
         };
+    }
+
+    /**
+     * The {@link Field.createGrouper} creates a grouper that sorts by increasing values.
+     * For {@link UrgencyField} the group sorting shall be done by decreasing values, so
+     * the normal order here is the reverse of the regular one.
+     *
+     * @param reverse - false for normal group order (from most urgent to less urgent),
+     * true for reverse group order.
+     */
+    public createGrouper(reverse: boolean): Grouper {
+        return super.createGrouper(!reverse);
     }
 }
