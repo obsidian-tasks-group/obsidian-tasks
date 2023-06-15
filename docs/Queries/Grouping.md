@@ -97,11 +97,11 @@ Since Tasks X.Y.Z, **[[Custom Grouping|custom grouping]] by status names** is no
 - `group by status.type`
   - This groups by the types you have given to your custom statuses.
   - In order to impose a useful sort order, the types are prefixed with a number, so the groups will appear in this order, and with these group names:
-    - `1 IN_PROGRESS`
-    - `2 TODO`
-    - `3 DONE`
-    - `4 CANCELLED`
-    - `5 NON_TASK`
+    - `IN_PROGRESS`
+    - `TODO`
+    - `DONE`
+    - `CANCELLED`
+    - `NON_TASK`
 
 > [!released]
 `group by status.type` was introduced in Tasks 1.23.0.

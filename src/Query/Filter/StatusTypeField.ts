@@ -134,6 +134,6 @@ export class StatusTypeField extends Field {
                 prefix = '6';
                 break;
         }
-        return prefix + ' ' + task.status.type;
+        return `%%${prefix}%%${task.status.type}`;
     }
 }
