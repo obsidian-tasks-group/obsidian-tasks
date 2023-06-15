@@ -18,6 +18,7 @@ We are using the word 'scripting' in a very loose sense here:
 ## Scripting capabilities
 
 - [[Custom Grouping]] - write short JavaScript expressions to create task group names in Tasks query results.
+    - See also the many `group by function` examples added to the [[Grouping]] documentation.
 
 ## Scripting reference
 
