@@ -1307,6 +1307,24 @@ describe('identicalTo', () => {
         expect(lhs).toBeIdenticalTo(new TaskBuilder().tags([]));
         expect(lhs).not.toBeIdenticalTo(new TaskBuilder().tags(['#stuff']));
     });
+
+    it.failing('should correctly compare a task with status read from user settings', () => {
+        // This was added when fixing:
+        // https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2044
+        // Uncaught (in promise) TypeError: this.configuration.identicalTo is not a function
+
+        // 1 Create a task whose StatusConfiguration was created via new StatusConfiguration()
+        const task1 = new TaskBuilder().build();
+
+        // 2 Simulate a task whose status was read from StatusSettings:
+        //   Create a task whose StatusConfiguration was read from JSON.
+        //   Any methods on StatusConfiguration are not available via this route.
+        const task1Configuration = JSON.stringify(task1.status.configuration);
+        const task2Configuration = JSON.parse(task1Configuration);
+        const task2 = new TaskBuilder().status(task2Configuration).build();
+
+        expect(task2.identicalTo(task1)).toEqual(true);
+    });
 });
 
 describe('checking if task lists are identical', () => {
