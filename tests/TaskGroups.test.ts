@@ -361,20 +361,20 @@ describe('Grouping tasks', () => {
             - status.type
             - happens
 
-            Group names: [2 TODO,2022-09-19 Monday]
-            #### [status.type] 2 TODO
+            Group names: [%%2%%TODO,2022-09-19 Monday]
+            #### [status.type] %%2%%TODO
             ##### [happens] 2022-09-19 Monday
             - [ ] Task a - early date 📅 2022-09-19
 
             ---
 
-            Group names: [2 TODO,2022-10-06 Thursday]
+            Group names: [%%2%%TODO,2022-10-06 Thursday]
             ##### [happens] 2022-10-06 Thursday
             - [ ] Task c - intermediate date ⏳ 2022-10-06
 
             ---
 
-            Group names: [2 TODO,2022-12-06 Tuesday]
+            Group names: [%%2%%TODO,2022-12-06 Tuesday]
             ##### [happens] 2022-12-06 Tuesday
             - [ ] Task b - later date ⏳ 2022-12-06
 
