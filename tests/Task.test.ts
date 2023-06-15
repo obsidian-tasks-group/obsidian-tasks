@@ -1321,8 +1321,10 @@ describe('identicalTo', () => {
         //   Any methods on StatusConfiguration are not available via this route.
         const task1Configuration = JSON.stringify(task1.status.configuration);
         const task2Configuration = JSON.parse(task1Configuration);
-        const task2 = new TaskBuilder().status(task2Configuration).build();
+        const task2Status = new Status(task2Configuration);
+        const task2 = new TaskBuilder().status(task2Status).build();
 
+        expect(task2.status.identicalTo(task1.status)).toEqual(true);
         expect(task2.identicalTo(task1)).toEqual(true);
     });
 });
