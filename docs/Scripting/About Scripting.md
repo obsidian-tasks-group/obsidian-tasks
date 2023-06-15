@@ -6,15 +6,20 @@ publish: true
 
 <span class="related-pages">#index-pages #feature/scripting</span>
 
-## Contents
+## Introduction
 
-This is the start of a growing set of documentation on how to get finer control of searches within Tasks.
+This is the start of a growing set of documentation on facilities to get finer control of searches within Tasks.
 
-### Scripting capabilities
+We are using the word 'scripting' in a very loose sense here:
+
+- For now, it refers only to writing JavaScript expressions in Tasks query blocks.
+- It is intended to evolve in to something broader over time.
+
+## Scripting capabilities
 
 - [[Custom Grouping]] - write short JavaScript expressions to create task group names in Tasks query results.
 
-### Scripting reference
+## Scripting reference
 
 - [[Task Properties]] - all the available task properties, such as `task.description`,  `task.file.path`.
   - Note: The properties are also listed in [[Quick Reference]].
