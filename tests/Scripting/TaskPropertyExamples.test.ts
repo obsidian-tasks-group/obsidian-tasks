@@ -89,6 +89,13 @@ describe('custom grouping by', () => {
                     '    ... which gets rendered by Obsidian as `2023 May - Week 22`.',
                     'If the month number is not embedded, in some years the first or last week of the year is displayed in a non-logical order.',
                 ],
+            ],
+            SampleTasks.withAllRepresentativeDueDates(),
+        ],
+
+        [
+            'task.due.advanced',
+            [
                 [
                     'group by function task.due.moment?.fromNow() || ""',
                     'Group by the time from now, for example "8 days ago".',

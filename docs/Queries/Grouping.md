@@ -182,6 +182,13 @@ Some of these examples use the [moment.js format characters](https://momentjs.co
   - Group by month and week number, for example `2023%%-05%% May - Week 22` ...
     - ... which gets rendered by Obsidian as `2023 May - Week 22`.
   - If the month number is not embedded, in some years the first or last week of the year is displayed in a non-logical order..
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+
+DON'T PANIC! For users who are comfortable with JavaScript, these more complicated examples may also be of interest:
+
+<!-- placeholder to force blank line before included text --> <!-- include: TaskPropertyExamples.test.custom_grouping_by_task.due.advanced_docs.approved.md -->
+
 - ```group by function task.due.moment?.fromNow() || ""```
   - Group by the time from now, for example "8 days ago".
   - Because Moment.fromNow() is not provided by TasksDate, we need special code for when there is no date value.
