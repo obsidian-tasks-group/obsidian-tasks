@@ -101,6 +101,3 @@ The tasks shown are purely examples for context. The `~` column is just an arbit
 | Name for `group by status.name` | Todo | In Progress | Done | Cancelled | My custom status |
 
 <!-- placeholder to force blank line after included text --> <!-- endInclude -->
-
-> [!warning]
-The `group by status.type` results of the above table are subject to change.
