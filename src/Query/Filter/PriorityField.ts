@@ -95,8 +95,8 @@ export class PriorityField extends Field {
 
     public grouper(): GrouperFunction {
         return (task: Task) => {
-            const priorityName = PriorityTools.priorityNameUsingNone(task.priority);
-            return [`Priority ${task.priority}: ${priorityName}`];
+            const priorityName = PriorityTools.priorityNameUsingNormal(task.priority);
+            return [`%%${task.priority}%%${priorityName} priority`];
         };
     }
 }

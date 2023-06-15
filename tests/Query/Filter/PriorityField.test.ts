@@ -200,12 +200,12 @@ describe('grouping by priority', () => {
     });
 
     it.each([
-        ['- [ ] a 🔺', ['Priority 0: Highest']],
-        ['- [ ] a ⏫', ['Priority 1: High']],
-        ['- [ ] a 🔼', ['Priority 2: Medium']],
-        ['- [ ] a', ['Priority 3: None']],
-        ['- [ ] a 🔽', ['Priority 4: Low']],
-        ['- [ ] a ⏬', ['Priority 5: Lowest']],
+        ['- [ ] a 🔺', ['%%0%%Highest priority']],
+        ['- [ ] a ⏫', ['%%1%%High priority']],
+        ['- [ ] a 🔼', ['%%2%%Medium priority']],
+        ['- [ ] a', ['%%3%%Normal priority']],
+        ['- [ ] a 🔽', ['%%4%%Low priority']],
+        ['- [ ] a ⏬', ['%%5%%Lowest priority']],
     ])('task "%s" should have groups: %s', (taskLine: string, groups: string[]) => {
         // Arrange
         const grouper = new PriorityField().createNormalGrouper().grouper;
@@ -219,12 +219,12 @@ describe('grouping by priority', () => {
         const tasks = SampleTasks.withAllPriorities();
 
         expect({ grouper, tasks }).groupHeadingsToBe([
-            'Priority 0: Highest',
-            'Priority 1: High',
-            'Priority 2: Medium',
-            'Priority 3: None',
-            'Priority 4: Low',
-            'Priority 5: Lowest',
+            '%%0%%Highest priority',
+            '%%1%%High priority',
+            '%%2%%Medium priority',
+            '%%3%%Normal priority',
+            '%%4%%Low priority',
+            '%%5%%Lowest priority',
         ]);
     });
 });
