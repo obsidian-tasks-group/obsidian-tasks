@@ -7,7 +7,7 @@ publish: true
 <span class="related-pages">#feature/scripting</span>
 
 > [!released]
-> Task Properties were introduced in Tasks X.Y.Z.
+> Task Properties were introduced in Tasks 4.0.0.
 
 ## Introduction
 

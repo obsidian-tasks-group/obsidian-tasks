@@ -40,7 +40,7 @@ To divide the matching tasks up with headings, you can add `group by` lines to t
 ## Custom Groups
 
 > [!released]
-> `group by function` was introduced in Tasks X.Y.Z.
+> `group by function` was introduced in Tasks 4.0.0.
 
 Tasks provides many built-in grouping options, but sometimes they don't quite do what is wanted by all users.
 
@@ -64,7 +64,7 @@ For more information, including adding your own customised statuses, see [[Statu
     - `Done` is used for tasks status types `DONE`, `CANCELLED` and `NON_TASK`
     - `Todo` is used for status types with type `TODO` and `IN_PROGRESS`
 
-Since Tasks X.Y.Z, **[[Custom Grouping|custom grouping]] by status** is now possible.
+Since Tasks 4.0.0, **[[Custom Grouping|custom grouping]] by status** is now possible.
 
 <!-- placeholder to force blank line before included text --> <!-- include: TaskPropertyExamples.test.custom_grouping_by_task.isDone_docs.approved.md -->
 
@@ -81,7 +81,7 @@ Since Tasks X.Y.Z, **[[Custom Grouping|custom grouping]] by status** is now poss
 > [!released]
 `group by status.name` was introduced in Tasks 1.23.0.
 
-Since Tasks X.Y.Z, **[[Custom Grouping|custom grouping]] by status names** is now possible.
+Since Tasks 4.0.0, **[[Custom Grouping|custom grouping]] by status names** is now possible.
 
 <!-- placeholder to force blank line before included text --> <!-- include: TaskPropertyExamples.test.custom_grouping_by_task.status.name_docs.approved.md -->
 
@@ -106,7 +106,7 @@ Since Tasks X.Y.Z, **[[Custom Grouping|custom grouping]] by status names** is no
 > [!released]
 `group by status.type` was introduced in Tasks 1.23.0.
 
-Since Tasks X.Y.Z, **[[Custom Grouping|custom grouping]] by status types** is now possible.
+Since Tasks 4.0.0, **[[Custom Grouping|custom grouping]] by status types** is now possible.
 
 <!-- placeholder to force blank line before included text --> <!-- include: TaskPropertyExamples.test.custom_grouping_by_task.status.type_docs.approved.md -->
 
@@ -119,7 +119,7 @@ Since Tasks X.Y.Z, **[[Custom Grouping|custom grouping]] by status types** is no
 
 There is no built-in instruction to group by status symbols.
 
-Since Tasks X.Y.Z, **[[Custom Grouping|custom grouping]] by status symbol** is now possible.
+Since Tasks 4.0.0, **[[Custom Grouping|custom grouping]] by status symbol** is now possible.
 
 <!-- placeholder to force blank line before included text --> <!-- include: TaskPropertyExamples.test.custom_grouping_by_task.status.symbol_docs.approved.md -->
 
@@ -132,7 +132,7 @@ Since Tasks X.Y.Z, **[[Custom Grouping|custom grouping]] by status symbol** is n
 
 There is no built-in instruction to group by next status symbols.
 
-Since Tasks X.Y.Z, **[[Custom Grouping|custom grouping]] by next status symbol** is now possible.
+Since Tasks 4.0.0, **[[Custom Grouping|custom grouping]] by next status symbol** is now possible.
 
 <!-- placeholder to force blank line before included text --> <!-- include: TaskPropertyExamples.test.custom_grouping_by_task.status.nextSymbol_docs.approved.md -->
 
@@ -154,7 +154,7 @@ Since Tasks X.Y.Z, **[[Custom Grouping|custom grouping]] by next status symbol**
 >
 > - `due` grouping option was introduced in Tasks 1.7.0.
 
-Since Tasks X.Y.Z, **[[Custom Grouping|custom grouping]] by due date** is now possible.
+Since Tasks 4.0.0, **[[Custom Grouping|custom grouping]] by due date** is now possible.
 
 These examples all use  `task.due` property, which is a `TasksDate` object. You can see the current [TasksDate source code](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/src/Scripting/TasksDate.ts), to explore its capabilities.
 
@@ -217,7 +217,7 @@ DON'T PANIC! For users who are comfortable with JavaScript, these more complicat
 >
 > - `done` grouping option was introduced in Tasks 1.7.0.
 
-Since Tasks X.Y.Z, **[[Custom Grouping|custom grouping]] by done date** is now possible.
+Since Tasks 4.0.0, **[[Custom Grouping|custom grouping]] by done date** is now possible.
 
 <!-- placeholder to force blank line before included text --> <!-- include: TaskPropertyExamples.test.custom_grouping_by_task.done_docs.approved.md -->
 
@@ -237,7 +237,7 @@ For more examples, see [[#Due Date]].
 >
 > - `scheduled` grouping option was introduced in Tasks 1.7.0.
 
-Since Tasks X.Y.Z, **[[Custom Grouping|custom grouping]] by scheduled date** is now possible.
+Since Tasks 4.0.0, **[[Custom Grouping|custom grouping]] by scheduled date** is now possible.
 
 <!-- placeholder to force blank line before included text --> <!-- include: TaskPropertyExamples.test.custom_grouping_by_task.scheduled_docs.approved.md -->
 
@@ -257,7 +257,7 @@ For more examples, see [[#Due Date]].
 >
 > - `start` grouping option was introduced in Tasks 1.7.0.
 
-Since Tasks X.Y.Z, **[[Custom Grouping|custom grouping]] by start date** is now possible.
+Since Tasks 4.0.0, **[[Custom Grouping|custom grouping]] by start date** is now possible.
 
 <!-- placeholder to force blank line before included text --> <!-- include: TaskPropertyExamples.test.custom_grouping_by_task.start_docs.approved.md -->
 
@@ -276,7 +276,7 @@ For more examples, see [[#Due Date]].
 > [!released]
 `created` grouping option was introduced in Tasks 2.0.0.
 
-Since Tasks X.Y.Z, **[[Custom Grouping|custom grouping]] by created date** is now possible.
+Since Tasks 4.0.0, **[[Custom Grouping|custom grouping]] by created date** is now possible.
 
 <!-- placeholder to force blank line before included text --> <!-- include: TaskPropertyExamples.test.custom_grouping_by_task.created_docs.approved.md -->
 
@@ -295,7 +295,7 @@ For more examples, see [[#Due Date]].
 > [!released]
 `happens` grouping option was introduced in Tasks 1.11.0.
 
-Since Tasks X.Y.Z, **[[Custom Grouping|custom grouping]] by happens date** is now possible.
+Since Tasks 4.0.0, **[[Custom Grouping|custom grouping]] by happens date** is now possible.
 
 <!-- placeholder to force blank line before included text --> <!-- include: TaskPropertyExamples.test.custom_grouping_by_task.happens_docs.approved.md -->
 
@@ -316,7 +316,7 @@ As well as the date-related groups above, groups can be created from properties 
 
 There is no built-in instruction to group by desciption.
 
-Since Tasks X.Y.Z, **[[Custom Grouping|custom grouping]] by description** is now possible.
+Since Tasks 4.0.0, **[[Custom Grouping|custom grouping]] by description** is now possible.
 
 <!-- placeholder to force blank line before included text --> <!-- include: TaskPropertyExamples.test.custom_grouping_by_task.description_docs.approved.md -->
 
@@ -347,7 +347,7 @@ Since Tasks X.Y.Z, **[[Custom Grouping|custom grouping]] by description** is now
 >
 > - `priority` grouping option was introduced in Tasks 1.11.0.
 
-Since Tasks X.Y.Z, **[[Custom Grouping|custom grouping]] by priority name and number** is now possible.
+Since Tasks 4.0.0, **[[Custom Grouping|custom grouping]] by priority name and number** is now possible.
 
 Using the priority name:
 
@@ -382,9 +382,9 @@ Using the priority number:
 > [!released]
 >
 > - `urgency` grouping option was introduced in Tasks 3.6.0.
-> - In Tasks X.Y.Z the order of `group by urgency` was reversed, to put most urgent tasks first. Add or remove the word `reverse` to get the original order.
+> - In Tasks 4.0.0 the order of `group by urgency` was reversed, to put most urgent tasks first. Add or remove the word `reverse` to get the original order.
 
-Since Tasks X.Y.Z, **[[Custom Grouping|custom grouping]] by urgency** is now possible.
+Since Tasks 4.0.0, **[[Custom Grouping|custom grouping]] by urgency** is now possible.
 
 <!-- placeholder to force blank line before included text --> <!-- include: TaskPropertyExamples.test.custom_grouping_by_task.urgency_docs.approved.md -->
 
@@ -405,7 +405,7 @@ Since Tasks X.Y.Z, **[[Custom Grouping|custom grouping]] by urgency** is now pos
 >
 > - `recurring` and `recurrence` grouping options were introduced in Tasks 1.11.0.
 
-Since Tasks X.Y.Z, **[[Custom Grouping|custom grouping]] by recurrence** is now possible.
+Since Tasks 4.0.0, **[[Custom Grouping|custom grouping]] by recurrence** is now possible.
 
 <!-- placeholder to force blank line before included text --> <!-- include: TaskPropertyExamples.test.custom_grouping_by_task.isRecurring_docs.approved.md -->
 
@@ -430,7 +430,7 @@ Since Tasks X.Y.Z, **[[Custom Grouping|custom grouping]] by recurrence** is now 
 >
 > - `tags` grouping option was introduced in Tasks 1.10.0.
 
-Since Tasks X.Y.Z, **[[Custom Grouping|custom grouping]] by tags** is now possible.
+Since Tasks 4.0.0, **[[Custom Grouping|custom grouping]] by tags** is now possible.
 
 <!-- placeholder to force blank line before included text --> <!-- include: TaskPropertyExamples.test.custom_grouping_by_task.tags_docs.approved.md -->
 
@@ -452,7 +452,7 @@ Since Tasks X.Y.Z, **[[Custom Grouping|custom grouping]] by tags** is now possib
 
 There is no built-in instruction to group by the original markdown line.
 
-Since Tasks X.Y.Z, **[[Custom Grouping|custom grouping]] by original markdown line** is now possible.
+Since Tasks 4.0.0, **[[Custom Grouping|custom grouping]] by original markdown line** is now possible.
 
 For example, this could be used to extract information from `task.originalMarkdown` that Tasks does not parse, to use for grouping tasks.
 
@@ -476,7 +476,7 @@ For example, this could be used to extract information from `task.originalMarkdo
 
 - `group by path` (the path to the file that contains the task, that is, the folder and the filename)
 
-Since Tasks X.Y.Z, **[[Custom Grouping|custom grouping]] by file path** is now possible.
+Since Tasks 4.0.0, **[[Custom Grouping|custom grouping]] by file path** is now possible.
 
 <!-- placeholder to force blank line before included text --> <!-- include: TaskPropertyExamples.test.custom_grouping_by_task.file.path_docs.approved.md -->
 
@@ -492,7 +492,7 @@ Since Tasks X.Y.Z, **[[Custom Grouping|custom grouping]] by file path** is now p
 > [!released]
 `root` grouping option was introduced in Tasks 1.11.0.
 
-Since Tasks X.Y.Z, **[[Custom Grouping|custom grouping]] by root folder** is now possible.
+Since Tasks 4.0.0, **[[Custom Grouping|custom grouping]] by root folder** is now possible.
 
 <!-- placeholder to force blank line before included text --> <!-- include: TaskPropertyExamples.test.custom_grouping_by_task.file.root_docs.approved.md -->
 
@@ -505,7 +505,7 @@ Since Tasks X.Y.Z, **[[Custom Grouping|custom grouping]] by root folder** is now
 
 - `group by folder` (the folder to the file that contains the task, which always ends in `/` and will be exactly `/` for files in root of the vault)
 
-Since Tasks X.Y.Z, **[[Custom Grouping|custom grouping]] by folder** is now possible.
+Since Tasks 4.0.0, **[[Custom Grouping|custom grouping]] by folder** is now possible.
 
 <!-- placeholder to force blank line before included text --> <!-- include: TaskPropertyExamples.test.custom_grouping_by_task.file.folder_docs.approved.md -->
 
@@ -526,7 +526,7 @@ Since Tasks X.Y.Z, **[[Custom Grouping|custom grouping]] by folder** is now poss
 - `group by filename` (the link to the file that contains the task, without the `.md` extension)
   - Note that tasks from different notes with the same file name will be grouped together in the same group.
 
-Since Tasks X.Y.Z, **[[Custom Grouping|custom grouping]] by file name** is now possible.
+Since Tasks 4.0.0, **[[Custom Grouping|custom grouping]] by file name** is now possible.
 
 <!-- placeholder to force blank line before included text --> <!-- include: TaskPropertyExamples.test.custom_grouping_by_task.file.filename_docs.approved.md -->
 
@@ -545,7 +545,7 @@ Since Tasks X.Y.Z, **[[Custom Grouping|custom grouping]] by file name** is now p
 
 - `group by heading` (the heading preceding the task, or `(No heading)` if there are no headings in the file)
 
-Since Tasks X.Y.Z, **[[Custom Grouping|custom grouping]] by heading** is now possible.
+Since Tasks 4.0.0, **[[Custom Grouping|custom grouping]] by heading** is now possible.
 
 <!-- placeholder to force blank line before included text --> <!-- include: TaskPropertyExamples.test.custom_grouping_by_task.heading_docs.approved.md -->
 

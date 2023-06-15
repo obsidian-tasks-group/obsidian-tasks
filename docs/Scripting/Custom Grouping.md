@@ -7,7 +7,7 @@ publish: true
 <span class="related-pages">#feature/scripting #feature/grouping</span>
 
 > [!released]
-> Custom grouping was introduced in Tasks X.Y.Z.
+> Custom grouping was introduced in Tasks 4.0.0.
 
 ## Summary
 
