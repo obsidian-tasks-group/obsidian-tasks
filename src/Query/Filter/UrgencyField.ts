@@ -60,8 +60,12 @@ export class UrgencyField extends Field {
     }
 
     /**
-     * Create a {@link Grouper} object for grouping tasks by this field's value.
-     * @param reverse - false for normal group order, true for reverse group order.
+     * The {@link Field.createGrouper} creates a grouper that sorts by increasing values.
+     * For {@link UrgencyField} the group sorting shall be done by decreasing values, so
+     * the normal order here is the reverse of the regular one.
+     *
+     * @param reverse - false for normal group order (from most urgent to less urgent),
+     * true for reverse group order.
      */
     public createGrouper(reverse: boolean): Grouper {
         return super.createGrouper(!reverse);
