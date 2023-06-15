@@ -1308,7 +1308,7 @@ describe('identicalTo', () => {
         expect(lhs).not.toBeIdenticalTo(new TaskBuilder().tags(['#stuff']));
     });
 
-    it.failing('should correctly compare a task with status read from user settings', () => {
+    it('should correctly compare a task with status read from user settings', () => {
         // This was added when fixing:
         // https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2044
         // Uncaught (in promise) TypeError: this.configuration.identicalTo is not a function
