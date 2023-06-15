@@ -96,7 +96,7 @@ Since Tasks X.Y.Z, **[[Custom Grouping|custom grouping]] by status names** is no
 
 - `group by status.type`
   - This groups by the types you have given to your custom statuses.
-  - In order to impose a useful sort order, the types are prefixed with a number, so the groups will appear in this order, and with these group names:
+  - The groups will appear in this order, and with these group names:
     - `IN_PROGRESS`
     - `TODO`
     - `DONE`
@@ -375,6 +375,7 @@ Using the priority number:
 > [!released]
 >
 > - `urgency` grouping option was introduced in Tasks 3.6.0.
+> - In Tasks X.Y.Z the order of `group by urgency` was reversed, to put most urgent tasks first. Add or remove the word `reverse` to get the original order.
 
 Since Tasks X.Y.Z, **[[Custom Grouping|custom grouping]] by urgency** is now possible.
 
