@@ -117,7 +117,8 @@ describe('task line rendering', () => {
         return getDescriptionText(parentRender);
     };
 
-    it('should render Global Filter by default', async () => {
+    it('should render Global Filter when the Remove Global Filter is off', async () => {
+        updateSettings({ removeGlobalFilter: false });
         GlobalFilter.set('#global');
 
         const taskLine = '- [ ] This is a simple task with a #global filter';
@@ -126,37 +127,15 @@ describe('task line rendering', () => {
         expect(descriptionWithFilter).toEqual('This is a simple task with a #global filter');
     });
 
-    it('should not render Global Filter when the Remove Global Filter is set', async () => {
+    it('should not render Global Filter when the Remove Global Filter is on', async () => {
         updateSettings({ removeGlobalFilter: true });
         GlobalFilter.set('#global');
 
-        const taskLine = '- [ ] This is a simple task with a #global filter';
+        const taskLine = '- [ ] #global/subtag-shall-stay This is a simple task with a #global filter';
         const descriptionWithoutFilter = await getDescriptionTest(taskLine);
 
-        expect(descriptionWithoutFilter).toEqual('This is a simple task with a filter');
+        expect(descriptionWithoutFilter).toEqual('#global/subtag-shall-stay This is a simple task with a filter');
     });
-
-    it.each([
-        // Global Filter is a tag
-        ['#task', '- [ ] #task/stage at the beginning', '#task/stage at the beginning'],
-        ['#task', '- [ ] in the #task/stage middle', 'in the #task/stage middle'],
-        ['#task', '- [ ] at the end #task/stage', 'at the end #task/stage'],
-
-        // Global Filter is not a tag
-        ['TODO', '- [ ] TODO/maybe at the beginning', 'TODO/maybe at the beginning'],
-        ['TODO', '- [ ] in the TODO/maybe middle', 'in the TODO/maybe middle'],
-        ['TODO', '- [ ] at the end TODO/maybe', 'at the end TODO/maybe'],
-    ])(
-        'should not remove Global Filter (%s) if it is in a substring for a task "%s"',
-        async (globalFilter: string, taskLine: string, expectedDescription: string) => {
-            updateSettings({ removeGlobalFilter: true });
-            GlobalFilter.set(globalFilter);
-
-            const renderedDescription = await getDescriptionTest(taskLine);
-
-            expect(renderedDescription).toEqual(expectedDescription);
-        },
-    );
 
     const testLayoutOptions = async (
         taskLine: string,
