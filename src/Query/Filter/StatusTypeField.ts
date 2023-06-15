@@ -134,6 +134,8 @@ export class StatusTypeField extends Field {
                 prefix = '6';
                 break;
         }
+        // Text inside the %%..%% comments is used to control the sorting in both sorting of tasks and naming of groups.
+        // The comments are hidden by Obsidian when the headings are rendered.
         return `%%${prefix}%%${task.status.type}`;
     }
 }
