@@ -4,7 +4,8 @@ import type { Comparator } from '../Sorter';
 import type { GrouperFunction } from '../Grouper';
 import { PriorityTools } from '../../lib/PriorityTools';
 import { Field } from './Field';
-import { Filter, FilterOrErrorMessage } from './Filter';
+import { Filter } from './Filter';
+import { FilterOrErrorMessage } from './FilterOrErrorMessage';
 
 export class PriorityField extends Field {
     // The trick in the following to manage whitespace with optional values

@@ -4,8 +4,9 @@ import { StatusType } from '../../StatusConfiguration';
 import type { Comparator } from '../Sorter';
 import { Explanation } from '../Explain/Explanation';
 import { Field } from './Field';
-import { Filter, FilterOrErrorMessage } from './Filter';
+import { Filter } from './Filter';
 import type { FilterFunction } from './Filter';
+import { FilterOrErrorMessage } from './FilterOrErrorMessage';
 
 /**
  * A ${@link Field} implementation for searching status.type

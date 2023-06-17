@@ -1,5 +1,5 @@
 import { FilterInstruction } from './FilterInstruction';
-import { FilterOrErrorMessage } from './Filter';
+import { FilterOrErrorMessage } from './FilterOrErrorMessage';
 import type { FilterFunction } from './Filter';
 
 /**

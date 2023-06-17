@@ -2,7 +2,7 @@ import type { Task } from '../../Task';
 import type { Comparator } from '../Sorter';
 import { Sorter } from '../Sorter';
 import type { GrouperFunction } from '../Grouper';
-import type { FilterOrErrorMessage } from './Filter';
+import type { FilterOrErrorMessage } from './FilterOrErrorMessage';
 import { FilterInstructions } from './FilterInstructions';
 import { MultiTextField } from './MultiTextField';
 

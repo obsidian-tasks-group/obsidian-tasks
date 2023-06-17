@@ -7,8 +7,9 @@ import type { Comparator } from '../Sorter';
 import { compareByDate } from '../../lib/DateTools';
 import type { GrouperFunction } from '../Grouper';
 import { Field } from './Field';
-import { Filter, type FilterFunction, FilterOrErrorMessage } from './Filter';
+import { Filter, type FilterFunction } from './Filter';
 import { FilterInstructions } from './FilterInstructions';
+import { FilterOrErrorMessage } from './FilterOrErrorMessage';
 
 export type DateFilterFunction = (date: Moment | null) => boolean;
 
