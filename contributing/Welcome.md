@@ -26,6 +26,7 @@ Getting the most from this documentation:
 
 - [[About Dependencies]]
 - [[About Releases]]
+- [[About User Support]]
 
 ## Other information
 
