@@ -6,7 +6,7 @@ import { DescriptionField } from '../../../src/Query/Filter/DescriptionField';
 import { GlobalFilter } from '../../../src/Config/GlobalFilter';
 import { testTaskFilter } from '../../TestingTools/FilterTestHelpers';
 import { fromLine } from '../../TestHelpers';
-import type { FilterOrErrorMessage } from '../../../src/Query/Filter/Filter';
+import type { FilterOrErrorMessage } from '../../../src/Query/Filter/FilterOrErrorMessage';
 import { BooleanField } from '../../../src/Query/Filter/BooleanField';
 import { Sort } from '../../../src/Query/Sort';
 import {

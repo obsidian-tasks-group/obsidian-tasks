@@ -2,7 +2,7 @@ import type { Comparator } from '../Sorter';
 import type { Task } from '../../Task';
 import type { Grouper, GrouperFunction } from '../Grouper';
 import { Field } from './Field';
-import { FilterOrErrorMessage } from './Filter';
+import { FilterOrErrorMessage } from './FilterOrErrorMessage';
 
 /**
  * Support 'urgency' sorting.

@@ -1,6 +1,6 @@
 import { Field } from './Field';
 import { FilterInstructions } from './FilterInstructions';
-import type { FilterOrErrorMessage } from './Filter';
+import type { FilterOrErrorMessage } from './FilterOrErrorMessage';
 
 /**
  * This class is an implementation for implements of {@link Field}

@@ -5,7 +5,7 @@ import { parseFilter } from '../FilterParser';
 import type { Task } from '../../Task';
 import { Explanation } from '../Explain/Explanation';
 import { Field } from './Field';
-import { FilterOrErrorMessage } from './Filter';
+import { FilterOrErrorMessage } from './FilterOrErrorMessage';
 import { Filter } from './Filter';
 
 /**

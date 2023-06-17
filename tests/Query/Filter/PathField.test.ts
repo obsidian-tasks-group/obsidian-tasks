@@ -1,5 +1,5 @@
 import { PathField } from '../../../src/Query/Filter/PathField';
-import type { FilterOrErrorMessage } from '../../../src/Query/Filter/Filter';
+import type { FilterOrErrorMessage } from '../../../src/Query/Filter/FilterOrErrorMessage';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { testFilter } from '../../TestingTools/FilterTestHelpers';
 import {

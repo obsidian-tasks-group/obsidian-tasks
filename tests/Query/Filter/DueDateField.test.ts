@@ -3,7 +3,7 @@
  */
 import moment from 'moment';
 import { DueDateField } from '../../../src/Query/Filter/DueDateField';
-import type { FilterOrErrorMessage } from '../../../src/Query/Filter/Filter';
+import type { FilterOrErrorMessage } from '../../../src/Query/Filter/FilterOrErrorMessage';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { testFilter } from '../../TestingTools/FilterTestHelpers';
 import {

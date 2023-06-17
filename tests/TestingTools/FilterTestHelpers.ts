@@ -1,4 +1,4 @@
-import type { FilterOrErrorMessage } from '../../src/Query/Filter/Filter';
+import type { FilterOrErrorMessage } from '../../src/Query/Filter/FilterOrErrorMessage';
 import { Task } from '../../src/Task';
 import { Query } from '../../src/Query/Query';
 import { TaskLocation } from '../../src/TaskLocation';

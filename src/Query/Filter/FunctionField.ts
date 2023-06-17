@@ -3,7 +3,7 @@ import type { Task } from '../../Task';
 import type { GrouperFunction } from '../Grouper';
 import { Grouper } from '../Grouper';
 import { Field } from './Field';
-import { FilterOrErrorMessage } from './Filter';
+import { FilterOrErrorMessage } from './FilterOrErrorMessage';
 
 /**
  * A {@link Field} implement that accepts a JavaSscript expression to group tasks together.

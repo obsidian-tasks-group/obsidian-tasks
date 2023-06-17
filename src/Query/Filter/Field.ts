@@ -3,7 +3,7 @@ import type { Comparator } from '../Sorter';
 import * as RegExpTools from '../../lib/RegExpTools';
 import { Grouper } from '../Grouper';
 import type { GrouperFunction } from '../Grouper';
-import type { FilterOrErrorMessage } from './Filter';
+import type { FilterOrErrorMessage } from './FilterOrErrorMessage';
 
 /**
  * Field is an abstract base class for each type of filter instruction.
