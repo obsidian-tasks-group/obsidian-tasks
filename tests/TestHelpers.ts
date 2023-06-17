@@ -81,7 +81,7 @@ export class SampleTasks {
             '',
         ];
 
-        const tasks = recurrenceRules.map((recurrenceRule) => {
+        return recurrenceRules.map((recurrenceRule) => {
             return new TaskBuilder()
                 .recurrence(
                     Recurrence.fromText({
@@ -93,8 +93,6 @@ export class SampleTasks {
                 )
                 .build();
         });
-
-        return tasks;
     }
 
     public static withAllRootsPathsHeadings(): Task[] {
@@ -122,51 +120,39 @@ export class SampleTasks {
         ];
         const t = '- [ ] xyz';
 
-        const tasks = allPathsAndHeadings.map(([path, heading]) => {
+        return allPathsAndHeadings.map(([path, heading]) => {
             return fromLine({ line: t, path: path, precedingHeader: heading });
         });
-
-        return tasks;
     }
 
     public static withAllRepresentativeCreatedDates(): Task[] {
-        const tasks = representativeDates.map((date) => {
+        return representativeDates.map((date) => {
             return new TaskBuilder().createdDate(date).build();
         });
-
-        return tasks;
     }
 
     public static withAllRepresentativeDoneDates(): Task[] {
-        const tasks = representativeDates.map((date) => {
+        return representativeDates.map((date) => {
             return new TaskBuilder().doneDate(date).build();
         });
-
-        return tasks;
     }
 
     public static withAllRepresentativeDueDates(): Task[] {
-        const tasks = representativeDates.map((date) => {
+        return representativeDates.map((date) => {
             return new TaskBuilder().dueDate(date).build();
         });
-
-        return tasks;
     }
 
     public static withAllRepresentativeScheduledDates(): Task[] {
-        const tasks = representativeDates.map((date) => {
+        return representativeDates.map((date) => {
             return new TaskBuilder().scheduledDate(date).build();
         });
-
-        return tasks;
     }
 
     public static withAllRepresentativeStartDates(): Task[] {
-        const tasks = representativeDates.map((date) => {
+        return representativeDates.map((date) => {
             return new TaskBuilder().startDate(date).build();
         });
-
-        return tasks;
     }
 
     public static withAllStatuses(): Task[] {
@@ -178,11 +164,9 @@ export class SampleTasks {
             Status.makeTodo(),
         ];
 
-        const tasks = statuses.map((status) => {
+        return statuses.map((status) => {
             return new TaskBuilder().status(status).build();
         });
-
-        return tasks;
     }
 
     public static withAllStatusTypes(): Task[] {
