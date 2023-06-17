@@ -3,8 +3,8 @@ import { TaskLocation } from '../src/TaskLocation';
 import { PriorityTools } from '../src/lib/PriorityTools';
 import { Status } from '../src/Status';
 import { StatusType } from '../src/StatusConfiguration';
-import { TaskBuilder } from './TestingTools/TaskBuilder';
 import { Recurrence } from '../src/Recurrence';
+import { TaskBuilder } from './TestingTools/TaskBuilder';
 
 export function fromLine({
     line,
