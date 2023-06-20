@@ -36,7 +36,7 @@ describe('task', () => {
 
     beforeAll(() => {
         jest.useFakeTimers();
-        jest.setSystemTime(new Date(2023, 6 - 1, 12));
+        jest.setSystemTime(new Date('2023-06-12'));
     });
 
     afterAll(() => {
