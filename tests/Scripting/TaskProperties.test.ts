@@ -34,6 +34,15 @@ describe('task', () => {
         markdownTable.verifyForDocs();
     }
 
+    beforeAll(() => {
+        jest.useFakeTimers();
+        jest.setSystemTime(new Date('2023-06-12'));
+    });
+
+    afterAll(() => {
+        jest.useRealTimers();
+    });
+
     it('status', () => {
         verifyFieldDataForReferenceDocs([
             'task.isDone',
