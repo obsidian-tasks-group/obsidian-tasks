@@ -7,6 +7,7 @@
     import { Status } from '../Status';
     import { Priority, Task } from '../Task';
     import { doAutocomplete } from '../DateAbbreviations';
+    import { TasksDate } from '../Scripting/TasksDate';
 
     // These exported variables are passed in as props by TaskModal.onOpen():
     export let task: Task;
@@ -255,17 +256,11 @@
             status: task.status,
             priority,
             recurrenceRule: task.recurrence ? task.recurrence.toText() : '',
-            createdDate: task.createdDate
-                ? task.createdDate.format('YYYY-MM-DD')
-                : '',
-            startDate: task.startDate
-                ? task.startDate.format('YYYY-MM-DD')
-                : '',
-            scheduledDate: task.scheduledDate
-                ? task.scheduledDate.format('YYYY-MM-DD')
-                : '',
-            dueDate: task.dueDate ? task.dueDate.format('YYYY-MM-DD') : '',
-            doneDate: task.doneDate ? task.doneDate.format('YYYY-MM-DD') : '',
+            createdDate: new TasksDate(task.createdDate).formatAsDate(),
+            startDate: new TasksDate(task.startDate).formatAsDate(),
+            scheduledDate: new TasksDate(task.scheduledDate).formatAsDate(),
+            dueDate: new TasksDate(task.dueDate).formatAsDate(),
+            doneDate: new TasksDate(task.doneDate).formatAsDate(),
             forwardOnly: true,
         };
         setTimeout(() => {
