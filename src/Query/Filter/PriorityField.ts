@@ -65,7 +65,7 @@ export class PriorityField extends Field {
                     explanation = `${this.fieldName()} is ${filterPriorityString}`;
             }
 
-            result.filter = new Filter(line, filter, new Explanation(explanation));
+            return FilterOrErrorMessage.fromFilter(new Filter(line, filter, new Explanation(explanation)));
         } else {
             result.error = 'do not understand query filter (priority)';
         }

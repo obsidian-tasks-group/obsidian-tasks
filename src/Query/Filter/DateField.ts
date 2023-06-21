@@ -83,7 +83,7 @@ export abstract class DateField extends Field {
                     this.filterResultIfFieldMissing(),
                     fieldDates,
                 );
-                result.filter = new Filter(line, filterFunction, explanation);
+                return FilterOrErrorMessage.fromFilter(new Filter(line, filterFunction, explanation));
             }
         } else {
             result.error = 'do not understand query filter (' + this.fieldName() + ' date)';

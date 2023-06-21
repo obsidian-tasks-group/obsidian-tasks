@@ -98,8 +98,7 @@ export class BooleanField extends Field {
                 return this.filterTaskWithParsedQuery(task, postfixExpression);
             };
             const explanation = this.constructExplanation(postfixExpression);
-            result.filter = new Filter(line, filterFunction, explanation);
-            return result;
+            return FilterOrErrorMessage.fromFilter(new Filter(line, filterFunction, explanation));
         } catch (error) {
             const message = error instanceof Error ? error.message : 'unknown error type';
             result.error = `malformed boolean query -- ${message} (check the documentation for guidelines)`;
