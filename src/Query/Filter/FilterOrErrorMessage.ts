@@ -13,11 +13,6 @@ import type { Filter, FilterFunction } from './Filter';
  * By the time the code has finished with parsing the line, typically the
  * contained {@link Filter} will be saved, for later use in searching for Tasks
  * that match the user's filter instruction.
- *
- * Later, it may gain helper functions for constructing parser error messages,
- * as currently these are created by some rather repetitious code, and also
- * there is scope for making these messages more informative (including the
- * problem line, and perhaps listing allowed options).
  */
 export class FilterOrErrorMessage {
     public object: ObjectOrErrorMessage<Filter>;
