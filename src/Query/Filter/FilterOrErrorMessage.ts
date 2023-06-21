@@ -1,4 +1,4 @@
-import { ObjectOrErrorMessage } from '../ObjectOrErrorMessage';
+import { QueryComponentOrError } from '../QueryComponentOrError';
 import type { Filter, FilterFunction } from './Filter';
 
 /**
@@ -15,9 +15,9 @@ import type { Filter, FilterFunction } from './Filter';
  * that match the user's filter instruction.
  */
 export class FilterOrErrorMessage {
-    public object: ObjectOrErrorMessage<Filter>;
+    public object: QueryComponentOrError<Filter>;
 
-    private constructor(object: ObjectOrErrorMessage<Filter>) {
+    private constructor(object: QueryComponentOrError<Filter>) {
         this.object = object;
     }
 
@@ -49,7 +49,7 @@ export class FilterOrErrorMessage {
      * @param filter - a {@link Filter}
      */
     public static fromFilter(filter: Filter): FilterOrErrorMessage {
-        return new FilterOrErrorMessage(ObjectOrErrorMessage.fromObject<Filter>(filter.instruction, filter));
+        return new FilterOrErrorMessage(QueryComponentOrError.fromObject<Filter>(filter.instruction, filter));
     }
 
     /**
@@ -58,6 +58,6 @@ export class FilterOrErrorMessage {
      * @param errorMessage
      */
     public static fromError(instruction: string, errorMessage: string): FilterOrErrorMessage {
-        return new FilterOrErrorMessage(ObjectOrErrorMessage.fromError<Filter>(instruction, errorMessage));
+        return new FilterOrErrorMessage(QueryComponentOrError.fromError<Filter>(instruction, errorMessage));
     }
 }

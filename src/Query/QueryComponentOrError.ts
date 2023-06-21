@@ -4,7 +4,7 @@
  * - an object of type QueryComponent constructed from the instruction, if the instruction is valid.
  * - otherwise, an error message explaining in what wat the instruction is invalid.
  */
-export class ObjectOrErrorMessage<QueryComponent> {
+export class QueryComponentOrError<QueryComponent> {
     readonly instruction: string;
     private _object: QueryComponent | undefined;
     private _error: string | undefined;
@@ -38,8 +38,8 @@ export class ObjectOrErrorMessage<QueryComponent> {
     public static fromObject<QueryComponent>(
         instruction: string,
         object: QueryComponent,
-    ): ObjectOrErrorMessage<QueryComponent> {
-        const result = new ObjectOrErrorMessage<QueryComponent>(instruction);
+    ): QueryComponentOrError<QueryComponent> {
+        const result = new QueryComponentOrError<QueryComponent>(instruction);
         result._object = object;
         return result;
     }
@@ -52,8 +52,8 @@ export class ObjectOrErrorMessage<QueryComponent> {
     public static fromError<QueryComponent>(
         instruction: string,
         errorMessage: string,
-    ): ObjectOrErrorMessage<QueryComponent> {
-        const result = new ObjectOrErrorMessage<QueryComponent>(instruction);
+    ): QueryComponentOrError<QueryComponent> {
+        const result = new QueryComponentOrError<QueryComponent>(instruction);
         result._error = errorMessage;
         return result;
     }
