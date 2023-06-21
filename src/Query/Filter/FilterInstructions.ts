@@ -35,8 +35,6 @@ export class FilterInstructions {
             }
         }
 
-        const result = new FilterOrErrorMessage(line);
-        result.error = `do not understand filter: ${line}`;
-        return result;
+        return FilterOrErrorMessage.fromError(line, `do not understand filter: ${line}`);
     }
 }
