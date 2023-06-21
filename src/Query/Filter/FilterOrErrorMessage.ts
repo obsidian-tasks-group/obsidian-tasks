@@ -21,7 +21,7 @@ import type { Filter, FilterFunction } from './Filter';
 export class FilterOrErrorMessage {
     readonly instruction: string;
     private _filter: Filter | undefined;
-    error: string | undefined;
+    private _error: string | undefined;
 
     constructor(instruction: string) {
         this.instruction = instruction;
@@ -33,6 +33,14 @@ export class FilterOrErrorMessage {
 
     private set filter(value: Filter | undefined) {
         this._filter = value;
+    }
+
+    public get error(): string | undefined {
+        return this._error;
+    }
+
+    public set error(value: string | undefined) {
+        this._error = value;
     }
 
     get filterFunction(): FilterFunction | undefined {
@@ -63,7 +71,7 @@ export class FilterOrErrorMessage {
      */
     public static fromError(instruction: string, errorMessage: string): FilterOrErrorMessage {
         const result = new FilterOrErrorMessage(instruction);
-        result.error = errorMessage;
+        result._error = errorMessage;
         return result;
     }
 }
