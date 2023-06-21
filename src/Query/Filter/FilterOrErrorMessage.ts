@@ -1,5 +1,55 @@
 import type { Filter, FilterFunction } from './Filter';
 
+class ObjectOrErrorMessage {
+    readonly instruction: string;
+    private _object: Filter | undefined;
+    private _error: string | undefined;
+
+    constructor(instruction: string) {
+        this.instruction = instruction;
+    }
+
+    public get object(): Filter | undefined {
+        return this._object;
+    }
+
+    protected set object(value: Filter | undefined) {
+        this._object = value;
+    }
+
+    public get error(): string | undefined {
+        return this._error;
+    }
+
+    private set error(value: string | undefined) {
+        this._error = value;
+    }
+
+    /**
+     * Construct a FilterOrErrorMessage with the filter.
+     *
+     * This function allows a meaningful {@link Explanation} to be supplied.
+     *
+     * @param object - a {@link Filter}
+     */
+    public static fromObject(object: Filter): FilterOrErrorMessage {
+        const result = new FilterOrErrorMessage(object.instruction);
+        result._object = object;
+        return result;
+    }
+
+    /**
+     * Construct a FilterOrErrorMessage with the given error message.
+     * @param instruction
+     * @param errorMessage
+     */
+    public static fromError(instruction: string, errorMessage: string): FilterOrErrorMessage {
+        const result = new FilterOrErrorMessage(instruction);
+        result._error = errorMessage;
+        return result;
+    }
+}
+
 /**
  * A class which stores one of:
  * - The original instruction string - a line from a tasks code block
@@ -18,21 +68,9 @@ import type { Filter, FilterFunction } from './Filter';
  * there is scope for making these messages more informative (including the
  * problem line, and perhaps listing allowed options).
  */
-export class FilterOrErrorMessage {
-    readonly instruction: string;
-    private _object: Filter | undefined;
-    private _error: string | undefined;
-
+export class FilterOrErrorMessage extends ObjectOrErrorMessage {
     constructor(instruction: string) {
-        this.instruction = instruction;
-    }
-
-    public get object(): Filter | undefined {
-        return this._object;
-    }
-
-    private set object(value: Filter | undefined) {
-        this._object = value;
+        super(instruction);
     }
 
     public get filter(): Filter | undefined {
@@ -41,14 +79,6 @@ export class FilterOrErrorMessage {
 
     private set filter(value: Filter | undefined) {
         this.object = value;
-    }
-
-    public get error(): string | undefined {
-        return this._error;
-    }
-
-    private set error(value: string | undefined) {
-        this._error = value;
     }
 
     get filterFunction(): FilterFunction | undefined {
@@ -64,33 +94,9 @@ export class FilterOrErrorMessage {
      *
      * This function allows a meaningful {@link Explanation} to be supplied.
      *
-     * @param object - a {@link Filter}
-     */
-    public static fromObject(object: Filter): FilterOrErrorMessage {
-        const result = new FilterOrErrorMessage(object.instruction);
-        result._object = object;
-        return result;
-    }
-
-    /**
-     * Construct a FilterOrErrorMessage with the filter.
-     *
-     * This function allows a meaningful {@link Explanation} to be supplied.
-     *
      * @param filter - a {@link Filter}
      */
     public static fromFilter(filter: Filter): FilterOrErrorMessage {
         return FilterOrErrorMessage.fromObject(filter);
-    }
-
-    /**
-     * Construct a FilterOrErrorMessage with the given error message.
-     * @param instruction
-     * @param errorMessage
-     */
-    public static fromError(instruction: string, errorMessage: string): FilterOrErrorMessage {
-        const result = new FilterOrErrorMessage(instruction);
-        result._error = errorMessage;
-        return result;
     }
 }
