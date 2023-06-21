@@ -26,7 +26,7 @@ export class FilterOrErrorMessage {
     }
 
     public get filter(): Filter | undefined {
-        return this.object.object;
+        return this.object.queryComponent;
     }
 
     public get error(): string | undefined {

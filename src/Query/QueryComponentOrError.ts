@@ -6,19 +6,19 @@
  */
 export class QueryComponentOrError<QueryComponent> {
     readonly instruction: string;
-    private _object: QueryComponent | undefined;
+    private _queryComponent: QueryComponent | undefined;
     private _error: string | undefined;
 
     private constructor(instruction: string) {
         this.instruction = instruction;
     }
 
-    public get object(): QueryComponent | undefined {
-        return this._object;
+    public get queryComponent(): QueryComponent | undefined {
+        return this._queryComponent;
     }
 
-    private set object(value: QueryComponent | undefined) {
-        this._object = value;
+    private set queryComponent(value: QueryComponent | undefined) {
+        this._queryComponent = value;
     }
 
     public get error(): string | undefined {
@@ -40,7 +40,7 @@ export class QueryComponentOrError<QueryComponent> {
         object: QueryComponent,
     ): QueryComponentOrError<QueryComponent> {
         const result = new QueryComponentOrError<QueryComponent>(instruction);
-        result._object = object;
+        result._queryComponent = object;
         return result;
     }
 
