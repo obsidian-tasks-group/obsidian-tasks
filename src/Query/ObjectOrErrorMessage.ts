@@ -9,7 +9,7 @@ export class ObjectOrErrorMessage<QueryComponent> {
     private _object: QueryComponent | undefined;
     private _error: string | undefined;
 
-    constructor(instruction: string) {
+    private constructor(instruction: string) {
         this.instruction = instruction;
     }
 
