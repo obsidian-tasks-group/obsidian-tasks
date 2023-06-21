@@ -54,8 +54,7 @@ export class FilterOrErrorMessage {
      * @param filter - a {@link Filter}
      */
     public static fromFilter(filter: Filter): FilterOrErrorMessage {
-        const object = ObjectOrErrorMessage.fromObject<Filter>(filter.instruction, filter);
-        return new FilterOrErrorMessage(object);
+        return new FilterOrErrorMessage(ObjectOrErrorMessage.fromObject<Filter>(filter.instruction, filter));
     }
 
     /**
