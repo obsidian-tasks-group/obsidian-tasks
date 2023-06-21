@@ -20,19 +20,27 @@ import type { Filter, FilterFunction } from './Filter';
  */
 export class FilterOrErrorMessage {
     readonly instruction: string;
-    private _filter: Filter | undefined;
+    private _object: Filter | undefined;
     private _error: string | undefined;
 
     constructor(instruction: string) {
         this.instruction = instruction;
     }
 
+    public get object(): Filter | undefined {
+        return this._object;
+    }
+
+    private set object(value: Filter | undefined) {
+        this._object = value;
+    }
+
     public get filter(): Filter | undefined {
-        return this._filter;
+        return this.object;
     }
 
     private set filter(value: Filter | undefined) {
-        this._filter = value;
+        this.object = value;
     }
 
     public get error(): string | undefined {
@@ -44,8 +52,8 @@ export class FilterOrErrorMessage {
     }
 
     get filterFunction(): FilterFunction | undefined {
-        if (this._filter) {
-            return this._filter.filterFunction;
+        if (this.filter) {
+            return this.filter.filterFunction;
         } else {
             return undefined;
         }
@@ -56,12 +64,23 @@ export class FilterOrErrorMessage {
      *
      * This function allows a meaningful {@link Explanation} to be supplied.
      *
+     * @param object - a {@link Filter}
+     */
+    public static fromObject(object: Filter): FilterOrErrorMessage {
+        const result = new FilterOrErrorMessage(object.instruction);
+        result._object = object;
+        return result;
+    }
+
+    /**
+     * Construct a FilterOrErrorMessage with the filter.
+     *
+     * This function allows a meaningful {@link Explanation} to be supplied.
+     *
      * @param filter - a {@link Filter}
      */
     public static fromFilter(filter: Filter): FilterOrErrorMessage {
-        const result = new FilterOrErrorMessage(filter.instruction);
-        result.filter = filter;
-        return result;
+        return FilterOrErrorMessage.fromObject(filter);
     }
 
     /**
