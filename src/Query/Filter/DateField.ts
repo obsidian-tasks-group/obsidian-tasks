@@ -50,8 +50,6 @@ export abstract class DateField extends Field {
             return filterResult;
         }
 
-        const result = new FilterOrErrorMessage(line);
-
         const fieldNameKeywordDate = Field.getMatch(this.filterRegExp(), line);
         if (fieldNameKeywordDate !== null) {
             const keywordAndDateString = fieldNameKeywordDate[1]; // Will contain the whole line except the field name
@@ -73,7 +71,7 @@ export abstract class DateField extends Field {
             }
 
             if (!fieldDates.isValid()) {
-                result.error = 'do not understand ' + this.fieldName() + ' date';
+                return FilterOrErrorMessage.fromError(line, 'do not understand ' + this.fieldName() + ' date');
             } else {
                 const filterFunction = this.buildFilterFunction(fieldKeyword, fieldDates);
 
@@ -86,9 +84,11 @@ export abstract class DateField extends Field {
                 return FilterOrErrorMessage.fromFilter(new Filter(line, filterFunction, explanation));
             }
         } else {
-            result.error = 'do not understand query filter (' + this.fieldName() + ' date)';
+            return FilterOrErrorMessage.fromError(
+                line,
+                'do not understand query filter (' + this.fieldName() + ' date)',
+            );
         }
-        return result;
     }
 
     /**

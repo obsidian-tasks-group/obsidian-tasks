@@ -39,7 +39,7 @@ export class FilterOrErrorMessage {
         return this._error;
     }
 
-    public set error(value: string | undefined) {
+    private set error(value: string | undefined) {
         this._error = value;
     }
 
