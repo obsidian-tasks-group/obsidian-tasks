@@ -22,7 +22,7 @@ import type { Filter, FilterFunction } from './Filter';
 export class FilterOrErrorMessage {
     public object: ObjectOrErrorMessage;
 
-    constructor(object: ObjectOrErrorMessage) {
+    private constructor(object: ObjectOrErrorMessage) {
         this.object = object;
     }
 
