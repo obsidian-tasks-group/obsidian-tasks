@@ -31,11 +31,11 @@ export class ObjectOrErrorMessage {
      * Construct a FilterOrErrorMessage with the filter.
      *
      * This function allows a meaningful {@link Explanation} to be supplied.
-     *
+     * @param instruction
      * @param object - a {@link Filter}
      */
-    public static fromObject(object: Filter): FilterOrErrorMessage {
-        const result = new FilterOrErrorMessage(object.instruction);
+    public static fromObject(instruction: string, object: Filter): FilterOrErrorMessage {
+        const result = new FilterOrErrorMessage(instruction);
         result._object = object;
         return result;
     }

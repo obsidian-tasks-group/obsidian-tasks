@@ -44,6 +44,6 @@ export class FilterOrErrorMessage extends ObjectOrErrorMessage {
      * @param filter - a {@link Filter}
      */
     public static fromFilter(filter: Filter): FilterOrErrorMessage {
-        return FilterOrErrorMessage.fromObject(filter);
+        return FilterOrErrorMessage.fromObject(filter.instruction, filter);
     }
 }
