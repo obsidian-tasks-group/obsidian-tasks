@@ -1,3 +1,4 @@
+import { QueryComponentOrError } from '../QueryComponentOrError';
 import type { Filter, FilterFunction } from './Filter';
 
 /**
@@ -12,40 +13,29 @@ import type { Filter, FilterFunction } from './Filter';
  * By the time the code has finished with parsing the line, typically the
  * contained {@link Filter} will be saved, for later use in searching for Tasks
  * that match the user's filter instruction.
- *
- * Later, it may gain helper functions for constructing parser error messages,
- * as currently these are created by some rather repetitious code, and also
- * there is scope for making these messages more informative (including the
- * problem line, and perhaps listing allowed options).
  */
 export class FilterOrErrorMessage {
-    readonly instruction: string;
-    private _filter: Filter | undefined;
-    private _error: string | undefined;
+    public object: QueryComponentOrError<Filter>;
 
-    constructor(instruction: string) {
-        this.instruction = instruction;
+    private constructor(object: QueryComponentOrError<Filter>) {
+        this.object = object;
+    }
+
+    public get instruction(): string {
+        return this.object.instruction;
     }
 
     public get filter(): Filter | undefined {
-        return this._filter;
-    }
-
-    private set filter(value: Filter | undefined) {
-        this._filter = value;
+        return this.object.queryComponent;
     }
 
     public get error(): string | undefined {
-        return this._error;
-    }
-
-    private set error(value: string | undefined) {
-        this._error = value;
+        return this.object.error;
     }
 
     get filterFunction(): FilterFunction | undefined {
-        if (this._filter) {
-            return this._filter.filterFunction;
+        if (this.filter) {
+            return this.filter.filterFunction;
         } else {
             return undefined;
         }
@@ -59,9 +49,7 @@ export class FilterOrErrorMessage {
      * @param filter - a {@link Filter}
      */
     public static fromFilter(filter: Filter): FilterOrErrorMessage {
-        const result = new FilterOrErrorMessage(filter.instruction);
-        result.filter = filter;
-        return result;
+        return new FilterOrErrorMessage(QueryComponentOrError.fromObject<Filter>(filter.instruction, filter));
     }
 
     /**
@@ -70,8 +58,6 @@ export class FilterOrErrorMessage {
      * @param errorMessage
      */
     public static fromError(instruction: string, errorMessage: string): FilterOrErrorMessage {
-        const result = new FilterOrErrorMessage(instruction);
-        result._error = errorMessage;
-        return result;
+        return new FilterOrErrorMessage(QueryComponentOrError.fromError<Filter>(instruction, errorMessage));
     }
 }
