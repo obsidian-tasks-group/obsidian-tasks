@@ -13,7 +13,7 @@ class ObjectOrErrorMessage {
         return this._object;
     }
 
-    protected set object(value: Filter | undefined) {
+    private set object(value: Filter | undefined) {
         this._object = value;
     }
 
@@ -75,10 +75,6 @@ export class FilterOrErrorMessage extends ObjectOrErrorMessage {
 
     public get filter(): Filter | undefined {
         return this.object;
-    }
-
-    private set filter(value: Filter | undefined) {
-        this.object = value;
     }
 
     get filterFunction(): FilterFunction | undefined {
