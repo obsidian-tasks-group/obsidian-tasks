@@ -19,13 +19,23 @@ import type { Filter, FilterFunction } from './Filter';
  * there is scope for making these messages more informative (including the
  * problem line, and perhaps listing allowed options).
  */
-export class FilterOrErrorMessage extends ObjectOrErrorMessage {
-    constructor(instruction: string) {
-        super(instruction);
+export class FilterOrErrorMessage {
+    public object: ObjectOrErrorMessage;
+
+    constructor(object: ObjectOrErrorMessage) {
+        this.object = object;
+    }
+
+    public get instruction(): string {
+        return this.object.instruction;
     }
 
     public get filter(): Filter | undefined {
-        return this.object;
+        return this.object.object;
+    }
+
+    public get error(): string | undefined {
+        return this.object.error;
     }
 
     get filterFunction(): FilterFunction | undefined {
@@ -44,6 +54,12 @@ export class FilterOrErrorMessage extends ObjectOrErrorMessage {
      * @param filter - a {@link Filter}
      */
     public static fromFilter(filter: Filter): FilterOrErrorMessage {
-        return FilterOrErrorMessage.fromObject(filter.instruction, filter);
+        const object = ObjectOrErrorMessage.fromObject(filter.instruction, filter);
+        return new FilterOrErrorMessage(object);
+    }
+
+    public static fromError(instruction: string, errorMessage: string): FilterOrErrorMessage {
+        const object = ObjectOrErrorMessage.fromError(instruction, errorMessage);
+        return new FilterOrErrorMessage(object);
     }
 }

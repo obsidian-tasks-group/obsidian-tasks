@@ -1,6 +1,5 @@
 // @ts-ignore
 import { Filter } from './Filter/Filter';
-import { FilterOrErrorMessage } from './Filter/FilterOrErrorMessage';
 
 export class ObjectOrErrorMessage {
     readonly instruction: string;
@@ -34,8 +33,8 @@ export class ObjectOrErrorMessage {
      * @param instruction
      * @param object - a {@link Filter}
      */
-    public static fromObject(instruction: string, object: Filter): FilterOrErrorMessage {
-        const result = new FilterOrErrorMessage(instruction);
+    public static fromObject(instruction: string, object: Filter): ObjectOrErrorMessage {
+        const result = new ObjectOrErrorMessage(instruction);
         result._object = object;
         return result;
     }
@@ -45,8 +44,8 @@ export class ObjectOrErrorMessage {
      * @param instruction
      * @param errorMessage
      */
-    public static fromError(instruction: string, errorMessage: string): FilterOrErrorMessage {
-        const result = new FilterOrErrorMessage(instruction);
+    public static fromError(instruction: string, errorMessage: string): ObjectOrErrorMessage {
+        const result = new ObjectOrErrorMessage(instruction);
         result._error = errorMessage;
         return result;
     }
