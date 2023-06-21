@@ -3,6 +3,8 @@
  * - a text instruction.
  * - an object of type QueryComponent constructed from the instruction, if the instruction is valid.
  * - otherwise, an error message explaining in what wat the instruction is invalid.
+ *
+ * An example type of QueryComponent is {@link Filter}. See {@link FilterOrErrorMessage}.
  */
 export class QueryComponentOrError<QueryComponent> {
     readonly instruction: string;
