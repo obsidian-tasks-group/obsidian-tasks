@@ -1,20 +1,23 @@
-// @ts-ignore
-import { Filter } from './Filter/Filter';
-
-export class ObjectOrErrorMessage {
+/**
+ * Generic class for storing:
+ * - a text instruction.
+ * - an object of type QueryComponent constructed from the instruction, if the instruction is valid.
+ * - otherwise, an error message explaining in what wat the instruction is invalid.
+ */
+export class ObjectOrErrorMessage<QueryComponent> {
     readonly instruction: string;
-    private _object: Filter | undefined;
+    private _object: QueryComponent | undefined;
     private _error: string | undefined;
 
     constructor(instruction: string) {
         this.instruction = instruction;
     }
 
-    public get object(): Filter | undefined {
+    public get object(): QueryComponent | undefined {
         return this._object;
     }
 
-    private set object(value: Filter | undefined) {
+    private set object(value: QueryComponent | undefined) {
         this._object = value;
     }
 
@@ -33,8 +36,11 @@ export class ObjectOrErrorMessage {
      * @param instruction
      * @param object - a {@link Filter}
      */
-    public static fromObject(instruction: string, object: Filter): ObjectOrErrorMessage {
-        const result = new ObjectOrErrorMessage(instruction);
+    public static fromObject<QueryComponent>(
+        instruction: string,
+        object: QueryComponent,
+    ): ObjectOrErrorMessage<QueryComponent> {
+        const result = new ObjectOrErrorMessage<QueryComponent>(instruction);
         result._object = object;
         return result;
     }
@@ -44,8 +50,11 @@ export class ObjectOrErrorMessage {
      * @param instruction
      * @param errorMessage
      */
-    public static fromError(instruction: string, errorMessage: string): ObjectOrErrorMessage {
-        const result = new ObjectOrErrorMessage(instruction);
+    public static fromError<QueryComponent>(
+        instruction: string,
+        errorMessage: string,
+    ): ObjectOrErrorMessage<QueryComponent> {
+        const result = new ObjectOrErrorMessage<QueryComponent>(instruction);
         result._error = errorMessage;
         return result;
     }

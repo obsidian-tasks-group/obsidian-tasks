@@ -20,9 +20,9 @@ import type { Filter, FilterFunction } from './Filter';
  * problem line, and perhaps listing allowed options).
  */
 export class FilterOrErrorMessage {
-    public object: ObjectOrErrorMessage;
+    public object: ObjectOrErrorMessage<Filter>;
 
-    private constructor(object: ObjectOrErrorMessage) {
+    private constructor(object: ObjectOrErrorMessage<Filter>) {
         this.object = object;
     }
 
@@ -54,12 +54,11 @@ export class FilterOrErrorMessage {
      * @param filter - a {@link Filter}
      */
     public static fromFilter(filter: Filter): FilterOrErrorMessage {
-        const object = ObjectOrErrorMessage.fromObject(filter.instruction, filter);
+        const object = ObjectOrErrorMessage.fromObject<Filter>(filter.instruction, filter);
         return new FilterOrErrorMessage(object);
     }
 
     public static fromError(instruction: string, errorMessage: string): FilterOrErrorMessage {
-        const object = ObjectOrErrorMessage.fromError(instruction, errorMessage);
-        return new FilterOrErrorMessage(object);
+        return new FilterOrErrorMessage(ObjectOrErrorMessage.fromError<Filter>(instruction, errorMessage));
     }
 }
