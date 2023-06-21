@@ -30,9 +30,8 @@ export class ObjectOrErrorMessage<QueryComponent> {
     }
 
     /**
-     * Construct a FilterOrErrorMessage with the filter.
+     * Construct an ObjectOrErrorMessage with the given QueryComponent.
      *
-     * This function allows a meaningful {@link Explanation} to be supplied.
      * @param instruction
      * @param object - a {@link Filter}
      */
@@ -46,7 +45,7 @@ export class ObjectOrErrorMessage<QueryComponent> {
     }
 
     /**
-     * Construct a FilterOrErrorMessage with the given error message.
+     * Construct a ObjectOrErrorMessage with the given error message.
      * @param instruction
      * @param errorMessage
      */
