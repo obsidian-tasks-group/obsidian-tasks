@@ -58,6 +58,11 @@ export class FilterOrErrorMessage {
         return new FilterOrErrorMessage(object);
     }
 
+    /**
+     * Construct a FilterOrErrorMessage with the given error message.
+     * @param instruction
+     * @param errorMessage
+     */
     public static fromError(instruction: string, errorMessage: string): FilterOrErrorMessage {
         return new FilterOrErrorMessage(ObjectOrErrorMessage.fromError<Filter>(instruction, errorMessage));
     }
