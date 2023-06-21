@@ -35,8 +35,7 @@ export class FilterInstruction {
         const result = new FilterOrErrorMessage(line);
 
         if (line === this._instruction) {
-            result.filter = new Filter(line, this._filter, new Explanation(line));
-            return result;
+            return FilterOrErrorMessage.fromFilter(new Filter(line, this._filter, new Explanation(line)));
         }
 
         result.error = `do not understand filter: ${line}`;

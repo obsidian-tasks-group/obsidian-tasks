@@ -31,7 +31,7 @@ export class FilterOrErrorMessage {
         return this._filter;
     }
 
-    set filter(value: Filter | undefined) {
+    private set filter(value: Filter | undefined) {
         this._filter = value;
     }
 
