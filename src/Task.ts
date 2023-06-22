@@ -224,7 +224,7 @@ export class Task {
 
         // return if task does not have the global filter. Do this before processing
         // rest of match to improve performance.
-        if (!GlobalFilter.includedIn(body)) {
+        if (!GlobalFilter.includedIn(line)) {
             return null;
         }
 
