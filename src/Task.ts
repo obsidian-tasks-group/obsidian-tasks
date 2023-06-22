@@ -226,9 +226,7 @@ export class Task {
         }
 
         // match[4] includes the whole body of the task after the brackets.
-        const body = regexMatch[4].trim();
-
-        let description = body;
+        let description = regexMatch[4].trim();
         const indentation = regexMatch[1];
         const listMarker = regexMatch[2];
 
