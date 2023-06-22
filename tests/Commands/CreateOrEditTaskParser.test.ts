@@ -73,7 +73,7 @@ describe('CreateOrEditTaskParser - task recognition', () => {
     it('should recognize task details without global filter', () => {
         GlobalFilter.set('#task');
         const taskLine =
-            '- [ ] without global filter but with all the info ⏬ 🔁 every 2 days ➕ 2022-03-10 🛫 2022-01-31 ⏳ 2023-06-13 📅 2024-12-35 ✅ 2023-06-22';
+            '- [ ] without global filter but with all the info ⏬ 🔁 every 2 days ➕ 2022-03-10 🛫 2022-01-31 ⏳ 2023-06-13 📅 2024-12-10 ✅ 2023-06-22';
         const path = 'a/b/c.md';
 
         const task = taskFromLine({ line: taskLine, path });
