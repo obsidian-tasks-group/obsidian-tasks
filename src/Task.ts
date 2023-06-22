@@ -225,14 +225,15 @@ export class Task {
             return null;
         }
 
-        // match[4] includes the whole body of the task after the brackets.
-        let description = regexMatch[4].trim();
         const indentation = regexMatch[1];
         const listMarker = regexMatch[2];
 
         // Get the status of the task.
         const statusString = regexMatch[3];
         const status = StatusRegistry.getInstance().bySymbolOrCreate(statusString);
+
+        // match[4] includes the whole body of the task after the brackets.
+        let description = regexMatch[4].trim();
 
         // Match for block link and remove if found. Always expected to be
         // at the end of the line.
