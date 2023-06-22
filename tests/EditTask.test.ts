@@ -64,18 +64,15 @@ describe('Task rendering', () => {
         );
     });
 
-    it.failing(
-        'should display task description with emoji removed, even if the global filter is missing from initial line (bug 2037)',
-        () => {
-            GlobalFilter.set('#todo');
-            // When written, this was a demonstration of the behaviour logged in
-            // https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2037
-            testDescriptionRender(
-                'without global filter but with scheduled date ⏳ 2023-06-13',
-                'without global filter but with scheduled date', // fails, as the absence of the global filter means the line is not parsed, and the emoji stays in the description.
-            );
-        },
-    );
+    it('should display task description with emoji removed, even if the global filter is missing from initial line (bug 2037)', () => {
+        GlobalFilter.set('#todo');
+        // When written, this was a demonstration of the behaviour logged in
+        // https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2037
+        testDescriptionRender(
+            'without global filter but with scheduled date ⏳ 2023-06-13',
+            'without global filter but with scheduled date', // fails, as the absence of the global filter means the line is not parsed, and the emoji stays in the description.
+        );
+    });
 });
 
 describe('Task editing', () => {

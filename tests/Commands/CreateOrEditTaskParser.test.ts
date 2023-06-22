@@ -86,13 +86,12 @@ describe('CreateOrEditTaskParser - task recognition', () => {
 
         expect(task.toFileLineString()).toStrictEqual(taskLine);
 
-        // Priority taken by default, everything else is not recognized
-        expect(task.priority).toStrictEqual(Priority.None);
-        expect(task.recurrenceRule).toStrictEqual('');
-        expect(task.createdDate?.format(TaskRegularExpressions.dateFormat)).toEqual(undefined);
-        expect(task.startDate?.format(TaskRegularExpressions.dateFormat)).toEqual(undefined);
-        expect(task.scheduledDate?.format(TaskRegularExpressions.dateFormat)).toEqual(undefined);
-        expect(task.dueDate?.format(TaskRegularExpressions.dateFormat)).toEqual(undefined);
-        expect(task.doneDate?.format(TaskRegularExpressions.dateFormat)).toEqual(undefined);
+        expect(task.priority).toStrictEqual(Priority.Lowest);
+        expect(task.recurrenceRule).toStrictEqual('every 2 days');
+        expect(task.createdDate?.format(TaskRegularExpressions.dateFormat)).toEqual('2022-03-10');
+        expect(task.startDate?.format(TaskRegularExpressions.dateFormat)).toEqual('2022-01-31');
+        expect(task.scheduledDate?.format(TaskRegularExpressions.dateFormat)).toEqual('2023-06-13');
+        expect(task.dueDate?.format(TaskRegularExpressions.dateFormat)).toEqual('2024-12-10');
+        expect(task.doneDate?.format(TaskRegularExpressions.dateFormat)).toEqual('2023-06-22');
     });
 });

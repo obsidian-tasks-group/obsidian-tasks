@@ -21,11 +21,11 @@ import { getSettings } from '../Config/Settings';
 export const taskFromLine = ({ line, path }: { line: string; path: string }): Task => {
     const fallbackDate = DateFallback.fromPath(path);
 
-    const task = Task.fromLine({
+    const task = Task.parseLine(
         line,
-        taskLocation: TaskLocation.fromUnknownPosition(path), // We don't need precise location to toggle it here in the editor.
+        TaskLocation.fromUnknownPosition(path), // We don't need precise location to toggle it here in the editor.
         fallbackDate, // set the scheduled date from the filename, so it can be displayed in the dialog
-    });
+    );
 
     if (task !== null) {
         return task;
