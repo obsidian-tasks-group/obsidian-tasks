@@ -1,6 +1,12 @@
+/**
+ * @jest-environment jsdom
+ */
+import moment from 'moment';
 import { Priority, TaskRegularExpressions } from '../../src/Task';
 import { taskFromLine } from '../../src/Commands/CreateOrEditTaskParser';
 import { GlobalFilter } from '../../src/Config/GlobalFilter';
+
+window.moment = moment;
 
 describe('CreateOrEditTaskParser - testing edited task if line is saved unchanged', () => {
     afterEach(() => {
