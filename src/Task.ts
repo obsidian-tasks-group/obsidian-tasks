@@ -213,15 +213,15 @@ export class Task {
         taskLocation: TaskLocation;
         fallbackDate: Moment | null;
     }): Task | null {
-        // Check the line to see if it is a markdown task.
-        const regexMatch = line.match(TaskRegularExpressions.taskRegex);
-        if (regexMatch === null) {
-            return null;
-        }
-
         // return if task does not have the global filter. Do this before processing
         // rest of match to improve performance.
         if (!GlobalFilter.includedIn(line)) {
+            return null;
+        }
+
+        // Check the line to see if it is a markdown task.
+        const regexMatch = line.match(TaskRegularExpressions.taskRegex);
+        if (regexMatch === null) {
             return null;
         }
 
