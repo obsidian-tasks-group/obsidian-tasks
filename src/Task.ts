@@ -219,14 +219,14 @@ export class Task {
             return null;
         }
 
-        // match[4] includes the whole body of the task after the brackets.
-        const body = regexMatch[4].trim();
-
         // return if task does not have the global filter. Do this before processing
         // rest of match to improve performance.
         if (!GlobalFilter.includedIn(line)) {
             return null;
         }
+
+        // match[4] includes the whole body of the task after the brackets.
+        const body = regexMatch[4].trim();
 
         let description = body;
         const indentation = regexMatch[1];
