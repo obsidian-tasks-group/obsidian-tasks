@@ -395,6 +395,10 @@ describe('parsing tags', () => {
 });
 
 describe('task parsing VS global filter', () => {
+    afterEach(() => {
+        GlobalFilter.reset();
+    });
+
     it('returns null when task does not have global filter', () => {
         // Arrange
         GlobalFilter.set('#task');
@@ -407,9 +411,6 @@ describe('task parsing VS global filter', () => {
 
         // Assert
         expect(task).toBeNull();
-
-        // Cleanup
-        GlobalFilter.reset();
     });
 });
 
