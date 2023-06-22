@@ -32,10 +32,7 @@ export const taskFromLine = ({ line, path }: { line: string; path: string }): Ta
     }
 
     const { setCreatedDate } = getSettings();
-    let createdDate: moment.Moment | null = null;
-    if (setCreatedDate) {
-        createdDate = window.moment();
-    }
+    const createdDate = setCreatedDate ? window.moment() : null;
 
     // If we are not on a line of a task, we take what we have.
     // The non-task line can still be a checklist, for example if it is lacking the global filter.
