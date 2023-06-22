@@ -219,6 +219,10 @@ export class Task {
             return null;
         }
 
+        return Task.parseLine(line, taskLocation, fallbackDate);
+    }
+
+    private static parseLine(line: string, taskLocation: TaskLocation, fallbackDate: Moment | null): Task | null {
         // Check the line to see if it is a markdown task.
         const regexMatch = line.match(TaskRegularExpressions.taskRegex);
         if (regexMatch === null) {
