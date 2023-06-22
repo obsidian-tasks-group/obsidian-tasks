@@ -85,6 +85,7 @@ describe('CreateOrEditTaskParser - task recognition', () => {
         const task = taskFromLine({ line: taskLine, path });
 
         expect(task.toFileLineString()).toStrictEqual(taskLine);
+        expect(task.path).toStrictEqual('a/b/c.md');
 
         expect(task.priority).toStrictEqual(Priority.Lowest);
         expect(task.recurrenceRule).toStrictEqual('every 2 days');
