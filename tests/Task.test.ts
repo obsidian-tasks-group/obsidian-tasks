@@ -412,6 +412,24 @@ describe('task parsing VS global filter', () => {
         // Assert
         expect(task).toBeNull();
     });
+
+    it.each([
+        '#task - [ ] this is a task 🗓 2021-09-12',
+        '- #task [ ] this is a task 🗓 2021-09-12',
+        '- [#task] this is a task 🗓 2021-09-12',
+        '- [ #task ] this is a task 🗓 2021-09-12',
+    ])('should not parse task with global filter outside of the description: "%s"', (line: string) => {
+        // Arrange
+        GlobalFilter.set('#task');
+
+        // Act
+        const task = fromLine({
+            line,
+        });
+
+        // Assert
+        expect(task).toBeNull();
+    });
 });
 
 describe('properties for scripting', () => {
