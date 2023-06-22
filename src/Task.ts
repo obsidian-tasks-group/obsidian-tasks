@@ -213,8 +213,8 @@ export class Task {
         taskLocation: TaskLocation;
         fallbackDate: Moment | null;
     }): Task | null {
-        // return if task does not have the global filter. Do this before processing
-        // rest of match to improve performance.
+        // return if the line does not have the global filter. Do this before
+        // any other processing to improve performance.
         if (!GlobalFilter.includedIn(line)) {
             return null;
         }
