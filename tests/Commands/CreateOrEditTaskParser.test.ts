@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 import moment from 'moment';
-import { Priority, TaskRegularExpressions } from '../../src/Task';
+import { Priority } from '../../src/Task';
 import { taskFromLine } from '../../src/Commands/CreateOrEditTaskParser';
 import { GlobalFilter } from '../../src/Config/GlobalFilter';
 
@@ -89,10 +89,10 @@ describe('CreateOrEditTaskParser - task recognition', () => {
 
         expect(task.priority).toStrictEqual(Priority.Lowest);
         expect(task.recurrenceRule).toStrictEqual('every 2 days');
-        expect(task.createdDate?.format(TaskRegularExpressions.dateFormat)).toEqual('2022-03-10');
-        expect(task.startDate?.format(TaskRegularExpressions.dateFormat)).toEqual('2022-01-31');
-        expect(task.scheduledDate?.format(TaskRegularExpressions.dateFormat)).toEqual('2023-06-13');
-        expect(task.dueDate?.format(TaskRegularExpressions.dateFormat)).toEqual('2024-12-10');
-        expect(task.doneDate?.format(TaskRegularExpressions.dateFormat)).toEqual('2023-06-22');
+        expect(task.createdDate).toEqualMoment(moment('2022-03-10'));
+        expect(task.startDate).toEqualMoment(moment('2022-01-31'));
+        expect(task.scheduledDate).toEqualMoment(moment('2023-06-13'));
+        expect(task.dueDate).toEqualMoment(moment('2024-12-10'));
+        expect(task.doneDate).toEqualMoment(moment('2023-06-22'));
     });
 });
