@@ -195,7 +195,8 @@ export class Task {
     }
 
     /**
-     * Takes the given line from an obsidian note and returns a Task object.
+     * Takes the given line from an Obsidian note and returns a Task object.
+     * Will check if Global Filter is present in the line.
      *
      * @static
      * @param {string} line - The full line in the note to parse.
@@ -222,7 +223,17 @@ export class Task {
         return Task.parseLine(line, taskLocation, fallbackDate);
     }
 
-    private static parseLine(line: string, taskLocation: TaskLocation, fallbackDate: Moment | null): Task | null {
+    /**
+     * Parses the line in attempt to get the task details.
+     * Parsing only is done. If a Global Filter check is needed,
+     * use {@link Task.fromLine}.
+     *
+     * @param line - the full line to parse
+     * @param taskLocation - The location of the task line
+     * @param fallbackDate - The date to use as the scheduled date if no other date is set
+     * @returns {*} {(Task | null)}
+     */
+    public static parseLine(line: string, taskLocation: TaskLocation, fallbackDate: Moment | null): Task | null {
         // Check the line to see if it is a markdown task.
         const regexMatch = line.match(TaskRegularExpressions.taskRegex);
         if (regexMatch === null) {
