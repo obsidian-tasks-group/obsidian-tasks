@@ -1,4 +1,4 @@
-import { Priority } from '../../src/Task';
+import { Priority, TaskRegularExpressions } from '../../src/Task';
 import { taskFromLine } from '../../src/Commands/CreateOrEditTaskParser';
 import { GlobalFilter } from '../../src/Config/GlobalFilter';
 
@@ -83,10 +83,10 @@ describe('CreateOrEditTaskParser - task recognition', () => {
         // Priority taken by default, everything else is not recognized
         expect(task.priority).toStrictEqual(Priority.None);
         expect(task.recurrenceRule).toStrictEqual('');
-        expect(task.createdDate).toStrictEqual(null);
-        expect(task.startDate).toStrictEqual(null);
-        expect(task.scheduledDate).toStrictEqual(null);
-        expect(task.dueDate).toStrictEqual(null);
-        expect(task.doneDate).toStrictEqual(null);
+        expect(task.createdDate?.format(TaskRegularExpressions.dateFormat)).toEqual(undefined);
+        expect(task.startDate?.format(TaskRegularExpressions.dateFormat)).toEqual(undefined);
+        expect(task.scheduledDate?.format(TaskRegularExpressions.dateFormat)).toEqual(undefined);
+        expect(task.dueDate?.format(TaskRegularExpressions.dateFormat)).toEqual(undefined);
+        expect(task.doneDate?.format(TaskRegularExpressions.dateFormat)).toEqual(undefined);
     });
 });
