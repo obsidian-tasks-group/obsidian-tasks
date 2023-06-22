@@ -1,3 +1,4 @@
+import { Priority } from '../../src/Task';
 import { taskFromLine } from '../../src/Commands/CreateOrEditTaskParser';
 import { GlobalFilter } from '../../src/Config/GlobalFilter';
 
@@ -62,4 +63,30 @@ describe('CreateOrEditTaskParser - testing edited task if line is saved unchange
             expect(task.path).toStrictEqual(path);
         },
     );
+});
+
+describe('CreateOrEditTaskParser - task recognition', () => {
+    afterEach(() => {
+        GlobalFilter.reset();
+    });
+
+    it('should recognize task details without global filter', () => {
+        GlobalFilter.set('#task');
+        const taskLine =
+            '- [ ] without global filter but with all the info ⏬ 🔁 every 2 days ➕ 2022-03-10 🛫 2022-01-31 ⏳ 2023-06-13 📅 2024-12-35 ✅ 2023-06-22';
+        const path = 'a/b/c.md';
+
+        const task = taskFromLine({ line: taskLine, path });
+
+        expect(task.toFileLineString()).toStrictEqual(taskLine);
+
+        // Priority taken by default, everything else is not recognized
+        expect(task.priority).toStrictEqual(Priority.None);
+        expect(task.recurrenceRule).toStrictEqual('');
+        expect(task.createdDate).toStrictEqual(null);
+        expect(task.startDate).toStrictEqual(null);
+        expect(task.scheduledDate).toStrictEqual(null);
+        expect(task.dueDate).toStrictEqual(null);
+        expect(task.doneDate).toStrictEqual(null);
+    });
 });
