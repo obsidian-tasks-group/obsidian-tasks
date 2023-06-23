@@ -227,7 +227,7 @@ export class Task {
         taskLocation: TaskLocation;
         fallbackDate: Moment | null;
     }): Task | null {
-        const taskComponents = this.extractTaskComponents(line);
+        const taskComponents = Task.extractTaskComponents(line);
         // Check the line to see if it is a markdown task.
         if (taskComponents === null) {
             return null;
@@ -262,7 +262,7 @@ export class Task {
         taskLocation: TaskLocation,
         fallbackDate: Moment | null,
     ): Task | null {
-        const taskComponents = this.extractTaskComponents(line);
+        const taskComponents = Task.extractTaskComponents(line);
         // Check the line to see if it is a markdown task.
         if (taskComponents === null) {
             return null;
