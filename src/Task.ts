@@ -56,6 +56,8 @@ export class TaskRegularExpressions {
     // - List marker
     // - Status character
     // - Rest of task after checkbox markdown
+    // See Task.extractTaskComponents() for abstraction around this regular expression.
+    // That is private for now, but could be made public in future if needed.
     public static readonly taskRegex = new RegExp(
         TaskRegularExpressions.indentationRegex.source +
             TaskRegularExpressions.listMarkerRegex.source +
