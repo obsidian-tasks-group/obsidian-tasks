@@ -95,6 +95,14 @@ export class TaskRegularExpressions {
     public static readonly hashTagsFromEnd = new RegExp(this.hashTags.source + '$');
 }
 
+interface TaskComponents {
+    indentation: string;
+    listMarker: string;
+    status: Status;
+    body: string;
+    blockLink: string;
+}
+
 /**
  * Task encapsulates the properties of the MarkDown task along with
  * the extensions provided by this plugin. This is used to parse and
@@ -241,32 +249,14 @@ export class Task {
         taskLocation: TaskLocation,
         fallbackDate: Moment | null,
     ): Task | null {
+        const taskComponents = this.extractTaskComponents(line);
         // Check the line to see if it is a markdown task.
-        const regexMatch = line.match(TaskRegularExpressions.taskRegex);
-        if (regexMatch === null) {
+        if (taskComponents === null) {
             return null;
         }
 
-        const indentation = regexMatch[1];
-        const listMarker = regexMatch[2];
-
-        // Get the status of the task.
-        const statusString = regexMatch[3];
-        const status = StatusRegistry.getInstance().bySymbolOrCreate(statusString);
-
-        // match[4] includes the whole body of the task after the brackets.
-        let description = regexMatch[4].trim();
-
-        // Match for block link and remove if found. Always expected to be
-        // at the end of the line.
-        const blockLinkMatch = description.match(TaskRegularExpressions.blockLinkRegex);
-        const blockLink = blockLinkMatch !== null ? blockLinkMatch[0] : '';
-
-        if (blockLink !== '') {
-            description = description.replace(TaskRegularExpressions.blockLinkRegex, '').trim();
-        }
         const { taskSerializer } = getUserSelectedTaskFormat();
-        const taskInfo = taskSerializer.deserialize(description);
+        const taskInfo = taskSerializer.deserialize(taskComponents.body);
 
         let scheduledDateIsInferred = false;
         // Infer the scheduled date from the file name if not set explicitly
@@ -282,16 +272,42 @@ export class Task {
         taskInfo.tags = taskInfo.tags.filter((tag) => !GlobalFilter.equals(tag));
 
         return new Task({
+            ...taskComponents,
             ...taskInfo,
-            status,
-            indentation,
-            listMarker,
             taskLocation: taskLocation,
-            blockLink,
             originalMarkdown: line,
             scheduledDateIsInferred,
         });
     }
+
+    private static extractTaskComponents(line: string): TaskComponents | null {
+        // Check the line to see if it is a markdown task.
+        const regexMatch = line.match(TaskRegularExpressions.taskRegex);
+        if (regexMatch === null) {
+            return null;
+        }
+
+        const indentation = regexMatch[1];
+        const listMarker = regexMatch[2];
+
+        // Get the status of the task.
+        const statusString = regexMatch[3];
+        const status = StatusRegistry.getInstance().bySymbolOrCreate(statusString);
+
+        // match[4] includes the whole body of the task after the brackets.
+        let body = regexMatch[4].trim();
+
+        // Match for block link and remove if found. Always expected to be
+        // at the end of the line.
+        const blockLinkMatch = body.match(TaskRegularExpressions.blockLinkRegex);
+        const blockLink = blockLinkMatch !== null ? blockLinkMatch[0] : '';
+
+        if (blockLink !== '') {
+            body = body.replace(TaskRegularExpressions.blockLinkRegex, '').trim();
+        }
+        return { indentation, listMarker, status, body, blockLink };
+    }
+
     /**
      * Create an HTML rendered List Item element (LI) for the current task.
      * @note Output is based on the {@link DefaultTaskSerializer}'s format, with default (emoji) symbols
