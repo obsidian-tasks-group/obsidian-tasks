@@ -216,6 +216,7 @@ export class Task {
      * @param {(Moment | null)} fallbackDate - The date to use as the scheduled date if no other date is set
      * @return {*}  {(Task | null)}
      * @memberof Task
+     * @see parseTaskSignifiers
      */
     public static fromLine({
         line,
@@ -243,16 +244,18 @@ export class Task {
 
     /**
      * Parses the line in attempt to get the task details.
-     * Parsing only is done. If a Global Filter check is needed,
-     * use {@link Task.fromLine}.
+     *
+     * This reads the task even if the Global Filter is missing.
+     * If a Global Filter check is needed, use {@link Task.fromLine}.
      *
      * Task is returned regardless if Global Filter is present or not.
-     * However if it is, it will be removed from the tags.
+     * However, if it is, it will be removed from the tags.
      *
      * @param line - the full line to parse
      * @param taskLocation - The location of the task line
      * @param fallbackDate - The date to use as the scheduled date if no other date is set
      * @returns {*} {(Task | null)}
+     * @see fromLine
      */
     public static parseTaskSignifiers(
         line: string,
