@@ -95,6 +95,10 @@ export class TaskRegularExpressions {
     public static readonly hashTagsFromEnd = new RegExp(this.hashTags.source + '$');
 }
 
+/**
+ * Storage for the task line, broken down in to sections.
+ * See {@link Task.extractTaskComponents} for use.
+ */
 interface TaskComponents {
     indentation: string;
     listMarker: string;
