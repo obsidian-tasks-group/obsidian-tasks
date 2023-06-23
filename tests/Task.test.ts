@@ -430,6 +430,19 @@ describe('task parsing VS global filter', () => {
         // Assert
         expect(task).toBeNull();
     });
+
+    it.failing('should not consider task status when searching for global filter', () => {
+        // Arrange
+        GlobalFilter.set('@');
+
+        // Act
+        const task = fromLine({
+            line: '- [@] Hello',
+        });
+
+        // Assert
+        expect(task).toBeNull();
+    });
 });
 
 describe('properties for scripting', () => {
