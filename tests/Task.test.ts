@@ -87,23 +87,6 @@ describe('parsing', () => {
         expect(task!.originalMarkdown).toStrictEqual(line);
     });
 
-    it('returns null when task does not have global filter', () => {
-        // Arrange
-        GlobalFilter.set('#task');
-        const line = '- [x] this is a done task 🗓 2021-09-12 ✅ 2021-06-20';
-
-        // Act
-        const task = fromLine({
-            line,
-        });
-
-        // Assert
-        expect(task).toBeNull();
-
-        // Cleanup
-        GlobalFilter.reset();
-    });
-
     it('supports capitalised status characters', () => {
         // See https://github.com/obsidian-tasks-group/obsidian-tasks/issues/520
         // "In combination with SlrVb's S-Checkbox CSS, Task Plugin breaks that style"
@@ -409,6 +392,57 @@ describe('parsing tags', () => {
             }
         },
     );
+});
+
+describe('task parsing VS global filter', () => {
+    afterEach(() => {
+        GlobalFilter.reset();
+    });
+
+    it('returns null when task does not have global filter', () => {
+        // Arrange
+        GlobalFilter.set('#task');
+        const line = '- [x] this is a done task 🗓 2021-09-12 ✅ 2021-06-20';
+
+        // Act
+        const task = fromLine({
+            line,
+        });
+
+        // Assert
+        expect(task).toBeNull();
+    });
+
+    it.each([
+        '#task - [ ] this is a task 🗓 2021-09-12',
+        '- #task [ ] this is a task 🗓 2021-09-12',
+        '- [#task] this is a task 🗓 2021-09-12',
+        '- [ #task ] this is a task 🗓 2021-09-12',
+    ])('should not parse task with global filter outside of the description: "%s"', (line: string) => {
+        // Arrange
+        GlobalFilter.set('#task');
+
+        // Act
+        const task = fromLine({
+            line,
+        });
+
+        // Assert
+        expect(task).toBeNull();
+    });
+
+    it('should not consider task status when searching for global filter', () => {
+        // Arrange
+        GlobalFilter.set('@');
+
+        // Act
+        const task = fromLine({
+            line: '- [@] Hello',
+        });
+
+        // Assert
+        expect(task).toBeNull();
+    });
 });
 
 describe('properties for scripting', () => {

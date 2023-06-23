@@ -19,23 +19,20 @@ import { getSettings } from '../Config/Settings';
  * @param path - The path of the file containing the line
  */
 export const taskFromLine = ({ line, path }: { line: string; path: string }): Task => {
-    const fallbackDate = DateFallback.fromPath(path);
-
-    const task = Task.fromLine({
+    // We get all signifiers from the line, even if the Global Filter is missing.
+    // This helps users who, for some reason, have data in a task line without the Global Filter.
+    const task = Task.parseTaskSignifiers(
         line,
-        taskLocation: TaskLocation.fromUnknownPosition(path), // We don't need precise location to toggle it here in the editor.
-        fallbackDate, // set the scheduled date from the filename, so it can be displayed in the dialog
-    });
+        TaskLocation.fromUnknownPosition(path), // We don't need precise location to toggle it here in the editor.
+        DateFallback.fromPath(path), // set the scheduled date from the filename, so it can be displayed in the dialog
+    );
 
     if (task !== null) {
         return task;
     }
 
     const { setCreatedDate } = getSettings();
-    let createdDate: moment.Moment | null = null;
-    if (setCreatedDate) {
-        createdDate = window.moment();
-    }
+    const createdDate = setCreatedDate ? window.moment() : null;
 
     // If we are not on a line of a task, we take what we have.
     // The non-task line can still be a checklist, for example if it is lacking the global filter.
