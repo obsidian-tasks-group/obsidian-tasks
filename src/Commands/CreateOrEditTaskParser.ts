@@ -19,7 +19,7 @@ import { getSettings } from '../Config/Settings';
  * @param path - The path of the file containing the line
  */
 export const taskFromLine = ({ line, path }: { line: string; path: string }): Task => {
-    const task = Task.parseLine(
+    const task = Task.parseTaskSignifiers(
         line,
         TaskLocation.fromUnknownPosition(path), // We don't need precise location to toggle it here in the editor.
         DateFallback.fromPath(path), // set the scheduled date from the filename, so it can be displayed in the dialog

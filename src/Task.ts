@@ -220,14 +220,14 @@ export class Task {
             return null;
         }
 
-        return Task.parseLine(line, taskLocation, fallbackDate);
+        return Task.parseTaskSignifiers(line, taskLocation, fallbackDate);
     }
 
     /**
      * Parses the line in attempt to get the task details.
      * Parsing only is done. If a Global Filter check is needed,
      * use {@link Task.fromLine}.
-     * 
+     *
      * Task is returned regardless if Global Filter is present or not.
      * However if it is, it will be removed from the tags.
      *
@@ -236,7 +236,11 @@ export class Task {
      * @param fallbackDate - The date to use as the scheduled date if no other date is set
      * @returns {*} {(Task | null)}
      */
-    public static parseLine(line: string, taskLocation: TaskLocation, fallbackDate: Moment | null): Task | null {
+    public static parseTaskSignifiers(
+        line: string,
+        taskLocation: TaskLocation,
+        fallbackDate: Moment | null,
+    ): Task | null {
         // Check the line to see if it is a markdown task.
         const regexMatch = line.match(TaskRegularExpressions.taskRegex);
         if (regexMatch === null) {
