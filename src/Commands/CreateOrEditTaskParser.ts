@@ -19,6 +19,8 @@ import { getSettings } from '../Config/Settings';
  * @param path - The path of the file containing the line
  */
 export const taskFromLine = ({ line, path }: { line: string; path: string }): Task => {
+    // We get all signifiers from the line, even if the Global Filter is missing.
+    // This helps users who, for some reason, have data in a task line without the Global Filter.
     const task = Task.parseTaskSignifiers(
         line,
         TaskLocation.fromUnknownPosition(path), // We don't need precise location to toggle it here in the editor.
