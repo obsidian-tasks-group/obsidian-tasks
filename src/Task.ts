@@ -226,9 +226,15 @@ export class Task {
         taskLocation: TaskLocation;
         fallbackDate: Moment | null;
     }): Task | null {
+        const taskComponents = this.extractTaskComponents(line);
+        // Check the line to see if it is a markdown task.
+        if (taskComponents === null) {
+            return null;
+        }
+
         // return if the line does not have the global filter. Do this before
         // any other processing to improve performance.
-        if (!GlobalFilter.includedIn(line)) {
+        if (!GlobalFilter.includedIn(taskComponents.body)) {
             return null;
         }
 

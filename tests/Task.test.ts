@@ -431,7 +431,7 @@ describe('task parsing VS global filter', () => {
         expect(task).toBeNull();
     });
 
-    it.failing('should not consider task status when searching for global filter', () => {
+    it('should not consider task status when searching for global filter', () => {
         // Arrange
         GlobalFilter.set('@');
 
