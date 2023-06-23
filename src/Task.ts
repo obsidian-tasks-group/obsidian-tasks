@@ -227,6 +227,9 @@ export class Task {
      * Parses the line in attempt to get the task details.
      * Parsing only is done. If a Global Filter check is needed,
      * use {@link Task.fromLine}.
+     * 
+     * Task is returned regardless if Global Filter is present or not.
+     * However if it is, it will be removed from the tags.
      *
      * @param line - the full line to parse
      * @param taskLocation - The location of the task line
