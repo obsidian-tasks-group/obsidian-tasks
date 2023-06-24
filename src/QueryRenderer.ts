@@ -148,29 +148,7 @@ class QueryRenderChild extends MarkdownRenderChild {
 
         const content = this.containerEl.createEl('div');
         if (state === State.Warm && this.query.error === undefined) {
-            console.debug(
-                `Render ${this.queryType} called for a block in active file "${this.filePath}", to select from ${tasks.length} tasks: plugin state: ${state}`,
-            );
-
-            if (this.query.layoutOptions.explainQuery) {
-                this.createExplanation(content);
-            }
-
-            const tasksSortedLimitedGrouped = this.query.applyQueryToTasks(tasks);
-            for (const group of tasksSortedLimitedGrouped.groups) {
-                // If there were no 'group by' instructions, group.groupHeadings
-                // will be empty, and no headings will be added.
-                this.addGroupHeadings(content, group.groupHeadings);
-
-                const { taskList } = await this.createTasksList({
-                    tasks: group.tasks,
-                    content: content,
-                });
-                content.appendChild(taskList);
-            }
-            const totalTasksCount = tasksSortedLimitedGrouped.totalTasksCount();
-            console.debug(`${totalTasksCount} of ${tasks.length} tasks displayed in a block in "${this.filePath}"`);
-            this.addTaskCount(content, totalTasksCount);
+            await this.renderQuerySearchResults(tasks, state, content);
         } else if (this.query.error !== undefined) {
             this.renderErrorMessage(content, this.query.error);
         } else {
@@ -178,6 +156,32 @@ class QueryRenderChild extends MarkdownRenderChild {
         }
 
         this.containerEl.firstChild?.replaceWith(content);
+    }
+
+    private async renderQuerySearchResults(tasks: Task[], state: State.Warm, content: HTMLDivElement) {
+        console.debug(
+            `Render ${this.queryType} called for a block in active file "${this.filePath}", to select from ${tasks.length} tasks: plugin state: ${state}`,
+        );
+
+        if (this.query.layoutOptions.explainQuery) {
+            this.createExplanation(content);
+        }
+
+        const tasksSortedLimitedGrouped = this.query.applyQueryToTasks(tasks);
+        for (const group of tasksSortedLimitedGrouped.groups) {
+            // If there were no 'group by' instructions, group.groupHeadings
+            // will be empty, and no headings will be added.
+            this.addGroupHeadings(content, group.groupHeadings);
+
+            const { taskList } = await this.createTasksList({
+                tasks: group.tasks,
+                content: content,
+            });
+            content.appendChild(taskList);
+        }
+        const totalTasksCount = tasksSortedLimitedGrouped.totalTasksCount();
+        console.debug(`${totalTasksCount} of ${tasks.length} tasks displayed in a block in "${this.filePath}"`);
+        this.addTaskCount(content, totalTasksCount);
     }
 
     private renderErrorMessage(content: HTMLDivElement, errorMessage: string) {
