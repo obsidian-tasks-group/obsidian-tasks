@@ -172,13 +172,16 @@ class QueryRenderChild extends MarkdownRenderChild {
             console.debug(`${totalTasksCount} of ${tasks.length} tasks displayed in a block in "${this.filePath}"`);
             this.addTaskCount(content, totalTasksCount);
         } else if (this.query.error !== undefined) {
-            content.createDiv().innerHTML =
-                '<pre>' + `Tasks query: ${this.query.error.replace(/\n/g, '<br>')}` + '</pre>';
+            this.renderErrorMessage(content, this.query.error);
         } else {
             this.renderLoadingMessage(content);
         }
 
         this.containerEl.firstChild?.replaceWith(content);
+    }
+
+    private renderErrorMessage(content: HTMLDivElement, errorMessage: string) {
+        content.createDiv().innerHTML = '<pre>' + `Tasks query: ${errorMessage.replace(/\n/g, '<br>')}` + '</pre>';
     }
 
     private renderLoadingMessage(content: HTMLDivElement) {
