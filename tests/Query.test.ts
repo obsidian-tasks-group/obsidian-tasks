@@ -966,11 +966,11 @@ At most 8 tasks per group (if any "group by" options are supplied).
             const tasks = createTasksFromMarkdown(tasksAsMarkdown, 'some_markdown_file', 'Some Heading');
 
             // Act
-            const groups = query.applyQueryToTasks(tasks);
+            const queryResult = query.applyQueryToTasks(tasks);
 
             // Assert
-            expect(groups.groups.length).toEqual(1);
-            const soleTaskGroup = groups.groups[0];
+            expect(queryResult.groups.length).toEqual(1);
+            const soleTaskGroup = queryResult.groups[0];
             const expectedTasks = `
 - [ ] Task 3 - will be sorted to 1st place, so should pass limit
 - [ ] Task 4 - will be sorted to 2nd place, so should pass limit
@@ -1004,17 +1004,17 @@ At most 8 tasks per group (if any "group by" options are supplied).
             const tasks = createTasksFromMarkdown(tasksAsMarkdown, 'some_markdown_file', 'Some Heading');
 
             // Act
-            const groups = query.applyQueryToTasks(tasks);
+            const queryResult = query.applyQueryToTasks(tasks);
 
             // Assert
-            expect(groups.groups.length).toEqual(2);
-            expect(groups.totalTasksCount()).toEqual(5);
-            expect(groups.groups[0].tasksAsStringOfLines()).toMatchInlineSnapshot(`
+            expect(queryResult.groups.length).toEqual(2);
+            expect(queryResult.totalTasksCount).toEqual(5);
+            expect(queryResult.groups[0].tasksAsStringOfLines()).toMatchInlineSnapshot(`
                 "- [x] Task 1 - will be in the first group
                 - [x] Task 2 - will be in the first group and sorted after next one
                 "
             `);
-            expect(groups.groups[1].tasksAsStringOfLines()).toMatchInlineSnapshot(`
+            expect(queryResult.groups[1].tasksAsStringOfLines()).toMatchInlineSnapshot(`
                 "- [ ] Task 3 - will be sorted to 1st place in the second group and pass the limit
                 - [ ] Task 4 - will be sorted to 2nd place in the second group and pass the limit
                 - [ ] Task 5 - will be sorted to 3nd place in the second group and pass the limit
