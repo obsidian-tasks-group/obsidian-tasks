@@ -1008,7 +1008,7 @@ At most 8 tasks per group (if any "group by" options are supplied).
 
             // Assert
             expect(groups.groups.length).toEqual(2);
-            expect(groups.totalTasksCount()).toEqual(5);
+            expect(groups.totalTasksCount).toEqual(5);
             expect(groups.groups[0].tasksAsStringOfLines()).toMatchInlineSnapshot(`
                 "- [x] Task 1 - will be in the first group
                 - [x] Task 2 - will be in the first group and sorted after next one

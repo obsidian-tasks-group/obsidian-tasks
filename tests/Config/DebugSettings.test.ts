@@ -28,11 +28,11 @@ describe('DebugSettings', () => {
         updateSettings({ debugSettings: new DebugSettings(true) });
 
         // Act
-        const groups = query.applyQueryToTasks(tasks);
+        const queryResult = query.applyQueryToTasks(tasks);
 
         // Assert
-        expect(groups.groups.length).toEqual(1);
-        const soleTaskGroup = groups.groups[0];
+        expect(queryResult.groups.length).toEqual(1);
+        const soleTaskGroup = queryResult.groups[0];
         // Check that the tasks are found in the original order, not the order in the sort instruction
         expect('\n' + soleTaskGroup.tasksAsStringOfLines()).toStrictEqual(tasksAsMarkdown);
 
