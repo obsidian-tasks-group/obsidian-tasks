@@ -1,13 +1,18 @@
 import type { TaskGroups } from './TaskGroups';
+import type { TaskGroup } from './TaskGroup';
 
 export class QueryResult {
-    public readonly groups: TaskGroups;
+    public readonly taskGroups: TaskGroups;
 
     constructor(groups: TaskGroups) {
-        this.groups = groups;
+        this.taskGroups = groups;
     }
 
     public get totalTasksCount(): number {
-        return this.groups.totalTasksCount();
+        return this.taskGroups.totalTasksCount();
+    }
+
+    public get groups(): TaskGroup[] {
+        return this.taskGroups.groups;
     }
 }
