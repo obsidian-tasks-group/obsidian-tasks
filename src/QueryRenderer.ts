@@ -168,10 +168,10 @@ class QueryRenderChild extends MarkdownRenderChild {
             this.createExplanation(content);
         }
 
-        const tasksSortedLimitedGrouped = this.query.applyQueryToTasks(tasks);
-        await this.addAllTaskGroups(tasksSortedLimitedGrouped, content);
+        const queryResult = this.query.applyQueryToTasks(tasks);
+        await this.addAllTaskGroups(queryResult.taskGroups, content);
 
-        const totalTasksCount = tasksSortedLimitedGrouped.totalTasksCount();
+        const totalTasksCount = queryResult.totalTasksCount;
         console.debug(`${totalTasksCount} of ${tasks.length} tasks displayed in a block in "${this.filePath}"`);
         this.addTaskCount(content, totalTasksCount);
     }

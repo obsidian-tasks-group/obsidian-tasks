@@ -8,6 +8,7 @@ import { TaskGroups } from './TaskGroups';
 import * as FilterParser from './FilterParser';
 import type { Grouper } from './Grouper';
 import type { Filter } from './Filter/Filter';
+import { QueryResult } from './QueryResult';
 
 export class Query implements IQuery {
     public source: string;
@@ -170,7 +171,7 @@ export class Query implements IQuery {
         return this._error;
     }
 
-    public applyQueryToTasks(tasks: Task[]): TaskGroups {
+    public applyQueryToTasks(tasks: Task[]): QueryResult {
         this.filters.forEach((filter) => {
             tasks = tasks.filter(filter.filterFunction);
         });
@@ -185,7 +186,7 @@ export class Query implements IQuery {
             taskGroups.applyTaskLimit(this._taskGroupLimit);
         }
 
-        return taskGroups;
+        return new QueryResult(taskGroups);
     }
 
     private parseHideOptions({ line }: { line: string }): void {
