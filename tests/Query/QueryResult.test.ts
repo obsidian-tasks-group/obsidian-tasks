@@ -15,6 +15,6 @@ describe('QueryResult', () => {
 
         // Assert
         expect(queryResult.totalTasksCount).toEqual(0);
-        expect(queryResult.groups).toEqual(groups);
+        expect(queryResult.groups).toEqual(groups.groups);
     });
 });
