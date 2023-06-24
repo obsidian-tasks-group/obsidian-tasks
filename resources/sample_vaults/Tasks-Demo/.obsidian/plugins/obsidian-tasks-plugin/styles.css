@@ -134,7 +134,7 @@
 
 .tasks-modal-priorities {
     display: grid;
-    grid-template-columns: 4em 5em 5em 7em 5em;
+    grid-template-columns: 4em 8em 8em 8em;
     grid-column-gap: 1.33em;
 }
 
@@ -146,6 +146,9 @@
 .tasks-modal-priorities label {
     border-radius: var(--input-radius);
     padding: 2px 3px;
+    grid-column: 1;
+    grid-row-start: 1;
+    grid-row-end: 7;
 }
 
 .tasks-modal-priorities input:focus + label {
@@ -153,11 +156,11 @@
     border-color: var(--background-modifier-border-focus);
 }
 
-.tasks-modal-priorities input:checked + label > span:first-child {
+.tasks-modal-priorities input:checked + label > span {
     font-weight: bold;
 }
 
-.tasks-modal-priorities input:not(:checked) + label > span:nth-child(2) {
+.tasks-modal-priorities input:not(:checked) + label > span:nth-child(4) {
     filter: grayscale(100%) opacity(60%);
 }
 
@@ -207,7 +210,7 @@
         margin-bottom: -10px;
     }
     .tasks-modal-priorities > label {
-        grid-row: 1 / span 2;
+        grid-row: 1 / span 7;
     }
     .tasks-modal-dates {
         grid-template-columns: 1fr;
@@ -231,7 +234,7 @@
         grid-template-columns: 4em auto;
     }
     .tasks-modal-priorities > label {
-        grid-row: 1 / span 4;
+        grid-row: 1 / span 7;
     }
 }
 
