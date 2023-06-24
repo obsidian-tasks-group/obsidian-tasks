@@ -175,10 +175,14 @@ class QueryRenderChild extends MarkdownRenderChild {
             content.createDiv().innerHTML =
                 '<pre>' + `Tasks query: ${this.query.error.replace(/\n/g, '<br>')}` + '</pre>';
         } else {
-            content.setText('Loading Tasks ...');
+            this.renderLoadingMessage(content);
         }
 
         this.containerEl.firstChild?.replaceWith(content);
+    }
+
+    private renderLoadingMessage(content: HTMLDivElement) {
+        content.setText('Loading Tasks ...');
     }
 
     // Use the 'explain' instruction to enable this
