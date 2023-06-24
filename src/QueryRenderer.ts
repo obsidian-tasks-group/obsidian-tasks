@@ -41,8 +41,22 @@ export class QueryRenderer {
 class QueryRenderChild extends MarkdownRenderChild {
     private readonly app: App;
     private readonly events: TasksEvents;
-    private readonly source: string; // The complete text in the instruction block, such as 'not done\nshort mode'
-    private readonly filePath: string; // The path of the file that contains the instruction block
+
+    /**
+     * The complete text in the instruction block, such as:
+     * ```
+     *   not done
+     *   short mode
+     * ```
+     *
+     * This does not contain the Global Query from the user's settings.
+     * Use {@link getQueryForQueryRenderer} to get this value prefixed with the Global Query.
+     */
+    private readonly source: string;
+
+    /// The path of the file that contains the instruction block.
+    private readonly filePath: string;
+
     private query: IQuery;
     private queryType: string;
 
