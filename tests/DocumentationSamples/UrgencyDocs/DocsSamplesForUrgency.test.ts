@@ -1,6 +1,10 @@
 import { verifyMarkdownForDocs } from '../../TestingTools/VerifyMarkdownTable';
 
 describe('UrgencyTable', () => {
+    function rowSpanningCell(span: number, text: string): string {
+        return `<td rowspan="${span}">${text}</td>`;
+    }
+
     it('urgency-html-table', () => {
         const heading = `
 <table>
@@ -17,7 +21,7 @@ describe('UrgencyTable', () => {
 
         const row1 = `
   <tr>
-    <td rowspan="5">Due</td>
+    ${rowSpanningCell(5, 'Due')}
     <td>More than 7 days overdue</td>
     <td><code>12.0</code></td>
   </tr>`;
@@ -25,7 +29,7 @@ describe('UrgencyTable', () => {
 
         table += `
   <tr>
-    <td rowspan="2">Due between 7 days ago and in 14 days</td>
+    ${rowSpanningCell(2, 'Due between 7 days ago and in 14 days')}
     <td>Range of <code>12.0</code> to <code>0.2</code></td>
   </tr>
   <tr>
@@ -40,7 +44,7 @@ describe('UrgencyTable', () => {
     <td><code>0.0</code></td>
   </tr>
   <tr>
-    <td rowspan="6">Priority</td>
+    ${rowSpanningCell(6, 'Priority')}
     <td>Highest</td>
     <td><code>9.0</code></td>
   </tr>
@@ -65,7 +69,7 @@ describe('UrgencyTable', () => {
     <td><code>-1.8</code></td>
   </tr>
   <tr>
-    <td rowspan="3">Scheduled</td>
+    ${rowSpanningCell(3, 'Scheduled')}
     <td>Today or earlier</td>
     <td><code>5.0</code></td>
   </tr>
@@ -78,7 +82,7 @@ describe('UrgencyTable', () => {
     <td><code>0.0</code></td>
   </tr>
   <tr>
-    <td rowspan="3">Starts</td>
+    ${rowSpanningCell(3, 'Starts')}
     <td>Today or earlier</td>
     <td><code>0.0</code></td>
   </tr>
