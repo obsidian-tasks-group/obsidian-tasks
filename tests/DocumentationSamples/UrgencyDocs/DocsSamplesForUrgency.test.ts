@@ -41,15 +41,12 @@ describe('UrgencyTable', () => {
         let table = '';
         table += heading;
 
-        const row1 = `
+        table += `
   <tr>
     ${rowSpanningCell(5, 'Due')}
     ${cell('More than 7 days overdue')}
     ${urgencyCell(12.0)}
-  </tr>`;
-        table += row1;
-
-        table += `
+  </tr>
   <tr>
     ${rowSpanningCell(2, 'Due between 7 days ago and in 14 days')}
     <td>Range of ${urgencyValue(12.0)} to ${urgencyValue(0.2)}</td>
