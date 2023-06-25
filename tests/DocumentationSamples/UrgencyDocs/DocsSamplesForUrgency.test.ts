@@ -40,8 +40,7 @@ describe('UrgencyTable', () => {
 
     function calcForPriority(priority: Priority) {
         const task = new TaskBuilder().priority(priority).build();
-        const u = Urgency.calculate(task);
-        return u;
+        return Urgency.calculate(task);
     }
 
     it('urgency-html-table', () => {
