@@ -5,7 +5,7 @@ describe('UrgencyTable', () => {
         return `<td>${text}</td>`;
     }
 
-    function rowSpanningCell(span: number, text: string): string {
+    function rowSpanningCell(text: string, span: number): string {
         return `<td rowspan="${span}">${text}</td>`;
     }
 
@@ -50,11 +50,11 @@ describe('UrgencyTable', () => {
         let table = '';
         table += heading;
 
-        table += property([[rowSpanningCell(5, 'Due'), cell('More than 7 days overdue'), urgencyCell(12.0)]]);
+        table += property([[rowSpanningCell('Due', 5), cell('More than 7 days overdue'), urgencyCell(12.0)]]);
 
         table += property([
             [
-                rowSpanningCell(2, 'Due between 7 days ago and in 14 days'),
+                rowSpanningCell('Due between 7 days ago and in 14 days', 2),
                 cell(`Range of ${urgencyValue(12.0)} to ${urgencyValue(0.2)}`),
             ],
             [cell('Example for "today": <code>9.0</code>')],
@@ -63,7 +63,7 @@ describe('UrgencyTable', () => {
         ]);
 
         table += property([
-            [rowSpanningCell(6, 'Priority'), cell('Highest'), urgencyCell(9.0)],
+            [rowSpanningCell('Priority', 6), cell('Highest'), urgencyCell(9.0)],
             [cell('High'), urgencyCell(6.0)],
             [cell('Medium'), urgencyCell(3.9)],
             [cell('None'), urgencyCell(1.95, 2)],
@@ -72,13 +72,13 @@ describe('UrgencyTable', () => {
         ]);
 
         table += property([
-            [rowSpanningCell(3, 'Scheduled'), cell('Today or earlier'), urgencyCell(5.0)],
+            [rowSpanningCell('Scheduled', 3), cell('Today or earlier'), urgencyCell(5.0)],
             [cell('Tomorrow or later'), urgencyCell(0.0)],
             [cell('None'), urgencyCell(0.0)],
         ]);
 
         table += property([
-            [rowSpanningCell(3, 'Starts'), cell('Today or earlier'), urgencyCell(0.0)],
+            [rowSpanningCell('Starts', 3), cell('Today or earlier'), urgencyCell(0.0)],
             [cell('Tomorrow or later'), urgencyCell(-3.0)],
             [cell('None'), urgencyCell(0.0)],
         ]);
