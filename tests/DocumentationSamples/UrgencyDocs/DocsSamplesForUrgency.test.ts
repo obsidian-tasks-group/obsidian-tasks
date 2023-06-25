@@ -14,12 +14,16 @@ describe('UrgencyTable', () => {
 
         let table = '';
         table += heading;
-        table += `
+
+        const row1 = `
   <tr>
     <td rowspan="5">Due</td>
     <td>More than 7 days overdue</td>
     <td><code>12.0</code></td>
-  </tr>
+  </tr>`;
+        table += row1;
+
+        table += `
   <tr>
     <td rowspan="2">Due between 7 days ago and in 14 days</td>
     <td>Range of <code>12.0</code> to <code>0.2</code></td>
