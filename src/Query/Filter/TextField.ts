@@ -7,7 +7,8 @@ import type { Comparator } from '../Sorter';
 import type { GrouperFunction } from '../Grouper';
 import { Field } from './Field';
 import type { FilterFunction } from './Filter';
-import { Filter, FilterOrErrorMessage } from './Filter';
+import { Filter } from './Filter';
+import { FilterOrErrorMessage } from './FilterOrErrorMessage';
 
 /**
  * TextField is an abstract base class to help implement

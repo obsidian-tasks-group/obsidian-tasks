@@ -4,6 +4,23 @@ publish: true
 
 # Filters
 
+---
+
+## Contents
+
+This page is long. Here are some links to the main sections:
+
+- [[#Searching for dates]]
+- [[#Text filters]]
+- [[#Matching multiple filters]]
+- [[#Filters for Task Statuses]]
+- [[#Filters for Dates in Tasks]]
+- [[#Filters for Other Task Properties]]
+- [[#Filters for File Properties]]
+- [[#Appendix: Tasks 2.0.0 improvements to date filters]]
+
+---
+
 ## Searching for dates
 
 Tasks allows a lot of flexibility in the dates inside query blocks.
@@ -175,12 +192,65 @@ For full details of combining filters with boolean operators, see [[Combining Fi
 
 ---
 
+## Filters for Task Statuses
+
+### Status
+
+- `done` - matches tasks status types `DONE`, `CANCELLED` and `NON_TASK`
+- `not done` - matches status types with type `TODO` and `IN_PROGRESS`
+
+> [!info]
+> Prior to Tasks 1.23.0, there was no concept of task status type, and so only the status symbol was used:
+>
+> - a task with `[ ]` used to count as `not done`
+> - any other character than space used to count as `done`
+>
+> The new behaviour is more flexible and was required to introduce support for in-progress and cancelled tasks. If the original behaviour is preferred, you can change the status types of every symbol except `space` to `DONE`. See [[Set up custom statuses|How to set up your custom statuses]].
+
+### Status Name
+
+- This searches the names given to your custom statuses.
+- For example, perhaps you might have named `[!]` as `Important`, and so this field would search the text `Important` for all tasks with that status symbol.
+- `status.name (includes|does not include) <string>`
+  - Matches case-insensitive (disregards capitalization).
+- `status.name (regex matches|regex does not match) /<JavaScript-style Regex>/`
+  - Does regular expression match (case-sensitive by default).
+  - Essential reading: [[Regular Expressions|Regular Expression Searches]].
+
+> [!released]
+`status.name` text searching was introduced in Tasks 1.23.0.
+
+For more information, including adding your own customised statuses, see [[Statuses]].
+
+### Status Type
+
+- `status.type (is|is not) (TODO|DONE|IN_PROGRESS|CANCELLED|NON_TASK)`
+  - The values `TODO` etc are case-insensitive: you can use `in_progress`, for example
+- This searches the types you have given to your custom statuses.
+- This search is efficient if you wish to find all tasks that are `IN_PROGRESS`, and you have set up your statuses to have `[/]`, `[d]` and perhaps several other all treated as `IN_PROGRESS`.
+- To exclude multiple values, you can use multiple `status.type is not` lines.
+- To allow multiple values, use a boolean combination, for example: `( status.type is TODO ) OR ( status.type is IN_PROGRESS )`.
+
+> [!released]
+`status.type` text searching was introduced in Tasks 1.23.0.
+
+For more information, including adding your own customised statuses, see [[Statuses]].
+
+### Status Examples
+
+Find any tasks that have status symbols you have not yet added to your Tasks settings:
+
+    ```tasks
+    status.name includes unknown
+    group by path
+    ```
+
+---
+
 ## Filters for Dates in Tasks
 
 ### Done Date
 
-- `done`
-- `not done`
 - `no done date`
 - `has done date`
 - `done (before|after|on) <date>`
@@ -368,58 +438,7 @@ to the incorrect line, and fixing it by directly typing in the new date.
 If you use the 'Create or edit Task' Modal, it will discard the broken date, and there will be no information about
 the original, incorrect value.
 
-## Filters for Task Statuses
-
-### Status
-
-- `done` - matches tasks status types `DONE`, `CANCELLED` and `NON_TASK`
-- `not done` - matches status types with type `TODO` and `IN_PROGRESS`
-
-> [!info]
-> Prior to Tasks 1.23.0, there was no concept of task status type, and so only the status symbol was used:
->
-> - a task with `[ ]` used to count as `not done`
-> - any other character than space used to count as `done`
->
-> The new behaviour is more flexible and was required to introduce support for in-progress and cancelled tasks. If the original behaviour is preferred, you can change the status types of every symbol except `space` to `DONE`. See [[Set up custom statuses|How to set up your custom statuses]].
-
-### Status Name
-
-- This searches the names given to your custom statuses.
-- For example, perhaps you might have named `[!]` as `Important`, and so this field would search the text `Important` for all tasks with that status symbol.
-- `status.name (includes|does not include) <string>`
-  - Matches case-insensitive (disregards capitalization).
-- `status.name (regex matches|regex does not match) /<JavaScript-style Regex>/`
-  - Does regular expression match (case-sensitive by default).
-  - Essential reading: [[Regular Expressions|Regular Expression Searches]].
-
-> [!released]
-`status.name` text searching was introduced in Tasks 1.23.0.
-
-For more information, including adding your own customised statuses, see [[Statuses]].
-
-### Status Type
-
-- `status.type (is|is not) (TODO|DONE|IN_PROGRESS|CANCELLED|NON_TASK)`
-  - The values `TODO` etc are case-insensitive: you can use `in_progress`, for example
-- This searches the types you have given to your custom statuses.
-- This search is efficient if you wish to find all tasks that are `IN_PROGRESS`, and you have set up your statuses to have `[/]`, `[d]` and perhaps several other all treated as `IN_PROGRESS`.
-- To exclude multiple values, you can use multiple `status.type is not` lines.
-- To allow multiple values, use a boolean combination, for example: `( status.type is TODO ) OR ( status.type is IN_PROGRESS )`.
-
-> [!released]
-`status.type` text searching was introduced in Tasks 1.23.0.
-
-For more information, including adding your own customised statuses, see [[Statuses]].
-
-### Status Examples
-
-Find any tasks that have status symbols you have not yet added to your Tasks settings:
-
-    ```tasks
-    status.name includes unknown
-    group by path
-    ```
+---
 
 ## Filters for Other Task Properties
 
@@ -544,6 +563,8 @@ Introduced in Tasks 1.6.0.
   - The trailing `i` means case-insensitive.
   - Searches for tags such as `#book`,  `#Book`, `#BOOK` and the `$` prevents matching of `#books`,  `#book/literature`, etc.
 
+---
+
 ## Filters for File Properties
 
 These filters allow searching for tasks in particular files and sections of files.
@@ -615,6 +636,8 @@ Note that the file name includes the `.md` extension.
 
 > [!released]
 `regex matches` and `regex does not match` were introduced in Tasks 1.12.0.
+
+---
 
 ## Appendix: Tasks 2.0.0 improvements to date filters
 

@@ -8,13 +8,7 @@ export class FolderField extends TextField {
     }
 
     public value(task: Task): string {
-        const path = task.path;
-        const fileNameWithExtension = task.filename + '.md';
-        const folder = path.substring(0, path.lastIndexOf(fileNameWithExtension));
-        if (folder === '') {
-            return '/';
-        }
-        return folder;
+        return task.file.folder;
     }
 
     public supportsGrouping(): boolean {

@@ -3,7 +3,7 @@
  */
 import moment from 'moment';
 import { CreatedDateField } from '../../../src/Query/Filter/CreatedDateField';
-import type { FilterOrErrorMessage } from '../../../src/Query/Filter/Filter';
+import type { FilterOrErrorMessage } from '../../../src/Query/Filter/FilterOrErrorMessage';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { testFilter } from '../../TestingTools/FilterTestHelpers';
 import {
@@ -11,6 +11,7 @@ import {
     expectTaskComparesBefore,
     expectTaskComparesEqual,
 } from '../../CustomMatchers/CustomMatchersForSorting';
+import { SampleTasks } from '../../TestHelpers';
 
 window.moment = moment;
 
@@ -104,5 +105,18 @@ describe('grouping by created date', () => {
         // Assert
         expect(grouper.grouper(taskWithDate)).toEqual(['1970-01-01 Thursday']);
         expect(grouper.grouper(taskWithoutDate)).toEqual(['No created date']);
+    });
+
+    it('should sort groups for CreatedDateField', () => {
+        const grouper = new CreatedDateField().createNormalGrouper();
+        const tasks = SampleTasks.withAllRepresentativeCreatedDates();
+
+        expect({ grouper, tasks }).groupHeadingsToBe([
+            '2023-05-30 Tuesday',
+            '2023-05-31 Wednesday',
+            '2023-06-01 Thursday',
+            'Invalid date',
+            'No created date',
+        ]);
     });
 });

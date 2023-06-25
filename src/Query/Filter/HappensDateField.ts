@@ -1,6 +1,5 @@
 import type { Moment } from 'moment';
 import type { Task } from '../../Task';
-import { compareByDate } from '../../lib/DateTools';
 import type { FilterFunction } from './Filter';
 import { FilterInstructions } from './FilterInstructions';
 import type { DateFilterFunction } from './DateField';
@@ -38,7 +37,7 @@ export class HappensDateField extends DateField {
      * Return the task's start, scheduled and due dates, any or all of which may be null.
      */
     public dates(task: Task): (Moment | null)[] {
-        return Array.of(task.startDate, task.scheduledDate, task.dueDate);
+        return task.happensDates;
     }
 
     /**
@@ -49,9 +48,7 @@ export class HappensDateField extends DateField {
      * @param task
      */
     public earliestDate(task: Task): Moment | null {
-        const happensDates = new HappensDateField().dates(task);
-        const sortedHappensDates = happensDates.sort(compareByDate);
-        return sortedHappensDates[0];
+        return task.happens.moment;
     }
 
     protected filterResultIfFieldMissing() {

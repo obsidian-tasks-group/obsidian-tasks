@@ -9,11 +9,11 @@ import { GlobalFilter } from '../src/Config/GlobalFilter';
 import type { StatusCollection } from '../src/StatusCollection';
 import { StatusRegistry } from '../src/StatusRegistry';
 import { TaskLocation } from '../src/TaskLocation';
+import { StatusConfiguration, StatusType } from '../src/StatusConfiguration';
 import { fromLine } from './TestHelpers';
 import { TaskBuilder } from './TestingTools/TaskBuilder';
 import { RecurrenceBuilder } from './TestingTools/RecurrenceBuilder';
 
-jest.mock('obsidian');
 window.moment = moment;
 
 describe('parsing', () => {
@@ -87,23 +87,6 @@ describe('parsing', () => {
         expect(task!.originalMarkdown).toStrictEqual(line);
     });
 
-    it('returns null when task does not have global filter', () => {
-        // Arrange
-        GlobalFilter.set('#task');
-        const line = '- [x] this is a done task 🗓 2021-09-12 ✅ 2021-06-20';
-
-        // Act
-        const task = fromLine({
-            line,
-        });
-
-        // Assert
-        expect(task).toBeNull();
-
-        // Cleanup
-        GlobalFilter.reset();
-    });
-
     it('supports capitalised status characters', () => {
         // See https://github.com/obsidian-tasks-group/obsidian-tasks/issues/520
         // "In combination with SlrVb's S-Checkbox CSS, Task Plugin breaks that style"
@@ -150,8 +133,10 @@ describe('parsing', () => {
         expect(task).not.toBeNull();
         expect(task!.description).toEqual('this is a ✅ done task');
         expect(task!.status).toStrictEqual(Status.DONE);
+        // begin-snippet: test-moment-equality
         expect(task!.dueDate).toEqualMoment(moment('2021-09-12'));
         expect(task!.doneDate).toEqualMoment(moment('2021-06-20'));
+        // end-snippet
         expect(task!.blockLink).toEqual(' ^my-precious');
     });
 
@@ -409,6 +394,123 @@ describe('parsing tags', () => {
     );
 });
 
+describe('task parsing VS global filter', () => {
+    afterEach(() => {
+        GlobalFilter.reset();
+    });
+
+    it('returns null when task does not have global filter', () => {
+        // Arrange
+        GlobalFilter.set('#task');
+        const line = '- [x] this is a done task 🗓 2021-09-12 ✅ 2021-06-20';
+
+        // Act
+        const task = fromLine({
+            line,
+        });
+
+        // Assert
+        expect(task).toBeNull();
+    });
+
+    it.each([
+        '#task - [ ] this is a task 🗓 2021-09-12',
+        '- #task [ ] this is a task 🗓 2021-09-12',
+        '- [#task] this is a task 🗓 2021-09-12',
+        '- [ #task ] this is a task 🗓 2021-09-12',
+    ])('should not parse task with global filter outside of the description: "%s"', (line: string) => {
+        // Arrange
+        GlobalFilter.set('#task');
+
+        // Act
+        const task = fromLine({
+            line,
+        });
+
+        // Assert
+        expect(task).toBeNull();
+    });
+
+    it('should not consider task status when searching for global filter', () => {
+        // Arrange
+        GlobalFilter.set('@');
+
+        // Act
+        const task = fromLine({
+            line: '- [@] Hello',
+        });
+
+        // Assert
+        expect(task).toBeNull();
+    });
+});
+
+describe('properties for scripting', () => {
+    it('should provide isDone for convenience', () => {
+        expect(new TaskBuilder().status(Status.makeTodo()).build().isDone).toEqual(false);
+        expect(new TaskBuilder().status(Status.makeInProgress()).build().isDone).toEqual(false);
+        expect(new TaskBuilder().status(Status.makeDone()).build().isDone).toEqual(true);
+        expect(new TaskBuilder().status(Status.makeCancelled()).build().isDone).toEqual(true);
+        expect(
+            new TaskBuilder()
+                .status(new Status(new StatusConfiguration('%', 'Non-task', ' ', true, StatusType.NON_TASK)))
+                .build().isDone,
+        ).toEqual(true);
+    });
+
+    it('should provide access to all date fields', () => {
+        const task = TaskBuilder.createFullyPopulatedTask();
+        expect(task.created.moment!).toEqualMoment(task.createdDate!);
+        expect(task.done.moment!).toEqualMoment(task.doneDate!);
+        expect(task.due.moment!).toEqualMoment(task.dueDate!);
+        expect(task.scheduled!.moment).toEqualMoment(task.scheduledDate!);
+        expect(task.start.moment!).toEqualMoment(task.startDate!);
+    });
+
+    it('should provide access to happens and happensDates', () => {
+        // Fields that are used by happens:
+        const dueDate = '2023-06-19';
+        const scheduledDate = '2023-06-20';
+        const startDate = '2023-06-21';
+        const task = new TaskBuilder().dueDate(dueDate).scheduledDate(scheduledDate).startDate(startDate).build();
+        expect(task.happensDates[0]).toEqualMoment(moment(startDate));
+        expect(task.happensDates[1]).toEqualMoment(moment(scheduledDate));
+        expect(task.happensDates[2]).toEqualMoment(moment(dueDate));
+        expect(task.happens.moment).toEqualMoment(moment(dueDate)!); // the earliest
+    });
+
+    it('happens should ignore non-contributing date fields', () => {
+        // other fields, that are ignored by happens:
+        const sampleDate = '2023-06-19';
+        expect(new TaskBuilder().createdDate(sampleDate).build().happens.moment).toBeNull();
+        expect(new TaskBuilder().doneDate(sampleDate).build().happens.moment).toBeNull();
+    });
+
+    it('should provide access to recurring-related properties', () => {
+        const non_recurring = '- [ ] non-recurring task';
+        const recurring = '- [ ] recurring 🔁 every day 📅 2022-06-17';
+        // Invalid recurrence rules are discarded, and treated as non-recurring
+        const invalid = '- [ ] recurring 🔁 invalid rule 📅 2022-06-17';
+
+        // Test Task.recurring
+        expect(fromLine({ line: non_recurring }).isRecurring).toEqual(false);
+        expect(fromLine({ line: recurring }).isRecurring).toEqual(true);
+        expect(fromLine({ line: invalid }).isRecurring).toEqual(false);
+
+        expect(fromLine({ line: non_recurring }).recurrenceRule).toEqual('');
+        expect(fromLine({ line: recurring }).recurrenceRule).toEqual('every day');
+        expect(fromLine({ line: invalid }).recurrenceRule).toEqual('');
+    });
+
+    it('should provide access to heading information', () => {
+        expect(new TaskBuilder().build().heading).toBeNull();
+        expect(new TaskBuilder().precedingHeader('my heading').build().heading).toEqual('my heading');
+
+        expect(new TaskBuilder().build().hasHeading).toEqual(false);
+        expect(new TaskBuilder().precedingHeader('my heading').build().hasHeading).toEqual(true);
+    });
+});
+
 describe('backlinks', () => {
     function shouldGiveLinkText(
         path: string,
@@ -496,6 +598,7 @@ describe('to string', () => {
 
         // Assert
         expect(task).not.toBeNull();
+        expect(task.indentation).toEqual('> > > ');
         expect(task.toFileLineString()).toStrictEqual(line);
     });
 
@@ -1237,6 +1340,26 @@ describe('identicalTo', () => {
         const lhs = new TaskBuilder().tags([]);
         expect(lhs).toBeIdenticalTo(new TaskBuilder().tags([]));
         expect(lhs).not.toBeIdenticalTo(new TaskBuilder().tags(['#stuff']));
+    });
+
+    it('should correctly compare a task with status read from user settings', () => {
+        // This was added when fixing:
+        // https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2044
+        // Uncaught (in promise) TypeError: this.configuration.identicalTo is not a function
+
+        // 1 Create a task whose StatusConfiguration was created via new StatusConfiguration()
+        const task1 = new TaskBuilder().build();
+
+        // 2 Simulate a task whose status was read from StatusSettings:
+        //   Create a task whose StatusConfiguration was read from JSON.
+        //   Any methods on StatusConfiguration are not available via this route.
+        const task1Configuration = JSON.stringify(task1.status.configuration);
+        const task2Configuration = JSON.parse(task1Configuration);
+        const task2Status = new Status(task2Configuration);
+        const task2 = new TaskBuilder().status(task2Status).build();
+
+        expect(task2.status.identicalTo(task1.status)).toEqual(true);
+        expect(task2.identicalTo(task1)).toEqual(true);
     });
 });
 

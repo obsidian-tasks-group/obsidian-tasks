@@ -109,24 +109,32 @@ describe('task line rendering', () => {
         expect((internalDescriptionSpan as HTMLSpanElement).innerText).toEqual('This is a simple task');
     });
 
-    it('hides the global filter if and only if required', async () => {
-        const getDescriptionTest = async () => {
-            const taskLine = '- [ ] This is a simple task with a #global filter';
-            const task = fromLine({
-                line: taskLine,
-            });
-            const parentRender = await createMockParentAndRender(task);
-            return getDescriptionText(parentRender);
-        };
+    const getDescriptionTest = async (taskLine: string) => {
+        const task = fromLine({
+            line: taskLine,
+        });
+        const parentRender = await createMockParentAndRender(task);
+        return getDescriptionText(parentRender);
+    };
 
-        const descriptionWithFilter = await getDescriptionTest();
+    it('should render Global Filter when the Remove Global Filter is off', async () => {
+        updateSettings({ removeGlobalFilter: false });
+        GlobalFilter.set('#global');
+
+        const taskLine = '- [ ] This is a simple task with a #global filter';
+        const descriptionWithFilter = await getDescriptionTest(taskLine);
+
         expect(descriptionWithFilter).toEqual('This is a simple task with a #global filter');
+    });
 
+    it('should not render Global Filter when the Remove Global Filter is on', async () => {
         updateSettings({ removeGlobalFilter: true });
         GlobalFilter.set('#global');
-        const descriptionWithoutFilter = await getDescriptionTest();
-        expect(descriptionWithoutFilter).toEqual('This is a simple task with a  filter');
-        resetSettings();
+
+        const taskLine = '- [ ] #global/subtag-shall-stay This is a simple task with a #global filter';
+        const descriptionWithoutFilter = await getDescriptionTest(taskLine);
+
+        expect(descriptionWithoutFilter).toEqual('#global/subtag-shall-stay This is a simple task with a filter');
     });
 
     const testLayoutOptions = async (

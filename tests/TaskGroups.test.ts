@@ -3,7 +3,7 @@
  */
 import moment from 'moment';
 import { FilenameField } from '../src/Query/Filter/FilenameField';
-import type { Grouper } from '../src/Query/Grouper';
+import { Grouper, type GrouperFunction } from '../src/Query/Grouper';
 import type { Task } from '../src/Task';
 import { PathField } from '../src/Query/Filter/PathField';
 import { TagsField } from '../src/Query/Filter/TagsField';
@@ -242,6 +242,46 @@ describe('Grouping tasks', () => {
         `);
     });
 
+    it('should retain tasks with no group name', () => {
+        const a = fromLine({
+            line: '- [ ] Task with a tag #group1',
+        });
+        const b = fromLine({
+            line: '- [ ] Task without a tag',
+        });
+        const inputs = [a, b];
+
+        const groupByTags: GrouperFunction = (task: Task) => task.tags;
+        const grouper = new Grouper('custom tag grouper', groupByTags, false);
+        const groups = new TaskGroups([grouper], inputs);
+
+        expect(groups.totalTasksCount()).toEqual(2);
+
+        // Force a recalculation of the task count, to ensure no
+        // tasks were lost in the grouping:
+        groups.recalculateTotalTaskCount();
+        expect(groups.totalTasksCount()).toEqual(2);
+
+        expect(groups.toString()).toMatchInlineSnapshot(`
+            "Groupers (if any):
+            - custom tag grouper
+
+            Group names: []
+            - [ ] Task without a tag
+
+            ---
+
+            Group names: [#group1]
+            #### [custom tag grouper] #group1
+            - [ ] Task with a tag #group1
+
+            ---
+
+            2 tasks
+            "
+        `);
+    });
+
     it('should create nested headings if multiple groups used even if one is reversed', () => {
         // Arrange
         const t1 = fromLine({
@@ -321,20 +361,20 @@ describe('Grouping tasks', () => {
             - status.type
             - happens
 
-            Group names: [2 TODO,2022-09-19 Monday]
-            #### [status.type] 2 TODO
+            Group names: [%%2%%TODO,2022-09-19 Monday]
+            #### [status.type] %%2%%TODO
             ##### [happens] 2022-09-19 Monday
             - [ ] Task a - early date 📅 2022-09-19
 
             ---
 
-            Group names: [2 TODO,2022-10-06 Thursday]
+            Group names: [%%2%%TODO,2022-10-06 Thursday]
             ##### [happens] 2022-10-06 Thursday
             - [ ] Task c - intermediate date ⏳ 2022-10-06
 
             ---
 
-            Group names: [2 TODO,2022-12-06 Tuesday]
+            Group names: [%%2%%TODO,2022-12-06 Tuesday]
             ##### [happens] 2022-12-06 Tuesday
             - [ ] Task b - later date ⏳ 2022-12-06
 

@@ -5,7 +5,7 @@ import { parseFilter } from '../FilterParser';
 import type { Task } from '../../Task';
 import { Explanation } from '../Explain/Explanation';
 import { Field } from './Field';
-import { FilterOrErrorMessage } from './Filter';
+import { FilterOrErrorMessage } from './FilterOrErrorMessage';
 import { Filter } from './Filter';
 
 /**
@@ -51,10 +51,8 @@ export class BooleanField extends Field {
      * 4. Returning a final function filter, which for each Task can run the complete query.
      */
     private parseLine(line: string): FilterOrErrorMessage {
-        const result = new FilterOrErrorMessage(line);
         if (line.length === 0) {
-            result.error = 'empty line';
-            return result;
+            return FilterOrErrorMessage.fromError(line, 'empty line');
         }
         const preprocessed = this.preprocessExpression(line);
         try {
@@ -68,12 +66,16 @@ export class BooleanField extends Field {
                     if (!(identifier in this.subFields)) {
                         const parsedField = parseFilter(identifier);
                         if (parsedField === null) {
-                            result.error = `couldn't parse sub-expression '${identifier}'`;
-                            return result;
+                            return FilterOrErrorMessage.fromError(
+                                line,
+                                `couldn't parse sub-expression '${identifier}'`,
+                            );
                         }
                         if (parsedField.error) {
-                            result.error = `couldn't parse sub-expression '${identifier}': ${parsedField.error}`;
-                            return result;
+                            return FilterOrErrorMessage.fromError(
+                                line,
+                                `couldn't parse sub-expression '${identifier}': ${parsedField.error}`,
+                            );
                         } else if (parsedField.filter) {
                             this.subFields[identifier] = parsedField.filter;
                         }
@@ -84,12 +86,10 @@ export class BooleanField extends Field {
                     // they are valid. If we won't, then an invalid operator will only be detected when the query is
                     // run on a task
                     if (token.value == undefined) {
-                        result.error = 'empty operator in boolean query';
-                        return result;
+                        return FilterOrErrorMessage.fromError(line, 'empty operator in boolean query');
                     }
                     if (!this.supportedOperators.includes(token.value)) {
-                        result.error = `unknown boolean operator '${token.value}'`;
-                        return result;
+                        return FilterOrErrorMessage.fromError(line, `unknown boolean operator '${token.value}'`);
                     }
                 }
             }
@@ -98,14 +98,14 @@ export class BooleanField extends Field {
                 return this.filterTaskWithParsedQuery(task, postfixExpression);
             };
             const explanation = this.constructExplanation(postfixExpression);
-            result.filter = new Filter(line, filterFunction, explanation);
-            return result;
+            return FilterOrErrorMessage.fromFilter(new Filter(line, filterFunction, explanation));
         } catch (error) {
             const message = error instanceof Error ? error.message : 'unknown error type';
-            result.error = `malformed boolean query -- ${message} (check the documentation for guidelines)`;
-            return result;
+            return FilterOrErrorMessage.fromError(
+                line,
+                `malformed boolean query -- ${message} (check the documentation for guidelines)`,
+            );
         }
-        return result;
     }
 
     private preprocessExpression(line: string): string {

@@ -1,6 +1,7 @@
 import { Explanation } from '../Explain/Explanation';
-import { Filter, FilterOrErrorMessage } from './Filter';
+import { Filter } from './Filter';
 import type { FilterFunction } from './Filter';
+import { FilterOrErrorMessage } from './FilterOrErrorMessage';
 
 /**
  * Implementation of a single instruction for filtering tasks, and its corresponding predicate.
@@ -31,14 +32,10 @@ export class FilterInstruction {
     }
 
     public createFilterOrErrorMessage(line: string): FilterOrErrorMessage {
-        const result = new FilterOrErrorMessage(line);
-
         if (line === this._instruction) {
-            result.filter = new Filter(line, this._filter, new Explanation(line));
-            return result;
+            return FilterOrErrorMessage.fromFilter(new Filter(line, this._filter, new Explanation(line)));
         }
 
-        result.error = `do not understand filter: ${line}`;
-        return result;
+        return FilterOrErrorMessage.fromError(line, `do not understand filter: ${line}`);
     }
 }

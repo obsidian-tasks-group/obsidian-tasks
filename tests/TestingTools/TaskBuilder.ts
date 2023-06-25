@@ -109,7 +109,7 @@ export class TaskBuilder {
             .doneDate('2023-07-05')
             .blockLink(' ^dcf64c')
             // Values in TaskLocation:
-            .path('/some/folder/fileName.md')
+            .path('some/folder/fileName.md')
             .lineNumber(17)
             .sectionStart(5)
             .sectionIndex(3)

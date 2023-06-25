@@ -4,8 +4,9 @@ import { StatusType } from '../../StatusConfiguration';
 import type { Comparator } from '../Sorter';
 import { Explanation } from '../Explain/Explanation';
 import { Field } from './Field';
-import { Filter, FilterOrErrorMessage } from './Filter';
+import { Filter } from './Filter';
 import type { FilterFunction } from './Filter';
+import { FilterOrErrorMessage } from './FilterOrErrorMessage';
 
 /**
  * A ${@link Field} implementation for searching status.type
@@ -134,6 +135,8 @@ export class StatusTypeField extends Field {
                 prefix = '6';
                 break;
         }
-        return prefix + ' ' + task.status.type;
+        // Text inside the %%..%% comments is used to control the sorting in both sorting of tasks and naming of groups.
+        // The comments are hidden by Obsidian when the headings are rendered.
+        return `%%${prefix}%%${task.status.type}`;
     }
 }

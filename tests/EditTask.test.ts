@@ -3,7 +3,7 @@
  */
 import { fireEvent, render } from '@testing-library/svelte';
 import { describe, expect, it } from '@jest/globals';
-import moment from 'moment/moment';
+import moment from 'moment';
 import { taskFromLine } from '../src/Commands/CreateOrEditTaskParser';
 import type { Task } from '../src/Task';
 import EditTask from '../src/ui/EditTask.svelte';
@@ -41,7 +41,7 @@ describe('Task rendering', () => {
 
     it('should display task description with complex non-tag Global Filter)', () => {
         GlobalFilter.set('filter');
-        // This behavior is incosistent with Obsidian's tag definition which includes nested tags
+        // This behavior is inconsistent with Obsidian's tag definition which includes nested tags
         testDescriptionRender('filter/important thing', 'filter/important thing');
     });
 
@@ -52,8 +52,26 @@ describe('Task rendering', () => {
 
     it('should display task description with complex tag-like Global Filter', () => {
         GlobalFilter.set('#todo');
-        // This behavior is incosistent with Obsidian's tag definition which includes nested tags
+        // This behavior is inconsistent with Obsidian's tag definition which includes nested tags
         testDescriptionRender('#todo/important another plan', '#todo/important another plan');
+    });
+
+    it('should display task description with emoji removed, when global filter is in initial line', () => {
+        GlobalFilter.set('#todo');
+        testDescriptionRender(
+            '#todo with global filter and with scheduled date ⏳ 2023-06-13',
+            'with global filter and with scheduled date',
+        );
+    });
+
+    it('should display task description with emoji removed, even if the global filter is missing from initial line (bug 2037)', () => {
+        GlobalFilter.set('#todo');
+        // When written, this was a demonstration of the behaviour logged in
+        // https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2037
+        testDescriptionRender(
+            'without global filter but with scheduled date ⏳ 2023-06-13',
+            'without global filter but with scheduled date', // fails, as the absence of the global filter means the line is not parsed, and the emoji stays in the description.
+        );
     });
 });
 

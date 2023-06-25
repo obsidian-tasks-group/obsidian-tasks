@@ -1,7 +1,7 @@
 import type { LayoutOptions } from './TaskLayout';
 import type { Task } from './Task';
-import type { TaskGroups } from './Query/TaskGroups';
 import type { Grouper } from './Query/Grouper';
+import type { QueryResult } from './Query/QueryResult';
 
 /**
  * Standard interface for the query engine used by Tasks, multiple
@@ -59,7 +59,7 @@ export interface IQuery {
      * @return {*}  {TaskGroups}
      * @memberof Query
      */
-    applyQueryToTasks: (tasks: Task[]) => TaskGroups;
+    applyQueryToTasks: (tasks: Task[]) => QueryResult;
 
     /**
      * Return a text representation of the query.

@@ -7,8 +7,9 @@ import type { Comparator } from '../Sorter';
 import { compareByDate } from '../../lib/DateTools';
 import type { GrouperFunction } from '../Grouper';
 import { Field } from './Field';
-import { Filter, type FilterFunction, FilterOrErrorMessage } from './Filter';
+import { Filter, type FilterFunction } from './Filter';
 import { FilterInstructions } from './FilterInstructions';
+import { FilterOrErrorMessage } from './FilterOrErrorMessage';
 
 export type DateFilterFunction = (date: Moment | null) => boolean;
 
@@ -49,8 +50,6 @@ export abstract class DateField extends Field {
             return filterResult;
         }
 
-        const result = new FilterOrErrorMessage(line);
-
         const fieldNameKeywordDate = Field.getMatch(this.filterRegExp(), line);
         if (fieldNameKeywordDate !== null) {
             const keywordAndDateString = fieldNameKeywordDate[1]; // Will contain the whole line except the field name
@@ -72,7 +71,7 @@ export abstract class DateField extends Field {
             }
 
             if (!fieldDates.isValid()) {
-                result.error = 'do not understand ' + this.fieldName() + ' date';
+                return FilterOrErrorMessage.fromError(line, 'do not understand ' + this.fieldName() + ' date');
             } else {
                 const filterFunction = this.buildFilterFunction(fieldKeyword, fieldDates);
 
@@ -82,12 +81,14 @@ export abstract class DateField extends Field {
                     this.filterResultIfFieldMissing(),
                     fieldDates,
                 );
-                result.filter = new Filter(line, filterFunction, explanation);
+                return FilterOrErrorMessage.fromFilter(new Filter(line, filterFunction, explanation));
             }
         } else {
-            result.error = 'do not understand query filter (' + this.fieldName() + ' date)';
+            return FilterOrErrorMessage.fromError(
+                line,
+                'do not understand query filter (' + this.fieldName() + ' date)',
+            );
         }
-        return result;
     }
 
     /**

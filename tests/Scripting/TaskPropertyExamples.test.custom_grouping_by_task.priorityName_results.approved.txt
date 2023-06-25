@@ -1,0 +1,31 @@
+Results of custom groupers
+
+
+
+group by function task.priorityName
+Group by the task's priority name
+The priority names are displayed in alphabetical order.
+Note that the default priority is called 'Normal', as opposed to with `group by priority` which calls the default 'None'
+=>
+High
+Highest
+Low
+Lowest
+Medium
+Normal
+====================================================================================
+
+
+group by function '%%' + task.priorityNumber.toString() + '%%' + task.priorityName +' priority'
+Group by the task's priority name
+The hidden priority number ensures that the headings are written from highest to lowest priority.
+Note that the default priority is called 'Normal', as opposed to with `group by priority` which calls the default 'None'
+=>
+%%0%%Highest priority
+%%1%%High priority
+%%2%%Medium priority
+%%3%%Normal priority
+%%4%%Low priority
+%%5%%Lowest priority
+====================================================================================
+

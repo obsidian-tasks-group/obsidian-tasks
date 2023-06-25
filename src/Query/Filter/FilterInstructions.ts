@@ -1,5 +1,5 @@
 import { FilterInstruction } from './FilterInstruction';
-import { FilterOrErrorMessage } from './Filter';
+import { FilterOrErrorMessage } from './FilterOrErrorMessage';
 import type { FilterFunction } from './Filter';
 
 /**
@@ -35,8 +35,6 @@ export class FilterInstructions {
             }
         }
 
-        const result = new FilterOrErrorMessage(line);
-        result.error = `do not understand filter: ${line}`;
-        return result;
+        return FilterOrErrorMessage.fromError(line, `do not understand filter: ${line}`);
     }
 }

@@ -10,14 +10,18 @@ import { renderTaskLine } from './TaskLineRenderer';
 import type { TaskLineRenderDetails } from './TaskLineRenderer';
 import { DateFallback } from './DateFallback';
 import { compareByDate } from './lib/DateTools';
+import { TasksDate } from './Scripting/TasksDate';
+import { StatusType } from './StatusConfiguration';
+import { TasksFile } from './Scripting/TasksFile';
+import { PriorityTools } from './lib/PriorityTools';
 
 /**
  * When sorting, make sure low always comes after none. This way any tasks with low will be below any exiting
  * tasks that have no priority which would be the default.
  *
  * Values can be converted to strings with:
- * - {@link priorityNameUsingNone} in {@link PriorityField}
- * - {@link priorityNameUsingNormal} in {@link PriorityField}
+ * - {@link priorityNameUsingNone} in {@link PriorityTools}
+ * - {@link priorityNameUsingNormal} in {@link PriorityTools}
  *
  * @export
  * @enum {number}
@@ -33,6 +37,7 @@ export enum Priority {
 
 export class TaskRegularExpressions {
     public static readonly dateFormat = 'YYYY-MM-DD';
+    public static readonly dateTimeFormat = 'YYYY-MM-DD HH:mm';
 
     // Matches indentation before a list marker (including > for potentially nested blockquotes or Obsidian callouts)
     public static readonly indentationRegex = /^([\s\t>]*)/;
@@ -51,6 +56,8 @@ export class TaskRegularExpressions {
     // - List marker
     // - Status character
     // - Rest of task after checkbox markdown
+    // See Task.extractTaskComponents() for abstraction around this regular expression.
+    // That is private for now, but could be made public in future if needed.
     public static readonly taskRegex = new RegExp(
         TaskRegularExpressions.indentationRegex.source +
             TaskRegularExpressions.listMarkerRegex.source +
@@ -88,6 +95,18 @@ export class TaskRegularExpressions {
     // matches: #dog, #car, #house
     public static readonly hashTags = /(^|\s)#[^ !@#$%^&*(),.?":{}|<>]*/g;
     public static readonly hashTagsFromEnd = new RegExp(this.hashTags.source + '$');
+}
+
+/**
+ * Storage for the task line, broken down in to sections.
+ * See {@link Task.extractTaskComponents} for use.
+ */
+interface TaskComponents {
+    indentation: string;
+    listMarker: string;
+    status: Status;
+    body: string;
+    blockLink: string;
 }
 
 /**
@@ -190,7 +209,8 @@ export class Task {
     }
 
     /**
-     * Takes the given line from an obsidian note and returns a Task object.
+     * Takes the given line from an Obsidian note and returns a Task object.
+     * Will check if Global Filter is present in the line.
      *
      * @static
      * @param {string} line - The full line in the note to parse.
@@ -198,6 +218,7 @@ export class Task {
      * @param {(Moment | null)} fallbackDate - The date to use as the scheduled date if no other date is set
      * @return {*}  {(Task | null)}
      * @memberof Task
+     * @see parseTaskSignifiers
      */
     public static fromLine({
         line,
@@ -208,39 +229,49 @@ export class Task {
         taskLocation: TaskLocation;
         fallbackDate: Moment | null;
     }): Task | null {
+        const taskComponents = Task.extractTaskComponents(line);
         // Check the line to see if it is a markdown task.
-        const regexMatch = line.match(TaskRegularExpressions.taskRegex);
-        if (regexMatch === null) {
+        if (taskComponents === null) {
             return null;
         }
 
-        // match[4] includes the whole body of the task after the brackets.
-        const body = regexMatch[4].trim();
-
-        // return if task does not have the global filter. Do this before processing
-        // rest of match to improve performance.
-        if (!GlobalFilter.includedIn(body)) {
+        // return if the line does not have the global filter. Do this before
+        // any other processing to improve performance.
+        if (!GlobalFilter.includedIn(taskComponents.body)) {
             return null;
         }
 
-        let description = body;
-        const indentation = regexMatch[1];
-        const listMarker = regexMatch[2];
+        return Task.parseTaskSignifiers(line, taskLocation, fallbackDate);
+    }
 
-        // Get the status of the task.
-        const statusString = regexMatch[3];
-        const status = StatusRegistry.getInstance().bySymbolOrCreate(statusString);
-
-        // Match for block link and remove if found. Always expected to be
-        // at the end of the line.
-        const blockLinkMatch = description.match(TaskRegularExpressions.blockLinkRegex);
-        const blockLink = blockLinkMatch !== null ? blockLinkMatch[0] : '';
-
-        if (blockLink !== '') {
-            description = description.replace(TaskRegularExpressions.blockLinkRegex, '').trim();
+    /**
+     * Parses the line in attempt to get the task details.
+     *
+     * This reads the task even if the Global Filter is missing.
+     * If a Global Filter check is needed, use {@link Task.fromLine}.
+     *
+     * Task is returned regardless if Global Filter is present or not.
+     * However, if it is, it will be removed from the tags.
+     *
+     * @param line - the full line to parse
+     * @param taskLocation - The location of the task line
+     * @param fallbackDate - The date to use as the scheduled date if no other date is set
+     * @returns {*} {(Task | null)}
+     * @see fromLine
+     */
+    public static parseTaskSignifiers(
+        line: string,
+        taskLocation: TaskLocation,
+        fallbackDate: Moment | null,
+    ): Task | null {
+        const taskComponents = Task.extractTaskComponents(line);
+        // Check the line to see if it is a markdown task.
+        if (taskComponents === null) {
+            return null;
         }
+
         const { taskSerializer } = getUserSelectedTaskFormat();
-        const taskInfo = taskSerializer.deserialize(description);
+        const taskInfo = taskSerializer.deserialize(taskComponents.body);
 
         let scheduledDateIsInferred = false;
         // Infer the scheduled date from the file name if not set explicitly
@@ -256,16 +287,42 @@ export class Task {
         taskInfo.tags = taskInfo.tags.filter((tag) => !GlobalFilter.equals(tag));
 
         return new Task({
+            ...taskComponents,
             ...taskInfo,
-            status,
-            indentation,
-            listMarker,
             taskLocation: taskLocation,
-            blockLink,
             originalMarkdown: line,
             scheduledDateIsInferred,
         });
     }
+
+    private static extractTaskComponents(line: string): TaskComponents | null {
+        // Check the line to see if it is a markdown task.
+        const regexMatch = line.match(TaskRegularExpressions.taskRegex);
+        if (regexMatch === null) {
+            return null;
+        }
+
+        const indentation = regexMatch[1];
+        const listMarker = regexMatch[2];
+
+        // Get the status of the task.
+        const statusString = regexMatch[3];
+        const status = StatusRegistry.getInstance().bySymbolOrCreate(statusString);
+
+        // match[4] includes the whole body of the task after the brackets.
+        let body = regexMatch[4].trim();
+
+        // Match for block link and remove if found. Always expected to be
+        // at the end of the line.
+        const blockLinkMatch = body.match(TaskRegularExpressions.blockLinkRegex);
+        const blockLink = blockLinkMatch !== null ? blockLinkMatch[0] : '';
+
+        if (blockLink !== '') {
+            body = body.replace(TaskRegularExpressions.blockLinkRegex, '').trim();
+        }
+        return { indentation, listMarker, status, body, blockLink };
+    }
+
     /**
      * Create an HTML rendered List Item element (LI) for the current task.
      * @note Output is based on the {@link DefaultTaskSerializer}'s format, with default (emoji) symbols
@@ -395,6 +452,42 @@ export class Task {
         return recurrenceOnNextLine ? newTasks.reverse() : newTasks;
     }
 
+    /**
+     * Return whether the task is considered done.
+     * @returns true if the status type is {@link StatusType.DONE}, {@link StatusType.CANCELLED} or {@link StatusType.NON_TASK}, and false otherwise.
+     */
+    public get isDone(): boolean {
+        return (
+            this.status.type === StatusType.DONE ||
+            this.status.type === StatusType.CANCELLED ||
+            this.status.type === StatusType.NON_TASK
+        );
+    }
+
+    /**
+     * Return the number of the Task's priority.
+     *     - Highest = 0
+     *     - High = 1
+     *     - Medium = 2
+     *     - None = 3
+     *     - Low = 4
+     *     - Lowest = 5
+     * @see priorityName
+     */
+    public get priorityNumber(): number {
+        return Number.parseInt(this.priority);
+    }
+
+    /**
+     * Return the name of the Task's priority.
+     *
+     * Note that the default priority is called 'Normal', not 'None'.
+     @see priorityNumber
+     */
+    public get priorityName(): string {
+        return PriorityTools.priorityNameUsingNormal(this.priority);
+    }
+
     public get urgency(): number {
         if (this._urgency === null) {
             this._urgency = Urgency.calculate(this);
@@ -405,6 +498,94 @@ export class Task {
 
     public get path(): string {
         return this.taskLocation.path;
+    }
+
+    /**
+     * Return {@link createdDate} as a {@link TasksDate}, so the field names in scripting docs are consistent with the existing search instruction names, and null values are easy to deal with.
+     */
+    public get created(): TasksDate {
+        return new TasksDate(this.createdDate);
+    }
+
+    /**
+     * Return {@link doneDate} as a {@link TasksDate}, so the field names in scripting docs are consistent with the existing search instruction names, and null values are easy to deal with.
+     */
+    public get done(): TasksDate {
+        return new TasksDate(this.doneDate);
+    }
+
+    /**
+     * Return {@link dueDate} as a {@link TasksDate}, so the field names in scripting docs are consistent with the existing search instruction names, and null values are easy to deal with.
+     */
+    public get due(): TasksDate {
+        return new TasksDate(this.dueDate);
+    }
+
+    /**
+     * Return {@link scheduledDate} as a {@link TasksDate}, so the field names in scripting docs are consistent with the existing search instruction names, and null values are easy to deal with.
+     */
+    public get scheduled(): TasksDate {
+        return new TasksDate(this.scheduledDate);
+    }
+
+    /**
+     * Return {@link startDate} as a {@link TasksDate}, so the field names in scripting docs are consistent with the existing search instruction names, and null values are easy to deal with.
+     */
+    public get start(): TasksDate {
+        return new TasksDate(this.startDate);
+    }
+
+    /**
+     * Return the date fields that contribute to 'happens' searches.
+     *
+     * @see happens
+     * @see {@link HappensDateField}
+     */
+    public get happensDates(): (Moment | null)[] {
+        return Array.of(this.startDate, this.scheduledDate, this.dueDate);
+    }
+
+    /**
+     * Return the earliest of the dates used by 'happens' in this given task as a {@link TasksDate}.
+     *
+     * Generally speaking, the earliest date is considered to be the highest priority,
+     * as it is the first point at which the user might wish to act on the task.
+     *
+     * @see happensDates
+     * @see {@link HappensDateField}
+     */
+    public get happens(): TasksDate {
+        const happensDates = this.happensDates;
+        const sortedHappensDates = happensDates.sort(compareByDate);
+        return new TasksDate(sortedHappensDates[0]);
+    }
+
+    /**
+     * Return true if the Task has a valid recurrence rule, and false otherwise,
+     * that is, false if it does not have a recurrence rule, or the recurrence rule is invalid.
+     */
+    public get isRecurring(): boolean {
+        return this.recurrence !== null;
+    }
+
+    /**
+     * Return the text of the Task's recurrence rule, if it is supplied and is valid,
+     * and an empty string otherwise.
+     */
+    public get recurrenceRule(): string {
+        return this.recurrence ? this.recurrence.toText() : '';
+    }
+
+    public get heading(): string | null {
+        return this.precedingHeader;
+    }
+
+    public get hasHeading(): boolean {
+        return this.precedingHeader !== null;
+    }
+
+    public get file(): TasksFile {
+        return new TasksFile(this.path);
     }
 
     /**

@@ -4,7 +4,7 @@ import { StatusField } from '../../src/Query/Filter/StatusField';
 import { Status } from '../../src/Status';
 import type { Task } from '../../src/Task';
 import { StatusConfiguration, StatusType } from '../../src/StatusConfiguration';
-import type { FilterOrErrorMessage } from '../../src/Query/Filter/Filter';
+import type { FilterOrErrorMessage } from '../../src/Query/Filter/FilterOrErrorMessage';
 import * as FilterParser from '../../src/Query/FilterParser';
 import { StatusNameField } from '../../src/Query/Filter/StatusNameField';
 import { StatusTypeField } from '../../src/Query/Filter/StatusTypeField';

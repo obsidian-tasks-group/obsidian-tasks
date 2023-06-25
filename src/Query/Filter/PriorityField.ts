@@ -2,8 +2,10 @@ import { Priority, Task } from '../../Task';
 import { Explanation } from '../Explain/Explanation';
 import type { Comparator } from '../Sorter';
 import type { GrouperFunction } from '../Grouper';
+import { PriorityTools } from '../../lib/PriorityTools';
 import { Field } from './Field';
-import { Filter, FilterOrErrorMessage } from './Filter';
+import { Filter } from './Filter';
+import { FilterOrErrorMessage } from './FilterOrErrorMessage';
 
 export class PriorityField extends Field {
     // The trick in the following to manage whitespace with optional values
@@ -14,7 +16,6 @@ export class PriorityField extends Field {
         /^priority(\s+is)?(\s+(above|below|not))?(\s+(lowest|low|none|medium|high|highest))$/;
 
     createFilterOrErrorMessage(line: string): FilterOrErrorMessage {
-        const result = new FilterOrErrorMessage(line);
         const priorityMatch = Field.getMatch(this.filterRegExp(), line);
         if (priorityMatch !== null) {
             const filterPriorityString = priorityMatch[5];
@@ -42,8 +43,7 @@ export class PriorityField extends Field {
             }
 
             if (filterPriority === null) {
-                result.error = 'do not understand priority';
-                return result;
+                return FilterOrErrorMessage.fromError(line, 'do not understand priority');
             }
 
             let explanation = line;
@@ -63,11 +63,10 @@ export class PriorityField extends Field {
                     explanation = `${this.fieldName()} is ${filterPriorityString}`;
             }
 
-            result.filter = new Filter(line, filter, new Explanation(explanation));
+            return FilterOrErrorMessage.fromFilter(new Filter(line, filter, new Explanation(explanation)));
         } else {
-            result.error = 'do not understand query filter (priority)';
+            return FilterOrErrorMessage.fromError(line, 'do not understand query filter (priority)');
         }
-        return result;
     }
 
     public fieldName(): string {
@@ -94,47 +93,10 @@ export class PriorityField extends Field {
 
     public grouper(): GrouperFunction {
         return (task: Task) => {
-            const priorityName = PriorityField.priorityNameUsingNone(task.priority);
-            return [`Priority ${task.priority}: ${priorityName}`];
+            const priorityName = PriorityTools.priorityNameUsingNormal(task.priority);
+            // Text inside the %%..%% comments is used to control the sort order.
+            // The comments are hidden by Obsidian when the headings are rendered.
+            return [`%%${task.priority}%%${priorityName} priority`];
         };
-    }
-
-    /**
-     * Get the name of a {@link Priority} value, returning 'None' for {@link Priority.None}
-     * @param priority
-     * @see priorityNameUsingNormal
-     */
-    public static priorityNameUsingNone(priority: Priority) {
-        let priorityName = 'ERROR';
-        switch (priority) {
-            case Priority.High:
-                priorityName = 'High';
-                break;
-            case Priority.Highest:
-                priorityName = 'Highest';
-                break;
-            case Priority.Medium:
-                priorityName = 'Medium';
-                break;
-            case Priority.None:
-                priorityName = 'None';
-                break;
-            case Priority.Low:
-                priorityName = 'Low';
-                break;
-            case Priority.Lowest:
-                priorityName = 'Lowest';
-                break;
-        }
-        return priorityName;
-    }
-
-    /**
-     * Get the name of a {@link Priority} value, returning 'Normal' for {@link Priority.None}
-     * @param priority
-     * @see priorityNameUsingNone
-     */
-    public static priorityNameUsingNormal(priority: Priority) {
-        return PriorityField.priorityNameUsingNone(priority).replace('None', 'Normal');
     }
 }

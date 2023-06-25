@@ -11,6 +11,7 @@ import type { Task } from './Task';
 import { DateFallback } from './DateFallback';
 import { TaskLayout } from './TaskLayout';
 import { explainResults, getQueryForQueryRenderer } from './lib/QueryRendererHelper';
+import type { TaskGroups } from './Query/TaskGroups';
 
 export class QueryRenderer {
     private readonly app: App;
@@ -41,8 +42,22 @@ export class QueryRenderer {
 class QueryRenderChild extends MarkdownRenderChild {
     private readonly app: App;
     private readonly events: TasksEvents;
-    private readonly source: string; // The complete text in the instruction block, such as 'not done\nshort mode'
-    private readonly filePath: string; // The path of the file that contains the instruction block
+
+    /**
+     * The complete text in the instruction block, such as:
+     * ```
+     *   not done
+     *   short mode
+     * ```
+     *
+     * This does not contain the Global Query from the user's settings.
+     * Use {@link getQueryForQueryRenderer} to get this value prefixed with the Global Query.
+     */
+    private readonly source: string;
+
+    /// The path of the file that contains the instruction block.
+    private readonly filePath: string;
+
     private query: IQuery;
     private queryType: string;
 
@@ -134,37 +149,39 @@ class QueryRenderChild extends MarkdownRenderChild {
 
         const content = this.containerEl.createEl('div');
         if (state === State.Warm && this.query.error === undefined) {
-            console.debug(
-                `Render ${this.queryType} called for a block in active file "${this.filePath}", to select from ${tasks.length} tasks: plugin state: ${state}`,
-            );
-
-            if (this.query.layoutOptions.explainQuery) {
-                this.createExplanation(content);
-            }
-
-            const tasksSortedLimitedGrouped = this.query.applyQueryToTasks(tasks);
-            for (const group of tasksSortedLimitedGrouped.groups) {
-                // If there were no 'group by' instructions, group.groupHeadings
-                // will be empty, and no headings will be added.
-                this.addGroupHeadings(content, group.groupHeadings);
-
-                const { taskList } = await this.createTasksList({
-                    tasks: group.tasks,
-                    content: content,
-                });
-                content.appendChild(taskList);
-            }
-            const totalTasksCount = tasksSortedLimitedGrouped.totalTasksCount();
-            console.debug(`${totalTasksCount} of ${tasks.length} tasks displayed in a block in "${this.filePath}"`);
-            this.addTaskCount(content, totalTasksCount);
+            await this.renderQuerySearchResults(tasks, state, content);
         } else if (this.query.error !== undefined) {
-            content.createDiv().innerHTML =
-                '<pre>' + `Tasks query: ${this.query.error.replace(/\n/g, '<br>')}` + '</pre>';
+            this.renderErrorMessage(content, this.query.error);
         } else {
-            content.setText('Loading Tasks ...');
+            this.renderLoadingMessage(content);
         }
 
         this.containerEl.firstChild?.replaceWith(content);
+    }
+
+    private async renderQuerySearchResults(tasks: Task[], state: State.Warm, content: HTMLDivElement) {
+        console.debug(
+            `Render ${this.queryType} called for a block in active file "${this.filePath}", to select from ${tasks.length} tasks: plugin state: ${state}`,
+        );
+
+        if (this.query.layoutOptions.explainQuery) {
+            this.createExplanation(content);
+        }
+
+        const queryResult = this.query.applyQueryToTasks(tasks);
+        await this.addAllTaskGroups(queryResult.taskGroups, content);
+
+        const totalTasksCount = queryResult.totalTasksCount;
+        console.debug(`${totalTasksCount} of ${tasks.length} tasks displayed in a block in "${this.filePath}"`);
+        this.addTaskCount(content, totalTasksCount);
+    }
+
+    private renderErrorMessage(content: HTMLDivElement, errorMessage: string) {
+        content.createDiv().innerHTML = '<pre>' + `Tasks query: ${errorMessage.replace(/\n/g, '<br>')}` + '</pre>';
+    }
+
+    private renderLoadingMessage(content: HTMLDivElement) {
+        content.setText('Loading Tasks ...');
     }
 
     // Use the 'explain' instruction to enable this
@@ -258,6 +275,20 @@ class QueryRenderChild extends MarkdownRenderChild {
     private addUrgency(listItem: HTMLElement, task: Task) {
         const text = new Intl.NumberFormat().format(task.urgency);
         listItem.createSpan({ text, cls: 'tasks-urgency' });
+    }
+
+    private async addAllTaskGroups(tasksSortedLimitedGrouped: TaskGroups, content: HTMLDivElement) {
+        for (const group of tasksSortedLimitedGrouped.groups) {
+            // If there were no 'group by' instructions, group.groupHeadings
+            // will be empty, and no headings will be added.
+            this.addGroupHeadings(content, group.groupHeadings);
+
+            const { taskList } = await this.createTasksList({
+                tasks: group.tasks,
+                content: content,
+            });
+            content.appendChild(taskList);
+        }
     }
 
     /**

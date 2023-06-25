@@ -75,8 +75,21 @@ export class Status {
      *
      * @type {string}
      * @memberof Status
+     * @see nextSymbol
      */
     public get nextStatusSymbol(): string {
+        return this.configuration.nextStatusSymbol;
+    }
+
+    /**
+     * Returns the next status for a task when toggled.
+     * This is an alias for {@link nextStatusSymbol} which is provided for brevity in user scripts.
+     *
+     * @type {string}
+     * @memberof Status
+     * @see nextStatusSymbol
+     */
+    public get nextSymbol(): string {
         return this.configuration.nextStatusSymbol;
     }
 
@@ -219,7 +232,17 @@ export class Status {
      * @param other
      */
     public identicalTo(other: Status): boolean {
-        return this.configuration.identicalTo(other.configuration);
+        const args: Array<keyof StatusConfiguration> = [
+            'symbol',
+            'name',
+            'nextStatusSymbol',
+            'availableAsCommand',
+            'type',
+        ];
+        for (const el of args) {
+            if (this[el] !== other[el]) return false;
+        }
+        return true;
     }
 
     /**

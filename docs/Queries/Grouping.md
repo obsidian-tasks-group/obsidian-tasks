@@ -4,6 +4,28 @@ publish: true
 
 # Grouping
 
+<span class="related-pages">#feature/grouping</span>
+
+---
+
+## Contents
+
+This page is long. Here are some links to the main sections:
+
+- [[#Basics]]
+- [[#Custom Groups]]
+- [[#Group by Task Statuses]]
+- [[#Group by Dates in Tasks]]
+- [[#Group by Other Task Properties]]
+- [[#Group by File Properties]]
+- [[#Multiple groups]]
+- [[#Refining groups]]
+- [[#Notes]]
+- [[#Screenshots]]
+- [[#Examples]]
+
+---
+
 ## Basics
 
 > [!released]
@@ -13,94 +35,551 @@ By default, Tasks displays tasks in a single list.
 
 To divide the matching tasks up with headings, you can add `group by` lines to the query.
 
-## Available grouping properties
+---
 
-You can group by the following properties.
+## Custom Groups
 
-### File locations
+> [!released]
+> `group by function` was introduced in Tasks 4.0.0.
 
-1. `path` (the path to the file that contains the task, that is, the folder and the filename)
-1. `root` (the top-level folder of the file that contains the task, that is, the first directory in the path, which will be `/` for files in root of the vault)
-1. `folder` (the folder to the file that contains the task, which will be `/` for files in root of the vault)
-1. `filename` (the link to the file that contains the task, without the `.md` extension)
-    - Note that tasks from different notes with the same file name will be grouped together in the same group.
+Tasks provides many built-in grouping options, but sometimes they don't quite do what is wanted by all users.
+
+Now. Tasks has a powerful mechanism for you to create your own **custom groups**, offering incredible flexibility.
+
+There are many examples of the custom grouping instruction `group by function` in the documentation below, with explanations, for when the `group by` instructions built in to Tasks do not satisfy your preferences.
+
+You can find out more about this very powerful facility in [[Custom Grouping]].
+
+---
+
+## Group by Task Statuses
+
+For more information, including adding your own customised statuses, see [[Statuses]].
+
+### Status
+
+- `group by status` (Done or Todo, which is capitalized for visibility in the headings)
+  - Note that the Done group is displayed before the Todo group,
+      which differs from the Sorting ordering of this property.
+    - `Done` is used for tasks status types `DONE`, `CANCELLED` and `NON_TASK`
+    - `Todo` is used for status types with type `TODO` and `IN_PROGRESS`
+
+Since Tasks 4.0.0, **[[Custom Grouping|custom grouping]] by status** is now possible.
+
+<!-- placeholder to force blank line before included text --> <!-- include: TaskPropertyExamples.test.custom_grouping_by_task.isDone_docs.approved.md -->
+
+- ```group by function task.isDone ? "Action Required" : "Nothing To Do"```
+  - Use JavaScript's ternary operator to choose what to do for true (after the ?) and false (after the :) values.
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+
+### Status Name
+
+- `group by status.name`
+  - This groups by the names you give to your custom statuses, in alphabetical order.
+
+> [!released]
+`group by status.name` was introduced in Tasks 1.23.0.
+
+Since Tasks 4.0.0, **[[Custom Grouping|custom grouping]] by status names** is now possible.
+
+<!-- placeholder to force blank line before included text --> <!-- include: TaskPropertyExamples.test.custom_grouping_by_task.status.name_docs.approved.md -->
+
+- ```group by function task.status.name```
+  - Identical to "group by status.name".
+- ```group by function task.status.name.toUpperCase()```
+  - Convert the status names to capitals.
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+
+### Status Type
+
+- `group by status.type`
+  - This groups by the types you have given to your custom statuses.
+  - The groups will appear in this order, and with these group names:
+    - `IN_PROGRESS`
+    - `TODO`
+    - `DONE`
+    - `CANCELLED`
+    - `NON_TASK`
+
+> [!released]
+`group by status.type` was introduced in Tasks 1.23.0.
+
+Since Tasks 4.0.0, **[[Custom Grouping|custom grouping]] by status types** is now possible.
+
+<!-- placeholder to force blank line before included text --> <!-- include: TaskPropertyExamples.test.custom_grouping_by_task.status.type_docs.approved.md -->
+
+- ```group by function task.status.type```
+  - Unlike "group by status.type", this sorts the status types in alphabetical order.
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+
+### Status Symbol
+
+There is no built-in instruction to group by status symbols.
+
+Since Tasks 4.0.0, **[[Custom Grouping|custom grouping]] by status symbol** is now possible.
+
+<!-- placeholder to force blank line before included text --> <!-- include: TaskPropertyExamples.test.custom_grouping_by_task.status.symbol_docs.approved.md -->
+
+- ```group by function "Status symbol: " + task.status.symbol.replace(" ", "space")```
+  - Group by the status symbol, making space characters visible.
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+
+### Next Status Symbol
+
+There is no built-in instruction to group by next status symbols.
+
+Since Tasks 4.0.0, **[[Custom Grouping|custom grouping]] by next status symbol** is now possible.
+
+<!-- placeholder to force blank line before included text --> <!-- include: TaskPropertyExamples.test.custom_grouping_by_task.status.nextSymbol_docs.approved.md -->
+
+- ```group by function "Next status symbol: " + task.status.nextSymbol.replace(" ", "space")```
+  - Group by the next status symbol, making space characters visible.
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+
+---
+
+## Group by Dates in Tasks
+
+### Due Date
+
+- `group by due`
+  - The due date of the task, including the week-day, or `No due date`.
+
+> [!released]
+>
+> - `due` grouping option was introduced in Tasks 1.7.0.
+
+Since Tasks 4.0.0, **[[Custom Grouping|custom grouping]] by due date** is now possible.
+
+These examples all use  `task.due` property, which is a `TasksDate` object. You can see the current [TasksDate source code](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/src/Scripting/TasksDate.ts), to explore its capabilities.
+
+Some of these examples use the [moment.js format characters](https://momentjs.com/docs/#/displaying/format/).
+
+<!-- placeholder to force blank line before included text --> <!-- include: TaskPropertyExamples.test.custom_grouping_by_task.due_docs.approved.md -->
+
+- ```group by function task.due.format("YYYY-MM-DD dddd")```
+  - Like "group by due", except it uses no heading, instead of a heading "No due date", if there is no due date.
+- ```group by function task.due.formatAsDate()```
+  - Format date as YYYY-MM-DD or empty string (so no heading) if there is no due date.
+- ```group by function task.due.formatAsDateAndTime()```
+  - Format date as YYYY-MM-DD HH:mm or empty string if no due date.
+  - Note:
+    - This is shown for demonstration purposes.
+    - Currently the Tasks plugin does not support storing of times.
+    - Do not add times to your tasks, as it will break the reading of task data.
+- ```group by function task.due.format("YYYY[%%]-MM[%%] MMM", "no due date")```
+  - Group by month, for example `2023%%-05%% May` ...
+    - ... which gets rendered by Obsidian as `2023 May`.
+  - Or show a default heading "no due date" if no date.
+  - The hidden month number is added, commented-out between two `%%` strings, to control the sort order of headings.
+  - To escape characters in format strings, you can wrap the characters in square brackets (here, `[%%]`).
+- ```group by function task.due.format("YYYY[%%]-MM[%%] MMM [- Week] WW")```
+  - Group by month and week number, for example `2023%%-05%% May - Week 22` ...
+    - ... which gets rendered by Obsidian as `2023 May - Week 22`.
+  - If the month number is not embedded, in some years the first or last week of the year is displayed in a non-logical order..
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+
+DON'T PANIC! For users who are comfortable with JavaScript, these more complicated examples may also be of interest:
+
+<!-- placeholder to force blank line before included text --> <!-- include: TaskPropertyExamples.test.custom_grouping_by_task.due.advanced_docs.approved.md -->
+
+- ```group by function task.due.moment?.fromNow() || ""```
+  - Group by the time from now, for example "8 days ago".
+  - Because Moment.fromNow() is not provided by TasksDate, we need special code for when there is no date value.
+  - Whilst interesting, the alphabetical sort order makes the headings a little hard to read.
+- ```group by function task.due.format("dddd")```
+  - Group by day of the week (Monday, Tuesday, etc).
+  - The day names are sorted alphabetically.
+- ```group by function task.due.format("[%%]d[%%]dddd")```
+  - Group by day of the week (Sunday, Monday, Tuesday, etc).
+  - The day names are sorted in date order, starting with Sunday.
+- ```group by function task.due.moment ? ( task.due.moment.day() === 0 ? task.due.format("[%%][8][%%]dddd") : task.due.format("[%%]d[%%]dddd") ) : "Undated"```
+  - Group by day of the week (Monday, Tuesday, etc).
+  - The day names are sorted in date order, starting with Monday.
+  - Tasks without due dates are displayed at the end, under a heading "Undated".
+  - This is best understood by pasting it in to a Tasks block in Obsidian and then deleting parts of the expression.
+  - The key technique is to say that if the day is Sunday (`0`), then force it to be displayed as date number `8`, so it comes after the other days of the week.
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+
+### Done Date
+
+- `group by done`
+  - The done date of the task, including the week-day, or `No done date`.
+
+> [!released]
+>
+> - `done` grouping option was introduced in Tasks 1.7.0.
+
+Since Tasks 4.0.0, **[[Custom Grouping|custom grouping]] by done date** is now possible.
+
+<!-- placeholder to force blank line before included text --> <!-- include: TaskPropertyExamples.test.custom_grouping_by_task.done_docs.approved.md -->
+
+- ```group by function task.done.format("YYYY-MM-DD dddd")```
+  - Like "group by done", except it uses an empty string instead of "No done date" if there is no done date.
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+
+For more examples, see [[#Due Date]].
+
+### Scheduled Date
+
+- `group by scheduled`
+  - The scheduled date of the task, including the week-day, or `No scheduled date`.
+
+> [!released]
+>
+> - `scheduled` grouping option was introduced in Tasks 1.7.0.
+
+Since Tasks 4.0.0, **[[Custom Grouping|custom grouping]] by scheduled date** is now possible.
+
+<!-- placeholder to force blank line before included text --> <!-- include: TaskPropertyExamples.test.custom_grouping_by_task.scheduled_docs.approved.md -->
+
+- ```group by function task.scheduled.format("YYYY-MM-DD dddd")```
+  - Like "group by scheduled", except it uses an empty string instead of "No scheduled date" if there is no scheduled date.
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+
+For more examples, see [[#Due Date]].
+
+### Start Date
+
+- `group by start`
+  - The start date of the task, including the week-day, or `No start date`.
+
+> [!released]
+>
+> - `start` grouping option was introduced in Tasks 1.7.0.
+
+Since Tasks 4.0.0, **[[Custom Grouping|custom grouping]] by start date** is now possible.
+
+<!-- placeholder to force blank line before included text --> <!-- include: TaskPropertyExamples.test.custom_grouping_by_task.start_docs.approved.md -->
+
+- ```group by function task.start.format("YYYY-MM-DD dddd")```
+  - Like "group by start", except it uses an empty string instead of "No start date" if there is no start date.
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+
+For more examples, see [[#Due Date]].
+
+### Created Date
+
+- `group by created`
+  - The created date of the task, including the week-day, or `No created date`.
+
+> [!released]
+`created` grouping option was introduced in Tasks 2.0.0.
+
+Since Tasks 4.0.0, **[[Custom Grouping|custom grouping]] by created date** is now possible.
+
+<!-- placeholder to force blank line before included text --> <!-- include: TaskPropertyExamples.test.custom_grouping_by_task.created_docs.approved.md -->
+
+- ```group by function task.created.format("YYYY-MM-DD dddd")```
+  - Like "group by created", except it uses an empty string instead of "No created date" if there is no created date.
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+
+For more examples, see [[#Due Date]].
+
+### Happens
+
+- `group by happens`
+  - The earliest of start date, scheduled date, and due date, including the week-day, or `No happens date` if none of those are set.
+
+> [!released]
+`happens` grouping option was introduced in Tasks 1.11.0.
+
+Since Tasks 4.0.0, **[[Custom Grouping|custom grouping]] by happens date** is now possible.
+
+<!-- placeholder to force blank line before included text --> <!-- include: TaskPropertyExamples.test.custom_grouping_by_task.happens_docs.approved.md -->
+
+- ```group by function task.happens.format("YYYY-MM-DD dddd")```
+  - Like "group by happens", except it uses an empty string instead of "No happens date" if there is no happens date.
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+
+For more examples, see [[#Due Date]].
+
+---
+
+## Group by Other Task Properties
+
+As well as the date-related groups above, groups can be created from properties in individual tasks.
+
+### Description
+
+There is no built-in instruction to group by desciption.
+
+Since Tasks 4.0.0, **[[Custom Grouping|custom grouping]] by description** is now possible.
+
+<!-- placeholder to force blank line before included text --> <!-- include: TaskPropertyExamples.test.custom_grouping_by_task.description_docs.approved.md -->
+
+- ```group by function task.description```
+  - group by description.
+  - This might be useful for finding completed recurrences of the same task.
+- ```group by function task.description.toUpperCase()```
+  - Convert the description to capitals.
+- ```group by function task.description.slice(0, 25)```
+  - Truncate descriptions to at most their first 25 characters, and group by that string.
+- ```group by function task.description.replace('short', '==short==')```
+  - Highlight the word "short" in any group descriptions.
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+
+### Priority
+
+- `group by priority`
+  - The priority of the task, namely one of:
+    - `Highest priority`
+    - `High priority`
+    - `Medium priority`
+    - `Normal priority`
+    - `Low priority`
+    - `Lowest priority`
+
+> [!released]
+>
+> - `priority` grouping option was introduced in Tasks 1.11.0.
+
+Since Tasks 4.0.0, **[[Custom Grouping|custom grouping]] by priority name and number** is now possible.
+
+Using the priority name:
+
+<!-- placeholder to force blank line before included text --> <!-- include: TaskPropertyExamples.test.custom_grouping_by_task.priorityName_docs.approved.md -->
+
+- ```group by function task.priorityName```
+  - Group by the task's priority name
+  - The priority names are displayed in alphabetical order.
+  - Note that the default priority is called 'Normal', as opposed to with `group by priority` which calls the default 'None'.
+- ```group by function '%%' + task.priorityNumber.toString() + '%%' + task.priorityName +' priority'```
+  - Group by the task's priority name
+  - The hidden priority number ensures that the headings are written from highest to lowest priority.
+  - Note that the default priority is called 'Normal', as opposed to with `group by priority` which calls the default 'None'.
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+
+Using the priority number:
+
+<!-- placeholder to force blank line before included text --> <!-- include: TaskPropertyExamples.test.custom_grouping_by_task.priorityNumber_docs.approved.md -->
+
+- ```group by function task.priorityNumber```
+  - Group by the task's priority number, where Highest is 0 and Lowest is 5.
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+
+### Urgency
+
+- `group by urgency` ([[Urgency|urgency]])
+  - The groups run from the highest urgency to the lowest.
+  - You can reverse this with `group by urgency reverse`.
+
+> [!released]
+>
+> - `urgency` grouping option was introduced in Tasks 3.6.0.
+> - In Tasks 4.0.0 the order of `group by urgency` was reversed, to put most urgent tasks first. Add or remove the word `reverse` to get the original order.
+
+Since Tasks 4.0.0, **[[Custom Grouping|custom grouping]] by urgency** is now possible.
+
+<!-- placeholder to force blank line before included text --> <!-- include: TaskPropertyExamples.test.custom_grouping_by_task.urgency_docs.approved.md -->
+
+- ```group by function task.urgency.toFixed(3)```
+  - Show the urgency to 3 decimal places, unlike the built-in "group by urgency" which uses 2.
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+
+### Recurrence
+
+- `group by recurring`
+  - Whether the task is recurring: either `Recurring` or `Not Recurring`.
+- `group by recurrence`
+  - The recurrence rule of the task, for example `every week on Sunday`, or `None` for non-recurring tasks.
+  - Note that the text displayed is generated programmatically and standardised, and so may not exactly match the text in any manually typed tasks. For example, a task with `🔁 every Sunday` is grouped in `every week on Sunday`.
+
+> [!released]
+>
+> - `recurring` and `recurrence` grouping options were introduced in Tasks 1.11.0.
+
+Since Tasks 4.0.0, **[[Custom Grouping|custom grouping]] by recurrence** is now possible.
+
+<!-- placeholder to force blank line before included text --> <!-- include: TaskPropertyExamples.test.custom_grouping_by_task.isRecurring_docs.approved.md -->
+
+- ```group by function task.isRecurring ? "Recurring" : "Non-Recurring"```
+  - Use JavaScript's ternary operator to choose what to do for true (after the ?) and false (after the :) values.
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+
+<!-- placeholder to force blank line before included text --> <!-- include: TaskPropertyExamples.test.custom_grouping_by_task.recurrenceRule_docs.approved.md -->
+
+- ```group by function task.recurrenceRule.replace('when done', '==when done==')```
+  - Group by recurrence rule, highlighting any occurrences of the words "when done".
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+
+### Tags
+
+- `group by tags`
+  - The tags of the tasks or `(No tags)`. If the task has multiple tags, it will show up under every tag.
+
+> [!released]
+>
+> - `tags` grouping option was introduced in Tasks 1.10.0.
+
+Since Tasks 4.0.0, **[[Custom Grouping|custom grouping]] by tags** is now possible.
+
+<!-- placeholder to force blank line before included text --> <!-- include: TaskPropertyExamples.test.custom_grouping_by_task.tags_docs.approved.md -->
+
+- ```group by function task.tags```
+  - Like "group by tags" except that tasks with no tags have no heading instead of "(No tags)".
+- ```group by function task.tags.join(", ")```
+  - Tasks with multiple tags are listed once, with a heading that combines all the tags.
+  - Separating with commas means the tags are clickable in the headings.
+- ```group by function task.tags.sort().join(", ")```
+  - As above, but sorting the tags first ensures that the final headings are independent of order of tags in the tasks.
+- ```group by function task.tags.filter( (tag) => tag.includes("#context/") )```
+  - Only create headings for tags that contain "#context/".
+- ```group by function task.tags.filter( (tag) => ! tag.includes("#tag") )```
+  - Create headings for all tags that do not contain "#tag".
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+
+These are more complicated examples, which you might like to copy if you use tasks with [nested tags](https://help.obsidian.md/Editing+and+formatting/Tags#Nested+tags) and wish to group them at different tag nesting levels.
+
+<!-- placeholder to force blank line before included text --> <!-- include: TaskPropertyExamples.test.custom_grouping_by_task.tags.advanced_docs.approved.md -->
+
+- ```group by function task.tags.map( (tag) => tag.split('/')[0].replace('#', '') )```
+  - `#tag/subtag/sub-sub-tag` gives **`tag`**.
+- ```group by function task.tags.map( (tag) => tag.split('/')[1] ? tag.split('/').slice(1, 2) : '')```
+  - `#tag/subtag/sub-sub-tag` gives **`subtag`**.
+- ```group by function task.tags.map( (tag) => tag.split('/')[2] ? tag.split('/').slice(2, 3) : '')```
+  - `#tag/subtag/sub-sub-tag` gives **`sub-sub-tag`**.
+- ```group by function task.tags.map( (tag) => tag.split('/')[3] ? tag.split('/').slice(3, 4) : '')```
+  - `#tag/subtag/sub-sub-tag` gives no heading, as there is no value at the 4th level.
+- ```group by function task.tags.map( (tag) => tag.split('/')[0] )```
+  - `#tag/subtag/sub-sub-tag` gives **`#tag`**.
+- ```group by function task.tags.map( (tag) => tag.split('/')[1] ? tag.split('/').slice(0, 2).join('/') : '')```
+  - `#tag/subtag/sub-sub-tag` gives **`#tag/subtag`**.
+- ```group by function task.tags.map( (tag) => tag.split('/')[2] ? tag.split('/').slice(0, 3).join('/') : '')```
+  - `#tag/subtag/sub-sub-tag` gives **`#tag/subtag/sub-sub-tag`**.
+- ```group by function task.tags.map( (tag) => tag.split('/')[3] ? tag.split('/').slice(0, 4).join('/') : '')```
+  - `#tag/subtag/sub-sub-tag` gives no heading, as there is no value at the 4th level.
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+
+### Original Markdown
+
+There is no built-in instruction to group by the original markdown line.
+
+Since Tasks 4.0.0, **[[Custom Grouping|custom grouping]] by original markdown line** is now possible.
+
+For example, this could be used to extract information from `task.originalMarkdown` that Tasks does not parse, to use for grouping tasks.
+
+<!-- placeholder to force blank line before included text --> <!-- include: TaskPropertyExamples.test.custom_grouping_by_task.originalMarkdown_docs.approved.md -->
+
+- ```group by function '``' + task.originalMarkdown + '``'```
+  - Group by the raw text of the task's original line in the MarkDown file as code.
+  - Note the pairs of backtick characters ('`'), to preserve even single backtick characters in the task line.
+  - It's important to prevent the task checkbox (for example, '[ ]') from being rendered in the heading, as it gets very confusing if there are checkboxes on both headings and tasks.
+- ```group by function task.originalMarkdown.replace(/^[^\[\]]+\[.\] */, '')```
+  - An alternative to formatting the markdown line as code is to remove everything up to the end of the checkbox.
+  - Then render the rest of the task line as normal markdown.
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+
+---
+
+## Group by File Properties
+
+### File Path
+
+- `group by path` (the path to the file that contains the task, that is, the folder and the filename)
+
+Since Tasks 4.0.0, **[[Custom Grouping|custom grouping]] by file path** is now possible.
+
+<!-- placeholder to force blank line before included text --> <!-- include: TaskPropertyExamples.test.custom_grouping_by_task.file.path_docs.approved.md -->
+
+- ```group by function task.file.path```
+  - Like 'group by path' but includes the file extension.
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+
+### Root
+
+- `group by root` (the top-level folder of the file that contains the task, that is, the first directory in the path, which will be `/` for files in root of the vault)
 
 > [!released]
 `root` grouping option was introduced in Tasks 1.11.0.
 
-### File contents
+Since Tasks 4.0.0, **[[Custom Grouping|custom grouping]] by root folder** is now possible.
 
-1. `backlink` (the text that would be shown in the task's [[Backlinks|backlink]], combining the task's file name and heading, but with no link added)
-1. `heading` (the heading preceding the task, or `(No heading)` if there are no headings in the file)
+<!-- placeholder to force blank line before included text --> <!-- include: TaskPropertyExamples.test.custom_grouping_by_task.file.root_docs.approved.md -->
 
-### Task date properties
+- ```group by function task.file.root```
+  - Same as 'group by root'.
 
-1. `created`
-    - The created date of the task, including the week-day, or `No created date`.
-1. `start`
-    - The start date of the task, including the week-day, or `No start date`.
-1. `scheduled`
-    - The scheduled date of the task, including the week-day, or `No scheduled date`.
-1. `due`
-    - The due date of the task, including the week-day, or `No due date`.
-1. `done`
-    - The done date of the task, including the week-day, or `No done date`.
-1. `happens`
-    - The earliest of start date, scheduled date, and due date, including the week-day, or `No happens date` if none of those are set.
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
 
-> [!released]
-`happens` grouping option was introduced in Tasks 1.11.0.<br>
-`created` grouping option was introduced in Tasks 2.0.0.
+### Folder
 
-### Task statuses
+- `group by folder` (the folder to the file that contains the task, which always ends in `/` and will be exactly `/` for files in root of the vault)
 
-1. `status` (Done or Todo, which is capitalized for visibility in the headings)
-    - Note that the Done group is displayed before the Todo group,
-      which differs from the Sorting ordering of this property.
-1. `status.name`
-    - This groups by the names you give to your custom statuses, in alphabetical order.
-1. `status.type`
-    - This groups by the types you have given to your custom statuses.
-    - In order to impose a useful sort order, the types are prefixed with a number, so the groups will appear in this order, and with these group names:
-        - `1 IN_PROGRESS`
-        - `2 TODO`
-        - `3 DONE`
-        - `4 CANCELLED`
-        - `5 NON_TASK`
+Since Tasks 4.0.0, **[[Custom Grouping|custom grouping]] by folder** is now possible.
 
-> [!released]
-`group by status.name` and `group by status.type` were introduced in Tasks 1.23.0.
+<!-- placeholder to force blank line before included text --> <!-- include: TaskPropertyExamples.test.custom_grouping_by_task.file.folder_docs.approved.md -->
 
-For more information, including adding your own customised statuses, see [[Statuses]].
+- ```group by function task.file.folder```
+  - Same as 'group by folder'.
+- ```group by function task.file.folder.slice(0, -1).split('/').pop() + '/'```
+  - Group by the immediate parent folder of the file containing task.
+  - Here's how it works:
+    - '.slice(0, -1)' removes the trailing slash ('/') from the original folder.
+    - '.split('/')' divides the remaining path up in to an array of folder names.
+    - '.pop()' returns the last folder name, that is, the parent of the file containing the task.
+    - Then the trailing slash is added back, to ensure we do not get an empty string for files in the top level of the vault.
 
-### Other task properties
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
 
-1. `priority`
-    - The priority of the task, namely one of:
-        - `Priority 0: Highest`
-        - `Priority 1: High`
-        - `Priority 2: Medium`
-        - `Priority 3: None`
-        - `Priority 4: Low`
-        - `Priority 5: Lowest`
-1. `urgency` ([[Urgency|urgency]])
-    - Currently, the groups run from the lowest urgency to highest.
-    - You can reverse this with `group by urgency reverse`.
-    - In a future release, the default group order will become from the highest urgency to lowest.
-1. `recurring`
-    - Whether the task is recurring: either `Recurring` or `Not Recurring`.
-1. `recurrence`
-    - The recurrence rule of the task, for example `every week on Sunday`, or `None` for non-recurring tasks.
-    - Note that the text displayed is generated programmatically and standardised, and so may not exactly match the text in any manually typed tasks. For example, a task with `🔁 every Sunday` is grouped in `every week on Sunday`.
-1. `tags`
-    - The tags of the tasks or `(No tags)`. If the task has multiple tags, it will show up under every tag.
+### File Name
 
-> [!released]
->
-> - `start`, `scheduled`, `due` and `done` grouping options were introduced in Tasks 1.7.0.<br>
-> - `tags` grouping option was introduced in Tasks 1.10.0.<br>
-> - `priority`, `recurring` and `recurrence` grouping options were introduced in Tasks 1.11.0.
-> - `urgency` grouping option was introduced in Tasks 3.6.0.
+- `group by filename` (the link to the file that contains the task, without the `.md` extension)
+  - Note that tasks from different notes with the same file name will be grouped together in the same group.
+
+Since Tasks 4.0.0, **[[Custom Grouping|custom grouping]] by file name** is now possible.
+
+<!-- placeholder to force blank line before included text --> <!-- include: TaskPropertyExamples.test.custom_grouping_by_task.file.filename_docs.approved.md -->
+
+- ```group by function task.file.filename```
+  - Like 'group by filename' but does not link to the file.
+- ```group by function  '[[' + task.file.filename.replace('.md', '') + ( task.hasHeading ? ('#' + task.heading) : '')  + ']]'```
+  - Like 'group by backlink' but links to the heading in the file.
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+
+### Backlink
+
+- `group by backlink` (the text that would be shown in the task's [[Backlinks|backlink]], combining the task's file name and heading, but with no link added)
+
+### Heading
+
+- `group by heading` (the heading preceding the task, or `(No heading)` if there are no headings in the file)
+
+Since Tasks 4.0.0, **[[Custom Grouping|custom grouping]] by heading** is now possible.
+
+<!-- placeholder to force blank line before included text --> <!-- include: TaskPropertyExamples.test.custom_grouping_by_task.heading_docs.approved.md -->
+
+- ```group by function (task.heading + '.md' === task.file.filename) ? '' : task.heading```
+  - Group by heading, but only if the heading differs from the file name.
+  - This works well immediately after a 'group by filename' line.
+  - Note the three equals signs '===': these are important for safety in JavaScript.
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+
+---
 
 ## Multiple groups
 
@@ -118,6 +597,8 @@ See the [screenshots below](#screenshots) for how this looks in practice.
 
 > [!info]
 > Headings are displayed in case-sensitive alphabetical order, not the original order.
+
+---
 
 ## Refining groups
 
@@ -149,15 +630,18 @@ You can limit the number of tasks in each group, perhaps to work on the most imp
 
 See [[Limiting#Limit number of tasks in each group|Limit number of tasks in each group]].
 
+---
+
 ## Notes
 
 > [!info]
-> The order of operations ensures that grouping does not modify which tasks are displayed, for example when the `limit` option is used:
+> The order of operations ensures that grouping does not modify which tasks are displayed, for example when the `limit` options are used:
 >
 > 1. all the filter instructions are run
 > 1. then any sorting instructions are run
 > 1. then any `limit` instructions are run
-> 1. then finally any grouping instructions are run
+> 1. then any grouping instructions are run
+> 1. then any `limit groups` instructions are run
 
 ---
 

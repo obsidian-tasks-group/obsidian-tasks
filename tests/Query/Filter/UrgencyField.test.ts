@@ -96,4 +96,19 @@ describe('grouping by urgency', () => {
         // Assert
         expect(grouper(fromLine({ line: taskLine }))).toEqual(groups);
     });
+
+    describe('should sort groups for UrgencyField', () => {
+        const taskLines = ['- [ ] a ⏫', '- [ ] a 🔼', '- [ ] a', '- [ ] a 🔽'];
+        const tasks = taskLines.map((taskLine) => fromLine({ line: taskLine }));
+
+        it('highest urgency first with normal grouper', () => {
+            const grouper = new UrgencyField().createNormalGrouper();
+            expect({ grouper, tasks }).groupHeadingsToBe(['0.00', '1.95', '3.90', '6.00'].reverse());
+        });
+
+        it('lowest urgency first with reverse grouper', () => {
+            const grouper = new UrgencyField().createReverseGrouper();
+            expect({ grouper, tasks }).groupHeadingsToBe(['0.00', '1.95', '3.90', '6.00']);
+        });
+    });
 });

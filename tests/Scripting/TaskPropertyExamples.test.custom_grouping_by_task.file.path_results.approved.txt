@@ -1,0 +1,14 @@
+Results of custom groupers
+
+
+
+group by function task.file.path
+Like 'group by path' but includes the file extension
+=>
+a_b_c.md
+a/b/_c_.md
+a/b/c.md
+a/d/c.md
+e/d/c.md
+====================================================================================
+

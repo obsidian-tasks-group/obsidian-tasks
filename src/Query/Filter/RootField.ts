@@ -8,17 +8,7 @@ export class RootField extends TextField {
     }
 
     public value(task: Task): string {
-        let path = task.path.replace(/\\/g, '/');
-
-        if (path.charAt(0) === '/') {
-            path = path.substring(1);
-        }
-
-        const separatorIndex = path.indexOf('/');
-        if (separatorIndex == -1) {
-            return '/';
-        }
-        return path.substring(0, separatorIndex + 1);
+        return task.file.root;
     }
 
     public supportsGrouping(): boolean {

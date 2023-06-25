@@ -1,6 +1,6 @@
 import { diff } from 'jest-diff';
 import type { Task } from '../../src/Task';
-import type { FilterOrErrorMessage } from '../../src/Query/Filter/Filter';
+import type { FilterOrErrorMessage } from '../../src/Query/Filter/FilterOrErrorMessage';
 import { fromLine } from '../TestHelpers';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import type { StatusConfiguration } from '../../src/StatusConfiguration';
@@ -138,13 +138,17 @@ export function toMatchTask(filter: FilterOrErrorMessage, task: Task) {
     const matches = filter.filterFunction!(task);
     if (!matches) {
         return {
-            message: () => `unexpected failure to match task: ${task.toFileLineString()}`,
+            message: () => `unexpected failure to match
+task:        "${task.toFileLineString()}"
+with filter: "${filter.instruction}"`,
             pass: false,
         };
     }
 
     return {
-        message: () => `filter should not have matched task: ${task.toFileLineString()}`,
+        message: () => `filter should not have matched
+task:        "${task.toFileLineString()}"
+with filter: "${filter.instruction}"`,
         pass: true,
     };
 }
