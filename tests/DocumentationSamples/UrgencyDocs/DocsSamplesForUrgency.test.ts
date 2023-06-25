@@ -36,24 +36,18 @@ describe('UrgencyTable', () => {
     <th>Score</th>
   </tr>
 </thead>
-<tbody>`;
+<tbody>
+`;
 
         let table = '';
         table += heading;
 
-        table += `
-  <tr>
-    ${rowSpanningCell(5, 'Due')}
-    ${cell('More than 7 days overdue')}
-    ${urgencyCell(12.0)}
-  </tr>
-  <tr>
-    ${rowSpanningCell(2, 'Due between 7 days ago and in 14 days')}
-    <td>Range of ${urgencyValue(12.0)} to ${urgencyValue(0.2)}</td>
-  </tr>
-  <tr>
-    ${cell('Example for "today": <code>9.0</code>')}
-  </tr>\n`;
+        table += row([rowSpanningCell(5, 'Due'), cell('More than 7 days overdue'), urgencyCell(12.0)]);
+        table += row([
+            rowSpanningCell(2, 'Due between 7 days ago and in 14 days'),
+            `<td>Range of ${urgencyValue(12.0)} to ${urgencyValue(0.2)}</td>`,
+        ]);
+        table += row([cell('Example for "today": <code>9.0</code>')]);
         table += row([cell('More than 14 days until due'), urgencyCell(0.2)]);
         table += row([cell('None'), urgencyCell(0.0)]);
 
