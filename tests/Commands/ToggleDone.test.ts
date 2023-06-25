@@ -101,64 +101,80 @@ describe('ToggleDone', () => {
         testToggleLine('foo|bar', '- foobar|');
     });
 
-    it('should add checkbox to hyphen and space', () => {
-        GlobalFilter.set('');
-        updateSettings({ autoInsertGlobalFilter: false });
+    describe('should add checkbox to hyphen and space', () => {
+        it('if autoInsertGlobalFilter is false, then an empty global filter is not added', () => {
+            GlobalFilter.set('');
+            updateSettings({ autoInsertGlobalFilter: false });
 
-        testToggleLine('|- ', '- [ ] |');
-        testToggleLine('- |', '- [ ] |');
-        testToggleLine('- |foobar', '- [ ] foobar|');
+            testToggleLine('|- ', '- [ ] |');
+            testToggleLine('- |', '- [ ] |');
+            testToggleLine('- |foobar', '- [ ] foobar|');
+        });
 
-        updateSettings({ autoInsertGlobalFilter: false });
+        it('if autoInsertGlobalFilter is true, then and empty global filter is not added', () => {
+            GlobalFilter.set('');
+            updateSettings({ autoInsertGlobalFilter: true });
 
-        testToggleLine('|- ', '- [ ] |');
-        testToggleLine('- |', '- [ ] |');
-        testToggleLine('- |foobar', '- [ ] foobar|');
+            testToggleLine('|- ', '- [ ] |');
+            testToggleLine('- |', '- [ ] |');
+            testToggleLine('- |foobar', '- [ ] foobar|');
+        });
 
-        GlobalFilter.set('#task');
-        updateSettings({ autoInsertGlobalFilter: false });
+        it('if autoInsertGlobalFilter is false, then a tag global filter is not added', () => {
+            GlobalFilter.set('#task');
+            updateSettings({ autoInsertGlobalFilter: false });
 
-        testToggleLine('|- ', '- [ ] |');
-        testToggleLine('- |', '- [ ] |');
-        testToggleLine('- |foobar', '- [ ] foobar|');
-        testToggleLine('- |#task', '- [ ] #task|');
+            testToggleLine('|- ', '- [ ] |');
+            testToggleLine('- |', '- [ ] |');
+            testToggleLine('- |foobar', '- [ ] foobar|');
+            testToggleLine('- |#task', '- [ ] #task|');
+        });
 
-        GlobalFilter.set('#task');
-        updateSettings({ autoInsertGlobalFilter: true });
+        it('if autoInsertGlobalFilter is true, then a tag global filter is added if absent', () => {
+            GlobalFilter.set('#task');
+            updateSettings({ autoInsertGlobalFilter: true });
 
-        testToggleLine('|- ', '- [ ] #task |');
-        testToggleLine('- |', '- [ ] #task |');
-        testToggleLine('- |foobar', '- [ ] #task foobar|');
-        testToggleLine('- |#task', '- [ ] #task|');
+            testToggleLine('|- ', '- [ ] #task |');
+            testToggleLine('- |', '- [ ] #task |');
+            testToggleLine('- |foobar', '- [ ] #task foobar|');
+            testToggleLine('- |#task', '- [ ] #task|');
+        });
 
-        GlobalFilter.set('TODO');
-        updateSettings({ autoInsertGlobalFilter: false });
+        it('if autoInsertGlobalFilter is false, then a non-tag global filter is not added', () => {
+            GlobalFilter.set('TODO');
+            updateSettings({ autoInsertGlobalFilter: false });
 
-        testToggleLine('|- ', '- [ ] |');
-        testToggleLine('- |', '- [ ] |');
-        testToggleLine('- |foobar', '- [ ] foobar|');
-        testToggleLine('- |TODO foobar', '- [ ] TODO foobar|');
+            testToggleLine('|- ', '- [ ] |');
+            testToggleLine('- |', '- [ ] |');
+            testToggleLine('- |foobar', '- [ ] foobar|');
+            testToggleLine('- |TODO foobar', '- [ ] TODO foobar|');
+        });
 
-        GlobalFilter.set('TODO');
-        updateSettings({ autoInsertGlobalFilter: true });
+        it('if autoInsertGlobalFilter is true, then a non-tag global filter is added if absent', () => {
+            GlobalFilter.set('TODO');
+            updateSettings({ autoInsertGlobalFilter: true });
 
-        testToggleLine('|- ', '- [ ] TODO |');
-        testToggleLine('- |', '- [ ] TODO |');
-        testToggleLine('- |foobar', '- [ ] TODO foobar|');
-        testToggleLine('- |TODO foobar', '- [ ] TODO foobar|');
+            testToggleLine('|- ', '- [ ] TODO |');
+            testToggleLine('- |', '- [ ] TODO |');
+            testToggleLine('- |foobar', '- [ ] TODO foobar|');
+            testToggleLine('- |TODO foobar', '- [ ] TODO foobar|');
+        });
 
-        // Test a global filter that has special characters from regular expressions
-        GlobalFilter.set('a.*b');
-        updateSettings({ autoInsertGlobalFilter: false });
+        it('regex is not broken', () => {
+            // Test a global filter that has special characters from regular expressions
+            // if autoInsertGlobalFilter is false, then global filter is not added
+            GlobalFilter.set('a.*b');
+            updateSettings({ autoInsertGlobalFilter: false });
 
-        testToggleLine('|- [ ] a.*b ', '|- [x] a.*b ✅ 2022-09-04');
-        testToggleLine('- [ ] a.*b foobar |', '- [x] a.*b foobar |✅ 2022-09-04');
+            testToggleLine('|- [ ] a.*b ', '|- [x] a.*b ✅ 2022-09-04');
+            testToggleLine('- [ ] a.*b foobar |', '- [x] a.*b foobar |✅ 2022-09-04');
 
-        GlobalFilter.set('a.*b');
-        updateSettings({ autoInsertGlobalFilter: true });
+            GlobalFilter.set('a.*b');
+            updateSettings({ autoInsertGlobalFilter: true });
 
-        testToggleLine('|- [ ] a.*b ', '|- [x] a.*b ✅ 2022-09-04');
-        testToggleLine('- [ ] a.*b foobar |', '- [x] a.*b foobar |✅ 2022-09-04');
+            testToggleLine('|- [ ] a.*b ', '|- [x] a.*b ✅ 2022-09-04');
+            testToggleLine('- [ ] a.*b foobar |', '- [x] a.*b foobar |✅ 2022-09-04');
+        });
     });
 
     it('should complete a task', () => {
