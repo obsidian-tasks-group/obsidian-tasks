@@ -1,4 +1,7 @@
 import { verifyMarkdownForDocs } from '../../TestingTools/VerifyMarkdownTable';
+import { TaskBuilder } from '../../TestingTools/TaskBuilder';
+import { Urgency } from '../../../src/Urgency';
+import { Priority } from '../../../src/Task';
 
 describe('UrgencyTable', () => {
     function cell(text: string, span: number = 0): string {
@@ -35,6 +38,12 @@ describe('UrgencyTable', () => {
         return result;
     }
 
+    function calcForPriority(priority: Priority) {
+        const task = new TaskBuilder().priority(priority).build();
+        const u = Urgency.calculate(task);
+        return u;
+    }
+
     it('urgency-html-table', () => {
         const heading = `
 <table>
@@ -63,12 +72,12 @@ describe('UrgencyTable', () => {
         ]);
 
         table += property([
-            [cell('Priority', 6), cell('Highest'), urgencyCell(9.0)],
-            [cell('High'), urgencyCell(6.0)],
-            [cell('Medium'), urgencyCell(3.9)],
-            [cell('None'), urgencyCell(1.95, 2)],
-            [cell('Low'), urgencyCell(0.0)],
-            [cell('Lowest'), urgencyCell(-1.8)],
+            [cell('Priority', 6), cell('Highest'), urgencyCell(calcForPriority(Priority.Highest))],
+            [cell('High'), urgencyCell(calcForPriority(Priority.High))],
+            [cell('Medium'), urgencyCell(calcForPriority(Priority.Medium))],
+            [cell('None'), urgencyCell(calcForPriority(Priority.None), 2)],
+            [cell('Low'), urgencyCell(calcForPriority(Priority.Low))],
+            [cell('Lowest'), urgencyCell(calcForPriority(Priority.Lowest))],
         ]);
 
         table += property([
