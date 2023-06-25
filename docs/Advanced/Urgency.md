@@ -29,6 +29,8 @@ As you can tell from the table below, **due dates have the strongest influence o
 
 The scores are as follows:
 
+<!-- placeholder to force blank line before included text --> <!-- include: DocsSamplesForUrgency.test.UrgencyTable_urgency-html-table.approved.md -->
+
 <table>
 <thead>
   <tr>
@@ -110,6 +112,8 @@ The scores are as follows:
   </tr>
 </tbody>
 </table>
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
 
 ## Examples
 
