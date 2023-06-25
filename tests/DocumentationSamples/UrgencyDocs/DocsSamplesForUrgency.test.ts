@@ -27,6 +27,14 @@ describe('UrgencyTable', () => {
         return result;
     }
 
+    function property(rows: string[][]) {
+        let result = '';
+        for (const rowCells of rows) {
+            result += row(rowCells);
+        }
+        return result;
+    }
+
     it('urgency-html-table', () => {
         const heading = `
 <table>
@@ -43,6 +51,7 @@ describe('UrgencyTable', () => {
         table += heading;
 
         table += row([rowSpanningCell(5, 'Due'), cell('More than 7 days overdue'), urgencyCell(12.0)]);
+
         table += row([
             rowSpanningCell(2, 'Due between 7 days ago and in 14 days'),
             `<td>Range of ${urgencyValue(12.0)} to ${urgencyValue(0.2)}</td>`,
@@ -62,9 +71,12 @@ describe('UrgencyTable', () => {
         table += row([cell('Tomorrow or later'), urgencyCell(0.0)]);
         table += row([cell('None'), urgencyCell(0.0)]);
 
-        table += row([rowSpanningCell(3, 'Starts'), cell('Today or earlier'), urgencyCell(0.0)]);
-        table += row([cell('Tomorrow or later'), urgencyCell(-3.0)]);
-        table += row([cell('None'), urgencyCell(0.0)]);
+        table += property([
+            [rowSpanningCell(3, 'Starts'), cell('Today or earlier'), urgencyCell(0.0)],
+            [cell('Tomorrow or later'), urgencyCell(-3.0)],
+            [cell('None'), urgencyCell(0.0)],
+        ]);
+
         table += `</tbody>
 </table>
 `;
