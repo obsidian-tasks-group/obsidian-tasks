@@ -17,6 +17,16 @@ describe('UrgencyTable', () => {
         return `<td>${urgencyValue(urgency, dps)}</td>`;
     }
 
+    function row(cells: string[]) {
+        let result = '';
+        result += '  <tr>\n';
+        for (const cell of cells) {
+            result += `    ${cell}\n`;
+        }
+        result += '  </tr>\n';
+        return result;
+    }
+
     it('urgency-html-table', () => {
         const heading = `
 <table>
@@ -101,13 +111,9 @@ describe('UrgencyTable', () => {
   <tr>
     ${cell('Tomorrow or later')}
     ${urgencyCell(-3.0)}
-  </tr>
-  <tr>
-    ${cell('None')}
-    ${urgencyCell(0.0)}
-  </tr>`;
-        table += `
-</tbody>
+  </tr>\n`;
+        table += row([cell('None'), urgencyCell(0.0)]);
+        table += `</tbody>
 </table>
 `;
         verifyMarkdownForDocs(table);
