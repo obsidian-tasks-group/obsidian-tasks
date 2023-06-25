@@ -89,29 +89,12 @@ describe('UrgencyTable', () => {
   <tr>
     ${cell('Lowest')}
     ${urgencyCell(-1.8)}
-  </tr>
-  <tr>
-    ${rowSpanningCell(3, 'Scheduled')}
-    ${cell('Today or earlier')}
-    ${urgencyCell(5.0)}
-  </tr>
-  <tr>
-    ${cell('Tomorrow or later')}
-    ${urgencyCell(0.0)}
-  </tr>
-  <tr>
-    ${cell('None')}
-    ${urgencyCell(0.0)}
-  </tr>
-  <tr>
-    ${rowSpanningCell(3, 'Starts')}
-    ${cell('Today or earlier')}
-    ${urgencyCell(0.0)}
-  </tr>
-  <tr>
-    ${cell('Tomorrow or later')}
-    ${urgencyCell(-3.0)}
   </tr>\n`;
+        table += row([rowSpanningCell(3, 'Scheduled'), cell('Today or earlier'), urgencyCell(5.0)]);
+        table += row([cell('Tomorrow or later'), urgencyCell(0.0)]);
+        table += row([cell('None'), urgencyCell(0.0)]);
+        table += row([rowSpanningCell(3, 'Starts'), cell('Today or earlier'), urgencyCell(0.0)]);
+        table += row([cell('Tomorrow or later'), urgencyCell(-3.0)]);
         table += row([cell('None'), urgencyCell(0.0)]);
         table += `</tbody>
 </table>
