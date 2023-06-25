@@ -105,7 +105,8 @@ describe('UrgencyTable', () => {
   <tr>
     ${cell('None')}
     ${urgencyCell(0.0)}
-  </tr>
+  </tr>`;
+        table += `
 </tbody>
 </table>
 `;
