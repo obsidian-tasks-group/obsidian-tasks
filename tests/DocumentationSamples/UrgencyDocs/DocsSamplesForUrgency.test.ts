@@ -53,43 +53,21 @@ describe('UrgencyTable', () => {
   </tr>
   <tr>
     ${cell('Example for "today": <code>9.0</code>')}
-  </tr>
-  <tr>
-    ${cell('More than 14 days until due')}
-    ${urgencyCell(0.2)}
-  </tr>
-  <tr>
-    ${cell('None')}
-    ${urgencyCell(0.0)}
-  </tr>
-  <tr>
-    ${rowSpanningCell(6, 'Priority')}
-    ${cell('Highest')}
-    ${urgencyCell(9.0)}
-  </tr>
-  <tr>
-    ${cell('High')}
-    ${urgencyCell(6.0)}
-  </tr>
-  <tr>
-    ${cell('Medium')}
-    ${urgencyCell(3.9)}
-  </tr>
-  <tr>
-    ${cell('None')}
-    ${urgencyCell(1.95, 2)}
-  </tr>
-  <tr>
-    ${cell('Low')}
-    ${urgencyCell(0.0)}
-  </tr>
-  <tr>
-    ${cell('Lowest')}
-    ${urgencyCell(-1.8)}
   </tr>\n`;
+        table += row([cell('More than 14 days until due'), urgencyCell(0.2)]);
+        table += row([cell('None'), urgencyCell(0.0)]);
+
+        table += row([rowSpanningCell(6, 'Priority'), cell('Highest'), urgencyCell(9.0)]);
+        table += row([cell('High'), urgencyCell(6.0)]);
+        table += row([cell('Medium'), urgencyCell(3.9)]);
+        table += row([cell('None'), urgencyCell(1.95, 2)]);
+        table += row([cell('Low'), urgencyCell(0.0)]);
+        table += row([cell('Lowest'), urgencyCell(-1.8)]);
+
         table += row([rowSpanningCell(3, 'Scheduled'), cell('Today or earlier'), urgencyCell(5.0)]);
         table += row([cell('Tomorrow or later'), urgencyCell(0.0)]);
         table += row([cell('None'), urgencyCell(0.0)]);
+
         table += row([rowSpanningCell(3, 'Starts'), cell('Today or earlier'), urgencyCell(0.0)]);
         table += row([cell('Tomorrow or later'), urgencyCell(-3.0)]);
         table += row([cell('None'), urgencyCell(0.0)]);
