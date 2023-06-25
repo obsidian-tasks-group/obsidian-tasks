@@ -55,7 +55,7 @@ describe('UrgencyTable', () => {
         table += property([
             [
                 rowSpanningCell(2, 'Due between 7 days ago and in 14 days'),
-                `<td>Range of ${urgencyValue(12.0)} to ${urgencyValue(0.2)}</td>`,
+                cell(`Range of ${urgencyValue(12.0)} to ${urgencyValue(0.2)}`),
             ],
             [cell('Example for "today": <code>9.0</code>')],
             [cell('More than 14 days until due'), urgencyCell(0.2)],
