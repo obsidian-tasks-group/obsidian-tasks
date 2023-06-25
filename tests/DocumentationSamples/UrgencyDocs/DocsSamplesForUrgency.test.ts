@@ -5,8 +5,12 @@ describe('UrgencyTable', () => {
         return `<td rowspan="${span}">${text}</td>`;
     }
 
+    function urgencyValue(urgency: number, dps: number = 1): string {
+        return `<code>${urgency.toFixed(dps)}</code>`;
+    }
+
     function urgencyCell(urgency: number, dps: number = 1): string {
-        return `<td><code>${urgency.toFixed(dps)}</code></td>`;
+        return `<td>${urgencyValue(urgency, dps)}</td>`;
     }
 
     it('urgency-html-table', () => {
@@ -34,7 +38,7 @@ describe('UrgencyTable', () => {
         table += `
   <tr>
     ${rowSpanningCell(2, 'Due between 7 days ago and in 14 days')}
-    <td>Range of <code>12.0</code> to <code>0.2</code></td>
+    <td>Range of ${urgencyValue(12.0)} to ${urgencyValue(0.2)}</td>
   </tr>
   <tr>
     <td>Example for "today": <code>9.0</code></td>
