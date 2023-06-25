@@ -5,6 +5,10 @@ describe('UrgencyTable', () => {
         return `<td rowspan="${span}">${text}</td>`;
     }
 
+    function urgencyCell(urgency: number, dps: number = 1): string {
+        return `<td><code>${urgency.toFixed(dps)}</code></td>`;
+    }
+
     it('urgency-html-table', () => {
         const heading = `
 <table>
@@ -23,7 +27,7 @@ describe('UrgencyTable', () => {
   <tr>
     ${rowSpanningCell(5, 'Due')}
     <td>More than 7 days overdue</td>
-    <td><code>12.0</code></td>
+    ${urgencyCell(12.0)}
   </tr>`;
         table += row1;
 
@@ -37,62 +41,62 @@ describe('UrgencyTable', () => {
   </tr>
   <tr>
     <td>More than 14 days until due</td>
-    <td><code>0.2</code></td>
+    ${urgencyCell(0.2)}
   </tr>
   <tr>
     <td>None</td>
-    <td><code>0.0</code></td>
+    ${urgencyCell(0.0)}
   </tr>
   <tr>
     ${rowSpanningCell(6, 'Priority')}
     <td>Highest</td>
-    <td><code>9.0</code></td>
+    ${urgencyCell(9.0)}
   </tr>
   <tr>
     <td>High</td>
-    <td><code>6.0</code></td>
+    ${urgencyCell(6.0)}
   </tr>
   <tr>
     <td>Medium</td>
-    <td><code>3.9</code></td>
+    ${urgencyCell(3.9)}
   </tr>
   <tr>
     <td>None</td>
-    <td><code>1.95</code></td>
+    ${urgencyCell(1.95, 2)}
   </tr>
   <tr>
     <td>Low</td>
-    <td><code>0.0</code></td>
+    ${urgencyCell(0.0)}
   </tr>
   <tr>
     <td>Lowest</td>
-    <td><code>-1.8</code></td>
+    ${urgencyCell(-1.8)}
   </tr>
   <tr>
     ${rowSpanningCell(3, 'Scheduled')}
     <td>Today or earlier</td>
-    <td><code>5.0</code></td>
+    ${urgencyCell(5.0)}
   </tr>
   <tr>
     <td>Tomorrow or later</td>
-    <td><code>0.0</code></td>
+    ${urgencyCell(0.0)}
   </tr>
   <tr>
     <td>None</td>
-    <td><code>0.0</code></td>
+    ${urgencyCell(0.0)}
   </tr>
   <tr>
     ${rowSpanningCell(3, 'Starts')}
     <td>Today or earlier</td>
-    <td><code>0.0</code></td>
+    ${urgencyCell(0.0)}
   </tr>
   <tr>
     <td>Tomorrow or later</td>
-    <td><code>-3.0</code></td>
+    ${urgencyCell(-3.0)}
   </tr>
   <tr>
     <td>None</td>
-    <td><code>0.0</code></td>
+    ${urgencyCell(0.0)}
   </tr>
 </tbody>
 </table>
