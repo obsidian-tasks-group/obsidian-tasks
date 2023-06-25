@@ -2,7 +2,7 @@ import { verifyMarkdownForDocs } from '../../TestingTools/VerifyMarkdownTable';
 
 describe('UrgencyTable', () => {
     it('urgency-html-table', () => {
-        const table = `
+        const heading = `
 <table>
 <thead>
   <tr>
@@ -10,7 +10,11 @@ describe('UrgencyTable', () => {
     <th>Score</th>
   </tr>
 </thead>
-<tbody>
+<tbody>`;
+
+        let table = '';
+        table += heading;
+        table += `
   <tr>
     <td rowspan="5">Due</td>
     <td>More than 7 days overdue</td>
