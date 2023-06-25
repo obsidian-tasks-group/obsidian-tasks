@@ -14,7 +14,7 @@ describe('UrgencyTable', () => {
     }
 
     function urgencyCell(urgency: number, dps: number = 1): string {
-        return `<td>${urgencyValue(urgency, dps)}</td>`;
+        return cell(`${urgencyValue(urgency, dps)}`);
     }
 
     function row(cells: string[]) {
