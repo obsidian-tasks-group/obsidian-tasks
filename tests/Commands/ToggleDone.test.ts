@@ -128,6 +128,7 @@ describe('ToggleDone', () => {
             testToggleLine('- |', '- [ ] |');
             testToggleLine('- |foobar', '- [ ] foobar|');
             testToggleLine('- |#task', '- [ ] #task|');
+            testToggleLine('- |write blog post #task', '- [ ] write blog post #task|');
         });
 
         it('if autoInsertGlobalFilter is true, then a tag global filter is added if absent', () => {
@@ -138,6 +139,7 @@ describe('ToggleDone', () => {
             testToggleLine('- |', '- [ ] #task |');
             testToggleLine('- |foobar', '- [ ] #task foobar|');
             testToggleLine('- |#task', '- [ ] #task|');
+            testToggleLine('- |write blog post #task', '- [ ] write blog post #task|');
         });
 
         it('if autoInsertGlobalFilter is false, then a non-tag global filter is not added', () => {
@@ -148,6 +150,7 @@ describe('ToggleDone', () => {
             testToggleLine('- |', '- [ ] |');
             testToggleLine('- |foobar', '- [ ] foobar|');
             testToggleLine('- |TODO foobar', '- [ ] TODO foobar|');
+            testToggleLine('- |write blog post TODO', '- [ ] write blog post TODO|');
         });
 
         it('if autoInsertGlobalFilter is true, then a non-tag global filter is added if absent', () => {
@@ -158,6 +161,7 @@ describe('ToggleDone', () => {
             testToggleLine('- |', '- [ ] TODO |');
             testToggleLine('- |foobar', '- [ ] TODO foobar|');
             testToggleLine('- |TODO foobar', '- [ ] TODO foobar|');
+            testToggleLine('- |write blog post TODO', '- [ ] write blog post TODO|');
         });
 
         it('regex is not broken', () => {
