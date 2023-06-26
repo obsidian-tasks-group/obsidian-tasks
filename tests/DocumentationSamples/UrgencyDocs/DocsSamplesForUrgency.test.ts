@@ -107,7 +107,7 @@ describe('UrgencyTable', () => {
             [cell('13 days until due'), urgencyCell(calcForDue('2023-05-23'), decimalPlaces)],
             [cell('14 days until due'), urgencyCell(calcForDue('2023-05-24'), decimalPlaces)],
             [cell('More than 14 days until due'), urgencyCell(calcForDue('2023-05-25'), decimalPlaces)],
-            [cell('None'), urgencyCell(0.0)],
+            [cell('None'), urgencyCell(calcForDue(''), decimalPlaces)],
         ]);
 
         table += property([

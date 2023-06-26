@@ -108,7 +108,7 @@
   </tr>
   <tr>
     <td>None</td>
-    <td><code>0.0</code></td>
+    <td><code>0.00000</code></td>
   </tr>
   <tr>
     <td rowspan="6">Priority</td>
