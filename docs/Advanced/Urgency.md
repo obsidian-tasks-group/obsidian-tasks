@@ -179,7 +179,7 @@ The scores are as follows:
     <td><code>0.0</code></td>
   </tr>
   <tr>
-    <td rowspan="3">Starts</td>
+    <td rowspan="3">Start</td>
     <td>Today or earlier</td>
     <td><code>0.0</code></td>
   </tr>
