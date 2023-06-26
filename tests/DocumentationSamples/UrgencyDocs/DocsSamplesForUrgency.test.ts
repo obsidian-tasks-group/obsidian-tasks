@@ -81,14 +81,9 @@ describe('UrgencyTable', () => {
         let table = '';
         table += heading;
 
-        table += property([[cell('Due', 5), cell('More than 7 days overdue'), urgencyCell(12.0)]]);
-
         table += property([
-            [
-                cell('Due between 7 days ago and in 14 days', 2),
-                cell(`Range of ${urgencyValue(12.0)} to ${urgencyValue(0.2)}`),
-            ],
-            [cell(`Example for "today": ${urgencyValue(calcForDue('2023-05-10'), 1)}`)],
+            [cell('Due', 4), cell('More than 7 days overdue'), urgencyCell(12.0)],
+            [cell('Today'), urgencyCell(calcForDue('2023-05-10'), 1)],
             [cell('More than 14 days until due'), urgencyCell(0.2)],
             [cell('None'), urgencyCell(0.0)],
         ]);
