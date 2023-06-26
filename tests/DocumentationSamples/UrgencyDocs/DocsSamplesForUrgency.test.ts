@@ -61,11 +61,6 @@ describe('UrgencyTable', () => {
         return Urgency.calculate(task);
     }
 
-    function calcForDue(date: string) {
-        const task = new TaskBuilder().dueDate(date).priority(Priority.Low).build();
-        return Urgency.calculate(task);
-    }
-
     function calcForScheduled(date: string) {
         const task = new TaskBuilder().scheduledDate(date).priority(Priority.Low).build();
         return Urgency.calculate(task);
@@ -77,7 +72,8 @@ describe('UrgencyTable', () => {
     }
 
     function dueCell(date: string) {
-        return urgencyCell(calcForDue(date), 5);
+        const task = new TaskBuilder().dueDate(date).priority(Priority.Low).build();
+        return urgencyCell(Urgency.calculate(task), 5);
     }
 
     function scheduledCell(date: string) {
