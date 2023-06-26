@@ -40,9 +40,25 @@ The scores are as follows:
 </thead>
 <tbody>
   <tr>
-    <td rowspan="21">Due</td>
-    <td>More than 7 days overdue</td>
-    <td><code>12.0</code></td>
+    <td rowspan="25">Due</td>
+    <td>due more than 7 days ago</td>
+    <td><code>12.00000</code></td>
+  </tr>
+  <tr>
+    <td>due 7 days ago</td>
+    <td><code>12.00000</code></td>
+  </tr>
+  <tr>
+    <td>due 6 days ago</td>
+    <td><code>11.54286</code></td>
+  </tr>
+  <tr>
+    <td>due 5 days ago</td>
+    <td><code>10.62857</code></td>
+  </tr>
+  <tr>
+    <td>due 4 days ago</td>
+    <td><code>11.08571</code></td>
   </tr>
   <tr>
     <td>due 3 days ago</td>
@@ -118,7 +134,7 @@ The scores are as follows:
   </tr>
   <tr>
     <td>More than 14 days until due</td>
-    <td><code>0.2</code></td>
+    <td><code>2.40000</code></td>
   </tr>
   <tr>
     <td>None</td>
