@@ -200,7 +200,7 @@ The scores are as follows:
 
 ```markdown
 A task that is due today, has a "medium" priority, is not scheduled, and has no start date:
-urgency = 9.0 + 3.9 + 0.0 + 0.0 = 12.9
+urgency = 8.8 + 3.9 + 0.0 + 0.0 = 12.7
 
 A task that has no due date, a "high" priority, is scheduled for yesterday, and started yesterday:
 urgency = 0.0 + 6.0 + 5.0 + 0.0 = 11.0
