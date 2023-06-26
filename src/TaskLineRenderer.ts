@@ -396,55 +396,11 @@ function addTooltip({
             recurrenceDiv.setText(`${recurrenceSymbol} ${task.recurrence.toText()}`);
         }
 
-        if (task.createdDate) {
-            const createdDateDiv = tooltip.createDiv();
-            createdDateDiv.setText(
-                toTooltipDate({
-                    signifier: createdDateSymbol,
-                    date: task.createdDate,
-                }),
-            );
-        }
-
-        if (task.startDate) {
-            const startDateDiv = tooltip.createDiv();
-            startDateDiv.setText(
-                toTooltipDate({
-                    signifier: startDateSymbol,
-                    date: task.startDate,
-                }),
-            );
-        }
-
-        if (task.scheduledDate) {
-            const scheduledDateDiv = tooltip.createDiv();
-            scheduledDateDiv.setText(
-                toTooltipDate({
-                    signifier: scheduledDateSymbol,
-                    date: task.scheduledDate,
-                }),
-            );
-        }
-
-        if (task.dueDate) {
-            const dueDateDiv = tooltip.createDiv();
-            dueDateDiv.setText(
-                toTooltipDate({
-                    signifier: dueDateSymbol,
-                    date: task.dueDate,
-                }),
-            );
-        }
-
-        if (task.doneDate) {
-            const doneDateDiv = tooltip.createDiv();
-            doneDateDiv.setText(
-                toTooltipDate({
-                    signifier: doneDateSymbol,
-                    date: task.doneDate,
-                }),
-            );
-        }
+        addDateToTooltip(tooltip, task.createdDate, createdDateSymbol);
+        addDateToTooltip(tooltip, task.startDate, startDateSymbol);
+        addDateToTooltip(tooltip, task.scheduledDate, scheduledDateSymbol);
+        addDateToTooltip(tooltip, task.dueDate, dueDateSymbol);
+        addDateToTooltip(tooltip, task.doneDate, doneDateSymbol);
 
         const linkText = task.getLinkText({ isFilenameUnique });
         if (linkText) {
@@ -456,6 +412,18 @@ function addTooltip({
             tooltip.remove();
         });
     });
+}
+
+function addDateToTooltip(tooltip: HTMLDivElement, date: moment.Moment | null, signifier: string) {
+    if (date) {
+        const createdDateDiv = tooltip.createDiv();
+        createdDateDiv.setText(
+            toTooltipDate({
+                signifier: signifier,
+                date: date,
+            }),
+        );
+    }
 }
 
 function toTooltipDate({ signifier, date }: { signifier: string; date: Moment }): string {
