@@ -61,27 +61,19 @@ describe('UrgencyTable', () => {
         return Urgency.calculate(task);
     }
 
-    function calcForScheduled(date: string) {
-        const task = new TaskBuilder().scheduledDate(date).priority(Priority.Low).build();
-        return Urgency.calculate(task);
-    }
-
-    function calcForStarts(date: string) {
-        const task = new TaskBuilder().startDate(date).priority(Priority.Low).build();
-        return Urgency.calculate(task);
-    }
-
     function dueCell(date: string) {
         const task = new TaskBuilder().dueDate(date).priority(Priority.Low).build();
         return urgencyCell(Urgency.calculate(task), 5);
     }
 
     function scheduledCell(date: string) {
-        return urgencyCell(calcForScheduled(date), 1);
+        const task = new TaskBuilder().scheduledDate(date).priority(Priority.Low).build();
+        return urgencyCell(Urgency.calculate(task), 1);
     }
 
     function startsCell(date: string) {
-        return urgencyCell(calcForStarts(date), 1);
+        const task = new TaskBuilder().startDate(date).priority(Priority.Low).build();
+        return urgencyCell(Urgency.calculate(task), 1);
     }
 
     it('urgency-html-table', () => {
