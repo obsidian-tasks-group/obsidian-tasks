@@ -103,9 +103,8 @@ describe('UrgencyTable', () => {
         let table = '';
         table += heading;
 
-        const decimalPlaces = 5;
         table += property([
-            [cell('Due', 25), cell('due more than 7 days ago'), urgencyCell(calcForDue('2023-05-02'), decimalPlaces)],
+            [cell('Due', 25), cell('due more than 7 days ago'), dueCell('2023-05-02')],
             [cell('due 7 days ago'), dueCell('2023-05-03')],
             [cell('due 6 days ago'), dueCell('2023-05-04')],
             [cell('due 5 days ago'), dueCell('2023-05-05')],
