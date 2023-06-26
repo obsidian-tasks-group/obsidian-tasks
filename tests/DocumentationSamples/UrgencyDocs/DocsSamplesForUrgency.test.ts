@@ -1,7 +1,25 @@
+/**
+ * @jest-environment jsdom
+ */
+
+import moment from 'moment';
+
 import { verifyMarkdownForDocs } from '../../TestingTools/VerifyMarkdownTable';
 import { TaskBuilder } from '../../TestingTools/TaskBuilder';
 import { Urgency } from '../../../src/Urgency';
 import { Priority } from '../../../src/Task';
+
+window.moment = moment;
+
+const today = '2023-05-20';
+beforeEach(() => {
+    jest.useFakeTimers();
+    jest.setSystemTime(new Date(today));
+});
+
+afterEach(() => {
+    jest.useRealTimers();
+});
 
 describe('UrgencyTable', () => {
     function cell(text: string, span: number = 0): string {
@@ -43,6 +61,11 @@ describe('UrgencyTable', () => {
         return Urgency.calculate(task);
     }
 
+    function calcForDue(date: string) {
+        const task = new TaskBuilder().dueDate(date).priority(Priority.Low).build();
+        return Urgency.calculate(task);
+    }
+
     it('urgency-html-table', () => {
         const heading = `
 <table>
@@ -65,7 +88,7 @@ describe('UrgencyTable', () => {
                 cell('Due between 7 days ago and in 14 days', 2),
                 cell(`Range of ${urgencyValue(12.0)} to ${urgencyValue(0.2)}`),
             ],
-            [cell('Example for "today": <code>9.0</code>')],
+            [cell(`Example for "today": ${urgencyValue(calcForDue('2023-05-20'), 1)}`)],
             [cell('More than 14 days until due'), urgencyCell(0.2)],
             [cell('None'), urgencyCell(0.0)],
         ]);
