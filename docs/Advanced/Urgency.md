@@ -54,11 +54,11 @@ The scores are as follows:
   </tr>
   <tr>
     <td>due 5 days ago</td>
-    <td><code>10.62857</code></td>
+    <td><code>11.08571</code></td>
   </tr>
   <tr>
     <td>due 4 days ago</td>
-    <td><code>11.08571</code></td>
+    <td><code>10.62857</code></td>
   </tr>
   <tr>
     <td>due 3 days ago</td>
