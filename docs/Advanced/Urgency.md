@@ -40,16 +40,13 @@ The scores are as follows:
 </thead>
 <tbody>
   <tr>
-    <td rowspan="5">Due</td>
+    <td rowspan="4">Due</td>
     <td>More than 7 days overdue</td>
     <td><code>12.0</code></td>
   </tr>
   <tr>
-    <td rowspan="2">Due between 7 days ago and in 14 days</td>
-    <td>Range of <code>12.0</code> to <code>0.2</code></td>
-  </tr>
-  <tr>
-    <td>Example for "today": <code>8.8</code></td>
+    <td>Today</td>
+    <td><code>8.8</code></td>
   </tr>
   <tr>
     <td>More than 14 days until due</td>
