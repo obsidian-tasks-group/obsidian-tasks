@@ -80,6 +80,14 @@ describe('UrgencyTable', () => {
         return urgencyCell(calcForDue(date), 5);
     }
 
+    function scheduledCell(date: string) {
+        return urgencyCell(calcForScheduled(date), 1);
+    }
+
+    function startsCell(date: string) {
+        return urgencyCell(calcForStarts(date), 1);
+    }
+
     it('urgency-html-table', () => {
         const heading = `
 <table>
@@ -134,15 +142,15 @@ describe('UrgencyTable', () => {
         ]);
 
         table += property([
-            [cell('Scheduled', 3), cell('Today or earlier'), urgencyCell(calcForScheduled('2023-05-10'), 1)],
-            [cell('Tomorrow or later'), urgencyCell(calcForScheduled('2023-05-11'), 1)],
-            [cell('None'), urgencyCell(calcForScheduled(''), 1)],
+            [cell('Scheduled', 3), cell('Today or earlier'), scheduledCell('2023-05-10')],
+            [cell('Tomorrow or later'), scheduledCell('2023-05-11')],
+            [cell('None'), scheduledCell('')],
         ]);
 
         table += property([
-            [cell('Starts', 3), cell('Today or earlier'), urgencyCell(calcForStarts('2023-05-10'), 1)],
-            [cell('Tomorrow or later'), urgencyCell(calcForStarts('2023-05-11'), 1)],
-            [cell('None'), urgencyCell(calcForStarts(''), 1)],
+            [cell('Starts', 3), cell('Today or earlier'), startsCell('2023-05-10')],
+            [cell('Tomorrow or later'), startsCell('2023-05-11')],
+            [cell('None'), startsCell('')],
         ]);
 
         table += `</tbody>
