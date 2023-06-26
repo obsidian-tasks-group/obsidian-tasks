@@ -7,6 +7,7 @@ import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { Urgency } from '../../src/Urgency';
 import { Priority } from '../../src/Task';
 import { calculateRelativeDate } from '../TestingTools/DateTestHelpers';
+import { fromLine } from '../TestHelpers';
 
 window.moment = moment;
 
@@ -39,6 +40,38 @@ function testUrgencyOnDate(today: string, builder: TaskBuilder, expectedScore: n
 function lowPriorityBuilder() {
     return new TaskBuilder().priority(Priority.Low);
 }
+
+// -----------------------------------------------------------------
+// Time of day does not affect result
+
+describe('urgency - test time-of-day impact on due-date score', () => {
+    // Test to reproduce https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2068
+    beforeEach(() => {
+        jest.useFakeTimers();
+    });
+
+    afterEach(() => {
+        jest.useRealTimers();
+    });
+
+    const task = fromLine({ line: '- [ ] #task 🔽 📅 2023-06-26', path: 'a/b/c.md', precedingHeader: null });
+
+    it.each([
+        // Force new line for each time
+        ['00:00'],
+        ['00:01'],
+        ['06:00'],
+        ['09:00'],
+        ['11:59'],
+        ['12:00'],
+        ['12:01'],
+        ['19:00'],
+        ['23:59'],
+    ])('with time  "%s"', (time: string) => {
+        jest.setSystemTime(new Date('2023-06-26 ' + time));
+        expect(Urgency.calculate(task)).toEqual(8.8);
+    });
+});
 
 // -----------------------------------------------------------------
 // Priority tests
