@@ -11,7 +11,7 @@ import { Priority } from '../../../src/Task';
 
 window.moment = moment;
 
-const today = '2023-05-20';
+const today = '2023-05-10';
 beforeEach(() => {
     jest.useFakeTimers();
     jest.setSystemTime(new Date(today));
@@ -88,7 +88,7 @@ describe('UrgencyTable', () => {
                 cell('Due between 7 days ago and in 14 days', 2),
                 cell(`Range of ${urgencyValue(12.0)} to ${urgencyValue(0.2)}`),
             ],
-            [cell(`Example for "today": ${urgencyValue(calcForDue('2023-05-20'), 1)}`)],
+            [cell(`Example for "today": ${urgencyValue(calcForDue('2023-05-10'), 1)}`)],
             [cell('More than 14 days until due'), urgencyCell(0.2)],
             [cell('None'), urgencyCell(0.0)],
         ]);
