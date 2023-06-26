@@ -21,6 +21,11 @@ afterEach(() => {
     jest.useRealTimers();
 });
 
+/**
+ * This test generates the HTML table in the user docs that shows how various Task
+ * signifiers affect the Urgency calculate:
+ * https://publish.obsidian.md/tasks/Advanced/Urgency
+ */
 describe('UrgencyTable', () => {
     function cell(text: string, span: number = 0): string {
         if (span !== 0) {
