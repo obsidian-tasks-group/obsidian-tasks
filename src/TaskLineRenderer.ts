@@ -250,15 +250,14 @@ export type AttributesDictionary = { [key: string]: string };
 function getComponentClassesAndData(component: TaskLayoutComponent, task: Task): [string[], AttributesDictionary] {
     const genericClasses: string[] = [];
     const dataAttributes: AttributesDictionary = {};
-    const setDateAttribute = (date: Moment, attributeName: string) => {
-        const dateValue = dateToAttribute(date);
-        if (dateValue) dataAttributes[attributeName] = dateValue;
-    };
 
     function addDateClassesAndName(date: moment.Moment | null, classes: string, attributeName: string) {
         if (date) {
             genericClasses.push(classes);
-            setDateAttribute(date, attributeName);
+            const dateValue = dateToAttribute(date);
+            if (dateValue) {
+                dataAttributes[attributeName] = dateValue;
+            }
         }
     }
 
