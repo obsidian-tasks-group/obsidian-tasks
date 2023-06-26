@@ -140,7 +140,7 @@ describe('UrgencyTable', () => {
         ]);
 
         table += property([
-            [cell('Starts', 3), cell('Today or earlier'), startsCell('2023-05-10')],
+            [cell('Start', 3), cell('Today or earlier'), startsCell('2023-05-10')],
             [cell('Tomorrow or later'), startsCell('2023-05-11')],
             [cell('None'), startsCell('')],
         ]);
