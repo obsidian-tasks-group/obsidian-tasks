@@ -10,13 +10,81 @@
 </thead>
 <tbody>
   <tr>
-    <td rowspan="4">Due</td>
+    <td rowspan="21">Due</td>
     <td>More than 7 days overdue</td>
     <td><code>12.0</code></td>
   </tr>
   <tr>
+    <td>due 3 days ago</td>
+    <td><code>10.17143</code></td>
+  </tr>
+  <tr>
+    <td>due 2 days ago</td>
+    <td><code>9.71429</code></td>
+  </tr>
+  <tr>
+    <td>due 1 day ago</td>
+    <td><code>9.25714</code></td>
+  </tr>
+  <tr>
     <td>Today</td>
-    <td><code>8.8</code></td>
+    <td><code>8.80000</code></td>
+  </tr>
+  <tr>
+    <td>1 day until due</td>
+    <td><code>8.34286</code></td>
+  </tr>
+  <tr>
+    <td>2 days until due</td>
+    <td><code>7.88571</code></td>
+  </tr>
+  <tr>
+    <td>3 days until due</td>
+    <td><code>7.42857</code></td>
+  </tr>
+  <tr>
+    <td>4 days until due</td>
+    <td><code>6.97143</code></td>
+  </tr>
+  <tr>
+    <td>5 days until due</td>
+    <td><code>6.51429</code></td>
+  </tr>
+  <tr>
+    <td>6 days until due</td>
+    <td><code>6.05714</code></td>
+  </tr>
+  <tr>
+    <td>7 days until due</td>
+    <td><code>5.60000</code></td>
+  </tr>
+  <tr>
+    <td>8 days until due</td>
+    <td><code>5.14286</code></td>
+  </tr>
+  <tr>
+    <td>9 days until due</td>
+    <td><code>4.68571</code></td>
+  </tr>
+  <tr>
+    <td>10 days until due</td>
+    <td><code>4.22857</code></td>
+  </tr>
+  <tr>
+    <td>11 days until due</td>
+    <td><code>3.77143</code></td>
+  </tr>
+  <tr>
+    <td>12 days until due</td>
+    <td><code>3.31429</code></td>
+  </tr>
+  <tr>
+    <td>13 days until due</td>
+    <td><code>2.85714</code></td>
+  </tr>
+  <tr>
+    <td>14 days until due</td>
+    <td><code>2.40000</code></td>
   </tr>
   <tr>
     <td>More than 14 days until due</td>

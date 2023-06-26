@@ -81,9 +81,27 @@ describe('UrgencyTable', () => {
         let table = '';
         table += heading;
 
+        const decimalPlaces = 5;
         table += property([
-            [cell('Due', 4), cell('More than 7 days overdue'), urgencyCell(12.0)],
-            [cell('Today'), urgencyCell(calcForDue('2023-05-10'), 1)],
+            [cell('Due', 21), cell('More than 7 days overdue'), urgencyCell(12.0)],
+            [cell('due 3 days ago'), urgencyCell(calcForDue('2023-05-07'), decimalPlaces)],
+            [cell('due 2 days ago'), urgencyCell(calcForDue('2023-05-08'), decimalPlaces)],
+            [cell('due 1 day ago'), urgencyCell(calcForDue('2023-05-09'), decimalPlaces)],
+            [cell('Today'), urgencyCell(calcForDue('2023-05-10'), decimalPlaces)],
+            [cell('1 day until due'), urgencyCell(calcForDue('2023-05-11'), decimalPlaces)],
+            [cell('2 days until due'), urgencyCell(calcForDue('2023-05-12'), decimalPlaces)],
+            [cell('3 days until due'), urgencyCell(calcForDue('2023-05-13'), decimalPlaces)],
+            [cell('4 days until due'), urgencyCell(calcForDue('2023-05-14'), decimalPlaces)],
+            [cell('5 days until due'), urgencyCell(calcForDue('2023-05-15'), decimalPlaces)],
+            [cell('6 days until due'), urgencyCell(calcForDue('2023-05-16'), decimalPlaces)],
+            [cell('7 days until due'), urgencyCell(calcForDue('2023-05-17'), decimalPlaces)],
+            [cell('8 days until due'), urgencyCell(calcForDue('2023-05-18'), decimalPlaces)],
+            [cell('9 days until due'), urgencyCell(calcForDue('2023-05-19'), decimalPlaces)],
+            [cell('10 days until due'), urgencyCell(calcForDue('2023-05-20'), decimalPlaces)],
+            [cell('11 days until due'), urgencyCell(calcForDue('2023-05-21'), decimalPlaces)],
+            [cell('12 days until due'), urgencyCell(calcForDue('2023-05-22'), decimalPlaces)],
+            [cell('13 days until due'), urgencyCell(calcForDue('2023-05-23'), decimalPlaces)],
+            [cell('14 days until due'), urgencyCell(calcForDue('2023-05-24'), decimalPlaces)],
             [cell('More than 14 days until due'), urgencyCell(0.2)],
             [cell('None'), urgencyCell(0.0)],
         ]);
