@@ -4,7 +4,7 @@ publish: true
 
 # How do I use Moment in tests
 
-<span class="related-pages">#libraries/moment</span>
+<span class="related-pages">#testing/automated-testing/dates-and-times #libraries/moment</span>
 
 See also the equivalent [[How do I use Moment in src]].
 

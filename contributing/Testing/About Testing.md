@@ -15,10 +15,14 @@ It's not perfect, but it is valuable and we try to continually improve the tests
 
 - [[Introduction to Writing Unit Tests]] - start here if you haven't written tests before, or are new to testing in TypeScript
 - [[Jest Test Framework]] - useful links on our chosen test framework
-- [[How do I use Moment in tests]] - how to test date and time values
 - [[Example Tests]] - this shows a selection of existing tests, to give ideas on writing new tests
 - [[Jest and the WebStorm IDE]] - tips if you use WebStorm
 - [[Writing Tests for New or Refactored Code]] - tips if you're stuck writing tests
+
+Testing dates and times:
+
+- [[How do I use Moment in tests]] - how to test date and time values
+- [[Simulating Dates and Times]] - examples of how to use fixed dates and times in tests
 
 More advanced features:
 
