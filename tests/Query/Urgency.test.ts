@@ -44,6 +44,7 @@ function lowPriorityBuilder() {
 // -----------------------------------------------------------------
 // Time of day does not affect result
 
+// begin-snippet: test-at-different-times
 describe('urgency - test time-of-day impact on due-date score', () => {
     // Test to reproduce https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2068
     beforeEach(() => {
@@ -72,6 +73,7 @@ describe('urgency - test time-of-day impact on due-date score', () => {
         expect(Urgency.calculate(task)).toEqual(8.8);
     });
 });
+// end-snippet
 
 // -----------------------------------------------------------------
 // Priority tests
