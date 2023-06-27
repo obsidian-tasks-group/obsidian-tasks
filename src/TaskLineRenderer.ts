@@ -7,6 +7,7 @@ import { TaskLayout } from './TaskLayout';
 import { replaceTaskWithTasks } from './File';
 import { TASK_FORMATS, getSettings } from './Config/Settings';
 import { GlobalFilter } from './Config/GlobalFilter';
+import { PriorityTools } from './lib/PriorityTools';
 
 export type TaskLineRenderDetails = {
     parentUlElement: HTMLElement;
@@ -266,14 +267,7 @@ function getComponentClassesAndData(component: TaskLayoutComponent, task: Task):
             genericClasses.push(LayoutClasses.description);
             break;
         case 'priority': {
-            let priorityValue = null;
-            if (task.priority === taskModule.Priority.Highest) priorityValue = 'highest';
-            else if (task.priority === taskModule.Priority.High) priorityValue = 'high';
-            else if (task.priority === taskModule.Priority.Medium) priorityValue = 'medium';
-            else if (task.priority === taskModule.Priority.Low) priorityValue = 'low';
-            else if (task.priority === taskModule.Priority.Lowest) priorityValue = 'lowest';
-            else priorityValue = 'normal';
-            dataAttributes['taskPriority'] = priorityValue;
+            dataAttributes['taskPriority'] = PriorityTools.priorityNameUsingNormal(task.priority).toLocaleLowerCase();
             genericClasses.push(LayoutClasses.priority);
             break;
         }
