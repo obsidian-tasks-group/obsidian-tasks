@@ -14,6 +14,7 @@ export class LayoutOptions {
     hideRecurrenceRule: boolean = false;
     hideEditButton: boolean = false;
     hideUrgency: boolean = true;
+    hideTags: boolean = false;
     shortMode: boolean = false;
     explainQuery: boolean = false;
 }
