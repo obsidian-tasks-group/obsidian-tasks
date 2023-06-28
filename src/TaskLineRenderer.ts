@@ -140,6 +140,17 @@ async function taskToHtml(
         if (componentString) {
             if (component === 'description') {
                 componentString = GlobalFilter.removeAsWordFromDependingOnSettings(componentString);
+
+                if (renderDetails.layoutOptions?.hideTags) {
+                    // This matches a tag only when it's a complete word
+                    const tagRegExp = RegExp('(#+[a-zA-Z0-9(_)]{1,})', 'ug');
+                    componentString = componentString.replace(tagRegExp, '');
+
+                    const extraSpacesRegExp = RegExp('[ ]{2,}', 'ug');
+                    componentString = componentString.replace(extraSpacesRegExp, ' ');
+
+                    componentString = componentString.trim();
+                }
             }
             // Create the text span that will hold the rendered component
             const span = document.createElement('span');
