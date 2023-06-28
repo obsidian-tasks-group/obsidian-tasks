@@ -44,7 +44,7 @@ To divide the matching tasks up with headings, you can add `group by` lines to t
 
 Tasks provides many built-in grouping options, but sometimes they don't quite do what is wanted by all users.
 
-Now. Tasks has a powerful mechanism for you to create your own **custom groups**, offering incredible flexibility.
+Now Tasks has a powerful mechanism for you to create your own **custom groups**, offering incredible flexibility.
 
 There are many examples of the custom grouping instruction `group by function` in the documentation below, with explanations, for when the `group by` instructions built in to Tasks do not satisfy your preferences.
 
