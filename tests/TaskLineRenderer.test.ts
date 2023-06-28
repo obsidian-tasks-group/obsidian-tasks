@@ -279,14 +279,17 @@ describe('task line rendering', () => {
         );
     });
 
-    it('renders without tags', async () => {
-        await testLayoutOptions(
-            '- [ ] Full task with a tag #tag ⏫ 📅 2022-07-02 ⏳ 2022-07-03 🛫 2022-07-04 ➕ 2022-07-05 🔁 every day',
-            { hideTags: true },
-            'Full task with a tag #tag',
-            [' ⏫', ' 🔁 every day', ' ➕ 2022-07-05', ' 🛫 2022-07-04', ' ⏳ 2022-07-03', ' 📅 2022-07-02'],
-        );
-    });
+    it.each([['a task with a tag #tag', 'a task with a tag #tag']])(
+        'renders without tags task with description "%s"',
+        async (taskDescription: string, renderedDescription: string) => {
+            await testLayoutOptions(
+                `- [ ] ${taskDescription} ⏫ 📅 2022-07-02 ⏳ 2022-07-03 🛫 2022-07-04 ➕ 2022-07-05 🔁 every day`,
+                { hideTags: true },
+                renderedDescription,
+                [' ⏫', ' 🔁 every day', ' ➕ 2022-07-05', ' 🛫 2022-07-04', ' ⏳ 2022-07-03', ' 📅 2022-07-02'],
+            );
+        },
+    );
 
     const testComponentClasses = async (
         taskLine: string,
