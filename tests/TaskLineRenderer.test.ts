@@ -279,6 +279,15 @@ describe('task line rendering', () => {
         );
     });
 
+    it('renders without tags', async () => {
+        await testLayoutOptions(
+            '- [ ] Full task with a tag #tag ⏫ 📅 2022-07-02 ⏳ 2022-07-03 🛫 2022-07-04 ➕ 2022-07-05 🔁 every day',
+            { hideTags: true },
+            'Full task with a tag #tag',
+            [' ⏫', ' 🔁 every day', ' ➕ 2022-07-05', ' 🛫 2022-07-04', ' ⏳ 2022-07-03', ' 📅 2022-07-02'],
+        );
+    });
+
     const testComponentClasses = async (
         taskLine: string,
         layoutOptions: Partial<LayoutOptions>,
