@@ -270,6 +270,7 @@ describe('Query parsing', () => {
             'hide start date',
             'hide task count',
             'hide urgency',
+            'hide tags',
             'limit 42',
             'limit to 42 tasks',
             'limit groups 31',
