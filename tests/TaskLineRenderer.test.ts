@@ -290,9 +290,9 @@ describe('task line rendering', () => {
         ['tag with hyphens #a-b-c', 'tag with hyphens'],
 
         // Border cases
-        ['should      keep extra     spaces', 'should      keep extra     spaces'],
+        ['but      keep extra     spaces', 'but      keep extra     spaces'],
     ])(
-        'renders without tags task with description "%s"',
+        'should render without tags task with description "%s"',
         async (taskDescription: string, renderedDescription: string) => {
             await testLayoutOptions(
                 `- [ ] ${taskDescription} ⏫ 📅 2022-07-02 ⏳ 2022-07-03 🛫 2022-07-04 ➕ 2022-07-05 🔁 every day`,
