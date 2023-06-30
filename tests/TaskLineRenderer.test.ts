@@ -280,10 +280,15 @@ describe('task line rendering', () => {
     });
 
     it.each([
+        // Nominal cases
         ['tag at the end #todo', 'tag at the end'],
         ['tag #tag in the middle', 'tag in the middle'],
         ['#now tag in the beginning', 'tag in the beginning'],
         ['#important #s a #today #TODO lot #never of tags #now #PERFORMANCE', 'a lot of tags'],
+        ['nested tags #todo/only/today #x/y/z', 'nested tags /only/today /y/z'], // TODO
+
+        // Border cases
+        ['should      keep extra     spaces', 'should keep extra spaces'], // TODO
     ])(
         'renders without tags task with description "%s"',
         async (taskDescription: string, renderedDescription: string) => {
