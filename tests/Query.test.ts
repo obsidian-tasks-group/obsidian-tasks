@@ -286,6 +286,7 @@ describe('Query parsing', () => {
             'show recurrence rule',
             'show scheduled date',
             'show start date',
+            'show tags',
             'show task count',
             'show urgency',
         ];
