@@ -280,10 +280,10 @@ describe('task line rendering', () => {
     });
 
     it.each([
-        ['a task with a tag at the end #todo', 'a task with a tag at the end'],
-        ['a task with a tag #tag in the middle', 'a task with a tag in the middle'],
-        ['#now a task with a tag in the beginning', 'a task with a tag in the beginning'],
-        ['#important #s a task with #today #TODO a lot #never of tags #now #PERFORMANCE', 'a task with a lot of tags'],
+        ['tag at the end #todo', 'tag at the end'],
+        ['tag #tag in the middle', 'tag in the middle'],
+        ['#now tag in the beginning', 'tag in the beginning'],
+        ['#important #s a #today #TODO lot #never of tags #now #PERFORMANCE', 'a lot of tags'],
     ])(
         'renders without tags task with description "%s"',
         async (taskDescription: string, renderedDescription: string) => {
