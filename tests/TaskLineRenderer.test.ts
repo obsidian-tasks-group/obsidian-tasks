@@ -287,6 +287,7 @@ describe('task line rendering', () => {
         ['#now tag in the beginning', 'tag in the beginning'],
         ['#important #s a #today #TODO lot #never of tags #now #PERFORMANCE', 'a lot of tags'],
         ['nested tags #todo/only/today #x/y/z', 'nested tags /only/today /y/z'], // TODO
+        ['tag with hyphens #a-b-c', 'tag with hyphens -b-c'], // TODO
 
         // Border cases
         ['should      keep extra     spaces', 'should keep extra spaces'], // TODO
