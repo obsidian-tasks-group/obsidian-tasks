@@ -1,6 +1,6 @@
 import { Component, MarkdownRenderer } from 'obsidian';
 import type { Moment } from 'moment';
-import type { Task } from './Task';
+import { type Task, TaskRegularExpressions } from './Task';
 import * as taskModule from './Task';
 import type { LayoutOptions, TaskLayoutComponent } from './TaskLayout';
 import { TaskLayout } from './TaskLayout';
@@ -142,14 +142,7 @@ async function taskToHtml(
                 componentString = GlobalFilter.removeAsWordFromDependingOnSettings(componentString);
 
                 if (renderDetails.layoutOptions?.hideTags) {
-                    // This matches a tag only when it's a complete word
-                    const tagRegExp = RegExp('(#+[a-zA-Z0-9(_)]{1,})', 'ug');
-                    componentString = componentString.replace(tagRegExp, '');
-
-                    const extraSpacesRegExp = RegExp('[ ]{2,}', 'ug');
-                    componentString = componentString.replace(extraSpacesRegExp, ' ');
-
-                    componentString = componentString.trim();
+                    componentString = componentString.replace(TaskRegularExpressions.hashTags, '').trim();
                 }
             }
             // Create the text span that will hold the rendered component
