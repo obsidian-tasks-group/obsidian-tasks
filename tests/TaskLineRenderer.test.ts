@@ -67,6 +67,7 @@ function getOtherLayoutComponents(parentElement: HTMLElement): string[] {
 describe('task line rendering', () => {
     afterEach(() => {
         resetSettings();
+        GlobalFilter.reset();
     });
 
     it('creates the correct span structure for a basic task', async () => {
@@ -300,6 +301,18 @@ describe('task line rendering', () => {
             );
         },
     );
+
+    it('"hide tags" should not hide Global Filter when it is a tag', async () => {
+        const globalFilter = '#task';
+        GlobalFilter.set(globalFilter);
+
+        await testLayoutOptions(
+            `- [ ] ${globalFilter} is kept and tags are hidden #todo`,
+            { hideTags: true },
+            'is kept and tags are hidden', // TODO
+            [],
+        );
+    });
 
     const testComponentClasses = async (
         taskLine: string,
