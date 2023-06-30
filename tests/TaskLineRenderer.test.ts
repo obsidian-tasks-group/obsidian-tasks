@@ -309,17 +309,17 @@ describe('task line rendering', () => {
 
         updateSettings({ removeGlobalFilter: false });
         await testLayoutOptions(
-            `- [ ] ${globalFilter} Global Filter and tags are hidden #todo`,
+            `- [ ] ${globalFilter} Global Filter and tags are hidden when Remove Global Filter setting is 'false' #todo`,
             { hideTags: true },
-            'Global Filter and tags are hidden', // TODO
+            "Global Filter and tags are hidden when Remove Global Filter setting is 'false'",
             [],
         );
 
         updateSettings({ removeGlobalFilter: true });
         await testLayoutOptions(
-            `- [ ] ${globalFilter} Global Filter and tags are hidden #todo`,
+            `- [ ] ${globalFilter} Global Filter and tags are hidden when Remove Global Filter setting is 'true' #todo`,
             { hideTags: true },
-            'Global Filter and tags are hidden', // TODO
+            "Global Filter and tags are hidden when Remove Global Filter setting is 'true'",
             [],
         );
     });
