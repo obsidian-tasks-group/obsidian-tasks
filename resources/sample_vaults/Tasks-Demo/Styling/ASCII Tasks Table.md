@@ -79,7 +79,15 @@ To:
 - []] #task ASCII code 93 - `]` - box brackets or square brackets, closing bracket
 - [^] #task ASCII code 94 - `^` - Circumflex accent or Caret
 - [_] #task ASCII code 95 - `_` - underscore , understrike , underbar or low line
+
+*Markdown-linting [rule MD038](https://github.com/DavidAnson/markdownlint/blob/main/doc/md038.md) disabled here, inside comments:*
+
+<!-- markdownlint-disable MD038 -->
 - [`] #task ASCII code 96 - `backtick` - Grave accent
+<!-- markdownlint-enable MD038 -->
+
+*Markdown-linting rule MD038 now turned back on.*
+
 - [a] #task ASCII code 97 - `a` - Lowercase letter a , minuscule a
 - [b] #task ASCII code 98 - `b` - Lowercase letter b , minuscule b
 - [c] #task ASCII code 99 - `c` - Lowercase letter c , minuscule c
