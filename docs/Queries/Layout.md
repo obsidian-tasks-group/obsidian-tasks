@@ -21,6 +21,7 @@ The following elements exist:
 - `due date`
 - `done date`
 - `recurrence rule`
+- `tags`
 - `task count`
 
 > [!released]
@@ -31,7 +32,8 @@ All of these elements except `urgency` are shown by default, so you will use the
 if you do not want to show any of them, or the command `show` to show the urgency score.
 
 > [!released]
-The `show` commands were introduced in Tasks 1.14.0.
+The `show` commands were introduced in Tasks 1.14.0.<br>
+`hide tags` was introduced in Tasks X.Y.Z.
 
 Example:
 
