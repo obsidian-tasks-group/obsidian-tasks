@@ -303,10 +303,19 @@ describe('task line rendering', () => {
         },
     );
 
-    it('"hide tags" should hide Global Filter when it is a tag', async () => {
+    it('"hide tags" should hide Global Filter when it is a tag despite Remove Global Filter setting', async () => {
         const globalFilter = '#task';
         GlobalFilter.set(globalFilter);
 
+        updateSettings({ removeGlobalFilter: false });
+        await testLayoutOptions(
+            `- [ ] ${globalFilter} Global Filter and tags are hidden #todo`,
+            { hideTags: true },
+            'Global Filter and tags are hidden', // TODO
+            [],
+        );
+
+        updateSettings({ removeGlobalFilter: true });
         await testLayoutOptions(
             `- [ ] ${globalFilter} Global Filter and tags are hidden #todo`,
             { hideTags: true },
