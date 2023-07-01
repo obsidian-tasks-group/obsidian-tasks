@@ -1,6 +1,6 @@
 import { Component, MarkdownRenderer } from 'obsidian';
 import type { Moment } from 'moment';
-import type { Task } from './Task';
+import { type Task, TaskRegularExpressions } from './Task';
 import * as taskModule from './Task';
 import type { LayoutOptions, TaskLayoutComponent } from './TaskLayout';
 import { TaskLayout } from './TaskLayout';
@@ -140,6 +140,10 @@ async function taskToHtml(
         if (componentString) {
             if (component === 'description') {
                 componentString = GlobalFilter.removeAsWordFromDependingOnSettings(componentString);
+
+                if (renderDetails.layoutOptions?.hideTags) {
+                    componentString = componentString.replace(TaskRegularExpressions.hashTags, '').trim();
+                }
             }
             // Create the text span that will hold the rendered component
             const span = document.createElement('span');

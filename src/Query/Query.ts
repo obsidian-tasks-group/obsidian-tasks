@@ -22,7 +22,7 @@ export class Query implements IQuery {
     private _grouping: Grouper[] = [];
 
     private readonly hideOptionsRegexp =
-        /^(hide|show) (task count|backlink|priority|created date|start date|scheduled date|done date|due date|recurrence rule|edit button|urgency)/;
+        /^(hide|show) (task count|backlink|priority|created date|start date|scheduled date|done date|due date|recurrence rule|edit button|urgency|tags)/;
     private readonly shortModeRegexp = /^short/;
     private readonly explainQueryRegexp = /^explain/;
 
@@ -228,6 +228,9 @@ export class Query implements IQuery {
                     break;
                 case 'urgency':
                     this._layoutOptions.hideUrgency = hide;
+                    break;
+                case 'tags':
+                    this._layoutOptions.hideTags = hide;
                     break;
                 default:
                     this._error = 'do not understand hide/show option';

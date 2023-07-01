@@ -67,6 +67,7 @@ function getOtherLayoutComponents(parentElement: HTMLElement): string[] {
 describe('task line rendering', () => {
     afterEach(() => {
         resetSettings();
+        GlobalFilter.reset();
     });
 
     it('creates the correct span structure for a basic task', async () => {
@@ -276,6 +277,50 @@ describe('task line rendering', () => {
             {},
             'Task with invalid recurrence rule',
             [' 🔁 every month on the 32th'],
+        );
+    });
+
+    it.each([
+        // Nominal cases
+        ['tag at the end #todo', 'tag at the end'],
+        ['tag #tag in the middle', 'tag in the middle'],
+        ['#now tag in the beginning', 'tag in the beginning'],
+        ['#important #s a #today #TODO lot #never of tags #now #PERFORMANCE', 'a lot of tags'],
+        ['nested tags #todo/only/today #x/y/z', 'nested tags'],
+        ['tag with hyphens #a-b-c', 'tag with hyphens'],
+
+        // Border cases
+        ['but      keep extra     spaces', 'but      keep extra     spaces'],
+    ])(
+        'renders without tags task with description "%s"',
+        async (taskDescription: string, renderedDescription: string) => {
+            await testLayoutOptions(
+                `- [ ] ${taskDescription} ⏫ 📅 2022-07-02 ⏳ 2022-07-03 🛫 2022-07-04 ➕ 2022-07-05 🔁 every day`,
+                { hideTags: true },
+                renderedDescription,
+                [' ⏫', ' 🔁 every day', ' ➕ 2022-07-05', ' 🛫 2022-07-04', ' ⏳ 2022-07-03', ' 📅 2022-07-02'],
+            );
+        },
+    );
+
+    it('"hide tags" should hide Global Filter when it is a tag despite Remove Global Filter setting', async () => {
+        const globalFilter = '#task';
+        GlobalFilter.set(globalFilter);
+
+        updateSettings({ removeGlobalFilter: false });
+        await testLayoutOptions(
+            `- [ ] ${globalFilter} Global Filter and tags are hidden when Remove Global Filter setting is 'false' #todo`,
+            { hideTags: true },
+            "Global Filter and tags are hidden when Remove Global Filter setting is 'false'",
+            [],
+        );
+
+        updateSettings({ removeGlobalFilter: true });
+        await testLayoutOptions(
+            `- [ ] ${globalFilter} Global Filter and tags are hidden when Remove Global Filter setting is 'true' #todo`,
+            { hideTags: true },
+            "Global Filter and tags are hidden when Remove Global Filter setting is 'true'",
+            [],
         );
     });
 
