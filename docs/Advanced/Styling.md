@@ -111,11 +111,6 @@ The CSS `:has` selector is available with Obsidian installer version 1.1.9 and n
 - The query container (`class="plugin-tasks-query-result"`) will include a `tasks-layout-hide...` class, e.g. `tasks-layout-hide-priority`.
 - Although the priority will not be rendered in the query, the upper task element (`li class="task-list-item"`) will still be added the attribute of hidden components, e.g. `data-task-priority="high"`.
 
-> [!warning]
-> For now hiding tags with `hide tags` instruction prevents the highlighting in the task's description.
->
-> We are tracking this in [issue #....](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/....).
-
 **Short mode** will add a `tasks-layout-short-mode` class to the query container.
 
 **Grouping rules** will add a `data-task-group-by` attribute to the query container, e.g. `data-task-group-by="due,scheduled"`.
@@ -347,6 +342,11 @@ The following rule adds a rounded red background to the description of a task if
 For example:
 
 ![Example of tasks-plugin-highlight-specific-tag-round-red-description.css snippet](../../images/tasks-plugin-highlight-specific-tag-round-red-description-snippet.png)
+
+> [!warning]
+> The above snippets require the tag to be displayed. Using the `hide tags` instruction prevents these tag-based snippets from working.
+>
+> We are tracking this in [issue #2083](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2083).
 
 ### Circle Checkboxes
 
