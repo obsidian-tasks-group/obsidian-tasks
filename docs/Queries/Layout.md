@@ -21,6 +21,7 @@ The following elements exist:
 - `due date`
 - `done date`
 - `recurrence rule`
+- `tags`
 - `task count`
 
 > [!released]
@@ -30,8 +31,14 @@ The following elements exist:
 All of these elements except `urgency` are shown by default, so you will use the command `hide`
 if you do not want to show any of them, or the command `show` to show the urgency score.
 
+> [!warning]
+> For now hiding tags with `hide tags` instruction prevents the tag highlighting with CSS styles.
+>
+> We are tracking this in [issue #....](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/....).
+
 > [!released]
-The `show` commands were introduced in Tasks 1.14.0.
+The `show` commands were introduced in Tasks 1.14.0.<br>
+`hide tags` was introduced in Tasks X.Y.Z.
 
 Example:
 

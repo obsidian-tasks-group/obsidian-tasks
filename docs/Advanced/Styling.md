@@ -111,6 +111,11 @@ The CSS `:has` selector is available with Obsidian installer version 1.1.9 and n
 - The query container (`class="plugin-tasks-query-result"`) will include a `tasks-layout-hide...` class, e.g. `tasks-layout-hide-priority`.
 - Although the priority will not be rendered in the query, the upper task element (`li class="task-list-item"`) will still be added the attribute of hidden components, e.g. `data-task-priority="high"`.
 
+> [!warning]
+> For now hiding tags with `hide tags` instruction prevents the highlighting in the task's description.
+>
+> We are tracking this in [issue #....](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/....).
+
 **Short mode** will add a `tasks-layout-short-mode` class to the query container.
 
 **Grouping rules** will add a `data-task-group-by` attribute to the query container, e.g. `data-task-group-by="due,scheduled"`.
