@@ -1,3 +1,5 @@
+/* Note: This will not work in any Task query blocks that use 'hide tags'.      */
+/*       See https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2083 */
 .task-description span:has(.tag[data-tag-name="#task/strategic"]) {
     background: #ffbfcc;
     border-radius: 10px;
