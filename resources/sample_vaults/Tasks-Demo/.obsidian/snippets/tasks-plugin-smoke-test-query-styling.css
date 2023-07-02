@@ -11,3 +11,17 @@
 ul.contains-task-list.tasks-layout-hide-priority.tasks-layout-hide-backlinks.tasks-layout-hide-urgency.tasks-layout-hide-edit-button {
     color: red;
 }
+
+.task-description span:has(.tag[data-tag-name="#todo/strategic"]) {
+    background: #ffbfcc;
+    border-radius: 10px;
+    padding: 2px 8px;
+}
+
+/* Put a blue border around Task code blocks, to make the structure of smoke tests easier to see. */
+:not(.callout-content) > .block-language-tasks {
+    padding: 5px 15px;
+    border: 2px solid var(--color-blue);
+    border-radius: 5px;
+    margin: 1em 0;
+}

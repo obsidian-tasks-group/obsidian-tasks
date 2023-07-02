@@ -102,7 +102,7 @@ export class TaskLayout {
         newComponents = removeIf(newComponents, layoutOptions.hideDueDate, 'dueDate');
         newComponents = removeIf(newComponents, layoutOptions.hideDoneDate, 'doneDate');
 
-        // Tags are removed from the description, rather than being a whole component in their own right.
+        // Tags are hidden, rather than removed. See tasks-layout-hide-tags in styles.css.
         markHiddenQueryComponent(layoutOptions.hideTags, 'tags');
 
         // The following components are handled in QueryRenderer.ts and thus are not part of the same flow that
