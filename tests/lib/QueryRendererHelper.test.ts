@@ -83,11 +83,7 @@ No filters supplied. All tasks will match the query.`;
         const source = 'ignore global query';
         const query = new Query({ source });
 
-        const expectedDisplayText = `Explanation of the global query:
-
-description includes hello
-
-Explanation of this Tasks code block query:
+        const expectedDisplayText = `Explanation of this Tasks code block query:
 
 No filters supplied. All tasks will match the query.`;
 

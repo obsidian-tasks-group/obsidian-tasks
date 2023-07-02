@@ -29,13 +29,17 @@ export function explainResults(source: string): string {
         result += `Only tasks containing the global filter '${GlobalFilter.get()}'.\n\n`;
     }
 
-    const globalQuery: IQuery = new Query(getGlobalQuerySource());
+    const tasksBlockQuery = new Query({ source });
 
-    if (globalQuery.source.trim() !== '') {
-        result += `Explanation of the global query:\n\n${globalQuery.explainQuery()}\n`;
+    if (!tasksBlockQuery.ignoreGlobalQuery) {
+        const globalQuery: IQuery = new Query(getGlobalQuerySource());
+
+        if (globalQuery.source.trim() !== '') {
+            result += `Explanation of the global query:\n\n${globalQuery.explainQuery()}\n`;
+        }
     }
 
-    result += `Explanation of this Tasks code block query:\n\n${new Query({ source }).explainQuery()}`;
+    result += `Explanation of this Tasks code block query:\n\n${tasksBlockQuery.explainQuery()}`;
 
     return result;
 }
