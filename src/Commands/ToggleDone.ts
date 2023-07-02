@@ -79,7 +79,7 @@ export const toggleLine = (line: string, path: string): EditorInsertion => {
         // 1. a regular checklist item
         // 2. a list item
         // 3. a simple text line
-        // 4. a standard task, but which does not contain the global filter, to be toggled, but no done date added.
+        // 4. a standard task, but which does not contain the Global Filter, to be toggled, but no done date added.
 
         // The task regex will match checklist items.
         const regexMatch = line.match(TaskRegularExpressions.taskRegex);

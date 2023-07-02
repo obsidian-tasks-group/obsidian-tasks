@@ -235,7 +235,7 @@ export class Task {
             return null;
         }
 
-        // return if the line does not have the global filter. Do this before
+        // return if the line does not have the Global Filter. Do this before
         // any other processing to improve performance.
         if (!GlobalFilter.includedIn(taskComponents.body)) {
             return null;

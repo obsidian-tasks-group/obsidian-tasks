@@ -44,17 +44,17 @@ export class GlobalFilter {
     }
 
     /**
-     * Search for the global filter for the purpose of removing it from the description, but do so only
+     * Search for the Global Filter for the purpose of removing it from the description, but do so only
      * if it is a separate word (preceding the beginning of line or a space and followed by the end of line
      * or a space), because we don't want to cut-off nested tags like #task/subtag.
-     * If the global filter exists as part of a nested tag, we keep it untouched.
+     * If the Global Filter exists as part of a nested tag, we keep it untouched.
      */
     static removeAsWordFrom(description: string): string {
         if (GlobalFilter.isEmpty()) {
             return description;
         }
 
-        // This matches the global filter (after escaping it) only when it's a complete word
+        // This matches the Global Filter (after escaping it) only when it's a complete word
         const theRegExp = RegExp('(^|\\s)' + RegExpTools.escapeRegExp(GlobalFilter.get()) + '($|\\s)', 'ug');
 
         if (description.search(theRegExp) > -1) {

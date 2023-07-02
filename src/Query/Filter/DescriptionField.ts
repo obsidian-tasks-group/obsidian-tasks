@@ -7,7 +7,7 @@ import { TextField } from './TextField';
  * Support the 'description' search instruction.
  *
  * Note that DescriptionField.value() returns the description
- * with the global filter (if any) removed.
+ * with the Global Filter (if any) removed.
  */
 export class DescriptionField extends TextField {
     public fieldName(): string {
@@ -22,9 +22,9 @@ export class DescriptionField extends TextField {
      * @public
      */
     public value(task: Task): string {
-        // Remove global filter from description match if present.
+        // Remove the Global Filter from description match if present.
         // This is necessary to match only on the content of the task, not
-        // the global filter.
+        // the Global Filter.
         return GlobalFilter.removeAsSubstringFrom(task.description);
     }
 

@@ -13,7 +13,7 @@ export class InlineRenderer {
 
     /**
      * This renders a file's task list when rendered in Reading View, using roughly the same pipeline
-     * of QueryRenderer (e.g. it removes the global filter and handles other formatting).
+     * of QueryRenderer (e.g. it removes the Global Filter and handles other formatting).
      */
     private async _markdownPostProcessor(element: HTMLElement, context: MarkdownPostProcessorContext): Promise<void> {
         // As of Obsidian 1.3.0, it is required by Obsidian to create and/or pass a Component object
@@ -30,7 +30,7 @@ export class InlineRenderer {
             // Only the first line. Can be multiple lines if an LI element contains an UL.
             // Want to match the top level LI independently from its children.
             // There was a false positive, when the LI wasn't a task itself, but contained the
-            // global filter in child LIs.
+            // Global Filter in child LIs.
             let firstLineText: string | null = null;
 
             // The first line is the first line that is not empty. Empty lines can exist when
