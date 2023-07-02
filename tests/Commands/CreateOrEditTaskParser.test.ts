@@ -20,7 +20,7 @@ describe('CreateOrEditTaskParser - testing edited task if line is saved unchange
             '',
         ],
         [
-            '* [ ] #task Hello World - with asterisk list marker', // Simple case, with global filter - using * as list marker
+            '* [ ] #task Hello World - with asterisk list marker', // Simple case, with Global Filter - using * as list marker
             '* [ ] #task Hello World - with asterisk list marker',
             '#task',
         ],
@@ -45,8 +45,8 @@ describe('CreateOrEditTaskParser - testing edited task if line is saved unchange
             '',
         ],
         [
-            'Non-blank line, not a task', // Blank line, not yet a task - settings have global filter
-            '- [ ] Non-blank line, not a task', // The global filter doesn't get added until the Modal rewrites the line
+            'Non-blank line, not a task', // Blank line, not yet a task - settings have Global Filter
+            '- [ ] Non-blank line, not a task', // The Global Filter doesn't get added until the Modal rewrites the line
             '#task',
         ],
         [
@@ -55,8 +55,8 @@ describe('CreateOrEditTaskParser - testing edited task if line is saved unchange
             '',
         ],
         [
-            '- [!] Not a task as no global filter - unknown status symbol', // Ensure unknown status symbol is retained in non-tasks
-            '- [!] Not a task as no global filter - unknown status symbol', // The global filter doesn't get added until the Modal rewrites the line
+            '- [!] Not a task as no Global Filter - unknown status symbol', // Ensure unknown status symbol is retained in non-tasks
+            '- [!] Not a task as no Global Filter - unknown status symbol', // The Global Filter doesn't get added until the Modal rewrites the line
             '#task',
         ],
     ])(
@@ -76,10 +76,10 @@ describe('CreateOrEditTaskParser - task recognition', () => {
         GlobalFilter.reset();
     });
 
-    it('should recognize task details without global filter', () => {
+    it('should recognize task details without Global Filter', () => {
         GlobalFilter.set('#task');
         const taskLine =
-            '- [ ] without global filter but with all the info ⏬ 🔁 every 2 days ➕ 2022-03-10 🛫 2022-01-31 ⏳ 2023-06-13 📅 2024-12-10 ✅ 2023-06-22';
+            '- [ ] without Global Filter but with all the info ⏬ 🔁 every 2 days ➕ 2022-03-10 🛫 2022-01-31 ⏳ 2023-06-13 📅 2024-12-10 ✅ 2023-06-22';
         const path = 'a/b/c.md';
 
         const task = taskFromLine({ line: taskLine, path });

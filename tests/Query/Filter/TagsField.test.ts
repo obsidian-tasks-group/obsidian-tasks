@@ -37,7 +37,7 @@ describe('tag presence & absence', () => {
         expect(filter).toMatchTaskFromLine('- [ ] no tag here');
     });
 
-    it('should filter together with the global filter ("has tags")', () => {
+    it('should filter together with the Global Filter ("has tags")', () => {
         GlobalFilter.set('#task');
 
         // Arrange
@@ -49,12 +49,12 @@ describe('tag presence & absence', () => {
 
         expect(filter).toMatchTaskFromLine('- [ ] #task stuff #one ');
         expect(filter).toMatchTaskFromLine('- [ ] #task stuff #one #two ');
-        expect(filter).not.toMatchTaskFromLine('- [ ] #task global filter is not a tag');
+        expect(filter).not.toMatchTaskFromLine('- [ ] #task Global Filter is not a tag');
 
         GlobalFilter.reset();
     });
 
-    it('should filter together with the global filter ("no tags")', () => {
+    it('should filter together with the Global Filter ("no tags")', () => {
         GlobalFilter.set('#task');
 
         // Arrange
@@ -66,7 +66,7 @@ describe('tag presence & absence', () => {
 
         expect(filter).not.toMatchTaskFromLine('- [ ] #task stuff #one ');
         expect(filter).not.toMatchTaskFromLine('- [ ] #task stuff #one #two ');
-        expect(filter).toMatchTaskFromLine('- [ ] #task global filter is not a tag');
+        expect(filter).toMatchTaskFromLine('- [ ] #task Global Filter is not a tag');
 
         GlobalFilter.reset();
     });
@@ -269,12 +269,12 @@ describe('tag/tags', () => {
             },
         );
 
-        it('should filter tags without globalFilter by tag presence when there is no global filter', () => {
+        it('should filter tags without globalFilter by tag presence when there is no Global Filter', () => {
             // Act, Assert
             shouldSupportFiltering(['tags include task'], defaultTasksWithTags, defaultTasksWithTags);
         });
 
-        it('should ignore the tag which is the global filter', () => {
+        it('should ignore the tag which is the Global Filter', () => {
             // Arrange
             GlobalFilter.set('#task');
             const filters: Array<string> = ['tags include task'];
@@ -400,7 +400,7 @@ describe('Sort by tags', () => {
         });
     });
 
-    it('should sort correctly by tag defaulting to first with no global filter', () => {
+    it('should sort correctly by tag defaulting to first with no Global Filter', () => {
         // Arrange
         const t1 = fromLine({ line: '- [ ] a #aaa #jjj' });
         const t2 = fromLine({ line: '- [ ] a #bbb #iii' });
@@ -423,7 +423,7 @@ describe('Sort by tags', () => {
         ).toEqual(expectedOrder);
     });
 
-    it('should sort correctly reversed by tag defaulting to first with no global filter', () => {
+    it('should sort correctly reversed by tag defaulting to first with no Global Filter', () => {
         // Arrange
         const t1 = fromLine({ line: '- [ ] a #aaa #jjj' });
         const t2 = fromLine({ line: '- [ ] a #bbb #iii' });
@@ -446,7 +446,7 @@ describe('Sort by tags', () => {
         ).toEqual(expectedOrder);
     });
 
-    it('should sort correctly by second tag with no global filter', () => {
+    it('should sort correctly by second tag with no Global Filter', () => {
         const t1 = fromLine({ line: '- [ ] a #fff #aaa' });
         const t2 = fromLine({ line: '- [ ] a #ccc #bbb' });
         const t3 = fromLine({ line: '- [ ] a #ggg #ccc' });
@@ -458,7 +458,7 @@ describe('Sort by tags', () => {
         );
     });
 
-    it('should sort correctly reversed by second tag with no global filter', () => {
+    it('should sort correctly reversed by second tag with no Global Filter', () => {
         const t1 = fromLine({ line: '- [ ] a #fff #aaa' });
         const t2 = fromLine({ line: '- [ ] a #ccc #bbb' });
         const t3 = fromLine({ line: '- [ ] a #ggg #ccc' });
@@ -470,7 +470,7 @@ describe('Sort by tags', () => {
         );
     });
 
-    it('should sort correctly by tag defaulting to first with global filter', () => {
+    it('should sort correctly by tag defaulting to first with Global Filter', () => {
         // Arrange
         GlobalFilter.set('#task');
 
@@ -502,7 +502,7 @@ describe('Sort by tags', () => {
         GlobalFilter.reset();
     });
 
-    it('should sort correctly reversed by tag defaulting to first with global filter', () => {
+    it('should sort correctly reversed by tag defaulting to first with Global Filter', () => {
         // Arrange
         GlobalFilter.set('#task');
 
@@ -534,7 +534,7 @@ describe('Sort by tags', () => {
         GlobalFilter.reset();
     });
 
-    it('should sort correctly by second tag with global filter', () => {
+    it('should sort correctly by second tag with Global Filter', () => {
         // Arrange
         GlobalFilter.set('#task');
 
@@ -561,7 +561,7 @@ describe('Sort by tags', () => {
         GlobalFilter.reset();
     });
 
-    it('should sort correctly reversed by second tag with global filter', () => {
+    it('should sort correctly reversed by second tag with Global Filter', () => {
         // Arrange
         GlobalFilter.set('#task');
 

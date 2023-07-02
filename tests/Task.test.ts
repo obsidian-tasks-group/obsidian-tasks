@@ -394,12 +394,12 @@ describe('parsing tags', () => {
     );
 });
 
-describe('task parsing VS global filter', () => {
+describe('task parsing VS Global Filter', () => {
     afterEach(() => {
         GlobalFilter.reset();
     });
 
-    it('returns null when task does not have global filter', () => {
+    it('returns null when task does not have Global Filter', () => {
         // Arrange
         GlobalFilter.set('#task');
         const line = '- [x] this is a done task 🗓 2021-09-12 ✅ 2021-06-20';
@@ -418,7 +418,7 @@ describe('task parsing VS global filter', () => {
         '- #task [ ] this is a task 🗓 2021-09-12',
         '- [#task] this is a task 🗓 2021-09-12',
         '- [ #task ] this is a task 🗓 2021-09-12',
-    ])('should not parse task with global filter outside of the description: "%s"', (line: string) => {
+    ])('should not parse task with Global Filter outside of the description: "%s"', (line: string) => {
         // Arrange
         GlobalFilter.set('#task');
 
@@ -431,7 +431,7 @@ describe('task parsing VS global filter', () => {
         expect(task).toBeNull();
     });
 
-    it('should not consider task status when searching for global filter', () => {
+    it('should not consider task status when searching for Global Filter', () => {
         // Arrange
         GlobalFilter.set('@');
 
@@ -635,9 +635,9 @@ describe('to string', () => {
         expect(task.toFileLineString()).toStrictEqual(expectedLine);
     });
 
-    it('retains the global filter', () => {
+    it('retains the Global Filter', () => {
         // Arrange
-        const line = '- [ ] This is a task with #t as a global filter and also #t/some tags';
+        const line = '- [ ] This is a task with #t as a Global Filter and also #t/some tags';
 
         updateSettings({ globalFilter: '#t' });
         // Act
@@ -646,7 +646,7 @@ describe('to string', () => {
         }) as Task;
 
         // Assert
-        const expectedLine = 'This is a task with #t as a global filter and also #t/some tags';
+        const expectedLine = 'This is a task with #t as a Global Filter and also #t/some tags';
         expect(task.toString()).toStrictEqual(expectedLine);
         resetSettings();
     });

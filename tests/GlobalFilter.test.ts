@@ -142,7 +142,7 @@ describe('Global Filter tests with Remove Global Filter Setting', () => {
     );
 });
 
-describe('check removal of the global filter', () => {
+describe('check removal of the Global Filter', () => {
     afterEach(() => {
         GlobalFilter.reset();
     });
@@ -166,18 +166,18 @@ describe('check removal of the global filter', () => {
         },
         {
             globalFilter: '🞋',
-            inputDescription: 'task with emoji 🞋 global filter',
-            expectedDescription: 'task with emoji global filter',
+            inputDescription: 'task with emoji 🞋 Global Filter',
+            expectedDescription: 'task with emoji Global Filter',
         },
         {
             globalFilter: '#t',
-            inputDescription: 'task with #t global filter in the middle',
-            expectedDescription: 'task with global filter in the middle',
+            inputDescription: 'task with #t Global Filter in the middle',
+            expectedDescription: 'task with Global Filter in the middle',
         },
         {
             globalFilter: '#t',
-            inputDescription: 'task with global filter in the end #t',
-            expectedDescription: 'task with global filter in the end',
+            inputDescription: 'task with Global Filter in the end #t',
+            expectedDescription: 'task with Global Filter in the end',
         },
         {
             globalFilter: '#t',
@@ -187,8 +187,8 @@ describe('check removal of the global filter', () => {
         },
         {
             globalFilter: '#t',
-            inputDescription: 'task with global filter in the end and some spaces  #t  ',
-            expectedDescription: 'task with global filter in the end and some spaces',
+            inputDescription: 'task with Global Filter in the end and some spaces  #t  ',
+            expectedDescription: 'task with Global Filter in the end and some spaces',
         },
         {
             globalFilter: '#complex/global/filter',
@@ -197,13 +197,13 @@ describe('check removal of the global filter', () => {
         },
         {
             globalFilter: '#task',
-            inputDescription: 'task with an extension of the global filter #task/with/extension',
-            expectedDescription: 'task with an extension of the global filter #task/with/extension',
+            inputDescription: 'task with an extension of the Global Filter #task/with/extension',
+            expectedDescription: 'task with an extension of the Global Filter #task/with/extension',
         },
         {
             globalFilter: '#t',
-            inputDescription: 'task with #t multiple global filters #t',
-            expectedDescription: 'task with multiple global filters',
+            inputDescription: 'task with #t multiple Global Filters #t',
+            expectedDescription: 'task with multiple Global Filters',
         },
         {
             globalFilter: '#t',
@@ -275,7 +275,7 @@ describe('check removal of the global filter', () => {
     );
 });
 
-describe('check removal of the global filter exhaustively', () => {
+describe('check removal of the Global Filter exhaustively', () => {
     afterEach(() => {
         GlobalFilter.reset();
     });
@@ -314,22 +314,22 @@ describe('check removal of the global filter exhaustively', () => {
         // Failed attempt at creating a failing test for when / was not escaped
         '///',
         '\\',
-    ])('should parse global filter "%s" edge cases correctly', (globalFilter) => {
+    ])('should parse Global Filter "%s" edge cases correctly', (globalFilter) => {
         // Arrange
         GlobalFilter.set(globalFilter);
 
-        // global filter removed at beginning, middle and end
+        // Global Filter removed at beginning, middle and end
         let inputDescription = `${globalFilter} 1 ${globalFilter} 2 ${globalFilter}`;
         let expectedDescription = '1 2';
         expect(GlobalFilter.removeAsWordFrom(inputDescription)).toEqual(expectedDescription);
 
-        // global filter not removed if non-empty non-tag characters before or after it
+        // Global Filter not removed if non-empty non-tag characters before or after it
         inputDescription = `${globalFilter}x 1 x${globalFilter} ${globalFilter}x 2 x${globalFilter}`;
         expectedDescription = `${globalFilter}x 1 x${globalFilter} ${globalFilter}x 2 x${globalFilter}`;
         expect(GlobalFilter.removeAsWordFrom(inputDescription)).toEqual(expectedDescription);
 
-        // global filter not removed if non-empty sub-tag characters after it.
-        // Include at least one occurrence of global filter, so we don't pass by luck.
+        // Global Filter not removed if non-empty sub-tag characters after it.
+        // Include at least one occurrence of Global Filter, so we don't pass by luck.
         inputDescription = `${globalFilter}/x 1 x${globalFilter} ${globalFilter}/x 2 ${globalFilter} ${globalFilter}/x`;
         expectedDescription = `${globalFilter}/x 1 x${globalFilter} ${globalFilter}/x 2 ${globalFilter}/x`;
         expect(GlobalFilter.removeAsWordFrom(inputDescription)).toEqual(expectedDescription);

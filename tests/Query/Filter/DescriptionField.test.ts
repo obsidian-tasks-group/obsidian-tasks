@@ -27,7 +27,7 @@ function testDescriptionFilter(filter: FilterOrErrorMessage, line: string, expec
 
 describe('description should strip signifiers, some duplicate spaces and trailing spaces', () => {
     const field = new DescriptionField();
-    it('without global filter - all tags included', () => {
+    it('without Global Filter - all tags included', () => {
         // Arrange
         const task = fromLine({
             line: '- [ ]   Initial  description  ⏫  #tag1 ✅ 2022-08-12 #tag2/sub-tag ',
@@ -41,7 +41,7 @@ describe('description should strip signifiers, some duplicate spaces and trailin
         expect(field.value(task)).toStrictEqual('Initial  description #tag1 #tag2/sub-tag');
     });
 
-    it('with tag as global filter - all tags included', () => {
+    it('with tag as Global Filter - all tags included', () => {
         // Arrange
         GlobalFilter.set('#task');
 
@@ -57,7 +57,7 @@ describe('description should strip signifiers, some duplicate spaces and trailin
         GlobalFilter.reset();
     });
 
-    it('with non-tag as global filter - all tags included', () => {
+    it('with non-tag as Global Filter - all tags included', () => {
         // Arrange
         GlobalFilter.set('global-filter');
 
@@ -75,7 +75,7 @@ describe('description should strip signifiers, some duplicate spaces and trailin
 });
 
 describe('description', () => {
-    it('ignores the global filter when filtering', () => {
+    it('ignores the Global Filter when filtering', () => {
         // Arrange
         GlobalFilter.set('#task');
         const filter = new DescriptionField().createFilterOrErrorMessage('description includes task');
@@ -83,7 +83,7 @@ describe('description', () => {
         // Act, Assert
         testDescriptionFilter(
             filter,
-            '- [ ] #task this does not include the word; only in the global filter',
+            '- [ ] #task this does not include the word; only in the Global Filter',
 
             false,
         );
@@ -93,7 +93,7 @@ describe('description', () => {
         GlobalFilter.reset();
     });
 
-    it('works without a global filter', () => {
+    it('works without a Global Filter', () => {
         // Arrange
         GlobalFilter.set('');
         const filter = new DescriptionField().createFilterOrErrorMessage('description includes task');

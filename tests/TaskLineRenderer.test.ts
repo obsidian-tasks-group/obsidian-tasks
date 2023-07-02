@@ -120,22 +120,22 @@ describe('task line rendering', () => {
 
     it('should render Global Filter when the Remove Global Filter is off', async () => {
         updateSettings({ removeGlobalFilter: false });
-        GlobalFilter.set('#global');
+        GlobalFilter.set('#todo');
 
-        const taskLine = '- [ ] This is a simple task with a #global filter';
+        const taskLine = '- [ ] This is a simple task #todo';
         const descriptionWithFilter = await getDescriptionTest(taskLine);
 
-        expect(descriptionWithFilter).toEqual('This is a simple task with a #global filter');
+        expect(descriptionWithFilter).toEqual('This is a simple task #todo');
     });
 
     it('should not render Global Filter when the Remove Global Filter is on', async () => {
         updateSettings({ removeGlobalFilter: true });
-        GlobalFilter.set('#global');
+        GlobalFilter.set('#todo');
 
-        const taskLine = '- [ ] #global/subtag-shall-stay This is a simple task with a #global filter';
+        const taskLine = '- [ ] #todo/subtag-shall-stay This is a simple task #todo';
         const descriptionWithoutFilter = await getDescriptionTest(taskLine);
 
-        expect(descriptionWithoutFilter).toEqual('#global/subtag-shall-stay This is a simple task with a filter');
+        expect(descriptionWithoutFilter).toEqual('#todo/subtag-shall-stay This is a simple task');
     });
 
     const testLayoutOptions = async (

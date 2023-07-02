@@ -87,7 +87,7 @@ describe('ToggleDone', () => {
     // Note that prior to the #1103 fix, this position was sometimes ignored.
 
     // Most of the tests are run twice. The second time, they are tested with tasks that
-    // do not match the global filter.
+    // do not match the Global Filter.
 
     it('should add hyphen and space to empty line', () => {
         testToggleLine('|', '- |');
@@ -136,7 +136,7 @@ describe('ToggleDone', () => {
 
         GlobalFilter.set('#task');
 
-        // Done date is not removed if task does not match global filter
+        // Done date is not removed if task does not match Global Filter
         testToggleLine('|- [x]  ✅ 2022-09-04', '|- [ ] ✅ 2022-09-04');
         testToggleLine('- [x]  ✅ 2022-09-04|', '- [ ] ✅ 2022-09-04|');
 
@@ -164,7 +164,7 @@ describe('ToggleDone', () => {
 
         GlobalFilter.set('#task');
 
-        // Tasks do not recur, and no done-date added, if not matching global filter
+        // Tasks do not recur, and no done-date added, if not matching Global Filter
         testToggleLine(
             '- [ ] I am a recurring task| 🔁 every day 📅 2022-09-04',
             '- [x] I am a recurring task| 🔁 every day 📅 2022-09-04',
@@ -189,7 +189,7 @@ describe('ToggleDone', () => {
         statusRegistry.add(new Status(new StatusConfiguration('P', 'Pro', 'C', false)));
         statusRegistry.add(new Status(new StatusConfiguration('C', 'Con', 'P', false)));
 
-        it('when there is no global filter', () => {
+        it('when there is no Global Filter', () => {
             const line1 = '- [P] this is a task starting at Pro';
 
             // Assert
@@ -200,7 +200,7 @@ describe('ToggleDone', () => {
             expect(line3).toStrictEqual('- [P] this is a task starting at Pro');
         });
 
-        it('when there is a global filter and task with global filter is toggled', () => {
+        it('when there is a Global Filter and task with Global Filter is toggled', () => {
             GlobalFilter.set('#task');
 
             const line1 = '- [C] #task this is a task starting at Con';
@@ -213,17 +213,17 @@ describe('ToggleDone', () => {
             expect(line3).toStrictEqual('- [C] #task this is a task starting at Con');
         });
 
-        it('when there is a global filter and task without global filter is toggled', () => {
+        it('when there is a Global Filter and task without Global Filter is toggled', () => {
             GlobalFilter.set('#task');
 
-            const line1 = '- [P] this is a task starting at Pro, not matching the global filter';
+            const line1 = '- [P] this is a task starting at Pro, not matching the Global Filter';
 
             // Assert
             const line2 = toggleLine(line1, 'x.md').text;
-            expect(line2).toStrictEqual('- [C] this is a task starting at Pro, not matching the global filter');
+            expect(line2).toStrictEqual('- [C] this is a task starting at Pro, not matching the Global Filter');
 
             const line3 = toggleLine(line2, 'x.md').text;
-            expect(line3).toStrictEqual('- [P] this is a task starting at Pro, not matching the global filter');
+            expect(line3).toStrictEqual('- [P] this is a task starting at Pro, not matching the Global Filter');
         });
     });
 

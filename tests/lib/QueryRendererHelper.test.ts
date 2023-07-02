@@ -26,13 +26,13 @@ No filters supplied. All tasks will match the query.`;
         expect(explainResults(query.source)).toEqual(expectedDisplayText);
     });
 
-    it('should explain a task with global filter active', () => {
+    it('should explain a task with Global Filter active', () => {
         GlobalFilter.set('#task');
 
         const source = '';
         const query = new Query({ source });
 
-        const expectedDisplayText = `Only tasks containing the global filter '#task'.
+        const expectedDisplayText = `Only tasks containing the Global Filter '#task'.
 
 Explanation of this Tasks code block query:
 
@@ -57,14 +57,14 @@ No filters supplied. All tasks will match the query.`;
         expect(explainResults(query.source)).toEqual(expectedDisplayText);
     });
 
-    it('should explain a task with global query and global filter active', () => {
+    it('should explain a task with global query and Global Filter active', () => {
         updateSettings({ globalQuery: 'description includes hello' });
         GlobalFilter.set('#task');
 
         const source = '';
         const query = new Query({ source });
 
-        const expectedDisplayText = `Only tasks containing the global filter '#task'.
+        const expectedDisplayText = `Only tasks containing the Global Filter '#task'.
 
 Explanation of the global query:
 
