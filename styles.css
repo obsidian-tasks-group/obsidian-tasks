@@ -83,7 +83,7 @@
     white-space: nowrap;
 }
 
-/* Hide tags, if `hide tags` instruction was used. */
+/* Hide tags that Obsidian recognises, if `hide tags` instruction was used. */
 .tasks-layout-hide-tags .task-description a.tag {
     display: none;
 }
