@@ -15,7 +15,7 @@ import { Query } from '../Query/Query';
  * Explains a query rendered by {@link QueryRenderer}
  *
  * Specifically, returns a formatted string:
- *     * Explains whether a global filter is in use
+ *     * Explains whether the Global Filter is in use
  *     * Explains whether the global query if it's in use
  *     * Explains the query described by {@link source}
  *
@@ -26,7 +26,7 @@ export function explainResults(source: string): string {
     let result = '';
 
     if (!GlobalFilter.isEmpty()) {
-        result += `Only tasks containing the global filter '${GlobalFilter.get()}'.\n\n`;
+        result += `Only tasks containing the Global Filter '${GlobalFilter.get()}'.\n\n`;
     }
 
     const globalQuery: IQuery = new Query(getGlobalQuerySource());
