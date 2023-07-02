@@ -448,7 +448,7 @@ As well as the date-related searches above, these filters search other propertie
 
 - `description (includes|does not include) <string>`
   - Matches case-insensitive (disregards capitalization).
-  - Disregards the global filter when matching.
+  - Disregards the Global Filter when matching.
 - `description (regex matches|regex does not match) /<JavaScript-style Regex>/`
   - Does regular expression match (case-sensitive by default).
   - Essential reading: [[Regular Expressions|Regular Expression Searches]].
@@ -459,7 +459,7 @@ As well as the date-related searches above, these filters search other propertie
 For precise searches, it may help to know that `description`:
 
 - first removes all each task's signifier emojis and their values,
-- then removes any global filter,
+- then removes the Global Filter,
 - then removes an trailing spaces
 - and then searches the remaining text
 
@@ -467,7 +467,7 @@ For example:
 
 | Global Filter    | Task line                                                                | Text searched by `description`   |
 | ---------------- | ------------------------------------------------------------------------ | -------------------------------- |
-| No global filter | `'- [ ] Do stuff  ⏫  #tag1 ✅ 2022-08-12 #tag2/sub-tag '`               | `'Do stuff #tag1 #tag2/sub-tag'` |
+| No Global Filter | `'- [ ] Do stuff  ⏫  #tag1 ✅ 2022-08-12 #tag2/sub-tag '`               | `'Do stuff #tag1 #tag2/sub-tag'` |
 | `#task`          | `'- [ ] #task Do stuff  ⏫  #tag1 ✅ 2022-08-12 #tag2/sub-tag '`         | `'Do stuff #tag1 #tag2/sub-tag'` |
 | `global-filter`  | `'- [ ] global-filter Do stuff  ⏫  #tag1 ✅ 2022-08-12 #tag2/sub-tag '` | `'Do stuff #tag1 #tag2/sub-tag'` |
 
@@ -537,7 +537,7 @@ Introduced in Tasks 1.6.0.
 - `tags (include|do not include) <tag>` _or_
 - `tag (includes|does not include) <tag>`
   - Matches case-insensitive (disregards capitalization).
-  - Disregards the global filter when matching.
+  - Disregards the Global Filter when matching.
   - The `#` is optional on the tag so `#home` and `home` will work to match `#home`.
   - If the `#` is given, it must be present, so searching for `#home` will match `#home` but not `#location/home`.
   - The match is partial so `tags include foo` will match `#foo/bar` and `#foo-bar`.

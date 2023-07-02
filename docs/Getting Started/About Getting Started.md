@@ -13,7 +13,7 @@ publish: true
   - Descriptive overview of setting up your tasks.
   - Also has a long list of known limitations.
 - [[Global Filter]]
-  - **Optionally** set a global filter so Tasks only matches specific checklist items.
+  - **Optionally** set the Global Filter so Tasks only matches specific checklist items.
   - See also [[Global Query]], which is much more powerful, once you know how searching works.
 - [[Settings]]
   - A convenient list of all the Tasks plugin options.

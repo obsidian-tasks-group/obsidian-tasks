@@ -12,4 +12,4 @@
 
 ## Model test
 
-- [ ] This checklist item is not a task as it doesn't include the global filter
+- [ ] This checklist item is not a task as it doesn't include the Global Filter

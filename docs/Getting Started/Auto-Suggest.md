@@ -34,7 +34,7 @@ Here is a more detailed walk through of the creation of a new task, which can be
     **Note**: the auto-suggest menu pops up only if the cursor is in a line that is recognized as a task, that is, the line contains:
 
      - a bullet with a checkbox (`- [ ]` or `* [ ]`)
-     - and the global filter (if any)
+     - and the Global Filter (if any)
 
 2. You can keep typing (to ignore the suggestions), or select one of the menu items in a variety of ways:
 
@@ -70,8 +70,8 @@ The auto-suggest menu works in both Source mode and Live Preview.
 
 It triggers only on lines that will be recognised as tasks by the Tasks plugin:
 
-- If you use a global task filter, for example `#task`, you will need to provide `- [ ] #task` before the menu pops up.
-- If you don't use a global task filter, you will only need to provide `- [ ]` before the menu pops up.
+- If you use the Global Fiter, for example `#task`, you will need to provide `- [ ] #task` before the menu pops up.
+- If you don't use the Global Fiter, you will only need to provide `- [ ]` before the menu pops up.
 - It also recognises lists starting with asterisk (`*`) characters.
 
 The menu is smart: it will only offer valid options:
@@ -215,7 +215,7 @@ Similarly, you can type some fraction of the word `start` (of whatever length is
 Obsidian plugins such as Tasks cannot tell if you have auto-suggest features from other plugins enabled.
 Therefore it is user responsibility to manage conflicts between auto-suggest features.
 
-The Tasks auto-suggest will only appear on lines that start `- [ ]` and contain the global filter (if one is set).
+The Tasks auto-suggest will only appear on lines that start `- [ ]` and contain the Global Filter (if one is set).
 If you want to use auto-suggest features from another plugin on such lines, make sure that plugin's settings for auto-suggest
 appearance do not overlap with the keywords listed above,
 then increase the 'Minimum match length for auto-suggest' value in the Tasks settings to more characters than used to activate the other plugin's auto-suggest,

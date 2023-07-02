@@ -43,7 +43,7 @@ This setting takes immediate effect, and does not require restarting of Obsidian
 
 This is the text describing your task.
 
-If you have a [[Global Filter|global filter]] enabled, the dialog takes care of adding it automatically.
+If you have the [[Global Filter]] enabled, the dialog takes care of adding it automatically.
 
 The description box can be enlarged by dragging its corner. Multi-line text can be pasted in, or dragged-and-dropped in, and Tasks will remove the end-of-line characters automatically.
 

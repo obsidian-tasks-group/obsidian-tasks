@@ -7,7 +7,7 @@
 - Tests that test low-level implementation details are hard to maintain over time. Instead, test user-visible features.
 - Try to think of the purpose of the code that has missing tests.
   - For example, in `taskFromLine()` in [src/Commands/CreateOrEdit.ts](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/src/Commands/CreateOrEdit.ts) the comments are quite useful in terms of showing the different scenarios being considered. Something like:
-        _already a task line with a global filter, already a task line missing the global filter, already a task line and there is no global filter, already a bullet item, not in a bullet item_
+        _already a task line with a Global Filter, already a task line missing the Global Filter, already a task line and there is no Global Filter, already a bullet item, not in a bullet item_
   - These then would be good tests to write: specifically, tests to check that each of those scenarios does actually behave as expected.
   - And if the implementation changed in future, those tests would be extremely useful to the maintainer at the time.
   - And if a new behaviour was added in future, it would be obvious how to add a new test for it.
