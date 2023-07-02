@@ -49,5 +49,8 @@ export function explainResults(source: string): string {
  * @returns {Query} The query to execute
  */
 export function getQueryForQueryRenderer(source: string): Query {
-    return new Query(getGlobalQuerySource()).append(new Query({ source }));
+    const globalQuery = new Query(getGlobalQuerySource());
+    const tasksBlockQuery = new Query({ source });
+
+    return globalQuery.append(tasksBlockQuery);
 }
