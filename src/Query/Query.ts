@@ -21,6 +21,7 @@ export class Query implements IQuery {
     private _error: string | undefined = undefined;
     private _sorting: Sorter[] = [];
     private _grouping: Grouper[] = [];
+    private _ignoreGlobalQuery: boolean = false;
 
     private readonly hideOptionsRegexp =
         /^(hide|show) (task count|backlink|priority|created date|start date|scheduled date|done date|due date|recurrence rule|edit button|urgency|tags)/;
@@ -48,6 +49,7 @@ export class Query implements IQuery {
                         this._layoutOptions.explainQuery = true;
                         break;
                     case this.ignoreGlobalQueryRegexp.test(line):
+                        this._ignoreGlobalQuery = true;
                         break;
                     case this.limitRegexp.test(line):
                         this.parseLimit({ line });
@@ -178,6 +180,10 @@ export class Query implements IQuery {
     private setError(message: string, line: string) {
         this._error = `${message}
 Problem line: "${line}"`;
+    }
+
+    public get ignoreGlobalQuery(): boolean {
+        return this._ignoreGlobalQuery;
     }
 
     public applyQueryToTasks(tasks: Task[]): QueryResult {
