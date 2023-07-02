@@ -56,5 +56,9 @@ export function getQueryForQueryRenderer(source: string): Query {
     const globalQuery = new Query(getGlobalQuerySource());
     const tasksBlockQuery = new Query({ source });
 
+    if (tasksBlockQuery.ignoreGlobalQuery) {
+        return tasksBlockQuery;
+    }
+
     return globalQuery.append(tasksBlockQuery);
 }

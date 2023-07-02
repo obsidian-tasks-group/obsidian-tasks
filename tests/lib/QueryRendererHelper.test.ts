@@ -114,7 +114,7 @@ describe('query used for QueryRenderer', () => {
         const globalQuerySource = 'description includes hello';
         updateSettings({ globalQuery: globalQuerySource });
         expect(getQueryForQueryRenderer(`${querySource}\n${ignoreGlobalQuery}`).source).toEqual(
-            `${globalQuerySource}\n${querySource}\n${ignoreGlobalQuery}`,
+            `${querySource}\n${ignoreGlobalQuery}`,
         );
     });
 });
