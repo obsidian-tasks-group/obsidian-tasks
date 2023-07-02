@@ -67,7 +67,6 @@ function getOtherLayoutComponents(parentElement: HTMLElement): string[] {
 describe('task line rendering', () => {
     afterEach(() => {
         resetSettings();
-        GlobalFilter.reset();
     });
 
     it('creates the correct span structure for a basic task', async () => {
