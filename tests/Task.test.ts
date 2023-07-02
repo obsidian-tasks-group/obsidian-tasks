@@ -638,8 +638,8 @@ describe('to string', () => {
     it('retains the Global Filter', () => {
         // Arrange
         const line = '- [ ] This is a task with #t as a Global Filter and also #t/some tags';
+        GlobalFilter.set('#t');
 
-        updateSettings({ globalFilter: '#t' });
         // Act
         const task: Task = fromLine({
             line,
