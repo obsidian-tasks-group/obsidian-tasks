@@ -24,6 +24,13 @@ The following elements exist:
 - `tags`
 - `task count`
 
+> [!Info]
+> Only tags recognised by Obsidian are hidden with `hide tags`.
+>
+> Tasks is a bit more relaxed in recognising tags than Obsidian. For example,  `#123` is treated as a tag by Tasks, and so is included in Tasks' searches, sorting and grouping code.
+>
+> However, `#123` is [not recognised a valid Obsidian tag](https://help.obsidian.md/Editing+and+formatting/Tags#Tag+format) and so not hidden.
+
 > [!released]
 `urgency` was introduced in Tasks 1.14.0.<br>
 `created date` was introduced in Tasks 2.0.0.<br>
