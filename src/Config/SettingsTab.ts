@@ -88,9 +88,9 @@ export class SettingsTab extends PluginSettingTab {
             .setDesc(
                 SettingsTab.createFragmentWithHTML(
                     '<p><b>Recommended: Leave empty if you want all checklist items in your vault to be tasks managed by this plugin.</b></p>' +
-                        '<p>Use a global filter if you want Tasks to only act on a subset of your "<code>- [ ]</code>" checklist items, so that ' +
+                        '<p>Use the Global Filter if you want Tasks to only act on a subset of your "<code>- [ ]</code>" checklist items, so that ' +
                         'a checklist item must include the specified string in its description in order to be considered a task.<p>' +
-                        '<p>For example, if you set the global filter to <code>#task</code>, the Tasks plugin will only handle checklist items tagged with <code>#task</code>.</br>' +
+                        '<p>For example, if you set the Global Filter to <code>#task</code>, the Tasks plugin will only handle checklist items tagged with <code>#task</code>.</br>' +
                         'Other checklist items will remain normal checklist items and not appear in queries or get a done date set.</p>' +
                         '<p>See the <a href="https://publish.obsidian.md/tasks/Getting+Started/Global+Filter">documentation</a>.</p>',
                 ),
@@ -108,9 +108,9 @@ export class SettingsTab extends PluginSettingTab {
             });
 
         new Setting(containerEl)
-            .setName('Remove global filter from description')
+            .setName('Remove the Global Filter from description')
             .setDesc(
-                'Enabling this removes the string that you set as global filter from the task description when displaying a task.',
+                'Enabling this removes the string that you set as the Global Filter from the task description when displaying a task.',
             )
             .addToggle((toggle) => {
                 const settings = getSettings();
