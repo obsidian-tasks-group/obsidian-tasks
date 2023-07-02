@@ -31,11 +31,6 @@ The following elements exist:
 All of these elements except `urgency` are shown by default, so you will use the command `hide`
 if you do not want to show any of them, or the command `show` to show the urgency score.
 
-> [!warning]
-> Hiding tags with the `hide tags` instruction breaks any CSS rules that use tags in tasks, such as the [[Styling#Highlight for a Specific Tag]] examples.
->
-> We are tracking this in [issue #2083](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2083).
-
 > [!released]
 The `show` commands were introduced in Tasks 1.14.0.<br>
 `hide tags` was introduced in Tasks X.Y.Z.
