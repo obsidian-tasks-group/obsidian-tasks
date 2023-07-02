@@ -317,8 +317,6 @@ The following rule adds a green glow around `#task/atHome` tags inside the descr
 
 <!-- snippet: resources/sample_vaults/Tasks-Demo/.obsidian/snippets/tasks-plugin-highlight-specific-tag-green-glow.css -->
 ```css
-/* Note: This will do nothing in any Task query blocks that use 'hide tags'.    */
-/*       See https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2083 */
 a.tag[data-tag-name="#task/atHome"] {
     box-shadow: 0 0 5px green;
 }
@@ -333,8 +331,6 @@ The following rule adds a rounded red background to the description of a task if
 
 <!-- snippet: resources/sample_vaults/Tasks-Demo/.obsidian/snippets/tasks-plugin-highlight-specific-tag-round-red-description.css -->
 ```css
-/* Note: This will not work in any Task query blocks that use 'hide tags'.      */
-/*       See https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2083 */
 .task-description span:has(.tag[data-tag-name="#task/strategic"]) {
     background: #ffbfcc;
     border-radius: 10px;
@@ -346,11 +342,6 @@ The following rule adds a rounded red background to the description of a task if
 For example:
 
 ![Example of tasks-plugin-highlight-specific-tag-round-red-description.css snippet](../../images/tasks-plugin-highlight-specific-tag-round-red-description-snippet.png)
-
-> [!warning]
-> The above snippets require the tag to be displayed. Using the `hide tags` instruction prevents these tag-based snippets from working.
->
-> We are tracking this in [issue #2083](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2083).
 
 ### Circle Checkboxes
 

@@ -24,21 +24,23 @@ The following elements exist:
 - `tags`
 - `task count`
 
+> [!Info] About `hide tags`
+>
+> 1. Only tags recognised by Obsidian are hidden with `hide tags`.
+>     - Tasks is a bit more relaxed in recognising tags than Obsidian. For example,  `#123` is treated as a tag by Tasks, and so is included in Tasks' searches, sorting and grouping code.
+>     - However, `#123` is [not recognised a valid Obsidian tag](https://help.obsidian.md/Editing+and+formatting/Tags#Tag+format) and so not hidden.
+> 2. It is not possible to hide or show individual tags. We are tracking this in [discussion #848](https://github.com/obsidian-tasks-group/obsidian-tasks/discussions/848).
+
 > [!released]
 `urgency` was introduced in Tasks 1.14.0.<br>
-`created date` was introduced in Tasks 2.0.0.
+`created date` was introduced in Tasks 2.0.0.<br>
+`tags` was introduced in Tasks X.Y.Z.
 
 All of these elements except `urgency` are shown by default, so you will use the command `hide`
 if you do not want to show any of them, or the command `show` to show the urgency score.
 
-> [!warning]
-> Hiding tags with the `hide tags` instruction breaks any CSS rules that use tags in tasks, such as the [[Styling#Highlight for a Specific Tag]] examples.
->
-> We are tracking this in [issue #2083](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2083).
-
 > [!released]
-The `show` commands were introduced in Tasks 1.14.0.<br>
-`hide tags` was introduced in Tasks X.Y.Z.
+The `show` commands were introduced in Tasks 1.14.0.
 
 Example:
 
