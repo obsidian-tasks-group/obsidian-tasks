@@ -76,6 +76,23 @@ No filters supplied. All tasks will match the query.`;
 
         expect(explainResults(query.source)).toEqual(expectedDisplayText);
     });
+
+    it('should explain a task with global query set but ignored without the global query', () => {
+        updateSettings({ globalQuery: 'description includes hello' });
+
+        const source = 'ignore global query';
+        const query = new Query({ source });
+
+        const expectedDisplayText = `Explanation of the global query:
+
+description includes hello
+
+Explanation of this Tasks code block query:
+
+No filters supplied. All tasks will match the query.`;
+
+        expect(explainResults(query.source)).toEqual(expectedDisplayText);
+    });
 });
 
 /**
