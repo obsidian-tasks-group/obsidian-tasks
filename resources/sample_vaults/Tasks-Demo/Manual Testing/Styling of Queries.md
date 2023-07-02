@@ -45,19 +45,27 @@ hide urgency
 hide edit button
 ```
 
-- [ ] **6. Test the colouring by tag presence** - this should **show** the description in red, and **show** the tag `#todo/strategic`
+- [ ] **6. Test the colouring by tag presence** - this should:
+  - **show** the task's tag `#todo/strategic`:
+  - **show** the description in red
+  - **show** the tag in the group heading
 
 ```tasks
 path includes Styling of Queries
 description includes tag
+group by tags
 hide backlink
 ```
 
-- [ ] **7. Test the colouring by tag presence when tags hidden** - this should **show** the description in red, and **hide** the tag `#todo/strategic`
+- [ ] **7. Test the colouring by tag presence when tags hidden** - this should:
+  - **hide** the task's tag `#todo/strategic`
+  - **still show** the description in red
+  - **still show** the tag in the group heading
 
 ```tasks
 path includes Styling of Queries
 description includes tag
+group by tags
 hide tags
 hide backlink
 ```
