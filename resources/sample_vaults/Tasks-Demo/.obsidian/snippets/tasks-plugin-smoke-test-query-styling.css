@@ -11,3 +11,9 @@
 ul.contains-task-list.tasks-layout-hide-priority.tasks-layout-hide-backlinks.tasks-layout-hide-urgency.tasks-layout-hide-edit-button {
     color: red;
 }
+
+.task-description span:has(.tag[data-tag-name="#todo/strategic"]) {
+    background: #ffbfcc;
+    border-radius: 10px;
+    padding: 2px 8px;
+}

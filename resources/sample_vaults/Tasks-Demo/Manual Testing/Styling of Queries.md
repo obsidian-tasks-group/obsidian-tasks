@@ -14,6 +14,7 @@ To test styling of queries, follow these steps, viewing this file either in **Re
 
 ```tasks
 path includes Styling of Queries
+description includes priority
 group by priority
 ```
 
@@ -21,6 +22,7 @@ group by priority
 
 ```tasks
 path includes Styling of Queries
+description includes priority
 group by due
 ```
 
@@ -28,6 +30,7 @@ group by due
 
 ```tasks
 path includes Styling of Queries
+description includes priority
 short mode
 ```
 
@@ -35,15 +38,34 @@ short mode
 
 ```tasks
 path includes Styling of Queries
+description includes priority
 hide priority
 hide backlinks
 hide urgency
 hide edit button
 ```
 
-- [ ] 6. Open the Obsidian settings of the Demo vault and under Appearance | CSS Snippets, turn **off** `tasks-plugin-smoke-test-query-styling`.
+- [ ] **6. Test the colouring by tag presence** - this should **show** the description in red, and **show** the tag `#todo/strategic`
+
+```tasks
+path includes Styling of Queries
+description includes tag
+hide backlink
+```
+
+- [ ] **7. Test the colouring by tag presence when tags hidden** - this should **show** the description in red, and **hide** the tag `#todo/strategic`
+
+```tasks
+path includes Styling of Queries
+description includes tag
+hide tags
+hide backlink
+```
+
+- [ ] **8. Open the Obsidian settings** of the Demo vault and under Appearance | CSS Snippets, turn **off** `tasks-plugin-smoke-test-query-styling`.
 
 ## Tasks for Reference
 
 - [ ] #task Task with high priority ⏫
 - [ ] #task Task with low priority 🔽
+- [ ] #task I have a tag to make my description red #todo/strategic
