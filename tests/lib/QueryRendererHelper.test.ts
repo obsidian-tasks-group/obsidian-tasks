@@ -107,4 +107,14 @@ describe('query used for QueryRenderer', () => {
         updateSettings({ globalQuery: globalQuerySource });
         expect(getQueryForQueryRenderer(querySource).source).toEqual(`${globalQuerySource}\n${querySource}`);
     });
+
+    it('should ignore the global query if "ignore global query" is set', () => {
+        const querySource = 'description includes world';
+        const ignoreGlobalQuery = 'ignore global query';
+        const globalQuerySource = 'description includes hello';
+        updateSettings({ globalQuery: globalQuerySource });
+        expect(getQueryForQueryRenderer(`${querySource}\n${ignoreGlobalQuery}`).source).toEqual(
+            `${globalQuerySource}\n${querySource}\n${ignoreGlobalQuery}`,
+        );
+    });
 });
