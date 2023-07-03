@@ -280,7 +280,19 @@ describe('custom grouping by', () => {
                     'Highlight the word "short" in any group descriptions',
                 ],
             ],
-            SampleTasks.withAllRepresentativeDescriptions(),
+            SampleTasks.withAllRepresentativeDescriptions().concat(SampleTasks.withRepresentativeTags()),
+        ],
+
+        [
+            'task.descriptionWithoutTags',
+            [
+                [
+                    'group by function task.descriptionWithoutTags',
+                    'Like `group by description`, but it removes any tags from the group headings.',
+                    'This might be useful for finding completed recurrences of the same task, even if the tags differ in some recurrences',
+                ],
+            ],
+            SampleTasks.withAllRepresentativeDescriptions().concat(SampleTasks.withRepresentativeTags()),
         ],
 
         // [
