@@ -314,7 +314,7 @@ As well as the date-related groups above, groups can be created from properties 
 
 ### Description
 
-There is no built-in instruction to group by desciption.
+There is no built-in instruction to group by description.
 
 Since Tasks 4.0.0, **[[Custom Grouping|custom grouping]] by description** is now possible.
 
@@ -329,6 +329,20 @@ Since Tasks 4.0.0, **[[Custom Grouping|custom grouping]] by description** is now
   - Truncate descriptions to at most their first 25 characters, and group by that string.
 - ```group by function task.description.replace('short', '==short==')```
   - Highlight the word "short" in any group descriptions.
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+
+### Description without tags
+
+Since Tasks X.Y.Z, it is possible to remove tags from the descriptions in custom groups, for use in **[[Custom Grouping|custom grouping]]**.
+
+The value `task.descriptionWithoutTags` returns a copy of the description with all the tags removed, so that you can group together any tasks whose descriptions differ only by their tags.
+
+<!-- placeholder to force blank line before included text --> <!-- include: TaskPropertyExamples.test.custom_grouping_by_task.descriptionWithoutTags_docs.approved.md -->
+
+- ```group by function task.descriptionWithoutTags```
+  - Like `group by description`, but it removes any tags from the group headings.
+  - This might be useful for finding completed recurrences of the same task, even if the tags differ in some recurrences.
 
 <!-- placeholder to force blank line after included text --> <!-- endInclude -->
 

@@ -67,6 +67,7 @@ describe('task', () => {
     it('other fields', () => {
         verifyFieldDataForReferenceDocs([
             'task.description',
+            'task.descriptionWithoutTags',
             'task.priorityNumber',
             'task.priorityName',
             'task.urgency',
