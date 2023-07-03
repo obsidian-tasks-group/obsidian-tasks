@@ -7,6 +7,14 @@ group by description.
 This might be useful for finding completed recurrences of the same task
 =>
 long description Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce quam ipsum, consectetur ut dolor nec, fringilla lobortis mi. Vestibulum gravida tincidunt urna nec ornare. Cras sit amet sagittis sapien, vitae mattis velit. Vestibulum sem tortor, blandit at ultrices eget, ultrices eget odio. Donec efficitur purus massa, vel molestie turpis tincidunt id. 
+my description
+my description #context/home
+my description #context/work
+my description #multiple-tags1 #multiple-tags2
+my description #project/project1
+my description #tag
+my description #tag/subtag
+my description #tag/subtag/sub-sub-tag
 short description
 ====================================================================================
 
@@ -15,6 +23,14 @@ group by function task.description.toUpperCase()
 Convert the description to capitals
 =>
 LONG DESCRIPTION LOREM IPSUM DOLOR SIT AMET, CONSECTETUR ADIPISCING ELIT. FUSCE QUAM IPSUM, CONSECTETUR UT DOLOR NEC, FRINGILLA LOBORTIS MI. VESTIBULUM GRAVIDA TINCIDUNT URNA NEC ORNARE. CRAS SIT AMET SAGITTIS SAPIEN, VITAE MATTIS VELIT. VESTIBULUM SEM TORTOR, BLANDIT AT ULTRICES EGET, ULTRICES EGET ODIO. DONEC EFFICITUR PURUS MASSA, VEL MOLESTIE TURPIS TINCIDUNT ID. 
+MY DESCRIPTION
+MY DESCRIPTION #CONTEXT/HOME
+MY DESCRIPTION #CONTEXT/WORK
+MY DESCRIPTION #MULTIPLE-TAGS1 #MULTIPLE-TAGS2
+MY DESCRIPTION #PROJECT/PROJECT1
+MY DESCRIPTION #TAG
+MY DESCRIPTION #TAG/SUBTAG
+MY DESCRIPTION #TAG/SUBTAG/SUB-SUB-TAG
 SHORT DESCRIPTION
 ====================================================================================
 
@@ -23,6 +39,13 @@ group by function task.description.slice(0, 25)
 Truncate descriptions to at most their first 25 characters, and group by that string
 =>
 long description Lorem ip
+my description
+my description #context/h
+my description #context/w
+my description #multiple-
+my description #project/p
+my description #tag
+my description #tag/subta
 short description
 ====================================================================================
 
@@ -32,5 +55,13 @@ Highlight the word "short" in any group descriptions
 =>
 ==short== description
 long description Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce quam ipsum, consectetur ut dolor nec, fringilla lobortis mi. Vestibulum gravida tincidunt urna nec ornare. Cras sit amet sagittis sapien, vitae mattis velit. Vestibulum sem tortor, blandit at ultrices eget, ultrices eget odio. Donec efficitur purus massa, vel molestie turpis tincidunt id. 
+my description
+my description #context/home
+my description #context/work
+my description #multiple-tags1 #multiple-tags2
+my description #project/project1
+my description #tag
+my description #tag/subtag
+my description #tag/subtag/sub-sub-tag
 ====================================================================================
 

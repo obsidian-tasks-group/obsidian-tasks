@@ -479,6 +479,16 @@ export class Task {
     }
 
     /**
+     * Return a copy of the description, with any tags removed.
+     *
+     * Note that this removes tags recognised by Tasks (including removing #123, for example),
+     * as opposed to tags recognised by Obsidian, which does not treat numbers-only as valid tags.
+     */
+    public get descriptionWithoutTags(): string {
+        return this.description.replace(TaskRegularExpressions.hashTags, '').trim();
+    }
+
+    /**
      * Return the name of the Task's priority.
      *
      * Note that the default priority is called 'Normal', not 'None'.
