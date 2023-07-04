@@ -87,10 +87,10 @@ filter by function task.tags.length > 1
 #         So it does not find the task due today (which has a time of `00:00`)
 filter by function task.due.moment?.isSameOrAfter(moment()) || false
 
-# This finds Tasks whose due date is today's date
+# This finds Tasks whose due date is today's date or later
 filter by function task.due.moment?.isSameOrAfter(moment(), 'day') || false
 
-# This finds Tasks whose due MONTH is today's MONTH
+# This finds Tasks whose due MONTH is today's MONTH or later
 filter by function task.due.moment?.isSameOrAfter(moment(), 'month') || false
 
 # Can I document use of chrono in these searches???
