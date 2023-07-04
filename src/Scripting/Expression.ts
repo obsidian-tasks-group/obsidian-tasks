@@ -16,6 +16,23 @@ function constructArguments(task: Task) {
 }
 
 /**
+ * Parse a JavaScript expression, and return either a Function or an error message in a string.
+ * @param paramsArgs
+ * @param arg
+ */
+function parseExpression(paramsArgs: [string, any][], arg: string): Function | string {
+    const params = paramsArgs.map(([p]) => p);
+    const expression: '' | null | Function = arg && new Function(...params, `return ${arg}`);
+
+    if (!(expression instanceof Function)) {
+        // I have not managed to write a test that reaches here:
+        return 'Error parsing group function';
+    }
+
+    return expression;
+}
+
+/**
  * Evaluate an arbitrary JavaScript expression on a Task object
  * @param task - a {@link Task} object
  * @param arg - a string, such as `task.path.startsWith("journal/") ? "journal/" : task.path`
@@ -29,12 +46,10 @@ function constructArguments(task: Task) {
 export function parseAndEvaluateExpression(task: Task, arg: string) {
     const paramsArgs = constructArguments(task);
 
-    const params = paramsArgs.map(([p]) => p);
-    const expression: '' | null | Function = arg && new Function(...params, `return ${arg}`);
-
-    if (!(expression instanceof Function)) {
-        // I have not managed to write a test that reaches here:
-        return 'Error parsing group function';
+    const expression = parseExpression(paramsArgs, arg);
+    if (typeof expression === 'string') {
+        // It's an error message
+        return expression;
     }
 
     const args = paramsArgs.map(([_, a]) => a);
