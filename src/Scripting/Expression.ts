@@ -1,4 +1,5 @@
 import type { Task } from '../Task';
+import { errorMessageForException } from '../lib/ExceptionTools';
 
 /**
  * Evaluate an arbitrary JavaScript expression on a Task object
@@ -30,11 +31,6 @@ export function evaluateExpression(task: Task, arg: string | null) {
     try {
         return expression(...args);
     } catch (e) {
-        const errorMessage = `Error: Failed calculating expression "${arg}". The error message was: `;
-        if (e instanceof Error) {
-            return errorMessage + e.message;
-        } else {
-            return errorMessage + 'Unknown error';
-        }
+        return errorMessageForException(`Failed calculating expression "${arg}"`, e);
     }
 }
