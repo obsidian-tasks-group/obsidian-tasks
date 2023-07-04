@@ -7,7 +7,7 @@ import { errorMessageForException } from '../lib/ExceptionTools';
  *      An argument is a value passed during function invocation.
  * @param task
  */
-function constructArguments(task: Task) {
+export function constructArguments(task: Task) {
     const paramsArgs: [string, any][] = [
         // TODO Later, pass in the Query too, for access to file properties
         ['task', task],
@@ -35,6 +35,24 @@ export function parseExpression(paramsArgs: [string, any][], arg: string): Funct
 }
 
 /**
+ * Evaluate an arbitrary JavaScript expression, returning an error message if the calculation failed.
+ * @param expression
+ * @param paramsArgs
+ * @param arg
+ *
+ * @see parseExpression
+ */
+export function evaluateExpressionOrCatch(expression: Function, paramsArgs: [string, any][], arg: string) {
+    const args = paramsArgs.map(([_, a]) => a);
+
+    try {
+        return expression(...args);
+    } catch (e) {
+        return errorMessageForException(`Failed calculating expression "${arg}"`, e);
+    }
+}
+
+/**
  * Evaluate an arbitrary JavaScript expression on a Task object
  * @param task - a {@link Task} object
  * @param arg - a string, such as `task.path.startsWith("journal/") ? "journal/" : task.path`
@@ -54,11 +72,5 @@ export function parseAndEvaluateExpression(task: Task, arg: string) {
         return expression;
     }
 
-    const args = paramsArgs.map(([_, a]) => a);
-
-    try {
-        return expression(...args);
-    } catch (e) {
-        return errorMessageForException(`Failed calculating expression "${arg}"`, e);
-    }
+    return evaluateExpressionOrCatch(expression, paramsArgs, arg);
 }

@@ -3,7 +3,12 @@
  */
 import moment from 'moment';
 
-import { parseAndEvaluateExpression, parseExpression } from '../../src/Scripting/Expression';
+import {
+    constructArguments,
+    evaluateExpressionOrCatch,
+    parseAndEvaluateExpression,
+    parseExpression,
+} from '../../src/Scripting/Expression';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { verifyMarkdownForDocs } from '../TestingTools/VerifyMarkdownTable';
 import { formatToRepresentType } from './ScriptingTestHelpers';
@@ -31,6 +36,24 @@ describe('Expression', () => {
             expect(parseExpression([], 'x())')).toEqual(
                 'Error: Failed parsing expression "x())". The error message was: "SyntaxError: Unexpected token \')\'"',
             );
+        });
+    });
+
+    describe('detect errors at evaluation time', () => {
+        const line = 'nonExistentVariable';
+        const paramsArgs = constructArguments(task);
+        const expression = parseExpression(paramsArgs, line);
+        it('evaluateExpressionAndCatch() should report meaningful error message for invalid variable', () => {
+            expect(expression).not.toBeUndefined();
+
+            const result = evaluateExpressionOrCatch(expression as Function, paramsArgs, line);
+            expect(result).toEqual(
+                'Error: Failed calculating expression "nonExistentVariable". The error message was: "ReferenceError: nonExistentVariable is not defined"',
+            );
+        });
+
+        it('should report unknown for undefined task property', () => {
+            expect(parseAndEvaluateExpression(task, 'task.iAmNotAKnownTaskProperty')).toEqual(undefined);
         });
     });
 
