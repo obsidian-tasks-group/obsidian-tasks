@@ -24,13 +24,11 @@ export function parseExpression(paramsArgs: [string, any][], arg: string): Funct
     const params = paramsArgs.map(([p]) => p);
     try {
         const expression: '' | null | Function = arg && new Function(...params, `return ${arg}`);
-
-        if (!(expression instanceof Function)) {
-            // I have not managed to write a test that reaches here:
-            return 'Error parsing group function';
+        if (expression instanceof Function) {
+            return expression;
         }
-
-        return expression;
+        // I have not managed to write a test that reaches here:
+        return 'Error parsing group function';
     } catch (e) {
         return errorMessageForException(`Failed parsing expression "${arg}"`, e);
     }
