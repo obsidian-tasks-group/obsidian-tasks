@@ -93,7 +93,7 @@ describe('FunctionField - grouping - error-handling', () => {
         const line = 'group by function hello';
         const grouper = createGrouper(line);
         toGroupTaskWithPath(grouper, 'journal/a/b.md', [
-            'Error: Failed calculating expression "hello". The error message was: hello is not defined',
+            'Error: Failed calculating expression "hello". The error message was: "ReferenceError: hello is not defined"',
         ]);
     });
 

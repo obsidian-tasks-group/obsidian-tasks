@@ -7,9 +7,9 @@ export function errorMessageForException(whatWasHappening: string, exception: an
     const errorMessage = `Error: ${whatWasHappening}. The error message was:`;
     let detail: string = '';
     if (exception instanceof Error) {
-        detail += exception.message;
+        detail += exception;
     } else {
         detail += 'Unknown error';
     }
-    return `${errorMessage} ${detail}`;
+    return `${errorMessage} "${detail}"`;
 }

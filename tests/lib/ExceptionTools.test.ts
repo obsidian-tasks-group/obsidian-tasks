@@ -20,7 +20,8 @@ describe('errorMessageForException()', () => {
         }
 
         // Assert
-        expect(messageReceived).toEqual('Error: testing. The error message was: that was out of range');
+        expect(messageReceived).toEqual('Error: testing. The error message was: "RangeError: that was out of range"');
+        expect(messageReceived.includes('RangeError')).toEqual(true);
         expect(messageReceived.includes(exceptionText)).toEqual(true);
     });
 
@@ -30,6 +31,6 @@ describe('errorMessageForException()', () => {
         const messageReceived = errorMessageForException('testing', nonExceptionValue);
 
         // Assert
-        expect(messageReceived).toEqual('Error: testing. The error message was: Unknown error');
+        expect(messageReceived).toEqual('Error: testing. The error message was: "Unknown error"');
     });
 });
