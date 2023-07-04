@@ -20,16 +20,20 @@ function constructArguments(task: Task) {
  * @param paramsArgs
  * @param arg
  */
-function parseExpression(paramsArgs: [string, any][], arg: string): Function | string {
+export function parseExpression(paramsArgs: [string, any][], arg: string): Function | string {
     const params = paramsArgs.map(([p]) => p);
-    const expression: '' | null | Function = arg && new Function(...params, `return ${arg}`);
+    try {
+        const expression: '' | null | Function = arg && new Function(...params, `return ${arg}`);
 
-    if (!(expression instanceof Function)) {
-        // I have not managed to write a test that reaches here:
-        return 'Error parsing group function';
+        if (!(expression instanceof Function)) {
+            // I have not managed to write a test that reaches here:
+            return 'Error parsing group function';
+        }
+
+        return expression;
+    } catch (e) {
+        return errorMessageForException(`Failed parsing expression "${arg}"`, e);
     }
-
-    return expression;
 }
 
 /**
