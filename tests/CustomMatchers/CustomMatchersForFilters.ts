@@ -67,6 +67,7 @@ declare global {
             toHaveExplanation(expectedExplanation: string): R;
             toMatchTask(task: Task): R;
             toMatchTaskFromLine(line: string): R;
+            toMatchTaskWithDescription(description: string): R;
             toMatchTaskWithHeading(heading: string | null): R;
             toMatchTaskWithPath(path: string): R;
             toMatchTaskWithStatus(statusConfiguration: StatusConfiguration): R;
@@ -77,6 +78,7 @@ declare global {
             toHaveExplanation(expectedExplanation: string): any;
             toMatchTask(task: Task): any;
             toMatchTaskFromLine(line: string): any;
+            toMatchTaskWithDescription(description: string): any;
             toMatchTaskWithHeading(heading: string | null): any;
             toMatchTaskWithPath(path: string): any;
             toMatchTaskWithStatus(statusConfiguration: StatusConfiguration): any;
@@ -87,6 +89,7 @@ declare global {
             toHaveExplanation(expectedExplanation: string): any;
             toMatchTask(task: Task): any;
             toMatchTaskFromLine(line: string): any;
+            toMatchTaskWithDescription(description: string): any;
             toMatchTaskWithHeading(heading: string | null): any;
             toMatchTaskWithPath(path: string): any;
             toMatchTaskWithStatus(statusConfiguration: StatusConfiguration): any;
@@ -157,6 +160,12 @@ export function toMatchTaskFromLine(filter: FilterOrErrorMessage, line: string) 
     const task = fromLine({
         line: line,
     });
+    return toMatchTask(filter, task);
+}
+
+export function toMatchTaskWithDescription(filter: FilterOrErrorMessage, description: string) {
+    const builder = new TaskBuilder();
+    const task = builder.description(description).build();
     return toMatchTask(filter, task);
 }
 
