@@ -4,6 +4,8 @@ publish: true
 
 # Filters
 
+<span class="related-pages">#feature/filters</span>
+
 ---
 
 ## Contents

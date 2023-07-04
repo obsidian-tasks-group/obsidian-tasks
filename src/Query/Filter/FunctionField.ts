@@ -2,17 +2,33 @@ import { parseAndEvaluateExpression } from '../../Scripting/Expression';
 import type { Task } from '../../Task';
 import type { GrouperFunction } from '../Grouper';
 import { Grouper } from '../Grouper';
+import { Explanation } from '../Explain/Explanation';
+import { TaskExpression } from '../../Scripting/TaskExpression';
 import { Field } from './Field';
+import { Filter, type FilterFunction } from './Filter';
 import { FilterOrErrorMessage } from './FilterOrErrorMessage';
 
 /**
- * A {@link Field} implement that accepts a JavaSscript expression to group tasks together.
+ * A {@link Field} implement that accepts a JavaScript expression to filter or group tasks.
  *
  * See also {@link parseAndEvaluateExpression}
  */
 export class FunctionField extends Field {
     createFilterOrErrorMessage(line: string): FilterOrErrorMessage {
-        return FilterOrErrorMessage.fromError(line, 'Searching by custom function not yet implemented');
+        const match = Field.getMatch(this.filterRegExp(), line);
+        if (match === null) {
+            return FilterOrErrorMessage.fromError(line, 'Unable to parse line');
+        }
+
+        const expression = match[1];
+        const taskExpression = new TaskExpression(expression);
+        if (!taskExpression.isValid()) {
+            return FilterOrErrorMessage.fromError(line, taskExpression.parseError!);
+        }
+
+        return FilterOrErrorMessage.fromFilter(
+            new Filter(line, createFilterFunctionFromLine(taskExpression), new Explanation(line)),
+        );
     }
 
     fieldName(): string {
@@ -20,7 +36,7 @@ export class FunctionField extends Field {
     }
 
     protected filterRegExp(): RegExp | null {
-        return null;
+        return new RegExp(`^filter by ${this.fieldNameSingularEscaped()} (.*)`);
     }
 
     // -----------------------------------------------------------------------------------------------------------------
@@ -56,6 +72,34 @@ export class FunctionField extends Field {
         throw Error('grouper() function not valid for FunctionField. Use createGrouperFromLine() instead.');
     }
 }
+
+// -----------------------------------------------------------------------------------------------------------------
+// Filtering
+// -----------------------------------------------------------------------------------------------------------------
+
+function createFilterFunctionFromLine(expression: TaskExpression): FilterFunction {
+    return (task: Task) => {
+        return filterByFunction(expression, task);
+    };
+}
+
+export function filterByFunction(expression: TaskExpression, task: Task): boolean {
+    // Allow exceptions to propagate to caller, since this will be called in a tight loop.
+    // In searches, it will eventually be caught by Query.applyQueryToTasks().
+    const result = expression.evaluate(task);
+
+    // We insist that 'filter by function' returns booleans,
+    // to avoid users having to understand truthy and falsey values.
+    if (typeof result === 'boolean') {
+        return result;
+    }
+
+    throw Error(`filtering function must return true or false. This returned "${result}".`);
+}
+
+// -----------------------------------------------------------------------------------------------------------------
+// Grouping
+// -----------------------------------------------------------------------------------------------------------------
 
 type GroupingArg = string;
 

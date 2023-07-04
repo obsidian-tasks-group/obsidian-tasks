@@ -17,6 +17,8 @@ We are using the word 'scripting' in a very loose sense here:
 
 ## Scripting capabilities
 
+- [[Custom Filters]] - write short JavaScript expressions to create task search filters.
+  - ==TODO== See also the many `group by function` examples added to the [[Grouping]] documentation.
 - [[Custom Grouping]] - write short JavaScript expressions to create task group names in Tasks query results.
   - See also the many `group by function` examples added to the [[Grouping]] documentation.
 
