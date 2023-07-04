@@ -5,6 +5,7 @@ import moment from 'moment';
 
 import {
     constructArguments,
+    evaluateExpression,
     evaluateExpressionOrCatch,
     parseAndEvaluateExpression,
     parseExpression,
@@ -52,7 +53,15 @@ describe('Expression', () => {
             );
         });
 
-        it('should report unknown for undefined task property', () => {
+        it('evaluateExpression() should throw exception for invalid variable', () => {
+            const t = () => {
+                evaluateExpression(expression as Function, paramsArgs);
+            };
+            expect(t).toThrow(ReferenceError);
+            expect(t).toThrowError('nonExistentVariable is not defined');
+        });
+
+        it('should report unknown for invalid task property', () => {
             expect(parseAndEvaluateExpression(task, 'task.iAmNotAKnownTaskProperty')).toEqual(undefined);
         });
     });

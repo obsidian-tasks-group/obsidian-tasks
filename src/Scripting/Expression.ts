@@ -19,6 +19,9 @@ export function constructArguments(task: Task) {
  * Parse a JavaScript expression, and return either a Function or an error message in a string.
  * @param paramsArgs
  * @param arg
+ *
+ * @see evaluateExpression
+ * @see evaluateExpressionOrCatch
  */
 export function parseExpression(paramsArgs: [string, any][], arg: string): Function | string {
     const params = paramsArgs.map(([p]) => p);
@@ -35,18 +38,30 @@ export function parseExpression(paramsArgs: [string, any][], arg: string): Funct
 }
 
 /**
+ * Evaluate an arbitrary JavaScript expression, throwing an exception if the calculation failed.
+ * @param expression
+ * @param paramsArgs
+ *
+ * @see parseExpression
+ * @see evaluateExpressionOrCatch
+ */
+export function evaluateExpression(expression: Function, paramsArgs: [string, any][]) {
+    const args = paramsArgs.map(([_, a]) => a);
+    return expression(...args);
+}
+
+/**
  * Evaluate an arbitrary JavaScript expression, returning an error message if the calculation failed.
  * @param expression
  * @param paramsArgs
  * @param arg
  *
  * @see parseExpression
+ * @see evaluateExpression
  */
 export function evaluateExpressionOrCatch(expression: Function, paramsArgs: [string, any][], arg: string) {
-    const args = paramsArgs.map(([_, a]) => a);
-
     try {
-        return expression(...args);
+        return evaluateExpression(expression, paramsArgs);
     } catch (e) {
         return errorMessageForException(`Failed calculating expression "${arg}"`, e);
     }
