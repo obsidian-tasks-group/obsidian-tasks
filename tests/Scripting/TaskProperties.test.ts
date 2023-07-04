@@ -3,7 +3,7 @@
  */
 
 import moment from 'moment';
-import { evaluateExpression } from '../../src/Scripting/Expression';
+import { parseAndEvaluateExpression } from '../../src/Scripting/Expression';
 import { Status } from '../../src/Status';
 
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
@@ -20,8 +20,8 @@ describe('task', () => {
         const task1 = TaskBuilder.createFullyPopulatedTask();
         const task2 = new TaskBuilder().description('minimal task').status(Status.makeInProgress()).build();
         for (const field of fields) {
-            const value1 = evaluateExpression(task1, field);
-            const value2 = evaluateExpression(task2, field);
+            const value1 = parseAndEvaluateExpression(task1, field);
+            const value2 = parseAndEvaluateExpression(task2, field);
             const cells = [
                 addBackticks(field),
                 addBackticks(determineExpressionType(value1)),
