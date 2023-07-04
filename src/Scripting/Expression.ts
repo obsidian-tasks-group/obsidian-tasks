@@ -12,7 +12,7 @@ import { errorMessageForException } from '../lib/ExceptionTools';
  *
  * See also {@link FunctionField} which exposes this facility to users.
  */
-export function evaluateExpression(task: Task, arg: string | null) {
+export function parseAndEvaluateExpression(task: Task, arg: string | null) {
     const paramsArgs: [string, any][] = [
         // TODO Later, pass in the Query too, for access to file properties
         ['task', task],
