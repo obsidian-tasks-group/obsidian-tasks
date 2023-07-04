@@ -169,6 +169,12 @@ class QueryRenderChild extends MarkdownRenderChild {
         }
 
         const queryResult = this.query.applyQueryToTasks(tasks);
+        if (queryResult.searchErrorMessage !== undefined) {
+            // There was an error in the search, for example due to a problem custom function.
+            this.renderErrorMessage(content, queryResult.searchErrorMessage);
+            return;
+        }
+
         await this.addAllTaskGroups(queryResult.taskGroups, content);
 
         const totalTasksCount = queryResult.totalTasksCount;

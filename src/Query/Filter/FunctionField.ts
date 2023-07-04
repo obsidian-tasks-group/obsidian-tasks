@@ -85,7 +85,7 @@ function createFilterFunctionFromLine(expression: TaskExpression): FilterFunctio
 
 export function filterByFunction(expression: TaskExpression, task: Task): boolean {
     // Allow exceptions to propagate to caller, since this will be called in a tight loop.
-    // In searches, it will eventually be caught by Query.applyQueryToTasks().
+    // In searches, it will be caught by Query.applyQueryToTasks().
     const result = expression.evaluate(task);
 
     // We insist that 'filter by function' returns booleans,

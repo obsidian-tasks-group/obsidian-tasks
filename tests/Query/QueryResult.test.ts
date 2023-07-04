@@ -16,5 +16,16 @@ describe('QueryResult', () => {
         // Assert
         expect(queryResult.totalTasksCount).toEqual(0);
         expect(queryResult.groups).toEqual(groups.groups);
+        expect(queryResult.searchErrorMessage).toBeUndefined();
+    });
+
+    it('should be able to store an error message if the search fails', () => {
+        // Arrange, Act:
+        const message = 'I did not work';
+        const result = QueryResult.fromError(message);
+
+        // Assert
+        expect(result.searchErrorMessage).toEqual(message);
+        expect(result.taskGroups.totalTasksCount()).toEqual(0);
     });
 });
