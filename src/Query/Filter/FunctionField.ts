@@ -1,4 +1,4 @@
-import { evaluateExpression } from '../../Scripting/Expression';
+import { parseAndEvaluateExpression } from '../../Scripting/Expression';
 import type { Task } from '../../Task';
 import type { GrouperFunction } from '../Grouper';
 import { Grouper } from '../Grouper';
@@ -8,7 +8,7 @@ import { FilterOrErrorMessage } from './FilterOrErrorMessage';
 /**
  * A {@link Field} implement that accepts a JavaSscript expression to group tasks together.
  *
- * See also {@link evaluateExpression}
+ * See also {@link parseAndEvaluateExpression}
  */
 export class FunctionField extends Field {
     createFilterOrErrorMessage(line: string): FilterOrErrorMessage {
@@ -67,7 +67,7 @@ function createGrouperFunctionFromLine(line: string): GrouperFunction {
 
 export function groupByFunction(task: Task, arg: GroupingArg): string[] {
     try {
-        const result = evaluateExpression(task, arg);
+        const result = parseAndEvaluateExpression(task, arg);
 
         if (Array.isArray(result)) {
             return result.map((h) => h.toString());

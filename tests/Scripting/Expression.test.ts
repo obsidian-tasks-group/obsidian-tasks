@@ -3,7 +3,7 @@
  */
 import moment from 'moment';
 
-import { evaluateExpression } from '../../src/Scripting/Expression';
+import { parseAndEvaluateExpression } from '../../src/Scripting/Expression';
 import { TaskBuilder } from '../TestingTools/TaskBuilder';
 import { verifyMarkdownForDocs } from '../TestingTools/VerifyMarkdownTable';
 import { formatToRepresentType } from './ScriptingTestHelpers';
@@ -38,7 +38,7 @@ describe('Expression', () => {
 
         let markdown = '~~~text\n';
         for (const expression of expressions) {
-            const result = evaluateExpression(task, expression);
+            const result = parseAndEvaluateExpression(task, expression);
             markdown += `${expression} => ${formatToRepresentType(result)}\n`;
         }
         markdown += '~~~\n';
