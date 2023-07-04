@@ -19,7 +19,7 @@ export function parseAndEvaluateExpression(task: Task, arg: string | null) {
     ];
 
     const params = paramsArgs.map(([p]) => p);
-    const expression = arg && new Function(...params, `return ${arg}`);
+    const expression: '' | null | Function = arg && new Function(...params, `return ${arg}`);
 
     if (!(expression instanceof Function)) {
         // I have not managed to write a test that reaches here:
