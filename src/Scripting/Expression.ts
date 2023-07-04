@@ -1,13 +1,17 @@
 import type { Task } from '../Task';
+import { QueryComponentOrError } from '../Query/QueryComponentOrError';
 import { errorMessageForException } from '../lib/ExceptionTools';
+
+export class FunctionOrError extends QueryComponentOrError<Function> {}
 
 /**
  *  From: https://www.educative.io/answers/parameter-vs-argument
  *      A parameter is a variable in a function definition. It is a placeholder and hence does not have a concrete value.
  *      An argument is a value passed during function invocation.
- * @param task
+ * @param task - during parsing, this can be null. During evaluation, it must be a Task
  */
-export function constructArguments(task: Task) {
+export function constructArguments(task: Task | null) {
+    // TODO Move this to TaskExpression
     const paramsArgs: [string, any][] = [
         // TODO Later, pass in the Query too, for access to file properties
         ['task', task],
@@ -23,17 +27,17 @@ export function constructArguments(task: Task) {
  * @see evaluateExpression
  * @see evaluateExpressionOrCatch
  */
-export function parseExpression(paramsArgs: [string, any][], arg: string): Function | string {
+export function parseExpression(paramsArgs: [string, any][], arg: string): FunctionOrError {
     const params = paramsArgs.map(([p]) => p);
     try {
         const expression: '' | null | Function = arg && new Function(...params, `return ${arg}`);
         if (expression instanceof Function) {
-            return expression;
+            return FunctionOrError.fromObject(arg, expression);
         }
         // I have not managed to write a test that reaches here:
-        return 'Error parsing group function';
+        return FunctionOrError.fromError(arg, 'Error parsing group function');
     } catch (e) {
-        return errorMessageForException(`Failed parsing expression "${arg}"`, e);
+        return FunctionOrError.fromError(arg, errorMessageForException(`Failed parsing expression "${arg}"`, e));
     }
 }
 
@@ -81,11 +85,10 @@ export function evaluateExpressionOrCatch(expression: Function, paramsArgs: [str
 export function parseAndEvaluateExpression(task: Task, arg: string) {
     const paramsArgs = constructArguments(task);
 
-    const expression = parseExpression(paramsArgs, arg);
-    if (typeof expression === 'string') {
-        // It's an error message
-        return expression;
+    const functionOrError = parseExpression(paramsArgs, arg);
+    if (functionOrError.error) {
+        return functionOrError.error;
     }
 
-    return evaluateExpressionOrCatch(expression, paramsArgs, arg);
+    return evaluateExpressionOrCatch(functionOrError.queryComponent!, paramsArgs, arg);
 }

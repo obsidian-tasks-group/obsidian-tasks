@@ -11,7 +11,7 @@ export class QueryComponentOrError<QueryComponent> {
     private _queryComponent: QueryComponent | undefined;
     private _error: string | undefined;
 
-    private constructor(instruction: string) {
+    protected constructor(instruction: string) {
         this.instruction = instruction;
     }
 
