@@ -16,11 +16,37 @@ window.moment = moment;
 // -----------------------------------------------------------------------------------------------------------------
 
 describe('FunctionField - filtering', () => {
-    it('should not parse line', () => {
-        const functionField = new FunctionField();
-        const filterOrErrorMessage = functionField.createFilterOrErrorMessage('hello world');
-        expect(filterOrErrorMessage).not.toBeValid();
-        expect(filterOrErrorMessage.error).toStrictEqual('Searching by custom function not yet implemented');
+    const functionField = new FunctionField();
+
+    it('filter by function - with valid query', () => {
+        const filter = functionField.createFilterOrErrorMessage('filter by function task.description.length > 5');
+        expect(filter).toBeValid();
+        expect(filter).toMatchTaskWithDescription('123456');
+        expect(filter).not.toMatchTaskWithDescription('12345');
+        expect(filter).not.toMatchTaskWithDescription('1234');
+    });
+
+    it('filter by function - should report syntax errors via FilterOrErrorMessage', () => {
+        const instructionWithExtraClosingParen = 'filter by function task.status.name.toUpperCase())';
+        const filter = functionField.createFilterOrErrorMessage(instructionWithExtraClosingParen);
+        expect(filter).not.toBeValid();
+        expect(filter.error).toEqual(
+            'Error: Failed parsing expression "task.status.name.toUpperCase())". The error message was: "SyntaxError: Unexpected token \')\'"',
+        );
+    });
+
+    it('filter by function - should report searching errors via exception', () => {
+        // Arrange
+        const instructionWithExtraClosingParen = 'filter by function task.wibble';
+        const filter = functionField.createFilterOrErrorMessage(instructionWithExtraClosingParen);
+
+        // Assert
+        expect(filter).toBeValid();
+        const t = () => {
+            filter.filterFunction!(new TaskBuilder().build());
+        };
+        expect(t).toThrow(Error);
+        expect(t).toThrowError('filtering function must return true or false. This returned "undefined".');
     });
 });
 
