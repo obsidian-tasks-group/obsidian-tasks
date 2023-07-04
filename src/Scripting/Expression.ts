@@ -8,9 +8,10 @@ export class FunctionOrError extends QueryComponentOrError<Function> {}
  *  From: https://www.educative.io/answers/parameter-vs-argument
  *      A parameter is a variable in a function definition. It is a placeholder and hence does not have a concrete value.
  *      An argument is a value passed during function invocation.
- * @param task
+ * @param task - during parsing, this can be null. During evaluation, it must be a Task
  */
-export function constructArguments(task: Task) {
+export function constructArguments(task: Task | null) {
+    // TODO Move this to TaskExpression
     const paramsArgs: [string, any][] = [
         // TODO Later, pass in the Query too, for access to file properties
         ['task', task],
