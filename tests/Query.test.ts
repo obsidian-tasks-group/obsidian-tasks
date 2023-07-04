@@ -1024,4 +1024,21 @@ At most 8 tasks per group (if any "group by" options are supplied).
             `);
         });
     });
+
+    describe('error handling', () => {
+        it('should catch an exception that occurs during searching', () => {
+            // Arrange
+            const input = 'filter by function wibble';
+            const query = new Query({ source: input });
+            const task = TaskBuilder.createFullyPopulatedTask();
+
+            // Act
+            const queryResult = query.applyQueryToTasks([task]);
+
+            // Assert
+            expect(queryResult.searchErrorMessage).toEqual(
+                'Error: Search failed. The error message was: "ReferenceError: wibble is not defined"',
+            );
+        });
+    });
 });
