@@ -21,20 +21,20 @@ describe('Expression', () => {
 
     describe('detect errors at parse stage', () => {
         it('should report meaningful error message for duplicate return statement', () => {
-            // parseExpression() currently adds a return statement, to save user typing it.
-            expect(parseExpression([], 'return 42')).toEqual(
+            // evaluateExpression() currently adds a return statement, to save user typing it.
+            expect(parseExpression([], 'return 42').error).toEqual(
                 'Error: Failed parsing expression "return 42". The error message was: "SyntaxError: Unexpected token \'return\'"',
             );
         });
 
         it('should report meaningful error message for parentheses too few parentheses', () => {
-            expect(parseExpression([], 'x(')).toEqual(
+            expect(parseExpression([], 'x(').error).toEqual(
                 'Error: Failed parsing expression "x(". The error message was: "SyntaxError: Unexpected token \'}\'"',
             );
         });
 
         it('should report meaningful error message for parentheses too many parentheses', () => {
-            expect(parseExpression([], 'x())')).toEqual(
+            expect(parseExpression([], 'x())').error).toEqual(
                 'Error: Failed parsing expression "x())". The error message was: "SyntaxError: Unexpected token \')\'"',
             );
         });
@@ -45,9 +45,9 @@ describe('Expression', () => {
         const paramsArgs = constructArguments(task);
         const expression = parseExpression(paramsArgs, line);
         it('evaluateExpressionAndCatch() should report meaningful error message for invalid variable', () => {
-            expect(expression).not.toBeUndefined();
+            expect(expression.error).toBeUndefined();
 
-            const result = evaluateExpressionOrCatch(expression as Function, paramsArgs, line);
+            const result = evaluateExpressionOrCatch(expression.queryComponent!, paramsArgs, line);
             expect(result).toEqual(
                 'Error: Failed calculating expression "nonExistentVariable". The error message was: "ReferenceError: nonExistentVariable is not defined"',
             );
@@ -55,7 +55,7 @@ describe('Expression', () => {
 
         it('evaluateExpression() should throw exception for invalid variable', () => {
             const t = () => {
-                evaluateExpression(expression as Function, paramsArgs);
+                evaluateExpression(expression.queryComponent!, paramsArgs);
             };
             expect(t).toThrow(ReferenceError);
             expect(t).toThrowError('nonExistentVariable is not defined');
