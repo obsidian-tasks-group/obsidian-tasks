@@ -2,6 +2,20 @@ import type { Task } from '../Task';
 import { errorMessageForException } from '../lib/ExceptionTools';
 
 /**
+ *  From: https://www.educative.io/answers/parameter-vs-argument
+ *      A parameter is a variable in a function definition. It is a placeholder and hence does not have a concrete value.
+ *      An argument is a value passed during function invocation.
+ * @param task
+ */
+function constructArguments(task: Task) {
+    const paramsArgs: [string, any][] = [
+        // TODO Later, pass in the Query too, for access to file properties
+        ['task', task],
+    ];
+    return paramsArgs;
+}
+
+/**
  * Evaluate an arbitrary JavaScript expression on a Task object
  * @param task - a {@link Task} object
  * @param arg - a string, such as `task.path.startsWith("journal/") ? "journal/" : task.path`
@@ -13,10 +27,7 @@ import { errorMessageForException } from '../lib/ExceptionTools';
  * See also {@link FunctionField} which exposes this facility to users.
  */
 export function parseAndEvaluateExpression(task: Task, arg: string) {
-    const paramsArgs: [string, any][] = [
-        // TODO Later, pass in the Query too, for access to file properties
-        ['task', task],
-    ];
+    const paramsArgs = constructArguments(task);
 
     const params = paramsArgs.map(([p]) => p);
     const expression: '' | null | Function = arg && new Function(...params, `return ${arg}`);
