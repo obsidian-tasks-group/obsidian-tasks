@@ -246,6 +246,48 @@ describe('file properties', () => {
 
 describe('custom grouping by', () => {
     const testData: CustomGroupingPropertyTestData[] = [
+        [
+            'task.status.name',
+            [
+                ['group by function task.status.name', 'Identical to "group by status.name"'],
+                ['group by function task.status.name.toUpperCase()', 'Convert the status names to capitals'],
+            ],
+            SampleTasks.withAllStatuses(),
+        ],
+
+        [
+            'task.status.nextSymbol',
+            [
+                [
+                    'group by function "Next status symbol: " + task.status.nextSymbol.replace(" ", "space")',
+                    'Group by the next status symbol, making space characters visible',
+                ],
+            ],
+            SampleTasks.withAllStatuses(),
+        ],
+
+        [
+            'task.status.symbol',
+            [
+                [
+                    'group by function "Status symbol: " + task.status.symbol.replace(" ", "space")',
+                    'Group by the status symbol, making space characters visible',
+                ],
+            ],
+            SampleTasks.withAllStatuses(),
+        ],
+
+        [
+            'task.status.type',
+            [
+                [
+                    'group by function task.status.type',
+                    'Unlike "group by status.type", this sorts the status types in alphabetical order',
+                ],
+            ],
+            SampleTasks.withAllStatuses(),
+        ],
+
         // ---------------------------------------------------------------------------------
         // RECURRENCE FIELDS
         // ---------------------------------------------------------------------------------
@@ -370,48 +412,6 @@ describe('custom grouping by', () => {
                 ],
             ],
             SampleTasks.withAllPriorities(),
-        ],
-
-        [
-            'task.status.name',
-            [
-                ['group by function task.status.name', 'Identical to "group by status.name"'],
-                ['group by function task.status.name.toUpperCase()', 'Convert the status names to capitals'],
-            ],
-            SampleTasks.withAllStatuses(),
-        ],
-
-        [
-            'task.status.nextSymbol',
-            [
-                [
-                    'group by function "Next status symbol: " + task.status.nextSymbol.replace(" ", "space")',
-                    'Group by the next status symbol, making space characters visible',
-                ],
-            ],
-            SampleTasks.withAllStatuses(),
-        ],
-
-        [
-            'task.status.symbol',
-            [
-                [
-                    'group by function "Status symbol: " + task.status.symbol.replace(" ", "space")',
-                    'Group by the status symbol, making space characters visible',
-                ],
-            ],
-            SampleTasks.withAllStatuses(),
-        ],
-
-        [
-            'task.status.type',
-            [
-                [
-                    'group by function task.status.type',
-                    'Unlike "group by status.type", this sorts the status types in alphabetical order',
-                ],
-            ],
-            SampleTasks.withAllStatuses(),
         ],
 
         [
