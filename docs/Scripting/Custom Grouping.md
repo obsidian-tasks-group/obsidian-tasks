@@ -80,7 +80,7 @@ You can find many more examples by searching for `group by function` in the [[Gr
 
 ### Text property examples
 
-<!-- placeholder to force blank line before included text --> <!-- include: CustomGroupingExamples.test.custom_grouping_by_task.description_docs.approved.md -->
+<!-- placeholder to force blank line before included text --> <!-- include: CustomGroupingExamples.test.other_properties_task.description_docs.approved.md -->
 
 - ```group by function task.description```
   - group by description.
@@ -96,7 +96,7 @@ You can find many more examples by searching for `group by function` in the [[Gr
 
 ### Date property examples
 
-<!-- placeholder to force blank line before included text --> <!-- include: CustomGroupingExamples.test.custom_grouping_by_task.due_docs.approved.md -->
+<!-- placeholder to force blank line before included text --> <!-- include: CustomGroupingExamples.test.dates_task.due_docs.approved.md -->
 
 - ```group by function task.due.format("YYYY-MM-DD dddd")```
   - Like "group by due", except it uses no heading, instead of a heading "No due date", if there is no due date.
@@ -125,7 +125,7 @@ There are many more date examples in [[Grouping#Due Date]].
 
 ### Number property examples
 
-<!-- placeholder to force blank line before included text --> <!-- include: CustomGroupingExamples.test.custom_grouping_by_task.urgency_docs.approved.md -->
+<!-- placeholder to force blank line before included text --> <!-- include: CustomGroupingExamples.test.other_properties_task.urgency_docs.approved.md -->
 
 - ```group by function task.urgency.toFixed(3)```
   - Show the urgency to 3 decimal places, unlike the built-in "group by urgency" which uses 2.
@@ -134,7 +134,7 @@ There are many more date examples in [[Grouping#Due Date]].
 
 ### File property examples
 
-<!-- placeholder to force blank line before included text --> <!-- include: CustomGroupingExamples.test.custom_grouping_by_task.file.folder_docs.approved.md -->
+<!-- placeholder to force blank line before included text --> <!-- include: CustomGroupingExamples.test.file_properties_task.file.folder_docs.approved.md -->
 
 - ```group by function task.file.folder```
   - Same as 'group by folder'.
