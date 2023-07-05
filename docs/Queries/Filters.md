@@ -209,6 +209,12 @@ For full details of combining filters with boolean operators, see [[Combining Fi
 >
 > The new behaviour is more flexible and was required to introduce support for in-progress and cancelled tasks. If the original behaviour is preferred, you can change the status types of every symbol except `space` to `DONE`. See [[Set up custom statuses|How to set up your custom statuses]].
 
+Since Tasks X.Y.Z, **[[Custom Filters|custom filtering]] by status** is now possible, using `task.isDone`.
+
+<!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.other_properties_task.isDone_docs.approved.md -->
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+
 ### Status Name
 
 - This searches the names given to your custom statuses.
@@ -224,6 +230,12 @@ For full details of combining filters with boolean operators, see [[Combining Fi
 
 For more information, including adding your own customised statuses, see [[Statuses]].
 
+Since Tasks X.Y.Z, **[[Custom Filters|custom filtering]] by status names** is now possible, using `task.status.name`.
+
+<!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.statuses_task.status.name_docs.approved.md -->
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+
 ### Status Type
 
 - `status.type (is|is not) (TODO|DONE|IN_PROGRESS|CANCELLED|NON_TASK)`
@@ -237,6 +249,32 @@ For more information, including adding your own customised statuses, see [[Statu
 `status.type` text searching was introduced in Tasks 1.23.0.
 
 For more information, including adding your own customised statuses, see [[Statuses]].
+
+Since Tasks X.Y.Z, **[[Custom Filters|custom filtering]] by status types** is now possible, using `task.status.type`.
+
+<!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.statuses_task.status.type_docs.approved.md -->
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+
+### Status Symbol
+
+There is no built-in instruction to filter by status symbols.
+
+Since Tasks X.Y.Z, **[[Custom Filters|custom filtering]] by status symbol** is now possible, using `task.status.symbol`.
+
+<!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.statuses_task.status.symbol_docs.approved.md -->
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+
+### Next Status Symbol
+
+There is no built-in instruction to filter by next status symbols.
+
+Since Tasks X.Y.Z, **[[Custom Filters|custom filtering]] by next status symbol** is now possible, using `task.status.nextSymbol`.
+
+<!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.statuses_task.status.nextSymbol_docs.approved.md -->
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
 
 ### Status Examples
 
@@ -271,6 +309,22 @@ For more information, see [[Dates#Due date|Due date]].
 > - `due (before|after|in) <date range>` searches were introduced in Tasks 2.0.0.
 > - `due (before|after|in) (YYYY-Www|YYYY-mm|YYYY-Qq|YYYY)` searches were introduced in Tasks 3.1.0.
 
+Since Tasks X.Y.Z, **[[Custom Filters|custom filtering]] by due date** is now possible, using `task.due`.
+
+These examples all use `task.due` property, which is a `TasksDate` object. You can see the current [TasksDate source code](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/src/Scripting/TasksDate.ts), to explore its capabilities.
+
+Some of these examples use the [moment.js format characters](https://momentjs.com/docs/#/displaying/format/).
+
+<!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.dates_task.due_docs.approved.md -->
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+
+%%DON'T PANIC! For users who are comfortable with JavaScript, these more complicated examples may also be of interest:%%
+
+<!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.dates_task.due.advanced_docs.approved.md -->
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+
 ### Done Date
 
 - `no done date`
@@ -290,6 +344,14 @@ For more information, see [[Dates#Done date|Done date]].
 > - `done date is invalid` was introduced in Tasks 1.16.0.
 > - `done (before|after|in) <date range>` searches were introduced in Tasks 2.0.0.
 > - `done (before|after|in) (YYYY-Www|YYYY-mm|YYYY-Qq|YYYY)` searches were introduced in Tasks 3.1.0.
+
+Since Tasks X.Y.Z, **[[Custom Filters|custom filtering]] by done date** is now possible, using `task.done`.
+
+<!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.dates_task.done_docs.approved.md -->
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+
+For more examples, see [[#Due Date]].
 
 ### Scheduled Date
 
@@ -311,6 +373,14 @@ For more information, see [[Dates#Scheduled date|Scheduled date]].
 > - `scheduled (before|after|in) <date range>` searches were introduced in Tasks 2.0.0.
 > - `scheduled (before|after|in) (YYYY-Www|YYYY-mm|YYYY-Qq|YYYY)` searches were introduced in Tasks 3.1.0.
 
+Since Tasks X.Y.Z, **[[Custom Filters|custom filtering]] by scheduled date** is now possible, using `task.scheduled`.
+
+<!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.dates_task.scheduled_docs.approved.md -->
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+
+For more examples, see [[#Due Date]].
+
 ### Start Date
 
 - `no start date`
@@ -330,6 +400,14 @@ For more information, see [[Dates#Start date|Start date]].
 > - `start date is invalid` was introduced in Tasks 1.16.0.
 > - `starts (before|after|in) <date range>` searches were introduced in Tasks 2.0.0.
 > - `starts (before|after|in) (YYYY-Www|YYYY-mm|YYYY-Qq|YYYY)` searches were introduced in Tasks 3.1.0.
+
+Since Tasks X.Y.Z, **[[Custom Filters|custom filtering]] by start date** is now possible, using `task.start`.
+
+<!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.dates_task.start_docs.approved.md -->
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+
+For more examples, see [[#Due Date]].
 
 #### Making Start Date only find tasks with Start
 
@@ -381,6 +459,14 @@ Such a filter could be:
 > - Created date was introduced in Tasks 2.0.0.
 > - `created (before|after|in) (YYYY-Www|YYYY-mm|YYYY-Qq|YYYY)` searches were introduced in Tasks 3.1.0.
 
+Since Tasks X.Y.Z, **[[Custom Filters|custom filtering]] by created date** is now possible, using `task.created`.
+
+<!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.dates_task.created_docs.approved.md -->
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+
+For more examples, see [[#Due Date]].
+
 ### Happens
 
 - `happens (before|after|on) <date>`
@@ -404,6 +490,14 @@ because the tasks starts before tomorrow. Only one of the dates needs to match.
 > - `no happens date` and `has happens date` were introduced in Tasks 1.7.0.
 > - `happens (before|after|in) <date range>` searches were introduced in Tasks 2.0.0.
 > - `happens (before|after|in) (YYYY-Www|YYYY-mm|YYYY-Qq|YYYY)` searches were introduced in Tasks 3.1.0.
+
+Since Tasks X.Y.Z, **[[Custom Filters|custom filtering]] by happens date** is now possible, using `task.happens`.
+
+<!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.dates_task.happens_docs.approved.md -->
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+
+For more examples, see [[#Due Date]].
 
 ### Troubleshooting date searches
 
@@ -473,6 +567,20 @@ For example:
 | `#task`          | `'- [ ] #task Do stuff  ⏫  #tag1 ✅ 2022-08-12 #tag2/sub-tag '`         | `'Do stuff #tag1 #tag2/sub-tag'` |
 | `global-filter`  | `'- [ ] global-filter Do stuff  ⏫  #tag1 ✅ 2022-08-12 #tag2/sub-tag '` | `'Do stuff #tag1 #tag2/sub-tag'` |
 
+Since Tasks X.Y.Z, **[[Custom Filters|custom filtering]] by description** is now possible, using `task.description`.
+
+<!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.other_properties_task.description_docs.approved.md -->
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+
+### Description without tags
+
+Since Tasks X.Y.Z, it is possible to remove tags from the descriptions in custom filters, for use in **[[Custom Filters|custom filtering]]**, using `task.descriptionWithoutTags`.
+
+<!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.other_properties_task.descriptionWithoutTags_docs.approved.md -->
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+
 ### Priority
 
 - `priority is (above|below|not)? (lowest|low|none|medium|high|highest)`
@@ -491,6 +599,20 @@ For more information, see [[Priority|Priorities]].
 > [!released]
 > Priorities 'lowest' and 'highest' were introduced in Tasks 3.9.0.
 
+Since Tasks X.Y.Z, **[[Custom Filters|custom filtering]] by priority name and number** is now possible, using `task.priorityName` and `task.priorityNumber`.
+
+%%Using the priority name:%%
+
+<!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.other_properties_task.priorityName_docs.approved.md -->
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+
+%%Using the priority number:%%
+
+<!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.other_properties_task.priorityNumber_docs.approved.md -->
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+
 #### Examples
 
     ```tasks
@@ -506,6 +628,16 @@ For more information, see [[Priority|Priorities]].
     not done
     priority is not none
     ```
+
+### Urgency
+
+There is no built-in instruction to filter by urgency.
+
+Since Tasks X.Y.Z, **[[Custom Filters|custom filtering]] by urgency** is now possible, using `task.urgency`.
+
+<!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.other_properties_task.urgency_docs.approved.md -->
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
 
 ### Recurrence
 
@@ -523,6 +655,16 @@ For more information, see [[Recurring Tasks]].
 
 > [!released]
 `recurrence` text searching was introduced in Tasks 1.22.0.
+
+Since Tasks X.Y.Z, **[[Custom Filters|custom filtering]] by recurrence** is now possible, using `task.isRecurring` and `task.recurrenceRule`.
+
+<!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.other_properties_task.isRecurring_docs.approved.md -->
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+
+<!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.other_properties_task.recurrenceRule_docs.approved.md -->
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
 
 ### Sub-Items
 
@@ -555,6 +697,18 @@ Introduced in Tasks 1.6.0.
 > - `regex matches` and `regex does not match` were introduced in Tasks 1.13.0.
 > - `no tags` and `has tags` were introduced in Tasks 2.0.0.
 
+Since Tasks X.Y.Z, **[[Custom Filters|custom filtering]] by tags** is now possible, using `task.tags`.
+
+<!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.other_properties_task.tags_docs.approved.md -->
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+
+%%These are more complicated examples, which you might like to copy if you use tasks with [nested tags](https://help.obsidian.md/Editing+and+formatting/Tags#Nested+tags).%%
+
+<!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.other_properties_task.tags.advanced_docs.approved.md -->
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+
 #### Tag Query Examples
 
 - `tags include #todo`
@@ -564,6 +718,18 @@ Introduced in Tasks 1.6.0.
 - `tag regex matches /#book$/i`
   - The trailing `i` means case-insensitive.
   - Searches for tags such as `#book`,  `#Book`, `#BOOK` and the `$` prevents matching of `#books`,  `#book/literature`, etc.
+
+### Original Markdown
+
+There is no built-in instruction to filter by the original markdown line.
+
+Since Tasks X.Y.Z, **[[Custom Filters|custom filtering]] by original markdown line** is now possible, using `task.originalMarkdown`.
+
+For example, this could be used to extract information from `task.originalMarkdown` that Tasks does not parse, to use for filtering tasks.
+
+<!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.other_properties_task.originalMarkdown_docs.approved.md -->
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
 
 ---
 
@@ -584,6 +750,11 @@ Note that the path includes the `.md` extension.
 > [!released]
 `regex matches` and `regex does not match` were introduced in Tasks 1.12.0.
 
+Since Tasks X.Y.Z, **[[Custom Filters|custom filtering]] by file path** is now possible, using `task.file.path`.
+
+<!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.file_properties_task.file.path_docs.approved.md -->
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
 ### Root
 
 > [!released]
@@ -596,6 +767,12 @@ The `root` is the top-level folder of the file that contains the task, that is, 
 - `root (regex matches|regex does not match) /<JavaScript-style Regex>/`
   - Does regular expression match (case-sensitive by default).
   - Essential reading: [[Regular Expressions|Regular Expression Searches]].
+
+Since Tasks X.Y.Z, **[[Custom Filters|custom filtering]] by root folder** is now possible, using `task.file.root`.
+
+<!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.file_properties_task.file.root_docs.approved.md -->
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
 
 ### Folder
 
@@ -610,6 +787,12 @@ This is the `folder` to the file that contains the task, which will be `/` for f
   - Does regular expression match (case-sensitive by default).
   - Essential reading: [[Regular Expressions|Regular Expression Searches]].
 
+Since Tasks X.Y.Z, **[[Custom Filters|custom filtering]] by folder** is now possible, using `task.file.folder`.
+
+<!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.file_properties_task.file.folder_docs.approved.md -->
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+
 ### File Name
 
 > [!released]
@@ -622,6 +805,12 @@ Note that the file name includes the `.md` extension.
 - `filename (regex matches|regex does not match) /<JavaScript-style Regex>/`
   - Does regular expression match (case-sensitive by default).
   - Essential reading: [[Regular Expressions|Regular Expression Searches]].
+
+Since Tasks X.Y.Z, **[[Custom Filters|custom filtering]] by file name** is now possible, using `task.file.filename`.
+
+<!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.file_properties_task.file.filename_docs.approved.md -->
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
 
 ### Heading
 
@@ -638,6 +827,12 @@ Note that the file name includes the `.md` extension.
 
 > [!released]
 `regex matches` and `regex does not match` were introduced in Tasks 1.12.0.
+
+Since Tasks X.Y.Z, **[[Custom Filters|custom filtering]] by heading** is now possible, using `task.heading`.
+
+<!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.file_properties_task.heading_docs.approved.md -->
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
 
 ---
 
