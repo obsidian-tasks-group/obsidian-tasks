@@ -298,7 +298,7 @@ describe('statuses', () => {
     });
 });
 
-describe('custom grouping by', () => {
+describe('other properties', () => {
     const testData: CustomGroupingPropertyTestData[] = [
         // ---------------------------------------------------------------------------------
         // RECURRENCE FIELDS
