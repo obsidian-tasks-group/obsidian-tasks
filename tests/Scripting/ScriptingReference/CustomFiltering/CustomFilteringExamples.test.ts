@@ -4,10 +4,12 @@
 
 import moment from 'moment';
 
+import { verifyAll } from 'approvals/lib/Providers/Jest/JestApprovals';
 import type { Task } from '../../../../src/Task';
 import { SampleTasks } from '../../../TestHelpers';
 import type { QueryInstructionLineAndDescription } from '../../../Query/Filter/ReferenceDocs/FilterReference/VerifyFunctionFieldSamples';
 import { verifyMarkdownForDocs } from '../../../TestingTools/VerifyMarkdownTable';
+import { FunctionField } from '../../../../src/Query/Filter/FunctionField';
 
 window.moment = moment;
 
@@ -25,12 +27,42 @@ type TaskPropertyName = string;
 
 type CustomGroupingPropertyTestData = [TaskPropertyName, QueryInstructionLineAndDescription[], Task[]];
 
-function verifyFunctionFieldFilterSamplesOnTasks(_groups: QueryInstructionLineAndDescription[], _tasks: Task[]) {
-    // TODO
+function verifyFunctionFieldFilterSamplesOnTasks(filters: QueryInstructionLineAndDescription[], tasks: Task[]) {
+    if (filters.length === 0) {
+        return;
+    }
+    verifyAll('Results of custom filters', filters, (filter) => {
+        const instruction = filter[0];
+        const comment = filter.slice(1);
+        const filterOrErrorMessage = new FunctionField().createFilterOrErrorMessage(instruction);
+        const filterFunction = filterOrErrorMessage.filterFunction!;
+        const matchingTasks: string[] = [];
+        for (const task of tasks) {
+            const matches = filterFunction(task);
+            if (matches) {
+                matchingTasks.push(task.toFileLineString());
+            }
+        }
+        return `
+${instruction}
+${comment.join('\n')}
+=>
+${matchingTasks.join('\n')}
+====================================================================================
+`;
+    });
 }
 
-function verifyFunctionFieldFilterSamplesForDocs(_groups: QueryInstructionLineAndDescription[]) {
-    verifyMarkdownForDocs('');
+function verifyFunctionFieldFilterSamplesForDocs(filters: QueryInstructionLineAndDescription[]) {
+    let markdown = '';
+    for (const filter of filters) {
+        const instruction = filter[0];
+        const comments = filter.slice(1);
+        markdown += `- \`\`\`${instruction}\`\`\`
+${comments.map((l) => l.replace(/^( *)/, '$1    - ')).join('\n')}.
+`;
+    }
+    verifyMarkdownForDocs(markdown);
 }
 
 describe('dates', () => {
@@ -126,7 +158,7 @@ describe('other properties', () => {
 
         [
             'task.description',
-            [],
+            [['filter by function task.description.length > 100', 'Find tasks with long descriptions']],
             SampleTasks.withAllRepresentativeDescriptions().concat(SampleTasks.withRepresentativeTags()),
         ],
 

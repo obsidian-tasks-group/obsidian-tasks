@@ -571,6 +571,9 @@ Since Tasks X.Y.Z, **[[Custom Filters|custom filtering]] by description** is now
 
 <!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.other_properties_task.description_docs.approved.md -->
 
+- ```filter by function task.description.length > 100```
+  - Find tasks with long descriptions.
+
 <!-- placeholder to force blank line after included text --> <!-- endInclude -->
 
 ### Description without tags
