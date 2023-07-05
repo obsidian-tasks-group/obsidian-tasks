@@ -740,11 +740,22 @@ Since Tasks X.Y.Z, **[[Custom Filters|custom filtering]] by tags** is now possib
 
 <!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.other_properties_task.tags_docs.approved.md -->
 
+- ```filter by function task.tags.length === 1```
+  - Find tasks with exactly 1 tag (other than any global filter).
+- ```filter by function task.tags.length > 1```
+  - Find tasks with more than one tag (other than any global filter).
+
 <!-- placeholder to force blank line after included text --> <!-- endInclude -->
 
-%%These are more complicated examples, which you might like to copy if you use tasks with [nested tags](https://help.obsidian.md/Editing+and+formatting/Tags#Nested+tags).%%
+These are more complicated examples, which you might like to copy if you use tasks with [nested tags](https://help.obsidian.md/Editing+and+formatting/Tags#Nested+tags).
 
 <!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.other_properties_task.tags.advanced_docs.approved.md -->
+
+- ```filter by function task.tags.find( (tag) => tag.includes('/') ) && true || false```
+  - Find all tasks that have at least one nested tag.
+- ```filter by function task.tags.find( (tag) => tag.split('/').length >= 3 ) && true || false```
+  - Find all tasks that have at least one doubly-nested tag, such as `#context/home/ground-floor`.
+  - This splits each tag at the `/` character, and counts as a match if there are at least 3 words.
 
 <!-- placeholder to force blank line after included text --> <!-- endInclude -->
 
