@@ -251,26 +251,6 @@ Find any tasks that have status symbols you have not yet added to your Tasks set
 
 ## Filters for Dates in Tasks
 
-### Done Date
-
-- `no done date`
-- `has done date`
-- `done (before|after|on) <date>`
-- `done (before|after|in) <date range>`
-  - `YYYY-MM-DD YYYY-MM-DD`
-  - `(last|this|next) (week|month|quarter|year)`
-  - `(YYYY-Www|YYYY-mm|YYYY-Qq|YYYY)`
-- `done date is invalid`
-
-For more information, see [[Dates#Done date|Done date]].
-
-> [!released]
->
-> - `no done date` and `has done date` were introduced in Tasks 1.7.0.
-> - `done date is invalid` was introduced in Tasks 1.16.0.
-> - `done (before|after|in) <date range>` searches were introduced in Tasks 2.0.0.
-> - `done (before|after|in) (YYYY-Www|YYYY-mm|YYYY-Qq|YYYY)` searches were introduced in Tasks 3.1.0.
-
 ### Due Date
 
 - `no due date`
@@ -290,6 +270,26 @@ For more information, see [[Dates#Due date|Due date]].
 > - `due date is invalid` was introduced in Tasks 1.16.0.
 > - `due (before|after|in) <date range>` searches were introduced in Tasks 2.0.0.
 > - `due (before|after|in) (YYYY-Www|YYYY-mm|YYYY-Qq|YYYY)` searches were introduced in Tasks 3.1.0.
+
+### Done Date
+
+- `no done date`
+- `has done date`
+- `done (before|after|on) <date>`
+- `done (before|after|in) <date range>`
+  - `YYYY-MM-DD YYYY-MM-DD`
+  - `(last|this|next) (week|month|quarter|year)`
+  - `(YYYY-Www|YYYY-mm|YYYY-Qq|YYYY)`
+- `done date is invalid`
+
+For more information, see [[Dates#Done date|Done date]].
+
+> [!released]
+>
+> - `no done date` and `has done date` were introduced in Tasks 1.7.0.
+> - `done date is invalid` was introduced in Tasks 1.16.0.
+> - `done (before|after|in) <date range>` searches were introduced in Tasks 2.0.0.
+> - `done (before|after|in) (YYYY-Www|YYYY-mm|YYYY-Qq|YYYY)` searches were introduced in Tasks 3.1.0.
 
 ### Scheduled Date
 
