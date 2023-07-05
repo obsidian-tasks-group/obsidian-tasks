@@ -28,7 +28,7 @@ type TaskPropertyName = string;
 
 type CustomGroupingPropertyTestData = [TaskPropertyName, QueryInstructionLineAndDescription[], Task[]];
 
-describe('custom grouping by', () => {
+describe('dates', () => {
     const testData: CustomGroupingPropertyTestData[] = [
         // ---------------------------------------------------------------------------------
         // DATE FIELDS
@@ -156,7 +156,19 @@ describe('custom grouping by', () => {
             ],
             SampleTasks.withAllRepresentativeStartDates(),
         ],
+    ];
 
+    it.each(testData)('%s results', (_: string, groups: QueryInstructionLineAndDescription[], tasks: Task[]) => {
+        verifyFunctionFieldGrouperSamplesOnTasks(groups, tasks);
+    });
+
+    it.each(testData)('%s docs', (_: string, groups: QueryInstructionLineAndDescription[], _tasks: Task[]) => {
+        verifyFunctionFieldGrouperSamplesForDocs(groups);
+    });
+});
+
+describe('custom grouping by', () => {
+    const testData: CustomGroupingPropertyTestData[] = [
         // ---------------------------------------------------------------------------------
         // FILE FIELDS
         // ---------------------------------------------------------------------------------
