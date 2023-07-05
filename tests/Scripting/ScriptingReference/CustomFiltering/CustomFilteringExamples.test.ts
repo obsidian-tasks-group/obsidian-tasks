@@ -7,6 +7,7 @@ import moment from 'moment';
 import type { Task } from '../../../../src/Task';
 import { SampleTasks } from '../../../TestHelpers';
 import type { QueryInstructionLineAndDescription } from '../../../Query/Filter/ReferenceDocs/FilterReference/VerifyFunctionFieldSamples';
+import { verifyMarkdownForDocs } from '../../../TestingTools/VerifyMarkdownTable';
 
 window.moment = moment;
 
@@ -29,7 +30,7 @@ function verifyFunctionFieldFilterSamplesOnTasks(_groups: QueryInstructionLineAn
 }
 
 function verifyFunctionFieldFilterSamplesForDocs(_groups: QueryInstructionLineAndDescription[]) {
-    // TODO
+    verifyMarkdownForDocs('');
 }
 
 describe('dates', () => {
