@@ -317,6 +317,10 @@ Some of these examples use the [moment.js format characters](https://momentjs.co
 
 <!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.dates_task.due_docs.approved.md -->
 
+- ```filter by function task.due.format('dddd') === 'Tuesday'```
+  - Find tasks due on Tuesday.
+  - On non-English systems, you may need to supply the day of the week in the local language.
+
 <!-- placeholder to force blank line after included text --> <!-- endInclude -->
 
 %%DON'T PANIC! For users who are comfortable with JavaScript, these more complicated examples may also be of interest:%%

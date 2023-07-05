@@ -75,7 +75,17 @@ describe('dates', () => {
 
         ['task.done', [], SampleTasks.withAllRepresentativeDoneDates()],
 
-        ['task.due', [], SampleTasks.withAllRepresentativeDueDates()],
+        [
+            'task.due',
+            [
+                [
+                    "filter by function task.due.format('dddd') === 'Tuesday'",
+                    'Find tasks due on Tuesday.',
+                    'On non-English systems, you may need to supply the day of the week in the local language',
+                ],
+            ],
+            SampleTasks.withAllRepresentativeDueDates(),
+        ],
 
         ['task.due.advanced', [], SampleTasks.withAllRepresentativeDueDates()],
 
