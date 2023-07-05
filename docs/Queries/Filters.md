@@ -323,9 +323,21 @@ Some of these examples use the [moment.js format characters](https://momentjs.co
 
 <!-- placeholder to force blank line after included text --> <!-- endInclude -->
 
-%%DON'T PANIC! For users who are comfortable with JavaScript, these more complicated examples may also be of interest:%%
+DON'T PANIC! For users who are comfortable with JavaScript, these more complicated examples may also be of interest:
 
 <!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.dates_task.due.advanced_docs.approved.md -->
+
+- ```filter by function task.due.moment?.isSameOrBefore(moment(), 'day') || false```
+  - Find all tasks due today or earlier.
+  - `moment()` returns the current date and time, which we need to convert to the start of the day.
+  - As the second parameter determines the precision, and not just a single value to check, using 'day' will check for year, month and day.
+  - See the documentation of [isSameOrBefore](https://momentjscom.readthedocs.io/en/latest/moment/05-query/04-is-same-or-before/).
+- ```filter by function task.due.moment?.isSameOrAfter(moment(), 'day') || false```
+  - Due today or later.
+- ```filter by function task.due.moment?.isSame(moment('2023-05-31'), 'day') || false```
+  - Find all tasks due on 31 May 2023.
+- ```filter by function task.due.moment?.isSame(moment('2023-05-31'), 'week') || false```
+  - Find all tasks due in the week of 31 May 2023.
 
 <!-- placeholder to force blank line after included text --> <!-- endInclude -->
 
