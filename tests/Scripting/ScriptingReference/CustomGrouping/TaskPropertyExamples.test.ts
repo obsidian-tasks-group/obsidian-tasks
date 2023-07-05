@@ -4,13 +4,13 @@
 
 import moment from 'moment';
 
-import type { Task } from '../../src/Task';
-import { SampleTasks } from '../TestHelpers';
+import type { Task } from '../../../../src/Task';
+import { SampleTasks } from '../../../TestHelpers';
 import {
     type QueryInstructionLineAndDescription,
     verifyFunctionFieldGrouperSamplesForDocs,
     verifyFunctionFieldGrouperSamplesOnTasks,
-} from '../Query/Filter/ReferenceDocs/FilterReference/VerifyFunctionFieldSamples';
+} from '../../../Query/Filter/ReferenceDocs/FilterReference/VerifyFunctionFieldSamples';
 
 window.moment = moment;
 
