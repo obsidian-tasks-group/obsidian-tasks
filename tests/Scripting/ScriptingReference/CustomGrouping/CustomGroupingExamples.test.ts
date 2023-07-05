@@ -244,7 +244,7 @@ describe('file properties', () => {
     });
 });
 
-describe('custom grouping by', () => {
+describe('statuses', () => {
     const testData: CustomGroupingPropertyTestData[] = [
         [
             'task.status.name',
@@ -287,7 +287,19 @@ describe('custom grouping by', () => {
             ],
             SampleTasks.withAllStatuses(),
         ],
+    ];
 
+    it.each(testData)('%s results', (_: string, groups: QueryInstructionLineAndDescription[], tasks: Task[]) => {
+        verifyFunctionFieldGrouperSamplesOnTasks(groups, tasks);
+    });
+
+    it.each(testData)('%s docs', (_: string, groups: QueryInstructionLineAndDescription[], _tasks: Task[]) => {
+        verifyFunctionFieldGrouperSamplesForDocs(groups);
+    });
+});
+
+describe('custom grouping by', () => {
+    const testData: CustomGroupingPropertyTestData[] = [
         // ---------------------------------------------------------------------------------
         // RECURRENCE FIELDS
         // ---------------------------------------------------------------------------------
