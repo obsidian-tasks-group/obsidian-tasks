@@ -170,19 +170,3 @@ describe('other properties', () => {
         verifyFunctionFieldFilterSamplesForDocs(groups);
     });
 });
-
-describe('special cases', () => {
-    const testData: CustomGroupingPropertyTestData[] = [
-        ['formatting', [], SampleTasks.withAllRepresentativeDueDates()],
-
-        // idea: folder: show stripping out the folder containing the query file - may need to escape forward slashes if using regular expression
-    ];
-
-    it.each(testData)('%s results', (_: string, groups: QueryInstructionLineAndDescription[], tasks: Task[]) => {
-        verifyFunctionFieldFilterSamplesOnTasks(groups, tasks);
-    });
-
-    it.each(testData)('%s docs', (_: string, groups: QueryInstructionLineAndDescription[], _tasks: Task[]) => {
-        verifyFunctionFieldFilterSamplesForDocs(groups);
-    });
-});
