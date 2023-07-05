@@ -263,9 +263,23 @@ describe('other properties', () => {
         //     SampleTasks.withAllPriorities(), // TODO Choose specific tasks for task.listMarker'
         // ],
 
-        ['task.priorityName', [], SampleTasks.withAllPriorities()],
+        [
+            'task.priorityName',
+            [["filter by function task.priorityName !== 'Normal'", 'The same as `priority is not none`']],
+            SampleTasks.withAllPriorities(),
+        ],
 
-        ['task.priorityNumber', [], SampleTasks.withAllPriorities()],
+        [
+            'task.priorityNumber',
+            [
+                [
+                    'filter by function task.priorityNumber % 2 === 0',
+                    "Filter using the task's priority number, where Highest is 0 and Lowest is 5.",
+                    'This artificial example finds all the tasks with even priority numbers, so Highest, Medium and Low priorities',
+                ],
+            ],
+            SampleTasks.withAllPriorities(),
+        ],
 
         [
             'task.tags',

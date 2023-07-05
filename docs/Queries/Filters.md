@@ -640,15 +640,22 @@ For more information, see [[Priority|Priorities]].
 
 Since Tasks X.Y.Z, **[[Custom Filters|custom filtering]] by priority name and number** is now possible, using `task.priorityName` and `task.priorityNumber`.
 
-%%Using the priority name:%%
+Using the priority name:
 
 <!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.other_properties_task.priorityName_docs.approved.md -->
 
+- ```filter by function task.priorityName !== 'Normal'```
+  - The same as `priority is not none`.
+
 <!-- placeholder to force blank line after included text --> <!-- endInclude -->
 
-%%Using the priority number:%%
+Using the priority number:
 
 <!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.other_properties_task.priorityNumber_docs.approved.md -->
+
+- ```filter by function task.priorityNumber % 2 === 0```
+  - Filter using the task's priority number, where Highest is 0 and Lowest is 5.
+  - This artificial example finds all the tasks with even priority numbers, so Highest, Medium and Low priorities.
 
 <!-- placeholder to force blank line after included text --> <!-- endInclude -->
 
