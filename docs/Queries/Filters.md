@@ -318,7 +318,7 @@ Some of these examples use the [moment.js format characters](https://momentjs.co
 <!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.dates_task.due_docs.approved.md -->
 
 - ```filter by function task.due.format('dddd') === 'Tuesday'```
-  - Find tasks due on Tuesday.
+  - Find tasks due on Tuesdays, that is, any Tuesday.
   - On non-English systems, you may need to supply the day of the week in the local language.
 
 <!-- placeholder to force blank line after included text --> <!-- endInclude -->
@@ -366,7 +366,7 @@ Since Tasks X.Y.Z, **[[Custom Filters|custom filtering]] by done date** is now p
 <!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.dates_task.done_docs.approved.md -->
 
 - ```filter by function task.done.format('dddd') === 'Thursday'```
-  - Find tasks done on Thursday.
+  - Find tasks done on Thursdays, that is, any Thursday.
   - On non-English systems, you may need to supply the day of the week in the local language.
 
 <!-- placeholder to force blank line after included text --> <!-- endInclude -->
@@ -398,7 +398,7 @@ Since Tasks X.Y.Z, **[[Custom Filters|custom filtering]] by scheduled date** is 
 <!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.dates_task.scheduled_docs.approved.md -->
 
 - ```filter by function task.scheduled.format('dddd') === 'Wednesday'```
-  - Find tasks scheduled on Wednesday.
+  - Find tasks scheduled on Wednesdays, that is, any Wednesday.
   - On non-English systems, you may need to supply the day of the week in the local language.
 
 <!-- placeholder to force blank line after included text --> <!-- endInclude -->
@@ -430,7 +430,7 @@ Since Tasks X.Y.Z, **[[Custom Filters|custom filtering]] by start date** is now 
 <!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.dates_task.start_docs.approved.md -->
 
 - ```filter by function task.start.format('dddd') === 'Sunday'```
-  - Find tasks starting on Sunday.
+  - Find tasks starting on Sundays, that is, any Sunday.
   - On non-English systems, you may need to supply the day of the week in the local language.
 
 <!-- placeholder to force blank line after included text --> <!-- endInclude -->
@@ -492,7 +492,7 @@ Since Tasks X.Y.Z, **[[Custom Filters|custom filtering]] by created date** is no
 <!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.dates_task.created_docs.approved.md -->
 
 - ```filter by function task.created.format('dddd') === 'Monday'```
-  - Find tasks created on Monday.
+  - Find tasks created on Mondays, that is, any Monday.
   - On non-English systems, you may need to supply the day of the week in the local language.
 
 <!-- placeholder to force blank line after included text --> <!-- endInclude -->
@@ -528,7 +528,7 @@ Since Tasks X.Y.Z, **[[Custom Filters|custom filtering]] by happens date** is no
 <!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.dates_task.happens_docs.approved.md -->
 
 - ```filter by function task.happens.format('dddd') === 'Friday'```
-  - Find tasks happens on Friday.
+  - Find tasks happens on Fridays, that is, any Friday.
   - On non-English systems, you may need to supply the day of the week in the local language.
 
 <!-- placeholder to force blank line after included text --> <!-- endInclude -->

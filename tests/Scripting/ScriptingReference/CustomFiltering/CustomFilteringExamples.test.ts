@@ -76,7 +76,7 @@ describe('dates', () => {
             [
                 [
                     "filter by function task.created.format('dddd') === 'Monday'",
-                    'Find tasks created on Monday.',
+                    'Find tasks created on Mondays, that is, any Monday.',
                     'On non-English systems, you may need to supply the day of the week in the local language',
                 ],
             ],
@@ -88,7 +88,7 @@ describe('dates', () => {
             [
                 [
                     "filter by function task.done.format('dddd') === 'Thursday'",
-                    'Find tasks done on Thursday.',
+                    'Find tasks done on Thursdays, that is, any Thursday.',
                     'On non-English systems, you may need to supply the day of the week in the local language',
                 ],
             ],
@@ -100,7 +100,7 @@ describe('dates', () => {
             [
                 [
                     "filter by function task.due.format('dddd') === 'Tuesday'",
-                    'Find tasks due on Tuesday.',
+                    'Find tasks due on Tuesdays, that is, any Tuesday.',
                     'On non-English systems, you may need to supply the day of the week in the local language',
                 ],
             ],
@@ -135,7 +135,7 @@ describe('dates', () => {
             [
                 [
                     "filter by function task.happens.format('dddd') === 'Friday'",
-                    'Find tasks happens on Friday.',
+                    'Find tasks happens on Fridays, that is, any Friday.',
                     'On non-English systems, you may need to supply the day of the week in the local language',
                 ],
             ],
@@ -147,7 +147,7 @@ describe('dates', () => {
             [
                 [
                     "filter by function task.scheduled.format('dddd') === 'Wednesday'",
-                    'Find tasks scheduled on Wednesday.',
+                    'Find tasks scheduled on Wednesdays, that is, any Wednesday.',
                     'On non-English systems, you may need to supply the day of the week in the local language',
                 ],
             ],
@@ -159,7 +159,7 @@ describe('dates', () => {
             [
                 [
                     "filter by function task.start.format('dddd') === 'Sunday'",
-                    'Find tasks starting on Sunday.',
+                    'Find tasks starting on Sundays, that is, any Sunday.',
                     'On non-English systems, you may need to supply the day of the week in the local language',
                 ],
             ],
