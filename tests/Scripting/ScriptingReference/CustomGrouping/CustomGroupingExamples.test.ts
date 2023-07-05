@@ -488,7 +488,19 @@ describe('custom grouping by', () => {
             ],
             SampleTasks.withAllPriorities(),
         ],
+    ];
 
+    it.each(testData)('%s results', (_: string, groups: QueryInstructionLineAndDescription[], tasks: Task[]) => {
+        verifyFunctionFieldGrouperSamplesOnTasks(groups, tasks);
+    });
+
+    it.each(testData)('%s docs', (_: string, groups: QueryInstructionLineAndDescription[], _tasks: Task[]) => {
+        verifyFunctionFieldGrouperSamplesForDocs(groups);
+    });
+});
+
+describe('special cases', () => {
+    const testData: CustomGroupingPropertyTestData[] = [
         [
             'formatting',
             [
