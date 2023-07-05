@@ -71,9 +71,29 @@ describe('dates', () => {
         // DATE FIELDS
         // ---------------------------------------------------------------------------------
 
-        ['task.created', [], SampleTasks.withAllRepresentativeCreatedDates()],
+        [
+            'task.created',
+            [
+                [
+                    "filter by function task.created.format('dddd') === 'Monday'",
+                    'Find tasks created on Monday.',
+                    'On non-English systems, you may need to supply the day of the week in the local language',
+                ],
+            ],
+            SampleTasks.withAllRepresentativeCreatedDates(),
+        ],
 
-        ['task.done', [], SampleTasks.withAllRepresentativeDoneDates()],
+        [
+            'task.done',
+            [
+                [
+                    "filter by function task.done.format('dddd') === 'Thursday'",
+                    'Find tasks done on Thursday.',
+                    'On non-English systems, you may need to supply the day of the week in the local language',
+                ],
+            ],
+            SampleTasks.withAllRepresentativeDoneDates(),
+        ],
 
         [
             'task.due',
@@ -110,11 +130,41 @@ describe('dates', () => {
             SampleTasks.withAllRepresentativeDueDates(),
         ],
 
-        ['task.happens', [], SampleTasks.withAllRepresentativeDueDates()],
+        [
+            'task.happens',
+            [
+                [
+                    "filter by function task.happens.format('dddd') === 'Friday'",
+                    'Find tasks happens on Friday.',
+                    'On non-English systems, you may need to supply the day of the week in the local language',
+                ],
+            ],
+            SampleTasks.withAllRepresentativeDueDates(),
+        ],
 
-        ['task.scheduled', [], SampleTasks.withAllRepresentativeScheduledDates()],
+        [
+            'task.scheduled',
+            [
+                [
+                    "filter by function task.scheduled.format('dddd') === 'Wednesday'",
+                    'Find tasks scheduled on Wednesday.',
+                    'On non-English systems, you may need to supply the day of the week in the local language',
+                ],
+            ],
+            SampleTasks.withAllRepresentativeScheduledDates(),
+        ],
 
-        ['task.start', [], SampleTasks.withAllRepresentativeStartDates()],
+        [
+            'task.start',
+            [
+                [
+                    "filter by function task.start.format('dddd') === 'Sunday'",
+                    'Find tasks starting on Sunday.',
+                    'On non-English systems, you may need to supply the day of the week in the local language',
+                ],
+            ],
+            SampleTasks.withAllRepresentativeStartDates(),
+        ],
     ];
 
     it.each(testData)('%s results', (_: string, groups: QueryInstructionLineAndDescription[], tasks: Task[]) => {

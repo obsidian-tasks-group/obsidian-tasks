@@ -365,6 +365,10 @@ Since Tasks X.Y.Z, **[[Custom Filters|custom filtering]] by done date** is now p
 
 <!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.dates_task.done_docs.approved.md -->
 
+- ```filter by function task.done.format('dddd') === 'Thursday'```
+  - Find tasks done on Thursday.
+  - On non-English systems, you may need to supply the day of the week in the local language.
+
 <!-- placeholder to force blank line after included text --> <!-- endInclude -->
 
 For more examples, see [[#Due Date]].
@@ -393,6 +397,10 @@ Since Tasks X.Y.Z, **[[Custom Filters|custom filtering]] by scheduled date** is 
 
 <!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.dates_task.scheduled_docs.approved.md -->
 
+- ```filter by function task.scheduled.format('dddd') === 'Wednesday'```
+  - Find tasks scheduled on Wednesday.
+  - On non-English systems, you may need to supply the day of the week in the local language.
+
 <!-- placeholder to force blank line after included text --> <!-- endInclude -->
 
 For more examples, see [[#Due Date]].
@@ -420,6 +428,10 @@ For more information, see [[Dates#Start date|Start date]].
 Since Tasks X.Y.Z, **[[Custom Filters|custom filtering]] by start date** is now possible, using `task.start`.
 
 <!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.dates_task.start_docs.approved.md -->
+
+- ```filter by function task.start.format('dddd') === 'Sunday'```
+  - Find tasks starting on Sunday.
+  - On non-English systems, you may need to supply the day of the week in the local language.
 
 <!-- placeholder to force blank line after included text --> <!-- endInclude -->
 
@@ -479,6 +491,10 @@ Since Tasks X.Y.Z, **[[Custom Filters|custom filtering]] by created date** is no
 
 <!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.dates_task.created_docs.approved.md -->
 
+- ```filter by function task.created.format('dddd') === 'Monday'```
+  - Find tasks created on Monday.
+  - On non-English systems, you may need to supply the day of the week in the local language.
+
 <!-- placeholder to force blank line after included text --> <!-- endInclude -->
 
 For more examples, see [[#Due Date]].
@@ -510,6 +526,10 @@ because the tasks starts before tomorrow. Only one of the dates needs to match.
 Since Tasks X.Y.Z, **[[Custom Filters|custom filtering]] by happens date** is now possible, using `task.happens`.
 
 <!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.dates_task.happens_docs.approved.md -->
+
+- ```filter by function task.happens.format('dddd') === 'Friday'```
+  - Find tasks happens on Friday.
+  - On non-English systems, you may need to supply the day of the week in the local language.
 
 <!-- placeholder to force blank line after included text --> <!-- endInclude -->
 
