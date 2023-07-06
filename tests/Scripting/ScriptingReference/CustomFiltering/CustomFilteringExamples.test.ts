@@ -183,20 +183,46 @@ describe('dates', () => {
 });
 
 describe('file properties', () => {
+    const samplePath = 'tasks releases/4.1.0 Release.md';
+    const extraTasks = fromLines({
+        lines: [`- [ ] from ${samplePath}`],
+        path: samplePath,
+    });
+    const tasks = SampleTasks.withAllRootsPathsHeadings().concat(extraTasks);
     const testData: CustomGroupingPropertyTestData[] = [
         // ---------------------------------------------------------------------------------
         // FILE FIELDS
         // ---------------------------------------------------------------------------------
 
-        ['task.file.path', [], SampleTasks.withAllRootsPathsHeadings()],
+        [
+            'task.file.path',
+            [
+                [
+                    `filter by function task.file.path.includes('${samplePath}')`,
+                    "Like 'path includes', except that it is **case-sensitive**: capitalisation matters",
+                ],
+                [
+                    `filter by function task.file.path === '${samplePath}'`,
+                    'An exact, **case-sensitive**, equality search.',
+                    'Note that the file extension needs to be included too.',
+                    'With built-in searches, this could only be done using a regular expression, with special characters `^` and `$`, and escaping any characters with special meaning such as `/`',
+                ],
+                [
+                    `filter by function task.file.path.toLocaleLowerCase() === '${samplePath.toLocaleUpperCase()}'.toLocaleLowerCase()`,
+                    'An exact, **non**-case-sensitive, equality search.',
+                    'By lower-casing both values, we do not have to worry about manually lower-casing them in our query',
+                ],
+            ],
+            tasks,
+        ],
 
-        ['task.file.root', [], SampleTasks.withAllRootsPathsHeadings()],
+        ['task.file.root', [], tasks],
 
-        ['task.file.folder', [], SampleTasks.withAllRootsPathsHeadings()],
+        ['task.file.folder', [], tasks],
 
-        ['task.file.filename', [], SampleTasks.withAllRootsPathsHeadings()],
+        ['task.file.filename', [], tasks],
 
-        ['task.heading', [], SampleTasks.withAllRootsPathsHeadings()],
+        ['task.heading', [], tasks],
     ];
 
     it.each(testData)('%s results', (_: string, groups: QueryInstructionLineAndDescription[], tasks: Task[]) => {
