@@ -352,7 +352,7 @@ Some of these examples use the [moment.js format characters](https://momentjs.co
 
 <!-- placeholder to force blank line after included text --> <!-- endInclude -->
 
-DON'T PANIC! For users who are comfortable with JavaScript, these more complicated examples may also be of interest:
+For users who are comfortable with JavaScript, these more complicated examples may also be of interest:
 
 <!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.dates_task.due.advanced_docs.approved.md -->
 
