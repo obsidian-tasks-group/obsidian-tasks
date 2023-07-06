@@ -6,7 +6,7 @@ import moment from 'moment';
 
 import { verifyAll } from 'approvals/lib/Providers/Jest/JestApprovals';
 import type { Task } from '../../../../src/Task';
-import { SampleTasks, fromLines } from '../../../TestHelpers';
+import { SampleTasks, fromLine, fromLines } from '../../../TestHelpers';
 import type { QueryInstructionLineAndDescription } from '../../../Query/Filter/ReferenceDocs/FilterReference/VerifyFunctionFieldSamples';
 import { verifyMarkdownForDocs } from '../../../TestingTools/VerifyMarkdownTable';
 import { FunctionField } from '../../../../src/Query/Filter/FunctionField';
@@ -188,6 +188,7 @@ describe('file properties', () => {
         lines: [`- [ ] from ${samplePath}`],
         path: samplePath,
     });
+    extraTasks.push(fromLine({ line: '- [ ] In Work', path: 'Work/do stuff.md' }));
     const tasks = SampleTasks.withAllRootsPathsHeadings().concat(extraTasks);
     const testData: CustomGroupingPropertyTestData[] = [
         // ---------------------------------------------------------------------------------
@@ -218,8 +219,18 @@ describe('file properties', () => {
 
         [
             'task.file.root',
-            // comment to force line break
-            [],
+            [
+                [
+                    "filter by function task.file.root === '/'",
+                    'Find tasks in files in the root of the vault.',
+                    'Note that this is **case-sensitive**: capitalisation matters',
+                ],
+                [
+                    "filter by function task.file.root === 'Work/'",
+                    'Find tasks in files inside the folder `Work` which is in the root of the vault.',
+                    'Note that this is **case-sensitive**: capitalisation matters',
+                ],
+            ],
             tasks,
         ],
 

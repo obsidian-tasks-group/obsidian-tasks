@@ -868,7 +868,7 @@ Since Tasks X.Y.Z, **[[Custom Filters|custom filtering]] by file path** is now p
 > [!released]
 > Introduced in Tasks 3.4.0.
 
-The `root` is the top-level folder of the file that contains the task, that is, the first directory in the path, which will be `/` for files in root of the vault.
+The `root` is the top-level folder of the file that contains the task, that is, the first directory in the path, which will be `/` for files in the root of the vault.
 
 - `root (includes|does not include) <root>`
   - Matches case-insensitive (disregards capitalization).
@@ -880,7 +880,12 @@ Since Tasks X.Y.Z, **[[Custom Filters|custom filtering]] by root folder** is now
 
 <!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.file_properties_task.file.root_docs.approved.md -->
 
-==TODO==
+- ```filter by function task.file.root === '/'```
+  - Find tasks in files in the root of the vault.
+  - Note that this is **case-sensitive**: capitalisation matters.
+- ```filter by function task.file.root === 'Work/'```
+  - Find tasks in files inside the folder `Work` which is in the root of the vault.
+  - Note that this is **case-sensitive**: capitalisation matters.
 
 <!-- placeholder to force blank line after included text --> <!-- endInclude -->
 
