@@ -216,13 +216,33 @@ describe('file properties', () => {
             tasks,
         ],
 
-        ['task.file.root', [], tasks],
+        [
+            'task.file.root',
+            // comment to force line break
+            [],
+            tasks,
+        ],
 
-        ['task.file.folder', [], tasks],
+        [
+            'task.file.folder',
+            // comment to force line break
+            [],
+            tasks,
+        ],
 
-        ['task.file.filename', [], tasks],
+        [
+            'task.file.filename',
+            // comment to force line break
+            [],
+            tasks,
+        ],
 
-        ['task.heading', [], tasks],
+        [
+            'task.heading',
+            // comment to force line break
+            [],
+            tasks,
+        ],
     ];
 
     it.each(testData)('%s results', (_: string, groups: QueryInstructionLineAndDescription[], tasks: Task[]) => {
@@ -342,14 +362,29 @@ describe('other properties', () => {
         // RECURRENCE FIELDS
         // ---------------------------------------------------------------------------------
 
-        ['task.isRecurring', [], SampleTasks.withAllRecurrences()],
+        [
+            'task.isRecurring',
+            // comment to force line break
+            [],
+            SampleTasks.withAllRecurrences(),
+        ],
 
-        ['task.recurrenceRule', [], SampleTasks.withAllRecurrences()],
+        [
+            'task.recurrenceRule',
+            // comment to force line break
+            [],
+            SampleTasks.withAllRecurrences(),
+        ],
 
         // ---------------------------------------------------------------------------------
         // OTHER FIELDS
         // ---------------------------------------------------------------------------------
-        ['task.blockLink', [], SampleTasks.withAllRepresentativeBlockLinks()],
+        [
+            'task.blockLink',
+            // comment to force line break
+            [],
+            SampleTasks.withAllRepresentativeBlockLinks(),
+        ],
 
         [
             'task.description',
@@ -369,7 +404,12 @@ describe('other properties', () => {
         //     SampleTasks.withAllPriorities(), // TODO Choose specific tasks for task.indentation'
         // ],
 
-        ['task.isDone', [], SampleTasks.withAllStatuses()],
+        [
+            'task.isDone',
+            // comment to force line break
+            [],
+            SampleTasks.withAllStatuses(),
+        ],
 
         // [
         //     'task.listMarker',
@@ -426,9 +466,19 @@ describe('other properties', () => {
             SampleTasks.withRepresentativeTags(),
         ],
 
-        ['task.originalMarkdown', [], SampleTasks.withRepresentativeTags()],
+        [
+            'task.originalMarkdown',
+            // comment to force line break
+            [],
+            SampleTasks.withRepresentativeTags(),
+        ],
 
-        ['task.urgency', [], SampleTasks.withAllPriorities()],
+        [
+            'task.urgency',
+            // comment to force line break
+            [],
+            SampleTasks.withAllPriorities(),
+        ],
     ];
 
     it.each(testData)('%s results', (_: string, groups: QueryInstructionLineAndDescription[], tasks: Task[]) => {
