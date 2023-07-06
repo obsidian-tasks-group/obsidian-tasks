@@ -245,17 +245,27 @@ Since Tasks X.Y.Z, **[[Custom Filters|custom filtering]] by status names** is no
   - The values `TODO` etc are case-insensitive: you can use `in_progress`, for example
 - This searches the types you have given to your custom statuses.
 - This search is efficient if you wish to find all tasks that are `IN_PROGRESS`, and you have set up your statuses to have `[/]`, `[d]` and perhaps several other all treated as `IN_PROGRESS`.
-- To exclude multiple values, you can use multiple `status.type is not` lines.
-- To allow multiple values, use a boolean combination, for example: `( status.type is TODO ) OR ( status.type is IN_PROGRESS )`.
+- Searching for multiple possible status types:
+  - To exclude multiple values, you can use multiple `status.type is not` lines.
+  - To allow multiple values, use a boolean combination, for example: `( status.type is TODO ) OR ( status.type is IN_PROGRESS )`.
+  - Or see the 'custom filtering' examples below.
 
 > [!released]
 `status.type` text searching was introduced in Tasks 1.23.0.
 
 For more information, including adding your own customised statuses, see [[Statuses]].
 
-Since Tasks X.Y.Z, **[[Custom Filters|custom filtering]] by status types** is now possible, using `task.status.type`.
+Since Tasks X.Y.Z, **[[Custom Filters|custom filtering]] by status type** is now possible, using `task.status.type`.
 
 <!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.statuses_task.status.type_docs.approved.md -->
+
+- ```filter by function task.status.type === 'NON_TASK'```
+  - Find tasks of type `NON_TASK`.
+- ```filter by function 'TODO,IN_PROGRESS'.includes(task.status.type)```
+  - Find tasks that are either type `TODO` or type `IN_PROGRESS`.
+  - This can be more convenient than doing Boolean `OR` searches.
+- ```filter by function ! 'NON_TASK,CANCELLED'.includes(task.status.type)```
+  - Find tasks that are not type `NON_TASK` and not type `CANCELLED`.
 
 <!-- placeholder to force blank line after included text --> <!-- endInclude -->
 
