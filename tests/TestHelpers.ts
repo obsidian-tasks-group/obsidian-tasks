@@ -177,7 +177,7 @@ export class SampleTasks {
         ];
 
         return statuses.map((status) => {
-            return new TaskBuilder().status(status).build();
+            return new TaskBuilder().status(status).description(`Status ${status.name}`).build();
         });
     }
 
