@@ -22,6 +22,18 @@ export function fromLine({
     })!;
 }
 
+export function fromLines({
+    lines,
+    path = '',
+    precedingHeader = null,
+}: {
+    lines: string[];
+    path?: string;
+    precedingHeader?: string | null;
+}): Task[] {
+    return lines.map((line) => fromLine({ line, path, precedingHeader }));
+}
+
 export function createTasksFromMarkdown(tasksAsMarkdown: string, path: string, precedingHeader: string): Task[] {
     const taskLines = tasksAsMarkdown.split('\n');
     const tasks: Task[] = [];
