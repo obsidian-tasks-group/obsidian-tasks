@@ -244,8 +244,8 @@ Since Tasks X.Y.Z, **[[Custom Filters|custom filtering]] by status names** is no
 - `status.type (is|is not) (TODO|DONE|IN_PROGRESS|CANCELLED|NON_TASK)`
   - The values `TODO` etc are case-insensitive: you can use `in_progress`, for example
 - This searches the types you have given to your custom statuses.
-- This search is efficient if you wish to find all tasks that are `IN_PROGRESS`, and you have set up your statuses to have `[/]`, `[d]` and perhaps several other all treated as `IN_PROGRESS`.
-- Searching for multiple possible status types:
+- This search is efficient if you wish to find all tasks that are `IN_PROGRESS`, and you have set up your statuses to have `[/]`, `[d]` and perhaps several others all treated as `IN_PROGRESS`.
+- To search for multiple possible status types:
   - To exclude multiple values, you can use multiple `status.type is not` lines.
   - To allow multiple values, use a boolean combination, for example: `( status.type is TODO ) OR ( status.type is IN_PROGRESS )`.
   - Or see the 'custom filtering' examples below.
