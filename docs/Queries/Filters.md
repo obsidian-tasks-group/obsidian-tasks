@@ -234,6 +234,9 @@ Since Tasks X.Y.Z, **[[Custom Filters|custom filtering]] by status names** is no
 
 <!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.statuses_task.status.name_docs.approved.md -->
 
+- ```filter by function task.status.name === 'Unknown'```
+  - Find all tasks with custom statuses not yet added to the Tasks settings.
+
 <!-- placeholder to force blank line after included text --> <!-- endInclude -->
 
 ### Status Type
@@ -264,6 +267,19 @@ Since Tasks X.Y.Z, **[[Custom Filters|custom filtering]] by status symbol** is n
 
 <!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.statuses_task.status.symbol_docs.approved.md -->
 
+- ```filter by function task.status.symbol === '-'```
+  - Find tasks with a checkbox `[-]`, which is conventionally used to mean "cancelled".
+- ```filter by function task.status.symbol !== ' '```
+  - Find tasks with anything but the space character as their status symbol, that is, without the checkbox `[ ]`.
+- ```filter by function task.status.symbol === 'P' || task.status.symbol === 'C' || task.status.symbol === 'Q' || task.status.symbol === 'A'```
+  - Find tasks with status symbol `P`, `C`, `Q` or `A`
+  - This can get quite verbose, the more symbols you want to search for..
+- ```filter by function 'PCQA'.includes(task.status.symbol)```
+  - Find tasks with status symbol `P`, `C`, `Q` or `A`.
+  - This is a convenient shortcut over a longer statement testing each allowed value independently.
+- ```filter by function !' -x/'.includes(task.status.symbol)```
+  - Find tasks with any status symbol not supported by Tasks in the default settings.
+
 <!-- placeholder to force blank line after included text --> <!-- endInclude -->
 
 ### Next Status Symbol
@@ -273,6 +289,9 @@ There is no built-in instruction to filter by next status symbols.
 Since Tasks X.Y.Z, **[[Custom Filters|custom filtering]] by next status symbol** is now possible, using `task.status.nextSymbol`.
 
 <!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.statuses_task.status.nextSymbol_docs.approved.md -->
+
+- ```filter by function task.status.symbol === task.status.nextSymbol```
+  - Find tasks that toggle to themselves, because the next symbol is the same as the current symbol.
 
 <!-- placeholder to force blank line after included text --> <!-- endInclude -->
 
