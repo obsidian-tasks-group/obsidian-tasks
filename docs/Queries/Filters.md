@@ -213,6 +213,8 @@ Since Tasks X.Y.Z, **[[Custom Filters|custom filtering]] by status** is now poss
 
 <!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.other_properties_task.isDone_docs.approved.md -->
 
+==TODO==
+
 <!-- placeholder to force blank line after included text --> <!-- endInclude -->
 
 ### Status Name
@@ -647,6 +649,8 @@ Since Tasks X.Y.Z, it is possible to remove tags from the descriptions in custom
 
 <!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.other_properties_task.descriptionWithoutTags_docs.approved.md -->
 
+==TODO==
+
 <!-- placeholder to force blank line after included text --> <!-- endInclude -->
 
 ### Priority
@@ -712,6 +716,8 @@ Since Tasks X.Y.Z, **[[Custom Filters|custom filtering]] by urgency** is now pos
 
 <!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.other_properties_task.urgency_docs.approved.md -->
 
+==TODO==
+
 <!-- placeholder to force blank line after included text --> <!-- endInclude -->
 
 ### Recurrence
@@ -735,9 +741,13 @@ Since Tasks X.Y.Z, **[[Custom Filters|custom filtering]] by recurrence** is now 
 
 <!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.other_properties_task.isRecurring_docs.approved.md -->
 
+==TODO==
+
 <!-- placeholder to force blank line after included text --> <!-- endInclude -->
 
 <!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.other_properties_task.recurrenceRule_docs.approved.md -->
+
+==TODO==
 
 <!-- placeholder to force blank line after included text --> <!-- endInclude -->
 
@@ -815,6 +825,8 @@ For example, this could be used to extract information from `task.originalMarkdo
 
 <!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.other_properties_task.originalMarkdown_docs.approved.md -->
 
+==TODO==
+
 <!-- placeholder to force blank line after included text --> <!-- endInclude -->
 
 ---
@@ -840,6 +852,8 @@ Since Tasks X.Y.Z, **[[Custom Filters|custom filtering]] by file path** is now p
 
 <!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.file_properties_task.file.path_docs.approved.md -->
 
+==TODO==
+
 <!-- placeholder to force blank line after included text --> <!-- endInclude -->
 ### Root
 
@@ -857,6 +871,8 @@ The `root` is the top-level folder of the file that contains the task, that is, 
 Since Tasks X.Y.Z, **[[Custom Filters|custom filtering]] by root folder** is now possible, using `task.file.root`.
 
 <!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.file_properties_task.file.root_docs.approved.md -->
+
+==TODO==
 
 <!-- placeholder to force blank line after included text --> <!-- endInclude -->
 
@@ -877,6 +893,8 @@ Since Tasks X.Y.Z, **[[Custom Filters|custom filtering]] by folder** is now poss
 
 <!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.file_properties_task.file.folder_docs.approved.md -->
 
+==TODO==
+
 <!-- placeholder to force blank line after included text --> <!-- endInclude -->
 
 ### File Name
@@ -895,6 +913,8 @@ Note that the file name includes the `.md` extension.
 Since Tasks X.Y.Z, **[[Custom Filters|custom filtering]] by file name** is now possible, using `task.file.filename`.
 
 <!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.file_properties_task.file.filename_docs.approved.md -->
+
+==TODO==
 
 <!-- placeholder to force blank line after included text --> <!-- endInclude -->
 
@@ -917,6 +937,8 @@ Since Tasks X.Y.Z, **[[Custom Filters|custom filtering]] by file name** is now p
 Since Tasks X.Y.Z, **[[Custom Filters|custom filtering]] by heading** is now possible, using `task.heading`.
 
 <!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.file_properties_task.heading_docs.approved.md -->
+
+==TODO==
 
 <!-- placeholder to force blank line after included text --> <!-- endInclude -->
 

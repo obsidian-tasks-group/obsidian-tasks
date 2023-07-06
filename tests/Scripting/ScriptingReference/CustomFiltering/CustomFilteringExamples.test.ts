@@ -57,12 +57,16 @@ ${matchingTasks.join('\n')}
 
 function verifyFunctionFieldFilterSamplesForDocs(filters: QueryInstructionLineAndDescription[]) {
     let markdown = '';
-    for (const filter of filters) {
-        const instruction = filter[0];
-        const comments = filter.slice(1);
-        markdown += `- \`\`\`${instruction}\`\`\`
+    if (filters.length === 0) {
+        markdown = '==TODO==';
+    } else {
+        for (const filter of filters) {
+            const instruction = filter[0];
+            const comments = filter.slice(1);
+            markdown += `- \`\`\`${instruction}\`\`\`
 ${comments.map((l) => l.replace(/^( *)/, '$1    - ')).join('\n')}.
 `;
+        }
     }
     verifyMarkdownForDocs(markdown);
 }
