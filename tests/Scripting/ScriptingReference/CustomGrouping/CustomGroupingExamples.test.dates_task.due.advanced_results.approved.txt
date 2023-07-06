@@ -62,3 +62,13 @@ In fact, for ease of development and testing, it was written in a full-fledged d
 %%4%% Undated
 ====================================================================================
 
+
+group by function (!task.due.moment) ? '%%4%% ==Undated==' : result = task.due.moment.isBefore(moment(), 'day') ? '%%1%% ==Overdue==' : result = task.due.moment.isSame(moment(), 'day') ? '%%2%% ==Today==' : '%%3%% ==Future=='
+As above, but the headings `Overdue`, `Today`, `Future` and `Undated` are highlighted.
+See the sample screenshot below
+=>
+%%1%% ==Overdue==
+%%3%% ==Future==
+%%4%% ==Undated==
+====================================================================================
+

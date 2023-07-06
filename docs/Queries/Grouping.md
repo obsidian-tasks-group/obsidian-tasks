@@ -210,8 +210,15 @@ DON'T PANIC! For users who are comfortable with JavaScript, these more complicat
   - Try this on a line before `group by due` if there are a lot of due date headings, and you would like them to be broken down in to some kind of structure.
   - A limitation of Tasks expressions is that they each need to fit on a single line, so this uses nested ternary operators, making it powerful but very hard to read.
   - In fact, for ease of development and testing, it was written in a full-fledged development environment as a series of if/else blocks, and then automatically refactored in these nested ternary operators.
+- ```group by function (!task.due.moment) ? '%%4%% ==Undated==' : result = task.due.moment.isBefore(moment(), 'day') ? '%%1%% ==Overdue==' : result = task.due.moment.isSame(moment(), 'day') ? '%%2%% ==Today==' : '%%3%% ==Future=='```
+  - As above, but the headings `Overdue`, `Today`, `Future` and `Undated` are highlighted.
+  - See the sample screenshot below.
 
 <!-- placeholder to force blank line after included text --> <!-- endInclude -->
+
+![Tasks grouped by due date category, and then by due date|600](../images/tasks_custom_groups_categorise_dates.png)
+
+Sample image showing tasks grouped first by highlighted words `Overdue`, `Today`, `Future` and `Undated`, and then by individual due date.
 
 ### Done Date
 

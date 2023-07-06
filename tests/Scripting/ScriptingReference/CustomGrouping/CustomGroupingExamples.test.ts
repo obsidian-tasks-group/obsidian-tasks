@@ -127,6 +127,11 @@ describe('dates', () => {
                     'A limitation of Tasks expressions is that they each need to fit on a single line, so this uses nested ternary operators, making it powerful but very hard to read.',
                     'In fact, for ease of development and testing, it was written in a full-fledged development environment as a series of if/else blocks, and then automatically refactored in these nested ternary operators',
                 ],
+                [
+                    "group by function (!task.due.moment) ? '%%4%% ==Undated==' : result = task.due.moment.isBefore(moment(), 'day') ? '%%1%% ==Overdue==' : result = task.due.moment.isSame(moment(), 'day') ? '%%2%% ==Today==' : '%%3%% ==Future=='",
+                    'As above, but the headings `Overdue`, `Today`, `Future` and `Undated` are highlighted.',
+                    'See the sample screenshot below',
+                ],
             ],
             SampleTasks.withAllRepresentativeDueDates(),
         ],
