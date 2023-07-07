@@ -27,6 +27,18 @@ You can set a global query in the settings that Tasks will add to the start of a
 >     tags include work
 >     ```
 
+If you need to ignore the Global Query in a given Tasks block you may add `ignore global query` instruction to any place of the block.
+
+> [!example]
+>
+> ```tasks
+> tags include work
+> ignore global query
+> ```
+
+> [!released]
+The `ignore global query` instruction was added in Tasks X.Y.Z.
+
 ## Examples
 
 Currently, any query that is allowed in a task block will also work as your Global Query. This feature is especially useful for applying [filters](Filters) or [layout options](Layout) by default for all your queries.
