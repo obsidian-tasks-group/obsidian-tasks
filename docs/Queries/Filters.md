@@ -714,9 +714,27 @@ There is no built-in instruction to filter by urgency.
 
 Since Tasks X.Y.Z, **[[Custom Filters|custom filtering]] by urgency** is now possible, using `task.urgency`.
 
+> [!Warning]
+> Please read the following examples carefully. To use `task.urgency`  with `filter by function` successfully, it is important to understand how to handle searches for non-integer numbers.
+
 <!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.other_properties_task.urgency_docs.approved.md -->
 
-==TODO==
+- ```filter by function task.urgency.toFixed(2) === 10.29.toFixed(2)```
+  - This is the correct way to search for urgency values.
+  - The `.toFixed(2)` on both sides of the `===` ensures that two numbers being are compared are both rounded to the same number of decimal places (2).
+  - This is important, to prevent being tripped up `10.29` being not exactly the same when comparing non-integer numbers.
+- ```filter by function task.urgency === 10.29```
+  - ==Do not use this pattern!==
+  - From using `group by urgency` and reviewing the headings, we might conclude that tasks with the following values have urgency `10.19`:
+    - due tomorrow
+    - have no priority symbol
+  - From this, it might be natural to presume that we can search for `task.urgency === 10.29`.
+  - However, our function is checking the following values for equality:
+    - `task.urgency` is approximately:
+      - `10.292857142857140928526860079728`
+    - `10.29` is approximately:
+      - `10.289999999999999147348717087880`
+  - These values are **not exactly equal**, so the test fails to find any matching tasks.
 
 <!-- placeholder to force blank line after included text --> <!-- endInclude -->
 
