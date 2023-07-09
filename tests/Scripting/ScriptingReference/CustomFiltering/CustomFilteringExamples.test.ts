@@ -400,6 +400,11 @@ describe('statuses', () => {
 });
 
 describe('other properties', () => {
+    const tasksForRecurrenceTests = SampleTasks.withAllRecurrences().concat(
+        fromLine({ line: '- [ ] valid recurrence 🔁 every day' }),
+        fromLine({ line: '- [ ] dodgy recurrence 🔁 every kasdhf alkfha' }),
+    );
+
     const testData: CustomGroupingPropertyTestData[] = [
         // ---------------------------------------------------------------------------------
         // RECURRENCE FIELDS
@@ -427,17 +432,37 @@ describe('other properties', () => {
                     'So we have to search for the recurrence marker in `task.originalMarkdown` to see whether the original task contained the recurrence signifier when `task.isRecurring` even though false',
                 ],
             ],
-            SampleTasks.withAllRecurrences().concat(
-                fromLine({ line: '- [ ] valid recurrence 🔁 every day' }),
-                fromLine({ line: '- [ ] dodgy recurrence 🔁 every kasdhf alkfha' }),
-            ),
+            tasksForRecurrenceTests,
         ],
 
         [
             'task.recurrenceRule',
             // comment to force line break
-            [],
-            SampleTasks.withAllRecurrences(),
+
+            /**
+             * Return the text of the Task's recurrence rule, if it is supplied and is valid,
+             * and an empty string otherwise.
+             */
+
+            [
+                [
+                    'filter by function task.recurrenceRule.includes("every week")',
+                    'Similar to `recurrence includes every week`, but case-sensitive',
+                ],
+                [
+                    'filter by function !task.recurrenceRule.includes("every week")',
+                    'Similar to `recurrence does not include every week`, but case-sensitive',
+                ],
+                [
+                    'filter by function task.recurrenceRule.includes("every week") && task.recurrenceRule.includes("when done")',
+                    'Find tasks that are due every week, and **do** contain `when done` in their recurrence rule',
+                ],
+                [
+                    'filter by function task.recurrenceRule.includes("every week") && !task.recurrenceRule.includes("when done")',
+                    'Find tasks that are due every week, and do **not** contain `when done` in their recurrence rule',
+                ],
+            ],
+            tasksForRecurrenceTests,
         ],
 
         // ---------------------------------------------------------------------------------

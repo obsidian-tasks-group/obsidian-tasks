@@ -1,0 +1,46 @@
+Results of custom filters
+
+
+
+filter by function task.recurrenceRule.includes("every week")
+Similar to `recurrence includes every week`, but case-sensitive
+=>
+- [ ] my description 🔁 every week on Tuesday
+- [ ] my description 🔁 every week on Tuesday when done
+- [ ] my description 🔁 every week
+====================================================================================
+
+
+filter by function !task.recurrenceRule.includes("every week")
+Similar to `recurrence does not include every week`, but case-sensitive
+=>
+- [ ] my description 🔁 every 4 months on the 3rd Wednesday
+- [ ] my description 🔁 every month
+- [ ] my description
+- [ ] my description
+- [ ] my description
+- [ ] my description 🔁 every 4 weeks
+- [ ] my description 🔁 every 6 days
+- [ ] my description 🔁 every 8 days
+- [ ] my description 🔁 every 8 days when done
+- [ ] my description 🔁 every day
+- [ ] my description
+- [ ] valid recurrence 🔁 every day
+- [ ] dodgy recurrence
+====================================================================================
+
+
+filter by function task.recurrenceRule.includes("every week") && task.recurrenceRule.includes("when done")
+Find tasks that are due every week, and **do** contain `when done` in their recurrence rule
+=>
+- [ ] my description 🔁 every week on Tuesday when done
+====================================================================================
+
+
+filter by function task.recurrenceRule.includes("every week") && !task.recurrenceRule.includes("when done")
+Find tasks that are due every week, and do **not** contain `when done` in their recurrence rule
+=>
+- [ ] my description 🔁 every week on Tuesday
+- [ ] my description 🔁 every week
+====================================================================================
+

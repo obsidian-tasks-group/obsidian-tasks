@@ -757,6 +757,8 @@ For more information, see [[Recurring Tasks]].
 
 Since Tasks X.Y.Z, **[[Custom Filters|custom filtering]] by recurrence** is now possible, using `task.isRecurring` and `task.recurrenceRule`.
 
+Using `task.isRecurring`:
+
 <!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.other_properties_task.isRecurring_docs.approved.md -->
 
 - ```filter by function task.isRecurring```
@@ -773,9 +775,18 @@ Since Tasks X.Y.Z, **[[Custom Filters|custom filtering]] by recurrence** is now 
 
 <!-- placeholder to force blank line after included text --> <!-- endInclude -->
 
+Using `task.recurrenceRule` - please read [[Task Properties#Values for Other Task Properties]] notes on `task.recurrenceRule` before use:
+
 <!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.other_properties_task.recurrenceRule_docs.approved.md -->
 
-==TODO==
+- ```filter by function task.recurrenceRule.includes("every week")```
+  - Similar to `recurrence includes every week`, but case-sensitive.
+- ```filter by function !task.recurrenceRule.includes("every week")```
+  - Similar to `recurrence does not include every week`, but case-sensitive.
+- ```filter by function task.recurrenceRule.includes("every week") && task.recurrenceRule.includes("when done")```
+  - Find tasks that are due every week, and **do** contain `when done` in their recurrence rule.
+- ```filter by function task.recurrenceRule.includes("every week") && !task.recurrenceRule.includes("when done")```
+  - Find tasks that are due every week, and do **not** contain `when done` in their recurrence rule.
 
 <!-- placeholder to force blank line after included text --> <!-- endInclude -->
 
