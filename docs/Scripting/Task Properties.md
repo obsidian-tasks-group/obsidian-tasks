@@ -78,6 +78,19 @@ For more information, including adding your own customised statuses, see [[Statu
 
 1. `task.description` has spaces at the start and end stripped off.
 1. `task.description` includes any tags.
+1. `task.isRecurring` is:
+    - `true` if the Task has a **valid** recurrence rule,
+    - `false` if:
+        - **either** it does not have a recurrence rule
+        - **or** the recurrence rule is invalid (such as `🔁  every seven weeks`, for example).
+1. `task.recurrenceRule` is:
+    - **either** the standardised text of the recurrence rule if the Task has a **valid** recurrence rule
+        - An example might be `every 7 weeks`.
+        - Note that this text is generated programmatically and standardised, and so may not exactly match the text in any manually typed tasks.
+        - For example, a task with `🔁 every Sunday` will have a   `task.recurrenceRule` value of  `every week on Sunday`.
+    - **or** an empty string (`''`) if:
+        - **either** it does not have a recurrence rule,
+        - **or** the recurrence rule is invalid (such as `🔁  every seven weeks`, for example).
 1. Note that if there is a [[Global Filter]] enabled in settings, and the filter is a tag, it will be removed from `task.tags`.
 
 ---

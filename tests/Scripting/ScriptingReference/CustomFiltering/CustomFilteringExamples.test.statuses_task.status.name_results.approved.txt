@@ -1,0 +1,15 @@
+Results of custom filters
+
+
+
+filter by function task.status.name === 'Unknown'
+Find all tasks with custom statuses not yet added to the Tasks settings
+=>
+- [p] Unknown symbol
+- [s] Toggles to self
+- [P] Pro
+- [C] Con
+- [Q] Question
+- [A] Answer
+====================================================================================
+

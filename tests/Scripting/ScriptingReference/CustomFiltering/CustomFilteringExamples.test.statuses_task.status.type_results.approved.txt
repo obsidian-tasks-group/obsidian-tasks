@@ -1,0 +1,41 @@
+Results of custom filters
+
+
+
+filter by function task.status.type === 'NON_TASK'
+Find tasks of type `NON_TASK`
+=>
+
+====================================================================================
+
+
+filter by function 'TODO,IN_PROGRESS'.includes(task.status.type)
+Find tasks that are either type `TODO` or type `IN_PROGRESS`.
+This can be more convenient than doing Boolean `OR` searches
+=>
+- [/] Status In Progress
+- [ ] Status Todo
+- [p] Unknown symbol
+- [s] Toggles to self
+- [P] Pro
+- [C] Con
+- [Q] Question
+- [A] Answer
+====================================================================================
+
+
+filter by function ! 'NON_TASK,CANCELLED'.includes(task.status.type)
+Find tasks that are not type `NON_TASK` and not type `CANCELLED`
+=>
+- [x] Status Done
+- [] Status EMPTY
+- [/] Status In Progress
+- [ ] Status Todo
+- [p] Unknown symbol
+- [s] Toggles to self
+- [P] Pro
+- [C] Con
+- [Q] Question
+- [A] Answer
+====================================================================================
+

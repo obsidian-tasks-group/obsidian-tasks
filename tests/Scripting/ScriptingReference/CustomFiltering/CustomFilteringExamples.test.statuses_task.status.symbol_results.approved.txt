@@ -1,0 +1,61 @@
+Results of custom filters
+
+
+
+filter by function task.status.symbol === '-'
+Find tasks with a checkbox `[-]`, which is conventionally used to mean "cancelled"
+=>
+- [-] Status Cancelled
+====================================================================================
+
+
+filter by function task.status.symbol !== ' '
+Find tasks with anything but the space character as their status symbol, that is, without the checkbox `[ ]`
+=>
+- [-] Status Cancelled
+- [x] Status Done
+- [] Status EMPTY
+- [/] Status In Progress
+- [p] Unknown symbol
+- [s] Toggles to self
+- [P] Pro
+- [C] Con
+- [Q] Question
+- [A] Answer
+====================================================================================
+
+
+filter by function task.status.symbol === 'P' || task.status.symbol === 'C' || task.status.symbol === 'Q' || task.status.symbol === 'A'
+Find tasks with status symbol `P`, `C`, `Q` or `A`
+This can get quite verbose, the more symbols you want to search for.
+=>
+- [P] Pro
+- [C] Con
+- [Q] Question
+- [A] Answer
+====================================================================================
+
+
+filter by function 'PCQA'.includes(task.status.symbol)
+Find tasks with status symbol `P`, `C`, `Q` or `A`.
+This is a convenient shortcut over a longer statement testing each allowed value independently
+=>
+- [] Status EMPTY
+- [P] Pro
+- [C] Con
+- [Q] Question
+- [A] Answer
+====================================================================================
+
+
+filter by function !' -x/'.includes(task.status.symbol)
+Find tasks with any status symbol not supported by Tasks in the default settings
+=>
+- [p] Unknown symbol
+- [s] Toggles to self
+- [P] Pro
+- [C] Con
+- [Q] Question
+- [A] Answer
+====================================================================================
+
