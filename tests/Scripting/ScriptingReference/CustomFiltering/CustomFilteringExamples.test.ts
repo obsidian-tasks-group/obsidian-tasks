@@ -187,15 +187,16 @@ describe('dates', () => {
 
 describe('file properties', () => {
     const samplePath = 'tasks releases/4.1.0 Release.md';
-    const extraTasks = fromLines({
-        lines: [`- [ ] from ${samplePath}`],
-        path: samplePath,
-    });
-    extraTasks.push(fromLine({ line: '- [ ] In Work/', path: 'Work/do stuff.md' }));
-    extraTasks.push(fromLine({ line: '- [ ] In Work/Projects/', path: 'Work/Projects/general projects stuff.md' }));
-    extraTasks.push(fromLine({ line: '- [ ] In Work/Projects/Detail/', path: 'Work/Projects/Detail/detailed.md' }));
-    extraTasks.push(fromLine({ line: '- [ ] In Work/Projects 2024/', path: 'Work/Projects 2024/2024.md' }));
+    const extraTasks = [
+        samplePath,
+        'Work/do stuff.md',
+        'Work/Projects/general projects stuff.md',
+        'Work/Projects/Detail/detailed.md',
+        'Work/Projects 2024/2024.md',
+    ].map((path) => fromLine({ line: '- [ ] In ' + path, path }));
+
     const tasks = SampleTasks.withAllRootsPathsHeadings().concat(extraTasks);
+
     const testData: CustomGroupingPropertyTestData[] = [
         // ---------------------------------------------------------------------------------
         // FILE FIELDS
