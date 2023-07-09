@@ -1,0 +1,43 @@
+Results of custom filters
+
+
+
+filter by function task.isRecurring
+This is identical to `is recurring`.
+It can be used with `&&` (Boolean AND) or `||` (Boolean OR) in conjunction with other conditions.
+=>
+- [ ] my description 🔁 every 4 months on the 3rd Wednesday
+- [ ] my description 🔁 every month
+- [ ] my description 🔁 every week on Tuesday
+- [ ] my description 🔁 every week on Tuesday when done
+- [ ] my description 🔁 every week
+- [ ] my description 🔁 every 4 weeks
+- [ ] my description 🔁 every 6 days
+- [ ] my description 🔁 every 8 days
+- [ ] my description 🔁 every 8 days when done
+- [ ] my description 🔁 every day
+- [ ] valid recurrence 🔁 every day
+====================================================================================
+
+
+filter by function !task.isRecurring
+This is identical to `is not recurring`.
+It can be used with `&&` (Boolean AND) or `||` (Boolean OR) in conjunction with other conditions.
+=>
+- [ ] my description
+- [ ] my description
+- [ ] my description
+- [ ] my description
+- [ ] dodgy recurrence
+====================================================================================
+
+
+filter by function (!task.isRecurring) && task.originalMarkdown.includes('🔁')
+Find tasks that have a **broken/invalid recurrence rule**.
+This assumes use of the Tasks emoji format, and should of course be updated if using another format.
+This uses knowledge of an implementation detail of Tasks, which is that recurrence rules are read and removed from the description even if they are invalid.
+So we have to search for the recurrence marker in `task.originalMarkdown` to see whether the original task contained the recurrence signifier when `task.isRecurring` even though false
+=>
+- [ ] dodgy recurrence
+====================================================================================
+
