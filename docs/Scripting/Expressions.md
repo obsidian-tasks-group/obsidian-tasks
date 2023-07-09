@@ -22,6 +22,7 @@ publish: true
 - The expression is a string instruction.
 - Depending on the context, one or two tasks are passed in to the expression, and a calculation is performed.
   - As of Tasks 4.0.0, in fact only a single task is passed in, to implement [[Custom Grouping]].
+  - As of Tasks X.Y.Z, a single task is passed in, to implement [[Custom Filters]].
 - Tasks then calculates a value from the inputs.
 
 ## Example expressions

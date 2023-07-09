@@ -12,6 +12,7 @@ publish: true
 
 This page is long. Here are some links to the main sections:
 
+- [[#Custom Filters]]
 - [[#Searching for dates]]
 - [[#Text filters]]
 - [[#Matching multiple filters]]
@@ -22,6 +23,18 @@ This page is long. Here are some links to the main sections:
 - [[#Appendix: Tasks 2.0.0 improvements to date filters]]
 
 ---
+## Custom Filters
+
+> [!released]
+> `filter by function` was introduced in Tasks X.Y.Z.
+
+Tasks provides many built-in filtering options, but sometimes they don't quite do what is wanted by all users.
+
+Now Tasks has a powerful mechanism for you to create your own **custom filters**, offering incredible flexibility.
+
+There are many examples of the custom filtering instruction `filter by function` in the documentation below, with explanations, for when the instructions built in to Tasks do not satisfy your preferences.
+
+You can find out more about this very powerful facility in [[Custom Filters]].
 
 ## Searching for dates
 
