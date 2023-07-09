@@ -6,6 +6,8 @@ publish: true
 
 ## What's New?
 
+- X.Y.Z: 🔥 Add [[Custom Filters|custom filtering]]
+- 4.1.0: 🔥 Add [[Layout|hide and show tags]]
 - 4.0.0: 🔥 Add [[Custom Grouping|custom grouping]], using [[Task Properties|task properties]] to create [[expressions|expressions]] - the start of a whole new [[About Scripting|scripting]] world in Tasks!
 - 3.9.0: 🔥 Add [[Priority#Priorities and Order|lowest and highest]] priorities
 - 3.8.0: 🔥 Add [[Limiting#Limit number of tasks in each group|limiting tasks per group]]
