@@ -187,6 +187,8 @@ describe('dates', () => {
 
 describe('file properties', () => {
     const samplePath = 'tasks releases/4.1.0 Release.md';
+
+    // Add some tasks with different paths
     const extraTasks = [
         samplePath,
         'Work/do stuff.md',
@@ -194,6 +196,35 @@ describe('file properties', () => {
         'Work/Projects/Detail/detailed.md',
         'Work/Projects 2024/2024.md',
     ].map((path) => fromLine({ line: '- [ ] In ' + path, path }));
+
+    const sampleDates = ['2023-06-10', '2023-06-11'];
+
+    // Add some tasks with due dates
+    sampleDates.map((date) => extraTasks.push(fromLine({ line: `- [ ] Due on ${date} 📅 ${date}` })));
+
+    // Add some tasks with dates in headings
+    sampleDates.map((date) =>
+        extraTasks.push(
+            fromLine({
+                line: `- [ ] No due date but I have ${date} in my preceding heading`,
+                precedingHeader: `Heading including a date ${date}`,
+            }),
+        ),
+    );
+
+    const sampleTags = ['#context/home', '#context/work'];
+    // Add some tasks with tags
+    sampleTags.map((tag) => extraTasks.push(fromLine({ line: `- [ ] I have a tag ${tag}` })));
+
+    // Add some tasks with tags
+    sampleTags.map((tag) =>
+        extraTasks.push(
+            fromLine({
+                line: `- [ ] I do not have a tag ${tag.substring(1)} but it is in my heading`,
+                precedingHeader: `Heading including a tag ${tag}`,
+            }),
+        ),
+    );
 
     const tasks = SampleTasks.withAllRootsPathsHeadings().concat(extraTasks);
 
@@ -282,11 +313,47 @@ describe('file properties', () => {
 
         [
             'task.heading',
-            // comment to force line break
-            [],
+            [
+                [
+                    "filter by function task.due.moment?.isSame('2023-06-11', 'day') || ( !task.due.moment && task.heading?.includes('2023-06-11')) || false",
+                    'Find takes that:',
+                    '  **either** due on the date `2023-06-11`,',
+                    '  **or** do not have a due date, and their preceding heading contains the same date as a string: `2023-06-11`',
+                ],
+                [
+                    "filter by function task.due.moment?.isSame(moment(), 'day') || ( !task.due.moment && task.heading?.includes(moment().format('YYYY-MM-DD')) ) || false",
+                    'Find takes that:',
+                    "  **either** due on today's date,",
+                    "  **or** do not have a due date, and their preceding heading contains today's date as a string, formatted as `YYYY-MM-DD`",
+                ],
+                [
+                    "filter by function task.heading?.includes('#context/home') || task.tags.find( (tag) => tag === '#context/home' ) && true || false",
+                    'Find takes that:',
+                    '  **either** have a tag exactly matching `#context/home` on the task line',
+                    '  **or** their preceding heading contains the text `#context/home` anywhere',
+                    '    For demonstration purposes, this is slightly imprecise, in that it would also match nested tasks, such as `#context/home/ground-floor`',
+                ],
+            ],
             tasks,
         ],
     ];
+
+    /*
+- ```filter by function task.due.moment?.isSame('2023-06-11', 'day') || ( !task.due.moment && task.heading?.includes('2023-06-11')) || false```
+"Find takes that:",
+"  **either** due on the date `2023-06-11`,",
+"  **or** do not have a due date, and their preceding heading contains the same date as a string: `2023-06-11`.",
+- ```filter by function task.due.moment?.isSame(moment(), 'day') || ( !task.due.moment && task.heading?.includes(moment().format('YYYY-MM-DD')) ) || false```
+"Find takes that:",
+"  **either** due on today's date,",
+"  **or** do not have a due date, and their preceding heading contains today's date as a string, formatted as `YYYY-MM-DD`.",
+- ```filter by function task.heading?.includes('#context/home') || task.tags.find( (tag) => tag === '#context/home' ) && true || false```
+"Find takes that:",
+"  **either** have a tag exactly matching `#context/home` on the task line",
+"  **or** their preceding heading contains the text `#context/home` anywhere",
+"    For demonstration purposes, this is slightly imprecise, in that it would also match nested tasks, such as `#context/home/ground-floor`",
+
+     */
 
     it.each(testData)('%s results', (_: string, groups: QueryInstructionLineAndDescription[], tasks: Task[]) => {
         verifyFunctionFieldFilterSamplesOnTasks(groups, tasks);
