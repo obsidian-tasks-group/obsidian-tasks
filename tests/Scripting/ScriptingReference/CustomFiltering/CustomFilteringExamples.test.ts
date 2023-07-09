@@ -495,8 +495,16 @@ describe('other properties', () => {
 
         [
             'task.isDone',
-            // comment to force line break
-            [],
+            [
+                [
+                    'filter by function task.isDone',
+                    'Same as the `done` filter, but might be useful in conjunction with other expressions on the same line',
+                ],
+                [
+                    'filter by function ! task.isDone',
+                    'Same as the `not done` filter, but might be useful in conjunction with other expressions on the same line',
+                ],
+            ],
             SampleTasks.withAllStatuses(),
         ],
 

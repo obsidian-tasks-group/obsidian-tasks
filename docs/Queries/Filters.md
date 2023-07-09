@@ -213,9 +213,15 @@ Since Tasks X.Y.Z, **[[Custom Filters|custom filtering]] by status** is now poss
 
 <!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.other_properties_task.isDone_docs.approved.md -->
 
-==TODO==
+- ```filter by function task.isDone```
+  - Same as the `done` filter, but might be useful in conjunction with other expressions on the same line.
+- ```filter by function ! task.isDone```
+  - Same as the `not done` filter, but might be useful in conjunction with other expressions on the same line.
 
 <!-- placeholder to force blank line after included text --> <!-- endInclude -->
+
+> [!NOTE]
+> `task.status.type` (see [[#Status Type]]) gives more precision in custom filters than `task.isDone`.
 
 ### Status Name
 
