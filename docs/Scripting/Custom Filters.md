@@ -7,7 +7,7 @@ publish: true
 <span class="related-pages">#feature/scripting #feature/filters</span>
 
 > [!released]
-> Custom filters were introduced in Tasks X.Y.Z.
+> Custom filters were introduced in Tasks 4.2.0.
 
 ## Summary
 

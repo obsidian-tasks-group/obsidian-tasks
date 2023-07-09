@@ -346,7 +346,7 @@ Since Tasks 4.0.0, **[[Custom Grouping|custom grouping]] by description** is now
 
 ### Description without tags
 
-Since Tasks X.Y.Z, it is possible to remove tags from the descriptions in custom groups, for use in **[[Custom Grouping|custom grouping]]**.
+Since Tasks 4.2.0, it is possible to remove tags from the descriptions in custom groups, for use in **[[Custom Grouping|custom grouping]]**.
 
 The value `task.descriptionWithoutTags` returns a copy of the description with all the tags removed, so that you can group together any tasks whose descriptions differ only by their tags.
 
