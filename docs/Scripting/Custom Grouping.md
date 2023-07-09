@@ -16,7 +16,7 @@ publish: true
 - There are loads of examples in [[Grouping]].
   - Search for `group by function` in that file.
 - Find all the supported tasks properties in [[Task Properties]] and [[Quick Reference]].
-  - A number of properties are only available for custom grouping, and not for built-in grouping instructions.
+  - A number of properties are only available for custom grouping and filters, and not for built-in grouping instructions.
 - Learn a bit about how expressions work in [[Expressions]].
 
 ## Custom grouping introduction
