@@ -209,6 +209,20 @@ For full details of combining filters with boolean operators, see [[Combining Fi
 >
 > The new behaviour is more flexible and was required to introduce support for in-progress and cancelled tasks. If the original behaviour is preferred, you can change the status types of every symbol except `space` to `DONE`. See [[Set up custom statuses|How to set up your custom statuses]].
 
+Since Tasks X.Y.Z, **[[Custom Filters|custom filtering]] by status** is now possible, using `task.isDone`.
+
+<!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.other_properties_task.isDone_docs.approved.md -->
+
+- ```filter by function task.isDone```
+  - Same as the `done` filter, but might be useful in conjunction with other expressions on the same line.
+- ```filter by function ! task.isDone```
+  - Same as the `not done` filter, but might be useful in conjunction with other expressions on the same line.
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+
+> [!NOTE]
+> `task.status.type` (see [[#Status Type]]) gives more precision in custom filters than `task.isDone`.
+
 ### Status Name
 
 - This searches the names given to your custom statuses.
@@ -224,19 +238,80 @@ For full details of combining filters with boolean operators, see [[Combining Fi
 
 For more information, including adding your own customised statuses, see [[Statuses]].
 
+Since Tasks X.Y.Z, **[[Custom Filters|custom filtering]] by status names** is now possible, using `task.status.name`.
+
+<!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.statuses_task.status.name_docs.approved.md -->
+
+- ```filter by function task.status.name === 'Unknown'```
+  - Find all tasks with custom statuses not yet added to the Tasks settings.
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+
 ### Status Type
 
 - `status.type (is|is not) (TODO|DONE|IN_PROGRESS|CANCELLED|NON_TASK)`
   - The values `TODO` etc are case-insensitive: you can use `in_progress`, for example
 - This searches the types you have given to your custom statuses.
-- This search is efficient if you wish to find all tasks that are `IN_PROGRESS`, and you have set up your statuses to have `[/]`, `[d]` and perhaps several other all treated as `IN_PROGRESS`.
-- To exclude multiple values, you can use multiple `status.type is not` lines.
-- To allow multiple values, use a boolean combination, for example: `( status.type is TODO ) OR ( status.type is IN_PROGRESS )`.
+- This search is efficient if you wish to find all tasks that are `IN_PROGRESS`, and you have set up your statuses to have `[/]`, `[d]` and perhaps several others all treated as `IN_PROGRESS`.
+- To search for multiple possible status types:
+  - To exclude multiple values, you can use multiple `status.type is not` lines.
+  - To allow multiple values, use a boolean combination, for example: `( status.type is TODO ) OR ( status.type is IN_PROGRESS )`.
+  - Or see the 'custom filtering' examples below.
 
 > [!released]
 `status.type` text searching was introduced in Tasks 1.23.0.
 
 For more information, including adding your own customised statuses, see [[Statuses]].
+
+Since Tasks X.Y.Z, **[[Custom Filters|custom filtering]] by status type** is now possible, using `task.status.type`.
+
+<!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.statuses_task.status.type_docs.approved.md -->
+
+- ```filter by function task.status.type === 'NON_TASK'```
+  - Find tasks of type `NON_TASK`.
+- ```filter by function 'TODO,IN_PROGRESS'.includes(task.status.type)```
+  - Find tasks that are either type `TODO` or type `IN_PROGRESS`.
+  - This can be more convenient than doing Boolean `OR` searches.
+- ```filter by function ! 'NON_TASK,CANCELLED'.includes(task.status.type)```
+  - Find tasks that are not type `NON_TASK` and not type `CANCELLED`.
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+
+### Status Symbol
+
+There is no built-in instruction to filter by status symbols.
+
+Since Tasks X.Y.Z, **[[Custom Filters|custom filtering]] by status symbol** is now possible, using `task.status.symbol`.
+
+<!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.statuses_task.status.symbol_docs.approved.md -->
+
+- ```filter by function task.status.symbol === '-'```
+  - Find tasks with a checkbox `[-]`, which is conventionally used to mean "cancelled".
+- ```filter by function task.status.symbol !== ' '```
+  - Find tasks with anything but the space character as their status symbol, that is, without the checkbox `[ ]`.
+- ```filter by function task.status.symbol === 'P' || task.status.symbol === 'C' || task.status.symbol === 'Q' || task.status.symbol === 'A'```
+  - Find tasks with status symbol `P`, `C`, `Q` or `A`
+  - This can get quite verbose, the more symbols you want to search for..
+- ```filter by function 'PCQA'.includes(task.status.symbol)```
+  - Find tasks with status symbol `P`, `C`, `Q` or `A`.
+  - This is a convenient shortcut over a longer statement testing each allowed value independently.
+- ```filter by function !' -x/'.includes(task.status.symbol)```
+  - Find tasks with any status symbol not supported by Tasks in the default settings.
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+
+### Next Status Symbol
+
+There is no built-in instruction to filter by next status symbols.
+
+Since Tasks X.Y.Z, **[[Custom Filters|custom filtering]] by next status symbol** is now possible, using `task.status.nextSymbol`.
+
+<!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.statuses_task.status.nextSymbol_docs.approved.md -->
+
+- ```filter by function task.status.symbol === task.status.nextSymbol```
+  - Find tasks that toggle to themselves, because the next symbol is the same as the current symbol.
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
 
 ### Status Examples
 
@@ -250,26 +325,6 @@ Find any tasks that have status symbols you have not yet added to your Tasks set
 ---
 
 ## Filters for Dates in Tasks
-
-### Done Date
-
-- `no done date`
-- `has done date`
-- `done (before|after|on) <date>`
-- `done (before|after|in) <date range>`
-  - `YYYY-MM-DD YYYY-MM-DD`
-  - `(last|this|next) (week|month|quarter|year)`
-  - `(YYYY-Www|YYYY-mm|YYYY-Qq|YYYY)`
-- `done date is invalid`
-
-For more information, see [[Dates#Done date|Done date]].
-
-> [!released]
->
-> - `no done date` and `has done date` were introduced in Tasks 1.7.0.
-> - `done date is invalid` was introduced in Tasks 1.16.0.
-> - `done (before|after|in) <date range>` searches were introduced in Tasks 2.0.0.
-> - `done (before|after|in) (YYYY-Www|YYYY-mm|YYYY-Qq|YYYY)` searches were introduced in Tasks 3.1.0.
 
 ### Due Date
 
@@ -291,6 +346,70 @@ For more information, see [[Dates#Due date|Due date]].
 > - `due (before|after|in) <date range>` searches were introduced in Tasks 2.0.0.
 > - `due (before|after|in) (YYYY-Www|YYYY-mm|YYYY-Qq|YYYY)` searches were introduced in Tasks 3.1.0.
 
+Since Tasks X.Y.Z, **[[Custom Filters|custom filtering]] by due date** is now possible, using `task.due`.
+
+These examples all use `task.due` property, which is a `TasksDate` object. You can see the current [TasksDate source code](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/src/Scripting/TasksDate.ts), to explore its capabilities.
+
+Some of these examples use the [moment.js format characters](https://momentjs.com/docs/#/displaying/format/).
+
+<!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.dates_task.due_docs.approved.md -->
+
+- ```filter by function task.due.format('dddd') === 'Tuesday'```
+  - Find tasks due on Tuesdays, that is, any Tuesday.
+  - On non-English systems, you may need to supply the day of the week in the local language.
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+
+For users who are comfortable with JavaScript, these more complicated examples may also be of interest:
+
+<!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.dates_task.due.advanced_docs.approved.md -->
+
+- ```filter by function task.due.moment?.isSameOrBefore(moment(), 'day') || false```
+  - Find all tasks due today or earlier.
+  - `moment()` returns the current date and time, which we need to convert to the start of the day.
+  - As the second parameter determines the precision, and not just a single value to check, using 'day' will check for year, month and day.
+  - See the documentation of [isSameOrBefore](https://momentjscom.readthedocs.io/en/latest/moment/05-query/04-is-same-or-before/).
+- ```filter by function task.due.moment?.isSameOrAfter(moment(), 'day') || false```
+  - Due today or later.
+- ```filter by function task.due.moment?.isSame(moment('2023-05-31'), 'day') || false```
+  - Find all tasks due on 31 May 2023.
+- ```filter by function task.due.moment?.isSame(moment('2023-05-31'), 'week') || false```
+  - Find all tasks due in the week of 31 May 2023.
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+
+### Done Date
+
+- `no done date`
+- `has done date`
+- `done (before|after|on) <date>`
+- `done (before|after|in) <date range>`
+  - `YYYY-MM-DD YYYY-MM-DD`
+  - `(last|this|next) (week|month|quarter|year)`
+  - `(YYYY-Www|YYYY-mm|YYYY-Qq|YYYY)`
+- `done date is invalid`
+
+For more information, see [[Dates#Done date|Done date]].
+
+> [!released]
+>
+> - `no done date` and `has done date` were introduced in Tasks 1.7.0.
+> - `done date is invalid` was introduced in Tasks 1.16.0.
+> - `done (before|after|in) <date range>` searches were introduced in Tasks 2.0.0.
+> - `done (before|after|in) (YYYY-Www|YYYY-mm|YYYY-Qq|YYYY)` searches were introduced in Tasks 3.1.0.
+
+Since Tasks X.Y.Z, **[[Custom Filters|custom filtering]] by done date** is now possible, using `task.done`.
+
+<!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.dates_task.done_docs.approved.md -->
+
+- ```filter by function task.done.format('dddd') === 'Thursday'```
+  - Find tasks done on Thursdays, that is, any Thursday.
+  - On non-English systems, you may need to supply the day of the week in the local language.
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+
+For more examples, see [[#Due Date]].
+
 ### Scheduled Date
 
 - `no scheduled date`
@@ -311,6 +430,18 @@ For more information, see [[Dates#Scheduled date|Scheduled date]].
 > - `scheduled (before|after|in) <date range>` searches were introduced in Tasks 2.0.0.
 > - `scheduled (before|after|in) (YYYY-Www|YYYY-mm|YYYY-Qq|YYYY)` searches were introduced in Tasks 3.1.0.
 
+Since Tasks X.Y.Z, **[[Custom Filters|custom filtering]] by scheduled date** is now possible, using `task.scheduled`.
+
+<!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.dates_task.scheduled_docs.approved.md -->
+
+- ```filter by function task.scheduled.format('dddd') === 'Wednesday'```
+  - Find tasks scheduled on Wednesdays, that is, any Wednesday.
+  - On non-English systems, you may need to supply the day of the week in the local language.
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+
+For more examples, see [[#Due Date]].
+
 ### Start Date
 
 - `no start date`
@@ -330,6 +461,18 @@ For more information, see [[Dates#Start date|Start date]].
 > - `start date is invalid` was introduced in Tasks 1.16.0.
 > - `starts (before|after|in) <date range>` searches were introduced in Tasks 2.0.0.
 > - `starts (before|after|in) (YYYY-Www|YYYY-mm|YYYY-Qq|YYYY)` searches were introduced in Tasks 3.1.0.
+
+Since Tasks X.Y.Z, **[[Custom Filters|custom filtering]] by start date** is now possible, using `task.start`.
+
+<!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.dates_task.start_docs.approved.md -->
+
+- ```filter by function task.start.format('dddd') === 'Sunday'```
+  - Find tasks starting on Sundays, that is, any Sunday.
+  - On non-English systems, you may need to supply the day of the week in the local language.
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+
+For more examples, see [[#Due Date]].
 
 #### Making Start Date only find tasks with Start
 
@@ -381,6 +524,18 @@ Such a filter could be:
 > - Created date was introduced in Tasks 2.0.0.
 > - `created (before|after|in) (YYYY-Www|YYYY-mm|YYYY-Qq|YYYY)` searches were introduced in Tasks 3.1.0.
 
+Since Tasks X.Y.Z, **[[Custom Filters|custom filtering]] by created date** is now possible, using `task.created`.
+
+<!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.dates_task.created_docs.approved.md -->
+
+- ```filter by function task.created.format('dddd') === 'Monday'```
+  - Find tasks created on Mondays, that is, any Monday.
+  - On non-English systems, you may need to supply the day of the week in the local language.
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+
+For more examples, see [[#Due Date]].
+
 ### Happens
 
 - `happens (before|after|on) <date>`
@@ -404,6 +559,18 @@ because the tasks starts before tomorrow. Only one of the dates needs to match.
 > - `no happens date` and `has happens date` were introduced in Tasks 1.7.0.
 > - `happens (before|after|in) <date range>` searches were introduced in Tasks 2.0.0.
 > - `happens (before|after|in) (YYYY-Www|YYYY-mm|YYYY-Qq|YYYY)` searches were introduced in Tasks 3.1.0.
+
+Since Tasks X.Y.Z, **[[Custom Filters|custom filtering]] by happens date** is now possible, using `task.happens`.
+
+<!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.dates_task.happens_docs.approved.md -->
+
+- ```filter by function task.happens.format('dddd') === 'Friday'```
+  - Find tasks happens on Fridays, that is, any Friday.
+  - On non-English systems, you may need to supply the day of the week in the local language.
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+
+For more examples, see [[#Due Date]].
 
 ### Troubleshooting date searches
 
@@ -473,6 +640,23 @@ For example:
 | `#task`          | `'- [ ] #task Do stuff  ⏫  #tag1 ✅ 2022-08-12 #tag2/sub-tag '`         | `'Do stuff #tag1 #tag2/sub-tag'` |
 | `global-filter`  | `'- [ ] global-filter Do stuff  ⏫  #tag1 ✅ 2022-08-12 #tag2/sub-tag '` | `'Do stuff #tag1 #tag2/sub-tag'` |
 
+Since Tasks X.Y.Z, **[[Custom Filters|custom filtering]] by description** is now possible, using `task.description`.
+
+<!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.other_properties_task.description_docs.approved.md -->
+
+- ```filter by function task.description.length > 100```
+  - Find tasks with long descriptions.
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+
+### Description without tags
+
+Since Tasks X.Y.Z, it is possible to remove tags from the descriptions in custom filters, for use in **[[Custom Filters|custom filtering]]**, using `task.descriptionWithoutTags`.
+
+<!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.other_properties_task.descriptionWithoutTags_docs.approved.md -->
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+
 ### Priority
 
 - `priority is (above|below|not)? (lowest|low|none|medium|high|highest)`
@@ -491,6 +675,27 @@ For more information, see [[Priority|Priorities]].
 > [!released]
 > Priorities 'lowest' and 'highest' were introduced in Tasks 3.9.0.
 
+Since Tasks X.Y.Z, **[[Custom Filters|custom filtering]] by priority name and number** is now possible, using `task.priorityName` and `task.priorityNumber`.
+
+Using the priority name:
+
+<!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.other_properties_task.priorityName_docs.approved.md -->
+
+- ```filter by function task.priorityName !== 'Normal'```
+  - The same as `priority is not none`.
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+
+Using the priority number:
+
+<!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.other_properties_task.priorityNumber_docs.approved.md -->
+
+- ```filter by function task.priorityNumber % 2 === 0```
+  - Filter using the task's priority number, where Highest is 0 and Lowest is 5.
+  - This artificial example finds all the tasks with even priority numbers, so Highest, Medium and Low priorities.
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+
 #### Examples
 
     ```tasks
@@ -506,6 +711,46 @@ For more information, see [[Priority|Priorities]].
     not done
     priority is not none
     ```
+
+### Urgency
+
+There is no built-in instruction to filter by urgency.
+
+Since Tasks X.Y.Z, **[[Custom Filters|custom filtering]] by urgency** is now possible, using `task.urgency`.
+
+> [!Warning]
+> Please read the following examples carefully. To use `task.urgency`  with `filter by function` successfully, it is important to understand how to handle searches for non-integer numbers.
+
+<!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.other_properties_task.urgency_docs.approved.md -->
+
+- ```filter by function task.urgency > 8.9999```
+  - Find tasks with an urgency score above `9.0`.
+  - Note that limiting value used is `8.9999`
+  - Searches that compare two urgency values for 'less than' or 'more than' (using one of `>`, `>=`, `<` or `<=`) **must adjust their values slightly to allow for rounding**.
+- ```filter by function task.urgency > 7.9999 && task.urgency < 11.0001```
+  - Find tasks with an urgency score between `8.0` and `11.0`, inclusive.
+- ```filter by function task.urgency.toFixed(2) === 1.95.toFixed(2)```
+  - Find tasks with the [[Urgency#Why do all my tasks have urgency score 1.95?|default urgency]] of `1.95`.
+  - This is the correct way to do an equality or inequality search for any numeric values.
+  - The `.toFixed(2)` on both sides of the `===` ensures that two numbers being compared are both rounded to the same number of decimal places (2).
+  - This is important, to prevent being tripped up `10.29` being not exactly the same when comparing non-integer numbers.
+- ```filter by function task.urgency.toFixed(2) !== 1.95.toFixed(2)```
+  - Find tasks with any urgency other than the default score of `1.95`.
+- ```filter by function task.urgency === 10.29```
+  - **This will not find any tasks**.
+  - ==Do not use raw numbers in searches for equality or inequality of any numbers==, either seemingly integer or floating point ones.
+  - From using `group by urgency` and reviewing the headings, we might conclude that tasks with the following values have urgency `10.19`:
+    - due tomorrow
+    - have no priority symbol
+  - From this, it might be natural to presume that we can search for `task.urgency === 10.29`.
+  - However, our function is checking the following values for equality:
+    - `task.urgency` is approximately:
+      - `10.292857142857140928526860079728`
+    - `10.29` is approximately:
+      - `10.289999999999999147348717087880`
+  - These values are **not exactly equal**, so the test fails to find any matching tasks.
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
 
 ### Recurrence
 
@@ -523,6 +768,41 @@ For more information, see [[Recurring Tasks]].
 
 > [!released]
 `recurrence` text searching was introduced in Tasks 1.22.0.
+
+Since Tasks X.Y.Z, **[[Custom Filters|custom filtering]] by recurrence** is now possible, using `task.isRecurring` and `task.recurrenceRule`.
+
+Using `task.isRecurring`:
+
+<!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.other_properties_task.isRecurring_docs.approved.md -->
+
+- ```filter by function task.isRecurring```
+  - This is identical to `is recurring`.
+  - It can be used with `&&` (Boolean AND) or `||` (Boolean OR) in conjunction with other conditions..
+- ```filter by function !task.isRecurring```
+  - This is identical to `is not recurring`.
+  - It can be used with `&&` (Boolean AND) or `||` (Boolean OR) in conjunction with other conditions..
+- ```filter by function (!task.isRecurring) && task.originalMarkdown.includes('🔁')```
+  - Find tasks that have a **broken/invalid recurrence rule**.
+  - This assumes use of the Tasks emoji format, and should of course be updated if using another format.
+  - This uses knowledge of an implementation detail of Tasks, which is that recurrence rules are read and removed from the description even if they are invalid.
+  - So we have to search for the recurrence marker in `task.originalMarkdown` to see whether the original task contained the recurrence signifier when `task.isRecurring` even though false.
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+
+Using `task.recurrenceRule` - please read [[Task Properties#Values for Other Task Properties]] notes on `task.recurrenceRule` before use:
+
+<!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.other_properties_task.recurrenceRule_docs.approved.md -->
+
+- ```filter by function task.recurrenceRule.includes("every week")```
+  - Similar to `recurrence includes every week`, but case-sensitive.
+- ```filter by function !task.recurrenceRule.includes("every week")```
+  - Similar to `recurrence does not include every week`, but case-sensitive.
+- ```filter by function task.recurrenceRule.includes("every week") && task.recurrenceRule.includes("when done")```
+  - Find tasks that are due every week, and **do** contain `when done` in their recurrence rule.
+- ```filter by function task.recurrenceRule.includes("every week") && !task.recurrenceRule.includes("when done")```
+  - Find tasks that are due every week, and do **not** contain `when done` in their recurrence rule.
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
 
 ### Sub-Items
 
@@ -555,6 +835,29 @@ Introduced in Tasks 1.6.0.
 > - `regex matches` and `regex does not match` were introduced in Tasks 1.13.0.
 > - `no tags` and `has tags` were introduced in Tasks 2.0.0.
 
+Since Tasks X.Y.Z, **[[Custom Filters|custom filtering]] by tags** is now possible, using `task.tags`.
+
+<!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.other_properties_task.tags_docs.approved.md -->
+
+- ```filter by function task.tags.length === 1```
+  - Find tasks with exactly 1 tag (other than any global filter).
+- ```filter by function task.tags.length > 1```
+  - Find tasks with more than one tag (other than any global filter).
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+
+These are more complicated examples, which you might like to copy if you use tasks with [nested tags](https://help.obsidian.md/Editing+and+formatting/Tags#Nested+tags).
+
+<!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.other_properties_task.tags.advanced_docs.approved.md -->
+
+- ```filter by function task.tags.find( (tag) => tag.includes('/') ) && true || false```
+  - Find all tasks that have at least one nested tag.
+- ```filter by function task.tags.find( (tag) => tag.split('/').length >= 3 ) && true || false```
+  - Find all tasks that have at least one doubly-nested tag, such as `#context/home/ground-floor`.
+  - This splits each tag at the `/` character, and counts as a match if there are at least 3 words.
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+
 #### Tag Query Examples
 
 - `tags include #todo`
@@ -564,6 +867,18 @@ Introduced in Tasks 1.6.0.
 - `tag regex matches /#book$/i`
   - The trailing `i` means case-insensitive.
   - Searches for tags such as `#book`,  `#Book`, `#BOOK` and the `$` prevents matching of `#books`,  `#book/literature`, etc.
+
+### Original Markdown
+
+There is no built-in instruction to filter by the original markdown line.
+
+Since Tasks X.Y.Z, **[[Custom Filters|custom filtering]] by original markdown line** is now possible, using `task.originalMarkdown`.
+
+For example, this could be used to extract information from `task.originalMarkdown` that Tasks does not parse, to use for filtering tasks.
+
+<!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.other_properties_task.originalMarkdown_docs.approved.md -->
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
 
 ---
 
@@ -584,18 +899,46 @@ Note that the path includes the `.md` extension.
 > [!released]
 `regex matches` and `regex does not match` were introduced in Tasks 1.12.0.
 
+Since Tasks X.Y.Z, **[[Custom Filters|custom filtering]] by file path** is now possible, using `task.file.path`.
+
+<!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.file_properties_task.file.path_docs.approved.md -->
+
+- ```filter by function task.file.path.includes('tasks releases/4.1.0 Release.md')```
+  - Like 'path includes', except that it is **case-sensitive**: capitalisation matters.
+- ```filter by function task.file.path === 'tasks releases/4.1.0 Release.md'```
+  - An exact, **case-sensitive**, equality search.
+  - Note that the file extension needs to be included too.
+  - With built-in searches, this could only be done using a regular expression, with special characters `^` and `$`, and escaping any characters with special meaning such as `/`.
+- ```filter by function task.file.path.toLocaleLowerCase() === 'TASKS RELEASES/4.1.0 RELEASE.MD'.toLocaleLowerCase()```
+  - An exact, **non**-case-sensitive, equality search.
+  - By lower-casing both values, we do not have to worry about manually lower-casing them in our query.
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
 ### Root
 
 > [!released]
 > Introduced in Tasks 3.4.0.
 
-The `root` is the top-level folder of the file that contains the task, that is, the first directory in the path, which will be `/` for files in root of the vault.
+The `root` is the top-level folder of the file that contains the task, that is, the first directory in the path, which will be `/` for files in the root of the vault.
 
 - `root (includes|does not include) <root>`
   - Matches case-insensitive (disregards capitalization).
 - `root (regex matches|regex does not match) /<JavaScript-style Regex>/`
   - Does regular expression match (case-sensitive by default).
   - Essential reading: [[Regular Expressions|Regular Expression Searches]].
+
+Since Tasks X.Y.Z, **[[Custom Filters|custom filtering]] by root folder** is now possible, using `task.file.root`.
+
+<!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.file_properties_task.file.root_docs.approved.md -->
+
+- ```filter by function task.file.root === '/'```
+  - Find tasks in files in the root of the vault.
+  - Note that this is **case-sensitive**: capitalisation matters.
+- ```filter by function task.file.root === 'Work/'```
+  - Find tasks in files inside the folder `Work` which is in the root of the vault.
+  - Note that this is **case-sensitive**: capitalisation matters.
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
 
 ### Folder
 
@@ -610,6 +953,22 @@ This is the `folder` to the file that contains the task, which will be `/` for f
   - Does regular expression match (case-sensitive by default).
   - Essential reading: [[Regular Expressions|Regular Expression Searches]].
 
+Since Tasks X.Y.Z, **[[Custom Filters|custom filtering]] by folder** is now possible, using `task.file.folder`.
+
+<!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.file_properties_task.file.folder_docs.approved.md -->
+
+- ```filter by function task.file.folder === "Work/Projects/"```
+  - Find tasks in files in any file in the given folder **only**, and not any sub-folders.
+  - The equality test, `===`, requires that the trailing slash (`/`) be included.
+- ```filter by function task.file.folder.includes("Work/Projects/")```
+  - Find tasks in files in any folder **and any sub-folders**.
+- ```filter by function task.file.folder.includes("Work/Projects")```
+  - By leaving off the trailing slash (`/`) this would also find tasks in any file inside folders such as:
+    - `Work/Projects 2023/`
+    - `Work/Projects Top Secret/`.
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+
 ### File Name
 
 > [!released]
@@ -622,6 +981,19 @@ Note that the file name includes the `.md` extension.
 - `filename (regex matches|regex does not match) /<JavaScript-style Regex>/`
   - Does regular expression match (case-sensitive by default).
   - Essential reading: [[Regular Expressions|Regular Expression Searches]].
+
+Since Tasks X.Y.Z, **[[Custom Filters|custom filtering]] by file name** is now possible, using `task.file.filename`.
+
+<!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.file_properties_task.file.filename_docs.approved.md -->
+
+- ```filter by function task.file.filename === "4.1.0 Release.md"```
+  - Find tasks in files with the exact file name, but in any folder.
+  - The equality test, `===`, requires that the file extension `.md` be included.
+- ```filter by function task.file.filename.includes("4.1.0 Release")```
+  - Find tasks in files whose name contains the given text.
+  - By using `.includes()` and leaving out the file extension, this will also find files such as `14.1.0 Release.md` and `4.1.0 Release Notes.md`.
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
 
 ### Heading
 
@@ -638,6 +1010,37 @@ Note that the file name includes the `.md` extension.
 
 > [!released]
 `regex matches` and `regex does not match` were introduced in Tasks 1.12.0.
+
+Since Tasks X.Y.Z, **[[Custom Filters|custom filtering]] by heading** is now possible, using `task.heading`.
+
+> [!Tip]
+> Heading searches can be very powerful: you can put information in headings and then write your searches to look for the information:
+>
+> - either on the task,
+> - or if it's missing from the task, then look for it in the preceding heading.
+>
+> It is like a more generalisable version of the built-in mechanism to infer [[Use Filename as Default Date|a scheduled date from a filename]], under your own control.
+
+<!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.file_properties_task.heading_docs.approved.md -->
+
+- ```filter by function task.due.moment?.isSame('2023-06-11', 'day') || ( !task.due.moment && task.heading?.includes('2023-06-11')) || false```
+  - Find takes that:
+    - **either** due on the date `2023-06-11`,
+    - **or** do not have a due date, and their preceding heading contains the same date as a string: `2023-06-11`.
+- ```filter by function task.due.moment?.isSame(moment(), 'day') || ( !task.due.moment && task.heading?.includes(moment().format('YYYY-MM-DD')) ) || false```
+  - Find takes that:
+    - **either** due on today's date,
+    - **or** do not have a due date, and their preceding heading contains today's date as a string, formatted as `YYYY-MM-DD`.
+- ```filter by function task.heading?.includes('#context/home') || task.tags.find( (tag) => tag === '#context/home' ) && true || false```
+  - Find takes that:
+    - **either** have a tag exactly matching `#context/home` on the task line
+    - **or** their preceding heading contains the text `#context/home` anywhere
+      - For demonstration purposes, this is slightly imprecise, in that it would also match nested tasks, such as `#context/home/ground-floor`.
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+
+![Custom filters can extract dates and tags from headings](images/search-headings-for-date-and-tag.png)
+Custom filters can extract dates and tags from headings.
 
 ---
 

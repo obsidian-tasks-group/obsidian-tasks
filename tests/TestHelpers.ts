@@ -22,6 +22,18 @@ export function fromLine({
     })!;
 }
 
+export function fromLines({
+    lines,
+    path = '',
+    precedingHeader = null,
+}: {
+    lines: string[];
+    path?: string;
+    precedingHeader?: string | null;
+}): Task[] {
+    return lines.map((line) => fromLine({ line, path, precedingHeader }));
+}
+
 export function createTasksFromMarkdown(tasksAsMarkdown: string, path: string, precedingHeader: string): Task[] {
     const taskLines = tasksAsMarkdown.split('\n');
     const tasks: Task[] = [];
@@ -121,7 +133,7 @@ export class SampleTasks {
         const t = '- [ ] xyz';
 
         return allPathsAndHeadings.map(([path, heading]) => {
-            return fromLine({ line: t, path: path, precedingHeader: heading });
+            return fromLine({ line: t + ' in ' + path, path: path, precedingHeader: heading });
         });
     }
 
@@ -165,7 +177,7 @@ export class SampleTasks {
         ];
 
         return statuses.map((status) => {
-            return new TaskBuilder().status(status).build();
+            return new TaskBuilder().status(status).description(`Status ${status.name}`).build();
         });
     }
 

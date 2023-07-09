@@ -101,20 +101,24 @@ export function toBeValid(filter: FilterOrErrorMessage) {
     if (filter.filterFunction === undefined) {
         return {
             message: () =>
-                `unexpected null filter: check your instruction matches your filter class.\n       Error message is "${filter.error}".`,
+                `unexpected null filter: check your instruction matches your filter class.
+       Line is "${filter.instruction}
+       Error message is "${filter.error}".`,
             pass: false,
         };
     }
 
     if (filter.error !== undefined) {
         return {
-            message: () => 'unexpected error message in filter: check your instruction matches your filter class',
+            message: () => `unexpected error message in filter: check your instruction matches your filter class
+       Line is "${filter.instruction}`,
             pass: false,
         };
     }
 
     return {
-        message: () => 'filter is unexpectedly valid',
+        message: () => `filter is unexpectedly valid:
+       Line is "${filter.instruction}`,
         pass: true,
     };
 }
