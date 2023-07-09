@@ -36,7 +36,10 @@ function verifyFunctionFieldFilterSamplesOnTasks(filters: QueryInstructionLineAn
     verifyAll('Results of custom filters', filters, (filter) => {
         const instruction = filter[0];
         const comment = filter.slice(1);
+
         const filterOrErrorMessage = new FunctionField().createFilterOrErrorMessage(instruction);
+        expect(filterOrErrorMessage).toBeValid();
+
         const filterFunction = filterOrErrorMessage.filterFunction!;
         const matchingTasks: string[] = [];
         for (const task of tasks) {
