@@ -655,8 +655,6 @@ Since Tasks X.Y.Z, it is possible to remove tags from the descriptions in custom
 
 <!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.other_properties_task.descriptionWithoutTags_docs.approved.md -->
 
-==TODO==
-
 <!-- placeholder to force blank line after included text --> <!-- endInclude -->
 
 ### Priority
@@ -879,8 +877,6 @@ Since Tasks X.Y.Z, **[[Custom Filters|custom filtering]] by original markdown li
 For example, this could be used to extract information from `task.originalMarkdown` that Tasks does not parse, to use for filtering tasks.
 
 <!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.other_properties_task.originalMarkdown_docs.approved.md -->
-
-==TODO==
 
 <!-- placeholder to force blank line after included text --> <!-- endInclude -->
 

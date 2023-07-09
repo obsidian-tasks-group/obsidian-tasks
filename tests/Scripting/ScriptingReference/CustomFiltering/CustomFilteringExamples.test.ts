@@ -61,7 +61,7 @@ ${matchingTasks.join('\n')}
 function verifyFunctionFieldFilterSamplesForDocs(filters: QueryInstructionLineAndDescription[]) {
     let markdown = '';
     if (filters.length === 0) {
-        markdown = '==TODO==';
+        markdown = '';
     } else {
         for (const filter of filters) {
             const instruction = filter[0];
