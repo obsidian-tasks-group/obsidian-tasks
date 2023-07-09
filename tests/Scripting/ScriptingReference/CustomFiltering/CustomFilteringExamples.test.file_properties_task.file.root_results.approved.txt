@@ -15,6 +15,9 @@ filter by function task.file.root === 'Work/'
 Find tasks in files inside the folder `Work` which is in the root of the vault.
 Note that this is **case-sensitive**: capitalisation matters
 =>
-- [ ] In Work
+- [ ] In Work/
+- [ ] In Work/Projects/
+- [ ] In Work/Projects/Detail/
+- [ ] In Work/Projects 2024/
 ====================================================================================
 

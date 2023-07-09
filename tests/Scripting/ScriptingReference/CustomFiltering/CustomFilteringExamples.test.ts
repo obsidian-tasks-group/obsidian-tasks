@@ -191,7 +191,10 @@ describe('file properties', () => {
         lines: [`- [ ] from ${samplePath}`],
         path: samplePath,
     });
-    extraTasks.push(fromLine({ line: '- [ ] In Work', path: 'Work/do stuff.md' }));
+    extraTasks.push(fromLine({ line: '- [ ] In Work/', path: 'Work/do stuff.md' }));
+    extraTasks.push(fromLine({ line: '- [ ] In Work/Projects/', path: 'Work/Projects/general projects stuff.md' }));
+    extraTasks.push(fromLine({ line: '- [ ] In Work/Projects/Detail/', path: 'Work/Projects/Detail/detailed.md' }));
+    extraTasks.push(fromLine({ line: '- [ ] In Work/Projects 2024/', path: 'Work/Projects 2024/2024.md' }));
     const tasks = SampleTasks.withAllRootsPathsHeadings().concat(extraTasks);
     const testData: CustomGroupingPropertyTestData[] = [
         // ---------------------------------------------------------------------------------
@@ -239,8 +242,23 @@ describe('file properties', () => {
 
         [
             'task.file.folder',
-            // comment to force line break
-            [],
+            [
+                [
+                    'filter by function task.file.folder === "Work/Projects/"',
+                    'Find tasks in files in any file in the given folder **only**, and not any sub-folders.',
+                    'The equality test, `===`, requires that the trailing slash (`/`) be included',
+                ],
+                [
+                    'filter by function task.file.folder.includes("Work/Projects/")',
+                    'Find tasks in files in any folder **and any sub-folders**',
+                ],
+                [
+                    'filter by function task.file.folder.includes("Work/Projects")',
+                    'By leaving off the trailing slash (`/`) this would also find tasks in any file inside folders such as:',
+                    '    `Work/Projects 2023/`',
+                    '    `Work/Projects Top Secret/`',
+                ],
+            ],
             tasks,
         ],
 
