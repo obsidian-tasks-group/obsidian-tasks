@@ -38,7 +38,7 @@ All open tasks due during the next calendar month but not scheduled:
     ```tasks
     not done
     due next month
-    not scheduled
+    no scheduled date
     ```
 
 ---
