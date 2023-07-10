@@ -7,7 +7,7 @@ import moment from 'moment';
 import { verifyAll } from 'approvals/lib/Providers/Jest/JestApprovals';
 import type { Task } from '../../../../src/Task';
 import { SampleTasks, fromLine, fromLines } from '../../../TestHelpers';
-import type { CustomGroupingPropertyTestData, QueryInstructionLineAndDescription } from '../VerifyFunctionFieldSamples';
+import type { CustomPropertyDocsTestData, QueryInstructionLineAndDescription } from '../VerifyFunctionFieldSamples';
 import { verifyMarkdownForDocs } from '../../../TestingTools/VerifyMarkdownTable';
 import { FunctionField } from '../../../../src/Query/Filter/FunctionField';
 import { StatusRegistry } from '../../../../src/StatusRegistry';
@@ -70,7 +70,7 @@ ${comments.map((l) => l.replace(/^( *)/, '$1    - ')).join('\n')}.
 }
 
 describe('dates', () => {
-    const testData: CustomGroupingPropertyTestData[] = [
+    const testData: CustomPropertyDocsTestData[] = [
         // ---------------------------------------------------------------------------------
         // DATE FIELDS
         // ---------------------------------------------------------------------------------
@@ -223,7 +223,7 @@ describe('file properties', () => {
 
     const tasks = SampleTasks.withAllRootsPathsHeadings().concat(extraTasks);
 
-    const testData: CustomGroupingPropertyTestData[] = [
+    const testData: CustomPropertyDocsTestData[] = [
         // ---------------------------------------------------------------------------------
         // FILE FIELDS
         // ---------------------------------------------------------------------------------
@@ -382,7 +382,7 @@ describe('statuses', () => {
     });
     const tasks = SampleTasks.withAllStatuses().concat(extraTasks);
 
-    const testData: CustomGroupingPropertyTestData[] = [
+    const testData: CustomPropertyDocsTestData[] = [
         [
             'task.status.name',
             [
@@ -467,7 +467,7 @@ describe('other properties', () => {
         fromLine({ line: '- [ ] dodgy recurrence 🔁 every kasdhf alkfha' }),
     );
 
-    const testData: CustomGroupingPropertyTestData[] = [
+    const testData: CustomPropertyDocsTestData[] = [
         // ---------------------------------------------------------------------------------
         // RECURRENCE FIELDS
         // ---------------------------------------------------------------------------------

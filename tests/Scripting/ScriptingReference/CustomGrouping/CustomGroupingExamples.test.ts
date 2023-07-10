@@ -7,7 +7,7 @@ import moment from 'moment';
 import type { Task } from '../../../../src/Task';
 import { SampleTasks } from '../../../TestHelpers';
 import {
-    type CustomGroupingPropertyTestData,
+    type CustomPropertyDocsTestData,
     type QueryInstructionLineAndDescription,
     verifyFunctionFieldGrouperSamplesForDocs,
     verifyFunctionFieldGrouperSamplesOnTasks,
@@ -25,7 +25,7 @@ afterEach(() => {
 });
 
 describe('dates', () => {
-    const testData: CustomGroupingPropertyTestData[] = [
+    const testData: CustomPropertyDocsTestData[] = [
         // ---------------------------------------------------------------------------------
         // DATE FIELDS
         // ---------------------------------------------------------------------------------
@@ -176,7 +176,7 @@ describe('dates', () => {
 });
 
 describe('file properties', () => {
-    const testData: CustomGroupingPropertyTestData[] = [
+    const testData: CustomPropertyDocsTestData[] = [
         // ---------------------------------------------------------------------------------
         // FILE FIELDS
         // ---------------------------------------------------------------------------------
@@ -253,7 +253,7 @@ describe('file properties', () => {
 });
 
 describe('statuses', () => {
-    const testData: CustomGroupingPropertyTestData[] = [
+    const testData: CustomPropertyDocsTestData[] = [
         [
             'task.status.name',
             [
@@ -307,7 +307,7 @@ describe('statuses', () => {
 });
 
 describe('other properties', () => {
-    const testData: CustomGroupingPropertyTestData[] = [
+    const testData: CustomPropertyDocsTestData[] = [
         // ---------------------------------------------------------------------------------
         // RECURRENCE FIELDS
         // ---------------------------------------------------------------------------------
@@ -544,7 +544,7 @@ describe('other properties', () => {
 });
 
 describe('special cases', () => {
-    const testData: CustomGroupingPropertyTestData[] = [
+    const testData: CustomPropertyDocsTestData[] = [
         [
             'formatting',
             [
