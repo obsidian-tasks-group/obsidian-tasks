@@ -23,6 +23,22 @@ ${matchingTasks.join('\n')}
 `;
 }
 
+function formatQueryAndCommentsForDocs(filters: QueryInstructionLineAndDescription[]) {
+    let markdown = '';
+    if (filters.length === 0) {
+        markdown = '';
+    } else {
+        for (const filter of filters) {
+            const instruction = filter[0];
+            const comments = filter.slice(1);
+            markdown += `- \`\`\`${instruction}\`\`\`
+${comments.map((l) => l.replace(/^( *)/, '$1    - ')).join('\n')}.
+`;
+        }
+    }
+    return markdown;
+}
+
 // -----------------------------------------------------------------------------------------------------------------
 // Filtering
 // -----------------------------------------------------------------------------------------------------------------
@@ -51,18 +67,7 @@ export function verifyFunctionFieldFilterSamplesOnTasks(filters: QueryInstructio
 }
 
 export function verifyFunctionFieldFilterSamplesForDocs(filters: QueryInstructionLineAndDescription[]) {
-    let markdown = '';
-    if (filters.length === 0) {
-        markdown = '';
-    } else {
-        for (const filter of filters) {
-            const instruction = filter[0];
-            const comments = filter.slice(1);
-            markdown += `- \`\`\`${instruction}\`\`\`
-${comments.map((l) => l.replace(/^( *)/, '$1    - ')).join('\n')}.
-`;
-        }
-    }
+    const markdown = formatQueryAndCommentsForDocs(filters);
     verifyMarkdownForDocs(markdown);
 }
 
@@ -94,13 +99,6 @@ export function verifyFunctionFieldGrouperSamplesOnTasks(
 }
 
 export function verifyFunctionFieldGrouperSamplesForDocs(customGroups: QueryInstructionLineAndDescription[]) {
-    let markdown = '';
-    for (const group of customGroups) {
-        const instruction = group[0];
-        const comments = group.slice(1);
-        markdown += `- \`\`\`${instruction}\`\`\`
-${comments.map((l) => l.replace(/^( *)/, '$1    - ')).join('\n')}.
-`;
-    }
+    const markdown = formatQueryAndCommentsForDocs(customGroups);
     verifyMarkdownForDocs(markdown);
 }
