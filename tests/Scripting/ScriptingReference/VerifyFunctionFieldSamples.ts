@@ -10,6 +10,20 @@ type TaskPropertyName = string;
 export type CustomPropertyDocsTestData = [TaskPropertyName, QueryInstructionLineAndDescription[], Task[]];
 
 // -----------------------------------------------------------------------------------------------------------------
+// Helper functions
+// -----------------------------------------------------------------------------------------------------------------
+
+function formatQueryAndResultsForApproving(instruction: string, comment: string[], matchingTasks: string[]) {
+    return `
+${instruction}
+${comment.join('\n')}
+=>
+${matchingTasks.join('\n')}
+====================================================================================
+`;
+}
+
+// -----------------------------------------------------------------------------------------------------------------
 // Filtering
 // -----------------------------------------------------------------------------------------------------------------
 
@@ -32,13 +46,7 @@ export function verifyFunctionFieldFilterSamplesOnTasks(filters: QueryInstructio
                 matchingTasks.push(task.toFileLineString());
             }
         }
-        return `
-${instruction}
-${comment.join('\n')}
-=>
-${matchingTasks.join('\n')}
-====================================================================================
-`;
+        return formatQueryAndResultsForApproving(instruction, comment, matchingTasks);
     });
 }
 
@@ -81,13 +89,7 @@ export function verifyFunctionFieldGrouperSamplesOnTasks(
         const comment = group.slice(1);
         const grouper = new FunctionField().createGrouperFromLine(instruction);
         const headings = groupHeadingsForTask(grouper!, tasks);
-        return `
-${instruction}
-${comment.join('\n')}
-=>
-${headings.join('\n')}
-====================================================================================
-`;
+        return formatQueryAndResultsForApproving(instruction, comment, headings);
     });
 }
 
