@@ -7,7 +7,7 @@ import moment from 'moment';
 import { verifyAll } from 'approvals/lib/Providers/Jest/JestApprovals';
 import type { Task } from '../../../../src/Task';
 import { SampleTasks, fromLine, fromLines } from '../../../TestHelpers';
-import type { QueryInstructionLineAndDescription } from '../../../Query/Filter/ReferenceDocs/FilterReference/VerifyFunctionFieldSamples';
+import type { QueryInstructionLineAndDescription } from '../VerifyFunctionFieldSamples';
 import { verifyMarkdownForDocs } from '../../../TestingTools/VerifyMarkdownTable';
 import { FunctionField } from '../../../../src/Query/Filter/FunctionField';
 import { StatusRegistry } from '../../../../src/StatusRegistry';

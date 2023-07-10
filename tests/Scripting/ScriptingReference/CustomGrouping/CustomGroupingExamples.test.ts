@@ -10,7 +10,7 @@ import {
     type QueryInstructionLineAndDescription,
     verifyFunctionFieldGrouperSamplesForDocs,
     verifyFunctionFieldGrouperSamplesOnTasks,
-} from '../../../Query/Filter/ReferenceDocs/FilterReference/VerifyFunctionFieldSamples';
+} from '../VerifyFunctionFieldSamples';
 
 window.moment = moment;
 
