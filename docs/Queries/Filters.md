@@ -294,8 +294,8 @@ Since Tasks 4.2.0, **[[Custom Filters|custom filtering]] by status symbol** is n
 - ```filter by function task.status.symbol !== ' '```
   - Find tasks with anything but the space character as their status symbol, that is, without the checkbox `[ ]`.
 - ```filter by function task.status.symbol === 'P' || task.status.symbol === 'C' || task.status.symbol === 'Q' || task.status.symbol === 'A'```
-  - Find tasks with status symbol `P`, `C`, `Q` or `A`
-  - This can get quite verbose, the more symbols you want to search for..
+  - Find tasks with status symbol `P`, `C`, `Q` or `A`.
+  - This can get quite verbose, the more symbols you want to search for.
 - ```filter by function 'PCQA'.includes(task.status.symbol)```
   - Find tasks with status symbol `P`, `C`, `Q` or `A`.
   - This is a convenient shortcut over a longer statement testing each allowed value independently.
@@ -725,7 +725,7 @@ Since Tasks 4.2.0, **[[Custom Filters|custom filtering]] by urgency** is now pos
 
 - ```filter by function task.urgency > 8.9999```
   - Find tasks with an urgency score above `9.0`.
-  - Note that limiting value used is `8.9999`
+  - Note that limiting value used is `8.9999`.
   - Searches that compare two urgency values for 'less than' or 'more than' (using one of `>`, `>=`, `<` or `<=`) **must adjust their values slightly to allow for rounding**.
 - ```filter by function task.urgency > 7.9999 && task.urgency < 11.0001```
   - Find tasks with an urgency score between `8.0` and `11.0`, inclusive.
@@ -740,8 +740,8 @@ Since Tasks 4.2.0, **[[Custom Filters|custom filtering]] by urgency** is now pos
   - **This will not find any tasks**.
   - ==Do not use raw numbers in searches for equality or inequality of any numbers==, either seemingly integer or floating point ones.
   - From using `group by urgency` and reviewing the headings, we might conclude that tasks with the following values have urgency `10.19`:
-    - due tomorrow
-    - have no priority symbol
+    - due tomorrow,
+    - have no priority symbol.
   - From this, it might be natural to presume that we can search for `task.urgency === 10.29`.
   - However, our function is checking the following values for equality:
     - `task.urgency` is approximately:
@@ -777,10 +777,10 @@ Using `task.isRecurring`:
 
 - ```filter by function task.isRecurring```
   - This is identical to `is recurring`.
-  - It can be used with `&&` (Boolean AND) or `||` (Boolean OR) in conjunction with other conditions..
+  - It can be used with `&&` (Boolean AND) or `||` (Boolean OR) in conjunction with other conditions.
 - ```filter by function !task.isRecurring```
   - This is identical to `is not recurring`.
-  - It can be used with `&&` (Boolean AND) or `||` (Boolean OR) in conjunction with other conditions..
+  - It can be used with `&&` (Boolean AND) or `||` (Boolean OR) in conjunction with other conditions.
 - ```filter by function (!task.isRecurring) && task.originalMarkdown.includes('🔁')```
   - Find tasks that have a **broken/invalid recurrence rule**.
   - This assumes use of the Tasks emoji format, and should of course be updated if using another format.
@@ -963,7 +963,7 @@ Since Tasks 4.2.0, **[[Custom Filters|custom filtering]] by folder** is now poss
 - ```filter by function task.file.folder.includes("Work/Projects")```
   - By leaving off the trailing slash (`/`) this would also find tasks in any file inside folders such as:
     - `Work/Projects 2023/`
-    - `Work/Projects Top Secret/`.
+    - `Work/Projects Top Secret/`
 
 <!-- placeholder to force blank line after included text --> <!-- endInclude -->
 
@@ -1031,8 +1031,8 @@ Since Tasks 4.2.0, **[[Custom Filters|custom filtering]] by heading** is now pos
     - **or** do not have a due date, and their preceding heading contains today's date as a string, formatted as `YYYY-MM-DD`.
 - ```filter by function task.heading?.includes('#context/home') || task.tags.find( (tag) => tag === '#context/home' ) && true || false```
   - Find takes that:
-    - **either** have a tag exactly matching `#context/home` on the task line
-    - **or** their preceding heading contains the text `#context/home` anywhere
+    - **either** have a tag exactly matching `#context/home` on the task line,
+    - **or** their preceding heading contains the text `#context/home` anywhere.
       - For demonstration purposes, this is slightly imprecise, in that it would also match nested tasks, such as `#context/home/ground-floor`.
 
 <!-- placeholder to force blank line after included text --> <!-- endInclude -->
