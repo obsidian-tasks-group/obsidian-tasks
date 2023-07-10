@@ -7,6 +7,7 @@ import moment from 'moment';
 import type { Task } from '../../../../src/Task';
 import { SampleTasks } from '../../../TestHelpers';
 import {
+    type CustomGroupingPropertyTestData,
     type QueryInstructionLineAndDescription,
     verifyFunctionFieldGrouperSamplesForDocs,
     verifyFunctionFieldGrouperSamplesOnTasks,
@@ -22,11 +23,6 @@ beforeEach(() => {
 afterEach(() => {
     jest.useRealTimers();
 });
-
-/** For example, 'task.due' */
-type TaskPropertyName = string;
-
-type CustomGroupingPropertyTestData = [TaskPropertyName, QueryInstructionLineAndDescription[], Task[]];
 
 describe('dates', () => {
     const testData: CustomGroupingPropertyTestData[] = [
