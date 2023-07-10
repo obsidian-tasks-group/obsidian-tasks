@@ -4,14 +4,14 @@ Results of custom filters
 
 filter by function task.file.folder === "Work/Projects/"
 Find tasks in files in any file in the given folder **only**, and not any sub-folders.
-The equality test, `===`, requires that the trailing slash (`/`) be included
+The equality test, `===`, requires that the trailing slash (`/`) be included.
 =>
 - [ ] In Work/Projects/general projects stuff.md
 ====================================================================================
 
 
 filter by function task.file.folder.includes("Work/Projects/")
-Find tasks in files in any folder **and any sub-folders**
+Find tasks in files in any folder **and any sub-folders**.
 =>
 - [ ] In Work/Projects/general projects stuff.md
 - [ ] In Work/Projects/Detail/detailed.md

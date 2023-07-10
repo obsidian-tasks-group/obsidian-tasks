@@ -4,7 +4,7 @@ Results of custom groupers
 
 group by function task.descriptionWithoutTags
 Like `group by description`, but it removes any tags from the group headings.
-This might be useful for finding completed recurrences of the same task, even if the tags differ in some recurrences
+This might be useful for finding completed recurrences of the same task, even if the tags differ in some recurrences.
 =>
 long description Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce quam ipsum, consectetur ut dolor nec, fringilla lobortis mi. Vestibulum gravida tincidunt urna nec ornare. Cras sit amet sagittis sapien, vitae mattis velit. Vestibulum sem tortor, blandit at ultrices eget, ultrices eget odio. Donec efficitur purus massa, vel molestie turpis tincidunt id.
 my description

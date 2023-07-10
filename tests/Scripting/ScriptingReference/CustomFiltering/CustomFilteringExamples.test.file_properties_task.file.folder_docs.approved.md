@@ -8,7 +8,7 @@
 - ```filter by function task.file.folder.includes("Work/Projects")```
     - By leaving off the trailing slash (`/`) this would also find tasks in any file inside folders such as:
         - `Work/Projects 2023/`
-        - `Work/Projects Top Secret/`.
+        - `Work/Projects Top Secret/`
 
 
 <!-- placeholder to force blank line after included text -->

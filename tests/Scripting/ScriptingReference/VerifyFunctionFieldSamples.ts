@@ -13,10 +13,21 @@ export type CustomPropertyDocsTestData = [TaskPropertyName, QueryInstructionLine
 // Helper functions
 // -----------------------------------------------------------------------------------------------------------------
 
-function formatQueryAndResultsForApproving(instruction: string, comment: string[], matchingTasks: string[]) {
+function punctuateComments(comments: string[]) {
+    return comments.map((comment) => {
+        if ('.,:`'.includes(comment.slice(-1))) {
+            return comment;
+        } else {
+            return comment + '.';
+        }
+    });
+}
+
+function formatQueryAndResultsForApproving(instruction: string, comments: string[], matchingTasks: string[]) {
+    const punctuatedComments: string[] = punctuateComments(comments);
     return `
 ${instruction}
-${comment.join('\n')}
+${punctuatedComments.join('\n')}
 =>
 ${matchingTasks.join('\n')}
 ====================================================================================
@@ -31,8 +42,9 @@ function formatQueryAndCommentsForDocs(filters: QueryInstructionLineAndDescripti
         for (const filter of filters) {
             const instruction = filter[0];
             const comments = filter.slice(1);
+            const punctuatedComments: string[] = punctuateComments(comments);
             markdown += `- \`\`\`${instruction}\`\`\`
-${comments.map((l) => l.replace(/^( *)/, '$1    - ')).join('\n')}.
+${punctuatedComments.map((l) => l.replace(/^( *)/, '$1    - ')).join('\n')}
 `;
         }
     }

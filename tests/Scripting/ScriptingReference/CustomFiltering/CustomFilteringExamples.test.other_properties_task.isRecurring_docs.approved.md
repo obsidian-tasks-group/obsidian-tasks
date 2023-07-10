@@ -2,10 +2,10 @@
 
 - ```filter by function task.isRecurring```
     - This is identical to `is recurring`.
-    - It can be used with `&&` (Boolean AND) or `||` (Boolean OR) in conjunction with other conditions..
+    - It can be used with `&&` (Boolean AND) or `||` (Boolean OR) in conjunction with other conditions.
 - ```filter by function !task.isRecurring```
     - This is identical to `is not recurring`.
-    - It can be used with `&&` (Boolean AND) or `||` (Boolean OR) in conjunction with other conditions..
+    - It can be used with `&&` (Boolean AND) or `||` (Boolean OR) in conjunction with other conditions.
 - ```filter by function (!task.isRecurring) && task.originalMarkdown.includes('🔁')```
     - Find tasks that have a **broken/invalid recurrence rule**.
     - This assumes use of the Tasks emoji format, and should of course be updated if using another format.

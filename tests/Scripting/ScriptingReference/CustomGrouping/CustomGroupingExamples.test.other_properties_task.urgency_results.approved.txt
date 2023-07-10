@@ -3,7 +3,7 @@ Results of custom groupers
 
 
 group by function task.urgency.toFixed(3)
-Show the urgency to 3 decimal places, unlike the built-in "group by urgency" which uses 2
+Show the urgency to 3 decimal places, unlike the built-in "group by urgency" which uses 2.
 =>
 -1.800
 0.000

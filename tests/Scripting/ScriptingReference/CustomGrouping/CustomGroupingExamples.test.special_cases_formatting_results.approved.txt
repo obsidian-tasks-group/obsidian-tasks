@@ -13,7 +13,7 @@ Undated
 
 
 group by function task.due.format("[%%]YYYY-MM-DD[%%]dddd [<mark style='background: var(--color-base-00); color: var(--color-base-40);'>](YYYY-MM-DD)[</mark>]")
-Show the day of the week, then the date in paler text
+Show the day of the week, then the date in paler text.
 =>
 %%2023-05-30%%Tuesday <mark style='background: var(--color-base-00); color: var(--color-base-40);'>(2023-05-30)</mark>
 %%2023-05-31%%Wednesday <mark style='background: var(--color-base-00); color: var(--color-base-40);'>(2023-05-31)</mark>
