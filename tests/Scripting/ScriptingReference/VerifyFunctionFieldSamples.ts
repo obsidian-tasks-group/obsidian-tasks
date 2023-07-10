@@ -1,8 +1,8 @@
 import { verifyAll } from 'approvals/lib/Providers/Jest/JestApprovals';
-import { FunctionField } from '../../../../../src/Query/Filter/FunctionField';
-import type { Task } from '../../../../../src/Task';
-import { groupHeadingsForTask } from '../../../../CustomMatchers/CustomMatchersForGrouping';
-import { verifyMarkdownForDocs } from '../../../../TestingTools/VerifyMarkdownTable';
+import { FunctionField } from '../../../src/Query/Filter/FunctionField';
+import type { Task } from '../../../src/Task';
+import { groupHeadingsForTask } from '../../CustomMatchers/CustomMatchersForGrouping';
+import { verifyMarkdownForDocs } from '../../TestingTools/VerifyMarkdownTable';
 
 /**
  * The first value is an example Tasks query block instruction line.
