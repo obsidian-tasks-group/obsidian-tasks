@@ -37,8 +37,6 @@ This is what you see in the Tasks settings when you first look at the Task Statu
 
 You can read about it in [[Status Settings]].
 
----
-
 ## Example: Add a set of high priority statuses
 
 ### Goal

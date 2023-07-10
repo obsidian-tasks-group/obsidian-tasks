@@ -6,8 +6,6 @@ publish: true
 
 <span class="related-pages">#feature/grouping</span>
 
----
-
 ## Contents
 
 This page is long. Here are some links to the main sections:
@@ -24,8 +22,6 @@ This page is long. Here are some links to the main sections:
 - [[#Screenshots]]
 - [[#Examples]]
 
----
-
 ## Basics
 
 > [!released]
@@ -34,8 +30,6 @@ Introduced in Tasks 1.6.0.
 By default, Tasks displays tasks in a single list.
 
 To divide the matching tasks up with headings, you can add `group by` lines to the query.
-
----
 
 ## Custom Groups
 
@@ -49,8 +43,6 @@ Now Tasks has a powerful mechanism for you to create your own **custom groups**,
 There are many examples of the custom grouping instruction `group by function` in the documentation below, with explanations, for when the `group by` instructions built in to Tasks do not satisfy your preferences.
 
 You can find out more about this very powerful facility in [[Custom Grouping]].
-
----
 
 ## Group by Task Statuses
 
@@ -140,8 +132,6 @@ Since Tasks 4.0.0, **[[Custom Grouping|custom grouping]] by next status symbol**
   - Group by the next status symbol, making space characters visible.
 
 <!-- placeholder to force blank line after included text --> <!-- endInclude -->
-
----
 
 ## Group by Dates in Tasks
 
@@ -317,8 +307,6 @@ Since Tasks 4.0.0, **[[Custom Grouping|custom grouping]] by happens date** is no
 <!-- placeholder to force blank line after included text --> <!-- endInclude -->
 
 For more examples, see [[#Due Date]].
-
----
 
 ## Group by Other Task Properties
 
@@ -517,8 +505,6 @@ For example, this could be used to extract information from `task.originalMarkdo
 
 <!-- placeholder to force blank line after included text --> <!-- endInclude -->
 
----
-
 ## Group by File Properties
 
 ### File Path
@@ -605,8 +591,6 @@ Since Tasks 4.0.0, **[[Custom Grouping|custom grouping]] by heading** is now pos
 
 <!-- placeholder to force blank line after included text --> <!-- endInclude -->
 
----
-
 ## Multiple groups
 
 You can add multiple `group by` query options, each on an extra line.
@@ -623,8 +607,6 @@ See the [screenshots below](#screenshots) for how this looks in practice.
 
 > [!info]
 > Headings are displayed in case-sensitive alphabetical order, not the original order.
-
----
 
 ## Refining groups
 
@@ -656,8 +638,6 @@ You can limit the number of tasks in each group, perhaps to work on the most imp
 
 See [[Limiting#Limit number of tasks in each group|Limit number of tasks in each group]].
 
----
-
 ## Notes
 
 > [!info]
@@ -668,8 +648,6 @@ See [[Limiting#Limit number of tasks in each group|Limit number of tasks in each
 > 1. then any `limit` instructions are run
 > 1. then any grouping instructions are run
 > 1. then any `limit groups` instructions are run
-
----
 
 ## Screenshots
 
@@ -686,8 +664,6 @@ And here is what this might look like, when grouped by folder, filename and head
 
 ![Tasks Grouped](../images/tasks_grouped.png)
 Tasks grouped.
-
----
 
 ## Examples
 

@@ -11,8 +11,6 @@ Please understand that Tasks is mostly maintained by a single person in their fr
 
 Please follow the steps in this page **fully** when reporting a bug, to save your time and ours. Thank you.
 
----
-
 ## Before reporting a bug
 
 > [!important]
@@ -37,8 +35,6 @@ Please follow the steps in this page **fully** when reporting a bug, to save you
   - Install and enable Tasks.
   - Confirm that you can reproduce the problem there.
   - Make a note of every individual step you needed to do, to reproduce the problem.
-
----
 
 ## Report the bug
 
@@ -157,8 +153,6 @@ This is the level of detail required for a developer to be able to reproduce a b
 >           - The task contains `⏳ 2023-01-13`
 > 8. Repeat the editing steps above in **Live Preview** mode
 >     - The same thing happens: the edited date is not applied to the task line
-
----
 
 ## Bug involving another plugin
 

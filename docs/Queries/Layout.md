@@ -53,8 +53,6 @@ Example:
     show urgency
     ```
 
----
-
 ## Short Mode
 
 In short mode, query results will only show the emojis, but not the concrete recurrence rule or dates.

@@ -74,8 +74,6 @@ The brackets `[]` and `()` differ in how [Dataview displays them](https://blacks
 >   >  - [ ] This is a task [priority:: high], [start:: 2023-04-24], [due:: 2023-05-01]
 >   > ```
 
----
-
 ## Supported dataview fields
 
 These samples demonstrate all the fields supported by the Tasks plugin's parsing of dataview fields.
@@ -127,8 +125,6 @@ For more information, see [[Priority]].
 ```
 
 For more information, see [[Recurring Tasks]].
-
----
 
 ## Limitations of Dataview Format
 
