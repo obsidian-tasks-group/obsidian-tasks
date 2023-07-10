@@ -587,8 +587,6 @@ For example:
 
 ![Example of tasks-plugin-complete-example.css snippet](../../images/tasks-plugin-complete-example-snippet.png)
 
----
-
 ## Appendix: Fixing CSS pre-existing snippets for Tasks 3.0.0
 
 This sections explains what to do if any CSS snippets for Tasks stopped working after updating to 3.0.0.

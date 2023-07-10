@@ -79,8 +79,6 @@ starts before tomorrow
 ```
 ````
 
----
-
 ## Track task histories
 
 This section explains the types of dates that Tasks can add for you automatically.
@@ -133,8 +131,6 @@ Done dates use a white check-mark emoji: ✅.
 ```markdown
 - [x] take out the trash ✅ 2021-04-09
 ```
-
----
 
 ## Finding mistakes in dates on task lines
 

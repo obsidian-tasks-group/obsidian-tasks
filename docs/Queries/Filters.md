@@ -6,8 +6,6 @@ publish: true
 
 <span class="related-pages">#feature/filters</span>
 
----
-
 ## Contents
 
 This page is long. Here are some links to the main sections:
@@ -22,7 +20,6 @@ This page is long. Here are some links to the main sections:
 - [[#Filters for File Properties]]
 - [[#Appendix: Tasks 2.0.0 improvements to date filters]]
 
----
 ## Custom Filters
 
 > [!released]
@@ -158,8 +155,6 @@ There is also the ability to use numbered date ranges that are independent of th
 > [!released]
 > Numbered date ranges were introduced in Tasks 3.1.0.
 
----
-
 ## Text filters
 
 Filters that search for text strings have two flavours.
@@ -182,8 +177,6 @@ In the following examples, we describe the `heading` filter, but these comments 
     - It is easy to write a regular expression that looks correct, but which has a special character with a non-obvious meaning.
     - Essential reading: [[Regular Expressions|Regular Expression Searches]].
 
----
-
 ## Matching multiple filters
 
 > [!released]
@@ -204,8 +197,6 @@ Within each line, you can use the boolean operators `NOT`, `AND`, `OR`, `AND NOT
     ```
 
 For full details of combining filters with boolean operators, see [[Combining Filters]].
-
----
 
 ## Filters for Task Statuses
 
@@ -334,8 +325,6 @@ Find any tasks that have status symbols you have not yet added to your Tasks set
     status.name includes unknown
     group by path
     ```
-
----
 
 ## Filters for Dates in Tasks
 
@@ -620,8 +609,6 @@ to the incorrect line, and fixing it by directly typing in the new date.
 If you use the 'Create or edit Task' Modal, it will discard the broken date, and there will be no information about
 the original, incorrect value.
 
----
-
 ## Filters for Other Task Properties
 
 As well as the date-related searches above, these filters search other properties in individual tasks.
@@ -893,8 +880,6 @@ For example, this could be used to extract information from `task.originalMarkdo
 
 <!-- placeholder to force blank line after included text --> <!-- endInclude -->
 
----
-
 ## Filters for File Properties
 
 These filters allow searching for tasks in particular files and sections of files.
@@ -1054,8 +1039,6 @@ Since Tasks 4.2.0, **[[Custom Filters|custom filtering]] by heading** is now pos
 
 ![Custom filters can extract dates and tags from headings](images/search-headings-for-date-and-tag.png)
 Custom filters can extract dates and tags from headings.
-
----
 
 ## Appendix: Tasks 2.0.0 improvements to date filters
 

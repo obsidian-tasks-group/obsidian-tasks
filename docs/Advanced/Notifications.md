@@ -30,8 +30,6 @@ You must fix this manually if you want to use the Reminders "defer" command;
 **otherwise (as of August 2022), using the Reminders "defer" command will overwrite all information between the ⏰ and 📅 emoji!**
 See [this issue in Reminders to check the current status](https://github.com/uphy/obsidian-reminder/issues/100).
 
----
-
 ## How to complete the reminder
 
 The reminder date doesn't change when completing the task, the date will change only when you complete it from the reminder popup or from the notification.

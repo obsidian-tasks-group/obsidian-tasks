@@ -43,8 +43,6 @@ _Note: This is the Dataview settings page, not the Tasks settings page._
 To get the correct behavior for recurring tasks from Dataview TASK query results, click the text of the task (not the checkbox) to go to the file where the task is written,
 and then use the "Tasks: Toggle Done" command or click the checkbox from there.
 
----
-
 ## Related pages
 
 - [[How to get tasks in current file|How to get all tasks in the current file]] - an example of using the Dataview plugin to generate Tasks code blocks, to do things that Tasks alone cannot do.

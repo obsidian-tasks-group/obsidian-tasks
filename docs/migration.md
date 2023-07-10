@@ -220,8 +220,6 @@ Things to mention
   - Add and enable a snippet in `docs/.obsidian/snippets/`
   - Add to `docs/publish.css`
 
----
-
 ## Remaining steps
 
 ```tasks
