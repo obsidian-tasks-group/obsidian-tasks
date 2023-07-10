@@ -101,7 +101,7 @@ For users who are comfortable with JavaScript, these more complicated examples m
 
 - ```filter by function task.urgency > 8.9999```
   - Find tasks with an urgency score above `9.0`.
-  - Note that limiting value used is `8.9999`
+  - Note that limiting value used is `8.9999`.
   - Searches that compare two urgency values for 'less than' or 'more than' (using one of `>`, `>=`, `<` or `<=`) **must adjust their values slightly to allow for rounding**.
 - ```filter by function task.urgency > 7.9999 && task.urgency < 11.0001```
   - Find tasks with an urgency score between `8.0` and `11.0`, inclusive.
@@ -116,8 +116,8 @@ For users who are comfortable with JavaScript, these more complicated examples m
   - **This will not find any tasks**.
   - ==Do not use raw numbers in searches for equality or inequality of any numbers==, either seemingly integer or floating point ones.
   - From using `group by urgency` and reviewing the headings, we might conclude that tasks with the following values have urgency `10.19`:
-    - due tomorrow
-    - have no priority symbol
+    - due tomorrow,
+    - have no priority symbol.
   - From this, it might be natural to presume that we can search for `task.urgency === 10.29`.
   - However, our function is checking the following values for equality:
     - `task.urgency` is approximately:
@@ -140,6 +140,6 @@ For users who are comfortable with JavaScript, these more complicated examples m
 - ```filter by function task.file.folder.includes("Work/Projects")```
   - By leaving off the trailing slash (`/`) this would also find tasks in any file inside folders such as:
     - `Work/Projects 2023/`
-    - `Work/Projects Top Secret/`.
+    - `Work/Projects Top Secret/`
 
 <!-- placeholder to force blank line after included text --> <!-- endInclude -->

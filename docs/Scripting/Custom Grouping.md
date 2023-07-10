@@ -117,7 +117,7 @@ You can find many more examples by searching for `group by function` in the [[Gr
 - ```group by function task.due.format("YYYY[%%]-MM[%%] MMM [- Week] WW")```
   - Group by month and week number, for example `2023%%-05%% May - Week 22` ...
     - ... which gets rendered by Obsidian as `2023 May - Week 22`.
-  - If the month number is not embedded, in some years the first or last week of the year is displayed in a non-logical order..
+  - If the month number is not embedded, in some years the first or last week of the year is displayed in a non-logical order.
 
 <!-- placeholder to force blank line after included text --> <!-- endInclude -->
 

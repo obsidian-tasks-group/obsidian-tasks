@@ -171,7 +171,7 @@ Some of these examples use the [moment.js format characters](https://momentjs.co
 - ```group by function task.due.format("YYYY[%%]-MM[%%] MMM [- Week] WW")```
   - Group by month and week number, for example `2023%%-05%% May - Week 22` ...
     - ... which gets rendered by Obsidian as `2023 May - Week 22`.
-  - If the month number is not embedded, in some years the first or last week of the year is displayed in a non-logical order..
+  - If the month number is not embedded, in some years the first or last week of the year is displayed in a non-logical order.
 
 <!-- placeholder to force blank line after included text --> <!-- endInclude -->
 
@@ -368,11 +368,11 @@ Using the priority name:
 <!-- placeholder to force blank line before included text --> <!-- include: CustomGroupingExamples.test.other_properties_task.priorityName_docs.approved.md -->
 
 - ```group by function task.priorityName```
-  - Group by the task's priority name
+  - Group by the task's priority name.
   - The priority names are displayed in alphabetical order.
   - Note that the default priority is called 'Normal', as opposed to with `group by priority` which calls the default 'None'.
 - ```group by function '%%' + task.priorityNumber.toString() + '%%' + task.priorityName +' priority'```
-  - Group by the task's priority name
+  - Group by the task's priority name.
   - The hidden priority number ensures that the headings are written from highest to lowest priority.
   - Note that the default priority is called 'Normal', as opposed to with `group by priority` which calls the default 'None'.
 
