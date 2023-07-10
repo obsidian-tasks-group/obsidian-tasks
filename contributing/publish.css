@@ -34,6 +34,17 @@ span.related-pages a.tag {
     border-radius: 12px;
 }
 
+/* Simulate a horizontal rule before each level-2 heading.
+   This is useful in dividing up long pages, so their structure is visible, by saving contributors
+   from having to remember to add actual horizontal rules manually.
+ */
+h2::before {
+    display: block;
+    content: '';
+    margin: 2rem 0;
+    border-bottom: var(--hr-thickness) solid var(--hr-color);
+}
+
 /* Top-align all table cells, for readability */
 table td, th {
     vertical-align: top;
