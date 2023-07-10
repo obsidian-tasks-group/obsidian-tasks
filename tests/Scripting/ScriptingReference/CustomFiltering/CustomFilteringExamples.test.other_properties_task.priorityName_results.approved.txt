@@ -3,7 +3,7 @@ Results of custom filters
 
 
 filter by function task.priorityName !== 'Normal'
-The same as `priority is not none`
+The same as `priority is not none`.
 =>
 - [ ] #task Highest priority 🔺
 - [ ] #task High priority ⏫

@@ -3,7 +3,7 @@ Results of custom groupers
 
 
 group by function task.file.root
-Same as 'group by root'
+Same as 'group by root'.
 =>
 /
 a/

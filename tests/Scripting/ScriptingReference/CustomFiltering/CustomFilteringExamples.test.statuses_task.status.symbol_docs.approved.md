@@ -5,8 +5,8 @@
 - ```filter by function task.status.symbol !== ' '```
     - Find tasks with anything but the space character as their status symbol, that is, without the checkbox `[ ]`.
 - ```filter by function task.status.symbol === 'P' || task.status.symbol === 'C' || task.status.symbol === 'Q' || task.status.symbol === 'A'```
-    - Find tasks with status symbol `P`, `C`, `Q` or `A`
-    - This can get quite verbose, the more symbols you want to search for..
+    - Find tasks with status symbol `P`, `C`, `Q` or `A`.
+    - This can get quite verbose, the more symbols you want to search for.
 - ```filter by function 'PCQA'.includes(task.status.symbol)```
     - Find tasks with status symbol `P`, `C`, `Q` or `A`.
     - This is a convenient shortcut over a longer statement testing each allowed value independently.

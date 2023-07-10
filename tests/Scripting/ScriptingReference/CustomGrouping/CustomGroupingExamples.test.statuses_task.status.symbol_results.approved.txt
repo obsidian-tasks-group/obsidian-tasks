@@ -3,7 +3,7 @@ Results of custom groupers
 
 
 group by function "Status symbol: " + task.status.symbol.replace(" ", "space")
-Group by the status symbol, making space characters visible
+Group by the status symbol, making space characters visible.
 =>
 Status symbol: 
 Status symbol: -

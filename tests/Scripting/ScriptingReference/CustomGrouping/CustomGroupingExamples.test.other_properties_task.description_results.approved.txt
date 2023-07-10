@@ -4,7 +4,7 @@ Results of custom groupers
 
 group by function task.description
 group by description.
-This might be useful for finding completed recurrences of the same task
+This might be useful for finding completed recurrences of the same task.
 =>
 long description Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce quam ipsum, consectetur ut dolor nec, fringilla lobortis mi. Vestibulum gravida tincidunt urna nec ornare. Cras sit amet sagittis sapien, vitae mattis velit. Vestibulum sem tortor, blandit at ultrices eget, ultrices eget odio. Donec efficitur purus massa, vel molestie turpis tincidunt id. 
 my description
@@ -20,7 +20,7 @@ short description
 
 
 group by function task.description.toUpperCase()
-Convert the description to capitals
+Convert the description to capitals.
 =>
 LONG DESCRIPTION LOREM IPSUM DOLOR SIT AMET, CONSECTETUR ADIPISCING ELIT. FUSCE QUAM IPSUM, CONSECTETUR UT DOLOR NEC, FRINGILLA LOBORTIS MI. VESTIBULUM GRAVIDA TINCIDUNT URNA NEC ORNARE. CRAS SIT AMET SAGITTIS SAPIEN, VITAE MATTIS VELIT. VESTIBULUM SEM TORTOR, BLANDIT AT ULTRICES EGET, ULTRICES EGET ODIO. DONEC EFFICITUR PURUS MASSA, VEL MOLESTIE TURPIS TINCIDUNT ID. 
 MY DESCRIPTION
@@ -36,7 +36,7 @@ SHORT DESCRIPTION
 
 
 group by function task.description.slice(0, 25)
-Truncate descriptions to at most their first 25 characters, and group by that string
+Truncate descriptions to at most their first 25 characters, and group by that string.
 =>
 long description Lorem ip
 my description
@@ -51,7 +51,7 @@ short description
 
 
 group by function task.description.replace('short', '==short==')
-Highlight the word "short" in any group descriptions
+Highlight the word "short" in any group descriptions.
 =>
 ==short== description
 long description Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce quam ipsum, consectetur ut dolor nec, fringilla lobortis mi. Vestibulum gravida tincidunt urna nec ornare. Cras sit amet sagittis sapien, vitae mattis velit. Vestibulum sem tortor, blandit at ultrices eget, ultrices eget odio. Donec efficitur purus massa, vel molestie turpis tincidunt id. 

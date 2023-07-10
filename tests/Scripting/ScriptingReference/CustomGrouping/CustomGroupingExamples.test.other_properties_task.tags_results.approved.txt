@@ -3,7 +3,7 @@ Results of custom groupers
 
 
 group by function task.tags
-Like "group by tags" except that tasks with no tags have no heading instead of "(No tags)"
+Like "group by tags" except that tasks with no tags have no heading instead of "(No tags)".
 =>
 #context/home
 #context/work
@@ -18,7 +18,7 @@ Like "group by tags" except that tasks with no tags have no heading instead of "
 
 group by function task.tags.join(", ")
 Tasks with multiple tags are listed once, with a heading that combines all the tags.
-Separating with commas means the tags are clickable in the headings
+Separating with commas means the tags are clickable in the headings.
 =>
 #context/home
 #context/work
@@ -31,7 +31,7 @@ Separating with commas means the tags are clickable in the headings
 
 
 group by function task.tags.sort().join(", ")
-As above, but sorting the tags first ensures that the final headings are independent of order of tags in the tasks
+As above, but sorting the tags first ensures that the final headings are independent of order of tags in the tasks.
 =>
 #context/home
 #context/work
@@ -44,7 +44,7 @@ As above, but sorting the tags first ensures that the final headings are indepen
 
 
 group by function task.tags.filter( (tag) => tag.includes("#context/") )
-Only create headings for tags that contain "#context/"
+Only create headings for tags that contain "#context/".
 =>
 #context/home
 #context/work
@@ -52,7 +52,7 @@ Only create headings for tags that contain "#context/"
 
 
 group by function task.tags.filter( (tag) => ! tag.includes("#tag") )
-Create headings for all tags that do not contain "#tag"
+Create headings for all tags that do not contain "#tag".
 =>
 #context/home
 #context/work

@@ -194,7 +194,7 @@ describe('file properties', () => {
                     `filter by function task.file.path === '${samplePath}'`,
                     'An exact, **case-sensitive**, equality search.',
                     'Note that the file extension needs to be included too.',
-                    'With built-in searches, this could only be done using a regular expression, with special characters `^` and `$`, and escaping any characters with special meaning such as `/`',
+                    'With built-in searches, this could only be done using a regular expression, with special characters `^` and `$`, and escaping any characters with special meaning such as `/`.',
                 ],
                 [
                     `filter by function task.file.path.toLocaleLowerCase() === '${samplePath.toLocaleUpperCase()}'.toLocaleLowerCase()`,
@@ -255,7 +255,7 @@ describe('file properties', () => {
                 [
                     'filter by function task.file.filename.includes("4.1.0 Release")',
                     'Find tasks in files whose name contains the given text.',
-                    'By using `.includes()` and leaving out the file extension, this will also find files such as `14.1.0 Release.md` and `4.1.0 Release Notes.md`',
+                    'By using `.includes()` and leaving out the file extension, this will also find files such as `14.1.0 Release.md` and `4.1.0 Release Notes.md`.',
                 ],
             ],
             tasks,
@@ -268,20 +268,20 @@ describe('file properties', () => {
                     "filter by function task.due.moment?.isSame('2023-06-11', 'day') || ( !task.due.moment && task.heading?.includes('2023-06-11')) || false",
                     'Find takes that:',
                     '  **either** due on the date `2023-06-11`,',
-                    '  **or** do not have a due date, and their preceding heading contains the same date as a string: `2023-06-11`',
+                    '  **or** do not have a due date, and their preceding heading contains the same date as a string: `2023-06-11`.',
                 ],
                 [
                     "filter by function task.due.moment?.isSame(moment(), 'day') || ( !task.due.moment && task.heading?.includes(moment().format('YYYY-MM-DD')) ) || false",
                     'Find takes that:',
                     "  **either** due on today's date,",
-                    "  **or** do not have a due date, and their preceding heading contains today's date as a string, formatted as `YYYY-MM-DD`",
+                    "  **or** do not have a due date, and their preceding heading contains today's date as a string, formatted as `YYYY-MM-DD`.",
                 ],
                 [
                     "filter by function task.heading?.includes('#context/home') || task.tags.find( (tag) => tag === '#context/home' ) && true || false",
                     'Find takes that:',
-                    '  **either** have a tag exactly matching `#context/home` on the task line',
-                    '  **or** their preceding heading contains the text `#context/home` anywhere',
-                    '    For demonstration purposes, this is slightly imprecise, in that it would also match nested tasks, such as `#context/home/ground-floor`',
+                    '  **either** have a tag exactly matching `#context/home` on the task line,',
+                    '  **or** their preceding heading contains the text `#context/home` anywhere.',
+                    '    For demonstration purposes, this is slightly imprecise, in that it would also match nested tasks, such as `#context/home/ground-floor`.',
                 ],
             ],
             tasks,
@@ -369,11 +369,11 @@ describe('statuses', () => {
                 ],
                 [
                     "filter by function task.status.symbol !== ' '",
-                    'Find tasks with anything but the space character as their status symbol, that is, without the checkbox `[ ]`',
+                    'Find tasks with anything but the space character as their status symbol, that is, without the checkbox `[ ]`.',
                 ],
                 [
                     "filter by function task.status.symbol === 'P' || task.status.symbol === 'C' || task.status.symbol === 'Q' || task.status.symbol === 'A'",
-                    'Find tasks with status symbol `P`, `C`, `Q` or `A`',
+                    'Find tasks with status symbol `P`, `C`, `Q` or `A`.',
                     'This can get quite verbose, the more symbols you want to search for.',
                 ],
                 [
@@ -392,7 +392,7 @@ describe('statuses', () => {
         [
             'task.status.type',
             [
-                ["filter by function task.status.type === 'NON_TASK'", 'Find tasks of type `NON_TASK`'],
+                ["filter by function task.status.type === 'NON_TASK'", 'Find tasks of type `NON_TASK`.'],
                 [
                     "filter by function 'TODO,IN_PROGRESS'.includes(task.status.type)",
                     'Find tasks that are either type `TODO` or type `IN_PROGRESS`.',
@@ -400,7 +400,7 @@ describe('statuses', () => {
                 ],
                 [
                     "filter by function ! 'NON_TASK,CANCELLED'.includes(task.status.type)",
-                    'Find tasks that are not type `NON_TASK` and not type `CANCELLED`',
+                    'Find tasks that are not type `NON_TASK` and not type `CANCELLED`.',
                 ],
             ],
             tasks,
@@ -533,7 +533,7 @@ describe('other properties', () => {
 
         [
             'task.priorityName',
-            [["filter by function task.priorityName !== 'Normal'", 'The same as `priority is not none`']],
+            [["filter by function task.priorityName !== 'Normal'", 'The same as `priority is not none`.']],
             SampleTasks.withAllPriorities(),
         ],
 
@@ -593,7 +593,7 @@ describe('other properties', () => {
                     // comment to force line break
                     'filter by function task.urgency > 8.9999',
                     'Find tasks with an urgency score above `9.0`.',
-                    'Note that limiting value used is `8.9999`',
+                    'Note that limiting value used is `8.9999`.',
                     "Searches that compare two urgency values for 'less than' or 'more than' (using one of `>`, `>=`, `<` or `<=`) **must adjust their values slightly to allow for rounding**",
                 ],
                 [
@@ -609,14 +609,14 @@ describe('other properties', () => {
                 ],
                 [
                     'filter by function task.urgency.toFixed(2) !== 1.95.toFixed(2)',
-                    'Find tasks with any urgency other than the default score of `1.95`',
+                    'Find tasks with any urgency other than the default score of `1.95`.',
                 ],
                 [
                     'filter by function task.urgency === 10.29',
                     '**This will not find any tasks**.',
                     '==Do not use raw numbers in searches for equality or inequality of any numbers==, either seemingly integer or floating point ones.',
                     'From using `group by urgency` and reviewing the headings, we might conclude that tasks with the following values have urgency `10.19`:',
-                    '    due tomorrow',
+                    '    due tomorrow,',
                     '    have no priority symbol',
                     'From this, it might be natural to presume that we can search for `task.urgency === 10.29`.',
                     'However, our function is checking the following values for equality:',

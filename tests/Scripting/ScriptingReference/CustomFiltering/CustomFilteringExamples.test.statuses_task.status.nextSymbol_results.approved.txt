@@ -3,7 +3,7 @@ Results of custom filters
 
 
 filter by function task.status.symbol === task.status.nextSymbol
-Find tasks that toggle to themselves, because the next symbol is the same as the current symbol
+Find tasks that toggle to themselves, because the next symbol is the same as the current symbol.
 =>
 - [] Status EMPTY
 ====================================================================================

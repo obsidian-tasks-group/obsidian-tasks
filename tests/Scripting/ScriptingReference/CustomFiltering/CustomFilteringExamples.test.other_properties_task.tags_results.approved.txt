@@ -3,7 +3,7 @@ Results of custom filters
 
 
 filter by function task.tags.length === 1
-Find tasks with exactly 1 tag (other than any global filter)
+Find tasks with exactly 1 tag (other than any global filter).
 =>
 - [ ] my description #tag
 - [ ] my description #tag/subtag
@@ -15,7 +15,7 @@ Find tasks with exactly 1 tag (other than any global filter)
 
 
 filter by function task.tags.length > 1
-Find tasks with more than one tag (other than any global filter)
+Find tasks with more than one tag (other than any global filter).
 =>
 - [ ] my description #multiple-tags1 #multiple-tags2
 ====================================================================================
