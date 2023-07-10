@@ -9,6 +9,59 @@ type TaskPropertyName = string;
 
 export type CustomPropertyDocsTestData = [TaskPropertyName, QueryInstructionLineAndDescription[], Task[]];
 
+// -----------------------------------------------------------------------------------------------------------------
+// Filtering
+// -----------------------------------------------------------------------------------------------------------------
+
+export function verifyFunctionFieldFilterSamplesOnTasks(filters: QueryInstructionLineAndDescription[], tasks: Task[]) {
+    if (filters.length === 0) {
+        return;
+    }
+    verifyAll('Results of custom filters', filters, (filter) => {
+        const instruction = filter[0];
+        const comment = filter.slice(1);
+
+        const filterOrErrorMessage = new FunctionField().createFilterOrErrorMessage(instruction);
+        expect(filterOrErrorMessage).toBeValid();
+
+        const filterFunction = filterOrErrorMessage.filterFunction!;
+        const matchingTasks: string[] = [];
+        for (const task of tasks) {
+            const matches = filterFunction(task);
+            if (matches) {
+                matchingTasks.push(task.toFileLineString());
+            }
+        }
+        return `
+${instruction}
+${comment.join('\n')}
+=>
+${matchingTasks.join('\n')}
+====================================================================================
+`;
+    });
+}
+
+export function verifyFunctionFieldFilterSamplesForDocs(filters: QueryInstructionLineAndDescription[]) {
+    let markdown = '';
+    if (filters.length === 0) {
+        markdown = '';
+    } else {
+        for (const filter of filters) {
+            const instruction = filter[0];
+            const comments = filter.slice(1);
+            markdown += `- \`\`\`${instruction}\`\`\`
+${comments.map((l) => l.replace(/^( *)/, '$1    - ')).join('\n')}.
+`;
+        }
+    }
+    verifyMarkdownForDocs(markdown);
+}
+
+// -----------------------------------------------------------------------------------------------------------------
+// Grouping
+// -----------------------------------------------------------------------------------------------------------------
+
 /**
  * The first value is an example Tasks query block instruction line.
  *

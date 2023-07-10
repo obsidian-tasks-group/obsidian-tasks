@@ -3,13 +3,13 @@
  */
 
 import moment from 'moment';
-
-import { verifyAll } from 'approvals/lib/Providers/Jest/JestApprovals';
 import type { Task } from '../../../../src/Task';
 import { SampleTasks, fromLine, fromLines } from '../../../TestHelpers';
 import type { CustomPropertyDocsTestData, QueryInstructionLineAndDescription } from '../VerifyFunctionFieldSamples';
-import { verifyMarkdownForDocs } from '../../../TestingTools/VerifyMarkdownTable';
-import { FunctionField } from '../../../../src/Query/Filter/FunctionField';
+import {
+    verifyFunctionFieldFilterSamplesForDocs,
+    verifyFunctionFieldFilterSamplesOnTasks,
+} from '../VerifyFunctionFieldSamples';
 import { StatusRegistry } from '../../../../src/StatusRegistry';
 import { StatusConfiguration } from '../../../../src/StatusConfiguration';
 
@@ -23,51 +23,6 @@ beforeEach(() => {
 afterEach(() => {
     jest.useRealTimers();
 });
-
-function verifyFunctionFieldFilterSamplesOnTasks(filters: QueryInstructionLineAndDescription[], tasks: Task[]) {
-    if (filters.length === 0) {
-        return;
-    }
-    verifyAll('Results of custom filters', filters, (filter) => {
-        const instruction = filter[0];
-        const comment = filter.slice(1);
-
-        const filterOrErrorMessage = new FunctionField().createFilterOrErrorMessage(instruction);
-        expect(filterOrErrorMessage).toBeValid();
-
-        const filterFunction = filterOrErrorMessage.filterFunction!;
-        const matchingTasks: string[] = [];
-        for (const task of tasks) {
-            const matches = filterFunction(task);
-            if (matches) {
-                matchingTasks.push(task.toFileLineString());
-            }
-        }
-        return `
-${instruction}
-${comment.join('\n')}
-=>
-${matchingTasks.join('\n')}
-====================================================================================
-`;
-    });
-}
-
-function verifyFunctionFieldFilterSamplesForDocs(filters: QueryInstructionLineAndDescription[]) {
-    let markdown = '';
-    if (filters.length === 0) {
-        markdown = '';
-    } else {
-        for (const filter of filters) {
-            const instruction = filter[0];
-            const comments = filter.slice(1);
-            markdown += `- \`\`\`${instruction}\`\`\`
-${comments.map((l) => l.replace(/^( *)/, '$1    - ')).join('\n')}.
-`;
-        }
-    }
-    verifyMarkdownForDocs(markdown);
-}
 
 describe('dates', () => {
     const testData: CustomPropertyDocsTestData[] = [
