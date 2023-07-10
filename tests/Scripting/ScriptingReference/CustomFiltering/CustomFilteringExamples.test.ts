@@ -7,7 +7,7 @@ import moment from 'moment';
 import { verifyAll } from 'approvals/lib/Providers/Jest/JestApprovals';
 import type { Task } from '../../../../src/Task';
 import { SampleTasks, fromLine, fromLines } from '../../../TestHelpers';
-import type { QueryInstructionLineAndDescription } from '../VerifyFunctionFieldSamples';
+import type { CustomGroupingPropertyTestData, QueryInstructionLineAndDescription } from '../VerifyFunctionFieldSamples';
 import { verifyMarkdownForDocs } from '../../../TestingTools/VerifyMarkdownTable';
 import { FunctionField } from '../../../../src/Query/Filter/FunctionField';
 import { StatusRegistry } from '../../../../src/StatusRegistry';
@@ -23,11 +23,6 @@ beforeEach(() => {
 afterEach(() => {
     jest.useRealTimers();
 });
-
-/** For example, 'task.due' */
-type TaskPropertyName = string;
-
-type CustomGroupingPropertyTestData = [TaskPropertyName, QueryInstructionLineAndDescription[], Task[]];
 
 function verifyFunctionFieldFilterSamplesOnTasks(filters: QueryInstructionLineAndDescription[], tasks: Task[]) {
     if (filters.length === 0) {

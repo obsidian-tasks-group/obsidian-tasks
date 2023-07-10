@@ -4,6 +4,11 @@ import type { Task } from '../../../src/Task';
 import { groupHeadingsForTask } from '../../CustomMatchers/CustomMatchersForGrouping';
 import { verifyMarkdownForDocs } from '../../TestingTools/VerifyMarkdownTable';
 
+/** For example, 'task.due' */
+type TaskPropertyName = string;
+
+export type CustomGroupingPropertyTestData = [TaskPropertyName, QueryInstructionLineAndDescription[], Task[]];
+
 /**
  * The first value is an example Tasks query block instruction line.
  *
