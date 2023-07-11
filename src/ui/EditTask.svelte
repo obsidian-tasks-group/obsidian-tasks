@@ -371,7 +371,6 @@
                 bind:value={editableTask.description}
                 bind:this={descriptionInput}
                 id="description"
-                type="text"
                 class="tasks-modal-description"
                 placeholder="Take out the trash"
                 accesskey={accesskey("t")}
