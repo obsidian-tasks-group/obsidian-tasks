@@ -144,7 +144,7 @@ describe('Query parsing', () => {
         });
 
         it('sample lines really are in alphabetical order', () => {
-            expect(filters.join('\n')).toStrictEqual(sortInstructionLines(filters).join('\n'));
+            expect(filters).toStrictEqual(sortInstructionLines(filters));
         });
 
         it('has a sample line for every supported filter', () => {
@@ -252,7 +252,7 @@ urgency
         });
 
         it('sample lines really are in alphabetical order', () => {
-            expect(filters.join('\n')).toStrictEqual(sortInstructionLines(filters).join('\n'));
+            expect(filters).toStrictEqual(sortInstructionLines(filters));
         });
     });
 
@@ -313,7 +313,7 @@ urgency
         });
 
         it('sample lines really are in alphabetical order', () => {
-            expect(filters.join('\n')).toStrictEqual(sortInstructionLines(filters).join('\n'));
+            expect(filters).toStrictEqual(sortInstructionLines(filters));
         });
     });
 
@@ -362,7 +362,7 @@ urgency
         });
 
         it('sample lines really are in alphabetical order', () => {
-            expect(filters.join('\n')).toStrictEqual(sortInstructionLines(filters).join('\n'));
+            expect(filters).toStrictEqual(sortInstructionLines(filters));
         });
     });
 
