@@ -263,34 +263,38 @@ urgency
             return filters.filter((instruction) => field.createSorterFromLine(instruction) !== null);
         }
 
-        it('has a sample line for every supported sorter', () => {
-            // This test guards against correctly adding a new sorter,
-            // but forgetting to add an example of it to the sorters variable above.
-            // So it's really testing the current tests are complete.
+        const namedFieldCreators = fieldCreators.map((creator) => {
+            const field = creator();
+            return [field.fieldName(), field];
+        });
 
-            const introLine = 'No sample sort instructions found for the following Fields';
-            let warnings = introLine + '\n';
-            for (const creator of fieldCreators) {
-                const field = creator();
+        test.concurrent.each(namedFieldCreators)(
+            'has sufficient sample "sort by" lines for field "%s"',
+            (name, fieldNeedsCasting) => {
+                const field = fieldNeedsCasting as Field;
                 if (!field.supportsSorting()) {
-                    continue;
+                    return;
                 }
+
+                const introLine = 'No sample sort instructions found for the following Fields';
+                let warnings = introLine + '\n';
 
                 const matchingLines = linesMatchingField(field);
                 // Is there a sample instruction with normal order?
                 if (!matchingLines.find((line) => !line.includes(' reverse'))) {
-                    warnings += `${field.fieldName()} (normal order)\n`;
+                    warnings += `${name} (normal order)\n`;
                 }
 
                 // Is there a sample instruction with reverse order?
                 if (!matchingLines.find((line) => line.includes(' reverse'))) {
-                    warnings += `${field.fieldName()} (reverse order)\n`;
+                    warnings += `${name} (reverse order)\n`;
                 }
-            }
-            const expectedWarnings = `${introLine}
+
+                const expectedWarnings = `${introLine}
 `;
-            expect(warnings).toEqual(expectedWarnings);
-        });
+                expect(warnings).toEqual(expectedWarnings);
+            },
+        );
     });
 
     describe('should recognise every group instruction', () => {
