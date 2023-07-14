@@ -20,6 +20,7 @@ window.moment = moment;
 describe('Query parsing', () => {
     // In alphabetical order, please
     const filters = [
+        '(due this week) AND (description includes Hello World)',
         'created after 2021-12-27',
         'created before 2021-12-27',
         'created date is invalid',
@@ -44,6 +45,10 @@ describe('Query parsing', () => {
         'due this week',
         'exclude sub-items',
         'filename includes wibble',
+        'filter by function task.isDone', // This cannot contain any () because of issue #1500
+        'folder does not include some/path',
+        'folder includes AND', // Verify Query doesn't confuse this with a boolean query
+        'folder includes some/path',
         'happens after 2021-12-27',
         'happens before 2021-12-27',
         'happens in 2021-12-27 2021-12-29',
@@ -82,6 +87,9 @@ describe('Query parsing', () => {
         'priority is none',
         'recurrence does not include wednesday',
         'recurrence includes wednesday',
+        'root does not include some',
+        'root includes AND', // Verify Query doesn't confuse this with a boolean query
+        'root includes some',
         'scheduled after 2021-12-27',
         'scheduled before 2021-12-27',
         'scheduled date is invalid',
@@ -131,7 +139,7 @@ describe('Query parsing', () => {
         });
     });
 
-    it.failing('has a sample line for every supported filter', () => {
+    it('has a sample line for every supported filter', () => {
         // This test guards against correctly adding a new filter,
         // but forgetting to add an example of it to the filters variable above.
         // So it's really testing the current tests are complete.
@@ -150,8 +158,8 @@ describe('Query parsing', () => {
             return false;
         }
 
-        const introLine = 'No sample filter instructions found for the following Fields\n';
-        let warnings = introLine;
+        const introLine = 'No sample filter instructions found for the following Fields';
+        let warnings = introLine + '\n';
         for (const creator of fieldCreators) {
             const field = creator();
             if (!haveExampleInstructionForField(field)) {
@@ -159,8 +167,7 @@ describe('Query parsing', () => {
             }
         }
         // These fields do not support filtering.
-        const expectedWarnings = `
-${introLine}
+        const expectedWarnings = `${introLine}
 backlink
 urgency
 `;
