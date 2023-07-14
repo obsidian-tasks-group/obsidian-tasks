@@ -259,10 +259,10 @@ urgency
     describe('should recognise every group instruction', () => {
         // In alphabetical order, please
         const filters: ReadonlyArray<string> = [
-            'group by created',
-            'group by created reverse',
             'group by backlink',
             'group by backlink reverse',
+            'group by created',
+            'group by created reverse',
             'group by done',
             'group by done reverse',
             'group by due',
@@ -271,8 +271,8 @@ urgency
             'group by filename reverse',
             'group by folder',
             'group by folder reverse',
-            'group by function task.status.symbol.replace(" ", "space")',
             'group by function reverse task.status.symbol.replace(" ", "space")',
+            'group by function task.status.symbol.replace(" ", "space")',
             'group by happens',
             'group by happens reverse',
             'group by heading',
@@ -310,6 +310,10 @@ urgency
             expect(query.error).toBeUndefined();
             expect(query.grouping.length).toEqual(1);
             expect(query.grouping[0]).toBeDefined();
+        });
+
+        it('sample lines really are in alphabetical order', () => {
+            expect(filters.join('\n')).toStrictEqual(sortInstructionLines(filters).join('\n'));
         });
     });
 
