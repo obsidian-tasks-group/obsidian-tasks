@@ -143,7 +143,7 @@ describe('Query parsing', () => {
             expect(query.filters[0]).toBeDefined();
         });
 
-        it('sample filter lines really are in alphabetical order', () => {
+        it('sample lines really are in alphabetical order', () => {
             expect(filters.join('\n')).toStrictEqual(sortInstructionLines(filters).join('\n'));
         });
 
@@ -208,38 +208,38 @@ urgency
     describe('should recognise every sort instruction', () => {
         // In alphabetical order, please
         const filters: ReadonlyArray<string> = [
-            'sort by created reverse',
             'sort by created',
-            'sort by description reverse',
+            'sort by created reverse',
             'sort by description',
-            'sort by done reverse',
+            'sort by description reverse',
             'sort by done',
-            'sort by due reverse',
+            'sort by done reverse',
             'sort by due',
+            'sort by due reverse',
             'sort by filename',
             'sort by happens',
             'sort by heading',
-            'sort by path reverse',
             'sort by path',
-            'sort by priority reverse',
+            'sort by path reverse',
             'sort by priority',
+            'sort by priority reverse',
             'sort by recurring',
-            'sort by scheduled reverse',
             'sort by scheduled',
-            'sort by start reverse',
+            'sort by scheduled reverse',
             'sort by start',
-            'sort by status reverse',
+            'sort by start reverse',
             'sort by status',
+            'sort by status reverse',
             'sort by status.name',
             'sort by status.name reverse',
             'sort by status.type',
             'sort by status.type reverse',
-            'sort by tag 5',
-            'sort by tag reverse 3',
-            'sort by tag reverse',
             'sort by tag',
-            'sort by urgency reverse',
+            'sort by tag 5',
+            'sort by tag reverse',
+            'sort by tag reverse 3',
             'sort by urgency',
+            'sort by urgency reverse',
         ];
         test.concurrent.each<string>(filters)('recognises %j', (filter) => {
             // Arrange
@@ -249,6 +249,10 @@ urgency
             expect(query.error).toBeUndefined();
             expect(query.sorting.length).toEqual(1);
             expect(query.sorting[0]).toBeDefined();
+        });
+
+        it('sample lines really are in alphabetical order', () => {
+            expect(filters.join('\n')).toStrictEqual(sortInstructionLines(filters).join('\n'));
         });
     });
 
