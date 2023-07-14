@@ -274,31 +274,21 @@ urgency
             return filters.filter((instruction) => field.createSorterFromLine(instruction) !== null);
         }
 
-        const namedFieldCreators = fieldCreators.map((creator) => {
-            const field = creator();
-            return [field.fieldName(), field];
+        describe.each(namedFieldCreators)('has sufficient sample "sort by" lines for field "%s"', ({ field }) => {
+            if (!field.supportsSorting()) {
+                return;
+            }
+
+            const matchingLines = linesMatchingField(field);
+
+            it('has at least one test for normal sorting', () => {
+                expect(matchingLines.filter((line) => !line.includes(' reverse')).length).toBeGreaterThan(0);
+            });
+
+            it('has at least one test for reverse sorting', () => {
+                expect(matchingLines.filter((line) => line.includes(' reverse')).length).toBeGreaterThan(0);
+            });
         });
-        namedFieldCreators.sort((a, b) => (a[0] as string).localeCompare(b[0] as string, undefined, { numeric: true }));
-
-        describe.each(namedFieldCreators)(
-            'has sufficient sample "sort by" lines for field "%s"',
-            (_, fieldNeedsCasting) => {
-                const field = fieldNeedsCasting as Field;
-                if (!field.supportsSorting()) {
-                    return;
-                }
-
-                const matchingLines = linesMatchingField(field);
-
-                it('has at least one test for normal sorting', () => {
-                    expect(matchingLines.filter((line) => !line.includes(' reverse')).length).toBeGreaterThan(0);
-                });
-
-                it('has at least one test for reverse sorting', () => {
-                    expect(matchingLines.filter((line) => line.includes(' reverse')).length).toBeGreaterThan(0);
-                });
-            },
-        );
     });
 
     describe('should recognise every group instruction', () => {
