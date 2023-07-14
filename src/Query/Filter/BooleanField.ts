@@ -13,7 +13,7 @@ import { Filter } from './Filter';
  * the format --
  *    (filter1) AND ((filter2) OR (filter3))
  * The filters can be mixed and matched with any boolean operators as long as the individual filters are
- * wrapped in either paranthesis or quotes -- (filter1) or "filter1".
+ * wrapped in either parenthesis or quotes -- (filter1) or "filter1".
  * What happens internally is that when the boolean field is asked to create a filter, it parses the boolean
  * query into a logical postfix expression (https://en.wikipedia.org/wiki/Reverse_Polish_notation),
  * with the individual filter components as "identifier" tokens.
@@ -203,7 +203,7 @@ export class BooleanField extends Field {
                     throw Error('Unsupported operator: ' + token.value);
                 }
             } else {
-                throw Error('Unsupported token type: ' + token);
+                throw Error('Unsupported token type: ' + token.name);
             }
         }
         // Eventually the Explanation is the only item left in the boolean stack
