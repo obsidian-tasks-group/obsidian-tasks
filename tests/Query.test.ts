@@ -21,7 +21,7 @@ interface NamedField {
     name: string;
     field: Field;
 }
-const namedFieldCreators: ReadonlyArray<NamedField> = fieldCreators
+const namedFields: ReadonlyArray<NamedField> = fieldCreators
     .map((creator) => {
         const field = creator();
         return { name: field.fieldName(), field };
@@ -167,7 +167,7 @@ describe('Query parsing', () => {
             });
         }
 
-        describe.each(namedFieldCreators)('has sufficient sample "filter" lines for field "%s"', ({ name, field }) => {
+        describe.each(namedFields)('has sufficient sample "filter" lines for field "%s"', ({ name, field }) => {
             function fieldDoesNotSupportFiltering() {
                 return name === 'backlink' || name === 'urgency';
             }
@@ -266,7 +266,7 @@ describe('Query parsing', () => {
             return filters.filter((instruction) => field.createSorterFromLine(instruction) !== null);
         }
 
-        describe.each(namedFieldCreators)('has sufficient sample "sort by" lines for field "%s"', ({ field }) => {
+        describe.each(namedFields)('has sufficient sample "sort by" lines for field "%s"', ({ field }) => {
             if (!field.supportsSorting()) {
                 return;
             }
@@ -347,7 +347,7 @@ describe('Query parsing', () => {
             return filters.filter((instruction) => field.createGrouperFromLine(instruction) !== null);
         }
 
-        describe.each(namedFieldCreators)('has sufficient sample "group by" lines for field "%s"', ({ field }) => {
+        describe.each(namedFields)('has sufficient sample "group by" lines for field "%s"', ({ field }) => {
             if (!field.supportsGrouping()) {
                 return;
             }
