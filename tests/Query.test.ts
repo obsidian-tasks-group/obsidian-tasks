@@ -7,6 +7,9 @@ import { Status } from '../src/Status';
 import { Priority, Task } from '../src/Task';
 import { GlobalFilter } from '../src/Config/GlobalFilter';
 import { TaskLocation } from '../src/TaskLocation';
+import { fieldCreators } from '../src/Query/FilterParser';
+import type { Field } from '../src/Query/Filter/Field';
+import type { BooleanField } from '../src/Query/Filter/BooleanField';
 import { createTasksFromMarkdown, fromLine } from './TestHelpers';
 import { shouldSupportFiltering } from './TestingTools/FilterTestHelpers';
 import type { FilteringCase } from './TestingTools/FilterTestHelpers';
@@ -14,9 +17,26 @@ import { TaskBuilder } from './TestingTools/TaskBuilder';
 
 window.moment = moment;
 
+interface NamedField {
+    name: string;
+    field: Field;
+}
+const namedFields: ReadonlyArray<NamedField> = fieldCreators
+    .map((creator) => {
+        const field = creator();
+        return { name: field.fieldName(), field };
+    })
+    .sort((a, b) => a.name.localeCompare(b.name, undefined, { numeric: true }));
+
+function sortInstructionLines(filters: ReadonlyArray<string>) {
+    // Sort a copy of the array of filters.
+    return [...filters].sort((a: string, b: string) => a.localeCompare(b, undefined, { numeric: true }));
+}
+
 describe('Query parsing', () => {
     // In alphabetical order, please
-    const filters = [
+    const filters: ReadonlyArray<string> = [
+        '(due this week) AND (description includes Hello World)',
         'created after 2021-12-27',
         'created before 2021-12-27',
         'created date is invalid',
@@ -26,13 +46,13 @@ describe('Query parsing', () => {
         'description does not include wibble',
         'description includes AND', // Verify Query doesn't confuse this with a boolean query
         'description includes wibble',
+        'done',
         'done after 2021-12-27',
         'done before 2021-12-27',
         'done date is invalid',
         'done in 2021-12-27 2021-12-29',
         'done on 2021-12-27',
         'done this week',
-        'done',
         'due after 2021-12-27',
         'due before 2021-12-27',
         'due date is invalid',
@@ -41,6 +61,10 @@ describe('Query parsing', () => {
         'due this week',
         'exclude sub-items',
         'filename includes wibble',
+        'filter by function task.isDone', // This cannot contain any () because of issue #1500
+        'folder does not include some/path',
+        'folder includes AND', // Verify Query doesn't confuse this with a boolean query
+        'folder includes some/path',
         'happens after 2021-12-27',
         'happens before 2021-12-27',
         'happens in 2021-12-27 2021-12-29',
@@ -52,8 +76,8 @@ describe('Query parsing', () => {
         'has happens date',
         'has scheduled date',
         'has start date',
-        'has tags',
         'has tag',
+        'has tags',
         'heading does not include wibble',
         'heading includes AND', // Verify Query doesn't confuse this with a boolean query
         'heading includes wibble',
@@ -65,8 +89,8 @@ describe('Query parsing', () => {
         'no happens date',
         'no scheduled date',
         'no start date',
-        'no tags',
         'no tag',
+        'no tags',
         'not done',
         'path does not include some/path',
         'path includes AND', // Verify Query doesn't confuse this with a boolean query
@@ -79,6 +103,9 @@ describe('Query parsing', () => {
         'priority is none',
         'recurrence does not include wednesday',
         'recurrence includes wednesday',
+        'root does not include some',
+        'root includes AND', // Verify Query doesn't confuse this with a boolean query
+        'root includes some',
         'scheduled after 2021-12-27',
         'scheduled before 2021-12-27',
         'scheduled date is invalid',
@@ -126,6 +153,37 @@ describe('Query parsing', () => {
             expect(query.filters.length).toEqual(1);
             expect(query.filters[0]).toBeDefined();
         });
+
+        it('sample lines really are in alphabetical order', () => {
+            expect(filters).toStrictEqual(sortInstructionLines(filters));
+        });
+
+        function linesMatchingField(field: Field | BooleanField) {
+            return filters.filter((instruction) => {
+                return (
+                    field.canCreateFilterForLine(instruction) &&
+                    field.createFilterOrErrorMessage(instruction).error === undefined
+                );
+            });
+        }
+
+        describe.each(namedFields)('has sufficient sample "filter" lines for field "%s"', ({ name, field }) => {
+            function fieldDoesNotSupportFiltering() {
+                return name === 'backlink' || name === 'urgency';
+            }
+
+            // This is a bit weaker than the corresponding tests for 'sort by' and 'group by',
+            // because so many of the Field classes support multiple different search lines.
+            // But it has found a few missing test cases nevertheless.
+            it('has at least one sample line for filter', () => {
+                const matchingLines = linesMatchingField(field);
+                if (fieldDoesNotSupportFiltering()) {
+                    expect(matchingLines.length).toEqual(0);
+                } else {
+                    expect(matchingLines.length).toBeGreaterThan(0);
+                }
+            });
+        });
     });
 
     describe('should not confuse a boolean query for any other single field', () => {
@@ -152,39 +210,43 @@ describe('Query parsing', () => {
 
     describe('should recognise every sort instruction', () => {
         // In alphabetical order, please
-        const filters = [
-            'sort by created reverse',
+        const filters: ReadonlyArray<string> = [
             'sort by created',
-            'sort by description reverse',
+            'sort by created reverse',
             'sort by description',
-            'sort by done reverse',
+            'sort by description reverse',
             'sort by done',
-            'sort by due reverse',
+            'sort by done reverse',
             'sort by due',
+            'sort by due reverse',
             'sort by filename',
+            'sort by filename reverse',
             'sort by happens',
+            'sort by happens reverse',
             'sort by heading',
-            'sort by path reverse',
+            'sort by heading reverse',
             'sort by path',
-            'sort by priority reverse',
+            'sort by path reverse',
             'sort by priority',
+            'sort by priority reverse',
             'sort by recurring',
-            'sort by scheduled reverse',
+            'sort by recurring reverse',
             'sort by scheduled',
-            'sort by start reverse',
+            'sort by scheduled reverse',
             'sort by start',
-            'sort by status reverse',
+            'sort by start reverse',
             'sort by status',
+            'sort by status reverse',
             'sort by status.name',
             'sort by status.name reverse',
             'sort by status.type',
             'sort by status.type reverse',
-            'sort by tag 5',
-            'sort by tag reverse 3',
-            'sort by tag reverse',
             'sort by tag',
-            'sort by urgency reverse',
+            'sort by tag 5',
+            'sort by tag reverse',
+            'sort by tag reverse 3',
             'sort by urgency',
+            'sort by urgency reverse',
         ];
         test.concurrent.each<string>(filters)('recognises %j', (filter) => {
             // Arrange
@@ -195,15 +257,39 @@ describe('Query parsing', () => {
             expect(query.sorting.length).toEqual(1);
             expect(query.sorting[0]).toBeDefined();
         });
+
+        it('sample lines really are in alphabetical order', () => {
+            expect(filters).toStrictEqual(sortInstructionLines(filters));
+        });
+
+        function linesMatchingField(field: Field | BooleanField) {
+            return filters.filter((instruction) => field.createSorterFromLine(instruction) !== null);
+        }
+
+        describe.each(namedFields)('has sufficient sample "sort by" lines for field "%s"', ({ field }) => {
+            if (!field.supportsSorting()) {
+                return;
+            }
+
+            const matchingLines = linesMatchingField(field);
+
+            it('has at least one test for normal sorting', () => {
+                expect(matchingLines.filter((line) => !line.includes(' reverse')).length).toBeGreaterThan(0);
+            });
+
+            it('has at least one test for reverse sorting', () => {
+                expect(matchingLines.filter((line) => line.includes(' reverse')).length).toBeGreaterThan(0);
+            });
+        });
     });
 
     describe('should recognise every group instruction', () => {
         // In alphabetical order, please
-        const filters = [
-            'group by created',
-            'group by created reverse',
+        const filters: ReadonlyArray<string> = [
             'group by backlink',
             'group by backlink reverse',
+            'group by created',
+            'group by created reverse',
             'group by done',
             'group by done reverse',
             'group by due',
@@ -212,8 +298,8 @@ describe('Query parsing', () => {
             'group by filename reverse',
             'group by folder',
             'group by folder reverse',
-            'group by function task.status.symbol.replace(" ", "space")',
             'group by function reverse task.status.symbol.replace(" ", "space")',
+            'group by function task.status.symbol.replace(" ", "space")',
             'group by happens',
             'group by happens reverse',
             'group by heading',
@@ -252,11 +338,35 @@ describe('Query parsing', () => {
             expect(query.grouping.length).toEqual(1);
             expect(query.grouping[0]).toBeDefined();
         });
+
+        it('sample lines really are in alphabetical order', () => {
+            expect(filters).toStrictEqual(sortInstructionLines(filters));
+        });
+
+        function linesMatchingField(field: Field | BooleanField) {
+            return filters.filter((instruction) => field.createGrouperFromLine(instruction) !== null);
+        }
+
+        describe.each(namedFields)('has sufficient sample "group by" lines for field "%s"', ({ field }) => {
+            if (!field.supportsGrouping()) {
+                return;
+            }
+
+            const matchingLines = linesMatchingField(field);
+
+            it('has at least one test for normal grouping', () => {
+                expect(matchingLines.filter((line) => !line.includes(' reverse')).length).toBeGreaterThan(0);
+            });
+
+            it('has at least one test for reverse grouping', () => {
+                expect(matchingLines.filter((line) => line.includes(' reverse')).length).toBeGreaterThan(0);
+            });
+        });
     });
 
     describe('should recognise every other instruction', () => {
         // In alphabetical order, please
-        const filters = [
+        const filters: ReadonlyArray<string> = [
             '# Comment lines are ignored',
             'explain',
             'hide backlink',
@@ -272,11 +382,11 @@ describe('Query parsing', () => {
             'hide task count',
             'hide urgency',
             'limit 42',
-            'limit to 42 tasks',
             'limit groups 31',
             'limit groups to 31 tasks',
-            'short mode',
+            'limit to 42 tasks',
             'short',
+            'short mode',
             'show backlink',
             'show created date',
             'show done date',
@@ -297,10 +407,14 @@ describe('Query parsing', () => {
             // Assert
             expect(query.error).toBeUndefined();
         });
+
+        it('sample lines really are in alphabetical order', () => {
+            expect(filters).toStrictEqual(sortInstructionLines(filters));
+        });
     });
 
     describe('should recognize boolean queries', () => {
-        const filters = [
+        const filters: ReadonlyArray<string> = [
             '# Comment lines are ignored',
             '(description includes wibble) OR (has due date)',
             '(has due date) OR ((has start date) AND (due after 2021-12-27))',
