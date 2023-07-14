@@ -335,11 +335,11 @@ urgency
             'hide task count',
             'hide urgency',
             'limit 42',
-            'limit to 42 tasks',
             'limit groups 31',
             'limit groups to 31 tasks',
-            'short mode',
+            'limit to 42 tasks',
             'short',
+            'short mode',
             'show backlink',
             'show created date',
             'show done date',
@@ -359,6 +359,10 @@ urgency
 
             // Assert
             expect(query.error).toBeUndefined();
+        });
+
+        it('sample lines really are in alphabetical order', () => {
+            expect(filters.join('\n')).toStrictEqual(sortInstructionLines(filters).join('\n'));
         });
     });
 
