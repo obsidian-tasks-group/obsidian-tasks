@@ -113,11 +113,11 @@ Please be aware of the following limitations in Tasks' implementation of regular
 - The single error message `Tasks query: cannot parse regex (description); check your leading and trailing slashes for your query` may mean any of:
   - The opening or closing `/` is missing from the query.
   - The regular expression is not valid, for example `description regex matches /[123/`.
-  - Logged in [#1038](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1038) and [#1039](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1039)
+  - We are tracking this in [issue #1038](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1038) and [issue #1039](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1039).
 - No error when part of the pattern is lost, for example because unescaped slashes are used inside the pattern.
   - For example, `path regex matches /a/b/c/d/` actually searches for `path regex matches /a/`.
   - In this case, the query should be `path regex matches /a\/b\/c\/d/`.
-  - Logged in [#1037](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1037)
+  - We are tracking this in [issue #1037](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1037).
 - Illegal flags are ignored.
   - For example, the query `description regex matches /CASE/&` should give an error that `&` (and similar) are unrecognised flags.
 - [Lookahead and Lookbehind](https://www.regular-expressions.info/lookaround.html) searches are untested, and are presumed not to work on Apple mobile devices, or to cause serious performance problems with slow searches.
