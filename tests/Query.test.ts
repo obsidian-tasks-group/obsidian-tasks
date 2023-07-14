@@ -158,39 +158,31 @@ describe('Query parsing', () => {
             expect(filters).toStrictEqual(sortInstructionLines(filters));
         });
 
-        function haveExampleInstructionForField(field: Field | BooleanField) {
-            for (const instruction of filters) {
-                if (!field.canCreateFilterForLine(instruction)) {
-                    continue;
-                }
-                if (field.createFilterOrErrorMessage(instruction).error === undefined) {
-                    // We found a sample instruction line that matches the filter in the Field.
-                    return true;
-                }
-            }
-            // We couldn't find any sample instruction lines that match the filter in the Field.
-            return false;
+        function linesMatchingField(field: Field | BooleanField) {
+            return filters.filter((instruction) => {
+                return (
+                    field.canCreateFilterForLine(instruction) &&
+                    field.createFilterOrErrorMessage(instruction).error === undefined
+                );
+            });
         }
 
-        it('has a sample line for every supported filter', () => {
-            // This test guards against correctly adding a new filter,
-            // but forgetting to add an example of it to the filters variable above.
-            // So it's really testing the current tests are complete.
-
-            const introLine = 'No sample filter instructions found for the following Fields';
-            let warnings = introLine + '\n';
-            for (const creator of fieldCreators) {
-                const field = creator();
-                if (!haveExampleInstructionForField(field)) {
-                    warnings += `${field.fieldName()}\n`;
-                }
+        describe.each(namedFieldCreators)('has sufficient sample "filter" lines for field "%s"', ({ name, field }) => {
+            function fieldDoesNotSupportFiltering() {
+                return name === 'backlink' || name === 'urgency';
             }
-            // These fields do not support filtering.
-            const expectedWarnings = `${introLine}
-backlink
-urgency
-`;
-            expect(warnings).toEqual(expectedWarnings);
+
+            // This is a bit weaker than the corresponding tests for 'sort by' and 'group by',
+            // because so many of the Field classes support multiple different search lines.
+            // But it has found a few missing test cases nevertheless.
+            it('has at least one sample line for filter', () => {
+                const matchingLines = linesMatchingField(field);
+                if (fieldDoesNotSupportFiltering()) {
+                    expect(matchingLines.length).toEqual(0);
+                } else {
+                    expect(matchingLines.length).toBeGreaterThan(0);
+                }
+            });
         });
     });
 
