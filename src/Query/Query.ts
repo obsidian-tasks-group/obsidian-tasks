@@ -243,7 +243,7 @@ export class Query implements IQuery {
                     this._layoutOptions.hideTags = hide;
                     break;
                 default:
-                    this._error = 'do not understand hide/show option';
+                    this.setError('do not understand hide/show option', line);
             }
         }
     }
@@ -261,7 +261,7 @@ export class Query implements IQuery {
     private parseLimit({ line }: { line: string }): void {
         const limitMatch = line.match(this.limitRegexp);
         if (limitMatch === null) {
-            this._error = 'do not understand query limit';
+            this.setError('do not understand query limit', line);
             return;
         }
 
