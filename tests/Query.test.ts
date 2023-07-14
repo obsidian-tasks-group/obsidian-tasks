@@ -7,6 +7,9 @@ import { Status } from '../src/Status';
 import { Priority, Task } from '../src/Task';
 import { GlobalFilter } from '../src/Config/GlobalFilter';
 import { TaskLocation } from '../src/TaskLocation';
+import { fieldCreators } from '../src/Query/FilterParser';
+import type { Field } from '../src/Query/Filter/Field';
+import type { BooleanField } from '../src/Query/Filter/BooleanField';
 import { createTasksFromMarkdown, fromLine } from './TestHelpers';
 import { shouldSupportFiltering } from './TestingTools/FilterTestHelpers';
 import type { FilteringCase } from './TestingTools/FilterTestHelpers';
@@ -126,6 +129,42 @@ describe('Query parsing', () => {
             expect(query.filters.length).toEqual(1);
             expect(query.filters[0]).toBeDefined();
         });
+    });
+
+    it.failing('has a sample line for every supported filter', () => {
+        // This test guards against correctly adding a new filter,
+        // but forgetting to add an example of it to the filters variable above.
+        // So it's really testing the current tests are complete.
+
+        function haveExampleInstructionForField(field: Field | BooleanField) {
+            for (const instruction of filters) {
+                if (!field.canCreateFilterForLine(instruction)) {
+                    continue;
+                }
+                if (field.createFilterOrErrorMessage(instruction).error === undefined) {
+                    // We found a sample instruction line that matches the filter in the Field.
+                    return true;
+                }
+            }
+            // We couldn't find any sample instruction lines that match the filter in the Field.
+            return false;
+        }
+
+        const introLine = 'No sample filter instructions found for the following Fields\n';
+        let warnings = introLine;
+        for (const creator of fieldCreators) {
+            const field = creator();
+            if (!haveExampleInstructionForField(field)) {
+                warnings += `${field.fieldName()}\n`;
+            }
+        }
+        // These fields do not support filtering.
+        const expectedWarnings = `
+${introLine}
+backlink
+urgency
+`;
+        expect(warnings).toEqual(expectedWarnings);
     });
 
     describe('should not confuse a boolean query for any other single field', () => {
