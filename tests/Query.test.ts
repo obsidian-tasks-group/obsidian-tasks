@@ -448,28 +448,28 @@ describe('Query parsing', () => {
         it('for invalid filter', () => {
             const source = 'description regex matches apple sauce';
             expect(getQueryError(source)).toEqual(
-                'cannot parse regex (description); check your leading and trailing slashes for your query: ' + source,
+                'cannot parse regex (description); check your leading and trailing slashes for your query:\n' + source,
             );
         });
 
         it('for invalid sort by', () => {
             const source = 'sort by nonsense';
-            expect(getQueryError(source)).toEqual('do not understand query: ' + source);
+            expect(getQueryError(source)).toEqual('do not understand query:\n' + source);
         });
 
         it('for invalid group by', () => {
             const source = 'group by nonsense';
-            expect(getQueryError(source)).toEqual('do not understand query: ' + source);
+            expect(getQueryError(source)).toEqual('do not understand query:\n' + source);
         });
 
         it('for invalid hide', () => {
             const source = 'hide nonsense';
-            expect(getQueryError(source)).toEqual('do not understand query: ' + source);
+            expect(getQueryError(source)).toEqual('do not understand query:\n' + source);
         });
 
         it('for unknown instruction', () => {
             const source = 'spaghetti';
-            expect(getQueryError(source)).toEqual('do not understand query: ' + source);
+            expect(getQueryError(source)).toEqual('do not understand query:\n' + source);
         });
     });
 });
