@@ -62,7 +62,7 @@ export class Query implements IQuery {
                     case this.parseFilter(line):
                         break;
                     default:
-                        this._error = `do not understand query: ${line}`;
+                        this.setError('do not understand query', line);
                 }
             });
     }
@@ -170,6 +170,10 @@ export class Query implements IQuery {
 
     public get error(): string | undefined {
         return this._error;
+    }
+
+    private setError(message: string, line: string) {
+        this._error = `${message}: ${line}`;
     }
 
     public applyQueryToTasks(tasks: Task[]): QueryResult {
