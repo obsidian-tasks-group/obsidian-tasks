@@ -451,6 +451,18 @@ describe('Query parsing', () => {
             );
         });
 
+        it('for invalid sort by', () => {
+            expect(getQueryError('sort by nonsense')).toEqual('do not understand query: sort by nonsense');
+        });
+
+        it('for invalid group by', () => {
+            expect(getQueryError('group by nonsense')).toEqual('do not understand query: group by nonsense');
+        });
+
+        it('for invalid hide', () => {
+            expect(getQueryError('hide nonsense')).toEqual('do not understand query: hide nonsense');
+        });
+
         it('for unknown instruction', () => {
             expect(getQueryError('spaghetti')).toEqual('do not understand query: spaghetti');
         });
