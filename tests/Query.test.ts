@@ -356,29 +356,25 @@ urgency
 
         const namedFieldCreators = fieldCreators.map((creator) => {
             const field = creator();
-            return [field.fieldName(), field];
+            return { name: field.fieldName(), field };
         });
-        namedFieldCreators.sort((a, b) => (a[0] as string).localeCompare(b[0] as string, undefined, { numeric: true }));
+        namedFieldCreators.sort((a, b) => a.name.localeCompare(b.name, undefined, { numeric: true }));
 
-        describe.each(namedFieldCreators)(
-            'has sufficient sample "group by" lines for field "%s"',
-            (_, fieldNeedsCasting) => {
-                const field = fieldNeedsCasting as Field;
-                if (!field.supportsGrouping()) {
-                    return;
-                }
+        describe.each(namedFieldCreators)('has sufficient sample "group by" lines for field "%s"', ({ field }) => {
+            if (!field.supportsGrouping()) {
+                return;
+            }
 
-                const matchingLines = linesMatchingField(field);
+            const matchingLines = linesMatchingField(field);
 
-                it('has at least one test for normal grouping', () => {
-                    expect(matchingLines.filter((line) => !line.includes(' reverse')).length).toBeGreaterThan(0);
-                });
+            it('has at least one test for normal grouping', () => {
+                expect(matchingLines.filter((line) => !line.includes(' reverse')).length).toBeGreaterThan(0);
+            });
 
-                it('has at least one test for reverse grouping', () => {
-                    expect(matchingLines.filter((line) => line.includes(' reverse')).length).toBeGreaterThan(0);
-                });
-            },
-        );
+            it('has at least one test for reverse grouping', () => {
+                expect(matchingLines.filter((line) => line.includes(' reverse')).length).toBeGreaterThan(0);
+            });
+        });
     });
 
     describe('should recognise every other instruction', () => {
