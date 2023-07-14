@@ -17,6 +17,11 @@ import { TaskBuilder } from './TestingTools/TaskBuilder';
 
 window.moment = moment;
 
+function sortInstructionLines(filters: ReadonlyArray<string>) {
+    // Sort a copy of the array of filters.
+    return [...filters].sort((a: string, b: string) => a.localeCompare(b, undefined, { numeric: true }));
+}
+
 describe('Query parsing', () => {
     // In alphabetical order, please
     const filters: ReadonlyArray<string> = [
@@ -140,11 +145,7 @@ describe('Query parsing', () => {
     });
 
     it('sample filter lines really are in alphabetical order', () => {
-        // Sort a copy of the array of filters.
-        const filtersSorted = [...filters].sort((a: string, b: string) =>
-            a.localeCompare(b, undefined, { numeric: true }),
-        );
-        expect(filters.join('\n')).toStrictEqual(filtersSorted.join('\n'));
+        expect(filters.join('\n')).toStrictEqual(sortInstructionLines(filters).join('\n'));
     });
 
     it('has a sample line for every supported filter', () => {
