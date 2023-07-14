@@ -19,7 +19,7 @@ window.moment = moment;
 
 describe('Query parsing', () => {
     // In alphabetical order, please
-    const filters = [
+    const filters: ReadonlyArray<string> = [
         '(due this week) AND (description includes Hello World)',
         'created after 2021-12-27',
         'created before 2021-12-27',
@@ -206,7 +206,7 @@ urgency
 
     describe('should recognise every sort instruction', () => {
         // In alphabetical order, please
-        const filters = [
+        const filters: ReadonlyArray<string> = [
             'sort by created reverse',
             'sort by created',
             'sort by description reverse',
@@ -253,7 +253,7 @@ urgency
 
     describe('should recognise every group instruction', () => {
         // In alphabetical order, please
-        const filters = [
+        const filters: ReadonlyArray<string> = [
             'group by created',
             'group by created reverse',
             'group by backlink',
@@ -310,7 +310,7 @@ urgency
 
     describe('should recognise every other instruction', () => {
         // In alphabetical order, please
-        const filters = [
+        const filters: ReadonlyArray<string> = [
             '# Comment lines are ignored',
             'explain',
             'hide backlink',
@@ -354,7 +354,7 @@ urgency
     });
 
     describe('should recognize boolean queries', () => {
-        const filters = [
+        const filters: ReadonlyArray<string> = [
             '# Comment lines are ignored',
             '(description includes wibble) OR (has due date)',
             '(has due date) OR ((has start date) AND (due after 2021-12-27))',
