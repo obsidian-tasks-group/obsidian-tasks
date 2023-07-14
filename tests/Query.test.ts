@@ -217,13 +217,17 @@ urgency
             'sort by due',
             'sort by due reverse',
             'sort by filename',
+            'sort by filename reverse',
             'sort by happens',
+            'sort by happens reverse',
             'sort by heading',
+            'sort by heading reverse',
             'sort by path',
             'sort by path reverse',
             'sort by priority',
             'sort by priority reverse',
             'sort by recurring',
+            'sort by recurring reverse',
             'sort by scheduled',
             'sort by scheduled reverse',
             'sort by start',
@@ -255,15 +259,8 @@ urgency
             expect(filters).toStrictEqual(sortInstructionLines(filters));
         });
 
-        function haveExampleInstructionForField(field: Field | BooleanField) {
-            for (const instruction of filters) {
-                if (field.createSorterFromLine(instruction) !== null) {
-                    // We found a sample instruction line that matches the sorter in the Field.
-                    return true;
-                }
-            }
-            // We couldn't find any sample instruction lines that match the sorter in the Field.
-            return false;
+        function linesMatchingField(field: Field | BooleanField) {
+            return filters.filter((instruction) => field.createSorterFromLine(instruction) !== null);
         }
 
         it('has a sample line for every supported sorter', () => {
@@ -278,8 +275,16 @@ urgency
                 if (!field.supportsSorting()) {
                     continue;
                 }
-                if (!haveExampleInstructionForField(field)) {
-                    warnings += `${field.fieldName()}\n`;
+
+                const matchingLines = linesMatchingField(field);
+                // Is there a sample instruction with normal order?
+                if (!matchingLines.find((line) => !line.includes(' reverse'))) {
+                    warnings += `${field.fieldName()} (normal order)\n`;
+                }
+
+                // Is there a sample instruction with reverse order?
+                if (!matchingLines.find((line) => line.includes(' reverse'))) {
+                    warnings += `${field.fieldName()} (reverse order)\n`;
                 }
             }
             const expectedWarnings = `${introLine}
