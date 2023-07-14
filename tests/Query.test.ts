@@ -30,13 +30,13 @@ describe('Query parsing', () => {
         'description does not include wibble',
         'description includes AND', // Verify Query doesn't confuse this with a boolean query
         'description includes wibble',
+        'done',
         'done after 2021-12-27',
         'done before 2021-12-27',
         'done date is invalid',
         'done in 2021-12-27 2021-12-29',
         'done on 2021-12-27',
         'done this week',
-        'done',
         'due after 2021-12-27',
         'due before 2021-12-27',
         'due date is invalid',
@@ -60,8 +60,8 @@ describe('Query parsing', () => {
         'has happens date',
         'has scheduled date',
         'has start date',
-        'has tags',
         'has tag',
+        'has tags',
         'heading does not include wibble',
         'heading includes AND', // Verify Query doesn't confuse this with a boolean query
         'heading includes wibble',
@@ -73,8 +73,8 @@ describe('Query parsing', () => {
         'no happens date',
         'no scheduled date',
         'no start date',
-        'no tags',
         'no tag',
+        'no tags',
         'not done',
         'path does not include some/path',
         'path includes AND', // Verify Query doesn't confuse this with a boolean query
@@ -137,6 +137,14 @@ describe('Query parsing', () => {
             expect(query.filters.length).toEqual(1);
             expect(query.filters[0]).toBeDefined();
         });
+    });
+
+    it('sample filter lines really are in alphabetical order', () => {
+        // Sort a copy of the array of filters.
+        const filtersSorted = [...filters].sort((a: string, b: string) =>
+            a.localeCompare(b, undefined, { numeric: true }),
+        );
+        expect(filters.join('\n')).toStrictEqual(filtersSorted.join('\n'));
     });
 
     it('has a sample line for every supported filter', () => {
