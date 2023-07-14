@@ -267,6 +267,7 @@ urgency
             const field = creator();
             return [field.fieldName(), field];
         });
+        namedFieldCreators.sort((a, b) => (a[0] as string).localeCompare(b[0] as string, undefined, { numeric: true }));
 
         describe.each(namedFieldCreators)(
             'has sufficient sample "sort by" lines for field "%s"',
