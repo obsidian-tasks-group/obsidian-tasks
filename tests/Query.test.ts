@@ -17,6 +17,17 @@ import { TaskBuilder } from './TestingTools/TaskBuilder';
 
 window.moment = moment;
 
+interface NamedField {
+    name: string;
+    field: Field;
+}
+const namedFieldCreators: ReadonlyArray<NamedField> = fieldCreators
+    .map((creator) => {
+        const field = creator();
+        return { name: field.fieldName(), field };
+    })
+    .sort((a, b) => a.name.localeCompare(b.name, undefined, { numeric: true }));
+
 function sortInstructionLines(filters: ReadonlyArray<string>) {
     // Sort a copy of the array of filters.
     return [...filters].sort((a: string, b: string) => a.localeCompare(b, undefined, { numeric: true }));
@@ -353,17 +364,6 @@ urgency
         function linesMatchingField(field: Field | BooleanField) {
             return filters.filter((instruction) => field.createGrouperFromLine(instruction) !== null);
         }
-
-        interface NamedField {
-            name: string;
-            field: Field;
-        }
-        const namedFieldCreators: ReadonlyArray<NamedField> = fieldCreators
-            .map((creator) => {
-                const field = creator();
-                return { name: field.fieldName(), field };
-            })
-            .sort((a, b) => a.name.localeCompare(b.name, undefined, { numeric: true }));
 
         describe.each(namedFieldCreators)('has sufficient sample "group by" lines for field "%s"', ({ field }) => {
             if (!field.supportsGrouping()) {
