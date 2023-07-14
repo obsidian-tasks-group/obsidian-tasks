@@ -136,13 +136,6 @@ Completing a task by clicking its checkbox from a `tasks` query block _will_ wor
 ---
 
 > [!warning]
-> Tasks does not display Tasks query blocks that are in **Obsidian Canvas cards**.
-
-We are tracking this in [issue #1732](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1732).
-
----
-
-> [!warning]
 > Tasks cannot read tasks that are **inside code blocks**, such as the ones used by the **Admonitions plugin**. Use Obsidian's built-in callouts instead.
 
 ---

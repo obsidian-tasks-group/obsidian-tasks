@@ -35,8 +35,7 @@ You can click on a backlink to navigate directly to the task's source line.
 
 ## Limitations
 
-- When in Reading mode and clicking a backlink, and switching to Edit mode to edit the task line, the pane does not scroll to the same position it was in Reading Mode.
-  - We are tracking this in [issue #1879](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1879).
+None, currently.
 
 ## Support
 
