@@ -446,25 +446,30 @@ describe('Query parsing', () => {
         }
 
         it('for invalid filter', () => {
-            expect(getQueryError('description regex matches apple sauce')).toEqual(
-                'cannot parse regex (description); check your leading and trailing slashes for your query: description regex matches apple sauce',
+            const source = 'description regex matches apple sauce';
+            expect(getQueryError(source)).toEqual(
+                'cannot parse regex (description); check your leading and trailing slashes for your query: ' + source,
             );
         });
 
         it('for invalid sort by', () => {
-            expect(getQueryError('sort by nonsense')).toEqual('do not understand query: sort by nonsense');
+            const source = 'sort by nonsense';
+            expect(getQueryError(source)).toEqual('do not understand query: ' + source);
         });
 
         it('for invalid group by', () => {
-            expect(getQueryError('group by nonsense')).toEqual('do not understand query: group by nonsense');
+            const source = 'group by nonsense';
+            expect(getQueryError(source)).toEqual('do not understand query: ' + source);
         });
 
         it('for invalid hide', () => {
-            expect(getQueryError('hide nonsense')).toEqual('do not understand query: hide nonsense');
+            const source = 'hide nonsense';
+            expect(getQueryError(source)).toEqual('do not understand query: ' + source);
         });
 
         it('for unknown instruction', () => {
-            expect(getQueryError('spaghetti')).toEqual('do not understand query: spaghetti');
+            const source = 'spaghetti';
+            expect(getQueryError(source)).toEqual('do not understand query: ' + source);
         });
     });
 });
