@@ -439,6 +439,39 @@ describe('Query parsing', () => {
         expect(new Query({ source: 'group by status.name' }).grouping[0].property).toEqual('status.name');
         expect(new Query({ source: 'group by status.type' }).grouping[0].property).toEqual('status.type');
     });
+
+    describe('should include instruction in parsing error messages', () => {
+        function getQueryError(source: string) {
+            return new Query({ source: source }).error;
+        }
+
+        it('for invalid filter', () => {
+            const source = 'description regex matches apple sauce';
+            expect(getQueryError(source)).toEqual(
+                'cannot parse regex (description); check your leading and trailing slashes for your query:\n' + source,
+            );
+        });
+
+        it('for invalid sort by', () => {
+            const source = 'sort by nonsense';
+            expect(getQueryError(source)).toEqual('do not understand query:\n' + source);
+        });
+
+        it('for invalid group by', () => {
+            const source = 'group by nonsense';
+            expect(getQueryError(source)).toEqual('do not understand query:\n' + source);
+        });
+
+        it('for invalid hide', () => {
+            const source = 'hide nonsense';
+            expect(getQueryError(source)).toEqual('do not understand query:\n' + source);
+        });
+
+        it('for unknown instruction', () => {
+            const source = 'spaghetti';
+            expect(getQueryError(source)).toEqual('do not understand query:\n' + source);
+        });
+    });
 });
 
 describe('Query', () => {
