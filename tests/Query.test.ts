@@ -445,6 +445,12 @@ describe('Query parsing', () => {
             return new Query({ source: source }).error;
         }
 
+        it('for invalid filter', () => {
+            expect(getQueryError('description regex matches apple sauce')).toEqual(
+                'cannot parse regex (description); check your leading and trailing slashes for your query: description regex matches apple sauce',
+            );
+        });
+
         it('for unknown instruction', () => {
             expect(getQueryError('spaghetti')).toEqual('do not understand query: spaghetti');
         });

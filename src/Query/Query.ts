@@ -254,7 +254,7 @@ export class Query implements IQuery {
             if (filterOrError.filter) {
                 this._filters.push(filterOrError.filter);
             } else {
-                this._error = filterOrError.error;
+                this.setError(filterOrError.error ?? 'Unknown error', line);
             }
             return true;
         }
