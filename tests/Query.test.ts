@@ -268,31 +268,23 @@ urgency
             return [field.fieldName(), field];
         });
 
-        test.concurrent.each(namedFieldCreators)(
+        describe.each(namedFieldCreators)(
             'has sufficient sample "sort by" lines for field "%s"',
-            (name, fieldNeedsCasting) => {
+            (_, fieldNeedsCasting) => {
                 const field = fieldNeedsCasting as Field;
                 if (!field.supportsSorting()) {
                     return;
                 }
 
-                const introLine = 'No sample sort instructions found for the following Fields';
-                let warnings = introLine + '\n';
-
                 const matchingLines = linesMatchingField(field);
-                // Is there a sample instruction with normal order?
-                if (!matchingLines.find((line) => !line.includes(' reverse'))) {
-                    warnings += `${name} (normal order)\n`;
-                }
 
-                // Is there a sample instruction with reverse order?
-                if (!matchingLines.find((line) => line.includes(' reverse'))) {
-                    warnings += `${name} (reverse order)\n`;
-                }
+                it('has at least one test for normal sorting', () => {
+                    expect(matchingLines.filter((line) => !line.includes(' reverse')).length).toBeGreaterThan(0);
+                });
 
-                const expectedWarnings = `${introLine}
-`;
-                expect(warnings).toEqual(expectedWarnings);
+                it('has at least one test for reverse sorting', () => {
+                    expect(matchingLines.filter((line) => line.includes(' reverse')).length).toBeGreaterThan(0);
+                });
             },
         );
     });
