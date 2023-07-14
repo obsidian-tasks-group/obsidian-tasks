@@ -439,6 +439,16 @@ describe('Query parsing', () => {
         expect(new Query({ source: 'group by status.name' }).grouping[0].property).toEqual('status.name');
         expect(new Query({ source: 'group by status.type' }).grouping[0].property).toEqual('status.type');
     });
+
+    describe('should include instruction in parsing error messages', () => {
+        function getQueryError(source: string) {
+            return new Query({ source: source }).error;
+        }
+
+        it('for unknown instruction', () => {
+            expect(getQueryError('spaghetti')).toEqual('do not understand query: spaghetti');
+        });
+    });
 });
 
 describe('Query', () => {
