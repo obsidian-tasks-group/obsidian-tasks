@@ -254,6 +254,38 @@ urgency
         it('sample lines really are in alphabetical order', () => {
             expect(filters).toStrictEqual(sortInstructionLines(filters));
         });
+
+        function haveExampleInstructionForField(field: Field | BooleanField) {
+            for (const instruction of filters) {
+                if (field.createSorterFromLine(instruction) !== null) {
+                    // We found a sample instruction line that matches the sorter in the Field.
+                    return true;
+                }
+            }
+            // We couldn't find any sample instruction lines that match the sorter in the Field.
+            return false;
+        }
+
+        it('has a sample line for every supported sorter', () => {
+            // This test guards against correctly adding a new sorter,
+            // but forgetting to add an example of it to the sorters variable above.
+            // So it's really testing the current tests are complete.
+
+            const introLine = 'No sample sort instructions found for the following Fields';
+            let warnings = introLine + '\n';
+            for (const creator of fieldCreators) {
+                const field = creator();
+                if (!field.supportsSorting()) {
+                    continue;
+                }
+                if (!haveExampleInstructionForField(field)) {
+                    warnings += `${field.fieldName()}\n`;
+                }
+            }
+            const expectedWarnings = `${introLine}
+`;
+            expect(warnings).toEqual(expectedWarnings);
+        });
     });
 
     describe('should recognise every group instruction', () => {
