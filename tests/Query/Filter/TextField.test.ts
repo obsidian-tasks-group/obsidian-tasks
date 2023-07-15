@@ -42,7 +42,6 @@ describe('explains regular expression searches', () => {
             description regex matches /waiting|waits|wartet/i
             filename regex does not match /^Tasks User Support Kanban\\.md$/
             folder regex matches /root/sub-folder/sub-sub-folder/
-            folder regex matches /root/sub-folder/sub-sub-folder/index.md
             folder regex matches /root\\/sub-folder\\/sub-sub-folder/
             heading regex matches /^Exactly Matched Heading$/
             path regex does not match /^_meta/
@@ -53,6 +52,8 @@ describe('explains regular expression searches', () => {
             path regex matches /(george)/i
             path regex matches /Log/
             path regex matches /clare/i
+            path regex matches /root/sub-folder/sub-sub-folder/index\\.md/
+            path regex matches /root\\/sub-folder\\/sub-sub-folder\\/index\\.md/
             path regex matches /sadfasfdafa/i
             recurrence regex does not match /\\d/
             recurrence regex matches /\\d/

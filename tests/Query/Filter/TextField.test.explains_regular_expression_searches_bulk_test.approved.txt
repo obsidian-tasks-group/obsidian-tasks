@@ -54,10 +54,6 @@ folder regex matches /root/sub-folder/sub-sub-folder/ =>
   folder regex matches /root/sub-folder/sub-sub-folder/
     Regular expression interpreted as: /root/
 
-folder regex matches /root/sub-folder/sub-sub-folder/index.md =>
-  folder regex matches /root/sub-folder/sub-sub-folder/index.md
-    Regular expression interpreted as: /root/
-
 folder regex matches /root\/sub-folder\/sub-sub-folder/ =>
   folder regex matches /root\/sub-folder\/sub-sub-folder/
     Regular expression interpreted as: /root\/sub-folder\/sub-sub-folder/
@@ -97,6 +93,14 @@ path regex matches /Log/ =>
 path regex matches /clare/i =>
   path regex matches /clare/i
     Regular expression interpreted as: /clare/i
+
+path regex matches /root/sub-folder/sub-sub-folder/index\.md/ =>
+  path regex matches /root/sub-folder/sub-sub-folder/index\.md/
+    Regular expression interpreted as: /root/
+
+path regex matches /root\/sub-folder\/sub-sub-folder\/index\.md/ =>
+  path regex matches /root\/sub-folder\/sub-sub-folder\/index\.md/
+    Regular expression interpreted as: /root\/sub-folder\/sub-sub-folder\/index\.md/
 
 path regex matches /sadfasfdafa/i =>
   path regex matches /sadfasfdafa/i
