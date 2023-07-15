@@ -44,12 +44,38 @@ export class RegexMatcher extends IStringMatcher {
     }
 
     explanation(instruction: string): Explanation {
-        const match = instruction.match(/\//);
-        if (!match) {
-            return new Explanation('Error explaining instruction. Could not find a slash character');
-        }
-        const startOfRegex = (match.index ?? 2) - 2;
-        const prefix = 'regex is: '.padEnd(startOfRegex);
-        return new Explanation(`${prefix}/${this.regex.source}/${this.regex.flags}`);
+        const intro = 'using regex: ';
+        const regexAsString = `/${this.regex.source}/${this.regex.flags}`;
+        const explanationText = alignRegexWithOriginalInstruction(instruction, intro, regexAsString);
+        return new Explanation(explanationText);
     }
+}
+
+/**
+ * Align the regex we are actually using with the regex in the original query.
+ * For example, this creates the second line in this instruction/explanation pair:
+ *
+ * ```text
+ * description regex matches /waiting|waits|wartet/ =>
+ *   using regex:            /waiting|waits|wartet/
+ * ```
+ *
+ * @param instruction
+ * @param intro
+ * @param regexAsString
+ */
+function alignRegexWithOriginalInstruction(instruction: string, intro: string, regexAsString: string) {
+    const match = instruction.match(/\//);
+    if (!match) {
+        return 'Error explaining instruction. Could not find a slash character';
+    }
+
+    // The explanation will be indented 2 characters from the parent instruction,
+    // so pad the explanation so that the start of the explained regex
+    // aligns with the start of the regex in the original instruction.
+    // This makes any differences in the regex much easier to spot.
+    const indentation = 2;
+    const startOfRegex = (match.index ?? indentation) - indentation;
+    const prefixPadded = intro.padEnd(startOfRegex);
+    return `${prefixPadded}${regexAsString}`;
 }

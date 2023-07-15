@@ -1,103 +1,103 @@
 description regex does not match /(buy|order|voucher|lakeland|purchase|\spresent)/i =>
-  regex is:                      /(buy|order|voucher|lakeland|purchase|\spresent)/i
+  using regex:                   /(buy|order|voucher|lakeland|purchase|\spresent)/i
 
 description regex does not match /^$/ =>
-  regex is:                      /^$/
+  using regex:                   /^$/
 
 description regex matches /#context/pc_photos|#context/pc_clare|#context/pc_macbook/i =>
-  regex is:               /#context/
+  using regex:            /#context/
 
 description regex matches /#context\/pc_photos|#context\/pc_clare|#context\/pc_macbook/i =>
-  regex is:               /#context\/pc_photos|#context\/pc_clare|#context\/pc_macbook/i
+  using regex:            /#context\/pc_photos|#context\/pc_clare|#context\/pc_macbook/i
 
 description regex matches /#tag\/subtag[0-9]\/subsubtag[0-9]/i =>
-  regex is:               /#tag\/subtag[0-9]\/subsubtag[0-9]/i
+  using regex:            /#tag\/subtag[0-9]\/subsubtag[0-9]/i
 
 description regex matches /(buy|order|voucher|lakeland|purchase|\spresent)/i =>
-  regex is:               /(buy|order|voucher|lakeland|purchase|\spresent)/i
+  using regex:            /(buy|order|voucher|lakeland|purchase|\spresent)/i
 
 description regex matches /[⏫🔼🔽📅⏳🛫🔁]/ =>
-  regex is:               /[⏫🔼🔽📅⏳🛫🔁]/
+  using regex:            /[⏫🔼🔽📅⏳🛫🔁]/
 
 description regex matches /[⏫🔼🔽📅⏳🛫🔁]/u =>
-  regex is:               /[⏫🔼🔽📅⏳🛫🔁]/
+  using regex:            /[⏫🔼🔽📅⏳🛫🔁]/
 
 description regex matches /^$/ =>
-  regex is:               /^$/
+  using regex:            /^$/
 
 description regex matches /^Log/i =>
-  regex is:               /^Log/i
+  using regex:            /^Log/i
 
 description regex matches /waiting|waits|wartet/ =>
-  regex is:               /waiting|waits|wartet/
+  using regex:            /waiting|waits|wartet/
 
 description regex matches /waiting|waits|wartet/i =>
-  regex is:               /waiting|waits|wartet/i
+  using regex:            /waiting|waits|wartet/i
 
 filename regex does not match /^Tasks User Support Kanban\.md$/ =>
-  regex is:                   /^Tasks User Support Kanban\.md$/
+  using regex:                /^Tasks User Support Kanban\.md$/
 
 folder regex matches /root/sub-folder/sub-sub-folder/ =>
-  regex is:          /root/
+  using regex:       /root/
 
 folder regex matches /root\/sub-folder\/sub-sub-folder/ =>
-  regex is:          /root\/sub-folder\/sub-sub-folder/
+  using regex:       /root\/sub-folder\/sub-sub-folder/
 
 heading regex matches /^Exactly Matched Heading$/ =>
-  regex is:           /^Exactly Matched Heading$/
+  using regex:        /^Exactly Matched Heading$/
 
 path regex does not match /^_meta/ =>
-  regex is:               /^_meta/
+  using regex:            /^_meta/
 
 path regex does not match /^_templates/ =>
-  regex is:               /^_templates/
+  using regex:            /^_templates/
 
 path regex does not match /sadfasfdafa/i =>
-  regex is:               /sadfasfdafa/i
+  using regex:            /sadfasfdafa/i
 
 path regex does not match /w.bble/ =>
-  regex is:               /w.bble/
+  using regex:            /w.bble/
 
 path regex matches /(george phone|exercise|100th|knee|TRVs|HWRC|2023-03-21 Python Pairing on the Hub with so-and-so|Epson|Fred's flat|1519 - feat - Theme-ability|McDermid)/i =>
-  regex is:        /(george phone|exercise|100th|knee|TRVs|HWRC|2023-03-21 Python Pairing on the Hub with so-and-so|Epson|Fred's flat|1519 - feat - Theme-ability|McDermid)/i
+  using regex:     /(george phone|exercise|100th|knee|TRVs|HWRC|2023-03-21 Python Pairing on the Hub with so-and-so|Epson|Fred's flat|1519 - feat - Theme-ability|McDermid)/i
 
 path regex matches /(george)/i =>
-  regex is:        /(george)/i
+  using regex:     /(george)/i
 
 path regex matches /Log/ =>
-  regex is:        /Log/
+  using regex:     /Log/
 
 path regex matches /clare/i =>
-  regex is:        /clare/i
+  using regex:     /clare/i
 
 path regex matches /root/sub-folder/sub-sub-folder/index\.md/ =>
-  regex is:        /root/
+  using regex:     /root/
 
 path regex matches /root\/sub-folder\/sub-sub-folder\/index\.md/ =>
-  regex is:        /root\/sub-folder\/sub-sub-folder\/index\.md/
+  using regex:     /root\/sub-folder\/sub-sub-folder\/index\.md/
 
 path regex matches /sadfasfdafa/i =>
-  regex is:        /sadfasfdafa/i
+  using regex:     /sadfasfdafa/i
 
 recurrence regex does not match /\d/ =>
-  regex is:                     /\d/
+  using regex:                  /\d/
 
 recurrence regex matches /\d/ =>
-  regex is:              /\d/
+  using regex:           /\d/
 
 tag regex does not match /./ =>
-  regex is:              /./
+  using regex:           /./
 
 tag regex matches /#book$/ =>
-  regex is:       /#book$/
+  using regex:    /#book$/
 
 tag regex matches /#t$/ =>
-  regex is:       /#t$/
+  using regex:    /#t$/
 
 tags regex does not match /(home|town)/ =>
-  regex is:               /(home|town)/
+  using regex:            /(home|town)/
 
 tags regex matches /(home|pc_mac|town)/ =>
-  regex is:        /(home|pc_mac|town)/
+  using regex:     /(home|pc_mac|town)/
 
 Error: None
