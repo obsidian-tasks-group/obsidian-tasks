@@ -43,7 +43,13 @@ export class RegexMatcher extends IStringMatcher {
         return stringToSearch.match(this.regex) !== null;
     }
 
-    explanation(_instruction: string): Explanation {
-        return new Explanation(`Regular expression interpreted as: /${this.regex.source}/${this.regex.flags}`);
+    explanation(instruction: string): Explanation {
+        const match = instruction.match(/\//);
+        if (!match) {
+            return new Explanation('Error explaining instruction. Could not find a slash character');
+        }
+        const startOfRegex = (match.index ?? 2) - 2;
+        const prefix = 'regex is: '.padEnd(startOfRegex);
+        return new Explanation(`${prefix}/${this.regex.source}/${this.regex.flags}`);
     }
 }
