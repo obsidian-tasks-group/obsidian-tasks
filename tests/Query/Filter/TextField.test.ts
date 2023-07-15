@@ -43,6 +43,7 @@ describe('explains regular expression searches', () => {
             filename regex does not match /^Tasks User Support Kanban\\.md$/
             folder regex matches /root/sub-folder/sub-sub-folder/
             folder regex matches /root/sub-folder/sub-sub-folder/index.md
+            folder regex matches /root\\/sub-folder\\/sub-sub-folder/
             heading regex matches /^Exactly Matched Heading$/
             path regex does not match /^_meta/
             path regex does not match /^_templates/

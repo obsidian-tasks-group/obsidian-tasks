@@ -58,6 +58,10 @@ folder regex matches /root/sub-folder/sub-sub-folder/index.md =>
   folder regex matches /root/sub-folder/sub-sub-folder/index.md
     Regular expression interpreted as: /root/
 
+folder regex matches /root\/sub-folder\/sub-sub-folder/ =>
+  folder regex matches /root\/sub-folder\/sub-sub-folder/
+    Regular expression interpreted as: /root\/sub-folder\/sub-sub-folder/
+
 heading regex matches /^Exactly Matched Heading$/ =>
   heading regex matches /^Exactly Matched Heading$/
     Regular expression interpreted as: /^Exactly Matched Heading$/
