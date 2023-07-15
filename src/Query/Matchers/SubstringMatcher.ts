@@ -1,4 +1,4 @@
-import type { Explanation } from '../Explain/Explanation';
+import { Explanation } from '../Explain/Explanation';
 import { IStringMatcher } from './IStringMatcher';
 
 /**
@@ -28,7 +28,9 @@ export class SubstringMatcher extends IStringMatcher {
         return haystack.toLocaleLowerCase().includes(needle.toLocaleLowerCase());
     }
 
-    childExplanations(): Explanation[] {
-        return [];
+    explanation(instruction: string): Explanation {
+        // We don't currently have any specific explanation of substring-searching,
+        // so just return the original instruction line.
+        return new Explanation(instruction);
     }
 }

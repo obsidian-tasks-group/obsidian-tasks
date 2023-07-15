@@ -25,5 +25,5 @@ export abstract class IStringMatcher {
      * Return an array of {@link Explanation} objects, with any extra detail
      * about the behaviour of this matcher.
      */
-    public abstract childExplanations(): Explanation[];
+    public abstract explanation(instruction: string): Explanation;
 }

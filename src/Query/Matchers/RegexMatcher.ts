@@ -43,7 +43,7 @@ export class RegexMatcher extends IStringMatcher {
         return stringToSearch.match(this.regex) !== null;
     }
 
-    childExplanations(): Explanation[] {
-        return [new Explanation(`Regular expression interpreted as: /${this.regex.source}/${this.regex.flags}`)];
+    explanation(_instruction: string): Explanation {
+        return new Explanation(`Regular expression interpreted as: /${this.regex.source}/${this.regex.flags}`);
     }
 }

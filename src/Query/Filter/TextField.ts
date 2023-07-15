@@ -2,7 +2,6 @@ import type { Task } from '../../Task';
 import { SubstringMatcher } from '../Matchers/SubstringMatcher';
 import { RegexMatcher } from '../Matchers/RegexMatcher';
 import type { IStringMatcher } from '../Matchers/IStringMatcher';
-import { Explanation } from '../Explain/Explanation';
 import type { Comparator } from '../Sorter';
 import type { GrouperFunction } from '../Grouper';
 import { Field } from './Field';
@@ -50,11 +49,7 @@ export abstract class TextField extends Field {
         // and tests if it matches the string filtering rule
         // represented by this object.
         const negate = filterOperator.match(/not/) !== null;
-        const filter = new Filter(
-            line,
-            this.getFilter(matcher, negate),
-            new Explanation(line, matcher.childExplanations()),
-        );
+        const filter = new Filter(line, this.getFilter(matcher, negate), matcher.explanation(line));
         return FilterOrErrorMessage.fromFilter(filter);
     }
 

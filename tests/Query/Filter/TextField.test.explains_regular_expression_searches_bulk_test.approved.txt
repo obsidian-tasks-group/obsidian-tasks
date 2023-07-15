@@ -1,137 +1,103 @@
 description regex does not match /(buy|order|voucher|lakeland|purchase|\spresent)/i =>
-  description regex does not match /(buy|order|voucher|lakeland|purchase|\spresent)/i
-    Regular expression interpreted as: /(buy|order|voucher|lakeland|purchase|\spresent)/i
+  Regular expression interpreted as: /(buy|order|voucher|lakeland|purchase|\spresent)/i
 
 description regex does not match /^$/ =>
-  description regex does not match /^$/
-    Regular expression interpreted as: /^$/
+  Regular expression interpreted as: /^$/
 
 description regex matches /#context/pc_photos|#context/pc_clare|#context/pc_macbook/i =>
-  description regex matches /#context/pc_photos|#context/pc_clare|#context/pc_macbook/i
-    Regular expression interpreted as: /#context/
+  Regular expression interpreted as: /#context/
 
 description regex matches /#context\/pc_photos|#context\/pc_clare|#context\/pc_macbook/i =>
-  description regex matches /#context\/pc_photos|#context\/pc_clare|#context\/pc_macbook/i
-    Regular expression interpreted as: /#context\/pc_photos|#context\/pc_clare|#context\/pc_macbook/i
+  Regular expression interpreted as: /#context\/pc_photos|#context\/pc_clare|#context\/pc_macbook/i
 
 description regex matches /#tag\/subtag[0-9]\/subsubtag[0-9]/i =>
-  description regex matches /#tag\/subtag[0-9]\/subsubtag[0-9]/i
-    Regular expression interpreted as: /#tag\/subtag[0-9]\/subsubtag[0-9]/i
+  Regular expression interpreted as: /#tag\/subtag[0-9]\/subsubtag[0-9]/i
 
 description regex matches /(buy|order|voucher|lakeland|purchase|\spresent)/i =>
-  description regex matches /(buy|order|voucher|lakeland|purchase|\spresent)/i
-    Regular expression interpreted as: /(buy|order|voucher|lakeland|purchase|\spresent)/i
+  Regular expression interpreted as: /(buy|order|voucher|lakeland|purchase|\spresent)/i
 
 description regex matches /[⏫🔼🔽📅⏳🛫🔁]/ =>
-  description regex matches /[⏫🔼🔽📅⏳🛫🔁]/
-    Regular expression interpreted as: /[⏫🔼🔽📅⏳🛫🔁]/
+  Regular expression interpreted as: /[⏫🔼🔽📅⏳🛫🔁]/
 
 description regex matches /[⏫🔼🔽📅⏳🛫🔁]/u =>
-  description regex matches /[⏫🔼🔽📅⏳🛫🔁]/u
-    Regular expression interpreted as: /[⏫🔼🔽📅⏳🛫🔁]/
+  Regular expression interpreted as: /[⏫🔼🔽📅⏳🛫🔁]/
 
 description regex matches /^$/ =>
-  description regex matches /^$/
-    Regular expression interpreted as: /^$/
+  Regular expression interpreted as: /^$/
 
 description regex matches /^Log/i =>
-  description regex matches /^Log/i
-    Regular expression interpreted as: /^Log/i
+  Regular expression interpreted as: /^Log/i
 
 description regex matches /waiting|waits|wartet/ =>
-  description regex matches /waiting|waits|wartet/
-    Regular expression interpreted as: /waiting|waits|wartet/
+  Regular expression interpreted as: /waiting|waits|wartet/
 
 description regex matches /waiting|waits|wartet/i =>
-  description regex matches /waiting|waits|wartet/i
-    Regular expression interpreted as: /waiting|waits|wartet/i
+  Regular expression interpreted as: /waiting|waits|wartet/i
 
 filename regex does not match /^Tasks User Support Kanban\.md$/ =>
-  filename regex does not match /^Tasks User Support Kanban\.md$/
-    Regular expression interpreted as: /^Tasks User Support Kanban\.md$/
+  Regular expression interpreted as: /^Tasks User Support Kanban\.md$/
 
 folder regex matches /root/sub-folder/sub-sub-folder/ =>
-  folder regex matches /root/sub-folder/sub-sub-folder/
-    Regular expression interpreted as: /root/
+  Regular expression interpreted as: /root/
 
 folder regex matches /root\/sub-folder\/sub-sub-folder/ =>
-  folder regex matches /root\/sub-folder\/sub-sub-folder/
-    Regular expression interpreted as: /root\/sub-folder\/sub-sub-folder/
+  Regular expression interpreted as: /root\/sub-folder\/sub-sub-folder/
 
 heading regex matches /^Exactly Matched Heading$/ =>
-  heading regex matches /^Exactly Matched Heading$/
-    Regular expression interpreted as: /^Exactly Matched Heading$/
+  Regular expression interpreted as: /^Exactly Matched Heading$/
 
 path regex does not match /^_meta/ =>
-  path regex does not match /^_meta/
-    Regular expression interpreted as: /^_meta/
+  Regular expression interpreted as: /^_meta/
 
 path regex does not match /^_templates/ =>
-  path regex does not match /^_templates/
-    Regular expression interpreted as: /^_templates/
+  Regular expression interpreted as: /^_templates/
 
 path regex does not match /sadfasfdafa/i =>
-  path regex does not match /sadfasfdafa/i
-    Regular expression interpreted as: /sadfasfdafa/i
+  Regular expression interpreted as: /sadfasfdafa/i
 
 path regex does not match /w.bble/ =>
-  path regex does not match /w.bble/
-    Regular expression interpreted as: /w.bble/
+  Regular expression interpreted as: /w.bble/
 
 path regex matches /(george phone|exercise|100th|knee|TRVs|HWRC|2023-03-21 Python Pairing on the Hub with so-and-so|Epson|Fred's flat|1519 - feat - Theme-ability|McDermid)/i =>
-  path regex matches /(george phone|exercise|100th|knee|TRVs|HWRC|2023-03-21 Python Pairing on the Hub with so-and-so|Epson|Fred's flat|1519 - feat - Theme-ability|McDermid)/i
-    Regular expression interpreted as: /(george phone|exercise|100th|knee|TRVs|HWRC|2023-03-21 Python Pairing on the Hub with so-and-so|Epson|Fred's flat|1519 - feat - Theme-ability|McDermid)/i
+  Regular expression interpreted as: /(george phone|exercise|100th|knee|TRVs|HWRC|2023-03-21 Python Pairing on the Hub with so-and-so|Epson|Fred's flat|1519 - feat - Theme-ability|McDermid)/i
 
 path regex matches /(george)/i =>
-  path regex matches /(george)/i
-    Regular expression interpreted as: /(george)/i
+  Regular expression interpreted as: /(george)/i
 
 path regex matches /Log/ =>
-  path regex matches /Log/
-    Regular expression interpreted as: /Log/
+  Regular expression interpreted as: /Log/
 
 path regex matches /clare/i =>
-  path regex matches /clare/i
-    Regular expression interpreted as: /clare/i
+  Regular expression interpreted as: /clare/i
 
 path regex matches /root/sub-folder/sub-sub-folder/index\.md/ =>
-  path regex matches /root/sub-folder/sub-sub-folder/index\.md/
-    Regular expression interpreted as: /root/
+  Regular expression interpreted as: /root/
 
 path regex matches /root\/sub-folder\/sub-sub-folder\/index\.md/ =>
-  path regex matches /root\/sub-folder\/sub-sub-folder\/index\.md/
-    Regular expression interpreted as: /root\/sub-folder\/sub-sub-folder\/index\.md/
+  Regular expression interpreted as: /root\/sub-folder\/sub-sub-folder\/index\.md/
 
 path regex matches /sadfasfdafa/i =>
-  path regex matches /sadfasfdafa/i
-    Regular expression interpreted as: /sadfasfdafa/i
+  Regular expression interpreted as: /sadfasfdafa/i
 
 recurrence regex does not match /\d/ =>
-  recurrence regex does not match /\d/
-    Regular expression interpreted as: /\d/
+  Regular expression interpreted as: /\d/
 
 recurrence regex matches /\d/ =>
-  recurrence regex matches /\d/
-    Regular expression interpreted as: /\d/
+  Regular expression interpreted as: /\d/
 
 tag regex does not match /./ =>
-  tag regex does not match /./
-    Regular expression interpreted as: /./
+  Regular expression interpreted as: /./
 
 tag regex matches /#book$/ =>
-  tag regex matches /#book$/
-    Regular expression interpreted as: /#book$/
+  Regular expression interpreted as: /#book$/
 
 tag regex matches /#t$/ =>
-  tag regex matches /#t$/
-    Regular expression interpreted as: /#t$/
+  Regular expression interpreted as: /#t$/
 
 tags regex does not match /(home|town)/ =>
-  tags regex does not match /(home|town)/
-    Regular expression interpreted as: /(home|town)/
+  Regular expression interpreted as: /(home|town)/
 
 tags regex matches /(home|pc_mac|town)/ =>
-  tags regex matches /(home|pc_mac|town)/
-    Regular expression interpreted as: /(home|pc_mac|town)/
+  Regular expression interpreted as: /(home|pc_mac|town)/
 
 Error: None
