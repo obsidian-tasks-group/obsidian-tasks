@@ -1,3 +1,4 @@
+import type { Explanation } from '../Explain/Explanation';
 import { IStringMatcher } from './IStringMatcher';
 
 /**
@@ -25,5 +26,9 @@ export class SubstringMatcher extends IStringMatcher {
 
     public static stringIncludesCaseInsensitive(haystack: string, needle: string): boolean {
         return haystack.toLocaleLowerCase().includes(needle.toLocaleLowerCase());
+    }
+
+    childExplanations(): Explanation[] {
+        return [];
     }
 }

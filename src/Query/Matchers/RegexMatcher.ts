@@ -1,3 +1,4 @@
+import { Explanation } from '../Explain/Explanation';
 import { IStringMatcher } from './IStringMatcher';
 
 /**
@@ -40,5 +41,9 @@ export class RegexMatcher extends IStringMatcher {
 
     public matches(stringToSearch: string): boolean {
         return stringToSearch.match(this.regex) !== null;
+    }
+
+    childExplanations(): Explanation[] {
+        return [new Explanation(`Regular expression interpreted as: /${this.regex.source}/${this.regex.flags}`)];
     }
 }

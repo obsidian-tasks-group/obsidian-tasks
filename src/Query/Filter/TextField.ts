@@ -50,7 +50,11 @@ export abstract class TextField extends Field {
         // and tests if it matches the string filtering rule
         // represented by this object.
         const negate = filterOperator.match(/not/) !== null;
-        const filter = new Filter(line, this.getFilter(matcher, negate), new Explanation(line));
+        const filter = new Filter(
+            line,
+            this.getFilter(matcher, negate),
+            new Explanation(line, matcher.childExplanations()),
+        );
         return FilterOrErrorMessage.fromFilter(filter);
     }
 
