@@ -23,6 +23,18 @@ describe('RegexMatcher', () => {
     });
 });
 
+describe('RegexMatcher source', () => {
+    it('should allow multiple slashes in source', () => {
+        const matcher = RegexMatcher.validateAndConstruct('/a/b/c/d/');
+        expect(matcher!.regex.source).toEqual(String.raw`a\/b\/c\/d`);
+    });
+
+    it('should allow multiple slashes and delimiters in source', () => {
+        const matcher = RegexMatcher.validateAndConstruct('//a/b/c/d//');
+        expect(matcher!.regex.source).toEqual(String.raw`\/a\/b\/c\/d\/`);
+    });
+});
+
 describe('RegexMatcher flags', () => {
     it('should allow "i" flag - case-insensitive', () => {
         const matcher = RegexMatcher.validateAndConstruct('/expression/i');
