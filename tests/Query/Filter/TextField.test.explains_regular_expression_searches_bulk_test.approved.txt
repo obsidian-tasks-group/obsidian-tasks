@@ -8,7 +8,7 @@ description regex matches /  / =>
   using regex:            '  ' with no flags
 
 description regex matches /#context/pc_photos|#context/pc_clare|#context/pc_macbook/i =>
-  using regex:            '#context' with no flags
+  using regex:            '#context\/pc_photos|#context\/pc_clare|#context\/pc_macbook' with flag 'i'
 
 description regex matches /#context\/pc_photos|#context\/pc_clare|#context\/pc_macbook/i =>
   using regex:            '#context\/pc_photos|#context\/pc_clare|#context\/pc_macbook' with flag 'i'
@@ -41,7 +41,7 @@ filename regex does not match /^Tasks User Support Kanban\.md$/ =>
   using regex:                '^Tasks User Support Kanban\.md$' with no flags
 
 folder regex matches /root/sub-folder/sub-sub-folder/ =>
-  using regex:       'root' with no flags
+  using regex:       'root\/sub-folder\/sub-sub-folder' with no flags
 
 folder regex matches /root\/sub-folder\/sub-sub-folder/ =>
   using regex:       'root\/sub-folder\/sub-sub-folder' with no flags
@@ -77,7 +77,7 @@ path regex matches /clare/i =>
   using regex:     'clare' with flag 'i'
 
 path regex matches /root/sub-folder/sub-sub-folder/index\.md/ =>
-  using regex:     'root' with no flags
+  using regex:     'root\/sub-folder\/sub-sub-folder\/index\.md' with no flags
 
 path regex matches /root\/sub-folder\/sub-sub-folder\/index\.md/ =>
   using regex:     'root\/sub-folder\/sub-sub-folder\/index\.md' with no flags
