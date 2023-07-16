@@ -55,7 +55,15 @@ export class RegexMatcher extends IStringMatcher {
             return result;
         }
 
-        result += ` with flags '${this.regex.flags}'`;
+        switch (this.regex.flags.length) {
+            case 1:
+                result += ` with flag '${this.regex.flags}'`;
+                break;
+            default:
+                result += ` with flags '${this.regex.flags}'`;
+                break;
+        }
+
         return result;
     }
 }
