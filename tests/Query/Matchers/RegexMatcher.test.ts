@@ -24,12 +24,12 @@ describe('RegexMatcher', () => {
 });
 
 describe('RegexMatcher source', () => {
-    it.failing('should allow multiple slashes in source', () => {
+    it('should allow multiple slashes in source', () => {
         const matcher = RegexMatcher.validateAndConstruct('/a/b/c/d/');
         expect(matcher!.regex.source).toEqual(String.raw`a\/b\/c\/d`);
     });
 
-    it.failing('should allow multiple slashes and delimiters in source', () => {
+    it('should allow multiple slashes and delimiters in source', () => {
         const matcher = RegexMatcher.validateAndConstruct('//a/b/c/d//');
         expect(matcher!.regex.source).toEqual(String.raw`\/a\/b\/c\/d\/`);
     });
