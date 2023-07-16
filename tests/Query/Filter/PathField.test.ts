@@ -81,7 +81,7 @@ describe('should use whole path with un-escaped slashes in query', () => {
         String.raw`path regex matches /a/b/c/d/`,
     );
 
-    it('should escape backslashes in query automatically', () => {
+    it('should escape forward slashes in query automatically', () => {
         expect(filterWithUnescapedSlashes).toBeValid();
         expect(filterWithUnescapedSlashes).toHaveExplanation("using regex:     'a\\/b\\/c\\/d' with no flags");
     });
