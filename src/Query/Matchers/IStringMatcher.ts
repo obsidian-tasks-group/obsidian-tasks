@@ -1,3 +1,5 @@
+import type { Explanation } from '../Explain/Explanation';
+
 /**
  * An interface for determining whether a string value matches a particular condition.
  *
@@ -18,4 +20,13 @@ export abstract class IStringMatcher {
     public matchesAnyOf(stringsToSearch: string[]) {
         return stringsToSearch.some((s) => this.matches(s));
     }
+
+    /**
+     * Return an {@link Explanation} object, with any extra detail
+     * about the behaviour of this matcher.
+     *
+     * If there is no extra detail, just pass {@link instruction} in to
+     * the {@link Explanation} constructor.
+     */
+    public abstract explanation(instruction: string): Explanation;
 }

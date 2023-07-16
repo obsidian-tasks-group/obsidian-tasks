@@ -1,0 +1,109 @@
+description regex does not match /(buy|order|voucher|lakeland|purchase|\spresent)/i =>
+  using regex:                   '(buy|order|voucher|lakeland|purchase|\spresent)' with flag 'i'
+
+description regex does not match /^$/ =>
+  using regex:                   '^$' with no flags
+
+description regex matches /  / =>
+  using regex:            '  ' with no flags
+
+description regex matches /#context/pc_photos|#context/pc_clare|#context/pc_macbook/i =>
+  using regex:            '#context' with no flags
+
+description regex matches /#context\/pc_photos|#context\/pc_clare|#context\/pc_macbook/i =>
+  using regex:            '#context\/pc_photos|#context\/pc_clare|#context\/pc_macbook' with flag 'i'
+
+description regex matches /#tag\/subtag[0-9]\/subsubtag[0-9]/i =>
+  using regex:            '#tag\/subtag[0-9]\/subsubtag[0-9]' with flag 'i'
+
+description regex matches /(buy|order|voucher|lakeland|purchase|\spresent)/i =>
+  using regex:            '(buy|order|voucher|lakeland|purchase|\spresent)' with flag 'i'
+
+description regex matches /[⏫🔼🔽📅⏳🛫🔁]/ =>
+  using regex:            '[⏫🔼🔽📅⏳🛫🔁]' with no flags
+
+description regex matches /[⏫🔼🔽📅⏳🛫🔁]/u =>
+  using regex:            '[⏫🔼🔽📅⏳🛫🔁]' with no flags
+
+description regex matches /^$/ =>
+  using regex:            '^$' with no flags
+
+description regex matches /^Log/i =>
+  using regex:            '^Log' with flag 'i'
+
+description regex matches /waiting|waits|wartet/ =>
+  using regex:            'waiting|waits|wartet' with no flags
+
+description regex matches /waiting|waits|wartet/i =>
+  using regex:            'waiting|waits|wartet' with flag 'i'
+
+filename regex does not match /^Tasks User Support Kanban\.md$/ =>
+  using regex:                '^Tasks User Support Kanban\.md$' with no flags
+
+folder regex matches /root/sub-folder/sub-sub-folder/ =>
+  using regex:       'root' with no flags
+
+folder regex matches /root\/sub-folder\/sub-sub-folder/ =>
+  using regex:       'root\/sub-folder\/sub-sub-folder' with no flags
+
+heading regex matches /^Exactly Matched Heading$/ =>
+  using regex:        '^Exactly Matched Heading$' with no flags
+
+path regex does not match /^_meta/ =>
+  using regex:            '^_meta' with no flags
+
+path regex does not match /^_templates/ =>
+  using regex:            '^_templates' with no flags
+
+path regex does not match /sadfasfdafa/i =>
+  using regex:            'sadfasfdafa' with flag 'i'
+
+path regex does not match /sadfasfdafa/igm =>
+  using regex:            'sadfasfdafa' with flags 'gim'
+
+path regex does not match /w.bble/ =>
+  using regex:            'w.bble' with no flags
+
+path regex matches /(george phone|exercise|100th|knee|TRVs|HWRC|2023-03-21 Python Pairing on the Hub with so-and-so|Epson|Fred's flat|1519 - feat - Theme-ability|McDermid)/i =>
+  using regex:     '(george phone|exercise|100th|knee|TRVs|HWRC|2023-03-21 Python Pairing on the Hub with so-and-so|Epson|Fred's flat|1519 - feat - Theme-ability|McDermid)' with flag 'i'
+
+path regex matches /(george)/i =>
+  using regex:     '(george)' with flag 'i'
+
+path regex matches /Log/ =>
+  using regex:     'Log' with no flags
+
+path regex matches /clare/i =>
+  using regex:     'clare' with flag 'i'
+
+path regex matches /root/sub-folder/sub-sub-folder/index\.md/ =>
+  using regex:     'root' with no flags
+
+path regex matches /root\/sub-folder\/sub-sub-folder\/index\.md/ =>
+  using regex:     'root\/sub-folder\/sub-sub-folder\/index\.md' with no flags
+
+path regex matches /sadfasfdafa/i =>
+  using regex:     'sadfasfdafa' with flag 'i'
+
+recurrence regex does not match /\d/ =>
+  using regex:                  '\d' with no flags
+
+recurrence regex matches /\d/ =>
+  using regex:           '\d' with no flags
+
+tag regex does not match /./ =>
+  using regex:           '.' with no flags
+
+tag regex matches /#book$/ =>
+  using regex:    '#book$' with no flags
+
+tag regex matches /#t$/ =>
+  using regex:    '#t$' with no flags
+
+tags regex does not match /(home|town)/ =>
+  using regex:            '(home|town)' with no flags
+
+tags regex matches /(home|pc_mac|town)/ =>
+  using regex:     '(home|pc_mac|town)' with no flags
+
+Error: None
