@@ -58,6 +58,9 @@ path regex does not match /^_templates/ =>
 path regex does not match /sadfasfdafa/i =>
   using regex:            'sadfasfdafa' with flags 'i'
 
+path regex does not match /sadfasfdafa/igm =>
+  using regex:            'sadfasfdafa' with flags 'gim'
+
 path regex does not match /w.bble/ =>
   using regex:            'w.bble'
 

@@ -46,6 +46,7 @@ describe('explains regular expression searches', () => {
             path regex does not match /^_meta/
             path regex does not match /^_templates/
             path regex does not match /sadfasfdafa/i
+            path regex does not match /sadfasfdafa/igm
             path regex does not match /w.bble/
             path regex matches /(george phone|exercise|100th|knee|TRVs|HWRC|2023-03-21 Python Pairing on the Hub with so-and-so|Epson|Fred's flat|1519 - feat - Theme-ability|McDermid)/i
             path regex matches /(george)/i
