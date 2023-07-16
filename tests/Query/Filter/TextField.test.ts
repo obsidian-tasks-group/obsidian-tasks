@@ -24,7 +24,12 @@ describe('explains regular expression searches', () => {
     });
 
     it('bulk test', () => {
+        /* This test uses Approval Tests' verify() to quickly get good coverage on a wide variety
+           of regular expression examples.
+         */
+
         // Arrange
+        // Alphabetical order please
         const source = `
             description regex does not match /(buy|order|voucher|lakeland|purchase|\\spresent)/i
             description regex does not match /^$/
