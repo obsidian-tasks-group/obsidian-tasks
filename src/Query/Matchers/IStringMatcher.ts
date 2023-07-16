@@ -22,8 +22,11 @@ export abstract class IStringMatcher {
     }
 
     /**
-     * Return an array of {@link Explanation} objects, with any extra detail
+     * Return an {@link Explanation} object, with any extra detail
      * about the behaviour of this matcher.
+     *
+     * If there is no extra detail, just pass {@link instruction} in to
+     * the {@link Explanation} constructor.
      */
     public abstract explanation(instruction: string): Explanation;
 }
