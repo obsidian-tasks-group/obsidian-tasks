@@ -39,7 +39,7 @@ describe('RegexMatcher flags', () => {
         expect(matcher!.regex.flags).toEqual('m');
     });
 
-    it.failing('should allow "u" flag - unicode', () => {
+    it('should allow "u" flag - unicode', () => {
         const matcher = RegexMatcher.validateAndConstruct('/expression/u');
         expect(matcher!.regex.flags).toEqual('u');
     });

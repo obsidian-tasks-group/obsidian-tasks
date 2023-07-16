@@ -28,7 +28,7 @@ export class RegexMatcher extends IStringMatcher {
      */
     public static validateAndConstruct(regexInput: string): RegexMatcher | null {
         // Courtesy of https://stackoverflow.com/questions/17843691/javascript-regex-to-match-a-regex
-        const regexPattern = /\/((?![*+?])(?:[^\r\n[/\\]|\\.|\[(?:[^\r\n\]\\]|\\.)*])+)\/([igm]*)/;
+        const regexPattern = /\/((?![*+?])(?:[^\r\n[/\\]|\\.|\[(?:[^\r\n\]\\]|\\.)*])+)\/([igmu]*)/;
         const query = regexInput.match(regexPattern);
 
         if (query !== null) {
