@@ -28,8 +28,8 @@ describe('explains regular expression searches', () => {
         const source = `
             description regex does not match /(buy|order|voucher|lakeland|purchase|\\spresent)/i
             description regex does not match /^$/
-            description regex matches /#context/pc_photos|#context/pc_clare|#context/pc_macbook/i
             description regex matches /  /
+            description regex matches /#context/pc_photos|#context/pc_clare|#context/pc_macbook/i
             description regex matches /#context\\/pc_photos|#context\\/pc_clare|#context\\/pc_macbook/i
             description regex matches /#tag\\/subtag[0-9]\\/subsubtag[0-9]/i
             description regex matches /(buy|order|voucher|lakeland|purchase|\\spresent)/i
