@@ -5,7 +5,7 @@ import { IStringMatcher } from './IStringMatcher';
  * Regular-expression-based implementation of IStringMatcher.
  */
 export class RegexMatcher extends IStringMatcher {
-    private readonly regex: RegExp;
+    public readonly regex: RegExp;
 
     /**
      * Construct a RegexMatcher object.
