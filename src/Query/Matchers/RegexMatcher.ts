@@ -24,7 +24,7 @@ export class RegexMatcher extends IStringMatcher {
      * @param {string} regexInput - A string that can be converted to a regular expression.
      *                              It must begin with a /, and end either with / and optionally any
      *                              valid flags.
-     * @throws Throws an exception if there was an error in {@link regexInput}.
+     * @throws {SyntaxError} Throws an exception if there was an error in {@link regexInput}.
      */
     public static validateAndConstruct(regexInput: string): RegexMatcher | null {
         // Courtesy of https://stackoverflow.com/questions/17843691/javascript-regex-to-match-a-regex
