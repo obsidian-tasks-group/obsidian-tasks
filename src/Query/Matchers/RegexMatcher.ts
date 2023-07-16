@@ -74,7 +74,7 @@ export class RegexMatcher extends IStringMatcher {
  *
  * ```text
  * description regex matches /waiting|waits|wartet/ =>
- *   using regex:            /waiting|waits|wartet/
+ *   using regex:            'waiting|waits|wartet' with no flags
  * ```
  *
  * @param instruction
