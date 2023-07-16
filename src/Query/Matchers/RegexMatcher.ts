@@ -50,17 +50,17 @@ export class RegexMatcher extends IStringMatcher {
     }
 
     private regexAsString() {
-        let result = `'${this.regex.source}'`;
+        let result = `'${this.regex.source}' with `;
 
         switch (this.regex.flags.length) {
             case 0:
-                result += ' with no flags';
+                result += 'no flags';
                 break;
             case 1:
-                result += ` with flag '${this.regex.flags}'`;
+                result += `flag '${this.regex.flags}'`;
                 break;
             default:
-                result += ` with flags '${this.regex.flags}'`;
+                result += `flags '${this.regex.flags}'`;
                 break;
         }
 
