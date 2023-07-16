@@ -50,7 +50,7 @@ export class RegexMatcher extends IStringMatcher {
     }
 
     private regexAsString() {
-        let result = `/${this.regex.source}/`;
+        let result = `'${this.regex.source}'`;
         if (this.regex.flags.length === 0) {
             return result;
         }

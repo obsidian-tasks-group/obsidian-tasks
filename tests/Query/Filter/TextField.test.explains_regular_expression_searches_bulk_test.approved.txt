@@ -1,106 +1,106 @@
 description regex does not match /(buy|order|voucher|lakeland|purchase|\spresent)/i =>
-  using regex:                   /(buy|order|voucher|lakeland|purchase|\spresent)/ with flags 'i'
+  using regex:                   '(buy|order|voucher|lakeland|purchase|\spresent)' with flags 'i'
 
 description regex does not match /^$/ =>
-  using regex:                   /^$/
+  using regex:                   '^$'
 
 description regex matches /#context/pc_photos|#context/pc_clare|#context/pc_macbook/i =>
-  using regex:            /#context/
+  using regex:            '#context'
 
 description regex matches /  / =>
-  using regex:            /  /
+  using regex:            '  '
 
 description regex matches /#context\/pc_photos|#context\/pc_clare|#context\/pc_macbook/i =>
-  using regex:            /#context\/pc_photos|#context\/pc_clare|#context\/pc_macbook/ with flags 'i'
+  using regex:            '#context\/pc_photos|#context\/pc_clare|#context\/pc_macbook' with flags 'i'
 
 description regex matches /#tag\/subtag[0-9]\/subsubtag[0-9]/i =>
-  using regex:            /#tag\/subtag[0-9]\/subsubtag[0-9]/ with flags 'i'
+  using regex:            '#tag\/subtag[0-9]\/subsubtag[0-9]' with flags 'i'
 
 description regex matches /(buy|order|voucher|lakeland|purchase|\spresent)/i =>
-  using regex:            /(buy|order|voucher|lakeland|purchase|\spresent)/ with flags 'i'
+  using regex:            '(buy|order|voucher|lakeland|purchase|\spresent)' with flags 'i'
 
 description regex matches /[⏫🔼🔽📅⏳🛫🔁]/ =>
-  using regex:            /[⏫🔼🔽📅⏳🛫🔁]/
+  using regex:            '[⏫🔼🔽📅⏳🛫🔁]'
 
 description regex matches /[⏫🔼🔽📅⏳🛫🔁]/u =>
-  using regex:            /[⏫🔼🔽📅⏳🛫🔁]/
+  using regex:            '[⏫🔼🔽📅⏳🛫🔁]'
 
 description regex matches /^$/ =>
-  using regex:            /^$/
+  using regex:            '^$'
 
 description regex matches /^Log/i =>
-  using regex:            /^Log/ with flags 'i'
+  using regex:            '^Log' with flags 'i'
 
 description regex matches /waiting|waits|wartet/ =>
-  using regex:            /waiting|waits|wartet/
+  using regex:            'waiting|waits|wartet'
 
 description regex matches /waiting|waits|wartet/i =>
-  using regex:            /waiting|waits|wartet/ with flags 'i'
+  using regex:            'waiting|waits|wartet' with flags 'i'
 
 filename regex does not match /^Tasks User Support Kanban\.md$/ =>
-  using regex:                /^Tasks User Support Kanban\.md$/
+  using regex:                '^Tasks User Support Kanban\.md$'
 
 folder regex matches /root/sub-folder/sub-sub-folder/ =>
-  using regex:       /root/
+  using regex:       'root'
 
 folder regex matches /root\/sub-folder\/sub-sub-folder/ =>
-  using regex:       /root\/sub-folder\/sub-sub-folder/
+  using regex:       'root\/sub-folder\/sub-sub-folder'
 
 heading regex matches /^Exactly Matched Heading$/ =>
-  using regex:        /^Exactly Matched Heading$/
+  using regex:        '^Exactly Matched Heading$'
 
 path regex does not match /^_meta/ =>
-  using regex:            /^_meta/
+  using regex:            '^_meta'
 
 path regex does not match /^_templates/ =>
-  using regex:            /^_templates/
+  using regex:            '^_templates'
 
 path regex does not match /sadfasfdafa/i =>
-  using regex:            /sadfasfdafa/ with flags 'i'
+  using regex:            'sadfasfdafa' with flags 'i'
 
 path regex does not match /w.bble/ =>
-  using regex:            /w.bble/
+  using regex:            'w.bble'
 
 path regex matches /(george phone|exercise|100th|knee|TRVs|HWRC|2023-03-21 Python Pairing on the Hub with so-and-so|Epson|Fred's flat|1519 - feat - Theme-ability|McDermid)/i =>
-  using regex:     /(george phone|exercise|100th|knee|TRVs|HWRC|2023-03-21 Python Pairing on the Hub with so-and-so|Epson|Fred's flat|1519 - feat - Theme-ability|McDermid)/ with flags 'i'
+  using regex:     '(george phone|exercise|100th|knee|TRVs|HWRC|2023-03-21 Python Pairing on the Hub with so-and-so|Epson|Fred's flat|1519 - feat - Theme-ability|McDermid)' with flags 'i'
 
 path regex matches /(george)/i =>
-  using regex:     /(george)/ with flags 'i'
+  using regex:     '(george)' with flags 'i'
 
 path regex matches /Log/ =>
-  using regex:     /Log/
+  using regex:     'Log'
 
 path regex matches /clare/i =>
-  using regex:     /clare/ with flags 'i'
+  using regex:     'clare' with flags 'i'
 
 path regex matches /root/sub-folder/sub-sub-folder/index\.md/ =>
-  using regex:     /root/
+  using regex:     'root'
 
 path regex matches /root\/sub-folder\/sub-sub-folder\/index\.md/ =>
-  using regex:     /root\/sub-folder\/sub-sub-folder\/index\.md/
+  using regex:     'root\/sub-folder\/sub-sub-folder\/index\.md'
 
 path regex matches /sadfasfdafa/i =>
-  using regex:     /sadfasfdafa/ with flags 'i'
+  using regex:     'sadfasfdafa' with flags 'i'
 
 recurrence regex does not match /\d/ =>
-  using regex:                  /\d/
+  using regex:                  '\d'
 
 recurrence regex matches /\d/ =>
-  using regex:           /\d/
+  using regex:           '\d'
 
 tag regex does not match /./ =>
-  using regex:           /./
+  using regex:           '.'
 
 tag regex matches /#book$/ =>
-  using regex:    /#book$/
+  using regex:    '#book$'
 
 tag regex matches /#t$/ =>
-  using regex:    /#t$/
+  using regex:    '#t$'
 
 tags regex does not match /(home|town)/ =>
-  using regex:            /(home|town)/
+  using regex:            '(home|town)'
 
 tags regex matches /(home|pc_mac|town)/ =>
-  using regex:     /(home|pc_mac|town)/
+  using regex:     '(home|pc_mac|town)'
 
 Error: None
