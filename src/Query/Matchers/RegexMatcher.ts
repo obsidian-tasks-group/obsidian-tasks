@@ -45,9 +45,12 @@ export class RegexMatcher extends IStringMatcher {
 
     explanation(instruction: string): Explanation {
         const intro = 'using regex: ';
-        const regexAsString = `/${this.regex.source}/${this.regex.flags}`;
-        const explanationText = alignRegexWithOriginalInstruction(instruction, intro, regexAsString);
+        const explanationText = alignRegexWithOriginalInstruction(instruction, intro, this.regexAsString());
         return new Explanation(explanationText);
+    }
+
+    private regexAsString() {
+        return `/${this.regex.source}/${this.regex.flags}`;
     }
 }
 
