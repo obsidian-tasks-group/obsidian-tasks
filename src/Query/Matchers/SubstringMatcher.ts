@@ -1,3 +1,4 @@
+import { Explanation } from '../Explain/Explanation';
 import { IStringMatcher } from './IStringMatcher';
 
 /**
@@ -25,5 +26,11 @@ export class SubstringMatcher extends IStringMatcher {
 
     public static stringIncludesCaseInsensitive(haystack: string, needle: string): boolean {
         return haystack.toLocaleLowerCase().includes(needle.toLocaleLowerCase());
+    }
+
+    explanation(instruction: string): Explanation {
+        // We don't currently have any specific explanation of substring-searching,
+        // so just return the original instruction line.
+        return new Explanation(instruction);
     }
 }
