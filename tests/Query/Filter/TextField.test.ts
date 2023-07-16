@@ -2,6 +2,16 @@ import { verify } from 'approvals/lib/Providers/Jest/JestApprovals';
 import { DescriptionField } from '../../../src/Query/Filter/DescriptionField';
 import { Query } from '../../../src/Query/Query';
 
+describe('should report regular expression errors to user ', () => {
+    it('should report mismatched parenthesis', () => {
+        const instruction = 'description regex matches /hello(/';
+        const filterOrError = new DescriptionField().createFilterOrErrorMessage(instruction);
+        expect(filterOrError.error).toEqual(
+            'Error: Parsing regular expression. The error message was: "SyntaxError: Invalid regular expression: /hello(/: Unterminated group"',
+        );
+    });
+});
+
 describe('explains regular sub-string searches', () => {
     it('should explain simple string search', () => {
         const instruction = 'description includes hello';
