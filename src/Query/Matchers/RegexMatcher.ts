@@ -51,11 +51,11 @@ export class RegexMatcher extends IStringMatcher {
 
     private regexAsString() {
         let result = `'${this.regex.source}'`;
-        if (this.regex.flags.length === 0) {
-            return result;
-        }
 
         switch (this.regex.flags.length) {
+            case 0:
+                result += ' with no flags';
+                break;
             case 1:
                 result += ` with flag '${this.regex.flags}'`;
                 break;
