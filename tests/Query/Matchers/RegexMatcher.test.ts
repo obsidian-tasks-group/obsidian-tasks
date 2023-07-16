@@ -61,12 +61,20 @@ describe('RegexMatcher flags', () => {
         expect(matcher!.regex.flags).toEqual('gim');
     });
 
-    it.failing('should reject invalid "x" flag', () => {
+    it('should reject invalid "x" flag', () => {
         const t = () => {
             RegexMatcher.validateAndConstruct('/expression/x');
         };
         expect(t).toThrow(SyntaxError);
         expect(t).toThrowError("Invalid flags supplied to RegExp constructor 'x'");
+    });
+
+    it('should treat any text after last slash as flags', () => {
+        const t = () => {
+            RegexMatcher.validateAndConstruct('/root/sub-folder/sub-sub-folder/filename.md');
+        };
+        expect(t).toThrow(SyntaxError);
+        expect(t).toThrowError("Invalid flags supplied to RegExp constructor 'filename.md'");
     });
 
     it('should reject duplicate "ii" flag', () => {
