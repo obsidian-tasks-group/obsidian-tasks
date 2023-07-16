@@ -7,6 +7,9 @@ description regex does not match /^$/ =>
 description regex matches /#context/pc_photos|#context/pc_clare|#context/pc_macbook/i =>
   using regex:            /#context/
 
+description regex matches /  / =>
+  using regex:            /  /
+
 description regex matches /#context\/pc_photos|#context\/pc_clare|#context\/pc_macbook/i =>
   using regex:            /#context\/pc_photos|#context\/pc_clare|#context\/pc_macbook/i
 
