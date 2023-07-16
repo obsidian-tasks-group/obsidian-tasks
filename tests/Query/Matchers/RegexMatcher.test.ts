@@ -57,7 +57,7 @@ describe('RegexMatcher flags', () => {
         expect(t).toThrowError("Invalid flags supplied to RegExp constructor 'x'");
     });
 
-    it.failing('should reject duplicate "ii" flag', () => {
+    it('should reject duplicate "ii" flag', () => {
         const t = () => {
             RegexMatcher.validateAndConstruct('/expression/ii');
         };
