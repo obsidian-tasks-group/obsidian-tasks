@@ -22,3 +22,46 @@ describe('RegexMatcher', () => {
         expect(matcher).toBeNull();
     });
 });
+
+describe('RegexMatcher flags', () => {
+    it('should allow "i" flag - case-insensitive', () => {
+        const matcher = RegexMatcher.validateAndConstruct('/expression/i');
+        expect(matcher!.regex.flags).toEqual('i');
+    });
+
+    it('should allow "g" flag - global', () => {
+        const matcher = RegexMatcher.validateAndConstruct('/expression/g');
+        expect(matcher!.regex.flags).toEqual('g');
+    });
+
+    it('should allow "m" flag - multiline', () => {
+        const matcher = RegexMatcher.validateAndConstruct('/expression/m');
+        expect(matcher!.regex.flags).toEqual('m');
+    });
+
+    it.failing('should allow "u" flag - unicode', () => {
+        const matcher = RegexMatcher.validateAndConstruct('/expression/u');
+        expect(matcher!.regex.flags).toEqual('u');
+    });
+
+    it('should allow "img" flags', () => {
+        const matcher = RegexMatcher.validateAndConstruct('/expression/img');
+        expect(matcher!.regex.flags).toEqual('gim');
+    });
+
+    it.failing('should reject invalid "x" flag', () => {
+        const t = () => {
+            RegexMatcher.validateAndConstruct('/expression/x');
+        };
+        expect(t).toThrow(SyntaxError);
+        expect(t).toThrowError("Invalid flags supplied to RegExp constructor 'x'");
+    });
+
+    it.failing('should reject duplicate "ii" flag', () => {
+        const t = () => {
+            RegexMatcher.validateAndConstruct('/expression/ii');
+        };
+        expect(t).toThrow(SyntaxError);
+        expect(t).toThrowError("Invalid flags supplied to RegExp constructor 'ii'");
+    });
+});
