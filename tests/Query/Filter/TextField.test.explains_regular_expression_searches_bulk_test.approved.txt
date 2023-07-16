@@ -23,7 +23,7 @@ description regex matches /[⏫🔼🔽📅⏳🛫🔁]/ =>
   using regex:            '[⏫🔼🔽📅⏳🛫🔁]' with no flags
 
 description regex matches /[⏫🔼🔽📅⏳🛫🔁]/u =>
-  using regex:            '[⏫🔼🔽📅⏳🛫🔁]' with no flags
+  using regex:            '[⏫🔼🔽📅⏳🛫🔁]' with flag 'u'
 
 description regex matches /^$/ =>
   using regex:            '^$' with no flags
