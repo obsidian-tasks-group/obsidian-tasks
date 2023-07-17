@@ -75,6 +75,9 @@ See the next section for the meaning of some of these characters.
 
 ## Explain: inspecting regular expressions
 
+> [!released]
+> Introduced in Tasks X.Y.Z.
+
 To see how Tasks interpreted your regular expression, you can add an `explain` line to the query.
 
 For example, the results of this query:
