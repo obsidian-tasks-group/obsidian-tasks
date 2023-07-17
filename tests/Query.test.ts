@@ -476,29 +476,33 @@ to find them literally, you must add a \ before them:
 CAUTION! Regular expression (or 'regex') searching is a powerful
 but advanced feature that requires thorough knowledge in order to
 use successfully, and not miss intended search results.
-:
-${source}`,
+
+Problem line: "${source}"`,
             );
         });
 
         it('for invalid sort by', () => {
             const source = 'sort by nonsense';
-            expect(getQueryError(source)).toEqual('do not understand query:\n' + source);
+            expect(getQueryError(source)).toEqual(`do not understand query
+Problem line: "${source}"`);
         });
 
         it('for invalid group by', () => {
             const source = 'group by nonsense';
-            expect(getQueryError(source)).toEqual('do not understand query:\n' + source);
+            expect(getQueryError(source)).toEqual(`do not understand query
+Problem line: "${source}"`);
         });
 
         it('for invalid hide', () => {
             const source = 'hide nonsense';
-            expect(getQueryError(source)).toEqual('do not understand query:\n' + source);
+            expect(getQueryError(source)).toEqual(`do not understand query
+Problem line: "${source}"`);
         });
 
         it('for unknown instruction', () => {
             const source = 'spaghetti';
-            expect(getQueryError(source)).toEqual('do not understand query:\n' + source);
+            expect(getQueryError(source)).toEqual(`do not understand query
+Problem line: "${source}"`);
         });
     });
 });
