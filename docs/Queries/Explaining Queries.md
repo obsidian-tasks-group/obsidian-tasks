@@ -60,7 +60,7 @@ It also shows that `starts` searches also match tasks with not start date.
 ### Regular Expressions are explained
 
 > [!released]
-> Introduced in Tasks X.Y.Z.
+> Introduced in Tasks 4.3.0.
 
 For example, when the following [[Regular Expressions|regular expression]] is placed in a tasks query block:
 
