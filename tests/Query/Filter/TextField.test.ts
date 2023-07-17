@@ -7,7 +7,35 @@ describe('should report regular expression errors to user ', () => {
         const instruction = 'description regex matches /hello(/';
         const filterOrError = new DescriptionField().createFilterOrErrorMessage(instruction);
         expect(filterOrError.error).toEqual(
-            'Error: Parsing regular expression. The error message was: "SyntaxError: Invalid regular expression: /hello(/: Unterminated group"',
+            String.raw`Error: Parsing regular expression. The error message was: "SyntaxError: Invalid regular expression: /hello(/: Unterminated group"
+
+See https://publish.obsidian.md/tasks/Queries/Regular+Expressions
+
+Regular expressions must look like this:
+    /pattern/
+or this:
+    /pattern/flags
+
+Where:
+- pattern: The 'regular expression' pattern to search for.
+- flags:   Optional characters that modify the search.
+           i => make the search case-insensitive
+           u => add Unicode support
+
+Examples:  /^Log/
+           /^Log/i
+           /File Name\.md/
+           /waiting|waits|waited/i
+           /\d\d:\d\d/
+
+The following characters have special meaning in the pattern:
+to find them literally, you must add a \ before them:
+    [\^$.|?*+()
+
+CAUTION! Regular expression (or 'regex') searching is a powerful
+but advanced feature that requires thorough knowledge in order to
+use successfully, and not miss intended search results.
+`,
         );
     });
 });
