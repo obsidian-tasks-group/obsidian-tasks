@@ -445,31 +445,64 @@ describe('Query parsing', () => {
             return new Query({ source: source }).error;
         }
 
-        it('for invalid filter', () => {
+        it('for invalid regular expression filter', () => {
             const source = 'description regex matches apple sauce';
             expect(getQueryError(source)).toEqual(
-                'cannot parse regex (description); check your leading and trailing slashes for your query:\n' + source,
+                String.raw`Invalid instruction: 'description regex matches apple sauce'
+
+See https://publish.obsidian.md/tasks/Queries/Regular+Expressions
+
+Regular expressions must look like this:
+    /pattern/
+or this:
+    /pattern/flags
+
+Where:
+- pattern: The 'regular expression' pattern to search for.
+- flags:   Optional characters that modify the search.
+           i => make the search case-insensitive
+           u => add Unicode support
+
+Examples:  /^Log/
+           /^Log/i
+           /File Name\.md/
+           /waiting|waits|waited/i
+           /\d\d:\d\d/
+
+The following characters have special meaning in the pattern:
+to find them literally, you must add a \ before them:
+    [\^$.|?*+()
+
+CAUTION! Regular expression (or 'regex') searching is a powerful
+but advanced feature that requires thorough knowledge in order to
+use successfully, and not miss intended search results.
+
+Problem line: "${source}"`,
             );
         });
 
         it('for invalid sort by', () => {
             const source = 'sort by nonsense';
-            expect(getQueryError(source)).toEqual('do not understand query:\n' + source);
+            expect(getQueryError(source)).toEqual(`do not understand query
+Problem line: "${source}"`);
         });
 
         it('for invalid group by', () => {
             const source = 'group by nonsense';
-            expect(getQueryError(source)).toEqual('do not understand query:\n' + source);
+            expect(getQueryError(source)).toEqual(`do not understand query
+Problem line: "${source}"`);
         });
 
         it('for invalid hide', () => {
             const source = 'hide nonsense';
-            expect(getQueryError(source)).toEqual('do not understand query:\n' + source);
+            expect(getQueryError(source)).toEqual(`do not understand query
+Problem line: "${source}"`);
         });
 
         it('for unknown instruction', () => {
             const source = 'spaghetti';
-            expect(getQueryError(source)).toEqual('do not understand query:\n' + source);
+            expect(getQueryError(source)).toEqual(`do not understand query
+Problem line: "${source}"`);
         });
     });
 });

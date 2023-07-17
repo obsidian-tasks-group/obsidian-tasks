@@ -173,7 +173,8 @@ export class Query implements IQuery {
     }
 
     private setError(message: string, line: string) {
-        this._error = `${message}:\n${line}`;
+        this._error = `${message}
+Problem line: "${line}"`;
     }
 
     public applyQueryToTasks(tasks: Task[]): QueryResult {
