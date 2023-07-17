@@ -59,6 +59,9 @@ It also shows that `starts` searches also match tasks with not start date.
 
 ### Regular Expressions are explained
 
+> [!released]
+> Introduced in Tasks X.Y.Z.
+
 For example, when the following [[Regular Expressions|regular expression]] is placed in a tasks query block:
 
 <!-- snippet: DocsSamplesForExplain.test.explain_regular_expression.approved.query.text -->
@@ -142,6 +145,9 @@ Explanation of this Tasks code block query:
 <!-- endSnippet -->
 
 ### Global Query is displayed
+
+> [!released]
+The Global Query setting was added in Tasks 3.5.0.
 
 For example, with this [[Global Query|global query]]:
 
