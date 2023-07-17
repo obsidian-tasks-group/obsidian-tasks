@@ -6,6 +6,11 @@ import { verifyQuery, verifyTaskBlockExplanation } from '../../TestingTools/Appr
 import { resetSettings, updateSettings } from '../../../src/Config/Settings';
 window.moment = moment;
 
+function checkExplainPresentAndVerify(blockQuery: string) {
+    expect(blockQuery.includes('explain')).toEqual(true);
+    verifyQuery(blockQuery);
+}
+
 describe('explain', () => {
     beforeAll(() => {
         jest.useFakeTimers();
@@ -27,7 +32,7 @@ due before tomorrow
 explain`;
 
         // Act, Assert
-        verifyQuery(instructions);
+        checkExplainPresentAndVerify(instructions);
         verifyTaskBlockExplanation(instructions);
     });
 
@@ -39,7 +44,7 @@ not done
 (due before tomorrow) AND (is recurring)`;
 
         // Act, Assert
-        verifyQuery(instructions);
+        checkExplainPresentAndVerify(instructions);
         verifyTaskBlockExplanation(instructions);
     });
 
@@ -50,7 +55,18 @@ explain
 ( (description includes 1) AND (description includes 2) AND (description includes 3) ) OR ( (description includes 5) AND (description includes 6) AND (description includes 7) ) AND NOT (description includes 7)`;
 
         // Act, Assert
-        verifyQuery(instructions);
+        checkExplainPresentAndVerify(instructions);
+        verifyTaskBlockExplanation(instructions);
+    });
+
+    it('regular expression', () => {
+        // Arrange
+        const instructions: string = `
+explain
+path regex matches /^Root/Sub-Folder/Sample File\\.md/i`;
+
+        // Act, Assert
+        checkExplainPresentAndVerify(instructions);
         verifyTaskBlockExplanation(instructions);
     });
 
@@ -71,7 +87,7 @@ due next week
 explain`;
 
         // Act, Assert
-        verifyQuery(blockQuery);
+        checkExplainPresentAndVerify(blockQuery);
         verifyTaskBlockExplanation(blockQuery);
     });
 });

@@ -73,6 +73,32 @@ See the next section for the meaning of some of these characters.
 > folder regex matches /Root\/Sub-Folder\/Sub-Sub-Folder/
 > ```
 
+## Explain: inspecting regular expressions
+
+To see how Tasks interpreted your regular expression, you can add an `explain` line to the query.
+
+For example, the results of this query:
+
+<!-- snippet: DocsSamplesForExplain.test.explain_regular_expression.approved.query.text -->
+```text
+explain
+path regex matches /^Root/Sub-Folder/Sample File\.md/i
+```
+<!-- endSnippet -->
+
+ will have this extra text in an [[Explaining Queries|explanation]] at the start:
+
+<!-- snippet: DocsSamplesForExplain.test.explain_regular_expression.approved.explanation.text -->
+```text
+Explanation of this Tasks code block query:
+
+path regex matches /^Root/Sub-Folder/Sample File\.md/i =>
+  using regex:     '^Root\/Sub-Folder\/Sample File\.md' with flag 'i'
+```
+<!-- endSnippet -->
+
+The use of apostrophes (`'`) rather than forward slashes (`/`) in the explanation is intended to emphasise that the delimiting slashes in the query are not included in the search strings.
+
 ## Special characters
 
 If using regex searches, it is important to be aware of the available special characters for several reasons:
