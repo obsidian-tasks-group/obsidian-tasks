@@ -119,6 +119,49 @@ Explanation of this Tasks code block query:
 ```
 <!-- endSnippet -->
 
+### Global Query is displayed
+
+For example, with this [[Global Query|global query]]:
+
+<!-- snippet: DocsSamplesForExplain.test.explain_example_global_query.approved.query.text -->
+```text
+limit 50
+heading includes tasks
+```
+<!-- endSnippet -->
+
+and when the following text is placed in a tasks query block:
+
+<!-- snippet: DocsSamplesForExplain.test.explain_explains_task_block_with_global_query_active.approved.query.text -->
+```text
+not done
+due next week
+explain
+```
+<!-- endSnippet -->
+
+the results begin with the following, on `2022-10-21`:
+
+<!-- snippet: DocsSamplesForExplain.test.explain_explains_task_block_with_global_query_active.approved.explanation.text -->
+```text
+Explanation of the global query:
+
+heading includes tasks
+
+
+At most 50 tasks.
+
+Explanation of this Tasks code block query:
+
+not done
+
+due next week =>
+  due date is between:
+    2022-10-24 (Monday 24th October 2022) and
+    2022-10-30 (Sunday 30th October 2022) inclusive
+```
+<!-- endSnippet -->
+
 ## Styling explain results
 
 ### Default style
