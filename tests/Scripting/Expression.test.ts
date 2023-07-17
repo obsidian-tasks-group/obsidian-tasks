@@ -23,19 +23,19 @@ describe('Expression', () => {
         it('should report meaningful error message for duplicate return statement', () => {
             // evaluateExpression() currently adds a return statement, to save user typing it.
             expect(parseExpression([], 'return 42').error).toEqual(
-                'Error: Failed parsing expression "return 42". The error message was: "SyntaxError: Unexpected token \'return\'"',
+                'Error: Failed parsing expression "return 42".\nThe error message was:\n    "SyntaxError: Unexpected token \'return\'"',
             );
         });
 
         it('should report meaningful error message for parentheses too few parentheses', () => {
             expect(parseExpression([], 'x(').error).toEqual(
-                'Error: Failed parsing expression "x(". The error message was: "SyntaxError: Unexpected token \'}\'"',
+                'Error: Failed parsing expression "x(".\nThe error message was:\n    "SyntaxError: Unexpected token \'}\'"',
             );
         });
 
         it('should report meaningful error message for parentheses too many parentheses', () => {
             expect(parseExpression([], 'x())').error).toEqual(
-                'Error: Failed parsing expression "x())". The error message was: "SyntaxError: Unexpected token \')\'"',
+                'Error: Failed parsing expression "x())".\nThe error message was:\n    "SyntaxError: Unexpected token \')\'"',
             );
         });
     });
@@ -49,7 +49,7 @@ describe('Expression', () => {
 
             const result = evaluateExpressionOrCatch(expression.queryComponent!, paramsArgs, line);
             expect(result).toEqual(
-                'Error: Failed calculating expression "nonExistentVariable". The error message was: "ReferenceError: nonExistentVariable is not defined"',
+                'Error: Failed calculating expression "nonExistentVariable".\nThe error message was:\n    "ReferenceError: nonExistentVariable is not defined"',
             );
         });
 
