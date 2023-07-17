@@ -4,12 +4,14 @@
  * @param exception - object that was caught in a try/catch block.
  */
 export function errorMessageForException(whatWasHappening: string, exception: any): string {
-    const errorMessage = `Error: ${whatWasHappening}. The error message was:`;
+    const errorMessage = `Error: ${whatWasHappening}.
+The error message was:
+    `;
     let detail: string = '';
     if (exception instanceof Error) {
         detail += exception;
     } else {
         detail += 'Unknown error';
     }
-    return `${errorMessage} "${detail}"`;
+    return `${errorMessage}"${detail}"`;
 }

@@ -31,7 +31,7 @@ describe('FunctionField - filtering', () => {
         const filter = functionField.createFilterOrErrorMessage(instructionWithExtraClosingParen);
         expect(filter).not.toBeValid();
         expect(filter.error).toEqual(
-            'Error: Failed parsing expression "task.status.name.toUpperCase())". The error message was: "SyntaxError: Unexpected token \')\'"',
+            'Error: Failed parsing expression "task.status.name.toUpperCase())".\nThe error message was:\n    "SyntaxError: Unexpected token \')\'"',
         );
     });
 
@@ -119,7 +119,7 @@ describe('FunctionField - grouping - error-handling', () => {
         const line = 'group by function hello';
         const grouper = createGrouper(line);
         toGroupTaskWithPath(grouper, 'journal/a/b.md', [
-            'Error: Failed calculating expression "hello". The error message was: "ReferenceError: hello is not defined"',
+            'Error: Failed calculating expression "hello".\nThe error message was:\n    "ReferenceError: hello is not defined"',
         ]);
     });
 
