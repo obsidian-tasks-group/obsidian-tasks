@@ -39,7 +39,7 @@ export abstract class TextField extends Field {
             if (matcher === null) {
                 return FilterOrErrorMessage.fromError(
                     line,
-                    `cannot parse regex (${this.fieldName()}); check your leading and trailing slashes for your query`,
+                    `Invalid instruction: '${line}'\n\n${RegexMatcher.helpMessage()}`,
                 );
             }
         }
