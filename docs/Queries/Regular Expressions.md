@@ -57,11 +57,21 @@ description regex matches /pc_abigail|pc_edwina|at_work/i
 
 ## Escaping special characters
 
-To search for any of the characters `[ \ ^ $ . | ? * + ( ) /` literally in Tasks, you should put a `\` character before each of them.
+To search for any of the characters `[ \ ^ $ . | ? * + ( )` literally in Tasks, you should put a `\` character before each of them.
 
 This is called 'escaping'. See [Escaping, special characters](https://javascript.info/regexp-escaping).
 
 See the next section for the meaning of some of these characters.
+
+> [!Tip]
+> Since Tasks X.Y.Z, it is no longer necessary to escape `/` characters as `\/`, although searches will still work if you do escape them.
+>
+> So these two searches are now identical, and will both search for tasks in any folder that contains `Root/Sub-Folder/Sub-Sub-Folder` anywhere:
+>
+> ```task
+> folder regex matches /Root/Sub-Folder/Sub-Sub-Folder/
+> folder regex matches /Root\/Sub-Folder\/Sub-Sub-Folder/
+> ```
 
 ## Special characters
 
@@ -110,16 +120,6 @@ Implementation details:
 
 Please be aware of the following limitations in Tasks' implementation of regular expression searching:
 
-- The single error message `Tasks query: cannot parse regex (description); check your leading and trailing slashes for your query` may mean any of:
-  - The opening or closing `/` is missing from the query.
-  - The regular expression is not valid, for example `description regex matches /[123/`.
-  - We are tracking this in [issue #1038](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1038) and [issue #1039](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1039).
-- No error when part of the pattern is lost, for example because unescaped slashes are used inside the pattern.
-  - For example, `path regex matches /a/b/c/d/` actually searches for `path regex matches /a/`.
-  - In this case, the query should be `path regex matches /a\/b\/c\/d/`.
-  - We are tracking this in [issue #1037](https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1037).
-- Illegal flags are ignored.
-  - For example, the query `description regex matches /CASE/&` should give an error that `&` (and similar) are unrecognised flags.
 - [Lookahead and Lookbehind](https://www.regular-expressions.info/lookaround.html) searches are untested, and are presumed not to work on Apple mobile devices, or to cause serious performance problems with slow searches.
 
 ## Regular expression examples
