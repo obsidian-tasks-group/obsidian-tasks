@@ -57,6 +57,28 @@ Note how it shows the dates being searched for very clearly, including the day o
 
 It also shows that `starts` searches also match tasks with not start date.
 
+### Regular Expressions are explained
+
+For example, when the following [[Regular Expressions|regular expression]] is placed in a tasks query block:
+
+<!-- snippet: DocsSamplesForExplain.test.explain_regular_expression.approved.query.text -->
+```text
+explain
+path regex matches /^Root/Sub-Folder/Sample File\.md/i
+```
+<!-- endSnippet -->
+
+the results begin with the following:
+
+<!-- snippet: DocsSamplesForExplain.test.explain_regular_expression.approved.explanation.text -->
+```text
+Explanation of this Tasks code block query:
+
+path regex matches /^Root/Sub-Folder/Sample File\.md/i =>
+  using regex:     '^Root\/Sub-Folder\/Sample File\.md' with flag 'i'
+```
+<!-- endSnippet -->
+
 ### Boolean combinations are displayed
 
 For example, when the following text is placed in a tasks query block:
