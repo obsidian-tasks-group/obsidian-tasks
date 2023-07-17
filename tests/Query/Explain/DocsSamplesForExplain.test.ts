@@ -54,11 +54,15 @@ explain
         verifyTaskBlockExplanation(instructions);
     });
 
+    const globalQuery = `limit 50
+heading includes tasks`;
+    it('example global query', () => {
+        // Act, Assert
+        verifyQuery(globalQuery);
+    });
+
     it('explains task block with global query active', () => {
         // Arrange
-        const globalQuery = `limit 50
-heading includes tasks`;
-
         updateSettings({ globalQuery });
 
         const blockQuery = `
