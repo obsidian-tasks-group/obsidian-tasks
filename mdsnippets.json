@@ -1,6 +1,6 @@
 {
   "$schema": "https://raw.githubusercontent.com/SimonCropp/MarkdownSnippets/master/schema.json",
-  "ExcludeDirectories": [ "node_modules", "contributing/_meta", "docs/_meta" ],
+  "ExcludeDirectories": [ "node_modules", "contributing/_meta", "docs/_meta", "coverage/" ],
   "Convention": "InPlaceOverwrite",
   "TocLevel": 5,
   "OmitSnippetLinks": true,
