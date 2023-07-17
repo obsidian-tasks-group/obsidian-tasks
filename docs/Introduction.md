@@ -6,7 +6,7 @@ publish: true
 
 ## What's New?
 
-- X.Y.Z: 🔥 Bug fixes, usability improvements and `explain` support for [[Regular Expressions|regular expression]] searches
+- 4.3.0: 🔥 Bug fixes, usability improvements and `explain` support for [[Regular Expressions|regular expression]] searches
 - 4.2.0: 🔥 Add [[Custom Filters|custom filtering]]
 - 4.1.0: 🔥 Add [[Layout|hide and show tags]]
 - 4.0.0: 🔥 Add [[Custom Grouping|custom grouping]], using [[Task Properties|task properties]] to create [[expressions|expressions]] - the start of a whole new [[About Scripting|scripting]] world in Tasks!

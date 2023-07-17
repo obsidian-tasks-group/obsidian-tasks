@@ -64,7 +64,7 @@ This is called 'escaping'. See [Escaping, special characters](https://javascript
 See the next section for the meaning of some of these characters.
 
 > [!Tip]
-> Since Tasks X.Y.Z, it is no longer necessary to escape `/` characters as `\/`, although searches will still work if you do escape them.
+> Since Tasks 4.3.0, it is no longer necessary to escape `/` characters as `\/`, although searches will still work if you do escape them.
 >
 > So these two searches are now identical, and will both search for tasks in any folder that contains `Root/Sub-Folder/Sub-Sub-Folder` anywhere:
 >
@@ -76,7 +76,7 @@ See the next section for the meaning of some of these characters.
 ## Explain: inspecting regular expressions
 
 > [!released]
-> Introduced in Tasks X.Y.Z.
+> Introduced in Tasks 4.3.0.
 
 To see how Tasks interpreted your regular expression, you can add an `explain` line to the query.
 
