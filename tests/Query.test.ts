@@ -1217,7 +1217,7 @@ At most 8 tasks per group (if any "group by" options are supplied).
 
             // Assert
             expect(queryResult.searchErrorMessage).toEqual(
-                'Error: Search failed. The error message was: "ReferenceError: wibble is not defined"',
+                'Error: Search failed.\nThe error message was:\n    "ReferenceError: wibble is not defined"',
             );
         });
     });

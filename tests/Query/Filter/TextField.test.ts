@@ -7,7 +7,9 @@ describe('should report regular expression errors to user ', () => {
         const instruction = 'description regex matches /hello(/';
         const filterOrError = new DescriptionField().createFilterOrErrorMessage(instruction);
         expect(filterOrError.error).toEqual(
-            String.raw`Error: Parsing regular expression. The error message was: "SyntaxError: Invalid regular expression: /hello(/: Unterminated group"
+            String.raw`Error: Parsing regular expression.
+The error message was:
+    "SyntaxError: Invalid regular expression: /hello(/: Unterminated group"
 
 See https://publish.obsidian.md/tasks/Queries/Regular+Expressions
 

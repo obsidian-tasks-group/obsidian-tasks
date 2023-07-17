@@ -25,7 +25,7 @@ describe('TaskExpression', () => {
             expect(taskExpression.isValid()).toEqual(false);
             expect(taskExpression.line).toEqual(line);
             expect(taskExpression.parseError).toEqual(
-                'Error: Failed parsing expression "task.due.formatAsDate())". The error message was: "SyntaxError: Unexpected token \')\'"',
+                'Error: Failed parsing expression "task.due.formatAsDate())".\nThe error message was:\n    "SyntaxError: Unexpected token \')\'"',
             );
         });
     });
@@ -51,7 +51,7 @@ describe('TaskExpression', () => {
 
             // Assert
             expect(result).toEqual(
-                'Error: Failed calculating expression "wibble". The error message was: "ReferenceError: wibble is not defined"',
+                'Error: Failed calculating expression "wibble".\nThe error message was:\n    "ReferenceError: wibble is not defined"',
             );
 
             // Try again, using evaluate()
@@ -72,7 +72,7 @@ describe('TaskExpression', () => {
 
             // Assert
             const expectedErrorMessage =
-                'Error: Cannot evaluate an expression which is not valid: "task.due.formatAsDate(" gave error: "Error: Failed parsing expression "task.due.formatAsDate(". The error message was: "SyntaxError: Unexpected token \'}\'""';
+                'Error: Cannot evaluate an expression which is not valid: "task.due.formatAsDate(" gave error: "Error: Failed parsing expression "task.due.formatAsDate(".\nThe error message was:\n    "SyntaxError: Unexpected token \'}\'""';
             expect(result).toEqual(expectedErrorMessage);
 
             // Try again, using evaluate()
