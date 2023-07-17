@@ -47,7 +47,37 @@ export class RegexMatcher extends IStringMatcher {
         return stringToSearch.match(this.regex) !== null;
     }
 
-    explanation(instruction: string): Explanation {
+    public static helpMessage(): string {
+        return String.raw`See https://publish.obsidian.md/tasks/Queries/Regular+Expressions
+
+Regular expressions must look like this:
+    /pattern/
+or this:
+    /pattern/flags
+
+Where:
+- pattern: The 'regular expression' pattern to search for.
+- flags:   Optional characters that modify the search.
+           i => make the search case-insensitive
+           u => add Unicode support
+
+Examples:  /^Log/
+           /^Log/i
+           /File Name\.md/
+           /waiting|waits|waited/i
+           /\d\d:\d\d/
+
+The following characters have special meaning in the pattern:
+to find them literally, you must add a \ before them:
+    [\^$.|?*+()
+
+CAUTION! Regular expression (or 'regex') searching is a powerful
+but advanced feature that requires thorough knowledge in order to
+use successfully, and not miss intended search results.
+`;
+    }
+
+    public explanation(instruction: string): Explanation {
         const intro = 'using regex: ';
         const explanationText = alignRegexWithOriginalInstruction(instruction, intro, this.regexAsString());
         return new Explanation(explanationText);
