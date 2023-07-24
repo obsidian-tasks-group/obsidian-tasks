@@ -12,6 +12,10 @@ body:
           required: true
         - label: "I searched previous [Issues](https://github.com/obsidian-tasks-group/obsidian-tasks/issues?q=is%3Aopen+is%3Aissue+label%3A%22type%3A+enhancement%22+sort%3Acomments-desc) didn't find any similar feature requests."
           required: true
+        - label: "I am only requesting a single feature. Multiple changes should be split into individual requests, with links between them."
+          required: true
+        - label: "I believe my requested feature will be generally applicable to other users, not just me: it is not uniquely tied to my personal workflow."
+          required: true
 
   - type: textarea
     id: feature-description
