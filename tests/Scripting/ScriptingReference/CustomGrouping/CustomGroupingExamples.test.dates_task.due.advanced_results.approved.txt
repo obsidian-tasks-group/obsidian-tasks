@@ -7,9 +7,9 @@ Group by the time from now, for example "8 days ago".
 Because Moment.fromNow() is not provided by TasksDate, we need special code for when there is no date value.
 Whilst interesting, the alphabetical sort order makes the headings a little hard to read.
 =>
-10 days ago
-11 days ago
-12 days ago
+2 days ago
+20 hours ago
+in 4 hours
 Invalid date
 ====================================================================================
 
@@ -58,6 +58,7 @@ A limitation of Tasks expressions is that they each need to fit on a single line
 In fact, for ease of development and testing, it was written in a full-fledged development environment as a series of if/else blocks, and then automatically refactored in these nested ternary operators.
 =>
 %%1%% Overdue
+%%2%% Today
 %%3%% Future
 %%4%% Undated
 ====================================================================================
@@ -68,6 +69,7 @@ As above, but the headings `Overdue`, `Today`, `Future` and `Undated` are highli
 See the sample screenshot below.
 =>
 %%1%% ==Overdue==
+%%2%% ==Today==
 %%3%% ==Future==
 %%4%% ==Undated==
 ====================================================================================
