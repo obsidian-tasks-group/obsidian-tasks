@@ -19,21 +19,15 @@ window.moment = moment;
 describe('Expression', () => {
     describe('support simple calculations', () => {
         it('should calculate simple expression', () => {
-            const functionOrError = parseExpression([], '1 + 1');
-            expect(functionOrError.queryComponent).not.toBeUndefined();
-            expect(evaluateExpression(functionOrError.queryComponent!, [])).toEqual(2);
+            expect('1 + 1').toEvaluateAs(2);
         });
 
         it('should support return statements', () => {
-            const functionOrError = parseExpression([], 'return 42');
-            expect(functionOrError.queryComponent).not.toBeUndefined();
-            expect(evaluateExpression(functionOrError.queryComponent!, [])).toEqual(42);
+            expect('return 42').toEvaluateAs(42);
         });
 
         it('should allow use of a variable in expression', () => {
-            const functionOrError = parseExpression([], 'const x = 1 + 1; return x;');
-            expect(functionOrError.queryComponent).not.toBeUndefined();
-            expect(evaluateExpression(functionOrError.queryComponent!, [])).toEqual(2);
+            expect('const x = 1 + 1; return x;').toEvaluateAs(2);
         });
     });
 
