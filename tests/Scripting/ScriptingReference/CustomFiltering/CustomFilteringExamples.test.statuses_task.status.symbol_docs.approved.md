@@ -4,7 +4,8 @@
     - Find tasks with a checkbox `[-]`, which is conventionally used to mean "cancelled".
 - ```filter by function task.status.symbol !== ' '```
     - Find tasks with anything but the space character as their status symbol, that is, without the checkbox `[ ]`.
-- ```filter by function task.status.symbol === 'P' || task.status.symbol === 'C' || task.status.symbol === 'Q' || task.status.symbol === 'A'```
+- ```filter by function const symbol = task.status.symbol; return symbol === 'P' || symbol === 'C' || symbol === 'Q' || symbol === 'A'```
+    - Note that because we use a variable to avoid repetition, we need to add `return`
     - Find tasks with status symbol `P`, `C`, `Q` or `A`.
     - This can get quite verbose, the more symbols you want to search for.
 - ```filter by function 'PCQA'.includes(task.status.symbol)```
