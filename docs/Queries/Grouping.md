@@ -195,6 +195,7 @@ DON'T PANIC! For users who are comfortable with JavaScript, these more complicat
   - Tasks without due dates are displayed at the end, under a heading "Undated".
   - This is best understood by pasting it in to a Tasks block in Obsidian and then deleting parts of the expression.
   - The key technique is to say that if the day is Sunday (`0`), then force it to be displayed as date number `8`, so it comes after the other days of the week.
+  - Note that because we use variables to avoid repetition of values, we need to add `return`
 - ```group by function const date = task.due.moment; return (!date) ? '%%4%% Undated' : date.isBefore(moment(), 'day') ? '%%1%% Overdue' : date.isSame(moment(), 'day') ? '%%2%% Today' : '%%3%% Future'```
   - Group task due dates in to 4 broad categories: `Overdue`, `Today`, `Future` and `Undated`, displayed in that order.
   - Try this on a line before `group by due` if there are a lot of due date headings, and you would like them to be broken down in to some kind of structure.
