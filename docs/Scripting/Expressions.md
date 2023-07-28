@@ -20,6 +20,8 @@ publish: true
 
 - Language is JavaScript.
 - The expression is a string instruction.
+- It must fit on one line.
+  - As of Tasks X.Y.Z, variables, functions, `if` blocks and similar can be used. See [[#More complex expressions]].
 - Depending on the context, one or two tasks are passed in to the expression, and a calculation is performed.
   - As of Tasks 4.0.0, in fact only a single task is passed in, to implement [[Custom Grouping]].
   - As of Tasks 4.2.0, a single task is passed in, to implement [[Custom Filters]].
@@ -39,7 +41,7 @@ expression => result
 
 ### Simple expressions
 
-Sample expressions:
+Some example expressions:
 
 <!-- placeholder to force blank line before included text --> <!-- include: Expression.test.Expression_result.approved.md -->
 
@@ -72,6 +74,7 @@ Note:
 - Single quotes (`'`) and double quotes (`"`) are generally equivalent and you can use whichever you prefer.
 - The `||` means 'or'. If the expression to the left of the `||` fails, the expression on the right is used instead.
 - You can experiment with these values by adding them to a `group by function` line in a Tasks query block.
+- If you don't write a `return` statement, Tasks adds one for you.
 
 ### More complex expressions
 
