@@ -17,7 +17,7 @@ window.moment = moment;
 
 beforeEach(() => {
     jest.useFakeTimers();
-    jest.setSystemTime(new Date('2023-06-10 20:00'));
+    jest.setSystemTime(new Date('2023-05-31 20:00'));
 });
 
 afterEach(() => {
