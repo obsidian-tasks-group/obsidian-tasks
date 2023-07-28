@@ -133,4 +133,14 @@ describe('Expression', () => {
         ];
         verifyExpressionsForDocs(expressions);
     });
+
+    it('returns and functions', () => {
+        const expressions = [
+            'return 42',
+            'const x = 1 + 1; return x * x',
+            'if (1 === 1) { return "yes"; } else { return "no" }',
+            'function f(value) { if (value === 1 ) { return "yes"; } else { return "no"; } } return f(1)',
+        ];
+        verifyExpressionsForDocs(expressions);
+    });
 });

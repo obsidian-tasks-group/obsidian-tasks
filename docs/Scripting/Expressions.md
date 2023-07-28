@@ -37,6 +37,8 @@ Each line below is of the form:
 expression => result
 ~~~
 
+### Simple expressions
+
 Sample expressions:
 
 <!-- placeholder to force blank line before included text --> <!-- include: Expression.test.Expression_result.approved.md -->
@@ -70,3 +72,23 @@ Note:
 - Single quotes (`'`) and double quotes (`"`) are generally equivalent and you can use whichever you prefer.
 - The `||` means 'or'. If the expression to the left of the `||` fails, the expression on the right is used instead.
 - You can experiment with these values by adding them to a `group by function` line in a Tasks query block.
+
+### More complex expressions
+
+As of Tasks X.Y.Z, it is also possible to use more complex constructs in expressions:
+
+- `return` statements
+- named variables
+- `if` statements
+- functions
+
+<!-- placeholder to force blank line before included text --> <!-- include: Expression.test.Expression_returns_and_functions.approved.md -->
+
+~~~text
+return 42 => 42
+const x = 1 + 1; return x * x => 4
+if (1 === 1) { return "yes"; } else { return "no" } => 'yes'
+function f(value) { if (value === 1 ) { return "yes"; } else { return "no"; } } return f(1) => 'yes'
+~~~
+
+<!-- placeholder to force blank line after included text --> <!-- endInclude -->
