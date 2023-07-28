@@ -17,16 +17,29 @@ import { formatToRepresentType } from './ScriptingTestHelpers';
 window.moment = moment;
 
 describe('Expression', () => {
+    describe('support simple calculations', () => {
+        it('should calculate simple expression', () => {
+            const functionOrError = parseExpression([], '1 + 1');
+            expect(functionOrError.queryComponent).not.toBeUndefined();
+            expect(evaluateExpression(functionOrError.queryComponent!, [])).toEqual(2);
+        });
+
+        it('should support return statements', () => {
+            const functionOrError = parseExpression([], 'return 42');
+            expect(functionOrError.queryComponent).not.toBeUndefined();
+            expect(evaluateExpression(functionOrError.queryComponent!, [])).toEqual(42);
+        });
+
+        it('should allow use of a variable in expression', () => {
+            const functionOrError = parseExpression([], 'const x = 1 + 1; return x;');
+            expect(functionOrError.queryComponent).not.toBeUndefined();
+            expect(evaluateExpression(functionOrError.queryComponent!, [])).toEqual(2);
+        });
+    });
+
     const task = TaskBuilder.createFullyPopulatedTask();
 
     describe('detect errors at parse stage', () => {
-        it('should report meaningful error message for duplicate return statement', () => {
-            // evaluateExpression() currently adds a return statement, to save user typing it.
-            expect(parseExpression([], 'return 42').error).toEqual(
-                'Error: Failed parsing expression "return 42".\nThe error message was:\n    "SyntaxError: Unexpected token \'return\'"',
-            );
-        });
-
         it('should report meaningful error message for parentheses too few parentheses', () => {
             expect(parseExpression([], 'x(').error).toEqual(
                 'Error: Failed parsing expression "x(".\nThe error message was:\n    "SyntaxError: Unexpected token \'}\'"',
