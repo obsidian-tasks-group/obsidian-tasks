@@ -6,6 +6,7 @@ publish: true
 
 ## What's New?
 
+- X.Y.Z: 🔥 Support [[Expressions#More complex expressions|variables, if statements, and functions]] in custom filters and groups
 - 4.3.0: 🔥 Bug fixes, usability improvements and `explain` support for [[Regular Expressions|regular expression]] searches
 - 4.2.0: 🔥 Add [[Custom Filters|custom filtering]]
 - 4.1.0: 🔥 Add [[Layout|hide and show tags]]
