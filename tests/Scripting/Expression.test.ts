@@ -29,6 +29,31 @@ describe('Expression', () => {
         it('should allow use of a variable in expression', () => {
             expect('const x = 1 + 1; return x;').toEvaluateAs(2);
         });
+
+        it('should support if blocks', () => {
+            expect('if (1 === 1) { return "yes"; } else { return "no"; }').toEvaluateAs('yes');
+            expect('if (1 !== 1) { return "yes"; } else { return "no"; }').toEvaluateAs('no');
+        });
+
+        it('should support functions - multi-line', () => {
+            // Tasks only supports single-line expressions.
+            // This multi-line one is used for readability
+            const line = `
+                function f(value) {
+                    if (value === 1 ) {
+                        return "yes";
+                    } else {
+                        return "no";
+                    }
+                }
+                return f(1)`;
+            expect(line).toEvaluateAs('yes');
+        });
+
+        it('should support functions - single-line', () => {
+            const line = 'function f(value) { if (value === 1 ) { return "yes"; } else { return "no"; } } return f(1)';
+            expect(line).toEvaluateAs('yes');
+        });
     });
 
     const task = TaskBuilder.createFullyPopulatedTask();
