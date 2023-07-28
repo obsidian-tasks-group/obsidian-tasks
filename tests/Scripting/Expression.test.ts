@@ -98,6 +98,16 @@ describe('Expression', () => {
         });
     });
 
+    function verifyExpressionsForDocs(expressions: string[]) {
+        let markdown = '~~~text\n';
+        for (const expression of expressions) {
+            const result = parseAndEvaluateExpression(task, expression);
+            markdown += `${expression} => ${formatToRepresentType(result)}\n`;
+        }
+        markdown += '~~~\n';
+        verifyMarkdownForDocs(markdown);
+    }
+
     it('result', () => {
         const expressions = [
             "'hello'",
@@ -121,13 +131,6 @@ describe('Expression', () => {
             // Should allow manual escaping of markdown
             String.raw`"I _am_ not _italic_".replaceAll("_", "\\_")`,
         ];
-
-        let markdown = '~~~text\n';
-        for (const expression of expressions) {
-            const result = parseAndEvaluateExpression(task, expression);
-            markdown += `${expression} => ${formatToRepresentType(result)}\n`;
-        }
-        markdown += '~~~\n';
-        verifyMarkdownForDocs(markdown);
+        verifyExpressionsForDocs(expressions);
     });
 });
