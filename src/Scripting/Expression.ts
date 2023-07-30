@@ -30,7 +30,8 @@ export function constructArguments(task: Task | null) {
 export function parseExpression(paramsArgs: [string, any][], arg: string): FunctionOrError {
     const params = paramsArgs.map(([p]) => p);
     try {
-        const expression: '' | null | Function = arg && new Function(...params, `return ${arg}`);
+        const input = arg.includes('return') ? arg : `return ${arg}`;
+        const expression: '' | null | Function = arg && new Function(...params, input);
         if (expression instanceof Function) {
             return FunctionOrError.fromObject(arg, expression);
         }

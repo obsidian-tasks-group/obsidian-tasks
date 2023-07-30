@@ -17,16 +17,48 @@ import { formatToRepresentType } from './ScriptingTestHelpers';
 window.moment = moment;
 
 describe('Expression', () => {
+    describe('support simple calculations', () => {
+        it('should calculate simple expression', () => {
+            expect('1 + 1').toEvaluateAs(2);
+        });
+
+        it('should support return statements', () => {
+            expect('return 42').toEvaluateAs(42);
+        });
+
+        it('should allow use of a variable in expression', () => {
+            expect('const x = 1 + 1; return x;').toEvaluateAs(2);
+        });
+
+        it('should support if blocks', () => {
+            expect('if (1 === 1) { return "yes"; } else { return "no"; }').toEvaluateAs('yes');
+            expect('if (1 !== 1) { return "yes"; } else { return "no"; }').toEvaluateAs('no');
+        });
+
+        it('should support functions - multi-line', () => {
+            // Tasks only supports single-line expressions.
+            // This multi-line one is used for readability
+            const line = `
+                function f(value) {
+                    if (value === 1 ) {
+                        return "yes";
+                    } else {
+                        return "no";
+                    }
+                }
+                return f(1)`;
+            expect(line).toEvaluateAs('yes');
+        });
+
+        it('should support functions - single-line', () => {
+            const line = 'function f(value) { if (value === 1 ) { return "yes"; } else { return "no"; } } return f(1)';
+            expect(line).toEvaluateAs('yes');
+        });
+    });
+
     const task = TaskBuilder.createFullyPopulatedTask();
 
     describe('detect errors at parse stage', () => {
-        it('should report meaningful error message for duplicate return statement', () => {
-            // evaluateExpression() currently adds a return statement, to save user typing it.
-            expect(parseExpression([], 'return 42').error).toEqual(
-                'Error: Failed parsing expression "return 42".\nThe error message was:\n    "SyntaxError: Unexpected token \'return\'"',
-            );
-        });
-
         it('should report meaningful error message for parentheses too few parentheses', () => {
             expect(parseExpression([], 'x(').error).toEqual(
                 'Error: Failed parsing expression "x(".\nThe error message was:\n    "SyntaxError: Unexpected token \'}\'"',
@@ -66,6 +98,16 @@ describe('Expression', () => {
         });
     });
 
+    function verifyExpressionsForDocs(expressions: string[]) {
+        let markdown = '~~~text\n';
+        for (const expression of expressions) {
+            const result = parseAndEvaluateExpression(task, expression);
+            markdown += `${expression} => ${formatToRepresentType(result)}\n`;
+        }
+        markdown += '~~~\n';
+        verifyMarkdownForDocs(markdown);
+    }
+
     it('result', () => {
         const expressions = [
             "'hello'",
@@ -89,13 +131,16 @@ describe('Expression', () => {
             // Should allow manual escaping of markdown
             String.raw`"I _am_ not _italic_".replaceAll("_", "\\_")`,
         ];
+        verifyExpressionsForDocs(expressions);
+    });
 
-        let markdown = '~~~text\n';
-        for (const expression of expressions) {
-            const result = parseAndEvaluateExpression(task, expression);
-            markdown += `${expression} => ${formatToRepresentType(result)}\n`;
-        }
-        markdown += '~~~\n';
-        verifyMarkdownForDocs(markdown);
+    it('returns and functions', () => {
+        const expressions = [
+            'return 42',
+            'const x = 1 + 1; return x * x',
+            'if (1 === 1) { return "yes"; } else { return "no" }',
+            'function f(value) { if (value === 1 ) { return "yes"; } else { return "no"; } } return f(1)',
+        ];
+        verifyExpressionsForDocs(expressions);
     });
 });
