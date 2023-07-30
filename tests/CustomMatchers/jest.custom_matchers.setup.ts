@@ -7,6 +7,14 @@ expect.extend({
 });
 
 // ---------------------------------------------------------------------
+// CustomMatchersForExpressions
+// ---------------------------------------------------------------------
+import { toEvaluateAs } from './CustomMatchersForExpressions';
+expect.extend({
+    toEvaluateAs,
+});
+
+// ---------------------------------------------------------------------
 // CustomMatchersForFilters
 // ---------------------------------------------------------------------
 import {

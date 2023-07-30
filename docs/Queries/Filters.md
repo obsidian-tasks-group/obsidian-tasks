@@ -293,7 +293,8 @@ Since Tasks 4.2.0, **[[Custom Filters|custom filtering]] by status symbol** is n
   - Find tasks with a checkbox `[-]`, which is conventionally used to mean "cancelled".
 - ```filter by function task.status.symbol !== ' '```
   - Find tasks with anything but the space character as their status symbol, that is, without the checkbox `[ ]`.
-- ```filter by function task.status.symbol === 'P' || task.status.symbol === 'C' || task.status.symbol === 'Q' || task.status.symbol === 'A'```
+- ```filter by function const symbol = task.status.symbol; return symbol === 'P' || symbol === 'C' || symbol === 'Q' || symbol === 'A'```
+  - Note that because we use a variable to avoid repetition, we need to add `return`
   - Find tasks with status symbol `P`, `C`, `Q` or `A`.
   - This can get quite verbose, the more symbols you want to search for.
 - ```filter by function 'PCQA'.includes(task.status.symbol)```
@@ -1021,11 +1022,12 @@ Since Tasks 4.2.0, **[[Custom Filters|custom filtering]] by heading** is now pos
 
 <!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.file_properties_task.heading_docs.approved.md -->
 
-- ```filter by function task.due.moment?.isSame('2023-06-11', 'day') || ( !task.due.moment && task.heading?.includes('2023-06-11')) || false```
+- ```filter by function const taskDate = task.due.moment; const wanted = '2023-06-11'; return taskDate?.isSame(wanted, 'day') || ( !taskDate && task.heading?.includes(wanted)) || false```
   - Find takes that:
     - **either** due on the date `2023-06-11`,
     - **or** do not have a due date, and their preceding heading contains the same date as a string: `2023-06-11`.
-- ```filter by function task.due.moment?.isSame(moment(), 'day') || ( !task.due.moment && task.heading?.includes(moment().format('YYYY-MM-DD')) ) || false```
+  - Note that because we use variables to avoid repetition of values, we need to add `return`.
+- ```filter by function const taskDate = task.due.moment; const now = moment(); return taskDate?.isSame(now, 'day') || ( !taskDate && task.heading?.includes(now.format('YYYY-MM-DD')) ) || false```
   - Find takes that:
     - **either** due on today's date,
     - **or** do not have a due date, and their preceding heading contains today's date as a string, formatted as `YYYY-MM-DD`.
