@@ -7,7 +7,7 @@ expect.extend({
 });
 
 // ---------------------------------------------------------------------
-// CustomMatchersForDates
+// CustomMatchersForExpressions
 // ---------------------------------------------------------------------
 import { toEvaluateAs } from './CustomMatchersForExpressions';
 expect.extend({
