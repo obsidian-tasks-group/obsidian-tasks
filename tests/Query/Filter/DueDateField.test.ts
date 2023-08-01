@@ -38,7 +38,7 @@ describe('due date', () => {
         testTaskFilterForTaskWithDueDate(filter, '2022-04-25', false);
     });
 
-    it.failing('by due date (on or before)', () => {
+    it('by due date (on or before)', () => {
         // Arrange
         const filter = new DueDateField().createFilterOrErrorMessage('due on or before 2023-08-01');
 
@@ -49,7 +49,7 @@ describe('due date', () => {
         testTaskFilterForTaskWithDueDate(filter, '2023-08-02', false);
     });
 
-    it.failing('by due date (on or after)', () => {
+    it('by due date (on or after)', () => {
         // Arrange
         const filter = new DueDateField().createFilterOrErrorMessage('due on or after 2022-02-01');
 
@@ -72,7 +72,7 @@ describe('due date', () => {
         testTaskFilterForTaskWithDueDate(filter, '2022-04-25', false);
     });
 
-    it.failing('by due date - on or before absolute range', () => {
+    it('by due date - on or before absolute range', () => {
         // Arrange
         const filter = new DueDateField().createFilterOrErrorMessage('due on or before 2021-07-10 2021-10-04');
 
@@ -96,7 +96,7 @@ describe('due date', () => {
         testTaskFilterForTaskWithDueDate(filter, '2022-04-25', false);
     });
 
-    it.failing('by due date - on or after absolute range', () => {
+    it('by due date - on or after absolute range', () => {
         // Arrange
         const filter = new DueDateField().createFilterOrErrorMessage('due on or after 2023-03-10 2023-04-01');
 
@@ -299,7 +299,7 @@ describe('due date before & on or before relative date range (Today is 2022-05-2
         jest.useRealTimers();
     });
 
-    it.failing.each([
+    it.each([
         // Week
         ['last week', '2022-05-15', '2022-05-16', '2022-05-22', '2022-05-23'],
         ['this week', '2022-05-22', '2022-05-23', '2022-05-29', '2022-05-30'],
@@ -447,7 +447,7 @@ describe('due date after & on or after relative date range (Today is 2021-11-01)
         jest.useRealTimers();
     });
 
-    it.failing.each([
+    it.each([
         // Week
         ['last week', '2021-10-24', '2021-10-25', '2021-10-31', '2021-11-01'],
         ['this week', '2021-10-31', '2021-11-01', '2021-11-07', '2021-11-08'],
