@@ -161,16 +161,12 @@ export abstract class DateField extends Field {
         let explanationDates;
         switch (fieldKeyword) {
             case 'before':
-                explanationDates = filterDates.start.format(dateFormat);
-                break;
-            case 'on or before':
-                explanationDates = filterDates.end.format(dateFormat);
-                break;
-            case 'after':
-                explanationDates = filterDates.end.format(dateFormat);
-                break;
             case 'on or after':
                 explanationDates = filterDates.start.format(dateFormat);
+                break;
+            case 'after':
+            case 'on or before':
+                explanationDates = filterDates.end.format(dateFormat);
                 break;
             default:
                 if (!filterDates.start.isSame(filterDates.end)) {
