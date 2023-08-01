@@ -101,8 +101,12 @@ export abstract class DateField extends Field {
         let dateFilter: DateFilterFunction;
         if (fieldKeyword === 'before') {
             dateFilter = (date) => (date ? date.isBefore(fieldDates.start) : this.filterResultIfFieldMissing());
+        } else if (fieldKeyword === 'on or before') {
+            dateFilter = (date) => (date ? date.isSameOrBefore(fieldDates.end) : this.filterResultIfFieldMissing());
         } else if (fieldKeyword === 'after') {
             dateFilter = (date) => (date ? date.isAfter(fieldDates.end) : this.filterResultIfFieldMissing());
+        } else if (fieldKeyword === 'on or after') {
+            dateFilter = (date) => (date ? date.isSameOrAfter(fieldDates.start) : this.filterResultIfFieldMissing());
         } else {
             dateFilter = (date) =>
                 date
