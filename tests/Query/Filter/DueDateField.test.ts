@@ -343,17 +343,17 @@ describe('due date before & on or before relative date range (Today is 2022-05-2
 
     it.failing.each([
         ['week', '2022-05-23 (Monday 23rd May 2022)', '2022-05-29 (Sunday 29th May 2022)'],
-        ['month', '2022-05-01 (Sunday 1st May 2022)', '2022-05-31 (Monday 31st May 2022)'],
-        ['quarter', '2022-04-01 (Friday 1st April 2022)', '2022-06-30 (Thursday 30th May 2022)'],
-        ['year', '2022-01-01 (Saturday 1st January 2022)', '2022-12-31 (Friday 31st May 2022)'],
+        ['month', '2022-05-01 (Sunday 1st May 2022)', '2022-05-31 (Tuesday 31st May 2022)'],
+        ['quarter', '2022-04-01 (Friday 1st April 2022)', '2022-06-30 (Thursday 30th June 2022)'],
+        ['year', '2022-01-01 (Saturday 1st January 2022)', '2022-12-31 (Saturday 31st December 2022)'],
     ])(
         'should explain before & on or before relative date range (%s)',
         (range: string, startDate: string, endDate: string) => {
             const filterBefore = new DueDateField().createFilterOrErrorMessage(`due before this ${range}`);
             expect(filterBefore).toHaveExplanation(`due date is before ${startDate}`);
 
-            const filterOnOrBeforeFilter = new DueDateField().createFilterOrErrorMessage(`due before this ${range}`);
-            expect(filterOnOrBeforeFilter).toHaveExplanation(`due date is on or before ${endDate}`);
+            const filterOnOrBefore = new DueDateField().createFilterOrErrorMessage(`due on or before this ${range}`);
+            expect(filterOnOrBefore).toHaveExplanation(`due date is on or before ${endDate}`);
         },
     );
 });
@@ -500,7 +500,7 @@ describe('due date after & on or after relative date range (Today is 2021-11-01)
             const filterAfter = new DueDateField().createFilterOrErrorMessage(`due after this ${range}`);
             expect(filterAfter).toHaveExplanation(`due date is after ${endDate}`);
 
-            const filterOnOrAfter = new DueDateField().createFilterOrErrorMessage(`due after this ${range}`);
+            const filterOnOrAfter = new DueDateField().createFilterOrErrorMessage(`due on or after this ${range}`);
             expect(filterOnOrAfter).toHaveExplanation(`due date is on or after ${startDate}`);
         },
     );
