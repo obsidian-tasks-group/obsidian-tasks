@@ -56,38 +56,38 @@ export abstract class DateField extends Field {
                 line,
                 'do not understand query filter (' + this.fieldName() + ' date)',
             );
+        }
+
+        const keywordAndDateString = fieldNameKeywordDate[1]; // Will contain the whole line except the field name
+        const fieldKeyword = fieldNameKeywordDate[2]; // Will be 'before', 'after', 'in', 'on' or undefined
+        const fieldDateString = fieldNameKeywordDate[3]; // Will contain the remainder of the instruction
+
+        // Try interpreting everything after the keyword as a date range:
+        let fieldDates = DateParser.parseDateRange(fieldDateString);
+
+        // If the date range parsing failed, try again to parse the whole line except the field name
+        // as a single date, using the pre-date-ranges parsing mechanism.
+        // This is needed to keep 'due in two weeks' working, as 'two weeks' is not actually a valid date range
+        // if the futureDates value passed in to chrono's parsing functions is false.
+        if (!fieldDates.isValid()) {
+            const date = DateParser.parseDate(keywordAndDateString);
+            if (date.isValid()) {
+                fieldDates = new DateRange(date, date);
+            }
+        }
+
+        if (!fieldDates.isValid()) {
+            return FilterOrErrorMessage.fromError(line, 'do not understand ' + this.fieldName() + ' date');
         } else {
-            const keywordAndDateString = fieldNameKeywordDate[1]; // Will contain the whole line except the field name
-            const fieldKeyword = fieldNameKeywordDate[2]; // Will be 'before', 'after', 'in', 'on' or undefined
-            const fieldDateString = fieldNameKeywordDate[3]; // Will contain the remainder of the instruction
+            const filterFunction = this.buildFilterFunction(fieldKeyword, fieldDates);
 
-            // Try interpreting everything after the keyword as a date range:
-            let fieldDates = DateParser.parseDateRange(fieldDateString);
-
-            // If the date range parsing failed, try again to parse the whole line except the field name
-            // as a single date, using the pre-date-ranges parsing mechanism.
-            // This is needed to keep 'due in two weeks' working, as 'two weeks' is not actually a valid date range
-            // if the futureDates value passed in to chrono's parsing functions is false.
-            if (!fieldDates.isValid()) {
-                const date = DateParser.parseDate(keywordAndDateString);
-                if (date.isValid()) {
-                    fieldDates = new DateRange(date, date);
-                }
-            }
-
-            if (!fieldDates.isValid()) {
-                return FilterOrErrorMessage.fromError(line, 'do not understand ' + this.fieldName() + ' date');
-            } else {
-                const filterFunction = this.buildFilterFunction(fieldKeyword, fieldDates);
-
-                const explanation = DateField.buildExplanation(
-                    this.fieldNameForExplanation(),
-                    fieldKeyword,
-                    this.filterResultIfFieldMissing(),
-                    fieldDates,
-                );
-                return FilterOrErrorMessage.fromFilter(new Filter(line, filterFunction, explanation));
-            }
+            const explanation = DateField.buildExplanation(
+                this.fieldNameForExplanation(),
+                fieldKeyword,
+                this.filterResultIfFieldMissing(),
+                fieldDates,
+            );
+            return FilterOrErrorMessage.fromFilter(new Filter(line, filterFunction, explanation));
         }
     }
 
