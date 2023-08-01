@@ -180,10 +180,10 @@ export abstract class DateField extends Field {
                     }
 
                     return new Explanation(firstLine, subExplanations);
-                } else {
-                    relationship = 'on';
-                    explanationDates = filterDates.start.format(dateFormat);
                 }
+
+                relationship = 'on';
+                explanationDates = filterDates.start.format(dateFormat);
                 break;
         }
 
