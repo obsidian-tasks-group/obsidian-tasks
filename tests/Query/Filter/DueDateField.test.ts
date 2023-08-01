@@ -38,6 +38,28 @@ describe('due date', () => {
         testTaskFilterForTaskWithDueDate(filter, '2022-04-25', false);
     });
 
+    it.failing('by due date (on or before)', () => {
+        // Arrange
+        const filter = new DueDateField().createFilterOrErrorMessage('due on or before 2023-08-01');
+
+        // Act, Assert
+        testTaskFilterForTaskWithDueDate(filter, null, false);
+        testTaskFilterForTaskWithDueDate(filter, '2023-07-31', true);
+        testTaskFilterForTaskWithDueDate(filter, '2023-08-01', true);
+        testTaskFilterForTaskWithDueDate(filter, '2023-08-02', false);
+    });
+
+    it.failing('by due date (on or after)', () => {
+        // Arrange
+        const filter = new DueDateField().createFilterOrErrorMessage('due on or after 2022-02-01');
+
+        // Act, Assert
+        testTaskFilterForTaskWithDueDate(filter, null, false);
+        testTaskFilterForTaskWithDueDate(filter, '2022-01-31', false);
+        testTaskFilterForTaskWithDueDate(filter, '2022-02-01', true);
+        testTaskFilterForTaskWithDueDate(filter, '2022-02-02', true);
+    });
+
     it('by due date - before absolute range', () => {
         // Arrange
         const filter = new DueDateField().createFilterOrErrorMessage('due before 2022-04-20 2022-04-24');
