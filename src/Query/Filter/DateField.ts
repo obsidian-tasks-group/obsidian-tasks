@@ -164,9 +164,17 @@ export abstract class DateField extends Field {
                 relationship = fieldKeyword;
                 explanationDates = filterDates.start.format(dateFormat);
                 break;
+            case 'on or before':
+                relationship = fieldKeyword;
+                explanationDates = filterDates.end.format(dateFormat);
+                break;
             case 'after':
                 relationship = fieldKeyword;
                 explanationDates = filterDates.end.format(dateFormat);
+                break;
+            case 'on or after':
+                relationship = fieldKeyword;
+                explanationDates = filterDates.start.format(dateFormat);
                 break;
             default:
                 if (!filterDates.start.isSame(filterDates.end)) {

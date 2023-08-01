@@ -341,7 +341,7 @@ describe('due date before & on or before relative date range (Today is 2022-05-2
         },
     );
 
-    it.failing.each([
+    it.each([
         ['week', '2022-05-23 (Monday 23rd May 2022)', '2022-05-29 (Sunday 29th May 2022)'],
         ['month', '2022-05-01 (Sunday 1st May 2022)', '2022-05-31 (Tuesday 31st May 2022)'],
         ['quarter', '2022-04-01 (Friday 1st April 2022)', '2022-06-30 (Thursday 30th June 2022)'],
@@ -489,7 +489,7 @@ describe('due date after & on or after relative date range (Today is 2021-11-01)
         },
     );
 
-    it.failing.each([
+    it.each([
         ['week', '2021-11-01 (Monday 1st November 2021)', '2021-11-07 (Sunday 7th November 2021)'],
         ['month', '2021-11-01 (Monday 1st November 2021)', '2021-11-30 (Tuesday 30th November 2021)'],
         ['quarter', '2021-10-01 (Friday 1st October 2021)', '2021-12-31 (Friday 31st December 2021)'],
