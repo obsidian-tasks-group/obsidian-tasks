@@ -163,10 +163,7 @@ export abstract class DateField extends Field {
                 explanationDates = filterDates.end.format(dateFormat);
                 break;
             default:
-                if (filterDates.start.isSame(filterDates.end)) {
-                    relationship = 'on';
-                    explanationDates = filterDates.start.format(dateFormat);
-                } else {
+                if (!filterDates.start.isSame(filterDates.end)) {
                     // This is a special case where a multi-line explanation has to be built
                     // All other cases need only one line
                     const firstLine = `${fieldName} date is between:`;
@@ -183,6 +180,9 @@ export abstract class DateField extends Field {
                     }
 
                     return new Explanation(firstLine, subExplanations);
+                } else {
+                    relationship = 'on';
+                    explanationDates = filterDates.start.format(dateFormat);
                 }
                 break;
         }
