@@ -42,6 +42,15 @@ There is a [form to guide you through submitting a bug report](https://github.co
 
 The rest of this section guides you through giving enough information for the bug to be investigated.
 
+> [!warning] Warning: Issues created with GitHub's 'Reference in new issue' will be closed with no action
+> Occasionally we receive bug reports or feature requests that were created via GitHub's '[Reference in new issue](https://docs.github.com/en/issues/tracking-your-work-with-issues/creating-an-issue#creating-an-issue-from-a-comment)' facility.
+>
+> Because they by-pass the Issue template mechanism, these do not have the information that we need to be able to act on requests.
+>
+> We no longer have the time to go back and forth asking for the information manually that the templates request.
+>
+> Please do not be offended when issues created via 'Reference in new issue' are just closed. It's nothing personal.
+
 ### Give us text to copy
 
 It's crucial that we receive a **text representation** of your files in order to be able to investigate issues.
