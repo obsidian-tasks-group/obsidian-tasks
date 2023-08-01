@@ -72,6 +72,18 @@ describe('due date', () => {
         testTaskFilterForTaskWithDueDate(filter, '2022-04-25', false);
     });
 
+    it.failing('by due date - on or before absolute range', () => {
+        // Arrange
+        const filter = new DueDateField().createFilterOrErrorMessage('due on or before 2021-07-10 2021-10-04');
+
+        // Act, Assert
+        testTaskFilterForTaskWithDueDate(filter, null, false);
+        testTaskFilterForTaskWithDueDate(filter, '2021-07-09', true);
+        testTaskFilterForTaskWithDueDate(filter, '2021-07-10', true);
+        testTaskFilterForTaskWithDueDate(filter, '2021-10-04', true);
+        testTaskFilterForTaskWithDueDate(filter, '2021-10-05', false);
+    });
+
     it('by due date - on absolute range', () => {
         // Arrange
         const filter = new DueDateField().createFilterOrErrorMessage('due on 2022-04-20 2022-04-24');
@@ -82,6 +94,18 @@ describe('due date', () => {
         testTaskFilterForTaskWithDueDate(filter, '2022-04-20', true);
         testTaskFilterForTaskWithDueDate(filter, '2022-04-24', true);
         testTaskFilterForTaskWithDueDate(filter, '2022-04-25', false);
+    });
+
+    it.failing('by due date - on or after absolute range', () => {
+        // Arrange
+        const filter = new DueDateField().createFilterOrErrorMessage('due on or after 2023-03-10 2023-04-01');
+
+        // Act, Assert
+        testTaskFilterForTaskWithDueDate(filter, null, false);
+        testTaskFilterForTaskWithDueDate(filter, '2023-03-09', false);
+        testTaskFilterForTaskWithDueDate(filter, '2023-03-10', true);
+        testTaskFilterForTaskWithDueDate(filter, '2023-04-01', true);
+        testTaskFilterForTaskWithDueDate(filter, '2023-04-02', true);
     });
 
     it('by due date - after absolute range', () => {
