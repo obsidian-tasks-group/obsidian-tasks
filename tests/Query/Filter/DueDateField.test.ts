@@ -289,7 +289,7 @@ describe('due date (error & corner cases)', () => {
     });
 });
 
-describe('due date before & on or before relative date range (Today is 2022-05-25)', () => {
+describe('due date before & in or before relative date range (Today is 2022-05-25)', () => {
     beforeAll(() => {
         jest.useFakeTimers();
         jest.setSystemTime(new Date(2022, 4, 25)); // 2022-05-25
@@ -320,11 +320,11 @@ describe('due date before & on or before relative date range (Today is 2022-05-2
         ['this year', '2021-12-31', '2022-01-01', '2022-12-31', '2023-01-01'],
         ['next year', '2022-12-31', '2023-01-01', '2023-12-31', '2024-01-01'],
     ])(
-        'due before & on or before %s',
+        'due before & in or before %s',
         (range: string, beforeRange: string, rangeStart: string, rangeEnd: string, afterRange: string) => {
             // Arrange
             const filterBefore = new DueDateField().createFilterOrErrorMessage(`due before ${range}`);
-            const filterOnOrBefore = new DueDateField().createFilterOrErrorMessage(`due on or before ${range}`);
+            const filterOnOrBefore = new DueDateField().createFilterOrErrorMessage(`due in or before ${range}`);
 
             // Act, Assert
             testTaskFilterForTaskWithDueDate(filterBefore, null, false);
@@ -347,12 +347,12 @@ describe('due date before & on or before relative date range (Today is 2022-05-2
         ['quarter', '2022-04-01 (Friday 1st April 2022)', '2022-06-30 (Thursday 30th June 2022)'],
         ['year', '2022-01-01 (Saturday 1st January 2022)', '2022-12-31 (Saturday 31st December 2022)'],
     ])(
-        'should explain before & on or before relative date range (%s)',
+        'should explain before & in or before relative date range (%s)',
         (range: string, startDate: string, endDate: string) => {
             const filterBefore = new DueDateField().createFilterOrErrorMessage(`due before this ${range}`);
             expect(filterBefore).toHaveExplanation(`due date is before ${startDate}`);
 
-            const filterOnOrBefore = new DueDateField().createFilterOrErrorMessage(`due on or before this ${range}`);
+            const filterOnOrBefore = new DueDateField().createFilterOrErrorMessage(`due in or before this ${range}`);
             expect(filterOnOrBefore).toHaveExplanation(`due date is on or before ${endDate}`);
         },
     );
@@ -437,7 +437,7 @@ describe('due date in relative date range (Today is 2023-02-28)', () => {
     });
 });
 
-describe('due date after & on or after relative date range (Today is 2021-11-01)', () => {
+describe('due date after & in or after relative date range (Today is 2021-11-01)', () => {
     beforeAll(() => {
         jest.useFakeTimers();
         jest.setSystemTime(new Date(2021, 10, 1)); // 2021-11-01
@@ -468,11 +468,11 @@ describe('due date after & on or after relative date range (Today is 2021-11-01)
         ['this year', '2020-12-31', '2021-01-01', '2021-12-31', '2022-01-01'],
         ['next year', '2021-12-31', '2022-01-01', '2022-12-31', '2023-01-01'],
     ])(
-        'due after & on or after %s',
+        'due after & in or after %s',
         (range: string, beforeRange: string, rangeStart: string, rangeEnd: string, afterRange: string) => {
             // Arrange
             const filterAfter = new DueDateField().createFilterOrErrorMessage(`due after ${range}`);
-            const filterOnOrAfter = new DueDateField().createFilterOrErrorMessage(`due on or after ${range}`);
+            const filterOnOrAfter = new DueDateField().createFilterOrErrorMessage(`due in or after ${range}`);
 
             // Act, Assert
             testTaskFilterForTaskWithDueDate(filterAfter, null, false);
@@ -495,12 +495,12 @@ describe('due date after & on or after relative date range (Today is 2021-11-01)
         ['quarter', '2021-10-01 (Friday 1st October 2021)', '2021-12-31 (Friday 31st December 2021)'],
         ['year', '2021-01-01 (Friday 1st January 2021)', '2021-12-31 (Friday 31st December 2021)'],
     ])(
-        'should explain after & on or after relative date range (%s)',
+        'should explain after & in or after relative date range (%s)',
         (range: string, startDate: string, endDate: string) => {
             const filterAfter = new DueDateField().createFilterOrErrorMessage(`due after this ${range}`);
             expect(filterAfter).toHaveExplanation(`due date is after ${endDate}`);
 
-            const filterOnOrAfter = new DueDateField().createFilterOrErrorMessage(`due on or after this ${range}`);
+            const filterOnOrAfter = new DueDateField().createFilterOrErrorMessage(`due in or after this ${range}`);
             expect(filterOnOrAfter).toHaveExplanation(`due date is on or after ${startDate}`);
         },
     );

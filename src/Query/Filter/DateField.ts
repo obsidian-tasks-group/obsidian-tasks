@@ -58,9 +58,9 @@ export abstract class DateField extends Field {
             );
         }
 
-        const keywordAndDateString = fieldNameKeywordDate[1]; // Will contain the whole line except the field name
-        const fieldKeyword = fieldNameKeywordDate[2]; // Will be 'before', 'after', 'in', 'on' or undefined
-        const fieldDateString = fieldNameKeywordDate[3]; // Will contain the remainder of the instruction
+        const keywordAndDateString = fieldNameKeywordDate[1]; // The whole line except the field name
+        const fieldKeyword = fieldNameKeywordDate[2]; // '(on|in or )before', '(on|in or )after', 'in', 'on', or undefined
+        const fieldDateString = fieldNameKeywordDate[3]; // The remainder of the instruction
 
         // Try interpreting everything after the keyword as a date range:
         let fieldDates = DateParser.parseDateRange(fieldDateString);
@@ -104,12 +104,14 @@ export abstract class DateField extends Field {
                 dateFilter = (date) => (date ? date.isBefore(fieldDates.start) : this.filterResultIfFieldMissing());
                 break;
             case 'on or before':
+            case 'in or before':
                 dateFilter = (date) => (date ? date.isSameOrBefore(fieldDates.end) : this.filterResultIfFieldMissing());
                 break;
             case 'after':
                 dateFilter = (date) => (date ? date.isAfter(fieldDates.end) : this.filterResultIfFieldMissing());
                 break;
             case 'on or after':
+            case 'in or after':
                 dateFilter = (date) =>
                     date ? date.isSameOrAfter(fieldDates.start) : this.filterResultIfFieldMissing();
                 break;
@@ -130,7 +132,7 @@ export abstract class DateField extends Field {
 
     protected filterRegExp(): RegExp {
         return new RegExp(
-            `^${this.fieldNameForFilterInstruction()} ((on or before|before|on or after|after|on|in)? ?(.*))`,
+            `^${this.fieldNameForFilterInstruction()} (((?:on|in) or before|before|(?:on|in) or after|after|on|in)? ?(.*))`,
         );
     }
 
@@ -173,6 +175,14 @@ export abstract class DateField extends Field {
             case 'after':
             case 'on or before':
                 explanationDates = filterDates.end.format(dateFormat);
+                break;
+            case 'in or before':
+                relationship = 'on or before';
+                explanationDates = filterDates.end.format(dateFormat);
+                break;
+            case 'in or after':
+                relationship = 'on or after';
+                explanationDates = filterDates.start.format(dateFormat);
                 break;
             default:
                 if (!filterDates.start.isSame(filterDates.end)) {
