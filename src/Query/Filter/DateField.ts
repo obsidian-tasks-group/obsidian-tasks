@@ -78,17 +78,17 @@ export abstract class DateField extends Field {
 
         if (!fieldDates.isValid()) {
             return FilterOrErrorMessage.fromError(line, 'do not understand ' + this.fieldName() + ' date');
-        } else {
-            const filterFunction = this.buildFilterFunction(fieldKeyword, fieldDates);
-
-            const explanation = DateField.buildExplanation(
-                this.fieldNameForExplanation(),
-                fieldKeyword,
-                this.filterResultIfFieldMissing(),
-                fieldDates,
-            );
-            return FilterOrErrorMessage.fromFilter(new Filter(line, filterFunction, explanation));
         }
+
+        const filterFunction = this.buildFilterFunction(fieldKeyword, fieldDates);
+
+        const explanation = DateField.buildExplanation(
+            this.fieldNameForExplanation(),
+            fieldKeyword,
+            this.filterResultIfFieldMissing(),
+            fieldDates,
+        );
+        return FilterOrErrorMessage.fromFilter(new Filter(line, filterFunction, explanation));
     }
 
     /**
