@@ -51,7 +51,12 @@ export abstract class DateField extends Field {
         }
 
         const fieldNameKeywordDate = Field.getMatch(this.filterRegExp(), line);
-        if (fieldNameKeywordDate !== null) {
+        if (fieldNameKeywordDate === null) {
+            return FilterOrErrorMessage.fromError(
+                line,
+                'do not understand query filter (' + this.fieldName() + ' date)',
+            );
+        } else {
             const keywordAndDateString = fieldNameKeywordDate[1]; // Will contain the whole line except the field name
             const fieldKeyword = fieldNameKeywordDate[2]; // Will be 'before', 'after', 'in', 'on' or undefined
             const fieldDateString = fieldNameKeywordDate[3]; // Will contain the remainder of the instruction
@@ -83,11 +88,6 @@ export abstract class DateField extends Field {
                 );
                 return FilterOrErrorMessage.fromFilter(new Filter(line, filterFunction, explanation));
             }
-        } else {
-            return FilterOrErrorMessage.fromError(
-                line,
-                'do not understand query filter (' + this.fieldName() + ' date)',
-            );
         }
     }
 
