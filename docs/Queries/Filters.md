@@ -401,7 +401,7 @@ For more information, see [[Dates#Done date|Done date]].
 > - `done date is invalid` was introduced in Tasks 1.16.0.
 > - `done (before|after|in) <date range>` searches were introduced in Tasks 2.0.0.
 > - `done (before|after|in) (YYYY-Www|YYYY-mm|YYYY-Qq|YYYY)` searches were introduced in Tasks 3.1.0.
-> - `done (on or before|on or after) <date>` and `due (in or before|in or after) <date range>` searches were introduced in Tasks X.Y.Z
+> - `done (on or before|on or after) <date>` and `done (in or before|in or after) <date range>` searches were introduced in Tasks X.Y.Z
 
 Since Tasks 4.2.0, **[[Custom Filters|custom filtering]] by done date** is now possible, using `task.done`.
 
@@ -434,7 +434,7 @@ For more information, see [[Dates#Scheduled date|Scheduled date]].
 > - `scheduled date is invalid` was introduced in Tasks 1.16.0.
 > - `scheduled (before|after|in) <date range>` searches were introduced in Tasks 2.0.0.
 > - `scheduled (before|after|in) (YYYY-Www|YYYY-mm|YYYY-Qq|YYYY)` searches were introduced in Tasks 3.1.0.
-> - `scheduled (on or before|on or after) <date>` and `due (in or before|in or after) <date range>` searches were introduced in Tasks X.Y.Z
+> - `scheduled (on or before|on or after) <date>` and `scheduled (in or before|in or after) <date range>` searches were introduced in Tasks X.Y.Z
 
 Since Tasks 4.2.0, **[[Custom Filters|custom filtering]] by scheduled date** is now possible, using `task.scheduled`.
 
@@ -467,7 +467,7 @@ For more information, see [[Dates#Start date|Start date]].
 > - `start date is invalid` was introduced in Tasks 1.16.0.
 > - `starts (before|after|in) <date range>` searches were introduced in Tasks 2.0.0.
 > - `starts (before|after|in) (YYYY-Www|YYYY-mm|YYYY-Qq|YYYY)` searches were introduced in Tasks 3.1.0.
-> - `starts (on or before|on or after) <date>` and `due (in or before|in or after) <date range>` searches were introduced in Tasks X.Y.Z
+> - `starts (on or before|on or after) <date>` and `starts (in or before|in or after) <date range>` searches were introduced in Tasks X.Y.Z
 
 Since Tasks 4.2.0, **[[Custom Filters|custom filtering]] by start date** is now possible, using `task.start`.
 
@@ -530,7 +530,7 @@ Such a filter could be:
 >
 > - Created date was introduced in Tasks 2.0.0.
 > - `created (before|after|in) (YYYY-Www|YYYY-mm|YYYY-Qq|YYYY)` searches were introduced in Tasks 3.1.0.
-> - `created (on or before|on or after) <date>` and `due (in or before|in or after) <date range>` searches were introduced in Tasks X.Y.Z
+> - `created (on or before|on or after) <date>` and `created (in or before|in or after) <date range>` searches were introduced in Tasks X.Y.Z
 
 Since Tasks 4.2.0, **[[Custom Filters|custom filtering]] by created date** is now possible, using `task.created`.
 
@@ -567,7 +567,7 @@ because the tasks starts before tomorrow. Only one of the dates needs to match.
 > - `no happens date` and `has happens date` were introduced in Tasks 1.7.0.
 > - `happens (before|after|in) <date range>` searches were introduced in Tasks 2.0.0.
 > - `happens (before|after|in) (YYYY-Www|YYYY-mm|YYYY-Qq|YYYY)` searches were introduced in Tasks 3.1.0.
-> - `happens (on or before|on or after) <date>` and `due (in or before|in or after) <date range>` searches were introduced in Tasks X.Y.Z
+> - `happens (on or before|on or after) <date>` and `happens (in or before|in or after) <date range>` searches were introduced in Tasks X.Y.Z
 
 Since Tasks 4.2.0, **[[Custom Filters|custom filtering]] by happens date** is now possible, using `task.happens`.
 
