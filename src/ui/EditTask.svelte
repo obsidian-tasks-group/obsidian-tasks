@@ -8,6 +8,7 @@
     import { Priority, Task } from '../Task';
     import { doAutocomplete } from '../DateAbbreviations';
     import { TasksDate } from '../Scripting/TasksDate';
+    import Chip from "./Chip.svelte";
 
     // These exported variables are passed in as props by TaskModal.onOpen():
     export let task: Task;
@@ -468,6 +469,12 @@
                 accesskey={accesskey("a")}
             />
             <code>{startDateSymbol} {@html parsedStartDate}</code>
+
+            <div id="chip-container">
+                <Chip name="task 1"/>
+                <Chip name="task 3"/>
+                <Chip name="task 6"/>
+            </div>
 
             <!-- --------------------------------------------------------------------------- -->
             <!--  Only future dates  -->
