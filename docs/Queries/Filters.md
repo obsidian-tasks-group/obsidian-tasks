@@ -82,14 +82,16 @@ Tasks allows date searches to specify a pair of dates, `<date range>`.
 
 These searches are inclusive: the dates at either end are found by the search.
 
+There are several options to match the dates:
+
+- `before <date range>` will match before the earliest date of the range excluding the earliest date.
+- `after <date range>` will match after the latest date of the range excluding the latest date.
+- `in or before <date range>` will match before the latest date of the range including the latest date.
+- `in or after <date range>` will match after the earliest date or the range including the earliest date.
+
 #### Absolute date ranges
 
 `<date range>` may be specified as 2 valid dates in `YYYY-MM-DD` format.
-
-Dates on either end are included, that is, it is an inclusive search.
-
-- `before <date range>` will match before the earliest date of the range.
-- `after <date range>` will match after the latest date of the range.
 
 Notes:
 
@@ -129,7 +131,7 @@ Example relative date ranges:
 - `in this week` (from this week's Monday to Sunday inclusive)
 - `after this month`
 - `next quarter`
-- `before next year`
+- `on or before next year`
 
 > [!warning]
 Prior to Tasks 2.0.0, the interpretation of relative date ranges was confusing, and not what most users naturally expected.
