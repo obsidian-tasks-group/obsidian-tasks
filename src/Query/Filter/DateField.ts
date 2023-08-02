@@ -59,7 +59,7 @@ export abstract class DateField extends Field {
         }
 
         const keywordAndDateString = fieldNameKeywordDate[1]; // The whole line except the field name
-        const fieldKeyword = fieldNameKeywordDate[2]; // '(on|in or )before', '(on|in or )after', 'in', 'on', or undefined
+        const fieldKeyword = fieldNameKeywordDate[2]; // 'on', 'in', 'before', 'after', 'on|in or before|after' or undefined
         const fieldDateString = fieldNameKeywordDate[3]; // The remainder of the instruction
 
         // Try interpreting everything after the keyword as a date range:
@@ -169,13 +169,13 @@ export abstract class DateField extends Field {
         let explanationDates;
         switch (fieldKeyword) {
             // 'before <date range>' and 'on or after <date range>' shall reference the beginning of the range:
-            // 'before this week' is before the Monday and 'on or after this week' is starting from Monday inclusive
+            // 'before this week' is before the Monday and 'on or after this week' is starting from Monday inclusive.
             case 'before':
             case 'on or after':
                 explanationDates = filterDates.start.format(dateFormat);
                 break;
-            // 'after <date range>' and 'on or before <date range>' shall reference the end of the range
-            // 'after this month' is after the last day of this month and 'on or before this month' is before the last day of this month inclusive
+            // 'after <date range>' and 'on or before <date range>' shall reference the end of the range:
+            // 'after this month' is after the last day of this month and 'on or before this month' is before the last day of this month inclusive.
             case 'after':
             case 'on or before':
                 explanationDates = filterDates.end.format(dateFormat);
