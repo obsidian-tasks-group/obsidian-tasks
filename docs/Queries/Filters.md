@@ -333,8 +333,8 @@ Find any tasks that have status symbols you have not yet added to your Tasks set
 
 - `no due date`
 - `has due date`
-- `due (before|on or before|after|on or after|on) <date>`
-- `due (before|in or before|after|in or after|in) <date range>`
+- `due (on|before|after|on or before|on or after) <date>`
+- `due (in|before|after|in or before|in or after) <date range>`
   - `YYYY-MM-DD YYYY-MM-DD`
   - `(last|this|next) (week|month|quarter|year)`
   - `(YYYY-Www|YYYY-mm|YYYY-Qq|YYYY)`
@@ -386,8 +386,8 @@ For users who are comfortable with JavaScript, these more complicated examples m
 
 - `no done date`
 - `has done date`
-- `done (before|on or before|after|on or after|on) <date>`
-- `done (before|in or before|after|in or after|in) <date range>`
+- `done (on|before|after|on or before|on or after) <date>`
+- `done (in|before|after|in or before|in or after) <date range>`
   - `YYYY-MM-DD YYYY-MM-DD`
   - `(last|this|next) (week|month|quarter|year)`
   - `(YYYY-Www|YYYY-mm|YYYY-Qq|YYYY)`
@@ -419,8 +419,8 @@ For more examples, see [[#Due Date]].
 
 - `no scheduled date`
 - `has scheduled date`
-- `scheduled (before|on or before|after|on or after|on) <date>`
-- `scheduled (before|in or before|after|in or after|in) <date range>`
+- `scheduled (on|before|after|on or before|on or after) <date>`
+- `scheduled (in|before|after|in or before|in or after) <date range>`
   - `YYYY-MM-DD YYYY-MM-DD`
   - `(last|this|next) (week|month|quarter|year)`
   - `(YYYY-Www|YYYY-mm|YYYY-Qq|YYYY)`
@@ -452,8 +452,8 @@ For more examples, see [[#Due Date]].
 
 - `no start date`
 - `has start date`
-- `starts (before|on or before|after|on or after|on) <date>`
-- `starts (before|in or before|after|in or after|in) <date range>`
+- `starts (on|before|after|on or before|on or after) <date>`
+- `starts (in|before|after|in or before|in or after) <date range>`
   - `YYYY-MM-DD YYYY-MM-DD`
   - `(last|this|next) (week|month|quarter|year)`
   - `(YYYY-Www|YYYY-mm|YYYY-Qq|YYYY)`
@@ -513,8 +513,8 @@ See [[Dates#Created date|created date]] for how to make Tasks record the created
 
 - `no created date`
 - `has created date`
-- `created (before|on or before|after|on or after|on) <date>`
-- `created (before|in or before|after|in or after|in) <date range>`
+- `created (on|before|after|on or before|on or after) <date>`
+- `created (in|before|after|in or before|in or after) <date range>`
   - `YYYY-MM-DD YYYY-MM-DD`
   - `(last|this|next) (week|month|quarter|year)`
   - `(YYYY-Www|YYYY-mm|YYYY-Qq|YYYY)`
@@ -546,8 +546,8 @@ For more examples, see [[#Due Date]].
 
 ### Happens
 
-- `happens (before|on or before|after|on or after|on) <date>`
-- `happens (before|in or before|after|in or after|in) <date range>`
+- `happens (on|before|after|on or before|on or after) <date>`
+- `happens (in|before|after|in or before|in or after) <date range>`
   - `YYYY-MM-DD YYYY-MM-DD`
   - `(last|this|next) (week|month|quarter|year)`
   - `(YYYY-Www|YYYY-mm|YYYY-Qq|YYYY)`
