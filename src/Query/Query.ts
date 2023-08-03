@@ -213,6 +213,9 @@ Problem line: "${line}"`;
                 case 'backlink':
                     this._layoutOptions.hideBacklinks = hide;
                     break;
+                case 'snooze button':
+                    this._layoutOptions.hideSnoozeButton = hide;
+                    break;
                 case 'priority':
                     this._layoutOptions.hidePriority = hide;
                     break;

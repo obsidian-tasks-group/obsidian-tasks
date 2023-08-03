@@ -7,7 +7,7 @@ import { getTaskLineAndFile, replaceTaskWithTasks } from './File';
 import type { GroupDisplayHeading } from './Query/GroupDisplayHeading';
 import { TaskModal } from './TaskModal';
 import type { TasksEvents } from './TasksEvents';
-import type { Task } from './Task';
+import { Task } from './Task';
 import { DateFallback } from './DateFallback';
 import { TaskLayout } from './TaskLayout';
 import { explainResults, getQueryForQueryRenderer } from './lib/QueryRendererHelper';
@@ -240,6 +240,10 @@ class QueryRenderChild extends MarkdownRenderChild {
                 this.addUrgency(extrasSpan, task);
             }
 
+            if (!this.query.layoutOptions.hideSnoozeButton) {
+                this.addSnoozeButton(extrasSpan, task, shortMode);
+            }
+
             if (!this.query.layoutOptions.hideBacklinks) {
                 this.addBacklinks(extrasSpan, task, shortMode, isFilenameUnique);
             }
@@ -386,6 +390,48 @@ class QueryRenderChild extends MarkdownRenderChild {
         if (!shortMode) {
             backLink.append(')');
         }
+    }
+
+    private addSnoozeButton(listItem: HTMLElement, task: Task, shortMode: boolean) {
+        const snoozeButton = listItem.createSpan({ cls: 'tasks-snooze-button' });
+
+        const button = snoozeButton.createEl('button');
+
+        button.addClass('internal-button');
+        if (shortMode) {
+            button.addClass('internal-button-short-mode');
+        }
+
+        let buttonText: string;
+        if (shortMode) {
+            buttonText = ' ⏩';
+        } else {
+            buttonText = ' ⏩ Snooze';
+        }
+
+        button.setText(buttonText);
+
+        const updatedTask = new Task({ ...task, dueDate: window.moment().add(1, 'days') });
+        button.addEventListener('click', async () => {
+            replaceTaskWithTasks({
+                originalTask: task,
+                newTasks: updatedTask,
+            });
+        });
+
+        button.addEventListener('mousedown', async (ev: MouseEvent) => {
+            // Open in a new tab on middle-click.
+            // This distinction is not available in the 'click' event, so we handle the 'mousedown' event
+            // solely for this.
+            // (for regular left-click we prefer the 'click' event, and not to just do everything here, because
+            // the 'click' event is more generic for touch devices etc.)
+            if (ev.button === 1) {
+                replaceTaskWithTasks({
+                    originalTask: task,
+                    newTasks: updatedTask,
+                });
+            }
+        });
     }
 
     private addTaskCount(content: HTMLDivElement, tasksCount: number) {

@@ -3,6 +3,7 @@
  * See applyOptions below when adding options here.
  */
 export class LayoutOptions {
+    hideSnoozeButton: boolean = false;
     hideTaskCount: boolean = false;
     hideBacklinks: boolean = false;
     hidePriority: boolean = false;
@@ -112,6 +113,7 @@ export class TaskLayout {
         // separately.
         markHiddenQueryComponent(layoutOptions.hideUrgency, 'urgency');
         markHiddenQueryComponent(layoutOptions.hideBacklinks, 'backlinks');
+        markHiddenQueryComponent(layoutOptions.hideSnoozeButton, 'snooze-button');
         markHiddenQueryComponent(layoutOptions.hideEditButton, 'edit-button');
         if (layoutOptions.shortMode) this.specificClasses.push('tasks-layout-short-mode');
         return newComponents;
