@@ -72,6 +72,16 @@
     text-decoration: none;
 }
 
+.internal-button {
+    background-color: transparent;
+    padding: 0;
+    padding: 0;
+    background-color: transparent;
+    display: contents;
+    font-size: var(--font-ui-large);
+    cursor: pointer;
+}
+
 .tasks-list-text {
     position: relative;
 }
