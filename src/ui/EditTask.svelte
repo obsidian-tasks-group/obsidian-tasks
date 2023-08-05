@@ -8,8 +8,6 @@
     import { Priority, Task } from '../Task';
     import { doAutocomplete } from '../DateAbbreviations';
     import { TasksDate } from '../Scripting/TasksDate';
-    import Chip from "./Chip.svelte";
-
     // These exported variables are passed in as props by TaskModal.onOpen():
     export let task: Task;
     export let onSubmit: (updatedTasks: Task[]) => void | Promise<void>;
@@ -47,6 +45,13 @@
         doneDate: '',
         forwardOnly: true
     };
+
+    let waitingTasks: string[] = ['task 1', 'task 2', 'task 3'];
+    let blockingTasks: Task[] = [];
+
+    function removeTask(task: string) {
+        waitingTasks = waitingTasks.filter((item) => item !== task)
+    }
 
     let isDescriptionValid: boolean = true;
     let parsedCreated: string = '';
@@ -298,6 +303,7 @@
     }
 
     const _onSubmit = () => {
+        console.log("onSubmit called!")
         let description = editableTask.description.trim();
         if (addGlobalFilterOnSave) {
             description = GlobalFilter.prependTo(description);
@@ -471,9 +477,15 @@
             <code>{startDateSymbol} {@html parsedStartDate}</code>
 
             <div id="chip-container">
-                <Chip name="task 1"/>
-                <Chip name="task 3"/>
-                <Chip name="task 6"/>
+                {#each waitingTasks as task}
+                    <div class="chip">
+                        <div class="chip-name">{task}</div>
+
+                        <button on:click={() => removeTask(task)} type="button" class="chip-close">
+                            <svg style="display: block; margin: auto;" xmlns="http://www.w3.org/2000/svg" width="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+                        </button>
+                    </div>
+                {/each}
             </div>
 
             <!-- --------------------------------------------------------------------------- -->

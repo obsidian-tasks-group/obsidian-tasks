@@ -264,6 +264,7 @@
     border: 1px solid grey;
     border-radius: 28px;
     padding: 6px 8px 6px 12px;
+    margin: 4px;
 }
 
 .chip-name {
@@ -276,6 +277,8 @@
     border-radius: 50%;
     margin-left: 6px;
     color: rgb(30,30,30);
+    cursor: pointer;
+    height: inherit;
 }
 
 .chip-close:hover {
