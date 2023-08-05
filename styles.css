@@ -224,7 +224,7 @@
         margin: 0;
     }
     .tasks-modal-dates > input, .tasks-modal-dates > code {
-        grid-column: 1;
+        /*grid-column: 1;*/
     }
     .tasks-modal-dates > div {
         grid-column-end: 1;
@@ -257,6 +257,8 @@
 
 #chip-container {
     /*margin: 4px;*/
+
+    grid-column: 2;
 }
 
 .chip {
@@ -283,6 +285,29 @@
 
 .chip-close:hover {
     background: lightgrey;
+}
+
+#tasks {
+    z-index: 1;
+    position: absolute;
+    top: calc(71%); /* Adjust the value as needed */
+    left: 106px;
+    width: 435px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+}
+
+#tasks li {
+    padding: 5px;
+    cursor: pointer;
+}
+
+#tasks li:hover {
+    background-color: #f2f2f2;
 }
 
 

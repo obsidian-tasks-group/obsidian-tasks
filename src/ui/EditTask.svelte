@@ -8,10 +8,12 @@
     import { Priority, Task } from '../Task';
     import { doAutocomplete } from '../DateAbbreviations';
     import { TasksDate } from '../Scripting/TasksDate';
+    import type { Cache } from "../Cache";
     // These exported variables are passed in as props by TaskModal.onOpen():
     export let task: Task;
     export let onSubmit: (updatedTasks: Task[]) => void | Promise<void>;
     export let statusOptions: Status[];
+    export let cache: Cache;
 
     const {
         prioritySymbols,
@@ -46,11 +48,15 @@
         forwardOnly: true
     };
 
-    let waitingTasks: string[] = ['task 1', 'task 2', 'task 3'];
-    let blockingTasks: Task[] = [];
+    let waitingTasks: Task[] = [cache.getTasks()[0], cache.getTasks()[3]];
 
-    function removeTask(task: string) {
+    function removeWaitingTask(task: Task) {
         waitingTasks = waitingTasks.filter((item) => item !== task)
+    }
+
+    function addWaitingTask(task: Task) {
+        waitingTasks = [...waitingTasks, task];
+        waitingOnSearch = '';
     }
 
     let isDescriptionValid: boolean = true;
@@ -67,6 +73,12 @@
     let addGlobalFilterOnSave: boolean = false;
     let withAccessKeys: boolean = true;
     let formIsValid: boolean = true;
+    let waitingOnSearch: string = '';
+    let waitingOnSearchResults: Task[];
+
+    $: {
+        waitingOnSearchResults = waitingOnSearch ? cache.searchTasks(waitingOnSearch).slice(0, 10) : [];
+    }
 
     // 'weekend' abbreviation ommitted due to lack of space.
     let datePlaceholder =
@@ -303,7 +315,6 @@
     }
 
     const _onSubmit = () => {
-        console.log("onSubmit called!")
         let description = editableTask.description.trim();
         if (addGlobalFilterOnSave) {
             description = GlobalFilter.prependTo(description);
@@ -476,12 +487,31 @@
             />
             <code>{startDateSymbol} {@html parsedStartDate}</code>
 
+            <!-- --------------------------------------------------------------------------- -->
+            <!--  Waiting on Tasks  -->
+            <!-- --------------------------------------------------------------------------- -->
+            <label for="start">Waiting On</label>
+            <!-- svelte-ignore a11y-accesskey -->
+            <input
+                bind:value={waitingOnSearch}
+                id="waitingOn"
+                type="text"
+                placeholder="Type to search..."
+            />
+            <ul id="tasks">
+                {#each waitingOnSearchResults as task}
+                    <li on:click={() => addWaitingTask(task)}>
+                        {task.descriptionWithoutTags}
+                    </li>
+                {/each}
+            </ul>
+
             <div id="chip-container">
                 {#each waitingTasks as task}
                     <div class="chip">
-                        <div class="chip-name">{task}</div>
+                        <div class="chip-name">{task.descriptionWithoutTags}</div>
 
-                        <button on:click={() => removeTask(task)} type="button" class="chip-close">
+                        <button on:click={() => removeWaitingTask(task)} type="button" class="chip-close">
                             <svg style="display: block; margin: auto;" xmlns="http://www.w3.org/2000/svg" width="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
                         </button>
                     </div>
