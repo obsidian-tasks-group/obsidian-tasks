@@ -76,8 +76,22 @@
     let waitingOnSearch: string = '';
     let waitingOnSearchResults: Task[];
 
+    function generateSearchResults(search: string) {
+        if (!search) {
+            return [];
+        }
+
+        let results = cache.searchTasks(search);
+
+        results = results.filter((item) => {
+            return !waitingTasks.includes(item);
+        });
+
+        return results.slice(0,10);
+    }
+
     $: {
-        waitingOnSearchResults = waitingOnSearch ? cache.searchTasks(waitingOnSearch).slice(0, 10) : [];
+        waitingOnSearchResults = generateSearchResults(waitingOnSearch);
     }
 
     // 'weekend' abbreviation ommitted due to lack of space.
