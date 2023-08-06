@@ -30,7 +30,7 @@ Now Tasks tracks that you need to take out the trash!
 > ```
 
 > [!released]
-> Support for tasks with `+` was introduced in Tasks X.Y.Z.
+> Support for tasks with `+` was introduced in Tasks 4.5.0.
 
 To list all open tasks in a markdown file, simply add a [[About Queries|query]] as a tasks code block like so:
 
