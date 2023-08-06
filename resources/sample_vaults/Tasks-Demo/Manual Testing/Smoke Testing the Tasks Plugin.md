@@ -65,10 +65,14 @@ Work through all the tasks below, until zero tasks remain in this query:
 
 ### Un-completion of tasks
 
-- [x] #task Mark this task not complete in **Source view** using **Tasks: Toggle task done** command ✅ 2022-07-05
-- [x] #task Mark this task not complete by clicking on it in **Reading view** ✅ 2022-07-05
-- [x] #task Mark this task not complete by clicking on it in **Live Preview** ✅ 2022-07-05
-- [ ] #task **check**: Checked all above methods for **un-completing tasks** - and they worked
+<!-- markdownlint-disable ul-style -->
+
+* [x] #task Mark this task not complete in **Source view** using **Tasks: Toggle task done** command ✅ 2022-07-05
+* [x] #task Mark this task not complete by clicking on it in **Reading view** ✅ 2022-07-05
+* [x] #task Mark this task not complete by clicking on it in **Live Preview** ✅ 2022-07-05
+* [ ] #task **check**: Checked all above methods for **un-completing tasks** - and they worked
+
+<!-- markdownlint-enable ul-style -->
 
 ### Recurring Tasks
 
@@ -88,9 +92,13 @@ Confirm that when a recurring task is completed, a new task is created, all the 
 
 Steps to do:
 
-- [ ] #task View this file in **Reading view** and confirm that the tasks in this section are listed
-- [ ] #task View this file in **Live Preview** and confirm that the tasks in this section are listed
-- [ ] #task **check**: Checked all above steps for **viewing task blocks** worked
+<!-- markdownlint-disable ul-style -->
+
++ [ ] #task View this file in **Reading view** and confirm that the tasks in this section are listed
++ [ ] #task View this file in **Live Preview** and confirm that the tasks in this section are listed
++ [ ] #task **check**: Checked all above steps for **viewing task blocks** worked
+
+<!-- markdownlint-enable ul-style -->
 
 ---
 
