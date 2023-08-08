@@ -103,15 +103,15 @@ export abstract class DateField extends Field {
             case 'before':
                 dateFilter = (date) => (date ? date.isBefore(fieldDates.start) : this.filterResultIfFieldMissing());
                 break;
+            case 'after':
+                dateFilter = (date) => (date ? date.isAfter(fieldDates.end) : this.filterResultIfFieldMissing());
+                break;
             case 'on or before':
             case 'in or before':
                 // 'on or before'/'in or before' a date range uses the end of the range
                 // as the search limit, so that it matches every date in the
                 // inclusive date range, and all dates before the range.
                 dateFilter = (date) => (date ? date.isSameOrBefore(fieldDates.end) : this.filterResultIfFieldMissing());
-                break;
-            case 'after':
-                dateFilter = (date) => (date ? date.isAfter(fieldDates.end) : this.filterResultIfFieldMissing());
                 break;
             case 'on or after':
             case 'in or after':
