@@ -37,7 +37,9 @@ You can find out more about this very powerful facility in [[Custom Filters]].
 
 Tasks allows a lot of flexibility in the dates inside query blocks.
 
-### Absolute dates
+### Searching particular dates
+
+#### Absolute dates
 
 `<date>` filters can be given with 'absolute' dates, whose preferred format is `YYYY-MM-DD`.
 
@@ -50,7 +52,7 @@ Examples:
   - The [chrono](https://github.com/wanasit/chrono) library reads dates very flexibly, so you can use free text for absolute dates in your filters.
   - The `YYYY-MM-DD` format is somewhat safer, though, as there is no chance of ambiguity in reading your text.
 
-### Relative dates
+#### Relative dates
 
 `<date>` filters can be given with `relative` dates.
 
@@ -80,14 +82,18 @@ Date range searches were introduced in Tasks 2.0.0.
 
 Tasks allows date searches to specify a pair of dates, `<date range>`.
 
-These searches are inclusive: the dates at either end are found by the search.
+There are several options to match the date ranges:
 
-There are several options to match the dates:
-
-- `before <date range>` will match before the earliest date of the range excluding the earliest date.
-- `after <date range>` will match after the latest date of the range excluding the latest date.
-- `in or before <date range>` will match before the latest date of the range including the latest date.
-- `in or after <date range>` will match after the earliest date or the range including the earliest date.
+- `in <date range>`
+  - will match the start date, the end date and all date in between.
+- `before <date range>`
+  - will match before the earliest date of the range excluding the earliest date.
+- `in or before <date range>`
+  - will match before the latest date of the range including the latest date.
+- `after <date range>`
+  - will match after the latest date of the range excluding the latest date.
+- `in or after <date range>`
+  - will match after the earliest date or the range including the earliest date.
 
 #### Absolute date ranges
 
