@@ -76,6 +76,19 @@ No filters supplied. All tasks will match the query.`;
 
         expect(explainResults(query.source)).toEqual(expectedDisplayText);
     });
+
+    it('should explain a task with global query set but ignored without the global query', () => {
+        updateSettings({ globalQuery: 'description includes hello' });
+
+        const source = 'ignore global query';
+        const query = new Query({ source });
+
+        const expectedDisplayText = `Explanation of this Tasks code block query:
+
+No filters supplied. All tasks will match the query.`;
+
+        expect(explainResults(query.source)).toEqual(expectedDisplayText);
+    });
 });
 
 /**
@@ -93,5 +106,12 @@ describe('query used for QueryRenderer', () => {
         const globalQuerySource = 'description includes hello';
         updateSettings({ globalQuery: globalQuerySource });
         expect(getQueryForQueryRenderer(querySource).source).toEqual(`${globalQuerySource}\n${querySource}`);
+    });
+
+    it('should ignore the global query if "ignore global query" is set', () => {
+        updateSettings({ globalQuery: 'path includes from_global_query' });
+        expect(getQueryForQueryRenderer('description includes from_block_query\nignore global query').source).toEqual(
+            'description includes from_block_query\nignore global query',
+        );
     });
 });
