@@ -67,7 +67,7 @@ There are several options available when searching with a particular date:
 - `after <date>`
   - will match all dates after the date.
 - `on or after <date>`
-  - will the date and all later dates.
+  - will match the date and all later dates.
 
 This table may help visualise these options:
 
@@ -148,7 +148,7 @@ There are several options available when searching with date ranges:
 - `after <date range>`
   - will match all dates after the **end** date.
 - `in or after <date range>`
-  - will the **start** date and all later dates.
+  - will match the **start** date and all later dates.
 
 This table may help visualise these options:
 
