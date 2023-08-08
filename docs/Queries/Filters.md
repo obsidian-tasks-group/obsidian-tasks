@@ -37,7 +37,50 @@ You can find out more about this very powerful facility in [[Custom Filters]].
 
 Tasks allows a lot of flexibility in the dates inside query blocks.
 
+There are basically two broad types of date search:
+
+- [[#Searching particular dates]]
+- [[#Searching date ranges]]
+
 ### Searching particular dates
+
+This section describes searches that use single dates, for example:
+
+    ```tasks
+    starts before 2023-04-20
+    due on or before today
+    ```
+
+See also [[#Searching date ranges]].
+
+#### Date search options
+
+There are several options available when searching with a particular date:
+
+- `on <date>` or `<date>`
+  - will match the date.
+  - `on` is the default for date searches and may be omitted.
+- `before <date>`
+  - will match all dates before the date.
+- `on or before <date>`
+  - will match the date and all earlier dates.
+- `after <date>`
+  - will match all dates after the date.
+- `on or after <date>`
+  - will the date and all later dates.
+
+This table may help visualise these options:
+
+| option         | all earlier dates | `search date` | all later dates |
+|----------------| ----------------- | ------------ | --------------- |
+| `before`       | matches           |              |                 |
+| `on or before` | matches           | matches      |                 |
+| `on`           |                   | matches      |                 |
+| `on or after`  |                   | matches      | matches         |
+| `after`        |                   |              | matches         |
+
+> [!released]
+> `on or before` and `on or after` were introduced in Tasks X.Y.Z.
 
 #### Absolute dates
 
@@ -82,18 +125,43 @@ Date range searches were introduced in Tasks 2.0.0.
 
 Tasks allows date searches to specify a pair of dates, `<date range>`.
 
-There are several options to match the date ranges:
+This section describes date range searches, for example:
 
-- `in <date range>`
-  - will match the start date, the end date and all date in between.
+    ```tasks
+    due 2023-11-25 2023-11-30
+    happens this week
+    ```
+
+See also [[#Searching particular dates]].
+
+#### Date range options
+
+There are several options available when searching with date ranges:
+
+- `in <date range>` or `<date range>`
+  - will match the **start** date, the **end** date and all dates in between.
+  - `in` is the default for date range searches and may be omitted.
 - `before <date range>`
-  - will match before the earliest date of the range excluding the earliest date.
+  - will match all dates before the **start** date.
 - `in or before <date range>`
-  - will match before the latest date of the range including the latest date.
+  - will match the **end** date and all earlier dates.
 - `after <date range>`
-  - will match after the latest date of the range excluding the latest date.
+  - will match all dates after the **end** date.
 - `in or after <date range>`
-  - will match after the earliest date or the range including the earliest date.
+  - will the **start** date and all later dates.
+
+This table may help visualise these options:
+
+| option         | all earlier dates | `start date` | all dates<br>inside the range | `end date` | all later dates |
+| -------------- | ----------------- | ------------ | -------------------------------- | ---------- | --------------- |
+| `before`       | matches           |              |                                  |            |                 |
+| `in or before` | matches           | matches      | matches                          | matches    |                 |
+| `in`           |                   | matches      | matches                          | matches    |                 |
+| `in or after`  |                   | matches      | matches                          | matches    | matches         |
+| `after`        |                   |              |                                  |            | matches         |
+
+> [!released]
+> `in or before` and `in or after` were introduced in Tasks X.Y.Z.
 
 #### Absolute date ranges
 
