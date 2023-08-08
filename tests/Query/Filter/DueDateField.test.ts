@@ -289,7 +289,7 @@ describe('due date (error & corner cases)', () => {
     });
 });
 
-describe('due date before & in or before relative date range (Today is 2022-05-25)', () => {
+describe('due date before relative date range (Today is 2022-05-25)', () => {
     beforeAll(() => {
         jest.useFakeTimers();
         jest.setSystemTime(new Date(2022, 4, 25)); // 2022-05-25
@@ -320,42 +320,29 @@ describe('due date before & in or before relative date range (Today is 2022-05-2
         ['this year', '2021-12-31', '2022-01-01', '2022-12-31', '2023-01-01'],
         ['next year', '2022-12-31', '2023-01-01', '2023-12-31', '2024-01-01'],
     ])(
-        'due before & in or before %s',
+        'due before %s: task with due date on %s is included; %s, %s, %s are not',
         (range: string, beforeRange: string, rangeStart: string, rangeEnd: string, afterRange: string) => {
             // Arrange
-            const filterBefore = new DueDateField().createFilterOrErrorMessage(`due before ${range}`);
-            const filterOnOrBefore = new DueDateField().createFilterOrErrorMessage(`due in or before ${range}`);
+            const filter = new DueDateField().createFilterOrErrorMessage(`due before ${range}`);
 
             // Act, Assert
-            testTaskFilterForTaskWithDueDate(filterBefore, null, false);
-            testTaskFilterForTaskWithDueDate(filterBefore, beforeRange, true);
-            testTaskFilterForTaskWithDueDate(filterBefore, rangeStart, false);
-            testTaskFilterForTaskWithDueDate(filterBefore, rangeEnd, false);
-            testTaskFilterForTaskWithDueDate(filterBefore, afterRange, false);
-
-            testTaskFilterForTaskWithDueDate(filterOnOrBefore, null, false);
-            testTaskFilterForTaskWithDueDate(filterOnOrBefore, beforeRange, true);
-            testTaskFilterForTaskWithDueDate(filterOnOrBefore, rangeStart, true);
-            testTaskFilterForTaskWithDueDate(filterOnOrBefore, rangeEnd, true);
-            testTaskFilterForTaskWithDueDate(filterOnOrBefore, afterRange, false);
+            testTaskFilterForTaskWithDueDate(filter, null, false);
+            testTaskFilterForTaskWithDueDate(filter, beforeRange, true);
+            testTaskFilterForTaskWithDueDate(filter, rangeStart, false);
+            testTaskFilterForTaskWithDueDate(filter, rangeEnd, false);
+            testTaskFilterForTaskWithDueDate(filter, afterRange, false);
         },
     );
 
     it.each([
-        ['week', '2022-05-23 (Monday 23rd May 2022)', '2022-05-29 (Sunday 29th May 2022)'],
-        ['month', '2022-05-01 (Sunday 1st May 2022)', '2022-05-31 (Tuesday 31st May 2022)'],
-        ['quarter', '2022-04-01 (Friday 1st April 2022)', '2022-06-30 (Thursday 30th June 2022)'],
-        ['year', '2022-01-01 (Saturday 1st January 2022)', '2022-12-31 (Saturday 31st December 2022)'],
-    ])(
-        'should explain before & in or before relative date range (%s)',
-        (range: string, startDate: string, endDate: string) => {
-            const filterBefore = new DueDateField().createFilterOrErrorMessage(`due before this ${range}`);
-            expect(filterBefore).toHaveExplanation(`due date is before ${startDate}`);
-
-            const filterOnOrBefore = new DueDateField().createFilterOrErrorMessage(`due in or before this ${range}`);
-            expect(filterOnOrBefore).toHaveExplanation(`due date is on or before ${endDate}`);
-        },
-    );
+        ['week', '2022-05-23 (Monday 23rd May 2022)'],
+        ['month', '2022-05-01 (Sunday 1st May 2022)'],
+        ['quarter', '2022-04-01 (Friday 1st April 2022)'],
+        ['year', '2022-01-01 (Saturday 1st January 2022)'],
+    ])('should explain before relative date range (%s)', (range: string, date: string) => {
+        const filter = new DueDateField().createFilterOrErrorMessage(`due before this ${range}`);
+        expect(filter).toHaveExplanation(`due date is before ${date}`);
+    });
 });
 
 describe('due date in relative date range (Today is 2023-02-28)', () => {
@@ -437,7 +424,7 @@ describe('due date in relative date range (Today is 2023-02-28)', () => {
     });
 });
 
-describe('due date after & in or after relative date range (Today is 2021-11-01)', () => {
+describe('due date after relative date range (Today is 2021-11-01)', () => {
     beforeAll(() => {
         jest.useFakeTimers();
         jest.setSystemTime(new Date(2021, 10, 1)); // 2021-11-01
@@ -468,42 +455,29 @@ describe('due date after & in or after relative date range (Today is 2021-11-01)
         ['this year', '2020-12-31', '2021-01-01', '2021-12-31', '2022-01-01'],
         ['next year', '2021-12-31', '2022-01-01', '2022-12-31', '2023-01-01'],
     ])(
-        'due after & in or after %s',
+        'due after %s: task with due date %s, %s, %s are not included, %s is',
         (range: string, beforeRange: string, rangeStart: string, rangeEnd: string, afterRange: string) => {
             // Arrange
-            const filterAfter = new DueDateField().createFilterOrErrorMessage(`due after ${range}`);
-            const filterOnOrAfter = new DueDateField().createFilterOrErrorMessage(`due in or after ${range}`);
+            const filter = new DueDateField().createFilterOrErrorMessage(`due after ${range}`);
 
             // Act, Assert
-            testTaskFilterForTaskWithDueDate(filterAfter, null, false);
-            testTaskFilterForTaskWithDueDate(filterAfter, beforeRange, false);
-            testTaskFilterForTaskWithDueDate(filterAfter, rangeStart, false);
-            testTaskFilterForTaskWithDueDate(filterAfter, rangeEnd, false);
-            testTaskFilterForTaskWithDueDate(filterAfter, afterRange, true);
-
-            testTaskFilterForTaskWithDueDate(filterOnOrAfter, null, false);
-            testTaskFilterForTaskWithDueDate(filterOnOrAfter, beforeRange, false);
-            testTaskFilterForTaskWithDueDate(filterOnOrAfter, rangeStart, true);
-            testTaskFilterForTaskWithDueDate(filterOnOrAfter, rangeEnd, true);
-            testTaskFilterForTaskWithDueDate(filterOnOrAfter, afterRange, true);
+            testTaskFilterForTaskWithDueDate(filter, null, false);
+            testTaskFilterForTaskWithDueDate(filter, beforeRange, false);
+            testTaskFilterForTaskWithDueDate(filter, rangeStart, false);
+            testTaskFilterForTaskWithDueDate(filter, rangeEnd, false);
+            testTaskFilterForTaskWithDueDate(filter, afterRange, true);
         },
     );
 
     it.each([
-        ['week', '2021-11-01 (Monday 1st November 2021)', '2021-11-07 (Sunday 7th November 2021)'],
-        ['month', '2021-11-01 (Monday 1st November 2021)', '2021-11-30 (Tuesday 30th November 2021)'],
-        ['quarter', '2021-10-01 (Friday 1st October 2021)', '2021-12-31 (Friday 31st December 2021)'],
-        ['year', '2021-01-01 (Friday 1st January 2021)', '2021-12-31 (Friday 31st December 2021)'],
-    ])(
-        'should explain after & in or after relative date range (%s)',
-        (range: string, startDate: string, endDate: string) => {
-            const filterAfter = new DueDateField().createFilterOrErrorMessage(`due after this ${range}`);
-            expect(filterAfter).toHaveExplanation(`due date is after ${endDate}`);
-
-            const filterOnOrAfter = new DueDateField().createFilterOrErrorMessage(`due in or after this ${range}`);
-            expect(filterOnOrAfter).toHaveExplanation(`due date is on or after ${startDate}`);
-        },
-    );
+        ['week', '2021-11-07 (Sunday 7th November 2021)'],
+        ['month', '2021-11-30 (Tuesday 30th November 2021)'],
+        ['quarter', '2021-12-31 (Friday 31st December 2021)'],
+        ['year', '2021-12-31 (Friday 31st December 2021)'],
+    ])('should explain after relative date range (%s)', (range: string, date: string) => {
+        const filter = new DueDateField().createFilterOrErrorMessage(`due after this ${range}`);
+        expect(filter).toHaveExplanation(`due date is after ${date}`);
+    });
 });
 
 describe('explain due date queries', () => {
