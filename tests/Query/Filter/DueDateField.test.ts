@@ -38,7 +38,7 @@ describe('due date', () => {
         testTaskFilterForTaskWithDueDate(filter, '2022-04-25', false);
     });
 
-    it('by due date (on or before)', () => {
+    it('by due date (on or before) should match the given date and all earlier dates', () => {
         // Arrange
         const filter = new DueDateField().createFilterOrErrorMessage('due on or before 2023-08-01');
 
@@ -49,7 +49,7 @@ describe('due date', () => {
         testTaskFilterForTaskWithDueDate(filter, '2023-08-02', false);
     });
 
-    it('by due date (on or after)', () => {
+    it('by due date (on or after) should match the given date and all later dates', () => {
         // Arrange
         const filter = new DueDateField().createFilterOrErrorMessage('due on or after 2022-02-01');
 
@@ -72,7 +72,7 @@ describe('due date', () => {
         testTaskFilterForTaskWithDueDate(filter, '2022-04-25', false);
     });
 
-    it('by due date - on or before absolute range', () => {
+    it('by due date - on or before absolute range should match the date range and all earlier dates', () => {
         // Arrange
         const filter = new DueDateField().createFilterOrErrorMessage('due on or before 2021-07-10 2021-10-04');
 
@@ -96,7 +96,7 @@ describe('due date', () => {
         testTaskFilterForTaskWithDueDate(filter, '2022-04-25', false);
     });
 
-    it('by due date - on or after absolute range', () => {
+    it('by due date - on or after absolute range should match the date range and all later dates', () => {
         // Arrange
         const filter = new DueDateField().createFilterOrErrorMessage('due on or after 2023-03-10 2023-04-01');
 
