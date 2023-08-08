@@ -499,6 +499,26 @@ describe('explain due date queries', () => {
   2023-01-17 (Tuesday 17th January 2023) inclusive`,
         );
     });
+
+    it('should explain "on or before" with a single date', () => {
+        const filterOrMessage = new DueDateField().createFilterOrErrorMessage('due on or before 2023-08-08');
+        expect(filterOrMessage).toHaveExplanation('due date is on or before 2023-08-08 (Tuesday 8th August 2023)');
+    });
+
+    it('should explain "on or after" with a single date', () => {
+        const filterOrMessage = new DueDateField().createFilterOrErrorMessage('due on or after 2023-07-29');
+        expect(filterOrMessage).toHaveExplanation('due date is on or after 2023-07-29 (Saturday 29th July 2023)');
+    });
+
+    it('should explain "in or before" with an absolute date range', () => {
+        const filterOrMessage = new DueDateField().createFilterOrErrorMessage('due in or before 2023-10-20 2023-11-01');
+        expect(filterOrMessage).toHaveExplanation('due date is on or before 2023-11-01 (Wednesday 1st November 2023)');
+    });
+
+    it('should explain "in or after" with an absolute date range', () => {
+        const filterOrMessage = new DueDateField().createFilterOrErrorMessage('due in or after 2023-10-20 2023-11-01');
+        expect(filterOrMessage).toHaveExplanation('due date is on or after 2023-10-20 (Friday 20th October 2023)');
+    });
 });
 
 describe('sorting by due', () => {
