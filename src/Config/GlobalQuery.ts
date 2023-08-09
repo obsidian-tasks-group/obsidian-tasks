@@ -9,6 +9,17 @@ export class GlobalQuery {
         return new Query(globalQuerySource);
     }
 
+    /**
+     * Retrieves the source of the global {@link Query}
+     */
+    static source(): { source: string } {
+        return { source: getSettings().globalQuery };
+    }
+
+    static string() {
+        return getSettings().globalQuery;
+    }
+
     static set(value: string) {
         updateSettings({ globalQuery: value });
     }
@@ -21,18 +32,7 @@ export class GlobalQuery {
         return GlobalQuery.get().explainQuery();
     }
 
-    static string() {
-        return getSettings().globalQuery;
-    }
-
     static reset() {
         updateSettings({ globalQuery: GlobalQuery.empty });
-    }
-
-    /**
-     * Retrieves the source of the global {@link Query}
-     */
-    static source(): { source: string } {
-        return { source: getSettings().globalQuery };
     }
 }
