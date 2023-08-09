@@ -62,10 +62,10 @@ There are several options available when searching with a particular date:
   - `on` is the default for date searches and may be omitted.
 - `before <date>`
   - will match all dates before the date.
-- `on or before <date>`
-  - will match the date and all earlier dates.
 - `after <date>`
   - will match all dates after the date.
+- `on or before <date>`
+  - will match the date and all earlier dates.
 - `on or after <date>`
   - will match the date and all later dates.
 
@@ -143,10 +143,10 @@ There are several options available when searching with date ranges:
   - `in` is the default for date range searches and may be omitted.
 - `before <date range>`
   - will match all dates before the **start** date.
-- `in or before <date range>`
-  - will match the **end** date and all earlier dates.
 - `after <date range>`
   - will match all dates after the **end** date.
+- `in or before <date range>`
+  - will match the **end** date and all earlier dates.
 - `in or after <date range>`
   - will match the **start** date and all later dates.
 
