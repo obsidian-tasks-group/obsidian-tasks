@@ -2,6 +2,8 @@ import { Query } from './../Query/Query';
 import { getSettings, updateSettings } from './Settings';
 
 export class GlobalQuery {
+    static empty = '';
+
     static get(): Query {
         const globalQuerySource = GlobalQuery.source();
         return new Query(globalQuerySource);
@@ -12,7 +14,7 @@ export class GlobalQuery {
     }
 
     static isEmpty() {
-        return GlobalQuery.string().trim() == '';
+        return GlobalQuery.string().trim() == GlobalQuery.empty;
     }
 
     static explain() {
@@ -24,7 +26,7 @@ export class GlobalQuery {
     }
 
     static reset() {
-        updateSettings({ globalQuery: '' });
+        updateSettings({ globalQuery: GlobalQuery.empty });
     }
 
     /**
