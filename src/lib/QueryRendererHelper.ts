@@ -33,7 +33,7 @@ export function explainResults(source: string): string {
     if (!tasksBlockQuery.ignoreGlobalQuery) {
         const globalQuery = GlobalQuery.get();
 
-        if (globalQuery.source.trim() !== '') {
+        if (!GlobalQuery.isEmpty()) {
             result += `Explanation of the global query:\n\n${globalQuery.explainQuery()}\n`;
         }
     }
