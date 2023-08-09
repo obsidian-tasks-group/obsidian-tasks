@@ -1,4 +1,3 @@
-import type { IQuery } from '../IQuery';
 import { GlobalFilter } from '../Config/GlobalFilter';
 import { Query } from '../Query/Query';
 import { GlobalQuery } from '../Config/GlobalQuery';
@@ -32,7 +31,7 @@ export function explainResults(source: string): string {
     const tasksBlockQuery = new Query({ source });
 
     if (!tasksBlockQuery.ignoreGlobalQuery) {
-        const globalQuery: IQuery = new Query(GlobalQuery.source());
+        const globalQuery = GlobalQuery.get();
 
         if (globalQuery.source.trim() !== '') {
             result += `Explanation of the global query:\n\n${globalQuery.explainQuery()}\n`;
@@ -53,7 +52,7 @@ export function explainResults(source: string): string {
  * @returns {Query} The query to execute
  */
 export function getQueryForQueryRenderer(source: string): Query {
-    const globalQuery = new Query(GlobalQuery.source());
+    const globalQuery = GlobalQuery.get();
     const tasksBlockQuery = new Query({ source });
 
     if (tasksBlockQuery.ignoreGlobalQuery) {
