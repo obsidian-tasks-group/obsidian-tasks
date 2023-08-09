@@ -20,7 +20,7 @@ export class GlobalQuery {
         return GlobalQuery.get().trim() == GlobalQuery.empty;
     }
 
-    static explain(): string {
+    static explainQuery(): string {
         return GlobalQuery.query().explainQuery();
     }
 
