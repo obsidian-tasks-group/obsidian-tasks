@@ -174,16 +174,18 @@ export abstract class DateField extends Field {
         const dateFormat = 'YYYY-MM-DD (dddd Do MMMM YYYY)';
         let explanationDates;
         switch (fieldKeyword) {
-            // 'before <date range>' and 'on or after <date range>' shall reference the beginning of the range:
-            // 'before this week' is before the Monday and 'on or after this week' is starting from Monday inclusive.
             case 'before':
             case 'on or after':
+                // 'before <date range>' and 'on or after <date range>' reference the Start of the range:
+                //  - 'before this week' is before the Monday
+                //  - 'on or after this week' is starting from Monday inclusive.
                 explanationDates = filterDates.start.format(dateFormat);
                 break;
-            // 'after <date range>' and 'on or before <date range>' shall reference the end of the range:
-            // 'after this month' is after the last day of this month and 'on or before this month' is before the last day of this month inclusive.
             case 'after':
             case 'on or before':
+                // 'after <date range>' and 'on or before <date range>' reference the End of the range:
+                //  - 'after this month' is after the last day of this month
+                //  - 'on or before this month' is before the last day of this month inclusive.
                 explanationDates = filterDates.end.format(dateFormat);
                 break;
             case 'in or before':
