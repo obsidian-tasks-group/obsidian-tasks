@@ -3,9 +3,10 @@
  */
 import moment from 'moment';
 import { Query } from '../../src/Query/Query';
-import { resetSettings, updateSettings } from '../../src/Config/Settings';
+import { resetSettings } from '../../src/Config/Settings';
 import { explainResults, getQueryForQueryRenderer } from '../../src/lib/QueryRendererHelper';
 import { GlobalFilter } from '../../src/Config/GlobalFilter';
+import { GlobalQuery } from '../../src/Config/GlobalQuery';
 
 window.moment = moment;
 
@@ -41,7 +42,7 @@ No filters supplied. All tasks will match the query.`;
     });
 
     it('should explain a task with global query active', () => {
-        updateSettings({ globalQuery: 'description includes hello' });
+        GlobalQuery.set('description includes hello');
 
         const source = '';
         const query = new Query({ source });
@@ -58,7 +59,7 @@ No filters supplied. All tasks will match the query.`;
     });
 
     it('should explain a task with global query and global filter active', () => {
-        updateSettings({ globalQuery: 'description includes hello' });
+        GlobalQuery.set('description includes hello');
         GlobalFilter.set('#task');
 
         const source = '';
@@ -78,7 +79,7 @@ No filters supplied. All tasks will match the query.`;
     });
 
     it('should explain a task with global query set but ignored without the global query', () => {
-        updateSettings({ globalQuery: 'description includes hello' });
+        GlobalQuery.set('description includes hello');
 
         const source = 'ignore global query';
         const query = new Query({ source });
@@ -104,12 +105,12 @@ describe('query used for QueryRenderer', () => {
     it('should be the result of combining the global query and the actual query', () => {
         const querySource = 'description includes world';
         const globalQuerySource = 'description includes hello';
-        updateSettings({ globalQuery: globalQuerySource });
+        GlobalQuery.set(globalQuerySource);
         expect(getQueryForQueryRenderer(querySource).source).toEqual(`${globalQuerySource}\n${querySource}`);
     });
 
     it('should ignore the global query if "ignore global query" is set', () => {
-        updateSettings({ globalQuery: 'path includes from_global_query' });
+        GlobalQuery.set('path includes from_global_query');
         expect(getQueryForQueryRenderer('description includes from_block_query\nignore global query').source).toEqual(
             'description includes from_block_query\nignore global query',
         );
