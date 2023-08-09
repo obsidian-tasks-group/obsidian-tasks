@@ -16,6 +16,10 @@ export class GlobalQuery {
         return GlobalQuery.get().explainQuery();
     }
 
+    static string() {
+        return getSettings().globalQuery;
+    }
+
     /**
      * Retrieves the source of the global {@link Query}
      */
