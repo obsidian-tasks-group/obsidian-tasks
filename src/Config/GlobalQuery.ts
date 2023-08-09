@@ -8,7 +8,7 @@ export class GlobalQuery {
         return new Query({ source: getSettings().globalQuery });
     }
 
-    static string() {
+    static string(): string {
         return getSettings().globalQuery;
     }
 
@@ -16,11 +16,11 @@ export class GlobalQuery {
         updateSettings({ globalQuery: value });
     }
 
-    static isEmpty() {
+    static isEmpty(): boolean {
         return GlobalQuery.string().trim() == GlobalQuery.empty;
     }
 
-    static explain() {
+    static explain(): string {
         return GlobalQuery.get().explainQuery();
     }
 
