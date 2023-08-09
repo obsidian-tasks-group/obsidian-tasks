@@ -12,6 +12,10 @@ export class GlobalQuery {
         return source.trim() == '';
     }
 
+    static explain() {
+        return GlobalQuery.get().explainQuery();
+    }
+
     /**
      * Retrieves the source of the global {@link Query}
      */

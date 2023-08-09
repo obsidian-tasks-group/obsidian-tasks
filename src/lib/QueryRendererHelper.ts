@@ -31,10 +31,8 @@ export function explainResults(source: string): string {
     const tasksBlockQuery = new Query({ source });
 
     if (!tasksBlockQuery.ignoreGlobalQuery) {
-        const globalQuery = GlobalQuery.get();
-
         if (!GlobalQuery.isEmpty()) {
-            result += `Explanation of the global query:\n\n${globalQuery.explainQuery()}\n`;
+            result += `Explanation of the global query:\n\n${GlobalQuery.explain()}\n`;
         }
     }
 
