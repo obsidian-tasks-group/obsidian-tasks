@@ -12,6 +12,7 @@ import { StatusSettings } from './StatusSettings';
 import settingsJson from './settingsConfiguration.json';
 
 import { CustomStatusModal } from './CustomStatusModal';
+import { GlobalQuery } from './GlobalQuery';
 
 export class SettingsTab extends PluginSettingTab {
     // If the UI needs a more complex setting you can create a
@@ -136,11 +137,9 @@ export class SettingsTab extends PluginSettingTab {
                     ),
                 )
                 .addTextArea((text) => {
-                    const settings = getSettings();
-
                     text.inputEl.rows = 4;
                     text.setPlaceholder('# For example...\npath does not include _templates/\nlimit 300\nshow urgency')
-                        .setValue(settings.globalQuery)
+                        .setValue(GlobalQuery.string())
                         .onChange(async (value) => {
                             updateSettings({ globalQuery: value });
 
