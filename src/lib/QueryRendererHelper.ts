@@ -52,12 +52,12 @@ export function explainResults(source: string): string {
  * @returns {Query} The query to execute
  */
 export function getQueryForQueryRenderer(source: string): Query {
-    const globalQuery = GlobalQuery.get();
     const tasksBlockQuery = new Query({ source });
 
     if (tasksBlockQuery.ignoreGlobalQuery) {
         return tasksBlockQuery;
     }
 
+    const globalQuery = GlobalQuery.get();
     return globalQuery.append(tasksBlockQuery);
 }
