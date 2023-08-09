@@ -8,8 +8,7 @@ export class GlobalQuery {
     }
 
     static isEmpty() {
-        const source = GlobalQuery.source().source;
-        return source.trim() == '';
+        return GlobalQuery.string().trim() == '';
     }
 
     static explain() {
