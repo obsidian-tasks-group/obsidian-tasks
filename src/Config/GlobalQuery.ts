@@ -5,15 +5,7 @@ export class GlobalQuery {
     static empty = '';
 
     static get(): Query {
-        const globalQuerySource = GlobalQuery.source();
-        return new Query(globalQuerySource);
-    }
-
-    /**
-     * Retrieves the source of the global {@link Query}
-     */
-    static source(): { source: string } {
-        return { source: getSettings().globalQuery };
+        return new Query({ source: getSettings().globalQuery });
     }
 
     static string() {
