@@ -4,11 +4,11 @@ import { getSettings, updateSettings } from './Settings';
 export class GlobalQuery {
     static empty = '';
 
-    static get(): Query {
+    static query(): Query {
         return new Query({ source: getSettings().globalQuery });
     }
 
-    static string(): string {
+    static get(): string {
         return getSettings().globalQuery;
     }
 
@@ -17,11 +17,11 @@ export class GlobalQuery {
     }
 
     static isEmpty(): boolean {
-        return GlobalQuery.string().trim() == GlobalQuery.empty;
+        return GlobalQuery.get().trim() == GlobalQuery.empty;
     }
 
     static explain(): string {
-        return GlobalQuery.get().explainQuery();
+        return GlobalQuery.query().explainQuery();
     }
 
     static reset() {
