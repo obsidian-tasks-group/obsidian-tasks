@@ -37,7 +37,52 @@ You can find out more about this very powerful facility in [[Custom Filters]].
 
 Tasks allows a lot of flexibility in the dates inside query blocks.
 
-### Absolute dates
+There are basically two broad types of date search:
+
+- [[#Searching particular dates]]
+- [[#Searching date ranges]]
+
+### Searching particular dates
+
+This section describes searches that use single dates, for example:
+
+    ```tasks
+    starts before 2023-04-20
+    due on or before today
+    ```
+
+See also [[#Searching date ranges]].
+
+#### Date search options
+
+There are several options available when searching with a particular date:
+
+- `on <date>` or `<date>`
+  - will match the date.
+  - `on` is the default for date searches and may be omitted.
+- `before <date>`
+  - will match all dates before the date.
+- `after <date>`
+  - will match all dates after the date.
+- `on or before <date>`
+  - will match the date and all earlier dates.
+- `on or after <date>`
+  - will match the date and all later dates.
+
+This table may help visualise these options:
+
+| option         | all earlier dates | `search date` | all later dates |
+|----------------| ----------------- | ------------ | --------------- |
+| `before`       | matches           |              |                 |
+| `on or before` | matches           | matches      |                 |
+| `on`           |                   | matches      |                 |
+| `on or after`  |                   | matches      | matches         |
+| `after`        |                   |              | matches         |
+
+> [!released]
+> `on or before` and `on or after` were introduced in Tasks X.Y.Z.
+
+#### Absolute dates
 
 `<date>` filters can be given with 'absolute' dates, whose preferred format is `YYYY-MM-DD`.
 
@@ -50,7 +95,7 @@ Examples:
   - The [chrono](https://github.com/wanasit/chrono) library reads dates very flexibly, so you can use free text for absolute dates in your filters.
   - The `YYYY-MM-DD` format is somewhat safer, though, as there is no chance of ambiguity in reading your text.
 
-### Relative dates
+#### Relative dates
 
 `<date>` filters can be given with `relative` dates.
 
@@ -80,16 +125,47 @@ Date range searches were introduced in Tasks 2.0.0.
 
 Tasks allows date searches to specify a pair of dates, `<date range>`.
 
-These searches are inclusive: the dates at either end are found by the search.
+This section describes date range searches, for example:
+
+    ```tasks
+    due 2023-11-25 2023-11-30
+    happens this week
+    ```
+
+See also [[#Searching particular dates]].
+
+#### Date range options
+
+There are several options available when searching with date ranges:
+
+- `in <date range>` or `<date range>`
+  - will match the **start** date, the **end** date and all dates in between.
+  - `in` is the default for date range searches and may be omitted.
+- `before <date range>`
+  - will match all dates before the **start** date.
+- `after <date range>`
+  - will match all dates after the **end** date.
+- `in or before <date range>`
+  - will match the **end** date and all earlier dates.
+- `in or after <date range>`
+  - will match the **start** date and all later dates.
+
+This table may help visualise these options:
+
+| option         | all earlier dates | `start date` | all dates<br>inside the range | `end date` | all later dates |
+| -------------- | ----------------- | ------------ | -------------------------------- | ---------- | --------------- |
+| `before`       | matches           |              |                                  |            |                 |
+| `in or before` | matches           | matches      | matches                          | matches    |                 |
+| `in`           |                   | matches      | matches                          | matches    |                 |
+| `in or after`  |                   | matches      | matches                          | matches    | matches         |
+| `after`        |                   |              |                                  |            | matches         |
+
+> [!released]
+> `in or before` and `in or after` were introduced in Tasks X.Y.Z.
 
 #### Absolute date ranges
 
 `<date range>` may be specified as 2 valid dates in `YYYY-MM-DD` format.
-
-Dates on either end are included, that is, it is an inclusive search.
-
-- `before <date range>` will match before the earliest date of the range.
-- `after <date range>` will match after the latest date of the range.
 
 Notes:
 
@@ -129,7 +205,7 @@ Example relative date ranges:
 - `in this week` (from this week's Monday to Sunday inclusive)
 - `after this month`
 - `next quarter`
-- `before next year`
+- `on or before next year`
 
 > [!warning]
 Prior to Tasks 2.0.0, the interpretation of relative date ranges was confusing, and not what most users naturally expected.
@@ -333,8 +409,8 @@ Find any tasks that have status symbols you have not yet added to your Tasks set
 
 - `no due date`
 - `has due date`
-- `due (before|after|on) <date>`
-- `due (before|after|in) <date range>`
+- `due (on|before|after|on or before|on or after) <date>`
+- `due (in|before|after|in or before|in or after) <date range>`
   - `YYYY-MM-DD YYYY-MM-DD`
   - `(last|this|next) (week|month|quarter|year)`
   - `(YYYY-Www|YYYY-mm|YYYY-Qq|YYYY)`
@@ -348,6 +424,7 @@ For more information, see [[Dates#Due date|Due date]].
 > - `due date is invalid` was introduced in Tasks 1.16.0.
 > - `due (before|after|in) <date range>` searches were introduced in Tasks 2.0.0.
 > - `due (before|after|in) (YYYY-Www|YYYY-mm|YYYY-Qq|YYYY)` searches were introduced in Tasks 3.1.0.
+> - `due (on or before|on or after) <date>` and `due (in or before|in or after) <date range>` searches were introduced in Tasks X.Y.Z
 
 Since Tasks 4.2.0, **[[Custom Filters|custom filtering]] by due date** is now possible, using `task.due`.
 
@@ -385,8 +462,8 @@ For users who are comfortable with JavaScript, these more complicated examples m
 
 - `no done date`
 - `has done date`
-- `done (before|after|on) <date>`
-- `done (before|after|in) <date range>`
+- `done (on|before|after|on or before|on or after) <date>`
+- `done (in|before|after|in or before|in or after) <date range>`
   - `YYYY-MM-DD YYYY-MM-DD`
   - `(last|this|next) (week|month|quarter|year)`
   - `(YYYY-Www|YYYY-mm|YYYY-Qq|YYYY)`
@@ -400,6 +477,7 @@ For more information, see [[Dates#Done date|Done date]].
 > - `done date is invalid` was introduced in Tasks 1.16.0.
 > - `done (before|after|in) <date range>` searches were introduced in Tasks 2.0.0.
 > - `done (before|after|in) (YYYY-Www|YYYY-mm|YYYY-Qq|YYYY)` searches were introduced in Tasks 3.1.0.
+> - `done (on or before|on or after) <date>` and `done (in or before|in or after) <date range>` searches were introduced in Tasks X.Y.Z
 
 Since Tasks 4.2.0, **[[Custom Filters|custom filtering]] by done date** is now possible, using `task.done`.
 
@@ -417,8 +495,8 @@ For more examples, see [[#Due Date]].
 
 - `no scheduled date`
 - `has scheduled date`
-- `scheduled (before|after|on) <date>`
-- `scheduled (before|after|in) <date range>`
+- `scheduled (on|before|after|on or before|on or after) <date>`
+- `scheduled (in|before|after|in or before|in or after) <date range>`
   - `YYYY-MM-DD YYYY-MM-DD`
   - `(last|this|next) (week|month|quarter|year)`
   - `(YYYY-Www|YYYY-mm|YYYY-Qq|YYYY)`
@@ -432,6 +510,7 @@ For more information, see [[Dates#Scheduled date|Scheduled date]].
 > - `scheduled date is invalid` was introduced in Tasks 1.16.0.
 > - `scheduled (before|after|in) <date range>` searches were introduced in Tasks 2.0.0.
 > - `scheduled (before|after|in) (YYYY-Www|YYYY-mm|YYYY-Qq|YYYY)` searches were introduced in Tasks 3.1.0.
+> - `scheduled (on or before|on or after) <date>` and `scheduled (in or before|in or after) <date range>` searches were introduced in Tasks X.Y.Z
 
 Since Tasks 4.2.0, **[[Custom Filters|custom filtering]] by scheduled date** is now possible, using `task.scheduled`.
 
@@ -449,8 +528,8 @@ For more examples, see [[#Due Date]].
 
 - `no start date`
 - `has start date`
-- `starts (before|after|on) <date>`
-- `starts (before|after|in) <date range>`
+- `starts (on|before|after|on or before|on or after) <date>`
+- `starts (in|before|after|in or before|in or after) <date range>`
   - `YYYY-MM-DD YYYY-MM-DD`
   - `(last|this|next) (week|month|quarter|year)`
   - `(YYYY-Www|YYYY-mm|YYYY-Qq|YYYY)`
@@ -464,6 +543,7 @@ For more information, see [[Dates#Start date|Start date]].
 > - `start date is invalid` was introduced in Tasks 1.16.0.
 > - `starts (before|after|in) <date range>` searches were introduced in Tasks 2.0.0.
 > - `starts (before|after|in) (YYYY-Www|YYYY-mm|YYYY-Qq|YYYY)` searches were introduced in Tasks 3.1.0.
+> - `starts (on or before|on or after) <date>` and `starts (in or before|in or after) <date range>` searches were introduced in Tasks X.Y.Z
 
 Since Tasks 4.2.0, **[[Custom Filters|custom filtering]] by start date** is now possible, using `task.start`.
 
@@ -509,8 +589,8 @@ See [[Dates#Created date|created date]] for how to make Tasks record the created
 
 - `no created date`
 - `has created date`
-- `created (before|after|on) <date>`
-- `created (before|after|in) <date range>`
+- `created (on|before|after|on or before|on or after) <date>`
+- `created (in|before|after|in or before|in or after) <date range>`
   - `YYYY-MM-DD YYYY-MM-DD`
   - `(last|this|next) (week|month|quarter|year)`
   - `(YYYY-Www|YYYY-mm|YYYY-Qq|YYYY)`
@@ -526,6 +606,7 @@ Such a filter could be:
 >
 > - Created date was introduced in Tasks 2.0.0.
 > - `created (before|after|in) (YYYY-Www|YYYY-mm|YYYY-Qq|YYYY)` searches were introduced in Tasks 3.1.0.
+> - `created (on or before|on or after) <date>` and `created (in or before|in or after) <date range>` searches were introduced in Tasks X.Y.Z
 
 Since Tasks 4.2.0, **[[Custom Filters|custom filtering]] by created date** is now possible, using `task.created`.
 
@@ -541,8 +622,8 @@ For more examples, see [[#Due Date]].
 
 ### Happens
 
-- `happens (before|after|on) <date>`
-- `happens (before|after|in) <date range>`
+- `happens (on|before|after|on or before|on or after) <date>`
+- `happens (in|before|after|in or before|in or after) <date range>`
   - `YYYY-MM-DD YYYY-MM-DD`
   - `(last|this|next) (week|month|quarter|year)`
   - `(YYYY-Www|YYYY-mm|YYYY-Qq|YYYY)`
@@ -562,6 +643,7 @@ because the tasks starts before tomorrow. Only one of the dates needs to match.
 > - `no happens date` and `has happens date` were introduced in Tasks 1.7.0.
 > - `happens (before|after|in) <date range>` searches were introduced in Tasks 2.0.0.
 > - `happens (before|after|in) (YYYY-Www|YYYY-mm|YYYY-Qq|YYYY)` searches were introduced in Tasks 3.1.0.
+> - `happens (on or before|on or after) <date>` and `happens (in or before|in or after) <date range>` searches were introduced in Tasks X.Y.Z
 
 Since Tasks 4.2.0, **[[Custom Filters|custom filtering]] by happens date** is now possible, using `task.happens`.
 
