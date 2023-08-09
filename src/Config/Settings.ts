@@ -212,12 +212,3 @@ export const toggleFeature = (internalName: string, enabled: boolean): FeatureFl
 export function getUserSelectedTaskFormat(): TaskFormat {
     return TASK_FORMATS[getSettings().taskFormat];
 }
-
-/**
- * Retrieves the source of the global {@link Query}
- *
- * @exports
- */
-export function getGlobalQuerySource(): { source: string } {
-    return { source: getSettings().globalQuery };
-}
