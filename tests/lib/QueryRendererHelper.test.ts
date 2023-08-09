@@ -3,7 +3,6 @@
  */
 import moment from 'moment';
 import { Query } from '../../src/Query/Query';
-import { resetSettings } from '../../src/Config/Settings';
 import { explainResults, getQueryForQueryRenderer } from '../../src/lib/QueryRendererHelper';
 import { GlobalFilter } from '../../src/Config/GlobalFilter';
 import { GlobalQuery } from '../../src/Config/GlobalQuery';
@@ -12,7 +11,7 @@ window.moment = moment;
 
 describe('explain', () => {
     afterEach(() => {
-        resetSettings();
+        GlobalQuery.reset();
         GlobalFilter.reset();
     });
 
@@ -99,7 +98,7 @@ No filters supplied. All tasks will match the query.`;
  */
 describe('query used for QueryRenderer', () => {
     afterEach(() => {
-        resetSettings();
+        GlobalQuery.reset();
     });
 
     it('should be the result of combining the global query and the actual query', () => {

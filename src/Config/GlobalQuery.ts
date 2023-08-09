@@ -23,6 +23,10 @@ export class GlobalQuery {
         return getSettings().globalQuery;
     }
 
+    static reset() {
+        updateSettings({ globalQuery: '' });
+    }
+
     /**
      * Retrieves the source of the global {@link Query}
      */
