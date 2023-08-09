@@ -7,6 +7,11 @@ export class GlobalQuery {
         return new Query(globalQuerySource);
     }
 
+    static isEmpty() {
+        const source = GlobalQuery.source().source;
+        return source.trim() == '';
+    }
+
     /**
      * Retrieves the source of the global {@link Query}
      */
