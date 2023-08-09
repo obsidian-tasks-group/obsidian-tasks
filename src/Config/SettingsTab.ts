@@ -141,8 +141,7 @@ export class SettingsTab extends PluginSettingTab {
                     text.setPlaceholder('# For example...\npath does not include _templates/\nlimit 300\nshow urgency')
                         .setValue(GlobalQuery.string())
                         .onChange(async (value) => {
-                            updateSettings({ globalQuery: value });
-
+                            GlobalQuery.set(value);
                             await this.plugin.saveSettings();
                         });
                 }),
