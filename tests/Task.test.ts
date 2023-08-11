@@ -394,6 +394,13 @@ describe('parsing tags', () => {
             extractedTags: ['#tagone'],
             globalFilter: '',
         },
+        {
+            // Single # character should not be treated as a tag - see issue 1969
+            markdownTask: '- [ ] count the # of tomatoes #gardening',
+            expectedDescription: 'count the # of tomatoes #gardening',
+            extractedTags: ['#gardening'],
+            globalFilter: '',
+        },
     ])(
         'should parse "$markdownTask" and extract "$extractedTags"',
         ({ markdownTask, expectedDescription, extractedTags, globalFilter }) => {
