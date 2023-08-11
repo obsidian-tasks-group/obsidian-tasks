@@ -634,6 +634,7 @@ describe('grouping by tag', () => {
         ['- [ ] a #tag1', ['#tag1']],
         ['- [ ] a #tag1 #tag2', ['#tag1', '#tag2']],
         ['- [x] a', ['(No tags)']],
+        ['- [ ] be sure to count the # of tomatoes #gardening', ['#gardening']], // See #1969
     ])('task "%s" should have groups: %s', (taskLine: string, groups: string[]) => {
         // Arrange
         const grouper = new TagsField().createNormalGrouper().grouper;
