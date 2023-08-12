@@ -71,7 +71,7 @@ li.task-list-item {
 
 /* ======================================================================== */
 
-/* Make signifiers smaller, and less opaquem so they stand out less*/
+/* Make signifiers smaller, and less opaque, so they stand out less*/
 .task-recurring,
 .task-due,
 .task-start,
@@ -80,7 +80,7 @@ li.task-list-item {
 .tasks-backlink
 {
     font-size: 0.85em;
-    opacity: 0.6;
+    opacity: 0.8;
 }
 
 /* ======================================================================== */
@@ -101,9 +101,9 @@ li.task-list-item {
 .task-list-item[data-task-status-type="IN_PROGRESS"] .task-start[data-task-start^="past-"] span,
 .task-list-item[data-task-status-type="IN_PROGRESS"] .task-due[data-task-scheduled^="past-"] span {
     color: var(--color-base-60);
-    background: rgba(255, 255, 0, 0.9);
+    background: rgba(255, 255, 0, 0.7);
     border-radius: 1px;
-    padding: 3px 3px; /* vertical then horizontal*/
+    padding: 3px 1px; /* vertical then horizontal*/
     /*font-size: 0.85em;*/
     /*opacity: 0.6;*/
     /*filter: grayscale(60%);*/
@@ -119,9 +119,9 @@ li.task-list-item {
 .task-list-item[data-task-status-type="IN_PROGRESS"] .task-start[data-task-start="today"] span,
 .task-list-item[data-task-status-type="IN_PROGRESS"] .task-scheduled[data-task-scheduled="today"] span {
     color: var(--color-base-60);
-    background: rgba(229, 157, 203, 0.9);
+    background: rgba(229, 157, 203, 0.5);
     border-radius: 1px;
-    padding: 3px 3px; /* vertical then horizontal*/
+    padding: 3px 1px; /* vertical then horizontal*/
     /*font-size: 0.85em;*/
     /*opacity: 0.6;*/
     /*filter: grayscale(60%);*/
