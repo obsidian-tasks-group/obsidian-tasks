@@ -288,11 +288,6 @@
 }
 
 #tasks {
-    z-index: 1;
-    position: absolute;
-    top: calc(71%); /* Adjust the value as needed */
-    left: 106px;
-    width: 435px;
     list-style: none;
     padding: 0;
     margin: 0;

@@ -25,6 +25,7 @@
   "devDependencies": {
     "@codemirror/view": "^6.2.0",
     "@evilmartians/lefthook": "^1.1.1",
+    "@floating-ui/core": "^1.4.1",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/svelte": "^3.2.2",
     "@tsconfig/svelte": "^3.0.0",
@@ -49,6 +50,7 @@
     "prettier-plugin-svelte": "^2.10.0",
     "svelte": "^3.59.1",
     "svelte-check": "^3.4.6",
+    "svelte-floating-ui": "^1.5.3",
     "svelte-jester": "^2.3.2",
     "svelte-preprocess": "^5.0.4",
     "ts-jest": "^29.1.0",

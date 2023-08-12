@@ -9,11 +9,24 @@
     import { doAutocomplete } from '../DateAbbreviations';
     import { TasksDate } from '../Scripting/TasksDate';
     import type { Cache } from "../Cache";
+    import { offset, flip, shift } from "svelte-floating-ui/dom";
+    import { createFloatingActions } from "svelte-floating-ui";
+
     // These exported variables are passed in as props by TaskModal.onOpen():
     export let task: Task;
     export let onSubmit: (updatedTasks: Task[]) => void | Promise<void>;
     export let statusOptions: Status[];
     export let cache: Cache;
+
+    const [ floatingRef, floatingContent ] = createFloatingActions({
+        strategy: "absolute",
+        placement: "bottom",
+        middleware: [
+            offset(6),
+            flip(),
+            shift()
+        ]
+    });
 
     const {
         prioritySymbols,
@@ -511,15 +524,17 @@
                 id="waitingOn"
                 type="text"
                 placeholder="Type to search..."
+                use:floatingRef
             />
-            <ul id="tasks">
-                {#each waitingOnSearchResults as task}
-                    <li on:click={() => addWaitingTask(task)}>
-                        {task.descriptionWithoutTags}
-                    </li>
-                {/each}
-            </ul>
-
+            {#if waitingOnSearchResults.length !== 0}
+                <ul id="tasks" use:floatingContent>
+                    {#each waitingOnSearchResults as task}
+                        <li on:click={() => addWaitingTask(task)}>
+                            {task.descriptionWithoutTags}
+                        </li>
+                    {/each}
+                </ul>
+            {/if}
             <div id="chip-container">
                 {#each waitingTasks as task}
                     <div class="chip">
