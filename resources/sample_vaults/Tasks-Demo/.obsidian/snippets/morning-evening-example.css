@@ -26,3 +26,48 @@ li.task-list-item {
     border: 1px solid var(--color-base-30);
     border-radius:4px
 }
+
+/* ======================================================================== */
+
+/* Make highest priority stand out in pink, if still needs work */
+/* This gets overridden later for future tasks, which are drawn all in grey */
+.task-list-item[data-task-status-type="TODO"][data-task-priority="highest"] {
+    background: rgba(229, 157, 203, 0.2);
+    border-radius: 4px;
+    padding: 3px 0px; /* vertical then horizontal*/
+}
+
+.task-list-item[data-task-status-type="IN_PROGRESS"][data-task-priority="highest"] {
+    background: rgba(229, 157, 203, 0.4);
+    border-radius: 4px;
+    padding: 3px 0px; /* vertical then horizontal*/
+}
+
+
+.task-list-item[data-task-status-type="TODO"][data-task-priority="high"] {
+    background: rgba(239, 189, 162, 0.3);
+    border-radius: 4px;
+    padding: 3px 0px; /* vertical then horizontal*/
+}
+
+.task-list-item[data-task-status-type="IN_PROGRESS"][data-task-priority="high"] {
+    background: rgba(239, 189, 162, 0.5);
+    border-radius: 4px;
+    padding: 3px 0px; /* vertical then horizontal*/
+}
+
+
+.task-list-item[data-task-status-type="TODO"][data-task-priority="medium"] {
+    background: rgba(204, 236, 184, 0.3);
+    border-radius: 4px;
+    padding: 3px 0px; /* vertical then horizontal*/
+}
+
+.task-list-item[data-task-status-type="IN_PROGRESS"][data-task-priority="medium"] {
+    background: rgba(204, 236, 184, 0.5);
+    border-radius: 4px;
+    padding: 3px 0px; /* vertical then horizontal*/
+}
+
+/* ======================================================================== */
+
