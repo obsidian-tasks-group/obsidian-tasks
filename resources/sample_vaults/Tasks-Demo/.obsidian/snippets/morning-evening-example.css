@@ -92,3 +92,37 @@ li.task-list-item {
 }
 
 /* ======================================================================== */
+
+/* DATED BEFORE TODAY - for actionable tasks*/
+.task-list-item[data-task-status-type="TODO"] .task-due[data-task-due^="past-"] span,
+.task-list-item[data-task-status-type="TODO"] .task-start[data-task-start^="past-"] span,
+.task-list-item[data-task-status-type="TODO"] .task-scheduled[data-task-scheduled^="past-"] span,
+.task-list-item[data-task-status-type="IN_PROGRESS"] .task-due[data-task-due^="past-"] span,
+.task-list-item[data-task-status-type="IN_PROGRESS"] .task-start[data-task-start^="past-"] span,
+.task-list-item[data-task-status-type="IN_PROGRESS"] .task-due[data-task-scheduled^="past-"] span {
+    color: var(--color-base-60);
+    background: rgba(255, 255, 0, 0.2);
+    border-radius: 4px;
+    padding: 3px 0px; /* vertical then horizontal*/
+    /*font-size: 0.85em;*/
+    /*opacity: 0.6;*/
+    /*filter: grayscale(60%);*/
+}
+
+/* ======================================================================== */
+
+/* DATED TODAY - for actionable tasks */
+.task-list-item[data-task-status-type="TODO"] .task-due[data-task-due="today"] span,
+.task-list-item[data-task-status-type="TODO"] .task-start[data-task-start="today"] span,
+.task-list-item[data-task-status-type="TODO"] .task-scheduled[data-task-scheduled="today"] span,
+.task-list-item[data-task-status-type="IN_PROGRESS"] .task-due[data-task-due="today"] span,
+.task-list-item[data-task-status-type="IN_PROGRESS"] .task-start[data-task-start="today"] span,
+.task-list-item[data-task-status-type="IN_PROGRESS"] .task-scheduled[data-task-scheduled="today"] span {
+    color: var(--color-base-60);
+    background: rgba(229, 157, 203, 0.2);
+    border-radius: 4px;
+    padding: 3px 0px; /* vertical then horizontal*/
+    /*font-size: 0.85em;*/
+    /*opacity: 0.6;*/
+    /*filter: grayscale(60%);*/
+}
