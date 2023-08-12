@@ -41,7 +41,7 @@ For example, this allows you to have your task seaches ignore certain folders by
 > ```
 
 > [!released]
-The `ignore global query` instruction was added in Tasks X.Y.Z.
+The `ignore global query` instruction was added in Tasks 4.6.0.
 
 ## Examples
 
