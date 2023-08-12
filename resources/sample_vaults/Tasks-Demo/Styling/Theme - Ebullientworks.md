@@ -2,7 +2,7 @@
 
 <https://github.com/ebullient/obsidian-theme-ebullientworks>
 
-<!-- placeholder to force blank line before included text --> <!-- include: DocsSamplesForStatuses.test.Theme_Ebullientworks_Tasks.approved.md -->
+<!-- placeholder to force blank line before included text --><!-- include: DocsSamplesForStatuses.test.Theme_Ebullientworks_Tasks.approved.md -->
 
 - [ ] #task `space` Unchecked
 - [x] #task `x` Checked
@@ -13,7 +13,7 @@
 - [?] #task `?` Question
 - [r] #task `r` Review
 
-<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+<!-- placeholder to force blank line after included text --><!-- endInclude -->
 
 ## Status grouped by status.type
 
