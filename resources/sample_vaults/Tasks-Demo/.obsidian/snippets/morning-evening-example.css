@@ -1,0 +1,20 @@
+/* Put a border round Tasks blocks, if not in a callout */
+:not(.callout-content) > .block-language-tasks {
+    background-color: #fcfcfc;
+    padding: 5px 15px;
+    border: 2px solid rgba(0, 184, 212, 0.43);
+    border-radius: 10px;
+    margin: 1em 0;
+}
+
+/* ======================================================================== */
+
+/* Style the Tasks headings */
+h4.tasks-group-heading, h5.tasks-group-heading, h6.tasks-group-heading {
+    /* Use a dark gradient */
+    background: rgb(2,0,36);
+    background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 35%, rgba(0,212,255,1) 100%);
+
+    /* Then make the heading text stand out */
+    color: white;
+}
