@@ -160,9 +160,13 @@ class QueryRenderChild extends MarkdownRenderChild {
     }
 
     private async renderQuerySearchResults(tasks: Task[], state: State.Warm, content: HTMLDivElement) {
-        console.debug(
-            `Render ${this.queryType} called for a block in active file "${this.filePath}", to select from ${tasks.length} tasks: plugin state: ${state}`,
-        );
+        // See https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2160
+        const debug = false;
+        if (debug) {
+            console.debug(
+                `Render ${this.queryType} called for a block in active file "${this.filePath}", to select from ${tasks.length} tasks: plugin state: ${state}`,
+            );
+        }
 
         if (this.query.layoutOptions.explainQuery) {
             this.createExplanation(content);
@@ -178,7 +182,9 @@ class QueryRenderChild extends MarkdownRenderChild {
         await this.addAllTaskGroups(queryResult.taskGroups, content);
 
         const totalTasksCount = queryResult.totalTasksCount;
-        console.debug(`${totalTasksCount} of ${tasks.length} tasks displayed in a block in "${this.filePath}"`);
+        if (debug) {
+            console.debug(`${totalTasksCount} of ${tasks.length} tasks displayed in a block in "${this.filePath}"`);
+        }
         this.addTaskCount(content, totalTasksCount);
     }
 
