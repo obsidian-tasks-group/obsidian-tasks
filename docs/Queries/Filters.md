@@ -897,6 +897,8 @@ Using `task.recurrenceRule` - please read [[Task Properties#Values for Other Tas
 > [!released]
 Introduced in Tasks 1.6.0.
 
+See [[Tags]] for important information about how tags behave in the Tasks plugin.
+
 - `no tags`
 - `has tags`
 - `tags (include|do not include) <tag>` _or_
