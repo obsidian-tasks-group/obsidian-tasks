@@ -440,6 +440,8 @@ Since Tasks 4.0.0, **[[Custom Grouping|custom grouping]] by recurrence** is now 
 
 ### Tags
 
+See [[Tags]] for important information about how tags behave in the Tasks plugin.
+
 - `group by tags`
   - The tags of the tasks or `(No tags)`. If the task has multiple tags, it will show up under every tag.
 
