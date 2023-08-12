@@ -21,7 +21,7 @@ flowchart LR
 1[Todo] --> 2[In Progress] --> 3[Done] --> 1
 ```
 
-<!-- placeholder to force blank line before included text --> <!-- include: DocsSamplesForStatuses.test.DefaultStatuses_todo-in_progress-done.approved.md -->
+<!-- placeholder to force blank line before included text --><!-- include: DocsSamplesForStatuses.test.DefaultStatuses_todo-in_progress-done.approved.md -->
 
 | Status Symbol | Next Status Symbol | Status Name | Status Type | Needs Custom Styling |
 | ----- | ----- | ----- | ----- | ----- |
@@ -29,7 +29,7 @@ flowchart LR
 | `/` | `x` | In Progress | `IN_PROGRESS` | Yes |
 | `x` | `space` | Done | `DONE` | No |
 
-<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+<!-- placeholder to force blank line after included text --><!-- endInclude -->
 
 ## Separate cycle for Important tasks
 
@@ -42,7 +42,7 @@ flowchart LR
 1[Important] --> 2[Doing - Important] --> 3[Done - Important] --> 1
 ```
 
-<!-- placeholder to force blank line before included text --> <!-- include: DocsSamplesForStatuses.test.DefaultStatuses_important-cycle.approved.md -->
+<!-- placeholder to force blank line before included text --><!-- include: DocsSamplesForStatuses.test.DefaultStatuses_important-cycle.approved.md -->
 
 | Status Symbol | Next Status Symbol | Status Name | Status Type | Needs Custom Styling |
 | ----- | ----- | ----- | ----- | ----- |
@@ -50,7 +50,7 @@ flowchart LR
 | `D` | `X` | Doing - Important | `IN_PROGRESS` | Yes |
 | `X` | `!` | Done - Important | `DONE` | Yes |
 
-<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+<!-- placeholder to force blank line after included text --><!-- endInclude -->
 
 ## Pro and Con checkboxes - which toggle to each other
 
@@ -65,14 +65,14 @@ flowchart LR
 1[Pro] --> 2[Con] --> 1
 ```
 
-<!-- placeholder to force blank line before included text --> <!-- include: DocsSamplesForStatuses.test.DefaultStatuses_pro-con-cycle.approved.md -->
+<!-- placeholder to force blank line before included text --><!-- include: DocsSamplesForStatuses.test.DefaultStatuses_pro-con-cycle.approved.md -->
 
 | Status Symbol | Next Status Symbol | Status Name | Status Type | Needs Custom Styling |
 | ----- | ----- | ----- | ----- | ----- |
 | `P` | `C` | Pro | `NON_TASK` | Yes |
 | `C` | `P` | Con | `NON_TASK` | Yes |
 
-<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+<!-- placeholder to force blank line after included text --><!-- endInclude -->
 
 ## Ignoring clicks and toggles
 
@@ -91,7 +91,7 @@ flowchart TD
 5[Quote] --> 5
 ```
 
-<!-- placeholder to force blank line before included text --> <!-- include: DocsSamplesForStatuses.test.DefaultStatuses_toggle-does-nothing.approved.md -->
+<!-- placeholder to force blank line before included text --><!-- include: DocsSamplesForStatuses.test.DefaultStatuses_toggle-does-nothing.approved.md -->
 
 | Status Symbol | Next Status Symbol | Status Name | Status Type | Needs Custom Styling |
 | ----- | ----- | ----- | ----- | ----- |
@@ -101,4 +101,4 @@ flowchart TD
 | `P` | `P` | Paraphrase | `NON_TASK` | Yes |
 | `Q` | `Q` | Quote | `NON_TASK` | Yes |
 
-<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+<!-- placeholder to force blank line after included text --><!-- endInclude -->

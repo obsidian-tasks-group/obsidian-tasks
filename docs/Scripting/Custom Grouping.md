@@ -80,7 +80,7 @@ You can find many more examples by searching for `group by function` in the [[Gr
 
 ### Text property examples
 
-<!-- placeholder to force blank line before included text --> <!-- include: CustomGroupingExamples.test.other_properties_task.description_docs.approved.md -->
+<!-- placeholder to force blank line before included text --><!-- include: CustomGroupingExamples.test.other_properties_task.description_docs.approved.md -->
 
 - ```group by function task.description```
   - group by description.
@@ -92,11 +92,11 @@ You can find many more examples by searching for `group by function` in the [[Gr
 - ```group by function task.description.replace('short', '==short==')```
   - Highlight the word "short" in any group descriptions.
 
-<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+<!-- placeholder to force blank line after included text --><!-- endInclude -->
 
 ### Date property examples
 
-<!-- placeholder to force blank line before included text --> <!-- include: CustomGroupingExamples.test.dates_task.due_docs.approved.md -->
+<!-- placeholder to force blank line before included text --><!-- include: CustomGroupingExamples.test.dates_task.due_docs.approved.md -->
 
 - ```group by function task.due.format("YYYY-MM-DD dddd")```
   - Like "group by due", except it uses no heading, instead of a heading "No due date", if there is no due date.
@@ -119,22 +119,22 @@ You can find many more examples by searching for `group by function` in the [[Gr
     - ... which gets rendered by Obsidian as `2023 May - Week 22`.
   - If the month number is not embedded, in some years the first or last week of the year is displayed in a non-logical order.
 
-<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+<!-- placeholder to force blank line after included text --><!-- endInclude -->
 
 There are many more date examples in [[Grouping#Due Date]].
 
 ### Number property examples
 
-<!-- placeholder to force blank line before included text --> <!-- include: CustomGroupingExamples.test.other_properties_task.urgency_docs.approved.md -->
+<!-- placeholder to force blank line before included text --><!-- include: CustomGroupingExamples.test.other_properties_task.urgency_docs.approved.md -->
 
 - ```group by function task.urgency.toFixed(3)```
   - Show the urgency to 3 decimal places, unlike the built-in "group by urgency" which uses 2.
 
-<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+<!-- placeholder to force blank line after included text --><!-- endInclude -->
 
 ### File property examples
 
-<!-- placeholder to force blank line before included text --> <!-- include: CustomGroupingExamples.test.file_properties_task.file.folder_docs.approved.md -->
+<!-- placeholder to force blank line before included text --><!-- include: CustomGroupingExamples.test.file_properties_task.file.folder_docs.approved.md -->
 
 - ```group by function task.file.folder```
   - Same as 'group by folder'.
@@ -146,7 +146,7 @@ There are many more date examples in [[Grouping#Due Date]].
     - '.pop()' returns the last folder name, that is, the parent of the file containing the task.
     - Then the trailing slash is added back, to ensure we do not get an empty string for files in the top level of the vault.
 
-<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+<!-- placeholder to force blank line after included text --><!-- endInclude -->
 
 ## Sorting the groups
 
