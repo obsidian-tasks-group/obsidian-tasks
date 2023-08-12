@@ -222,12 +222,15 @@ export class Cache {
             return;
         }
 
+        // Temporary edit - See https://github.com/obsidian-tasks-group/obsidian-tasks/issues/2160
+        /*
         if (this.getState() == State.Warm) {
             // logger.debug(`Cache read: ${file.path}`);
             console.debug(
                 `At least one task, its line number or its heading has changed in ${file.path}: triggering a refresh of all active Tasks blocks in Live Preview and Reading mode views.`,
             );
         }
+        */
 
         // Remove all tasks from this file from the cache before
         // adding the ones that are currently in the file.
