@@ -71,3 +71,24 @@ li.task-list-item {
 
 /* ======================================================================== */
 
+/* Make signifiers smaller, and less opaquem so they stand out less*/
+.task-recurring,
+.task-due,
+.task-start,
+.task-scheduled,
+.task-priority,
+.tasks-backlink
+{
+    font-size: 0.85em;
+    opacity: 0.6;
+}
+
+/* ======================================================================== */
+
+/* Grey out the text of backlinks */
+/* From https://github.com/obsidian-tasks-group/obsidian-tasks/discussions/622#discussioncomment-2649299 */
+.tasks-backlink {
+    filter: grayscale(60%);
+}
+
+/* ======================================================================== */
