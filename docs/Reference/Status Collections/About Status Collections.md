@@ -15,7 +15,7 @@ Custom statuses were introduced in Tasks 1.23.0.
 
 You can control the behaviour of your tasks (such as what happens when you click on a checkbox), using Tasks' [[Statuses]] feature.
 
-<!-- force a blank line --> <!-- include: snippet-statuses-overview.md -->
+<!-- force a blank line --><!-- include: snippet-statuses-overview.md -->
 
 > [!info]
 > Broad steps to understand and set up Statuses (or "Alternate Checkboxes"):
@@ -32,7 +32,7 @@ You can control the behaviour of your tasks (such as what happens when you click
 > - Optionally, update your tasks searches to take advantage of the new flexibility
 >   - [[Filters#Filters for Task Statuses|Filters for Task Statuses]]
 
-<!-- force a blank line --> <!-- endInclude -->
+<!-- force a blank line --><!-- endInclude -->
 
 The theme and snippet authors generally refer to this as 'custom checkboxes'.
 

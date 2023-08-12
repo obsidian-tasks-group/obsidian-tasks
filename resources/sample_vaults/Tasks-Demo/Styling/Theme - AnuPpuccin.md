@@ -2,7 +2,7 @@
 
 <https://github.com/AnubisNekhet/AnuPpuccin>
 
-<!-- placeholder to force blank line before included text --> <!-- include: DocsSamplesForStatuses.test.Theme_AnuPpuccin_Tasks.approved.md -->
+<!-- placeholder to force blank line before included text --><!-- include: DocsSamplesForStatuses.test.Theme_AnuPpuccin_Tasks.approved.md -->
 
 - [ ] #task `space` Unchecked
 - [x] #task `x` Checked
@@ -33,7 +33,7 @@
 - [8] #task `8` Speech bubble 8
 - [9] #task `9` Speech bubble 9
 
-<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+<!-- placeholder to force blank line after included text --><!-- endInclude -->
 
 ## Status grouped by status.type
 

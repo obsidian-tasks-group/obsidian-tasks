@@ -22,7 +22,7 @@ This page documents all the available pieces of information in Tasks that you ca
 
 For more information, including adding your own customised statuses, see [[Statuses]].
 
-<!-- placeholder to force blank line before included text --> <!-- include: TaskProperties.test.task_status.approved.md -->
+<!-- placeholder to force blank line before included text --><!-- include: TaskProperties.test.task_status.approved.md -->
 
 | Field | Type 1 | Example 1 | Type 2 | Example 2 |
 | ----- | ----- | ----- | ----- | ----- |
@@ -32,11 +32,11 @@ For more information, including adding your own customised statuses, see [[Statu
 | `task.status.symbol` | `string` | `' '` | `string` | `'/'` |
 | `task.status.nextSymbol` | `string` | `'x'` | `string` | `'x'` |
 
-<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+<!-- placeholder to force blank line after included text --><!-- endInclude -->
 
 ## Values for Dates in Tasks
 
-<!-- placeholder to force blank line before included text --> <!-- include: TaskProperties.test.task_dates.approved.md -->
+<!-- placeholder to force blank line before included text --><!-- include: TaskProperties.test.task_dates.approved.md -->
 
 | Field | Type 1 | Example 1 | Type 2 | Example 2 |
 | ----- | ----- | ----- | ----- | ----- |
@@ -47,7 +47,7 @@ For more information, including adding your own customised statuses, see [[Statu
 | `task.done` | `TasksDate` | `2023-07-05 00:00` | `TasksDate` | `` |
 | `task.happens` | `TasksDate` | `2023-07-02 00:00` | `TasksDate` | `` |
 
-<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+<!-- placeholder to force blank line after included text --><!-- endInclude -->
 
 1. You can see the current [TasksDate source code](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/src/Scripting/TasksDate.ts), to explore its capabilities.
 1. The `TasksDate` formatting methods use the [moment.js format characters](https://momentjs.com/docs/#/displaying/format/).
@@ -57,7 +57,7 @@ For more information, including adding your own customised statuses, see [[Statu
 
 ## Values for Other Task Properties
 
-<!-- placeholder to force blank line before included text --> <!-- include: TaskProperties.test.task_other_fields.approved.md -->
+<!-- placeholder to force blank line before included text --><!-- include: TaskProperties.test.task_other_fields.approved.md -->
 
 | Field | Type 1 | Example 1 | Type 2 | Example 2 |
 | ----- | ----- | ----- | ----- | ----- |
@@ -71,7 +71,7 @@ For more information, including adding your own customised statuses, see [[Statu
 | `task.tags` | `string[]` | `['#todo', '#health']` | `any[]` | `[]` |
 | `task.originalMarkdown` | `string` | `'  - [ ] Do exercises #todo #health 🔼 🔁 every day when done ➕ 2023-07-01 🛫 2023-07-02 ⏳ 2023-07-03 📅 2023-07-04 ✅ 2023-07-05 ^dcf64c'` | `string` | `'- [/] minimal task'` |
 
-<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+<!-- placeholder to force blank line after included text --><!-- endInclude -->
 
 1. `task.description` has spaces at the start and end stripped off.
 1. `task.description` includes any tags.
@@ -92,7 +92,7 @@ For more information, including adding your own customised statuses, see [[Statu
 
 ## Values for File Properties
 
-<!-- placeholder to force blank line before included text --> <!-- include: TaskProperties.test.task_file_properties.approved.md -->
+<!-- placeholder to force blank line before included text --><!-- include: TaskProperties.test.task_file_properties.approved.md -->
 
 | Field | Type 1 | Example 1 | Type 2 | Example 2 |
 | ----- | ----- | ----- | ----- | ----- |
@@ -103,7 +103,7 @@ For more information, including adding your own customised statuses, see [[Statu
 | `task.hasHeading` | `boolean` | `true` | `boolean` | `false` |
 | `task.heading` | `string` | `'My Header'` | `null` | `null` |
 
-<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+<!-- placeholder to force blank line after included text --><!-- endInclude -->
 
 1. `task.file` is a `TasksFile` object.
 1. You can see the current [TasksFile source code](https://github.com/obsidian-tasks-group/obsidian-tasks/blob/main/src/Scripting/TasksFile.ts), to explore its capabilities.

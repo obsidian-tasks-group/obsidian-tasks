@@ -4,7 +4,7 @@
 
 Available checkbox icons:
 
-<!-- placeholder to force blank line before included text --> <!-- include: DocsSamplesForStatuses.test.Theme_Things_Tasks.approved.md -->
+<!-- placeholder to force blank line before included text --><!-- include: DocsSamplesForStatuses.test.Theme_Things_Tasks.approved.md -->
 
 - [ ] #task `space` to-do
 - [/] #task `/` incomplete
@@ -29,7 +29,7 @@ Available checkbox icons:
 - [u] #task `u` up
 - [d] #task `d` down
 
-<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+<!-- placeholder to force blank line after included text --><!-- endInclude -->
 
 ## Status grouped by status.type
 

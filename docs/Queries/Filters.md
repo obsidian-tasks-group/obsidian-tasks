@@ -291,14 +291,14 @@ For full details of combining filters with boolean operators, see [[Combining Fi
 
 Since Tasks 4.2.0, **[[Custom Filters|custom filtering]] by status** is now possible, using `task.isDone`.
 
-<!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.other_properties_task.isDone_docs.approved.md -->
+<!-- placeholder to force blank line before included text --><!-- include: CustomFilteringExamples.test.other_properties_task.isDone_docs.approved.md -->
 
 - ```filter by function task.isDone```
   - Same as the `done` filter, but might be useful in conjunction with other expressions on the same line.
 - ```filter by function ! task.isDone```
   - Same as the `not done` filter, but might be useful in conjunction with other expressions on the same line.
 
-<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+<!-- placeholder to force blank line after included text --><!-- endInclude -->
 
 > [!NOTE]
 > `task.status.type` (see [[#Status Type]]) gives more precision in custom filters than `task.isDone`.
@@ -320,12 +320,12 @@ For more information, including adding your own customised statuses, see [[Statu
 
 Since Tasks 4.2.0, **[[Custom Filters|custom filtering]] by status names** is now possible, using `task.status.name`.
 
-<!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.statuses_task.status.name_docs.approved.md -->
+<!-- placeholder to force blank line before included text --><!-- include: CustomFilteringExamples.test.statuses_task.status.name_docs.approved.md -->
 
 - ```filter by function task.status.name === 'Unknown'```
   - Find all tasks with custom statuses not yet added to the Tasks settings.
 
-<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+<!-- placeholder to force blank line after included text --><!-- endInclude -->
 
 ### Status Type
 
@@ -345,7 +345,7 @@ For more information, including adding your own customised statuses, see [[Statu
 
 Since Tasks 4.2.0, **[[Custom Filters|custom filtering]] by status type** is now possible, using `task.status.type`.
 
-<!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.statuses_task.status.type_docs.approved.md -->
+<!-- placeholder to force blank line before included text --><!-- include: CustomFilteringExamples.test.statuses_task.status.type_docs.approved.md -->
 
 - ```filter by function task.status.type === 'NON_TASK'```
   - Find tasks of type `NON_TASK`.
@@ -355,7 +355,7 @@ Since Tasks 4.2.0, **[[Custom Filters|custom filtering]] by status type** is now
 - ```filter by function ! 'NON_TASK,CANCELLED'.includes(task.status.type)```
   - Find tasks that are not type `NON_TASK` and not type `CANCELLED`.
 
-<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+<!-- placeholder to force blank line after included text --><!-- endInclude -->
 
 ### Status Symbol
 
@@ -363,7 +363,7 @@ There is no built-in instruction to filter by status symbols.
 
 Since Tasks 4.2.0, **[[Custom Filters|custom filtering]] by status symbol** is now possible, using `task.status.symbol`.
 
-<!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.statuses_task.status.symbol_docs.approved.md -->
+<!-- placeholder to force blank line before included text --><!-- include: CustomFilteringExamples.test.statuses_task.status.symbol_docs.approved.md -->
 
 - ```filter by function task.status.symbol === '-'```
   - Find tasks with a checkbox `[-]`, which is conventionally used to mean "cancelled".
@@ -379,7 +379,7 @@ Since Tasks 4.2.0, **[[Custom Filters|custom filtering]] by status symbol** is n
 - ```filter by function !' -x/'.includes(task.status.symbol)```
   - Find tasks with any status symbol not supported by Tasks in the default settings.
 
-<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+<!-- placeholder to force blank line after included text --><!-- endInclude -->
 
 ### Next Status Symbol
 
@@ -387,12 +387,12 @@ There is no built-in instruction to filter by next status symbols.
 
 Since Tasks 4.2.0, **[[Custom Filters|custom filtering]] by next status symbol** is now possible, using `task.status.nextSymbol`.
 
-<!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.statuses_task.status.nextSymbol_docs.approved.md -->
+<!-- placeholder to force blank line before included text --><!-- include: CustomFilteringExamples.test.statuses_task.status.nextSymbol_docs.approved.md -->
 
 - ```filter by function task.status.symbol === task.status.nextSymbol```
   - Find tasks that toggle to themselves, because the next symbol is the same as the current symbol.
 
-<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+<!-- placeholder to force blank line after included text --><!-- endInclude -->
 
 ### Status Examples
 
@@ -432,17 +432,17 @@ These examples all use `task.due` property, which is a `TasksDate` object. You c
 
 Some of these examples use the [moment.js format characters](https://momentjs.com/docs/#/displaying/format/).
 
-<!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.dates_task.due_docs.approved.md -->
+<!-- placeholder to force blank line before included text --><!-- include: CustomFilteringExamples.test.dates_task.due_docs.approved.md -->
 
 - ```filter by function task.due.format('dddd') === 'Tuesday'```
   - Find tasks due on Tuesdays, that is, any Tuesday.
   - On non-English systems, you may need to supply the day of the week in the local language.
 
-<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+<!-- placeholder to force blank line after included text --><!-- endInclude -->
 
 For users who are comfortable with JavaScript, these more complicated examples may also be of interest:
 
-<!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.dates_task.due.advanced_docs.approved.md -->
+<!-- placeholder to force blank line before included text --><!-- include: CustomFilteringExamples.test.dates_task.due.advanced_docs.approved.md -->
 
 - ```filter by function task.due.moment?.isSameOrBefore(moment(), 'day') || false```
   - Find all tasks due today or earlier.
@@ -456,7 +456,7 @@ For users who are comfortable with JavaScript, these more complicated examples m
 - ```filter by function task.due.moment?.isSame(moment('2023-05-31'), 'week') || false```
   - Find all tasks due in the week of 31 May 2023.
 
-<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+<!-- placeholder to force blank line after included text --><!-- endInclude -->
 
 ### Done Date
 
@@ -481,13 +481,13 @@ For more information, see [[Dates#Done date|Done date]].
 
 Since Tasks 4.2.0, **[[Custom Filters|custom filtering]] by done date** is now possible, using `task.done`.
 
-<!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.dates_task.done_docs.approved.md -->
+<!-- placeholder to force blank line before included text --><!-- include: CustomFilteringExamples.test.dates_task.done_docs.approved.md -->
 
 - ```filter by function task.done.format('dddd') === 'Thursday'```
   - Find tasks done on Thursdays, that is, any Thursday.
   - On non-English systems, you may need to supply the day of the week in the local language.
 
-<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+<!-- placeholder to force blank line after included text --><!-- endInclude -->
 
 For more examples, see [[#Due Date]].
 
@@ -514,13 +514,13 @@ For more information, see [[Dates#Scheduled date|Scheduled date]].
 
 Since Tasks 4.2.0, **[[Custom Filters|custom filtering]] by scheduled date** is now possible, using `task.scheduled`.
 
-<!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.dates_task.scheduled_docs.approved.md -->
+<!-- placeholder to force blank line before included text --><!-- include: CustomFilteringExamples.test.dates_task.scheduled_docs.approved.md -->
 
 - ```filter by function task.scheduled.format('dddd') === 'Wednesday'```
   - Find tasks scheduled on Wednesdays, that is, any Wednesday.
   - On non-English systems, you may need to supply the day of the week in the local language.
 
-<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+<!-- placeholder to force blank line after included text --><!-- endInclude -->
 
 For more examples, see [[#Due Date]].
 
@@ -547,13 +547,13 @@ For more information, see [[Dates#Start date|Start date]].
 
 Since Tasks 4.2.0, **[[Custom Filters|custom filtering]] by start date** is now possible, using `task.start`.
 
-<!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.dates_task.start_docs.approved.md -->
+<!-- placeholder to force blank line before included text --><!-- include: CustomFilteringExamples.test.dates_task.start_docs.approved.md -->
 
 - ```filter by function task.start.format('dddd') === 'Sunday'```
   - Find tasks starting on Sundays, that is, any Sunday.
   - On non-English systems, you may need to supply the day of the week in the local language.
 
-<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+<!-- placeholder to force blank line after included text --><!-- endInclude -->
 
 For more examples, see [[#Due Date]].
 
@@ -610,13 +610,13 @@ Such a filter could be:
 
 Since Tasks 4.2.0, **[[Custom Filters|custom filtering]] by created date** is now possible, using `task.created`.
 
-<!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.dates_task.created_docs.approved.md -->
+<!-- placeholder to force blank line before included text --><!-- include: CustomFilteringExamples.test.dates_task.created_docs.approved.md -->
 
 - ```filter by function task.created.format('dddd') === 'Monday'```
   - Find tasks created on Mondays, that is, any Monday.
   - On non-English systems, you may need to supply the day of the week in the local language.
 
-<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+<!-- placeholder to force blank line after included text --><!-- endInclude -->
 
 For more examples, see [[#Due Date]].
 
@@ -647,13 +647,13 @@ because the tasks starts before tomorrow. Only one of the dates needs to match.
 
 Since Tasks 4.2.0, **[[Custom Filters|custom filtering]] by happens date** is now possible, using `task.happens`.
 
-<!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.dates_task.happens_docs.approved.md -->
+<!-- placeholder to force blank line before included text --><!-- include: CustomFilteringExamples.test.dates_task.happens_docs.approved.md -->
 
 - ```filter by function task.happens.format('dddd') === 'Friday'```
   - Find tasks happens on Fridays, that is, any Friday.
   - On non-English systems, you may need to supply the day of the week in the local language.
 
-<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+<!-- placeholder to force blank line after included text --><!-- endInclude -->
 
 For more examples, see [[#Due Date]].
 
@@ -725,20 +725,20 @@ For example:
 
 Since Tasks 4.2.0, **[[Custom Filters|custom filtering]] by description** is now possible, using `task.description`.
 
-<!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.other_properties_task.description_docs.approved.md -->
+<!-- placeholder to force blank line before included text --><!-- include: CustomFilteringExamples.test.other_properties_task.description_docs.approved.md -->
 
 - ```filter by function task.description.length > 100```
   - Find tasks with long descriptions.
 
-<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+<!-- placeholder to force blank line after included text --><!-- endInclude -->
 
 ### Description without tags
 
 Since Tasks 4.2.0, it is possible to remove tags from the descriptions in custom filters, for use in **[[Custom Filters|custom filtering]]**, using `task.descriptionWithoutTags`.
 
-<!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.other_properties_task.descriptionWithoutTags_docs.approved.md -->
+<!-- placeholder to force blank line before included text --><!-- include: CustomFilteringExamples.test.other_properties_task.descriptionWithoutTags_docs.approved.md -->
 
-<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+<!-- placeholder to force blank line after included text --><!-- endInclude -->
 
 ### Priority
 
@@ -762,22 +762,22 @@ Since Tasks 4.2.0, **[[Custom Filters|custom filtering]] by priority name and nu
 
 Using the priority name:
 
-<!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.other_properties_task.priorityName_docs.approved.md -->
+<!-- placeholder to force blank line before included text --><!-- include: CustomFilteringExamples.test.other_properties_task.priorityName_docs.approved.md -->
 
 - ```filter by function task.priorityName !== 'Normal'```
   - The same as `priority is not none`.
 
-<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+<!-- placeholder to force blank line after included text --><!-- endInclude -->
 
 Using the priority number:
 
-<!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.other_properties_task.priorityNumber_docs.approved.md -->
+<!-- placeholder to force blank line before included text --><!-- include: CustomFilteringExamples.test.other_properties_task.priorityNumber_docs.approved.md -->
 
 - ```filter by function task.priorityNumber % 2 === 0```
   - Filter using the task's priority number, where Highest is 0 and Lowest is 5.
   - This artificial example finds all the tasks with even priority numbers, so Highest, Medium and Low priorities.
 
-<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+<!-- placeholder to force blank line after included text --><!-- endInclude -->
 
 #### Examples
 
@@ -804,7 +804,7 @@ Since Tasks 4.2.0, **[[Custom Filters|custom filtering]] by urgency** is now pos
 > [!Warning]
 > Please read the following examples carefully. To use `task.urgency`  with `filter by function` successfully, it is important to understand how to handle searches for non-integer numbers.
 
-<!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.other_properties_task.urgency_docs.approved.md -->
+<!-- placeholder to force blank line before included text --><!-- include: CustomFilteringExamples.test.other_properties_task.urgency_docs.approved.md -->
 
 - ```filter by function task.urgency > 8.9999```
   - Find tasks with an urgency score above `9.0`.
@@ -833,7 +833,7 @@ Since Tasks 4.2.0, **[[Custom Filters|custom filtering]] by urgency** is now pos
       - `10.289999999999999147348717087880`
   - These values are **not exactly equal**, so the test fails to find any matching tasks.
 
-<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+<!-- placeholder to force blank line after included text --><!-- endInclude -->
 
 ### Recurrence
 
@@ -856,7 +856,7 @@ Since Tasks 4.2.0, **[[Custom Filters|custom filtering]] by recurrence** is now 
 
 Using `task.isRecurring`:
 
-<!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.other_properties_task.isRecurring_docs.approved.md -->
+<!-- placeholder to force blank line before included text --><!-- include: CustomFilteringExamples.test.other_properties_task.isRecurring_docs.approved.md -->
 
 - ```filter by function task.isRecurring```
   - This is identical to `is recurring`.
@@ -870,11 +870,11 @@ Using `task.isRecurring`:
   - This uses knowledge of an implementation detail of Tasks, which is that recurrence rules are read and removed from the description even if they are invalid.
   - So we have to search for the recurrence marker in `task.originalMarkdown` to see whether the original task contained the recurrence signifier when `task.isRecurring` even though false.
 
-<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+<!-- placeholder to force blank line after included text --><!-- endInclude -->
 
 Using `task.recurrenceRule` - please read [[Task Properties#Values for Other Task Properties]] notes on `task.recurrenceRule` before use:
 
-<!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.other_properties_task.recurrenceRule_docs.approved.md -->
+<!-- placeholder to force blank line before included text --><!-- include: CustomFilteringExamples.test.other_properties_task.recurrenceRule_docs.approved.md -->
 
 - ```filter by function task.recurrenceRule.includes("every week")```
   - Similar to `recurrence includes every week`, but case-sensitive.
@@ -885,7 +885,7 @@ Using `task.recurrenceRule` - please read [[Task Properties#Values for Other Tas
 - ```filter by function task.recurrenceRule.includes("every week") && !task.recurrenceRule.includes("when done")```
   - Find tasks that are due every week, and do **not** contain `when done` in their recurrence rule.
 
-<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+<!-- placeholder to force blank line after included text --><!-- endInclude -->
 
 ### Sub-Items
 
@@ -922,18 +922,18 @@ See [[Tags]] for important information about how tags behave in the Tasks plugin
 
 Since Tasks 4.2.0, **[[Custom Filters|custom filtering]] by tags** is now possible, using `task.tags`.
 
-<!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.other_properties_task.tags_docs.approved.md -->
+<!-- placeholder to force blank line before included text --><!-- include: CustomFilteringExamples.test.other_properties_task.tags_docs.approved.md -->
 
 - ```filter by function task.tags.length === 1```
   - Find tasks with exactly 1 tag (other than any global filter).
 - ```filter by function task.tags.length > 1```
   - Find tasks with more than one tag (other than any global filter).
 
-<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+<!-- placeholder to force blank line after included text --><!-- endInclude -->
 
 These are more complicated examples, which you might like to copy if you use tasks with [nested tags](https://help.obsidian.md/Editing+and+formatting/Tags#Nested+tags).
 
-<!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.other_properties_task.tags.advanced_docs.approved.md -->
+<!-- placeholder to force blank line before included text --><!-- include: CustomFilteringExamples.test.other_properties_task.tags.advanced_docs.approved.md -->
 
 - ```filter by function task.tags.find( (tag) => tag.includes('/') ) && true || false```
   - Find all tasks that have at least one nested tag.
@@ -941,7 +941,7 @@ These are more complicated examples, which you might like to copy if you use tas
   - Find all tasks that have at least one doubly-nested tag, such as `#context/home/ground-floor`.
   - This splits each tag at the `/` character, and counts as a match if there are at least 3 words.
 
-<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+<!-- placeholder to force blank line after included text --><!-- endInclude -->
 
 #### Tag Query Examples
 
@@ -961,9 +961,9 @@ Since Tasks 4.2.0, **[[Custom Filters|custom filtering]] by original markdown li
 
 For example, this could be used to extract information from `task.originalMarkdown` that Tasks does not parse, to use for filtering tasks.
 
-<!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.other_properties_task.originalMarkdown_docs.approved.md -->
+<!-- placeholder to force blank line before included text --><!-- include: CustomFilteringExamples.test.other_properties_task.originalMarkdown_docs.approved.md -->
 
-<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+<!-- placeholder to force blank line after included text --><!-- endInclude -->
 
 ## Filters for File Properties
 
@@ -984,7 +984,7 @@ Note that the path includes the `.md` extension.
 
 Since Tasks 4.2.0, **[[Custom Filters|custom filtering]] by file path** is now possible, using `task.file.path`.
 
-<!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.file_properties_task.file.path_docs.approved.md -->
+<!-- placeholder to force blank line before included text --><!-- include: CustomFilteringExamples.test.file_properties_task.file.path_docs.approved.md -->
 
 - ```filter by function task.file.path.includes('tasks releases/4.1.0 Release.md')```
   - Like 'path includes', except that it is **case-sensitive**: capitalisation matters.
@@ -996,7 +996,7 @@ Since Tasks 4.2.0, **[[Custom Filters|custom filtering]] by file path** is now p
   - An exact, **non**-case-sensitive, equality search.
   - By lower-casing both values, we do not have to worry about manually lower-casing them in our query.
 
-<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+<!-- placeholder to force blank line after included text --><!-- endInclude -->
 ### Root
 
 > [!released]
@@ -1012,7 +1012,7 @@ The `root` is the top-level folder of the file that contains the task, that is, 
 
 Since Tasks 4.2.0, **[[Custom Filters|custom filtering]] by root folder** is now possible, using `task.file.root`.
 
-<!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.file_properties_task.file.root_docs.approved.md -->
+<!-- placeholder to force blank line before included text --><!-- include: CustomFilteringExamples.test.file_properties_task.file.root_docs.approved.md -->
 
 - ```filter by function task.file.root === '/'```
   - Find tasks in files in the root of the vault.
@@ -1021,7 +1021,7 @@ Since Tasks 4.2.0, **[[Custom Filters|custom filtering]] by root folder** is now
   - Find tasks in files inside the folder `Work` which is in the root of the vault.
   - Note that this is **case-sensitive**: capitalisation matters.
 
-<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+<!-- placeholder to force blank line after included text --><!-- endInclude -->
 
 ### Folder
 
@@ -1038,7 +1038,7 @@ This is the `folder` to the file that contains the task, which will be `/` for f
 
 Since Tasks 4.2.0, **[[Custom Filters|custom filtering]] by folder** is now possible, using `task.file.folder`.
 
-<!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.file_properties_task.file.folder_docs.approved.md -->
+<!-- placeholder to force blank line before included text --><!-- include: CustomFilteringExamples.test.file_properties_task.file.folder_docs.approved.md -->
 
 - ```filter by function task.file.folder === "Work/Projects/"```
   - Find tasks in files in any file in the given folder **only**, and not any sub-folders.
@@ -1050,7 +1050,7 @@ Since Tasks 4.2.0, **[[Custom Filters|custom filtering]] by folder** is now poss
     - `Work/Projects 2023/`
     - `Work/Projects Top Secret/`
 
-<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+<!-- placeholder to force blank line after included text --><!-- endInclude -->
 
 ### File Name
 
@@ -1067,7 +1067,7 @@ Note that the file name includes the `.md` extension.
 
 Since Tasks 4.2.0, **[[Custom Filters|custom filtering]] by file name** is now possible, using `task.file.filename`.
 
-<!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.file_properties_task.file.filename_docs.approved.md -->
+<!-- placeholder to force blank line before included text --><!-- include: CustomFilteringExamples.test.file_properties_task.file.filename_docs.approved.md -->
 
 - ```filter by function task.file.filename === "4.1.0 Release.md"```
   - Find tasks in files with the exact file name, but in any folder.
@@ -1076,7 +1076,7 @@ Since Tasks 4.2.0, **[[Custom Filters|custom filtering]] by file name** is now p
   - Find tasks in files whose name contains the given text.
   - By using `.includes()` and leaving out the file extension, this will also find files such as `14.1.0 Release.md` and `4.1.0 Release Notes.md`.
 
-<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+<!-- placeholder to force blank line after included text --><!-- endInclude -->
 
 ### Heading
 
@@ -1104,7 +1104,7 @@ Since Tasks 4.2.0, **[[Custom Filters|custom filtering]] by heading** is now pos
 >
 > It is like a more generalisable version of the built-in mechanism to infer [[Use Filename as Default Date|a scheduled date from a filename]], under your own control.
 
-<!-- placeholder to force blank line before included text --> <!-- include: CustomFilteringExamples.test.file_properties_task.heading_docs.approved.md -->
+<!-- placeholder to force blank line before included text --><!-- include: CustomFilteringExamples.test.file_properties_task.heading_docs.approved.md -->
 
 - ```filter by function const taskDate = task.due.moment; const wanted = '2023-06-11'; return taskDate?.isSame(wanted, 'day') || ( !taskDate && task.heading?.includes(wanted)) || false```
   - Find takes that:
@@ -1121,7 +1121,7 @@ Since Tasks 4.2.0, **[[Custom Filters|custom filtering]] by heading** is now pos
     - **or** their preceding heading contains the text `#context/home` anywhere.
       - For demonstration purposes, this is slightly imprecise, in that it would also match nested tasks, such as `#context/home/ground-floor`.
 
-<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+<!-- placeholder to force blank line after included text --><!-- endInclude -->
 
 ![Custom filters can extract dates and tags from headings](images/search-headings-for-date-and-tag.png)
 Custom filters can extract dates and tags from headings.

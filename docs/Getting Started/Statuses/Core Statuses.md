@@ -36,11 +36,11 @@ You are free to rename them, change their next character, and even change their 
 
 And this is how you can use them:
 
-<!-- placeholder to force blank line before included text --> <!-- include: DocsSamplesForStatuses.test.DefaultStatuses_core-statuses.approved.md -->
+<!-- placeholder to force blank line before included text --><!-- include: DocsSamplesForStatuses.test.DefaultStatuses_core-statuses.approved.md -->
 
 | Status Symbol | Next Status Symbol | Status Name<br>`status.name includes...`<br>`sort by status.name`<br>`group by status.name` | Status Type<br>`status.type is...`<br>`sort by status.type`<br>`group by status.type` | Needs Custom Styling |
 | ----- | ----- | ----- | ----- | ----- |
 | `space` | `x` | Todo | `TODO` | No |
 | `x` | `space` | Done | `DONE` | No |
 
-<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+<!-- placeholder to force blank line after included text --><!-- endInclude -->

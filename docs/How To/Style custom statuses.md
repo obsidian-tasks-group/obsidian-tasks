@@ -82,7 +82,7 @@ Now the above three tasks look more colourful, and tasks with `[x]` and `[X]` ar
 
 ## Related pages
 
-<!-- force a blank line --> <!-- include: snippet-statuses-overview.md -->
+<!-- force a blank line --><!-- include: snippet-statuses-overview.md -->
 
 > [!info]
 > Broad steps to understand and set up Statuses (or "Alternate Checkboxes"):
@@ -99,4 +99,4 @@ Now the above three tasks look more colourful, and tasks with `[x]` and `[X]` ar
 > - Optionally, update your tasks searches to take advantage of the new flexibility
 >   - [[Filters#Filters for Task Statuses|Filters for Task Statuses]]
 
-<!-- force a blank line --> <!-- endInclude -->
+<!-- force a blank line --><!-- endInclude -->

@@ -29,7 +29,7 @@ As you can tell from the table below, **due dates have the strongest influence o
 
 The scores are as follows:
 
-<!-- placeholder to force blank line before included text --> <!-- include: DocsSamplesForUrgency.test.UrgencyTable_urgency-html-table.approved.md -->
+<!-- placeholder to force blank line before included text --><!-- include: DocsSamplesForUrgency.test.UrgencyTable_urgency-html-table.approved.md -->
 
 <table>
 <thead>
@@ -194,7 +194,7 @@ The scores are as follows:
 </tbody>
 </table>
 
-<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+<!-- placeholder to force blank line after included text --><!-- endInclude -->
 
 ## Examples
 

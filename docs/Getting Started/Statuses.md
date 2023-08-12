@@ -138,7 +138,7 @@ What Tasks' custom statuses allow you to do is to **also customise the behaviour
 
 ### Setting up Custom Statuses
 
-<!-- force a blank line --> <!-- include: snippet-statuses-overview.md -->
+<!-- force a blank line --><!-- include: snippet-statuses-overview.md -->
 
 > [!info]
 > Broad steps to understand and set up Statuses (or "Alternate Checkboxes"):
@@ -155,7 +155,7 @@ What Tasks' custom statuses allow you to do is to **also customise the behaviour
 > - Optionally, update your tasks searches to take advantage of the new flexibility
 >   - [[Filters#Filters for Task Statuses|Filters for Task Statuses]]
 
-<!-- force a blank line --> <!-- endInclude -->
+<!-- force a blank line --><!-- endInclude -->
 
 ## Using Statuses
 

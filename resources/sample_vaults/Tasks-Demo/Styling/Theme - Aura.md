@@ -2,7 +2,7 @@
 
 <https://github.com/ashwinjadhav818/obsidian-aura>
 
-<!-- placeholder to force blank line before included text --> <!-- include: DocsSamplesForStatuses.test.Theme_Aura_Tasks.approved.md -->
+<!-- placeholder to force blank line before included text --><!-- include: DocsSamplesForStatuses.test.Theme_Aura_Tasks.approved.md -->
 
 - [ ] #task `space` incomplete
 - [x] #task `x` complete / done
@@ -24,7 +24,7 @@
 - [P] #task `P` pro
 - [C] #task `C` con
 
-<!-- placeholder to force blank line after included text --> <!-- endInclude -->
+<!-- placeholder to force blank line after included text --><!-- endInclude -->
 
 ## Status grouped by status.type
 
