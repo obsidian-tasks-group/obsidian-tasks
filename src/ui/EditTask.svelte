@@ -9,7 +9,7 @@
     import { doAutocomplete } from '../DateAbbreviations';
     import { TasksDate } from '../Scripting/TasksDate';
     import type { Cache } from "../Cache";
-    import { offset, flip, shift } from "svelte-floating-ui/dom";
+    import { offset, shift } from "svelte-floating-ui/dom";
     import { createFloatingActions } from "svelte-floating-ui";
 
     // These exported variables are passed in as props by TaskModal.onOpen():
@@ -23,7 +23,6 @@
         placement: "bottom",
         middleware: [
             offset(6),
-            flip(),
             shift()
         ]
     });
@@ -70,6 +69,7 @@
     function addWaitingTask(task: Task) {
         waitingTasks = [...waitingTasks, task];
         waitingOnSearch = '';
+        selectedIndex = null;
     }
 
     let isDescriptionValid: boolean = true;
@@ -100,11 +100,39 @@
             return !waitingTasks.includes(item);
         });
 
-        return results.slice(0,10);
+        return results.slice(0,5);
     }
 
     $: {
         waitingOnSearchResults = generateSearchResults(waitingOnSearch);
+    }
+
+    let selectedIndex: null | number = null;
+
+    function taskKeydown(e) {
+        switch(e.keyCode) {
+            case 38:
+                if (selectedIndex === 0 || selectedIndex === null) {
+                    selectedIndex = waitingOnSearchResults.length -1;
+                } else {
+                    selectedIndex -= 1;
+                }
+                break;
+            case 40:
+                if (selectedIndex === waitingOnSearchResults.length -1 || selectedIndex === null) {
+                    selectedIndex = 0;
+                } else {
+                    selectedIndex += 1;
+                }
+                break;
+            case 13:
+                if (selectedIndex !== null) {
+                    e.preventDefault();
+                    addWaitingTask(waitingOnSearchResults[selectedIndex]);
+                }
+                break;
+        }
+
     }
 
     // 'weekend' abbreviation ommitted due to lack of space.
@@ -330,7 +358,9 @@
     const _onDescriptionKeyDown = (e: KeyboardEvent) => {
         if (e.key === 'Enter') {
             e.preventDefault();
-            if (formIsValid) _onSubmit();
+            if (formIsValid && selectedIndex === null) {
+                _onSubmit()
+            };
         }
     }
 
@@ -521,6 +551,7 @@
             <!-- svelte-ignore a11y-accesskey -->
             <input
                 bind:value={waitingOnSearch}
+                on:keydown={taskKeydown}
                 id="waitingOn"
                 type="text"
                 placeholder="Type to search..."
@@ -528,8 +559,10 @@
             />
             {#if waitingOnSearchResults.length !== 0}
                 <ul id="tasks" use:floatingContent>
-                    {#each waitingOnSearchResults as task}
-                        <li on:click={() => addWaitingTask(task)}>
+                    {#each waitingOnSearchResults as task, index}
+                        <li on:click={() => addWaitingTask(task)}
+                            class:selected={selectedIndex !== null && index === selectedIndex}
+                            on:mouseenter={() => selectedIndex = index}>
                             {task.descriptionWithoutTags}
                         </li>
                     {/each}

@@ -290,9 +290,8 @@
 #tasks {
     list-style: none;
     padding: 0;
-    margin: 0;
-    background-color: white;
-    border: 1px solid #ccc;
+    background-color: var(--background-primary);
+    border: 1px;
     border-radius: 6px;
 }
 
@@ -301,8 +300,8 @@
     cursor: pointer;
 }
 
-#tasks li:hover {
-    background-color: #f2f2f2;
+#tasks li.selected {
+    background-color: var(--background-secondary-alt);
 }
 
 
