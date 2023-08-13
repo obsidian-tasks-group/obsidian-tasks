@@ -252,9 +252,9 @@ function getComponentClassesAndData(component: TaskLayoutComponent, task: Task):
     const genericClasses: string[] = [];
     const dataAttributes: AttributesDictionary = {};
 
-    function addDateClassesAndName(date: moment.Moment | null, classes: string, attributeName: string) {
+    function addDateClassesAndName(date: moment.Moment | null, component: TaskLayoutComponent, attributeName: string) {
         if (date) {
-            genericClasses.push(classes);
+            genericClasses.push(LayoutClasses[component]);
             const dateValue = dateToAttribute(date);
             if (dateValue) {
                 dataAttributes[attributeName] = dateValue;
@@ -273,23 +273,23 @@ function getComponentClassesAndData(component: TaskLayoutComponent, task: Task):
             break;
         }
         case 'createdDate': {
-            addDateClassesAndName(task.createdDate, LayoutClasses.createdDate, 'taskCreated');
+            addDateClassesAndName(task.createdDate, component, 'taskCreated');
             break;
         }
         case 'dueDate': {
-            addDateClassesAndName(task.dueDate, LayoutClasses.dueDate, 'taskDue');
+            addDateClassesAndName(task.dueDate, component, 'taskDue');
             break;
         }
         case 'startDate': {
-            addDateClassesAndName(task.startDate, LayoutClasses.startDate, 'taskStart');
+            addDateClassesAndName(task.startDate, component, 'taskStart');
             break;
         }
         case 'scheduledDate': {
-            addDateClassesAndName(task.scheduledDate, LayoutClasses.scheduledDate, 'taskScheduled');
+            addDateClassesAndName(task.scheduledDate, component, 'taskScheduled');
             break;
         }
         case 'doneDate': {
-            addDateClassesAndName(task.doneDate, LayoutClasses.doneDate, 'taskDone');
+            addDateClassesAndName(task.doneDate, component, 'taskDone');
             break;
         }
     }
