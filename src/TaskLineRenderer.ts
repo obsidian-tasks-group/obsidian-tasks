@@ -264,6 +264,7 @@ function getComponentClassesAndData(component: TaskLayoutComponent, task: Task):
 
     switch (component) {
         case 'description':
+        case 'recurrenceRule':
             genericClasses.push(LayoutClasses[component]);
             break;
         case 'priority': {
@@ -289,10 +290,6 @@ function getComponentClassesAndData(component: TaskLayoutComponent, task: Task):
         }
         case 'doneDate': {
             addDateClassesAndName(task.doneDate, LayoutClasses.doneDate, 'taskDone');
-            break;
-        }
-        case 'recurrenceRule': {
-            genericClasses.push(LayoutClasses[component]);
             break;
         }
     }
