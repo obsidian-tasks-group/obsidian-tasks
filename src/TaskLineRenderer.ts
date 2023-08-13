@@ -249,7 +249,6 @@ export type AttributesDictionary = { [key: string]: string };
  * The dataAttributes describe the content of the component, e.g. `data-task-priority="medium"`, `data-task-due="past-1d"` etc.
  */
 function getComponentClassesAndData(component: TaskLayoutComponent, task: Task): [string[], AttributesDictionary] {
-    const genericClasses: string[] = [];
     const dataAttributes: AttributesDictionary = {};
 
     function addDateClassesAndName(date: moment.Moment | null, attributeName: string) {
@@ -260,8 +259,6 @@ function getComponentClassesAndData(component: TaskLayoutComponent, task: Task):
             }
         }
     }
-
-    genericClasses.push(LayoutClasses[component]);
 
     switch (component) {
         case 'priority': {
@@ -289,7 +286,7 @@ function getComponentClassesAndData(component: TaskLayoutComponent, task: Task):
             break;
         }
     }
-    return [genericClasses, dataAttributes];
+    return [[LayoutClasses[component]], dataAttributes];
 }
 
 /*
