@@ -261,38 +261,33 @@ function getComponentClassesAndData(component: TaskLayoutComponent, task: Task):
         }
     }
 
+    genericClasses.push(LayoutClasses[component]);
+
     switch (component) {
         case 'description':
         case 'recurrenceRule':
-            genericClasses.push(LayoutClasses[component]);
             break;
         case 'priority': {
             dataAttributes['taskPriority'] = PriorityTools.priorityNameUsingNormal(task.priority).toLocaleLowerCase();
-            genericClasses.push(LayoutClasses[component]);
             break;
         }
         case 'createdDate': {
-            genericClasses.push(LayoutClasses[component]);
             addDateClassesAndName(task.createdDate, 'taskCreated');
             break;
         }
         case 'dueDate': {
-            genericClasses.push(LayoutClasses[component]);
             addDateClassesAndName(task.dueDate, 'taskDue');
             break;
         }
         case 'startDate': {
-            genericClasses.push(LayoutClasses[component]);
             addDateClassesAndName(task.startDate, 'taskStart');
             break;
         }
         case 'scheduledDate': {
-            genericClasses.push(LayoutClasses[component]);
             addDateClassesAndName(task.scheduledDate, 'taskScheduled');
             break;
         }
         case 'doneDate': {
-            genericClasses.push(LayoutClasses[component]);
             addDateClassesAndName(task.doneDate, 'taskDone');
             break;
         }
