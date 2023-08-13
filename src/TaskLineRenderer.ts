@@ -252,9 +252,8 @@ function getComponentClassesAndData(component: TaskLayoutComponent, task: Task):
     const genericClasses: string[] = [];
     const dataAttributes: AttributesDictionary = {};
 
-    function addDateClassesAndName(date: moment.Moment | null, component: TaskLayoutComponent, attributeName: string) {
+    function addDateClassesAndName(date: moment.Moment | null, attributeName: string) {
         if (date) {
-            genericClasses.push(LayoutClasses[component]);
             const dateValue = dateToAttribute(date);
             if (dateValue) {
                 dataAttributes[attributeName] = dateValue;
@@ -273,23 +272,28 @@ function getComponentClassesAndData(component: TaskLayoutComponent, task: Task):
             break;
         }
         case 'createdDate': {
-            addDateClassesAndName(task.createdDate, component, 'taskCreated');
+            genericClasses.push(LayoutClasses[component]);
+            addDateClassesAndName(task.createdDate, 'taskCreated');
             break;
         }
         case 'dueDate': {
-            addDateClassesAndName(task.dueDate, component, 'taskDue');
+            genericClasses.push(LayoutClasses[component]);
+            addDateClassesAndName(task.dueDate, 'taskDue');
             break;
         }
         case 'startDate': {
-            addDateClassesAndName(task.startDate, component, 'taskStart');
+            genericClasses.push(LayoutClasses[component]);
+            addDateClassesAndName(task.startDate, 'taskStart');
             break;
         }
         case 'scheduledDate': {
-            addDateClassesAndName(task.scheduledDate, component, 'taskScheduled');
+            genericClasses.push(LayoutClasses[component]);
+            addDateClassesAndName(task.scheduledDate, 'taskScheduled');
             break;
         }
         case 'doneDate': {
-            addDateClassesAndName(task.doneDate, component, 'taskDone');
+            genericClasses.push(LayoutClasses[component]);
+            addDateClassesAndName(task.doneDate, 'taskDone');
             break;
         }
     }
