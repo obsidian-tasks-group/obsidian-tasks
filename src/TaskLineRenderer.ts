@@ -165,7 +165,7 @@ async function taskToHtml(
                 span.classList.add(...[LayoutClasses[component]]);
 
                 // Add the attributes to the component ('priority-medium', 'due-past-1d' etc)
-                const dataAttributes = getComponentClassesAndData(component, task);
+                const dataAttributes = getComponentAttributes(component, task);
                 for (const key in dataAttributes) {
                     span.dataset[key] = dataAttributes[key];
                 }
@@ -177,7 +177,7 @@ async function taskToHtml(
 
     // Now build classes for the hidden task components without rendering them
     for (const component of taskLayout.hiddenComponents) {
-        const dataAttributes = getComponentClassesAndData(component, task);
+        const dataAttributes = getComponentAttributes(component, task);
         allAttributes = { ...allAttributes, ...dataAttributes };
     }
 
@@ -187,7 +187,7 @@ async function taskToHtml(
     // So if the priority was not rendered, force it through the pipe of getting the component data for the
     // priority field.
     if (allAttributes.taskPriority === undefined) {
-        const dataAttributes = getComponentClassesAndData('priority', task);
+        const dataAttributes = getComponentAttributes('priority', task);
         allAttributes = { ...allAttributes, ...dataAttributes };
     }
 
@@ -247,16 +247,15 @@ async function renderComponentText(
 export type AttributesDictionary = { [key: string]: string };
 
 /**
- * This function returns two lists -- genericClasses and dataAttributes -- that describe the
- * given component.
- * The genericClasses describe what the component is, e.g. a due date or a priority, and are one of the
- * options in LayoutClasses.
- * The dataAttributes describe the content of the component, e.g. `data-task-priority="medium"`, `data-task-due="past-1d"` etc.
+ * This function returns dataAttributes that describe the content of a component,
+ * e.g. `data-task-priority="medium"`, `data-task-due="past-1d"` etc.
+ * The component classes are described by LayoutClasses.
+ *
  */
-function getComponentClassesAndData(component: TaskLayoutComponent, task: Task): AttributesDictionary {
+function getComponentAttributes(component: TaskLayoutComponent, task: Task): AttributesDictionary {
     const dataAttributes: AttributesDictionary = {};
 
-    function addDateClassesAndName(date: moment.Moment | null, attributeName: string) {
+    function addDateAttributes(date: moment.Moment | null, attributeName: string) {
         if (date) {
             const dateValue = dateToAttribute(date);
             if (dateValue) {
@@ -271,23 +270,23 @@ function getComponentClassesAndData(component: TaskLayoutComponent, task: Task):
             break;
         }
         case 'createdDate': {
-            addDateClassesAndName(task.createdDate, 'taskCreated');
+            addDateAttributes(task.createdDate, 'taskCreated');
             break;
         }
         case 'dueDate': {
-            addDateClassesAndName(task.dueDate, 'taskDue');
+            addDateAttributes(task.dueDate, 'taskDue');
             break;
         }
         case 'startDate': {
-            addDateClassesAndName(task.startDate, 'taskStart');
+            addDateAttributes(task.startDate, 'taskStart');
             break;
         }
         case 'scheduledDate': {
-            addDateClassesAndName(task.scheduledDate, 'taskScheduled');
+            addDateAttributes(task.scheduledDate, 'taskScheduled');
             break;
         }
         case 'doneDate': {
-            addDateClassesAndName(task.doneDate, 'taskDone');
+            addDateAttributes(task.doneDate, 'taskDone');
             break;
         }
     }
