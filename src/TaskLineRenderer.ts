@@ -166,7 +166,10 @@ async function taskToHtml(
 
                 // Add the attributes to the component ('priority-medium', 'due-past-1d' etc)
                 const dataAttributes = getComponentClassesAndData(component, task);
-                for (const key in dataAttributes) span.dataset[key] = dataAttributes[key];
+                for (const key in dataAttributes) {
+                    span.dataset[key] = dataAttributes[key];
+                }
+
                 allAttributes = { ...allAttributes, ...dataAttributes };
             }
         }
