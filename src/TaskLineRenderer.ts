@@ -160,7 +160,7 @@ async function taskToHtml(
                     renderDetails.obsidianComponent,
                 );
                 const [dataAttributes] = getComponentClassesAndData(component, task);
-                const genericClasses = appleSauce(component);
+                const genericClasses = [LayoutClasses[component]];
                 addInternalClasses(component, internalSpan);
                 // Add the generic classes that apply to what this component is (priority, due date etc)
                 span.classList.add(...genericClasses);
@@ -288,10 +288,6 @@ function getComponentClassesAndData(component: TaskLayoutComponent, task: Task):
         }
     }
     return [dataAttributes];
-}
-
-function appleSauce(component: TaskLayoutComponent): string[] {
-    return [LayoutClasses[component]];
 }
 
 /*
