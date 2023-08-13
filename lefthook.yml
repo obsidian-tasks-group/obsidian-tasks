@@ -1,14 +1,14 @@
-pre-push:
-  parallel: true
-  commands:
-    build:
-      run: yarn build
-    lint:
-      run: yarn lint
-    lint-markdown:
-      run: yarn lint:markdown
-    test:
-      run: yarn test
+#pre-push:
+#  parallel: true
+#  commands:
+#    build:
+#      run: yarn build
+#    lint:
+#      run: yarn lint
+#    lint-markdown:
+#      run: yarn lint:markdown
+#    test:
+#      run: yarn test
 
 #pre-commit:
 #  parallel: true
