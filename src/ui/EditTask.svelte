@@ -87,7 +87,7 @@
     let withAccessKeys: boolean = true;
     let formIsValid: boolean = true;
     let waitingOnSearch: string = '';
-    let waitingOnSearchResults: Task[];
+    let waitingOnSearchResults: Task[] | null = null;
 
     function generateSearchResults(search: string) {
         if (!search) {
@@ -103,36 +103,46 @@
         return results.slice(0,5);
     }
 
+    let taskFocused: boolean;
+
     $: {
-        waitingOnSearchResults = generateSearchResults(waitingOnSearch);
+        waitingOnSearchResults = taskFocused ? generateSearchResults(waitingOnSearch) : null;
     }
 
     let selectedIndex: null | number = null;
 
     function taskKeydown(e) {
-        switch(e.keyCode) {
-            case 38:
+        if (waitingOnSearchResults === null) {
+            return;
+        }
+
+        switch(e.key) {
+            case "ArrowUp":
+                e.preventDefault();
                 if (selectedIndex === 0 || selectedIndex === null) {
                     selectedIndex = waitingOnSearchResults.length -1;
                 } else {
                     selectedIndex -= 1;
                 }
                 break;
-            case 40:
+            case "ArrowDown":
+                e.preventDefault();
                 if (selectedIndex === waitingOnSearchResults.length -1 || selectedIndex === null) {
                     selectedIndex = 0;
                 } else {
                     selectedIndex += 1;
                 }
                 break;
-            case 13:
+            case "Enter":
                 if (selectedIndex !== null) {
                     e.preventDefault();
                     addWaitingTask(waitingOnSearchResults[selectedIndex]);
                 }
                 break;
+            default:
+                selectedIndex = null;
+                break;
         }
-
     }
 
     // 'weekend' abbreviation ommitted due to lack of space.
@@ -552,12 +562,14 @@
             <input
                 bind:value={waitingOnSearch}
                 on:keydown={taskKeydown}
+                on:focusin={()=>taskFocused=true}
+                on:focusout={()=>taskFocused=false}
                 id="waitingOn"
                 type="text"
                 placeholder="Type to search..."
                 use:floatingRef
             />
-            {#if waitingOnSearchResults.length !== 0}
+            {#if waitingOnSearchResults && waitingOnSearchResults.length !== 0}
                 <ul id="tasks" use:floatingContent>
                     {#each waitingOnSearchResults as task, index}
                         <li on:click={() => addWaitingTask(task)}

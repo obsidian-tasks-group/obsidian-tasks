@@ -263,8 +263,10 @@
 
 .chip {
     display: inline-flex;
-    border: 1px solid grey;
+    border-color: var(--background-secondary-alt);
+    border-style: solid;
     border-radius: 28px;
+    border-width: 1px;
     padding: 6px 8px 6px 12px;
     margin: 4px;
 }
@@ -274,29 +276,34 @@
 }
 
 .chip-close {
-    background: grey;
+    background: var(--text-faint);
     padding: 3px;
     border-radius: 50%;
     margin-left: 6px;
-    color: rgb(30,30,30);
+    color: var(--background-primary);
     cursor: pointer;
     height: inherit;
 }
 
 .chip-close:hover {
-    background: lightgrey;
+    background: var(--text-normal);
 }
 
 #tasks {
     list-style: none;
-    padding: 0;
+    padding: 4px;
+    margin:0;
     background-color: var(--background-primary);
     border: 1px;
     border-radius: 6px;
+    border-color: var(--background-secondary-alt);
+    border-style: solid;
 }
 
 #tasks li {
     padding: 5px;
+    margin: 2px;
+    border-radius: 6px;
     cursor: pointer;
 }
 
