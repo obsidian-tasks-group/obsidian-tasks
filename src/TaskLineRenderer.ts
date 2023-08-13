@@ -159,7 +159,8 @@ async function taskToHtml(
                     textRenderer,
                     renderDetails.obsidianComponent,
                 );
-                const [genericClasses, dataAttributes] = getComponentClassesAndData(component, task);
+                const [dataAttributes] = getComponentClassesAndData(component, task);
+                const genericClasses = appleSauce(component);
                 addInternalClasses(component, internalSpan);
                 // Add the generic classes that apply to what this component is (priority, due date etc)
                 span.classList.add(...genericClasses);
@@ -172,7 +173,7 @@ async function taskToHtml(
 
     // Now build classes for the hidden task components without rendering them
     for (const component of taskLayout.hiddenComponents) {
-        const [_, dataAttributes] = getComponentClassesAndData(component, task);
+        const [dataAttributes] = getComponentClassesAndData(component, task);
         allAttributes = { ...allAttributes, ...dataAttributes };
     }
 
@@ -182,7 +183,7 @@ async function taskToHtml(
     // So if the priority was not rendered, force it through the pipe of getting the component data for the
     // priority field.
     if (allAttributes.taskPriority === undefined) {
-        const [_, dataAttributes] = getComponentClassesAndData('priority', task);
+        const [dataAttributes] = getComponentClassesAndData('priority', task);
         allAttributes = { ...allAttributes, ...dataAttributes };
     }
 
@@ -248,7 +249,7 @@ export type AttributesDictionary = { [key: string]: string };
  * options in LayoutClasses.
  * The dataAttributes describe the content of the component, e.g. `data-task-priority="medium"`, `data-task-due="past-1d"` etc.
  */
-function getComponentClassesAndData(component: TaskLayoutComponent, task: Task): [string[], AttributesDictionary] {
+function getComponentClassesAndData(component: TaskLayoutComponent, task: Task): [AttributesDictionary] {
     const dataAttributes: AttributesDictionary = {};
 
     function addDateClassesAndName(date: moment.Moment | null, attributeName: string) {
@@ -286,7 +287,11 @@ function getComponentClassesAndData(component: TaskLayoutComponent, task: Task):
             break;
         }
     }
-    return [[LayoutClasses[component]], dataAttributes];
+    return [dataAttributes];
+}
+
+function appleSauce(component: TaskLayoutComponent): string[] {
+    return [LayoutClasses[component]];
 }
 
 /*
