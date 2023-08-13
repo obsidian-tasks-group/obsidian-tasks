@@ -160,10 +160,11 @@ async function taskToHtml(
                     renderDetails.obsidianComponent,
                 );
                 const [dataAttributes] = getComponentClassesAndData(component, task);
-                const genericClasses = [LayoutClasses[component]];
                 addInternalClasses(component, internalSpan);
+
                 // Add the generic classes that apply to what this component is (priority, due date etc)
-                span.classList.add(...genericClasses);
+                span.classList.add(...[LayoutClasses[component]]);
+
                 // Add the attributes to the component ('priority-medium', 'due-past-1d' etc)
                 for (const key in dataAttributes) span.dataset[key] = dataAttributes[key];
                 allAttributes = { ...allAttributes, ...dataAttributes };
