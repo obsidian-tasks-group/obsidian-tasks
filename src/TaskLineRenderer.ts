@@ -135,7 +135,7 @@ async function taskToHtml(
     const taskLayout = new TaskLayout(renderDetails.layoutOptions);
     const emojiSerializer = TASK_FORMATS.tasksPluginEmoji.taskSerializer;
     // Render and build classes for all the task's visible components
-    for (const component of taskLayout.layoutComponents) {
+    for (const component of taskLayout.shownTaskLayoutComponents) {
         let componentString = emojiSerializer.componentToString(task, taskLayout, component);
         if (componentString) {
             if (component === 'description') {
@@ -171,7 +171,7 @@ async function taskToHtml(
     }
 
     // Now build classes for the hidden task components without rendering them
-    for (const component of taskLayout.hiddenComponents) {
+    for (const component of taskLayout.hiddenTaskLayoutComponents) {
         const [_, dataAttributes] = getComponentClassesAndData(component, task);
         allAttributes = { ...allAttributes, ...dataAttributes };
     }
