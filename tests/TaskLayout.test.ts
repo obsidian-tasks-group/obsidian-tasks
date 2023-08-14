@@ -24,20 +24,12 @@ describe('TaskLayout tests', () => {
 
     it('should generate expected CSS components with all default option reversed', () => {
         const layoutOptions = new LayoutOptions();
-        layoutOptions.hideTaskCount = !layoutOptions.hideTaskCount;
-        layoutOptions.hideBacklinks = !layoutOptions.hideBacklinks;
-        layoutOptions.hidePriority = !layoutOptions.hidePriority;
-        layoutOptions.hideCreatedDate = !layoutOptions.hideCreatedDate;
-        layoutOptions.hideStartDate = !layoutOptions.hideStartDate;
-        layoutOptions.hideScheduledDate = !layoutOptions.hideScheduledDate;
-        layoutOptions.hideDoneDate = !layoutOptions.hideDoneDate;
-        layoutOptions.hideDueDate = !layoutOptions.hideDueDate;
-        layoutOptions.hideRecurrenceRule = !layoutOptions.hideRecurrenceRule;
-        layoutOptions.hideEditButton = !layoutOptions.hideEditButton;
-        layoutOptions.hideUrgency = !layoutOptions.hideUrgency;
-        layoutOptions.hideTags = !layoutOptions.hideTags;
-        layoutOptions.shortMode = !layoutOptions.shortMode;
-        layoutOptions.explainQuery = !layoutOptions.explainQuery;
+
+        // Negate all the boolean values:
+        Object.keys(layoutOptions).forEach((key) => {
+            const key2 = key as keyof LayoutOptions;
+            layoutOptions[key2] = !layoutOptions[key2];
+        });
 
         const taskLayout = new TaskLayout(layoutOptions);
 
