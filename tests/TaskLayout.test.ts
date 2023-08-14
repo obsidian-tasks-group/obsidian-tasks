@@ -5,7 +5,7 @@
 import { LayoutOptions, TaskLayout } from '../src/TaskLayout';
 
 describe('TaskLayout tests', () => {
-    it('should have a default configuration', () => {
+    it('should generate expected CSS components for default layout', () => {
         const taskLayout = new TaskLayout();
 
         expect(taskLayout.defaultLayout.join('\n')).toMatchInlineSnapshot(`
@@ -34,7 +34,7 @@ describe('TaskLayout tests', () => {
         expect(taskLayout.taskListClasses.join('\n')).toMatchInlineSnapshot('"tasks-layout-hide-urgency"');
     });
 
-    it('should have a configuration opposite to default', () => {
+    it('should generate expected CSS components with all default option reversed', () => {
         const layoutOptions = new LayoutOptions();
         layoutOptions.hideTaskCount = true;
         layoutOptions.hideBacklinks = true;
