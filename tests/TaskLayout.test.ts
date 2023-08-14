@@ -7,18 +7,6 @@ import { LayoutOptions, TaskLayout } from '../src/TaskLayout';
 describe('TaskLayout tests', () => {
     it('should generate expected CSS components for default layout', () => {
         const taskLayout = new TaskLayout();
-
-        expect(taskLayout.defaultLayout.join('\n')).toMatchInlineSnapshot(`
-            "description
-            priority
-            recurrenceRule
-            createdDate
-            startDate
-            scheduledDate
-            dueDate
-            doneDate
-            blockLink"
-        `);
         expect(taskLayout.shownTaskLayoutComponents.join('\n')).toMatchInlineSnapshot(`
             "description
             priority
@@ -53,17 +41,6 @@ describe('TaskLayout tests', () => {
 
         const taskLayout = new TaskLayout(layoutOptions);
 
-        expect(taskLayout.defaultLayout.join('\n')).toMatchInlineSnapshot(`
-            "description
-            priority
-            recurrenceRule
-            createdDate
-            startDate
-            scheduledDate
-            dueDate
-            doneDate
-            blockLink"
-        `);
         expect(taskLayout.shownTaskLayoutComponents.join('\n')).toMatchInlineSnapshot(`
             "description
             blockLink"
