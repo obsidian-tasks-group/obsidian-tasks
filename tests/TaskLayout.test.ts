@@ -24,20 +24,20 @@ describe('TaskLayout tests', () => {
 
     it('should generate expected CSS components with all default option reversed', () => {
         const layoutOptions = new LayoutOptions();
-        layoutOptions.hideTaskCount = true;
-        layoutOptions.hideBacklinks = true;
-        layoutOptions.hidePriority = true;
-        layoutOptions.hideCreatedDate = true;
-        layoutOptions.hideStartDate = true;
-        layoutOptions.hideScheduledDate = true;
-        layoutOptions.hideDoneDate = true;
-        layoutOptions.hideDueDate = true;
-        layoutOptions.hideRecurrenceRule = true;
-        layoutOptions.hideEditButton = true;
-        layoutOptions.hideUrgency = false;
-        layoutOptions.hideTags = true;
-        layoutOptions.shortMode = true;
-        layoutOptions.explainQuery = true;
+        layoutOptions.hideTaskCount = !layoutOptions.hideTaskCount;
+        layoutOptions.hideBacklinks = !layoutOptions.hideBacklinks;
+        layoutOptions.hidePriority = !layoutOptions.hidePriority;
+        layoutOptions.hideCreatedDate = !layoutOptions.hideCreatedDate;
+        layoutOptions.hideStartDate = !layoutOptions.hideStartDate;
+        layoutOptions.hideScheduledDate = !layoutOptions.hideScheduledDate;
+        layoutOptions.hideDoneDate = !layoutOptions.hideDoneDate;
+        layoutOptions.hideDueDate = !layoutOptions.hideDueDate;
+        layoutOptions.hideRecurrenceRule = !layoutOptions.hideRecurrenceRule;
+        layoutOptions.hideEditButton = !layoutOptions.hideEditButton;
+        layoutOptions.hideUrgency = !layoutOptions.hideUrgency;
+        layoutOptions.hideTags = !layoutOptions.hideTags;
+        layoutOptions.shortMode = !layoutOptions.shortMode;
+        layoutOptions.explainQuery = !layoutOptions.explainQuery;
 
         const taskLayout = new TaskLayout(layoutOptions);
 
