@@ -57,7 +57,7 @@ group by tags
 hide backlink
 ```
 
-- [ ] **7. Test the colouring by tag presence when tags hidden** - this should:
+- [ ] **7. Test the colouring by tag presence when tags are hidden** - this should:
   - **hide** the task's tag `#todo/strategic`
   - **still show** the description in red
   - **still show** the tag in the group heading
