@@ -10,7 +10,7 @@ To test styling of queries, follow these steps, viewing this file either in **Re
 
 - [ ] **1. Open the Obsidian settings of the Demo vault and under Appearance | CSS Snippets, turn on `tasks-plugin-smoke-test-query-styling`.**
 
-- [ ] **2.** **Test 'group by' classes** - the following query result should have **red headings** named 'Priority 1: High' and 'Priority 4: Low'.
+- [ ] **2.** **Test 'group by' classes** - the following query result should have **red headings** named 'High priority' and 'Low priority'.
 
 ```tasks
 path includes Styling of Queries
