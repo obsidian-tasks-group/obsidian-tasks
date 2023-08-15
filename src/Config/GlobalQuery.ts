@@ -22,8 +22,12 @@ export class GlobalQuery {
         return this._value;
     }
 
+    public new_query(): Query {
+        return new Query({ source: this._value });
+    }
+
     static query(): Query {
-        return new Query({ source: GlobalQuery.getInstance().new_get() });
+        return GlobalQuery.getInstance().new_query();
     }
 
     static get(): string {
