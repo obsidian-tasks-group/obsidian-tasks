@@ -5,6 +5,7 @@ export class GlobalQuery {
     private static instance: GlobalQuery;
 
     static empty = '';
+    private _value = GlobalQuery.empty;
 
     public static getInstance(): GlobalQuery {
         if (!GlobalQuery.instance) {
@@ -12,6 +13,10 @@ export class GlobalQuery {
         }
 
         return GlobalQuery.instance;
+    }
+
+    public new_set(value: string) {
+        this._value = value;
     }
 
     static query(): Query {
