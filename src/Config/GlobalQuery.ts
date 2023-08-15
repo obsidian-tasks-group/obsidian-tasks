@@ -26,16 +26,12 @@ export class GlobalQuery {
         return new Query({ source: this._value });
     }
 
-    static query(): Query {
-        return GlobalQuery.getInstance().new_query();
-    }
-
     static isEmpty(): boolean {
         return GlobalQuery.getInstance().new_get().trim() == GlobalQuery.empty;
     }
 
     static explainQuery(): string {
-        return GlobalQuery.query().explainQuery();
+        return GlobalQuery.getInstance().new_query().explainQuery();
     }
 
     static reset() {
