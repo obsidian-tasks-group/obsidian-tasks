@@ -383,11 +383,14 @@ function isAnyBracketOpen(line: string, brackets: [opening_bracket: string, clos
 }
 
 /**
- * Decorates SuggestionBuilder {@link fn} to only return suggestions if there is an open bracket at the
- *     given cursor position
+ * Given a SuggestionBuilder {@link fn}, returns a new SuggestionBuilder with identical behavior to {@link fn} except
+ *     it only return suggestions if there is an open bracket at the given cursor position.
  *
- * @param fn - A suggestion builder to decorate
+ * @param fn - A suggestion builder to wrap
  * @param brackets - A list of tuples that defines bracket pairs.
+ * @returns A {@link SuggestionBuilder} that returns:
+ *   * `[]` if there is no open brackets at the the given
+ *   * {@link fn}`(line, cursorPos, settings)` otherwise
  */
 export function onlySuggestIfBracketOpen(fn: SuggestionBuilder, brackets: [string, string][]): SuggestionBuilder {
     return (line, cursorPos, settings): SuggestInfo[] => {
