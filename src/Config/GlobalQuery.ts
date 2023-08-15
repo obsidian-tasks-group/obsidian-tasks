@@ -1,5 +1,4 @@
-import { Query } from './../Query/Query';
-import { getSettings, updateSettings } from './Settings';
+import { Query } from '../Query/Query';
 
 export class GlobalQuery {
     private static instance: GlobalQuery;
