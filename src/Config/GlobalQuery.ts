@@ -30,10 +30,6 @@ export class GlobalQuery {
         return this._value === GlobalQuery.empty;
     }
 
-    static isEmpty(): boolean {
-        return GlobalQuery.getInstance().new_isEmpty();
-    }
-
     static explainQuery(): string {
         return GlobalQuery.getInstance().new_query().explainQuery();
     }
