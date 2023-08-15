@@ -24,11 +24,11 @@ export class GlobalQuery {
     }
 
     static query(): Query {
-        return new Query({ source: getSettings().globalQuery });
+        return new Query({ source: GlobalQuery.getInstance().new_get() });
     }
 
     static get(): string {
-        return getSettings().globalQuery;
+        return GlobalQuery.getInstance().new_get();
     }
 
     static set(value: string) {
