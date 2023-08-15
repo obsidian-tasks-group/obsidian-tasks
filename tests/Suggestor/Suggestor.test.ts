@@ -161,6 +161,8 @@ describe('onlySuggestIfBracketOpen', () => {
         ],
     );
 
+    const emptySuggestion = [] as unknown;
+
     /**
      * Given a string with **exactly** one vertical bar (`|`), returns the string with the vertical bar removed
      * and the index of the bar.
@@ -182,36 +184,36 @@ describe('onlySuggestIfBracketOpen', () => {
     it('should suggest if cursor at end of line with an open pair', () => {
         for (const line of ['(hello world|', '[hello world|']) {
             const suggestions = buildSuggestions(...cursorPosition(line), getSettings());
-            expect(suggestions).not.toEqual([]);
+            expect(suggestions).not.toEqual(emptySuggestion);
         }
     });
 
     it('should suggest if cursor at end of line with an nested open pairs', () => {
         for (const line of ['(((hello world))|', '[[[hello world]]|']) {
             const suggestions = buildSuggestions(...cursorPosition(line), getSettings());
-            expect(suggestions).not.toEqual([]);
+            expect(suggestions).not.toEqual(emptySuggestion);
         }
     });
 
     it('should suggest if cursor in middle of closed pair', () => {
         for (const line of ['(hello world|)', '[hello world|]']) {
             const suggestions = buildSuggestions(...cursorPosition(line), getSettings());
-            expect(suggestions).not.toEqual([]);
+            expect(suggestions).not.toEqual(emptySuggestion);
         }
     });
 
     it('should suggest if there is an opening bracket after many closing brackets', () => {
         const suggestions = buildSuggestions(...cursorPosition(']]]]]]](hello|'), getSettings());
-        expect(suggestions).not.toEqual([]);
+        expect(suggestions).not.toEqual(emptySuggestion);
     });
 
     it('should not suggest on an empty line', () => {
         const suggestions = buildSuggestions(...cursorPosition('|'), getSettings());
-        expect(suggestions).toEqual([]);
+        expect(suggestions).toEqual(emptySuggestion);
     });
 
     it("should not suggest if there's no open bracket at cursor position", () => {
         const suggestions = buildSuggestions(...cursorPosition('(hello world)|'), getSettings());
-        expect(suggestions).toEqual([]);
+        expect(suggestions).toEqual(emptySuggestion);
     });
 });
