@@ -32,7 +32,7 @@ export function explainResults(source: string): string {
 
     if (!tasksBlockQuery.ignoreGlobalQuery) {
         if (!GlobalQuery.getInstance().new_isEmpty()) {
-            result += `Explanation of the global query:\n\n${GlobalQuery.explainQuery()}\n`;
+            result += `Explanation of the global query:\n\n${GlobalQuery.getInstance().new_query().explainQuery()}\n`;
         }
     }
 

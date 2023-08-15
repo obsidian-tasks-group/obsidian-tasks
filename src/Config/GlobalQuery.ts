@@ -29,8 +29,4 @@ export class GlobalQuery {
     public new_isEmpty() {
         return this._value === GlobalQuery.empty;
     }
-
-    static explainQuery(): string {
-        return GlobalQuery.getInstance().new_query().explainQuery();
-    }
 }
