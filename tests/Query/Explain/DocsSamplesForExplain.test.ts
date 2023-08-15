@@ -80,7 +80,7 @@ heading includes tasks`;
 
     it('explains task block with global query active', () => {
         // Arrange
-        GlobalQuery.getInstance().new_set(globalQuery);
+        GlobalQuery.getInstance().set(globalQuery);
 
         const blockQuery = `
 not done

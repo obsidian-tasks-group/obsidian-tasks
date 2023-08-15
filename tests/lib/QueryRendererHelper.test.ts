@@ -40,7 +40,7 @@ No filters supplied. All tasks will match the query.`;
     });
 
     it('should explain a task with global query active', () => {
-        GlobalQuery.getInstance().new_set('description includes hello');
+        GlobalQuery.getInstance().set('description includes hello');
 
         const source = '';
         const query = new Query({ source });
@@ -57,7 +57,7 @@ No filters supplied. All tasks will match the query.`;
     });
 
     it('should explain a task with global query and global filter active', () => {
-        GlobalQuery.getInstance().new_set('description includes hello');
+        GlobalQuery.getInstance().set('description includes hello');
         GlobalFilter.set('#task');
 
         const source = '';
@@ -77,7 +77,7 @@ No filters supplied. All tasks will match the query.`;
     });
 
     it('should explain a task with global query set but ignored without the global query', () => {
-        GlobalQuery.getInstance().new_set('description includes hello');
+        GlobalQuery.getInstance().set('description includes hello');
 
         const source = 'ignore global query';
         const query = new Query({ source });
@@ -99,12 +99,12 @@ describe('query used for QueryRenderer', () => {
     it('should be the result of combining the global query and the actual query', () => {
         const querySource = 'description includes world';
         const globalQuerySource = 'description includes hello';
-        GlobalQuery.getInstance().new_set(globalQuerySource);
+        GlobalQuery.getInstance().set(globalQuerySource);
         expect(getQueryForQueryRenderer(querySource).source).toEqual(`${globalQuerySource}\n${querySource}`);
     });
 
     it('should ignore the global query if "ignore global query" is set', () => {
-        GlobalQuery.getInstance().new_set('path includes from_global_query');
+        GlobalQuery.getInstance().set('path includes from_global_query');
         expect(getQueryForQueryRenderer('description includes from_block_query\nignore global query').source).toEqual(
             'description includes from_block_query\nignore global query',
         );

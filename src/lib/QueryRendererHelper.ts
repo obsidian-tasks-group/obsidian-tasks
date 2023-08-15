@@ -32,8 +32,8 @@ export function explainResults(source: string): string {
 
     if (!tasksBlockQuery.ignoreGlobalQuery) {
         const globalQuery = GlobalQuery.getInstance();
-        if (!globalQuery.new_isEmpty()) {
-            result += `Explanation of the global query:\n\n${globalQuery.new_query().explainQuery()}\n`;
+        if (!globalQuery.isEmpty()) {
+            result += `Explanation of the global query:\n\n${globalQuery.query().explainQuery()}\n`;
         }
     }
 
@@ -57,6 +57,6 @@ export function getQueryForQueryRenderer(source: string): Query {
         return tasksBlockQuery;
     }
 
-    const globalQuery = GlobalQuery.getInstance().new_query();
+    const globalQuery = GlobalQuery.getInstance().query();
     return globalQuery.append(tasksBlockQuery);
 }

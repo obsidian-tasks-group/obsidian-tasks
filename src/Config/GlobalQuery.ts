@@ -14,19 +14,19 @@ export class GlobalQuery {
         return GlobalQuery.instance;
     }
 
-    public new_set(value: string) {
+    public set(value: string) {
         this._value = value;
     }
 
-    public new_get() {
+    public get() {
         return this._value;
     }
 
-    public new_query(): Query {
+    public query(): Query {
         return new Query({ source: this._value });
     }
 
-    public new_isEmpty() {
+    public isEmpty() {
         return this._value === GlobalQuery.empty;
     }
 }
