@@ -30,16 +30,12 @@ export class GlobalQuery {
         return GlobalQuery.getInstance().new_query();
     }
 
-    static get(): string {
-        return GlobalQuery.getInstance().new_get();
-    }
-
     static set(value: string) {
         GlobalQuery.getInstance().new_set(value);
     }
 
     static isEmpty(): boolean {
-        return GlobalQuery.get().trim() == GlobalQuery.empty;
+        return GlobalQuery.getInstance().new_get().trim() == GlobalQuery.empty;
     }
 
     static explainQuery(): string {
