@@ -173,7 +173,7 @@ describe('onlySuggestIfBracketOpen', () => {
      * @param line - A string that contains exactly one vertical bar (`|`)
      * @returns A tuple of the line without the vertical bar, and the index of the vertical bar.
      */
-    function cursorPosition(line: string): [line_without_cursor: string, cursor_index: number] {
+    function cursorPosition(line: string): [lineWithoutCursor: string, cursorIndex: number] {
         const line_without_cursor = line.replace('|', '');
         // Check that the cursor marker appears exactly once in each input string:
         expect(line_without_cursor.length).toEqual(line.length - 1);
