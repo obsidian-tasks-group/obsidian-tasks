@@ -11,7 +11,6 @@ window.moment = moment;
 
 describe('explain', () => {
     afterEach(() => {
-        GlobalQuery.reset();
         GlobalFilter.reset();
     });
 
@@ -97,10 +96,6 @@ No filters supplied. All tasks will match the query.`;
  *       the right query.
  */
 describe('query used for QueryRenderer', () => {
-    afterEach(() => {
-        GlobalQuery.reset();
-    });
-
     it('should be the result of combining the global query and the actual query', () => {
         const querySource = 'description includes world';
         const globalQuerySource = 'description includes hello';

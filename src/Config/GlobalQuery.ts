@@ -33,8 +33,4 @@ export class GlobalQuery {
     static explainQuery(): string {
         return GlobalQuery.getInstance().new_query().explainQuery();
     }
-
-    static reset() {
-        GlobalQuery.getInstance().new_set(GlobalQuery.empty);
-    }
 }
