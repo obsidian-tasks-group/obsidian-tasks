@@ -40,7 +40,7 @@ Here is a more detailed walk through of the creation of a new task, which can be
      - and the global filter (if any)
 
      Tasks also tries to display the auto-suggest menu based on context. For example, suggestions will only appear
-      within square brackets `[]` or parens `()` when using the [[Dataview Format#Bracketed inline fields|Dataview Task Format]].
+      within square brackets `[]` or parentheses `()` when using the [[Dataview Format#Bracketed inline fields|Dataview Task Format]].
 
 2. You can keep typing (to ignore the suggestions), or select one of the menu items in a variety of ways:
 

@@ -130,7 +130,7 @@ For more information, see [[Recurring Tasks]].
 
 The Dataview format fully supports Tasks' [[Auto-Suggest]] feature, but requires users to manually type out surrounding brackets (`[]` or `()`).  This works best with `Settings > Editor > Autopair Brackets` enabled.
 
-Since Tasks X.Y.Z, the Auto-Suggest menu _only_ appears between square brackets `[]` or parens `()`.
+Since Tasks X.Y.Z, the Auto-Suggest menu _only_ appears between square brackets `[]` or parentheses `()`.
 
 ## Limitations of Dataview Format
 
