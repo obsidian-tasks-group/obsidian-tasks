@@ -177,7 +177,6 @@ describe('onlySuggestIfBracketOpen', () => {
         const line_without_cursor = line.replace('|', '');
         // Check that the cursor marker appears exactly once in each input string:
         expect(line_without_cursor.length).toEqual(line.length - 1);
-        console.log([line.replace('|', ''), line.indexOf('|')]);
         return [line.replace('|', ''), line.indexOf('|')];
     }
 
