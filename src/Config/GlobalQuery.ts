@@ -19,6 +19,10 @@ export class GlobalQuery {
         this._value = value;
     }
 
+    public new_get() {
+        return this._value;
+    }
+
     static query(): Query {
         return new Query({ source: getSettings().globalQuery });
     }
