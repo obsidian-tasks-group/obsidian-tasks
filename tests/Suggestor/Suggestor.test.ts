@@ -181,24 +181,30 @@ describe('onlySuggestIfBracketOpen', () => {
     }
 
     it('should suggest if cursor at end of line with an open pair', () => {
-        for (const line of ['(hello world|', '[hello world|']) {
-            const suggestions = buildSuggestions(...cursorPosition(line), getSettings());
-            expect(suggestions).not.toEqual(emptySuggestion);
-        }
+        const settings = getSettings();
+        let suggestions = buildSuggestions(...cursorPosition('(hello world|'), settings);
+        expect(suggestions).not.toEqual(emptySuggestion);
+
+        suggestions = buildSuggestions(...cursorPosition('[hello world|'), settings);
+        expect(suggestions).not.toEqual(emptySuggestion);
     });
 
     it('should suggest if cursor at end of line with an nested open pairs', () => {
-        for (const line of ['(((hello world))|', '[[[hello world]]|']) {
-            const suggestions = buildSuggestions(...cursorPosition(line), getSettings());
-            expect(suggestions).not.toEqual(emptySuggestion);
-        }
+        const settings = getSettings();
+        let suggestions = buildSuggestions(...cursorPosition('(((hello world))|'), settings);
+        expect(suggestions).not.toEqual(emptySuggestion);
+
+        suggestions = buildSuggestions(...cursorPosition('[[[hello world]]|'), settings);
+        expect(suggestions).not.toEqual(emptySuggestion);
     });
 
     it('should suggest if cursor in middle of closed pair', () => {
-        for (const line of ['(hello world|)', '[hello world|]']) {
-            const suggestions = buildSuggestions(...cursorPosition(line), getSettings());
-            expect(suggestions).not.toEqual(emptySuggestion);
-        }
+        const settings = getSettings();
+        let suggestions = buildSuggestions(...cursorPosition('(hello world|)'), settings);
+        expect(suggestions).not.toEqual(emptySuggestion);
+
+        suggestions = buildSuggestions(...cursorPosition('[hello world|]'), settings);
+        expect(suggestions).not.toEqual(emptySuggestion);
     });
 
     it('should suggest if there is an opening bracket after many closing brackets', () => {
