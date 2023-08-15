@@ -28,7 +28,7 @@ export class GlobalQuery {
     }
 
     static set(value: string) {
-        updateSettings({ globalQuery: value });
+        GlobalQuery.getInstance().new_set(value);
     }
 
     static isEmpty(): boolean {
@@ -40,6 +40,6 @@ export class GlobalQuery {
     }
 
     static reset() {
-        updateSettings({ globalQuery: GlobalQuery.empty });
+        GlobalQuery.getInstance().new_set(GlobalQuery.empty);
     }
 }
