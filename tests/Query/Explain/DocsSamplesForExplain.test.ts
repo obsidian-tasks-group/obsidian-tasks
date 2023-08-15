@@ -2,8 +2,9 @@
  * @jest-environment jsdom
  */
 import moment from 'moment';
+import { GlobalQuery } from '../../../src/Config/GlobalQuery';
 import { verifyQuery, verifyTaskBlockExplanation } from '../../TestingTools/ApprovalTestHelpers';
-import { resetSettings, updateSettings } from '../../../src/Config/Settings';
+import { resetSettings } from '../../../src/Config/Settings';
 window.moment = moment;
 
 function checkExplainPresentAndVerify(blockQuery: string) {
@@ -79,7 +80,7 @@ heading includes tasks`;
 
     it('explains task block with global query active', () => {
         // Arrange
-        updateSettings({ globalQuery });
+        GlobalQuery.getInstance().new_set(globalQuery);
 
         const blockQuery = `
 not done
