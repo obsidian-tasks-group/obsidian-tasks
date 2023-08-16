@@ -59,7 +59,7 @@ export const taskFromLine = ({ line, path }: { line: string; path: string }): Ta
             tags: [],
             originalMarkdown: '',
             scheduledDateIsInferred: false,
-            id: false,
+            id: '',
         });
     }
 
@@ -96,6 +96,6 @@ export const taskFromLine = ({ line, path }: { line: string; path: string }): Ta
         originalMarkdown: '',
         // Not needed since the inferred status is always re-computed after submitting.
         scheduledDateIsInferred: false,
-        id: false,
+        id: '',
     });
 };

@@ -44,7 +44,7 @@ export class TaskBuilder {
     private _blockLink: string = '';
 
     private _scheduledDateIsInferred: boolean = false;
-    private _id: boolean = false;
+    private _id: string = '';
 
     /**
      * Build a Task
@@ -110,6 +110,7 @@ export class TaskBuilder {
             .dueDate('2023-07-04')
             .doneDate('2023-07-05')
             .blockLink(' ^dcf64c')
+            .id('abcdef')
             // Values in TaskLocation:
             .path('some/folder/fileName.md')
             .lineNumber(17)
@@ -257,6 +258,11 @@ export class TaskBuilder {
 
     public scheduledDateIsInferred(isInferred: boolean) {
         this._scheduledDateIsInferred = isInferred;
+        return this;
+    }
+
+    public id(id: string) {
+        this._id = id;
         return this;
     }
 

@@ -103,7 +103,7 @@ function tryBuildTaskDetails(t: object): TaskDetails | null {
         dueDate: null,
         doneDate: null,
         recurrence: null,
-        id: false,
+        id: '',
         tags: [],
         ...t,
     };

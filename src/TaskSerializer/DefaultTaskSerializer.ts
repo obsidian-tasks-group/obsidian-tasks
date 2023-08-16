@@ -157,7 +157,7 @@ export class DefaultTaskSerializer implements TaskSerializer {
                     : ` ${recurrenceSymbol} ${task.recurrence.toText()}`;
             case 'id':
                 if (!task.id) return '';
-                return ' ' + idSymbol;
+                return ' ' + idSymbol + ' ' + task.id;
             case 'blockLink':
                 return task.blockLink ?? '';
             default:
@@ -212,7 +212,7 @@ export class DefaultTaskSerializer implements TaskSerializer {
         let createdDate: Moment | null = null;
         let recurrenceRule: string = '';
         let recurrence: Recurrence | null = null;
-        const id: boolean = false;
+        const id: string = '';
         // Tags that are removed from the end while parsing, but we want to add them back for being part of the description.
         // In the original task description they are possibly mixed with other components
         // (e.g. #tag1 <due date> #tag2), they do not have to all trail all task components,

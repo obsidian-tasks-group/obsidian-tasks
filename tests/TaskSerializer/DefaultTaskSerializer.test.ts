@@ -23,8 +23,15 @@ describe.each(symbolMap)("DefaultTaskSerializer with '$taskFormat' symbols", ({ 
     const taskSerializer = new DefaultTaskSerializer(symbols);
     const serialize = taskSerializer.serialize.bind(taskSerializer);
     const deserialize = taskSerializer.deserialize.bind(taskSerializer);
-    const { startDateSymbol, createdDateSymbol, recurrenceSymbol, scheduledDateSymbol, dueDateSymbol, doneDateSymbol } =
-        symbols;
+    const {
+        startDateSymbol,
+        createdDateSymbol,
+        recurrenceSymbol,
+        scheduledDateSymbol,
+        dueDateSymbol,
+        doneDateSymbol,
+        idSymbol,
+    } = symbols;
 
     describe('deserialize', () => {
         it('should parse an empty string', () => {
@@ -114,6 +121,12 @@ describe.each(symbolMap)("DefaultTaskSerializer with '$taskFormat' symbols", ({ 
             const task = new TaskBuilder().description('').tags(['#hello', '#world', '#task']).build();
             const serialized = serialize(task);
             expect(serialized).toEqual(' #hello #world #task');
+        });
+
+        it('should serialize id', () => {
+            const task = new TaskBuilder().description('').id('abcdef').build();
+            const serialized = serialize(task);
+            expect(serialized).toEqual(` ${idSymbol} abcdef`);
         });
     });
 });

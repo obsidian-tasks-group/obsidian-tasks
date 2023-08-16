@@ -14,6 +14,7 @@ export function verifyMarkdown(output: string) {
             // Built-in reporters listed at:
             // https://github.com/approvals/Approvals.NodeJS#built-in-reporters
             'vscode', // VS Code diff works well with files containing emojis
+            'DiffMerge',
             //-----------------
             // Last one is jest reporter, that should write diffs to console in
             // Continuous Integration builds, such as GitHub Actions

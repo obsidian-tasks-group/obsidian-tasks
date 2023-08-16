@@ -136,7 +136,7 @@ export class Task {
     public readonly doneDate: Moment | null;
 
     public readonly recurrence: Recurrence | null;
-    public readonly id: boolean;
+    public readonly id: string;
 
     /** The blockLink is a "^" annotation after the dates/recurrence rules.
      * Any non-empty value must begin with ' ^'. */
@@ -187,7 +187,7 @@ export class Task {
         tags: string[] | [];
         originalMarkdown: string;
         scheduledDateIsInferred: boolean;
-        id: boolean;
+        id: string;
     }) {
         this.status = status;
         this.description = description;
