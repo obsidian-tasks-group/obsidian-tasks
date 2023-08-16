@@ -26,7 +26,7 @@ export interface DefaultTaskSerializerSymbols {
     readonly dueDateSymbol: string;
     readonly doneDateSymbol: string;
     readonly recurrenceSymbol: string;
-    readonly sequentialSymbol: string;
+    readonly idSymbol: string;
     readonly TaskFormatRegularExpressions: {
         priorityRegex: RegExp;
         startDateRegex: RegExp;
@@ -35,7 +35,7 @@ export interface DefaultTaskSerializerSymbols {
         dueDateRegex: RegExp;
         doneDateRegex: RegExp;
         recurrenceRegex: RegExp;
-        sequentialRegex: RegExp;
+        idRegex: RegExp;
     };
 }
 
@@ -58,7 +58,7 @@ export const DEFAULT_SYMBOLS: DefaultTaskSerializerSymbols = {
     dueDateSymbol: '📅',
     doneDateSymbol: '✅',
     recurrenceSymbol: '🔁',
-    sequentialSymbol: '⬇️',
+    idSymbol: '⬇️',
     TaskFormatRegularExpressions: {
         // The following regex's end with `$` because they will be matched and
         // removed from the end until none are left.
@@ -69,7 +69,7 @@ export const DEFAULT_SYMBOLS: DefaultTaskSerializerSymbols = {
         dueDateRegex: /[📅📆🗓] *(\d{4}-\d{2}-\d{2})$/u,
         doneDateRegex: /✅ *(\d{4}-\d{2}-\d{2})$/u,
         recurrenceRegex: /🔁 ?([a-zA-Z0-9, !]+)$/iu,
-        sequentialRegex: /(⬇️)$/u,
+        idRegex: /(⬇️)$/u,
     },
 } as const;
 
@@ -103,7 +103,7 @@ export class DefaultTaskSerializer implements TaskSerializer {
             doneDateSymbol,
             recurrenceSymbol,
             dueDateSymbol,
-            sequentialSymbol,
+            idSymbol,
         } = this.symbols;
 
         switch (component) {
@@ -155,9 +155,9 @@ export class DefaultTaskSerializer implements TaskSerializer {
                 return layout.options.shortMode
                     ? ' ' + recurrenceSymbol
                     : ` ${recurrenceSymbol} ${task.recurrence.toText()}`;
-            case 'sequential':
-                if (!task.sequential) return '';
-                return ' ' + sequentialSymbol;
+            case 'id':
+                if (!task.id) return '';
+                return ' ' + idSymbol;
             case 'blockLink':
                 return task.blockLink ?? '';
             default:
@@ -212,7 +212,7 @@ export class DefaultTaskSerializer implements TaskSerializer {
         let createdDate: Moment | null = null;
         let recurrenceRule: string = '';
         let recurrence: Recurrence | null = null;
-        let sequential: boolean = false;
+        const id: boolean = false;
         // Tags that are removed from the end while parsing, but we want to add them back for being part of the description.
         // In the original task description they are possibly mixed with other components
         // (e.g. #tag1 <due date> #tag2), they do not have to all trail all task components,
@@ -286,13 +286,13 @@ export class DefaultTaskSerializer implements TaskSerializer {
                 trailingTags = trailingTags.length > 0 ? [tagName, trailingTags].join(' ') : tagName;
             }
 
-            const sequentialMatch = line.match(TaskFormatRegularExpressions.sequentialRegex);
-
-            if (sequentialMatch != null) {
-                line = line.replace(TaskFormatRegularExpressions.sequentialRegex, '').trim();
-                sequential = true;
-                matched = true;
-            }
+            // const sequentialMatch = line.match(TaskFormatRegularExpressions.idRegex);
+            //
+            // if (sequentialMatch != null) {
+            //     line = line.replace(TaskFormatRegularExpressions.idRegex, '').trim();
+            //     id = true;
+            //     matched = true;
+            // }
 
             runs++;
         } while (matched && runs <= maxRuns);
@@ -321,7 +321,7 @@ export class DefaultTaskSerializer implements TaskSerializer {
             dueDate,
             doneDate,
             recurrence,
-            sequential,
+            id,
             tags: Task.extractHashtags(line),
         };
     }

@@ -80,7 +80,7 @@ function summarizeTaskDetails(t: TaskDetails | null): SummarizedTaskDetails | nu
         dueDate: t.dueDate?.format(TaskRegularExpressions.dateFormat) ?? null,
         doneDate: t.doneDate?.format(TaskRegularExpressions.dateFormat) ?? null,
         recurrence: t.recurrence?.toText() ?? null,
-        sequential: t.sequential?.valueOf().toString() ?? null,
+        id: t.id?.valueOf().toString() ?? null,
     };
 }
 
@@ -103,7 +103,7 @@ function tryBuildTaskDetails(t: object): TaskDetails | null {
         dueDate: null,
         doneDate: null,
         recurrence: null,
-        sequential: false,
+        id: false,
         tags: [],
         ...t,
     };
