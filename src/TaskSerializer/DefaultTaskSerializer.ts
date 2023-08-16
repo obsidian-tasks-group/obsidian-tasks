@@ -69,7 +69,7 @@ export const DEFAULT_SYMBOLS: DefaultTaskSerializerSymbols = {
         dueDateRegex: /[📅📆🗓] *(\d{4}-\d{2}-\d{2})$/u,
         doneDateRegex: /✅ *(\d{4}-\d{2}-\d{2})$/u,
         recurrenceRegex: /🔁 ?([a-zA-Z0-9, !]+)$/iu,
-        idRegex: /(⬇️)$/u,
+        idRegex: /⬇️ ?([a-z0-9]+)$/iu,
     },
 } as const;
 
@@ -212,7 +212,7 @@ export class DefaultTaskSerializer implements TaskSerializer {
         let createdDate: Moment | null = null;
         let recurrenceRule: string = '';
         let recurrence: Recurrence | null = null;
-        const id: string = '';
+        let id: string = '';
         // Tags that are removed from the end while parsing, but we want to add them back for being part of the description.
         // In the original task description they are possibly mixed with other components
         // (e.g. #tag1 <due date> #tag2), they do not have to all trail all task components,
@@ -286,13 +286,13 @@ export class DefaultTaskSerializer implements TaskSerializer {
                 trailingTags = trailingTags.length > 0 ? [tagName, trailingTags].join(' ') : tagName;
             }
 
-            // const sequentialMatch = line.match(TaskFormatRegularExpressions.idRegex);
-            //
-            // if (sequentialMatch != null) {
-            //     line = line.replace(TaskFormatRegularExpressions.idRegex, '').trim();
-            //     id = true;
-            //     matched = true;
-            // }
+            const idMatch = line.match(TaskFormatRegularExpressions.idRegex);
+
+            if (idMatch != null) {
+                line = line.replace(TaskFormatRegularExpressions.idRegex, '').trim();
+                id = idMatch[1].trim();
+                matched = true;
+            }
 
             runs++;
         } while (matched && runs <= maxRuns);

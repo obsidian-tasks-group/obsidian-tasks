@@ -74,6 +74,12 @@ describe.each(symbolMap)("DefaultTaskSerializer with '$taskFormat' symbols", ({ 
             const taskDetails = deserialize(description);
             expect(taskDetails).toMatchTaskDetails({ tags: ['#hello', '#world', '#task'], description });
         });
+
+        it('should parse id', () => {
+            const id = `${idSymbol} Abcd0f`;
+            const taskDetails = deserialize(id);
+            expect(taskDetails).toMatchTaskDetails({ id: 'Abcd0f' });
+        });
     });
 
     describe('serialize', () => {
