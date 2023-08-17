@@ -174,7 +174,7 @@ describe('onlySuggestIfBracketOpen', () => {
      * @returns A tuple of the line without the vertical bar, and the index of the vertical bar.
      */
     function cursorPosition(line: string): [lineWithoutCursor: string, cursorIndex: number] {
-        const line_without_cursor = line.replace('|', '');
+        const line_without_cursor = line.replace(/\|/g, '');
         // Check that the cursor marker appears exactly once in each input string:
         expect(line_without_cursor.length).toEqual(line.length - 1);
         return [line_without_cursor, line.indexOf('|')];
