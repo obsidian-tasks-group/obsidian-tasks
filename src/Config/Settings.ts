@@ -1,4 +1,8 @@
-import { DEFAULT_MAX_GENERIC_SUGGESTIONS, makeDefaultSuggestionBuilder } from '../Suggestor/Suggestor';
+import {
+    DEFAULT_MAX_GENERIC_SUGGESTIONS,
+    makeDefaultSuggestionBuilder,
+    onlySuggestIfBracketOpen,
+} from '../Suggestor/Suggestor';
 import { DEFAULT_SYMBOLS } from '../TaskSerializer/DefaultTaskSerializer';
 import { DATAVIEW_SYMBOLS } from '../TaskSerializer/DataviewTaskSerializer';
 import { StatusConfiguration } from '../StatusConfiguration';
@@ -43,7 +47,13 @@ export const TASK_FORMATS = {
     dataview: {
         displayName: 'Dataview',
         taskSerializer: new DataviewTaskSerializer(),
-        buildSuggestions: makeDefaultSuggestionBuilder(DATAVIEW_SYMBOLS, DEFAULT_MAX_GENERIC_SUGGESTIONS),
+        buildSuggestions: onlySuggestIfBracketOpen(
+            makeDefaultSuggestionBuilder(DATAVIEW_SYMBOLS, DEFAULT_MAX_GENERIC_SUGGESTIONS),
+            [
+                ['(', ')'],
+                ['[', ']'],
+            ],
+        ),
     },
 } as const;
 

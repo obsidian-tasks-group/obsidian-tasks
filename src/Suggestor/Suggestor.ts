@@ -345,3 +345,58 @@ export function matchByPosition(s: string, r: RegExp, position: number): RegExpM
         if (match?.index && match.index <= position && position <= match.index + match[0].length) return match;
     }
 }
+
+/**
+ * Checks whether _any_ of the bracket pairs in {@link brackets} is open at the end of the string {@link line}
+ *
+ * @example
+ *     isAnyBracketOpen("(hello world",   [['(', ')']]);             // true
+ *     isAnyBracketOpen("[hello world",   [['[', ']']]);             // true
+ *     isAnyBracketOpen("[hello world",   [['(', ')'], ['[', ']']]); // true
+ *     isAnyBracketOpen("([hello world)", [['(', ')'], ['[', ']']])  // true
+ *     isAnyBracketOpen("))))(",          [['(', ')']])              // true
+ *     isAnyBracketOpen("(hello world)",  [['(', ')']]);             // false
+ *     isAnyBracketOpen("(hello world)",  []);                       // false
+ *
+ * @param line - The line of text to scan
+ * @param brackets - A list of tuples that defines bracket pairs.
+ */
+function isAnyBracketOpen(line: string, brackets: [opening_bracket: string, closing_bracket: string][]): boolean {
+    if (brackets.length === 0) {
+        return false;
+    }
+
+    // Maps an opening bracket to the number of open brackets of that type
+    const numOpeningBrackets = Object.fromEntries(brackets.map(([open, _]) => [open, 0]));
+    // Maps a closing bracket to an opening bracket
+    const openingOf = Object.fromEntries(brackets.map(([open, close]) => [close, open]));
+
+    for (const c of line) {
+        if (c in numOpeningBrackets) {
+            numOpeningBrackets[c]++;
+        } else if (c in openingOf) {
+            numOpeningBrackets[openingOf[c]] = Math.max(0, numOpeningBrackets[openingOf[c]] - 1);
+        }
+    }
+
+    return Object.values(numOpeningBrackets).some((n) => n > 0);
+}
+
+/**
+ * Given a SuggestionBuilder {@link fn}, returns a new SuggestionBuilder with identical behavior to {@link fn} except
+ *     it only return suggestions if there is an open bracket at the given cursor position.
+ *
+ * @param fn - A suggestion builder to wrap
+ * @param brackets - A list of tuples that defines bracket pairs.
+ * @returns A {@link SuggestionBuilder} that returns:
+ *   * `[]` if there is no open brackets at the the given
+ *   * {@link fn}`(line, cursorPos, settings)` otherwise
+ */
+export function onlySuggestIfBracketOpen(fn: SuggestionBuilder, brackets: [string, string][]): SuggestionBuilder {
+    return (line, cursorPos, settings): SuggestInfo[] => {
+        if (!isAnyBracketOpen(line.slice(0, cursorPos), brackets)) {
+            return [];
+        }
+        return fn(line, cursorPos, settings);
+    };
+}
