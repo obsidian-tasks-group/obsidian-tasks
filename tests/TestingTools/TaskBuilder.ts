@@ -45,6 +45,7 @@ export class TaskBuilder {
 
     private _scheduledDateIsInferred: boolean = false;
     private _id: string = '';
+    private _dependsOn: string[] = [];
 
     /**
      * Build a Task
@@ -82,11 +83,12 @@ export class TaskBuilder {
             dueDate: this._dueDate,
             doneDate: this._doneDate,
             recurrence: this._recurrence,
+            dependsOn: this._dependsOn,
+            id: this._id,
             blockLink: this._blockLink,
             tags: this._tags,
             originalMarkdown: '',
             scheduledDateIsInferred: this._scheduledDateIsInferred,
-            id: this._id,
         });
         const markdown = task.toFileLineString();
         return new Task({
@@ -109,8 +111,9 @@ export class TaskBuilder {
             .scheduledDate('2023-07-03')
             .dueDate('2023-07-04')
             .doneDate('2023-07-05')
-            .blockLink(' ^dcf64c')
+            .dependsOn(['123456', 'abc123'])
             .id('abcdef')
+            .blockLink(' ^dcf64c')
             // Values in TaskLocation:
             .path('some/folder/fileName.md')
             .lineNumber(17)
@@ -258,6 +261,11 @@ export class TaskBuilder {
 
     public scheduledDateIsInferred(isInferred: boolean) {
         this._scheduledDateIsInferred = isInferred;
+        return this;
+    }
+
+    public dependsOn(dependsOn: string[]) {
+        this._dependsOn = dependsOn;
         return this;
     }
 

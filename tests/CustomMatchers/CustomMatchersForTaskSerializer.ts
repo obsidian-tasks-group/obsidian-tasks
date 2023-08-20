@@ -103,6 +103,7 @@ function tryBuildTaskDetails(t: object): TaskDetails | null {
         dueDate: null,
         doneDate: null,
         recurrence: null,
+        dependsOn: [],
         id: '',
         tags: [],
         ...t,

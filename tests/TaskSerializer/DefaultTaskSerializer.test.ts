@@ -31,6 +31,7 @@ describe.each(symbolMap)("DefaultTaskSerializer with '$taskFormat' symbols", ({ 
         dueDateSymbol,
         doneDateSymbol,
         idSymbol,
+        dependsOnSymbol,
     } = symbols;
 
     describe('deserialize', () => {
@@ -69,16 +70,22 @@ describe.each(symbolMap)("DefaultTaskSerializer with '$taskFormat' symbols", ({ 
             });
         });
 
-        it('should parse tags', () => {
-            const description = ' #hello #world #task';
-            const taskDetails = deserialize(description);
-            expect(taskDetails).toMatchTaskDetails({ tags: ['#hello', '#world', '#task'], description });
+        it('should parse depends on', () => {
+            const id = `${dependsOnSymbol} 123456,abc123`;
+            const taskDetails = deserialize(id);
+            expect(taskDetails).toMatchTaskDetails({ dependsOn: ['123456', 'abc123'] });
         });
 
         it('should parse id', () => {
             const id = `${idSymbol} Abcd0f`;
             const taskDetails = deserialize(id);
             expect(taskDetails).toMatchTaskDetails({ id: 'Abcd0f' });
+        });
+
+        it('should parse tags', () => {
+            const description = ' #hello #world #task';
+            const taskDetails = deserialize(description);
+            expect(taskDetails).toMatchTaskDetails({ tags: ['#hello', '#world', '#task'], description });
         });
     });
 
@@ -123,16 +130,22 @@ describe.each(symbolMap)("DefaultTaskSerializer with '$taskFormat' symbols", ({ 
             expect(serialized).toEqual(` ${recurrenceSymbol} every day`);
         });
 
-        it('should serialize tags', () => {
-            const task = new TaskBuilder().description('').tags(['#hello', '#world', '#task']).build();
+        it('should serialize depends on', () => {
+            const task = new TaskBuilder().description('').dependsOn(['123456', 'abc123']).build();
             const serialized = serialize(task);
-            expect(serialized).toEqual(' #hello #world #task');
+            expect(serialized).toEqual(` ${dependsOnSymbol} 123456,abc123`);
         });
 
         it('should serialize id', () => {
             const task = new TaskBuilder().description('').id('abcdef').build();
             const serialized = serialize(task);
             expect(serialized).toEqual(` ${idSymbol} abcdef`);
+        });
+
+        it('should serialize tags', () => {
+            const task = new TaskBuilder().description('').tags(['#hello', '#world', '#task']).build();
+            const serialized = serialize(task);
+            expect(serialized).toEqual(' #hello #world #task');
         });
     });
 });
