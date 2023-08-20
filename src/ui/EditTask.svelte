@@ -90,16 +90,16 @@
     let waitingOnSearchResults: Task[] | null = null;
 
     function generateSearchResults(search: string) {
-        if (!search) {
-            return [];
-        }
+        if (!search) return [];
 
         let results = cache.searchTasks(search);
 
+        // remove results that this task already depends on
         results = results.filter((item) => {
             return !waitingTasks.includes(item);
         });
 
+        // search results favour tasks from the same file as this task
         results.sort((a, b) => {
             const locationA = a.taskLocation.path === task.taskLocation.path ? 1 : 0;
             const locationB = b.taskLocation.path === task.taskLocation.path ? 1 : 0;
