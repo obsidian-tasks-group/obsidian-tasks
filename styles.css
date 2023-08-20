@@ -311,6 +311,10 @@
     background-color: var(--background-secondary-alt);
 }
 
+#tasks li.same_path {
+    color: lightyellow;
+}
+
 
 /**------------------------------------------------------------------------
  **                            SETTINGS

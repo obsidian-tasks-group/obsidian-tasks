@@ -100,6 +100,12 @@
             return !waitingTasks.includes(item);
         });
 
+        results.sort((a, b) => {
+            const locationA = a.taskLocation.path === task.taskLocation.path ? 1 : 0;
+            const locationB = b.taskLocation.path === task.taskLocation.path ? 1 : 0;
+            return locationB - locationA;
+        });
+
         return results.slice(0,5);
     }
 
@@ -571,11 +577,12 @@
             />
             {#if waitingOnSearchResults && waitingOnSearchResults.length !== 0}
                 <ul id="tasks" use:floatingContent>
-                    {#each waitingOnSearchResults as task, index}
-                        <li on:click={() => addWaitingTask(task)}
+                    {#each waitingOnSearchResults as searchTask, index}
+                        <li on:click={() => addWaitingTask(searchTask)}
                             class:selected={selectedIndex !== null && index === selectedIndex}
+                            class:same_path={searchTask.taskLocation.path === task.taskLocation.path}
                             on:mouseenter={() => selectedIndex = index}>
-                            {task.descriptionWithoutTags}
+                            {searchTask.descriptionWithoutTags}
                         </li>
                     {/each}
                 </ul>
