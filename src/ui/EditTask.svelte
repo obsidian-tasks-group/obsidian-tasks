@@ -18,7 +18,16 @@
     export let statusOptions: Status[];
     export let cache: Cache;
 
-    const [ floatingRef, floatingContent ] = createFloatingActions({
+    const [ waitingOnRef, waitingOnContent ] = createFloatingActions({
+        strategy: "absolute",
+        placement: "bottom",
+        middleware: [
+            offset(6),
+            shift()
+        ]
+    });
+
+    const [ blockingRef, blockingContent ] = createFloatingActions({
         strategy: "absolute",
         placement: "bottom",
         middleware: [
@@ -60,16 +69,27 @@
         forwardOnly: true
     };
 
-    let waitingTasks: Task[] = [cache.getTasks()[0], cache.getTasks()[3]];
+    let waitingOnTasks: Task[] = [];
+    let blockingTasks: Task[] = [];
 
-    function removeWaitingTask(task: Task) {
-        waitingTasks = waitingTasks.filter((item) => item !== task)
+    function addWaitingOnTask(task: Task) {
+        waitingOnTasks = [...waitingOnTasks, task];
+        waitingOnSearch = '';
+        waitingOnSearchIndex = null;
     }
 
-    function addWaitingTask(task: Task) {
-        waitingTasks = [...waitingTasks, task];
-        waitingOnSearch = '';
-        selectedIndex = null;
+    function removeWaitingOnTask(task: Task) {
+        waitingOnTasks = waitingOnTasks.filter((item) => item !== task)
+    }
+
+    function addBlockingTask(task: Task) {
+        blockingTasks = [...blockingTasks, task];
+        blockingSearch = '';
+        blockingSearchIndex = null;
+    }
+
+    function removeBlockingTask(task: Task) {
+        blockingTasks = blockingTasks.filter((item) => item !== task)
     }
 
     let isDescriptionValid: boolean = true;
@@ -86,17 +106,23 @@
     let addGlobalFilterOnSave: boolean = false;
     let withAccessKeys: boolean = true;
     let formIsValid: boolean = true;
+
     let waitingOnSearch: string = '';
     let waitingOnSearchResults: Task[] | null = null;
+    let waitingOnSearchIndex: null | number = null;
 
-    function generateSearchResults(search: string) {
+    let blockingSearch: string = '';
+    let blockingSearchResults: Task[] | null = null;
+    let blockingSearchIndex: null | number = null;
+
+    function generateSearchResults(search: string, currentList: Task[]) {
         if (!search) return [];
 
         let results = cache.searchTasks(search);
 
-        // remove results that this task already depends on
+        // remove results that this task already has a relationship with
         results = results.filter((item) => {
-            return !waitingTasks.includes(item);
+            return item !== task && !currentList.includes(item);
         });
 
         // search results favour tasks from the same file as this task
@@ -109,49 +135,64 @@
         return results.slice(0,5);
     }
 
-    let taskFocused: boolean;
+    let waitingOnFocused = false;
+    let blockingFocused = false;
 
     $: {
-        waitingOnSearchResults = taskFocused ? generateSearchResults(waitingOnSearch) : null;
+        waitingOnSearchResults = waitingOnFocused ? generateSearchResults(waitingOnSearch, waitingOnTasks) : null;
     }
 
-    let selectedIndex: null | number = null;
+    $: {
+        blockingSearchResults = blockingFocused ? generateSearchResults(blockingSearch, blockingTasks) : null;
+    }
 
-    function taskKeydown(e) {
-        if (waitingOnSearchResults === null) {
-            return;
-        }
+    function taskKeydown(e, field: "waitingOn" | "blocking") {
+        const resultsList = field === "waitingOn" ? waitingOnSearchResults : blockingSearchResults;
+        let searchIndex = field === "waitingOn" ? waitingOnSearchIndex : blockingSearchIndex;
+
+        if (resultsList === null) return;
 
         switch(e.key) {
             case "ArrowUp":
                 e.preventDefault();
-                if (selectedIndex === 0 || selectedIndex === null) {
-                    selectedIndex = waitingOnSearchResults.length -1;
+                if (searchIndex === 0 || searchIndex === null) {
+                    searchIndex = resultsList.length - 1;
                 } else {
-                    selectedIndex -= 1;
+                    searchIndex -= 1;
                 }
                 break;
             case "ArrowDown":
                 e.preventDefault();
-                if (selectedIndex === waitingOnSearchResults.length -1 || selectedIndex === null) {
-                    selectedIndex = 0;
+                if (searchIndex === resultsList.length - 1 || searchIndex === null) {
+                    searchIndex = 0;
                 } else {
-                    selectedIndex += 1;
+                    searchIndex += 1;
                 }
                 break;
             case "Enter":
-                if (selectedIndex !== null) {
+                if (searchIndex !== null) {
                     e.preventDefault();
-                    addWaitingTask(waitingOnSearchResults[selectedIndex]);
+                    if (field === "waitingOn") {
+                        addWaitingOnTask(resultsList[searchIndex]);
+                    }
+                    else {
+                        addBlockingTask(resultsList[searchIndex]);
+                    }
                 }
                 break;
             default:
-                selectedIndex = null;
+                searchIndex = null;
                 break;
+        }
+
+        if (field === "waitingOn") {
+            waitingOnSearchIndex = searchIndex;
+        } else {
+            blockingSearchIndex = searchIndex;
         }
     }
 
-    // 'weekend' abbreviation ommitted due to lack of space.
+    // 'weekend' abbreviation omitted due to lack of space.
     let datePlaceholder =
         "Try 'Monday' or 'tomorrow', or [td|tm|yd|tw|nw|we] then space.";
 
@@ -374,9 +415,9 @@
     const _onDescriptionKeyDown = (e: KeyboardEvent) => {
         if (e.key === 'Enter') {
             e.preventDefault();
-            if (formIsValid && selectedIndex === null) {
+            if (formIsValid && waitingOnSearchIndex === null && blockingSearchIndex === null) {
                 _onSubmit()
-            };
+            }
         }
     }
 
@@ -567,32 +608,71 @@
             <!-- svelte-ignore a11y-accesskey -->
             <input
                 bind:value={waitingOnSearch}
-                on:keydown={taskKeydown}
-                on:focusin={()=>taskFocused=true}
-                on:focusout={()=>taskFocused=false}
+                on:keydown={(e) => taskKeydown(e, "waitingOn")}
+                on:focusin={() => waitingOnFocused = true}
+                on:focusout={() => waitingOnFocused = false}
                 id="waitingOn"
                 type="text"
                 placeholder="Type to search..."
-                use:floatingRef
+                use:waitingOnRef
             />
             {#if waitingOnSearchResults && waitingOnSearchResults.length !== 0}
-                <ul id="tasks" use:floatingContent>
+                <ul class="tasks" use:waitingOnContent>
                     {#each waitingOnSearchResults as searchTask, index}
-                        <li on:click={() => addWaitingTask(searchTask)}
-                            class:selected={selectedIndex !== null && index === selectedIndex}
+                        <li on:click={() => addWaitingOnTask(searchTask)}
+                            class:selected={waitingOnSearchIndex !== null && index === waitingOnSearchIndex}
                             class:same_path={searchTask.taskLocation.path === task.taskLocation.path}
-                            on:mouseenter={() => selectedIndex = index}>
+                            on:mouseenter={() => waitingOnSearchIndex = index}>
                             {searchTask.descriptionWithoutTags}
                         </li>
                     {/each}
                 </ul>
             {/if}
-            <div id="chip-container">
-                {#each waitingTasks as task}
+            <div class="chip-container">
+                {#each waitingOnTasks as task}
                     <div class="chip">
                         <div class="chip-name">{task.descriptionWithoutTags}</div>
 
-                        <button on:click={() => removeWaitingTask(task)} type="button" class="chip-close">
+                        <button on:click={() => removeWaitingOnTask(task)} type="button" class="chip-close">
+                            <svg style="display: block; margin: auto;" xmlns="http://www.w3.org/2000/svg" width="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+                        </button>
+                    </div>
+                {/each}
+            </div>
+
+            <!-- --------------------------------------------------------------------------- -->
+            <!--  Blocking Tasks  -->
+            <!-- --------------------------------------------------------------------------- -->
+            <label for="start">Blocking</label>
+            <!-- svelte-ignore a11y-accesskey -->
+            <input
+                bind:value={blockingSearch}
+                on:keydown={(e) => taskKeydown(e, "blocking")}
+                on:focusin={() => blockingFocused = true}
+                on:focusout={() => blockingFocused = false}
+                id="blocking"
+                type="text"
+                placeholder="Type to search..."
+                use:blockingRef
+            />
+            {#if blockingSearchResults && blockingSearchResults.length !== 0}
+                <ul class="tasks" use:blockingContent>
+                    {#each blockingSearchResults as searchTask, index}
+                        <li on:click={() => addBlockingTask(searchTask)}
+                            class:selected={blockingSearch !== null && index === blockingSearchIndex}
+                            class:same_path={searchTask.taskLocation.path === task.taskLocation.path}
+                            on:mouseenter={() => blockingSearchIndex = index}>
+                            {searchTask.descriptionWithoutTags}
+                        </li>
+                    {/each}
+                </ul>
+            {/if}
+            <div class="chip-container">
+                {#each blockingTasks as task}
+                    <div class="chip">
+                        <div class="chip-name">{task.descriptionWithoutTags}</div>
+
+                        <button on:click={() => removeBlockingTask(task)} type="button" class="chip-close">
                             <svg style="display: block; margin: auto;" xmlns="http://www.w3.org/2000/svg" width="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
                         </button>
                     </div>

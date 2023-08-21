@@ -255,10 +255,10 @@
 
 /* Dependency Styles */
 
-#chip-container {
+.chip-container {
     /*margin: 4px;*/
 
-    grid-column: 2;
+    grid-column: 2 !important;
 }
 
 .chip {
@@ -289,7 +289,7 @@
     background: var(--text-normal);
 }
 
-#tasks {
+.tasks {
     list-style: none;
     padding: 4px;
     margin:0;
@@ -300,18 +300,18 @@
     border-style: solid;
 }
 
-#tasks li {
+.tasks li {
     padding: 5px;
     margin: 2px;
     border-radius: 6px;
     cursor: pointer;
 }
 
-#tasks li.selected {
+.tasks li.selected {
     background-color: var(--background-secondary-alt);
 }
 
-#tasks li.same_path {
+.tasks li.same_path {
     color: lightyellow;
 }
 
