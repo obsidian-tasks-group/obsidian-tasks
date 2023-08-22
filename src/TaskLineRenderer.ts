@@ -258,14 +258,18 @@ function getComponentClassesAndData(component: TaskLayoutComponent, task: Task):
         }
     }
 
-    function addDateClassesAndName(date: moment.Moment | null, classes: string, attributeName: string) {
-        addDateClasses(date, classes);
+    function addDateDataAttributes(date: moment.Moment | null, attributeName: string) {
         if (date) {
             const dateValue = dateToAttribute(date);
             if (dateValue) {
                 dataAttributes[attributeName] = dateValue;
             }
         }
+    }
+
+    function addDateClassesAndName(date: moment.Moment | null, classes: string, attributeName: string) {
+        addDateClasses(date, classes);
+        addDateDataAttributes(date, attributeName);
     }
 
     switch (component) {
