@@ -241,6 +241,10 @@ async function renderComponentText(
 
 export type AttributesDictionary = { [key: string]: string };
 
+/**
+ * The genericClasses describe what the component is, e.g. a due date or a priority, and are one of the
+ * options in LayoutClasses.
+ */
 function getGenericClasses(component: TaskLayoutComponent, task: Task) {
     const genericClasses: string[] = [];
 
@@ -285,6 +289,9 @@ function getGenericClasses(component: TaskLayoutComponent, task: Task) {
     return genericClasses;
 }
 
+/**
+ * The dataAttributes describe the content of the component, e.g. `data-task-priority="medium"`, `data-task-due="past-1d"` etc.
+ */
 function getDataAttributes(component: TaskLayoutComponent, task: Task) {
     const dataAttributes: AttributesDictionary = {};
 
