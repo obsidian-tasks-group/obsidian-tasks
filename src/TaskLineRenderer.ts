@@ -267,11 +267,6 @@ function getComponentClassesAndData(component: TaskLayoutComponent, task: Task):
         }
     }
 
-    function addDateClassesAndName(date: moment.Moment | null, classes: string, attributeName: string) {
-        addDateClasses(date, classes);
-        addDateDataAttributes(date, attributeName);
-    }
-
     switch (component) {
         case 'description':
             genericClasses.push(LayoutClasses[component]);
@@ -282,23 +277,28 @@ function getComponentClassesAndData(component: TaskLayoutComponent, task: Task):
             break;
         }
         case 'createdDate': {
-            addDateClassesAndName(task.createdDate, LayoutClasses.createdDate, 'taskCreated');
+            addDateClasses(task.createdDate, LayoutClasses.createdDate);
+            addDateDataAttributes(task.createdDate, 'taskCreated');
             break;
         }
         case 'dueDate': {
-            addDateClassesAndName(task.dueDate, LayoutClasses.dueDate, 'taskDue');
+            addDateClasses(task.dueDate, LayoutClasses.dueDate);
+            addDateDataAttributes(task.dueDate, 'taskDue');
             break;
         }
         case 'startDate': {
-            addDateClassesAndName(task.startDate, LayoutClasses.startDate, 'taskStart');
+            addDateClasses(task.startDate, LayoutClasses.startDate);
+            addDateDataAttributes(task.startDate, 'taskStart');
             break;
         }
         case 'scheduledDate': {
-            addDateClassesAndName(task.scheduledDate, LayoutClasses.scheduledDate, 'taskScheduled');
+            addDateClasses(task.scheduledDate, LayoutClasses.scheduledDate);
+            addDateDataAttributes(task.scheduledDate, 'taskScheduled');
             break;
         }
         case 'doneDate': {
-            addDateClassesAndName(task.doneDate, LayoutClasses.doneDate, 'taskDone');
+            addDateClasses(task.doneDate, LayoutClasses.doneDate);
+            addDateDataAttributes(task.doneDate, 'taskDone');
             break;
         }
         case 'recurrenceRule': {
