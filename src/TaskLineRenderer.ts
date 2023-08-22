@@ -285,19 +285,7 @@ function getGenericClasses(component: TaskLayoutComponent, task: Task) {
     return genericClasses;
 }
 
-function getDataAttributes(
-    component:
-        | 'description'
-        | 'priority'
-        | 'recurrenceRule'
-        | 'createdDate'
-        | 'startDate'
-        | 'scheduledDate'
-        | 'dueDate'
-        | 'doneDate'
-        | 'blockLink',
-    task: Task,
-) {
+function getDataAttributes(component: TaskLayoutComponent, task: Task) {
     const dataAttributes: AttributesDictionary = {};
 
     function addDateDataAttributes(date: moment.Moment | null, attributeName: string) {
