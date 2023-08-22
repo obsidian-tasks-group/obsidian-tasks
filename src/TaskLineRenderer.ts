@@ -241,19 +241,7 @@ async function renderComponentText(
 
 export type AttributesDictionary = { [key: string]: string };
 
-function getGenericClasses(
-    component:
-        | 'description'
-        | 'priority'
-        | 'recurrenceRule'
-        | 'createdDate'
-        | 'startDate'
-        | 'scheduledDate'
-        | 'dueDate'
-        | 'doneDate'
-        | 'blockLink',
-    task: Task,
-) {
+function getGenericClasses(component: TaskLayoutComponent, task: Task) {
     const genericClasses: string[] = [];
 
     function addGenericDateClasses(date: moment.Moment | null, classes: string) {
