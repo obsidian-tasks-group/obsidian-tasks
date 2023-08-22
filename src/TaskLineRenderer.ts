@@ -271,6 +271,10 @@ function getComponentClassesAndData(component: TaskLayoutComponent, task: Task):
         case 'description':
             genericClasses.push(LayoutClasses[component]);
             break;
+        case 'recurrenceRule': {
+            genericClasses.push(LayoutClasses[component]);
+            break;
+        }
         case 'priority': {
             dataAttributes['taskPriority'] = PriorityTools.priorityNameUsingNormal(task.priority).toLocaleLowerCase();
             genericClasses.push(LayoutClasses[component]);
@@ -299,10 +303,6 @@ function getComponentClassesAndData(component: TaskLayoutComponent, task: Task):
         case 'doneDate': {
             addDateClasses(task.doneDate, LayoutClasses.doneDate);
             addDateDataAttributes(task.doneDate, 'taskDone');
-            break;
-        }
-        case 'recurrenceRule': {
-            genericClasses.push(LayoutClasses[component]);
             break;
         }
     }
