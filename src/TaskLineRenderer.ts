@@ -250,7 +250,6 @@ export type AttributesDictionary = { [key: string]: string };
  */
 function getComponentClassesAndData(component: TaskLayoutComponent, task: Task): [string[], AttributesDictionary] {
     const genericClasses: string[] = [];
-    const dataAttributes: AttributesDictionary = {};
 
     function addGenericDateClasses(date: moment.Moment | null, classes: string) {
         if (date) {
@@ -290,6 +289,8 @@ function getComponentClassesAndData(component: TaskLayoutComponent, task: Task):
             break;
         }
     }
+
+    const dataAttributes: AttributesDictionary = {};
 
     function addDateDataAttributes(date: moment.Moment | null, attributeName: string) {
         if (date) {
