@@ -252,10 +252,14 @@ function getComponentClassesAndData(component: TaskLayoutComponent, task: Task):
     const genericClasses: string[] = [];
     const dataAttributes: AttributesDictionary = {};
 
-    function addDateClassesAndName(date: moment.Moment | null, classes: string, attributeName: string) {
+    function addDateClasses(date: moment.Moment | null, classes: string) {
         if (date) {
             genericClasses.push(classes);
         }
+    }
+
+    function addDateClassesAndName(date: moment.Moment | null, classes: string, attributeName: string) {
+        addDateClasses(date, classes);
         if (date) {
             const dateValue = dateToAttribute(date);
             if (dateValue) {
