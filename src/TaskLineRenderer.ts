@@ -294,7 +294,7 @@ function getComponentClassesAndData(component: TaskLayoutComponent, task: Task):
             break;
         }
         case 'scheduledDate': {
-            addGenericDateClasses(task.scheduledDate, LayoutClasses.scheduledDate);
+            addGenericDateClasses(task.scheduledDate, LayoutClasses[component]);
             addDateDataAttributes(task.scheduledDate, 'taskScheduled');
             break;
         }
