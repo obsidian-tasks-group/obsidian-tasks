@@ -264,7 +264,7 @@ function getComponentClassesAndData(component: TaskLayoutComponent, task: Task):
 
     switch (component) {
         case 'description':
-            genericClasses.push(LayoutClasses.description);
+            genericClasses.push(LayoutClasses[component]);
             break;
         case 'priority': {
             dataAttributes['taskPriority'] = PriorityTools.priorityNameUsingNormal(task.priority).toLocaleLowerCase();
