@@ -159,11 +159,14 @@ async function taskToHtml(
                     textRenderer,
                     renderDetails.obsidianComponent,
                 );
-                const [genericClasses, dataAttributes] = getComponentClassesAndData(component, task);
                 addInternalClasses(component, internalSpan);
+
                 // Add the generic classes that apply to what this component is (priority, due date etc)
-                span.classList.add(...genericClasses);
+                const taskClasses = getTaskClasses(component, task);
+                span.classList.add(...taskClasses);
+
                 // Add the attributes to the component ('priority-medium', 'due-past-1d' etc)
+                const dataAttributes = getTaskDataAttributes(component, task);
                 for (const key in dataAttributes) span.dataset[key] = dataAttributes[key];
                 allAttributes = { ...allAttributes, ...dataAttributes };
             }
@@ -172,7 +175,7 @@ async function taskToHtml(
 
     // Now build classes for the hidden task components without rendering them
     for (const component of taskLayout.hiddenTaskLayoutComponents) {
-        const [_, dataAttributes] = getComponentClassesAndData(component, task);
+        const dataAttributes = getTaskDataAttributes(component, task);
         allAttributes = { ...allAttributes, ...dataAttributes };
     }
 
@@ -182,7 +185,7 @@ async function taskToHtml(
     // So if the priority was not rendered, force it through the pipe of getting the component data for the
     // priority field.
     if (allAttributes.taskPriority === undefined) {
-        const [_, dataAttributes] = getComponentClassesAndData('priority', task);
+        const dataAttributes = getTaskDataAttributes('priority', task);
         allAttributes = { ...allAttributes, ...dataAttributes };
     }
 
@@ -242,19 +245,61 @@ async function renderComponentText(
 export type AttributesDictionary = { [key: string]: string };
 
 /**
- * This function returns two lists -- genericClasses and dataAttributes -- that describe the
- * given component.
  * The genericClasses describe what the component is, e.g. a due date or a priority, and are one of the
  * options in LayoutClasses.
- * The dataAttributes describe the content of the component, e.g. `data-task-priority="medium"`, `data-task-due="past-1d"` etc.
  */
-function getComponentClassesAndData(component: TaskLayoutComponent, task: Task): [string[], AttributesDictionary] {
+function getTaskClasses(component: TaskLayoutComponent, task: Task) {
     const genericClasses: string[] = [];
-    const dataAttributes: AttributesDictionary = {};
 
-    function addDateClassesAndName(date: moment.Moment | null, classes: string, attributeName: string) {
+    function addGenericDateClasses(date: moment.Moment | null, classes: string) {
         if (date) {
             genericClasses.push(classes);
+        }
+    }
+
+    // Update "generic" classes
+    switch (component) {
+        case 'description':
+        case 'recurrenceRule': {
+            genericClasses.push(LayoutClasses[component]);
+            break;
+        }
+        case 'priority': {
+            genericClasses.push(LayoutClasses[component]);
+            break;
+        }
+        case 'createdDate': {
+            addGenericDateClasses(task.createdDate, LayoutClasses[component]);
+            break;
+        }
+        case 'dueDate': {
+            addGenericDateClasses(task.dueDate, LayoutClasses[component]);
+            break;
+        }
+        case 'startDate': {
+            addGenericDateClasses(task.startDate, LayoutClasses[component]);
+            break;
+        }
+        case 'scheduledDate': {
+            addGenericDateClasses(task.scheduledDate, LayoutClasses[component]);
+            break;
+        }
+        case 'doneDate': {
+            addGenericDateClasses(task.doneDate, LayoutClasses[component]);
+            break;
+        }
+    }
+    return genericClasses;
+}
+
+/**
+ * The dataAttributes describe the content of the component, e.g. `data-task-priority="medium"`, `data-task-due="past-1d"` etc.
+ */
+function getTaskDataAttributes(component: TaskLayoutComponent, task: Task) {
+    const dataAttributes: AttributesDictionary = {};
+
+    function addDateDataAttributes(date: moment.Moment | null, attributeName: string) {
+        if (date) {
             const dateValue = dateToAttribute(date);
             if (dateValue) {
                 dataAttributes[attributeName] = dateValue;
@@ -262,41 +307,38 @@ function getComponentClassesAndData(component: TaskLayoutComponent, task: Task):
         }
     }
 
+    // Update data attributes
     switch (component) {
         case 'description':
-            genericClasses.push(LayoutClasses.description);
+        case 'recurrenceRule': {
             break;
+        }
         case 'priority': {
             dataAttributes['taskPriority'] = PriorityTools.priorityNameUsingNormal(task.priority).toLocaleLowerCase();
-            genericClasses.push(LayoutClasses.priority);
             break;
         }
         case 'createdDate': {
-            addDateClassesAndName(task.createdDate, LayoutClasses.createdDate, 'taskCreated');
+            addDateDataAttributes(task.createdDate, 'taskCreated');
             break;
         }
         case 'dueDate': {
-            addDateClassesAndName(task.dueDate, LayoutClasses.dueDate, 'taskDue');
+            addDateDataAttributes(task.dueDate, 'taskDue');
             break;
         }
         case 'startDate': {
-            addDateClassesAndName(task.startDate, LayoutClasses.startDate, 'taskStart');
+            addDateDataAttributes(task.startDate, 'taskStart');
             break;
         }
         case 'scheduledDate': {
-            addDateClassesAndName(task.scheduledDate, LayoutClasses.scheduledDate, 'taskScheduled');
+            addDateDataAttributes(task.scheduledDate, 'taskScheduled');
             break;
         }
         case 'doneDate': {
-            addDateClassesAndName(task.doneDate, LayoutClasses.doneDate, 'taskDone');
-            break;
-        }
-        case 'recurrenceRule': {
-            genericClasses.push(LayoutClasses.recurrenceRule);
+            addDateDataAttributes(task.doneDate, 'taskDone');
             break;
         }
     }
-    return [genericClasses, dataAttributes];
+    return dataAttributes;
 }
 
 /*
