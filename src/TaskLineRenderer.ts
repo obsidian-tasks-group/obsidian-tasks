@@ -160,7 +160,10 @@ async function taskToHtml(
                     renderDetails.obsidianComponent,
                 );
                 addInternalClasses(component, internalSpan);
-                const [taskClasses, dataAttributes] = getComponentClassesAndData(component, task);
+                const [taskClasses, dataAttributes] = [
+                    getGenericClasses(component, task),
+                    getDataAttributes(component, task),
+                ];
                 // Add the generic classes that apply to what this component is (priority, due date etc)
                 span.classList.add(...taskClasses);
                 // Add the attributes to the component ('priority-medium', 'due-past-1d' etc)
@@ -172,7 +175,7 @@ async function taskToHtml(
 
     // Now build classes for the hidden task components without rendering them
     for (const component of taskLayout.hiddenTaskLayoutComponents) {
-        const [_, dataAttributes] = getComponentClassesAndData(component, task);
+        const [_, dataAttributes] = [getGenericClasses(component, task), getDataAttributes(component, task)];
         allAttributes = { ...allAttributes, ...dataAttributes };
     }
 
@@ -182,7 +185,7 @@ async function taskToHtml(
     // So if the priority was not rendered, force it through the pipe of getting the component data for the
     // priority field.
     if (allAttributes.taskPriority === undefined) {
-        const [_, dataAttributes] = getComponentClassesAndData('priority', task);
+        const [_, dataAttributes] = [getGenericClasses('priority', task), getDataAttributes('priority', task)];
         allAttributes = { ...allAttributes, ...dataAttributes };
     }
 
@@ -336,17 +339,6 @@ function getDataAttributes(component: TaskLayoutComponent, task: Task) {
         }
     }
     return dataAttributes;
-}
-
-/**
- * This function returns two lists -- genericClasses and dataAttributes -- that describe the
- * given component.
- * The genericClasses describe what the component is, e.g. a due date or a priority, and are one of the
- * options in LayoutClasses.
- * The dataAttributes describe the content of the component, e.g. `data-task-priority="medium"`, `data-task-due="past-1d"` etc.
- */
-function getComponentClassesAndData(component: TaskLayoutComponent, task: Task): [string[], AttributesDictionary] {
-    return [getGenericClasses(component, task), getDataAttributes(component, task)];
 }
 
 /*
