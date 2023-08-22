@@ -285,16 +285,19 @@ function getGenericClasses(component: TaskLayoutComponent, task: Task) {
     return genericClasses;
 }
 
-/**
- * This function returns two lists -- genericClasses and dataAttributes -- that describe the
- * given component.
- * The genericClasses describe what the component is, e.g. a due date or a priority, and are one of the
- * options in LayoutClasses.
- * The dataAttributes describe the content of the component, e.g. `data-task-priority="medium"`, `data-task-due="past-1d"` etc.
- */
-function getComponentClassesAndData(component: TaskLayoutComponent, task: Task): [string[], AttributesDictionary] {
-    const genericClasses = getGenericClasses(component, task);
-
+function getDataAttributes(
+    component:
+        | 'description'
+        | 'priority'
+        | 'recurrenceRule'
+        | 'createdDate'
+        | 'startDate'
+        | 'scheduledDate'
+        | 'dueDate'
+        | 'doneDate'
+        | 'blockLink',
+    task: Task,
+) {
     const dataAttributes: AttributesDictionary = {};
 
     function addDateDataAttributes(date: moment.Moment | null, attributeName: string) {
@@ -337,6 +340,19 @@ function getComponentClassesAndData(component: TaskLayoutComponent, task: Task):
             break;
         }
     }
+    return dataAttributes;
+}
+
+/**
+ * This function returns two lists -- genericClasses and dataAttributes -- that describe the
+ * given component.
+ * The genericClasses describe what the component is, e.g. a due date or a priority, and are one of the
+ * options in LayoutClasses.
+ * The dataAttributes describe the content of the component, e.g. `data-task-priority="medium"`, `data-task-due="past-1d"` etc.
+ */
+function getComponentClassesAndData(component: TaskLayoutComponent, task: Task): [string[], AttributesDictionary] {
+    const genericClasses = getGenericClasses(component, task);
+    const dataAttributes = getDataAttributes(component, task);
     return [genericClasses, dataAttributes];
 }
 
