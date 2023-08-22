@@ -289,7 +289,7 @@ function getComponentClassesAndData(component: TaskLayoutComponent, task: Task):
             break;
         }
         case 'startDate': {
-            addGenericDateClasses(task.startDate, LayoutClasses.startDate);
+            addGenericDateClasses(task.startDate, LayoutClasses[component]);
             addDateDataAttributes(task.startDate, 'taskStart');
             break;
         }
