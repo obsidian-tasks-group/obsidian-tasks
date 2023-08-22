@@ -162,7 +162,7 @@ async function taskToHtml(
                 addInternalClasses(component, internalSpan);
 
                 // Add the generic classes that apply to what this component is (priority, due date etc)
-                const taskClasses = getGenericClasses(component, task);
+                const taskClasses = getTaskClasses(component, task);
                 span.classList.add(...taskClasses);
 
                 // Add the attributes to the component ('priority-medium', 'due-past-1d' etc)
@@ -248,7 +248,7 @@ export type AttributesDictionary = { [key: string]: string };
  * The genericClasses describe what the component is, e.g. a due date or a priority, and are one of the
  * options in LayoutClasses.
  */
-function getGenericClasses(component: TaskLayoutComponent, task: Task) {
+function getTaskClasses(component: TaskLayoutComponent, task: Task) {
     const genericClasses: string[] = [];
 
     function addGenericDateClasses(date: moment.Moment | null, classes: string) {
