@@ -83,11 +83,6 @@ export class TaskLayout {
                 return taskComponents;
             }
         };
-        const markHiddenQueryComponent = (hidden: boolean, hiddenComponentName: string) => {
-            if (hidden) {
-                this.taskListClasses.push(`tasks-layout-hide-${hiddenComponentName}`);
-            }
-        };
         // Remove components from the layout according to the task options. These represent the existing task options,
         // so some components (e.g. the description) are not here because there are no layout options to remove them.
         let newComponents = this.shownTaskLayoutComponents;
@@ -98,8 +93,14 @@ export class TaskLayout {
         newComponents = removeIf(newComponents, layoutOptions.hideScheduledDate, 'scheduledDate');
         newComponents = removeIf(newComponents, layoutOptions.hideDueDate, 'dueDate');
         newComponents = removeIf(newComponents, layoutOptions.hideDoneDate, 'doneDate');
-
         // Tags are hidden, rather than removed. See tasks-layout-hide-tags in styles.css.
+
+        const markHiddenQueryComponent = (hidden: boolean, hiddenComponentName: string) => {
+            if (hidden) {
+                this.taskListClasses.push(`tasks-layout-hide-${hiddenComponentName}`);
+            }
+        };
+
         markHiddenQueryComponent(layoutOptions.hideTags, 'tags');
 
         // The following components are handled in QueryRenderer.ts and thus are not part of the same flow that
