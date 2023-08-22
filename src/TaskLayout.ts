@@ -95,6 +95,11 @@ export class TaskLayout {
         newComponents = removeIf(newComponents, layoutOptions.hideDoneDate, 'doneDate');
         // Tags are hidden, rather than removed. See tasks-layout-hide-tags in styles.css.
 
+        this.markHiddenQueryComponents(layoutOptions);
+        return newComponents;
+    }
+
+    private markHiddenQueryComponents(layoutOptions: LayoutOptions) {
         const markHiddenQueryComponent = (hidden: boolean, hiddenComponentName: string) => {
             if (hidden) {
                 this.taskListClasses.push(`tasks-layout-hide-${hiddenComponentName}`);
@@ -112,6 +117,5 @@ export class TaskLayout {
         markHiddenQueryComponent(layoutOptions.hideBacklinks, 'backlinks');
         markHiddenQueryComponent(layoutOptions.hideEditButton, 'edit-button');
         if (layoutOptions.shortMode) this.taskListClasses.push('tasks-layout-short-mode');
-        return newComponents;
     }
 }
