@@ -159,10 +159,10 @@ async function taskToHtml(
                     textRenderer,
                     renderDetails.obsidianComponent,
                 );
-                const [genericClasses, dataAttributes] = getComponentClassesAndData(component, task);
+                const [taskClasses, dataAttributes] = getComponentClassesAndData(component, task);
                 addInternalClasses(component, internalSpan);
                 // Add the generic classes that apply to what this component is (priority, due date etc)
-                span.classList.add(...genericClasses);
+                span.classList.add(...taskClasses);
                 // Add the attributes to the component ('priority-medium', 'due-past-1d' etc)
                 for (const key in dataAttributes) span.dataset[key] = dataAttributes[key];
                 allAttributes = { ...allAttributes, ...dataAttributes };
