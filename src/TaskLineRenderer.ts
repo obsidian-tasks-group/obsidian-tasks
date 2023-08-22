@@ -267,6 +267,7 @@ function getComponentClassesAndData(component: TaskLayoutComponent, task: Task):
         }
     }
 
+    // Update "generic" classes
     switch (component) {
         case 'description':
         case 'recurrenceRule': {
@@ -275,31 +276,57 @@ function getComponentClassesAndData(component: TaskLayoutComponent, task: Task):
         }
         case 'priority': {
             genericClasses.push(LayoutClasses[component]);
-            dataAttributes['taskPriority'] = PriorityTools.priorityNameUsingNormal(task.priority).toLocaleLowerCase();
             break;
         }
         case 'createdDate': {
             addGenericDateClasses(task.createdDate, LayoutClasses[component]);
-            addDateDataAttributes(task.createdDate, 'taskCreated');
             break;
         }
         case 'dueDate': {
             addGenericDateClasses(task.dueDate, LayoutClasses[component]);
-            addDateDataAttributes(task.dueDate, 'taskDue');
             break;
         }
         case 'startDate': {
             addGenericDateClasses(task.startDate, LayoutClasses[component]);
-            addDateDataAttributes(task.startDate, 'taskStart');
             break;
         }
         case 'scheduledDate': {
             addGenericDateClasses(task.scheduledDate, LayoutClasses[component]);
-            addDateDataAttributes(task.scheduledDate, 'taskScheduled');
             break;
         }
         case 'doneDate': {
             addGenericDateClasses(task.doneDate, LayoutClasses[component]);
+            break;
+        }
+    }
+
+    // Update data attributes
+    switch (component) {
+        case 'description':
+        case 'recurrenceRule': {
+            break;
+        }
+        case 'priority': {
+            dataAttributes['taskPriority'] = PriorityTools.priorityNameUsingNormal(task.priority).toLocaleLowerCase();
+            break;
+        }
+        case 'createdDate': {
+            addDateDataAttributes(task.createdDate, 'taskCreated');
+            break;
+        }
+        case 'dueDate': {
+            addDateDataAttributes(task.dueDate, 'taskDue');
+            break;
+        }
+        case 'startDate': {
+            addDateDataAttributes(task.startDate, 'taskStart');
+            break;
+        }
+        case 'scheduledDate': {
+            addDateDataAttributes(task.scheduledDate, 'taskScheduled');
+            break;
+        }
+        case 'doneDate': {
             addDateDataAttributes(task.doneDate, 'taskDone');
             break;
         }
