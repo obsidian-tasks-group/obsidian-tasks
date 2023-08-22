@@ -346,8 +346,7 @@ function getDataAttributes(component: TaskLayoutComponent, task: Task) {
  * The dataAttributes describe the content of the component, e.g. `data-task-priority="medium"`, `data-task-due="past-1d"` etc.
  */
 function getComponentClassesAndData(component: TaskLayoutComponent, task: Task): [string[], AttributesDictionary] {
-    const dataAttributes = getDataAttributes(component, task);
-    return [getGenericClasses(component, task), dataAttributes];
+    return [getGenericClasses(component, task), getDataAttributes(component, task)];
 }
 
 /*
