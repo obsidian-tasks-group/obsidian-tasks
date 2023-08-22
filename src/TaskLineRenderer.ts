@@ -292,7 +292,7 @@ function getComponentClassesAndData(component: TaskLayoutComponent, task: Task):
             break;
         }
         case 'recurrenceRule': {
-            genericClasses.push(LayoutClasses.recurrenceRule);
+            genericClasses.push(LayoutClasses[component]);
             break;
         }
     }
