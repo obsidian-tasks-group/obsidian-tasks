@@ -255,6 +255,8 @@ function getComponentClassesAndData(component: TaskLayoutComponent, task: Task):
     function addDateClassesAndName(date: moment.Moment | null, classes: string, attributeName: string) {
         if (date) {
             genericClasses.push(classes);
+        }
+        if (date) {
             const dateValue = dateToAttribute(date);
             if (dateValue) {
                 dataAttributes[attributeName] = dateValue;
