@@ -269,8 +269,6 @@ function getComponentClassesAndData(component: TaskLayoutComponent, task: Task):
 
     switch (component) {
         case 'description':
-            genericClasses.push(LayoutClasses[component]);
-            break;
         case 'recurrenceRule': {
             genericClasses.push(LayoutClasses[component]);
             break;
