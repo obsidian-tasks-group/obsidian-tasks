@@ -175,7 +175,7 @@ async function taskToHtml(
 
     // Now build classes for the hidden task components without rendering them
     for (const component of taskLayout.hiddenTaskLayoutComponents) {
-        const [_, dataAttributes] = [getGenericClasses(component, task), getDataAttributes(component, task)];
+        const [dataAttributes] = [getDataAttributes(component, task)];
         allAttributes = { ...allAttributes, ...dataAttributes };
     }
 
