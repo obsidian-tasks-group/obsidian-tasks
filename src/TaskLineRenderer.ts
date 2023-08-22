@@ -258,15 +258,6 @@ function getComponentClassesAndData(component: TaskLayoutComponent, task: Task):
         }
     }
 
-    function addDateDataAttributes(date: moment.Moment | null, attributeName: string) {
-        if (date) {
-            const dateValue = dateToAttribute(date);
-            if (dateValue) {
-                dataAttributes[attributeName] = dateValue;
-            }
-        }
-    }
-
     // Update "generic" classes
     switch (component) {
         case 'description':
@@ -297,6 +288,15 @@ function getComponentClassesAndData(component: TaskLayoutComponent, task: Task):
         case 'doneDate': {
             addGenericDateClasses(task.doneDate, LayoutClasses[component]);
             break;
+        }
+    }
+
+    function addDateDataAttributes(date: moment.Moment | null, attributeName: string) {
+        if (date) {
+            const dateValue = dateToAttribute(date);
+            if (dateValue) {
+                dataAttributes[attributeName] = dateValue;
+            }
         }
     }
 
