@@ -248,14 +248,14 @@ export type AttributesDictionary = { [key: string]: string };
  * The CSS class that describes what the component is, e.g. a due date or a priority, and is a value from LayoutClasses.
  */
 function getTaskComponentClass(component: TaskLayoutComponent, task: Task) {
-    const taskClasses: string[] = [];
+    const componentClassContainer: string[] = [];
 
     const componentClass = LayoutClasses[component];
     switch (component) {
         case 'description':
         case 'priority':
         case 'recurrenceRule':
-            taskClasses.push(componentClass);
+            componentClassContainer.push(componentClass);
             break;
         case 'createdDate':
         case 'dueDate':
@@ -264,12 +264,12 @@ function getTaskComponentClass(component: TaskLayoutComponent, task: Task) {
         case 'doneDate': {
             const date = task[component];
             if (date) {
-                taskClasses.push(componentClass);
+                componentClassContainer.push(componentClass);
             }
             break;
         }
     }
-    return taskClasses;
+    return componentClassContainer;
 }
 
 /**
