@@ -75,13 +75,7 @@ export class TaskLayout {
             shouldRemove: boolean,
             componentToRemove: TaskLayoutComponent,
         ) => {
-            if (shouldRemove) {
-                this.taskListClasses.push(`tasks-layout-hide-${componentToRemove}`);
-                this.hiddenTaskLayoutComponents.push(componentToRemove);
-                return taskComponents.filter((element) => element != componentToRemove);
-            } else {
-                return taskComponents;
-            }
+            return this.removeIf2(shouldRemove, componentToRemove, taskComponents);
         };
         // Remove components from the layout according to the task options. These represent the existing task options,
         // so some components (e.g. the description) are not here because there are no layout options to remove them.
@@ -120,6 +114,29 @@ export class TaskLayout {
 
         this.markHiddenQueryComponents(layoutOptions);
         return this.shownTaskLayoutComponents;
+    }
+
+    private removeIf2(
+        shouldRemove: boolean,
+        componentToRemove:
+            | 'description'
+            | 'priority'
+            | 'recurrenceRule'
+            | 'createdDate'
+            | 'startDate'
+            | 'scheduledDate'
+            | 'dueDate'
+            | 'doneDate'
+            | 'blockLink',
+        taskComponents: TaskLayoutComponent[],
+    ) {
+        if (shouldRemove) {
+            this.taskListClasses.push(`tasks-layout-hide-${componentToRemove}`);
+            this.hiddenTaskLayoutComponents.push(componentToRemove);
+            return taskComponents.filter((element) => element != componentToRemove);
+        } else {
+            return taskComponents;
+        }
     }
 
     private markHiddenQueryComponents(layoutOptions: LayoutOptions) {
