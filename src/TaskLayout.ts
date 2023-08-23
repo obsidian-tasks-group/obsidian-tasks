@@ -58,7 +58,7 @@ export class TaskLayout {
         } else {
             this.options = new LayoutOptions();
         }
-        const components = undefined;
+
         this.shownTaskLayoutComponents = this.defaultLayout;
         this.shownTaskLayoutComponents = this.applyOptions(this.options);
     }
