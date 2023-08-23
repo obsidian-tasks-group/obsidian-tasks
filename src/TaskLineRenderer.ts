@@ -280,15 +280,6 @@ function getTaskComponentClass(component: TaskLayoutComponent, task: Task) {
 function getTaskDataAttributes(component: TaskLayoutComponent, task: Task) {
     const dataAttributes: AttributesDictionary = {};
 
-    function addDateDataAttributes(date: moment.Moment | null, attributeName: string) {
-        if (date) {
-            const dateValue = dateToAttribute(date);
-            if (dateValue) {
-                dataAttributes[attributeName] = dateValue;
-            }
-        }
-    }
-
     const dataAttributeNames: { [c in TaskLayoutComponent]: string } = {
         createdDate: 'taskCreated',
         dueDate: 'taskDue',
@@ -315,7 +306,12 @@ function getTaskDataAttributes(component: TaskLayoutComponent, task: Task) {
         case 'doneDate': {
             const date = task[component];
             const dataAttributeName = dataAttributeNames[component];
-            addDateDataAttributes(date, dataAttributeName);
+            if (date) {
+                const dateValue = dateToAttribute(date);
+                if (dateValue) {
+                    dataAttributes[dataAttributeName] = dateValue;
+                }
+            }
             break;
         }
     }
