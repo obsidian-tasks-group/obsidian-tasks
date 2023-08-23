@@ -309,8 +309,6 @@ function getTaskDataAttributes(component: TaskLayoutComponent, task: Task) {
         case 'recurrenceRule':
             break;
         case 'createdDate':
-            addDateDataAttributes(task[component], dataAttributeNames[component]);
-            break;
         case 'dueDate':
             addDateDataAttributes(task[component], dataAttributeNames[component]);
             break;
