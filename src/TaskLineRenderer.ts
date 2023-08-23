@@ -275,7 +275,7 @@ function getTaskComponentClass(component: TaskLayoutComponent, task: Task) {
 }
 
 /**
- * The dataAttributes describe the content of the component, e.g. `data-task-priority="medium"`, `data-task-due="past-1d"` etc.
+ * The data attribute describes the content of the component, e.g. `data-task-priority="medium"`, `data-task-due="past-1d"` etc.
  */
 function getComponentDataAttribute(component: TaskLayoutComponent, task: Task) {
     const dataAttributes: AttributesDictionary = {};
