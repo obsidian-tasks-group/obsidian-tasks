@@ -162,8 +162,8 @@ async function taskToHtml(
                 addInternalClasses(component, internalSpan);
 
                 // Add the generic classes that apply to what this component is (priority, due date etc)
-                const taskClasses = getTaskComponentClass(component, task);
-                span.classList.add(...taskClasses);
+                const componentClass = getTaskComponentClass(component, task);
+                span.classList.add(...componentClass);
 
                 // Add the attributes to the component ('priority-medium', 'due-past-1d' etc)
                 const dataAttributes = getTaskDataAttributes(component, task);
