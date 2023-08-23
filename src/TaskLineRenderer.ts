@@ -166,7 +166,7 @@ async function taskToHtml(
                 span.classList.add(...componentClass);
 
                 // Add the attributes to the component ('priority-medium', 'due-past-1d' etc)
-                const dataAttributes = getTaskDataAttributes(component, task);
+                const dataAttributes = getComponentDataAttribute(component, task);
                 for (const key in dataAttributes) span.dataset[key] = dataAttributes[key];
                 allAttributes = { ...allAttributes, ...dataAttributes };
             }
@@ -175,7 +175,7 @@ async function taskToHtml(
 
     // Now build classes for the hidden task components without rendering them
     for (const component of taskLayout.hiddenTaskLayoutComponents) {
-        const dataAttributes = getTaskDataAttributes(component, task);
+        const dataAttributes = getComponentDataAttribute(component, task);
         allAttributes = { ...allAttributes, ...dataAttributes };
     }
 
@@ -185,7 +185,7 @@ async function taskToHtml(
     // So if the priority was not rendered, force it through the pipe of getting the component data for the
     // priority field.
     if (allAttributes.taskPriority === undefined) {
-        const dataAttributes = getTaskDataAttributes('priority', task);
+        const dataAttributes = getComponentDataAttribute('priority', task);
         allAttributes = { ...allAttributes, ...dataAttributes };
     }
 
@@ -277,7 +277,7 @@ function getTaskComponentClass(component: TaskLayoutComponent, task: Task) {
 /**
  * The dataAttributes describe the content of the component, e.g. `data-task-priority="medium"`, `data-task-due="past-1d"` etc.
  */
-function getTaskDataAttributes(component: TaskLayoutComponent, task: Task) {
+function getComponentDataAttribute(component: TaskLayoutComponent, task: Task) {
     const dataAttributes: AttributesDictionary = {};
 
     const dataAttributeNames: { [c in TaskLayoutComponent]: string } = {
