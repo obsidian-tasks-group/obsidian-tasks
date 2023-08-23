@@ -282,7 +282,7 @@ function getTaskClasses(component: TaskLayoutComponent, task: Task) {
             break;
         }
         case 'doneDate': {
-            addGenericDateClasses(task.doneDate, LayoutClasses[component]);
+            addGenericDateClasses(task[component], LayoutClasses[component]);
             break;
         }
     }
