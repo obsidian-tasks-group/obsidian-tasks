@@ -308,8 +308,8 @@ function getTaskDataAttributes(component: TaskLayoutComponent, task: Task) {
             if (date) {
                 const attributeValue = dateToAttribute(date);
                 if (attributeValue) {
-                    const dataAttributeName = dataAttributeNames[component];
-                    dataAttributes[dataAttributeName] = attributeValue;
+                    const attributeName = dataAttributeNames[component];
+                    dataAttributes[attributeName] = attributeValue;
                 }
             }
             break;
