@@ -67,9 +67,6 @@ export class TaskLayout {
      * Return a new list of components with the given options applied.
      */
     applyOptions(layoutOptions: LayoutOptions): TaskLayoutComponent[] {
-        // Remove a component from the taskComponents array if the given layoutOption criteria is met,
-        // and add to the layout's specific classes list the class that denotes that this component
-        // isn't in the layout
         // Remove components from the layout according to the task options. These represent the existing task options,
         // so some components (e.g. the description) are not here because there are no layout options to remove them.
         this.shownTaskLayoutComponents = this.removeIf2(
@@ -113,6 +110,9 @@ export class TaskLayout {
         return this.shownTaskLayoutComponents;
     }
 
+    // Remove a component from the taskComponents array if the given layoutOption criteria is met,
+    // and add to the layout's specific classes list the class that denotes that this component
+    // isn't in the layout
     private removeIf2(
         shouldRemove: boolean,
         componentToRemove: TaskLayoutComponent,
