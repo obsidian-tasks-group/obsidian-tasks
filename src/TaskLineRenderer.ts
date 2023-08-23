@@ -290,6 +290,7 @@ function getTaskDataAttributes(component: TaskLayoutComponent, task: Task) {
     }
 
     const createdDateAttributeName = 'taskCreated';
+    const dueDateAttributeName = 'taskDue';
     // Update data attributes
     switch (component) {
         case 'priority': {
@@ -305,7 +306,6 @@ function getTaskDataAttributes(component: TaskLayoutComponent, task: Task) {
             break;
         }
         case 'dueDate': {
-            const dueDateAttributeName = 'taskDue';
             addDateDataAttributes(task.dueDate, dueDateAttributeName);
             break;
         }
