@@ -263,7 +263,8 @@ function getTaskClasses(component: TaskLayoutComponent, task: Task) {
         case 'startDate':
         case 'scheduledDate':
         case 'doneDate': {
-            if (task[component]) {
+            const date = task[component];
+            if (date) {
                 taskClasses.push(LayoutClasses[component]);
             }
             break;
