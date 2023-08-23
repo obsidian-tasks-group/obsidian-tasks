@@ -312,9 +312,10 @@ function getTaskDataAttributes(component: TaskLayoutComponent, task: Task) {
         case 'dueDate':
         case 'startDate':
         case 'scheduledDate':
-        case 'doneDate':
+        case 'doneDate': {
             addDateDataAttributes(task[component], dataAttributeNames[component]);
             break;
+        }
     }
     return dataAttributes;
 }
