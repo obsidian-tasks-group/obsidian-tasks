@@ -321,7 +321,7 @@ function getTaskDataAttributes(component: TaskLayoutComponent, task: Task) {
             break;
         }
         case 'dueDate': {
-            addDateDataAttributes(task.dueDate, dueDateAttributeName);
+            addDateDataAttributes(task.dueDate, dataAttributeNames[component]);
             break;
         }
         case 'startDate': {
