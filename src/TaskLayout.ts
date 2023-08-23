@@ -59,16 +59,12 @@ export class TaskLayout {
             this.options = new LayoutOptions();
         }
         const components = undefined;
-        this.buildShownTaskLayoutComponents(components);
-        this.shownTaskLayoutComponents = this.applyOptions(this.options);
-    }
-
-    private buildShownTaskLayoutComponents(components: TaskLayoutComponent[] | undefined) {
         if (components) {
             this.shownTaskLayoutComponents = components;
         } else {
             this.shownTaskLayoutComponents = this.defaultLayout;
         }
+        this.shownTaskLayoutComponents = this.applyOptions(this.options);
     }
 
     /**
