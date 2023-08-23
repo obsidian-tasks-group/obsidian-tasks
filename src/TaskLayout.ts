@@ -118,16 +118,7 @@ export class TaskLayout {
 
     private removeIf2(
         shouldRemove: boolean,
-        componentToRemove:
-            | 'description'
-            | 'priority'
-            | 'recurrenceRule'
-            | 'createdDate'
-            | 'startDate'
-            | 'scheduledDate'
-            | 'dueDate'
-            | 'doneDate'
-            | 'blockLink',
+        componentToRemove: TaskLayoutComponent,
         taskComponents: TaskLayoutComponent[],
     ) {
         if (shouldRemove) {
