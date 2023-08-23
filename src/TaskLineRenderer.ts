@@ -289,18 +289,18 @@ function getTaskDataAttributes(component: TaskLayoutComponent, task: Task) {
         }
     }
 
+    const createdDateAttributeName = 'taskCreated';
     // Update data attributes
     switch (component) {
-        case 'description':
-        case 'recurrenceRule': {
-            break;
-        }
         case 'priority': {
             dataAttributes['taskPriority'] = PriorityTools.priorityNameUsingNormal(task.priority).toLocaleLowerCase();
             break;
         }
+        case 'description':
+        case 'recurrenceRule': {
+            break;
+        }
         case 'createdDate': {
-            const createdDateAttributeName = 'taskCreated';
             addDateDataAttributes(task.createdDate, createdDateAttributeName);
             break;
         }
