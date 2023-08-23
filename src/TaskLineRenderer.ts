@@ -293,12 +293,12 @@ function getTaskDataAttributes(component: TaskLayoutComponent, task: Task) {
     };
 
     switch (component) {
-        case 'priority':
-            dataAttributes['taskPriority'] = PriorityTools.priorityNameUsingNormal(task.priority).toLocaleLowerCase();
-            break;
         case 'description':
         case 'recurrenceRule':
         case 'blockLink':
+            break;
+        case 'priority':
+            dataAttributes['taskPriority'] = PriorityTools.priorityNameUsingNormal(task.priority).toLocaleLowerCase();
             break;
         case 'createdDate':
         case 'dueDate':
