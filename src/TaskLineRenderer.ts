@@ -306,10 +306,10 @@ function getTaskDataAttributes(component: TaskLayoutComponent, task: Task) {
         case 'doneDate': {
             const date = task[component];
             if (date) {
-                const dateValue = dateToAttribute(date);
-                if (dateValue) {
+                const attributeValue = dateToAttribute(date);
+                if (attributeValue) {
                     const dataAttributeName = dataAttributeNames[component];
-                    dataAttributes[dataAttributeName] = dateValue;
+                    dataAttributes[dataAttributeName] = attributeValue;
                 }
             }
             break;
