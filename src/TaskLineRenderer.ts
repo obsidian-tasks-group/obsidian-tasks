@@ -267,8 +267,6 @@ function getTaskClasses(component: TaskLayoutComponent, task: Task) {
         case 'createdDate':
         case 'dueDate':
         case 'startDate':
-            addGenericDateClasses(task[component], LayoutClasses[component]);
-            break;
         case 'scheduledDate':
             addGenericDateClasses(task[component], LayoutClasses[component]);
             break;
