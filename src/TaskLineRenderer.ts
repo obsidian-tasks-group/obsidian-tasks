@@ -291,7 +291,7 @@ function getTaskDataAttributes(component: TaskLayoutComponent, task: Task) {
         recurrenceRule: '',
         blockLink: '',
     };
-    // Update data attributes
+
     switch (component) {
         case 'priority':
             dataAttributes['taskPriority'] = PriorityTools.priorityNameUsingNormal(task.priority).toLocaleLowerCase();
