@@ -252,6 +252,8 @@ function getTaskComponentClass(component: TaskLayoutComponent, task: Task) {
 
     const componentClass = LayoutClasses[component];
     switch (component) {
+        case 'blockLink':
+            break;
         case 'description':
         case 'priority':
         case 'recurrenceRule':
