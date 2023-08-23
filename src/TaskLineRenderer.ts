@@ -260,11 +260,8 @@ function getTaskClasses(component: TaskLayoutComponent, task: Task) {
     // Update "generic" classes
     switch (component) {
         case 'description':
+        case 'priority':
         case 'recurrenceRule': {
-            taskClasses.push(LayoutClasses[component]);
-            break;
-        }
-        case 'priority': {
             taskClasses.push(LayoutClasses[component]);
             break;
         }
