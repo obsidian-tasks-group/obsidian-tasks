@@ -278,7 +278,7 @@ function getTaskComponentClass(component: TaskLayoutComponent, task: Task) {
  * The data attribute describes the content of the component, e.g. `data-task-priority="medium"`, `data-task-due="past-1d"` etc.
  */
 function getComponentDataAttribute(component: TaskLayoutComponent, task: Task) {
-    const dataAttributes: AttributesDictionary = {};
+    const dataAttribute: AttributesDictionary = {};
 
     const dataAttributeNames: { [c in TaskLayoutComponent]: string } = {
         createdDate: 'taskCreated',
@@ -298,7 +298,7 @@ function getComponentDataAttribute(component: TaskLayoutComponent, task: Task) {
         case 'blockLink':
             break;
         case 'priority':
-            dataAttributes['taskPriority'] = PriorityTools.priorityNameUsingNormal(task.priority).toLocaleLowerCase();
+            dataAttribute['taskPriority'] = PriorityTools.priorityNameUsingNormal(task.priority).toLocaleLowerCase();
             break;
         case 'createdDate':
         case 'dueDate':
@@ -310,13 +310,13 @@ function getComponentDataAttribute(component: TaskLayoutComponent, task: Task) {
                 const attributeValue = dateToAttribute(date);
                 if (attributeValue) {
                     const attributeName = dataAttributeNames[component];
-                    dataAttributes[attributeName] = attributeValue;
+                    dataAttribute[attributeName] = attributeValue;
                 }
             }
             break;
         }
     }
-    return dataAttributes;
+    return dataAttribute;
 }
 
 /*
