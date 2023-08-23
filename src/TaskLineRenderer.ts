@@ -294,6 +294,18 @@ function getTaskDataAttributes(component: TaskLayoutComponent, task: Task) {
     const startDateAttributeName = 'taskStart';
     const scheduledDateAttributeName = 'taskScheduled';
     const doneDateAttributeName = 'taskDone';
+
+    const dataAttributeNames: { [c in TaskLayoutComponent]: string } = {
+        createdDate: createdDateAttributeName,
+        dueDate: dueDateAttributeName,
+        startDate: startDateAttributeName,
+        scheduledDate: scheduledDateAttributeName,
+        doneDate: doneDateAttributeName,
+        priority: '',
+        description: '',
+        recurrenceRule: '',
+        blockLink: '',
+    };
     // Update data attributes
     switch (component) {
         case 'priority': {
