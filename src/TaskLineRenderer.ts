@@ -245,8 +245,7 @@ async function renderComponentText(
 export type AttributesDictionary = { [key: string]: string };
 
 /**
- * The genericClasses describe what the component is, e.g. a due date or a priority, and are one of the
- * options in LayoutClasses.
+ * The CSS class that describes what the component is, e.g. a due date or a priority, and is a value from LayoutClasses.
  */
 function getTaskComponentClass(component: TaskLayoutComponent, task: Task) {
     const taskClasses: string[] = [];
