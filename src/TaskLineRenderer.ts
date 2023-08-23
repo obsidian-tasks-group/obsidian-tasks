@@ -251,12 +251,6 @@ export type AttributesDictionary = { [key: string]: string };
 function getTaskClasses(component: TaskLayoutComponent, task: Task) {
     const taskClasses: string[] = [];
 
-    function addGenericDateClasses(date: moment.Moment | null, classes: string) {
-        if (date) {
-            taskClasses.push(classes);
-        }
-    }
-
     // Update "generic" classes
     switch (component) {
         case 'description':
@@ -269,7 +263,9 @@ function getTaskClasses(component: TaskLayoutComponent, task: Task) {
         case 'startDate':
         case 'scheduledDate':
         case 'doneDate':
-            addGenericDateClasses(task[component], LayoutClasses[component]);
+            if (task[component]) {
+                taskClasses.push(LayoutClasses[component]);
+            }
             break;
     }
     return taskClasses;
