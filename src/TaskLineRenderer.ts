@@ -289,14 +289,13 @@ function getTaskDataAttributes(component: TaskLayoutComponent, task: Task) {
         }
     }
 
-    const dueDateAttributeName = 'taskDue';
     const startDateAttributeName = 'taskStart';
     const scheduledDateAttributeName = 'taskScheduled';
     const doneDateAttributeName = 'taskDone';
 
     const dataAttributeNames: { [c in TaskLayoutComponent]: string } = {
         createdDate: 'taskCreated',
-        dueDate: dueDateAttributeName,
+        dueDate: 'taskDue',
         startDate: startDateAttributeName,
         scheduledDate: scheduledDateAttributeName,
         doneDate: doneDateAttributeName,
