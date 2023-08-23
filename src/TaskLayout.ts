@@ -52,13 +52,13 @@ export class TaskLayout {
     public options: LayoutOptions;
     public taskListClasses: string[] = [];
 
-    constructor(options?: LayoutOptions, components?: TaskLayoutComponent[]) {
+    constructor(options?: LayoutOptions, _components?: TaskLayoutComponent[]) {
         if (options) {
             this.options = options;
         } else {
             this.options = new LayoutOptions();
         }
-        this.buildShownTaskLayoutComponents(components);
+        this.buildShownTaskLayoutComponents(_components);
         this.shownTaskLayoutComponents = this.applyOptions(this.options);
     }
 
