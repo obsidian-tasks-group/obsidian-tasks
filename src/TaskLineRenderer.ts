@@ -175,8 +175,8 @@ async function taskToHtml(
 
     // Now build classes for the hidden task components without rendering them
     for (const component of taskLayout.hiddenTaskLayoutComponents) {
-        const dataAttributes = getComponentDataAttribute(component, task);
-        allAttributes = { ...allAttributes, ...dataAttributes };
+        const hiddenComponentDataAttribute = getComponentDataAttribute(component, task);
+        allAttributes = { ...allAttributes, ...hiddenComponentDataAttribute };
     }
 
     // If a task has no priority field set, its priority will not be rendered as part of the loop above and
