@@ -298,7 +298,6 @@ function getTaskDataAttributes(component: TaskLayoutComponent, task: Task) {
             break;
         case 'description':
         case 'recurrenceRule':
-            break;
         case 'blockLink':
             break;
         case 'createdDate':
