@@ -251,7 +251,6 @@ export type AttributesDictionary = { [key: string]: string };
 function getTaskClasses(component: TaskLayoutComponent, task: Task) {
     const taskClasses: string[] = [];
 
-    // Update "generic" classes
     const componentClass = LayoutClasses[component];
     switch (component) {
         case 'description':
