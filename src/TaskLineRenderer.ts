@@ -302,34 +302,27 @@ function getTaskDataAttributes(component: TaskLayoutComponent, task: Task) {
     };
     // Update data attributes
     switch (component) {
-        case 'priority': {
+        case 'priority':
             dataAttributes['taskPriority'] = PriorityTools.priorityNameUsingNormal(task.priority).toLocaleLowerCase();
             break;
-        }
         case 'description':
-        case 'recurrenceRule': {
+        case 'recurrenceRule':
             break;
-        }
-        case 'createdDate': {
+        case 'createdDate':
             addDateDataAttributes(task[component], dataAttributeNames[component]);
             break;
-        }
-        case 'dueDate': {
+        case 'dueDate':
             addDateDataAttributes(task[component], dataAttributeNames[component]);
             break;
-        }
-        case 'startDate': {
+        case 'startDate':
             addDateDataAttributes(task[component], dataAttributeNames[component]);
             break;
-        }
-        case 'scheduledDate': {
+        case 'scheduledDate':
             addDateDataAttributes(task[component], dataAttributeNames[component]);
             break;
-        }
-        case 'doneDate': {
+        case 'doneDate':
             addDateDataAttributes(task[component], dataAttributeNames[component]);
             break;
-        }
     }
     return dataAttributes;
 }
