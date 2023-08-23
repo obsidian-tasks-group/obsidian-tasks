@@ -261,30 +261,24 @@ function getTaskClasses(component: TaskLayoutComponent, task: Task) {
     switch (component) {
         case 'description':
         case 'priority':
-        case 'recurrenceRule': {
+        case 'recurrenceRule':
             taskClasses.push(LayoutClasses[component]);
             break;
-        }
-        case 'createdDate': {
+        case 'createdDate':
             addGenericDateClasses(task[component], LayoutClasses[component]);
             break;
-        }
-        case 'dueDate': {
+        case 'dueDate':
             addGenericDateClasses(task[component], LayoutClasses[component]);
             break;
-        }
-        case 'startDate': {
+        case 'startDate':
             addGenericDateClasses(task[component], LayoutClasses[component]);
             break;
-        }
-        case 'scheduledDate': {
+        case 'scheduledDate':
             addGenericDateClasses(task[component], LayoutClasses[component]);
             break;
-        }
-        case 'doneDate': {
+        case 'doneDate':
             addGenericDateClasses(task[component], LayoutClasses[component]);
             break;
-        }
     }
     return taskClasses;
 }
