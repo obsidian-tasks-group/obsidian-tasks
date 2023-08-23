@@ -320,7 +320,8 @@ function getTaskDataAttributes(component: TaskLayoutComponent, task: Task) {
             break;
         }
         case 'doneDate': {
-            addDateDataAttributes(task.doneDate, 'taskDone');
+            const doneDateAttributeName = 'taskDone';
+            addDateDataAttributes(task.doneDate, doneDateAttributeName);
             break;
         }
     }
