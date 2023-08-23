@@ -315,7 +315,8 @@ function getTaskDataAttributes(component: TaskLayoutComponent, task: Task) {
             break;
         }
         case 'scheduledDate': {
-            addDateDataAttributes(task.scheduledDate, 'taskScheduled');
+            const scheduledDateAttributeName = 'taskScheduled';
+            addDateDataAttributes(task.scheduledDate, scheduledDateAttributeName);
             break;
         }
         case 'doneDate': {
