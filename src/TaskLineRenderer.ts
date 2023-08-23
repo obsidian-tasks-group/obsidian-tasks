@@ -252,11 +252,12 @@ function getTaskClasses(component: TaskLayoutComponent, task: Task) {
     const taskClasses: string[] = [];
 
     // Update "generic" classes
+    const componentClass = LayoutClasses[component];
     switch (component) {
         case 'description':
         case 'priority':
         case 'recurrenceRule':
-            taskClasses.push(LayoutClasses[component]);
+            taskClasses.push(componentClass);
             break;
         case 'createdDate':
         case 'dueDate':
@@ -265,7 +266,7 @@ function getTaskClasses(component: TaskLayoutComponent, task: Task) {
         case 'doneDate': {
             const date = task[component];
             if (date) {
-                taskClasses.push(LayoutClasses[component]);
+                taskClasses.push(componentClass);
             }
             break;
         }
