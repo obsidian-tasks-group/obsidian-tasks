@@ -249,11 +249,11 @@ export type AttributesDictionary = { [key: string]: string };
  * options in LayoutClasses.
  */
 function getTaskClasses(component: TaskLayoutComponent, task: Task) {
-    const genericClasses: string[] = [];
+    const taskClasses: string[] = [];
 
     function addGenericDateClasses(date: moment.Moment | null, classes: string) {
         if (date) {
-            genericClasses.push(classes);
+            taskClasses.push(classes);
         }
     }
 
@@ -261,11 +261,11 @@ function getTaskClasses(component: TaskLayoutComponent, task: Task) {
     switch (component) {
         case 'description':
         case 'recurrenceRule': {
-            genericClasses.push(LayoutClasses[component]);
+            taskClasses.push(LayoutClasses[component]);
             break;
         }
         case 'priority': {
-            genericClasses.push(LayoutClasses[component]);
+            taskClasses.push(LayoutClasses[component]);
             break;
         }
         case 'createdDate': {
@@ -289,7 +289,7 @@ function getTaskClasses(component: TaskLayoutComponent, task: Task) {
             break;
         }
     }
-    return genericClasses;
+    return taskClasses;
 }
 
 /**
