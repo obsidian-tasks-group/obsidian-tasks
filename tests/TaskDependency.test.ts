@@ -17,6 +17,16 @@ function addDependency(parentTask: Task, childTask: Task) {
     return [newParent, newChild];
 }
 
+function removeDependency(parentTask: Task, childTask: Task) {
+    let newParent = parentTask;
+    if (parentTask.dependsOn.includes(childTask.id)) {
+        const newDependsOn = parentTask.dependsOn.filter((dependsOn) => dependsOn !== childTask.id);
+        newParent = new Task({ ...parentTask, dependsOn: newDependsOn });
+    }
+
+    return [newParent, childTask];
+}
+
 describe('TaskDependency', () => {
     it('Should add dependency on existing id', () => {
         const childTask = new TaskBuilder().id('123456').build();
@@ -53,5 +63,18 @@ describe('TaskDependency', () => {
 
         expect(newChild.id).not.toEqual('');
         expect(newParent.dependsOn).toEqual([newChild.id]);
+    });
+
+    it('Should remove a dependency', () => {
+        const childTask = new TaskBuilder().id('123456').build();
+        const parentTask = new TaskBuilder().dependsOn(['123456']).description('parent task').build();
+
+        const [newParent, newChild] = removeDependency(parentTask, childTask);
+
+        expect(parentTask.dependsOn).toEqual(['123456']);
+        expect(newParent.dependsOn).toEqual([]);
+        expect(childTask.id).toEqual('123456');
+        expect(newChild.id).toEqual('123456');
+        expect(newChild === childTask).toEqual(true);
     });
 });
