@@ -2,11 +2,18 @@ import { Task } from '../src/Task';
 import { TaskBuilder } from './TestingTools/TaskBuilder';
 
 function addDependency(parentTask: Task, childTask: Task) {
-    const id = childTask.id === '' ? 'abcdef' : childTask.id;
+    let id: string;
+    let newChild = childTask;
+    if (childTask.id === '') {
+        id = 'abcdef';
+        newChild = new Task({ ...childTask, id });
+    } else {
+        id = childTask.id;
+    }
     const newDependsOn = [...parentTask.dependsOn];
     newDependsOn.push(id);
 
-    return [new Task({ ...parentTask, dependsOn: newDependsOn }), new Task({ ...childTask, id })];
+    return [new Task({ ...parentTask, dependsOn: newDependsOn }), newChild];
 }
 
 describe('TaskDependency', () => {
@@ -20,6 +27,7 @@ describe('TaskDependency', () => {
         expect(newParent.dependsOn).toEqual(['123456']);
         expect(childTask.id).toEqual('123456');
         expect(newChild.id).toEqual('123456');
+        expect(newChild === childTask).toEqual(true);
     });
 
     it('Should add an id to a child task with no id', () => {
