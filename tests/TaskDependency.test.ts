@@ -9,12 +9,15 @@ function addDependency(parentTask: Task, childTask: Task) {
         newChild = new Task({ ...childTask, id });
     }
 
-    const newDependsOn = [...parentTask.dependsOn];
+    let newParent = parentTask;
     if (!parentTask.dependsOn.includes(newChild.id)) {
+        const newDependsOn = [...parentTask.dependsOn];
         newDependsOn.push(newChild.id);
+
+        newParent = new Task({ ...parentTask, dependsOn: newDependsOn });
     }
 
-    return [new Task({ ...parentTask, dependsOn: newDependsOn }), newChild];
+    return [newParent, newChild];
 }
 
 describe('TaskDependency', () => {
@@ -42,6 +45,7 @@ describe('TaskDependency', () => {
         expect(childTask.id).toEqual('123456');
         expect(newChild.id).toEqual('123456');
         expect(newChild === childTask).toEqual(true);
+        expect(newParent === parentTask).toEqual(true);
     });
 
     it('Should add an id to a child task with no id', () => {
