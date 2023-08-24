@@ -14,8 +14,12 @@ function setDependencies(parentTask: Task, childTasksWithIds: Task[]): Task {
     const newDependsOn = childTasksWithIds.map((task) => {
         return task.id;
     });
+    let newParent = parentTask;
+    if (parentTask.dependsOn.toString() !== newDependsOn.toString()) {
+        newParent = new Task({ ...parentTask, dependsOn: newDependsOn });
+    }
 
-    return new Task({ ...parentTask, dependsOn: newDependsOn });
+    return newParent;
 }
 
 function addDependency(parentTask: Task, childTask: Task) {
@@ -101,5 +105,17 @@ describe('TaskDependency', () => {
 
         expect(parentTask.dependsOn).toEqual(['012345']);
         expect(newParent.dependsOn).toEqual(['123456', '234567', '345678']);
+    });
+
+    it('Should not create a duplicate dependency', () => {
+        const childTask = new TaskBuilder().id('123456').build();
+        const parentTask = new TaskBuilder().dependsOn(['123456']).description('parent task').build();
+
+        const newParent = setDependencies(parentTask, [childTask]);
+
+        expect(parentTask.dependsOn).toEqual(['123456']);
+        expect(newParent.dependsOn).toEqual(['123456']);
+        expect(childTask.id).toEqual('123456');
+        expect(newParent === parentTask).toEqual(true);
     });
 });
