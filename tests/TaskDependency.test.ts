@@ -10,7 +10,7 @@ function ensureTaskHasId(childTask: Task) {
     return newChild;
 }
 
-function setDependencies(parentTask: Task, childTasksWithIds: Task[]): Task {
+function setDependenciesOnTasksWithIds(parentTask: Task, childTasksWithIds: Task[]): Task {
     const newDependsOn = childTasksWithIds.map((task) => {
         return task.id;
     });
@@ -101,7 +101,7 @@ describe('TaskDependency', () => {
         const childTask3 = new TaskBuilder().id('345678').build();
         const parentTask = new TaskBuilder().description('parent task').dependsOn(['012345']).build();
 
-        const newParent = setDependencies(parentTask, [childTask1, childTask2, childTask3]);
+        const newParent = setDependenciesOnTasksWithIds(parentTask, [childTask1, childTask2, childTask3]);
 
         expect(parentTask.dependsOn).toEqual(['012345']);
         expect(newParent.dependsOn).toEqual(['123456', '234567', '345678']);
@@ -111,7 +111,7 @@ describe('TaskDependency', () => {
         const childTask = new TaskBuilder().id('123456').build();
         const parentTask = new TaskBuilder().dependsOn(['123456']).description('parent task').build();
 
-        const newParent = setDependencies(parentTask, [childTask]);
+        const newParent = setDependenciesOnTasksWithIds(parentTask, [childTask]);
 
         expect(parentTask.dependsOn).toEqual(['123456']);
         expect(newParent.dependsOn).toEqual(['123456']);
