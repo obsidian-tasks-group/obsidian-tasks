@@ -1,12 +1,17 @@
 import { Task } from '../src/Task';
 import { TaskBuilder } from './TestingTools/TaskBuilder';
 
-function addDependency(parentTask: Task, childTask: Task) {
+function ensureTaskHasId(childTask: Task) {
     let newChild = childTask;
     if (childTask.id === '') {
         const id = 'abcdef';
         newChild = new Task({ ...childTask, id });
     }
+    return newChild;
+}
+
+function addDependency(parentTask: Task, childTask: Task) {
+    const newChild = ensureTaskHasId(childTask);
 
     let newParent = parentTask;
     if (!parentTask.dependsOn.includes(newChild.id)) {
