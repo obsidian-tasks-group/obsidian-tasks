@@ -45,6 +45,22 @@ function removeDependency(parentTask: Task, childTask: Task) {
 }
 
 describe('TaskDependency', () => {
+    it('Should add id to task without id', () => {
+        const task = new TaskBuilder().build();
+
+        const newTask = ensureTaskHasId(task);
+
+        expect(newTask.id).not.toEqual('');
+    });
+
+    it('Should return original task if it already has id', () => {
+        const task = new TaskBuilder().id('abc123').build();
+
+        const newTask = ensureTaskHasId(task);
+
+        expect(newTask === task).toEqual(true);
+    });
+
     it('Should add dependency on existing id', () => {
         const childTask = new TaskBuilder().id('123456').build();
         const parentTask = new TaskBuilder().description('parent task').build();
