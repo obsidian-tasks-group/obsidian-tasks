@@ -3,7 +3,6 @@ import { TaskBuilder } from './TestingTools/TaskBuilder';
 
 function addDependency(parentTask: Task, childTask: Task) {
     let newChild = childTask;
-
     if (childTask.id === '') {
         const id = 'abcdef';
         newChild = new Task({ ...childTask, id });
@@ -11,9 +10,7 @@ function addDependency(parentTask: Task, childTask: Task) {
 
     let newParent = parentTask;
     if (!parentTask.dependsOn.includes(newChild.id)) {
-        const newDependsOn = [...parentTask.dependsOn];
-        newDependsOn.push(newChild.id);
-
+        const newDependsOn = [...parentTask.dependsOn, newChild.id];
         newParent = new Task({ ...parentTask, dependsOn: newDependsOn });
     }
 
