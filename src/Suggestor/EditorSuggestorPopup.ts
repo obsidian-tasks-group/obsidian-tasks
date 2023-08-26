@@ -1,27 +1,12 @@
 import { App, Editor, EditorSuggest, TFile } from 'obsidian';
 import type { EditorPosition, EditorSuggestContext, EditorSuggestTriggerInfo } from 'obsidian';
-
-import { GlobalFilter } from '../Config/GlobalFilter';
 import { type Settings, getUserSelectedTaskFormat } from '../Config/Settings';
-import * as task from '../Task';
+import { canSuggestForLine } from './Suggestor';
 import type { SuggestInfo } from '.';
 
 export type SuggestInfoWithContext = SuggestInfo & {
     context: EditorSuggestContext;
 };
-
-/**
- * Return a truthy if the Auto-Suggest menu may be shown on the current line,
- * and a falsy value otherwise.
- *
- * This checks for simple pre-conditions:
- *  - Is the global filter (if set) in the line?
- *  - Is the line a task line (with a checkbox)
- * @param line
- */
-function canSuggestForLine(line: string) {
-    return GlobalFilter.includedIn(line) && line.match(task.TaskRegularExpressions.taskRegex);
-}
 
 export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
     private settings: Settings;
