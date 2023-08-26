@@ -404,8 +404,8 @@ export function onlySuggestIfBracketOpen(fn: SuggestionBuilder, brackets: [strin
 }
 
 /**
- * Return a truthy if the Auto-Suggest menu may be shown on the current line,
- * and a falsy value otherwise.
+ * Return true if the Auto-Suggest menu may be shown on the current line,
+ * and false value otherwise.
  *
  * This checks for simple pre-conditions:
  *  - Is the global filter (if set) in the line?
@@ -413,5 +413,5 @@ export function onlySuggestIfBracketOpen(fn: SuggestionBuilder, brackets: [strin
  * @param line
  */
 export function canSuggestForLine(line: string) {
-    return GlobalFilter.includedIn(line) && line.match(task.TaskRegularExpressions.taskRegex);
+    return GlobalFilter.includedIn(line) && line.match(task.TaskRegularExpressions.taskRegex) !== null;
 }
