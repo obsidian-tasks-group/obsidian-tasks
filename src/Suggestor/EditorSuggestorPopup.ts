@@ -10,6 +10,10 @@ export type SuggestInfoWithContext = SuggestInfo & {
     context: EditorSuggestContext;
 };
 
+function canSuggestForLine(line: string) {
+    return GlobalFilter.includedIn(line) && line.match(task.TaskRegularExpressions.taskRegex);
+}
+
 export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
     private settings: Settings;
 
@@ -21,7 +25,7 @@ export class EditorSuggestor extends EditorSuggest<SuggestInfoWithContext> {
     onTrigger(cursor: EditorPosition, editor: Editor, _file: TFile): EditorSuggestTriggerInfo | null {
         if (!this.settings.autoSuggestInEditor) return null;
         const line = editor.getLine(cursor.line);
-        if (GlobalFilter.includedIn(line) && line.match(task.TaskRegularExpressions.taskRegex)) {
+        if (canSuggestForLine(line)) {
             return {
                 start: { line: cursor.line, ch: 0 },
                 end: {
