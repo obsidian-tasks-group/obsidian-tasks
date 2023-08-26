@@ -233,6 +233,11 @@ describe('canSuggestForLine', () => {
         GlobalFilter.reset();
     });
 
+    it('should suggest if global filter missing from line', () => {
+        GlobalFilter.set('#todo');
+        expect(canSuggestForLine('- [ ] #todo has global filter')).toBeTruthy();
+    });
+
     it('should not suggest if global filter missing from line', () => {
         GlobalFilter.set('#todo');
         expect(canSuggestForLine('- [ ] no global filter')).toEqual(false);
