@@ -10,6 +10,15 @@ export type SuggestInfoWithContext = SuggestInfo & {
     context: EditorSuggestContext;
 };
 
+/**
+ * Return a truthy if the Auto-Suggest menu may be shown on the current line,
+ * and a falsy value otherwise.
+ *
+ * This checks for simple pre-conditions:
+ *  - Is the global filter (if set) in the line?
+ *  - Is the line a task line (with a checkbox)
+ * @param line
+ */
 function canSuggestForLine(line: string) {
     return GlobalFilter.includedIn(line) && line.match(task.TaskRegularExpressions.taskRegex);
 }
