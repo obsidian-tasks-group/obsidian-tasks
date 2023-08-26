@@ -5,10 +5,15 @@ import moment from 'moment';
 import * as chrono from 'chrono-node';
 import { getSettings } from '../../src/Config/Settings';
 import type { SuggestInfo, SuggestionBuilder } from '../../src/Suggestor';
-import { makeDefaultSuggestionBuilder, onlySuggestIfBracketOpen } from '../../src/Suggestor/Suggestor';
+import {
+    canSuggestForLine,
+    makeDefaultSuggestionBuilder,
+    onlySuggestIfBracketOpen,
+} from '../../src/Suggestor/Suggestor';
 import { DEFAULT_SYMBOLS } from '../../src/TaskSerializer/DefaultTaskSerializer';
 import { DATAVIEW_SYMBOLS } from '../../src/TaskSerializer/DataviewTaskSerializer';
 import { MarkdownTable } from '../TestingTools/VerifyMarkdownTable';
+import { GlobalFilter } from '../../src/Config/GlobalFilter';
 
 window.moment = moment;
 
@@ -220,5 +225,26 @@ describe('onlySuggestIfBracketOpen', () => {
     it("should not suggest if there's no open bracket at cursor position", () => {
         const suggestions = buildSuggestions(...cursorPosition('(hello world)|'), getSettings());
         expect(suggestions).toEqual(emptySuggestion);
+    });
+});
+
+describe('canSuggestForLine', () => {
+    afterEach(() => {
+        GlobalFilter.reset();
+    });
+
+    it('should suggest if there is no global filter', () => {
+        GlobalFilter.reset();
+        expect(canSuggestForLine('- [ ] global filter is not set')).toEqual(true);
+    });
+
+    it('should suggest if global filter missing from line', () => {
+        GlobalFilter.set('#todo');
+        expect(canSuggestForLine('- [ ] #todo has global filter')).toEqual(true);
+    });
+
+    it('should not suggest if global filter missing from line', () => {
+        GlobalFilter.set('#todo');
+        expect(canSuggestForLine('- [ ] no global filter')).toEqual(false);
     });
 });

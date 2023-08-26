@@ -3,7 +3,9 @@ import { DateParser } from '../Query/DateParser';
 import { doAutocomplete } from '../DateAbbreviations';
 import { Recurrence } from '../Recurrence';
 import type { DefaultTaskSerializerSymbols } from '../TaskSerializer/DefaultTaskSerializer';
+import * as task from '../Task';
 import { TaskRegularExpressions } from '../Task';
+import { GlobalFilter } from '../Config/GlobalFilter';
 import type { SuggestInfo, SuggestionBuilder } from '.';
 
 /**
@@ -399,4 +401,17 @@ export function onlySuggestIfBracketOpen(fn: SuggestionBuilder, brackets: [strin
         }
         return fn(line, cursorPos, settings);
     };
+}
+
+/**
+ * Return true if the Auto-Suggest menu may be shown on the current line,
+ * and false value otherwise.
+ *
+ * This checks for simple pre-conditions:
+ *  - Is the global filter (if set) in the line?
+ *  - Is the line a task line (with a checkbox)
+ * @param line
+ */
+export function canSuggestForLine(line: string) {
+    return GlobalFilter.includedIn(line) && line.match(task.TaskRegularExpressions.taskRegex) !== null;
 }
