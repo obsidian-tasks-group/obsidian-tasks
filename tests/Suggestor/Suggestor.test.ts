@@ -235,7 +235,7 @@ describe('canSuggestForLine', () => {
 
     it('should suggest if global filter missing from line', () => {
         GlobalFilter.set('#todo');
-        expect(canSuggestForLine('- [ ] #todo has global filter')).toBeTruthy();
+        expect(canSuggestForLine('- [ ] #todo has global filter')).toEqual(true);
     });
 
     it('should not suggest if global filter missing from line', () => {
