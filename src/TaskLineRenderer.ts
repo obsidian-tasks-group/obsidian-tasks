@@ -161,9 +161,9 @@ async function taskToHtml(
                 );
                 addInternalClasses(component, internalSpan);
 
-                // Add the generic classes that apply to what this component is (priority, due date etc)
-                const taskClasses = getTaskClasses(component, task);
-                span.classList.add(...taskClasses);
+                // Add the component's CSS class describing what this component is (priority, due date etc.)
+                const componentClass = getTaskComponentClass(component, task);
+                span.classList.add(...componentClass);
 
                 // Add the attributes to the component ('priority-medium', 'due-past-1d' etc)
                 const dataAttributes = getTaskDataAttributes(component, task);
@@ -245,51 +245,33 @@ async function renderComponentText(
 export type AttributesDictionary = { [key: string]: string };
 
 /**
- * The genericClasses describe what the component is, e.g. a due date or a priority, and are one of the
- * options in LayoutClasses.
+ * The CSS class that describes what the component is, e.g. a due date or a priority, and is a value from LayoutClasses.
  */
-function getTaskClasses(component: TaskLayoutComponent, task: Task) {
-    const genericClasses: string[] = [];
+function getTaskComponentClass(component: TaskLayoutComponent, task: Task) {
+    const componentClassContainer: string[] = [];
 
-    function addGenericDateClasses(date: moment.Moment | null, classes: string) {
-        if (date) {
-            genericClasses.push(classes);
-        }
-    }
-
-    // Update "generic" classes
+    const componentClass = LayoutClasses[component];
     switch (component) {
+        case 'blockLink':
+            break;
         case 'description':
-        case 'recurrenceRule': {
-            genericClasses.push(LayoutClasses[component]);
+        case 'priority':
+        case 'recurrenceRule':
+            componentClassContainer.push(componentClass);
             break;
-        }
-        case 'priority': {
-            genericClasses.push(LayoutClasses[component]);
-            break;
-        }
-        case 'createdDate': {
-            addGenericDateClasses(task.createdDate, LayoutClasses[component]);
-            break;
-        }
-        case 'dueDate': {
-            addGenericDateClasses(task.dueDate, LayoutClasses[component]);
-            break;
-        }
-        case 'startDate': {
-            addGenericDateClasses(task.startDate, LayoutClasses[component]);
-            break;
-        }
-        case 'scheduledDate': {
-            addGenericDateClasses(task.scheduledDate, LayoutClasses[component]);
-            break;
-        }
+        case 'createdDate':
+        case 'dueDate':
+        case 'startDate':
+        case 'scheduledDate':
         case 'doneDate': {
-            addGenericDateClasses(task.doneDate, LayoutClasses[component]);
+            const date = task[component];
+            if (date) {
+                componentClassContainer.push(componentClass);
+            }
             break;
         }
     }
-    return genericClasses;
+    return componentClassContainer;
 }
 
 /**
