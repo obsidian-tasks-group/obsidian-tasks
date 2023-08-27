@@ -60,13 +60,13 @@ export class TaskLayout {
         }
 
         this.shownTaskLayoutComponents = this.defaultLayout;
-        this.shownTaskLayoutComponents = this.applyOptions(this.options);
+        this.applyOptions(this.options);
     }
 
     /**
      * Return a new list of components with the given options applied.
      */
-    applyOptions(layoutOptions: LayoutOptions): TaskLayoutComponent[] {
+    applyOptions(layoutOptions: LayoutOptions) {
         // Remove components from the layout according to the task options. These represent the existing task options,
         // so some components (e.g. the description) are not here because there are no layout options to remove them.
         this.removeIf2(layoutOptions.hidePriority, 'priority');
@@ -79,7 +79,6 @@ export class TaskLayout {
         // Tags are hidden, rather than removed. See tasks-layout-hide-tags in styles.css.
 
         this.markHiddenQueryComponents(layoutOptions);
-        return this.shownTaskLayoutComponents;
     }
 
     // Remove a component from the taskComponents array if the given layoutOption criteria is met,
