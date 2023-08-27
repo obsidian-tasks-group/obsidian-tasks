@@ -3,7 +3,10 @@ import { Task } from './Task';
 export function ensureTaskHasId(childTask: Task, _existingIds: string[]) {
     let newChild = childTask;
     if (childTask.id === '') {
-        const id = 'abcdef';
+        // from https://www.codemzy.com/blog/random-unique-id-javascript
+        const id = Math.random()
+            .toString(36)
+            .substring(2, 6 + 2);
         newChild = new Task({ ...childTask, id });
     }
     return newChild;
