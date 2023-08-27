@@ -73,7 +73,24 @@ export class TaskLayout {
         this.removeIf2(this.options.hideDueDate, 'dueDate');
         this.removeIf2(this.options.hideDoneDate, 'doneDate');
 
-        this.markHiddenQueryComponents(this.options);
+        const markHiddenQueryComponent = (hidden: boolean, hiddenComponentName: string) => {
+            if (hidden) {
+                this.taskListClasses.push(`tasks-layout-hide-${hiddenComponentName}`);
+            }
+        };
+
+        // Tags are hidden, rather than removed. See tasks-layout-hide-tags in styles.css.
+        markHiddenQueryComponent(this.options.hideTags, 'tags');
+
+        // The following components are handled in QueryRenderer.ts and thus are not part of the same flow that
+        // hides TaskLayoutComponent items. However, we still want to have 'tasks-layout-hide' items for them
+        // (see https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1866).
+        // This can benefit from some refactoring, i.e. render these components in a similar flow rather than
+        // separately.
+        markHiddenQueryComponent(this.options.hideUrgency, 'urgency');
+        markHiddenQueryComponent(this.options.hideBacklinks, 'backlinks');
+        markHiddenQueryComponent(this.options.hideEditButton, 'edit-button');
+        if (this.options.shortMode) this.taskListClasses.push('tasks-layout-short-mode');
     }
 
     // Remove a component from the taskComponents array if the given layoutOption criteria is met,
@@ -87,26 +104,5 @@ export class TaskLayout {
                 (element) => element != componentToRemove,
             );
         }
-    }
-
-    private markHiddenQueryComponents(layoutOptions: LayoutOptions) {
-        const markHiddenQueryComponent = (hidden: boolean, hiddenComponentName: string) => {
-            if (hidden) {
-                this.taskListClasses.push(`tasks-layout-hide-${hiddenComponentName}`);
-            }
-        };
-
-        // Tags are hidden, rather than removed. See tasks-layout-hide-tags in styles.css.
-        markHiddenQueryComponent(layoutOptions.hideTags, 'tags');
-
-        // The following components are handled in QueryRenderer.ts and thus are not part of the same flow that
-        // hides TaskLayoutComponent items. However, we still want to have 'tasks-layout-hide' items for them
-        // (see https://github.com/obsidian-tasks-group/obsidian-tasks/issues/1866).
-        // This can benefit from some refactoring, i.e. render these components in a similar flow rather than
-        // separately.
-        markHiddenQueryComponent(layoutOptions.hideUrgency, 'urgency');
-        markHiddenQueryComponent(layoutOptions.hideBacklinks, 'backlinks');
-        markHiddenQueryComponent(layoutOptions.hideEditButton, 'edit-button');
-        if (layoutOptions.shortMode) this.taskListClasses.push('tasks-layout-short-mode');
     }
 }
