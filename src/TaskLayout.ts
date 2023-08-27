@@ -87,9 +87,9 @@ export class TaskLayout {
         if (this.options.shortMode) this.taskListClasses.push('tasks-layout-short-mode');
     }
 
-    private generateHiddenClassForTaskList(hidden: boolean, hiddenComponentName: string) {
-        if (hidden) {
-            this.taskListClasses.push(`tasks-layout-hide-${hiddenComponentName}`);
+    private generateHiddenClassForTaskList(hide: boolean, component: string) {
+        if (hide) {
+            this.taskListClasses.push(`tasks-layout-hide-${component}`);
         }
     }
 
