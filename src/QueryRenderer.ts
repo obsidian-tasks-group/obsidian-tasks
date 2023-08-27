@@ -222,8 +222,7 @@ class QueryRenderChild extends MarkdownRenderChild {
         taskList.addClasses(layout.taskListHiddenClasses);
         const groupingAttribute = this.getGroupingAttribute();
         if (groupingAttribute && groupingAttribute.length > 0) taskList.dataset.taskGroupBy = groupingAttribute;
-        for (let i = 0; i < tasksCount; i++) {
-            const task = tasks[i];
+        for (const [i, task] of tasks.entries()) {
             const isFilenameUnique = this.isFilenameUnique({ task });
 
             const listItem = await task.toLi({
